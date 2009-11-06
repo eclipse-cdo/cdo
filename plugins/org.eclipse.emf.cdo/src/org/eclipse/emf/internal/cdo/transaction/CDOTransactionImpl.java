@@ -585,18 +585,20 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public void commit(IProgressMonitor progressMonitor) throws TransactionException
   {
     checkActive();
-    if (hasConflict())
-    {
-      throw new TransactionException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
-    }
-
-    if (progressMonitor == null)
-    {
-      progressMonitor = new NullProgressMonitor();
-    }
+    getLock().lock();
 
     try
     {
+      if (hasConflict())
+      {
+        throw new TransactionException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
+      }
+
+      if (progressMonitor == null)
+      {
+        progressMonitor = new NullProgressMonitor();
+      }
+
       Set<CDOResource> dirtyResources = null;
       if (isTrackingModification())
       {
@@ -628,6 +630,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     catch (Exception ex)
     {
       throw new TransactionException(ex);
+    }
+    finally
+    {
+      getLock().unlock();
     }
   }
 
@@ -1369,6 +1375,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           Set<CDOIDAndVersion> dirtyIDs = new HashSet<CDOIDAndVersion>();
           for (CDOObject dirtyObject : dirtyObjects.values())
           {
+            CDOState cdoState = dirtyObject.cdoState();
+            if (cdoState != CDOState.CLEAN)
+            {
+              System.out.println(cdoState);
+            }
+
             CDORevision revision = dirtyObject.cdoRevision();
             CDOIDAndVersion dirtyID = CDOIDUtil.createIDAndVersion(revision.getID(), revision.getVersion() - 1);
             dirtyIDs.add(dirtyID);

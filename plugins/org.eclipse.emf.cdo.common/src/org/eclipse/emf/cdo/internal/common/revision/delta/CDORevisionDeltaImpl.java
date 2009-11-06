@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -127,6 +128,11 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
   public CDOID getID()
   {
     return cdoID;
+  }
+
+  public EClass getEClass()
+  {
+    return eClass;
   }
 
   public int getOriginVersion()
@@ -296,5 +302,12 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
   private boolean compare(Object originValue, Object dirtyValue)
   {
     return originValue == dirtyValue || originValue != null && dirtyValue != null && originValue.equals(dirtyValue);
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("CDORevisionDelta[{0}@{1}v{2} -> v{3}]", eClass.getName(), cdoID, originVersion,
+        dirtyVersion);
   }
 }

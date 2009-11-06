@@ -253,7 +253,14 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     {
       if (session != excludedSession)
       {
-        session.handleCommitNotification(timeStamp, packageUnits, dirtyIDs, detachedObjects, deltas);
+        try
+        {
+          session.handleCommitNotification(timeStamp, packageUnits, dirtyIDs, detachedObjects, deltas);
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.warn("A problem occured while notifying session " + session, ex);
+        }
       }
     }
   }
@@ -263,12 +270,26 @@ public class SessionManager extends Container<ISession> implements ISessionManag
    */
   public void handleRemoteSessionNotification(byte opcode, Session excludedSession)
   {
-    for (Session session : getSessions())
+    try
     {
-      if (session != excludedSession && session.isSubscribed())
+      for (Session session : getSessions())
       {
-        session.handleRemoteSessionNotification(opcode, excludedSession);
+        if (session != excludedSession && session.isSubscribed())
+        {
+          try
+          {
+            session.handleRemoteSessionNotification(opcode, excludedSession);
+          }
+          catch (Exception ex)
+          {
+            OM.LOG.warn("A problem occured while notifying session " + session, ex);
+          }
+        }
       }
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.warn("A problem occured while notifying other sessions", ex);
     }
   }
 

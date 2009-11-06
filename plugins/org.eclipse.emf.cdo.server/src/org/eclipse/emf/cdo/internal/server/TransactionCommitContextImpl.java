@@ -326,6 +326,10 @@ public class TransactionCommitContextImpl implements InternalCommitContext
         transaction.getRepository().getNotificationManager().notifyCommit(transaction.getSession(), this);
       }
     }
+    catch (Exception ex)
+    {
+      OM.LOG.warn("A problem occured while notifying other sessions", ex);
+    }
     finally
     {
       StoreThreadLocal.release();

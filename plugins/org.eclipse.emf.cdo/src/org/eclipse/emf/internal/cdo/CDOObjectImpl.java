@@ -458,6 +458,17 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   @Override
+  public Resource.Internal eInternalResource()
+  {
+    if (FSMUtil.isInvalid(this))
+    {
+      return null;
+    }
+
+    return super.eInternalResource();
+  }
+
+  @Override
   public Object dynamicGet(int dynamicFeatureID)
   {
     Object result = eSettings[dynamicFeatureID];

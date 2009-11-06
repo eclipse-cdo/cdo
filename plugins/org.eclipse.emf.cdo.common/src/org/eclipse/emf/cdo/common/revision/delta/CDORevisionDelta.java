@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+
+import org.eclipse.emf.ecore.EClass;
 
 import java.util.List;
 
@@ -23,6 +25,11 @@ import java.util.List;
 public interface CDORevisionDelta
 {
   public CDOID getID();
+
+  /**
+   * @since 3.0
+   */
+  public EClass getEClass();
 
   /**
    * Specify the version of the object BEFORE it was modified.

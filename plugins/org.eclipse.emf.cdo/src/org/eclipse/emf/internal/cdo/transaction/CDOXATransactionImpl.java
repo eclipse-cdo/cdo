@@ -91,7 +91,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
   private boolean allRequestEnabled = true;
 
-  private ExecutorService executorService = Executors.newFixedThreadPool(10);
+  private ExecutorService executorService = createExecutorService();
 
   private Map<InternalCDOTransaction, CDOXACommitContextImpl> activeContext = new HashMap<InternalCDOTransaction, CDOXACommitContextImpl>();
 
@@ -378,6 +378,11 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
       return savepoints;
     }
+  }
+
+  protected ExecutorService createExecutorService()
+  {
+    return Executors.newFixedThreadPool(10);
   }
 
   /**

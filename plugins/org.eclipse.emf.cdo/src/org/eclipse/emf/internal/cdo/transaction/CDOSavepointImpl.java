@@ -23,8 +23,11 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.InternalCDOFeatureDelta;
 
 import org.eclipse.net4j.util.collection.MultiMap;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -39,7 +42,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author Simon McDuff
  * @since 2.0
  */
-public class CDOSavepointImpl extends AbstractSavepoint
+public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCDOSavepoint
 {
   private Map<CDOID, CDOResource> newResources = new HashMap<CDOID, CDOResource>();
 
@@ -76,12 +79,12 @@ public class CDOSavepointImpl extends AbstractSavepoint
    */
   private Set<CDOID> sharedDetachedObjects;
 
-  private boolean isDirty;
+  private boolean dirty;
 
-  public CDOSavepointImpl(InternalCDOTransaction transaction, CDOSavepointImpl lastSavepoint)
+  public CDOSavepointImpl(InternalCDOTransaction transaction, InternalCDOSavepoint lastSavepoint)
   {
     super(transaction, lastSavepoint);
-    isDirty = transaction.isDirty();
+    dirty = transaction.isDirty();
     if (lastSavepoint == null)
     {
       sharedDetachedObjects = new HashSet<CDOID>();
@@ -92,6 +95,42 @@ public class CDOSavepointImpl extends AbstractSavepoint
     }
   }
 
+  @Override
+  public InternalCDOTransaction getTransaction()
+  {
+    return (InternalCDOTransaction)super.getTransaction();
+  }
+
+  @Override
+  public InternalCDOSavepoint getFirstSavePoint()
+  {
+    return (InternalCDOSavepoint)super.getFirstSavePoint();
+  }
+
+  @Override
+  public InternalCDOSavepoint getPreviousSavepoint()
+  {
+    return (InternalCDOSavepoint)super.getPreviousSavepoint();
+  }
+
+  @Override
+  public InternalCDOSavepoint getNextSavepoint()
+  {
+    return (InternalCDOSavepoint)super.getNextSavepoint();
+  }
+
+  @Override
+  public void setPreviousSavepoint(InternalCDOUserSavepoint previousSavepoint)
+  {
+    super.setPreviousSavepoint(previousSavepoint);
+  }
+
+  @Override
+  public void setNextSavepoint(InternalCDOUserSavepoint nextSavepoint)
+  {
+    super.setNextSavepoint(nextSavepoint);
+  }
+
   public void clear()
   {
     newResources.clear();
@@ -100,11 +139,12 @@ public class CDOSavepointImpl extends AbstractSavepoint
     revisionDeltas.clear();
     baseNewObjects.clear();
     detachedObjects.clear();
+    // TODO reattachedObjects.clear(); ???
   }
 
   public boolean isDirty()
   {
-    return isDirty;
+    return dirty;
   }
 
   public Map<CDOID, CDOResource> getNewResources()
@@ -120,6 +160,12 @@ public class CDOSavepointImpl extends AbstractSavepoint
   public Map<CDOID, CDOObject> getDetachedObjects()
   {
     return detachedObjects;
+  }
+
+  // Bug 283985 (Re-attachment)
+  public Map<CDOID, CDOObject> getReattachedObjects()
+  {
+    return reattachedObjects;
   }
 
   public Map<CDOID, CDOObject> getDirtyObjects()
@@ -149,11 +195,11 @@ public class CDOSavepointImpl extends AbstractSavepoint
   {
     if (getPreviousSavepoint() == null)
     {
-      return getDirtyObjects();
+      return Collections.unmodifiableMap(getDirtyObjects());
     }
 
     MultiMap.ListBased<CDOID, CDOObject> dirtyObjects = new MultiMap.ListBased<CDOID, CDOObject>();
-    for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+    for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
     {
       dirtyObjects.getDelegates().add(savepoint.getDirtyObjects());
     }
@@ -174,7 +220,7 @@ public class CDOSavepointImpl extends AbstractSavepoint
     if (getSharedDetachedObjects().size() == 0)
     {
       MultiMap.ListBased<CDOID, CDOObject> newObjects = new MultiMap.ListBased<CDOID, CDOObject>();
-      for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+      for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
       {
         newObjects.getDelegates().add(savepoint.getNewObjects());
       }
@@ -183,7 +229,7 @@ public class CDOSavepointImpl extends AbstractSavepoint
     }
 
     Map<CDOID, CDOObject> newObjects = new HashMap<CDOID, CDOObject>();
-    for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+    for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
     {
       for (Entry<CDOID, CDOObject> entry : savepoint.getNewObjects().entrySet())
       {
@@ -210,7 +256,7 @@ public class CDOSavepointImpl extends AbstractSavepoint
     if (getSharedDetachedObjects().size() == 0)
     {
       MultiMap.ListBased<CDOID, CDOResource> newResources = new MultiMap.ListBased<CDOID, CDOResource>();
-      for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+      for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
       {
         newResources.getDelegates().add(savepoint.getNewResources());
       }
@@ -219,7 +265,7 @@ public class CDOSavepointImpl extends AbstractSavepoint
     }
 
     Map<CDOID, CDOResource> newResources = new HashMap<CDOID, CDOResource>();
-    for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+    for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
     {
       for (Entry<CDOID, CDOResource> entry : savepoint.getNewResources().entrySet())
       {
@@ -244,7 +290,7 @@ public class CDOSavepointImpl extends AbstractSavepoint
     }
 
     MultiMap.ListBased<CDOID, CDORevision> newObjects = new MultiMap.ListBased<CDOID, CDORevision>();
-    for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+    for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
     {
       newObjects.getDelegates().add(savepoint.getBaseNewObjects());
     }
@@ -264,7 +310,7 @@ public class CDOSavepointImpl extends AbstractSavepoint
 
     // We need to combined the result for all delta in different Savepoint
     Map<CDOID, CDORevisionDelta> revisionDeltas = new HashMap<CDOID, CDORevisionDelta>();
-    for (CDOSavepointImpl savepoint = (CDOSavepointImpl)getFirstSavePoint(); savepoint != null; savepoint = savepoint
+    for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint
         .getNextSavepoint())
     {
       for (Entry<CDOID, CDORevisionDelta> entry : savepoint.getRevisionDeltas().entrySet())
@@ -295,23 +341,14 @@ public class CDOSavepointImpl extends AbstractSavepoint
 
   public Map<CDOID, CDOObject> getAllDetachedObjects()
   {
-    if (getPreviousSavepoint() == null)
+    if (getPreviousSavepoint() == null && reattachedObjects.isEmpty())
     {
-      Map<CDOID, CDOObject> detachedObjects = getDetachedObjects();
-
-      // Bug 283985 (Re-attachment):
-      // Object is only included if it was not reattached in a later savepoint
-      for (CDOID id : getReattachedObjects().keySet())
-      {
-        detachedObjects.remove(id);
-      }
-
-      return Collections.unmodifiableMap(detachedObjects);
+      return Collections.unmodifiableMap(getDetachedObjects());
     }
 
     Map<CDOID, CDOObject> detachedObjects = new HashMap<CDOID, CDOObject>();
     Set<CDOID> reattachedObjectIDs = new HashSet<CDOID>(); // Bug 283985 (Re-attachment)
-    for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+    for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
     {
       reattachedObjectIDs.addAll(savepoint.getReattachedObjects().keySet());
 
@@ -332,16 +369,10 @@ public class CDOSavepointImpl extends AbstractSavepoint
     return detachedObjects;
   }
 
-  // Bug 283985 (Re-attachment)
-  public Map<CDOID, CDOObject> getReattachedObjects()
-  {
-    return reattachedObjects;
-  }
-
   public void recalculateSharedDetachedObjects()
   {
     sharedDetachedObjects.clear();
-    for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+    for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
     {
       for (CDOID id : savepoint.getDetachedObjects().keySet())
       {
@@ -350,31 +381,10 @@ public class CDOSavepointImpl extends AbstractSavepoint
     }
   }
 
-  @Override
-  public CDOSavepointImpl getPreviousSavepoint()
-  {
-    return (CDOSavepointImpl)super.getPreviousSavepoint();
-  }
-
-  @Override
-  public CDOSavepointImpl getNextSavepoint()
-  {
-    return (CDOSavepointImpl)super.getNextSavepoint();
-  }
-
-  public void setPreviousSavepoint(CDOSavepointImpl previousSavepoint)
-  {
-    super.setPreviousSavepoint(previousSavepoint);
-  }
-
-  public void setNextSavepoint(CDOSavepointImpl nextSavepoint)
-  {
-    super.setNextSavepoint(nextSavepoint);
-  }
-
-  @Override
   public void rollback()
   {
-    getUserTransaction().rollback(this);
+    InternalCDOTransaction transaction = getTransaction();
+    LifecycleUtil.checkActive(transaction);
+    transaction.getTransactionStrategy().rollback(transaction, this);
   }
 }

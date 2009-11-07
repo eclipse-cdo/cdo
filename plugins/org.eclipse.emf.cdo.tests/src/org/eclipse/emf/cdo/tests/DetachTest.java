@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
-import org.eclipse.emf.cdo.transaction.CDOSavepoint;
+import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
@@ -138,11 +138,11 @@ public class DetachTest extends AbstractCDOTest
     boolean isPersisted = !FSMUtil.isNew(companyCDOObject);
     c1.setName("SIMON");
 
-    CDOSavepoint savepoint = transaction.setSavepoint();
+    CDOUserSavepoint savepoint = transaction.setSavepoint();
     resource.getContents().remove(0); // remove object by index
     assertTransient(c1);
 
-    CDOSavepoint savepoint2 = transaction.setSavepoint();
+    CDOUserSavepoint savepoint2 = transaction.setSavepoint();
     c1.setName("SIMON2");
     if (isPersisted)
     {

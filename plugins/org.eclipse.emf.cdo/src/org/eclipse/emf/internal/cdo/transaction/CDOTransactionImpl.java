@@ -37,12 +37,12 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
-import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransactionStartedEvent;
+import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOViewResourcesEvent;
 
@@ -68,8 +68,10 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -105,9 +107,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   };
 
-  private CDOSavepointImpl lastSavepoint = new CDOSavepointImpl(this, null);
+  private InternalCDOSavepoint lastSavepoint = new CDOSavepointImpl(this, null);
 
-  private CDOSavepointImpl firstSavepoint = lastSavepoint;
+  private InternalCDOSavepoint firstSavepoint = lastSavepoint;
 
   private boolean dirty;
 
@@ -480,7 +482,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public CDOSavepointImpl getLastSavepoint()
+  public InternalCDOSavepoint getLastSavepoint()
   {
     checkActive();
     return lastSavepoint;
@@ -726,12 +728,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  private Set<CDOID> rollbackCompletely(CDOSavepoint savepoint)
+  private Set<CDOID> rollbackCompletely(CDOUserSavepoint savepoint)
   {
     Set<CDOID> idsOfNewObjectWithDeltas = new HashSet<CDOID>();
 
     // Start from the last savepoint and come back up to the active
-    for (CDOSavepointImpl itrSavepoint = lastSavepoint; itrSavepoint != null; itrSavepoint = itrSavepoint
+    for (InternalCDOSavepoint itrSavepoint = lastSavepoint; itrSavepoint != null; itrSavepoint = itrSavepoint
         .getPreviousSavepoint())
     {
       // Rollback new objects created after the save point
@@ -797,7 +799,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return idsOfNewObjectWithDeltas;
   }
 
-  private void loadSavepoint(CDOSavepoint savepoint, Set<CDOID> idsOfNewObjectWithDeltas)
+  private void loadSavepoint(CDOUserSavepoint savepoint, Set<CDOID> idsOfNewObjectWithDeltas)
   {
     lastSavepoint.recalculateSharedDetachedObjects();
 
@@ -856,7 +858,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       cleanObject(internalDirtyObject, getRevision(entryDirtyObject.getKey(), true));
     }
 
-    for (CDOSavepointImpl itrSavepoint = firstSavepoint; itrSavepoint != savepoint; itrSavepoint = itrSavepoint
+    for (InternalCDOSavepoint itrSavepoint = firstSavepoint; itrSavepoint != savepoint; itrSavepoint = itrSavepoint
         .getNextSavepoint())
     {
       CDOObjectMerger merger = new CDOObjectMerger();
@@ -947,23 +949,23 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public void rollback(CDOSavepoint savepoint)
+  public void rollback(CDOUserSavepoint savepoint)
   {
     checkActive();
-    getTransactionStrategy().rollback(this, savepoint);
+    getTransactionStrategy().rollback(this, (InternalCDOUserSavepoint)savepoint);
   }
 
   /**
    * @since 2.0
    */
-  public void handleRollback(CDOSavepoint savepoint)
+  public void handleRollback(InternalCDOSavepoint savepoint)
   {
     if (savepoint == null)
     {
       throw new IllegalArgumentException(Messages.getString("CDOTransactionImpl.3")); //$NON-NLS-1$
     }
 
-    if (savepoint.getUserTransaction() != this)
+    if (savepoint.getTransaction() != this)
     {
       throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOTransactionImpl.4"), savepoint)); //$NON-NLS-1$
     }
@@ -990,7 +992,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         // Rollback objects
         Set<CDOID> idsOfNewObjectWithDeltas = rollbackCompletely(savepoint);
 
-        lastSavepoint = (CDOSavepointImpl)savepoint;
+        lastSavepoint = savepoint;
         // Make savepoint active. Erase savepoint that could have be after
         lastSavepoint.setNextSavepoint(null);
         lastSavepoint.clear();
@@ -1047,7 +1049,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public CDOSavepoint handleSetSavepoint()
+  public InternalCDOSavepoint handleSetSavepoint()
   {
     // Take a copy of all new objects for the current save point
     addToBase(lastSavepoint.getNewObjects());
@@ -1060,10 +1062,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public CDOSavepoint setSavepoint()
+  public InternalCDOSavepoint setSavepoint()
   {
     checkActive();
-    return getTransactionStrategy().setSavepoint(this);
+    return (InternalCDOSavepoint)getTransactionStrategy().setSavepoint(this);
   }
 
   private void addToBase(Map<CDOID, ? extends CDOObject> objects)

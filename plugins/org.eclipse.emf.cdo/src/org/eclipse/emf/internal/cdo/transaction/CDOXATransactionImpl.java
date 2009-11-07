@@ -33,6 +33,8 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
+import org.eclipse.emf.spi.cdo.InternalCDOXASavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
@@ -41,7 +43,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -97,9 +98,9 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
   private Map<InternalCDOTransaction, Set<CDOID>> requestedCDOID = new HashMap<InternalCDOTransaction, Set<CDOID>>();
 
-  private CDOXASavepointImpl lastSavepoint = new CDOXASavepointImpl(this, null);
+  private InternalCDOXASavepoint lastSavepoint = new CDOXASavepointImpl(this, null);
 
-  private CDOXASavepointImpl firstSavepoint = lastSavepoint;
+  private InternalCDOXASavepoint firstSavepoint = lastSavepoint;
 
   private CDOTransactionStrategy transactionStrategy = new CDOXATransactionStrategyImpl();
 
@@ -307,7 +308,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     }
   }
 
-  public CDOXASavepointImpl getLastSavepoint()
+  public InternalCDOXASavepoint getLastSavepoint()
   {
     return lastSavepoint;
   }
@@ -317,25 +318,14 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     rollback(firstSavepoint);
   }
 
-  public void rollback(CDOSavepoint savepoint)
+  public void rollback(InternalCDOXASavepoint savepoint)
   {
-    if (savepoint == null)
-    {
-      throw new IllegalArgumentException(Messages.getString("CDOXATransactionImpl.5")); //$NON-NLS-1$
-    }
-
-    if (savepoint.getUserTransaction() != this)
-    {
-      throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOXATransactionImpl.6"), savepoint)); //$NON-NLS-1$
-    }
-
     if (!savepoint.isValid())
     {
       throw new IllegalArgumentException(Messages.getString("CDOXATransactionImpl.7") + savepoint); //$NON-NLS-1$
     }
 
-    CDOXASavepointImpl savepointSet = (CDOXASavepointImpl)savepoint;
-    List<CDOSavepoint> savepoints = savepointSet.getSavepoints();
+    List<CDOSavepoint> savepoints = savepoint.getSavepoints();
     if (savepoints == null)
     {
       savepoints = getListSavepoints();
@@ -343,21 +333,21 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
     for (CDOSavepoint indexSavePoint : savepoints)
     {
-      InternalCDOTransaction transaction = (InternalCDOTransaction)indexSavePoint.getUserTransaction();
-      CDOSingleTransactionStrategyImpl.INSTANCE.rollback(transaction, indexSavePoint);
+      InternalCDOTransaction transaction = (InternalCDOTransaction)indexSavePoint.getTransaction();
+      CDOSingleTransactionStrategyImpl.INSTANCE.rollback(transaction, (InternalCDOUserSavepoint)indexSavePoint);
     }
 
-    lastSavepoint = savepointSet;
+    lastSavepoint = savepoint;
     lastSavepoint.setNextSavepoint(null);
     lastSavepoint.setSavepoints(null);
   }
 
-  public CDOSavepoint setSavepoint()
+  public InternalCDOXASavepoint setSavepoint()
   {
     List<CDOSavepoint> savepoints = getListSavepoints();
     for (CDOSavepoint savepoint : savepoints)
     {
-      InternalCDOTransaction transaction = (InternalCDOTransaction)savepoint.getUserTransaction();
+      InternalCDOTransaction transaction = (InternalCDOTransaction)savepoint.getTransaction();
       CDOSingleTransactionStrategyImpl.INSTANCE.setSavepoint(transaction);
     }
 
@@ -424,13 +414,13 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       CDOXATransactionImpl.this.commit(progressMonitor);
     }
 
-    public void rollback(InternalCDOTransaction transaction, CDOSavepoint savepoint)
+    public void rollback(InternalCDOTransaction transaction, InternalCDOUserSavepoint savepoint)
     {
       checkAccess();
-      CDOXATransactionImpl.this.rollback(savepoint);
+      CDOXATransactionImpl.this.rollback((InternalCDOXASavepoint)savepoint);
     }
 
-    public CDOSavepoint setSavepoint(InternalCDOTransaction transaction)
+    public InternalCDOUserSavepoint setSavepoint(InternalCDOTransaction transaction)
     {
       checkAccess();
       return CDOXATransactionImpl.this.setSavepoint();

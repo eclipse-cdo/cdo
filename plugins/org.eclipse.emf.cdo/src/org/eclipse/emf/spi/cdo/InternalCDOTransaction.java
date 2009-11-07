@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
-import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
@@ -31,13 +30,29 @@ import java.util.Set;
  * @author Simon McDuff
  * @since 2.0
  */
-public interface InternalCDOTransaction extends CDOTransaction, InternalCDOView
+public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserTransaction, InternalCDOView
 {
   public InternalCDOCommitContext createCommitContext();
 
-  public void handleRollback(CDOSavepoint savepoint);
+  /**
+   * @since 3.0
+   */
+  public InternalCDOSavepoint setSavepoint();
 
-  public CDOSavepoint handleSetSavepoint();
+  /**
+   * @since 3.0
+   */
+  public InternalCDOSavepoint getLastSavepoint();
+
+  /**
+   * @since 3.0
+   */
+  public InternalCDOSavepoint handleSetSavepoint();
+
+  /**
+   * @since 3.0
+   */
+  public void handleRollback(InternalCDOSavepoint savepoint);
 
   public CDOTransactionStrategy getTransactionStrategy();
 

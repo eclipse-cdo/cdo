@@ -4,13 +4,11 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   Simon McDuff - initial API and implementation
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.transaction;
-
-import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
@@ -20,7 +18,9 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
+import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 
@@ -72,12 +72,12 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
     commitContext.postCommit(result);
   }
 
-  public void rollback(InternalCDOTransaction transaction, CDOSavepoint savepoint)
+  public void rollback(InternalCDOTransaction transaction, InternalCDOUserSavepoint savepoint)
   {
-    transaction.handleRollback(savepoint);
+    transaction.handleRollback((InternalCDOSavepoint)savepoint);
   }
 
-  public CDOSavepoint setSavepoint(InternalCDOTransaction transaction)
+  public InternalCDOUserSavepoint setSavepoint(InternalCDOTransaction transaction)
   {
     return transaction.handleSetSavepoint();
   }

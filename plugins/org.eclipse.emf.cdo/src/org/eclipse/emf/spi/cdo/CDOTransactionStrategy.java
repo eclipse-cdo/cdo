@@ -4,14 +4,12 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  */
 package org.eclipse.emf.spi.cdo;
-
-import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 
 import org.eclipse.emf.internal.cdo.transaction.CDOSingleTransactionStrategyImpl;
 
@@ -38,7 +36,13 @@ public interface CDOTransactionStrategy
    */
   public void commit(InternalCDOTransaction transaction, IProgressMonitor progressMonitor) throws Exception;
 
-  public void rollback(InternalCDOTransaction transaction, CDOSavepoint savepoint);
+  /**
+   * @since 3.0
+   */
+  public void rollback(InternalCDOTransaction transaction, InternalCDOUserSavepoint savepoint);
 
-  public CDOSavepoint setSavepoint(InternalCDOTransaction transaction);
+  /**
+   * @since 3.0
+   */
+  public InternalCDOUserSavepoint setSavepoint(InternalCDOTransaction transaction);
 }

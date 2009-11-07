@@ -27,7 +27,6 @@ import org.eclipse.emf.cdo.util.InvalidObjectException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.transaction.CDOSavepointImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.collection.Pair;
@@ -791,7 +790,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       changeState(object, CDOState.DIRTY);
 
       // Add the object to the set of reattached objects
-      ((CDOSavepointImpl)transaction.getLastSavepoint()).getReattachedObjects().put(id, object);
+      transaction.getLastSavepoint().getReattachedObjects().put(id, object);
     }
   }
 

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -29,15 +29,18 @@ public interface CDOUserTransaction
 
   public void rollback();
 
-  public void rollback(CDOSavepoint savepoint);
-
   /**
    * Creates a save point in the {@link CDOTransaction} that can be used to roll back a part of the transaction
    * <p>
    * Save points do not involve the server side, everything is done on the client side.
    * <p>
+   * 
+   * @since 3.0
    */
-  public CDOSavepoint setSavepoint();
+  public CDOUserSavepoint setSavepoint();
 
-  public CDOSavepoint getLastSavepoint();
+  /**
+   * @since 3.0
+   */
+  public CDOUserSavepoint getLastSavepoint();
 }

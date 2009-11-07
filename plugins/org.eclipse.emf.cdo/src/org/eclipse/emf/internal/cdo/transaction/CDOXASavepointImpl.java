@@ -11,7 +11,9 @@
 package org.eclipse.emf.internal.cdo.transaction;
 
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
-import org.eclipse.emf.cdo.transaction.CDOUserTransaction;
+
+import org.eclipse.emf.spi.cdo.InternalCDOXASavepoint;
+import org.eclipse.emf.spi.cdo.InternalCDOXATransaction;
 
 import java.util.List;
 
@@ -19,13 +21,37 @@ import java.util.List;
  * @author Simon McDuff
  * @since 2.0
  */
-public class CDOXASavepointImpl extends AbstractSavepoint
+public class CDOXASavepointImpl extends CDOUserSavepointImpl implements InternalCDOXASavepoint
 {
   private List<CDOSavepoint> savepoints;
 
-  public CDOXASavepointImpl(CDOUserTransaction transaction, AbstractSavepoint lastSavepoint)
+  public CDOXASavepointImpl(InternalCDOXATransaction transaction, InternalCDOXASavepoint lastSavepoint)
   {
     super(transaction, lastSavepoint);
+  }
+
+  @Override
+  public InternalCDOXATransaction getTransaction()
+  {
+    return (InternalCDOXATransaction)super.getTransaction();
+  }
+
+  @Override
+  public InternalCDOXASavepoint getFirstSavePoint()
+  {
+    return (InternalCDOXASavepoint)super.getFirstSavePoint();
+  }
+
+  @Override
+  public InternalCDOXASavepoint getNextSavepoint()
+  {
+    return (InternalCDOXASavepoint)super.getNextSavepoint();
+  }
+
+  @Override
+  public InternalCDOXASavepoint getPreviousSavepoint()
+  {
+    return (InternalCDOXASavepoint)super.getPreviousSavepoint();
   }
 
   public List<CDOSavepoint> getSavepoints()
@@ -36,5 +62,10 @@ public class CDOXASavepointImpl extends AbstractSavepoint
   public void setSavepoints(List<CDOSavepoint> savepoints)
   {
     this.savepoints = savepoints;
+  }
+
+  public void rollback()
+  {
+    getTransaction().rollback(this);
   }
 }

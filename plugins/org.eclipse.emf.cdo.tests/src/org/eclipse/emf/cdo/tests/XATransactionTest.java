@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
-import org.eclipse.emf.cdo.transaction.CDOSavepoint;
+import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -113,12 +113,12 @@ public class XATransactionTest extends AbstractCDOTest
     assertNew(resA, transactionA1);
     assertNew(resB, transactionB1);
 
-    CDOSavepoint savepoint1 = xaTransaction.setSavepoint();
+    CDOUserSavepoint savepoint1 = xaTransaction.setSavepoint();
 
     purchaseOrder.setDate(new Date());
     supplier.setCity("OTTAWA");
 
-    CDOSavepoint savepoint2 = xaTransaction.setSavepoint();
+    CDOUserSavepoint savepoint2 = xaTransaction.setSavepoint();
 
     savepoint1.rollback();
 

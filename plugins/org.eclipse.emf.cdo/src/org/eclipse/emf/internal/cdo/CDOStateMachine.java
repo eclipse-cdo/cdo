@@ -14,10 +14,14 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
@@ -25,6 +29,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
+import org.eclipse.emf.internal.cdo.transaction.CDOSavepointImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
@@ -35,6 +40,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -82,6 +88,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.TRANSIENT, CDOEvent.RELOAD, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.COMMIT, FAIL);
     init(CDOState.TRANSIENT, CDOEvent.ROLLBACK, FAIL);
+    init(CDOState.TRANSIENT, CDOEvent.REATTACH, new ReattachTransition());
 
     init(CDOState.PREPARED, CDOEvent.PREPARE, FAIL);
     init(CDOState.PREPARED, CDOEvent.ATTACH, new AttachTransition());
@@ -93,6 +100,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.PREPARED, CDOEvent.RELOAD, FAIL);
     init(CDOState.PREPARED, CDOEvent.COMMIT, FAIL);
     init(CDOState.PREPARED, CDOEvent.ROLLBACK, FAIL);
+    init(CDOState.PREPARED, CDOEvent.REATTACH, FAIL);
 
     init(CDOState.NEW, CDOEvent.PREPARE, FAIL);
     init(CDOState.NEW, CDOEvent.ATTACH, FAIL);
@@ -104,6 +112,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.NEW, CDOEvent.RELOAD, FAIL);
     init(CDOState.NEW, CDOEvent.COMMIT, new CommitTransition(false));
     init(CDOState.NEW, CDOEvent.ROLLBACK, FAIL);
+    init(CDOState.NEW, CDOEvent.REATTACH, FAIL);
 
     init(CDOState.CLEAN, CDOEvent.PREPARE, FAIL);
     init(CDOState.CLEAN, CDOEvent.ATTACH, FAIL);
@@ -115,6 +124,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.CLEAN, CDOEvent.RELOAD, new ReloadTransition());
     init(CDOState.CLEAN, CDOEvent.COMMIT, FAIL);
     init(CDOState.CLEAN, CDOEvent.ROLLBACK, FAIL);
+    init(CDOState.CLEAN, CDOEvent.REATTACH, FAIL);
 
     init(CDOState.DIRTY, CDOEvent.PREPARE, FAIL);
     init(CDOState.DIRTY, CDOEvent.ATTACH, FAIL);
@@ -126,6 +136,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.DIRTY, CDOEvent.RELOAD, new ReloadTransition());
     init(CDOState.DIRTY, CDOEvent.COMMIT, new CommitTransition(true));
     init(CDOState.DIRTY, CDOEvent.ROLLBACK, new RollbackTransition());
+    init(CDOState.DIRTY, CDOEvent.REATTACH, FAIL);
 
     init(CDOState.PROXY, CDOEvent.PREPARE, FAIL);
     init(CDOState.PROXY, CDOEvent.ATTACH, FAIL);
@@ -137,6 +148,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.PROXY, CDOEvent.RELOAD, new ReloadTransition());
     init(CDOState.PROXY, CDOEvent.COMMIT, FAIL);
     init(CDOState.PROXY, CDOEvent.ROLLBACK, FAIL);
+    init(CDOState.PROXY, CDOEvent.REATTACH, FAIL); // Bug 283985 (Re-attachment) - Not sure about this one
 
     init(CDOState.CONFLICT, CDOEvent.PREPARE, FAIL);
     init(CDOState.CONFLICT, CDOEvent.ATTACH, IGNORE);
@@ -148,6 +160,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.CONFLICT, CDOEvent.RELOAD, FAIL);
     init(CDOState.CONFLICT, CDOEvent.COMMIT, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.ROLLBACK, new RollbackTransition());
+    init(CDOState.CONFLICT, CDOEvent.REATTACH, FAIL); // Bug 283985 (Re-attachment) Not sure about this one
 
     init(CDOState.INVALID, CDOEvent.PREPARE, InvalidTransition.INSTANCE);
     init(CDOState.INVALID, CDOEvent.ATTACH, InvalidTransition.INSTANCE);
@@ -159,6 +172,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.INVALID, CDOEvent.RELOAD, InvalidTransition.INSTANCE);
     init(CDOState.INVALID, CDOEvent.COMMIT, InvalidTransition.INSTANCE);
     init(CDOState.INVALID, CDOEvent.ROLLBACK, InvalidTransition.INSTANCE);
+    init(CDOState.INVALID, CDOEvent.REATTACH, FAIL); // Bug 283985 (Re-attachment) Not sure about this one
 
     init(CDOState.INVALID_CONFLICT, CDOEvent.PREPARE, InvalidTransition.INSTANCE);
     init(CDOState.INVALID_CONFLICT, CDOEvent.ATTACH, InvalidTransition.INSTANCE);
@@ -170,12 +184,13 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.INVALID_CONFLICT, CDOEvent.RELOAD, InvalidTransition.INSTANCE);
     init(CDOState.INVALID_CONFLICT, CDOEvent.COMMIT, InvalidTransition.INSTANCE);
     init(CDOState.INVALID_CONFLICT, CDOEvent.ROLLBACK, DetachRemoteTransition.INSTANCE);
+    init(CDOState.INVALID_CONFLICT, CDOEvent.REATTACH, FAIL); // Bug 283985 (Re-attachment) Not sure about this one
   }
 
   /**
    * The object is already attached in EMF world. It contains all the information needed to know where it will be
    * connected.
-   *
+   * 
    * @since 2.0
    */
   public void attach(InternalCDOObject object, InternalCDOTransaction transaction)
@@ -186,16 +201,29 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       List<InternalCDOObject> contents = new ArrayList<InternalCDOObject>();
       prepare(object, new Pair<InternalCDOTransaction, List<InternalCDOObject>>(transaction, contents));
-      attachObject(object);
 
+      attachOrReattach(object, transaction);
       for (InternalCDOObject content : contents)
       {
-        attachObject(content);
+        attachOrReattach(content, transaction);
       }
     }
     finally
     {
       unlockView(lock);
+    }
+  }
+
+  private void attachOrReattach(InternalCDOObject object, InternalCDOTransaction transaction)
+  {
+    // Bug 283985 (Re-attachment): Special case: re-attachment
+    if (((CDOTransactionImpl)transaction).getFormerRevisions().containsKey(object))
+    {
+      reattachObject(object, transaction);
+    }
+    else
+    {
+      attachObject(object);
     }
   }
 
@@ -224,6 +252,16 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
 
     process(object, CDOEvent.ATTACH, null);
+  }
+
+  private void reattachObject(InternalCDOObject object, InternalCDOTransaction transaction)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("REATTACH: {0}", object);
+    }
+
+    process(object, CDOEvent.REATTACH, transaction);
   }
 
   /**
@@ -584,7 +622,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * <li>Registration with the {@link CDOTransaction}
    * <li>Changing state to {@link CDOState#PREPARED PREPARED}
    * </ol>
-   *
+   * 
    * @see AttachTransition
    * @author Eike Stepper
    */
@@ -597,31 +635,79 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       InternalCDOTransaction transaction = transactionAndContents.getElement1();
       List<InternalCDOObject> contents = transactionAndContents.getElement2();
 
-      // Prepare object
-      CDOID id = transaction.getNextTemporaryID();
-      object.cdoInternalSetID(id);
-      object.cdoInternalSetView(transaction);
-      changeState(object, CDOState.PREPARED);
+      Map<InternalCDOObject, InternalCDORevision> formerRevisionMap = ((CDOTransactionImpl)transaction)
+          .getFormerRevisions();
+      boolean reattaching = formerRevisionMap.containsKey(object);
 
-      // Create new revision
-      EClass eClass = object.eClass();
-      CDORevisionFactory factory = transaction.getSession().options().getRevisionFactory();
-      InternalCDORevision revision = (InternalCDORevision)factory.createRevision(eClass, id);
-      revision.setVersion(-1);
+      if (!reattaching)
+      {
+        // Prepare object
+        CDOID id = transaction.getNextTemporaryID();
+        object.cdoInternalSetID(id);
+        object.cdoInternalSetView(transaction);
+        changeState(object, CDOState.PREPARED);
 
-      object.cdoInternalSetRevision(revision);
+        // Create new revision
+        EClass eClass = object.eClass();
+        CDORevisionFactory factory = transaction.getSession().options().getRevisionFactory();
+        InternalCDORevision revision = (InternalCDORevision)factory.createRevision(eClass, id);
+        revision.setVersion(-1);
 
-      // Register object
-      transaction.registerObject(object);
-      transaction.registerNew(object);
+        object.cdoInternalSetRevision(revision);
+
+        // Register object
+        transaction.registerObject(object);
+        transaction.registerNew(object);
+      }
 
       // Prepare content tree
-      for (Iterator<InternalCDOObject> it = FSMUtil.getProperContents(object); it.hasNext();)
+      for (Iterator<InternalCDOObject> it = getProperContents(object, transaction); it.hasNext();)
       {
         InternalCDOObject content = it.next();
         contents.add(content);
         INSTANCE.process(content, CDOEvent.PREPARE, transactionAndContents);
       }
+    }
+
+    private Iterator<InternalCDOObject> getProperContents(final InternalCDOObject object, final CDOView cdoView)
+    {
+      final boolean isResource = object instanceof Resource;
+      final Iterator<EObject> delegate = object.eContents().iterator();
+
+      return new Iterator<InternalCDOObject>()
+      {
+        private Object next;
+
+        public boolean hasNext()
+        {
+          while (delegate.hasNext())
+          {
+            InternalEObject eObject = (InternalEObject)delegate.next();
+            EStructuralFeature eContainingFeature = eObject.eContainingFeature();
+            if (isResource || eObject.eDirectResource() == null
+                && (eContainingFeature == null || EMFUtil.isPersistent(eContainingFeature)))
+            {
+              next = FSMUtil.adapt(eObject, cdoView);
+              if (next instanceof InternalCDOObject)
+              {
+                return true;
+              }
+            }
+          }
+
+          return false;
+        }
+
+        public InternalCDOObject next()
+        {
+          return (InternalCDOObject)next;
+        }
+
+        public void remove()
+        {
+          throw new UnsupportedOperationException();
+        }
+      };
     }
   }
 
@@ -639,7 +725,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * </ol>
    * <li>Changing state to {@link CDOState#NEW NEW}
    * </ol>
-   *
+   * 
    * @see PrepareTransition
    * @author Eike Stepper
    */
@@ -649,6 +735,65 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       object.cdoInternalPostAttach();
       changeState(object, CDOState.NEW);
+    }
+  }
+
+  /**
+   * Bug 283985 (Re-attachment)
+   * 
+   * @author Caspar De Groot
+   */
+  private final class ReattachTransition implements
+      ITransition<CDOState, CDOEvent, InternalCDOObject, InternalCDOTransaction>
+  {
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, InternalCDOTransaction transaction)
+    {
+      InternalCDORevision formerRevision = ((CDOTransactionImpl)transaction).getFormerRevisions().get(object);
+      CDOID id = formerRevision.getID();
+
+      object.cdoInternalSetID(id);
+      object.cdoInternalSetView(transaction);
+
+      // Construct a new revision if the old one is not transactional
+      InternalCDORevision revision;
+      EClass eClass = object.eClass();
+      if (!formerRevision.isTransactional())
+      {
+        CDORevisionFactory factory = transaction.getSession().options().getRevisionFactory();
+        revision = (InternalCDORevision)factory.createRevision(eClass, id);
+        revision.setVersion(formerRevision.getVersion());
+        revision.setTransactional();
+      }
+      else
+      {
+        // This branch only gets taken if the object that is being re-attached,
+        // was already DIRTY when it was first detached.
+        //
+        revision = formerRevision;
+        for (int i = 0; i < eClass.getFeatureCount(); i++)
+        {
+          EStructuralFeature eFeature = object.cdoInternalDynamicFeature(i);
+          if (!eFeature.isTransient())
+          {
+            revision.clear(eFeature);
+          }
+        }
+      }
+
+      // Populate the revision based on the values in the CDOObject
+      object.cdoInternalSetRevision(revision);
+      object.cdoInternalPostAttach();
+
+      // Compute a revision delta and register it with the tx
+      CDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
+      CDORevision originalRevision = revisionManager.getRevisionByVersion(id, -1, revision.getVersion() - 1);
+      CDORevisionDelta revisionDelta = CDORevisionDeltaUtil.create(originalRevision, revision);
+      transaction.registerRevisionDelta(revisionDelta);
+      transaction.registerDirty(object, null);
+      changeState(object, CDOState.DIRTY);
+
+      // Add the object to the set of reattached objects
+      ((CDOSavepointImpl)transaction.getLastSavepoint()).getReattachedObjects().put(id, object);
     }
   }
 
@@ -928,5 +1073,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
  */
 enum CDOEvent
 {
-  PREPARE, ATTACH, DETACH, READ, WRITE, INVALIDATE, DETACH_REMOTE, RELOAD, COMMIT, ROLLBACK
+  PREPARE, ATTACH, DETACH, READ, WRITE, INVALIDATE, DETACH_REMOTE, RELOAD, COMMIT, ROLLBACK,
+
+  // Bug 283985 (Re-attachment)
+  REATTACH
 }

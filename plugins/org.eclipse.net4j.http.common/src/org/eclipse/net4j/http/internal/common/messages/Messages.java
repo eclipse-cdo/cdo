@@ -7,7 +7,7 @@
  * 
  * Contributors:
  *    Victor Roldan Betancort - initial API and implementation 
- *    Eike Stepper            - maintenance  
+ *    Eike Stepper - maintenance  
  */
 package org.eclipse.net4j.http.internal.common.messages;
 

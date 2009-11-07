@@ -600,6 +600,7 @@ public class FormatChecker
     ignore("org.eclipse.emf.cdo.tests.model1.impl.OrderDetailImpl", 1);
     ignore("org.eclipse.emf.cdo.tests.model1.impl.OrderImpl", 1);
     ignore("org.eclipse.emf.cdo.tests.model1.impl.Product1Impl", 1);
+    ignore("org.eclipse.emf.cdo.tests.model1.impl.ProductToOrderImpl", 2);
     ignore("org.eclipse.emf.cdo.tests.model1.impl.PurchaseOrderImpl", 1);
     ignore("org.eclipse.emf.cdo.tests.model1.impl.SalesOrderImpl", 1);
     ignore("org.eclipse.emf.cdo.tests.model1.impl.SupplierImpl", 1);

@@ -20,9 +20,8 @@ import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 
-import org.eclipse.emf.internal.cdo.transaction.CDOSavepointImpl;
+import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 
 /**
  * @author Caspar De Groot
@@ -94,17 +93,17 @@ public class Bugzilla_283985_SavePointTest extends AbstractCDOTest
 
   public void test2()
   {
-    CDOUserSavepoint sp = transaction.setSavepoint();
+    InternalCDOSavepoint sp = (InternalCDOSavepoint)transaction.setSavepoint();
     order1.getOrderDetails().remove(detail1);
     assertTransient(detail1);
 
-    assertTrue(((CDOSavepointImpl)sp).getDetachedObjects().containsValue(detail1));
+    assertTrue(sp.getDetachedObjects().containsValue(detail1));
 
-    sp = transaction.setSavepoint();
-    assertTrue(((CDOSavepointImpl)sp.getPreviousSavepoint()).getDetachedObjects().containsValue(detail1));
+    sp = (InternalCDOSavepoint)transaction.setSavepoint();
+    assertTrue(sp.getPreviousSavepoint().getDetachedObjects().containsValue(detail1));
 
     order1.getOrderDetails().add(detail1);
-    assertTrue(((CDOSavepointImpl)sp).getReattachedObjects().containsValue(detail1));
+    assertTrue(sp.getReattachedObjects().containsValue(detail1));
     assertDirty(detail1, transaction);
 
     sp.rollback();

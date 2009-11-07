@@ -37,6 +37,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
+import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent;
@@ -107,7 +108,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   };
 
-  private InternalCDOSavepoint lastSavepoint = new CDOSavepointImpl(this, null);
+  private InternalCDOSavepoint lastSavepoint = createSavepoint(null);
 
   private InternalCDOSavepoint firstSavepoint = lastSavepoint;
 
@@ -799,7 +800,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return idsOfNewObjectWithDeltas;
   }
 
-  private void loadSavepoint(CDOUserSavepoint savepoint, Set<CDOID> idsOfNewObjectWithDeltas)
+  private void loadSavepoint(CDOSavepoint savepoint, Set<CDOID> idsOfNewObjectWithDeltas)
   {
     lastSavepoint.recalculateSharedDetachedObjects();
 
@@ -885,7 +886,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    dirty = ((CDOSavepointImpl)savepoint).isDirty();
+    dirty = savepoint.isDirty();
   }
 
   /**
@@ -1051,12 +1052,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public InternalCDOSavepoint handleSetSavepoint()
   {
-    // Take a copy of all new objects for the current save point
     addToBase(lastSavepoint.getNewObjects());
     addToBase(lastSavepoint.getNewResources());
 
-    lastSavepoint = new CDOSavepointImpl(this, lastSavepoint);
+    lastSavepoint = createSavepoint(lastSavepoint);
     return lastSavepoint;
+  }
+
+  protected CDOSavepointImpl createSavepoint(InternalCDOSavepoint lastSavepoint)
+  {
+    return new CDOSavepointImpl(this, lastSavepoint);
   }
 
   /**
@@ -1375,7 +1380,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @author Simon McDuff
    */
-  private class CDOCommitContextImpl implements InternalCDOCommitContext
+  private final class CDOCommitContextImpl implements InternalCDOCommitContext
   {
     private Map<CDOID, CDOResource> newResources;
 

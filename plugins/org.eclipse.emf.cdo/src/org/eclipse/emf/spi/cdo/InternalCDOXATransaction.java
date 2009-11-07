@@ -10,13 +10,18 @@
  **************************************************************************/
 package org.eclipse.emf.spi.cdo;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
 
+import org.eclipse.net4j.util.transaction.TransactionException;
+
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
+
+import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -42,6 +47,21 @@ public interface InternalCDOXATransaction extends CDOXATransaction, InternalCDOU
    */
   public void rollback(InternalCDOXASavepoint savepoint);
 
+  /**
+   * @since 3.0
+   */
+  public void add(InternalCDOTransaction transaction, CDOID object);
+
+  /**
+   * @since 3.0
+   */
+  public void add(InternalCDOTransaction transaction);
+
+  /**
+   * @since 3.0
+   */
+  public void remove(InternalCDOTransaction transaction);
+
   public InternalCDOXACommitContext getCommitContext(CDOTransaction transaction);
 
   /**
@@ -55,5 +75,52 @@ public interface InternalCDOXATransaction extends CDOXATransaction, InternalCDOU
     public Map<CDOIDTempObjectExternalImpl, InternalCDOTransaction> getRequestedIDs();
 
     public CommitTransactionResult getResult();
+
+    /**
+     * @since 3.0
+     */
+    public void setResult(CommitTransactionResult result);
+
+    /**
+     * @since 3.0
+     */
+    public CDOXAState getState();
+
+    /**
+     * @since 3.0
+     */
+    public void setState(CDOXAState state);
+
+    /**
+     * @since 3.0
+     */
+    public void setProgressMonitor(IProgressMonitor progressMonitor);
+
+    /**
+     * @author Simon McDuff
+     * @since 3.0
+     */
+    public static abstract class CDOXAState
+    {
+      public static final CDOXAState DONE = new CDOXAState()
+      {
+        @Override
+        public void handle(InternalCDOXACommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
+        {
+          progressMonitor.done();
+        }
+      };
+
+      public void check_result(CommitTransactionResult result)
+      {
+        if (result != null && result.getRollbackMessage() != null)
+        {
+          throw new TransactionException(result.getRollbackMessage());
+        }
+      }
+
+      public abstract void handle(InternalCDOXACommitContext xaContext, IProgressMonitor progressMonitor)
+          throws Exception;
+    }
   }
 }

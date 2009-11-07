@@ -20,13 +20,13 @@ import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
-import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl.CDOXAState;
 
 import org.eclipse.net4j.util.ImplementationError;
 
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOXATransaction;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
@@ -44,7 +44,7 @@ import java.util.Map;
  */
 public class CDOXACommitContextImpl implements InternalCDOXACommitContext
 {
-  private CDOXATransactionImpl transactionManager;
+  private InternalCDOXATransaction transactionManager;
 
   private IProgressMonitor progressMonitor;
 
@@ -58,13 +58,13 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
 
   private Map<InternalCDOObject, CDOIDTempObjectExternalImpl> objectToID = new HashMap<InternalCDOObject, CDOIDTempObjectExternalImpl>();
 
-  public CDOXACommitContextImpl(CDOXATransactionImpl manager, InternalCDOCommitContext commitContext)
+  public CDOXACommitContextImpl(InternalCDOXATransaction manager, InternalCDOCommitContext commitContext)
   {
     transactionManager = manager;
     delegateCommitContext = commitContext;
   }
 
-  public CDOXATransactionImpl getTransactionManager()
+  public InternalCDOXATransaction getTransactionManager()
   {
     return transactionManager;
   }
@@ -143,7 +143,6 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
   public CDOID provideCDOID(Object idOrObject)
   {
     CDOID id = getTransaction().provideCDOID(idOrObject);
-
     if (id instanceof CDOIDTempObjectExternalImpl)
     {
       if (idOrObject instanceof InternalEObject)

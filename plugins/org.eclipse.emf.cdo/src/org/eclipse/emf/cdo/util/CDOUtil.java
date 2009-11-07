@@ -31,6 +31,7 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.session.CDOCollectionLoadingPolicyImpl;
 import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl;
+import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl.CDOXAInternalAdapter;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.view.CDORevisionPrefetchingPolicyImpl;
 
@@ -148,7 +149,7 @@ public final class CDOUtil
    */
   public static CDOXATransaction createXATransaction(CDOViewSet viewSet)
   {
-    CDOXATransaction xaTransaction = new CDOXATransactionImpl();
+    CDOXATransaction xaTransaction = createXATransaction();
     if (viewSet != null)
     {
       xaTransaction.add(viewSet);
@@ -162,7 +163,7 @@ public final class CDOUtil
    */
   public static CDOXATransaction createXATransaction()
   {
-    return createXATransaction(null);
+    return new CDOXATransactionImpl();
   }
 
   /**
@@ -173,9 +174,9 @@ public final class CDOUtil
     EList<Adapter> adapters = viewSet.eAdapters();
     for (Adapter adapter : adapters)
     {
-      if (adapter instanceof CDOXATransactionImpl.CDOXAInternalAdapter)
+      if (adapter instanceof CDOXAInternalAdapter)
       {
-        return ((CDOXATransactionImpl.CDOXAInternalAdapter)adapter).getCDOXA();
+        return ((CDOXAInternalAdapter)adapter).getXATransaction();
       }
     }
 

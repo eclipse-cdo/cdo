@@ -38,6 +38,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOXASavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
+import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext.CDOXAState;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -94,17 +95,17 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
   private ExecutorService executorService = createExecutorService();
 
-  private Map<InternalCDOTransaction, CDOXACommitContextImpl> activeContext = new HashMap<InternalCDOTransaction, CDOXACommitContextImpl>();
+  private Map<InternalCDOTransaction, InternalCDOXACommitContext> activeContext = new HashMap<InternalCDOTransaction, InternalCDOXACommitContext>();
 
   private Map<InternalCDOTransaction, Set<CDOID>> requestedCDOID = new HashMap<InternalCDOTransaction, Set<CDOID>>();
 
-  private InternalCDOXASavepoint lastSavepoint = new CDOXASavepointImpl(this, null);
+  private InternalCDOXASavepoint lastSavepoint = createSavepoint(null);
 
   private InternalCDOXASavepoint firstSavepoint = lastSavepoint;
 
-  private CDOTransactionStrategy transactionStrategy = new CDOXATransactionStrategyImpl();
+  private CDOTransactionStrategy transactionStrategy = createTransactionStrategy();
 
-  private CDOXAInternalAdapter internalAdapter = new CDOXAInternalAdapter();
+  private CDOXAInternalAdapter internalAdapter = createInternalAdapter();
 
   public CDOXATransactionImpl()
   {
@@ -162,15 +163,15 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     viewSet.eAdapters().remove(internalAdapter);
   };
 
-  public void add(InternalCDOTransaction view, CDOID object)
+  public void add(InternalCDOTransaction transaction, CDOID object)
   {
     synchronized (requestedCDOID)
     {
-      Set<CDOID> ids = requestedCDOID.get(view);
+      Set<CDOID> ids = requestedCDOID.get(transaction);
       if (ids == null)
       {
         ids = new HashSet<CDOID>();
-        requestedCDOID.put(view, ids);
+        requestedCDOID.put(transaction, ids);
       }
 
       ids.add(object);
@@ -183,12 +184,12 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     return ids.toArray(new CDOID[ids.size()]);
   }
 
-  public CDOXACommitContextImpl getCommitContext(CDOTransaction transaction)
+  public InternalCDOXACommitContext getCommitContext(CDOTransaction transaction)
   {
     return activeContext.get(transaction);
   }
 
-  private void send(Collection<CDOXACommitContextImpl> xaContexts, final IProgressMonitor progressMonitor)
+  private void send(Collection<InternalCDOXACommitContext> xaContexts, final IProgressMonitor progressMonitor)
       throws InterruptedException, ExecutionException
   {
     progressMonitor.beginTask("", xaContexts.size()); //$NON-NLS-1$
@@ -196,7 +197,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     try
     {
       List<Future<Object>> futures = new ArrayList<Future<Object>>();
-      for (CDOXACommitContextImpl xaContext : xaContexts)
+      for (InternalCDOXACommitContext xaContext : xaContexts)
       {
         xaContext.setProgressMonitor(new SynchonizedSubProgressMonitor(progressMonitor, 1));
         futures.add(executorService.submit(xaContext));
@@ -222,7 +223,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     finally
     {
       progressMonitor.done();
-      for (CDOXACommitContextImpl xaContext : xaContexts)
+      for (InternalCDOXACommitContext xaContext : xaContexts)
       {
         xaContext.setProgressMonitor(null);
       }
@@ -263,7 +264,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     for (InternalCDOTransaction transaction : transactions)
     {
       InternalCDOCommitContext context = transaction.createCommitContext();
-      CDOXACommitContextImpl xaContext = new CDOXACommitContextImpl(this, context);
+      InternalCDOXACommitContext xaContext = createXACommitContext(context);
       xaContext.setState(CDOXAPhase1State.INSTANCE);
       activeContext.put(transaction, xaContext);
     }
@@ -282,9 +283,9 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       if (phase < 2)
       {
         // Phase 0 and 1 are the only two phases we can cancel.
-        for (CDOXACommitContextImpl transaction : activeContext.values())
+        for (InternalCDOXACommitContext xaContext : activeContext.values())
         {
-          transaction.setState(CDOXACancel.INSTANCE);
+          xaContext.setState(CDOXACancel.INSTANCE);
         }
 
         try
@@ -352,8 +353,33 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     }
 
     getLastSavepoint().setSavepoints(savepoints);
-    lastSavepoint = new CDOXASavepointImpl(this, getLastSavepoint());
+    lastSavepoint = createSavepoint(getLastSavepoint());
     return lastSavepoint;
+  }
+
+  protected CDOXACommitContextImpl createXACommitContext(InternalCDOCommitContext context)
+  {
+    return new CDOXACommitContextImpl(this, context);
+  }
+
+  protected CDOXATransactionStrategyImpl createTransactionStrategy()
+  {
+    return new CDOXATransactionStrategyImpl(this);
+  }
+
+  protected CDOXAInternalAdapter createInternalAdapter()
+  {
+    return new CDOXAInternalAdapter(this);
+  }
+
+  protected CDOXASavepointImpl createSavepoint(InternalCDOXASavepoint lastSavepoint)
+  {
+    return new CDOXASavepointImpl(this, lastSavepoint);
+  }
+
+  protected ExecutorService createExecutorService()
+  {
+    return Executors.newFixedThreadPool(10);
   }
 
   private List<CDOSavepoint> getListSavepoints()
@@ -370,9 +396,58 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     }
   }
 
-  protected ExecutorService createExecutorService()
+  /**
+   * @author Simon McDuff
+   */
+  public static class CDOXAInternalAdapter implements Adapter
   {
-    return Executors.newFixedThreadPool(10);
+    private InternalCDOXATransaction xaTransaction;
+
+    public CDOXAInternalAdapter(InternalCDOXATransaction xaTransaction)
+    {
+      this.xaTransaction = xaTransaction;
+    }
+
+    public InternalCDOXATransaction getXATransaction()
+    {
+      return xaTransaction;
+    }
+
+    public Notifier getTarget()
+    {
+      return null;
+    }
+
+    public boolean isAdapterForType(Object type)
+    {
+      return false;
+    }
+
+    public void notifyChanged(Notification notification)
+    {
+      switch (notification.getEventType())
+      {
+      case Notification.ADD:
+        if (notification.getNewValue() instanceof InternalCDOTransaction)
+        {
+          getXATransaction().add((InternalCDOTransaction)notification.getNewValue());
+        }
+
+        break;
+
+      case Notification.REMOVE:
+        if (notification.getOldValue() instanceof InternalCDOTransaction)
+        {
+          getXATransaction().remove((InternalCDOTransaction)notification.getNewValue());
+        }
+
+        break;
+      }
+    }
+
+    public void setTarget(Notifier newTarget)
+    {
+    }
   }
 
   /**
@@ -380,8 +455,11 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
    */
   private final class CDOXATransactionStrategyImpl implements CDOTransactionStrategy
   {
-    public CDOXATransactionStrategyImpl()
+    private InternalCDOXATransaction xaTransaction;
+
+    public CDOXATransactionStrategyImpl(InternalCDOXATransaction xaTransaction)
     {
+      this.xaTransaction = xaTransaction;
     }
 
     public void setTarget(InternalCDOTransaction transaction)
@@ -411,46 +489,21 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     public void commit(InternalCDOTransaction transactionCommit, IProgressMonitor progressMonitor) throws Exception
     {
       checkAccess();
-      CDOXATransactionImpl.this.commit(progressMonitor);
+      xaTransaction.commit(progressMonitor);
     }
 
     public void rollback(InternalCDOTransaction transaction, InternalCDOUserSavepoint savepoint)
     {
       checkAccess();
-      CDOXATransactionImpl.this.rollback((InternalCDOXASavepoint)savepoint);
+      xaTransaction.rollback((InternalCDOXASavepoint)savepoint);
     }
 
     public InternalCDOUserSavepoint setSavepoint(InternalCDOTransaction transaction)
     {
       checkAccess();
-      return CDOXATransactionImpl.this.setSavepoint();
+      return xaTransaction.setSavepoint();
     }
   }
-
-  /**
-   * @author Simon McDuff
-   */
-  public static abstract class CDOXAState
-  {
-    public static final CDOXAState DONE = new CDOXAState()
-    {
-      @Override
-      protected void handle(CDOXACommitContextImpl xaContext, IProgressMonitor progressMonitor) throws Exception
-      {
-        progressMonitor.done();
-      }
-    };
-
-    protected void check_result(CommitTransactionResult result)
-    {
-      if (result != null && result.getRollbackMessage() != null)
-      {
-        throw new TransactionException(result.getRollbackMessage());
-      }
-    }
-
-    protected abstract void handle(CDOXACommitContextImpl xaContext, IProgressMonitor progressMonitor) throws Exception;
-  };
 
   /**
    * @author Simon McDuff
@@ -460,7 +513,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     public static final CDOXAPhase1State INSTANCE = new CDOXAPhase1State();
 
     @Override
-    protected void handle(CDOXACommitContextImpl xaContext, IProgressMonitor progressMonitor) throws Exception
+    public void handle(InternalCDOXACommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
     {
       xaContext.preCommit();
       CommitTransactionResult result = null;
@@ -489,7 +542,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     }
 
     @Override
-    protected void handle(CDOXACommitContextImpl xaContext, IProgressMonitor progressMonitor) throws Exception
+    public void handle(InternalCDOXACommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
     {
       if (xaContext.getTransaction().isDirty())
       {
@@ -515,7 +568,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     }
 
     @Override
-    protected void handle(CDOXACommitContextImpl xaContext, IProgressMonitor progressMonitor) throws Exception
+    public void handle(InternalCDOXACommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
     {
       if (xaContext.getTransaction().isDirty())
       {
@@ -542,63 +595,12 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     }
 
     @Override
-    protected void handle(CDOXACommitContextImpl xaContext, IProgressMonitor progressMonitor) throws Exception
+    public void handle(InternalCDOXACommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
     {
       CDOSessionProtocol sessionProtocol = xaContext.getTransaction().getSession().getSessionProtocol();
       OMMonitor monitor = new EclipseMonitor(progressMonitor);
       CommitTransactionResult result = sessionProtocol.commitTransactionCancel(xaContext, monitor);
       check_result(result);
-    }
-  };
-
-  /**
-   * @author Simon McDuff
-   */
-  public class CDOXAInternalAdapter implements Adapter
-  {
-    public CDOXAInternalAdapter()
-    {
-    }
-
-    public CDOXATransactionImpl getCDOXA()
-    {
-      return CDOXATransactionImpl.this;
-    }
-
-    public Notifier getTarget()
-    {
-      return null;
-    }
-
-    public boolean isAdapterForType(Object type)
-    {
-      return false;
-    }
-
-    public void notifyChanged(Notification notification)
-    {
-      switch (notification.getEventType())
-      {
-      case Notification.ADD:
-        if (notification.getNewValue() instanceof InternalCDOTransaction)
-        {
-          CDOXATransactionImpl.this.add((InternalCDOTransaction)notification.getNewValue());
-        }
-
-        break;
-
-      case Notification.REMOVE:
-        if (notification.getOldValue() instanceof InternalCDOTransaction)
-        {
-          CDOXATransactionImpl.this.remove((InternalCDOTransaction)notification.getNewValue());
-        }
-
-        break;
-      }
-    }
-
-    public void setTarget(Notifier newTarget)
-    {
     }
   }
 }

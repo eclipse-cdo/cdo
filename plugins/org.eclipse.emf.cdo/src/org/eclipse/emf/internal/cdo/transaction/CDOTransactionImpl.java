@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
@@ -83,6 +84,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
@@ -116,6 +118,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private AtomicInteger lastTemporaryID = new AtomicInteger();
 
   private CDOTransactionStrategy transactionStrategy;
+
+  // Bug 283985 (Re-attachment)
+  private WeakHashMap<InternalCDOObject, InternalCDORevision> formerRevisions = new WeakHashMap<InternalCDOObject, InternalCDORevision>();
 
   /**
    * @since 2.0
@@ -733,6 +738,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       removeObjects(itrSavepoint.getNewResources().values());
       removeObjects(itrSavepoint.getNewObjects().values());
 
+      // Bug 283985 (Re-attachment): Objects that were reattached must also be removed
+      Collection<CDOObject> reattachedObjects = itrSavepoint.getReattachedObjects().values();
+      removeObjects(reattachedObjects);
+
       Map<CDOID, CDORevisionDelta> revisionDeltas = itrSavepoint.getRevisionDeltas();
       if (!revisionDeltas.isEmpty())
       {
@@ -769,7 +778,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         if (!entryDirtyObject.getKey().isTemporary())
         {
           InternalCDOObject internalDirtyObject = (InternalCDOObject)entryDirtyObject.getValue();
-          CDOStateMachine.INSTANCE.rollback(internalDirtyObject);
+
+          // Bug 283985 (Re-attachment): Skip objects that were reattached, because
+          // they were already reset to TRANSIENT earlier in this method
+          if (!reattachedObjects.contains(internalDirtyObject))
+          {
+            CDOStateMachine.INSTANCE.rollback(internalDirtyObject);
+          }
         }
       }
 
@@ -907,6 +922,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     else
     {
       getLastSavepoint().getDetachedObjects().put(object.cdoID(), object);
+
+      if (!formerRevisions.containsKey(object))
+      {
+        formerRevisions.put(object, object.cdoRevision());
+      }
+
+      // Object may have been reattached previously, in which case it must
+      // here be removed from the collection of reattached objects
+      lastSavepoint.getReattachedObjects().remove(object.cdoID());
     }
 
     if (!dirty)
@@ -1303,6 +1327,34 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     checkActive();
     return lastSavepoint.getAllDetachedObjects();
+  }
+
+  public Map<InternalCDOObject, InternalCDORevision> getFormerRevisions()
+  {
+    return formerRevisions;
+  }
+
+  @Override
+  protected CDOID getID(InternalCDOObject object, boolean onlyPersistedID)
+  {
+    // Bug 283985 (Re-attachment): We consult the formerRevision map before delegating
+    // to the super implementation. Note that we *abuse* the onlyPersistedID
+    // argument to determine if we should disregard the formerRevision map. We need
+    // to disregard it when this gets called during commit, and it just so happens
+    // that only during commit it is being called with onlyPersistedID = false. So
+    // this code exploits a regularity in the calling code, rather than interpreting
+    // the onlyPersistedID argument in accordance with its intended meaning. Indeed
+    // this is a very fragile hack...
+    if (onlyPersistedID)
+    {
+      CDORevision formerRevision = formerRevisions.get(object);
+      if (formerRevision != null)
+      {
+        return formerRevision.getID();
+      }
+    }
+
+    return super.getID(object, onlyPersistedID);
   }
 
   /**

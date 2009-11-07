@@ -28,7 +28,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.transaction.CDOSavepointImpl;
-import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.collection.Pair;
@@ -213,7 +212,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   private void attachOrReattach(InternalCDOObject object, InternalCDOTransaction transaction)
   {
     // Bug 283985 (Re-attachment): Special case: re-attachment
-    if (((CDOTransactionImpl)transaction).getFormerRevisions().containsKey(object))
+    if (transaction.getFormerRevisions().containsKey(object))
     {
       reattachObject(object, transaction);
     }
@@ -631,42 +630,42 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       InternalCDOTransaction transaction = transactionAndContents.getElement1();
       List<InternalCDOObject> contents = transactionAndContents.getElement2();
 
-      Map<InternalCDOObject, InternalCDORevision> formerRevisionMap = ((CDOTransactionImpl)transaction)
-          .getFormerRevisions();
+      Map<InternalCDOObject, InternalCDORevision> formerRevisionMap = transaction.getFormerRevisions();
       boolean reattaching = formerRevisionMap.containsKey(object);
 
       if (!reattaching)
       {
-      // Prepare object
-      CDOID id = transaction.getNextTemporaryID();
-      object.cdoInternalSetID(id);
-      object.cdoInternalSetView(transaction);
-      changeState(object, CDOState.PREPARED);
+        // Prepare object
+        CDOID id = transaction.getNextTemporaryID();
+        object.cdoInternalSetID(id);
+        object.cdoInternalSetView(transaction);
+        changeState(object, CDOState.PREPARED);
 
-      // Create new revision
-      EClass eClass = object.eClass();
-      CDORevisionFactory factory = transaction.getSession().getRevisionManager().getFactory();
-      InternalCDORevision revision = (InternalCDORevision)factory.createRevision(eClass);
-      revision.setID(id);
-      revision.setVersion(-1);
+        // Create new revision
+        EClass eClass = object.eClass();
+        CDORevisionFactory factory = transaction.getSession().getRevisionManager().getFactory();
+        InternalCDORevision revision = (InternalCDORevision)factory.createRevision(eClass);
+        revision.setID(id);
+        revision.setVersion(-1);
 
-      object.cdoInternalSetRevision(revision);
+        object.cdoInternalSetRevision(revision);
 
-      // Register object
-      transaction.registerObject(object);
-      transaction.registerNew(object);
+        // Register object
+        transaction.registerObject(object);
+        transaction.registerNew(object);
       }
 
       // Prepare content tree
-      for (Iterator<InternalCDOObject> it = getProperContents(object,transaction); it.hasNext();)
+      for (Iterator<InternalCDOObject> it = getProperContents(object, transaction); it.hasNext();)
       {
         InternalCDOObject content = it.next();
         contents.add(content);
         INSTANCE.process(content, CDOEvent.PREPARE, transactionAndContents);
       }
     }
- 
-    private Iterator<InternalCDOObject> getProperContents(final InternalCDOObject object, final CDOTransaction transaction)
+
+    private Iterator<InternalCDOObject> getProperContents(final InternalCDOObject object,
+        final CDOTransaction transaction)
     {
       final boolean isResource = object instanceof Resource;
       final Iterator<EObject> delegate = object.eContents().iterator();
@@ -746,7 +745,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, InternalCDOTransaction transaction)
     {
       InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
-      InternalCDORevision formerRevision = ((CDOTransactionImpl)transaction).getFormerRevisions().get(object);
+      InternalCDORevision formerRevision = transaction.getFormerRevisions().get(object);
       CDOID id = formerRevision.getID();
 
       object.cdoInternalSetID(id);

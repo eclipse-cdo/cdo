@@ -66,6 +66,8 @@ public class CDOSavepointImpl extends AbstractSavepoint
     }
   };
 
+  private Map<CDOID, CDOObject> reattachedObjects = new HashMap<CDOID, CDOObject>();
+
   private ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = new ConcurrentHashMap<CDOID, CDORevisionDelta>();
 
   /**
@@ -80,7 +82,7 @@ public class CDOSavepointImpl extends AbstractSavepoint
   {
     super(transaction, lastSavepoint);
     isDirty = transaction.isDirty();
-    if (getPreviousSavepoint() == null)
+    if (lastSavepoint == null)
     {
       sharedDetachedObjects = new HashSet<CDOID>();
     }
@@ -295,22 +297,45 @@ public class CDOSavepointImpl extends AbstractSavepoint
   {
     if (getPreviousSavepoint() == null)
     {
-      return Collections.unmodifiableMap(getDetachedObjects());
+      Map<CDOID, CDOObject> detachedObjects = getDetachedObjects();
+
+      // Bug 283985 (Re-attachment):
+      // Object is only included if it was not reattached in a later savepoint
+      for (CDOID id : getReattachedObjects().keySet())
+      {
+        detachedObjects.remove(id);
+      }
+
+      return Collections.unmodifiableMap(detachedObjects);
     }
 
     Map<CDOID, CDOObject> detachedObjects = new HashMap<CDOID, CDOObject>();
+    Set<CDOID> reattachedObjectIDs = new HashSet<CDOID>(); // Bug 283985 (Re-attachment)
     for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
     {
+      reattachedObjectIDs.addAll(savepoint.getReattachedObjects().keySet());
+
       for (Entry<CDOID, CDOObject> entry : savepoint.getDetachedObjects().entrySet())
       {
         if (!entry.getKey().isTemporary())
         {
-          detachedObjects.put(entry.getKey(), entry.getValue());
+          // Bug 283985 (Re-attachment):
+          // Object is only included if it was not reattached in a later savepoint
+          if (!reattachedObjectIDs.contains(entry.getKey()))
+          {
+            detachedObjects.put(entry.getKey(), entry.getValue());
+          }
         }
       }
     }
 
     return detachedObjects;
+  }
+
+  // Bug 283985 (Re-attachment)
+  public Map<CDOID, CDOObject> getReattachedObjects()
+  {
+    return reattachedObjects;
   }
 
   public void recalculateSharedDetachedObjects()

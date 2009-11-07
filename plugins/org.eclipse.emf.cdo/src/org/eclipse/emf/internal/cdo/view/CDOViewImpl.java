@@ -1032,7 +1032,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   // throw new IllegalStateException("Dangling objects not possible outside of a transaction");
   // }
 
-  private CDOID getID(InternalCDOObject object, boolean onlyPersistedID)
+  protected CDOID getID(InternalCDOObject object, boolean onlyPersistedID)
   {
     if (onlyPersistedID)
     {

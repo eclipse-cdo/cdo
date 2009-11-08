@@ -91,9 +91,9 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
 
   public void cdoInternalSetID(CDOID id)
   {
-    if (id == null)
+    if (id == null || id.isNull())
     {
-      throw new IllegalArgumentException("id == null"); //$NON-NLS-1$
+      throw new IllegalArgumentException("id is null"); //$NON-NLS-1$
     }
 
     if (TRACER.isEnabled())

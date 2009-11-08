@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Martin Fluegge - bug 247226: Transparently support legacy models
  */
 package org.eclipse.emf.internal.cdo;
 
@@ -15,6 +16,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -28,9 +30,9 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.NotifyingListImpl;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -46,6 +48,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -58,6 +62,38 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   protected CDOState state;
 
   protected InternalCDORevision revision;
+
+  /**
+   * @since 3.0
+   * @description It could happen that while <i>revisionToInstance()</i> is executed externally the
+   *              <i>internalPostLoad()</i> method will be called. This happens for example if
+   *              <i>internalPostInvalidate()</i> is called. The leads to another <i>revisionToInstance()</i> call while
+   *              the first call has not finished. This is certainly not so cool. That's why <b>underConstruction</b>
+   *              will flag that <i>revisionToInstance()</i> is still running and avoid the second call.
+   */
+  private boolean underConstruction;
+
+  /**
+   * This local ThreadMap stores all pre-registered objects. This avoids a neverending loop when setting the container
+   * for the object.
+   */
+  private static ThreadLocal<Map<CDOID, EObject>> preRegisteredObjects = new InheritableThreadLocal<Map<CDOID, EObject>>()
+  {
+    @Override
+    protected Map<CDOID, EObject> initialValue()
+    {
+      return new HashMap<CDOID, EObject>();
+    }
+  };
+
+  private static ThreadLocal<Counter> recursionCounter = new InheritableThreadLocal<Counter>()
+  {
+    @Override
+    protected Counter initialValue()
+    {
+      return new Counter();
+    }
+  };
 
   public CDOLegacyWrapper(InternalEObject instance)
   {
@@ -86,7 +122,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Setting state {0} for {1}", state, this); //$NON-NLS-1$
+        TRACER.format("Setting state {0} for {1}", state, this);
       }
 
       CDOState oldState = this.state;
@@ -107,7 +143,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting revision: {0}", revision); //$NON-NLS-1$
+      TRACER.format(("Setting revision: " + revision + ""));
     }
 
     this.revision = (InternalCDORevision)revision;
@@ -118,7 +154,8 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     instanceToRevision();
 
     // TODO Avoid if no adapters in list (eBasicAdapters?)
-    // TODO LEGACY Clarify how to intercept adapter addition in the legacy instance
+    // TODO LEGACY Clarify how to intercept adapter addition in the legacy
+    // instance
     for (Adapter adapter : eAdapters())
     {
       view.subscribe(this, adapter);
@@ -127,22 +164,10 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   public void cdoInternalPostDetach(boolean remote)
   {
-    // Do nothing
   }
 
   public void cdoInternalPreCommit()
   {
-    // instanceToRevision();
-    // if (cdoState() == CDOState.DIRTY) // NEW is handled in PrepareTransition
-    // {
-    // CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)cdoView().getSession().getRevisionManager();
-    // InternalCDORevision originRevision = revisionManager.getRevisionByVersion(revision.getID(),
-    // CDORevision.UNCHUNKED, revision.getVersion() - 1, false);
-    // CDORevisionDelta delta = revision.compare(originRevision);
-    //
-    // // TODO LEGACY Consider to gather the deltas on the fly with noremal EMF change notifications
-    // cdoView().toTransaction().registerRevisionDelta(delta);
-    // }
   }
 
   public void cdoInternalPreLoad()
@@ -151,12 +176,17 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   public void cdoInternalPostLoad()
   {
-    // TODO Consider not remembering the revisin after copying it to the instance (spare 1/2 of the space)
+    // TODO Consider not remembering the revisin after copying it to the
+    // instance (spare 1/2 of the space)
     revisionToInstance();
   }
 
   public void cdoInternalPostInvalidate()
   {
+    InternalCDORevision revision = cdoView().getRevision(cdoID(), true);
+    cdoInternalSetRevision(revision);
+    revisionToInstance();
+    cdoInternalSetState(CDOState.CLEAN);
   }
 
   public void cdoInternalCleanup()
@@ -183,14 +213,14 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   @Override
   public String toString()
   {
-    return "CDOLegacyWrapper[" + id + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+    return "CDOLegacyWrapper[" + id + "]";
   }
 
   protected void instanceToRevision()
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Transfering instance to revision: {0} --> {1}", instance, revision); //$NON-NLS-1$
+      TRACER.format("Transfering instance to revision: {0} --> {1}", instance, revision);
     }
 
     // Handle containment
@@ -230,14 +260,19 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     CDOObjectImpl.instanceToRevisionFeature(view, this, feature, instanceValue);
   }
 
-  /**
-   * TODO Simon: Fix this whole mess ;-)
-   */
   protected void revisionToInstance()
   {
+    if (underConstruction)
+    {
+      // return if revisionToInstance was called before to avoid doubled calls
+      return;
+    }
+
+    underConstruction = true;
+
     if (TRACER.isEnabled())
     {
-      TRACER.format("Transfering revision to instance: {0} --> {1}", revision, instance); //$NON-NLS-1$
+      TRACER.format("Transfering revision to instance: {0} --> {1}", revision, instance);
     }
 
     boolean deliver = instance.eDeliver();
@@ -246,18 +281,23 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       instance.eSetDeliver(false);
     }
 
+    Counter counter = recursionCounter.get();
     try
     {
-      // Handle containment
+      preRegisterObject(this);
+      counter.increment();
+
       revisionToInstanceContainment();
 
-      // Handle values
-      CDOPackageRegistry packageRegistry = cdoView().getSession().getPackageRegistry();
-      EClass eClass = revision.getEClass();
-      for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(eClass))
+      for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(revision.getEClass()))
       {
-        revisionToInstanceFeature(feature, packageRegistry);
+        revisionToInstanceFeature(feature);
       }
+    }
+    catch (RuntimeException ex)
+    {
+      OM.LOG.error(ex);
+      throw ex;
     }
     finally
     {
@@ -265,7 +305,26 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       {
         instance.eSetDeliver(true);
       }
+
+      int newThreadCount = counter.decrement();
+
+      if (newThreadCount == 0 && getPreRegisteredObjects() != null)
+      {
+        // localThread.remove(); // TODO Martin: check why new
+        // objects will be created if this list is cleared
+      }
+
+      underConstruction = false;
     }
+  }
+
+  /**
+   * adds an object to the pre-registered objects list which hold all created objects even if they are not registered in
+   * the view
+   */
+  private void preRegisterObject(CDOLegacyWrapper wrapper)
+  {
+    getPreRegisteredObjects().put(wrapper.cdoID(), wrapper);
   }
 
   protected void revisionToInstanceContainment()
@@ -279,11 +338,141 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     setInstanceContainer(container, revision.getContainingFeatureID());
   }
 
-  protected void revisionToInstanceFeature(EStructuralFeature feature, CDOPackageRegistry packageRegistry)
+  private Map<CDOID, EObject> getPreRegisteredObjects()
   {
-    // Attempt 4
-    Object value = revision.getValue(feature);
-    view.getStore().set(instance, feature, Notification.NO_INDEX, value);
+    return preRegisteredObjects.get();
+  }
+
+  /**
+   * @since 3.0
+   */
+
+  protected void revisionToInstanceFeature(EStructuralFeature feature)
+  {
+    if (feature.isMany())
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("State of Object is : " + state);
+      }
+
+      // if (state != CDOState.CONFLICT) // do not do anything with the
+      if (state == CDOState.CLEAN || state == CDOState.PROXY) // do not do anything with the
+      // list if state is conflict
+      {
+        // int size = view.getStore().size(instance, feature);
+        int size = revision.size(feature);
+
+        @SuppressWarnings("unchecked")
+        InternalEList<Object> list = (InternalEList<Object>)instance.eGet(feature);
+
+        clearList(feature, list);
+        for (int i = 0; i < size; i++)
+        {
+          Object object = getValueFromRevision(feature, i);
+
+          if (TRACER.isEnabled())
+          {
+            TRACER.format(("Adding " + object + " to feature " + feature + "in instance " + instance));
+          }
+
+          // instance.eInverseAdd((InternalEObject)object, instance.eClass().getFeatureID(feature), object.getClass(),
+          // null);
+          list.basicAdd(object, null);
+        }
+      }
+    }
+    else
+    { // ! isMany()
+      Object object = getValueFromRevision(feature, 0);
+      if (feature instanceof EAttribute)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format(("Setting attribute value " + object + " to feature " + feature + " in instance " + instance));
+        }
+
+        eSet(feature, object);
+      }
+      else
+      { // EReferences
+        if (TRACER.isEnabled())
+        {
+          TRACER.format(("Adding object " + object + " to feature " + feature + " in instance " + instance));
+        }
+
+        int featureID = instance.eClass().getFeatureID(feature);
+        Class<? extends Object> baseClass = object == null ? null : object.getClass();
+        instance.eInverseAdd((InternalEObject)object, featureID, baseClass, null);
+
+        if (TRACER.isEnabled())
+        {
+          TRACER.format(("Added object " + object + " to feature " + feature + " in instance " + instance));
+        }
+      }
+    }
+  }
+
+  private void clearList(EStructuralFeature feature, InternalEList<Object> list)
+  {
+    // attempt 2
+    int featureID = feature.getFeatureID();
+    for (int i = list.size() - 1; i >= 0; --i)
+    {
+      InternalEObject obj = (InternalEObject)list.get(i);
+      // TODO clarify obj.getClass()/baseclass
+      instance.eInverseRemove(obj, featureID, obj.getClass(), null);
+    }
+  }
+
+  /**
+   * This method retrieves the value from the feature at the given index. It retrieves the value either from the views's
+   * store or the internal pre-registration Map.
+   * 
+   * @param feature
+   *          the feature to retireive the value from
+   * @param index
+   *          the given index of the object in the feature
+   * @return the value from the feature at the given index
+   */
+  private Object getValueFromRevision(EStructuralFeature feature, int index)
+  {
+    Object object = revision.get(feature, index);
+
+    if (object == null)
+    {
+      return null;
+    }
+
+    CDOType type = CDOModelUtil.getType(feature.getEType());
+    object = type.convertToEMF(feature.getEType(), object);
+
+    if (type == CDOType.OBJECT)
+    {
+      CDOID id = (CDOID)object;
+      if (id.isNull())
+      {
+        return null;
+      }
+
+      object = getPreRegisteredObjects().get(id);
+
+      if (object != null)
+      {
+        System.out.println(((CDOLegacyWrapper)object).cdoInternalInstance());
+        return ((CDOLegacyWrapper)object).cdoInternalInstance();
+      }
+
+      // return view.getStore().get(instance, feature, index);
+      object = view.getObject(id);
+
+      if (object instanceof CDOObjectWrapper)
+      {
+        return ((CDOObjectWrapper)object).cdoInternalInstance();
+      }
+    }
+
+    return object;
   }
 
   protected Resource.Internal getInstanceResource(InternalEObject instance)
@@ -315,6 +504,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   protected void setInstanceContainer(InternalEObject container, int containerFeatureID)
   {
+    // TODO change to direct call of eBasicSetContainer
     Method method = ReflectUtil.getMethod(instance.getClass(), "eBasicSetContainer", InternalEObject.class, int.class); //$NON-NLS-1$
     ReflectUtil.invokeMethod(method, instance, container, containerFeatureID);
   }
@@ -333,25 +523,37 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   protected InternalEObject getEObjectFromPotentialID(InternalCDOView view, EStructuralFeature feature,
       Object potentialID)
   {
-    if (potentialID instanceof CDOID)
+    if (getPreRegisteredObjects().get(potentialID) != null)
     {
-      CDOID id = (CDOID)potentialID;
-      if (id.isNull())
-      {
-        return null;
-      }
+      potentialID = ((CDOLegacyWrapper)getPreRegisteredObjects().get(potentialID)).instance;
 
-      boolean loadOnDemand = feature == null;
-      potentialID = view.getObject(id, loadOnDemand);
-      if (potentialID == null && !loadOnDemand)
+      if (TRACER.isEnabled())
       {
-        return createProxy(view, feature, id);
+        TRACER.format(("getting Object (" + potentialID + ") from localThread instead of the view"));
       }
     }
-
-    if (potentialID instanceof InternalCDOObject)
+    else
     {
-      return ((InternalCDOObject)potentialID).cdoInternalInstance();
+      if (potentialID instanceof CDOID)
+      {
+        CDOID id = (CDOID)potentialID;
+        if (id.isNull())
+        {
+          return null;
+        }
+
+        boolean loadOnDemand = feature == null;
+        potentialID = view.getObject(id, loadOnDemand);
+        if (potentialID == null && !loadOnDemand)
+        {
+          return createProxy(view, feature, id);
+        }
+      }
+
+      if (potentialID instanceof InternalCDOObject)
+      {
+        return ((InternalCDOObject)potentialID).cdoInternalInstance();
+      }
     }
 
     return (InternalEObject)potentialID;
@@ -441,9 +643,11 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
             // TODO LEGACY
             // // TODO Is InternalEList.basicSet() needed???
-            // if (list instanceof org.eclipse.emf.ecore.util.DelegatingInternalEList)
+            // if (list instanceof
+            // org.eclipse.emf.ecore.util.DelegatingInternalEList)
             // {
-            // list = ((org.eclipse.emf.ecore.util.DelegatingInternalEList)list).getDelegateInternalEList();
+            // list =
+            // ((org.eclipse.emf.ecore.util.DelegatingInternalEList)list).getDelegateInternalEList();
             // }
 
             if (list instanceof NotifyingListImpl)
@@ -482,7 +686,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         URI uri = URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + ":proxy#" + id); //$NON-NLS-1$
         if (TRACER.isEnabled())
         {
-          TRACER.format("Setting proxyURI {0} for {1}", uri, instance); //$NON-NLS-1$
+          TRACER.format("Setting proxyURI {0} for {1}", uri, instance);
         }
 
         instance.eSetProxyURI(uri);
@@ -494,7 +698,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Unsetting proxyURI for {0}", instance); //$NON-NLS-1$
+          TRACER.format("Unsetting proxyURI for {0}", instance);
         }
 
         instance.eSetProxyURI(null);
@@ -538,11 +742,11 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    */
   private static final class LegacyProxyInvocationHandler implements InvocationHandler, LegacyProxy
   {
-    private static final Method getIDMethod = ReflectUtil.getMethod(LegacyProxy.class, "getID"); //$NON-NLS-1$
+    private static final Method getIDMethod = ReflectUtil.getMethod(LegacyProxy.class, "getID");
 
-    private static final Method eIsProxyMethod = ReflectUtil.getMethod(EObject.class, "eIsProxy"); //$NON-NLS-1$
+    private static final Method eIsProxyMethod = ReflectUtil.getMethod(EObject.class, "eIsProxy");
 
-    private static final Method eProxyURIMethod = ReflectUtil.getMethod(InternalEObject.class, "eProxyURI"); //$NON-NLS-1$
+    private static final Method eProxyURIMethod = ReflectUtil.getMethod(InternalEObject.class, "eProxyURI");
 
     private CDOLegacyWrapper wrapper;
 
@@ -573,16 +777,53 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
       if (method.equals(eProxyURIMethod))
       {
-        // Use the resource of the container because it's guaranteed to be in the same CDOView as the resource
+        // Use the resource of the container because it's guaranteed to
+        // be in the same CDOView as the resource
         // of the target!
         Resource resource = wrapper.eResource();
 
-        // TODO Consider using a "fake" Resource implementation. See Resource.getEObject(...)
+        // TODO Consider using a "fake" Resource implementation. See
+        // Resource.getEObject(...)
         return resource.getURI().appendFragment(id.toURIFragment());
       }
 
-      // A client must have invoked the proxy while being told not to do so!
+      // A client must have invoked the proxy while being told not to do
+      // so!
       throw new UnsupportedOperationException(method.getName());
+    }
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void setUnderConstruction(boolean underConstruction)
+  {
+    this.underConstruction = underConstruction;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public boolean isUnderConstruction()
+  {
+    return underConstruction;
+  }
+
+  /**
+   * @author Martin Fluegge
+   */
+  private static final class Counter
+  {
+    private int value;
+
+    public void increment()
+    {
+      ++value;
+    }
+
+    public int decrement()
+    {
+      return --value;
     }
   }
 }

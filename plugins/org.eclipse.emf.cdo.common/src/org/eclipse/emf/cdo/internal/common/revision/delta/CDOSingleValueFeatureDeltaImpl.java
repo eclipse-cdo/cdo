@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -26,6 +27,7 @@ import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 
 /**
  * @author Simon McDuff
@@ -110,5 +112,16 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   public void clear()
   {
     setValue(CDOID.NULL);
+  }
+
+  @Override
+  protected String toStringAdditional()
+  {
+    if (index == Notification.NO_INDEX)
+    {
+      return MessageFormat.format("value={0}", newValue);
+    }
+
+    return MessageFormat.format("value={0}, index={1}", newValue, index);
   }
 }

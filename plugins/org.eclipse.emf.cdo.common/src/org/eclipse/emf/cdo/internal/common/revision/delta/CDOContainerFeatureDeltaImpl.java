@@ -4,11 +4,11 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
- *    Simon McDuff - http://bugs.eclipse.org/204890 
+ *    Simon McDuff - http://bugs.eclipse.org/204890
  *    Simon McDuff - http://bugs.eclipse.org/213402
  */
 package org.eclipse.emf.cdo.internal.common.revision.delta;
@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 
 /**
  * @author Simon McDuff
@@ -100,6 +101,13 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   public void accept(CDOFeatureDeltaVisitor visitor)
   {
     visitor.visit(this);
+  }
+
+  @Override
+  protected String toStringAdditional()
+  {
+    return MessageFormat.format("resource={0}, container={1}, feature={2}", newResourceID, newContainerID,
+        newContainerFeatureID);
   }
 
   /**

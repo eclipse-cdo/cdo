@@ -215,6 +215,12 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     visitor.visit(this);
   }
 
+  @Override
+  protected String toStringAdditional()
+  {
+    return "list=" + featureDeltas;
+  }
+
   /**
    * Copied from JAVA 1.6 {@link Arrays Arrays.copyOf}.
    */

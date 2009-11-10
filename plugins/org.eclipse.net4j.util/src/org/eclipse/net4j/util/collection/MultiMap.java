@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -344,19 +344,20 @@ public abstract class MultiMap<K, V> implements Map<K, V>
      * @category READ
      */
     @Override
-    @SuppressWarnings("unchecked")
     public boolean contains(Object o)
     {
-      if (o instanceof Map.Entry)
+      if (o instanceof Map.Entry<?, ?>)
       {
         for (int i = 0; i < getDelegateCount(); i++)
         {
           Map<K, V> delegate = getDelegate(i);
           if (delegate != null)
           {
+            @SuppressWarnings("unchecked")
             K key = ((Map.Entry<K, V>)o).getKey();
             if (delegate.containsKey(key))
             {
+              @SuppressWarnings("unchecked")
               V value = ((Map.Entry<K, V>)o).getValue();
               if (ObjectUtil.equals(delegate.get(key), value))
               {

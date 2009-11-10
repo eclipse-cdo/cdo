@@ -419,14 +419,14 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     }
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public void fireEvent(IEvent event)
   {
-    if (event instanceof IContainerEvent)
+    if (event instanceof IContainerEvent<?>)
     {
-      IContainerEvent<Object> containerEvent = (IContainerEvent<Object>)event;
-      if (containerEvent.isEmpty())
+      @SuppressWarnings("unchecked")
+      IContainerEvent<Object> e = (IContainerEvent<Object>)event;
+      if (e.isEmpty())
       {
         return;
       }

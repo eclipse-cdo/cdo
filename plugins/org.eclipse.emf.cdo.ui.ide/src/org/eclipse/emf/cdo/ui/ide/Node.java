@@ -174,7 +174,7 @@ public abstract class Node extends PlatformObject
       return "icons/full/obj16/Resources.gif"; //$NON-NLS-1$
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     @Override
     public Object getAdapter(Class adapter)
     {

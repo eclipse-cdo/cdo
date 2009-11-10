@@ -32,7 +32,7 @@ import org.hibernate.tuple.component.AbstractComponentTuplizer;
  * @see FeatureMapEntryPropertyHandler
  * @see FeatureMapEntryFeatureURIPropertyHandler
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class FeatureMapEntryTuplizer extends AbstractComponentTuplizer
@@ -114,7 +114,7 @@ public class FeatureMapEntryTuplizer extends AbstractComponentTuplizer
     return propertyHandler;
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Class getMappedClass()
   {
     return CDOFeatureMapEntry.class;

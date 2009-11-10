@@ -192,7 +192,6 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
     }
   }
 
-  @SuppressWarnings("unchecked")
   public void notifyEvent(IEvent event)
   {
     if (event.getSource() == session)
@@ -208,8 +207,9 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
           }
         }
       }
-      else if (event instanceof IContainerEvent)
+      else if (event instanceof IContainerEvent<?>)
       {
+        @SuppressWarnings("unchecked")
         IContainerEvent<IBuddy> e = (IContainerEvent<IBuddy>)event;
         if (e.getDeltaKind() == IContainerDelta.Kind.ADDED)
         {

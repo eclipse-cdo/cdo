@@ -172,7 +172,9 @@ public class History<T> extends Notifier implements IHistory<T>
   @SuppressWarnings("unchecked")
   protected IHistoryElement<T> createElement(T data)
   {
-    return new HistoryElement(this, data);
+    @SuppressWarnings("rawtypes")
+    HistoryElement result = new HistoryElement(this, data);
+    return result;
   }
 
   protected void load()

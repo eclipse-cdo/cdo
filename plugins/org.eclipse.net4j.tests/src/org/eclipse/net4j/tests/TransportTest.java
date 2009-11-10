@@ -43,7 +43,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Eike Stepper
  */
-@SuppressWarnings("unchecked")
 public abstract class TransportTest extends AbstractProtocolTest
 {
   public TransportTest()
@@ -108,16 +107,18 @@ public abstract class TransportTest extends AbstractProtocolTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof IContainerEvent)
+        if (event instanceof IContainerEvent<?>)
         {
-          IContainerEvent<IConnector> e = (IContainerEvent)event;
+          @SuppressWarnings("unchecked")
+          IContainerEvent<IConnector> e = (IContainerEvent<IConnector>)event;
           e.getDeltaElement().addListener(new IListener()
           {
             public void notifyEvent(IEvent event)
             {
-              if (event instanceof IContainerEvent)
+              if (event instanceof IContainerEvent<?>)
               {
-                IContainerEvent<IChannel> e = (IContainerEvent)event;
+                @SuppressWarnings("unchecked")
+                IContainerEvent<IChannel> e = (IContainerEvent<IChannel>)event;
                 if (e.getDeltaKind() == IContainerDelta.Kind.ADDED)
                 {
                   inputStream[0] = new ChannelInputStream(e.getDeltaElement(), 2000);
@@ -170,16 +171,18 @@ public abstract class TransportTest extends AbstractProtocolTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof IContainerEvent)
+        if (event instanceof IContainerEvent<?>)
         {
-          IContainerEvent<IConnector> e = (IContainerEvent)event;
+          @SuppressWarnings("unchecked")
+          IContainerEvent<IConnector> e = (IContainerEvent<IConnector>)event;
           e.getDeltaElement().addListener(new IListener()
           {
             public void notifyEvent(IEvent event)
             {
-              if (event instanceof IContainerEvent)
+              if (event instanceof IContainerEvent<?>)
               {
-                IContainerEvent<IChannel> e = (IContainerEvent)event;
+                @SuppressWarnings("unchecked")
+                IContainerEvent<IChannel> e = (IContainerEvent<IChannel>)event;
                 if (e.getDeltaKind() == IContainerDelta.Kind.ADDED)
                 {
                   inputStream[0] = new ChannelInputStream(e.getDeltaElement(), 2000);
@@ -236,16 +239,18 @@ public abstract class TransportTest extends AbstractProtocolTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof IContainerEvent)
+        if (event instanceof IContainerEvent<?>)
         {
-          IContainerEvent<IConnector> e = (IContainerEvent)event;
+          @SuppressWarnings("unchecked")
+          IContainerEvent<IConnector> e = (IContainerEvent<IConnector>)event;
           e.getDeltaElement().addListener(new IListener()
           {
             public void notifyEvent(IEvent event)
             {
-              if (event instanceof IContainerEvent)
+              if (event instanceof IContainerEvent<?>)
               {
-                IContainerEvent<IChannel> e = (IContainerEvent)event;
+                @SuppressWarnings("unchecked")
+                IContainerEvent<IChannel> e = (IContainerEvent<IChannel>)event;
                 if (e.getDeltaKind() == IContainerDelta.Kind.ADDED)
                 {
                   inputStream[0] = new ChannelInputStream(e.getDeltaElement(), 2000);
@@ -318,16 +323,18 @@ public abstract class TransportTest extends AbstractProtocolTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof IContainerEvent)
+        if (event instanceof IContainerEvent<?>)
         {
-          IContainerEvent<IConnector> e = (IContainerEvent)event;
+          @SuppressWarnings("unchecked")
+          IContainerEvent<IConnector> e = (IContainerEvent<IConnector>)event;
           e.getDeltaElement().addListener(new IListener()
           {
             public void notifyEvent(IEvent event)
             {
-              if (event instanceof IContainerEvent)
+              if (event instanceof IContainerEvent<?>)
               {
-                IContainerEvent<IChannel> e = (IContainerEvent)event;
+                @SuppressWarnings("unchecked")
+                IContainerEvent<IChannel> e = (IContainerEvent<IChannel>)event;
                 if (e.getDeltaKind() == IContainerDelta.Kind.ADDED)
                 {
                   inputStream[0] = new ChannelInputStream(e.getDeltaElement(), 2000);

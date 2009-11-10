@@ -29,7 +29,6 @@ import java.util.Map;
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
  */
-@SuppressWarnings("unchecked")
 public class WildCardAttributePropertyHandler extends FeatureMapEntryPropertyHandler
 {
   private static final long serialVersionUID = -2659637883475733107L;
@@ -58,6 +57,7 @@ public class WildCardAttributePropertyHandler extends FeatureMapEntryPropertyHan
   }
 
   @Override
+  @SuppressWarnings("rawtypes")
   public Object getForInsert(Object owner, Map mergeMap, SessionImplementor session) throws HibernateException
   {
     final Object value = get(owner);

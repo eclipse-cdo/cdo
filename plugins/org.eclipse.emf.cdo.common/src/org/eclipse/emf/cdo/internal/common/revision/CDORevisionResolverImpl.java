@@ -394,10 +394,16 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
     super.doDeactivate();
   }
 
+  /**
+   * Overriden by org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl (client-side)
+   */
   protected void acquireAtomicRequestLock(Object lockObject)
   {
   }
 
+  /**
+   * Overriden by org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl (client-side)
+   */
   protected void releaseAtomicRequestLock(Object lockObject)
   {
   }

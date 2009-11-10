@@ -643,6 +643,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         {
           throw new TransactionException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
         }
+
         if (progressMonitor == null)
         {
           progressMonitor = new NullProgressMonitor();

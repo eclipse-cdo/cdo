@@ -633,34 +633,36 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public void commit(IProgressMonitor progressMonitor) throws TransactionException
   {
     checkActive();
-    getLock().lock();
-
-    try
+    // TODO Consider fixing Bug 294700 without this commit lock.
+    synchronized (getSession().getCommitLock())
     {
-      if (hasConflict())
+      getLock().lock();
+
+      try
       {
-        throw new TransactionException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
-      }
+        if (hasConflict())
+        {
+          throw new TransactionException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
+        }
+        if (progressMonitor == null)
+        {
+          progressMonitor = new NullProgressMonitor();
+        }
 
-      if (progressMonitor == null)
+        getTransactionStrategy().commit(this, progressMonitor);
+      }
+      catch (TransactionException ex)
       {
-        progressMonitor = new NullProgressMonitor();
+        throw ex;
       }
-
-      // TTT convertDanglingObjects();
-      getTransactionStrategy().commit(this, progressMonitor);
-    }
-    catch (TransactionException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new TransactionException(ex);
-    }
-    finally
-    {
-      getLock().unlock();
+      catch (Exception ex)
+      {
+        throw new TransactionException(ex);
+      }
+      finally
+      {
+        getLock().unlock();
+      }
     }
   }
 
@@ -668,35 +670,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     commit(null);
   }
-
-  // TTT private void convertDanglingObjects()
-  // {
-  // for (CDOIDDanglingImpl id : danglingObjects.values())
-  // {
-  //
-  // for (Reference reference : id.getReferences())
-  // {
-  // convertDanglingObject(reference.getSourceObject(), reference.getSourceFeature(), id);
-  // }
-  // }
-  // }
-  //
-  // private void convertDanglingObject(CDOObject object, EStructuralFeature feature, CDOIDDangling id)
-  // {
-  // InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
-  // Object value = revision.getValue(feature);
-  // if (value instanceof List<?>)
-  // {
-  // List<?> list = (List<?>)value;
-  // for (int i = 0; i < list.size(); i++)
-  // {
-  // if (list.get(i) == id)
-  // {
-  //
-  // }
-  // }
-  // }
-  // }
 
   /**
    * @since 2.0

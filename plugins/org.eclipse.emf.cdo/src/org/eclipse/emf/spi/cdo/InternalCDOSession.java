@@ -97,6 +97,11 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
    */
   public Object resolveElementProxy(CDORevision revision, EStructuralFeature feature, int accessIndex, int serverIndex);
 
+  /**
+   * @since 3.0
+   */
+  public Object getCommitLock();
+
   public void handleCommitNotification(long timeStamp, Collection<CDOPackageUnit> newPackageUnits,
       Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects, Collection<CDORevisionDelta> deltas,
       InternalCDOView excludedView);

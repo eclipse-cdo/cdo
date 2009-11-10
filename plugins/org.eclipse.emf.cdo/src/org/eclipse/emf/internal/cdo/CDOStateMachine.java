@@ -374,17 +374,22 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     try
     {
-      if (TRACER.isEnabled())
-      {
-        trace(object, CDOEvent.WRITE);
-      }
-
-      process(object, CDOEvent.WRITE, featureDelta);
+      writeWithoutViewLock(object, featureDelta);
     }
     finally
     {
       unlockView(lock);
     }
+  }
+
+  private void writeWithoutViewLock(InternalCDOObject object, CDOFeatureDelta featureDelta)
+  {
+    if (TRACER.isEnabled())
+    {
+      trace(object, CDOEvent.WRITE);
+    }
+
+    process(object, CDOEvent.WRITE, featureDelta);
   }
 
   /**
@@ -1037,7 +1042,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       if (forWrite)
       {
-        INSTANCE.write(object, (CDOFeatureDelta)delta);
+        INSTANCE.writeWithoutViewLock(object, (CDOFeatureDelta)delta);
       }
     }
   }

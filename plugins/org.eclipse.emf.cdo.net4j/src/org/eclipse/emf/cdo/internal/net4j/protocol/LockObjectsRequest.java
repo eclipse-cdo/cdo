@@ -74,8 +74,8 @@ public class LockObjectsRequest extends AbstractSyncRevisionsRequest
     Collection<CDOTimeStampContext> contexts = super.confirming(in);
     for (CDOTimeStampContext timestampContext : contexts)
     {
-      getSession().handleUpdateRevision(timestampContext.getTimeStamp(), timestampContext.getDirtyObjects(),
-          timestampContext.getDetachedObjects());
+      getSession().reviseRevisions(timestampContext.getTimeStamp(), timestampContext.getDirtyObjects(),
+          timestampContext.getDetachedObjects(), null);
       ((InternalCDOView)view).handleInvalidationWithoutNotification(timestampContext.getDirtyObjects(),
           timestampContext.getDetachedObjects(), new HashSet<InternalCDOObject>(), new HashSet<InternalCDOObject>());
     }

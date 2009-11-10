@@ -106,7 +106,9 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
 
   /**
    * In some cases we need to sync without propagating event. Lock is a good example.
+   * 
+   * @since 3.0
    */
-  public void handleUpdateRevision(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
-      Collection<CDOID> detachedObjects);
+  public void reviseRevisions(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects,
+      InternalCDOView excludedView);
 }

@@ -580,7 +580,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     {
       if (passiveUpdate)
       {
-        updateRevisionForRemoteChanges(timeStamp, dirtyOIDs, detachedObjects, excludedView);
+        reviseRevisions(timeStamp, dirtyOIDs, detachedObjects, excludedView);
       }
 
       final Set<CDOIDAndVersion> finalDirtyOIDs = Collections.unmodifiableSet(dirtyOIDs);
@@ -682,14 +682,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     fireInvalidationEvent(timeStamp, newPackageUnits, dirtyOIDs, detachedObjects, excludedView);
   }
 
-  public void handleUpdateRevision(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
-      Collection<CDOID> detachedObjects)
-  {
-    updateRevisionForRemoteChanges(timeStamp, dirtyOIDs, detachedObjects, null);
-  }
-
-  private void updateRevisionForRemoteChanges(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
-      Collection<CDOID> detachedObjects, InternalCDOView excludedView)
+  public void reviseRevisions(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects,
+      InternalCDOView excludedView)
   {
     InternalCDORevisionManager revisionManager = getRevisionManager();
     if (excludedView == null || timeStamp == CDORevision.UNSPECIFIED_DATE)

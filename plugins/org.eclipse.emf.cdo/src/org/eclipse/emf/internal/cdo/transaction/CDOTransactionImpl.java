@@ -50,6 +50,7 @@ import org.eclipse.emf.internal.cdo.CDOObjectMerger;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
+import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
@@ -590,55 +591,60 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public void commit(IProgressMonitor progressMonitor) throws TransactionException
   {
     checkActive();
-    getLock().lock();
-
-    try
+    InternalCDOSession session = getSession();
+    Object lock = session instanceof CDOSessionImpl ? ((CDOSessionImpl)session).commitLock : new Object();
+    synchronized (lock)
     {
-      if (hasConflict())
-      {
-        throw new TransactionException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
-      }
+      getLock().lock();
 
-      if (progressMonitor == null)
+      try
       {
-        progressMonitor = new NullProgressMonitor();
-      }
-
-      Set<CDOResource> dirtyResources = null;
-      if (isTrackingModification())
-      {
-        dirtyResources = new HashSet<CDOResource>();
-        for (CDOObject object : getDirtyObjects().values())
+        if (hasConflict())
         {
-          CDOResource resource = object.cdoResource();
-          if (resource != null)
+          throw new TransactionException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
+        }
+
+        if (progressMonitor == null)
+        {
+          progressMonitor = new NullProgressMonitor();
+        }
+
+        Set<CDOResource> dirtyResources = null;
+        if (isTrackingModification())
+        {
+          dirtyResources = new HashSet<CDOResource>();
+          for (CDOObject object : getDirtyObjects().values())
           {
-            dirtyResources.add(resource);
+            CDOResource resource = object.cdoResource();
+            if (resource != null)
+            {
+              dirtyResources.add(resource);
+            }
+          }
+        }
+
+        getTransactionStrategy().commit(this, progressMonitor);
+
+        if (dirtyResources != null)
+        {
+          for (CDOResource dirtyResource : dirtyResources)
+          {
+            dirtyResource.setModified(false);
           }
         }
       }
-
-      getTransactionStrategy().commit(this, progressMonitor);
-
-      if (dirtyResources != null)
+      catch (TransactionException ex)
       {
-        for (CDOResource dirtyResource : dirtyResources)
-        {
-          dirtyResource.setModified(false);
-        }
+        throw ex;
       }
-    }
-    catch (TransactionException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new TransactionException(ex);
-    }
-    finally
-    {
-      getLock().unlock();
+      catch (Exception ex)
+      {
+        throw new TransactionException(ex);
+      }
+      finally
+      {
+        getLock().unlock();
+      }
     }
   }
 

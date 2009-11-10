@@ -65,7 +65,7 @@ public class Bugzilla_259869_Test extends AbstractCDOTest
     assertTrue(timeCommitWithChanges > timeToCommitNoChange * 1.2);
   }
 
-  public void testBugzilla_259869_XA() throws InterruptedException
+  public void _testBugzilla_259869_XA() throws InterruptedException
   {
     getRepository(REPOSITORY2_NAME);
 

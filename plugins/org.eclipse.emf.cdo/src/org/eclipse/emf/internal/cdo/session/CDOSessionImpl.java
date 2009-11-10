@@ -477,6 +477,12 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         .isPassiveUpdateEnabled(), true);
   }
 
+  /**
+   * TODO This is a workaround for 2.0 maintenance. It fixes a threading problem between a committing thread and the
+   * Net4j thread that delivers incoming commit notifications.
+   */
+  public Object commitLock = new Object();
+
   private void handleCommitNotification(final long timeStamp, final Collection<CDOPackageUnit> newPackageUnits,
       Set<CDOIDAndVersion> dirtyOIDs, final Collection<CDOID> detachedObjects,
       final Collection<CDORevisionDelta> deltas, InternalCDOView excludedView, final boolean passiveUpdate,
@@ -484,88 +490,91 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   {
     try
     {
-      if (passiveUpdate)
+      synchronized (commitLock)
       {
-        updateRevisionForRemoteChanges(timeStamp, dirtyOIDs, detachedObjects, excludedView);
-      }
-
-      final Set<CDOIDAndVersion> finalDirtyOIDs = Collections.unmodifiableSet(dirtyOIDs);
-      final Collection<CDOID> finalDetachedObjects = Collections.unmodifiableCollection(detachedObjects);
-      final boolean skipChangeSubscription = (deltas == null || deltas.size() <= 0)
-          && (detachedObjects == null || detachedObjects.size() <= 0);
-
-      for (final InternalCDOView view : getViews())
-      {
-        if (view != excludedView)
+        if (passiveUpdate)
         {
-          final Runnable runnable = new Runnable()
+          updateRevisionForRemoteChanges(timeStamp, dirtyOIDs, detachedObjects, excludedView);
+        }
+
+        final Set<CDOIDAndVersion> finalDirtyOIDs = Collections.unmodifiableSet(dirtyOIDs);
+        final Collection<CDOID> finalDetachedObjects = Collections.unmodifiableCollection(detachedObjects);
+        final boolean skipChangeSubscription = (deltas == null || deltas.size() <= 0)
+            && (detachedObjects == null || detachedObjects.size() <= 0);
+
+        for (final InternalCDOView view : getViews())
+        {
+          if (view != excludedView)
           {
-            public void run()
-            {
-              try
-              {
-                Set<CDOObject> conflicts = null;
-                if (passiveUpdate)
-                {
-                  conflicts = view.handleInvalidation(timeStamp, finalDirtyOIDs, finalDetachedObjects);
-                }
-
-                if (!skipChangeSubscription)
-                {
-                  view.handleChangeSubscription(deltas, detachedObjects);
-                }
-
-                if (conflicts != null)
-                {
-                  ((InternalCDOTransaction)view).handleConflicts(conflicts);
-                }
-
-                if (view instanceof CDOViewImpl)
-                {
-                  ((CDOViewImpl)view).fireAdaptersNotifiedEvent(timeStamp);
-                }
-              }
-              catch (RuntimeException ex)
-              {
-                if (!async)
-                {
-                  throw ex;
-                }
-
-                if (view.isActive())
-                {
-                  OM.LOG.error(ex);
-                }
-                else
-                {
-                  OM.LOG.info(Messages.getString("CDOSessionImpl.1"));
-                }
-              }
-            }
-          };
-
-          if (async)
-          {
-            QueueRunner runner = getInvalidationRunner();
-            runner.addWork(new Runnable()
+            final Runnable runnable = new Runnable()
             {
               public void run()
               {
                 try
                 {
-                  invalidationRunnerActive.set(true);
-                  runnable.run();
+                  Set<CDOObject> conflicts = null;
+                  if (passiveUpdate)
+                  {
+                    conflicts = view.handleInvalidation(timeStamp, finalDirtyOIDs, finalDetachedObjects);
+                  }
+
+                  if (!skipChangeSubscription)
+                  {
+                    view.handleChangeSubscription(deltas, detachedObjects);
+                  }
+
+                  if (conflicts != null)
+                  {
+                    ((InternalCDOTransaction)view).handleConflicts(conflicts);
+                  }
+
+                  if (view instanceof CDOViewImpl)
+                  {
+                    ((CDOViewImpl)view).fireAdaptersNotifiedEvent(timeStamp);
+                  }
                 }
-                finally
+                catch (RuntimeException ex)
                 {
-                  invalidationRunnerActive.set(false);
+                  if (!async)
+                  {
+                    throw ex;
+                  }
+
+                  if (view.isActive())
+                  {
+                    OM.LOG.error(ex);
+                  }
+                  else
+                  {
+                    OM.LOG.info(Messages.getString("CDOSessionImpl.1"));
+                  }
                 }
               }
-            });
-          }
-          else
-          {
-            runnable.run();
+            };
+
+            if (async)
+            {
+              QueueRunner runner = getInvalidationRunner();
+              runner.addWork(new Runnable()
+              {
+                public void run()
+                {
+                  try
+                  {
+                    invalidationRunnerActive.set(true);
+                    runnable.run();
+                  }
+                  finally
+                  {
+                    invalidationRunnerActive.set(false);
+                  }
+                }
+              });
+            }
+            else
+            {
+              runnable.run();
+            }
           }
         }
       }

@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259869_Test;
 public class DISABLED_Bugzilla_259869_Test extends Bugzilla_259869_Test
 {
   @Override
-  public void testBugzilla_259869_XA() throws InterruptedException
+  public void _testBugzilla_259869_XA() throws InterruptedException
   {
     // DISABLED because of Bug 284004
   }

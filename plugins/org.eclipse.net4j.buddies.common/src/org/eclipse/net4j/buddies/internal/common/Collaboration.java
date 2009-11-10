@@ -187,7 +187,7 @@ public class Collaboration extends MembershipContainer implements ICollaboration
   /**
    * @see PlatformObject#getAdapter(Class)
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Object getAdapter(Class adapter)
   {
     return Platform.getAdapterManager().getAdapter(this, adapter);

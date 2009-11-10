@@ -42,13 +42,13 @@ public class FeatureMapEntryFeatureURIPropertyHandler implements PropertyAccesso
 
   private static final long serialVersionUID = 1L;
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Getter getGetter(Class theClass, String propertyName) throws PropertyNotFoundException
   {
     return this;
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Setter getSetter(Class theClass, String propertyName) throws PropertyNotFoundException
   {
     return this;
@@ -60,7 +60,7 @@ public class FeatureMapEntryFeatureURIPropertyHandler implements PropertyAccesso
     return getEStructuralFeatureAsString(cdoFeatureMapEntry);
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Object getForInsert(Object owner, Map mergeMap, SessionImplementor session) throws HibernateException
   {
     return get(owner);
@@ -76,7 +76,7 @@ public class FeatureMapEntryFeatureURIPropertyHandler implements PropertyAccesso
     return null;
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Class getReturnType()
   {
     return String.class;

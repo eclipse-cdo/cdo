@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -42,13 +42,13 @@ public class CDORevisionPropertyAccessor implements PropertyAccessor
     return tuplizer;
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Getter getGetter(Class theClass, String propertyName) throws PropertyNotFoundException
   {
     return new CDORevisionGetter(this, propertyName);
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Setter getSetter(Class theClass, String propertyName) throws PropertyNotFoundException
   {
     return new CDORevisionSetter(this, propertyName);
@@ -102,7 +102,7 @@ public class CDORevisionPropertyAccessor implements PropertyAccessor
       return revision.getValue(getEStructuralFeature());
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     public Object getForInsert(Object target, Map mergeMap, SessionImplementor session) throws HibernateException
     {
       return get(target);
@@ -118,7 +118,7 @@ public class CDORevisionPropertyAccessor implements PropertyAccessor
       return null;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     public Class getReturnType()
     {
       return Object.class;

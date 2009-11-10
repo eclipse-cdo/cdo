@@ -217,7 +217,6 @@ public class SQLQueryHandler implements IQueryHandler
     }
   }
 
-  @SuppressWarnings("unchecked")
   private String parse(String query, Map<String, List<Integer>> paramMap)
   {
     int length = query.length();
@@ -268,7 +267,7 @@ public class SQLQueryHandler implements IQueryHandler
           List<Integer> indexList = paramMap.get(name);
           if (indexList == null)
           {
-            indexList = new ArrayList();
+            indexList = new ArrayList<Integer>();
             paramMap.put(name, indexList);
           }
 

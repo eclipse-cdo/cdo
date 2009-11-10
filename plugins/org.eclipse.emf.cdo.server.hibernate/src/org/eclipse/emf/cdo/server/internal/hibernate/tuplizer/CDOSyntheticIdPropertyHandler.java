@@ -35,18 +35,19 @@ import java.util.Map;
  * Is only used for synthetic id's.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
-@SuppressWarnings("unchecked")
 public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAccessor
 {
   private static final long serialVersionUID = 1L;
 
+  @SuppressWarnings("rawtypes")
   public Getter getGetter(Class theClass, String propertyName) throws PropertyNotFoundException
   {
     return this;
   }
 
+  @SuppressWarnings("rawtypes")
   public Setter getSetter(Class theClass, String propertyName) throws PropertyNotFoundException
   {
     return this;
@@ -68,6 +69,7 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
     return HibernateUtil.getInstance().getIdValue(revision.getID());
   }
 
+  @SuppressWarnings("rawtypes")
   public Object getForInsert(Object arg0, Map arg1, SessionImplementor arg2) throws HibernateException
   {
     return get(arg0);
@@ -83,6 +85,7 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
     return null;
   }
 
+  @SuppressWarnings("rawtypes")
   public Class getReturnType()
   {
     return null;

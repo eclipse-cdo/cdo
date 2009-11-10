@@ -71,7 +71,7 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
     return value;
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Object getForInsert(Object target, Map mergeMap, SessionImplementor session) throws HibernateException
   {
     return get(target);
@@ -87,7 +87,7 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
     return null;
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Class getReturnType()
   {
     return Object.class;

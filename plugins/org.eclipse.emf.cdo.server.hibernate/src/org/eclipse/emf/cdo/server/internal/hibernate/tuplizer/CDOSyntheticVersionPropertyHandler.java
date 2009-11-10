@@ -29,9 +29,8 @@ import java.util.Map;
  * Reads the version from the internal version cache.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
-@SuppressWarnings("unchecked")
 public class CDOSyntheticVersionPropertyHandler implements Getter, Setter, PropertyAccessor
 {
   private static final long serialVersionUID = 1L;
@@ -40,11 +39,13 @@ public class CDOSyntheticVersionPropertyHandler implements Getter, Setter, Prope
   {
   }
 
+  @SuppressWarnings("rawtypes")
   public Getter getGetter(Class theClass, String propertyName) throws PropertyNotFoundException
   {
     return this;
   }
 
+  @SuppressWarnings("rawtypes")
   public Setter getSetter(Class theClass, String propertyName) throws PropertyNotFoundException
   {
     return this;
@@ -64,6 +65,7 @@ public class CDOSyntheticVersionPropertyHandler implements Getter, Setter, Prope
   /**
    * Reads the version from the versioncache
    */
+  @SuppressWarnings("rawtypes")
   public Object getForInsert(Object owner, Map mergeMap, SessionImplementor session) throws HibernateException
   {
     return get(owner);
@@ -80,6 +82,7 @@ public class CDOSyntheticVersionPropertyHandler implements Getter, Setter, Prope
   }
 
   /** Returns Integer.class */
+  @SuppressWarnings("rawtypes")
   public Class getReturnType()
   {
     return Integer.class;

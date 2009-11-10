@@ -31,7 +31,6 @@ public class CDOManyAttributeSetter extends CDOPropertySetter
     super(tuplizer, propertyName);
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
@@ -47,7 +46,7 @@ public class CDOManyAttributeSetter extends CDOPropertySetter
       throw new IllegalArgumentException("Value is not a PersistentCollection but a " + value.getClass().getName());
     }
 
-    if (!(value instanceof List))
+    if (!(value instanceof List<?>))
     {
       throw new IllegalArgumentException("Value is not a list but a " + value.getClass().getName());
     }
@@ -62,8 +61,11 @@ public class CDOManyAttributeSetter extends CDOPropertySetter
     final Object currentValue = revision.getValue(getEStructuralFeature());
     if (currentValue == null || !(currentValue instanceof List<?>))
     {
+      @SuppressWarnings("unchecked")
+      List<Object> valueList = (List<Object>)value;
+
       final WrappedHibernateList whl = new WrappedHibernateList();
-      whl.setDelegate((List)value);
+      whl.setDelegate(valueList);
       super.set(target, whl, factory);
     }
   }

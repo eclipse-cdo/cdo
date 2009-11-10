@@ -361,13 +361,13 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     return pf;
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Class getMappedClass()
   {
     return InternalCDORevision.class;
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Class getConcreteProxyClass()
   {
     return InternalCDORevision.class;

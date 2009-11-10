@@ -622,7 +622,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    * IMPORTANT: Compile errors in this method might indicate an old version of EMF. Legacy support is only enabled for
    * EMF with fixed bug #247130. These compile errors do not affect native models!
    */
-  @SuppressWarnings("unchecked")
   protected void resolveProxies(EStructuralFeature feature, CDOPackageRegistry packageRegistry)
   {
     Object value = getInstanceValue(instance, feature, packageRegistry);
@@ -630,6 +629,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     {
       if (feature.isMany())
       {
+        @SuppressWarnings("unchecked")
         InternalEList<Object> list = (InternalEList<Object>)value;
         int size = list.size();
         for (int i = 0; i < size; i++)
@@ -650,9 +650,9 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
             // ((org.eclipse.emf.ecore.util.DelegatingInternalEList)list).getDelegateInternalEList();
             // }
 
-            if (list instanceof NotifyingListImpl)
+            if (list instanceof NotifyingListImpl<?>)
             {
-              ((NotifyingListImpl)list).basicSet(i, instance, null);
+              ((NotifyingListImpl<Object>)list).basicSet(i, instance, null);
             }
             else
             {

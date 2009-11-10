@@ -73,44 +73,14 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     return queue.add(new QueueEntry<E>(e));
   }
 
-  @SuppressWarnings("unchecked")
-  public boolean addAll(Collection c)
-  {
-    return queue.addAll(c);
-  }
-
   public void clear()
   {
     queue.clear();
   }
 
-  @SuppressWarnings("unchecked")
-  public Comparator comparator()
-  {
-    return queue.comparator();
-  }
-
   public boolean contains(Object o)
   {
     return queue.contains(o);
-  }
-
-  @SuppressWarnings("unchecked")
-  public boolean containsAll(Collection c)
-  {
-    return queue.containsAll(c);
-  }
-
-  @SuppressWarnings("unchecked")
-  public int drainTo(Collection c, int maxElements)
-  {
-    return queue.drainTo(c, maxElements);
-  }
-
-  @SuppressWarnings("unchecked")
-  public int drainTo(Collection c)
-  {
-    return queue.drainTo(c);
   }
 
   public E element()
@@ -180,18 +150,6 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     return queue.remove(o);
   }
 
-  @SuppressWarnings("unchecked")
-  public boolean removeAll(Collection c)
-  {
-    return queue.removeAll(c);
-  }
-
-  @SuppressWarnings("unchecked")
-  public boolean retainAll(Collection c)
-  {
-    return queue.retainAll(c);
-  }
-
   public int size()
   {
     return queue.size();
@@ -227,6 +185,31 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
   {
     QueueEntry<E> entry = queue.poll();
     return checkObject(entry);
+  }
+
+  public Comparator<?> comparator()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean containsAll(Collection<?> c)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean addAll(Collection<? extends E> c)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean removeAll(Collection<?> c)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean retainAll(Collection<?> c)
+  {
+    throw new UnsupportedOperationException();
   }
 
   private E checkObject(QueueEntry<E> entry)

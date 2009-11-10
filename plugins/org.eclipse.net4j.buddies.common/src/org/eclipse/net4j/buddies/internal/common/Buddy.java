@@ -142,7 +142,7 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
   /**
    * @see PlatformObject#getAdapter(Class)
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Object getAdapter(Class adapter)
   {
     return Platform.getAdapterManager().getAdapter(this, adapter);

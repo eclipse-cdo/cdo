@@ -31,18 +31,19 @@ import java.util.Map;
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
  */
-@SuppressWarnings("unchecked")
 public class FeatureMapEntryPropertyHandler implements PropertyAccessor, Getter, Setter
 {
   private static final long serialVersionUID = 1L;
 
   private String propertyName;
 
+  @SuppressWarnings("rawtypes")
   public Getter getGetter(Class theClass, String propertyName) throws PropertyNotFoundException
   {
     return this;
   }
 
+  @SuppressWarnings("rawtypes")
   public Setter getSetter(Class theClass, String propertyName) throws PropertyNotFoundException
   {
     return this;
@@ -69,6 +70,7 @@ public class FeatureMapEntryPropertyHandler implements PropertyAccessor, Getter,
     return cdoFeatureMapEntry.getValue();
   }
 
+  @SuppressWarnings("rawtypes")
   public Object getForInsert(Object owner, Map mergeMap, SessionImplementor session) throws HibernateException
   {
     return get(owner);
@@ -84,6 +86,7 @@ public class FeatureMapEntryPropertyHandler implements PropertyAccessor, Getter,
     return null;
   }
 
+  @SuppressWarnings("rawtypes")
   public Class getReturnType()
   {
     return CDOFeatureMapEntry.class;

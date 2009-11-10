@@ -282,7 +282,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     }
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   @Override
   public Object getAdapter(Class adapter)
   {

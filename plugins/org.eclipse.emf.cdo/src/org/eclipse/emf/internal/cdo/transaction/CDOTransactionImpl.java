@@ -1262,6 +1262,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     firstSavepoint.clear();
     firstSavepoint.setNextSavepoint(null);
     firstSavepoint.getSharedDetachedObjects().clear();
+
+    // Bug 283985 (Re-attachment)
+    formerRevisions.clear();
+
     dirty = false;
     conflict = 0;
     lastTemporaryID.set(0);

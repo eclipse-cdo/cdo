@@ -4,15 +4,17 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.buffer;
 
 import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.internal.net4j.IOTimeoutException;
 import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.IOException;
@@ -185,7 +187,8 @@ public class BufferInputStream extends InputStream implements IBufferHandler
           remaining -= System.currentTimeMillis();
           if (remaining <= 0)
           {
-            return false;
+            // Throw an exception so that caller can distinguish between end-of-stream and a timeout
+            throw new IOTimeoutException();
           }
 
           currentBuffer = buffers.poll(Math.min(remaining, check), TimeUnit.MILLISECONDS);
@@ -194,7 +197,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
     }
     catch (InterruptedException ex)
     {
-      throw new IOException("Interrupted"); //$NON-NLS-1$
+      throw WrappedException.wrap(ex);
     }
 
     eos = currentBuffer.isEOS();

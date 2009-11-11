@@ -4,13 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.util.concurrent;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
@@ -87,8 +88,9 @@ public abstract class Worker extends Lifecycle
         workerThread.stopRunning();
         workerThread.interrupt();
       }
-      catch (RuntimeException ignore)
+      catch (RuntimeException ex)
       {
+        OM.LOG.warn(ex);
       }
 
       throw new TimeoutException("Worker thread activation timed out after " + activationTimeout + " millis"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -104,8 +106,9 @@ public abstract class Worker extends Lifecycle
       workerThread.interrupt();
       workerThread.join(deactivationTimeout);
     }
-    catch (RuntimeException ignore)
+    catch (RuntimeException ex)
     {
+      OM.LOG.warn(ex);
     }
 
     super.doDeactivate();
@@ -161,7 +164,7 @@ public abstract class Worker extends Lifecycle
           }
           catch (InterruptedException ex)
           {
-            break;
+            throw WrappedException.wrap(ex);
           }
         }
         catch (Terminate terminate)
@@ -170,7 +173,7 @@ public abstract class Worker extends Lifecycle
         }
         catch (InterruptedException ex)
         {
-          break;
+          throw WrappedException.wrap(ex);
         }
         catch (Exception ex)
         {

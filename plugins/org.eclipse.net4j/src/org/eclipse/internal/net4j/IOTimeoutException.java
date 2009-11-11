@@ -8,40 +8,42 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.util.concurrent;
+package org.eclipse.internal.net4j;
 
+import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 /**
  * @author Eike Stepper
  */
-public class TimeoutRuntimeException extends RuntimeException
+public class IOTimeoutException extends IOException
 {
   private static final long serialVersionUID = 1L;
 
-  public TimeoutRuntimeException()
+  public IOTimeoutException()
   {
   }
 
-  public TimeoutRuntimeException(String message)
+  public IOTimeoutException(String message, Throwable cause)
+  {
+    super(message);
+    initCause(cause);
+  }
+
+  public IOTimeoutException(String message)
   {
     super(message);
   }
 
-  public TimeoutRuntimeException(Throwable cause)
+  public IOTimeoutException(Throwable cause)
   {
-    super(cause);
-  }
-
-  public TimeoutRuntimeException(String message, Throwable cause)
-  {
-    super(message, cause);
+    initCause(cause);
   }
 
   public TimeoutException createTimeoutException()
   {
     TimeoutException timeoutException = new TimeoutException(getMessage());
-    timeoutException.initCause(this);
+    timeoutException.initCause(getCause());
     return timeoutException;
   }
 }

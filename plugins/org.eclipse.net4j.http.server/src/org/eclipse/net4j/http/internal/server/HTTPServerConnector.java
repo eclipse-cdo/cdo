@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -13,6 +13,7 @@ package org.eclipse.net4j.http.internal.server;
 import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.http.internal.common.HTTPConnector;
 import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.util.WrappedException;
 
 import java.text.MessageFormat;
 
@@ -33,11 +34,13 @@ public class HTTPServerConnector extends HTTPConnector
     return acceptor;
   }
 
+  @Override
   public Location getLocation()
   {
     return Location.SERVER;
   }
 
+  @Override
   public String getURL()
   {
     return "agent://connector:" + getConnectorID(); //$NON-NLS-1$
@@ -82,7 +85,7 @@ public class HTTPServerConnector extends HTTPConnector
     }
     catch (InterruptedException ex)
     {
-      return false;
+      throw WrappedException.wrap(ex);
     }
   }
 }

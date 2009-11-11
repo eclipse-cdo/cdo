@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -15,6 +15,7 @@ import org.eclipse.net4j.internal.http.HTTPClientConnector;
 import org.eclipse.net4j.tests.AbstractTransportTest;
 import org.eclipse.net4j.tests.signal.IntRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
@@ -88,7 +89,7 @@ public class HTTPTest extends AbstractTransportTest
         }
         catch (InterruptedException ex)
         {
-          throw new RuntimeException(ex);
+          throw WrappedException.wrap(ex);
         }
       }
     });

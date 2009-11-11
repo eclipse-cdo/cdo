@@ -17,6 +17,7 @@ import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.connector.IConnectorStateEvent;
 import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.INotifier;
@@ -241,7 +242,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
     }
     catch (InterruptedException ex)
     {
-      return false;
+      throw WrappedException.wrap(ex);
     }
   }
 

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -13,6 +13,7 @@ package org.eclipse.internal.net4j.buffer;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferPool;
 import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -114,7 +115,7 @@ public class BufferPool extends BufferProvider implements IBufferPool, IBufferPo
   @Override
   public String toString()
   {
-    return MessageFormat.format("BufferPool[{0}]", getBufferCapacity()); //$NON-NLS-1$ 
+    return MessageFormat.format("BufferPool[{0}]", getBufferCapacity()); //$NON-NLS-1$
   }
 
   protected BufferRef createBufferRef(IBuffer buffer)
@@ -229,7 +230,7 @@ public class BufferPool extends BufferProvider implements IBufferPool, IBufferPo
       }
       catch (InterruptedException ex)
       {
-        return;
+        throw WrappedException.wrap(ex);
       }
       finally
       {

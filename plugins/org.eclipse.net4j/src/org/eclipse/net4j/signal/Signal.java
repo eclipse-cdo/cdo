@@ -15,17 +15,16 @@ import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.IOTimeoutException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.MessageFormat;
-import java.util.concurrent.TimeoutException;
 
 /**
  * @author Eike Stepper
@@ -238,9 +237,9 @@ public abstract class Signal implements Runnable
     {
       execute(bufferInputStream, bufferOutputStream);
     }
-    catch (EOFException ex)
+    catch (IOTimeoutException ex) // Thrown from BufferInputStream
     {
-      throw new TimeoutException("Timeout"); //$NON-NLS-1$
+      throw ex.createTimeoutException();
     }
     catch (Exception ex)
     {

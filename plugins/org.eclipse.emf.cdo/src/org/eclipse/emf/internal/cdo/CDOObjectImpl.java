@@ -1182,7 +1182,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       }
       catch (InterruptedException ex)
       {
-        return false;
+        throw WrappedException.wrap(ex);
       }
     }
 

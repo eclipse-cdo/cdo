@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.internal.server.XATransactionCommitContext;
 import org.eclipse.emf.cdo.internal.server.XATransactionCommitContext.CommitState;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -73,7 +74,7 @@ public class CommitTransactionPhase2Indication extends CommitTransactionIndicati
     }
     catch (InterruptedException ex)
     {
-      exceptionMessage = ex.getMessage();
+      throw WrappedException.wrap(ex);
     }
     catch (ExecutionException ex)
     {

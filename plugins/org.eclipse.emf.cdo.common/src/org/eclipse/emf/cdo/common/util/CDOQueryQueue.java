@@ -353,7 +353,7 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
         }
         catch (InterruptedException ex)
         {
-          Thread.currentThread().interrupt();
+          throw WrappedException.wrap(ex);
         }
       }
     }

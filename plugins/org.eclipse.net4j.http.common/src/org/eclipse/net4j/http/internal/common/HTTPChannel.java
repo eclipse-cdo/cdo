@@ -4,13 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.http.internal.common;
 
 import org.eclipse.net4j.http.internal.common.HTTPConnector.ChannelOperation;
+import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.spi.net4j.Channel;
 
@@ -79,8 +80,9 @@ public class HTTPChannel extends Channel
     {
       openAck.await(timeout, TimeUnit.MILLISECONDS);
     }
-    catch (InterruptedException ignore)
+    catch (InterruptedException ex)
     {
+      throw WrappedException.wrap(ex);
     }
   }
 

@@ -19,9 +19,11 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
+import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor.SynchonizedSubProgressMonitor;
@@ -216,6 +218,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
           }
           catch (TimeoutException ex)
           {
+            OM.LOG.warn(ex);
           }
         }
       } while (xaContexts.size() != nbProcessDone);
@@ -292,11 +295,13 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
         {
           send(activeContext.values(), new SubProgressMonitor(progressMonitor, 2 - phase));
         }
-        catch (InterruptedException ignore)
+        catch (InterruptedException ex1)
         {
+          throw WrappedException.wrap(ex1);
         }
-        catch (ExecutionException ignore)
+        catch (ExecutionException ex1)
         {
+          OM.LOG.warn(ex1);
         }
       }
 

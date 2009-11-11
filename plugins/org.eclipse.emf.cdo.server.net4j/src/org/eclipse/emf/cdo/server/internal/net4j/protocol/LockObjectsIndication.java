@@ -19,8 +19,8 @@ import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.IView;
 
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.io.IORuntimeException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class LockObjectsIndication extends AbstractSyncRevisionsIndication
     }
     catch (InterruptedException ex)
     {
-      throw new IORuntimeException(ex);
+      throw WrappedException.wrap(ex);
     }
   }
 

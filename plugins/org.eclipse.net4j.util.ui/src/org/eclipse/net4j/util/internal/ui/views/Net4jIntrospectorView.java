@@ -232,7 +232,6 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
     }
   }
 
-  @SuppressWarnings("unchecked")
   public void doubleClick(DoubleClickEvent event)
   {
     ISelection sel = event.getSelection();
@@ -240,8 +239,9 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
     {
       IStructuredSelection ssel = (IStructuredSelection)sel;
       Object element = ssel.getFirstElement();
-      if (currentViewer == objectViewer && element instanceof Pair)
+      if (currentViewer == objectViewer && element instanceof Pair<?, ?>)
       {
+        @SuppressWarnings("unchecked")
         Pair<Field, Object> pair = (Pair<Field, Object>)element;
         Field field = pair.getElement1();
         if (!field.getType().isPrimitive())
@@ -249,7 +249,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
           setObject(pair.getElement2());
         }
       }
-      else if (currentViewer == mapViewer && element instanceof Map.Entry)
+      else if (currentViewer == mapViewer && element instanceof Map.Entry<?, ?>)
       {
         Map.Entry<?, ?> entry = (Map.Entry<?, ?>)element;
         setObject(entry.getValue());
@@ -258,8 +258,9 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
       {
         setObject(element);
       }
-      else if (currentViewer == arrayViewer && element instanceof Pair)
+      else if (currentViewer == arrayViewer && element instanceof Pair<?, ?>)
       {
+        @SuppressWarnings("unchecked")
         Pair<Integer, Object> pair = (Pair<Integer, Object>)element;
         setObject(pair.getElement2());
       }
@@ -521,14 +522,15 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
    */
   class ObjectLabelProvider extends AbstractLabelProvider
   {
-    @SuppressWarnings("unchecked")
     public String getColumnText(Object obj, int index)
     {
-      if (obj instanceof Pair)
+      if (obj instanceof Pair<?, ?>)
       {
         try
         {
+          @SuppressWarnings("unchecked")
           Pair<Field, Object> pair = (Pair<Field, Object>)obj;
+
           Field field = pair.getElement1();
           Object value = pair.getElement2();
           switch (index)
@@ -631,14 +633,15 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
    */
   class ArrayLabelProvider extends AbstractLabelProvider
   {
-    @SuppressWarnings("unchecked")
     public String getColumnText(Object obj, int index)
     {
-      if (obj instanceof Pair)
+      if (obj instanceof Pair<?, ?>)
       {
         try
         {
+          @SuppressWarnings("unchecked")
           Pair<Integer, Object> pair = (Pair<Integer, Object>)obj;
+
           int i = pair.getElement1();
           Object value = pair.getElement2();
           switch (index)

@@ -36,9 +36,9 @@ import java.util.Map;
  * Is only used for synthetic id's.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.10.2.1 $
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings("rawtypes")
 public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAccessor
 {
   private static final long serialVersionUID = 1L;

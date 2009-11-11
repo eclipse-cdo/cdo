@@ -1115,7 +1115,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * TODO Simon: Should this method go to CDOSavePointImpl?
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   private void registerNew(Map map, InternalCDOObject object)
   {
     Object old = map.put(object.cdoID(), object);
@@ -1494,7 +1494,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     private void preCommit(Map objects)
     {
       if (!objects.isEmpty())
@@ -1506,7 +1506,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     private void postCommit(Map objects, CommitTransactionResult result)
     {
       if (!objects.isEmpty())

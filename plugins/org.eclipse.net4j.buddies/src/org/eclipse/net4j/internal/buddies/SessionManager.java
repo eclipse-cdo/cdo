@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -188,7 +188,6 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
     }
   }
 
-  @SuppressWarnings("unchecked")
   public void notifyEvent(IEvent event)
   {
     if (event.getSource() == session)
@@ -204,8 +203,9 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
           }
         }
       }
-      else if (event instanceof IContainerEvent)
+      else if (event instanceof IContainerEvent<?>)
       {
+        @SuppressWarnings("unchecked")
         IContainerEvent<IBuddy> e = (IContainerEvent<IBuddy>)event;
         if (e.getDeltaKind() == IContainerDelta.Kind.ADDED)
         {

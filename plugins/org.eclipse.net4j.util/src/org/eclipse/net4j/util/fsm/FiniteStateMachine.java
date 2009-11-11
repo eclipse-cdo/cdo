@@ -23,10 +23,10 @@ import java.text.MessageFormat;
  */
 public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends Enum<?>, SUBJECT> extends Lifecycle
 {
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public static final ITransition IGNORE = new IgnoreTransition();
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public static final ITransition FAIL = new FailTransition();
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, FiniteStateMachine.class);

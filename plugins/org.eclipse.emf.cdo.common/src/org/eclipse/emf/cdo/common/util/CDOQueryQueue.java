@@ -73,7 +73,7 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     return queue.add(new QueueEntry<E>(e));
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   public boolean addAll(Collection c)
   {
     return queue.addAll(c);
@@ -84,7 +84,7 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     queue.clear();
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Comparator comparator()
   {
     return queue.comparator();
@@ -95,19 +95,19 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     return queue.contains(o);
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public boolean containsAll(Collection c)
   {
     return queue.containsAll(c);
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   public int drainTo(Collection c, int maxElements)
   {
     return queue.drainTo(c, maxElements);
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   public int drainTo(Collection c)
   {
     return queue.drainTo(c);
@@ -180,13 +180,13 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     return queue.remove(o);
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public boolean removeAll(Collection c)
   {
     return queue.removeAll(c);
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public boolean retainAll(Collection c)
   {
     return queue.retainAll(c);

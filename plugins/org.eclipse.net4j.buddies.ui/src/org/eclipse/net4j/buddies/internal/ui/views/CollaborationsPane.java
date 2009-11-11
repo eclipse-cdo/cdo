@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -169,7 +169,6 @@ public class CollaborationsPane extends Composite implements IListener
     }
   }
 
-  @SuppressWarnings("unchecked")
   public void notifyEvent(IEvent event)
   {
     if (session == null)
@@ -177,8 +176,9 @@ public class CollaborationsPane extends Composite implements IListener
       return;
     }
 
-    if (event.getSource() == session.getSelf() && event instanceof IContainerEvent)
+    if (event.getSource() == session.getSelf() && event instanceof IContainerEvent<?>)
     {
+      @SuppressWarnings("unchecked")
       IContainerEvent<IMembership> e = (IContainerEvent<IMembership>)event;
       e.accept(new IContainerEventVisitor<IMembership>()
       {

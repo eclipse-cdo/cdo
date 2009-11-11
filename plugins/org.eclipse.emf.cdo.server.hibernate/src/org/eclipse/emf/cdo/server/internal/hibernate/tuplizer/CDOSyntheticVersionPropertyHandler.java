@@ -29,9 +29,9 @@ import java.util.Map;
  * Reads the version from the internal version cache.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.6.4.1 $
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings("rawtypes")
 public class CDOSyntheticVersionPropertyHandler implements Getter, Setter, PropertyAccessor
 {
   private static final long serialVersionUID = 1L;

@@ -1403,7 +1403,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * 
    * @generated
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   @Override
   public Object getAdapter(Class key)
   {

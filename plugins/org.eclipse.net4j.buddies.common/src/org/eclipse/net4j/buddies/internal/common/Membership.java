@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -72,7 +72,7 @@ public class Membership extends Lifecycle implements IMembership
   /**
    * @see PlatformObject#getAdapter(Class)
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Object getAdapter(Class adapter)
   {
     return Platform.getAdapterManager().getAdapter(this, adapter);

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -22,11 +22,11 @@ public class ContainerEventAdapter<E> implements IListener
   {
   }
 
-  @SuppressWarnings("unchecked")
   public final void notifyEvent(IEvent event)
   {
-    if (event instanceof IContainerEvent)
+    if (event instanceof IContainerEvent<?>)
     {
+      @SuppressWarnings("unchecked")
       IContainerEvent<E> e = (IContainerEvent<E>)event;
       notifyContainerEvent(e);
     }

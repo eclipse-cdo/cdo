@@ -72,7 +72,7 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
   /**
    * @see PlatformObject#getAdapter(Class)
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Object getAdapter(Class adapter)
   {
     return Platform.getAdapterManager().getAdapter(this, adapter);

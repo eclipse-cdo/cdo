@@ -64,7 +64,7 @@ public class ServerSession extends Lifecycle implements ISession, IListener
   /**
    * @see PlatformObject#getAdapter(Class)
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   public Object getAdapter(Class adapter)
   {
     return Platform.getAdapterManager().getAdapter(this, adapter);

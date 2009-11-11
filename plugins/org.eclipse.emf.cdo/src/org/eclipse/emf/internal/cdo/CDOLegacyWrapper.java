@@ -421,7 +421,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    * IMPORTANT: Compile errors in this method might indicate an old version of EMF. Legacy support is only enabled for
    * EMF with fixed bug #247130. These compile errors do not affect native models!
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   protected void resolveProxies(EStructuralFeature feature, CDOPackageRegistry packageRegistry)
   {
     Object value = getInstanceValue(instance, feature, packageRegistry);

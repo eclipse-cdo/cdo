@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
@@ -211,6 +211,8 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
         if (holderVersion == version)
         {
           revision = holder.getRevision();
+          LRU list = revision.isCurrent() ? currentLRU : revisedLRU;
+          list.remove((DLRevisionHolder)holder);
           removeHolder(holder);
         }
 
@@ -362,15 +364,17 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
       if (holder.isCurrent() && nextHolder.isCurrent())
       {
         currentLRU.remove((DLRevisionHolder)nextHolder);
-        revisedLRU.add((DLRevisionHolder)nextHolder);
 
         InternalCDORevision oldRevision = nextHolder.getRevision();
-
-        // TODO Should we even keeps revised revision with good version && not good revised ?
         if (oldRevision != null && oldRevision.getRevised() == 0 && holder.getCreated() > 0
             && oldRevision.getVersion() == holder.getVersion() - 1)
         {
+          revisedLRU.add((DLRevisionHolder)nextHolder);
           oldRevision.setRevised(holder.getCreated() - 1);
+        }
+        else
+        {
+          removeHolder(nextHolder);
         }
       }
     }

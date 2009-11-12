@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * @author Simon McDuff
  */
-public class LockObjectsRequest extends AbstractSyncRevisionsRequest
+public class LockObjectsRequest extends SyncRevisionsRequest
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LockObjectsRequest.class);
 

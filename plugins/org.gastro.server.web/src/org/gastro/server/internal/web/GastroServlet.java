@@ -92,9 +92,25 @@ public class GastroServlet extends HttpServlet
   public void destroy()
   {
     System.out.println("DESTROY GastroServlet");
-    view.getSession().close();
-    connector.close();
-    acceptor.close();
+    if (view != null)
+    {
+      CDOSession session = (CDOSession)view.getSession();
+      if (session != null)
+      {
+        session.close();
+      }
+    }
+
+    if (connector != null)
+    {
+      connector.close();
+    }
+
+    if (acceptor != null)
+    {
+      acceptor.close();
+    }
+
     super.destroy();
   }
 

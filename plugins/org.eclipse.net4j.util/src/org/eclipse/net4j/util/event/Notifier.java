@@ -128,7 +128,10 @@ public class Notifier implements INotifier
       try
       {
         IListener listener = listeners[i];
-        listener.notifyEvent(event);
+        if (listener != null)
+        {
+          listener.notifyEvent(event);
+        }
       }
       catch (Exception ex)
       {

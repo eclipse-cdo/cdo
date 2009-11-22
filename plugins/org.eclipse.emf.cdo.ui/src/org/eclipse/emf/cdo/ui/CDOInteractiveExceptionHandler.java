@@ -62,13 +62,16 @@ public class CDOInteractiveExceptionHandler implements ExceptionHandler, IElemen
     };
 
     Display display = UIUtil.getDisplay();
-    if (Thread.currentThread() == display.getThread())
+    if (display != null && !display.isDisposed())
     {
-      runnable.run();
-    }
-    else
-    {
-      display.syncExec(runnable);
+      if (display.getThread() == Thread.currentThread())
+      {
+        runnable.run();
+      }
+      else
+      {
+        display.syncExec(runnable);
+      }
     }
 
     if (result[0] != null)

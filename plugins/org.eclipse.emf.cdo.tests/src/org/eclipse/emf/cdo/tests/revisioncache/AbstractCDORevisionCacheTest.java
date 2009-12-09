@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
+import org.eclipse.net4j.util.tests.ConcurrentRunner;
 
 import java.util.List;
 

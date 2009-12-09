@@ -32,6 +32,9 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.emf.ecore.EPackage;
 
 /**
+ * A class that holds a single CDOSession. It starts an IRepository that uses a memstore and a client that connects to
+ * it by JVM transport
+ * 
  * @author Andre Dietisheim
  */
 public class Session extends Lifecycle
@@ -78,6 +81,14 @@ public class Session extends Lifecycle
     LifecycleUtil.deactivate(serverContainer);
   }
 
+  /**
+   * Returns the session held by this class and registers the given packages to it.
+   * 
+   * @param ePackages
+   *          the e packages
+   * @return the session
+   * @see CDOSession
+   */
   public CDOSession getSession(EPackage... ePackages)
   {
     CDOSession session = getSession();
@@ -88,6 +99,11 @@ public class Session extends Lifecycle
     return session;
   }
 
+  /**
+   * Returns the session this class holds.
+   * 
+   * @return the session
+   */
   public CDOSession getSession()
   {
     CheckUtil.checkState(session != null, "Session not activated!");
@@ -111,6 +127,13 @@ public class Session extends Lifecycle
     return configuration.openSession();
   }
 
+  /**
+   * Creates the repository for this session holder. It initializes the acceptor and store used within this session
+   * holder
+   * 
+   * @param repositoryName
+   *          the repository name
+   */
   protected void createRepository(String repositoryName)
   {
     serverContainer = ContainerUtil.createContainer();

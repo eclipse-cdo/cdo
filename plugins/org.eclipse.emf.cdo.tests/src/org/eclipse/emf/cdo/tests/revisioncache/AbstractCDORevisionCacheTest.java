@@ -13,9 +13,12 @@ package org.eclipse.emf.cdo.tests.revisioncache;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.internal.db.cache.DBRevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
+import org.eclipse.emf.cdo.internal.common.revision.cache.mem.MEMRevisionCache;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -31,7 +34,18 @@ import org.eclipse.net4j.util.tests.AbstractOMTest;
 import java.util.List;
 
 /**
+ * An abstract superclass that may be subclassed to test behaviour common to all CDORevisionCaches
+ * 
  * @author Andre Dietisheim
+ * @see CDORevisionCache
+ * @see DBRevisionCache
+ * @see LRURevisionCache
+ * @see MEMRevisionCache
+ * @see DerbyDBRevisionCacheTest
+ * @see H2DBRevisionCacheTest
+ * @see LRURevisionCacheTest
+ * @see MEMRevisionCacheTest
+ * @see DefaultRevisionCacheTest
  */
 public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 {
@@ -50,9 +64,9 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
   {
     super.doSetUp();
 
-    Session sessionFactory = new Session();
-    LifecycleUtil.activate(sessionFactory);
-    session = sessionFactory.getSession(Model1Package.eINSTANCE);
+    Session sessionHolder = new Session();
+    LifecycleUtil.activate(sessionHolder);
+    session = sessionHolder.getSession(Model1Package.eINSTANCE);
     resource = createResource();
     revisionCache = createRevisionCache(session);
     LifecycleUtil.activate(revisionCache);

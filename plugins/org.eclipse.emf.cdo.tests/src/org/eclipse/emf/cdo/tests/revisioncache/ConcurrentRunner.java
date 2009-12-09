@@ -22,7 +22,7 @@ import java.util.concurrent.Future;
  * 
  * @author Andre Dietisheim
  */
-public class ConcurrentTestCaseRunner
+public class ConcurrentRunner
 {
 
   /**

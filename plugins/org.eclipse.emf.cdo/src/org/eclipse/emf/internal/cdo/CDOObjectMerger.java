@@ -40,7 +40,7 @@ public class CDOObjectMerger extends CDORevisionMerger
 
     object.cdoInternalSetRevision(revision);
 
-    // NEW object should stay that state.
+    // NEW objects should stay in that state.
     if (object.cdoState() != CDOState.NEW)
     {
       object.cdoInternalSetState(CDOState.DIRTY);

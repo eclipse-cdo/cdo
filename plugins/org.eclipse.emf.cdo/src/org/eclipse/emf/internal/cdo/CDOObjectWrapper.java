@@ -28,6 +28,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -35,6 +36,8 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author Eike Stepper
@@ -259,6 +262,30 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     return instance.eGet(featureID, resolve, coreType);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public int eDerivedOperationID(int baseOperationID, Class<?> baseClass)
+  {
+    return instance.eDerivedOperationID(baseOperationID, baseClass);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public Object eInvoke(EOperation operation, EList<?> arguments) throws InvocationTargetException
+  {
+    return instance.eInvoke(operation, arguments);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
+  {
+    return instance.eInvoke(operationID, arguments);
   }
 
   public InternalEObject eInternalContainer()

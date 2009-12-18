@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="CDO Server" id="org.eclipse.emf.cdo.server.product" application="org.eclipse.emf.cdo.server.app" useFeatures="true">
-
+<product name="CDO Server" id="org.eclipse.emf.cdo.server.product" application="org.eclipse.emf.cdo.server.app" useFeatures="true" includeLaunchers="true">
 
    <configIni use="">
       <linux>/org.eclipse.emf.cdo.server.product/config.ini</linux>
@@ -29,18 +28,15 @@
 
    <windowImages/>
 
-
-   <launcher name="cdo-server.exe">
+   <launcher name="cdo-server">
       <solaris/>
       <win useIco="false">
          <bmp/>
       </win>
    </launcher>
 
-
    <vm>
    </vm>
-
 
    <plugins>
       <plugin id="org.eclipse.core.contenttype"/>

@@ -269,6 +269,7 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
    */
   public int eDerivedOperationID(int baseOperationID, Class<?> baseClass)
   {
+    // Note: This causes a compiler error with EMF < 2.6M4!!! Ignore it or update your target platform.
     return instance.eDerivedOperationID(baseOperationID, baseClass);
   }
 
@@ -277,6 +278,7 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
    */
   public Object eInvoke(EOperation operation, EList<?> arguments) throws InvocationTargetException
   {
+    // Note: This causes a compiler error with EMF < 2.6M4!!! Ignore it or update your target platform.
     return instance.eInvoke(operation, arguments);
   }
 
@@ -285,6 +287,7 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
    */
   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
   {
+    // Note: This causes a compiler error with EMF < 2.6M4!!! Ignore it or update your target platform.
     return instance.eInvoke(operationID, arguments);
   }
 

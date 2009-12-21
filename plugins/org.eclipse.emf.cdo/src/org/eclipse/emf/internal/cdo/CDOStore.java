@@ -74,13 +74,6 @@ public final class CDOStore implements EStore
 
   private InternalCDOView view;
 
-  // // Used for optimization. Multiple call to CDStore will be sent like size and than add.
-  // private EStructuralFeature lastLookupEFeature;
-  //
-  // private EStructuralFeature lastLookupEStructuralFeature;
-  //
-  // private Object lock = new Object();
-
   /**
    * @since 2.0
    */
@@ -350,136 +343,6 @@ public final class CDOStore implements EStore
     return oldValue;
   }
 
-  /**
-   * @since 2.0
-   */
-  public Object convertToEMF(EObject eObject, InternalCDORevision revision, EStructuralFeature feature, int index,
-      Object value)
-  {
-    if (value != null)
-    {
-      if (value == InternalCDORevision.NIL)
-      {
-        return EStoreEObjectImpl.NIL;
-      }
-
-      if (feature.isMany() && index != EStore.NO_INDEX)
-      {
-        value = resolveProxy(revision, feature, index, value);
-        if (value instanceof CDOID)
-        {
-          CDOID id = (CDOID)value;
-          CDOList list = revision.getList(feature);
-          InternalCDORevisionManager revisionManager = view.getSession().getRevisionManager();
-          CDORevisionPrefetchingPolicy policy = view.options().getRevisionPrefetchingPolicy();
-          Collection<CDOID> listOfIDs = policy.loadAhead(revisionManager, eObject, feature, list, index, id);
-          if (!listOfIDs.isEmpty())
-          {
-            revisionManager.getRevisions(listOfIDs, view.getSession().options().getCollectionLoadingPolicy()
-                .getInitialChunkSize(), CDORevision.DEPTH_NONE);
-          }
-        }
-      }
-
-      // TODO Clarify feature maps
-      if (feature instanceof EReference)
-      {
-        value = convertIdToObject(view, eObject, feature, index, value);
-      }
-      else if (FeatureMapUtil.isFeatureMap(feature))
-      {
-        FeatureMap.Entry entry = (FeatureMap.Entry)value;
-        EStructuralFeature innerFeature = entry.getEStructuralFeature();
-        Object innerValue = entry.getValue();
-        Object convertedValue = convertIdToObject(view, eObject, feature, index, innerValue);
-        if (convertedValue != innerValue)
-        {
-          value = FeatureMapUtil.createEntry(innerFeature, convertedValue);
-        }
-      }
-      else
-      {
-        CDOType type = CDOModelUtil.getType(feature.getEType());
-        if (type != null)
-        {
-          value = type.convertToEMF(feature.getEType(), value);
-        }
-      }
-    }
-
-    return value;
-  }
-
-  private Object convertIdToObject(InternalCDOView view, EObject eObject, EStructuralFeature feature, int index,
-      Object value)
-  {
-    // The EReference condition should be in the CDOType.convertToCDO. Since common package do not have access to
-    // InternalCDOView I kept it here.
-    try
-    {
-      value = view.convertIDToObject(value);
-    }
-    catch (ObjectNotFoundException ex)
-    {
-      if (value instanceof CDOID)
-      {
-        value = view.options().getStaleReferenceBehaviour().processStaleReference(eObject, feature, index, ex.getID());
-      }
-    }
-
-    return value;
-  }
-
-  /**
-   * @since 3.0
-   */
-  public Object convertToCDO(InternalCDOObject object, EStructuralFeature feature, Object value)
-  {
-    if (value != null)
-    {
-      if (value == EStoreEObjectImpl.NIL)
-      {
-        value = InternalCDORevision.NIL;
-      }
-      else if (feature instanceof EReference)
-      {
-        // The EReference condition should be in the CDOType.convertToCDO. Since common package do not have access to
-        // InternalCDOView I kept it here.
-        value = view.convertObjectToID(value, true);
-        // TTT if (value instanceof InternalEObject)
-        // {
-        // CDOIDDangling id = view.convertDanglingObjectToID(object, feature, (InternalEObject)value);
-        // if (id != null)
-        // {
-        // // TODO assign at once from convertDanglingObjectToID() if dangling IDs are fully implemented
-        // value = id;
-        // }
-        // }
-      }
-      else if (FeatureMapUtil.isFeatureMap(feature))
-      {
-        FeatureMap.Entry entry = (FeatureMap.Entry)value;
-        EStructuralFeature innerFeature = entry.getEStructuralFeature();
-        Object innerValue = entry.getValue();
-        Object convertedValue = view.convertObjectToID(innerValue);
-        if (convertedValue != innerValue)
-        {
-          value = CDORevisionUtil.createFeatureMapEntry(innerFeature, convertedValue);
-        }
-      }
-      else
-      {
-        CDOType type = CDOModelUtil.getType(feature.getEType());
-        if (type != null)
-        {
-          value = type.convertToCDO(feature.getEType(), value);
-        }
-      }
-    }
-
-    return value;
-  }
-
   public void unset(InternalEObject eObject, EStructuralFeature feature)
   {
     InternalCDOObject cdoObject = getCDOObject(eObject);
@@ -568,11 +431,6 @@ public final class CDOStore implements EStore
     return MessageFormat.format("CDOStore[{0}]", view); //$NON-NLS-1$
   }
 
-  private InternalCDOObject getCDOObject(Object object)
-  {
-    return FSMUtil.adapt(object, view);
-  }
-
   /**
    * @since 2.0
    */
@@ -586,33 +444,140 @@ public final class CDOStore implements EStore
     return value;
   }
 
-  // private EStructuralFeature getEStructuralFeature(InternalCDOObject cdoObject, EStructuralFeature feature)
-  // {
-  // synchronized (lock)
-  // {
-  // if (feature == lastLookupEFeature)
-  // {
-  // return lastLookupEStructuralFeature;
-  // }
-  // }
-  //
-  // InternalCDOView view = cdoObject.cdoView();
-  // if (view == null)
-  // {
-  // throw new IllegalStateException("view == null");
-  // }
-  //
-  // CDOSessionPackageManagerImpl packageManager = (CDOSessionPackageManagerImpl)view.getSession().getPackageManager();
-  // EStructuralFeature feature = packageManager.getEStructuralFeature(feature);
-  //
-  // synchronized (lock)
-  // {
-  // lastLookupEFeature = feature;
-  // lastLookupEStructuralFeature = feature;
-  // }
-  //
-  // return feature;
-  // }
+  /**
+   * @since 3.0
+   */
+  public Object convertToCDO(InternalCDOObject object, EStructuralFeature feature, Object value)
+  {
+    if (value != null)
+    {
+      if (value == EStoreEObjectImpl.NIL)
+      {
+        value = InternalCDORevision.NIL;
+      }
+      else if (feature instanceof EReference)
+      {
+        // The EReference condition should be in the CDOType.convertToCDO. Since common package do not have access to
+        // InternalCDOView I kept it here.
+        value = view.convertObjectToID(value, true);
+        // TTT if (value instanceof InternalEObject)
+        // {
+        // CDOIDDangling id = view.convertDanglingObjectToID(object, feature, (InternalEObject)value);
+        // if (id != null)
+        // {
+        // // TODO assign at once from convertDanglingObjectToID() if dangling IDs are fully implemented
+        // value = id;
+        // }
+        // }
+      }
+      else if (FeatureMapUtil.isFeatureMap(feature))
+      {
+        FeatureMap.Entry entry = (FeatureMap.Entry)value;
+        EStructuralFeature innerFeature = entry.getEStructuralFeature();
+        Object innerValue = entry.getValue();
+        Object convertedValue = view.convertObjectToID(innerValue);
+        if (convertedValue != innerValue)
+        {
+          value = CDORevisionUtil.createFeatureMapEntry(innerFeature, convertedValue);
+        }
+      }
+      else
+      {
+        CDOType type = CDOModelUtil.getType(feature.getEType());
+        if (type != null)
+        {
+          value = type.convertToCDO(feature.getEType(), value);
+        }
+      }
+    }
+
+    return value;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Object convertToEMF(EObject eObject, InternalCDORevision revision, EStructuralFeature feature, int index,
+      Object value)
+  {
+    if (value != null)
+    {
+      if (value == InternalCDORevision.NIL)
+      {
+        return EStoreEObjectImpl.NIL;
+      }
+
+      if (feature.isMany() && index != EStore.NO_INDEX)
+      {
+        value = resolveProxy(revision, feature, index, value);
+        if (value instanceof CDOID)
+        {
+          CDOID id = (CDOID)value;
+          CDOList list = revision.getList(feature);
+          InternalCDORevisionManager revisionManager = view.getSession().getRevisionManager();
+          CDORevisionPrefetchingPolicy policy = view.options().getRevisionPrefetchingPolicy();
+          Collection<CDOID> listOfIDs = policy.loadAhead(revisionManager, eObject, feature, list, index, id);
+          if (!listOfIDs.isEmpty())
+          {
+            revisionManager.getRevisions(listOfIDs, view.getSession().options().getCollectionLoadingPolicy()
+                .getInitialChunkSize(), CDORevision.DEPTH_NONE);
+          }
+        }
+      }
+
+      // TODO Clarify feature maps
+      if (feature instanceof EReference)
+      {
+        value = convertIdToObject(view, eObject, feature, index, value);
+      }
+      else if (FeatureMapUtil.isFeatureMap(feature))
+      {
+        FeatureMap.Entry entry = (FeatureMap.Entry)value;
+        EStructuralFeature innerFeature = entry.getEStructuralFeature();
+        Object innerValue = entry.getValue();
+        Object convertedValue = convertIdToObject(view, eObject, feature, index, innerValue);
+        if (convertedValue != innerValue)
+        {
+          value = FeatureMapUtil.createEntry(innerFeature, convertedValue);
+        }
+      }
+      else
+      {
+        CDOType type = CDOModelUtil.getType(feature.getEType());
+        if (type != null)
+        {
+          value = type.convertToEMF(feature.getEType(), value);
+        }
+      }
+    }
+
+    return value;
+  }
+
+  private Object convertIdToObject(InternalCDOView view, EObject eObject, EStructuralFeature feature, int index,
+      Object value)
+  {
+    // The EReference condition should be in the CDOType.convertToCDO.
+    // Since common package do not have access to InternalCDOView I kept it here.
+    try
+    {
+      value = view.convertIDToObject(value);
+    }
+    catch (ObjectNotFoundException ex)
+    {
+      if (value instanceof CDOID)
+      {
+        value = view.options().getStaleReferenceBehaviour().processStaleReference(eObject, feature, index, ex.getID());
+      }
+    }
+
+    return value;
+  }
+
+  private InternalCDOObject getCDOObject(Object object)
+  {
+    return FSMUtil.adapt(object, view);
+  }
 
   private static InternalCDORevision getRevisionForReading(InternalCDOObject cdoObject)
   {

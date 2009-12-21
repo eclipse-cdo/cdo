@@ -708,15 +708,35 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
    */
   public void save(Map<?, ?> options) throws IOException
   {
-    CDOView view = cdoView();
-    if (view instanceof CDOTransaction)
+    CDOTransaction transaction = getTransaction(options);
+    IProgressMonitor progressMonitor = options != null ? (IProgressMonitor)options
+        .get(CDOResource.OPTION_SAVE_PROGRESS_MONITOR) : null;
+    transaction.commit(progressMonitor);
+    setModified(false);
+  }
+
+  /**
+   * @ADDED
+   */
+  private CDOTransaction getTransaction(Map<?, ?> options)
+  {
+    CDOTransaction transaction = options != null ? (CDOTransaction)options.get(CDOResource.OPTION_SAVE_OVERRIDE_TRANSACTION)
+        : null;
+
+    if (transaction == null)
     {
-      CDOTransaction transaction = (CDOTransaction)view;
-      IProgressMonitor progressMonitor = options != null ? (IProgressMonitor)options
-          .get(CDOResource.OPTION_SAVE_PROGRESS_MONITOR) : null;
-      transaction.commit(progressMonitor);
-      setModified(false);
+      CDOView view = cdoView();
+      if (view instanceof CDOTransaction)
+      {
+        transaction = (CDOTransaction)view;
+      }
+      else
+      {
+        throw new IllegalStateException("No transaction available");
+      }
     }
+
+    return transaction;
   }
 
   /**

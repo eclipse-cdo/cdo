@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.eresource;
 
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -47,6 +49,12 @@ public interface CDOResource extends CDOResourceNode, Resource
    * @since 2.0
    */
   public static final String OPTION_SAVE_PROGRESS_MONITOR = IProgressMonitor.class.getName();
+
+  /**
+   * @ADDED
+   * @since 3.0
+   */
+  public static final String OPTION_SAVE_OVERRIDE_TRANSACTION = CDOTransaction.class.getName();
 
   /**
    * Returns the value of the '<em><b>Resource Set</b></em>' attribute. <!-- begin-user-doc -->

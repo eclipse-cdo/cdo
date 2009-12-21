@@ -1666,6 +1666,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
               {
                 savedResources.add(resource);
                 saveOptions.put(CDOResource.OPTION_SAVE_PROGRESS_MONITOR, new SubProgressMonitor(monitor, 1));
+                saveOptions.put(CDOResource.OPTION_SAVE_OVERRIDE_TRANSACTION, view);
                 resource.save(saveOptions);
               }
               catch (TransactionException exception)

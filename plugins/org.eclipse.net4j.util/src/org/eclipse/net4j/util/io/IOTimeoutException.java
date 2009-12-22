@@ -15,6 +15,7 @@ import java.util.concurrent.TimeoutException;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
 public class IOTimeoutException extends IOException
 {

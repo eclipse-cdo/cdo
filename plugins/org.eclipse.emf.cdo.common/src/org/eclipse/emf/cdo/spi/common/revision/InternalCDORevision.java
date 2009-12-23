@@ -45,9 +45,10 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
 
   public void setVersion(int version);
 
-  public int setTransactional();
-
-  public void setUntransactional();
+  /**
+   * @since 3.0
+   */
+  public int setTransactional(boolean on);
 
   public void setCreated(long created);
 

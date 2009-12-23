@@ -136,14 +136,9 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li.getRevision().isTransactional();
   }
 
-  public int setTransactional()
+  public int setTransactional(boolean on)
   {
-    return li.getRevision().setTransactional();
-  }
-
-  public void setUntransactional()
-  {
-    li.getRevision().setUntransactional();
+    return li.getRevision().setTransactional(on);
   }
 
   public CDOID getResourceID()

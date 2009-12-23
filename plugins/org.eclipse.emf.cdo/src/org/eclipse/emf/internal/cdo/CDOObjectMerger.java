@@ -35,7 +35,7 @@ public class CDOObjectMerger extends CDORevisionMerger
     InternalCDORevision revision = (InternalCDORevision)object.cdoRevision().copy();
     if (!revision.isTransactional())
     {
-      revision.setTransactional();
+      revision.setTransactional(true);
     }
 
     object.cdoInternalSetRevision(revision);

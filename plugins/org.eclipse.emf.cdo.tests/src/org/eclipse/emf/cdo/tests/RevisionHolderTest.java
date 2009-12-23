@@ -511,12 +511,7 @@ public class RevisionHolderTest extends AbstractCDOTest
       throw new UnsupportedOperationException();
     }
 
-    public int setTransactional()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void setUntransactional()
+    public int setTransactional(boolean on)
     {
       throw new UnsupportedOperationException();
     }

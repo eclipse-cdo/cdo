@@ -286,25 +286,26 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     return version < 0;
   }
 
-  public int setTransactional()
+  /**
+   * @since 3.0
+   */
+  public int setTransactional(boolean on)
   {
-    if (TRACER.isEnabled())
+    if (on)
     {
-      TRACER.format("Setting transactional {0}: v{1}", this, -(version + 1));
+      version = -(version + 1);
+    }
+    else
+    {
+      version = Math.abs(version);
     }
 
-    version = -(version + 1);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Setting transactional={0} for {1}", on, this);
+    }
+
     return version;
-  }
-
-  public void setUntransactional()
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Setting untransactional {0}: v{1}", this, Math.abs(version));
-    }
-
-    version = Math.abs(version);
   }
 
   public long getCreated()

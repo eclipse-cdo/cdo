@@ -764,7 +764,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         revision = (InternalCDORevision)factory.createRevision(eClass);
         revision.setID(id);
         revision.setVersion(formerRevision.getVersion());
-        revision.setTransactional();
+        revision.setTransactional(true);
       }
       else
       {
@@ -858,7 +858,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       // Adjust revision
       revision.setID(id);
-      revision.setUntransactional();
+      revision.setTransactional(false);
       revision.setCreated(data.getTimeStamp());
 
       // if (useDeltas)
@@ -900,7 +900,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       // Copy revision
       InternalCDORevision revision = (InternalCDORevision)object.cdoRevision().copy();
-      revision.setTransactional();
+      revision.setTransactional(true);
       object.cdoInternalSetRevision(revision);
 
       InternalCDOView view = object.cdoView();

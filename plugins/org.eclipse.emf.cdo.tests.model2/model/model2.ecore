@@ -18,4 +18,52 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="done" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Unsettable1">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableBoolean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableByte" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EByte"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableChar" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EChar"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableDouble" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableFloat" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableInt" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableLong" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableShort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EShort"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableVAT" eType="ecore:EEnum ../../org.eclipse.emf.cdo.tests.model1/model/model1.ecore#//VAT"
+        unsettable="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Unsettable2WithDefault">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableBoolean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="true" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableByte" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EByte"
+        defaultValueLiteral="3" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableChar" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EChar"
+        defaultValueLiteral="'x'" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"
+        defaultValueLiteral="2009-12-21T15:12:59" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableDouble" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+        defaultValueLiteral="3.3" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableFloat" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"
+        defaultValueLiteral="4.4" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableInt" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="5" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableLong" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
+        defaultValueLiteral="6" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableShort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EShort"
+        defaultValueLiteral="7" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;eike&quot;" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableVAT" eType="ecore:EEnum ../../org.eclipse.emf.cdo.tests.model1/model/model1.ecore#//VAT"
+        defaultValueLiteral="VAT15" unsettable="true"/>
+  </eClassifiers>
 </ecore:EPackage>

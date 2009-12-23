@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Task;
 import org.eclipse.emf.cdo.tests.model2.TaskContainer;
+import org.eclipse.emf.cdo.tests.model2.Unsettable1;
+import org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -99,6 +101,18 @@ public class Model2AdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseUnsettable1(Unsettable1 object)
+    {
+      return createUnsettable1Adapter();
+    }
+
+    @Override
+    public Adapter caseUnsettable2WithDefault(Unsettable2WithDefault object)
+    {
+      return createUnsettable2WithDefaultAdapter();
+    }
+
+    @Override
     public Adapter caseOrder(Order object)
     {
       return createOrderAdapter();
@@ -170,6 +184,35 @@ public class Model2AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1
+   * <em>Unsettable1</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable1
+   * @generated
+   */
+  public Adapter createUnsettable1Adapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault
+   * <em>Unsettable2 With Default</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
+   * end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault
+   * @generated
+   */
+  public Adapter createUnsettable2WithDefaultAdapter()
   {
     return null;
   }

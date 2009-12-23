@@ -53,6 +53,22 @@ public interface Model2Factory extends EFactory
   Task createTask();
 
   /**
+   * Returns a new object of class '<em>Unsettable1</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Unsettable1</em>'.
+   * @generated
+   */
+  Unsettable1 createUnsettable1();
+
+  /**
+   * Returns a new object of class '<em>Unsettable2 With Default</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Unsettable2 With Default</em>'.
+   * @generated
+   */
+  Unsettable2WithDefault createUnsettable2WithDefault();
+
+  /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the package supported by this factory.

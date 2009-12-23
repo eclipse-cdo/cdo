@@ -194,6 +194,222 @@ public interface Model2Package extends EPackage
   int TASK_FEATURE_COUNT = 3;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl <em>Unsettable1</em>}'
+   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getUnsettable1()
+   * @generated
+   */
+  int UNSETTABLE1 = 3;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Boolean</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE1__UNSETTABLE_BOOLEAN = 0;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Byte</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE1__UNSETTABLE_BYTE = 1;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Char</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE1__UNSETTABLE_CHAR = 2;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Date</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE1__UNSETTABLE_DATE = 3;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Double</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE1__UNSETTABLE_DOUBLE = 4;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Float</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE1__UNSETTABLE_FLOAT = 5;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Int</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE1__UNSETTABLE_INT = 6;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Long</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE1__UNSETTABLE_LONG = 7;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Short</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE1__UNSETTABLE_SHORT = 8;
+
+  /**
+   * The feature id for the '<em><b>Unsettable String</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE1__UNSETTABLE_STRING = 9;
+
+  /**
+   * The feature id for the '<em><b>Unsettable VAT</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE1__UNSETTABLE_VAT = 10;
+
+  /**
+   * The number of structural features of the '<em>Unsettable1</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE1_FEATURE_COUNT = 11;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable2WithDefaultImpl
+   * <em>Unsettable2 With Default</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Unsettable2WithDefaultImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getUnsettable2WithDefault()
+   * @generated
+   */
+  int UNSETTABLE2_WITH_DEFAULT = 4;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Boolean</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BOOLEAN = 0;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Byte</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BYTE = 1;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Char</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_CHAR = 2;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Date</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DATE = 3;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Double</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DOUBLE = 4;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Float</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_FLOAT = 5;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Int</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_INT = 6;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Long</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_LONG = 7;
+
+  /**
+   * The feature id for the '<em><b>Unsettable Short</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_SHORT = 8;
+
+  /**
+   * The feature id for the '<em><b>Unsettable String</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_STRING = 9;
+
+  /**
+   * The feature id for the '<em><b>Unsettable VAT</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_VAT = 10;
+
+  /**
+   * The number of structural features of the '<em>Unsettable2 With Default</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE2_WITH_DEFAULT_FEATURE_COUNT = 11;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder
    * <em>Special Purchase Order</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -291,6 +507,279 @@ public interface Model2Package extends EPackage
    * @generated
    */
   EAttribute getTask_Done();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1 <em>Unsettable1</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Unsettable1</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable1
+   * @generated
+   */
+  EClass getUnsettable1();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#isUnsettableBoolean
+   * <em>Unsettable Boolean</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Boolean</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable1#isUnsettableBoolean()
+   * @see #getUnsettable1()
+   * @generated
+   */
+  EAttribute getUnsettable1_UnsettableBoolean();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableByte
+   * <em>Unsettable Byte</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Byte</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableByte()
+   * @see #getUnsettable1()
+   * @generated
+   */
+  EAttribute getUnsettable1_UnsettableByte();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableChar
+   * <em>Unsettable Char</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Char</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableChar()
+   * @see #getUnsettable1()
+   * @generated
+   */
+  EAttribute getUnsettable1_UnsettableChar();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDate
+   * <em>Unsettable Date</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Date</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDate()
+   * @see #getUnsettable1()
+   * @generated
+   */
+  EAttribute getUnsettable1_UnsettableDate();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDouble
+   * <em>Unsettable Double</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Double</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDouble()
+   * @see #getUnsettable1()
+   * @generated
+   */
+  EAttribute getUnsettable1_UnsettableDouble();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableFloat
+   * <em>Unsettable Float</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Float</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableFloat()
+   * @see #getUnsettable1()
+   * @generated
+   */
+  EAttribute getUnsettable1_UnsettableFloat();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableInt
+   * <em>Unsettable Int</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Int</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableInt()
+   * @see #getUnsettable1()
+   * @generated
+   */
+  EAttribute getUnsettable1_UnsettableInt();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableLong
+   * <em>Unsettable Long</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Long</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableLong()
+   * @see #getUnsettable1()
+   * @generated
+   */
+  EAttribute getUnsettable1_UnsettableLong();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableShort
+   * <em>Unsettable Short</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Short</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableShort()
+   * @see #getUnsettable1()
+   * @generated
+   */
+  EAttribute getUnsettable1_UnsettableShort();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableString
+   * <em>Unsettable String</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable String</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableString()
+   * @see #getUnsettable1()
+   * @generated
+   */
+  EAttribute getUnsettable1_UnsettableString();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableVAT
+   * <em>Unsettable VAT</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable VAT</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableVAT()
+   * @see #getUnsettable1()
+   * @generated
+   */
+  EAttribute getUnsettable1_UnsettableVAT();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault
+   * <em>Unsettable2 With Default</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Unsettable2 With Default</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault
+   * @generated
+   */
+  EClass getUnsettable2WithDefault();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#isUnsettableBoolean <em>Unsettable Boolean</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Boolean</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#isUnsettableBoolean()
+   * @see #getUnsettable2WithDefault()
+   * @generated
+   */
+  EAttribute getUnsettable2WithDefault_UnsettableBoolean();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableByte <em>Unsettable Byte</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Byte</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableByte()
+   * @see #getUnsettable2WithDefault()
+   * @generated
+   */
+  EAttribute getUnsettable2WithDefault_UnsettableByte();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableChar <em>Unsettable Char</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Char</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableChar()
+   * @see #getUnsettable2WithDefault()
+   * @generated
+   */
+  EAttribute getUnsettable2WithDefault_UnsettableChar();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableDate <em>Unsettable Date</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Date</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableDate()
+   * @see #getUnsettable2WithDefault()
+   * @generated
+   */
+  EAttribute getUnsettable2WithDefault_UnsettableDate();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableDouble <em>Unsettable Double</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Double</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableDouble()
+   * @see #getUnsettable2WithDefault()
+   * @generated
+   */
+  EAttribute getUnsettable2WithDefault_UnsettableDouble();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableFloat <em>Unsettable Float</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Float</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableFloat()
+   * @see #getUnsettable2WithDefault()
+   * @generated
+   */
+  EAttribute getUnsettable2WithDefault_UnsettableFloat();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableInt <em>Unsettable Int</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Int</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableInt()
+   * @see #getUnsettable2WithDefault()
+   * @generated
+   */
+  EAttribute getUnsettable2WithDefault_UnsettableInt();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableLong <em>Unsettable Long</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Long</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableLong()
+   * @see #getUnsettable2WithDefault()
+   * @generated
+   */
+  EAttribute getUnsettable2WithDefault_UnsettableLong();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableShort <em>Unsettable Short</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable Short</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableShort()
+   * @see #getUnsettable2WithDefault()
+   * @generated
+   */
+  EAttribute getUnsettable2WithDefault_UnsettableShort();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableString <em>Unsettable String</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable String</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableString()
+   * @see #getUnsettable2WithDefault()
+   * @generated
+   */
+  EAttribute getUnsettable2WithDefault_UnsettableString();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableVAT <em>Unsettable VAT</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Unsettable VAT</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableVAT()
+   * @see #getUnsettable2WithDefault()
+   * @generated
+   */
+  EAttribute getUnsettable2WithDefault_UnsettableVAT();
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -391,6 +880,202 @@ public interface Model2Package extends EPackage
      * @generated
      */
     EAttribute TASK__DONE = eINSTANCE.getTask_Done();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl
+     * <em>Unsettable1</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getUnsettable1()
+     * @generated
+     */
+    EClass UNSETTABLE1 = eINSTANCE.getUnsettable1();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Boolean</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE1__UNSETTABLE_BOOLEAN = eINSTANCE.getUnsettable1_UnsettableBoolean();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Byte</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE1__UNSETTABLE_BYTE = eINSTANCE.getUnsettable1_UnsettableByte();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Char</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE1__UNSETTABLE_CHAR = eINSTANCE.getUnsettable1_UnsettableChar();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Date</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE1__UNSETTABLE_DATE = eINSTANCE.getUnsettable1_UnsettableDate();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Double</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE1__UNSETTABLE_DOUBLE = eINSTANCE.getUnsettable1_UnsettableDouble();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Float</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE1__UNSETTABLE_FLOAT = eINSTANCE.getUnsettable1_UnsettableFloat();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Int</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE1__UNSETTABLE_INT = eINSTANCE.getUnsettable1_UnsettableInt();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Long</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE1__UNSETTABLE_LONG = eINSTANCE.getUnsettable1_UnsettableLong();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Short</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE1__UNSETTABLE_SHORT = eINSTANCE.getUnsettable1_UnsettableShort();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable String</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE1__UNSETTABLE_STRING = eINSTANCE.getUnsettable1_UnsettableString();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable VAT</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE1__UNSETTABLE_VAT = eINSTANCE.getUnsettable1_UnsettableVAT();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable2WithDefaultImpl
+     * <em>Unsettable2 With Default</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Unsettable2WithDefaultImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getUnsettable2WithDefault()
+     * @generated
+     */
+    EClass UNSETTABLE2_WITH_DEFAULT = eINSTANCE.getUnsettable2WithDefault();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Boolean</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BOOLEAN = eINSTANCE.getUnsettable2WithDefault_UnsettableBoolean();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Byte</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BYTE = eINSTANCE.getUnsettable2WithDefault_UnsettableByte();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Char</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_CHAR = eINSTANCE.getUnsettable2WithDefault_UnsettableChar();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Date</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DATE = eINSTANCE.getUnsettable2WithDefault_UnsettableDate();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Double</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DOUBLE = eINSTANCE.getUnsettable2WithDefault_UnsettableDouble();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Float</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_FLOAT = eINSTANCE.getUnsettable2WithDefault_UnsettableFloat();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Int</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_INT = eINSTANCE.getUnsettable2WithDefault_UnsettableInt();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Long</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_LONG = eINSTANCE.getUnsettable2WithDefault_UnsettableLong();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable Short</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_SHORT = eINSTANCE.getUnsettable2WithDefault_UnsettableShort();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable String</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_STRING = eINSTANCE.getUnsettable2WithDefault_UnsettableString();
+
+    /**
+     * The meta object literal for the '<em><b>Unsettable VAT</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_VAT = eINSTANCE.getUnsettable2WithDefault_UnsettableVAT();
 
   }
 

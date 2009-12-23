@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Task;
 import org.eclipse.emf.cdo.tests.model2.TaskContainer;
+import org.eclipse.emf.cdo.tests.model2.Unsettable1;
+import org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -78,6 +80,10 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
       return createTaskContainer();
     case Model2Package.TASK:
       return createTask();
+    case Model2Package.UNSETTABLE1:
+      return createUnsettable1();
+    case Model2Package.UNSETTABLE2_WITH_DEFAULT:
+      return createUnsettable2WithDefault();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -114,6 +120,28 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
   {
     TaskImpl task = new TaskImpl();
     return task;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Unsettable1 createUnsettable1()
+  {
+    Unsettable1Impl unsettable1 = new Unsettable1Impl();
+    return unsettable1;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Unsettable2WithDefault createUnsettable2WithDefault()
+  {
+    Unsettable2WithDefaultImpl unsettable2WithDefault = new Unsettable2WithDefaultImpl();
+    return unsettable2WithDefault;
   }
 
   /**

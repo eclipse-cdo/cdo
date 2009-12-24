@@ -75,12 +75,13 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
     // General
-    testClasses.add(EMapTest.class);
     testClasses.add(InitialTest.class);
     testClasses.add(CDOIDTest.class);
     testClasses.add(ComplexTest.class);
     testClasses.add(AttributeTest.class);
     testClasses.add(EnumTest.class);
+    testClasses.add(EMapTest.class);
+    testClasses.add(UnsetTest.class);
     testClasses.add(StateMachineTest.class);
     testClasses.add(SessionTest.class);
     testClasses.add(RemoteSessionManagerTest.class);

@@ -26,10 +26,10 @@ import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
-import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -187,7 +187,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       CDOResource res2 = transaction.createResource("/res2");
 
       Class1 class1 = getModel3Factory().createClass1();
-      Class2 class2 = SubpackageFactory.eINSTANCE.createClass2();
+      Class2 class2 = getModel3SubpackageFactory().createClass2();
       class1.getClass2().add(class2);
 
       res1.getContents().add(class1);
@@ -203,7 +203,8 @@ public class PackageRegistryTest extends AbstractCDOTest
 
       Class1 class1 = (Class1)res1.getContents().get(0);
       assertNotNull(class1);
-      Class2 class2 = class1.getClass2().get(0);
+      EList<Class2> class22 = class1.getClass2();
+      Class2 class2 = class22.get(0);
       assertNotNull(class2);
     }
 

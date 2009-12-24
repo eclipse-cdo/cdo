@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
 /**
@@ -33,16 +34,15 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 public class UnsetTest extends AbstractCDOTest
 {
   /**
-   * Ensure that properly typed (i.e. usable) default values can be read from dynamic packages.
+   * Ensures that properly typed (i.e. usable) default values can be read from dynamic packages.
    * <p>
    * Works only in standalone mode.
    */
-  public void _testDynamicDefaultValue() throws Exception
+  public static void main(String[] args)
   {
     ResourceSet resourceSet = new ResourceSetImpl();
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
 
-    // URI uri = URI.createPlatformPluginURI("org.eclipse.emf.cdo.tests.model2/model/model2.ecore", true);
     URI uri = URI.createFileURI("../org.eclipse.emf.cdo.tests.model2/model/model2.ecore");
     Resource resource = resourceSet.getResource(uri, true);
 
@@ -50,8 +50,14 @@ public class UnsetTest extends AbstractCDOTest
     EClass unsettable2 = (EClass)model2.getEClassifier("Unsettable2WithDefault");
     EAttribute unsettableInt = (EAttribute)unsettable2.getEStructuralFeature("unsettableInt");
 
-    Object defaultValue = unsettableInt.getDefaultValue();
-    assertEquals(5, (int)(Integer)defaultValue);
+    // Check static default value
+    Integer defaultValue = (Integer)unsettableInt.getDefaultValue();
+    assertEquals(5, (int)defaultValue);
+
+    // Check dynamic default value
+    EObject object = EcoreUtil.create(unsettable2);
+    Integer value = (Integer)object.eGet(unsettableInt);
+    assertEquals((int)defaultValue, (int)value);
   }
 
   public void testReadDefaultValue() throws Exception

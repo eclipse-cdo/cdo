@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
-import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
@@ -37,8 +36,8 @@ public class Bugzilla_285008_Test extends AbstractCDOTest
       CDOResource res1 = transaction.createResource("/res1");
 
       Class1 class1 = getModel3Factory().createClass1();
-      Class2 class2a = SubpackageFactory.eINSTANCE.createClass2();
-      Class2 class2b = SubpackageFactory.eINSTANCE.createClass2();
+      Class2 class2a = getModel3SubpackageFactory().createClass2();
+      Class2 class2b = getModel3SubpackageFactory().createClass2();
       class1.getClass2().add(class2a);
       class1.getClass2().add(class2b);
 

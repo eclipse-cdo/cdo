@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -96,7 +96,7 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
 
       CDOTransaction transaction = session.openTransaction();
       EObject instance = EcoreUtil.create(class1Class);
-      if (NIL != initializeValue)
+      if (initializeValue != NIL)
       {
         instance.eSet(feature, initializeValue);
         // instance.eUnset(feature);

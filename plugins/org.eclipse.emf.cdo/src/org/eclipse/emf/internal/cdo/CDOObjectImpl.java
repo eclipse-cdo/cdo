@@ -325,18 +325,20 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       revision.setResourceID(cdoResource.cdoID());
     }
 
-    EClass eClass = eClass();
-    for (int i = 0; i < eClass.getFeatureCount(); i++)
+    if (cdoSettings != null)
     {
-      EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
-      if (EMFUtil.isPersistent(eFeature))
+      EClass eClass = eClass();
+      for (int i = 0; i < eClass.getFeatureCount(); i++)
       {
-        Object setting = cdoBasicSettings() != null ? cdoSettings()[i] : null;
-        instanceToRevisionFeature(view, this, eFeature, setting);
+        EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
+        if (EMFUtil.isPersistent(eFeature))
+        {
+          instanceToRevisionFeature(view, this, eFeature, cdoSettings[i]);
+        }
       }
-    }
 
-    cdoSettings = null;
+      cdoSettings = null;
+    }
   }
 
   /**
@@ -541,8 +543,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   @Override
   protected boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature)
   {
-    return dynamicFeatureID < 0 ? eOpenIsSet(eFeature) : eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(),
-        dynamicFeatureID);
+    return dynamicFeatureID < 0 ? eOpenIsSet(eFeature) : !EMFUtil.isPersistent(eFeature) ? eSettingDelegate(eFeature)
+        .dynamicIsSet(this, eSettings(), dynamicFeatureID) : eStore().isSet(this, eFeature);
   }
 
   /**
@@ -772,7 +774,14 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     if (cdoSettings == null)
     {
       int size = eClass().getFeatureCount() - eStaticFeatureCount();
-      cdoSettings = size == 0 ? ENO_SETTINGS : new Object[size];
+      if (size == 0)
+      {
+        cdoSettings = ENO_SETTINGS;
+      }
+      else
+      {
+        cdoSettings = new Object[size];
+      }
     }
 
     return cdoSettings;
@@ -1223,7 +1232,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
     protected Object getValue(InternalEObject eObject, int dynamicFeatureID)
     {
-      return ((CDOObjectImpl)eObject).cdoSettings()[dynamicFeatureID];
+      Object value = ((CDOObjectImpl)eObject).cdoSettings()[dynamicFeatureID];
+      return value;
     }
 
     protected EList<Object> getValueAsList(InternalEObject eObject, int dynamicFeatureID)
@@ -1241,16 +1251,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
     protected Object setValue(InternalEObject eObject, int dynamicFeatureID, Object newValue)
     {
-      Object eSettings[] = ((CDOObjectImpl)eObject).cdoSettings();
-
-      try
-      {
-        return eSettings[dynamicFeatureID];
-      }
-      finally
-      {
-        eSettings[dynamicFeatureID] = newValue;
-      }
+      Object settings[] = ((CDOObjectImpl)eObject).cdoSettings();
+      Object oldSetting = settings[dynamicFeatureID];
+      settings[dynamicFeatureID] = newValue;
+      return oldSetting;
     }
 
     protected int eDynamicFeatureID(InternalEObject eObject, EStructuralFeature feature)
@@ -1364,8 +1368,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
     public EStructuralFeature getContainingFeature(InternalEObject eObject)
     {
-      // This should never be called.
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("Should never be called");
     }
 
     public EObject create(EClass eClass)
@@ -1375,14 +1378,39 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
     public boolean isSet(InternalEObject eObject, EStructuralFeature feature)
     {
+      if (!feature.isUnsettable())
+      {
+        return true;
+      }
+
+      Object[] settings = ((CDOObjectImpl)eObject).cdoBasicSettings();
+      if (settings == null)
+      {
+        return false;
+      }
+
       int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      return getValue(eObject, dynamicFeatureID) != null;
+      return settings[dynamicFeatureID] != null;
     }
 
     public void unset(InternalEObject eObject, EStructuralFeature feature)
     {
+      Object[] settings = ((CDOObjectImpl)eObject).cdoBasicSettings();
+      if (settings == null)
+      {
+        // Is already unset
+        return;
+      }
+
       int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      setValue(eObject, dynamicFeatureID, null);
+      if (feature.isUnsettable())
+      {
+        settings[dynamicFeatureID] = null;
+      }
+      else
+      {
+        settings[dynamicFeatureID] = feature.getDefaultValue();
+      }
     }
   }
 

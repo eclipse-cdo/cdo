@@ -322,14 +322,6 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   public Object readCDOFeatureValue(EStructuralFeature feature) throws IOException
   {
     CDOType type = CDOModelUtil.getType(feature);
-    if (type.canBeNull() && !feature.isMany())
-    {
-      if (readBoolean())
-      {
-        return InternalCDORevision.NIL;
-      }
-    }
-
     return type.readValue(this);
   }
 

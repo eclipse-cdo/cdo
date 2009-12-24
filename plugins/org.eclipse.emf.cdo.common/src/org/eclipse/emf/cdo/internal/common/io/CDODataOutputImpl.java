@@ -258,33 +258,7 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
 
   public void writeCDOFeatureValue(EStructuralFeature feature, Object value) throws IOException
   {
-    // TODO We could certainly optimized this: When a feature is a reference, NIL is only possible in the case where
-    // unsettable == true. (TO be verified)
-
     CDOType type = CDOModelUtil.getType(feature);
-    if (type.canBeNull())
-    {
-      if (!feature.isMany())
-      {
-        if (value == InternalCDORevision.NIL)
-        {
-          writeBoolean(true);
-          return;
-        }
-        else
-        {
-          writeBoolean(false);
-        }
-      }
-    }
-    else
-    {
-      if (value == null)
-      {
-        value = feature.getDefaultValue();
-      }
-    }
-
     type.writeValue(this, value);
   }
 

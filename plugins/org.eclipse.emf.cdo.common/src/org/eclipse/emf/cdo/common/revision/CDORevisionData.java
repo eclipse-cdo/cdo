@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -20,6 +20,13 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  */
 public interface CDORevisionData
 {
+  /**
+   * The equivalent of <code>EStructuralFeatureImpl.NIL</code> (i.e. explicit <code>null</code>).
+   * 
+   * @since 3.0
+   */
+  public static final Nil NIL = new Nil();
+
   /**
    * @since 2.0
    */
@@ -78,4 +85,23 @@ public interface CDORevisionData
    * @since 2.0
    */
   public int hashCode(EStructuralFeature feature);
+
+  /**
+   * A singleton marker class that is only used in {@link CDORevisionData#NIL} for better recognition while debugging.
+   * 
+   * @author Eike Stepper
+   * @since 3.0
+   */
+  public static final class Nil
+  {
+    private Nil()
+    {
+    }
+
+    @Override
+    public String toString()
+    {
+      return "<NIL>";
+    }
+  }
 }

@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -37,7 +38,6 @@ import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -171,18 +171,30 @@ public final class CDOStore implements EStore
     view.getFeatureAnalyzer().preTraverseFeature(cdoObject, feature, index);
     InternalCDORevision revision = getRevisionForReading(cdoObject);
 
-    Object value = revision.basicGet(feature, index);
+    Object value = revision.getValue(feature, index);
     value = convertToEMF(eObject, revision, feature, index, value);
 
     view.getFeatureAnalyzer().postTraverseFeature(cdoObject, feature, index, value);
     return value;
   }
 
-  @Deprecated
   public boolean isSet(InternalEObject eObject, EStructuralFeature feature)
   {
-    // Should not be called
-    throw new ImplementationError();
+    if (!feature.isUnsettable())
+    {
+      return true;
+    }
+
+    InternalCDOObject cdoObject = getCDOObject(eObject);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("isSet({0}, {1})", cdoObject, feature); //$NON-NLS-1$
+    }
+
+    InternalCDORevision revision = getRevisionForReading(cdoObject);
+
+    Object value = revision.getValue(feature, NO_INDEX);
+    return value != null;
   }
 
   public int size(InternalEObject eObject, EStructuralFeature feature)
@@ -333,12 +345,12 @@ public final class CDOStore implements EStore
     // TODO Clarify feature maps
     if (feature instanceof EReference)
     {
-      Object oldValue = revision.basicGet(feature, index);
+      Object oldValue = revision.getValue(feature, index);
       oldValue = resolveProxy(revision, feature, index, oldValue);
       value = cdoObject.cdoView().convertObjectToID(value, true);
     }
 
-    Object oldValue = revision.basicSet(feature, index, value);
+    Object oldValue = revision.setValue(feature, index, value);
     oldValue = convertToEMF(eObject, revision, feature, index, oldValue);
     return oldValue;
   }
@@ -354,8 +366,15 @@ public final class CDOStore implements EStore
     CDOFeatureDelta delta = new CDOUnsetFeatureDeltaImpl(feature);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
 
-    // TODO Handle containment remove!!!
-    revision.set(feature, 0, null);
+    if (feature.isUnsettable())
+    {
+      revision.unset(feature);
+    }
+    else
+    {
+      Object defaultValue = convertToCDO(cdoObject, feature, feature.getDefaultValue());
+      revision.set(feature, NO_INDEX, defaultValue);
+    }
   }
 
   public void add(InternalEObject eObject, EStructuralFeature feature, int index, Object value)
@@ -449,26 +468,18 @@ public final class CDOStore implements EStore
    */
   public Object convertToCDO(InternalCDOObject object, EStructuralFeature feature, Object value)
   {
+    if (value == EStoreEObjectImpl.NIL)
+    {
+      return CDORevisionData.NIL;
+    }
+
     if (value != null)
     {
-      if (value == EStoreEObjectImpl.NIL)
-      {
-        value = InternalCDORevision.NIL;
-      }
-      else if (feature instanceof EReference)
+      if (feature instanceof EReference)
       {
         // The EReference condition should be in the CDOType.convertToCDO. Since common package do not have access to
         // InternalCDOView I kept it here.
         value = view.convertObjectToID(value, true);
-        // TTT if (value instanceof InternalEObject)
-        // {
-        // CDOIDDangling id = view.convertDanglingObjectToID(object, feature, (InternalEObject)value);
-        // if (id != null)
-        // {
-        // // TODO assign at once from convertDanglingObjectToID() if dangling IDs are fully implemented
-        // value = id;
-        // }
-        // }
       }
       else if (FeatureMapUtil.isFeatureMap(feature))
       {
@@ -500,13 +511,13 @@ public final class CDOStore implements EStore
   public Object convertToEMF(EObject eObject, InternalCDORevision revision, EStructuralFeature feature, int index,
       Object value)
   {
+    if (value == CDORevisionData.NIL)
+    {
+      return EStoreEObjectImpl.NIL;
+    }
+
     if (value != null)
     {
-      if (value == InternalCDORevision.NIL)
-      {
-        return EStoreEObjectImpl.NIL;
-      }
-
       if (feature.isMany() && index != EStore.NO_INDEX)
       {
         value = resolveProxy(revision, feature, index, value);
@@ -525,7 +536,6 @@ public final class CDOStore implements EStore
         }
       }
 
-      // TODO Clarify feature maps
       if (feature instanceof EReference)
       {
         value = convertIdToObject(view, eObject, feature, index, value);

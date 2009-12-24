@@ -32,11 +32,6 @@ import java.io.IOException;
 public interface InternalCDORevision extends CDORevision, CDORevisionData, CDOReferenceAdjustable
 {
   /**
-   * The equivalent of <code>EStructuralFeatureImpl.NIL</code> (i.e. explicit <code>null</code>).
-   */
-  public static final Object NIL = new Object();
-
-  /**
    * @since 3.0
    */
   public CDOClassInfo getClassInfo();
@@ -80,16 +75,14 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
   public Object setValue(EStructuralFeature feature, Object value);
 
   /**
-   * Use this method to retrieved {@link InternalCDORevision#NIL} object in some cases.
-   * 
-   * @since 2.0
+   * @since 3.0
    */
-  public Object basicGet(EStructuralFeature feature, int index);
+  public Object getValue(EStructuralFeature feature, int index);
 
   /**
-   * Use this method to retrieved {@link InternalCDORevision#NIL} object in some cases.
+   * @since 3.0
    */
-  public Object basicSet(EStructuralFeature feature, int index, Object value);
+  public Object setValue(EStructuralFeature feature, int index, Object value);
 
   public void setList(EStructuralFeature feature, InternalCDOList list);
 
@@ -101,9 +94,6 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
    *          return <code>null</code> in this case.
    */
   public CDOList getList(EStructuralFeature feature, int size);
-
-  @Deprecated
-  public void setListSize(EStructuralFeature feature, int size);
 
   /**
    * @since 3.0

@@ -546,12 +546,12 @@ public class RevisionHolderTest extends AbstractCDOTest
       throw new UnsupportedOperationException();
     }
 
-    public Object basicGet(EStructuralFeature feature, int index)
+    public Object getValue(EStructuralFeature feature, int index)
     {
       throw new UnsupportedOperationException();
     }
 
-    public Object basicSet(EStructuralFeature feature, int index, Object value)
+    public Object setValue(EStructuralFeature feature, int index, Object value)
     {
       throw new UnsupportedOperationException();
     }

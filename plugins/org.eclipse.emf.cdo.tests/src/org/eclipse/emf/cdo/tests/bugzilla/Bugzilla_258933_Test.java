@@ -44,12 +44,12 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
 
   public void testBugzilla_258933() throws Exception
   {
-    testWithValue("level", NIL, false);
+    testWithValue("level", NIL, true);
   }
 
   public void testBugzilla_258933_SetToDefaultValue() throws Exception
   {
-    testWithValue("level", new Integer(10), false);
+    testWithValue("level", new Integer(10), true);
   }
 
   public void testBugzilla_258933_String() throws Exception
@@ -59,7 +59,7 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
 
   public void testBugzilla_258933_String_SetToDefaultValue() throws Exception
   {
-    testWithValue("settable", "Simon", false);
+    testWithValue("settable", "Simon", true);
   }
 
   public void testBugzilla_258933_String_SetToNull() throws Exception
@@ -69,7 +69,7 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
 
   public void testBugzilla_258933_String_unsettable() throws Exception
   {
-    testWithValue("settable", NIL, false);
+    testWithValue("settable", NIL, true);
   }
 
   public void testBugzilla_258933_String_SetToDefaultValue_unsettable() throws Exception
@@ -133,26 +133,29 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
     transaction.getResource("/test1").getContents().remove(0);
     assertEquals(isSet, instance.eIsSet(feature));
 
-    instance.eUnset(feature);
-    assertEquals(false, instance.eIsSet(feature));
+    if (feature.isUnsettable())
+    {
+      instance.eUnset(feature);
+      assertEquals(false, instance.eIsSet(feature));
+    }
   }
 
   public void testBugzilla_258278_List() throws Exception
   {
     {
+      Order order = getModel1Factory().createOrder();
+      assertEquals(true, order.eIsSet(getModel1Package().getOrder_OrderDetails()));
+
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(getModel1Package());
 
       CDOTransaction transaction = session.openTransaction();
-      Order order = getModel1Factory().createOrder();
-      assertFalse(order.eIsSet(getModel1Package().getOrder_OrderDetails()));
-
       CDOResource resource = transaction.createResource("/test1");
       resource.getContents().add(order);
-      assertFalse(order.eIsSet(getModel1Package().getOrder_OrderDetails()));
+      assertEquals(true, order.eIsSet(getModel1Package().getOrder_OrderDetails()));
 
       transaction.commit();
-      assertFalse(order.eIsSet(getModel1Package().getOrder_OrderDetails()));
+      assertEquals(true, order.eIsSet(getModel1Package().getOrder_OrderDetails()));
 
       session.close();
     }
@@ -162,10 +165,10 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
 
     CDOTransaction transaction = session.openTransaction();
     Order instance = (Order)transaction.getResource("/test1").getContents().get(0);
-    assertFalse(instance.eIsSet(getModel1Package().getOrder_OrderDetails()));
+    assertEquals(true, instance.eIsSet(getModel1Package().getOrder_OrderDetails()));
 
     transaction.getResource("/test1").getContents().remove(0);
-    assertFalse(instance.eIsSet(getModel1Package().getOrder_OrderDetails()));
+    assertEquals(true, instance.eIsSet(getModel1Package().getOrder_OrderDetails()));
 
     instance.getOrderDetails().add(getModel1Factory().createOrderDetail());
   }
@@ -193,14 +196,14 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
       EAttribute level = efactory.createEAttribute();
       level.setName("level");
       level.setEType(epackage.getEInt());
-      // level.setUnsettable(true);
+      level.setUnsettable(false);
       level.setDefaultValue(new Integer(10));
       schoolBookEClass.getEStructuralFeatures().add(level);
 
       EAttribute settable = efactory.createEAttribute();
       settable.setName("settable");
       settable.setEType(epackage.getEString());
-      // level.setUnsettable(true);
+      level.setUnsettable(false);
       settable.setDefaultValue(new String("Simon"));
       schoolBookEClass.getEStructuralFeatures().add(settable);
 

@@ -286,12 +286,6 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li.getRevision().set(feature, index, value);
   }
 
-  @SuppressWarnings("deprecation")
-  public void setListSize(EStructuralFeature feature, int size)
-  {
-    li.getRevision().setListSize(feature, size);
-  }
-
   public Object setValue(EStructuralFeature feature, Object value)
   {
     return li.getRevision().setValue(feature, value);
@@ -317,14 +311,14 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     li.getRevision().unset(feature);
   }
 
-  public Object basicGet(EStructuralFeature feature, int index)
+  public Object getValue(EStructuralFeature feature, int index)
   {
-    return li.getRevision().basicGet(feature, index);
+    return li.getRevision().getValue(feature, index);
   }
 
-  public Object basicSet(EStructuralFeature feature, int index, Object value)
+  public Object setValue(EStructuralFeature feature, int index, Object value)
   {
-    return li.getRevision().basicSet(feature, index, value);
+    return li.getRevision().setValue(feature, index, value);
   }
 
   public int hashCode(EStructuralFeature feature)

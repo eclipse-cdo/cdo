@@ -11,7 +11,6 @@
 package org.eclipse.net4j.util.concurrent;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
@@ -164,7 +163,7 @@ public abstract class Worker extends Lifecycle
           }
           catch (InterruptedException ex)
           {
-            throw WrappedException.wrap(ex);
+            return;
           }
         }
         catch (Terminate terminate)
@@ -173,7 +172,7 @@ public abstract class Worker extends Lifecycle
         }
         catch (InterruptedException ex)
         {
-          throw WrappedException.wrap(ex);
+          return;
         }
         catch (Exception ex)
         {

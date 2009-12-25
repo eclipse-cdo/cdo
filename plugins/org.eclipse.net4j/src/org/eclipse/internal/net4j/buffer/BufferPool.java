@@ -13,7 +13,6 @@ package org.eclipse.internal.net4j.buffer;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferPool;
 import org.eclipse.net4j.buffer.IBufferProvider;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -230,7 +229,7 @@ public class BufferPool extends BufferProvider implements IBufferPool, IBufferPo
       }
       catch (InterruptedException ex)
       {
-        throw WrappedException.wrap(ex);
+        return;
       }
       finally
       {

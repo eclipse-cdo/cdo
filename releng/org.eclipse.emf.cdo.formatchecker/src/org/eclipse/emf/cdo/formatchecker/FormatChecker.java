@@ -606,11 +606,15 @@ public class FormatChecker
     ignore("org.eclipse.emf.cdo.tests.model1.impl.SupplierImpl", 1);
     ignore("org.eclipse.emf.cdo.tests.model1.util.Model1AdapterFactory", 3);
     ignore("org.eclipse.emf.cdo.tests.model1.util.Model1Switch", 2);
+    ignore("org.eclipse.emf.cdo.tests.model2.Unsettable1", 1);
+    ignore("org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault", 1);
     ignore("org.eclipse.emf.cdo.tests.model2.Model2Factory", 1);
     ignore("org.eclipse.emf.cdo.tests.model2.Model2Package", 2);
     ignore("org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder", 1);
     ignore("org.eclipse.emf.cdo.tests.model2.Task", 1);
     ignore("org.eclipse.emf.cdo.tests.model2.TaskContainer", 1);
+    ignore("org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl", 1);
+    ignore("org.eclipse.emf.cdo.tests.model2.impl.Unsettable2WithDefaultImpl", 1);
     ignore("org.eclipse.emf.cdo.tests.model2.impl.Model2FactoryImpl", 2);
     ignore("org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl", 1);
     ignore("org.eclipse.emf.cdo.tests.model2.impl.SpecialPurchaseOrderImpl", 1);

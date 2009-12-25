@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2009 Andre Dietisheim (Bern, Switzerland) and others.
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
+ *    Eike Stepper - maintenance
  */
 package org.eclipse.emf.cdo.tests.revisioncache;
 
@@ -291,7 +292,6 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testConcurrentAccess() throws Throwable
   {
-
     Runnable[] testCases = new Runnable[] {
 
     new Runnable()
@@ -306,45 +306,54 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
         CDORevision fetchedRevision = revisionCache.getRevision(revision.getID());
         assertNotNull(fetchedRevision != null);
       }
-    }, new Runnable()
-    {
-      public void run()
-      {
-        CDOObject company = createCompanyInResource("Puzzle", session.openTransaction());
-        CDORevision revision = company.cdoRevision();
-        revisionCache.addRevision(revision);
-        CDORevision fetchedRevision = revisionCache.getRevisionByVersion(revision.getID(), revision.getVersion());
-        assertEquals(revision.getVersion(), fetchedRevision.getVersion());
-        assertEquals(revision.getCreated(), fetchedRevision.getCreated());
-      }
-    }, new Runnable()
-    {
-      public void run()
-      {
-        CDOObject company = createCompanyInResource("Puzzle", session.openTransaction());
-        CDORevision revision = company.cdoRevision();
-        revisionCache.addRevision(revision);
-        revisionCache.removeRevision(revision.getID(), revision.getVersion());
-      }
-    }, new Runnable()
-    {
-      public void run()
-      {
-        revisionCache.getRevisions();
-      }
-    }, new Runnable()
-    {
-      public void run()
-      {
-        CDOObject company = createCompanyInResource("Puzzle", session.openTransaction());
-        CDORevision revision = company.cdoRevision();
-        revisionCache.addRevision(revision);
-        CDORevision fetchedRevision = revisionCache.getRevisionByTime(revision.getID(), revision.getCreated());
-        assertEquals(revision.getVersion(), fetchedRevision.getVersion());
-        assertEquals(revision.getCreated(), fetchedRevision.getCreated());
-        revisionCache.removeRevision(revision.getID(), revision.getVersion());
-      }
-    } };
+    } //
+
+        , new Runnable()
+        {
+          public void run()
+          {
+            CDOObject company = createCompanyInResource("Puzzle", session.openTransaction());
+            CDORevision revision = company.cdoRevision();
+            revisionCache.addRevision(revision);
+            CDORevision fetchedRevision = revisionCache.getRevisionByVersion(revision.getID(), revision.getVersion());
+            assertEquals(revision.getVersion(), fetchedRevision.getVersion());
+            assertEquals(revision.getCreated(), fetchedRevision.getCreated());
+          }
+        } //
+
+        , new Runnable()
+        {
+          public void run()
+          {
+            CDOObject company = createCompanyInResource("Puzzle", session.openTransaction());
+            CDORevision revision = company.cdoRevision();
+            revisionCache.addRevision(revision);
+            revisionCache.removeRevision(revision.getID(), revision.getVersion());
+          }
+        } //
+
+        , new Runnable()
+        {
+          public void run()
+          {
+            revisionCache.getRevisions();
+          }
+        } //
+
+        , new Runnable()
+        {
+          public void run()
+          {
+            CDOObject company = createCompanyInResource("Puzzle", session.openTransaction());
+            CDORevision revision = company.cdoRevision();
+            revisionCache.addRevision(revision);
+            CDORevision fetchedRevision = revisionCache.getRevisionByTime(revision.getID(), revision.getCreated());
+            assertEquals(revision.getVersion(), fetchedRevision.getVersion());
+            assertEquals(revision.getCreated(), fetchedRevision.getCreated());
+            revisionCache.removeRevision(revision.getID(), revision.getVersion());
+          }
+        } };
+
     ConcurrentRunner.run(testCases, MAX_THREADS, 50);
   }
 

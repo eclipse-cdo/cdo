@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class MultiValuedOfAttributeTest extends AbstractCDOTest
 {
-  public void testFeatureMaps() throws Exception
+  public void _testFeatureMaps() throws Exception
   {
     {
       CDOSession session = openSession(getModel5Package());

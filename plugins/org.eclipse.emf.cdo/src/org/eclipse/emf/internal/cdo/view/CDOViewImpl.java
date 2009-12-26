@@ -599,7 +599,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
   /**
    * TODO Remove me
-   * 
+   *
    * @since 2.0
    */
   @Deprecated
@@ -1199,7 +1199,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
    * to the caller of this method but this should not happen in the absence of implementation errors.
    * <p>
    * Note that this method can block for an uncertain amount of time on the reentrant view lock!
-   * 
+   *
    * @param timeStamp
    *          The time stamp of the server transaction if this event was sent as a result of a successfully committed
    *          transaction or <code>LOCAL_ROLLBACK</code> if this event was sent due to a local rollback.
@@ -1452,7 +1452,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
   /**
    * Needed for {@link CDOAuditImpl#setTimeStamp(long)}.
-   * 
+   *
    * @since 2.0
    */
   protected List<InternalCDOObject> getInvalidObjects(long timeStamp)
@@ -1705,7 +1705,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     {
       if (options().getStrongReferencePolicy().isValid(object, adapter))
       {
-        objects.add(object);
+        objects.remove(object);
       }
     }
 

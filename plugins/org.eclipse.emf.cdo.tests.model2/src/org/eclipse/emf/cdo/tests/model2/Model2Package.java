@@ -410,6 +410,61 @@ public interface Model2Package extends EPackage
   int UNSETTABLE2_WITH_DEFAULT_FEATURE_COUNT = 11;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.PersistentContainmentImpl
+   * <em>Persistent Containment</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.PersistentContainmentImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getPersistentContainment()
+   * @generated
+   */
+  int PERSISTENT_CONTAINMENT = 5;
+
+  /**
+   * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PERSISTENT_CONTAINMENT__CHILDREN = 0;
+
+  /**
+   * The number of structural features of the '<em>Persistent Containment</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PERSISTENT_CONTAINMENT_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.TransientContainerImpl
+   * <em>Transient Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.TransientContainerImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getTransientContainer()
+   * @generated
+   */
+  int TRANSIENT_CONTAINER = 6;
+
+  /**
+   * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int TRANSIENT_CONTAINER__PARENT = 0;
+
+  /**
+   * The number of structural features of the '<em>Transient Container</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int TRANSIENT_CONTAINER_FEATURE_COUNT = 1;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder
    * <em>Special Purchase Order</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -782,6 +837,50 @@ public interface Model2Package extends EPackage
   EAttribute getUnsettable2WithDefault_UnsettableVAT();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.PersistentContainment
+   * <em>Persistent Containment</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Persistent Containment</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.PersistentContainment
+   * @generated
+   */
+  EClass getPersistentContainment();
+
+  /**
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.tests.model2.PersistentContainment#getChildren <em>Children</em>}'. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Children</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.PersistentContainment#getChildren()
+   * @see #getPersistentContainment()
+   * @generated
+   */
+  EReference getPersistentContainment_Children();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.TransientContainer
+   * <em>Transient Container</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Transient Container</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.TransientContainer
+   * @generated
+   */
+  EClass getTransientContainer();
+
+  /**
+   * Returns the meta object for the container reference '
+   * {@link org.eclipse.emf.cdo.tests.model2.TransientContainer#getParent <em>Parent</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for the container reference '<em>Parent</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.TransientContainer#getParent()
+   * @see #getTransientContainer()
+   * @generated
+   */
+  EReference getTransientContainer_Parent();
+
+  /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the factory that creates the instances of the model.
@@ -1076,6 +1175,42 @@ public interface Model2Package extends EPackage
      * @generated
      */
     EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_VAT = eINSTANCE.getUnsettable2WithDefault_UnsettableVAT();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model2.impl.PersistentContainmentImpl
+     * <em>Persistent Containment</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.PersistentContainmentImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getPersistentContainment()
+     * @generated
+     */
+    EClass PERSISTENT_CONTAINMENT = eINSTANCE.getPersistentContainment();
+
+    /**
+     * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference PERSISTENT_CONTAINMENT__CHILDREN = eINSTANCE.getPersistentContainment_Children();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model2.impl.TransientContainerImpl
+     * <em>Transient Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.TransientContainerImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getTransientContainer()
+     * @generated
+     */
+    EClass TRANSIENT_CONTAINER = eINSTANCE.getTransientContainer();
+
+    /**
+     * The meta object literal for the '<em><b>Parent</b></em>' container reference feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference TRANSIENT_CONTAINER__PARENT = eINSTANCE.getTransientContainer_Parent();
 
   }
 

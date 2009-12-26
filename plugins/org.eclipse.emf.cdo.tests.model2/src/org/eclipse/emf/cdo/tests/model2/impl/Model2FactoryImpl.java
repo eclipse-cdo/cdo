@@ -12,9 +12,11 @@ package org.eclipse.emf.cdo.tests.model2.impl;
 
 import org.eclipse.emf.cdo.tests.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model2.PersistentContainment;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Task;
 import org.eclipse.emf.cdo.tests.model2.TaskContainer;
+import org.eclipse.emf.cdo.tests.model2.TransientContainer;
 import org.eclipse.emf.cdo.tests.model2.Unsettable1;
 import org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault;
 
@@ -84,6 +86,10 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
       return createUnsettable1();
     case Model2Package.UNSETTABLE2_WITH_DEFAULT:
       return createUnsettable2WithDefault();
+    case Model2Package.PERSISTENT_CONTAINMENT:
+      return createPersistentContainment();
+    case Model2Package.TRANSIENT_CONTAINER:
+      return createTransientContainer();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -142,6 +148,28 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
   {
     Unsettable2WithDefaultImpl unsettable2WithDefault = new Unsettable2WithDefaultImpl();
     return unsettable2WithDefault;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public PersistentContainment createPersistentContainment()
+  {
+    PersistentContainmentImpl persistentContainment = new PersistentContainmentImpl();
+    return persistentContainment;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public TransientContainer createTransientContainer()
+  {
+    TransientContainerImpl transientContainer = new TransientContainerImpl();
+    return transientContainer;
   }
 
   /**

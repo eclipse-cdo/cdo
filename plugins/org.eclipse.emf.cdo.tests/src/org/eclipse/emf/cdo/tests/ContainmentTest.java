@@ -509,7 +509,6 @@ public class ContainmentTest extends AbstractCDOTest
   {
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
-
     CDOResource resource = transaction.createResource("/my/resource1");
 
     for (EClassifier eClassifier : EcorePackage.eINSTANCE.getEClassifiers())

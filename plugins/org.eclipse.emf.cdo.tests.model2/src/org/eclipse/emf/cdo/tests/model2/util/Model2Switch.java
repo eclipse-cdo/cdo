@@ -13,9 +13,11 @@ package org.eclipse.emf.cdo.tests.model2.util;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model2.PersistentContainment;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Task;
 import org.eclipse.emf.cdo.tests.model2.TaskContainer;
+import org.eclipse.emf.cdo.tests.model2.TransientContainer;
 import org.eclipse.emf.cdo.tests.model2.Unsettable1;
 import org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault;
 
@@ -142,6 +144,22 @@ public class Model2Switch<T>
         result = defaultCase(theEObject);
       return result;
     }
+    case Model2Package.PERSISTENT_CONTAINMENT:
+    {
+      PersistentContainment persistentContainment = (PersistentContainment)theEObject;
+      T result = casePersistentContainment(persistentContainment);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model2Package.TRANSIENT_CONTAINER:
+    {
+      TransientContainer transientContainer = (TransientContainer)theEObject;
+      T result = caseTransientContainer(transientContainer);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
     default:
       return defaultCase(theEObject);
     }
@@ -220,6 +238,37 @@ public class Model2Switch<T>
    * @generated
    */
   public T caseUnsettable2WithDefault(Unsettable2WithDefault object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Persistent Containment</em>'. <!--
+   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
+   * end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Persistent Containment</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePersistentContainment(PersistentContainment object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Transient Container</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Transient Container</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTransientContainer(TransientContainer object)
   {
     return null;
   }

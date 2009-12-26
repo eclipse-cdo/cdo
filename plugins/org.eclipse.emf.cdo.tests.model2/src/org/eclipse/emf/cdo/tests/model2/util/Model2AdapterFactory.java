@@ -13,9 +13,11 @@ package org.eclipse.emf.cdo.tests.model2.util;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model2.PersistentContainment;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Task;
 import org.eclipse.emf.cdo.tests.model2.TaskContainer;
+import org.eclipse.emf.cdo.tests.model2.TransientContainer;
 import org.eclipse.emf.cdo.tests.model2.Unsettable1;
 import org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault;
 
@@ -110,6 +112,18 @@ public class Model2AdapterFactory extends AdapterFactoryImpl
     public Adapter caseUnsettable2WithDefault(Unsettable2WithDefault object)
     {
       return createUnsettable2WithDefaultAdapter();
+    }
+
+    @Override
+    public Adapter casePersistentContainment(PersistentContainment object)
+    {
+      return createPersistentContainmentAdapter();
+    }
+
+    @Override
+    public Adapter caseTransientContainer(TransientContainer object)
+    {
+      return createTransientContainerAdapter();
     }
 
     @Override
@@ -213,6 +227,36 @@ public class Model2AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createUnsettable2WithDefaultAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model2.PersistentContainment
+   * <em>Persistent Containment</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
+   * end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model2.PersistentContainment
+   * @generated
+   */
+  public Adapter createPersistentContainmentAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model2.TransientContainer
+   * <em>Transient Container</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
+   * end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model2.TransientContainer
+   * @generated
+   */
+  public Adapter createTransientContainerAdapter()
   {
     return null;
   }

@@ -69,6 +69,22 @@ public interface Model2Factory extends EFactory
   Unsettable2WithDefault createUnsettable2WithDefault();
 
   /**
+   * Returns a new object of class '<em>Persistent Containment</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Persistent Containment</em>'.
+   * @generated
+   */
+  PersistentContainment createPersistentContainment();
+
+  /**
+   * Returns a new object of class '<em>Transient Container</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Transient Container</em>'.
+   * @generated
+   */
+  TransientContainer createTransientContainer();
+
+  /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the package supported by this factory.

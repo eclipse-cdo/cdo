@@ -66,4 +66,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableVAT" eType="ecore:EEnum ../../org.eclipse.emf.cdo.tests.model1/model/model1.ecore#//VAT"
         defaultValueLiteral="VAT15" unsettable="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PersistentContainment">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//TransientContainer" containment="true" eOpposite="#//TransientContainer/parent"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TransientContainer">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//PersistentContainment"
+        eOpposite="#//PersistentContainment/children"/>
+  </eClassifiers>
 </ecore:EPackage>

@@ -13,9 +13,11 @@ package org.eclipse.emf.cdo.tests.model2.impl;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model2.PersistentContainment;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Task;
 import org.eclipse.emf.cdo.tests.model2.TaskContainer;
+import org.eclipse.emf.cdo.tests.model2.TransientContainer;
 import org.eclipse.emf.cdo.tests.model2.Unsettable1;
 import org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault;
 
@@ -66,6 +68,20 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * @generated
    */
   private EClass unsettable2WithDefaultEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass persistentContainmentEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass transientContainerEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -468,6 +484,46 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * 
    * @generated
    */
+  public EClass getPersistentContainment()
+  {
+    return persistentContainmentEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getPersistentContainment_Children()
+  {
+    return (EReference)persistentContainmentEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getTransientContainer()
+  {
+    return transientContainerEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getTransientContainer_Parent()
+  {
+    return (EReference)transientContainerEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public Model2Factory getModel2Factory()
   {
     return (Model2Factory)getEFactoryInstance();
@@ -530,6 +586,12 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     createEAttribute(unsettable2WithDefaultEClass, UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_SHORT);
     createEAttribute(unsettable2WithDefaultEClass, UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_STRING);
     createEAttribute(unsettable2WithDefaultEClass, UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_VAT);
+
+    persistentContainmentEClass = createEClass(PERSISTENT_CONTAINMENT);
+    createEReference(persistentContainmentEClass, PERSISTENT_CONTAINMENT__CHILDREN);
+
+    transientContainerEClass = createEClass(TRANSIENT_CONTAINER);
+    createEReference(transientContainerEClass, TRANSIENT_CONTAINER__PARENT);
   }
 
   /**
@@ -662,6 +724,20 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     initEAttribute(getUnsettable2WithDefault_UnsettableVAT(), theModel1Package.getVAT(), "unsettableVAT", "VAT15", 0,
         1, Unsettable2WithDefault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
+
+    initEClass(persistentContainmentEClass, PersistentContainment.class, "PersistentContainment", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPersistentContainment_Children(), this.getTransientContainer(), this
+        .getTransientContainer_Parent(), "children", null, 0, -1, PersistentContainment.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+
+    initEClass(transientContainerEClass, TransientContainer.class, "TransientContainer", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTransientContainer_Parent(), this.getPersistentContainment(), this
+        .getPersistentContainment_Children(), "parent", null, 0, 1, TransientContainer.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

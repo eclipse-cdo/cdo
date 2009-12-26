@@ -26,6 +26,8 @@ public interface IConstants
 
   public static final RepositoryConfig MEM = RepositoryConfig.MEM.INSTANCE;
 
+  public static final RepositoryConfig MEM_OFFLINE = RepositoryConfig.MEMOffline.INSTANCE;
+
   public static final SessionConfig EMBEDDED = SessionConfig.Embedded.INSTANCE;
 
   public static final SessionConfig JVM = SessionConfig.JVM.INSTANCE;

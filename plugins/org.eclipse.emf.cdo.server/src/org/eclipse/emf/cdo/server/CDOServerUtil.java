@@ -14,7 +14,10 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionConfiguration;
+import org.eclipse.emf.cdo.internal.server.offline.ClonedRepository;
+import org.eclipse.emf.cdo.internal.server.offline.OfflineRepository;
 import org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -63,6 +66,26 @@ public final class CDOServerUtil
     repository.setStore(store);
     repository.setProperties(props);
     return repository;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static IRepository createClonedRepository(String name, IStore store, Map<String, String> props)
+  {
+    ClonedRepository repository = new ClonedRepository();
+    repository.setName(name);
+    repository.setStore(store);
+    repository.setProperties(props);
+    return repository;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static IRepository createOfflineRepository(IRepository delegate, String userID)
+  {
+    return new OfflineRepository((InternalRepository)delegate, userID);
   }
 
   public static void addRepository(IManagedContainer container, IRepository repository)

@@ -103,9 +103,9 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
   private ExecutorService executorService = createExecutorService();
 
-  private Map<InternalCDOTransaction, InternalCDOXACommitContext> activeContext = new HashMap<InternalCDOTransaction, InternalCDOXACommitContext>();
+  private Map<InternalCDOTransaction, InternalCDOXACommitContext> activeContexts = new HashMap<InternalCDOTransaction, InternalCDOXACommitContext>();
 
-  private Map<InternalCDOTransaction, Set<CDOID>> requestedCDOID = new HashMap<InternalCDOTransaction, Set<CDOID>>();
+  private Map<InternalCDOTransaction, Set<CDOID>> requestedCDOIDs = new HashMap<InternalCDOTransaction, Set<CDOID>>();
 
   private InternalCDOXASavepoint lastSavepoint = createSavepoint(null);
 
@@ -124,9 +124,9 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     return allowRequestFromTransactionEnabled;
   }
 
-  public void setAllowRequestFromTransactionEnabled(boolean allRequest)
+  public void setAllowRequestFromTransactionEnabled(boolean on)
   {
-    allowRequestFromTransactionEnabled = allRequest;
+    allowRequestFromTransactionEnabled = on;
   }
 
   public void add(InternalCDOTransaction transaction)
@@ -173,13 +173,13 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
   public void add(InternalCDOTransaction transaction, CDOID object)
   {
-    synchronized (requestedCDOID)
+    synchronized (requestedCDOIDs)
     {
-      Set<CDOID> ids = requestedCDOID.get(transaction);
+      Set<CDOID> ids = requestedCDOIDs.get(transaction);
       if (ids == null)
       {
         ids = new HashSet<CDOID>();
-        requestedCDOID.put(transaction, ids);
+        requestedCDOIDs.put(transaction, ids);
       }
 
       ids.add(object);
@@ -188,13 +188,13 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
   public CDOID[] get(InternalCDOTransaction transaction)
   {
-    Set<CDOID> ids = requestedCDOID.get(transaction);
+    Set<CDOID> ids = requestedCDOIDs.get(transaction);
     return ids.toArray(new CDOID[ids.size()]);
   }
 
   public InternalCDOXACommitContext getCommitContext(CDOTransaction transaction)
   {
-    return activeContext.get(transaction);
+    return activeContexts.get(transaction);
   }
 
   private void send(Collection<InternalCDOXACommitContext> xaContexts, final IProgressMonitor progressMonitor)
@@ -257,8 +257,8 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
   private void cleanUp()
   {
-    activeContext.clear();
-    requestedCDOID.clear();
+    activeContexts.clear();
+    requestedCDOIDs.clear();
   }
 
   private List<InternalCDOTransaction> getTransactions(CDOViewSet viewSet)
@@ -291,7 +291,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       InternalCDOCommitContext context = transaction.createCommitContext();
       InternalCDOXACommitContext xaContext = createXACommitContext(context);
       xaContext.setState(CDOXAPhase1State.INSTANCE);
-      activeContext.put(transaction, xaContext);
+      activeContexts.put(transaction, xaContext);
     }
 
     try
@@ -299,7 +299,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       // We need to complete 3 phases
       while (phase < 3)
       {
-        send(activeContext.values(), new SubProgressMonitor(progressMonitor, 1));
+        send(activeContexts.values(), new SubProgressMonitor(progressMonitor, 1));
         ++phase;
       }
     }
@@ -308,14 +308,14 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       if (phase < 2)
       {
         // Phase 0 and 1 are the only two phases we can cancel.
-        for (InternalCDOXACommitContext xaContext : activeContext.values())
+        for (InternalCDOXACommitContext xaContext : activeContexts.values())
         {
           xaContext.setState(CDOXACancel.INSTANCE);
         }
 
         try
         {
-          send(activeContext.values(), new SubProgressMonitor(progressMonitor, 2 - phase));
+          send(activeContexts.values(), new SubProgressMonitor(progressMonitor, 2 - phase));
         }
         catch (InterruptedException ex1)
         {

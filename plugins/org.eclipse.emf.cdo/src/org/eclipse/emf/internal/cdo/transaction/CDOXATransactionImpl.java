@@ -47,13 +47,16 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -96,7 +99,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
   private List<InternalCDOTransaction> transactions = new ArrayList<InternalCDOTransaction>();
 
-  private boolean allRequestEnabled = true;
+  private boolean allowRequestFromTransactionEnabled = true;
 
   private ExecutorService executorService = createExecutorService();
 
@@ -118,12 +121,12 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
   public boolean isAllowRequestFromTransactionEnabled()
   {
-    return allRequestEnabled;
+    return allowRequestFromTransactionEnabled;
   }
 
   public void setAllowRequestFromTransactionEnabled(boolean allRequest)
   {
-    allRequestEnabled = allRequest;
+    allowRequestFromTransactionEnabled = allRequest;
   }
 
   public void add(InternalCDOTransaction transaction)
@@ -202,26 +205,33 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
     try
     {
-      List<Future<Object>> futures = new ArrayList<Future<Object>>();
+      Map<Future<Object>, InternalCDOXACommitContext> futures = new HashMap<Future<Object>, InternalCDOXACommitContext>();
       for (InternalCDOXACommitContext xaContext : xaContexts)
       {
         xaContext.setProgressMonitor(new SynchronizedSubProgressMonitor(progressMonitor, 1));
-        futures.add(executorService.submit(xaContext));
+        Future<Object> future = executorService.submit(xaContext);
+        futures.put(future, xaContext);
       }
 
       int nbProcessDone = 0;
 
       do
       {
-        for (Future<Object> future : futures)
+        for (Iterator<Entry<Future<Object>, InternalCDOXACommitContext>> it = futures.entrySet().iterator(); it
+            .hasNext();)
         {
+          Entry<Future<Object>, InternalCDOXACommitContext> entry = it.next();
+          Future<Object> future = entry.getKey();
+          InternalCDOXACommitContext xaContext = entry.getValue();
+
           try
           {
-            future.get(2000, TimeUnit.MILLISECONDS);
+            future.get(1000, TimeUnit.MILLISECONDS);
             nbProcessDone++;
+            it.remove();
             if (TRACER.isEnabled())
             {
-              TRACER.format("Got {0}", future);
+              TRACER.format("Got {0}", xaContext);
             }
           }
           catch (TimeoutException ex)
@@ -229,7 +239,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
             // Just retry
             if (TRACER.isEnabled())
             {
-              TRACER.format("Waiting for {0}", future);
+              TRACER.format("Waiting for {0}", xaContext);
             }
           }
         }
@@ -374,6 +384,12 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     return lastSavepoint;
   }
 
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("CDOXATransaction{0}", transactions);
+  }
+
   protected CDOXACommitContextImpl createXACommitContext(InternalCDOCommitContext context)
   {
     return new CDOXACommitContextImpl(this, context);
@@ -497,7 +513,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
     private void checkAccess()
     {
-      if (!allRequestEnabled)
+      if (!allowRequestFromTransactionEnabled)
       {
         throw new IllegalStateException(Messages.getString("CDOXATransactionImpl.8")); //$NON-NLS-1$
       }
@@ -545,6 +561,12 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       xaContext.setResult(result);
       xaContext.setState(CDOXAPhase2State.INSTANCE);
     }
+
+    @Override
+    public String toString()
+    {
+      return "PHASE1";
+    };
   };
 
   /**
@@ -571,6 +593,12 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
       xaContext.setState(CDOXAPhase3State.INSTANCE);
     }
+
+    @Override
+    public String toString()
+    {
+      return "PHASE2";
+    };
   };
 
   /**
@@ -598,6 +626,12 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       xaContext.postCommit(xaContext.getResult());
       xaContext.setState(null);
     }
+
+    @Override
+    public String toString()
+    {
+      return "PHASE3";
+    };
   };
 
   /**
@@ -619,5 +653,11 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       CommitTransactionResult result = sessionProtocol.commitTransactionCancel(xaContext, monitor);
       check_result(result);
     }
+
+    @Override
+    public String toString()
+    {
+      return "CANCEL";
+    };
   }
 }

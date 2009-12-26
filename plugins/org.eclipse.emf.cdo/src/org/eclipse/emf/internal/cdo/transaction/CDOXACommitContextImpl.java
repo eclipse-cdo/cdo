@@ -193,4 +193,10 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
 
     delegateCommitContext.postCommit(result);
   }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("CDOXACommitContext[{0}, {1}]", transactionManager, state);
+  }
 };

@@ -109,6 +109,12 @@ public interface InternalCDOXATransaction extends CDOXATransaction, InternalCDOU
         {
           progressMonitor.done();
         }
+
+        @Override
+        public String toString()
+        {
+          return "DONE";
+        };
       };
 
       public void check_result(CommitTransactionResult result)

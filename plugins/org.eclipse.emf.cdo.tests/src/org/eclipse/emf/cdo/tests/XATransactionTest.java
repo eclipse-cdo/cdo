@@ -17,8 +17,8 @@ import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
-import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -272,7 +272,7 @@ public class XATransactionTest extends AbstractCDOTest
     }
   }
 
-  public void _test_ExceptionInWrite() throws Exception
+  public void test_ExceptionInWrite() throws Exception
   {
     getRepository(REPOSITORY2_NAME);
     getRepository("repo3");

@@ -102,21 +102,6 @@ public interface InternalCDOXATransaction extends CDOXATransaction, InternalCDOU
      */
     public static abstract class CDOXAState
     {
-      public static final CDOXAState DONE = new CDOXAState()
-      {
-        @Override
-        public void handle(InternalCDOXACommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
-        {
-          progressMonitor.done();
-        }
-
-        @Override
-        public String toString()
-        {
-          return "DONE";
-        };
-      };
-
       public void check_result(CommitTransactionResult result)
       {
         if (result != null && result.getRollbackMessage() != null)

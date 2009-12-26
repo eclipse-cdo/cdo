@@ -387,7 +387,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOXATransaction[transaction={0}]", transactions.size());
+    return MessageFormat.format("CDOXATransaction[size={0}]", transactions.size());
   }
 
   protected CDOXACommitContextImpl createXACommitContext(InternalCDOCommitContext context)

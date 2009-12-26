@@ -25,7 +25,9 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
+ * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.PersistentContainmentImpl#getAttrBefore <em>Attr Before</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.PersistentContainmentImpl#getChildren <em>Children</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.PersistentContainmentImpl#getAttrAfter <em>Attr After</em>}</li>
  * </ul>
  * </p>
  * 
@@ -70,10 +72,50 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
    * 
    * @generated
    */
+  public String getAttrBefore()
+  {
+    return (String)eGet(Model2Package.Literals.PERSISTENT_CONTAINMENT__ATTR_BEFORE, true);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public void setAttrBefore(String newAttrBefore)
+  {
+    eSet(Model2Package.Literals.PERSISTENT_CONTAINMENT__ATTR_BEFORE, newAttrBefore);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   public EList<TransientContainer> getChildren()
   {
     return (EList<TransientContainer>)eGet(Model2Package.Literals.PERSISTENT_CONTAINMENT__CHILDREN, true);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public String getAttrAfter()
+  {
+    return (String)eGet(Model2Package.Literals.PERSISTENT_CONTAINMENT__ATTR_AFTER, true);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public void setAttrAfter(String newAttrAfter)
+  {
+    eSet(Model2Package.Literals.PERSISTENT_CONTAINMENT__ATTR_AFTER, newAttrAfter);
   }
 
 } // PersistentContainmentImpl

@@ -67,11 +67,16 @@
         defaultValueLiteral="VAT15" unsettable="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PersistentContainment">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
-        eType="#//TransientContainer" containment="true" eOpposite="#//TransientContainer/parent"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrBefore" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" ordered="false"
+        upperBound="-1" eType="#//TransientContainer" containment="true" resolveProxies="false"
+        eOpposite="#//TransientContainer/parent"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrAfter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TransientContainer">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrBefore" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//PersistentContainment"
-        eOpposite="#//PersistentContainment/children"/>
+        transient="true" eOpposite="#//PersistentContainment/children"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrAfter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -420,13 +420,29 @@ public interface Model2Package extends EPackage
   int PERSISTENT_CONTAINMENT = 5;
 
   /**
+   * The feature id for the '<em><b>Attr Before</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PERSISTENT_CONTAINMENT__ATTR_BEFORE = 0;
+
+  /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int PERSISTENT_CONTAINMENT__CHILDREN = 0;
+  int PERSISTENT_CONTAINMENT__CHILDREN = 1;
+
+  /**
+   * The feature id for the '<em><b>Attr After</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PERSISTENT_CONTAINMENT__ATTR_AFTER = 2;
 
   /**
    * The number of structural features of the '<em>Persistent Containment</em>' class. <!-- begin-user-doc --> <!--
@@ -435,7 +451,7 @@ public interface Model2Package extends EPackage
    * @generated
    * @ordered
    */
-  int PERSISTENT_CONTAINMENT_FEATURE_COUNT = 1;
+  int PERSISTENT_CONTAINMENT_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.TransientContainerImpl
@@ -448,12 +464,28 @@ public interface Model2Package extends EPackage
   int TRANSIENT_CONTAINER = 6;
 
   /**
+   * The feature id for the '<em><b>Attr Before</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int TRANSIENT_CONTAINER__ATTR_BEFORE = 0;
+
+  /**
    * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int TRANSIENT_CONTAINER__PARENT = 0;
+  int TRANSIENT_CONTAINER__PARENT = 1;
+
+  /**
+   * The feature id for the '<em><b>Attr After</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int TRANSIENT_CONTAINER__ATTR_AFTER = 2;
 
   /**
    * The number of structural features of the '<em>Transient Container</em>' class. <!-- begin-user-doc --> <!--
@@ -462,7 +494,7 @@ public interface Model2Package extends EPackage
    * @generated
    * @ordered
    */
-  int TRANSIENT_CONTAINER_FEATURE_COUNT = 1;
+  int TRANSIENT_CONTAINER_FEATURE_COUNT = 3;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder
@@ -847,6 +879,18 @@ public interface Model2Package extends EPackage
   EClass getPersistentContainment();
 
   /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.PersistentContainment#getAttrBefore <em>Attr Before</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Attr Before</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.PersistentContainment#getAttrBefore()
+   * @see #getPersistentContainment()
+   * @generated
+   */
+  EAttribute getPersistentContainment_AttrBefore();
+
+  /**
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.tests.model2.PersistentContainment#getChildren <em>Children</em>}'. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
@@ -859,6 +903,18 @@ public interface Model2Package extends EPackage
   EReference getPersistentContainment_Children();
 
   /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.PersistentContainment#getAttrAfter <em>Attr After</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Attr After</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.PersistentContainment#getAttrAfter()
+   * @see #getPersistentContainment()
+   * @generated
+   */
+  EAttribute getPersistentContainment_AttrAfter();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.TransientContainer
    * <em>Transient Container</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -867,6 +923,18 @@ public interface Model2Package extends EPackage
    * @generated
    */
   EClass getTransientContainer();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.TransientContainer#getAttrBefore <em>Attr Before</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Attr Before</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.TransientContainer#getAttrBefore()
+   * @see #getTransientContainer()
+   * @generated
+   */
+  EAttribute getTransientContainer_AttrBefore();
 
   /**
    * Returns the meta object for the container reference '
@@ -879,6 +947,17 @@ public interface Model2Package extends EPackage
    * @generated
    */
   EReference getTransientContainer_Parent();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.TransientContainer#getAttrAfter
+   * <em>Attr After</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Attr After</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.TransientContainer#getAttrAfter()
+   * @see #getTransientContainer()
+   * @generated
+   */
+  EAttribute getTransientContainer_AttrAfter();
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1187,12 +1266,28 @@ public interface Model2Package extends EPackage
     EClass PERSISTENT_CONTAINMENT = eINSTANCE.getPersistentContainment();
 
     /**
+     * The meta object literal for the '<em><b>Attr Before</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute PERSISTENT_CONTAINMENT__ATTR_BEFORE = eINSTANCE.getPersistentContainment_AttrBefore();
+
+    /**
      * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated
      */
     EReference PERSISTENT_CONTAINMENT__CHILDREN = eINSTANCE.getPersistentContainment_Children();
+
+    /**
+     * The meta object literal for the '<em><b>Attr After</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute PERSISTENT_CONTAINMENT__ATTR_AFTER = eINSTANCE.getPersistentContainment_AttrAfter();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model2.impl.TransientContainerImpl
@@ -1205,12 +1300,28 @@ public interface Model2Package extends EPackage
     EClass TRANSIENT_CONTAINER = eINSTANCE.getTransientContainer();
 
     /**
+     * The meta object literal for the '<em><b>Attr Before</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute TRANSIENT_CONTAINER__ATTR_BEFORE = eINSTANCE.getTransientContainer_AttrBefore();
+
+    /**
      * The meta object literal for the '<em><b>Parent</b></em>' container reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * 
      * @generated
      */
     EReference TRANSIENT_CONTAINER__PARENT = eINSTANCE.getTransientContainer_Parent();
+
+    /**
+     * The meta object literal for the '<em><b>Attr After</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute TRANSIENT_CONTAINER__ATTR_AFTER = eINSTANCE.getTransientContainer_AttrAfter();
 
   }
 

@@ -494,9 +494,29 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * 
    * @generated
    */
+  public EAttribute getPersistentContainment_AttrBefore()
+  {
+    return (EAttribute)persistentContainmentEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EReference getPersistentContainment_Children()
   {
-    return (EReference)persistentContainmentEClass.getEStructuralFeatures().get(0);
+    return (EReference)persistentContainmentEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getPersistentContainment_AttrAfter()
+  {
+    return (EAttribute)persistentContainmentEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -514,9 +534,29 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * 
    * @generated
    */
+  public EAttribute getTransientContainer_AttrBefore()
+  {
+    return (EAttribute)transientContainerEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EReference getTransientContainer_Parent()
   {
-    return (EReference)transientContainerEClass.getEStructuralFeatures().get(0);
+    return (EReference)transientContainerEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getTransientContainer_AttrAfter()
+  {
+    return (EAttribute)transientContainerEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -588,10 +628,14 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     createEAttribute(unsettable2WithDefaultEClass, UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_VAT);
 
     persistentContainmentEClass = createEClass(PERSISTENT_CONTAINMENT);
+    createEAttribute(persistentContainmentEClass, PERSISTENT_CONTAINMENT__ATTR_BEFORE);
     createEReference(persistentContainmentEClass, PERSISTENT_CONTAINMENT__CHILDREN);
+    createEAttribute(persistentContainmentEClass, PERSISTENT_CONTAINMENT__ATTR_AFTER);
 
     transientContainerEClass = createEClass(TRANSIENT_CONTAINER);
+    createEAttribute(transientContainerEClass, TRANSIENT_CONTAINER__ATTR_BEFORE);
     createEReference(transientContainerEClass, TRANSIENT_CONTAINER__PARENT);
+    createEAttribute(transientContainerEClass, TRANSIENT_CONTAINER__ATTR_AFTER);
   }
 
   /**
@@ -727,17 +771,29 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
     initEClass(persistentContainmentEClass, PersistentContainment.class, "PersistentContainment", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPersistentContainment_AttrBefore(), ecorePackage.getEString(), "attrBefore", null, 0, 1,
+        PersistentContainment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
     initEReference(getPersistentContainment_Children(), this.getTransientContainer(), this
         .getTransientContainer_Parent(), "children", null, 0, -1, PersistentContainment.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+        !IS_ORDERED);
+    initEAttribute(getPersistentContainment_AttrAfter(), ecorePackage.getEString(), "attrAfter", null, 0, 1,
+        PersistentContainment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(transientContainerEClass, TransientContainer.class, "TransientContainer", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTransientContainer_AttrBefore(), ecorePackage.getEString(), "attrBefore", null, 0, 1,
+        TransientContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
     initEReference(getTransientContainer_Parent(), this.getPersistentContainment(), this
-        .getPersistentContainment_Children(), "parent", null, 0, 1, TransientContainer.class, !IS_TRANSIENT,
+        .getPersistentContainment_Children(), "parent", null, 0, 1, TransientContainer.class, IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
+    initEAttribute(getTransientContainer_AttrAfter(), ecorePackage.getEString(), "attrAfter", null, 0, 1,
+        TransientContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

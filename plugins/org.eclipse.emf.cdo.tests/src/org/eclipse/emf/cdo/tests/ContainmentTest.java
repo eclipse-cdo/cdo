@@ -17,9 +17,11 @@ import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
+import org.eclipse.emf.cdo.tests.model2.PersistentContainment;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Task;
 import org.eclipse.emf.cdo.tests.model2.TaskContainer;
+import org.eclipse.emf.cdo.tests.model2.TransientContainer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -501,6 +503,82 @@ public class ContainmentTest extends AbstractCDOTest
     assertEquals(taskContainer, task.eContainer());
     assertEquals(taskContainer, task.getTaskContainer());
     session.close();
+  }
+
+  public void testModeledBackPointer_Transient() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/resource1");
+
+    PersistentContainment parent1 = createPersistentContainment();
+    parent1.getChildren().add(createTransientContainer());
+    parent1.getChildren().add(createTransientContainer());
+    parent1.getChildren().add(createTransientContainer());
+    resource.getContents().add(parent1);
+    transaction.commit();
+
+    // Move child
+    PersistentContainment parent2 = createPersistentContainment();
+    parent2.getChildren().add(parent1.getChildren().get(0));
+    transaction.commit();
+
+    // Remove child
+    parent1.getChildren().remove(0);
+    transaction.commit();
+
+    // Remove child
+    parent1.getChildren().remove(0);
+    transaction.commit();
+  }
+
+  public void testModeledBackPointer_Transient_Load() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/resource1");
+
+    PersistentContainment parent1 = createPersistentContainment();
+    parent1.getChildren().add(createTransientContainer());
+    parent1.getChildren().add(createTransientContainer());
+    parent1.getChildren().add(createTransientContainer());
+    resource.getContents().add(parent1);
+    transaction.commit();
+
+    session.close();
+    session = openSession();
+    transaction = session.openTransaction();
+    resource = transaction.getResource("/resource1");
+    parent1 = (PersistentContainment)resource.getContents().get(0);
+
+    // Move child
+    PersistentContainment parent2 = createPersistentContainment();
+    parent2.getChildren().add(parent1.getChildren().get(0));
+    transaction.commit();
+
+    // Remove child
+    parent1.getChildren().remove(0);
+    transaction.commit();
+
+    // Remove child
+    parent1.getChildren().remove(0);
+    transaction.commit();
+  }
+
+  private PersistentContainment createPersistentContainment()
+  {
+    PersistentContainment result = getModel2Factory().createPersistentContainment();
+    result.setAttrBefore("BEFORE");
+    result.setAttrAfter("AFTER");
+    return result;
+  }
+
+  private TransientContainer createTransientContainer()
+  {
+    TransientContainer result = getModel2Factory().createTransientContainer();
+    result.setAttrBefore("BEFORE");
+    result.setAttrAfter("AFTER");
+    return result;
   }
 
   // TODO Revisit me

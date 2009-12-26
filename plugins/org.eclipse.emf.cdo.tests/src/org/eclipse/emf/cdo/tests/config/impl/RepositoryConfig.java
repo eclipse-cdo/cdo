@@ -144,7 +144,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   {
     IStore store = createStore(name);
     Map<String, String> props = getRepositoryProperties();
-    InternalRepository repository = createRepository(name, store, props);
+    InternalRepository repository = (InternalRepository)CDOServerUtil.createRepository(name, store, props);
     InternalCDORevisionManager revisionManager = getTestRevisionManager();
     if (revisionManager != null)
     {
@@ -166,11 +166,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
 
     return repository;
-  }
-
-  protected InternalRepository createRepository(String name, IStore store, Map<String, String> props)
-  {
-    return (InternalRepository)CDOServerUtil.createRepository(name, store, props);
   }
 
   protected abstract IStore createStore(String repoName);
@@ -237,9 +232,18 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
 
     @Override
-    protected InternalRepository createRepository(String name, IStore store, Map<String, String> props)
+    protected InternalRepository createRepository(String name)
     {
-      return super.createRepository(name, store, props);
+      InternalRepository delegate = super.createRepository(name);
+      LifecycleUtil.activate(delegate);
+
+      String userID = getUserID(getTestProperties());
+      return (InternalRepository)CDOServerUtil.createOfflineRepository(delegate, userID);
+    }
+
+    protected String getUserID(Map<String, Object> properties)
+    {
+      return "default";
     }
   }
 }

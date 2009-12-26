@@ -26,7 +26,7 @@ import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.monitor.EclipseMonitor.SynchonizedSubProgressMonitor;
+import org.eclipse.net4j.util.om.monitor.EclipseMonitor.SynchronizedSubProgressMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
@@ -205,7 +205,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       List<Future<Object>> futures = new ArrayList<Future<Object>>();
       for (InternalCDOXACommitContext xaContext : xaContexts)
       {
-        xaContext.setProgressMonitor(new SynchonizedSubProgressMonitor(progressMonitor, 1));
+        xaContext.setProgressMonitor(new SynchronizedSubProgressMonitor(progressMonitor, 1));
         futures.add(executorService.submit(xaContext));
       }
 

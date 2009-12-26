@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -80,11 +80,11 @@ public class EclipseMonitor extends Monitor
    * A sub progress monitor that synchronizes all methods on the parent monitor instance.
    * 
    * @author Eike Stepper
-   * @since 2.0
+   * @since 3.0
    */
-  public static class SynchonizedSubProgressMonitor extends SubProgressMonitor
+  public static class SynchronizedSubProgressMonitor extends SubProgressMonitor
   {
-    public SynchonizedSubProgressMonitor(IProgressMonitor monitor, int ticks)
+    public SynchronizedSubProgressMonitor(IProgressMonitor monitor, int ticks)
     {
       super(monitor, ticks);
     }

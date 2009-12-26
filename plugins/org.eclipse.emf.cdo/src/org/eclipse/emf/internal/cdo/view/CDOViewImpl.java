@@ -1685,7 +1685,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     {
       if (options().getStrongReferencePolicy().isValid(object, adapter))
       {
-        objects.add(object);
+        objects.remove(object);
       }
     }
 

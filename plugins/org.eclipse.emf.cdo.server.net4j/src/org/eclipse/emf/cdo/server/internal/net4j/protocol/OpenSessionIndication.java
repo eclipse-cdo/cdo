@@ -92,7 +92,6 @@ public class OpenSessionIndication extends RepositoryTimeIndication
       session = sessionManager.openSession(protocol);
       session.setPassiveUpdateEnabled(passiveUpdateEnabled);
 
-      // Adjust the infra structure (was IRepositoryProvider)
       protocol.setInfraStructure(session);
       if (TRACER.isEnabled())
       {

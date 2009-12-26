@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.internal.server.SessionManager;
+import org.eclipse.emf.cdo.internal.server.offline.OfflineRepository;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -28,6 +29,9 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleException;
+import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.IUserManager;
 
@@ -238,12 +242,43 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       LifecycleUtil.activate(delegate);
 
       String userID = getUserID(getTestProperties());
-      return (InternalRepository)CDOServerUtil.createOfflineRepository(delegate, userID);
+      return new TestOfflineRepository(delegate, userID);
     }
 
     protected String getUserID(Map<String, Object> properties)
     {
       return "default";
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class TestOfflineRepository extends OfflineRepository implements ILifecycle
+    {
+      public TestOfflineRepository(InternalRepository delegate, String userID)
+      {
+        super(delegate, userID);
+      }
+
+      public LifecycleState getLifecycleState()
+      {
+        return LifecycleUtil.getLifecycleState(getDelegate());
+      }
+
+      public boolean isActive()
+      {
+        return LifecycleUtil.isActive(getDelegate());
+      }
+
+      public void activate() throws LifecycleException
+      {
+        LifecycleUtil.activate(getDelegate());
+      }
+
+      public Exception deactivate()
+      {
+        return LifecycleUtil.deactivate(getDelegate());
+      }
     }
   }
 }

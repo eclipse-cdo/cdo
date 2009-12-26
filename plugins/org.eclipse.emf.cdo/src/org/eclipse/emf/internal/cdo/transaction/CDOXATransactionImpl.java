@@ -27,6 +27,7 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor.SynchonizedSubProgressMonitor;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -91,6 +92,8 @@ import java.util.concurrent.TimeoutException;
  */
 public class CDOXATransactionImpl implements InternalCDOXATransaction
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION, CDOXATransactionImpl.class);
+
   private List<InternalCDOTransaction> transactions = new ArrayList<InternalCDOTransaction>();
 
   private boolean allRequestEnabled = true;
@@ -194,7 +197,8 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
   private void send(Collection<InternalCDOXACommitContext> xaContexts, final IProgressMonitor progressMonitor)
       throws InterruptedException, ExecutionException
   {
-    progressMonitor.beginTask("", xaContexts.size()); //$NON-NLS-1$
+    int xaContextSize = xaContexts.size();
+    progressMonitor.beginTask("", xaContextSize); //$NON-NLS-1$
 
     try
     {
@@ -205,23 +209,31 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
         futures.add(executorService.submit(xaContext));
       }
 
-      int nbProcessDone;
+      int nbProcessDone = 0;
+
       do
       {
-        nbProcessDone = 0;
         for (Future<Object> future : futures)
         {
           try
           {
-            future.get(1, TimeUnit.MILLISECONDS);
+            future.get(2000, TimeUnit.MILLISECONDS);
             nbProcessDone++;
+            if (TRACER.isEnabled())
+            {
+              TRACER.format("Got {0}", future);
+            }
           }
           catch (TimeoutException ex)
           {
-            OM.LOG.warn(ex);
+            // Just retry
+            if (TRACER.isEnabled())
+            {
+              TRACER.format("Waiting for {0}", future);
+            }
           }
         }
-      } while (xaContexts.size() != nbProcessDone);
+      } while (xaContextSize != nbProcessDone);
     }
     finally
     {

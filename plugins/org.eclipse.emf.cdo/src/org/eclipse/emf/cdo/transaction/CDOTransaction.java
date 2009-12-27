@@ -172,8 +172,9 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
 
     /**
      * @author Eike Stepper
+     * @since 3.0
      */
-    public interface AutoReleaseLockEvent extends IOptionsEvent
+    public interface AutoReleaseLocksEvent extends IOptionsEvent
     {
     }
   }

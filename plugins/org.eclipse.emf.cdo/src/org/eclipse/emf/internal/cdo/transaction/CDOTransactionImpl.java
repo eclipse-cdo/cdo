@@ -1831,7 +1831,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         IListener[] listeners = getListeners();
         if (listeners != null)
         {
-          fireEvent(new AutoReleaseLockEventImpl(), listeners);
+          fireEvent(new AutoReleaseLocksEventImpl(), listeners);
         }
       }
     }
@@ -1852,11 +1852,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     /**
      * @author Eike Stepper
      */
-    private final class AutoReleaseLockEventImpl extends OptionsEvent implements AutoReleaseLockEvent
+    private final class AutoReleaseLocksEventImpl extends OptionsEvent implements AutoReleaseLocksEvent
     {
       private static final long serialVersionUID = 1L;
 
-      public AutoReleaseLockEventImpl()
+      public AutoReleaseLocksEventImpl()
       {
         super(OptionsImpl.this);
       }

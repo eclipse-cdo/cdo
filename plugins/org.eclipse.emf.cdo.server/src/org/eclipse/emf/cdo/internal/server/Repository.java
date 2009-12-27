@@ -805,6 +805,7 @@ public class Repository extends Container<Object> implements InternalRepository
     LifecycleUtil.activate(queryHandlerProvider);
     LifecycleUtil.activate(lockManager);
 
+    lastCommitTimeStamp = getCreationTime();
     if (store.isFirstTime())
     {
       initSystemPackages();

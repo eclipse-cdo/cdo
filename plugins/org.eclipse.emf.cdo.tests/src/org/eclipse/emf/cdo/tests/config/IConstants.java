@@ -35,4 +35,6 @@ public interface IConstants
   public static final SessionConfig TCP = SessionConfig.TCP.INSTANCE;
 
   public static final ModelConfig NATIVE = ModelConfig.Native.INSTANCE;
+
+  public static final ModelConfig LEGACY = ModelConfig.Legacy.INSTANCE;
 }

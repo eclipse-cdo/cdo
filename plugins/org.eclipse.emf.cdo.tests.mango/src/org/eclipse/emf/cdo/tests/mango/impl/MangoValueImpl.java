@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.tests.mango.impl;
 
 import org.eclipse.emf.cdo.tests.mango.MangoPackage;
-import org.eclipse.emf.cdo.tests.mango.Value;
+import org.eclipse.emf.cdo.tests.mango.MangoValue;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
@@ -22,38 +22,35 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.mango.impl.ValueImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.impl.MangoValueImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
-public class ValueImpl extends CDOObjectImpl implements Value
+public class MangoValueImpl extends CDOObjectImpl implements MangoValue
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  protected ValueImpl()
+  protected MangoValueImpl()
   {
     super();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   protected EClass eStaticClass()
   {
-    return MangoPackage.Literals.VALUE;
+    return MangoPackage.Literals.MANGO_VALUE;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -64,22 +61,20 @@ public class ValueImpl extends CDOObjectImpl implements Value
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
   {
-    return (String)eGet(MangoPackage.Literals.VALUE__NAME, true);
+    return (String)eGet(MangoPackage.Literals.MANGO_VALUE__NAME, true);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)
   {
-    eSet(MangoPackage.Literals.VALUE__NAME, newName);
+    eSet(MangoPackage.Literals.MANGO_VALUE__NAME, newName);
   }
 
 } // ValueImpl

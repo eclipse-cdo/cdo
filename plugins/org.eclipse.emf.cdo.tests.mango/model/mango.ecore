@@ -3,19 +3,19 @@
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="mango"
     nsURI="http://www.eclipse.org/emf/CDO/tests/mango" nsPrefix="mango">
-  <eClassifiers xsi:type="ecore:EClass" name="ValueList">
+  <eClassifiers xsi:type="ecore:EClass" name="MangoValueList">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
-        eType="#//Value"/>
+        eType="#//MangoValue"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Value">
+  <eClassifiers xsi:type="ecore:EClass" name="MangoValue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ParameterPassing">
     <eLiterals name="ByValue"/>
     <eLiterals name="ByReference" value="1"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Parameter">
+  <eClassifiers xsi:type="ecore:EClass" name="MangoParameter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="passing" eType="#//ParameterPassing"/>
   </eClassifiers>

@@ -8,13 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: SalesOrderImpl.java,v 1.5 2009-08-22 09:35:30 estepper Exp $
+ * $Id: SalesOrderImpl.java,v 1.6 2009-12-27 15:50:56 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model1.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model1.Customer;
 import org.eclipse.emf.cdo.tests.legacy.model1.Model1Package;
-import org.eclipse.emf.cdo.tests.legacy.model1.SalesOrder;
+import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -23,29 +23,32 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Sales Order</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Sales Order</b></em>'.
+ * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.SalesOrderImpl#getId <em>Id</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.SalesOrderImpl#getCustomer <em>Customer</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.SalesOrderImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.SalesOrderImpl#getCustomer <em>Customer</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class SalesOrderImpl extends OrderImpl implements SalesOrder
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * The default value of the '{@link #getId() <em>Id</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getId()
    * @generated
    * @ordered
@@ -53,8 +56,9 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   protected static final int ID_EDEFAULT = 0;
 
   /**
-   * The cached value of the '{@link #getId() <em>Id</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getId()
    * @generated
    * @ordered
@@ -62,9 +66,9 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   protected int id = ID_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getCustomer() <em>Customer</em>}' reference. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
-   * 
+   * The cached value of the '{@link #getCustomer() <em>Customer</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getCustomer()
    * @generated
    * @ordered
@@ -72,8 +76,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   protected Customer customer;
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected SalesOrderImpl()
@@ -82,8 +86,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -93,8 +97,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public int getId()
@@ -103,8 +107,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setId(int newId)
@@ -116,8 +120,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public Customer getCustomer()
@@ -137,8 +141,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public Customer basicGetCustomer()
@@ -147,8 +151,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public NotificationChain basicSetCustomer(Customer newCustomer, NotificationChain msgs)
@@ -168,8 +172,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setCustomer(Customer newCustomer)
@@ -193,8 +197,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -212,8 +216,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -228,8 +232,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -248,8 +252,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -268,8 +272,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -288,8 +292,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -306,8 +310,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -323,4 +327,4 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
     return result.toString();
   }
 
-} // SalesOrderImpl
+} //SalesOrderImpl

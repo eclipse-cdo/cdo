@@ -8,16 +8,16 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: MangoFactoryImpl.java,v 1.5 2009-08-22 09:34:41 estepper Exp $
+ * $Id: MangoFactoryImpl.java,v 1.6 2009-12-27 15:51:10 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.mango.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.mango.MangoFactory;
-import org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage;
-import org.eclipse.emf.cdo.tests.legacy.mango.Parameter;
-import org.eclipse.emf.cdo.tests.legacy.mango.ParameterPassing;
-import org.eclipse.emf.cdo.tests.legacy.mango.Value;
-import org.eclipse.emf.cdo.tests.legacy.mango.ValueList;
+import org.eclipse.emf.cdo.tests.mango.MangoFactory;
+import org.eclipse.emf.cdo.tests.mango.MangoPackage;
+import org.eclipse.emf.cdo.tests.mango.MangoParameter;
+import org.eclipse.emf.cdo.tests.mango.MangoValue;
+import org.eclipse.emf.cdo.tests.mango.MangoValueList;
+import org.eclipse.emf.cdo.tests.mango.ParameterPassing;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -34,17 +34,22 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 {
   /**
+   * @ADDED
+   */
+  public static final MangoFactory eINSTANCE = org.eclipse.emf.cdo.tests.legacy.mango.impl.MangoFactoryImpl.init();
+
+  /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
-  public static MangoFactory init()
+  public static org.eclipse.emf.cdo.tests.mango.MangoFactory init()
   {
     try
     {
       MangoFactory theMangoFactory = (MangoFactory)EPackage.Registry.INSTANCE
           .getEFactory("http://www.eclipse.org/emf/CDO/tests/mango");
-      if (theMangoFactory != null)
+      if (theMangoFactory instanceof MangoFactoryImpl)
       {
         return theMangoFactory;
       }
@@ -53,7 +58,11 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
     {
       EcorePlugin.INSTANCE.log(exception);
     }
-    return new MangoFactoryImpl();
+
+    MangoFactoryImpl factory = new MangoFactoryImpl();
+   // EPackage.Registry.INSTANCE.put(factory.getEPackage().getNsURI(), factory);
+    EPackage.Registry.INSTANCE.put("http://www.eclipse.org/emf/CDO/tests/mango", factory);
+    return factory;
   }
 
   /**
@@ -76,12 +85,12 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   {
     switch (eClass.getClassifierID())
     {
-    case MangoPackage.VALUE_LIST:
-      return createValueList();
-    case MangoPackage.VALUE:
-      return createValue();
-    case MangoPackage.PARAMETER:
-      return createParameter();
+    case MangoPackage.MANGO_VALUE_LIST:
+      return createMangoValueList();
+    case MangoPackage.MANGO_VALUE:
+      return createMangoValue();
+    case MangoPackage.MANGO_PARAMETER:
+      return createMangoParameter();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -126,10 +135,10 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
    * 
    * @generated
    */
-  public ValueList createValueList()
+  public MangoValueList createMangoValueList()
   {
-    ValueListImpl valueList = new ValueListImpl();
-    return valueList;
+    MangoValueListImpl mangoValueList = new MangoValueListImpl();
+    return mangoValueList;
   }
 
   /**
@@ -137,10 +146,10 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
    * 
    * @generated
    */
-  public Value createValue()
+  public MangoValue createMangoValue()
   {
-    ValueImpl value = new ValueImpl();
-    return value;
+    MangoValueImpl mangoValue = new MangoValueImpl();
+    return mangoValue;
   }
 
   /**
@@ -148,10 +157,10 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
    * 
    * @generated
    */
-  public Parameter createParameter()
+  public MangoParameter createMangoParameter()
   {
-    ParameterImpl parameter = new ParameterImpl();
-    return parameter;
+    MangoParameterImpl mangoParameter = new MangoParameterImpl();
+    return mangoParameter;
   }
 
   /**

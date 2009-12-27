@@ -8,16 +8,17 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: MangoPackageImpl.java,v 1.5 2009-08-22 09:34:41 estepper Exp $
+ * $Id: MangoPackageImpl.java,v 1.6 2009-12-27 15:51:11 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.mango.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.mango.MangoFactory;
-import org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage;
-import org.eclipse.emf.cdo.tests.legacy.mango.Parameter;
-import org.eclipse.emf.cdo.tests.legacy.mango.ParameterPassing;
-import org.eclipse.emf.cdo.tests.legacy.mango.Value;
-import org.eclipse.emf.cdo.tests.legacy.mango.ValueList;
+
+import org.eclipse.emf.cdo.tests.mango.MangoFactory;
+import org.eclipse.emf.cdo.tests.mango.MangoPackage;
+import org.eclipse.emf.cdo.tests.mango.MangoParameter;
+import org.eclipse.emf.cdo.tests.mango.MangoValue;
+import org.eclipse.emf.cdo.tests.mango.MangoValueList;
+import org.eclipse.emf.cdo.tests.mango.ParameterPassing;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -28,35 +29,37 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * @ADDED
+   */
+  public static final MangoPackage eINSTANCE = org.eclipse.emf.cdo.tests.legacy.mango.impl.MangoPackageImpl.init();
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
-  private EClass valueListEClass = null;
+  private EClass mangoValueListEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass mangoValueEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass mangoParameterEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  private EClass valueEClass = null;
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  private EClass parameterEClass = null;
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EEnum parameterPassingEEnum = null;
@@ -81,18 +84,17 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * <p>
-   * This method is used to initialize {@link MangoPackage#eINSTANCE} when that field is accessed. Clients should not
-   * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
    * 
+   * <p>This method is used to initialize {@link MangoPackage#eINSTANCE} when that field is accessed.
+   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -125,88 +127,87 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getValueList()
+  public EClass getMangoValueList()
   {
-    return valueListEClass;
+    return mangoValueListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMangoValueList_Name()
+  {
+    return (EAttribute)mangoValueListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMangoValueList_Values()
+  {
+    return (EReference)mangoValueListEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getMangoValue()
+  {
+    return mangoValueEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMangoValue_Name()
+  {
+    return (EAttribute)mangoValueEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getMangoParameter()
+  {
+    return mangoParameterEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMangoParameter_Name()
+  {
+    return (EAttribute)mangoParameterEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMangoParameter_Passing()
+  {
+    return (EAttribute)mangoParameterEClass.getEStructuralFeatures().get(1);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getValueList_Name()
-  {
-    return (EAttribute)valueListEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EReference getValueList_Values()
-  {
-    return (EReference)valueListEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EClass getValue()
-  {
-    return valueEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getValue_Name()
-  {
-    return (EAttribute)valueEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EClass getParameter()
-  {
-    return parameterEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getParameter_Name()
-  {
-    return (EAttribute)parameterEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getParameter_Passing()
-  {
-    return (EAttribute)parameterEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EEnum getParameterPassing()
@@ -216,7 +217,6 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public MangoFactory getMangoFactory()
@@ -226,15 +226,14 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
-   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the meta-model objects for the package.  This method is
+   * guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void createPackageContents()
@@ -244,16 +243,16 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
     isCreated = true;
 
     // Create classes and their features
-    valueListEClass = createEClass(VALUE_LIST);
-    createEAttribute(valueListEClass, VALUE_LIST__NAME);
-    createEReference(valueListEClass, VALUE_LIST__VALUES);
+    mangoValueListEClass = createEClass(MANGO_VALUE_LIST);
+    createEAttribute(mangoValueListEClass, MANGO_VALUE_LIST__NAME);
+    createEReference(mangoValueListEClass, MANGO_VALUE_LIST__VALUES);
 
-    valueEClass = createEClass(VALUE);
-    createEAttribute(valueEClass, VALUE__NAME);
+    mangoValueEClass = createEClass(MANGO_VALUE);
+    createEAttribute(mangoValueEClass, MANGO_VALUE__NAME);
 
-    parameterEClass = createEClass(PARAMETER);
-    createEAttribute(parameterEClass, PARAMETER__NAME);
-    createEAttribute(parameterEClass, PARAMETER__PASSING);
+    mangoParameterEClass = createEClass(MANGO_PARAMETER);
+    createEAttribute(mangoParameterEClass, MANGO_PARAMETER__NAME);
+    createEAttribute(mangoParameterEClass, MANGO_PARAMETER__PASSING);
 
     // Create enums
     parameterPassingEEnum = createEEnum(PARAMETER_PASSING);
@@ -261,15 +260,14 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
-   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Complete the initialization of the package and its meta-model.  This
+   * method is guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void initializePackageContents()
@@ -290,22 +288,26 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
     // Add supertypes to classes
 
     // Initialize classes and features; add operations and parameters
-    initEClass(valueListEClass, ValueList.class, "ValueList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getValueList_Name(), ecorePackage.getEString(), "name", null, 0, 1, ValueList.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getValueList_Values(), this.getValue(), null, "values", null, 0, -1, ValueList.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-
-    initEClass(valueEClass, Value.class, "Value", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getValue_Name(), ecorePackage.getEString(), "name", null, 0, 1, Value.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getParameter_Name(), ecorePackage.getEString(), "name", null, 0, 1, Parameter.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getParameter_Passing(), this.getParameterPassing(), "passing", null, 0, 1, Parameter.class,
+    initEClass(mangoValueListEClass, MangoValueList.class, "MangoValueList", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMangoValueList_Name(), ecorePackage.getEString(), "name", null, 0, 1, MangoValueList.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMangoValueList_Values(), this.getMangoValue(), null, "values", null, 0, -1, MangoValueList.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(mangoValueEClass, MangoValue.class, "MangoValue", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMangoValue_Name(), ecorePackage.getEString(), "name", null, 0, 1, MangoValue.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(mangoParameterEClass, MangoParameter.class, "MangoParameter", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMangoParameter_Name(), ecorePackage.getEString(), "name", null, 0, 1, MangoParameter.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMangoParameter_Passing(), this.getParameterPassing(), "passing", null, 0, 1,
+        MangoParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(parameterPassingEEnum, ParameterPassing.class, "ParameterPassing");

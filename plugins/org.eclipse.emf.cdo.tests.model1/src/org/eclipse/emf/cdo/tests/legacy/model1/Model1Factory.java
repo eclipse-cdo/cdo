@@ -8,9 +8,21 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: Model1Factory.java,v 1.5 2009-08-22 09:35:29 estepper Exp $
+ * $Id: Model1Factory.java,v 1.6 2009-12-27 15:50:54 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model1;
+
+import org.eclipse.emf.cdo.tests.model1.Address;
+import org.eclipse.emf.cdo.tests.model1.Category;
+import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.tests.model1.Order;
+import org.eclipse.emf.cdo.tests.model1.OrderAddress;
+import org.eclipse.emf.cdo.tests.model1.OrderDetail;
+import org.eclipse.emf.cdo.tests.model1.Product1;
+import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.cdo.tests.model1.SalesOrder;
+import org.eclipse.emf.cdo.tests.model1.Supplier;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -21,7 +33,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.cdo.tests.legacy.model1.Model1Package
  * @generated
  */
-public interface Model1Factory extends EFactory
+public interface Model1Factory extends EFactory, org.eclipse.emf.cdo.tests.model1.Model1Factory
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->

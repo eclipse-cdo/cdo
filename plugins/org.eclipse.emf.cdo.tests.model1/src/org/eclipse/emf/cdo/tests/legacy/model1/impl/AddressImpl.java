@@ -8,12 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: AddressImpl.java,v 1.5 2009-08-22 09:35:30 estepper Exp $
+ * $Id: AddressImpl.java,v 1.6 2009-12-27 15:50:56 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model1.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model1.Address;
 import org.eclipse.emf.cdo.tests.legacy.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.Address;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -141,7 +141,9 @@ public class AddressImpl extends EObjectImpl implements Address
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ADDRESS__NAME, oldName, name));
+    }
   }
 
   /**
@@ -164,7 +166,9 @@ public class AddressImpl extends EObjectImpl implements Address
     String oldStreet = street;
     street = newStreet;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ADDRESS__STREET, oldStreet, street));
+    }
   }
 
   /**
@@ -187,7 +191,9 @@ public class AddressImpl extends EObjectImpl implements Address
     String oldCity = city;
     city = newCity;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ADDRESS__CITY, oldCity, city));
+    }
   }
 
   /**
@@ -285,7 +291,9 @@ public class AddressImpl extends EObjectImpl implements Address
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

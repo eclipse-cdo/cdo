@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: Model1Package.java,v 1.5 2009-08-22 09:35:29 estepper Exp $
+ * $Id: Model1Package.java,v 1.6 2009-12-27 15:50:51 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model1;
 
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.EReference;
  * @model kind="package"
  * @generated
  */
-public interface Model1Package extends EPackage
+public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model1.Model1Package
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -300,12 +300,20 @@ public interface Model1Package extends EPackage
   int CUSTOMER__SALES_ORDERS = ADDRESS_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Order By Product</b></em>' map. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int CUSTOMER__ORDER_BY_PRODUCT = ADDRESS_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Customer</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int CUSTOMER_FEATURE_COUNT = ADDRESS_FEATURE_COUNT + 1;
+  int CUSTOMER_FEATURE_COUNT = ADDRESS_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderImpl <em>Order</em>}' class.
@@ -645,6 +653,41 @@ public interface Model1Package extends EPackage
   int ORDER_ADDRESS_FEATURE_COUNT = ADDRESS_FEATURE_COUNT + 5;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.ProductToOrderImpl
+   * <em>Product To Order</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.legacy.model1.impl.ProductToOrderImpl
+   * @see org.eclipse.emf.cdo.tests.legacy.model1.impl.Model1PackageImpl#getProductToOrder()
+   * @generated
+   */
+  int PRODUCT_TO_ORDER = 11;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PRODUCT_TO_ORDER__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PRODUCT_TO_ORDER__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>Product To Order</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PRODUCT_TO_ORDER_FEATURE_COUNT = 2;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model1.VAT <em>VAT</em>}' enum. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -652,7 +695,7 @@ public interface Model1Package extends EPackage
    * @see org.eclipse.emf.cdo.tests.legacy.model1.impl.Model1PackageImpl#getVAT()
    * @generated
    */
-  int VAT = 11;
+  int VAT = 12;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model1.Address <em>Address</em>}'. <!--
@@ -821,6 +864,17 @@ public interface Model1Package extends EPackage
    * @generated
    */
   EReference getCustomer_SalesOrders();
+
+  /**
+   * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.legacy.model1.Customer#getOrderByProduct
+   * <em>Order By Product</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the map '<em>Order By Product</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model1.Customer#getOrderByProduct()
+   * @see #getCustomer()
+   * @generated
+   */
+  EReference getCustomer_OrderByProduct();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model1.Order <em>Order</em>}'. <!--
@@ -1076,6 +1130,40 @@ public interface Model1Package extends EPackage
   EAttribute getOrderAddress_TestAttribute();
 
   /**
+   * Returns the meta object for class '{@link java.util.Map.Entry <em>Product To Order</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Product To Order</em>'.
+   * @see java.util.Map.Entry
+   * @model keyType="org.eclipse.emf.cdo.tests.legacy.model1.Product1"
+   *        valueType="org.eclipse.emf.cdo.tests.legacy.model1.SalesOrder"
+   * @generated
+   */
+  EClass getProductToOrder();
+
+  /**
+   * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the reference '<em>Key</em>'.
+   * @see java.util.Map.Entry
+   * @see #getProductToOrder()
+   * @generated
+   */
+  EReference getProductToOrder_Key();
+
+  /**
+   * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference '<em>Value</em>'.
+   * @see java.util.Map.Entry
+   * @see #getProductToOrder()
+   * @generated
+   */
+  EReference getProductToOrder_Value();
+
+  /**
    * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.legacy.model1.VAT <em>VAT</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -1234,6 +1322,14 @@ public interface Model1Package extends EPackage
      * @generated
      */
     EReference CUSTOMER__SALES_ORDERS = eINSTANCE.getCustomer_SalesOrders();
+
+    /**
+     * The meta object literal for the '<em><b>Order By Product</b></em>' map feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference CUSTOMER__ORDER_BY_PRODUCT = eINSTANCE.getCustomer_OrderByProduct();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderImpl <em>Order</em>}'
@@ -1432,6 +1528,32 @@ public interface Model1Package extends EPackage
      * @generated
      */
     EAttribute ORDER_ADDRESS__TEST_ATTRIBUTE = eINSTANCE.getOrderAddress_TestAttribute();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.ProductToOrderImpl
+     * <em>Product To Order</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.legacy.model1.impl.ProductToOrderImpl
+     * @see org.eclipse.emf.cdo.tests.legacy.model1.impl.Model1PackageImpl#getProductToOrder()
+     * @generated
+     */
+    EClass PRODUCT_TO_ORDER = eINSTANCE.getProductToOrder();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference PRODUCT_TO_ORDER__KEY = eINSTANCE.getProductToOrder_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference PRODUCT_TO_ORDER__VALUE = eINSTANCE.getProductToOrder_Value();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model1.VAT <em>VAT</em>}' enum. <!--

@@ -11,51 +11,49 @@
 package org.eclipse.emf.cdo.tests.mango.impl;
 
 import org.eclipse.emf.cdo.tests.mango.MangoPackage;
-import org.eclipse.emf.cdo.tests.mango.Parameter;
-import org.eclipse.emf.cdo.tests.mango.ParameterPassing;
+import org.eclipse.emf.cdo.tests.mango.MangoValue;
+import org.eclipse.emf.cdo.tests.mango.MangoValueList;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Parameter</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Value List</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.mango.impl.ParameterImpl#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.mango.impl.ParameterImpl#getPassing <em>Passing</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.impl.MangoValueListImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.impl.MangoValueListImpl#getValues <em>Values</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
-public class ParameterImpl extends CDOObjectImpl implements Parameter
+public class MangoValueListImpl extends CDOObjectImpl implements MangoValueList
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  protected ParameterImpl()
+  protected MangoValueListImpl()
   {
     super();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   protected EClass eStaticClass()
   {
-    return MangoPackage.Literals.PARAMETER;
+    return MangoPackage.Literals.MANGO_VALUE_LIST;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -66,42 +64,30 @@ public class ParameterImpl extends CDOObjectImpl implements Parameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
   {
-    return (String)eGet(MangoPackage.Literals.PARAMETER__NAME, true);
+    return (String)eGet(MangoPackage.Literals.MANGO_VALUE_LIST__NAME, true);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)
   {
-    eSet(MangoPackage.Literals.PARAMETER__NAME, newName);
+    eSet(MangoPackage.Literals.MANGO_VALUE_LIST__NAME, newName);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public ParameterPassing getPassing()
+  @SuppressWarnings("unchecked")
+  public EList<MangoValue> getValues()
   {
-    return (ParameterPassing)eGet(MangoPackage.Literals.PARAMETER__PASSING, true);
+    return (EList<MangoValue>)eGet(MangoPackage.Literals.MANGO_VALUE_LIST__VALUES, true);
   }
 
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public void setPassing(ParameterPassing newPassing)
-  {
-    eSet(MangoPackage.Literals.PARAMETER__PASSING, newPassing);
-  }
-
-} // ParameterImpl
+} // ValueListImpl

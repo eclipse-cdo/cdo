@@ -12,10 +12,10 @@ package org.eclipse.emf.cdo.tests.mango.impl;
 
 import org.eclipse.emf.cdo.tests.mango.MangoFactory;
 import org.eclipse.emf.cdo.tests.mango.MangoPackage;
-import org.eclipse.emf.cdo.tests.mango.Parameter;
+import org.eclipse.emf.cdo.tests.mango.MangoParameter;
+import org.eclipse.emf.cdo.tests.mango.MangoValue;
+import org.eclipse.emf.cdo.tests.mango.MangoValueList;
 import org.eclipse.emf.cdo.tests.mango.ParameterPassing;
-import org.eclipse.emf.cdo.tests.mango.Value;
-import org.eclipse.emf.cdo.tests.mango.ValueList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -26,14 +26,13 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static MangoFactory init()
@@ -55,8 +54,8 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public MangoFactoryImpl()
@@ -66,7 +65,6 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -74,12 +72,12 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   {
     switch (eClass.getClassifierID())
     {
-    case MangoPackage.VALUE_LIST:
-      return createValueList();
-    case MangoPackage.VALUE:
-      return createValue();
-    case MangoPackage.PARAMETER:
-      return createParameter();
+    case MangoPackage.MANGO_VALUE_LIST:
+      return createMangoValueList();
+    case MangoPackage.MANGO_VALUE:
+      return createMangoValue();
+    case MangoPackage.MANGO_PARAMETER:
+      return createMangoParameter();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -87,7 +85,6 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -104,7 +101,6 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -120,41 +116,40 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
-  public ValueList createValueList()
+  public MangoValueList createMangoValueList()
   {
-    ValueListImpl valueList = new ValueListImpl();
-    return valueList;
+    MangoValueListImpl mangoValueList = new MangoValueListImpl();
+    return mangoValueList;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MangoValue createMangoValue()
+  {
+    MangoValueImpl mangoValue = new MangoValueImpl();
+    return mangoValue;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MangoParameter createMangoParameter()
+  {
+    MangoParameterImpl mangoParameter = new MangoParameterImpl();
+    return mangoParameter;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public Value createValue()
-  {
-    ValueImpl value = new ValueImpl();
-    return value;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public Parameter createParameter()
-  {
-    ParameterImpl parameter = new ParameterImpl();
-    return parameter;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ParameterPassing createParameterPassingFromString(EDataType eDataType, String initialValue)
@@ -168,7 +163,6 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String convertParameterPassingToString(EDataType eDataType, Object instanceValue)
@@ -178,7 +172,6 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public MangoPackage getMangoPackage()
@@ -188,7 +181,6 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

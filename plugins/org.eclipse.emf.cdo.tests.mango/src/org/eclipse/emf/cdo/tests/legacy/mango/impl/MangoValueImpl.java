@@ -8,12 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: ValueImpl.java,v 1.5 2009-08-22 09:34:41 estepper Exp $
+ * $Id: MangoValueImpl.java,v 1.1 2009-12-27 15:51:10 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.mango.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage;
-import org.eclipse.emf.cdo.tests.legacy.mango.Value;
+import org.eclipse.emf.cdo.tests.mango.MangoPackage;
+import org.eclipse.emf.cdo.tests.mango.MangoValue;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -25,13 +25,13 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.ValueImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.MangoValueImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
-public class ValueImpl extends EObjectImpl implements Value
+public class MangoValueImpl extends EObjectImpl implements MangoValue
 {
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -44,8 +44,8 @@ public class ValueImpl extends EObjectImpl implements Value
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getName()
    * @generated
    * @ordered
@@ -54,28 +54,25 @@ public class ValueImpl extends EObjectImpl implements Value
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  protected ValueImpl()
+  protected MangoValueImpl()
   {
     super();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   protected EClass eStaticClass()
   {
-    return MangoPackage.Literals.VALUE;
+    return MangoPackage.Literals.MANGO_VALUE;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -85,7 +82,6 @@ public class ValueImpl extends EObjectImpl implements Value
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)
@@ -93,12 +89,11 @@ public class ValueImpl extends EObjectImpl implements Value
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MangoPackage.VALUE__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, MangoPackage.MANGO_VALUE__NAME, oldName, name));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -106,7 +101,7 @@ public class ValueImpl extends EObjectImpl implements Value
   {
     switch (featureID)
     {
-    case MangoPackage.VALUE__NAME:
+    case MangoPackage.MANGO_VALUE__NAME:
       return getName();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -114,7 +109,6 @@ public class ValueImpl extends EObjectImpl implements Value
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -122,7 +116,7 @@ public class ValueImpl extends EObjectImpl implements Value
   {
     switch (featureID)
     {
-    case MangoPackage.VALUE__NAME:
+    case MangoPackage.MANGO_VALUE__NAME:
       setName((String)newValue);
       return;
     }
@@ -131,7 +125,6 @@ public class ValueImpl extends EObjectImpl implements Value
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -139,7 +132,7 @@ public class ValueImpl extends EObjectImpl implements Value
   {
     switch (featureID)
     {
-    case MangoPackage.VALUE__NAME:
+    case MangoPackage.MANGO_VALUE__NAME:
       setName(NAME_EDEFAULT);
       return;
     }
@@ -148,7 +141,6 @@ public class ValueImpl extends EObjectImpl implements Value
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -156,7 +148,7 @@ public class ValueImpl extends EObjectImpl implements Value
   {
     switch (featureID)
     {
-    case MangoPackage.VALUE__NAME:
+    case MangoPackage.MANGO_VALUE__NAME:
       return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     }
     return super.eIsSet(featureID);
@@ -164,7 +156,6 @@ public class ValueImpl extends EObjectImpl implements Value
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

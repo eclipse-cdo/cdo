@@ -1,20 +1,8 @@
-/**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- *    Eike Stepper - initial API and implementation
- *
- * $Id: PurchaseOrderImpl.java,v 1.5 2009-08-22 09:35:30 estepper Exp $
- */
 package org.eclipse.emf.cdo.tests.legacy.model1.impl;
 
 import org.eclipse.emf.cdo.tests.legacy.model1.Model1Package;
-import org.eclipse.emf.cdo.tests.legacy.model1.PurchaseOrder;
-import org.eclipse.emf.cdo.tests.legacy.model1.Supplier;
+import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.cdo.tests.model1.Supplier;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -25,7 +13,16 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import java.util.Date;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Purchase Order</b></em>'. <!-- end-user-doc -->
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others. All rights reserved. This program and the
+ * accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this
+ * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html Contributors: Eike Stepper - initial API
+ * and implementation $Id: PurchaseOrderImpl.java,v 1.5 2009/08/22 09:35:30 estepper Exp
+ * $.emf.cdo.tests.legacy.model1.impl; import org.eclipse.emf.cdimport org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+ * import org.eclipse.emf.cdo.tests.model1.Supplier; cdsts.model1.Supplier; import
+ * org.eclipse.emf.common.notify.Notification; import org.eclipse.emf.common.noty.NotificationChain; import
+ * org.eclipse.emf.ecore.EClass; import org.eclipse.emf.ece.InternalEObject; import org.eclipse.emf.ecore.impl. import
+ * java.util.Date; ENotificationImpl; import java.util.Date; /** <!-- begin-user-doc --> An implementation of the model
+ * object '<em><b>Purchase Order</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -115,7 +112,9 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
     Date oldDate = date;
     date = newDate;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.PURCHASE_ORDER__DATE, oldDate, date));
+    }
   }
 
   /**
@@ -132,8 +131,10 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
       if (supplier != oldSupplier)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.PURCHASE_ORDER__SUPPLIER,
               oldSupplier, supplier));
+        }
       }
     }
     return supplier;
@@ -163,9 +164,13 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           Model1Package.PURCHASE_ORDER__SUPPLIER, oldSupplier, newSupplier);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -181,18 +186,26 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
     {
       NotificationChain msgs = null;
       if (supplier != null)
+      {
         msgs = ((InternalEObject)supplier).eInverseRemove(this, Model1Package.SUPPLIER__PURCHASE_ORDERS,
             Supplier.class, msgs);
+      }
       if (newSupplier != null)
+      {
         msgs = ((InternalEObject)newSupplier).eInverseAdd(this, Model1Package.SUPPLIER__PURCHASE_ORDERS,
             Supplier.class, msgs);
+      }
       msgs = basicSetSupplier(newSupplier, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.PURCHASE_ORDER__SUPPLIER, newSupplier,
           newSupplier));
+    }
   }
 
   /**
@@ -207,8 +220,10 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
     {
     case Model1Package.PURCHASE_ORDER__SUPPLIER:
       if (supplier != null)
+      {
         msgs = ((InternalEObject)supplier).eInverseRemove(this, Model1Package.SUPPLIER__PURCHASE_ORDERS,
             Supplier.class, msgs);
+      }
       return basicSetSupplier((Supplier)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -244,7 +259,9 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
       return getDate();
     case Model1Package.PURCHASE_ORDER__SUPPLIER:
       if (resolve)
+      {
         return getSupplier();
+      }
       return basicGetSupplier();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -317,7 +334,9 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (date: ");

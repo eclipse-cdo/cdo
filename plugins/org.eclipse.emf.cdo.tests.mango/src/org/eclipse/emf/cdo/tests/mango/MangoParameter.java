@@ -7,47 +7,46 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: Parameter.java,v 1.2 2009-08-22 09:34:41 estepper Exp $
  */
-package org.eclipse.emf.cdo.tests.legacy.mango;
+package org.eclipse.emf.cdo.tests.mango;
 
 import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Parameter</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.Parameter#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.Parameter#getPassing <em>Passing</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.MangoParameter#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.MangoParameter#getPassing <em>Passing</em>}</li>
  * </ul>
  * </p>
- * 
- * @see org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage#getParameter()
+ *
+ * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoParameter()
  * @model
  * @generated
  */
-public interface Parameter extends EObject
+public interface MangoParameter extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage#getParameter_Name()
+   * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoParameter_Name()
    * @model
    * @generated
    */
   String getName();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.legacy.mango.Parameter#getName <em>Name</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.mango.MangoParameter#getName <em>Name</em>}' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
    *          the new value of the '<em>Name</em>' attribute.
@@ -57,30 +56,28 @@ public interface Parameter extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Passing</b></em>' attribute. The literals are from the enumeration
-   * {@link org.eclipse.emf.cdo.tests.legacy.mango.ParameterPassing}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Passing</b></em>' attribute.
+   * The literals are from the enumeration {@link org.eclipse.emf.cdo.tests.mango.ParameterPassing}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Passing</em>' attribute isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Passing</em>' attribute.
-   * @see org.eclipse.emf.cdo.tests.legacy.mango.ParameterPassing
+   * @see org.eclipse.emf.cdo.tests.mango.ParameterPassing
    * @see #setPassing(ParameterPassing)
-   * @see org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage#getParameter_Passing()
+   * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoParameter_Passing()
    * @model
    * @generated
    */
   ParameterPassing getPassing();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.legacy.mango.Parameter#getPassing <em>Passing</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Passing</em>' attribute.
-   * @see org.eclipse.emf.cdo.tests.legacy.mango.ParameterPassing
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.mango.MangoParameter#getPassing <em>Passing</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Passing</em>' attribute.
+   * @see org.eclipse.emf.cdo.tests.mango.ParameterPassing
    * @see #getPassing()
    * @generated
    */

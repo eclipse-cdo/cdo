@@ -8,19 +8,23 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: CustomerImpl.java,v 1.5 2009-08-22 09:35:30 estepper Exp $
+ * $Id: CustomerImpl.java,v 1.6 2009-12-27 15:50:55 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model1.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model1.Customer;
 import org.eclipse.emf.cdo.tests.legacy.model1.Model1Package;
-import org.eclipse.emf.cdo.tests.legacy.model1.SalesOrder;
+import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.tests.model1.Product1;
+import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import java.util.Collection;
@@ -31,6 +35,7 @@ import java.util.Collection;
  * The following features are implemented:
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CustomerImpl#getSalesOrders <em>Sales Orders</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CustomerImpl#getOrderByProduct <em>Order By Product</em>}</li>
  * </ul>
  * </p>
  * 
@@ -54,6 +59,16 @@ public class CustomerImpl extends AddressImpl implements Customer
    * @ordered
    */
   protected EList<SalesOrder> salesOrders;
+
+  /**
+   * The cached value of the '{@link #getOrderByProduct() <em>Order By Product</em>}' map. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @see #getOrderByProduct()
+   * @generated
+   * @ordered
+   */
+  protected EMap<Product1, SalesOrder> orderByProduct;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -96,6 +111,21 @@ public class CustomerImpl extends AddressImpl implements Customer
    * 
    * @generated
    */
+  public EMap<Product1, SalesOrder> getOrderByProduct()
+  {
+    if (orderByProduct == null)
+    {
+      orderByProduct = new EcoreEMap<Product1, SalesOrder>(Model1Package.Literals.PRODUCT_TO_ORDER,
+          ProductToOrderImpl.class, this, Model1Package.CUSTOMER__ORDER_BY_PRODUCT);
+    }
+    return orderByProduct;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
@@ -120,6 +150,8 @@ public class CustomerImpl extends AddressImpl implements Customer
     {
     case Model1Package.CUSTOMER__SALES_ORDERS:
       return ((InternalEList<?>)getSalesOrders()).basicRemove(otherEnd, msgs);
+    case Model1Package.CUSTOMER__ORDER_BY_PRODUCT:
+      return ((InternalEList<?>)getOrderByProduct()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -136,6 +168,15 @@ public class CustomerImpl extends AddressImpl implements Customer
     {
     case Model1Package.CUSTOMER__SALES_ORDERS:
       return getSalesOrders();
+    case Model1Package.CUSTOMER__ORDER_BY_PRODUCT:
+      if (coreType)
+      {
+        return getOrderByProduct();
+      }
+      else
+      {
+        return getOrderByProduct().map();
+      }
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -155,6 +196,9 @@ public class CustomerImpl extends AddressImpl implements Customer
       getSalesOrders().clear();
       getSalesOrders().addAll((Collection<? extends SalesOrder>)newValue);
       return;
+    case Model1Package.CUSTOMER__ORDER_BY_PRODUCT:
+      ((EStructuralFeature.Setting)getOrderByProduct()).set(newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -172,6 +216,9 @@ public class CustomerImpl extends AddressImpl implements Customer
     case Model1Package.CUSTOMER__SALES_ORDERS:
       getSalesOrders().clear();
       return;
+    case Model1Package.CUSTOMER__ORDER_BY_PRODUCT:
+      getOrderByProduct().clear();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -188,6 +235,8 @@ public class CustomerImpl extends AddressImpl implements Customer
     {
     case Model1Package.CUSTOMER__SALES_ORDERS:
       return salesOrders != null && !salesOrders.isEmpty();
+    case Model1Package.CUSTOMER__ORDER_BY_PRODUCT:
+      return orderByProduct != null && !orderByProduct.isEmpty();
     }
     return super.eIsSet(featureID);
   }

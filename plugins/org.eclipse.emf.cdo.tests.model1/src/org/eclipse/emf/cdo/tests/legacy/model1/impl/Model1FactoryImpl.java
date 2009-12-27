@@ -8,24 +8,24 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: Model1FactoryImpl.java,v 1.5 2009-08-22 09:35:30 estepper Exp $
+ * $Id: Model1FactoryImpl.java,v 1.6 2009-12-27 15:50:55 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model1.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model1.Address;
-import org.eclipse.emf.cdo.tests.legacy.model1.Category;
-import org.eclipse.emf.cdo.tests.legacy.model1.Company;
-import org.eclipse.emf.cdo.tests.legacy.model1.Customer;
 import org.eclipse.emf.cdo.tests.legacy.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.legacy.model1.Model1Package;
-import org.eclipse.emf.cdo.tests.legacy.model1.Order;
-import org.eclipse.emf.cdo.tests.legacy.model1.OrderAddress;
-import org.eclipse.emf.cdo.tests.legacy.model1.OrderDetail;
-import org.eclipse.emf.cdo.tests.legacy.model1.Product1;
-import org.eclipse.emf.cdo.tests.legacy.model1.PurchaseOrder;
-import org.eclipse.emf.cdo.tests.legacy.model1.SalesOrder;
-import org.eclipse.emf.cdo.tests.legacy.model1.Supplier;
-import org.eclipse.emf.cdo.tests.legacy.model1.VAT;
+import org.eclipse.emf.cdo.tests.model1.Address;
+import org.eclipse.emf.cdo.tests.model1.Category;
+import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.tests.model1.Order;
+import org.eclipse.emf.cdo.tests.model1.OrderAddress;
+import org.eclipse.emf.cdo.tests.model1.OrderDetail;
+import org.eclipse.emf.cdo.tests.model1.Product1;
+import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.cdo.tests.model1.SalesOrder;
+import org.eclipse.emf.cdo.tests.model1.Supplier;
+import org.eclipse.emf.cdo.tests.model1.VAT;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -33,6 +33,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
@@ -113,6 +115,8 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
       return createProduct1();
     case Model1Package.ORDER_ADDRESS:
       return createOrderAddress();
+    case Model1Package.PRODUCT_TO_ORDER:
+      return (EObject)createProductToOrder();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -278,12 +282,25 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
    * 
    * @generated
    */
+  public Map.Entry<Product1, SalesOrder> createProductToOrder()
+  {
+    ProductToOrderImpl productToOrder = new ProductToOrderImpl();
+    return productToOrder;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public VAT createVATFromString(EDataType eDataType, String initialValue)
   {
     VAT result = VAT.get(initialValue);
     if (result == null)
+    {
       throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
           + eDataType.getName() + "'");
+    }
     return result;
   }
 

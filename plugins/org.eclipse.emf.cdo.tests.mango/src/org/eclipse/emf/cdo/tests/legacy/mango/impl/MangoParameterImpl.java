@@ -8,36 +8,32 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: ValueListImpl.java,v 1.5 2009-08-22 09:34:41 estepper Exp $
+ * $Id: MangoParameterImpl.java,v 1.1 2009-12-27 15:51:11 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.mango.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage;
-import org.eclipse.emf.cdo.tests.legacy.mango.Value;
-import org.eclipse.emf.cdo.tests.legacy.mango.ValueList;
+import org.eclipse.emf.cdo.tests.mango.MangoPackage;
+import org.eclipse.emf.cdo.tests.mango.MangoParameter;
+import org.eclipse.emf.cdo.tests.mango.ParameterPassing;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-
-import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Value List</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Parameter</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.ValueListImpl#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.ValueListImpl#getValues <em>Values</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.MangoParameterImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.MangoParameterImpl#getPassing <em>Passing</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
-public class ValueListImpl extends EObjectImpl implements ValueList
+public class MangoParameterImpl extends EObjectImpl implements MangoParameter
 {
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -50,8 +46,8 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getName()
    * @generated
    * @ordered
@@ -59,39 +55,46 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getValues() <em>Values</em>}' reference list. <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getPassing() <em>Passing</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
-   * @see #getValues()
+   * @see #getPassing()
    * @generated
    * @ordered
    */
-  protected EList<Value> values;
+  protected static final ParameterPassing PASSING_EDEFAULT = ParameterPassing.BY_VALUE;
+
+  /**
+   * The cached value of the '{@link #getPassing() <em>Passing</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * @see #getPassing()
+   * @generated
+   * @ordered
+   */
+  protected ParameterPassing passing = PASSING_EDEFAULT;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  protected ValueListImpl()
+  protected MangoParameterImpl()
   {
     super();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   protected EClass eStaticClass()
   {
-    return MangoPackage.Literals.VALUE_LIST;
+    return MangoPackage.Literals.MANGO_PARAMETER;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -101,7 +104,6 @@ public class ValueListImpl extends EObjectImpl implements ValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)
@@ -109,26 +111,32 @@ public class ValueListImpl extends EObjectImpl implements ValueList
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MangoPackage.VALUE_LIST__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, MangoPackage.MANGO_PARAMETER__NAME, oldName, name));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public EList<Value> getValues()
+  public ParameterPassing getPassing()
   {
-    if (values == null)
-    {
-      values = new EObjectResolvingEList<Value>(Value.class, this, MangoPackage.VALUE_LIST__VALUES);
-    }
-    return values;
+    return passing;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * @generated
+   */
+  public void setPassing(ParameterPassing newPassing)
+  {
+    ParameterPassing oldPassing = passing;
+    passing = newPassing == null ? PASSING_EDEFAULT : newPassing;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, MangoPackage.MANGO_PARAMETER__PASSING, oldPassing, passing));
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -136,31 +144,28 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   {
     switch (featureID)
     {
-    case MangoPackage.VALUE_LIST__NAME:
+    case MangoPackage.MANGO_PARAMETER__NAME:
       return getName();
-    case MangoPackage.VALUE_LIST__VALUES:
-      return getValues();
+    case MangoPackage.MANGO_PARAMETER__PASSING:
+      return getPassing();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-    case MangoPackage.VALUE_LIST__NAME:
+    case MangoPackage.MANGO_PARAMETER__NAME:
       setName((String)newValue);
       return;
-    case MangoPackage.VALUE_LIST__VALUES:
-      getValues().clear();
-      getValues().addAll((Collection<? extends Value>)newValue);
+    case MangoPackage.MANGO_PARAMETER__PASSING:
+      setPassing((ParameterPassing)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -168,7 +173,6 @@ public class ValueListImpl extends EObjectImpl implements ValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -176,11 +180,11 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   {
     switch (featureID)
     {
-    case MangoPackage.VALUE_LIST__NAME:
+    case MangoPackage.MANGO_PARAMETER__NAME:
       setName(NAME_EDEFAULT);
       return;
-    case MangoPackage.VALUE_LIST__VALUES:
-      getValues().clear();
+    case MangoPackage.MANGO_PARAMETER__PASSING:
+      setPassing(PASSING_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -188,7 +192,6 @@ public class ValueListImpl extends EObjectImpl implements ValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -196,17 +199,16 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   {
     switch (featureID)
     {
-    case MangoPackage.VALUE_LIST__NAME:
+    case MangoPackage.MANGO_PARAMETER__NAME:
       return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-    case MangoPackage.VALUE_LIST__VALUES:
-      return values != null && !values.isEmpty();
+    case MangoPackage.MANGO_PARAMETER__PASSING:
+      return passing != PASSING_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -218,8 +220,10 @@ public class ValueListImpl extends EObjectImpl implements ValueList
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
+    result.append(", passing: ");
+    result.append(passing);
     result.append(')');
     return result.toString();
   }
 
-} // ValueListImpl
+} // ParameterImpl

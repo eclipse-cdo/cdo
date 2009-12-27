@@ -109,12 +109,12 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
 
   public Map<CDOID, CDOObject> getNewObjects();
 
-  public Map<CDOID, CDOObject> getDirtyObjects();
-
   /**
    * @since 2.0
    */
   public Map<CDOID, CDOObject> getDetachedObjects();
+
+  public Map<CDOID, CDOObject> getDirtyObjects();
 
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas();
 

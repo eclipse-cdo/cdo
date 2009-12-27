@@ -56,16 +56,6 @@ public interface CDOSavepoint extends CDOUserSavepoint
   /**
    * @since 3.0
    */
-  public Map<CDOID, CDOObject> getDirtyObjects();
-
-  /**
-   * @since 3.0
-   */
-  public ConcurrentMap<CDOID, CDORevisionDelta> getRevisionDeltas();
-
-  /**
-   * @since 3.0
-   */
   public Map<CDOID, CDOObject> getDetachedObjects();
 
   /**
@@ -74,6 +64,16 @@ public interface CDOSavepoint extends CDOUserSavepoint
    * @since 3.0
    */
   public Map<CDOID, CDOObject> getReattachedObjects();
+
+  /**
+   * @since 3.0
+   */
+  public Map<CDOID, CDOObject> getDirtyObjects();
+
+  /**
+   * @since 3.0
+   */
+  public ConcurrentMap<CDOID, CDORevisionDelta> getRevisionDeltas();
 
   /**
    * @since 3.0
@@ -95,6 +95,11 @@ public interface CDOSavepoint extends CDOUserSavepoint
   public Map<CDOID, CDOObject> getAllNewObjects();
 
   /**
+   * @since 3.0
+   */
+  public Map<CDOID, CDOObject> getAllDetachedObjects();
+
+  /**
    * Return the list of new objects from this point.
    * 
    * @since 3.0
@@ -107,9 +112,4 @@ public interface CDOSavepoint extends CDOUserSavepoint
    * @since 3.0
    */
   public Map<CDOID, CDORevisionDelta> getAllRevisionDeltas();
-
-  /**
-   * @since 3.0
-   */
-  public Map<CDOID, CDOObject> getAllDetachedObjects();
 }

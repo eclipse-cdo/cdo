@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.eresource.impl;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -18,6 +19,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
@@ -529,7 +531,8 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
       if (cdoID.isObject())
       {
-        return cdoView().getObject(cdoID, true);
+        CDOObject object = cdoView().getObject(cdoID, true);
+        return CDOUtil.getEObject(object);
       }
     }
     catch (Exception ex)
@@ -538,7 +541,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
       // Return null if the object cannot be resolved.
     }
 
-    // If it doesn`t match to anything we return null like ResourceImpl.getEObject
+    // If it doesn't match to anything we return null like ResourceImpl.getEObject
     return null;
   }
 
@@ -720,8 +723,8 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
    */
   private CDOTransaction getTransaction(Map<?, ?> options)
   {
-    CDOTransaction transaction = options != null ? (CDOTransaction)options.get(CDOResource.OPTION_SAVE_OVERRIDE_TRANSACTION)
-        : null;
+    CDOTransaction transaction = options != null ? (CDOTransaction)options
+        .get(CDOResource.OPTION_SAVE_OVERRIDE_TRANSACTION) : null;
 
     if (transaction == null)
     {

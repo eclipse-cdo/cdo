@@ -57,8 +57,14 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
   public void notifyChanged(Notification msg)
   {
-    CDOStore store = view.getStore();
     EStructuralFeature feature = (EStructuralFeature)msg.getFeature();
+
+    if (view == null || feature == null)
+    {
+      return;
+    }
+
+    CDOStore store = view.getStore();
 
     if (EMFUtil.isPersistent(feature))
     {

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -30,7 +31,6 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.impl.NotifyingListImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -64,12 +64,12 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   protected InternalCDORevision revision;
 
   /**
+   * It could happen that while <i>revisionToInstance()</i> is executed externally the <i>internalPostLoad()</i> method
+   * will be called. This happens for example if <i>internalPostInvalidate()</i> is called. The leads to another
+   * <i>revisionToInstance()</i> call while the first call has not finished. This is certainly not so cool. That's why
+   * <b>underConstruction</b> will flag that <i>revisionToInstance()</i> is still running and avoid the second call.
+   * 
    * @since 3.0
-   * @description It could happen that while <i>revisionToInstance()</i> is executed externally the
-   *              <i>internalPostLoad()</i> method will be called. This happens for example if
-   *              <i>internalPostInvalidate()</i> is called. The leads to another <i>revisionToInstance()</i> call while
-   *              the first call has not finished. This is certainly not so cool. That's why <b>underConstruction</b>
-   *              will flag that <i>revisionToInstance()</i> is still running and avoid the second call.
    */
   private boolean underConstruction;
 
@@ -356,11 +356,8 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         TRACER.format("State of Object is : " + state);
       }
 
-      // if (state != CDOState.CONFLICT) // do not do anything with the
-      if (state == CDOState.CLEAN || state == CDOState.PROXY) // do not do anything with the
-      // list if state is conflict
+      if (state == CDOState.CLEAN || state == CDOState.PROXY)
       {
-        // int size = view.getStore().size(instance, feature);
         int size = revision.size(feature);
 
         @SuppressWarnings("unchecked")
@@ -376,14 +373,13 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
             TRACER.format(("Adding " + object + " to feature " + feature + "in instance " + instance));
           }
 
-          // instance.eInverseAdd((InternalEObject)object, instance.eClass().getFeatureID(feature), object.getClass(),
-          // null);
           list.basicAdd(object, null);
         }
       }
     }
     else
-    { // ! isMany()
+    {
+      // !feature.isMany()
       Object object = getValueFromRevision(feature, 0);
       if (feature instanceof EAttribute)
       {
@@ -395,7 +391,8 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         eSet(feature, object);
       }
       else
-      { // EReferences
+      {
+        // EReferences
         if (TRACER.isEnabled())
         {
           TRACER.format(("Adding object " + object + " to feature " + feature + " in instance " + instance));
@@ -403,7 +400,24 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
         int featureID = instance.eClass().getFeatureID(feature);
         Class<? extends Object> baseClass = object == null ? null : object.getClass();
-        instance.eInverseAdd((InternalEObject)object, featureID, baseClass, null);
+
+        try
+        {
+          instance.eInverseAdd((InternalEObject)object, featureID, baseClass, null);
+        }
+        catch (NullPointerException e)
+        {
+          // TODO: Martin:quick hack, because there is still a problem with the feature id. Should investigate this soon
+          instance.eSet(feature, object);
+        }
+
+        // Adjust opposite for transient opposite features
+        EStructuralFeature.Internal internalFeature = (EStructuralFeature.Internal)feature;
+        EReference oppositeReference = cdoID().isTemporary() ? null : internalFeature.getEOpposite();
+        if (oppositeReference != null && object != null && !EMFUtil.isPersistent(oppositeReference))
+        {
+          adjustOppositeReference(instance, (InternalEObject)object, oppositeReference);
+        }
 
         if (TRACER.isEnabled())
         {
@@ -413,15 +427,52 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
+  private void adjustOppositeReference(InternalEObject instance, InternalEObject object, EReference oppositeReference)
+  {
+    boolean deliver = object.eDeliver(); // Disable notifications
+    if (deliver)
+    {
+      object.eSetDeliver(false);
+    }
+
+    try
+    {
+      if (oppositeReference.isMany())
+      {
+        // TODO Martin: Is this enough??
+        @SuppressWarnings("unchecked")
+        InternalEList<Object> list = (InternalEList<Object>)object.eGet(oppositeReference);
+        list.basicAdd(instance, null);
+      }
+      else
+      {
+        // TODO Martin: This only increases performance if getter is cheaper than setter. Should discuss this.
+        if (object.eGet(oppositeReference) != instance)
+        {
+          object.eInverseAdd(instance, oppositeReference.getFeatureID(), ((EObject)instance).getClass(), null);
+        }
+      }
+    }
+    finally
+    {
+      if (deliver)
+      {
+        object.eSetDeliver(true);
+      }
+    }
+  }
+
   private void clearList(EStructuralFeature feature, InternalEList<Object> list)
   {
-    // attempt 2
-    int featureID = feature.getFeatureID();
     for (int i = list.size() - 1; i >= 0; --i)
     {
       InternalEObject obj = (InternalEObject)list.get(i);
-      // TODO clarify obj.getClass()/baseclass
-      instance.eInverseRemove(obj, featureID, obj.getClass(), null);
+
+      // TODO Clarify obj.getClass()/baseclass
+      ((InternalEList<?>)list).basicRemove(obj, null);
+
+      // TODO Martin: baseicRemove seems to be better than eInverseremove
+      // instance.eInverseRemove(obj, featureID, obj.getClass(), null);
     }
   }
 
@@ -438,7 +489,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   private Object getValueFromRevision(EStructuralFeature feature, int index)
   {
     Object object = revision.get(feature, index);
-
     if (object == null)
     {
       return null;
@@ -456,16 +506,12 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       }
 
       object = getPreRegisteredObjects().get(id);
-
       if (object != null)
       {
-        System.out.println(((CDOLegacyWrapper)object).cdoInternalInstance());
         return ((CDOLegacyWrapper)object).cdoInternalInstance();
       }
 
-      // return view.getStore().get(instance, feature, index);
       object = view.getObject(id);
-
       if (object instanceof CDOObjectWrapper)
       {
         return ((CDOObjectWrapper)object).cdoInternalInstance();
@@ -504,7 +550,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   protected void setInstanceContainer(InternalEObject container, int containerFeatureID)
   {
-    // TODO change to direct call of eBasicSetContainer
+    // TODO Change to direct call of eBasicSetContainer
     Method method = ReflectUtil.getMethod(instance.getClass(), "eBasicSetContainer", InternalEObject.class, int.class); //$NON-NLS-1$
     ReflectUtil.invokeMethod(method, instance, container, containerFeatureID);
   }
@@ -586,7 +632,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   }
 
   /**
-   * TODO Ed: Fix whole mess ;-)
+   * TODO Martin: Can this be optimized?
    */
   protected void clearEList(InternalEList<Object> list)
   {
@@ -602,19 +648,14 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    */
   protected void resolveAllProxies()
   {
-    // if (!allProxiesResolved)
+    CDOPackageRegistry packageRegistry = cdoView().getSession().getPackageRegistry();
+    EClass eClass = revision.getEClass();
+    for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(eClass))
     {
-      CDOPackageRegistry packageRegistry = cdoView().getSession().getPackageRegistry();
-      EClass eClass = revision.getEClass();
-      for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(eClass))
+      if (feature instanceof EReference)
       {
-        if (feature instanceof EReference)
-        {
-          resolveProxies(feature, packageRegistry);
-        }
+        resolveProxies(feature, packageRegistry);
       }
-
-      // allProxiesResolved = true;
     }
   }
 
@@ -632,6 +673,13 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         @SuppressWarnings("unchecked")
         InternalEList<Object> list = (InternalEList<Object>)value;
         int size = list.size();
+
+        boolean deliver = instance.eDeliver();
+        if (deliver)
+        {
+          instance.eSetDeliver(false);
+        }
+
         for (int i = 0; i < size; i++)
         {
           Object element = list.get(i);
@@ -650,15 +698,20 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
             // ((org.eclipse.emf.ecore.util.DelegatingInternalEList)list).getDelegateInternalEList();
             // }
 
-            if (list instanceof NotifyingListImpl<?>)
-            {
-              ((NotifyingListImpl<Object>)list).basicSet(i, instance, null);
-            }
-            else
-            {
-              list.set(i, instance);
-            }
+            // if (list instanceof NotifyingListImpl<?>)
+            // {
+            // ((NotifyingListImpl<Object>)list).basicSet(i, instance, null);
+            // }
+            // else
+            // {
+            list.set(i, instance);
+            // }
           }
+        }
+
+        if (deliver)
+        {
+          instance.eSetDeliver(true);
         }
       }
       else
@@ -794,27 +847,15 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   }
 
   /**
-   * @since 3.0
-   */
-  public void setUnderConstruction(boolean underConstruction)
-  {
-    this.underConstruction = underConstruction;
-  }
-
-  /**
-   * @since 3.0
-   */
-  public boolean isUnderConstruction()
-  {
-    return underConstruction;
-  }
-
-  /**
    * @author Martin Fluegge
    */
   private static final class Counter
   {
     private int value;
+
+    public Counter()
+    {
+    }
 
     public void increment()
     {

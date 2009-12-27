@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.common.branch;
 
+import java.util.List;
+
 /**
  * @author Eike Stepper
  * @since 3.0
@@ -17,4 +19,6 @@ package org.eclipse.emf.cdo.common.branch;
 public interface CDOBranchTag extends CDOBranchPoint
 {
   public String getName();
+
+  public List<String> getComments();
 }

@@ -8,16 +8,27 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.common.branch;
+package org.eclipse.emf.cdo.common.commit;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+
+import java.util.List;
 
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public interface CDOBranchPoint
+public interface CDOCommit extends CDOBranchPoint
 {
-  public int getBranchID();
+  public String getUserID();
 
-  public long getTimeStamp();
+  public List<String> getComments();
+
+  // public Set<CDOID> getNewResources();
+  //
+  // public Set<CDOID> getNewObjects();
+  //
+  // public Set<CDOID> getDetachedObjects();
+  //
+  // public Set<CDOID> getDirtyObjects();
 }

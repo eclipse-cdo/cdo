@@ -47,6 +47,11 @@ public interface CDORevision
 
   public CDOID getID();
 
+  // /**
+  // * @since 3.0
+  // */
+  // public int getBranchID();
+
   public int getVersion();
 
   public long getCreated();

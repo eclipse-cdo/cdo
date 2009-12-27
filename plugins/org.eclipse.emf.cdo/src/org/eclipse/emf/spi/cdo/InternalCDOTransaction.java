@@ -12,7 +12,9 @@
 package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -83,6 +85,11 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    * @since 3.0
    */
   public Map<InternalCDOObject, InternalCDORevision> getFormerRevisions();
+
+  /**
+   * @since 3.0
+   */
+  public Map<CDOID, CDORevision> getBaseNewObjects();
 
   /**
    * Provides a context for a commit operation.

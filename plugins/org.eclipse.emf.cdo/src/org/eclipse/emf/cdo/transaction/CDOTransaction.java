@@ -16,7 +16,6 @@ package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -116,11 +115,6 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
    * @since 2.0
    */
   public Map<CDOID, CDOObject> getDetachedObjects();
-
-  /**
-   * @since 3.0
-   */
-  public Map<CDOID, CDORevision> getBaseNewObjects();
 
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas();
 

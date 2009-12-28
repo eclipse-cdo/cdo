@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -19,6 +21,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOQuery;
+import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -26,6 +29,7 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
@@ -42,6 +46,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -51,11 +56,43 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author Eike Stepper
  * @since 3.0
  */
-public class CDOPushTransaction implements CDOTransaction
+public class CDOPushTransaction extends Notifier implements CDOTransaction
 {
   private CDOTransaction delegate;
 
   private File file;
+
+  private boolean dirty;
+
+  private CDOTransactionHandler delegateHandler = new CDOTransactionHandler()
+  {
+    public void attachingObject(CDOTransaction transaction, CDOObject object)
+    {
+      setDirty(true);
+    }
+
+    public void detachingObject(CDOTransaction transaction, CDOObject object)
+    {
+      setDirty(true);
+    }
+
+    public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
+    {
+      setDirty(true);
+    }
+
+    public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+    {
+    }
+
+    public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+    {
+    }
+
+    public void rolledBackTransaction(CDOTransaction transaction)
+    {
+    }
+  };
 
   public CDOPushTransaction(CDOTransaction delegate) throws IOException
   {
@@ -71,6 +108,9 @@ public class CDOPushTransaction implements CDOTransaction
   {
     this.delegate = delegate;
     this.file = file;
+
+    dirty = delegate.isDirty();
+    delegate.addTransactionHandler(delegateHandler);
 
     if (file.isDirectory())
     {
@@ -108,6 +148,49 @@ public class CDOPushTransaction implements CDOTransaction
     return file;
   }
 
+  public boolean isDirty()
+  {
+    return dirty;
+  }
+
+  protected void setDirty(boolean dirty)
+  {
+    if (this.dirty != dirty)
+    {
+      this.dirty = dirty;
+      if (dirty)
+      {
+        fireEvent(new CDOTransactionStartedEvent()
+        {
+          public CDOView getSource()
+          {
+            return CDOPushTransaction.this;
+          }
+        });
+      }
+      else
+      {
+        fireEvent(new CDOTransactionFinishedEvent()
+        {
+          public CDOView getSource()
+          {
+            return CDOPushTransaction.this;
+          }
+
+          public Type getType()
+          {
+            return Type.COMMITTED;
+          }
+
+          public Map<CDOIDTemp, CDOID> getIDMappings()
+          {
+            return Collections.emptyMap();
+          }
+        });
+      }
+    }
+  }
+
   public void commit() throws TransactionException
   {
     commit(null);
@@ -121,6 +204,7 @@ public class CDOPushTransaction implements CDOTransaction
     {
       out = new FileOutputStream(file);
       delegate.exportChanges(out);
+      setDirty(false);
     }
     catch (IOException ex)
     {
@@ -130,6 +214,11 @@ public class CDOPushTransaction implements CDOTransaction
     {
       IOUtil.close(out);
     }
+  }
+
+  public void rollback()
+  {
+    throw new UnsupportedOperationException("Rollback not supported for push transactions");
   }
 
   public void push() throws TransactionException
@@ -152,9 +241,30 @@ public class CDOPushTransaction implements CDOTransaction
     return delegate.importChanges(in, reconstructSavepoints);
   }
 
+  @Override
   public void addListener(IListener listener)
   {
+    super.addListener(listener);
     delegate.addListener(listener);
+  }
+
+  @Override
+  public void removeListener(IListener listener)
+  {
+    super.removeListener(listener);
+    delegate.removeListener(listener);
+  }
+
+  @Override
+  public boolean hasListeners()
+  {
+    return delegate.hasListeners();
+  }
+
+  @Override
+  public IListener[] getListeners()
+  {
+    return delegate.getListeners();
   }
 
   public void addObjectHandler(CDOObjectHandler handler)
@@ -169,6 +279,7 @@ public class CDOPushTransaction implements CDOTransaction
 
   public void close()
   {
+    delegate.removeTransactionHandler(delegateHandler);
     delegate.close();
   }
 
@@ -205,11 +316,6 @@ public class CDOPushTransaction implements CDOTransaction
   public CDOSavepoint getLastSavepoint()
   {
     return delegate.getLastSavepoint();
-  }
-
-  public IListener[] getListeners()
-  {
-    return delegate.getListeners();
   }
 
   public ReentrantLock getLock()
@@ -317,11 +423,6 @@ public class CDOPushTransaction implements CDOTransaction
     return delegate.hasConflict();
   }
 
-  public boolean hasListeners()
-  {
-    return delegate.hasListeners();
-  }
-
   public boolean hasResource(String path)
   {
     return delegate.hasResource(path);
@@ -330,11 +431,6 @@ public class CDOPushTransaction implements CDOTransaction
   public boolean isClosed()
   {
     return delegate.isClosed();
-  }
-
-  public boolean isDirty()
-  {
-    return delegate.isDirty();
   }
 
   public boolean isObjectRegistered(CDOID id)
@@ -369,11 +465,6 @@ public class CDOPushTransaction implements CDOTransaction
     return delegate.reload(objects);
   }
 
-  public void removeListener(IListener listener)
-  {
-    delegate.removeListener(listener);
-  }
-
   public void removeObjectHandler(CDOObjectHandler handler)
   {
     delegate.removeObjectHandler(handler);
@@ -387,11 +478,6 @@ public class CDOPushTransaction implements CDOTransaction
   public void resolveConflicts(CDOConflictResolver... resolver)
   {
     delegate.resolveConflicts(resolver);
-  }
-
-  public void rollback()
-  {
-    delegate.rollback();
   }
 
   public CDOSavepoint setSavepoint()

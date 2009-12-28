@@ -90,14 +90,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
       InternalCDORevision revision = cache.getRevision(id);
       if (revision != null)
       {
-        if (timeStamp == CDORevision.UNSPECIFIED_DATE)
-        {
-          removeCachedRevision(revision.getID(), revision.getVersion());
-        }
-        else
-        {
-          revision.setRevised(timeStamp - 1);
-        }
+        cache.removeRevision(revision.getID(), revision.getVersion());
       }
     }
     finally
@@ -117,7 +110,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
       {
         if (timeStamp == CDORevision.UNSPECIFIED_DATE)
         {
-          removeCachedRevision(revision.getID(), revision.getVersion());
+          cache.removeRevision(revision.getID(), revision.getVersion());
         }
         else
         {

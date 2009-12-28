@@ -124,6 +124,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   // Bug 283985 (Re-attachment)
   private WeakHashMap<InternalCDOObject, InternalCDORevision> formerRevisions = new WeakHashMap<InternalCDOObject, InternalCDORevision>();
 
+  // Bug 283985 (Re-attachment)
+  private final ThreadLocal<Boolean> providingCDOID = new InheritableThreadLocal<Boolean>()
+  {
+    @Override
+    protected Boolean initialValue()
+    {
+      return false;
+    }
+  };
+
   /**
    * @since 2.0
    */
@@ -1321,24 +1331,38 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   protected CDOID getID(InternalCDOObject object, boolean onlyPersistedID)
   {
-    // Bug 283985 (Re-attachment): We consult the formerRevision map before delegating
-    // to the super implementation. Note that we *abuse* the onlyPersistedID
-    // argument to determine if we should disregard the formerRevision map. We need
-    // to disregard it when this gets called during commit, and it just so happens
-    // that only during commit it is being called with onlyPersistedID = false. So
-    // this code exploits a regularity in the calling code, rather than interpreting
-    // the onlyPersistedID argument in accordance with its intended meaning. Indeed
-    // this is a very fragile hack...
-    if (onlyPersistedID)
+    CDOID id = super.getID(object, onlyPersistedID);
+
+    // The super implementation will return null for a transient (unattached) object;
+    // but in a tx, an transient object may previously have been attached, so we consult
+    // the formerRevisions -- unless this is being called indirectly through provideCDOID.
+    // The latter case occurs when deltas or revisions are being written out to a stream; in
+    // which case null must be returned (for transients) so that the caller will detect a
+    // dangling reference
+    if (!providingCDOID.get().booleanValue() && id == null)
     {
       CDORevision formerRevision = formerRevisions.get(object);
       if (formerRevision != null)
       {
-        return formerRevision.getID();
+        id = formerRevision.getID();
       }
     }
 
-    return super.getID(object, onlyPersistedID);
+    return id;
+  }
+
+  @Override
+  public CDOID provideCDOID(Object idOrObject)
+  {
+    try
+    {
+      providingCDOID.set(true);
+      return super.provideCDOID(idOrObject);
+    }
+    finally
+    {
+      providingCDOID.set(false);
+    }
   }
 
   /**

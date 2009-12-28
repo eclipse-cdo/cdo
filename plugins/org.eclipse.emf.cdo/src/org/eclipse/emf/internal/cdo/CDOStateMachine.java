@@ -142,7 +142,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.PROXY, CDOEvent.RELOAD, new ReloadTransition());
     init(CDOState.PROXY, CDOEvent.COMMIT, FAIL);
     init(CDOState.PROXY, CDOEvent.ROLLBACK, FAIL);
-    init(CDOState.PROXY, CDOEvent.REATTACH, FAIL); // Bug 283985 (Re-attachment) - Not sure about this one
+    init(CDOState.PROXY, CDOEvent.REATTACH, FAIL);
 
     init(CDOState.CONFLICT, CDOEvent.PREPARE, FAIL);
     init(CDOState.CONFLICT, CDOEvent.ATTACH, IGNORE);
@@ -154,7 +154,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.CONFLICT, CDOEvent.RELOAD, FAIL);
     init(CDOState.CONFLICT, CDOEvent.COMMIT, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.ROLLBACK, new RollbackTransition());
-    init(CDOState.CONFLICT, CDOEvent.REATTACH, FAIL); // Bug 283985 (Re-attachment) Not sure about this one
+    init(CDOState.CONFLICT, CDOEvent.REATTACH, FAIL);
 
     init(CDOState.INVALID, CDOEvent.PREPARE, InvalidTransition.INSTANCE);
     init(CDOState.INVALID, CDOEvent.ATTACH, InvalidTransition.INSTANCE);
@@ -166,7 +166,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.INVALID, CDOEvent.RELOAD, InvalidTransition.INSTANCE);
     init(CDOState.INVALID, CDOEvent.COMMIT, InvalidTransition.INSTANCE);
     init(CDOState.INVALID, CDOEvent.ROLLBACK, InvalidTransition.INSTANCE);
-    init(CDOState.INVALID, CDOEvent.REATTACH, FAIL); // Bug 283985 (Re-attachment) Not sure about this one
+    init(CDOState.INVALID, CDOEvent.REATTACH, FAIL);
 
     init(CDOState.INVALID_CONFLICT, CDOEvent.PREPARE, InvalidTransition.INSTANCE);
     init(CDOState.INVALID_CONFLICT, CDOEvent.ATTACH, InvalidTransition.INSTANCE);
@@ -178,7 +178,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.INVALID_CONFLICT, CDOEvent.RELOAD, InvalidTransition.INSTANCE);
     init(CDOState.INVALID_CONFLICT, CDOEvent.COMMIT, InvalidTransition.INSTANCE);
     init(CDOState.INVALID_CONFLICT, CDOEvent.ROLLBACK, DetachRemoteTransition.INSTANCE);
-    init(CDOState.INVALID_CONFLICT, CDOEvent.REATTACH, FAIL); // Bug 283985 (Re-attachment) Not sure about this one
+    init(CDOState.INVALID_CONFLICT, CDOEvent.REATTACH, FAIL);
   }
 
   /**
@@ -210,7 +210,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   private void attachOrReattach(InternalCDOObject object, InternalCDOTransaction transaction)
   {
-    // Bug 283985 (Re-attachment): Special case: re-attachment
+    // Bug 283985 (Re-attachment)
     if (transaction.getFormerRevisions().containsKey(object))
     {
       reattachObject(object, transaction);
@@ -769,7 +769,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       else
       {
         // This branch only gets taken if the object that is being re-attached,
-        // was already DIRTY when it was first detached.
+        // was already DIRTY when it was first detached. In this case, the revision
+        // is already transactional; we clear it before repopulating it.
         //
         revision = formerRevision;
         for (int i = 0; i < eClass.getFeatureCount(); i++)

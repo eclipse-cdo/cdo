@@ -69,6 +69,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     }
   };
 
+  // Bug 283985 (Re-attachment)
   private Map<CDOID, CDOObject> reattachedObjects = new HashMap<CDOID, CDOObject>();
 
   private ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = new ConcurrentHashMap<CDOID, CDORevisionDelta>();
@@ -139,7 +140,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     revisionDeltas.clear();
     baseNewObjects.clear();
     detachedObjects.clear();
-    // TODO reattachedObjects.clear(); ???
+    reattachedObjects.clear();
   }
 
   public boolean isDirty()

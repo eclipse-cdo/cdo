@@ -12,10 +12,8 @@ package org.eclipse.emf.internal.cdo.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -23,12 +21,7 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.emf.spi.cdo.InternalCDOObject;
-import org.eclipse.emf.spi.cdo.InternalCDOView;
-
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -67,20 +60,5 @@ public class LockObjectsRequest extends SyncRevisionsRequest
       TRACER.format("Locking of type {0} requested for view {1} with timeout {2}", //$NON-NLS-1$
           lockType == RWLockManager.LockType.READ ? "read" : "write", view.getViewID(), timeout); //$NON-NLS-1$ //$NON-NLS-2$
     }
-  }
-
-  @Override
-  protected Collection<CDOTimeStampContext> confirming(CDODataInput in) throws IOException
-  {
-    Collection<CDOTimeStampContext> contexts = super.confirming(in);
-    for (CDOTimeStampContext timestampContext : contexts)
-    {
-      getSession().handleUpdateRevision(timestampContext.getTimeStamp(), timestampContext.getDirtyObjects(),
-          timestampContext.getDetachedObjects());
-      ((InternalCDOView)view).handleInvalidationWithoutNotification(timestampContext.getDirtyObjects(),
-          timestampContext.getDetachedObjects(), new HashSet<InternalCDOObject>(), new HashSet<InternalCDOObject>());
-    }
-
-    return contexts;
   }
 }

@@ -236,15 +236,6 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
       {
         // Incoming confirmation
         signal = signals.get(-correlationID);
-        if (signal == null)
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.trace("Discarding buffer"); //$NON-NLS-1$
-          }
-
-          buffer.release();
-        }
       }
     }
 
@@ -252,6 +243,15 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     {
       BufferInputStream inputStream = signal.getBufferInputStream();
       inputStream.handleBuffer(buffer);
+    }
+    else
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Discarding buffer"); //$NON-NLS-1$
+      }
+
+      buffer.release();
     }
   }
 

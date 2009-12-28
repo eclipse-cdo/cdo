@@ -271,7 +271,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
           ChannelOperation operation = channel.getQuarantinedInputOperation(channel.getInputOperationCount());
           if (operation != null)
           {
-            operation.doEexecute(channel);
+            operation.doExecute(channel);
             channel.increaseInputOperationCount();
           }
           else
@@ -283,7 +283,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
         if (operationCount == channel.getInputOperationCount())
         {
           // Execute operation if possible
-          doEexecute(channel);
+          doExecute(channel);
           channel.increaseInputOperationCount();
 
           // Execute following operations if possible
@@ -292,7 +292,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
             ChannelOperation operation = channel.getQuarantinedInputOperation(++operationCount);
             if (operation != null)
             {
-              operation.doEexecute(channel);
+              operation.doExecute(channel);
               channel.increaseInputOperationCount();
             }
             else
@@ -308,7 +308,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       }
     }
 
-    public abstract void doEexecute(HTTPChannel channel);
+    public abstract void doExecute(HTTPChannel channel);
 
     public void dispose()
     {
@@ -357,11 +357,11 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       }
 
       channel.increaseInputOperationCount();
-      doEexecute(channel);
+      doExecute(channel);
     }
 
     @Override
-    public void doEexecute(HTTPChannel channel)
+    public void doExecute(HTTPChannel channel)
     {
       ChannelOperation operation = new OpenAckChannelOperation(getChannelID(), true);
       outputOperations.add(operation);
@@ -401,7 +401,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     }
 
     @Override
-    public void doEexecute(HTTPChannel channel)
+    public void doExecute(HTTPChannel channel)
     {
       channel.openAck();
     }
@@ -430,7 +430,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     }
 
     @Override
-    public void doEexecute(HTTPChannel channel)
+    public void doExecute(HTTPChannel channel)
     {
       channel.setInverseRemoved();
       inverseCloseChannel(channel.getID());
@@ -502,7 +502,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     }
 
     @Override
-    public void doEexecute(HTTPChannel channel)
+    public void doExecute(HTTPChannel channel)
     {
       channel.handleBufferFromMultiplexer(buffer);
       buffer = null;

@@ -88,6 +88,7 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(RemoteSessionManagerTest.class);
     testClasses.add(ViewTest.class);
     testClasses.add(TransactionTest.class);
+    testClasses.add(PushTransactionTest.class);
     testClasses.add(AuditTest.class);
     testClasses.add(LocalAuditTest.class);
     testClasses.add(ResourceTest.class);

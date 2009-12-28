@@ -14,12 +14,16 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
+import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.transaction.CDOPushTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -190,5 +194,108 @@ public class TransactionTest extends AbstractCDOTest
     {
       assertEquals(0, exceptions.size());
     }
+  }
+
+  public void testPushModeNewObjects() throws Exception
+  {
+    msg("Creating category1");
+    Category category1 = getModel1Factory().createCategory();
+    category1.setName("category1");
+
+    msg("Creating category2");
+    Category category2 = getModel1Factory().createCategory();
+    category2.setName("category2");
+
+    msg("Creating category3");
+    Category category3 = getModel1Factory().createCategory();
+    category3.setName("category3");
+
+    msg("Creating company");
+    Company company = getModel1Factory().createCompany();
+    company.setName("Foundation");
+
+    msg("Adding categories");
+    company.getCategories().add(category1);
+    category1.getCategories().add(category2);
+    category1.getCategories().add(category3);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+    File file = pushTransaction.getFile();
+
+    CDOResource resource = pushTransaction.getOrCreateResource("/test1");
+    resource.getContents().add(company);
+
+    pushTransaction.commit();
+    pushTransaction.close();
+    transaction = session.openTransaction();
+    pushTransaction = new CDOPushTransaction(transaction, file);
+    pushTransaction.push();
+
+    session.close();
+    session = openSession();
+
+    CDOView view = session.openView();
+    resource = view.getResource("/test1");
+    company = (Company)resource.getContents().get(0);
+    assertEquals("Foundation", company.getName());
+    assertEquals(1, company.getCategories().size());
+    assertEquals(2, company.getCategories().get(0).getCategories().size());
+    session.close();
+  }
+
+  public void testPushModeDeltas() throws Exception
+  {
+    msg("Creating category1");
+    Category category1 = getModel1Factory().createCategory();
+    category1.setName("category1");
+
+    msg("Creating company");
+    Company company = getModel1Factory().createCompany();
+    company.setName("Foundation");
+
+    msg("Adding categories");
+    company.getCategories().add(category1);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+    File file = pushTransaction.getFile();
+
+    CDOResource resource = pushTransaction.getOrCreateResource("/test1");
+    resource.getContents().add(company);
+
+    pushTransaction.commit();
+
+    msg("Creating category2");
+    Category category2 = getModel1Factory().createCategory();
+    category2.setName("category2");
+    category1.getCategories().add(category2);
+
+    msg("Creating category3");
+    Category category3 = getModel1Factory().createCategory();
+    category3.setName("category3");
+    category1.getCategories().add(category3);
+
+    pushTransaction.commit();
+    pushTransaction.close();
+
+    transaction = session.openTransaction();
+    pushTransaction = new CDOPushTransaction(transaction, file);
+    pushTransaction.push();
+
+    session.close();
+    session = openSession();
+
+    CDOView view = session.openView();
+    resource = view.getResource("/test1");
+    company = (Company)resource.getContents().get(0);
+    assertEquals("Foundation", company.getName());
+    assertEquals(1, company.getCategories().size());
+    assertEquals(2, company.getCategories().get(0).getCategories().size());
+    session.close();
   }
 }

@@ -316,6 +316,124 @@ public class PushTransactionTest extends AbstractCDOTest
     assertEquals(orderDetailPrice, detail.getPrice());
   }
 
+  public void testMoveObject() throws Exception
+  {
+    {
+      msg("Open session & local transaction");
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      file = pushTransaction.getFile();
+      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      msg("Create a new elements");
+      Supplier supplier2 = getModel1Factory().createSupplier();
+      supplier2.setName("supplier" + System.currentTimeMillis());
+      resource.getContents().add(supplier2);
+      msg("Move first supplier");
+      Supplier supplier1 = (Supplier)resource.getContents().get(0);
+      resource.getContents().move(1, supplier1);
+      assertEquals(supplierName, ((Supplier)resource.getContents().get(1)).getName());
+      msg("Commit");
+      pushTransaction.commit();
+      session.close();
+    }
+
+    {
+      msg("Reload previous local session");
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+      assertTrue(transaction.isDirty());
+      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      assertEquals(supplierName, ((Supplier)resource.getContents().get(1)).getName());
+      msg("Publish previous modifications");
+      pushTransaction.push();
+      session.close();
+    }
+
+    CDOSession session = openModel1Session();
+    CDOView view = session.openView();
+    assertEquals(1, view.getRootResource().getContents().size());
+    CDOResource resource = view.getResource(resourcePath);
+    assertEquals(supplierName, ((Supplier)resource.getContents().get(1)).getName());
+  }
+
+  public void testClearObjects() throws Exception
+  {
+    {
+      msg("Open session & local transaction");
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      file = pushTransaction.getFile();
+      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      msg("Create a new elements");
+      Supplier supplier2 = getModel1Factory().createSupplier();
+      supplier2.setName("supplier" + System.currentTimeMillis());
+      resource.getContents().add(supplier2);
+      msg("Clear contents");
+      resource.getContents().clear();
+      msg("Commit");
+      pushTransaction.commit();
+      session.close();
+    }
+
+    {
+      msg("Reload previous local session");
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+      assertTrue(transaction.isDirty());
+      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      assertEquals(0, resource.getContents().size());
+      msg("Publish previous modifications");
+      pushTransaction.push();
+      session.close();
+    }
+
+    CDOSession session = openModel1Session();
+    CDOView view = session.openView();
+    CDOResource resource = view.getResource(resourcePath);
+    assertEquals(0, resource.getContents().size());
+  }
+
+  public void testUnsetValue() throws Exception
+  {
+    {
+      msg("Open session & local transaction");
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      file = pushTransaction.getFile();
+      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      Supplier supplier = (Supplier)resource.getContents().get(0);
+      supplier.setName(null);
+      msg("Commit");
+      pushTransaction.commit();
+      session.close();
+    }
+
+    {
+      msg("Reload previous local session");
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+      assertTrue(transaction.isDirty());
+      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      Supplier supplier = (Supplier)resource.getContents().get(0);
+      assertNull(supplier.getName());
+      msg("Publish previous modifications");
+      pushTransaction.push();
+      session.close();
+    }
+
+    CDOSession session = openModel1Session();
+    CDOView view = session.openView();
+    CDOResource resource = view.getResource(resourcePath);
+    Supplier supplier = (Supplier)resource.getContents().get(0);
+    assertNull(supplier.getName());
+  }
+
   public void testConflictWithRemovedObject() throws Exception
   {
     {

@@ -229,6 +229,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public void push(IProgressMonitor progressMonitor) throws TransactionException
   {
     delegate.commit(progressMonitor);
+    file.delete();
   }
 
   public CDOSavepoint[] exportChanges(OutputStream out) throws IOException

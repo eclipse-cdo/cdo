@@ -23,7 +23,6 @@ import java.io.Serializable;
  * Instantiates {@link CDOFeatureMapEntry}.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.1 $
  */
 
 public class FeatureMapEntryInstantiator implements Instantiator

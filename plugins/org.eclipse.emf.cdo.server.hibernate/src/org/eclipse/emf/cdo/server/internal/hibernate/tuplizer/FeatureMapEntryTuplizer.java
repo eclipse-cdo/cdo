@@ -32,7 +32,6 @@ import org.hibernate.tuple.component.AbstractComponentTuplizer;
  * @see FeatureMapEntryPropertyHandler
  * @see FeatureMapEntryFeatureURIPropertyHandler
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.2 $
  */
 
 public class FeatureMapEntryTuplizer extends AbstractComponentTuplizer

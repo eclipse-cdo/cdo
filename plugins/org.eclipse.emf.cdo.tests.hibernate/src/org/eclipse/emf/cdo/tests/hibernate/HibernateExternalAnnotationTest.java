@@ -48,7 +48,7 @@ public class HibernateExternalAnnotationTest extends AbstractCDOTest
   {
     final IRepositoryConfig repConfig = getRepositoryConfig();
     final HibernateConfig hbConfig = (HibernateConfig)repConfig;
-    final String persistenceXML = "org/eclipse/emf/cdo/tests/hibernate/external_model1.persistence.xml";
+    final String persistenceXML = "org/eclipse/emf/cdo/tests/hibernate/external_model1_4.persistence.xml";
     hbConfig.getAdditionalProperties().put(PersistenceOptions.PERSISTENCE_XML, persistenceXML);
 
     super.doSetUp();

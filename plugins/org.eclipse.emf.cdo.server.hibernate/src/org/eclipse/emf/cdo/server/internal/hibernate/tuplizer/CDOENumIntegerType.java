@@ -1,17 +1,13 @@
 /**
- * <copyright>
- *
- * Copyright (c) 2005, 2006, 2007, 2008 Springsite BV (The Netherlands) and others
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Martin Taal
- * </copyright>
- *
- * $Id: CDOENumIntegerType.java,v 1.7 2009-07-17 09:05:00 mtaal Exp $
+ *    Martin Taal - initial API and implementation
+ *    Eike Stepper - maintenance
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
@@ -29,7 +25,6 @@ import java.util.HashMap;
  * Implements the EMF UserType for an Enum in a dynamic model, for an integer field.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.7 $ $Date: 2009-07-17 09:05:00 $
  */
 public class CDOENumIntegerType extends CDOENumStringType
 {

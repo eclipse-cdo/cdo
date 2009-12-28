@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others. and others
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
@@ -25,16 +26,9 @@ public class HibernateThreadContext
 
   private static ThreadLocal<HibernateCommitContext> commitContext = new ThreadLocal<HibernateCommitContext>();
 
-  private static ThreadLocal<HibernateStoreAccessor> accessor = new ThreadLocal<HibernateStoreAccessor>();
-
   public static HibernateStoreAccessor getCurrentStoreAccessor()
   {
-    return accessor.get();
-  }
-
-  public static void setCurrentStoreAccessor(HibernateStoreAccessor storeAccessor)
-  {
-    accessor.set(storeAccessor);
+    return (HibernateStoreAccessor)StoreThreadLocal.getAccessor();
   }
 
   public static HibernateCommitContext getCommitContext()
@@ -55,10 +49,11 @@ public class HibernateThreadContext
 
   public static void setCommitContext(CommitContext newCommitContext)
   {
-    if (newCommitContext != null && commitContext.get() != null)
-    {
-      throw new IllegalStateException("CommitContext already set");
-    }
+    // in case of xa transactions then the commit context is set again
+    // if (newCommitContext != null && commitContext.get() != null)
+    // {
+    // throw new IllegalStateException("CommitContext already set");
+    // }
 
     if (TRACER.isEnabled())
     {

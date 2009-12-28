@@ -1,13 +1,13 @@
 /**
- * Copyright (c) 2005, 2006, 2007, 2008 Springsite BV (The Netherlands) and others
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Martin Taal - initial API and implementation
- *   Eike Stepper - maintenance
+ *    Martin Taal - initial API and implementation
+ *    Eike Stepper - maintenance
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
@@ -35,7 +35,6 @@ import java.util.Map;
  * Is only used for synthetic id's.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.15 $
  */
 public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAccessor
 {

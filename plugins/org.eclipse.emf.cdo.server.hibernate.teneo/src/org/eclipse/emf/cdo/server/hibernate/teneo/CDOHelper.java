@@ -1,5 +1,5 @@
-/***************************************************************************
- * Copyright (c) 2004 - 2009 Springsite B.V. and others
+/**
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,16 +7,19 @@
  *
  * Contributors:
  *    Martin Taal - initial API and implementation
- **************************************************************************/
+ *    Eike Stepper - maintenance
+ */
 package org.eclipse.emf.cdo.server.hibernate.teneo;
 
 import org.eclipse.emf.cdo.server.hibernate.internal.teneo.CDOEFeatureAnnotator;
 import org.eclipse.emf.cdo.server.hibernate.internal.teneo.CDOManyAttributeMapper;
 import org.eclipse.emf.cdo.server.hibernate.internal.teneo.CDOMappingContext;
+import org.eclipse.emf.cdo.server.hibernate.internal.teneo.CDOXmlPersistenceContentHandler;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.teneo.PersistenceOptions;
 import org.eclipse.emf.teneo.annotations.mapper.EFeatureAnnotator;
+import org.eclipse.emf.teneo.annotations.xml.XmlPersistenceContentHandler;
 import org.eclipse.emf.teneo.extension.ExtensionManager;
 import org.eclipse.emf.teneo.extension.ExtensionManagerFactory;
 import org.eclipse.emf.teneo.extension.ExtensionUtil;
@@ -65,6 +68,8 @@ public class CDOHelper
 
     extensionManager.registerExtension(ExtensionUtil.createExtension(ManyAttributeMapper.class,
         CDOManyAttributeMapper.class, false));
+    extensionManager.registerExtension(ExtensionUtil.createExtension(XmlPersistenceContentHandler.class,
+        CDOXmlPersistenceContentHandler.class, false));
     // extensionManager.registerExtension(ExtensionUtil.createExtension(BasicMapper.class, CDOBasicMapper.class,
     // false));
   }

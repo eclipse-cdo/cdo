@@ -310,7 +310,11 @@ public class HibernateMoveableListWrapper implements List<Object>, MoveableList<
     public Object next()
     {
       Object o = delegate.next();
-      if (o instanceof CDOID)
+      if (o instanceof CDOIDExternal)
+      {
+        return o;
+      }
+      else if (o instanceof CDOID)
       {
         return HibernateUtil.getInstance().getCDORevision((CDOID)o);
       }

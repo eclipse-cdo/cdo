@@ -25,18 +25,22 @@ public class HibernateExternalReferenceTest extends ExternalReferenceTest
   @Override
   public void testManyViewsOnOneResourceSet() throws Exception
   {
+    // this testcase does not work because it there are external temporary references between two
+    // objects and the objects are stored at the same time. The temporary references are then
+    // stored in the database (as external), when retrieving the objects the temporary references
+    // can not be resolved to real ones.
+    // one note in the second part of the test the supplier is read. The supplier is not read
+    // from the database but is cached server side
     // super.testManyViewsOnOneResourceSet();
-  }
-
-  @Override
-  public void testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
-  {
-    // super.testOneXMIResourceManyViewsOnOneResourceSet();
   }
 
   @Override
   public void testUsingObjectsBetweenSameTransaction() throws Exception
   {
+    // note this testcase requires that no id's are mapped externally
+    // this testcase does not work for hibernate because 2 objects reference eachother and
+    // are added in different transactions, hibernate/mysql will throw a fk-constraint
+    // exception. This is correct behavior.
     // super.testUsingObjectsBetweenSameTransaction();
   }
 
@@ -45,7 +49,7 @@ public class HibernateExternalReferenceTest extends ExternalReferenceTest
   {
     final IRepositoryConfig repConfig = getRepositoryConfig();
     final HibernateConfig hbConfig = (HibernateConfig)repConfig;
-    final String persistenceXML = "org/eclipse/emf/cdo/tests/hibernate/external_model4.persistence.xml";
+    final String persistenceXML = "org/eclipse/emf/cdo/tests/hibernate/external_model1_4.persistence.xml";
     hbConfig.getAdditionalProperties().put(PersistenceOptions.PERSISTENCE_XML, persistenceXML);
 
     super.doSetUp();

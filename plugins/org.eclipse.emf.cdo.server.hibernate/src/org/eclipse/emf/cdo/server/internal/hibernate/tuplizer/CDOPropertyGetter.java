@@ -62,6 +62,10 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
   {
     InternalCDORevision revision = (InternalCDORevision)target;
     final Object value = revision.getValue(getEStructuralFeature());
+    if (value == null)
+    {
+      return null;
+    }
     // hibernate sees eenums, CDO sees int
     if (isEEnum)
     {

@@ -12,16 +12,15 @@ package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
 import org.eclipse.emf.cdo.tests.AuditTest;
+import org.eclipse.emf.cdo.tests.ContainmentTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 import org.eclipse.emf.cdo.tests.FeatureMapTest;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
 import org.eclipse.emf.cdo.tests.MultiValuedOfAttributeTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
 import org.eclipse.emf.cdo.tests.AuditTest.LocalAuditTest;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_251752_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259869_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_272861_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
@@ -53,14 +52,12 @@ public class AllTestsHibernate extends AllTestsAllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
     super.initTestClasses(testClasses);
-    //
-    // if (false)
+
+    // if (true)
     // {
     // testClasses.clear();
-    // testClasses.add(HibernateExternalAnnotationTest.class);
-    // testClasses.add(HibernateExternalReferenceTest.class);
-    // // current failing tests to solve:
-    // // testClasses.add(FeatureMapTest.class);
+    // // // current failing tests to solve:
+    // testClasses.add(ContainmentTest.class);
     // return;
     // }
 
@@ -84,14 +81,12 @@ public class AllTestsHibernate extends AllTestsAllConfigs
     // MemStore is not relevant
     testClasses.remove(MEMStoreQueryTest.class);
 
-    // XATransactions are not yet supported
-    // bug 282649
+    // replace test case to do external mapping
     testClasses.remove(XATransactionTest.class);
-    testClasses.remove(Bugzilla_259869_Test.class);
-    testClasses.remove(Bugzilla_251752_Test.class);
+    testClasses.add(HibernateXATransactionTest.class);
 
-    // this testcase contains XA Transaction things
-    // so replace test case with one disabling some of them
+    // replace test case with one, disabling some non working testcases
+    // see the HibernateExternalReferenceTest for a description
     testClasses.remove(ExternalReferenceTest.class);
     testClasses.add(HibernateExternalReferenceTest.class);
 
@@ -111,16 +106,5 @@ public class AllTestsHibernate extends AllTestsAllConfigs
     // has a different meaning of unset
     testClasses.remove(Bugzilla_258933_Test.class);
     testClasses.add(HibernateBugzilla_258933_Test.class);
-
-    // testClasses.clear();
-    // testClasses.add(EnumTest.class);
-    // testClasses.add(HibernateQueryTest.class);
-    // testClasses.add(InitialTest.class);
-    // testClasses.add(ContainmentTest.class);
-    // testClasses.add(HibernateBugzilla_258933_Test.class);
-    // testClasses.add(HibernateMultiValuedOfAttributeTest.class);
-    // testClasses.add(HibernateQueryTest.class);
-    // testClasses.add(Bugzilla_252909_Test.class);
-    // testClasses.add(Bugzilla_258933_Test.class);
   }
 }

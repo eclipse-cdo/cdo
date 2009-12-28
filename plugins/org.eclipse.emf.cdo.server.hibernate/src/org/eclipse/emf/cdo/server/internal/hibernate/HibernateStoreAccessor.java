@@ -100,7 +100,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public HibernateStoreAccessor(HibernateStore store, ISession session)
   {
     super(store, session);
-    HibernateThreadContext.setCurrentStoreAccessor(this);
     if (TRACER.isEnabled())
     {
       TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
@@ -118,7 +117,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public HibernateStoreAccessor(HibernateStore store, ITransaction transaction)
   {
     super(store, transaction);
-    HibernateThreadContext.setCurrentStoreAccessor(this);
     if (TRACER.isEnabled())
     {
       TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
@@ -458,7 +456,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public void write(IStoreAccessor.CommitContext context, OMMonitor monitor)
   {
     HibernateThreadContext.setCommitContext(context);
-    HibernateThreadContext.setCurrentStoreAccessor(this);
     if (context.getNewPackageUnits().length > 0)
     {
       writePackageUnits(context.getNewPackageUnits(), monitor);
@@ -643,12 +640,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   @Override
-  protected void doActivate() throws Exception
-  {
-    HibernateThreadContext.setCurrentStoreAccessor(this);
-  }
-
-  @Override
   protected void doDeactivate() throws Exception
   {
     // TODO This method is called when this accessor is not needed anymore
@@ -673,16 +664,19 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     clearThreadState();
   }
 
-  @Override
-  protected void doUnpassivate() throws Exception
-  {
-    HibernateThreadContext.setCurrentStoreAccessor(this);
-  }
-
   private void clearThreadState()
   {
     PersistableListHolder.getInstance().clearListMapping();
-    HibernateThreadContext.setCurrentStoreAccessor(null);
     HibernateThreadContext.setCommitContext(null);
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+  }
+
+  @Override
+  protected void doUnpassivate() throws Exception
+  {
   }
 }

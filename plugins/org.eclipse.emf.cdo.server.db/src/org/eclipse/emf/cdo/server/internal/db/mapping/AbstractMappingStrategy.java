@@ -60,7 +60,7 @@ import java.util.Set;
 /**
  * This abstract base class implements those methods which are most likely common to most mapping strategies. It can be
  * used to derive custom mapping strategy implementation.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  */
@@ -342,7 +342,6 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   private Set<IDBTable> getModelTables()
   {
     Set<IDBTable> tables = new HashSet<IDBTable>();
-
     for (IClassMapping mapping : classMappings.values())
     {
       tables.addAll(mapping.getDBTables());
@@ -354,7 +353,6 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   private IClassMapping createClassMapping(EClass eClass)
   {
     IClassMapping mapping = doCreateClassMapping(eClass);
-
     if (mapping != null)
     {
       classMappings.put(eClass, mapping);
@@ -372,16 +370,26 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public final IClassMapping getClassMapping(EClass eClass)
   {
+    // Try without synchronization first; this will almost always succeed, so it avoids the
+    // performance penalty of syncing in the majority of cases
     IClassMapping result = classMappings.get(eClass);
-    if (result != null)
+    if (result == null)
     {
-      return result;
+      // Synchronize on the classMappings to prevent concurrent invocations of createClassMapping
+      // (Synchronizing on the eClass allows for more concurrency, but is risky because application
+      // code may be syncing on the eClass also.)
+      synchronized (classMappings)
+      {
+        // Check again, because other thread may have just added the mapping
+        result = classMappings.get(eClass);
+        if (result == null)
+        {
+          result = createClassMapping(eClass);
+        }
+      }
     }
-    else
-    {
-      // create class mapping on demand ...
-      return createClassMapping(eClass);
-    }
+
+    return result;
   }
 
   public ITypeMapping createValueMapping(EStructuralFeature feature)

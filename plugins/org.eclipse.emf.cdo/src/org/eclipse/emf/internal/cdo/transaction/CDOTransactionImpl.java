@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
  *    Victor Roldan Betancort - maintenance
+ *    Gonzague Reydet - bug 298334
  */
 package org.eclipse.emf.internal.cdo.transaction;
 
@@ -16,13 +17,18 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.io.CDODataInput;
+import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
@@ -33,7 +39,10 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
+import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
+import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
@@ -51,6 +60,7 @@ import org.eclipse.emf.internal.cdo.CDOObjectMerger;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
+import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
@@ -60,6 +70,8 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.FastList;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.OptionsEvent;
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -77,10 +89,14 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -582,10 +598,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return null;
   }
 
-  // TTT Map<InternalEObject, CDOIDDanglingImpl> danglingObjects = new HashMap<InternalEObject, CDOIDDanglingImpl>();
+  // TTT Map<InternalEObject, CDOIDDanglingImpl> danglingObjects = new
+  // HashMap<InternalEObject, CDOIDDanglingImpl>();
   //
   // @Override
-  // public CDOIDDangling convertDanglingObjectToID(InternalCDOObject source, EStructuralFeature feature,
+  // public CDOIDDangling convertDanglingObjectToID(InternalCDOObject source,
+  // EStructuralFeature feature,
   // InternalEObject target)
   // {
   // CDOIDDanglingImpl id;
@@ -724,7 +742,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       removeObjects(itrSavepoint.getNewResources().values());
       removeObjects(itrSavepoint.getNewObjects().values());
 
-      // Bug 283985 (Re-attachment): Objects that were reattached must also be removed
+      // Bug 283985 (Re-attachment): Objects that were reattached must
+      // also be removed
       Collection<CDOObject> reattachedObjects = itrSavepoint.getReattachedObjects().values();
       removeObjects(reattachedObjects);
 
@@ -765,8 +784,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         {
           InternalCDOObject internalDirtyObject = (InternalCDOObject)entryDirtyObject.getValue();
 
-          // Bug 283985 (Re-attachment): Skip objects that were reattached, because
-          // they were already reset to TRANSIENT earlier in this method
+          // Bug 283985 (Re-attachment): Skip objects that were
+          // reattached, because
+          // they were already reset to TRANSIENT earlier in this
+          // method
           if (!reattachedObjects.contains(internalDirtyObject))
           {
             CDOStateMachine.INSTANCE.rollback(internalDirtyObject);
@@ -820,7 +841,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    // We need to register back new objects that are not removed anymore there.
+    // We need to register back new objects that are not removed anymore
+    // there.
     for (Entry<CDOID, CDOObject> entryNewObject : newObjMaps.entrySet())
     {
       InternalCDOObject object = (InternalCDOObject)entryNewObject.getValue();
@@ -966,8 +988,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOTransactionImpl.6"), savepoint)); //$NON-NLS-1$
       }
 
-      // Use the state lock since rollback mechanism is playing with EObject and CDORevisions. We do not want to
-      // receives notifications during that process! neither the user should callload any objects.
+      // Use the state lock since rollback mechanism is playing with
+      // EObject and CDORevisions. We do not want to
+      // receives notifications during that process! neither the user
+      // should callload any objects.
       ReentrantLock viewLock = getStateLock();
       viewLock.lock();
 
@@ -977,7 +1001,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         Set<CDOID> idsOfNewObjectWithDeltas = rollbackCompletely(savepoint);
 
         lastSavepoint = savepoint;
-        // Make savepoint active. Erase savepoint that could have be after
+        // Make savepoint active. Erase savepoint that could have be
+        // after
         lastSavepoint.setNextSavepoint(null);
         lastSavepoint.clear();
 
@@ -1118,7 +1143,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     boolean needToSaveFeatureDelta = true;
     if (object.cdoState() == CDOState.NEW)
     {
-      // Register Delta for new objects only if objectA doesn't belong to this savepoint
+      // Register Delta for new objects only if objectA doesn't belong to
+      // this savepoint
       if (getLastSavepoint().getPreviousSavepoint() == null || featureDelta == null)
       {
         needToSaveFeatureDelta = false;
@@ -1279,6 +1305,182 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     dirty = false;
     conflict = 0;
     lastTemporaryID.set(0);
+  }
+
+  public CDOSavepoint[] exportChanges(OutputStream stream) throws IOException
+  {
+    CDODataOutput out = new CDODataOutputImpl(new ExtendedDataOutputStream(stream))
+    {
+      public CDOIDProvider getIDProvider()
+      {
+        return CDOTransactionImpl.this;
+      }
+
+      public CDOPackageRegistry getPackageRegistry()
+      {
+        return getSession().getPackageRegistry();
+      }
+    };
+
+    List<CDOSavepoint> savepoints = new ArrayList<CDOSavepoint>();
+    InternalCDOSavepoint savepoint = firstSavepoint;
+    while (savepoint != null)
+    {
+      Collection<CDOResource> newResources = savepoint.getNewResources().values();
+      Collection<CDOObject> newObjects = savepoint.getNewObjects().values();
+      Collection<CDORevisionDelta> revisionDeltas = savepoint.getRevisionDeltas().values();
+      if (newResources.isEmpty() && newObjects.isEmpty() && revisionDeltas.isEmpty())
+      {
+        savepoint = savepoint.getNextSavepoint();
+        continue;
+      }
+
+      savepoints.add(savepoint);
+      out.writeBoolean(true);
+
+      out.writeInt(newResources.size() + newObjects.size());
+      for (CDOResource newResource : newResources)
+      {
+        out.writeCDORevision(newResource.cdoRevision(), CDORevision.UNCHUNKED);
+      }
+
+      for (CDOObject newObject : newObjects)
+      {
+        out.writeCDORevision(newObject.cdoRevision(), CDORevision.UNCHUNKED);
+      }
+
+      out.writeInt(revisionDeltas.size());
+      for (CDORevisionDelta revisionDelta : revisionDeltas)
+      {
+        out.writeCDORevisionDelta(revisionDelta);
+      }
+
+      savepoint = savepoint.getNextSavepoint();
+    }
+
+    out.writeBoolean(false);
+    return savepoints.toArray(new CDOSavepoint[savepoints.size()]);
+  }
+
+  public CDOSavepoint[] importChanges(InputStream stream, boolean reconstructSavepoints) throws IOException
+  {
+    List<CDOSavepoint> savepoints = new ArrayList<CDOSavepoint>();
+    if (stream.available() > 0)
+    {
+      CDODataInput in = new CDODataInputImpl(new ExtendedDataInputStream(stream))
+      {
+        @Override
+        protected CDOPackageRegistry getPackageRegistry()
+        {
+          return getSession().getPackageRegistry();
+        }
+
+        @Override
+        protected CDORevisionFactory getRevisionFactory()
+        {
+          return getSession().getRevisionManager().getFactory();
+        }
+
+        @Override
+        protected CDOListFactory getListFactory()
+        {
+          return CDOListWithElementProxiesImpl.FACTORY;
+        }
+      };
+
+      Map<CDOIDTemp, CDOID> idMappings = new HashMap<CDOIDTemp, CDOID>();
+      while (in.readBoolean())
+      {
+        if (reconstructSavepoints)
+        {
+          InternalCDOSavepoint savepoint = setSavepoint();
+          savepoints.add(savepoint);
+        }
+
+        // Import revisions and deltas
+        List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
+        importNewRevisions(in, revisions, idMappings);
+        List<InternalCDORevisionDelta> revisionDeltas = importRevisionDeltas(in);
+
+        // Re-map temp IDs
+        CDOIDMapper idMapper = new CDOIDMapper(idMappings);
+        for (InternalCDORevision revision : revisions)
+        {
+          revision.adjustReferences(idMapper);
+        }
+
+        for (InternalCDORevisionDelta delta : revisionDeltas)
+        {
+          delta.adjustReferences(idMapper);
+        }
+
+        // Create new objects
+        for (InternalCDORevision revision : revisions)
+        {
+          InternalCDOObject object = newInstance(revision);
+          registerObject(object);
+          registerNew(object);
+        }
+
+        // Apply deltas
+        CDOObjectMerger merger = new CDOObjectMerger();
+        for (InternalCDORevisionDelta delta : revisionDeltas)
+        {
+          InternalCDOObject object = getObject(delta.getID());
+          CDORevision revision = object.cdoRevision().copy();
+          merger.merge(object, delta);
+          registerRevisionDelta(delta);
+          registerDirty(object, null);
+
+          if (delta.getOriginVersion() < revision.getVersion())
+          {
+            setConflict(object);
+          }
+        }
+      }
+    }
+
+    return savepoints.toArray(new CDOSavepoint[savepoints.size()]);
+  }
+
+  private void importNewRevisions(CDODataInput in, List<InternalCDORevision> revisions, Map<CDOIDTemp, CDOID> idMappings)
+      throws IOException
+  {
+    int size = in.readInt();
+    for (int i = 0; i < size; i++)
+    {
+      InternalCDORevision revision = (InternalCDORevision)in.readCDORevision();
+
+      CDOIDTemp oldID = (CDOIDTemp)revision.getID();
+      CDOIDTemp newID = getNextTemporaryID();
+      idMappings.put(oldID, newID);
+      revision.setID(newID);
+
+      revisions.add(revision);
+    }
+  }
+
+  private List<InternalCDORevisionDelta> importRevisionDeltas(CDODataInput in) throws IOException
+  {
+    int size = in.readInt();
+    List<InternalCDORevisionDelta> deltas = new ArrayList<InternalCDORevisionDelta>(size);
+    for (int i = 0; i < size; i++)
+    {
+      InternalCDORevisionDelta delta = (InternalCDORevisionDelta)in.readCDORevisionDelta();
+      deltas.add(delta);
+    }
+
+    return deltas;
+  }
+
+  private InternalCDOObject newInstance(InternalCDORevision revision)
+  {
+    InternalCDOObject object = newInstance(revision.getEClass());
+    object.cdoInternalSetID(revision.getID());
+    object.cdoInternalSetRevision(revision);
+    object.cdoInternalSetState(CDOState.NEW);
+    object.cdoInternalSetView(this);
+    return object;
   }
 
   public Map<CDOID, CDOObject> getDirtyObjects()
@@ -1521,7 +1723,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             Set<CDOID> detachedIDs = new HashSet<CDOID>(getDetachedObjects().keySet());
             Collection<CDORevisionDelta> deltasCopy = new ArrayList<CDORevisionDelta>(deltas);
 
-            // Adjust references in the deltas. Could be used in ChangeSubscription from others CDOView
+            // Adjust references in the deltas. Could be used in
+            // ChangeSubscription from others CDOView
             for (CDORevisionDelta dirtyObjectDelta : deltasCopy)
             {
               ((InternalCDORevisionDelta)dirtyObjectDelta).adjustReferences(result.getReferenceAdjuster());

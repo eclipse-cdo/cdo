@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 /**
  * CDOView.hasResource() is not aware of deleted resources
  * <p>
- * See https://bugs.eclipse.org/248117
+ * See bug 248117
  * 
  * @author Victor Roldan Betancort
  */

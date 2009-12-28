@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * CDOTransaction.postCommit not adjusting the Transaction/View reference
  * <p>
- * See https://bugs.eclipse.org/254489
+ * See bug 254489
  * 
  * @author Simon McDuff
  */

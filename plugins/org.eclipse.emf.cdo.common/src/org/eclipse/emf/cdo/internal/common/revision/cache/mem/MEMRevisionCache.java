@@ -7,8 +7,8 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/201266
- *    Simon McDuff - http://bugs.eclipse.org/230832
+ *    Simon McDuff - bug 201266
+ *    Simon McDuff - bug 230832
  */
 package org.eclipse.emf.cdo.internal.common.revision.cache.mem;
 

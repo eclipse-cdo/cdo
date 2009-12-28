@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * Export resource miss all of the oneToMany references
  * <p>
- * See https://bugs.eclipse.org/273758
+ * See bug 273758
  * 
  * @author Victor Roldan Betancort
  */

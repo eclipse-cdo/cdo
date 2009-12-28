@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * 248052: CDO: UnsupportedOperationException in HibernateStoreAccessor
  * <p>
- * See https://bugs.eclipse.org/248052
+ * See bug 248052
  * 
  * @author Simon McDuff
  */

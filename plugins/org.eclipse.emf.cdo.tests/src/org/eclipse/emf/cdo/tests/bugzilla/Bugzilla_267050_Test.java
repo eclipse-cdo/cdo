@@ -26,7 +26,7 @@ import java.util.Collection;
 /**
  * Add new packages infos in the Notifications process at the client side
  * 
- * @see https://bugs.eclipse.org/267050
+ * @see bug 267050
  * @author Simon McDuff
  */
 public class Bugzilla_267050_Test extends AbstractCDOTest

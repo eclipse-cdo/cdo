@@ -7,9 +7,9 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/226778
- *    Simon McDuff - http://bugs.eclipse.org/213402
- *    Martin Taal - Added subtype handling and EClass conversion, http://bugs.eclipse.org/283106
+ *    Simon McDuff - bug 226778
+ *    Simon McDuff - bug 213402
+ *    Martin Taal - Added subtype handling and EClass conversion, bug 283106
  */
 package org.eclipse.emf.cdo.common.id;
 

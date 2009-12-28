@@ -68,7 +68,7 @@ public class AllTestsHibernate extends AllTestsAllConfigs
     testClasses.add(HibernateExternalAnnotationTest.class);
 
     // audit support to do
-    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=244141
+    // bug 244141
     testClasses.remove(AuditTest.class);
     testClasses.remove(LocalAuditTest.class);
     testClasses.remove(Bugzilla_252214_Test.class);
@@ -85,7 +85,7 @@ public class AllTestsHibernate extends AllTestsAllConfigs
     testClasses.remove(MEMStoreQueryTest.class);
 
     // XATransactions are not yet supported
-    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=282649
+    // bug 282649
     testClasses.remove(XATransactionTest.class);
     testClasses.remove(Bugzilla_259869_Test.class);
     testClasses.remove(Bugzilla_251752_Test.class);
@@ -96,7 +96,7 @@ public class AllTestsHibernate extends AllTestsAllConfigs
     testClasses.add(HibernateExternalReferenceTest.class);
 
     // Feature map is not yet supported
-    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=282711
+    // bug 282711
     testClasses.remove(FeatureMapTest.class);
 
     // this testcases removes and creates a resource with the

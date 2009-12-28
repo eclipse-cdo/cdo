@@ -7,7 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/246705
+ *    Simon McDuff - bug 246705
  */
 package org.eclipse.emf.internal.cdo.util;
 

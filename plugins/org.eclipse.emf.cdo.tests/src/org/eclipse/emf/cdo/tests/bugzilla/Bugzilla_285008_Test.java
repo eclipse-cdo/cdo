@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 /**
  * Invalid listener might prevent CDOTransaction to close properly
  * <p>
- * See https://bugs.eclipse.org/285008
+ * See bug 285008
  * 
  * @author Andre Dietisheim
  */

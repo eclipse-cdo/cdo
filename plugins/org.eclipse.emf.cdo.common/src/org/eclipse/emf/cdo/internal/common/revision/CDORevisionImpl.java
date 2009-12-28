@@ -7,9 +7,9 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/201266
- *    Simon McDuff - http://bugs.eclipse.org/212958
- *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Simon McDuff - bug 201266
+ *    Simon McDuff - bug 212958
+ *    Simon McDuff - bug 213402
  */
 package org.eclipse.emf.cdo.internal.common.revision;
 

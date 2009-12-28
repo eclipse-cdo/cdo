@@ -7,8 +7,8 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/201266
- *    Simon McDuff - http://bugs.eclipse.org/233490
+ *    Simon McDuff - bug 201266
+ *    Simon McDuff - bug 233490
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 

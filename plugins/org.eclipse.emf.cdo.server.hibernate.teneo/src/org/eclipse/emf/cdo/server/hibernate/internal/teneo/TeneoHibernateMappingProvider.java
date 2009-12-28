@@ -7,7 +7,7 @@
  *
  * Contributors:
  *    Martin Taal - initial API and implementation
- *    Eike Stepper - http://bugs.eclipse.org/238300
+ *    Eike Stepper - bug 238300
  */
 package org.eclipse.emf.cdo.server.hibernate.internal.teneo;
 

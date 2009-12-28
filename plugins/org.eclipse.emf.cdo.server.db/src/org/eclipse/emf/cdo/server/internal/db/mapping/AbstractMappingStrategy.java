@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - major refactoring
- *    Stefan Winkler - Bug 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
+ *    Stefan Winkler - Bug 271444: [DB] Multiple refactorings bug 271444
  *    Stefan Winkler - Bug 282976: [DB] Influence Mappings through EAnnotations
  *    Kai Schlamp - Bug 284680 - [DB] Provide annotation to bypass ClassMapping
  *    Stefan Winkler - maintenance

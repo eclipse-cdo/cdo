@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * Resources fetched using CDOViewImpl.getResource(CDOID) not added to ResourceSet
  * <p>
- * See https://bugs.eclipse.org/251544
+ * See bug 251544
  * 
  * @author Simon McDuff
  */

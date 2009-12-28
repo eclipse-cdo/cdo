@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EAttribute;
 /**
  * ArrayIndexOutOfBoundsException while unsetting "modified" EAttribute in CDOResource
  * <p>
- * See https://bugs.eclipse.org/276696
+ * See bug 276696
  * 
  * @author Victor Roldan Betancort
  */

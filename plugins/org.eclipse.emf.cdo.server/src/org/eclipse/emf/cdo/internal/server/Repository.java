@@ -7,9 +7,9 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/201266
- *    Simon McDuff - http://bugs.eclipse.org/233273
- *    Simon McDuff - http://bugs.eclipse.org/233490
+ *    Simon McDuff - bug 201266
+ *    Simon McDuff - bug 233273
+ *    Simon McDuff - bug 233490
  *    Stefan Winkler - changed order of determining audit and revision delta support.
  */
 package org.eclipse.emf.cdo.internal.server;

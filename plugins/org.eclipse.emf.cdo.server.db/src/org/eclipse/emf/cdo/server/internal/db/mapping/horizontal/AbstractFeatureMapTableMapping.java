@@ -7,8 +7,8 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
- *    Christopher Albert - 254455: [DB] Support FeatureMaps https://bugs.eclipse.org/bugs/show_bug.cgi?id=254455
+ *    Stefan Winkler - 271444: [DB] Multiple refactorings bug 271444
+ *    Christopher Albert - 254455: [DB] Support FeatureMaps bug 254455
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 

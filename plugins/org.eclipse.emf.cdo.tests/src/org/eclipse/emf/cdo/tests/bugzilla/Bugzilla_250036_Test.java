@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * See https://bugs.eclipse.org/250036
+ * See bug 250036
  * 
  * @author Simon McDuff
  */

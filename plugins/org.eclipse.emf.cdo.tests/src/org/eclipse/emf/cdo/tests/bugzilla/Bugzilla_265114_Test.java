@@ -42,7 +42,7 @@ import java.util.Map;
 /**
  * Attaching adapters to resources does not load them?
  * <p>
- * See https://bugs.eclipse.org/265114
+ * See bug 265114
  * 
  * @author Simon McDuff
  */

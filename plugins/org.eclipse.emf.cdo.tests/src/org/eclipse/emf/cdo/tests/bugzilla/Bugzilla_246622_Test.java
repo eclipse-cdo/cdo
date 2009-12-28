@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 /**
  * 246622: CDOStore.set doesn't affect variable correctly - Could cause memory retention
  * <p>
- * See https://bugs.eclipse.org/243310
+ * See bug 243310
  * 
  * @author Simon McDuff
  */

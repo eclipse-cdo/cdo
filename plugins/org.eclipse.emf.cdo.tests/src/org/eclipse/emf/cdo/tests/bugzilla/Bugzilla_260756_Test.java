@@ -25,7 +25,7 @@ import java.util.Set;
 /**
  * CDOEList::toArray not implemented
  * <p>
- * See https://bugs.eclipse.org/260756
+ * See bug 260756
  * 
  * @author Simon McDuff
  */

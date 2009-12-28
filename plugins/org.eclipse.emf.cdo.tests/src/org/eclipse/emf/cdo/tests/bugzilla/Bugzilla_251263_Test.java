@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 /**
  * EOpposite reference is not removed
  * <p>
- * See https://bugs.eclipse.org/251263
+ * See bug 251263
  * 
  * @author Victor Roldan Betancort
  */

@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * 250910: IllegalArgumentException: created > revised
  * <p>
- * See https://bugs.eclipse.org/250910
+ * See bug 250910
  * 
  * @author Simon McDuff
  */

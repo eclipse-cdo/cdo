@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * Persisted objects keeps references to detached objects through deltas
  * <p>
- * See https://bugs.eclipse.org/250757
+ * See bug 250757
  * 
  * @author Victor Roldan Betancort
  */

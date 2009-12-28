@@ -7,7 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
+ *    Stefan Winkler - 271444: [DB] Multiple refactorings bug 271444
  */
 package org.eclipse.emf.cdo.server.db.mapping;
 

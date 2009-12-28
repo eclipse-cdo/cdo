@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 /**
  * NPE during Transaction.getObject(id, false)
  * <p>
- * See https://bugs.eclipse.org/243310
+ * See bug 243310
  * 
  * @author Eike Stepper
  */

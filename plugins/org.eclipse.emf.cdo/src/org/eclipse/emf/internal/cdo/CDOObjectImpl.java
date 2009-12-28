@@ -1415,7 +1415,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   /**
-   * TODO Remove this when EMF has fixed http://bugs.eclipse.org/197487
+   * TODO Remove this when EMF has fixed bug 197487
    * 
    * @author Eike Stepper
    */

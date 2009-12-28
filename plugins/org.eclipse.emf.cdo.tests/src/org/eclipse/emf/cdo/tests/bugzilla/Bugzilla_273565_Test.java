@@ -23,7 +23,7 @@ import junit.framework.Assert;
 /**
  * Concurrency problem: attribute of enumeration type not updated correctly between two clients
  * <p>
- * See https://bugs.eclipse.org/273565
+ * See bug 273565
  * 
  * @author Simon McDuff
  */

@@ -591,7 +591,7 @@ public class ResourceTest extends AbstractCDOTest
   }
 
   /**
-   * http://bugs.eclipse.org/208689
+   * bug 208689
    */
   public void testQueryResources() throws Exception
   {
@@ -635,7 +635,7 @@ public class ResourceTest extends AbstractCDOTest
   }
 
   /**
-   * http://bugs.eclipse.org/208689
+   * bug 208689
    */
   public void testQueryModifiedResources() throws Exception
   {

@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 /**
  * Objects that are contained by a transient feature could be persisted
  * <p>
- * See https://bugs.eclipse.org/289932
+ * See bug 289932
  * 
  * @author Simon McDuff
  */

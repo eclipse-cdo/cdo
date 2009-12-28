@@ -82,7 +82,7 @@ public class HibernateQueryTest extends AbstractCDOTest
       msg("Query for products with VAT15");
       CDOQuery cdoQuery = transaction.createQuery("hql", "from Product1 where vat=:vat");
       // it is nicer to use the enum directly, see bugzilla:
-      // https://bugs.eclipse.org/bugs/show_bug.cgi?id=282610
+      // bug 282610
       cdoQuery.setParameter("vat", VAT.VAT15.getValue());
       final List<Product1> products = cdoQuery.getResult(Product1.class);
       assertEquals(10, products.size());
@@ -117,7 +117,7 @@ public class HibernateQueryTest extends AbstractCDOTest
     {
       msg("Orders with sum of order details");
       // result with arrays are not yet supported, see this bugzilla:
-      // https://bugs.eclipse.org/bugs/show_bug.cgi?id=282612
+      // bug 282612
       // CDOQuery cdoQuery = transaction.createQuery("hql",
       // "select so.id, sum(od.price) from SalesOrder so, OrderDetail od where od.order=so group by so.id");
       CDOQuery cdoQuery = transaction.createQuery("hql",
@@ -164,7 +164,7 @@ public class HibernateQueryTest extends AbstractCDOTest
         {
           final int productIndex = Integer.parseInt(product.getName());
           // note the id is always used as the parameter
-          // https://bugs.eclipse.org/bugs/show_bug.cgi?id=282620
+          // bug 282620
           final CDOQuery orderQuery = transaction
               .createQuery(
                   "hql",
@@ -205,7 +205,7 @@ public class HibernateQueryTest extends AbstractCDOTest
   public void testElementsClause() throws Exception
   {
     // tests
-    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=282620
+    // bug 282620
 
     msg("Opening session");
     CDOSession session = openModel1Session();
@@ -235,7 +235,7 @@ public class HibernateQueryTest extends AbstractCDOTest
   }
 
   // Tests id handling
-  // See: https://bugs.eclipse.org/bugs/show_bug.cgi?id=283106
+  // See: bug 283106
   public void testQueryWithID() throws Exception
   {
     msg("Opening session");

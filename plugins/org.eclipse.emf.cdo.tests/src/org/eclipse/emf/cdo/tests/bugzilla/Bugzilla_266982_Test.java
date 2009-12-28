@@ -22,7 +22,7 @@ import junit.framework.Assert;
 /**
  * IllegalStateException in CDOStore.getRevision
  * <p>
- * See https://bugs.eclipse.org/266982
+ * See bug 266982
  * 
  * @author Simon McDuff
  */

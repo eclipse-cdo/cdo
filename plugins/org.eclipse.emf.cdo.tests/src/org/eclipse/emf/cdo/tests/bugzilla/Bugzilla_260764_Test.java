@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * CDO wrong feature on notification when multiple super types
  * <p>
- * See https://bugs.eclipse.org/260764
+ * See bug 260764
  * 
  * @author Simon McDuff
  */

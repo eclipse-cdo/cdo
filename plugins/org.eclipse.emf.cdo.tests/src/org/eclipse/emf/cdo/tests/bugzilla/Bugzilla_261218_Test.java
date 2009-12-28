@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.ecore.resource.Resource;
 
 /**
- * See https://bugs.eclipse.org/261218
+ * See bug 261218
  * 
  * @author Simon McDuff
  */

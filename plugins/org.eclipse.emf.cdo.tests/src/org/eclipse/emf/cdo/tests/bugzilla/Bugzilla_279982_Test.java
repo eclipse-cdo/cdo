@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * Deadlock in CDOView
  * <p>
- * See https://bugs.eclipse.org/279982
+ * See bug 279982
  * 
  * @author Simon McDuff
  */

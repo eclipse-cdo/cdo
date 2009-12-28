@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
- * Lazy packageRegistry fail when adding instance with Eclass in a subpackage See https://bugs.eclipse.org/256141
+ * Lazy packageRegistry fail when adding instance with Eclass in a subpackage See bug 256141
  * 
  * @author Simon McDuff
  */

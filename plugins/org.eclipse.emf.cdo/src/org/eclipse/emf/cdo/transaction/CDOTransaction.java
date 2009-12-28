@@ -7,10 +7,11 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/201266
- *    Simon McDuff - http://bugs.eclipse.org/215688
- *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Simon McDuff - bug 201266
+ *    Simon McDuff - bug 215688
+ *    Simon McDuff - bug 213402
  *    Victor Roldan Betancort - maintenance
+ *    Gonzague Reydet - bug 298334
  */
 package org.eclipse.emf.cdo.transaction;
 
@@ -25,6 +26,9 @@ import org.eclipse.net4j.util.options.IOptionsEvent;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Map;
 import java.util.Set;
 
@@ -117,6 +121,16 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
   public Map<CDOID, CDOObject> getDirtyObjects();
 
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas();
+
+  /**
+   * @since 3.0
+   */
+  public CDOSavepoint[] exportChanges(OutputStream out) throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  public CDOSavepoint[] importChanges(InputStream in, boolean reconstructSavepoints) throws IOException;
 
   public Options options();
 

@@ -7,7 +7,7 @@
  * 
  * Contributors:
  *    Simon McDuff - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/233273    
+ *    Simon McDuff - bug 233273    
  *    Eike Stepper - maintenance
  */
 package org.eclipse.emf.cdo.internal.server.mem;

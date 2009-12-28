@@ -7,8 +7,8 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/201266
- *    Simon McDuff - http://bugs.eclipse.org/204890
+ *    Simon McDuff - bug 201266
+ *    Simon McDuff - bug 204890
  */
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 

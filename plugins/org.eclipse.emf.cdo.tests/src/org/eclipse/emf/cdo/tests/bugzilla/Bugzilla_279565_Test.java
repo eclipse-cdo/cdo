@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 /**
  * Invalid listener might prevent CDOTransaction to close properly
  * <p>
- * See https://bugs.eclipse.org/279565
+ * See bug 279565
  * 
  * @author Eike Stepper
  */

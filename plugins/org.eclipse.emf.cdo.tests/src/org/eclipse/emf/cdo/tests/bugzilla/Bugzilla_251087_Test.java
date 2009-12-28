@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * NPE in ChangeSubscriptionManager.isPending() while subscribing a pending TRANSIENT-by-removal object
  * <p>
- * See https://bugs.eclipse.org/251087
+ * See bug 251087
  * 
  * @author Victor Roldan Betancort
  */

@@ -7,7 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Victor Roldan Betancort - http://bugs.eclipse.org/208689
+ *    Victor Roldan Betancort - bug 208689
  */
 package org.eclipse.emf.cdo.server.internal.db;
 

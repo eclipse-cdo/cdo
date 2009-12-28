@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * NPE when calling audit.setTimeStamp()
  * <p>
- * See https://bugs.eclipse.org/252214
+ * See bug 252214
  * 
  * @author Simon McDuff
  */

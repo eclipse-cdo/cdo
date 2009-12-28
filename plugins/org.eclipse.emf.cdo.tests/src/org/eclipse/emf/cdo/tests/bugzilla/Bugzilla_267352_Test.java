@@ -23,7 +23,7 @@ import junit.framework.Assert;
 /**
  * NullPointerException on reload
  * <p>
- * See https://bugs.eclipse.org/267352
+ * See bug 267352
  * 
  * @author Simon McDuff
  */

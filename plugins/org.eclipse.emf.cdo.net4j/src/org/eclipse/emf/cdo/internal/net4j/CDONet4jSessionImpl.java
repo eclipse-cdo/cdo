@@ -7,10 +7,10 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/226778
- *    Simon McDuff - http://bugs.eclipse.org/230832
- *    Simon McDuff - http://bugs.eclipse.org/233490
- *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Simon McDuff - bug 226778
+ *    Simon McDuff - bug 230832
+ *    Simon McDuff - bug 233490
+ *    Simon McDuff - bug 213402
  *    Victor Roldan Betancort - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j;

@@ -12,7 +12,7 @@
 package org.eclipse.emf.cdo.tests;
 
 /**
- * @see http://bugs.eclipse.org/201266
+ * @see bug 201266
  * @author Simon McDuff
  */
 public class RevisionDeltaWithDeltaSupportTest extends RevisionDeltaTest

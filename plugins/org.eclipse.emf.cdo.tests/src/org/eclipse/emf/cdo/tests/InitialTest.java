@@ -732,7 +732,7 @@ public class InitialTest extends AbstractCDOTest
   }
 
   /**
-   * http://bugs.eclipse.org/226317
+   * bug 226317
    */
   public void testMultipleInheritence() throws Exception
   {

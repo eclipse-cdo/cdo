@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 /**
  * CDORevisionImpl.eIsSet() works incorrectly
  * <p>
- * See https://bugs.eclipse.org/258933
+ * See bug 258933
  * 
  * @author Martin Taal
  */

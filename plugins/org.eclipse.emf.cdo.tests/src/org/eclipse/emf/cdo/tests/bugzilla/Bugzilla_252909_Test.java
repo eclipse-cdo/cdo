@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 /**
  * [DBStore] NPE when trying to update objects
  * <p>
- * See https://bugs.eclipse.org/252909
+ * See bug 252909
  * 
  * @author Simon McDuff
  */

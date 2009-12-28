@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.TakeRemoteChangesThenApplyLocalChanges;
 
 /**
- * See https://bugs.eclipse.org/285441
+ * See bug 285441
  * 
  * @author Saulius Tvarijonas
  */

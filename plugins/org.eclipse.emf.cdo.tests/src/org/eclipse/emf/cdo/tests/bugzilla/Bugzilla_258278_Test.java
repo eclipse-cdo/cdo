@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 /**
  * : Multiple resources creation bug
  * <p>
- * See https://bugs.eclipse.org/258278
+ * See bug 258278
  * 
  * @author Simon McDuff
  */

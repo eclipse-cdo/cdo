@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.tests.RevisionHolderTest.TestRevision;
 /**
  * Exception Holder RevisionHolder[AAA@OID297v1] does not belong to this list
  * <p>
- * See https://bugs.eclipse.org/289984
+ * See bug 289984
  * 
  * @author Simon McDuff
  */

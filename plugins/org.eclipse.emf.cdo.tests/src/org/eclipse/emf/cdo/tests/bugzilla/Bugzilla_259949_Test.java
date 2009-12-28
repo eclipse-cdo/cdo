@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 /**
  * Make timeouts in read-access requests configurable
  * <p>
- * See https://bugs.eclipse.org/241464
+ * See bug 241464
  * 
  * @author Eike Stepper
  */

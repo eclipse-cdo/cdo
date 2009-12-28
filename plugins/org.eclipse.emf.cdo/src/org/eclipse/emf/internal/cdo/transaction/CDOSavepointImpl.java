@@ -8,7 +8,7 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
- *    Simon McDuff - http://bugs.eclipse.org/204890
+ *    Simon McDuff - bug 204890
  */
 package org.eclipse.emf.internal.cdo.transaction;
 

@@ -26,8 +26,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @see http://bugs.eclipse.org/213782
- * @see http://bugs.eclipse.org/201366
+ * @see bug 213782
+ * @see bug 201366
  * @author Simon McDuff
  */
 public class TransactionTest extends AbstractCDOTest

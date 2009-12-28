@@ -359,7 +359,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
         @Override
         public int getFeatureID(Class<?> expectedClass)
         {
-          // TODO FIX https://bugs.eclipse.org/bugs/show_bug.cgi?id=265136
+          // TODO FIX bug 265136
           return Resource.RESOURCE__IS_LOADED;
         }
       };
@@ -616,7 +616,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
         }
       }
 
-      // TODO FIX https://bugs.eclipse.org/bugs/show_bug.cgi?id=265136 Needed to run against a TED.
+      // TODO FIX bug 265136 Needed to run against a TED.
       Notification notification = setLoaded(true);
       if (notification != null)
       {

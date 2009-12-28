@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 /**
  * CommitTransactionRequest sent redundantly
  * 
- * @see https://bugs.eclipse.org/259869
+ * @see bug 259869
  * @author Simon McDuff
  */
 public class Bugzilla_259869_Test extends AbstractCDOTest

@@ -23,7 +23,7 @@ import org.eclipse.net4j.util.options.IOptionsEvent;
 /**
  * 258850: Make Options extend INotifier
  * <p>
- * See https://bugs.eclipse.org/258850
+ * See bug 258850
  * 
  * @author Victor Roldan Betancort
  */

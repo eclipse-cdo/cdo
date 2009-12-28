@@ -7,7 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Victor Roldan Betancort - http://bugs.eclipse.org/244801
+ *    Victor Roldan Betancort - bug 244801
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 

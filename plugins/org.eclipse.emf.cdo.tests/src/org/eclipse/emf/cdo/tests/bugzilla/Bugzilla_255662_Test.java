@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 /**
  * NPE in CDOResourceImpl.save()
  * <p>
- * See https://bugs.eclipse.org/255662
+ * See bug 255662
  * 
  * @author Simon McDuff
  */

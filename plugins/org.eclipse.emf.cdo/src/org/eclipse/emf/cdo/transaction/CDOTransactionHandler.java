@@ -7,9 +7,9 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/201266
- *    Simon McDuff - http://bugs.eclipse.org/233314
- *    Simon McDuff - http://bugs.eclipse.org/247143
+ *    Simon McDuff - bug 201266
+ *    Simon McDuff - bug 233314
+ *    Simon McDuff - bug 247143
  */
 package org.eclipse.emf.cdo.transaction;
 

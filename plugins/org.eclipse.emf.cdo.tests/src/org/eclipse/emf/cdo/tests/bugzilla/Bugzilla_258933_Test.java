@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 /**
  * CDORevisionImpl.eIsSet() works incorrectly
  * <p>
- * See https://bugs.eclipse.org/258933
+ * See bug 258933
  * 
  * @author Simon McDuff
  */

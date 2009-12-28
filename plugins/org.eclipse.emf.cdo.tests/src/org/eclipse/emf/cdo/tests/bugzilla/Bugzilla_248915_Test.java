@@ -24,7 +24,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 /**
  * Resources fetched using CDOViewImpl.getResource(CDOID) not added to ResourceSet
  * <p>
- * See https://bugs.eclipse.org/248915
+ * See bug 248915
  * 
  * @author Paul Richardson
  */

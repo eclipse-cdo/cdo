@@ -30,7 +30,7 @@ public class DBRevisionCacheUtil
    * @param revision
    *          the revision
    * @return the resource node name
-   * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=279817
+   * @see bug 279817
    */
   // TODO: this should be refactored and put in a place, that's more generic
   // than this class. The same snippet's used in LRURevisionCache and

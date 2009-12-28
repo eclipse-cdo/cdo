@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.event.IEvent;
@@ -119,7 +120,29 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
   public boolean addRevision(CDORevision revision)
   {
     CheckUtil.checkArg(revision, "revision");
-    return level1.addRevision(revision);
+    boolean added = level1.addRevision(revision);
+
+    // Bugzilla 292372: If a new current revision was added to level1, we must check whether
+    // level2 contains a stale current revision, and revise that revision if possible
+    if (added && revision.isCurrent())
+    {
+      CDOID id = revision.getID();
+      CDORevision revisionInLevel2 = level2.getRevision(id);
+      if (revisionInLevel2 != null && revisionInLevel2.isCurrent())
+      {
+        // We can only revise if the revisions are consecutive
+        if (revision.getVersion() == revisionInLevel2.getVersion() + 1)
+        {
+          ((InternalCDORevision)revisionInLevel2).setRevised(revision.getCreated() - 1);
+        }
+        else
+        {
+          level2.removeRevision(id, revisionInLevel2.getVersion());
+        }
+      }
+    }
+
+    return added;
   }
 
   public void removeRevision(CDORevision revision)

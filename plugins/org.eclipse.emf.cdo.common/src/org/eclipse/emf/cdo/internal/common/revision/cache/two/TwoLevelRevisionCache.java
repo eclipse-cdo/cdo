@@ -118,7 +118,29 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
 
   public boolean addRevision(InternalCDORevision revision)
   {
-    return level1.addRevision(revision);
+    boolean added = level1.addRevision(revision);
+
+    // Bugzilla 292372: If a new current revision was added to level1, we must check whether
+    // level2 contains a stale current revision, and revise that revision if possible
+    CDOID id = revision.getID();
+    if (added && revision.isCurrent())
+    {
+      InternalCDORevision rev2 = level2.getRevision(id);
+      if (rev2 != null && rev2.isCurrent())
+      {
+        // We can only revise if the revisions are consecutive
+        if (revision.getVersion() - rev2.getVersion() == 1)
+        {
+          rev2.setRevised(revision.getCreated() - 1);
+        }
+        else
+        {
+          level2.removeRevision(id, rev2.getVersion());
+        }
+      }
+    }
+
+    return added;
   }
 
   public InternalCDORevision removeRevision(CDOID id, int version)

@@ -32,10 +32,12 @@ import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainer;
 import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainerNPL;
 import org.eclipse.emf.cdo.tests.model4.MultiContainedElement;
 import org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement;
 import org.eclipse.emf.cdo.tests.model4.RefMultiContained;
 import org.eclipse.emf.cdo.tests.model4.RefMultiContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.RefMultiNonContained;
 import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable;
 import org.eclipse.emf.cdo.tests.model4.RefSingleContained;
 import org.eclipse.emf.cdo.tests.model4.RefSingleContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.RefSingleNonContained;
@@ -119,6 +121,10 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
       return createRefMultiNonContained();
     case model4Package.MULTI_NON_CONTAINED_ELEMENT:
       return createMultiNonContainedElement();
+    case model4Package.REF_MULTI_NON_CONTAINED_UNSETTABLE:
+      return createRefMultiNonContainedUnsettable();
+    case model4Package.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT:
+      return createMultiNonContainedUnsettableElement();
     case model4Package.REF_SINGLE_CONTAINED_NPL:
       return createRefSingleContainedNPL();
     case model4Package.REF_SINGLE_NON_CONTAINED_NPL:
@@ -260,6 +266,28 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
   {
     MultiNonContainedElementImpl multiNonContainedElement = new MultiNonContainedElementImpl();
     return multiNonContainedElement;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public RefMultiNonContainedUnsettable createRefMultiNonContainedUnsettable()
+  {
+    RefMultiNonContainedUnsettableImpl refMultiNonContainedUnsettable = new RefMultiNonContainedUnsettableImpl();
+    return refMultiNonContainedUnsettable;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public MultiNonContainedUnsettableElement createMultiNonContainedUnsettableElement()
+  {
+    MultiNonContainedUnsettableElementImpl multiNonContainedUnsettableElement = new MultiNonContainedUnsettableElementImpl();
+    return multiNonContainedUnsettableElement;
   }
 
   /**

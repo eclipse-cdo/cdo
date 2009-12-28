@@ -32,10 +32,12 @@ import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainer;
 import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainerNPL;
 import org.eclipse.emf.cdo.tests.model4.MultiContainedElement;
 import org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement;
 import org.eclipse.emf.cdo.tests.model4.RefMultiContained;
 import org.eclipse.emf.cdo.tests.model4.RefMultiContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.RefMultiNonContained;
 import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable;
 import org.eclipse.emf.cdo.tests.model4.RefSingleContained;
 import org.eclipse.emf.cdo.tests.model4.RefSingleContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.RefSingleNonContained;
@@ -116,6 +118,20 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * @generated
    */
   private EClass multiNonContainedElementEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass refMultiNonContainedUnsettableEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass multiNonContainedUnsettableElementEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -319,15 +335,9 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * Simple dependencies are satisfied by calling this method on all dependent packages before doing anything else. This
-   * method drives initialization for interdependent packages directly, in parallel with this package, itself.
    * <p>
-   * Of this package and its interdependencies, all packages which have not yet been registered by their URI values are
-   * first created and registered. The packages are then initialized in two steps: meta-model objects for all of the
-   * packages are created before any are initialized, since one package's meta-model objects may refer to those of
-   * another.
-   * <p>
-   * Invocation of this method will not affect any packages that have already been initialized. <!-- begin-user-doc -->
+   * This method is used to initialize {@link model4Package#eINSTANCE} when that field is accessed. Clients should not
+   * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * 
    * @see #eNS_URI
@@ -341,8 +351,8 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
       return (model4Package)EPackage.Registry.INSTANCE.getEPackage(model4Package.eNS_URI);
 
     // Obtain or create and register package
-    model4PackageImpl themodel4Package = (model4PackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof model4PackageImpl ? EPackage.Registry.INSTANCE
-        .getEPackage(eNS_URI)
+    model4PackageImpl themodel4Package = (model4PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof model4PackageImpl ? EPackage.Registry.INSTANCE
+        .get(eNS_URI)
         : new model4PackageImpl());
 
     isInited = true;
@@ -359,6 +369,8 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
     // Mark meta-data to indicate it can't be changed
     themodel4Package.freeze();
 
+    // Update the registry and return the package
+    EPackage.Registry.INSTANCE.put(model4Package.eNS_URI, themodel4Package);
     return themodel4Package;
   }
 
@@ -560,6 +572,56 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
   public EReference getMultiNonContainedElement_Parent()
   {
     return (EReference)multiNonContainedElementEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getRefMultiNonContainedUnsettable()
+  {
+    return refMultiNonContainedUnsettableEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getRefMultiNonContainedUnsettable_Elements()
+  {
+    return (EReference)refMultiNonContainedUnsettableEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getMultiNonContainedUnsettableElement()
+  {
+    return multiNonContainedUnsettableElementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getMultiNonContainedUnsettableElement_Name()
+  {
+    return (EAttribute)multiNonContainedUnsettableElementEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getMultiNonContainedUnsettableElement_Parent()
+  {
+    return (EReference)multiNonContainedUnsettableElementEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1040,6 +1102,13 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
     createEAttribute(multiNonContainedElementEClass, MULTI_NON_CONTAINED_ELEMENT__NAME);
     createEReference(multiNonContainedElementEClass, MULTI_NON_CONTAINED_ELEMENT__PARENT);
 
+    refMultiNonContainedUnsettableEClass = createEClass(REF_MULTI_NON_CONTAINED_UNSETTABLE);
+    createEReference(refMultiNonContainedUnsettableEClass, REF_MULTI_NON_CONTAINED_UNSETTABLE__ELEMENTS);
+
+    multiNonContainedUnsettableElementEClass = createEClass(MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT);
+    createEAttribute(multiNonContainedUnsettableElementEClass, MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__NAME);
+    createEReference(multiNonContainedUnsettableElementEClass, MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__PARENT);
+
     refSingleContainedNPLEClass = createEClass(REF_SINGLE_CONTAINED_NPL);
     createEReference(refSingleContainedNPLEClass, REF_SINGLE_CONTAINED_NPL__ELEMENT);
 
@@ -1227,6 +1296,23 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
         .getRefMultiNonContained_Elements(), "parent", null, 0, 1, MultiNonContainedElement.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
+
+    initEClass(refMultiNonContainedUnsettableEClass, RefMultiNonContainedUnsettable.class,
+        "RefMultiNonContainedUnsettable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getRefMultiNonContainedUnsettable_Elements(), this.getMultiNonContainedUnsettableElement(), this
+        .getMultiNonContainedUnsettableElement_Parent(), "elements", null, 0, -1, RefMultiNonContainedUnsettable.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(multiNonContainedUnsettableElementEClass, MultiNonContainedUnsettableElement.class,
+        "MultiNonContainedUnsettableElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMultiNonContainedUnsettableElement_Name(), ecorePackage.getEString(), "name", null, 0, 1,
+        MultiNonContainedUnsettableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMultiNonContainedUnsettableElement_Parent(), this.getRefMultiNonContainedUnsettable(), this
+        .getRefMultiNonContainedUnsettable_Elements(), "parent", null, 0, 1, MultiNonContainedUnsettableElement.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(refSingleContainedNPLEClass, RefSingleContainedNPL.class, "RefSingleContainedNPL", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

@@ -51,6 +51,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
+import org.eclipse.emf.ecore.util.DelegatingEcoreEList;
 import org.eclipse.emf.ecore.util.DelegatingFeatureMap;
 import org.eclipse.emf.ecore.util.EcoreEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -61,6 +62,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOLoadable;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -916,7 +918,45 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       return new EStoreEcoreEMap();
     }
 
-    return super.createList(eStructuralFeature);
+    EList<?> list = super.createList(eStructuralFeature);
+    workaround_Bugzilla285008(list);
+    return list;
+  }
+
+  /**
+   * DelegatingEcoreEList.Generic fails to set the IS_SET bit in its "kind" field on construction. This workaround
+   * "fixes" the list when necessary.
+   * 
+   * @author Caspar De Groot
+   */
+  private void workaround_Bugzilla285008(EList<?> list)
+  {
+    if (list instanceof DelegatingEcoreEList.Generic<?>)
+    {
+      DelegatingEcoreEList.Generic<?> dlist = (DelegatingEcoreEList.Generic<?>)list;
+      if (!dlist.isEmpty() && !dlist.isSet())
+      {
+        try
+        {
+          // Use reflection to access the protected "kind" field
+          Field kindField = DelegatingEcoreEList.Generic.class.getDeclaredField("kind");
+          kindField.setAccessible(true);
+          Object o = kindField.get(dlist);
+
+          if (o instanceof Integer)
+          {
+            // Poke the bit and write it back
+            int kind = ((Integer)o).intValue();
+            kind |= DelegatingEcoreEList.Generic.IS_SET;
+            kindField.set(dlist, new Integer(kind));
+          }
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error("Bugzilla 285008 workaround failed", ex);
+        }
+      }
+    }
   }
 
   @Override

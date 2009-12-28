@@ -32,10 +32,12 @@ import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainer;
 import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainerNPL;
 import org.eclipse.emf.cdo.tests.model4.MultiContainedElement;
 import org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement;
 import org.eclipse.emf.cdo.tests.model4.RefMultiContained;
 import org.eclipse.emf.cdo.tests.model4.RefMultiContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.RefMultiNonContained;
 import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable;
 import org.eclipse.emf.cdo.tests.model4.RefSingleContained;
 import org.eclipse.emf.cdo.tests.model4.RefSingleContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.RefSingleNonContained;
@@ -198,6 +200,22 @@ public class model4Switch<T>
     {
       MultiNonContainedElement multiNonContainedElement = (MultiNonContainedElement)theEObject;
       T result = caseMultiNonContainedElement(multiNonContainedElement);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case model4Package.REF_MULTI_NON_CONTAINED_UNSETTABLE:
+    {
+      RefMultiNonContainedUnsettable refMultiNonContainedUnsettable = (RefMultiNonContainedUnsettable)theEObject;
+      T result = caseRefMultiNonContainedUnsettable(refMultiNonContainedUnsettable);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case model4Package.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT:
+    {
+      MultiNonContainedUnsettableElement multiNonContainedUnsettableElement = (MultiNonContainedUnsettableElement)theEObject;
+      T result = caseMultiNonContainedUnsettableElement(multiNonContainedUnsettableElement);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -559,6 +577,38 @@ public class model4Switch<T>
    * @generated
    */
   public T caseMultiNonContainedElement(MultiNonContainedElement object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Ref Multi Non Contained Unsettable</em>'. <!--
+   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
+   * end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Ref Multi Non Contained Unsettable</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRefMultiNonContainedUnsettable(RefMultiNonContainedUnsettable object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Multi Non Contained Unsettable Element</em>'.
+   * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Multi Non Contained Unsettable Element</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMultiNonContainedUnsettableElement(MultiNonContainedUnsettableElement object)
   {
     return null;
   }

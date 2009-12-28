@@ -96,7 +96,7 @@ public abstract class AbstractSyncRevisionsIndication extends CDOReadIndication
       }
       else if (revision.getVersion() < version)
       {
-        throw new IllegalStateException("The object " + revision.getID() + " have a higher version (" //$NON-NLS-1$ //$NON-NLS-2$
+        throw new IllegalStateException("The object " + revision.getID() + " has a lower version (" //$NON-NLS-1$ //$NON-NLS-2$
             + revision.getVersion() + ") in the repository than the version (" + version + ") submitted."); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }

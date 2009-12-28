@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
+import org.eclipse.emf.cdo.internal.common.revision.cache.two.TwoLevelRevisionCache;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -303,12 +304,14 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
+    applyLRUSettings(getCache());
+  }
 
-    CDORevisionCache cache = getCache();
+  private void applyLRUSettings(CDORevisionCache cache)
+  {
     if (cache instanceof LRURevisionCache)
     {
       LRURevisionCache lruCache = (LRURevisionCache)cache;
-
       Integer currentLRUCapacity = getIntegerProperty(Props.CURRENT_LRU_CAPACITY);
       if (currentLRUCapacity != null)
       {
@@ -320,6 +323,12 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
       {
         lruCache.setCapacityRevised(revisedLRUCapacity);
       }
+    }
+    else if (cache instanceof TwoLevelRevisionCache)
+    {
+      TwoLevelRevisionCache twoLevelCache = (TwoLevelRevisionCache)cache;
+      applyLRUSettings(twoLevelCache.getLevel1());
+      applyLRUSettings(twoLevelCache.getLevel2());
     }
   }
 

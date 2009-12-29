@@ -543,8 +543,21 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   @Override
   protected boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature)
   {
-    return dynamicFeatureID < 0 ? eOpenIsSet(eFeature) : !EMFUtil.isPersistent(eFeature) ? eSettingDelegate(eFeature)
-        .dynamicIsSet(this, eSettings(), dynamicFeatureID) : eStore().isSet(this, eFeature);
+    if (dynamicFeatureID < 0)
+    {
+      return eOpenIsSet(eFeature);
+    }
+    else
+    {
+      if (EMFUtil.isPersistent(eFeature))
+      {
+        return eStore().isSet(this, eFeature);
+      }
+      else
+      {
+        return eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(), dynamicFeatureID);
+      }
+    }
   }
 
   /**

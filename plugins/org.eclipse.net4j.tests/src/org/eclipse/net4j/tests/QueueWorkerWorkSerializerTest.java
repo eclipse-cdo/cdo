@@ -13,6 +13,7 @@ package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.util.concurrent.QueueWorkerWorkSerializer;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
@@ -23,11 +24,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author Andre Dietisheim
  */
-public class QueueWorkerWorkSerializerTest extends AbstractProtocolTest
+public class QueueWorkerWorkSerializerTest extends AbstractOMTest
 {
   private static final int NUM_WORKPRODUCER_THREADS = 4;
 
-  private static final int NUM_WORK = 200;
+  private static final int NUM_WORK = 10;
 
   private CountDownLatch stopLatch;
 
@@ -47,7 +48,7 @@ public class QueueWorkerWorkSerializerTest extends AbstractProtocolTest
   {
     createWorkProducerThreads();
     stopLatch.await();
-    assertEquals(workProduced, workConsumed);
+    assertEquals(workProduced.get(), workConsumed.get());
   }
 
   private void createWorkProducerThreads()
@@ -58,26 +59,22 @@ public class QueueWorkerWorkSerializerTest extends AbstractProtocolTest
     }
   }
 
-  /**
-   * @author Andre Dietisheim
-   */
   private final class WorkProducer implements Runnable
   {
-    Random random = new Random();
+    private Random random = new Random();
 
     public void run()
     {
       try
       {
-        while (workProduced.getAndIncrement() <= NUM_WORK)
+        int workToCreate;
+        do
         {
-          int workCreated = workProduced.incrementAndGet();
-          queueWorker.addWork(new Work(workCreated));
-          IOUtil.OUT().println("work unit " + workCreated + " produced");
           Thread.sleep(random.nextInt(1000));
-        }
-        IOUtil.OUT().println("stopping work production");
-        stopLatch.countDown();
+          workToCreate = (int)stopLatch.getCount();
+          queueWorker.addWork(new Work(NUM_WORK - workToCreate));
+        } while (workToCreate > 0);
+        IOUtil.OUT().println("work producer " + this + " stopped its production");
       }
       catch (InterruptedException ex)
       {
@@ -96,14 +93,15 @@ public class QueueWorkerWorkSerializerTest extends AbstractProtocolTest
     private Work(int identifier)
     {
       workUnit = identifier;
+      IOUtil.OUT().println("work unit " + identifier + " created");
     }
 
     public void run()
     {
       try
       {
+        stopLatch.countDown();
         IOUtil.OUT().println("work unit " + workUnit + " consumed");
-        IOUtil.OUT().println("work consumption counter set to " + workConsumed.incrementAndGet());
       }
       catch (Exception ex)
       {
@@ -116,8 +114,8 @@ public class QueueWorkerWorkSerializerTest extends AbstractProtocolTest
   public void setUp()
   {
     threadPool = Executors.newFixedThreadPool(NUM_WORKPRODUCER_THREADS);
+    stopLatch = new CountDownLatch(NUM_WORK);
     queueWorker = new QueueWorkerWorkSerializer();
-    stopLatch = new CountDownLatch(1);
     workProduced = new AtomicInteger(0);
     workConsumed = new AtomicInteger(0);
   }

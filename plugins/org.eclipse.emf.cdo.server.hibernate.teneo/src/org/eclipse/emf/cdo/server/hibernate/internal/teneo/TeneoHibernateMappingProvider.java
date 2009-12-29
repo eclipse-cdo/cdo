@@ -31,8 +31,6 @@ import org.eclipse.emf.teneo.PersistenceOptions;
 import org.eclipse.emf.teneo.extension.ExtensionManager;
 import org.eclipse.emf.teneo.extension.ExtensionManagerFactory;
 
-import org.hibernate.cfg.Configuration;
-
 import java.util.List;
 import java.util.Properties;
 
@@ -63,7 +61,8 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     return (HibernateStore)super.getHibernateStore();
   }
 
-  public void addMapping(Configuration configuration)
+  @SuppressWarnings("restriction")
+  public void addMapping(org.hibernate.cfg.Configuration configuration)
   {
     final String mapping = generateMapping();
     if (TRACER.isEnabled())

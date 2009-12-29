@@ -19,6 +19,7 @@ import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -26,15 +27,15 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class QueueWorkerWorkSerializerTest extends AbstractOMTest
 {
-  private static final int NUM_WORKPRODUCER_THREADS = 4;
+  private static final int WORK_COMPLETION_TIMEOUT = 10000;
 
-  private static final int NUM_WORK = 10;
+  private static final int NUM_WORKPRODUCER_THREADS = 10;
 
-  private CountDownLatch stopLatch;
+  private static final int NUM_WORK = 40;
+
+  private CountDownLatch workConsumedLatch;
 
   private AtomicInteger workProduced;
-
-  private AtomicInteger workConsumed;
 
   private ExecutorService threadPool;
 
@@ -46,20 +47,111 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
 
   public void testAllWorkSubmittedIsConsumed() throws Throwable
   {
-    createWorkProducerThreads();
-    stopLatch.await();
-    assertEquals(workProduced.get(), workConsumed.get());
+    createWorkProducerThreads(new AbstractRunnableFactory()
+    {
+      @Override
+      Runnable create()
+      {
+        return new WorkProducer()
+        {
+          @Override
+          protected Runnable createWork(int id)
+          {
+            return new Work(id);
+          }
+        };
+      }
+    });
+    workConsumedLatch.await(WORK_COMPLETION_TIMEOUT, TimeUnit.MILLISECONDS);
+    assertEquals(workProduced.get(), NUM_WORK - workConsumedLatch.getCount());
   }
 
-  private void createWorkProducerThreads()
+  // public void testAllWorkSubmittedIsConsumedSeuqentially() throws Throwable
+  // {
+  // final List<Integer> idList = new ArrayList<Integer>();
+  // createWorkProducerThreads(new AbstractRunnableFactory()
+  // {
+  // @Override
+  // Runnable create()
+  // {
+  // return new WorkProducer()
+  // {
+  // @Override
+  // protected Runnable createWork(final int id)
+  // {
+  // return new Work(id)
+  // {
+  // @Override
+  // public void run()
+  // {
+  // idList.add(id);
+  // super.run();
+  // }
+  // };
+  // }
+  // };
+  // }
+  // });
+  // stopLatch.await();
+  // Collections.sort(idList, new Comparator<Integer>()
+  // {
+  // public int compare(Integer thisInteger, Integer thatInteger)
+  // {
+  // int comparisonResult = thisInteger.compareTo(thatInteger);
+  // assertTrue(comparisonResult == -1);
+  // return comparisonResult;
+  // }
+  // });
+  // }
+  //
+  // public void testGivenExceptionInWorkAllWorkSubmittedIsConsumed() throws Throwable
+  // {
+  // createWorkProducerThreads(new AbstractRunnableFactory()
+  // {
+  // @Override
+  // Runnable create()
+  // {
+  // return new WorkProducer()
+  // {
+  // @Override
+  // protected Runnable createWork(int id)
+  // {
+  // return new Work(id)
+  // {
+  // protected Random random = new Random();
+  //
+  // @Override
+  // public void run()
+  // {
+  // super.run();
+  // if (random.nextBoolean())
+  // {
+  // throw new RuntimeException("dummy exception to simulate runtime errors");
+  // }
+  // }
+  // };
+  // }
+  // };
+  // }
+  // });
+  // stopLatch.await();
+  // assertEquals(workProduced.get(), workConsumed.get());
+  // }
+
+  private void createWorkProducerThreads(AbstractRunnableFactory factory)
   {
     for (int i = 0; i < NUM_WORKPRODUCER_THREADS; i++)
     {
-      threadPool.submit(new WorkProducer());
+      threadPool.submit(factory.create());
     }
   }
 
-  private final class WorkProducer implements Runnable
+  private abstract class AbstractRunnableFactory
+  {
+    abstract Runnable create();
+  }
+
+  private abstract class WorkProducer implements Runnable
   {
     private Random random = new Random();
 
@@ -67,13 +159,12 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
     {
       try
       {
-        int workToCreate;
-        do
+        int currentWorkProduced;
+        while ((currentWorkProduced = workProduced.getAndIncrement()) < NUM_WORK)
         {
+          queueWorker.addWork(createWork(currentWorkProduced));
           Thread.sleep(random.nextInt(1000));
-          workToCreate = (int)stopLatch.getCount();
-          queueWorker.addWork(new Work(NUM_WORK - workToCreate));
-        } while (workToCreate > 0);
+        }
         IOUtil.OUT().println("work producer " + this + " stopped its production");
       }
       catch (InterruptedException ex)
@@ -81,32 +172,27 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
         return;
       }
     }
+
+    protected abstract Runnable createWork(int id);
   }
 
   /**
    * @author Andre Dietisheim
    */
-  private class Work implements Runnable
+  class Work implements Runnable
   {
-    private final int workUnit;
+    private final int id;
 
-    private Work(int identifier)
+    private Work(int id)
     {
-      workUnit = identifier;
-      IOUtil.OUT().println("work unit " + identifier + " created");
+      this.id = id;
+      IOUtil.OUT().println("work unit " + id + " created");
     }
 
     public void run()
     {
-      try
-      {
-        stopLatch.countDown();
-        IOUtil.OUT().println("work unit " + workUnit + " consumed");
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace(IOUtil.OUT());
-      }
+      workConsumedLatch.countDown();
+      IOUtil.OUT().println("work unit " + id + " consumed");
     }
   }
 
@@ -114,10 +200,9 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
   public void setUp()
   {
     threadPool = Executors.newFixedThreadPool(NUM_WORKPRODUCER_THREADS);
-    stopLatch = new CountDownLatch(NUM_WORK);
+    workConsumedLatch = new CountDownLatch(NUM_WORK);
     queueWorker = new QueueWorkerWorkSerializer();
     workProduced = new AtomicInteger(0);
-    workConsumed = new AtomicInteger(0);
   }
 
   @Override

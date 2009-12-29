@@ -6,7 +6,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ *    Andre Dietisheim - initial API and implementation
+ *    Eike Stepper - maintenance
  */
 package org.eclipse.net4j.tests;
 
@@ -30,7 +31,7 @@ public class QueueWorkerWorkSerializerTest extends AbstractProtocolTest
 
   private CountDownLatch stopLatch;
 
-  private AtomicInteger workCreated;
+  private AtomicInteger workProduced;
 
   private AtomicInteger workConsumed;
 
@@ -46,7 +47,7 @@ public class QueueWorkerWorkSerializerTest extends AbstractProtocolTest
   {
     createWorkProducerThreads();
     stopLatch.await();
-    assertEquals(workCreated, workConsumed);
+    assertEquals(workProduced, workConsumed);
   }
 
   private void createWorkProducerThreads()
@@ -57,6 +58,9 @@ public class QueueWorkerWorkSerializerTest extends AbstractProtocolTest
     }
   }
 
+  /**
+   * @author Andre Dietisheim
+   */
   private final class WorkProducer implements Runnable
   {
     Random random = new Random();
@@ -65,9 +69,9 @@ public class QueueWorkerWorkSerializerTest extends AbstractProtocolTest
     {
       try
       {
-        while (workCreated.getAndIncrement() <= NUM_WORK)
+        while (workProduced.getAndIncrement() <= NUM_WORK)
         {
-          int workCreated = QueueWorkerWorkSerializerTest.this.workCreated.incrementAndGet();
+          int workCreated = workProduced.incrementAndGet();
           queueWorker.addWork(new Work(workCreated));
           IOUtil.OUT().println("work unit " + workCreated + " created");
           Thread.sleep(random.nextInt(1000));
@@ -77,11 +81,14 @@ public class QueueWorkerWorkSerializerTest extends AbstractProtocolTest
       }
       catch (InterruptedException ex)
       {
-        // ignore
+        return;
       }
     }
   }
 
+  /**
+   * @author Andre Dietisheim
+   */
   private class Work implements Runnable
   {
     private final int workUnit;
@@ -98,9 +105,9 @@ public class QueueWorkerWorkSerializerTest extends AbstractProtocolTest
         IOUtil.OUT().println("work unit " + workUnit + " consumed");
         IOUtil.OUT().println("work consumption counter set to " + workConsumed.incrementAndGet());
       }
-      catch (Exception e)
+      catch (Exception ex)
       {
-        e.printStackTrace(IOUtil.OUT());
+        ex.printStackTrace(IOUtil.OUT());
       }
     }
   }
@@ -111,7 +118,7 @@ public class QueueWorkerWorkSerializerTest extends AbstractProtocolTest
     threadPool = Executors.newFixedThreadPool(NUM_WORKPRODUCER_THREADS);
     queueWorker = new QueueWorkerWorkSerializer();
     stopLatch = new CountDownLatch(1);
-    workCreated = new AtomicInteger(0);
+    workProduced = new AtomicInteger(0);
     workConsumed = new AtomicInteger(0);
   }
 

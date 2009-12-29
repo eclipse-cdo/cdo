@@ -73,7 +73,7 @@ public class QueueWorkerWorkSerializerTest extends AbstractProtocolTest
         {
           int workCreated = workProduced.incrementAndGet();
           queueWorker.addWork(new Work(workCreated));
-          IOUtil.OUT().println("work unit " + workCreated + " created");
+          IOUtil.OUT().println("work unit " + workCreated + " produced");
           Thread.sleep(random.nextInt(1000));
         }
         IOUtil.OUT().println("stopping work production");

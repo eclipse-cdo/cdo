@@ -47,6 +47,7 @@ public class AllTests
     suite.addTestSuite(SignalMonitorTest.class);
     suite.addTestSuite(ExceptionTest.class);
     suite.addTestSuite(SecurityTest.class);
+    suite.addTestSuite(QueueWorkerWorkSerializerTest.class);
 
     // defs
     // suite.addTestSuite(TestDefTest.class);

@@ -346,7 +346,7 @@ public class Channel extends Lifecycle implements InternalChannel
 
     private NonBlockingIntCounter size = new NonBlockingIntCounter();
 
-    public SendQueue()
+    protected SendQueue()
     {
     }
 

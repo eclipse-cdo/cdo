@@ -15,7 +15,6 @@ import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
-import org.eclipse.net4j.util.concurrent.NonBlockingIntCounter;
 import org.eclipse.net4j.util.concurrent.QueueWorkerWorkSerializer;
 import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.net4j.util.event.Event;
@@ -33,6 +32,7 @@ import java.text.MessageFormat;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Eike Stepper
@@ -337,6 +337,10 @@ public class Channel extends Lifecycle implements InternalChannel
   }
 
   /**
+   * A queue that holds buffers that shall be sent. This implementation notifies observers of enqueued and dequeued
+   * buffers. The notification's deliberately not synchronized. It shall only be used by O&M tooling to offer (not 100%
+   * accurate) statistical insights
+   * 
    * @author Eike Stepper
    * @since 3.0
    */
@@ -344,7 +348,7 @@ public class Channel extends Lifecycle implements InternalChannel
   {
     private static final long serialVersionUID = 1L;
 
-    private NonBlockingIntCounter size = new NonBlockingIntCounter();
+    private AtomicInteger size = new AtomicInteger();
 
     protected SendQueue()
     {
@@ -404,7 +408,7 @@ public class Channel extends Lifecycle implements InternalChannel
 
     private void added()
     {
-      int queueSize = size.increment();
+      int queueSize = size.incrementAndGet();
       IListener[] listeners = getListeners();
       if (listeners != null)
       {
@@ -414,7 +418,7 @@ public class Channel extends Lifecycle implements InternalChannel
 
     private void removed()
     {
-      int queueSize = size.decrement();
+      int queueSize = size.decrementAndGet();
       IListener[] listeners = getListeners();
       if (listeners != null)
       {

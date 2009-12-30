@@ -23,13 +23,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * The Class QueueWorkerWorkSerializerTest.
+ * A test for {@link QueueWorkerWorkSerializer}
  * 
  * @author Andre Dietisheim
  */
 public class QueueWorkerWorkSerializerTest extends AbstractOMTest
 {
-
   /** timeout to wait for execution of all work units. */
   private static final int WORK_COMPLETION_TIMEOUT = 10000;
 
@@ -57,9 +56,6 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
 
   /**
    * Test that asserts that all submitted workers are executed
-   * 
-   * @throws Throwable
-   *           the throwable
    */
   public void testAllWorkSubmittedIsConsumed() throws Throwable
   {
@@ -84,10 +80,7 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
 
   /**
    * If the workers throw Exceptions, the QueueWorker stops executing work (deactivates its working thread). Therefore
-   * the first work unit gets consumed
-   * 
-   * @throws Throwable
-   *           the throwable
+   * the first work unit gets consumed, the rest is not executed any more.
    */
   public void testGivenWorkExceptionInWorkAllWorkSubmittedOnlyTheFirstWorkerIsConsumed() throws Throwable
   {
@@ -136,8 +129,6 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
   /**
    * Creates work producer threads.
    * 
-   * @param factory
-   *          the factory
    * @see #NUM_WORKPRODUCER_THREADS
    */
   private void createWorkProducerThreads(AbstractWorkProducerFactory factory)
@@ -169,7 +160,7 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
     private Random random = new Random();
 
     /**
-     * Run the work unit.
+     * Produce work: add work units to the queue worker
      */
     public void run()
     {

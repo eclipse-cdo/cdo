@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - Bug 289445
  */
 package org.eclipse.net4j.spi.db;
 
@@ -18,7 +19,6 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.bundle.OM;
-import org.eclipse.net4j.internal.db.ddl.DBTable;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -130,7 +130,7 @@ public abstract class DBAdapter implements IDBAdapter
 
     try
     {
-      doCreateTable((DBTable)table, statement);
+      doCreateTable(table, statement);
     }
     catch (SQLException ex)
     {
@@ -141,7 +141,7 @@ public abstract class DBAdapter implements IDBAdapter
       }
     }
 
-    validateTable((DBTable)table, statement);
+    validateTable(table, statement);
     return created;
   }
 
@@ -489,5 +489,13 @@ public abstract class DBAdapter implements IDBAdapter
     catch (IOException canNotHappen)
     {
     }
+  }
+
+  /**
+   * @since 3.0
+   */
+  public DBType adaptType(DBType type)
+  {
+    return type;
   }
 }

@@ -9,6 +9,7 @@
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper - maintenance
  *    Stefan Winkler - Bug 276979
+ *    Stefan Winkler - Bug 289445
  */
 package org.eclipse.net4j.db.postgresql;
 
@@ -120,8 +121,8 @@ public class PostgreSQLAdapter extends DBAdapter
   public boolean createTable(IDBTable table, Statement statement) throws DBException
   {
     boolean created = true;
-
     Savepoint savepoint = null;
+
     try
     {
       savepoint = statement.getConnection().setSavepoint();
@@ -162,5 +163,18 @@ public class PostgreSQLAdapter extends DBAdapter
 
     validateTable(table, statement);
     return created;
+  }
+
+  @Override
+  public DBType adaptType(DBType type)
+  {
+    switch (type)
+    {
+    // Due to Bug 289194: [DB] BLOB not correctly handled by PostgreSQL DBAdapter
+    case BLOB:
+      return DBType.VARBINARY;
+    }
+
+    return super.adaptType(type);
   }
 }

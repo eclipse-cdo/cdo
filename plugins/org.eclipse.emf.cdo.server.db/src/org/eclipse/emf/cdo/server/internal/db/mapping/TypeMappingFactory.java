@@ -9,6 +9,7 @@
  *    Stefan Winkler - initial API and implementation
  *    Eike Stepper - maintenance
  *    Stefan Winkler - bug 285270: [DB] Support XSD based models
+ *    Stefan Winkler - Bug 289445
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
@@ -19,6 +20,7 @@ import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBAnnotation;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.emf.ecore.EClass;
@@ -264,7 +266,7 @@ public enum TypeMappingFactory
   public static ITypeMapping createTypeMapping(IMappingStrategy mappingStrategy, EStructuralFeature feature)
   {
     CDOType cdoType = CDOModelUtil.getType(feature);
-    DBType dbType = getDBType(feature);
+    DBType dbType = getDBType(feature, mappingStrategy.getStore().getDBAdapter());
 
     TypeMappingFactory concreteFactory = mappingTable.get(new Pair<CDOType, DBType>(cdoType, dbType));
     if (concreteFactory == null)
@@ -276,7 +278,7 @@ public enum TypeMappingFactory
     return concreteFactory.doCreateTypeMapping(mappingStrategy, feature, dbType);
   }
 
-  private static DBType getDBType(EStructuralFeature feature)
+  private static DBType getDBType(EStructuralFeature feature, IDBAdapter dbAdapter)
   {
     String typeKeyword = DBAnnotation.COLUMN_TYPE.getValue(feature);
     if (typeKeyword != null)
@@ -291,30 +293,32 @@ public enum TypeMappingFactory
       return dbType;
     }
 
-    // no annotation present - lookup default DB type.
-    return getDefaultDBType(feature.getEType());
+    // No annotation present - lookup default DB type.
+    return getDefaultDBType(feature.getEType(), dbAdapter);
   }
 
-  private static DBType getDefaultDBType(EClassifier type)
+  private static DBType getDefaultDBType(EClassifier type, IDBAdapter dbAdapter)
   {
+    // Fallback (e.g., for CUSTOM types)
+    DBType result = DBType.VARCHAR;
     if (type instanceof EClass)
     {
-      return DBType.BIGINT;
+      result = DBType.BIGINT;
     }
 
     if (type instanceof EEnum)
     {
-      return DBType.INTEGER;
+      result = DBType.INTEGER;
     }
 
     DBType dbType = defaultTypeMap.get(type);
     if (dbType != null)
     {
-      return dbType;
+      result = dbType;
     }
 
-    // Fallback (e.g., for CUSTOM types)
-    return DBType.VARCHAR;
+    // Give the DBAdapter a chance to override the default type, if it's not supported
+    return dbAdapter.adaptType(result);
   }
 
   public static Collection<DBType> getDefaultFeatureMapDBTypes()

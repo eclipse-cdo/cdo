@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - bug 289445
  */
 package org.eclipse.net4j.db;
 
@@ -63,4 +64,12 @@ public interface IDBAdapter
   public void appendValue(StringBuilder builder, IDBField field, Object value);
 
   public boolean isTypeIndexable(DBType type);
+
+  /**
+   * Provide a way for the DBAdapter to override unsupported DB types with replacements. The default implementation just
+   * returns the given type. Subclasses may override single types with replacements.
+   * 
+   * @since 3.0
+   */
+  public DBType adaptType(DBType type);
 }

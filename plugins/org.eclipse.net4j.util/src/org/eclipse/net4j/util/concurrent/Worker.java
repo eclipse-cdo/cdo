@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.concurrent;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.IErrorHandler;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
@@ -25,6 +26,19 @@ import java.util.concurrent.TimeoutException;
 public abstract class Worker extends Lifecycle
 {
   public static final int DEFAULT_TIMEOUT = 10000;
+
+  /**
+   * @since 3.0
+   */
+  public static final IErrorHandler DEFAULT_ERROR_HANDLER = new IErrorHandler()
+  {
+    public void handleError(Throwable t)
+    {
+      OM.LOG.error(t);
+    }
+  };
+
+  private static IErrorHandler globalErrorHandler = DEFAULT_ERROR_HANDLER;
 
   private boolean daemon;
 
@@ -121,6 +135,24 @@ public abstract class Worker extends Lifecycle
   protected abstract void work(WorkContext context) throws Exception;
 
   /**
+   * @since 3.0
+   */
+  public static IErrorHandler getGlobalErrorHandler()
+  {
+    return globalErrorHandler;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static IErrorHandler setGlobalErrorHandler(IErrorHandler globalErrorHandler)
+  {
+    IErrorHandler oldHandler = Worker.globalErrorHandler;
+    Worker.globalErrorHandler = globalErrorHandler;
+    return oldHandler;
+  }
+
+  /**
    * @author Eike Stepper
    */
   private final class WorkerThread extends Thread
@@ -176,7 +208,11 @@ public abstract class Worker extends Lifecycle
         }
         catch (Exception ex)
         {
-          OM.LOG.error(ex);
+          if (globalErrorHandler != null)
+          {
+            globalErrorHandler.handleError(ex);
+          }
+
           break;
         }
       }

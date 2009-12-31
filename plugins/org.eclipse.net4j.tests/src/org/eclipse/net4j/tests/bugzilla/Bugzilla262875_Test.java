@@ -11,14 +11,17 @@
  */
 package org.eclipse.net4j.tests.bugzilla;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.util.IErrorHandler;
+import org.eclipse.net4j.util.concurrent.Worker;
+import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -26,43 +29,77 @@ import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import org.eclipse.spi.net4j.ServerProtocolFactory;
 
+import java.nio.BufferUnderflowException;
+
 /**
  * @author David Bonneau
  */
 public class Bugzilla262875_Test extends AbstractOMTest
 {
+  private IManagedContainer container;
+
+  private IConnector connector;
+
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    super.doSetUp();
+    container = ContainerUtil.createContainer();
+    Net4jUtil.prepareContainer(container);
+    JVMUtil.prepareContainer(container);
+    container.registerFactory(new TestProtocol.Factory());
+    container.activate();
+
+    JVMUtil.getAcceptor(container, "default");
+    connector = JVMUtil.getConnector(container, "default");
+  }
+
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    connector.close();
+    container.deactivate();
+    super.doTearDown();
+  }
+
   public void testBufferUnderflowException() throws Exception
   {
-    IManagedContainer container = IPluginContainer.INSTANCE;
-    container.registerFactory(new TestProtocolFactory());
-    JVMUtil.getAcceptor(container, "default");
-    IConnector connector = JVMUtil.getConnector(container, "default");
-    TestProtocol protocol = new TestProtocol("TEST_PROTOCOL");
-    connector.openChannel(protocol);
-
-    TestRequest request = new TestRequest(protocol, (short)10, 4086);
-    request.send();
-  }
-
-  private class TestProtocolFactory extends ServerProtocolFactory
-  {
-    public TestProtocolFactory()
+    final boolean[] failed = { false };
+    IErrorHandler oldErrorHandler = Worker.setGlobalErrorHandler(new IErrorHandler()
     {
-      super("TEST_PROTOCOL");
+      public void handleError(Throwable t)
+      {
+        t.printStackTrace();
+        failed[0] |= t instanceof BufferUnderflowException;
+      }
+    });
+
+    try
+    {
+      TestProtocol protocol = new TestProtocol();
+      protocol.open(connector);
+
+      TestProtocol.Request request = new TestProtocol.Request(protocol, (short)10, 4086);
+      request.send();
+    }
+    finally
+    {
+      Worker.setGlobalErrorHandler(oldErrorHandler);
     }
 
-    public Object create(String description) throws ProductCreationException
-    {
-      return new TestProtocol("TEST_PROTOCOL");
-    }
-
+    assertEquals(false, failed[0]);
   }
 
-  private class TestProtocol extends SignalProtocol<Object>
+  /**
+   * @author David Bonneau
+   */
+  private static final class TestProtocol extends SignalProtocol<Object>
   {
-    public TestProtocol(String type)
+    public static final String NAME = "TEST_PROTOCOL";
+
+    public TestProtocol()
     {
-      super(type);
+      super(NAME);
     }
 
     @Override
@@ -71,60 +108,80 @@ public class Bugzilla262875_Test extends AbstractOMTest
       switch (signalID)
       {
       case (short)10:
-        return new TestIndication(this, signalID);
-      default:
-        break;
+        return new Indication(this, signalID);
       }
+
       return super.createSignalReactor(signalID);
     }
-  }
 
-  private class TestRequest extends RequestWithConfirmation<Boolean>
-  {
-    private int value = 0;
-
-    public TestRequest(SignalProtocol<?> protocol, short id, int value)
+    /**
+     * @author David Bonneau
+     */
+    private static final class Request extends RequestWithConfirmation<Boolean>
     {
-      super(protocol, id);
-      this.value = value;
-    }
+      private int value = 0;
 
-    @Override
-    protected void requesting(ExtendedDataOutputStream out) throws Exception
-    {
-      for (int i = 0; i < value; ++i)
+      public Request(SignalProtocol<?> protocol, short id, int value)
       {
-        out.writeByte(0);
+        super(protocol, id);
+        this.value = value;
       }
-      Thread.sleep(30);
+
+      @Override
+      protected void requesting(ExtendedDataOutputStream out) throws Exception
+      {
+        for (int i = 0; i < value; ++i)
+        {
+          out.writeByte(0);
+        }
+
+        Thread.sleep(30);
+      }
+
+      @Override
+      protected Boolean confirming(ExtendedDataInputStream in) throws Exception
+      {
+        return in.readBoolean();
+      }
     }
 
-    @Override
-    protected Boolean confirming(ExtendedDataInputStream in) throws Exception
+    /**
+     * @author David Bonneau
+     */
+    private static final class Indication extends IndicationWithResponse
     {
-      return in.readBoolean();
+      public Indication(SignalProtocol<?> protocol, short id)
+      {
+        super(protocol, id);
+      }
+
+      @Override
+      protected void indicating(ExtendedDataInputStream in) throws Exception
+      {
+        System.out.println("receive ");
+      }
+
+      @Override
+      protected void responding(ExtendedDataOutputStream out) throws Exception
+      {
+        out.writeBoolean(true);
+      }
     }
-  }
 
-  private class TestIndication extends IndicationWithResponse
-  {
-
-    public TestIndication(SignalProtocol<?> protocol, short id)
+    /**
+     * @author David Bonneau
+     */
+    private static final class Factory extends ServerProtocolFactory
     {
-      super(protocol, id);
-    }
+      public Factory()
+      {
+        super(NAME);
+      }
 
-    @Override
-    protected void indicating(ExtendedDataInputStream in) throws Exception
-    {
-      System.out.println("receive ");
-    }
-
-    @Override
-    protected void responding(ExtendedDataOutputStream out) throws Exception
-    {
-      out.writeBoolean(true);
-
+      public Object create(String description) throws ProductCreationException
+      {
+        return new TestProtocol();
+      }
     }
   }
 }

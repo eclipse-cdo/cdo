@@ -706,48 +706,63 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       return null;
     }
 
-    synchronized (objects)
+    // Since getObject could trigger a read (ONLY when we load a resource) we NEED to make sure the state lock is
+    // active.
+    // Always use in the following order
+    // 1- getStateLock().lock();
+    // 2- synchronized(objects)
+    // DO NOT inverse them otherwise deadlock could occured.
+    getStateLock().lock();
+    
+    try
     {
-      if (id.equals(lastLookupID))
+      synchronized (objects)
       {
-        return lastLookupObject;
-      }
-
-      // Needed for recursive call to getObject. (from createObject/cleanObject/getResource/getObject)
-      InternalCDOObject localLookupObject = objects.get(id);
-      if (localLookupObject == null)
-      {
-        if (id.isMeta())
+        if (id.equals(lastLookupID))
         {
-          localLookupObject = createMetaObject((CDOIDMeta)id);
+          return lastLookupObject;
         }
-        else
-        {
-          if (loadOnDemand)
-          {
-            if (id.isTemporary())
-            {
-              throw new ObjectNotFoundException(id);
-            }
 
-            localLookupObject = createObject(id);
+        // Needed for recursive call to getObject. (from createObject/cleanObject/getResource/getObject)
+        InternalCDOObject localLookupObject = objects.get(id);
+        if (localLookupObject == null)
+        {
+          if (id.isMeta())
+          {
+            localLookupObject = createMetaObject((CDOIDMeta)id);
           }
           else
           {
-            return null;
+            if (loadOnDemand)
+            {
+              if (id.isTemporary())
+              {
+                throw new ObjectNotFoundException(id);
+              }
+
+              localLookupObject = createObject(id);
+            }
+            else
+            {
+              return null;
+            }
+          }
+
+          // CDOResource have a special way to register to the view.
+          if (!CDOModelUtil.isResource(localLookupObject.eClass()))
+          {
+            registerObject(localLookupObject);
           }
         }
 
-        // CDOResource have a special way to register to the view.
-        if (!CDOModelUtil.isResource(localLookupObject.eClass()))
-        {
-          registerObject(localLookupObject);
-        }
+        lastLookupID = id;
+        lastLookupObject = localLookupObject;
+        return lastLookupObject;
       }
-
-      lastLookupID = id;
-      lastLookupObject = localLookupObject;
-      return lastLookupObject;
+    }
+    finally
+    {
+      getStateLock().unlock();
     }
   }
 

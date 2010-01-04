@@ -30,6 +30,9 @@ import org.eclipse.net4j.util.tests.AbstractOMTest;
 import org.eclipse.spi.net4j.ServerProtocolFactory;
 
 import java.nio.BufferUnderflowException;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author David Bonneau
@@ -64,16 +67,17 @@ public class Bugzilla262875_Test extends AbstractOMTest
 
   public void testBufferUnderflowException() throws Exception
   {
-    final boolean[] failed = { false };
+    final AtomicBoolean failed = new AtomicBoolean(false);
+    final CountDownLatch latch = new CountDownLatch(1);
     IErrorHandler oldErrorHandler = Worker.setGlobalErrorHandler(new IErrorHandler()
     {
       public void handleError(Throwable t)
       {
         t.printStackTrace();
-        failed[0] |= t instanceof BufferUnderflowException;
+        failed.set(t instanceof BufferUnderflowException);
+        latch.countDown();
       }
     });
-
     try
     {
       TestProtocol protocol = new TestProtocol();
@@ -81,13 +85,13 @@ public class Bugzilla262875_Test extends AbstractOMTest
 
       TestProtocol.Request request = new TestProtocol.Request(protocol);
       request.send();
+      latch.await(100000, TimeUnit.MILLISECONDS);
+      assertEquals(false, failed.get());
     }
     finally
     {
       Worker.setGlobalErrorHandler(oldErrorHandler);
     }
-
-    assertEquals(false, failed[0]);
   }
 
   /**

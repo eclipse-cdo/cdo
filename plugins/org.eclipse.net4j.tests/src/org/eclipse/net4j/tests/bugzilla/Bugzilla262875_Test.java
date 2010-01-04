@@ -79,7 +79,7 @@ public class Bugzilla262875_Test extends AbstractOMTest
       TestProtocol protocol = new TestProtocol();
       protocol.open(connector);
 
-      TestProtocol.Request request = new TestProtocol.Request(protocol, (short)10, 4086);
+      TestProtocol.Request request = new TestProtocol.Request(protocol);
       request.send();
     }
     finally
@@ -97,6 +97,8 @@ public class Bugzilla262875_Test extends AbstractOMTest
   {
     public static final String NAME = "TEST_PROTOCOL";
 
+    private static final short TEST_PROTOCOL_SIGNALID = 10;
+
     public TestProtocol()
     {
       super(NAME);
@@ -107,8 +109,8 @@ public class Bugzilla262875_Test extends AbstractOMTest
     {
       switch (signalID)
       {
-      case (short)10:
-        return new Indication(this, signalID);
+      case TEST_PROTOCOL_SIGNALID:
+        return new Indication(this);
       }
 
       return super.createSignalReactor(signalID);
@@ -119,18 +121,17 @@ public class Bugzilla262875_Test extends AbstractOMTest
      */
     private static final class Request extends RequestWithConfirmation<Boolean>
     {
-      private int value = 0;
+      private static final int TEST_PROTOCOL_REQUEST_NUMBYTES = 4086;
 
-      public Request(SignalProtocol<?> protocol, short id, int value)
+      public Request(SignalProtocol<?> protocol)
       {
-        super(protocol, id);
-        this.value = value;
+        super(protocol, TEST_PROTOCOL_SIGNALID);
       }
 
       @Override
       protected void requesting(ExtendedDataOutputStream out) throws Exception
       {
-        for (int i = 0; i < value; ++i)
+        for (int i = 0; i < TEST_PROTOCOL_REQUEST_NUMBYTES; ++i)
         {
           out.writeByte(0);
         }
@@ -150,9 +151,9 @@ public class Bugzilla262875_Test extends AbstractOMTest
      */
     private static final class Indication extends IndicationWithResponse
     {
-      public Indication(SignalProtocol<?> protocol, short id)
+      public Indication(SignalProtocol<?> protocol)
       {
-        super(protocol, id);
+        super(protocol, TEST_PROTOCOL_SIGNALID);
       }
 
       @Override

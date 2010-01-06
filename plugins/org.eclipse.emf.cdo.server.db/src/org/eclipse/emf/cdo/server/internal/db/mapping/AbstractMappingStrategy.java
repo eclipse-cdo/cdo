@@ -59,6 +59,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * This abstract base class implements those methods which are most likely common to most mapping strategies. It can be
@@ -84,11 +86,11 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   private Map<String, String> properties;
 
-  private Map<EClass, IClassMapping> classMappings;
+  private ConcurrentMap<EClass, IClassMapping> classMappings;
 
   public AbstractMappingStrategy()
   {
-    classMappings = new HashMap<EClass, IClassMapping>();
+    classMappings = new ConcurrentHashMap<EClass, IClassMapping>();
   }
 
   // -- property related methods -----------------------------------------
@@ -346,7 +348,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       if (!(eClass.isInterface() || eClass.isAbstract()))
       {
         String mapping = DBAnnotation.TABLE_MAPPING.getValue(eClass);
-        
+
         // TODO Maybe we should explicitly report unknown values of the annotation
         if (mapping == null || !mapping.equalsIgnoreCase(DBAnnotation.TABLE_MAPPING_NONE))
         {
@@ -400,16 +402,26 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public final IClassMapping getClassMapping(EClass eClass)
   {
+    // Try without synchronization first; this will almost always succeed, so it avoids the
+    // performance penalty of syncing in the majority of cases
     IClassMapping result = classMappings.get(eClass);
-    if (result != null)
+    if (result == null)
     {
-      return result;
+      // Synchronize on the classMappings to prevent concurrent invocations of createClassMapping
+      // (Synchronizing on the eClass allows for more concurrency, but is risky because application
+      // code may be syncing on the eClass also.)
+      synchronized (classMappings)
+      {
+        // Check again, because other thread may have just added the mapping
+        result = classMappings.get(eClass);
+        if (result == null)
+        {
+          result = createClassMapping(eClass);
+        }
+      }
     }
-    else
-    {
-      // create class mapping on demand ...
-      return createClassMapping(eClass);
-    }
+
+    return result;
   }
 
   public ITypeMapping createValueMapping(EStructuralFeature feature)

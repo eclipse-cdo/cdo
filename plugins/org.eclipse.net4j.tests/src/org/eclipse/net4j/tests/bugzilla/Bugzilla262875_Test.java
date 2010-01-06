@@ -39,6 +39,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class Bugzilla262875_Test extends AbstractOMTest
 {
+  private static final long EXCEPTION_WAIT_TIMEOUT = 10000;
+
   private IManagedContainer container;
 
   private IConnector connector;
@@ -78,14 +80,16 @@ public class Bugzilla262875_Test extends AbstractOMTest
         latch.countDown();
       }
     });
+
     try
     {
       TestProtocol protocol = new TestProtocol();
       protocol.open(connector);
 
-      TestProtocol.Request request = new TestProtocol.Request(protocol);
-      request.send();
-      latch.await(100000, TimeUnit.MILLISECONDS);
+      new TestProtocol.Request(protocol, Net4jUtil.DEFAULT_BUFFER_CAPACITY - 10).send();
+      // TestProtocol.Request request = new TestProtocol.Request(protocol, Net4jUtil.DEFAULT_BUFFER_CAPACITY);
+
+      latch.await(EXCEPTION_WAIT_TIMEOUT, TimeUnit.MILLISECONDS);
       assertEquals(false, failed.get());
     }
     finally
@@ -99,7 +103,7 @@ public class Bugzilla262875_Test extends AbstractOMTest
    */
   private static final class TestProtocol extends SignalProtocol<Object>
   {
-    public static final String NAME = "TEST_PROTOCOL";
+    private static final String NAME = "TEST_PROTOCOL";
 
     private static final short TEST_PROTOCOL_SIGNALID = 10;
 
@@ -125,22 +129,22 @@ public class Bugzilla262875_Test extends AbstractOMTest
      */
     private static final class Request extends RequestWithConfirmation<Boolean>
     {
-      private static final int TEST_PROTOCOL_REQUEST_NUMBYTES = 4086;
+      private int requestNumOfBytes;
 
-      public Request(SignalProtocol<?> protocol)
+      public Request(SignalProtocol<?> protocol, int requestNumOfBytes)
       {
         super(protocol, TEST_PROTOCOL_SIGNALID);
+        this.requestNumOfBytes = requestNumOfBytes;
       }
 
       @Override
       protected void requesting(ExtendedDataOutputStream out) throws Exception
       {
-        for (int i = 0; i < TEST_PROTOCOL_REQUEST_NUMBYTES; ++i)
+        for (int i = 0; i < requestNumOfBytes; ++i)
         {
-          out.writeByte(0);
+          out.writeByte(i);
         }
-
-        Thread.sleep(30);
+        Thread.sleep(100);
       }
 
       @Override
@@ -163,7 +167,7 @@ public class Bugzilla262875_Test extends AbstractOMTest
       @Override
       protected void indicating(ExtendedDataInputStream in) throws Exception
       {
-        System.out.println("receive ");
+        System.out.println("indicating");
       }
 
       @Override

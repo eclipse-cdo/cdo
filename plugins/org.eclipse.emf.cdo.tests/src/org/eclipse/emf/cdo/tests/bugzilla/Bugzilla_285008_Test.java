@@ -4,58 +4,145 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ *    Caspar De Groot - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.model3.Class1;
-import org.eclipse.emf.cdo.tests.model3.Model3Package;
-import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
+import org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement;
+import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable;
+import org.eclipse.emf.cdo.tests.model4.model4Factory;
+import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
- * Invalid listener might prevent CDOTransaction to close properly
- * <p>
- * See bug 285008
- * 
- * @author Andre Dietisheim
+ * @author Caspar De Groot
  */
 public class Bugzilla_285008_Test extends AbstractCDOTest
 {
-  public void testBugzilla_285008() throws Exception
+  private static String RESOURCENAME = "/r1";
+
+  public void testCDO_isSet()
   {
     {
       CDOSession session = openSession();
-      session.getPackageRegistry().putEPackage(Model3Package.eINSTANCE);
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource res1 = transaction.createResource("/res1");
+      model4Package p = model4Package.eINSTANCE;
+      session.getPackageRegistry().putEPackage(p);
+      session.options().setPassiveUpdateEnabled(false);
+      model4Factory f = model4Factory.eINSTANCE;
 
-      Class1 class1 = getModel3Factory().createClass1();
-      Class2 class2a = getModel3SubpackageFactory().createClass2();
-      Class2 class2b = getModel3SubpackageFactory().createClass2();
-      class1.getClass2().add(class2a);
-      class1.getClass2().add(class2b);
+      // Ensure that model is suitable for this test
+      boolean p1 = p.getRefMultiNonContainedUnsettable_Elements().isMany();
+      boolean p2 = p.getRefMultiNonContainedUnsettable_Elements().isUnsettable();
+      boolean p3 = !p.getMultiNonContainedUnsettableElement_Parent().isMany();
+      boolean p4 = p.getMultiNonContainedUnsettableElement_Parent().isUnsettable();
+      boolean p5 = p.getRefMultiNonContainedUnsettable_Elements().getEOpposite() == p
+          .getMultiNonContainedUnsettableElement_Parent();
+      if (!p1 || !p2 || !p3 || !p4 || !p5)
+      {
+        throw new RuntimeException("Model does not meet the prerequirements for this test");
+      }
 
-      res1.getContents().add(class1);
-      res1.getContents().add(class2a);
-      res1.getContents().add(class2b);
-      transaction.commit();
+      CDOTransaction tx = session.openTransaction();
+      CDOResource r1 = tx.createResource(RESOURCENAME);
+      RefMultiNonContainedUnsettable a = f.createRefMultiNonContainedUnsettable();
+      MultiNonContainedUnsettableElement b = f.createMultiNonContainedUnsettableElement();
+      r1.getContents().add(a);
+      r1.getContents().add(b);
+      a.getElements().add(b);
+
+      assertTrue(a.isSetElements());
+
+      tx.commit();
+
+      assertTrue(a.isSetElements());
+
+      tx.close();
       session.close();
     }
 
+    // Same tests on isSetElements, but in a new session
     {
       CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource res1 = transaction.getResource("/res1");
+      model4Package p = model4Package.eINSTANCE;
+      session.getPackageRegistry().putEPackage(p);
+      session.options().setPassiveUpdateEnabled(false);
+      CDOTransaction tx = session.openTransaction();
 
-      Class1 class1 = (Class1)res1.getContents().get(0);
-      assertNotNull(class1);
-      assertTrue(class1.isSetClass2());
+      CDOResource r1 = tx.getResource(RESOURCENAME);
+      RefMultiNonContainedUnsettable a = (RefMultiNonContainedUnsettable)r1.getContents().get(0);
+
+      assertTrue(a.isSetElements());
+
+      tx.close();
+      session.close();
+    }
+  }
+
+  public void testCDO_crossReferences()
+  {
+    {
+      CDOSession session = openSession();
+      model4Package p = model4Package.eINSTANCE;
+      session.getPackageRegistry().putEPackage(p);
+      session.options().setPassiveUpdateEnabled(false);
+      model4Factory f = model4Factory.eINSTANCE;
+
+      // Ensure that model is suitable for this test
+      boolean p1 = p.getRefMultiNonContainedUnsettable_Elements().isMany();
+      boolean p2 = p.getRefMultiNonContainedUnsettable_Elements().isUnsettable();
+      boolean p3 = !p.getMultiNonContainedUnsettableElement_Parent().isMany();
+      boolean p4 = p.getMultiNonContainedUnsettableElement_Parent().isUnsettable();
+      boolean p5 = p.getRefMultiNonContainedUnsettable_Elements().getEOpposite() == p
+          .getMultiNonContainedUnsettableElement_Parent();
+      if (!p1 || !p2 || !p3 || !p4 || !p5)
+      {
+        throw new RuntimeException("Model does not meet the prerequirements for this test");
+      }
+
+      CDOTransaction tx = session.openTransaction();
+      CDOResource r1 = tx.createResource(RESOURCENAME);
+      RefMultiNonContainedUnsettable a = f.createRefMultiNonContainedUnsettable();
+      MultiNonContainedUnsettableElement b = f.createMultiNonContainedUnsettableElement();
+      r1.getContents().add(a);
+      r1.getContents().add(b);
+      a.getElements().add(b);
+      tx.commit();
+
+      assertEquals(1, a.eCrossReferences().size());
+      assertSame(b, a.eCrossReferences().get(0));
+
+      assertEquals(1, b.eCrossReferences().size());
+      assertSame(a, b.eCrossReferences().get(0));
+
+      tx.close();
+      session.close();
+    }
+
+    // Same tests on eCrossReferences, but in a new session
+    {
+      CDOSession session = openSession();
+      model4Package p = model4Package.eINSTANCE;
+      session.getPackageRegistry().putEPackage(p);
+      session.options().setPassiveUpdateEnabled(false);
+      CDOTransaction tx = session.openTransaction();
+
+      CDOResource r1 = tx.getResource(RESOURCENAME);
+      RefMultiNonContainedUnsettable a = (RefMultiNonContainedUnsettable)r1.getContents().get(0);
+      MultiNonContainedUnsettableElement b = (MultiNonContainedUnsettableElement)r1.getContents().get(1);
+
+      assertEquals(1, a.eCrossReferences().size());
+      assertSame(b, a.eCrossReferences().get(0));
+
+      assertEquals(1, b.eCrossReferences().size());
+      assertSame(a, b.eCrossReferences().get(0));
+
+      tx.close();
+      session.close();
     }
   }
 }

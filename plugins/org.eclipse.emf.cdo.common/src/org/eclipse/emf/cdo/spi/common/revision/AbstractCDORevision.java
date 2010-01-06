@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.util.FeatureMap.Entry;
@@ -446,7 +447,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
 
   public Object get(EStructuralFeature feature, int index)
   {
-    if (feature.isMany())
+    if (feature.isMany() && index != EStore.NO_INDEX)
     {
       return getList(feature).get(index);
     }

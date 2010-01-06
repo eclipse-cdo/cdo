@@ -94,6 +94,24 @@ public interface model4Factory extends EFactory
   MultiNonContainedElement createMultiNonContainedElement();
 
   /**
+   * Returns a new object of class '<em>Ref Multi Non Contained Unsettable</em>'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return a new object of class '<em>Ref Multi Non Contained Unsettable</em>'.
+   * @generated
+   */
+  RefMultiNonContainedUnsettable createRefMultiNonContainedUnsettable();
+
+  /**
+   * Returns a new object of class '<em>Multi Non Contained Unsettable Element</em>'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return a new object of class '<em>Multi Non Contained Unsettable Element</em>'.
+   * @generated
+   */
+  MultiNonContainedUnsettableElement createMultiNonContainedUnsettableElement();
+
+  /**
    * Returns a new object of class '<em>Ref Single Contained NPL</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return a new object of class '<em>Ref Single Contained NPL</em>'.

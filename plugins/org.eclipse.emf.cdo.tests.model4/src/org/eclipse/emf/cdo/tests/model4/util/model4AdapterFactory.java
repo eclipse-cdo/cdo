@@ -32,10 +32,12 @@ import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainer;
 import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainerNPL;
 import org.eclipse.emf.cdo.tests.model4.MultiContainedElement;
 import org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement;
 import org.eclipse.emf.cdo.tests.model4.RefMultiContained;
 import org.eclipse.emf.cdo.tests.model4.RefMultiContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.RefMultiNonContained;
 import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable;
 import org.eclipse.emf.cdo.tests.model4.RefSingleContained;
 import org.eclipse.emf.cdo.tests.model4.RefSingleContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.RefSingleNonContained;
@@ -169,6 +171,18 @@ public class model4AdapterFactory extends AdapterFactoryImpl
     public Adapter caseMultiNonContainedElement(MultiNonContainedElement object)
     {
       return createMultiNonContainedElementAdapter();
+    }
+
+    @Override
+    public Adapter caseRefMultiNonContainedUnsettable(RefMultiNonContainedUnsettable object)
+    {
+      return createRefMultiNonContainedUnsettableAdapter();
+    }
+
+    @Override
+    public Adapter caseMultiNonContainedUnsettableElement(MultiNonContainedUnsettableElement object)
+    {
+      return createMultiNonContainedUnsettableElementAdapter();
     }
 
     @Override
@@ -542,6 +556,37 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createMultiNonContainedElementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '
+   * {@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable <em>Ref Multi Non Contained Unsettable</em>}
+   * '. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
+   * to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable
+   * @generated
+   */
+  public Adapter createRefMultiNonContainedUnsettableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '
+   * {@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement
+   * <em>Multi Non Contained Unsettable Element</em>}'. <!-- begin-user-doc --> This default implementation returns null
+   * so that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement
+   * @generated
+   */
+  public Adapter createMultiNonContainedUnsettableElementAdapter()
   {
     return null;
   }

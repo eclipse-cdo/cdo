@@ -39,6 +39,15 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//RefMultiNonContained"
         eOpposite="#//RefMultiNonContained/elements"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RefMultiNonContainedUnsettable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//MultiNonContainedUnsettableElement" unsettable="true" eOpposite="#//MultiNonContainedUnsettableElement/parent"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MultiNonContainedUnsettableElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//RefMultiNonContainedUnsettable"
+        unsettable="true" eOpposite="#//RefMultiNonContainedUnsettable/elements"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RefSingleContainedNPL">
     <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="#//ContainedElementNoOpposite"
         containment="true"/>

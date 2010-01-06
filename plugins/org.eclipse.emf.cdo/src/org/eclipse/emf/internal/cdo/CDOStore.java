@@ -171,7 +171,7 @@ public final class CDOStore implements EStore
     view.getFeatureAnalyzer().preTraverseFeature(cdoObject, feature, index);
     InternalCDORevision revision = getRevisionForReading(cdoObject);
 
-    Object value = revision.getValue(feature, index);
+    Object value = revision.get(feature, index);
     value = convertToEMF(eObject, revision, feature, index, value);
 
     view.getFeatureAnalyzer().postTraverseFeature(cdoObject, feature, index, value);
@@ -193,7 +193,7 @@ public final class CDOStore implements EStore
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
 
-    Object value = revision.getValue(feature, NO_INDEX);
+    Object value = revision.get(feature, NO_INDEX);
     return value != null;
   }
 
@@ -345,12 +345,12 @@ public final class CDOStore implements EStore
     // TODO Clarify feature maps
     if (feature instanceof EReference)
     {
-      Object oldValue = revision.getValue(feature, index);
+      Object oldValue = revision.get(feature, index);
       oldValue = resolveProxy(revision, feature, index, oldValue);
       value = cdoObject.cdoView().convertObjectToID(value, true);
     }
 
-    Object oldValue = revision.setValue(feature, index, value);
+    Object oldValue = revision.set(feature, index, value);
     oldValue = convertToEMF(eObject, revision, feature, index, oldValue);
     return oldValue;
   }

@@ -311,16 +311,6 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     li.getRevision().unset(feature);
   }
 
-  public Object getValue(EStructuralFeature feature, int index)
-  {
-    return li.getRevision().getValue(feature, index);
-  }
-
-  public Object setValue(EStructuralFeature feature, int index, Object value)
-  {
-    return li.getRevision().setValue(feature, index, value);
-  }
-
   public int hashCode(EStructuralFeature feature)
   {
     return li.getRevision().hashCode(feature);

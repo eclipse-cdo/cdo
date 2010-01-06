@@ -601,32 +601,6 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     return getList(feature, 0);
   }
 
-  /**
-   * @since 3.0
-   */
-  public Object getValue(EStructuralFeature feature, int index)
-  {
-    if (feature.isMany())
-    {
-      return getList(feature).get(index);
-    }
-
-    return getValue(feature);
-  }
-
-  /**
-   * @since 3.0
-   */
-  public Object setValue(EStructuralFeature feature, int index, Object value)
-  {
-    if (feature.isMany())
-    {
-      return getList(feature).set(index, value);
-    }
-
-    return setValue(feature, value);
-  }
-
   public CDOList getList(EStructuralFeature feature, int size)
   {
     int featureIndex = classInfo.getFeatureIndex(feature);

@@ -74,16 +74,6 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
 
   public Object setValue(EStructuralFeature feature, Object value);
 
-  /**
-   * @since 3.0
-   */
-  public Object getValue(EStructuralFeature feature, int index);
-
-  /**
-   * @since 3.0
-   */
-  public Object setValue(EStructuralFeature feature, int index, Object value);
-
   public void setList(EStructuralFeature feature, InternalCDOList list);
 
   public CDOList getList(EStructuralFeature feature);

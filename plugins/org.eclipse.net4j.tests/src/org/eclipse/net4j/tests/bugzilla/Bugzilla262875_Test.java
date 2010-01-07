@@ -39,8 +39,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class Bugzilla262875_Test extends AbstractOMTest
 {
-  private static final long EXCEPTION_WAIT_TIMEOUT = 10000;
-
   private IManagedContainer container;
 
   private IConnector connector;
@@ -76,7 +74,11 @@ public class Bugzilla262875_Test extends AbstractOMTest
       public void handleError(Throwable t)
       {
         t.printStackTrace();
-        failed.set(t instanceof BufferUnderflowException);
+        if (t instanceof BufferUnderflowException)
+        {
+          failed.set(true);
+        }
+
         latch.countDown();
       }
     });
@@ -86,10 +88,10 @@ public class Bugzilla262875_Test extends AbstractOMTest
       TestProtocol protocol = new TestProtocol();
       protocol.open(connector);
 
-      new TestProtocol.Request(protocol, Net4jUtil.DEFAULT_BUFFER_CAPACITY - 10).send();
-      // TestProtocol.Request request = new TestProtocol.Request(protocol, Net4jUtil.DEFAULT_BUFFER_CAPACITY);
+      short bufferCapacity = protocol.getBufferProvider().getBufferCapacity();
+      new TestProtocol.Request(protocol, bufferCapacity - 10).send();
 
-      latch.await(EXCEPTION_WAIT_TIMEOUT, TimeUnit.MILLISECONDS);
+      latch.await(DEFAULT_TIMEOUT_EXPECTED, TimeUnit.MILLISECONDS);
       assertEquals(false, failed.get());
     }
     finally
@@ -105,7 +107,7 @@ public class Bugzilla262875_Test extends AbstractOMTest
   {
     private static final String NAME = "TEST_PROTOCOL";
 
-    private static final short TEST_PROTOCOL_SIGNALID = 10;
+    private static final short SIGNAL_ID = 10;
 
     public TestProtocol()
     {
@@ -117,7 +119,7 @@ public class Bugzilla262875_Test extends AbstractOMTest
     {
       switch (signalID)
       {
-      case TEST_PROTOCOL_SIGNALID:
+      case SIGNAL_ID:
         return new Indication(this);
       }
 
@@ -133,7 +135,7 @@ public class Bugzilla262875_Test extends AbstractOMTest
 
       public Request(SignalProtocol<?> protocol, int requestNumOfBytes)
       {
-        super(protocol, TEST_PROTOCOL_SIGNALID);
+        super(protocol, SIGNAL_ID);
         this.requestNumOfBytes = requestNumOfBytes;
       }
 
@@ -161,7 +163,7 @@ public class Bugzilla262875_Test extends AbstractOMTest
     {
       public Indication(SignalProtocol<?> protocol)
       {
-        super(protocol, TEST_PROTOCOL_SIGNALID);
+        super(protocol, SIGNAL_ID);
       }
 
       @Override

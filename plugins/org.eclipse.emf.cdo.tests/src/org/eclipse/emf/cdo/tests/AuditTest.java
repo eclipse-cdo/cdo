@@ -319,6 +319,8 @@ public class AuditTest extends AbstractCDOTest
 
   public void testConsistentHistoryForIsMany() throws Exception
   {
+    skipConfig(MEM);
+
     ArrayList<List<Integer>> history = new ArrayList<List<Integer>>();
     ArrayList<Long> timestamps = new ArrayList<Long>();
 

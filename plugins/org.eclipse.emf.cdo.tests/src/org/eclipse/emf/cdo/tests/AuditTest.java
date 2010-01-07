@@ -14,16 +14,22 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
+import org.eclipse.emf.cdo.tests.model5.Model5Factory;
+import org.eclipse.emf.cdo.tests.model5.Model5Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOAudit;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.signal.RemoteException;
 
 import org.eclipse.emf.common.util.URI;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -309,6 +315,115 @@ public class AuditTest extends AbstractCDOTest
     assertInvalid(auditCompany);
     assertEquals(5, auditResource.getContents().size());
     session.close();
+  }
+
+  public void testConsistentHistoryForIsMany() throws Exception
+  {
+    ArrayList<List<Integer>> history = new ArrayList<List<Integer>>();
+    ArrayList<Long> timestamps = new ArrayList<Long>();
+
+    {
+      CDOSession session = openSession(Model5Package.eINSTANCE);
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/res1");
+
+      GenListOfInt persistentList = Model5Factory.eINSTANCE.createGenListOfInt();
+      resource.getContents().add(persistentList);
+
+      transaction.commit();
+      timestamps.add(transaction.getLastCommitTime());
+      history.add(new ArrayList<Integer>(persistentList.getElements()));
+
+      persistentList.getElements().add(1);
+      persistentList.getElements().add(2);
+      persistentList.getElements().add(3);
+
+      transaction.commit();
+      timestamps.add(transaction.getLastCommitTime());
+      history.add(new ArrayList<Integer>(persistentList.getElements()));
+
+      persistentList.getElements().add(1, 4);
+
+      transaction.commit();
+      timestamps.add(transaction.getLastCommitTime());
+      history.add(new ArrayList<Integer>(persistentList.getElements()));
+
+      persistentList.getElements().add(0, 5);
+
+      transaction.commit();
+      timestamps.add(transaction.getLastCommitTime());
+      history.add(new ArrayList<Integer>(persistentList.getElements()));
+
+      persistentList.getElements().move(1, 3);
+
+      transaction.commit();
+      timestamps.add(transaction.getLastCommitTime());
+      history.add(new ArrayList<Integer>(persistentList.getElements()));
+
+      persistentList.getElements().move(4, 2);
+      persistentList.getElements().move(1, 3);
+
+      transaction.commit();
+      timestamps.add(transaction.getLastCommitTime());
+      history.add(new ArrayList<Integer>(persistentList.getElements()));
+
+      persistentList.getElements().remove(2);
+
+      transaction.commit();
+      timestamps.add(transaction.getLastCommitTime());
+      history.add(new ArrayList<Integer>(persistentList.getElements()));
+
+      persistentList.getElements().add(1, 2);
+      persistentList.getElements().remove(2);
+
+      transaction.commit();
+      timestamps.add(transaction.getLastCommitTime());
+      history.add(new ArrayList<Integer>(persistentList.getElements()));
+
+      persistentList.getElements().clear();
+      persistentList.getElements().add(6);
+      persistentList.getElements().add(7);
+      persistentList.getElements().add(8);
+
+      transaction.commit();
+      timestamps.add(transaction.getLastCommitTime());
+      history.add(new ArrayList<Integer>(persistentList.getElements()));
+
+      resource.getContents().clear();
+
+      transaction.commit();
+      transaction.close();
+      session.close();
+      clearCache(getRepository().getRevisionManager());
+    }
+
+    {
+      CDOSession session = openSession(Model5Package.eINSTANCE);
+
+      for (int i = 0; i < timestamps.size(); i++)
+      {
+        CDOAudit audit = session.openAudit(timestamps.get(i));
+        CDOResource res = audit.getResource("/res1");
+        GenListOfInt persistentList = (GenListOfInt)res.getContents().get(0);
+
+        assertEquals(joinList(history.get(i)), joinList(persistentList.getElements()));
+        audit.close();
+      }
+
+      CDOView view = session.openView();
+      CDOResource res = view.getResource("/res1");
+      assertTrue(res.getContents().isEmpty());
+    }
+  }
+
+  private String joinList(List<Integer> list)
+  {
+    String result = "";
+    for (Integer i : list)
+    {
+      result += " " + i;
+    }
+    return result;
   }
 
   public void testCanCreateAuditAtRepoCreationTime() throws Exception

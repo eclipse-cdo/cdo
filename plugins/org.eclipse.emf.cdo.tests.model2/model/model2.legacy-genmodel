@@ -5,7 +5,7 @@
     modelDirectory="/org.eclipse.emf.cdo.tests.model2/src" editDirectory="" editorDirectory=""
     modelPluginID="org.eclipse.emf.cdo.tests.model2" modelName="Model2" updateClasspath="false"
     codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.cdo"
-    complianceLevel="5.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.cdo.tests.model1/model/model1.legacy.genmodel#//model1">
+    complianceLevel="5.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.cdo.tests.model1/model/model1.legacy-genmodel#//model1">
   <foreignModel>model2.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="Model2" basePackage="org.eclipse.emf.cdo.tests.legacy" disposableProviderFactory="true"

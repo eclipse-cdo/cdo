@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: MangoFactoryImpl.java,v 1.6 2009-12-27 15:51:10 mfluegge Exp $
+ * $Id: MangoFactoryImpl.java,v 1.7 2010-01-08 19:43:12 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.mango.impl;
 
@@ -60,7 +60,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
     }
 
     MangoFactoryImpl factory = new MangoFactoryImpl();
-   // EPackage.Registry.INSTANCE.put(factory.getEPackage().getNsURI(), factory);
+    // EPackage.Registry.INSTANCE.put(factory.getEPackage().getNsURI(), factory);
     EPackage.Registry.INSTANCE.put("http://www.eclipse.org/emf/CDO/tests/mango", factory);
     return factory;
   }

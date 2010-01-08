@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,8 +56,8 @@ public class TransactionHandlerTest extends AbstractCDOTest
     order.getOrderDetails().add(orderDetail);
 
     resource1.getContents().add(order);
-    assertEquals(true, handler.getListOfAddingObject().contains(order));
-    assertEquals(true, handler.getListOfAddingObject().contains(orderDetail));
+    assertEquals(true, handler.getListOfAddingObject().contains(CDOUtil.getCDOObject(order)));
+    assertEquals(true, handler.getListOfAddingObject().contains(CDOUtil.getCDOObject(orderDetail)));
 
     transaction.close();
     session.close();
@@ -142,12 +143,12 @@ public class TransactionHandlerTest extends AbstractCDOTest
     order.getOrderDetails().add(orderDetail);
 
     resource1.getContents().add(order);
-    assertEquals(true, handler.getListOfAddingObject().contains(order));
-    assertEquals(true, handler.getListOfAddingObject().contains(orderDetail));
+    assertEquals(true, handler.getListOfAddingObject().contains(CDOUtil.getCDOObject(order)));
+    assertEquals(true, handler.getListOfAddingObject().contains(CDOUtil.getCDOObject(orderDetail)));
 
     msg("Remove Object");
     order.getOrderDetails().remove(orderDetail);
-    assertEquals(true, handler.getListOfDetachingObject().contains(orderDetail));
+    assertEquals(true, handler.getListOfDetachingObject().contains(CDOUtil.getCDOObject(orderDetail)));
 
     resource1.delete(null);
     assertEquals(true, handler.getListOfDetachingObject().contains(resource1));
@@ -205,13 +206,13 @@ public class TransactionHandlerTest extends AbstractCDOTest
     order.getOrderDetails().add(orderDetail);
 
     resource1.getContents().add(order);
-    assertEquals(true, handler.getListOfAddingObject().contains(order));
-    assertEquals(true, handler.getListOfAddingObject().contains(orderDetail));
+    assertEquals(true, handler.getListOfAddingObject().contains(CDOUtil.getCDOObject(order)));
+    assertEquals(true, handler.getListOfAddingObject().contains(CDOUtil.getCDOObject(orderDetail)));
 
     msg("Modifying Object");
     assertEquals(false, handler.getListOfModifyinObject().contains(orderDetail));
     orderDetail.setPrice(1.0f);
-    assertEquals(true, handler.getListOfModifyinObject().contains(orderDetail));
+    assertEquals(true, handler.getListOfModifyinObject().contains(CDOUtil.getCDOObject(orderDetail)));
     transaction.close();
     session.close();
   }

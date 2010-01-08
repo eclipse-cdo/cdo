@@ -518,8 +518,9 @@ public class InvalidationTest extends AbstractCDOTest
 
     msg("Opening transactionB");
     CDOTransaction transactionB = sessionB.openTransaction();
-    Category categoryB = (Category)transactionB.getObject(cdoidA, true);
+    Category categoryB;
 
+    categoryB = (Category)CDOUtil.getEObject(transactionB.getObject(cdoidA, true));
     msg("Changing name");
     categoryB.setName("CHANGED NAME");
 
@@ -532,7 +533,7 @@ public class InvalidationTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        Category categoryA = (Category)transactionA.getObject(cdoidA, true);
+        Category categoryA = (Category)CDOUtil.getEObject(transactionA.getObject(cdoidA, true));
         String name = categoryA.getName();
         return "CHANGED NAME".equals(name);
       }

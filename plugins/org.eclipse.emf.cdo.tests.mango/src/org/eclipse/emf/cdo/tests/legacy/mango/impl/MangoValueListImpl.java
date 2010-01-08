@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: MangoValueListImpl.java,v 1.1 2009-12-27 15:51:09 mfluegge Exp $
+ * $Id: MangoValueListImpl.java,v 1.2 2010-01-08 19:43:12 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.mango.impl;
 
@@ -30,11 +30,11 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.MangoValueListImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.MangoValueListImpl#getValues <em>Values</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.MangoValueListImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.MangoValueListImpl#getValues <em>Values</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class MangoValueListImpl extends EObjectImpl implements MangoValueList
@@ -50,8 +50,8 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -59,9 +59,9 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getValues() <em>Values</em>}' reference list.
-   * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getValues() <em>Values</em>}' reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getValues()
    * @generated
    * @ordered
@@ -70,6 +70,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected MangoValueListImpl()
@@ -79,6 +80,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -89,6 +91,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -98,6 +101,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -110,6 +114,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EList<MangoValue> getValues()
@@ -123,6 +128,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -140,6 +146,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -161,6 +168,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -180,6 +188,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -197,6 +206,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

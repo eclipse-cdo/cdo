@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: ProductToOrderImpl.java,v 1.1 2009-12-27 15:50:56 mfluegge Exp $
+ * $Id: ProductToOrderImpl.java,v 1.2 2010-01-08 19:43:17 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model1.impl;
 
@@ -26,32 +26,31 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Product To Order</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Product To Order</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.ProductToOrderImpl#getTypedKey <em>Key</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.ProductToOrderImpl#getTypedValue <em>Value</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.ProductToOrderImpl#getTypedKey <em>Key</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.ProductToOrderImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<Product1, SalesOrder>
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * The cached value of the '{@link #getTypedKey() <em>Key</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getTypedKey() <em>Key</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -59,9 +58,9 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   protected Product1 key;
 
   /**
-   * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @see #getTypedValue()
    * @generated
    * @ordered
@@ -69,8 +68,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   protected SalesOrder value;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ProductToOrderImpl()
@@ -79,8 +78,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -90,8 +89,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Product1 getTypedKey()
@@ -110,8 +109,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Product1 basicGetTypedKey()
@@ -120,8 +119,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setTypedKey(Product1 newKey)
@@ -133,8 +132,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public SalesOrder getTypedValue()
@@ -154,8 +153,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public SalesOrder basicGetTypedValue()
@@ -164,8 +163,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setTypedValue(SalesOrder newValue)
@@ -177,8 +176,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -199,8 +198,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -219,8 +218,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -239,8 +238,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -257,15 +256,15 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected int hash = -1;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getHash()
@@ -279,8 +278,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setHash(int hash)
@@ -289,8 +288,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Product1 getKey()
@@ -299,8 +298,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setKey(Product1 key)
@@ -309,8 +308,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public SalesOrder getValue()
@@ -319,8 +318,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public SalesOrder setValue(SalesOrder value)
@@ -331,8 +330,8 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -342,4 +341,4 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
     return container == null ? null : (EMap<Product1, SalesOrder>)container.eGet(eContainmentFeature());
   }
 
-} //ProductToOrderImpl
+} // ProductToOrderImpl

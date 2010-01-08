@@ -8,12 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: SubpackagePackage.java,v 1.5 2009-08-22 09:33:57 estepper Exp $
+ * $Id: SubpackagePackage.java,v 1.6 2010-01-08 19:43:42 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.subpackage;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 /**
@@ -30,7 +29,7 @@ import org.eclipse.emf.ecore.EReference;
  * @model kind="package"
  * @generated
  */
-public interface SubpackagePackage extends EPackage
+public interface SubpackagePackage extends org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage
 {
   /**
    * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -42,9 +41,9 @@ public interface SubpackagePackage extends EPackage
   /**
    * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
-  String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/subpackage/1.0.0";
+  String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/legacy/subpackage/1.0.0";
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->

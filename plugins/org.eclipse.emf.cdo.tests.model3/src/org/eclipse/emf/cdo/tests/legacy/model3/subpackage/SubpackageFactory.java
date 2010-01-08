@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: SubpackageFactory.java,v 1.5 2009-08-22 09:33:57 estepper Exp $
+ * $Id: SubpackageFactory.java,v 1.6 2010-01-08 19:43:42 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.subpackage;
 
-import org.eclipse.emf.ecore.EFactory;
+import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 
 /**
  * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackagePackage
  * @generated
  */
-public interface SubpackageFactory extends EFactory
+public interface SubpackageFactory extends org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory
 {
   /**
    * The singleton instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->

@@ -159,7 +159,7 @@ public class ComplexTest extends AbstractCDOTest
     purgeCaches();
     assertEquals(1, resource1.getContents().size());
 
-    container = (RefSingleContained)resource1.getContents().get(0);
+    container = (RefSingleContained)CDOUtil.getEObject(resource1.getContents().get(0));
     element0 = container.getElement();
 
     assertEquals(container, element0.getParent());
@@ -188,7 +188,7 @@ public class ComplexTest extends AbstractCDOTest
     purgeCaches();
     assertEquals(3, resource1.getContents().size());
 
-    container = (RefMultiNonContained)resource1.getContents().get(0);
+    container = (RefMultiNonContained)CDOUtil.getEObject(resource1.getContents().get(0));
     element0 = (MultiNonContainedElement)resource1.getContents().get(1);
     element1 = (MultiNonContainedElement)resource1.getContents().get(2);
 
@@ -485,7 +485,7 @@ public class ComplexTest extends AbstractCDOTest
     purgeCaches();
     assertEquals(2, resource1.getContents().size());
 
-    container = (ImplSingleRefNonContainer)resource1.getContents().get(0);
+    container = (ImplSingleRefNonContainer)CDOUtil.getEObject(resource1.getContents().get(0));
     ISingleRefNonContainedElement element0_ = (ISingleRefNonContainedElement)resource1.getContents().get(1);
 
     assertEquals(element0_, container.getElement());
@@ -511,7 +511,7 @@ public class ComplexTest extends AbstractCDOTest
     purgeCaches();
     assertEquals(1, resource1.getContents().size());
 
-    container = (ImplSingleRefContainer)resource1.getContents().get(0);
+    container = (ImplSingleRefContainer)CDOUtil.getEObject(resource1.getContents().get(0));
     ISingleRefContainedElement element0_ = container.getElement();
 
     assertEquals(container, element0_.getParent());
@@ -723,7 +723,7 @@ public class ComplexTest extends AbstractCDOTest
     assertEquals(1, resource1.getContents().size());
     assertEquals(1, resource2.getContents().size());
 
-    container = (RefSingleNonContained)resource1.getContents().get(0);
+    container = (RefSingleNonContained)CDOUtil.getEObject(resource1.getContents().get(0));
     element0 = (SingleNonContainedElement)resource2.getContents().get(0);
 
     assertEquals(element0, container.getElement());
@@ -909,7 +909,7 @@ public class ComplexTest extends AbstractCDOTest
     assertEquals(1, resource1.getContents().size());
     assertEquals(1, resource2.getContents().size());
 
-    container = (ImplSingleRefNonContainer)resource1.getContents().get(0);
+    container = (ImplSingleRefNonContainer)CDOUtil.getEObject(resource1.getContents().get(0));
     ISingleRefNonContainedElement element0_ = (ISingleRefNonContainedElement)resource2.getContents().get(0);
 
     assertEquals(element0_, container.getElement());

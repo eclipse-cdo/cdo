@@ -29,14 +29,14 @@ public class model4interfacesFactoryImpl extends EFactoryImpl implements model4i
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   public static model4interfacesFactory init()
   {
     try
     {
       model4interfacesFactory themodel4interfacesFactory = (model4interfacesFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/tests/model4interfaces/1.0.0");
+          .getEFactory("http://www.eclipse.org/emf/CDO/tests/legacy/model4interfaces/1.0.0");
       if (themodel4interfacesFactory != null)
       {
         return themodel4interfacesFactory;

@@ -8,57 +8,59 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: model4AdapterFactory.java,v 1.5 2009-08-22 09:34:59 estepper Exp $
+ * $Id: model4AdapterFactory.java,v 1.6 2010-01-08 19:43:53 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.util;
 
-import org.eclipse.emf.cdo.tests.legacy.model4.ContainedElementNoOpposite;
-import org.eclipse.emf.cdo.tests.legacy.model4.GenRefMapNonContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNUNonContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNonContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleNonContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplContainedElementNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainer;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainerNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainer;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainerNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainer;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainerNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainer;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainerNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.MultiContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContainedNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.RefSingleContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.RefSingleContainedNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContainedNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.SingleContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4.SingleNonContainedElement;
 import org.eclipse.emf.cdo.tests.legacy.model4.model4Package;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IContainedElementNoParentLink;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefContainer;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefContainerNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefNonContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefNonContainer;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefNonContainerNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.INamedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefContainer;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefContainerNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainer;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainerNPL;
+import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
+import org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefMultiContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefMultiNonContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefSingleContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
+import org.eclipse.emf.cdo.tests.model4.ImplContainedElementNPL;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainedElement;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainer;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainerNPL;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainer;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainerNPL;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainedElement;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainer;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainerNPL;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainer;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainerNPL;
+import org.eclipse.emf.cdo.tests.model4.MultiContainedElement;
+import org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement;
+import org.eclipse.emf.cdo.tests.model4.RefMultiContained;
+import org.eclipse.emf.cdo.tests.model4.RefMultiContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.RefMultiNonContained;
+import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable;
+import org.eclipse.emf.cdo.tests.model4.RefSingleContained;
+import org.eclipse.emf.cdo.tests.model4.RefSingleContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.RefSingleNonContained;
+import org.eclipse.emf.cdo.tests.model4.RefSingleNonContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.SingleContainedElement;
+import org.eclipse.emf.cdo.tests.model4.SingleNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink;
+import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement;
+import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer;
+import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainerNPL;
+import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainer;
+import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainerNPL;
+import org.eclipse.emf.cdo.tests.model4interfaces.INamedElement;
+import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement;
+import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainer;
+import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainerNPL;
+import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer;
+import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainerNPL;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -171,6 +173,18 @@ public class model4AdapterFactory extends AdapterFactoryImpl
     public Adapter caseMultiNonContainedElement(MultiNonContainedElement object)
     {
       return createMultiNonContainedElementAdapter();
+    }
+
+    @Override
+    public Adapter caseRefMultiNonContainedUnsettable(RefMultiNonContainedUnsettable object)
+    {
+      return createRefMultiNonContainedUnsettableAdapter();
+    }
+
+    @Override
+    public Adapter caseMultiNonContainedUnsettableElement(MultiNonContainedUnsettableElement object)
+    {
+      return createMultiNonContainedUnsettableElementAdapter();
     }
 
     @Override
@@ -544,6 +558,38 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createMultiNonContainedElementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedUnsettable
+   * <em>Ref Multi Non Contained Unsettable</em>}'. <!-- begin-user-doc --> This default implementation returns null so
+   * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedUnsettable
+   * @generated
+   */
+  public Adapter createRefMultiNonContainedUnsettableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedUnsettableElement
+   * <em>Multi Non Contained Unsettable Element</em>}'. <!-- begin-user-doc --> This default implementation returns null
+   * so that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedUnsettableElement
+   * @generated
+   */
+  public Adapter createMultiNonContainedUnsettableElementAdapter()
   {
     return null;
   }

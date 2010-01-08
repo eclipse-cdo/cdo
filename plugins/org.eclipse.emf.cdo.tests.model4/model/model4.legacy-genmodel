@@ -6,7 +6,7 @@
     modelPluginID="org.eclipse.emf.cdo.tests.model4" modelName="Model4" updateClasspath="false"
     codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.cdo"
     complianceLevel="5.0" copyrightFields="false" editPluginID="org.eclipse.emf.cdo.tests.model4.edit"
-    usedGenPackages="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.legacy.genmodel#//model4interfaces">
+    usedGenPackages="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.legacy-genmodel#//model4interfaces">
   <foreignModel>model4.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="model4" basePackage="org.eclipse.emf.cdo.tests.legacy" disposableProviderFactory="true"

@@ -8,11 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: Model3Factory.java,v 1.5 2009-08-22 09:33:56 estepper Exp $
+ * $Id: Model3Factory.java,v 1.6 2010-01-08 19:43:42 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3;
 
-import org.eclipse.emf.ecore.EFactory;
+import org.eclipse.emf.cdo.tests.model3.Class1;
+import org.eclipse.emf.cdo.tests.model3.MetaRef;
 
 /**
  * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
@@ -21,7 +22,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.cdo.tests.legacy.model3.Model3Package
  * @generated
  */
-public interface Model3Factory extends EFactory
+public interface Model3Factory extends org.eclipse.emf.cdo.tests.model3.Model3Factory
 {
   /**
    * The singleton instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->

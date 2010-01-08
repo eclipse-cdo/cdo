@@ -8,11 +8,44 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: model4Factory.java,v 1.5 2009-08-22 09:34:58 estepper Exp $
+ * $Id: model4Factory.java,v 1.6 2010-01-08 19:43:52 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4;
 
-import org.eclipse.emf.ecore.EFactory;
+import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
+import org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefMultiContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefMultiNonContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefSingleContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
+import org.eclipse.emf.cdo.tests.model4.ImplContainedElementNPL;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainedElement;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainer;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainerNPL;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainer;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainerNPL;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainedElement;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainer;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainerNPL;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainer;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainerNPL;
+import org.eclipse.emf.cdo.tests.model4.MultiContainedElement;
+import org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement;
+import org.eclipse.emf.cdo.tests.model4.RefMultiContained;
+import org.eclipse.emf.cdo.tests.model4.RefMultiContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.RefMultiNonContained;
+import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable;
+import org.eclipse.emf.cdo.tests.model4.RefSingleContained;
+import org.eclipse.emf.cdo.tests.model4.RefSingleContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.RefSingleNonContained;
+import org.eclipse.emf.cdo.tests.model4.RefSingleNonContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.SingleContainedElement;
+import org.eclipse.emf.cdo.tests.model4.SingleNonContainedElement;
 
 /**
  * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
@@ -21,7 +54,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.cdo.tests.legacy.model4.model4Package
  * @generated
  */
-public interface model4Factory extends EFactory
+public interface model4Factory extends org.eclipse.emf.cdo.tests.model4.model4Factory
 {
   /**
    * The singleton instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -94,6 +127,24 @@ public interface model4Factory extends EFactory
    * @generated
    */
   MultiNonContainedElement createMultiNonContainedElement();
+
+  /**
+   * Returns a new object of class '<em>Ref Multi Non Contained Unsettable</em>'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return a new object of class '<em>Ref Multi Non Contained Unsettable</em>'.
+   * @generated
+   */
+  RefMultiNonContainedUnsettable createRefMultiNonContainedUnsettable();
+
+  /**
+   * Returns a new object of class '<em>Multi Non Contained Unsettable Element</em>'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return a new object of class '<em>Multi Non Contained Unsettable Element</em>'.
+   * @generated
+   */
+  MultiNonContainedUnsettableElement createMultiNonContainedUnsettableElement();
 
   /**
    * Returns a new object of class '<em>Ref Single Contained NPL</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->

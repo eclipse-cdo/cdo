@@ -8,14 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: Model1Package.java,v 1.6 2009-12-27 15:50:51 mfluegge Exp $
+ * $Id: Model1Package.java,v 1.7 2010-01-08 19:43:18 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model1;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 /**
@@ -32,7 +31,7 @@ import org.eclipse.emf.ecore.EReference;
  * @model kind="package"
  * @generated
  */
-public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model1.Model1Package
+public interface Model1Package extends org.eclipse.emf.cdo.tests.model1.Model1Package
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -51,9 +50,9 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
   /**
    * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
-  String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/model1/1.0.0";
+  String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/legacy/model1/1.0.0";
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->

@@ -8,14 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: ImplSingleRefNonContainerImpl.java,v 1.5 2009-08-22 09:34:58 estepper Exp $
+ * $Id: ImplSingleRefNonContainerImpl.java,v 1.6 2010-01-08 19:43:50 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainer;
 import org.eclipse.emf.cdo.tests.legacy.model4.model4Package;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainedElement;
 import org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesPackage;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainer;
+import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;

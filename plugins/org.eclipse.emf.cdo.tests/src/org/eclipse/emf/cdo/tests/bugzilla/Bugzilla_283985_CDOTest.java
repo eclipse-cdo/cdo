@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.tests.model4.model4Factory;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -221,8 +222,8 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     int i = 0;
     for (OrderDetail detail : details)
     {
-      cdoIDsBefore[i] = ((CDOObject)detail).cdoID();
-      versionsBefore[i] = ((CDOObject)detail).cdoRevision().getVersion();
+      cdoIDsBefore[i] = CDOUtil.getCDOObject(detail).cdoID();
+      versionsBefore[i] = CDOUtil.getCDOObject(detail).cdoRevision().getVersion();
       i++;
     }
 
@@ -241,11 +242,11 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     i = 0;
     for (OrderDetail detail : details)
     {
-      CDOID idAfter = ((CDOObject)detail).cdoID();
+      CDOID idAfter = CDOUtil.getCDOObject(detail).cdoID();
       CDOID idBefore = cdoIDsBefore[i];
       assertEquals(idBefore, idAfter);
 
-      int versionAfter = ((CDOObject)detail).cdoRevision().getVersion();
+      int versionAfter = CDOUtil.getCDOObject(detail).cdoRevision().getVersion();
       int versionBefore = versionsBefore[i];
       assertEquals(versionBefore + 1, versionAfter);
 
@@ -259,11 +260,11 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     i = 0;
     for (OrderDetail detail : details)
     {
-      CDOID idAfter = ((CDOObject)detail).cdoID();
+      CDOID idAfter = CDOUtil.getCDOObject(detail).cdoID();
       CDOID idBefore = cdoIDsBefore[i];
       assertEquals(idBefore, idAfter);
 
-      int versionAfter = ((CDOObject)detail).cdoRevision().getVersion();
+      int versionAfter = CDOUtil.getCDOObject(detail).cdoRevision().getVersion();
       int versionBefore = versionsBefore[i];
       assertEquals(versionBefore + 1, versionAfter);
 
@@ -362,7 +363,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     tx.commit();
 
     order2.getOrderDetails().remove(detail1);
-    assertTrue(((CDOObject)detail1).cdoState() == CDOState.TRANSIENT);
+    assertTrue((CDOUtil.getCDOObject(detail1)).cdoState() == CDOState.TRANSIENT);
 
     boolean contains;
 
@@ -455,7 +456,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     tx.commit();
     assertSame(order1, detail1.eContainer());
 
-    assertSame(CDOState.CLEAN, ((CDOObject)detail1).cdoState());
+    assertSame(CDOState.CLEAN, CDOUtil.getCDOObject(detail1).cdoState());
 
     // Drag and drop #3
     cmd = DragAndDropCommand.create(domain, order2, location, operations, operation, coll);

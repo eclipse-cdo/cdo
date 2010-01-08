@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -348,7 +349,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     externalResource.getContents().add(customer);
 
     transaction.commit();
-    CDORevisionData data = ((CDOObject)salesOrder).cdoRevision().data();
+    CDORevisionData data = CDOUtil.getCDOObject(salesOrder).cdoRevision().data();
     CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
     assertTrue(id.isExternal());
   }
@@ -413,7 +414,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     externalResource.getContents().add(customer);
 
     transaction.commit();
-    CDORevisionData data = ((CDOObject)salesOrder).cdoRevision().data();
+    CDORevisionData data = (CDOUtil.getCDOObject(salesOrder)).cdoRevision().data();
     CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
     assertTrue(id.isExternal());
   }
@@ -444,7 +445,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     company.getCustomers().add(customer);
 
     transaction.commit();
-    CDORevisionData data = ((CDOObject)salesOrder).cdoRevision().data();
+    CDORevisionData data = (CDOUtil.getCDOObject(salesOrder)).cdoRevision().data();
     CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
     assertFalse(id.isExternal());
   }
@@ -475,7 +476,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     externalResource.getContents().add(customer);
 
     transaction.commit();
-    CDORevisionData data = ((CDOObject)salesOrder).cdoRevision().data();
+    CDORevisionData data = CDOUtil.getCDOObject(salesOrder).cdoRevision().data();
     CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
     assertTrue(id.isExternal());
 

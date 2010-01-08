@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: Model1PackageImpl.java,v 1.6 2009-12-27 15:50:56 mfluegge Exp $
+ * $Id: Model1PackageImpl.java,v 1.7 2010-01-08 19:43:17 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model1.impl;
 
@@ -175,7 +175,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
-   * @generated
+   * @generated NOT
    */
   public static Model1Package init()
   {
@@ -185,7 +185,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     }
 
     // Obtain or create and register package
-    Model1PackageImpl theModel1Package = (Model1PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model1PackageImpl ? EPackage.Registry.INSTANCE
+    Model1PackageImpl theModel1Package = (Model1PackageImpl)(EPackage.Registry.INSTANCE.get(Model1Package.eNS_URI) instanceof Model1PackageImpl ? EPackage.Registry.INSTANCE
         .get(eNS_URI)
         : new Model1PackageImpl());
 

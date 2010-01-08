@@ -62,7 +62,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     System.gc();
 
     assertEquals(false, transaction.isObjectRegistered(id));
-    companyA = (Company)transaction.getObject(id);
+    companyA = (Company)CDOUtil.getEObject(transaction.getObject(id));
     assertEquals(0, testAdapter.getNotifications().size());
     companyA.setCity("Ottawa");
     assertEquals(0, testAdapter.getNotifications().size());
@@ -97,7 +97,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     System.gc();
 
     assertEquals(true, transaction.isObjectRegistered(id));
-    companyA = (Company)transaction.getObject(id);
+    companyA = (Company)CDOUtil.getEObject(transaction.getObject(id));
 
     assertEquals(0, testAdapter.getNotifications().size());
     companyA.setCity("Ottawa");
@@ -136,7 +136,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     System.gc();
 
     assertEquals(true, transaction.isObjectRegistered(id));
-    companyA = (Company)transaction.getObject(id);
+    companyA = (Company)CDOUtil.getEObject(transaction.getObject(id));
 
     assertEquals(0, testAdapter.getNotifications().size());
     companyA.setCity("Ottawa");
@@ -176,7 +176,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     System.gc();
 
     assertEquals(true, transaction.isObjectRegistered(id));
-    Company companyB = (Company)transaction.getObject(id);
+    Company companyB = (Company)CDOUtil.getEObject(transaction.getObject(id));
     assertEquals(companyB, weakCompanyA.get());
     companyB.setCity("Ottawa");
     transaction.getResource("/resA").getContents().remove(0);

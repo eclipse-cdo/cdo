@@ -169,58 +169,42 @@ public abstract class ModelConfig extends Config implements IModelConfig
 
     public Model2Factory getModel2Factory()
     {
-      // TODO: implement ModelConfig.Legacy.getModel2Factory()
-      throw new UnsupportedOperationException();
-      // return org.eclipse.emf.cdo.tests.legacy.model2.Model2Factory.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.legacy.model2.Model2Factory.eINSTANCE;
     }
 
     public Model2Package getModel2Package()
     {
-      // TODO: implement ModelConfig.Legacy.getModel2Package()
-      throw new UnsupportedOperationException();
-      // return org.eclipse.emf.cdo.tests.legacy.model2.Model2Package.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.legacy.model2.Model2Package.eINSTANCE;
     }
 
     public Model3Factory getModel3Factory()
     {
-      // TODO: implement ModelConfig.Legacy.getModel3Factory()
-      throw new UnsupportedOperationException();
-      // return org.eclipse.emf.cdo.tests.legacy.model3.Model3Factory.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.legacy.model3.Model3Factory.eINSTANCE;
     }
 
     public Model3Package getModel3Package()
     {
-      // TODO: implement ModelConfig.Legacy.getModel3Package()
-      throw new UnsupportedOperationException();
-      // return org.eclipse.emf.cdo.tests.legacy.model3.Model3Package.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.legacy.model3.Model3Package.eINSTANCE;
     }
 
     public SubpackageFactory getModel3SubPackageFactory()
     {
-      // TODO: implement ModelConfig.Legacy.getModel3SubPackageFactory()
-      throw new UnsupportedOperationException();
-      // return org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackageFactory.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackageFactory.eINSTANCE;
     }
 
     public SubpackagePackage getModel3SubPackagePackage()
     {
-      // TODO: implement ModelConfig.Legacy.getModel3SubPackagePackage()
-      throw new UnsupportedOperationException();
-      // return org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackagePackage.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackagePackage.eINSTANCE;
     }
 
     public model4Factory getModel4Factory()
     {
-      // TODO: implement ModelConfig.Legacy.getModel4Factory()
-      throw new UnsupportedOperationException();
-      // return org.eclipse.emf.cdo.tests.legacy.model4.model4Factory.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.legacy.model4.model4Factory.eINSTANCE;
     }
 
     public model4Package getModel4Package()
     {
-      // TODO: implement ModelConfig.Legacy.getModel4Package()
-      throw new UnsupportedOperationException();
-      // return org.eclipse.emf.cdo.tests.legacy.model4.model4Package.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.legacy.model4.model4Package.eINSTANCE;
     }
 
     public model4interfacesPackage getModel4InterfacesPackage()
@@ -230,16 +214,12 @@ public abstract class ModelConfig extends Config implements IModelConfig
 
     public Model5Factory getModel5Factory()
     {
-      // TODO: implement ModelConfig.Legacy.getModel5Factory()
-      throw new UnsupportedOperationException();
-      // return org.eclipse.emf.cdo.tests.legacy.model5.Model5Factory.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.legacy.model5.Model5Factory.eINSTANCE;
     }
 
     public Model5Package getModel5Package()
     {
-      // TODO: implement ModelConfig.Legacy.getModel5Package()
-      throw new UnsupportedOperationException();
-      // return org.eclipse.emf.cdo.tests.legacy.model5.Model5Package.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.legacy.model5.Model5Package.eINSTANCE;
     }
   }
 }

@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -226,15 +225,15 @@ public class SavePointTest extends AbstractCDOTest
 
     // Test NEW TO TRANSIENT (2 step back)
     assertEquals(true, FSMUtil.isTransient(CDOUtil.getCDOObject(category3)));
-    assertEquals(false, transaction1.getNewObjects().containsKey(((CDOObject)category3).cdoID()));
+    assertEquals(false, transaction1.getNewObjects().containsKey(CDOUtil.getCDOObject(category3).cdoID()));
 
     // Test NEW TO TRANSIENT (1 step back)
     assertEquals(true, FSMUtil.isTransient(CDOUtil.getCDOObject(category4)));
-    assertEquals(false, transaction1.getNewObjects().containsKey(((CDOObject)category4).cdoID()));
+    assertEquals(false, transaction1.getNewObjects().containsKey(CDOUtil.getCDOObject(category4).cdoID()));
 
     // Test NEW TO NEW
     assertEquals(false, FSMUtil.isTransient(CDOUtil.getCDOObject(category2)));
-    assertEquals(true, transaction1.getNewObjects().containsKey(((CDOObject)category2).cdoID()));
+    assertEquals(true, transaction1.getNewObjects().containsKey((CDOUtil.getCDOObject(category2)).cdoID()));
 
     // Test rollback NEW
     assertEquals("CITY1", company1.getCity());

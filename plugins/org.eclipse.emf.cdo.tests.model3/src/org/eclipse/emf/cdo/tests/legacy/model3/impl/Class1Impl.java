@@ -8,14 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: Class1Impl.java,v 1.5 2009-08-22 09:33:57 estepper Exp $
+ * $Id: Class1Impl.java,v 1.6 2010-01-08 19:43:42 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model3.Class1;
 import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
-import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackagePackage;
+import org.eclipse.emf.cdo.tests.model3.Class1;
+import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;

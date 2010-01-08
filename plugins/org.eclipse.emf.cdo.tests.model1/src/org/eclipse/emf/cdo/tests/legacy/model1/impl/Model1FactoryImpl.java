@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: Model1FactoryImpl.java,v 1.6 2009-12-27 15:50:55 mfluegge Exp $
+ * $Id: Model1FactoryImpl.java,v 1.7 2010-01-08 19:43:17 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model1.impl;
 
@@ -53,14 +53,14 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   public static Model1Factory init()
   {
     try
     {
       Model1Factory theModel1Factory = (Model1Factory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/tests/model1/1.0.0");
+          .getEFactory("http://www.eclipse.org/emf/CDO/tests/legacy/model1/1.0.0");
       if (theModel1Factory != null)
       {
         return theModel1Factory;

@@ -8,12 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: GenRefMultiNUNonContainedImpl.java,v 1.2 2009-08-22 09:34:57 estepper Exp $
+ * $Id: GenRefMultiNUNonContainedImpl.java,v 1.3 2010-01-08 19:43:50 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNUNonContained;
 import org.eclipse.emf.cdo.tests.legacy.model4.model4Package;
+import org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;

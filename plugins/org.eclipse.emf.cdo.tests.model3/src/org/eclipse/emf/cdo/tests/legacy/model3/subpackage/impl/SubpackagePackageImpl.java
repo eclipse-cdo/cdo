@@ -8,15 +8,15 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: SubpackagePackageImpl.java,v 1.5 2009-08-22 09:33:57 estepper Exp $
+ * $Id: SubpackagePackageImpl.java,v 1.6 2010-01-08 19:43:43 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl;
 
 import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl;
-import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackageFactory;
 import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackagePackage;
+import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;

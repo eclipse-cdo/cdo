@@ -8,13 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: ImplMultiRefContainerNPLImpl.java,v 1.5 2009-08-22 09:34:57 estepper Exp $
+ * $Id: ImplMultiRefContainerNPLImpl.java,v 1.6 2010-01-08 19:43:49 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainerNPL;
 import org.eclipse.emf.cdo.tests.legacy.model4.model4Package;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IContainedElementNoParentLink;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainerNPL;
+import org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;

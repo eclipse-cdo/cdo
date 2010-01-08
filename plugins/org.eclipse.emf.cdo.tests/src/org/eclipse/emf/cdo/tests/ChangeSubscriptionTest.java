@@ -90,7 +90,8 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Opening view");
     final CDOTransaction transaction2 = session.openTransaction();
 
-    final Category category1B = (Category)transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true);
+    final Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A)
+        .cdoID(), true));
 
     msg("Changing name");
     category1B.setName("CHANGED NAME");
@@ -205,7 +206,8 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     final CDOTransaction transaction2 = session2.openTransaction();
 
-    final Category category1B = (Category)transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true);
+    final Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A)
+        .cdoID(), true));
 
     msg("Changing name");
     category1B.setName("CHANGED NAME");
@@ -300,7 +302,8 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     final CDOTransaction transaction2 = session2.openTransaction();
     transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    final Category category1B = (Category)transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true);
+    final Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A)
+        .cdoID(), true));
 
     msg("Changing name");
     category1B.setName("CHANGED NAME");
@@ -371,8 +374,10 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     final CDOTransaction transaction2 = session2.openTransaction();
 
-    final Category category1B = (Category)transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true);
-    final Company company1B = (Company)transaction2.getObject(CDOUtil.getCDOObject(companyA).cdoID(), true);
+    final Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A)
+        .cdoID(), true));
+    final Company company1B = (Company)CDOUtil.getEObject(transaction2.getObject(
+        CDOUtil.getCDOObject(companyA).cdoID(), true));
 
     msg("Changing name");
     category1B.setName("CHANGED NAME");
@@ -463,7 +468,8 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     final CDOTransaction transaction2 = session2.openTransaction();
 
-    final Company company1B = (Company)transaction2.getObject(CDOUtil.getCDOObject(companyA).cdoID(), true);
+    final Company company1B = (Company)CDOUtil.getEObject(transaction2.getObject(
+        CDOUtil.getCDOObject(companyA).cdoID(), true));
 
     msg("Changing name");
     company1B.setName("TEST1");

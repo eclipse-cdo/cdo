@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EReference;
  * 
  * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesFactory
  * @model kind="package"
- * @generated NOT
+ * @generated
  */
 public interface model4interfacesPackage extends org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage
 {
@@ -40,9 +40,9 @@ public interface model4interfacesPackage extends org.eclipse.emf.cdo.tests.model
   /**
    * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
-  String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/model4interfaces/1.0.0";
+  String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/legacy/model4interfaces/1.0.0";
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->

@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
@@ -33,6 +32,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
@@ -126,7 +126,8 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
     transaction.close();
 
     CDOTransaction transaction2 = session.openTransaction();
-    SalesOrder salesOrder2 = (SalesOrder)transaction2.getObject(CDOUtil.getCDOObject(salesOrder).cdoID(), true);
+    SalesOrder salesOrder2 = (SalesOrder)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(salesOrder)
+        .cdoID(), true));
     CDORevision salesRevision = CDOUtil.getCDOObject(salesOrder2).cdoRevision();
     EStructuralFeature customerFeature = getModel1Package().getSalesOrder_Customer();
 
@@ -432,7 +433,7 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
 
   private InternalCDORevision getCopyCDORevision(Object object)
   {
-    return (InternalCDORevision)((CDOObject)object).cdoRevision().copy();
+    return (InternalCDORevision)CDOUtil.getCDOObject((EObject)object).cdoRevision().copy();
   }
 
   private void testStoreDelta(ListManipulator manipulator)

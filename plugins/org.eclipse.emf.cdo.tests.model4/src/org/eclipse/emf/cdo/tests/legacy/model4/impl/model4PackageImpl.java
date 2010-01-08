@@ -8,45 +8,47 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: model4PackageImpl.java,v 1.5 2009-08-22 09:34:57 estepper Exp $
+ * $Id: model4PackageImpl.java,v 1.6 2010-01-08 19:43:50 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model4.ContainedElementNoOpposite;
-import org.eclipse.emf.cdo.tests.legacy.model4.GenRefMapNonContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNUNonContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNonContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleNonContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplContainedElementNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainer;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainerNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainer;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainerNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainer;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainerNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainer;
-import org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainerNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.MultiContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContainedNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.RefSingleContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.RefSingleContainedNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContained;
-import org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContainedNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4.SingleContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4.SingleNonContainedElement;
 import org.eclipse.emf.cdo.tests.legacy.model4.model4Factory;
 import org.eclipse.emf.cdo.tests.legacy.model4.model4Package;
 import org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesPackage;
+import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
+import org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefMultiContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefMultiNonContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefSingleContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
+import org.eclipse.emf.cdo.tests.model4.ImplContainedElementNPL;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainedElement;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainer;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainerNPL;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainer;
+import org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainerNPL;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainedElement;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainer;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainerNPL;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainer;
+import org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainerNPL;
+import org.eclipse.emf.cdo.tests.model4.MultiContainedElement;
+import org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement;
+import org.eclipse.emf.cdo.tests.model4.RefMultiContained;
+import org.eclipse.emf.cdo.tests.model4.RefMultiContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.RefMultiNonContained;
+import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable;
+import org.eclipse.emf.cdo.tests.model4.RefSingleContained;
+import org.eclipse.emf.cdo.tests.model4.RefSingleContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.RefSingleNonContained;
+import org.eclipse.emf.cdo.tests.model4.RefSingleNonContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.SingleContainedElement;
+import org.eclipse.emf.cdo.tests.model4.SingleNonContainedElement;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -118,6 +120,20 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * @generated
    */
   private EClass multiNonContainedElementEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass refMultiNonContainedUnsettableEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass multiNonContainedUnsettableElementEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -558,6 +574,56 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
   public EReference getMultiNonContainedElement_Parent()
   {
     return (EReference)multiNonContainedElementEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getRefMultiNonContainedUnsettable()
+  {
+    return refMultiNonContainedUnsettableEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getRefMultiNonContainedUnsettable_Elements()
+  {
+    return (EReference)refMultiNonContainedUnsettableEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getMultiNonContainedUnsettableElement()
+  {
+    return multiNonContainedUnsettableElementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getMultiNonContainedUnsettableElement_Name()
+  {
+    return (EAttribute)multiNonContainedUnsettableElementEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getMultiNonContainedUnsettableElement_Parent()
+  {
+    return (EReference)multiNonContainedUnsettableElementEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1038,6 +1104,13 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
     createEAttribute(multiNonContainedElementEClass, MULTI_NON_CONTAINED_ELEMENT__NAME);
     createEReference(multiNonContainedElementEClass, MULTI_NON_CONTAINED_ELEMENT__PARENT);
 
+    refMultiNonContainedUnsettableEClass = createEClass(REF_MULTI_NON_CONTAINED_UNSETTABLE);
+    createEReference(refMultiNonContainedUnsettableEClass, REF_MULTI_NON_CONTAINED_UNSETTABLE__ELEMENTS);
+
+    multiNonContainedUnsettableElementEClass = createEClass(MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT);
+    createEAttribute(multiNonContainedUnsettableElementEClass, MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__NAME);
+    createEReference(multiNonContainedUnsettableElementEClass, MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__PARENT);
+
     refSingleContainedNPLEClass = createEClass(REF_SINGLE_CONTAINED_NPL);
     createEReference(refSingleContainedNPLEClass, REF_SINGLE_CONTAINED_NPL__ELEMENT);
 
@@ -1225,6 +1298,23 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
         .getRefMultiNonContained_Elements(), "parent", null, 0, 1, MultiNonContainedElement.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
+
+    initEClass(refMultiNonContainedUnsettableEClass, RefMultiNonContainedUnsettable.class,
+        "RefMultiNonContainedUnsettable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getRefMultiNonContainedUnsettable_Elements(), this.getMultiNonContainedUnsettableElement(), this
+        .getMultiNonContainedUnsettableElement_Parent(), "elements", null, 0, -1, RefMultiNonContainedUnsettable.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(multiNonContainedUnsettableElementEClass, MultiNonContainedUnsettableElement.class,
+        "MultiNonContainedUnsettableElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMultiNonContainedUnsettableElement_Name(), ecorePackage.getEString(), "name", null, 0, 1,
+        MultiNonContainedUnsettableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMultiNonContainedUnsettableElement_Parent(), this.getRefMultiNonContainedUnsettable(), this
+        .getRefMultiNonContainedUnsettable_Elements(), "parent", null, 0, 1, MultiNonContainedUnsettableElement.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(refSingleContainedNPLEClass, RefSingleContainedNPL.class, "RefSingleContainedNPL", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

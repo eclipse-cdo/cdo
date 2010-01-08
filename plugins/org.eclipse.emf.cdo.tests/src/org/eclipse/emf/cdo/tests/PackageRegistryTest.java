@@ -392,7 +392,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.getResource("/res");
 
-    CDOObject company = (CDOObject)res.getContents().get(0);
+    CDOObject company = CDOUtil.getCDOObject(res.getContents().get(0));
     EClass companyClass = company.eClass();
     EAttribute nameAttribute = (EAttribute)companyClass.getEStructuralFeature("name");
     String name = (String)company.eGet(nameAttribute);
@@ -425,7 +425,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.getResource("/res");
 
-    CDOObject company = (CDOObject)res.getContents().get(0);
+    CDOObject company = CDOUtil.getCDOObject(res.getContents().get(0));
     EClass companyClass = company.eClass();
     EAttribute nameAttribute = (EAttribute)companyClass.getEStructuralFeature("name");
     String name = (String)company.eGet(nameAttribute);

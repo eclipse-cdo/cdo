@@ -19,8 +19,8 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
-import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
@@ -79,7 +79,7 @@ public class DetachTest extends AbstractCDOTest
 
     resource.getContents().remove(c1);
     assertTransient(c1);
-    assertSame(c1, transaction.getObject(id));
+    assertSame(c1, CDOUtil.getEObject(transaction.getObject(id)));
     assertSame(c1, transaction.getResourceSet().getEObject(uriC1, false));
 
     transaction.commit();

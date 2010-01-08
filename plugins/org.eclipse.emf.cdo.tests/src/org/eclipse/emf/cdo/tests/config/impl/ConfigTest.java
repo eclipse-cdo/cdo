@@ -475,12 +475,17 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     }
   }
 
-  protected void skipConfig(Config config)
+  protected boolean isConfig(Config config)
   {
-    skipTest(ObjectUtil.equals(getContainerConfig(), config) //
+    return ObjectUtil.equals(getContainerConfig(), config) //
         || ObjectUtil.equals(getRepositoryConfig(), config) //
         || ObjectUtil.equals(getSessionConfig(), config) //
-        || ObjectUtil.equals(getModelConfig(), config));
+        || ObjectUtil.equals(getModelConfig(), config);
+  }
+
+  protected void skipConfig(Config config)
+  {
+    skipTest(isConfig(config));
   }
 
   protected void skipUnlessConfig(Config config)

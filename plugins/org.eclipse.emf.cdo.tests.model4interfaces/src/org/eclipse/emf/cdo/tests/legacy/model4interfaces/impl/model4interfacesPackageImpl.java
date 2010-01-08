@@ -10,22 +10,22 @@
  */
 package org.eclipse.emf.cdo.tests.legacy.model4interfaces.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IContainedElementNoParentLink;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefContainer;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefContainerNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefNonContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefNonContainer;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefNonContainerNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.INamedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefContainer;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefContainerNPL;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainedElement;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainer;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainerNPL;
 import org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesFactory;
 import org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesPackage;
+import org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink;
+import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement;
+import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer;
+import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainerNPL;
+import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainer;
+import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainerNPL;
+import org.eclipse.emf.cdo.tests.model4interfaces.INamedElement;
+import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement;
+import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainer;
+import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainerNPL;
+import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer;
+import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainerNPL;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;

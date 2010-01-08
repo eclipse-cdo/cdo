@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 
@@ -76,7 +77,7 @@ public class Bugzilla_283985_SavePointTest extends AbstractCDOTest
 
   public void test1()
   {
-    CDOID id = ((CDOObject)detail1).cdoID();
+    CDOID id = CDOUtil.getCDOObject(detail1).cdoID();
 
     order1.getOrderDetails().remove(detail1);
     assertTransient(detail1);
@@ -86,7 +87,7 @@ public class Bugzilla_283985_SavePointTest extends AbstractCDOTest
     assertDirty(detail1, transaction);
 
     transaction.commit();
-    assertEquals(id, ((CDOObject)detail1).cdoID());
+    assertEquals(id, (CDOUtil.getCDOObject(detail1)).cdoID());
     assertEquals(detail1, transaction.getObject(id));
     assertClean(detail1, transaction);
   }
@@ -116,7 +117,7 @@ public class Bugzilla_283985_SavePointTest extends AbstractCDOTest
 
   public void test3()
   {
-    CDOID id = ((CDOObject)detail1).cdoID();
+    CDOID id = CDOUtil.getCDOObject(detail1).cdoID();
 
     transaction.setSavepoint();
     assertClean(detail1, transaction);

@@ -8,13 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: Model3Switch.java,v 1.5 2009-08-22 09:33:57 estepper Exp $
+ * $Id: Model3Switch.java,v 1.6 2010-01-08 19:43:42 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.util;
 
-import org.eclipse.emf.cdo.tests.legacy.model3.Class1;
-import org.eclipse.emf.cdo.tests.legacy.model3.MetaRef;
 import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
+import org.eclipse.emf.cdo.tests.model3.Class1;
+import org.eclipse.emf.cdo.tests.model3.MetaRef;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;

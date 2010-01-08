@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: Model1Factory.java,v 1.6 2009-12-27 15:50:54 mfluegge Exp $
+ * $Id: Model1Factory.java,v 1.7 2010-01-08 19:43:18 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model1;
 
@@ -24,8 +24,6 @@ import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 
-import org.eclipse.emf.ecore.EFactory;
-
 /**
  * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
  * the model. <!-- end-user-doc -->
@@ -33,7 +31,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.cdo.tests.legacy.model1.Model1Package
  * @generated
  */
-public interface Model1Factory extends EFactory, org.eclipse.emf.cdo.tests.model1.Model1Factory
+public interface Model1Factory extends org.eclipse.emf.cdo.tests.model1.Model1Factory
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->

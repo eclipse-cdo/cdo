@@ -8,13 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: SubpackageFactoryImpl.java,v 1.5 2009-08-22 09:33:57 estepper Exp $
+ * $Id: SubpackageFactoryImpl.java,v 1.6 2010-01-08 19:43:43 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackageFactory;
 import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackagePackage;
+import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -32,14 +32,14 @@ public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFac
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   public static SubpackageFactory init()
   {
     try
     {
       SubpackageFactory theSubpackageFactory = (SubpackageFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/tests/subpackage/1.0.0");
+          .getEFactory("http://www.eclipse.org/emf/CDO/tests/legacy/subpackage/1.0.0");
       if (theSubpackageFactory != null)
       {
         return theSubpackageFactory;

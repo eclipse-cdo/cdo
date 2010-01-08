@@ -8,12 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: SubpackageAdapterFactory.java,v 1.5 2009-08-22 09:33:57 estepper Exp $
+ * $Id: SubpackageAdapterFactory.java,v 1.6 2010-01-08 19:43:43 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.subpackage.util;
 
-import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackagePackage;
+import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;

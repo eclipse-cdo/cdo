@@ -39,6 +39,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class Bugzilla262875_Test extends AbstractOMTest
 {
+
+  /** the length of the metadata sent in a buffer: channelID, correlationID */
+  private static final short BUFFER_METADATA_LENGHT = 10;
+
   private IManagedContainer container;
 
   private IConnector connector;
@@ -96,7 +100,48 @@ public class Bugzilla262875_Test extends AbstractOMTest
       protocol.open(connector);
 
       short bufferCapacity = protocol.getBufferProvider().getBufferCapacity();
-      new TestProtocol.Request(protocol, bufferCapacity - 10).send();
+      new TestProtocol.Request(protocol, bufferCapacity - BUFFER_METADATA_LENGHT).send();
+
+      latch.await(DEFAULT_TIMEOUT_EXPECTED, TimeUnit.MILLISECONDS);
+      assertEquals(false, failed.get());
+    }
+    finally
+    {
+      Worker.setGlobalErrorHandler(oldErrorHandler);
+    }
+  }
+
+  /**
+   * Tests if an illegal argument exception occurs if the data sent in a request's larger than the capacity of a buffer.
+   * 
+   * @throws Exception
+   *           the exception
+   */
+  public void testGivenDataIsLargerThanBufferLengthThenIllegalArgumentException() throws Exception
+  {
+    final AtomicBoolean failed = new AtomicBoolean(false);
+    final CountDownLatch latch = new CountDownLatch(1);
+    IErrorHandler oldErrorHandler = Worker.setGlobalErrorHandler(new IErrorHandler()
+    {
+      public void handleError(Throwable t)
+      {
+        t.printStackTrace();
+        if (t instanceof IllegalArgumentException)
+        {
+          failed.set(true);
+        }
+
+        latch.countDown();
+      }
+    });
+
+    try
+    {
+      TestProtocol protocol = new TestProtocol();
+      protocol.open(connector);
+
+      short bufferCapacity = protocol.getBufferProvider().getBufferCapacity();
+      new TestProtocol.Request(protocol, bufferCapacity + 10).send();
 
       latch.await(DEFAULT_TIMEOUT_EXPECTED, TimeUnit.MILLISECONDS);
       assertEquals(false, failed.get());

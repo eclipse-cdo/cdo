@@ -65,7 +65,14 @@ public class Bugzilla262875_Test extends AbstractOMTest
     super.doTearDown();
   }
 
-  public void testBufferUnderflowException() throws Exception
+  /**
+   * Tests if a buffer underflow exception occurs if the data sent in a request exactly matches the capacity of a
+   * buffer.
+   * 
+   * @throws Exception
+   *           the exception
+   */
+  public void testGivenDataMatchesBufferLengthThenBufferUnderflowException() throws Exception
   {
     final AtomicBoolean failed = new AtomicBoolean(false);
     final CountDownLatch latch = new CountDownLatch(1);
@@ -146,6 +153,7 @@ public class Bugzilla262875_Test extends AbstractOMTest
         {
           out.writeByte(i);
         }
+        // delay completion
         Thread.sleep(100);
       }
 

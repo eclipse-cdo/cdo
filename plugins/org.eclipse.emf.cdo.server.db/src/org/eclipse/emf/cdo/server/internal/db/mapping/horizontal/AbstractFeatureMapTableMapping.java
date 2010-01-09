@@ -360,9 +360,7 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
       while ((listChunk == CDORevision.UNCHUNKED || --listChunk >= 0) && resultSet.next())
       {
         Long tag = resultSet.getLong(1);
-        String column = getColumnName(tag);
-        int fieldIndex = resultSet.findColumn(column);
-        Object value = getTypeMapping(tag).readValue(resultSet, fieldIndex);
+        Object value = getTypeMapping(tag).readValue(resultSet);
 
         if (TRACER.isEnabled())
         {
@@ -508,9 +506,7 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
       while (resultSet.next())
       {
         Long tag = resultSet.getLong(1);
-        String column = getColumnName(tag);
-        int fieldIndex = resultSet.findColumn(column);
-        Object value = getTypeMapping(tag).readValue(resultSet, fieldIndex);
+        Object value = getTypeMapping(tag).readValue(resultSet);
 
         if (chunk == null)
         {

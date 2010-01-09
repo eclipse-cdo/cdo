@@ -179,19 +179,18 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
         return false;
       }
 
-      int i = 1;
-      revision.setVersion(resultSet.getInt(i++));
-      revision.setCreated(resultSet.getLong(i++));
-      revision.setRevised(resultSet.getLong(i++));
+      revision.setVersion(resultSet.getInt(CDODBSchema.ATTRIBUTES_VERSION));
+      revision.setCreated(resultSet.getLong(CDODBSchema.ATTRIBUTES_CREATED));
+      revision.setRevised(resultSet.getLong(CDODBSchema.ATTRIBUTES_REVISED));
       revision.setResourceID(CDODBUtil.convertLongToCDOID(getExternalReferenceManager(), accessor, resultSet
-          .getLong(i++)));
+          .getLong(CDODBSchema.ATTRIBUTES_RESOURCE)));
       revision.setContainerID(CDODBUtil.convertLongToCDOID(getExternalReferenceManager(), accessor, resultSet
-          .getLong(i++)));
-      revision.setContainingFeatureID(resultSet.getInt(i++));
+          .getLong(CDODBSchema.ATTRIBUTES_CONTAINER)));
+      revision.setContainingFeatureID(resultSet.getInt(CDODBSchema.ATTRIBUTES_FEATURE));
 
       for (ITypeMapping mapping : valueMappings)
       {
-        mapping.readValueToRevision(resultSet, i++, revision);
+        mapping.readValueToRevision(resultSet, revision);
       }
 
       return true;

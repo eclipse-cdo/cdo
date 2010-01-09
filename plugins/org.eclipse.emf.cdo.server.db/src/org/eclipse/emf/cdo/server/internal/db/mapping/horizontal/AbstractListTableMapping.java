@@ -191,7 +191,18 @@ public abstract class AbstractListTableMapping implements IListMapping
     // ----------------- INSERT - reference entry -----------------
     builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
     builder.append(tableName);
-    builder.append(" VALUES ("); //$NON-NLS-1$
+    builder.append("("); //$NON-NLS-1$
+
+    for (int i = 0; i < fields.length; i++)
+    {
+      builder.append(fields[i].getName());
+      builder.append(", "); //$NON-NLS-1$
+    }
+
+    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(") VALUES ("); //$NON-NLS-1$
     for (int i = 0; i < fields.length; i++)
     {
       builder.append("?, "); //$NON-NLS-1$
@@ -272,7 +283,7 @@ public abstract class AbstractListTableMapping implements IListMapping
 
       while ((listChunk == CDORevision.UNCHUNKED || --listChunk >= 0) && resultSet.next())
       {
-        Object value = typeMapping.readValue(resultSet, 1);
+        Object value = typeMapping.readValue(resultSet);
         if (TRACER.isEnabled())
         {
           TRACER.format("Read value for index {0} from result set: {1}", list.size(), value); //$NON-NLS-1$
@@ -406,7 +417,7 @@ public abstract class AbstractListTableMapping implements IListMapping
 
       while (resultSet.next())
       {
-        Object value = typeMapping.readValue(resultSet, 1);
+        Object value = typeMapping.readValue(resultSet);
         resultCounter++;
 
         if (chunk == null)

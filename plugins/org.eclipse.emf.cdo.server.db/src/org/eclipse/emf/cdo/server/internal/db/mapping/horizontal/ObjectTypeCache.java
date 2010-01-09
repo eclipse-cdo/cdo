@@ -123,7 +123,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
 
       if (result != 1)
       {
-        throw new DBException("Object type could not be deleted: " + id); //$NON-NLS-1$
+        throw new DBException("Object type could not be inserted: " + id); //$NON-NLS-1$
       }
     }
     catch (SQLException ex)
@@ -208,7 +208,9 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     }
 
     sqlSelect = "SELECT " + typeField.getName() + " FROM " + table.getName() + " WHERE " + idField.getName() + " = ?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-    sqlInsert = "INSERT INTO " + table.getName() + " VALUES (?,?)"; //$NON-NLS-1$ //$NON-NLS-2$
+    sqlInsert = "INSERT INTO " + table.getName() + "(" //$NON-NLS-1$ //$NON-NLS-2$
+        + idField.getName() + "," + typeField.getName() //$NON-NLS-1$  
+        + ") VALUES (?,?)"; //$NON-NLS-1$ 
     sqlDelete = "DELETE FROM " + table.getName() + " WHERE " + idField.getName() + " = ?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 

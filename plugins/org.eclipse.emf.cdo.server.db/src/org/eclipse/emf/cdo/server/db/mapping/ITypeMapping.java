@@ -109,30 +109,30 @@ public interface ITypeMapping
   public void setValueFromRevision(PreparedStatement stmt, int index, InternalCDORevision value) throws SQLException;
 
   /**
-   * Read a value from a {@link ResultSet} and convert it from the DB to the CDO representation.
+   * Read the value from a {@link ResultSet} and convert it from the DB to the CDO representation. The resultSet field
+   * to read from is determined automatically by the internal {@link #getField()} name.
    * 
    * @param resultSet
    *          the result set to read from
-   * @param i
-   *          the column index in the result set to read from
    * @return the read value
    * @throws SQLException
    *           if reading the value throws an SQLException
+   * @since 3.0
    */
-  public Object readValue(ResultSet resultSet, int i) throws SQLException;
+  public Object readValue(ResultSet resultSet) throws SQLException;
 
   /**
    * Read a value from a {@link ResultSet}, convert it from the DB to the CDO representation and set it to the feature
-   * of the revision. The feature is determined by getFeature()
+   * of the revision. The feature is determined by getFeature() The resultSet field to read from is determined
+   * automatically by the internal {@link #getField()} name.
    * 
    * @param resultSet
    *          the result set to read from
-   * @param i
-   *          the column index in the result set to read from
    * @param revision
    *          the revision to which the value should be set.
    * @throws SQLException
    *           if reading the value throws an SQLException
+   * @since 3.0
    */
-  public void readValueToRevision(ResultSet resultSet, int i, InternalCDORevision revision) throws SQLException;
+  public void readValueToRevision(ResultSet resultSet, InternalCDORevision revision) throws SQLException;
 }

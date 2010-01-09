@@ -125,16 +125,15 @@ public abstract class TypeMapping implements ITypeMapping
     return field;
   }
 
-  public final void readValueToRevision(ResultSet resultSet, int index, InternalCDORevision revision)
-      throws SQLException
+  public final void readValueToRevision(ResultSet resultSet, InternalCDORevision revision) throws SQLException
   {
-    Object value = readValue(resultSet, index);
+    Object value = readValue(resultSet);
     revision.setValue(getFeature(), value);
   }
 
-  public final Object readValue(ResultSet resultSet, int index) throws SQLException
+  public final Object readValue(ResultSet resultSet) throws SQLException
   {
-    Object value = getResultSetValue(resultSet, index);
+    Object value = getResultSetValue(resultSet);
     if (resultSet.wasNull())
     {
       value = null;
@@ -190,7 +189,7 @@ public abstract class TypeMapping implements ITypeMapping
     return type == DBType.VARCHAR ? 32672 : IDBField.DEFAULT;
   }
 
-  protected abstract Object getResultSetValue(ResultSet resultSet, int column) throws SQLException;
+  protected abstract Object getResultSetValue(ResultSet resultSet) throws SQLException;
 
   /**
    * @author Eike Stepper
@@ -203,10 +202,10 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    public Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
       // see Bug 271941
-      return resultSet.getInt(column);
+      return resultSet.getInt(getField().getName());
       // EEnum type = (EEnum)getFeature().getEType();
       // int value = resultSet.getInt(column);
       // return type.getEEnumLiteral(value);
@@ -230,9 +229,9 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    public Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
-      return resultSet.getString(column);
+      return resultSet.getString(getField().getName());
     }
   }
 
@@ -247,15 +246,14 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    public Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
-      return resultSet.getShort(column);
+      return resultSet.getShort(getField().getName());
     }
   }
 
   /**
    * @author Eike Stepper <br>
-   *         TODO add mapping/unmapping calls for external references here
    */
   public static class TMObject extends TypeMapping
   {
@@ -265,9 +263,9 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    public Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
-      long id = resultSet.getLong(column);
+      long id = resultSet.getLong(getField().getName());
       if (resultSet.wasNull())
       {
         return null;
@@ -307,9 +305,9 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    public Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
-      return resultSet.getLong(column);
+      return resultSet.getLong(getField().getName());
     }
   }
 
@@ -324,9 +322,9 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    public Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
-      return resultSet.getInt(column);
+      return resultSet.getInt(getField().getName());
     }
   }
 
@@ -341,9 +339,9 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    public Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
-      return resultSet.getFloat(column);
+      return resultSet.getFloat(getField().getName());
     }
   }
 
@@ -358,9 +356,9 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    public Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
-      return resultSet.getDouble(column);
+      return resultSet.getDouble(getField().getName());
     }
   }
 
@@ -375,9 +373,9 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    public Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
-      return resultSet.getTimestamp(column);
+      return resultSet.getTimestamp(getField().getName());
     }
 
     @Override
@@ -398,9 +396,9 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    public Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
-      String str = resultSet.getString(column);
+      String str = resultSet.getString(getField().getName());
       if (resultSet.wasNull())
       {
         return null;
@@ -427,9 +425,9 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    public Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
-      return resultSet.getByte(column);
+      return resultSet.getByte(getField().getName());
     }
   }
 
@@ -444,9 +442,9 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    public Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
-      return resultSet.getBytes(column);
+      return resultSet.getBytes(getField().getName());
     }
   }
 
@@ -461,9 +459,9 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    public Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
-      return resultSet.getBoolean(column);
+      return resultSet.getBoolean(getField().getName());
     }
   }
 
@@ -478,9 +476,9 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    protected Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    protected Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
-      String val = resultSet.getString(column);
+      String val = resultSet.getString(getField().getName());
 
       if (resultSet.wasNull())
       {
@@ -508,9 +506,9 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    protected Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    protected Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
-      String val = resultSet.getString(column);
+      String val = resultSet.getString(getField().getName());
 
       if (resultSet.wasNull())
       {
@@ -551,9 +549,9 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    protected Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    protected Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
-      String val = resultSet.getString(column);
+      String val = resultSet.getString(getField().getName());
       if (resultSet.wasNull())
       {
         return null;

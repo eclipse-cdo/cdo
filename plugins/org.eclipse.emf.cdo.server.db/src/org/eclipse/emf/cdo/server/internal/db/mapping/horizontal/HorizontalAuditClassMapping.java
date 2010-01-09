@@ -125,8 +125,32 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     builder = new StringBuilder();
     builder.append("INSERT INTO "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" VALUES (?, ?, "); //$NON-NLS-1$
-    builder.append("?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
+
+    builder.append("("); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_CLASS);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_RESOURCE);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_FEATURE);
+
+    for (ITypeMapping singleMapping : getValueMappings())
+    {
+      builder.append(", "); //$NON-NLS-1$
+      builder.append(singleMapping.getField().getName());
+    }
+
+    builder.append(") VALUES (?, ?, ?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
+
     for (int i = 0; i < getValueMappings().size(); i++)
     {
       builder.append(", ?"); //$NON-NLS-1$

@@ -77,12 +77,12 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    * This local ThreadMap stores all pre-registered objects. This avoids a neverending loop when setting the container
    * for the object.
    */
-  private static ThreadLocal<Map<CDOID, EObject>> preRegisteredObjects = new InheritableThreadLocal<Map<CDOID, EObject>>()
+  private static ThreadLocal<Map<CDOID, CDOLegacyWrapper>> wrapperRegistry = new InheritableThreadLocal<Map<CDOID, CDOLegacyWrapper>>()
   {
     @Override
-    protected Map<CDOID, EObject> initialValue()
+    protected Map<CDOID, CDOLegacyWrapper> initialValue()
     {
-      return new HashMap<CDOID, EObject>();
+      return new HashMap<CDOID, CDOLegacyWrapper>();
     }
   };
 
@@ -285,7 +285,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     Counter counter = recursionCounter.get();
     try
     {
-      preRegisterObject(this);
+      registerWrapper(this);
       counter.increment();
 
       revisionToInstanceContainment();
@@ -308,23 +308,9 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       }
 
       counter.decrement();
-      unregister(this);
+      unregisterWrapper(this);
       underConstruction = false;
     }
-  }
-
-  /**
-   * adds an object to the pre-registered objects list which hold all created objects even if they are not registered in
-   * the view
-   */
-  private void preRegisterObject(CDOLegacyWrapper wrapper)
-  {
-    getPreRegisteredObjects().put(wrapper.cdoID(), wrapper);
-  }
-
-  private void unregister(CDOLegacyWrapper wrapper)
-  {
-    getPreRegisteredObjects().remove(wrapper.cdoID());
   }
 
   protected void revisionToInstanceContainment()
@@ -341,15 +327,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   /**
    * @since 3.0
    */
-  public static Map<CDOID, EObject> getPreRegisteredObjects()
-  {
-    return preRegisteredObjects.get();
-  }
-
-  /**
-   * @since 3.0
-   */
-
   protected void revisionToInstanceFeature(EStructuralFeature feature)
   {
     if (feature.isMany())
@@ -514,7 +491,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
           return null;
         }
 
-        object = getPreRegisteredObjects().get(id);
+        object = getRegisteredWrapper(id);
         if (object != null)
         {
           return ((CDOLegacyWrapper)object).cdoInternalInstance();
@@ -579,13 +556,14 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   protected InternalEObject getEObjectFromPotentialID(InternalCDOView view, EStructuralFeature feature,
       Object potentialID)
   {
-    if (getPreRegisteredObjects().get(potentialID) != null)
+    CDOLegacyWrapper wrapper;
+    if (potentialID instanceof CDOID && (wrapper = getRegisteredWrapper((CDOID)potentialID)) != null)
     {
-      potentialID = ((CDOLegacyWrapper)getPreRegisteredObjects().get(potentialID)).instance;
+      potentialID = wrapper.instance;
 
       if (TRACER.isEnabled())
       {
-        TRACER.format(("getting Object (" + potentialID + ") from localThread instead of the view"));
+        TRACER.format("getting Object (" + potentialID + ") from localThread instead of the view");
       }
     }
     else
@@ -769,6 +747,11 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
+  public static boolean isLegacyProxy(Object object)
+  {
+    return object instanceof LegacyProxy;
+  }
+
   protected static int getEFlagMask(Class<?> instanceClass, String flagName)
   {
     Field field = ReflectUtil.getField(instanceClass, flagName);
@@ -787,9 +770,23 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
-  public static boolean isLegacyProxy(Object object)
+  private static CDOLegacyWrapper getRegisteredWrapper(CDOID id)
   {
-    return object instanceof LegacyProxy;
+    return wrapperRegistry.get().get(id);
+  }
+
+  /**
+   * adds an object to the pre-registered objects list which hold all created objects even if they are not registered in
+   * the view
+   */
+  private static void registerWrapper(CDOLegacyWrapper wrapper)
+  {
+    wrapperRegistry.get().put(wrapper.cdoID(), wrapper);
+  }
+
+  private static void unregisterWrapper(CDOLegacyWrapper wrapper)
+  {
+    wrapperRegistry.get().remove(wrapper.cdoID());
   }
 
   /**

@@ -56,11 +56,13 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * This abstract base class implements those methods which are most likely common to most mapping strategies. It can be
  * used to derive custom mapping strategy implementation.
- *
+ * 
  * @author Eike Stepper
  * @since 2.0
  */
@@ -81,11 +83,11 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   private Map<String, String> properties;
 
-  private Map<EClass, IClassMapping> classMappings;
+  private ConcurrentMap<EClass, IClassMapping> classMappings;
 
   public AbstractMappingStrategy()
   {
-    classMappings = new HashMap<EClass, IClassMapping>();
+    classMappings = new ConcurrentHashMap<EClass, IClassMapping>();
   }
 
   // -- property related methods -----------------------------------------

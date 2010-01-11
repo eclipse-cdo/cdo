@@ -344,7 +344,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   /**
    * It is really important for accessing the data to go through {@link #cdoStore()}. {@link #eStore()} will redirect
    * you to the transient data.
-   * 
+   *
    * @since 2.0
    */
   public void cdoInternalPostDetach(boolean remote)
@@ -603,7 +603,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    * Code took from {@link BasicEObjectImpl#eBasicSetContainer} and modify it to detect when object are moved in the
    * same context. (E.g.: An object is moved from resA to resB. resA and resB belongs to the same CDORepositoryInfo.
    * Without this special handling, a detach and newObject will be generated for the object moved)
-   * 
+   *
    * @since 2.0
    */
   @Override
@@ -696,7 +696,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   /**
    * Code took from {@link BasicEObjectImpl#eSetResource} and modify it to detect when object are moved in the same
    * context.
-   * 
+   *
    * @since 2.0
    */
   @Override
@@ -707,7 +707,15 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     CDOView oldView = view;
     CDOView newView = resource != null && resource instanceof CDOResource ? ((CDOResource)resource).cdoView() : null;
 
-    boolean isSameView = oldView != null && oldView == newView;
+    boolean isSameView ;
+    if (state == CDOState.NEW)
+    {
+      isSameView = false;
+    }
+    else
+    {
+      isSameView = oldView != null && oldView == newView;
+    }
 
     if (oldResource != null)
     {
@@ -1425,7 +1433,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   /**
    * TODO Remove this when EMF has fixed bug 197487
-   * 
+   *
    * @author Eike Stepper
    */
   public class CDOStoreFeatureMap extends DelegatingFeatureMap

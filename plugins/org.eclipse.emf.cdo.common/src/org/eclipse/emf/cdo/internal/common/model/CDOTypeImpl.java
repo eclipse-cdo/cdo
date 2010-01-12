@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - Bug 299194: unsettable features inconsistent between revisions
  */
 package org.eclipse.emf.cdo.internal.common.model;
 
@@ -825,7 +826,7 @@ public abstract class CDOTypeImpl implements CDOType
 
   public Object copyValue(Object value)
   {
-    return value == null ? getDefaultValue() : value;
+    return value;
   }
 
   public void write(CDODataOutput out) throws IOException

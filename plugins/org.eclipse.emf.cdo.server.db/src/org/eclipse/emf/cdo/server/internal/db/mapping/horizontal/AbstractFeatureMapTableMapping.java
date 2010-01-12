@@ -10,6 +10,7 @@
  *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
  *    Christopher Albert - 254455: [DB] Support FeatureMaps https://bugs.eclipse.org/bugs/show_bug.cgi?id=254455
  *    Victor Roldan Betancort - 289360: [DB] [maintenance] Support FeatureMaps
+ *    Victor Roldan Betancort - Bug 283998: [DB] Chunk reading for multiple chunks fails
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -467,6 +468,7 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
       StringBuilder builder = new StringBuilder(sqlSelectChunksPrefix);
       if (where != null)
       {
+        builder.append(" AND "); //$NON-NLS-1$
         builder.append(where);
       }
 

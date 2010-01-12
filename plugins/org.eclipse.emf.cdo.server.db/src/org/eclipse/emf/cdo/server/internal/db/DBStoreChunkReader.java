@@ -7,6 +7,9 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - Bug 271444: [DB] Multiple refactorings 
+ *    Stefan Winkler - Bug 283998: [DB] Chunk reading for multiple chunks fails
+ *    Victor Roldan Betancort - Bug 283998: [DB] Chunk reading for multiple chunks fails
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
@@ -48,9 +51,10 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
   public void addSimpleChunk(int index)
   {
     super.addSimpleChunk(index);
-    builder.append(" AND "); //$NON-NLS-1$
+    prepareAddition();
+
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append("="); //$NON-NLS-1$
+    builder.append('=');
     builder.append(index);
   }
 
@@ -58,7 +62,8 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
   public void addRangedChunk(int fromIndex, int toIndex)
   {
     super.addRangedChunk(fromIndex, toIndex);
-    builder.append(" AND "); //$NON-NLS-1$
+    prepareAddition();
+
     builder.append(CDODBSchema.LIST_IDX);
     builder.append(" BETWEEN "); //$NON-NLS-1$
     builder.append(fromIndex);
@@ -69,7 +74,22 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
   public List<Chunk> executeRead()
   {
     List<Chunk> chunks = getChunks();
+    if (chunks.size() > 1)
+    {
+      builder.insert(0, '(');
+      builder.append(')');
+    }
+
     referenceMapping.readChunks(this, chunks, builder.toString());
     return chunks;
+  }
+
+  private void prepareAddition()
+  {
+    // If not empty, a chunk has been already added, and the next condition needs to be OR-ed
+    if (builder.length() > 0)
+    {
+      builder.append(" OR "); //$NON-NLS-1$
+    }
   }
 }

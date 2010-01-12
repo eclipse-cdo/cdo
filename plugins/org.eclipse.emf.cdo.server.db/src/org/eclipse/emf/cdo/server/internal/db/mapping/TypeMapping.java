@@ -16,6 +16,7 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
@@ -33,6 +34,7 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -91,9 +93,14 @@ public abstract class TypeMapping implements ITypeMapping
     setValue(stmt, index, getRevisionValue(revision));
   }
 
+  public void setDefaultValue(PreparedStatement stmt, int index) throws SQLException
+  {
+    setValue(stmt, index, feature.getDefaultValue());
+  }
+
   public final void setValue(PreparedStatement stmt, int index, Object value) throws SQLException
   {
-    if (value == null)
+    if (value == null || value == CDORevisionData.NIL)
     {
       stmt.setNull(index, getSqlType());
     }
@@ -136,7 +143,7 @@ public abstract class TypeMapping implements ITypeMapping
     Object value = getResultSetValue(resultSet);
     if (resultSet.wasNull())
     {
-      value = null;
+      value = feature.isUnsettable() ? CDORevisionData.NIL : null;
     }
 
     return value;
@@ -212,6 +219,13 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
+    public void setDefaultValue(PreparedStatement stmt, int index) throws SQLException
+    {
+      EEnumLiteral defaultValue = (EEnumLiteral)getFeature().getDefaultValue();
+      setValue(stmt, index, defaultValue.getValue());
+    }
+
+    @Override
     protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
     {
       super.doSetValue(stmt, index, value);
@@ -268,7 +282,7 @@ public abstract class TypeMapping implements ITypeMapping
       long id = resultSet.getLong(getField().getName());
       if (resultSet.wasNull())
       {
-        return null;
+        return getFeature().isUnsettable() ? CDORevisionData.NIL : null;
       }
 
       IExternalReferenceManager externalRefs = getMappingStrategy().getStore().getExternalReferenceManager();
@@ -401,7 +415,7 @@ public abstract class TypeMapping implements ITypeMapping
       String str = resultSet.getString(getField().getName());
       if (resultSet.wasNull())
       {
-        return null;
+        return getFeature().isUnsettable() ? CDORevisionData.NIL : null;
       }
 
       return str.charAt(0);
@@ -482,7 +496,7 @@ public abstract class TypeMapping implements ITypeMapping
 
       if (resultSet.wasNull())
       {
-        return null;
+        return getFeature().isUnsettable() ? CDORevisionData.NIL : null;
       }
 
       return new BigInteger(val);
@@ -512,7 +526,7 @@ public abstract class TypeMapping implements ITypeMapping
 
       if (resultSet.wasNull())
       {
-        return null;
+        return getFeature().isUnsettable() ? CDORevisionData.NIL : null;
       }
 
       return new BigDecimal(val);
@@ -554,7 +568,7 @@ public abstract class TypeMapping implements ITypeMapping
       String val = resultSet.getString(getField().getName());
       if (resultSet.wasNull())
       {
-        return null;
+        return getFeature().isUnsettable() ? CDORevisionData.NIL : null;
       }
 
       return factory.createFromString(dataType, val);

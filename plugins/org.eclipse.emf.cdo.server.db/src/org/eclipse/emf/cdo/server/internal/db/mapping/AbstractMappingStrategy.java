@@ -80,6 +80,11 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   protected static final String TYPE_PREFIX_PACKAGE = "P"; //$NON-NLS-1$
 
+  /**
+   * Prefix for unsettable feature helper columns
+   */
+  protected static final String CDO_SET_PREFIX = "cdo_set_"; //$NON-NLS-1$
+
   protected static final String FEATEURE_TABLE_SUFFIX = "_list"; //$NON-NLS-1$
 
   private IDBStore store;
@@ -290,6 +295,19 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     }
 
     return name;
+  }
+
+  public String getUnsettableFieldName(EStructuralFeature feature)
+  {
+    String name = DBAnnotation.COLUMN_NAME.getValue(feature);
+    if(name != null) {
+    	return CDO_SET_PREFIX + name;
+    }
+    else 
+    {
+    	return getName(CDO_SET_PREFIX + feature.getName(), TYPE_PREFIX_FEATURE + getMetaDataManager().getMetaID(feature),
+          getMaxFieldNameLength());
+    }
   }
 
   private String getName(String name, String suffix, int maxLength)

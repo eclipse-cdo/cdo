@@ -52,6 +52,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -94,6 +95,8 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
   private void initSqlStrings()
   {
+    Map<EStructuralFeature, String> unsettableFields = getUnsettableFields();
+
     // ----------- Select Revision ---------------------------
     StringBuilder builder = new StringBuilder();
 
@@ -114,6 +117,15 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     {
       builder.append(", "); //$NON-NLS-1$
       builder.append(singleMapping.getField().getName());
+    }
+
+    if (unsettableFields != null)
+    {
+      for (String fieldName : unsettableFields.values())
+      {
+        builder.append(", ");
+        builder.append(fieldName);
+      }
     }
 
     builder.append(" FROM "); //$NON-NLS-1$
@@ -152,11 +164,28 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       builder.append(singleMapping.getField().getName());
     }
 
+    if (unsettableFields != null)
+    {
+      for (String fieldName : unsettableFields.values())
+      {
+        builder.append(", ");
+        builder.append(fieldName);
+      }
+    }
+
     builder.append(") VALUES (?, ?, "); //$NON-NLS-1$
     builder.append("?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
     for (int i = 0; i < getValueMappings().size(); i++)
     {
       builder.append(", ?"); //$NON-NLS-1$
+    }
+
+    if (unsettableFields != null)
+    {
+      for (int i = 0; i < unsettableFields.size(); i++)
+      {
+        builder.append(", ?"); //$NON-NLS-1$
+      }
     }
 
     builder.append(")"); //$NON-NLS-1$
@@ -223,8 +252,27 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
           .getContainerID()));
       stmt.setInt(col++, revision.getContainingFeatureID());
 
+      int isSetCol = col + getValueMappings().size();
+
       for (ITypeMapping mapping : getValueMappings())
       {
+        EStructuralFeature feature = mapping.getFeature();
+        if (feature.isUnsettable())
+        {
+          if (revision.getValue(feature) == null)
+          {
+            stmt.setBoolean(isSetCol++, false);
+
+            // also set value column to default value
+            mapping.setDefaultValue(stmt, col++);
+            continue;
+          }
+          else
+          {
+            stmt.setBoolean(isSetCol++, true);
+          }
+        }
+        
         mapping.setValueFromRevision(stmt, col++, revision);
       }
 
@@ -517,10 +565,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, newContainerId));
       stmt.setInt(col++, newContainingFeatureId);
 
-      for (Pair<ITypeMapping, Object> change : attributeChanges)
-      {
-        change.getElement1().setValue(stmt, col++, change.getElement2());
-      }
+      col = setUpdateAttributeValues(attributeChanges, stmt, col);
 
       stmt.setLong(col++, CDOIDUtil.getLong(id));
 
@@ -534,6 +579,38 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     {
       accessor.getStatementCache().releasePreparedStatement(stmt);
     }
+  }
+
+  private int setUpdateAttributeValues(List<Pair<ITypeMapping, Object>> attributeChanges, PreparedStatement stmt,
+      int col) throws SQLException
+  {
+    for (Pair<ITypeMapping, Object> change : attributeChanges)
+    {
+      ITypeMapping typeMapping = change.getElement1();
+      Object value = change.getElement2();
+      if (typeMapping.getFeature().isUnsettable())
+      {
+        // feature is unsettable
+        if (value == null)
+        {
+          // feature is unset
+          typeMapping.setDefaultValue(stmt, col++);
+          stmt.setBoolean(col++, false);
+        }
+        else
+        {
+          // feature is set
+          typeMapping.setValue(stmt, col++, value);
+          stmt.setBoolean(col++, true);
+        }
+      }
+      else
+      {
+        typeMapping.setValue(stmt, col++, change.getElement2());
+      }
+    }
+    
+    return col;
   }
 
   public void updateAttributes(IDBStoreAccessor accessor, CDOID id, int newVersion, long created,
@@ -551,10 +628,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       stmt.setInt(col++, newVersion);
       stmt.setLong(col++, created);
 
-      for (Pair<ITypeMapping, Object> change : attributeChanges)
-      {
-        change.getElement1().setValue(stmt, col++, change.getElement2());
-      }
+      col = setUpdateAttributeValues(attributeChanges, stmt, col);
 
       stmt.setLong(col++, CDOIDUtil.getLong(id));
 
@@ -581,8 +655,16 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     for (Pair<ITypeMapping, Object> change : attributeChanges)
     {
       builder.append(", "); //$NON-NLS-1$
-      builder.append(change.getElement1().getField().getName());
+      ITypeMapping typeMapping = change.getElement1();
+      builder.append(typeMapping.getField().getName());
       builder.append(" =? "); //$NON-NLS-1$
+
+      if (typeMapping.getFeature().isUnsettable())
+      {
+        builder.append(", "); //$NON-NLS-1$
+        builder.append(getUnsettableFields().get(typeMapping.getFeature()));
+        builder.append(" =? "); //$NON-NLS-1$            
+      }
     }
 
     builder.append(sqlUpdateAffix);

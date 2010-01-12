@@ -94,6 +94,20 @@ public interface ITypeMapping
   public void setValue(PreparedStatement stmt, int index, Object value) throws SQLException;
 
   /**
+   * Set the feature's default value to the JDBC {@link PreparedStatement} using an appropriate <code>setXxx</code>
+   * method.
+   * 
+   * @param stmt
+   *          the prepared statement to set the value
+   * @param index
+   *          the index to use for the <code>setXxx</code> method.
+   * @throws SQLException
+   *           if the <code>setXxx</code> throws it.
+   * @since 3.0
+   */
+  public void setDefaultValue(PreparedStatement stmt, int index) throws SQLException;
+
+  /**
    * Set a value of the given revision to the JDBC {@link PreparedStatement} using an appropriate <code>setXxx</code>
    * method. The feature from which the value is taken is determined by {@link #getFeature()}.
    * 

@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.tests.AttributeTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 import org.eclipse.emf.cdo.tests.FeatureMapTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259869_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
@@ -37,10 +36,6 @@ public abstract class DBConfigs extends AllTestsAllConfigs
     // fails because of Bug 284109
     testClasses.remove(XATransactionTest.class);
     testClasses.add(DISABLE_XATransactionTest.class);
-
-    // fails because of Bug 284110
-    testClasses.remove(Bugzilla_258933_Test.class);
-    testClasses.add(DISABLE_Bugzilla_258933_Test.class);
 
     // ------------ tests below only fail for PostgreSQL
     // ------------ therefore they are overridden and

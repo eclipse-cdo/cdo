@@ -48,7 +48,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -67,6 +69,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
   private List<ITypeMapping> valueMappings;
 
   private List<IListMapping> listMappings;
+
+  private Map<EStructuralFeature, String> unsettableFields;
 
   public AbstractHorizontalClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
@@ -121,6 +125,26 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
         ITypeMapping mapping = mappingStrategy.createValueMapping(feature);
         mapping.createDBField(getTable());
         mappings.add(mapping);
+
+        if (feature.isUnsettable())
+        {
+          String fieldName = mappingStrategy.getUnsettableFieldName(feature);
+          if (unsettableFields == null)
+          {
+            unsettableFields = new LinkedHashMap<EStructuralFeature, String>();
+          }
+
+          unsettableFields.put(feature, fieldName);
+        }
+      }
+    }
+
+    // add unsettable fields to end of table
+    if (unsettableFields != null)
+    {
+      for (String fieldName : unsettableFields.values())
+      {
+        table.addField(fieldName, DBType.BOOLEAN, 1);
       }
     }
 
@@ -190,6 +214,18 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
       for (ITypeMapping mapping : valueMappings)
       {
+        EStructuralFeature feature = mapping.getFeature();
+        if (feature.isUnsettable())
+        {
+          if (!resultSet.getBoolean(unsettableFields.get(feature)))
+          {
+
+            // isSet==false -- setValue: null
+            revision.setValue(feature, null);
+            continue;
+          }
+        }
+
         mapping.readValueToRevision(resultSet, revision);
       }
 
@@ -253,6 +289,11 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
   protected final EClass getEClass()
   {
     return eClass;
+  }
+
+  protected final Map<EStructuralFeature, String> getUnsettableFields()
+  {
+    return unsettableFields;
   }
 
   public final List<ITypeMapping> getValueMappings()

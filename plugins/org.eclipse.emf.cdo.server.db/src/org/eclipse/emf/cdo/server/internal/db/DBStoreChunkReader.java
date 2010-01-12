@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - Bug 283998: [DB] Chunk reading for multiple chunks fails
+ *    Victor Roldan Betancort - Bug 283998: [DB] Chunk reading for multiple chunks fails
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
@@ -31,8 +32,6 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
 
   private StringBuilder builder = new StringBuilder();
 
-  private boolean firstChunk = true;
-
   public DBStoreChunkReader(DBStoreAccessor accessor, CDORevision revision, EStructuralFeature feature)
   {
     super(accessor, revision, feature);
@@ -51,18 +50,10 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
   public void addSimpleChunk(int index)
   {
     super.addSimpleChunk(index);
-    if (firstChunk)
-    {
-      builder.append(" AND ("); //$NON-NLS-1$
-      firstChunk = false;
-    }
-    else
-    {
-      builder.append(" OR "); //$NON-NLS-1$
-    }
+    prepareAddition();
 
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append("="); //$NON-NLS-1$
+    builder.append('=');
     builder.append(index);
   }
 
@@ -70,15 +61,7 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
   public void addRangedChunk(int fromIndex, int toIndex)
   {
     super.addRangedChunk(fromIndex, toIndex);
-    if (firstChunk)
-    {
-      builder.append(" AND ("); //$NON-NLS-1$
-      firstChunk = false;
-    }
-    else
-    {
-      builder.append(" OR "); //$NON-NLS-1$
-    }
+    prepareAddition();
 
     builder.append(CDODBSchema.LIST_IDX);
     builder.append(" BETWEEN "); //$NON-NLS-1$
@@ -90,13 +73,22 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
   public List<Chunk> executeRead()
   {
     List<Chunk> chunks = getChunks();
-
-    if (!firstChunk)
-    { // at least one chunk queried -> close parantheses.
-      builder.append(")"); //$NON-NLS-1$
+    if (chunks.size() > 1)
+    {
+      builder.insert(0, '(');
+      builder.append(')');
     }
 
     referenceMapping.readChunks(this, chunks, builder.toString());
     return chunks;
+  }
+
+  private void prepareAddition()
+  {
+    // If not empty, a chunk has been already added, and the next condition needs to be OR-ed
+    if (builder.length() > 0)
+    {
+      builder.append(" OR "); //$NON-NLS-1$
+    }
   }
 }

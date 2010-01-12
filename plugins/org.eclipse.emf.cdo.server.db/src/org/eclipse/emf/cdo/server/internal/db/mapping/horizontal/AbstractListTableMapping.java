@@ -393,6 +393,7 @@ public abstract class AbstractListTableMapping implements IListMapping
       StringBuilder builder = new StringBuilder(sqlSelectChunksPrefix);
       if (where != null)
       {
+        builder.append(" AND "); //$NON-NLS-1$
         builder.append(where);
       }
 
@@ -401,10 +402,6 @@ public abstract class AbstractListTableMapping implements IListMapping
       String sql = builder.toString();
       pstmt = chunkReader.getAccessor().getStatementCache().getPreparedStatement(sql, ReuseProbability.LOW);
       setKeyFields(pstmt, chunkReader.getRevision());
-      // if (TRACER.isEnabled())
-      // {
-      // TRACER.trace(pstmt.toString());
-      // }
 
       resultSet = pstmt.executeQuery();
 
@@ -413,12 +410,9 @@ public abstract class AbstractListTableMapping implements IListMapping
       int chunkIndex = 0;
       int indexInChunk = 0;
 
-      int resultCounter = 0;
-
       while (resultSet.next())
       {
         Object value = typeMapping.readValue(resultSet);
-        resultCounter++;
 
         if (chunk == null)
         {
@@ -448,17 +442,6 @@ public abstract class AbstractListTableMapping implements IListMapping
           chunk = null;
           indexInChunk = 0;
         }
-      }
-
-      // check if result set and chunks matched
-      for (Chunk ch : chunks)
-      {
-        resultCounter -= ch.size();
-      }
-
-      if (resultCounter != 0)
-      {
-        throw new IllegalStateException("ResultSet contained " + -resultCounter + " entries less than expected.");
       }
 
       if (TRACER.isEnabled())

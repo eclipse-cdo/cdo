@@ -51,8 +51,14 @@ import java.util.Map.Entry;
  */
 public final class EMFUtil
 {
+  /**
+   * @since 2.0
+   */
   public static final String CDO_ANNOTATION_SOURCE = "http://www.eclipse.org/emf/CDO";
 
+  /**
+   * @since 2.0
+   */
   public static final String CDO_ANNOTATION_KEY_PERSISTENT = "persistent";
 
   private static final EReference EOPERATION_EEXCEPTIONS = EcorePackage.eINSTANCE.getEOperation_EExceptions();
@@ -179,6 +185,9 @@ public final class EMFUtil
     return result;
   }
 
+  /**
+   * @since 2.0
+   */
   public static boolean isPersistent(EStructuralFeature feature)
   {
     if (feature == ECLASS_ESUPER_TYPES || feature == ETYPED_ELEMENT_ETYPE || feature == EOPERATION_EEXCEPTIONS)

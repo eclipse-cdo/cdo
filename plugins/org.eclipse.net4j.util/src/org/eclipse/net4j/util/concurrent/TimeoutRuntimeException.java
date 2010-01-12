@@ -38,6 +38,9 @@ public class TimeoutRuntimeException extends RuntimeException
     super(message, cause);
   }
 
+  /**
+   * @since 2.0
+   */
   public TimeoutException createTimeoutException()
   {
     TimeoutException timeoutException = new TimeoutException(getMessage());

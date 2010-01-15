@@ -66,7 +66,7 @@ public class AllTestsDBPsql extends DBConfigs
 
     // non-audit mode - remove audit tests
     testClasses.remove(AuditTest.class);
-    testClasses.remove(AuditTest.LocalAuditTest.class);
+    testClasses.remove(AuditTest.SameSession.class);
     testClasses.remove(Bugzilla_252214_Test.class);
   }
 

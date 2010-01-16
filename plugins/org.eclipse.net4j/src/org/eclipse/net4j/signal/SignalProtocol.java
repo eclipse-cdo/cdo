@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Andre Dietisheim - maintenance
  */
 package org.eclipse.net4j.signal;
 
@@ -197,6 +198,9 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     return true;
   }
 
+  /**
+   * Handles a given (incoming) buffer. Creates a signal to act upon the given buffer or uses a previously created signal.
+   */
   public void handleBuffer(IBuffer buffer)
   {
     ByteBuffer byteBuffer = buffer.getByteBuffer();

@@ -19,7 +19,6 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 import org.eclipse.net4j.util.io.StreamWrapperChain;
@@ -190,7 +189,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
         }
         catch (InterruptedException ex)
         {
-          throw WrappedException.wrap(ex);
+          return false;
         }
       }
     }
@@ -241,15 +240,6 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
       {
         // Incoming confirmation
         signal = signals.get(-correlationID);
-        if (signal == null)
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.trace("Discarding buffer"); //$NON-NLS-1$
-          }
-
-          buffer.release();
-        }
       }
     }
 
@@ -257,6 +247,15 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     {
       BufferInputStream inputStream = signal.getBufferInputStream();
       inputStream.handleBuffer(buffer);
+    }
+    else
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Discarding buffer"); //$NON-NLS-1$
+      }
+
+      buffer.release();
     }
   }
 
@@ -440,7 +439,6 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
   boolean handleFailOver(SignalActor signalActor, IChannel originalChannel, Exception reason)
   {
-    OM.LOG.error(reason);
     if (failOverStrategy != null)
     {
       try

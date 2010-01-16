@@ -8,4 +8,72 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/concurrent/Worker.java" type="org.eclipse.net4j.util.concurrent.Worker">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="setGlobalErrorHandler(IErrorHandler)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getGlobalErrorHandler()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="DEFAULT_ERROR_HANDLER"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/concurrent/Worker.java" type="org.eclipse.net4j.util.concurrent.Worker">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="setGlobalErrorHandler(IErrorHandler)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getGlobalErrorHandler()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="DEFAULT_ERROR_HANDLER"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/concurrent/Worker.java" type="org.eclipse.net4j.util.concurrent.Worker">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="setGlobalErrorHandler(IErrorHandler)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getGlobalErrorHandler()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="DEFAULT_ERROR_HANDLER"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/concurrent/Worker.java" type="org.eclipse.net4j.util.concurrent.Worker">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="setGlobalErrorHandler(IErrorHandler)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getGlobalErrorHandler()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="DEFAULT_ERROR_HANDLER"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

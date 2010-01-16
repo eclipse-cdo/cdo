@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.concurrent;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.IErrorHandler;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
@@ -37,6 +38,16 @@ public abstract class Worker extends Lifecycle
 
   @ExcludeFromDump
   private transient WorkerThread workerThread;
+
+  public static final IErrorHandler DEFAULT_ERROR_HANDLER = new IErrorHandler()
+  {
+    public void handleError(Throwable t)
+    {
+      OM.LOG.error(t);
+    }
+  };
+
+  private static IErrorHandler globalErrorHandler = DEFAULT_ERROR_HANDLER;
 
   public Worker()
   {
@@ -120,6 +131,18 @@ public abstract class Worker extends Lifecycle
 
   protected abstract void work(WorkContext context) throws Exception;
 
+  public static IErrorHandler getGlobalErrorHandler()
+  {
+    return globalErrorHandler;
+  }
+
+  public static IErrorHandler setGlobalErrorHandler(IErrorHandler globalErrorHandler)
+  {
+    IErrorHandler oldHandler = Worker.globalErrorHandler;
+    Worker.globalErrorHandler = globalErrorHandler;
+    return oldHandler;
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -176,7 +199,11 @@ public abstract class Worker extends Lifecycle
         }
         catch (Exception ex)
         {
-          OM.LOG.error(ex);
+          if (globalErrorHandler != null)
+          {
+            globalErrorHandler.handleError(ex);
+          }
+
           break;
         }
       }

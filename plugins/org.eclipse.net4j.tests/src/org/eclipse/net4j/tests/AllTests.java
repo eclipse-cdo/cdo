@@ -11,6 +11,7 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.tests.bugzilla.Bugzilla241463_Test;
+import org.eclipse.net4j.tests.bugzilla.Bugzilla262875_Test;
 import org.eclipse.net4j.util.tests.ExtendedIOTest;
 import org.eclipse.net4j.util.tests.MultiMapTest;
 import org.eclipse.net4j.util.tests.ReferenceValueMapTest;
@@ -35,7 +36,6 @@ public class AllTests
     suite.addTestSuite(ReferenceValueMapTest.class);
     suite.addTestSuite(BufferPoolTest.class);
     suite.addTestSuite(ExtendedIOTest.class);
-    suite.addTestSuite(Bugzilla241463_Test.class);
     suite.addTestSuite(ChannelTest.JVM.class);
     suite.addTestSuite(ChannelTest.TCP.class);
     suite.addTestSuite(TCPConnectorTest.class);
@@ -45,6 +45,10 @@ public class AllTests
     suite.addTestSuite(SignalMonitorTest.class);
     suite.addTestSuite(ExceptionTest.class);
     suite.addTestSuite(SecurityTest.class);
+
+    // Bugzillas
+    suite.addTestSuite(Bugzilla241463_Test.class);
+    suite.addTestSuite(Bugzilla262875_Test.class);
 
     // defs
     // suite.addTestSuite(TestDefTest.class);

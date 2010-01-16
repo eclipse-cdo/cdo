@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Andre Dietisheim - maintenance
  */
 package org.eclipse.spi.net4j;
 
@@ -134,6 +135,14 @@ public class Channel extends Lifecycle implements InternalChannel
     handleBuffer(buffer);
   }
 
+  /**
+   * Handles the given buffer. Ensures it is in the PUTTING state (otherwise ignores it) and sends it on behalf of the
+   * send queue.
+   * 
+   * @see IBuffer#getState
+   * @see BufferState.PUTTING
+   * @see Channel#sendQueue
+   */
   public void handleBuffer(IBuffer buffer)
   {
     BufferState state = buffer.getState();
@@ -164,6 +173,13 @@ public class Channel extends Lifecycle implements InternalChannel
     }
   }
 
+  /**
+   * Handles a buffer sent by the multiplexer. Adds work to the receive queue or releases the buffer.
+   * 
+   * @see InternalChannelMultiplexer#multiplexChannel
+   * @see IWorkSerializer
+   * @see ReceiverWork
+   */
   public void handleBufferFromMultiplexer(IBuffer buffer)
   {
     if (receiveHandler != null)

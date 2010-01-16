@@ -33,5 +33,9 @@
             class="org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalNonAuditMappingStrategy"
             type="horizontalNonAudit">
       </mappingStrategy>
+      <mappingStrategy
+            class="org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategyWithRanges"
+            type="horizontalAuditWithRanges">
+      </mappingStrategy>
    </extension>
 </plugin>

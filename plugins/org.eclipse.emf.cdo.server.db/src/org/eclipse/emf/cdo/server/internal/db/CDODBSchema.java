@@ -148,6 +148,10 @@ public class CDODBSchema extends DBSchema
 
   public static final String LIST_REVISION_VERSION = "cdo_version"; //$NON-NLS-1$
 
+  public static final String LIST_REVISION_VERSION_ADDED = "cdo_version_added"; //$NON-NLS-1$
+
+  public static final String LIST_REVISION_VERSION_REMOVED = "cdo_version_removed"; //$NON-NLS-1$
+
   public static final String LIST_IDX = "cdo_idx"; //$NON-NLS-1$
 
   public static final String LIST_VALUE = "cdo_value"; //$NON-NLS-1$
@@ -158,6 +162,10 @@ public class CDODBSchema extends DBSchema
   public static final String FEATUREMAP_REVISION_ID = "cdo_id"; //$NON-NLS-1$
 
   public static final String FEATUREMAP_VERSION = "cdo_version"; //$NON-NLS-1$
+
+  public static final String FEATUREMAP_VERSION_ADDED = "cdo_version_added"; //$NON-NLS-1$
+
+  public static final String FEATUREMAP_VERSION_REMOVED = "cdo_version_removed"; //$NON-NLS-1$
 
   public static final String FEATUREMAP_IDX = "cdo_idx"; //$NON-NLS-1$
 

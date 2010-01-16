@@ -20,8 +20,8 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
+import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
-import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
@@ -57,18 +57,13 @@ import java.util.Map;
 
 /**
  * This abstract base class provides basic behavior needed for mapping many-valued attributes to tables.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  */
-public abstract class AbstractFeatureMapTableMapping implements IListMapping
+public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTableMapping
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractFeatureMapTableMapping.class);
-
-  /**
-   * The feature for this mapping.
-   */
-  private EStructuralFeature feature;
 
   /**
    * The table of this mapping.
@@ -90,11 +85,6 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
    */
   private Map<Long, ITypeMapping> typeMappings;
 
-  /**
-   * The associated mapping strategy.
-   */
-  private IMappingStrategy mappingStrategy;
-
   // --------- SQL strings - see initSqlStrings() -----------------
   private String sqlSelectChunksPrefix;
 
@@ -102,18 +92,13 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
 
   protected String sqlInsert;
 
-  private EClass containingClass;
-
   private String sqlGetListLastIndex;
 
   private List<DBType> dbTypes;
 
   public AbstractFeatureMapTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
-    this.mappingStrategy = mappingStrategy;
-    this.feature = feature;
-    containingClass = eClass;
-
+    super(mappingStrategy, eClass, feature);
     initDBTypes();
     initTable();
     initSqlStrings();
@@ -122,14 +107,13 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
   private void initDBTypes()
   {
     // TODO add annotation processing here ...
-
     dbTypes = new ArrayList<DBType>(TypeMappingFactory.getDefaultFeatureMapDBTypes());
   }
 
   private void initTable()
   {
-    String tableName = mappingStrategy.getTableName(containingClass, feature);
-    table = mappingStrategy.getStore().getDBSchema().addTable(tableName);
+    String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
+    table = getMappingStrategy().getStore().getDBSchema().addTable(tableName);
 
     // add fields for keys (cdo_id, version, feature_id)
     FieldInfo[] fields = getKeyFields();
@@ -274,19 +258,9 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
     sqlInsert = builder.toString();
   }
 
-  public final EStructuralFeature getFeature()
-  {
-    return feature;
-  }
-
   protected List<DBType> getDBTypes()
   {
     return dbTypes;
-  }
-
-  public final EClass getContainingClass()
-  {
-    return containingClass;
   }
 
   protected final IDBTable getTable()
@@ -331,25 +305,19 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading list values for feature {0}.{1} of {2}v{3}", containingClass.getName(), feature.getName(),
-          revision.getID(), revision.getVersion());
+      TRACER.format("Reading list values for feature {0}.{1} of {2}v{3}", getContainingClass().getName(), getFeature()
+          .getName(), revision.getID(), revision.getVersion());
     }
 
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement pstmt = null;
     ResultSet resultSet = null;
 
     try
     {
       String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
-
-      pstmt = accessor.getStatementCache().getPreparedStatement(sql, ReuseProbability.HIGH);
-
+      pstmt = statementCache.getPreparedStatement(sql, ReuseProbability.HIGH);
       setKeyFields(pstmt, revision);
-
-      // if (TRACER.isEnabled())
-      // {
-      // TRACER.trace(pstmt.toString());
-      // }
 
       if (listChunk != CDORevision.UNCHUNKED)
       {
@@ -357,7 +325,6 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
       }
 
       resultSet = pstmt.executeQuery();
-
       while ((listChunk == CDORevision.UNCHUNKED || --listChunk >= 0) && resultSet.next())
       {
         Long tag = resultSet.getLong(1);
@@ -388,13 +355,13 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
     finally
     {
       DBUtil.close(resultSet);
-      accessor.getStatementCache().releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(pstmt);
     }
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading list values done for feature {0}.{1} of {2}v{3}", containingClass.getName(), feature //$NON-NLS-1$
-          .getName(), revision.getID(), revision.getVersion());
+      TRACER.format("Reading list values done for feature {0}.{1} of {2}v{3}", getContainingClass().getName(),
+          getFeature().getName(), revision.getID(), revision.getVersion());
     }
   }
 
@@ -402,7 +369,7 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
   {
     EStructuralFeature modelFeature = getFeatureByTag(tag);
 
-    TypeMapping typeMapping = (TypeMapping)mappingStrategy.createValueMapping(modelFeature);
+    TypeMapping typeMapping = (TypeMapping)getMappingStrategy().createValueMapping(modelFeature);
     String column = CDODBSchema.FEATUREMAP_VALUE + "_" + typeMapping.getDBType();
 
     tagMap.put(tag, column);
@@ -412,7 +379,7 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
 
   /**
    * Return the last (maximum) list index. (euals to size-1)
-   * 
+   *
    * @param accessor
    *          the accessor to use
    * @param revision
@@ -421,22 +388,16 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
    */
   private int getListLastIndex(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement pstmt = null;
     ResultSet resultSet = null;
 
     try
     {
-      pstmt = accessor.getStatementCache().getPreparedStatement(sqlGetListLastIndex, ReuseProbability.HIGH);
-
+      pstmt = statementCache.getPreparedStatement(sqlGetListLastIndex, ReuseProbability.HIGH);
       setKeyFields(pstmt, revision);
 
-      // if (TRACER.isEnabled())
-      // {
-      // TRACER.trace(pstmt.toString());
-      // }
-
       resultSet = pstmt.executeQuery();
-
       if (!resultSet.next())
       {
         if (TRACER.isEnabled())
@@ -464,7 +425,7 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
     finally
     {
       DBUtil.close(resultSet);
-      accessor.getStatementCache().releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(pstmt);
     }
   }
 
@@ -472,10 +433,11 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading list chunk values for feature {0}.{1} of {2}v{3}", containingClass.getName(), feature //$NON-NLS-1$
-          .getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
+      TRACER.format("Reading list chunk values for feature {0}.{1} of {2}v{3}", getContainingClass().getName(),
+          getFeature().getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
     }
 
+    IPreparedStatementCache statementCache = chunkReader.getAccessor().getStatementCache();
     PreparedStatement pstmt = null;
     ResultSet resultSet = null;
 
@@ -491,7 +453,7 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
       builder.append(sqlOrderByIndex);
 
       String sql = builder.toString();
-      pstmt = chunkReader.getAccessor().getStatementCache().getPreparedStatement(sql, ReuseProbability.LOW);
+      pstmt = statementCache.getPreparedStatement(sql, ReuseProbability.LOW);
       setKeyFields(pstmt, chunkReader.getRevision());
 
       resultSet = pstmt.executeQuery();
@@ -538,8 +500,8 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("Reading list chunk values done for feature {0}.{1} of {2}v{3}", containingClass.getName(),
-            getTagByFeature(feature), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
+        TRACER.format("Reading list chunk values done for feature {0}.{1} of {2}v{3}", getContainingClass().getName(),
+            getTagByFeature(getFeature()), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
       }
     }
     catch (SQLException ex)
@@ -549,7 +511,7 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
     finally
     {
       DBUtil.close(resultSet);
-      chunkReader.getAccessor().getStatementCache().releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(pstmt);
     }
   }
 
@@ -566,13 +528,14 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
 
   protected final void writeValue(IDBStoreAccessor accessor, CDORevision revision, int idx, Object value)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     if (TRACER.isEnabled())
     {
       TRACER
           .format(
-              "Writing value for feature {0}.{1} index {2} of {3}v{4} : {5}", containingClass.getName(), getTagByFeature(feature), idx, revision.getID(), revision.getVersion(), value); //$NON-NLS-1$
+              "Writing value for feature {0}.{1} index {2} of {3}v{4} : {5}", getContainingClass().getName(), getTagByFeature(getFeature()), idx, revision.getID(), revision.getVersion(), value); //$NON-NLS-1$
     }
 
     try
@@ -583,9 +546,7 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
       String column = getColumnName(tag);
 
       String sql = sqlInsert;
-
-      stmt = accessor.getStatementCache().getPreparedStatement(sql, ReuseProbability.HIGH);
-
+      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.HIGH);
       setKeyFields(stmt, revision);
       int stmtIndex = getKeyFields().length + 1;
 
@@ -603,7 +564,6 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
 
       stmt.setInt(stmtIndex++, idx);
       stmt.setLong(stmtIndex++, tag);
-
       CDODBUtil.sqlUpdate(stmt, true);
     }
     catch (SQLException e)
@@ -612,18 +572,17 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
   /**
    * Get column name (lazy)
-   * 
+   *
    * @param tag
    *          The feature's MetaID in CDO
    * @return the column name where the values are stored
    */
-
   protected String getColumnName(Long tag)
   {
     String column = tagMap.get(tag);
@@ -638,12 +597,11 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
 
   /**
    * Get type mapping (lazy)
-   * 
+   *
    * @param tag
    *          The feature's MetaID in CDO
    * @return the corresponding type mapping
    */
-
   protected ITypeMapping getTypeMapping(Long tag)
   {
     ITypeMapping typeMapping = typeMappings.get(tag);
@@ -660,10 +618,9 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
    * @param metaID
    * @return the column name where the values are stored
    */
-
   private EStructuralFeature getFeatureByTag(Long tag)
   {
-    return (EStructuralFeature)mappingStrategy.getStore().getMetaDataManager().getMetaInstance(tag);
+    return (EStructuralFeature)getMappingStrategy().getStore().getMetaDataManager().getMetaInstance(tag);
   }
 
   /**
@@ -671,21 +628,15 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
    *          The EStructuralFeature
    * @return The feature's MetaID in CDO
    */
-
   protected Long getTagByFeature(EStructuralFeature feature)
   {
-    return mappingStrategy.getStore().getMetaDataManager().getMetaID(feature);
+    return getMappingStrategy().getStore().getMetaDataManager().getMetaID(feature);
   }
 
-  /**
-   * @param metaID
-   *          The feature's MetaID in CDO
-   * @return the column name where the values are stored
-   */
 
   /**
    * Used by subclasses to indicate which fields should be in the table. I.e. just a pair of name and DBType ...
-   * 
+   *
    * @author Stefan Winkler
    */
   protected static class FieldInfo

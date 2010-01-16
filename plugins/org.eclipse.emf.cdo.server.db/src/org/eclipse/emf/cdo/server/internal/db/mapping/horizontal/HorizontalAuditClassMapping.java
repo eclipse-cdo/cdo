@@ -8,26 +8,41 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - major refactoring
- *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
+ *    Stefan Winkler - Bug 249610: [DB] Support external references (Implementation)
+ *    Lothar Werzinger - Bug 296440: [DB] Change RDB schema to improve scalability of to-many references in audit mode
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
+import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
+import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
+import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -44,7 +59,7 @@ import java.util.Map;
  * @since 2.0
  */
 public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping implements IClassMapping,
-    IClassMappingAuditSupport
+    IClassMappingAuditSupport, IClassMappingDeltaSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalAuditClassMapping.class);
 
@@ -59,6 +74,15 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
   private String sqlSelectAttributesByVersion;
 
   private String sqlReviseAttributes;
+
+  private ThreadLocal<FeatureDeltaWriter> deltaWriter = new ThreadLocal<FeatureDeltaWriter>()
+  {
+    @Override
+    protected FeatureDeltaWriter initialValue()
+    {
+      return new FeatureDeltaWriter();
+    };
+  };
 
   public HorizontalAuditClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
@@ -473,6 +497,112 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     finally
     {
       accessor.getStatementCache().releasePreparedStatement(stmt);
+    }
+  }
+
+  public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created,
+      OMMonitor monitor)
+  {
+    monitor.begin();
+    Async async = monitor.forkAsync();
+
+    try
+    {
+      FeatureDeltaWriter writer = deltaWriter.get();
+      writer.process(accessor, delta, created);
+    }
+    finally
+    {
+      async.stop();
+      monitor.done();
+    }
+  }
+
+  /**
+   * @author Stefan Winkler
+   */
+  private class FeatureDeltaWriter implements CDOFeatureDeltaVisitor
+  {
+    private IDBStoreAccessor accessor;
+
+    private long created;
+
+    private CDOID id;
+
+    private int oldVersion;
+
+    private int newVersion;
+
+    private InternalCDORevision newRevision;
+
+    public void process(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created)
+    {
+      this.accessor = accessor;
+      this.created = created;
+      id = delta.getID();
+      oldVersion = delta.getOriginVersion();
+      newVersion = delta.getDirtyVersion();
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("FeatureDeltaWriter: old version: {0}, new version: {1}", oldVersion, newVersion); //$NON-NLS-1$
+      }
+
+      InternalCDORevision originalRevision = (InternalCDORevision)accessor.getStore().getRepository()
+          .getRevisionManager().getRevision(id, 0, CDORevision.DEPTH_NONE);
+
+      newRevision = (InternalCDORevision)originalRevision.copy();
+
+      newRevision.setVersion(newVersion);
+      newRevision.setCreated(created);
+
+      // process revision delta tree
+      delta.accept(this);
+
+      long revised = newRevision.getCreated() - 1;
+      reviseObject(accessor, id, revised);
+
+      writeValues(accessor, newRevision);
+    }
+
+    public void visit(CDOMoveFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+    }
+
+    public void visit(CDOAddFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+    }
+
+    public void visit(CDORemoveFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+    }
+
+    public void visit(CDOSetFeatureDelta delta)
+    {
+      delta.apply(newRevision);
+    }
+
+    public void visit(CDOUnsetFeatureDelta delta)
+    {
+      delta.apply(newRevision);
+    }
+
+    public void visit(CDOListFeatureDelta delta)
+    {
+      IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(delta.getFeature());
+      listMapping.processDelta(accessor, id, oldVersion, newVersion, created, delta);
+    }
+
+    public void visit(CDOClearFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+    }
+
+    public void visit(CDOContainerFeatureDelta delta)
+    {
+      delta.apply(newRevision);
     }
   }
 }

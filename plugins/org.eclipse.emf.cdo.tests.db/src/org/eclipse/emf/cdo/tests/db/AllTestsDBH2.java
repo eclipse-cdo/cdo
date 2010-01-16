@@ -7,10 +7,10 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - introduced variable mapping strategies
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBUtil;
@@ -45,7 +45,8 @@ public class AllTestsDBH2 extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, AllTestsDBH2.H2.ReusableFolder.INSTANCE, JVM, NATIVE);
+    addScenario(parent, COMBINED, AllTestsDBH2.H2.ReusableFolder.AUDIT_INSTANCE, JVM, NATIVE);
+    addScenario(parent, COMBINED, AllTestsDBH2.H2.ReusableFolder.RANGE_INSTANCE, JVM, NATIVE);
   }
 
   /**
@@ -55,19 +56,32 @@ public class AllTestsDBH2 extends DBConfigs
   {
     private static final long serialVersionUID = 1L;
 
-    public static final AllTestsDBH2.H2 INSTANCE = new H2("DBStore: H2");
+    public static final AllTestsDBH2.H2 INSTANCE = new H2("DBStore: H2 (audit)",
+        "org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategy");
 
     protected transient File dbFolder;
 
-    public H2(String name)
+    private String mappingStrategy;
+
+    public H2(String name, String mappingStrategy)
     {
       super(name);
+      this.mappingStrategy = mappingStrategy;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected IMappingStrategy createMappingStrategy()
     {
-      return CDODBUtil.createHorizontalMappingStrategy(true);
+      try
+      {
+        Class<IMappingStrategy> clazz = (Class<IMappingStrategy>)Class.forName(mappingStrategy);
+        return clazz.newInstance();
+      }
+      catch (Exception ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
     }
 
     @Override
@@ -107,7 +121,12 @@ public class AllTestsDBH2 extends DBConfigs
     {
       private static final long serialVersionUID = 1L;
 
-      public static final ReusableFolder INSTANCE = new ReusableFolder("DBStore: H2 (Reusable Folder)");
+      public static final ReusableFolder AUDIT_INSTANCE = new ReusableFolder("DBStore: H2 (Reusable Folder, audit), ",
+          "org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategy");
+
+      public static final ReusableFolder RANGE_INSTANCE = new ReusableFolder(
+          "DBStore: H2 (Reusable Folder, audit, range-based mapping strategy)",
+          "org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategyWithRanges");
 
       private static File reusableFolder;
 
@@ -115,9 +134,9 @@ public class AllTestsDBH2 extends DBConfigs
 
       private transient ArrayList<String> repoNames = new ArrayList<String>();
 
-      public ReusableFolder(String name)
+      public ReusableFolder(String name, String mappingStrategy)
       {
-        super(name);
+        super(name, mappingStrategy);
       }
 
       @Override
@@ -138,6 +157,7 @@ public class AllTestsDBH2 extends DBConfigs
 
         Connection conn = null;
         Statement stmt = null;
+
         try
         {
           conn = defaultDataSource.getConnection();
@@ -157,7 +177,6 @@ public class AllTestsDBH2 extends DBConfigs
 
         JdbcDataSource dataSource = new JdbcDataSource();
         dataSource.setURL("jdbc:h2:" + dbFolder.getAbsolutePath() + "/h2test;SCHEMA=" + repoName);
-
         return dataSource;
       }
 

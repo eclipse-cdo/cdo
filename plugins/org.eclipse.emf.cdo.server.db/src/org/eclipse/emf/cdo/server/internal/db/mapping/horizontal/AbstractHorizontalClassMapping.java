@@ -350,7 +350,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     return tables;
   }
 
-  private void checkDuplicateResources(IDBStoreAccessor accessor, CDORevision revision) throws IllegalStateException
+  protected void checkDuplicateResources(IDBStoreAccessor accessor, CDORevision revision) throws IllegalStateException
   {
     CDOID folderID = (CDOID)revision.data().getContainerID();
     String name = (String)revision.data().get(EresourcePackage.eINSTANCE.getCDOResourceNode_Name(), 0);

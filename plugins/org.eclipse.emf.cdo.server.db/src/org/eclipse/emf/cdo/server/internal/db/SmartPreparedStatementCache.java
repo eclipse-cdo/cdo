@@ -49,6 +49,10 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
     return result;
   }
 
+  /**
+   * @param ps
+   *          the prepared statement to be released to the cache, or <code>null</code>.
+   */
   public void releasePreparedStatement(PreparedStatement ps)
   {
     if (ps != null) // Bug 276926: Silently accept ps == null and do nothing.

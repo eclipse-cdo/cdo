@@ -18,8 +18,8 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
+import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
-import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
@@ -52,14 +52,9 @@ import java.util.List;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractListTableMapping implements IListMapping
+public abstract class AbstractListTableMapping extends BasicAbstractListTableMapping
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractListTableMapping.class);
-
-  /**
-   * The feature for this mapping.
-   */
-  private EStructuralFeature feature;
 
   /**
    * The table of this mapping.
@@ -71,11 +66,6 @@ public abstract class AbstractListTableMapping implements IListMapping
    */
   private ITypeMapping typeMapping;
 
-  /**
-   * The associated mapping strategy.
-   */
-  private IMappingStrategy mappingStrategy;
-
   // --------- SQL strings - see initSqlStrings() -----------------
   private String sqlSelectChunksPrefix;
 
@@ -83,23 +73,19 @@ public abstract class AbstractListTableMapping implements IListMapping
 
   private String sqlInsertEntry;
 
-  private EClass containingClass;
-
   private String sqlGetListLastIndex;
 
   public AbstractListTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
-    this.mappingStrategy = mappingStrategy;
-    this.feature = feature;
-    containingClass = eClass;
-
+    super(mappingStrategy, eClass, feature);
     initTable();
     initSqlStrings();
   }
 
   private void initTable()
   {
-    String tableName = mappingStrategy.getTableName(containingClass, feature);
+    IMappingStrategy mappingStrategy = getMappingStrategy();
+    String tableName = mappingStrategy.getTableName(getContainingClass(), getFeature());
     table = mappingStrategy.getStore().getDBSchema().addTable(tableName);
 
     // add fields for keys (cdo_id, version, feature_id)
@@ -115,7 +101,7 @@ public abstract class AbstractListTableMapping implements IListMapping
     dbFields[dbFields.length - 1] = table.addField(CDODBSchema.LIST_IDX, DBType.INTEGER);
 
     // add field for value
-    typeMapping = mappingStrategy.createValueMapping(feature);
+    typeMapping = mappingStrategy.createValueMapping(getFeature());
     typeMapping.createDBField(table, CDODBSchema.LIST_VALUE);
 
     // add table indexes
@@ -212,16 +198,6 @@ public abstract class AbstractListTableMapping implements IListMapping
     sqlInsertEntry = builder.toString();
   }
 
-  public final EStructuralFeature getFeature()
-  {
-    return feature;
-  }
-
-  public final EClass getContainingClass()
-  {
-    return containingClass;
-  }
-
   protected final IDBTable getTable()
   {
     return table;
@@ -254,25 +230,19 @@ public abstract class AbstractListTableMapping implements IListMapping
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading list values for feature {0}.{1} of {2}v{3}", containingClass.getName(), feature.getName(), //$NON-NLS-1$
-          revision.getID(), revision.getVersion());
+      TRACER.format("Reading list values for feature {0}.{1} of {2}v{3}", getContainingClass().getName(), //$NON-NLS-1$
+          getFeature().getName(), revision.getID(), revision.getVersion());
     }
 
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement pstmt = null;
     ResultSet resultSet = null;
 
     try
     {
       String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
-
-      pstmt = accessor.getStatementCache().getPreparedStatement(sql, ReuseProbability.HIGH);
-
+      pstmt = statementCache.getPreparedStatement(sql, ReuseProbability.HIGH);
       setKeyFields(pstmt, revision);
-
-      // if (TRACER.isEnabled())
-      // {
-      // TRACER.trace(pstmt.toString());
-      // }
 
       if (listChunk != CDORevision.UNCHUNKED)
       {
@@ -280,7 +250,6 @@ public abstract class AbstractListTableMapping implements IListMapping
       }
 
       resultSet = pstmt.executeQuery();
-
       while ((listChunk == CDORevision.UNCHUNKED || --listChunk >= 0) && resultSet.next())
       {
         Object value = typeMapping.readValue(resultSet);
@@ -309,13 +278,13 @@ public abstract class AbstractListTableMapping implements IListMapping
     finally
     {
       DBUtil.close(resultSet);
-      accessor.getStatementCache().releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(pstmt);
     }
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading list values done for feature {0}.{1} of {2}v{3}", containingClass.getName(), feature //$NON-NLS-1$
-          .getName(), revision.getID(), revision.getVersion());
+      TRACER.format("Reading list values done for feature {0}.{1} of {2}v{3}", getContainingClass().getName(), //$NON-NLS-1$
+          getFeature().getName(), revision.getID(), revision.getVersion());
     }
   }
 
@@ -330,22 +299,16 @@ public abstract class AbstractListTableMapping implements IListMapping
    */
   private int getListLastIndex(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement pstmt = null;
     ResultSet resultSet = null;
 
     try
     {
-      pstmt = accessor.getStatementCache().getPreparedStatement(sqlGetListLastIndex, ReuseProbability.HIGH);
-
+      pstmt = statementCache.getPreparedStatement(sqlGetListLastIndex, ReuseProbability.HIGH);
       setKeyFields(pstmt, revision);
 
-      // if (TRACER.isEnabled())
-      // {
-      // TRACER.trace(pstmt.toString());
-      // }
-
       resultSet = pstmt.executeQuery();
-
       if (!resultSet.next())
       {
         if (TRACER.isEnabled())
@@ -373,7 +336,7 @@ public abstract class AbstractListTableMapping implements IListMapping
     finally
     {
       DBUtil.close(resultSet);
-      accessor.getStatementCache().releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(pstmt);
     }
   }
 
@@ -381,10 +344,11 @@ public abstract class AbstractListTableMapping implements IListMapping
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading list chunk values for feature {0}.{1} of {2}v{3}", containingClass.getName(), feature //$NON-NLS-1$
-          .getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
+      TRACER.format("Reading list chunk values for feature {0}.{1} of {2}v{3}", getContainingClass().getName(), //$NON-NLS-1$
+          getFeature().getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
     }
 
+    IPreparedStatementCache statementCache = chunkReader.getAccessor().getStatementCache();
     PreparedStatement pstmt = null;
     ResultSet resultSet = null;
 
@@ -400,7 +364,7 @@ public abstract class AbstractListTableMapping implements IListMapping
       builder.append(sqlOrderByIndex);
 
       String sql = builder.toString();
-      pstmt = chunkReader.getAccessor().getStatementCache().getPreparedStatement(sql, ReuseProbability.LOW);
+      pstmt = statementCache.getPreparedStatement(sql, ReuseProbability.LOW);
       setKeyFields(pstmt, chunkReader.getRevision());
 
       resultSet = pstmt.executeQuery();
@@ -446,8 +410,8 @@ public abstract class AbstractListTableMapping implements IListMapping
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("Reading list chunk values done for feature {0}.{1} of {2}v{3}", containingClass.getName(), //$NON-NLS-1$
-            feature.getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
+        TRACER.format("Reading list chunk values done for feature {0}.{1} of {2}v{3}", getContainingClass().getName(), //$NON-NLS-1$
+            getFeature().getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
       }
     }
     catch (SQLException ex)
@@ -457,7 +421,7 @@ public abstract class AbstractListTableMapping implements IListMapping
     finally
     {
       DBUtil.close(resultSet);
-      chunkReader.getAccessor().getStatementCache().releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(pstmt);
     }
   }
 
@@ -474,17 +438,18 @@ public abstract class AbstractListTableMapping implements IListMapping
 
   protected final void writeValue(IDBStoreAccessor accessor, CDORevision revision, int idx, Object value)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing value for feature {0}.{1} index {2} of {3}v{4} : {5}", containingClass.getName(), feature //$NON-NLS-1$
-          .getName(), idx, revision.getID(), revision.getVersion(), value);
+      TRACER.format("Writing value for feature {0}.{1} index {2} of {3}v{4} : {5}", getContainingClass().getName(),
+          getFeature().getName(), idx, revision.getID(), revision.getVersion(), value);
     }
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlInsertEntry, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sqlInsertEntry, ReuseProbability.HIGH);
 
       setKeyFields(stmt, revision);
       int stmtIndex = getKeyFields().length + 1;
@@ -499,7 +464,7 @@ public abstract class AbstractListTableMapping implements IListMapping
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 

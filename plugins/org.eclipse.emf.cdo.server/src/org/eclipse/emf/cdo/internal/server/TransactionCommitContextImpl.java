@@ -251,17 +251,17 @@ public class TransactionCommitContextImpl implements InternalCommitContext
     {
       monitor.begin(106);
 
+      adjustMetaRanges();
+      monitor.worked();
+
+      lockObjects();
+
       // Could throw an exception
       timeStamp = createTimeStamp();
       dirtyObjects = new InternalCDORevision[dirtyObjectDeltas.length];
 
-      adjustMetaRanges();
-      monitor.worked();
-
       adjustTimeStamps();
       monitor.worked();
-
-      lockObjects();
 
       InternalRepository repository = transaction.getRepository();
       computeDirtyObjects(!repository.isSupportingRevisionDeltas(), monitor.fork());

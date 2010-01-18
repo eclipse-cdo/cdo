@@ -11,8 +11,10 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.tests.bugzilla.Bugzilla241463_Test;
+import org.eclipse.net4j.tests.bugzilla.Bugzilla262875_Test;
 import org.eclipse.net4j.util.tests.ExtendedIOTest;
 import org.eclipse.net4j.util.tests.MultiMapTest;
+import org.eclipse.net4j.util.tests.QueueWorkerWorkSerializerTest;
 import org.eclipse.net4j.util.tests.ReferenceValueMapTest;
 import org.eclipse.net4j.util.tests.SecurityTest;
 import org.eclipse.net4j.util.tests.SortedFileMapTest;
@@ -37,7 +39,6 @@ public class AllTests
     suite.addTestSuite(BufferPoolTest.class);
     suite.addTestSuite(ExtendedIOTest.class);
     suite.addTestSuite(StringCompressorTest.class);
-    suite.addTestSuite(Bugzilla241463_Test.class);
     suite.addTestSuite(ChannelTest.JVM.class);
     suite.addTestSuite(ChannelTest.TCP.class);
     suite.addTestSuite(TCPConnectorTest.class);
@@ -49,7 +50,11 @@ public class AllTests
     suite.addTestSuite(SecurityTest.class);
     suite.addTestSuite(QueueWorkerWorkSerializerTest.class);
 
-    // defs
+    // Bugzillas
+    suite.addTestSuite(Bugzilla241463_Test.class);
+    suite.addTestSuite(Bugzilla262875_Test.class);
+
+    // Defs
     // suite.addTestSuite(TestDefTest.class);
     // suite.addTestSuite(TCPAcceptorDefImplTest.class);
     // suite.addTestSuite(TCPConnectorDefImplTest.class);

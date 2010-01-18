@@ -9,11 +9,10 @@
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.net4j.tests;
+package org.eclipse.net4j.util.tests;
 
 import org.eclipse.net4j.util.concurrent.QueueWorkerWorkSerializer;
 import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
@@ -23,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * A test for {@link QueueWorkerWorkSerializer}
+ * A test for {@link QueueWorkerWorkSerializer}.
  * 
  * @author Andre Dietisheim
  */
@@ -59,10 +58,9 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
    */
   public void testAllWorkSubmittedIsConsumed() throws Throwable
   {
-    createWorkProducerThreads(new AbstractWorkProducerFactory()
+    createWorkProducerThreads(new WorkProducerFactory()
     {
-      @Override
-      Runnable create()
+      public WorkProducer createWorkProducer()
       {
         return new WorkProducer()
         {
@@ -74,6 +72,7 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
         };
       }
     });
+
     waitForAllWorkExecuted();
     assertEquals(workProduced.get(), NUM_WORK - workConsumedLatch.getCount());
   }
@@ -84,10 +83,9 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
    */
   public void testGivenWorkExceptionInWorkAllWorkSubmittedOnlyTheFirstWorkerIsConsumed() throws Throwable
   {
-    createWorkProducerThreads(new AbstractWorkProducerFactory()
+    createWorkProducerThreads(new WorkProducerFactory()
     {
-      @Override
-      Runnable create()
+      public WorkProducer createWorkProducer()
       {
         return new WorkProducer()
         {
@@ -107,17 +105,12 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
         };
       }
     });
+
     waitForAllWorkExecuted();
     assertEquals(NUM_WORK, workProduced.get());
     assertEquals(1, NUM_WORK - workConsumedLatch.getCount());
   }
 
-  /**
-   * Wait for all work executed.
-   * 
-   * @throws InterruptedException
-   *           the interrupted exception
-   */
   private void waitForAllWorkExecuted() throws InterruptedException
   {
     if (!workConsumedLatch.await(WORK_COMPLETION_TIMEOUT, TimeUnit.MILLISECONDS))
@@ -126,30 +119,20 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
     }
   }
 
-  /**
-   * Creates work producer threads.
-   * 
-   * @see #NUM_WORKPRODUCER_THREADS
-   */
-  private void createWorkProducerThreads(AbstractWorkProducerFactory factory)
+  private void createWorkProducerThreads(WorkProducerFactory factory)
   {
     for (int i = 0; i < NUM_WORKPRODUCER_THREADS; i++)
     {
-      threadPool.submit(factory.create());
+      threadPool.submit(factory.createWorkProducer());
     }
   }
 
   /**
    * A factory that creates work units.
    */
-  private abstract class AbstractWorkProducerFactory
+  private static interface WorkProducerFactory
   {
-    /**
-     * Creates the.
-     * 
-     * @return the runnable
-     */
-    abstract Runnable create();
+    public WorkProducer createWorkProducer();
   }
 
   /**
@@ -193,14 +176,12 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
   }
 
   /**
-   * A simple work unit to be executed in the queueWorker
+   * A simple work unit to be executed in the queueWorker.
    * 
    * @author Andre Dietisheim
    */
   class Work implements Runnable
   {
-
-    /** The id. */
     private final int id;
 
     private Work(int id)
@@ -225,9 +206,6 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
     workProduced = new AtomicInteger(0);
   }
 
-  /**
-   * Tear down.
-   */
   @Override
   public void tearDown()
   {

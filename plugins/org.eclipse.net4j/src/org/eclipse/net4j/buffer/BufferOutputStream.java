@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Andre Dietisheim -  Bug 262875: java.nio.BufferUnderFlowException https://bugs.eclipse.org/bugs/show_bug.cgi?id=262875
  */
 package org.eclipse.net4j.buffer;
 
@@ -93,7 +94,10 @@ public class BufferOutputStream extends OutputStream
   @Override
   public void write(int b) throws IOException
   {
+    throwExceptionOnError();
+    flushIfFilled();
     ensureBuffer();
+
     if (TRACER.isEnabled())
     {
       TRACER.trace("--> " + HexUtil.formatByte(b) //$NON-NLS-1$
@@ -102,13 +106,30 @@ public class BufferOutputStream extends OutputStream
 
     ByteBuffer buffer = currentBuffer.getByteBuffer();
     buffer.put((byte)b);
+  }
 
-    if (!buffer.hasRemaining())
+  /**
+   * Flushes the current buffer if it has no remaining space.
+   * 
+   * @throws IOException
+   *           Signals that an I/O exception has occurred.
+   */
+  private void flushIfFilled() throws IOException
+  {
+    if (currentBuffer != null && !currentBuffer.getByteBuffer().hasRemaining())
     {
       flush();
     }
   }
 
+  /**
+   * Flushes the current buffer, it's handled over to the buffer handler.
+   * 
+   * @throws IOException
+   *           Signals that an I/O exception has occurred.
+   * @see #currentBuffer
+   * @see IBufferHandler#handleBuffer(IBuffer)
+   */
   @Override
   public void flush() throws IOException
   {
@@ -121,6 +142,7 @@ public class BufferOutputStream extends OutputStream
 
   public void flushWithEOS() throws IOException
   {
+    throwExceptionOnError();
     ensureBuffer();
     currentBuffer.setEOS(true);
     flush();
@@ -151,7 +173,33 @@ public class BufferOutputStream extends OutputStream
     return "BufferOutputStream"; //$NON-NLS-1$
   }
 
+  /**
+   * Ensures that this BufferOutputStream has a buffer. If the current buffer was flushed a new one is fetched from the
+   * buffer provider.
+   * 
+   * @throws IOException
+   *           Signals that an I/O exception has occurred.
+   * @see #flush()
+   * @see IBufferProvider#provideBuffer()
+   */
   protected void ensureBuffer() throws IOException
+  {
+    if (currentBuffer == null)
+    {
+      currentBuffer = bufferProvider.provideBuffer();
+      currentBuffer.setErrorHandler(errorHandler);
+      currentBuffer.startPutting(channelID);
+    }
+  }
+
+  /**
+   * Throws an exception if there's an error.
+   * 
+   * @throws IOException
+   *           Signals that an I/O exception has occurred.
+   * @see #error
+   */
+  private void throwExceptionOnError() throws IOException
   {
     if (error != null)
     {
@@ -166,13 +214,6 @@ public class BufferOutputStream extends OutputStream
       }
 
       throw new IORuntimeException(error);
-    }
-
-    if (currentBuffer == null)
-    {
-      currentBuffer = bufferProvider.provideBuffer();
-      currentBuffer.setErrorHandler(errorHandler);
-      currentBuffer.startPutting(channelID);
     }
   }
 

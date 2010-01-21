@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.ObjectUtil;
 
 /**
  * @author Caspar De Groot
+ * @since 3.0
  */
 public class Triplet<T1, T2, T3> extends Pair<T1, T2>
 {
@@ -56,8 +57,9 @@ public class Triplet<T1, T2, T3> extends Pair<T1, T2>
     if (obj instanceof Triplet<?, ?, ?>)
     {
       Triplet<?, ?, ?> that = (Triplet<?, ?, ?>)obj;
-      return ObjectUtil.equals(getElement1(), that.getElement1())
-          && ObjectUtil.equals(getElement2(), that.getElement2()) && ObjectUtil.equals(element3, that.element3);
+      return ObjectUtil.equals(getElement1(), that.getElement1()) //
+          && ObjectUtil.equals(getElement2(), that.getElement2()) //
+          && ObjectUtil.equals(element3, that.element3);
     }
 
     return false;

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -54,6 +54,11 @@ public class RepositoryConfigurator
 
   private IManagedContainer container;
 
+  public RepositoryConfigurator()
+  {
+    this(null);
+  }
+
   public RepositoryConfigurator(IManagedContainer container)
   {
     this.container = container;
@@ -80,7 +85,11 @@ public class RepositoryConfigurator
       Element repositoryConfig = (Element)elements.item(i);
       IRepository repository = configureRepository(repositoryConfig);
       repositories.add(repository);
-      CDOServerUtil.addRepository(container, repository);
+
+      if (container != null)
+      {
+        CDOServerUtil.addRepository(container, repository);
+      }
     }
 
     return repositories.toArray(new IRepository[repositories.size()]);

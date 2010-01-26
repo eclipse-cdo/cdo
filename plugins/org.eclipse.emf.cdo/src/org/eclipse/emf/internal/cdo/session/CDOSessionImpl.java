@@ -934,11 +934,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
         // Need to refresh if we change state
         Map<CDOID, CDOIDAndVersion> allRevisions = getAllCDOIDAndVersion();
-        if (!allRevisions.isEmpty())
-        {
-          int initialChunkSize = collectionLoadingPolicy.getInitialChunkSize();
-          getSessionProtocol().setPassiveUpdate(allRevisions, initialChunkSize, passiveUpdateEnabled);
-        }
+        int initialChunkSize = collectionLoadingPolicy.getInitialChunkSize();
+        getSessionProtocol().setPassiveUpdate(allRevisions, initialChunkSize, passiveUpdateEnabled);
 
         IListener[] listeners = getListeners();
         if (listeners != null)

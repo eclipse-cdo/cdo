@@ -15,7 +15,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j;
 
-import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
+import org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest;
 import org.eclipse.emf.cdo.net4j.CDOSession;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -70,9 +70,9 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   protected class OptionsImpl extends org.eclipse.emf.internal.cdo.session.CDOSessionImpl.OptionsImpl implements
       org.eclipse.emf.cdo.net4j.CDOSession.Options
   {
-    private int commitTimeout = OM.PREF_COMMIT_MONITOR_TIMEOUT_SECONDS.getValue();
+    private int commitTimeout = CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS;
 
-    private int progressInterval = OM.PREF_COMMIT_MONITOR_PROGRESS_SECONDS.getValue();
+    private int progressInterval = CommitTransactionRequest.DEFAULT_MONITOR_PROGRESS_SECONDS;
 
     public OptionsImpl()
     {

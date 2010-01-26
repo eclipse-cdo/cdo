@@ -97,6 +97,7 @@ public class CDOPreferencePage extends OMPreferencePage
 
   protected void initValues()
   {
+    // TODO Move all preferences from core to UI!
     repositoryName.setText(org.eclipse.emf.internal.cdo.bundle.OM.PREF_REPOSITORY_NAME.getValue());
     userName.setText(org.eclipse.emf.internal.cdo.bundle.OM.PREF_USER_NAME.getValue());
     connectorDescription.setText(org.eclipse.emf.internal.cdo.bundle.OM.PREF_CONNECTOR_DESCRIPTION.getValue());
@@ -111,6 +112,7 @@ public class CDOPreferencePage extends OMPreferencePage
   @Override
   public boolean performOk()
   {
+    // TODO Move all preferences from core to UI!
     org.eclipse.emf.internal.cdo.bundle.OM.PREF_REPOSITORY_NAME.setValue(repositoryName.getText());
     org.eclipse.emf.internal.cdo.bundle.OM.PREF_USER_NAME.setValue(userName.getText());
     org.eclipse.emf.internal.cdo.bundle.OM.PREF_CONNECTOR_DESCRIPTION.setValue(connectorDescription.getText());

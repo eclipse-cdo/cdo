@@ -34,7 +34,6 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
-import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -886,13 +885,10 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     private boolean passiveUpdateEnabled = true;
 
-    private CDOCollectionLoadingPolicy collectionLoadingPolicy;
+    private CDOCollectionLoadingPolicy collectionLoadingPolicy = CDOCollectionLoadingPolicy.DEFAULT;
 
     public OptionsImpl()
     {
-      // TODO Remove preferences from core
-      int value = OM.PREF_COLLECTION_LOADING_CHUNK_SIZE.getValue();
-      collectionLoadingPolicy = CDOUtil.createCollectionLoadingPolicy(value, value);
     }
 
     public IOptionsContainer getContainer()

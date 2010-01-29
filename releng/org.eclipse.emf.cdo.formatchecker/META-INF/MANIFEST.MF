@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CDO Format Checker
+Bundle-SymbolicName: org.eclipse.emf.cdo.formatchecker
+Bundle-Version: 1.0.0.qualifier
+Export-Package: org.eclipse.emf.cdo.formatchecker
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: Eclipse Modeling Project

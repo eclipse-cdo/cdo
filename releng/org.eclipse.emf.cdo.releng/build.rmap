@@ -3,7 +3,7 @@
   <rm:property key="build.type" mutable="true" value="N"/>
 
   <rm:locator pattern="^org\.eclipse\.emf\.cdo*" searchPathRef="cdo.source"/>
-  <rm:locator pattern="^org\.gastro\.*" searchPathRef="cdo.source"/>
+  <rm:locator pattern="^org\.gastro*" searchPathRef="cdo.source"/>
   <rm:locator pattern="^org\.eclipse\.net4j*" searchPathRef="net4j.source"/>
   <rm:locator searchPathRef="modeling" failOnError="false"/>
   <rm:locator searchPathRef="target.platform"/>

@@ -4,6 +4,7 @@
         <cs:dependency name="org.eclipse.emf.cdo.site" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.emf.cdo.tests" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.net4j.tests" componentType="eclipse.feature"/>
+        <cs:dependency name="org.eclipse.emf.cdo.formatchecker" componentType="osgi.bundle"/>
         <cs:dependency name="org.gastro" componentType="eclipse.feature"/>
         <cs:dependency name="com.mysql.jdbc" componentType="eclipse.feature"/>
         <cs:dependency name="org.apache.derby" componentType="eclipse.feature"/>

@@ -44,7 +44,7 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
 
   public void testBugzilla_258933() throws Exception
   {
-    testWithValue("level", NIL, true);
+    testWithValue("level", NIL, false);
   }
 
   public void testBugzilla_258933_SetToDefaultValue() throws Exception
@@ -69,7 +69,7 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
 
   public void testBugzilla_258933_String_unsettable() throws Exception
   {
-    testWithValue("settable", NIL, true);
+    testWithValue("settable", NIL, false);
   }
 
   public void testBugzilla_258933_String_SetToDefaultValue_unsettable() throws Exception
@@ -144,7 +144,7 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
   {
     {
       Order order = getModel1Factory().createOrder();
-      assertEquals(true, order.eIsSet(getModel1Package().getOrder_OrderDetails()));
+      assertEquals(false, order.eIsSet(getModel1Package().getOrder_OrderDetails()));
 
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(getModel1Package());
@@ -152,10 +152,10 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/test1");
       resource.getContents().add(order);
-      assertEquals(true, order.eIsSet(getModel1Package().getOrder_OrderDetails()));
+      assertEquals(false, order.eIsSet(getModel1Package().getOrder_OrderDetails()));
 
       transaction.commit();
-      assertEquals(true, order.eIsSet(getModel1Package().getOrder_OrderDetails()));
+      assertEquals(false, order.eIsSet(getModel1Package().getOrder_OrderDetails()));
 
       session.close();
     }
@@ -165,10 +165,10 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
 
     CDOTransaction transaction = session.openTransaction();
     Order instance = (Order)transaction.getResource("/test1").getContents().get(0);
-    assertEquals(true, instance.eIsSet(getModel1Package().getOrder_OrderDetails()));
+    assertEquals(false, instance.eIsSet(getModel1Package().getOrder_OrderDetails()));
 
     transaction.getResource("/test1").getContents().remove(0);
-    assertEquals(true, instance.eIsSet(getModel1Package().getOrder_OrderDetails()));
+    assertEquals(false, instance.eIsSet(getModel1Package().getOrder_OrderDetails()));
 
     instance.getOrderDetails().add(getModel1Factory().createOrderDetail());
   }

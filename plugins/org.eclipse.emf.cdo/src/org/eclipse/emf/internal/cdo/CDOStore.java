@@ -50,6 +50,7 @@ import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.spi.cdo.CDOElementProxy;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -182,7 +183,16 @@ public final class CDOStore implements EStore
   {
     if (!feature.isUnsettable())
     {
-      return true;
+      if (feature.isMany())
+      {
+        @SuppressWarnings("unchecked")
+        InternalEList<Object> list = (InternalEList<Object>)eObject.eGet(feature);
+        return list != null && !list.isEmpty();
+      }
+      else
+      {
+        return eObject.eGet(feature) != feature.getDefaultValue();
+      }
     }
 
     InternalCDOObject cdoObject = getCDOObject(eObject);

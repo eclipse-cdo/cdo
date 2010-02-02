@@ -112,7 +112,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     this.delegate = delegate;
     this.file = file;
 
-    dirty = delegate.isDirty();
+    boolean delegateWasDirty = delegate.isDirty();
     delegate.addTransactionHandler(delegateHandler);
 
     if (file.isDirectory())
@@ -139,6 +139,8 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
         IOUtil.close(in);
       }
     }
+
+    dirty = delegateWasDirty;
   }
 
   public CDOTransaction getDelegate()
@@ -234,6 +236,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   {
     delegate.commit(progressMonitor);
     file.delete();
+    setDirty(false);
   }
 
   public CDOSavepoint[] exportChanges(OutputStream out) throws IOException

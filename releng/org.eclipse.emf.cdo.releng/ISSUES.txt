@@ -1,0 +1,4 @@
+- JavaDoc generation
+- Generated source features have wrong labels
+- Source bundles into SDK
+- Signing

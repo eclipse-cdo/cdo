@@ -244,10 +244,10 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
       long timeStamp = revision.getTimeStamp();
       if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
       {
-      pstmt = accessor.getStatementCache().getPreparedStatement(sqlSelectAttributesByTime, ReuseProbability.MEDIUM);
-      pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
-      pstmt.setLong(2, timeStamp);
-      pstmt.setLong(3, timeStamp);
+        pstmt = accessor.getStatementCache().getPreparedStatement(sqlSelectAttributesByTime, ReuseProbability.MEDIUM);
+        pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
+        pstmt.setLong(2, timeStamp);
+        pstmt.setLong(3, timeStamp);
       }
       else
       {
@@ -510,8 +510,6 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
 
     private int oldVersion;
 
-    private int newVersion;
-
     private InternalCDORevision newRevision;
 
     public void process(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created)
@@ -523,7 +521,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("FeatureDeltaWriter: old version: {0}, new version: {1}", oldVersion, newVersion); //$NON-NLS-1$
+        TRACER.format("FeatureDeltaWriter: old version: {0}, new version: {1}", oldVersion, oldVersion + 1); //$NON-NLS-1$
       }
 
       InternalCDORevision originalRevision = (InternalCDORevision)accessor.getStore().getRepository()
@@ -531,7 +529,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
 
       newRevision = (InternalCDORevision)originalRevision.copy();
 
-      newRevision.setVersion(newVersion);
+      newRevision.setVersion(oldVersion + 1);
       newRevision.setBranchPoint(CDOBranchUtil.createBranchPoint(delta.getBranch(), created));
 
       // process revision delta tree
@@ -571,7 +569,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     public void visit(CDOListFeatureDelta delta)
     {
       IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(delta.getFeature());
-      listMapping.processDelta(accessor, id, oldVersion, newVersion, created, delta);
+      listMapping.processDelta(accessor, id, oldVersion, oldVersion + 1, created, delta);
     }
 
     public void visit(CDOClearFeatureDelta delta)

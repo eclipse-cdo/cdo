@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
 import org.eclipse.emf.cdo.tests.AttributeTest;
+import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 import org.eclipse.emf.cdo.tests.FeatureMapTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
@@ -29,6 +30,12 @@ public abstract class DBConfigs extends AllTestsAllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
     super.initTestClasses(testClasses);
+
+    // remove BranchingTests because most mappings do not support it
+    // Subclasses should add Banching tests if supported
+    testClasses.remove(BranchingTest.class);
+    testClasses.remove(BranchingTest.SameSession.class);
+
     testClasses.add(DBStoreTest.class);
     testClasses.add(SQLQueryTest.class);
     testClasses.add(DBAnnotationsTest.class);

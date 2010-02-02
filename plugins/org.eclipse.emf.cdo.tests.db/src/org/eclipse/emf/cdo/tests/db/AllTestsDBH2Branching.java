@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import org.eclipse.net4j.db.DBUtil;
@@ -50,27 +51,31 @@ public class AllTestsDBH2Branching extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, AllTestsDBH2Branching.H2NonAudit.ReusableFolder.INSTANCE, JVM, NATIVE);
+    addScenario(parent, COMBINED, AllTestsDBH2Branching.H2Branching.ReusableFolder.INSTANCE, JVM, NATIVE);
   }
 
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
+    // add branching tests for this testsuite
+    testClasses.add(BranchingTest.class);
+    testClasses.add(BranchingTest.SameSession.class);
+
     super.initTestClasses(testClasses);
   }
 
   /**
    * @author Eike Stepper
    */
-  public static class H2NonAudit extends DBStoreRepositoryConfig
+  public static class H2Branching extends DBStoreRepositoryConfig
   {
     private static final long serialVersionUID = 1L;
 
-    public static final AllTestsDBH2Branching.H2NonAudit INSTANCE = new H2NonAudit("DBStore: H2 (non-audit)");
+    public static final AllTestsDBH2Branching.H2Branching INSTANCE = new H2Branching("DBStore: H2 (branching)");
 
     protected transient File dbFolder;
 
-    public H2NonAudit(String name)
+    public H2Branching(String name)
     {
       super(name);
     }
@@ -122,7 +127,7 @@ public class AllTestsDBH2Branching extends DBConfigs
     /**
      * @author Eike Stepper
      */
-    public static class ReusableFolder extends H2NonAudit
+    public static class ReusableFolder extends H2Branching
     {
       private static final long serialVersionUID = 1L;
 

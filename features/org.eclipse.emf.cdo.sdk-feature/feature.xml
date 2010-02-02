@@ -61,4 +61,23 @@
          version="0.0.0"
          unpack="false"/>
 
+		<plugin id="org.eclipse.emf.cdo.common.db.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.common.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.defs.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.edit.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.examples.company.edit.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.examples.company.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.examples.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.migrator.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.net4j.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.server.db.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.server.hibernate.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.server.hibernate.teneo.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.server.net4j.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.server.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.ui.capabilities.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.ui.defs.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.ui.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
 </feature>

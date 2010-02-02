@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.server.embedded;
 
 import org.eclipse.emf.cdo.server.embedded.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -41,6 +42,11 @@ public class EmbeddedClientSession extends CDOSessionImpl implements CDOSession
   public InternalCDOPackageRegistry getPackageRegistry()
   {
     return getRepository().getPackageRegistry();
+  }
+
+  public InternalCDOBranchManager getBranchManager()
+  {
+    return getRepository().getBranchManager();
   }
 
   public InternalCDORevisionManager getRevisionManager()

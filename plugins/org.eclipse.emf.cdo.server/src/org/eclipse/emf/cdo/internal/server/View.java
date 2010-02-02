@@ -11,14 +11,18 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.CDOCommonView;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import java.text.MessageFormat;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,6 +34,8 @@ public class View implements InternalView
 
   private int viewID;
 
+  private CDOBranchPoint branchPoint;
+
   private InternalRepository repository;
 
   private Set<CDOID> changeSubscriptionIDs = new HashSet<CDOID>();
@@ -37,11 +43,13 @@ public class View implements InternalView
   /**
    * @since 2.0
    */
-  public View(InternalSession session, int viewID)
+  public View(InternalSession session, int viewID, CDOBranchPoint branchPoint)
   {
     this.session = session;
-    this.viewID = viewID;
     repository = session.getManager().getRepository();
+
+    this.viewID = viewID;
+    setBranchPoint(branchPoint);
   }
 
   public InternalSession getSession()
@@ -54,12 +62,19 @@ public class View implements InternalView
     return viewID;
   }
 
-  /**
-   * @since 2.0
-   */
-  public Type getViewType()
+  public CDOBranch getBranch()
   {
-    return Type.READONLY;
+    return branchPoint.getBranch();
+  }
+
+  public long getTimeStamp()
+  {
+    return branchPoint.getTimeStamp();
+  }
+
+  public boolean isReadOnly()
+  {
+    return true;
   }
 
   /**
@@ -71,15 +86,35 @@ public class View implements InternalView
     return repository;
   }
 
-  /**
-   * The timeStamp of the view ({@link CDOCommonView#UNSPECIFIED_DATE} if the view is an
-   * {@link CDOCommonView.Type#AUDIT audit} view.
-   * 
-   * @since 2.0
-   */
-  public long getTimeStamp()
+  public boolean[] changeTarget(CDOBranchPoint branchPoint, List<CDOID> invalidObjects)
   {
-    return UNSPECIFIED_DATE;
+    checkOpen();
+    setBranchPoint(branchPoint);
+    List<CDORevision> revisions = repository.getRevisionManager().getRevisions(invalidObjects, branchPoint, 0,
+        CDORevision.DEPTH_NONE, false);
+    boolean[] existanceFlags = new boolean[revisions.size()];
+    for (int i = 0; i < existanceFlags.length; i++)
+    {
+      existanceFlags[i] = revisions.get(i) != null;
+    }
+
+    return existanceFlags;
+  }
+
+  private void setBranchPoint(CDOBranchPoint branchPoint)
+  {
+    long timeStamp = branchPoint.getTimeStamp();
+    branchPoint = CDOBranchUtil.createBranchPoint(branchPoint.getBranch(), timeStamp);
+    validateTimeStamp(timeStamp);
+    this.branchPoint = branchPoint;
+  }
+
+  protected void validateTimeStamp(long timeStamp) throws IllegalArgumentException
+  {
+    if (timeStamp != UNSPECIFIED_DATE)
+    {
+      repository.validateTimeStamp(timeStamp);
+    }
   }
 
   /**
@@ -116,6 +151,11 @@ public class View implements InternalView
   {
     checkOpen();
     changeSubscriptionIDs.clear();
+  }
+
+  public int compareTo(CDOBranchPoint o)
+  {
+    return branchPoint.compareTo(o);
   }
 
   @Override

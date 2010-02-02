@@ -4,12 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.common.revision.cache;
 
+import org.eclipse.emf.cdo.internal.common.revision.cache.branch.BranchDispatcher;
+import org.eclipse.emf.cdo.internal.common.revision.cache.branch.BranchRevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.cache.mem.MEMRevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.cache.two.TwoLevelRevisionCache;
@@ -54,8 +56,42 @@ public final class CDORevisionCacheUtil
   public static CDORevisionCache createTwoLevelCache(CDORevisionCache level1, CDORevisionCache level2)
   {
     TwoLevelRevisionCache cache = new TwoLevelRevisionCache();
-    cache.setLevel1(level1);
-    cache.setLevel2(level2);
+    cache.setLevel1((InternalCDORevisionCache)level1);
+    cache.setLevel2((InternalCDORevisionCache)level2);
+    return cache;
+  }
+
+  /**
+   * Creates and returns a new memory sensitive revision cache that supports branches.
+   * 
+   * @since 3.0
+   */
+  public static CDORevisionCache createBranchRevisionCache()
+  {
+    return new BranchRevisionCache();
+  }
+
+  /**
+   * Creates and returns a new branch dispatcher cache.
+   * 
+   * @since 3.0
+   */
+  public static CDORevisionCache createBranchDispatcher(CDORevisionCacheFactory factory)
+  {
+    BranchDispatcher cache = new BranchDispatcher();
+    cache.setFactory(factory);
+    return cache;
+  }
+
+  /**
+   * Creates and returns a new branch dispatcher cache.
+   * 
+   * @since 3.0
+   */
+  public static CDORevisionCache createBranchDispatcher(CDORevisionCache protoType)
+  {
+    BranchDispatcher cache = new BranchDispatcher();
+    cache.setFactory(new CDORevisionCacheFactory.PrototypeInstantiator(protoType));
     return cache;
   }
 
@@ -69,12 +105,19 @@ public final class CDORevisionCacheUtil
   }
 
   /**
-   * Identical to calling
-   * <p>
-   * <code>{@link #createDefaultCache(int, int) createDefaultCache}({@link #DEFAULT_CAPACITY_CURRENT}, {@link #DEFAULT_CAPACITY_REVISED})</code>
+   * Identical to calling {@link #createBranchRevisionCache() createBranchRevisionCache()} if
+   * <code>supportingBranches</code> is <code>true</code>, {@link #createDefaultCache(int, int)
+   * createDefaultCache(DEFAULT_CAPACITY_CURRENT, DEFAULT_CAPACITY_REVISED)} otherwise.
+   * 
+   * @since 3.0
    */
-  public static CDORevisionCache createDefaultCache()
+  public static CDORevisionCache createDefaultCache(boolean supportingBranches)
   {
-    return createDefaultCache(DEFAULT_CAPACITY_CURRENT, DEFAULT_CAPACITY_REVISED);
+    // if (supportingBranches)
+    {
+      return createBranchRevisionCache();
+    }
+
+    // return createDefaultCache(DEFAULT_CAPACITY_CURRENT, DEFAULT_CAPACITY_REVISED);
   }
 }

@@ -180,6 +180,16 @@ public interface IMappingStrategy
   public boolean hasAuditSupport();
 
   /**
+   * Query if this mapping supports branches. <br>
+   * If this method returns <code>true</code>, it is guaranteed that all class mappings returned by
+   * {@link #getClassMapping(EClass)} implement {@link IClassMappingBranchingSupport}.
+   * 
+   * @return <code>true</code> if branches are supported, <code>false</code> else.
+   * @since 3.0
+   */
+  public boolean hasBranchingSupport();
+
+  /**
    * Execute a resource query.
    * 
    * @param dbStoreAccessor

@@ -66,7 +66,7 @@ public class NotificationManager extends Lifecycle implements InternalNotificati
       for (int i = 0; i < dirtyIDSize; i++)
       {
         CDORevisionDelta delta = arrayOfDeltas[i];
-        CDOIDAndVersion dirtyIDAndVersion = CDOIDUtil.createIDAndVersion(delta.getID(), delta.getOriginVersion());
+        CDOIDAndVersion dirtyIDAndVersion = CDOIDUtil.createIDAndVersion(delta.getID(), delta.getVersion());
         dirtyIDs.add(dirtyIDAndVersion);
 
         // TODO Avoid creating a temp list
@@ -80,7 +80,7 @@ public class NotificationManager extends Lifecycle implements InternalNotificati
       }
     }
 
-    sessionManager.handleCommitNotification(commitContext.getTimeStamp(), arrayOfNewPackageUnit, dirtyIDs,
+    sessionManager.handleCommitNotification(commitContext.getBranchPoint(), arrayOfNewPackageUnit, dirtyIDs,
         detachedObjects, deltas, session);
   }
 }

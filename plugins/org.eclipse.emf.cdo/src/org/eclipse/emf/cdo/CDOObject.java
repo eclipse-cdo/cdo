@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -124,6 +125,12 @@ public interface CDOObject extends EObject
   public CDOLock cdoWriteLock();
 
   /**
+   * Ensures that the revisions of the contained objects up to the given depth are in the local
+   * {@link CDORevisionManager revision cache}. Subsequent access to the respective contained objects will not lead to
+   * server round-trips after calling this method.
+   * 
+   * @param depth
+   *          {@link CDORevision#DEPTH_NONE}, {@link CDORevision#DEPTH_INFINITE} or any other positive integer number.
    * @since 3.0
    */
   public void cdoPrefetch(int depth);

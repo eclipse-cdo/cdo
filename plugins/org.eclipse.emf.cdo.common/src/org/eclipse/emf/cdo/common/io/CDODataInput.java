@@ -11,8 +11,13 @@
  */
 package org.eclipse.emf.cdo.common.io;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersionAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
@@ -59,9 +64,36 @@ public interface CDODataInput extends ExtendedDataInput
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 
+  /**
+   * @since 3.0
+   */
+  public CDOBranch readCDOBranch() throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  public CDOBranchPoint readCDOBranchPoint() throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  public CDOBranchVersion readCDOBranchVersion() throws IOException;
+
+  // /////////////////////////////////////////////////////////////////////////////////////////////////
+
   public CDOID readCDOID() throws IOException;
 
   public CDOIDAndVersion readCDOIDAndVersion() throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  public CDOIDAndBranch readCDOIDAndBranch() throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  public CDOIDAndVersionAndBranch readCDOIDAndVersionAndBranch() throws IOException;
 
   public CDOIDMetaRange readCDOIDMetaRange() throws IOException;
 

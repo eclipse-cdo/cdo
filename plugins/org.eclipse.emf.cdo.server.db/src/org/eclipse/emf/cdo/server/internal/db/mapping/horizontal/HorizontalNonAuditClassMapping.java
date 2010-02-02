@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -244,7 +245,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       stmt.setLong(col++, CDOIDUtil.getLong(revision.getID()));
       stmt.setInt(col++, revision.getVersion());
       stmt.setLong(col++, accessor.getStore().getMetaDataManager().getMetaID(revision.getEClass()));
-      stmt.setLong(col++, revision.getCreated());
+      stmt.setLong(col++, revision.getTimeStamp());
       stmt.setLong(col++, revision.getRevised());
       stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, revision
           .getResourceID()));
@@ -299,8 +300,9 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   }
 
   public PreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,
-      boolean exactMatch, long timeStamp)
+      boolean exactMatch, CDOBranchPoint branchPoint)
   {
+    long timeStamp = branchPoint.getTimeStamp();
     if (timeStamp != CDORevision.UNSPECIFIED_DATE)
     {
       throw new IllegalArgumentException("Non-audit store does not support explicit timeStamp in resource query"); //$NON-NLS-1$
@@ -362,10 +364,16 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
+
+    long timeStamp = revision.getTimeStamp();
+    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      throw new UnsupportedOperationException("Mapping strategy does not support audits."); //$NON-NLS-1$
+    }
+
     PreparedStatement pstmt = null;
     try
     {
-      // TODO add caching
       pstmt = accessor.getStatementCache().getPreparedStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
       pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
 
@@ -435,8 +443,6 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     private int oldVersion;
 
-    private int newVersion;
-
     private long created;
 
     private IDBStoreAccessor accessor;
@@ -468,8 +474,8 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
       reset();
       id = d.getID();
-      oldVersion = d.getOriginVersion();
-      newVersion = d.getDirtyVersion();
+      oldVersion = d.getVersion();
+      int newVersion = oldVersion + 1;
       created = c;
       accessor = a;
 
@@ -520,7 +526,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     public void visit(CDOListFeatureDelta delta)
     {
       IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(delta.getFeature());
-      listMapping.processDelta(accessor, id, oldVersion, newVersion, created, delta);
+      listMapping.processDelta(accessor, id, oldVersion, oldVersion + 1, created, delta);
     }
 
     public void visit(CDOClearFeatureDelta delta)

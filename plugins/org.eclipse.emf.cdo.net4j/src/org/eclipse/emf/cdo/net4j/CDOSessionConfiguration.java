@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.net4j;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 
@@ -49,6 +50,10 @@ public interface CDOSessionConfiguration extends org.eclipse.emf.cdo.session.CDO
    * @see CDOSession#getPackageRegistry()
    */
   public void setPackageRegistry(CDOPackageRegistry packageRegistry);
+
+  public CDOBranchManager getBranchManager();
+
+  public void setBranchManager(CDOBranchManager branchManager);
 
   /**
    * @see CDOSession#getRevisionManager()

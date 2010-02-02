@@ -80,12 +80,12 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
    */
   private Set<CDOID> sharedDetachedObjects;
 
-  private boolean dirty;
+  private boolean wasDirty;
 
   public CDOSavepointImpl(InternalCDOTransaction transaction, InternalCDOSavepoint lastSavepoint)
   {
     super(transaction, lastSavepoint);
-    dirty = transaction.isDirty();
+    wasDirty = transaction.isDirty();
     if (lastSavepoint == null)
     {
       sharedDetachedObjects = new HashSet<CDOID>();
@@ -143,9 +143,9 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     reattachedObjects.clear();
   }
 
-  public boolean isDirty()
+  public boolean wasDirty()
   {
-    return dirty;
+    return wasDirty;
   }
 
   public Map<CDOID, CDOResource> getNewResources()

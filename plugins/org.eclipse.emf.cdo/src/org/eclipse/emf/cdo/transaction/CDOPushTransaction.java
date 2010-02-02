@@ -11,6 +11,9 @@
 package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOCommit;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -191,12 +194,12 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     }
   }
 
-  public void commit() throws TransactionException
+  public CDOCommit commit() throws TransactionException
   {
-    commit(null);
+    return commit(null);
   }
 
-  public void commit(IProgressMonitor progressMonitor) throws TransactionException
+  public CDOCommit commit(IProgressMonitor progressMonitor) throws TransactionException
   {
     OutputStream out = null;
 
@@ -205,6 +208,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
       out = new FileOutputStream(file);
       delegate.exportChanges(out);
       setDirty(false);
+      return null;
     }
     catch (IOException ex)
     {
@@ -284,6 +288,11 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     delegate.close();
   }
 
+  public int compareTo(CDOBranchPoint o)
+  {
+    return delegate.compareTo(o);
+  }
+
   public CDOQuery createQuery(String language, String queryString)
   {
     return delegate.createQuery(language, queryString);
@@ -307,11 +316,6 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public Map<CDOID, CDOObject> getDirtyObjects()
   {
     return delegate.getDirtyObjects();
-  }
-
-  public long getLastCommitTime()
-  {
-    return delegate.getLastCommitTime();
   }
 
   public CDOSavepoint getLastSavepoint()
@@ -414,11 +418,6 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.getViewSet();
   }
 
-  public Type getViewType()
-  {
-    return delegate.getViewType();
-  }
-
   public boolean hasConflict()
   {
     return delegate.hasConflict();
@@ -496,33 +495,39 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     delegate.unlockObjects(objects, lockType);
   }
 
-  @Deprecated
-  public URIHandler getURIHandler()
-  {
-    return delegate.getURIHandler();
-  }
-
-  @Deprecated
-  public void addHandler(CDOTransactionHandler handler)
-  {
-    delegate.addHandler(handler);
-  }
-
-  @Deprecated
-  public void removeHandler(CDOTransactionHandler handler)
-  {
-    delegate.removeHandler(handler);
-  }
-
-  @Deprecated
-  public CDOTransactionHandler[] getHandlers()
-  {
-    return delegate.getHandlers();
-  }
-
   public static File createTempFile(CDOTransaction transaction) throws IOException
   {
     String prefix = "cdo_tx_" + transaction.getSession().getSessionID() + "_" + transaction.getViewID() + "__";
     return File.createTempFile(prefix, null);
+  }
+
+  public boolean isReadOnly()
+  {
+    return delegate.isReadOnly();
+  }
+
+  public CDOBranch getBranch()
+  {
+    return delegate.getBranch();
+  }
+
+  public boolean setBranchPoint(CDOBranch branch, long timeStamp)
+  {
+    return delegate.setBranchPoint(branch, timeStamp);
+  }
+
+  public boolean setBranch(CDOBranch branch)
+  {
+    return delegate.setBranch(branch);
+  }
+
+  public boolean setTimeStamp(long timeStamp)
+  {
+    return delegate.setTimeStamp(timeStamp);
+  }
+
+  public URIHandler getURIHandler()
+  {
+    return delegate.getURIHandler();
   }
 }

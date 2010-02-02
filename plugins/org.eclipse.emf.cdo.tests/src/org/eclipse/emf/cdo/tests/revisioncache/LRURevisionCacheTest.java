@@ -11,8 +11,8 @@
  */
 package org.eclipse.emf.cdo.tests.revisioncache;
 
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheUtil;
+import org.eclipse.emf.cdo.common.revision.cache.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 /**
@@ -25,8 +25,9 @@ public class LRURevisionCacheTest extends AbstractCDORevisionCacheTest
   public static final int DEFAULT_CAPACITY_REVISED = 1000;
 
   @Override
-  protected CDORevisionCache createRevisionCache(CDOSession session) throws Exception
+  protected InternalCDORevisionCache createRevisionCache(CDOSession session) throws Exception
   {
-    return CDORevisionCacheUtil.createLRUCache(DEFAULT_CAPACITY_CURRENT, DEFAULT_CAPACITY_REVISED);
+    return (InternalCDORevisionCache)CDORevisionCacheUtil.createLRUCache(DEFAULT_CAPACITY_CURRENT,
+        DEFAULT_CAPACITY_REVISED);
   }
 }

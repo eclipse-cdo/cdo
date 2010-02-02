@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.spi.cdo;
 
+import org.eclipse.emf.cdo.common.commit.CDOCommit;
+
 import org.eclipse.emf.internal.cdo.transaction.CDOSingleTransactionStrategyImpl;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -33,8 +35,10 @@ public interface CDOTransactionStrategy
 
   /**
    * TODO Better use an {@link OMMonitor}?
+   * 
+   * @since 3.0
    */
-  public void commit(InternalCDOTransaction transaction, IProgressMonitor progressMonitor) throws Exception;
+  public CDOCommit commit(InternalCDOTransaction transaction, IProgressMonitor progressMonitor) throws Exception;
 
   /**
    * @since 3.0

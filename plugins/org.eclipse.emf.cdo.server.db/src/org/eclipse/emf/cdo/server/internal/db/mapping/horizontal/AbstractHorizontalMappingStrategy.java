@@ -150,20 +150,18 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     CDOID folderID = context.getFolderID();
     String name = context.getName();
     boolean exactMatch = context.exactMatch();
-    long timeStamp = context.getTimeStamp();
 
     try
     {
-      stmt = classMapping.createResourceQueryStatement(accessor, folderID, name, exactMatch, timeStamp);
+      stmt = classMapping.createResourceQueryStatement(accessor, folderID, name, exactMatch, context);
       rset = stmt.executeQuery();
 
       while (rset.next())
       {
         long longID = rset.getLong(1);
-
         if (TRACER.isEnabled())
         {
-          TRACER.format("Resource Query returned ID {0}", longID); //$NON-NLS-1$
+          TRACER.trace("Resource query returned ID " + longID); //$NON-NLS-1$
         }
 
         CDOID id = CDOIDUtil.createLong(longID);

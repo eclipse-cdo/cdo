@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.common.CDOTimeProvider;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
@@ -26,7 +28,7 @@ import java.util.Map;
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IRepository extends IContainer<Object>, IQueryHandlerProvider
+public interface IRepository extends IContainer<Object>, IQueryHandlerProvider, CDOTimeProvider
 {
   public String getName();
 
@@ -46,6 +48,11 @@ public interface IRepository extends IContainer<Object>, IQueryHandlerProvider
 
   public boolean isSupportingAudits();
 
+  /**
+   * @since 3.0
+   */
+  public boolean isSupportingBranches();
+
   public boolean isVerifyingRevisions();
 
   /**
@@ -57,6 +64,11 @@ public interface IRepository extends IContainer<Object>, IQueryHandlerProvider
    * @since 2.0
    */
   public CDOPackageRegistry getPackageRegistry();
+
+  /**
+   * @since 3.0
+   */
+  public CDOBranchManager getBranchManager();
 
   /**
    * @since 3.0
@@ -183,6 +195,11 @@ public interface IRepository extends IContainer<Object>, IQueryHandlerProvider
      * @since 2.0
      */
     public static final String SUPPORTING_AUDITS = "supportingAudits"; //$NON-NLS-1$
+
+    /**
+     * @since 3.0
+     */
+    public static final String SUPPORTING_BRANCHES = "supportingBranches"; //$NON-NLS-1$
 
     /**
      * @since 2.0

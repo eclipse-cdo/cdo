@@ -52,4 +52,9 @@ public class HorizontalNonAuditMappingStrategy extends AbstractHorizontalMapping
   {
     return true;
   }
+
+  public boolean hasBranchingSupport()
+  {
+    return false;
+  }
 }

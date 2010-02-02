@@ -10,29 +10,22 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.io.CDODataInput;
-import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOClassInfo;
-import org.eclipse.emf.cdo.common.revision.CDOList;
-import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionData;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.internal.common.branch.CDOBranchImpl;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.DLRevisionHolder;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionHolder;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionList;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.RevisionHolder;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.revision.StubCDORevision;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -53,13 +46,13 @@ public class RevisionHolderTest extends AbstractCDOTest
     TestRevision r1v2 = new TestRevision(1, 2, 6);
     cache.addRevision(r1v2);
     assertEquals(CDORevision.UNSPECIFIED_DATE, r1v2.getRevised());
-    assertEquals(r1v2.getCreated() - 1, r1v1.getRevised());
+    assertEquals(r1v2.getTimeStamp() - 1, r1v1.getRevised());
 
     TestRevision r1v3 = new TestRevision(1, 3, 11);
     cache.addRevision(r1v3);
     assertEquals(CDORevision.UNSPECIFIED_DATE, r1v3.getRevised());
-    assertEquals(r1v3.getCreated() - 1, r1v2.getRevised());
-    assertEquals(r1v2.getCreated() - 1, r1v1.getRevised());
+    assertEquals(r1v3.getTimeStamp() - 1, r1v2.getRevised());
+    assertEquals(r1v2.getTimeStamp() - 1, r1v1.getRevised());
 
     CDOID id = r1v1.getID();
 
@@ -209,7 +202,7 @@ public class RevisionHolderTest extends AbstractCDOTest
     TestRevision r1v3 = new TestRevision(1, 3, 11);
     cache.addRevision(r1v3);
     assertEquals(CDORevision.UNSPECIFIED_DATE, r1v3.getRevised());
-    assertNotSame(r1v3.getCreated() - 1, r1v1.getRevised());
+    assertNotSame(r1v3.getTimeStamp() - 1, r1v1.getRevised());
 
     CDOID id = r1v1.getID();
 
@@ -253,21 +246,21 @@ public class RevisionHolderTest extends AbstractCDOTest
   /**
    * @author Eike Stepper
    */
-  public static final class TestRevision implements InternalCDORevision
+  public static final class TestRevision extends StubCDORevision
   {
     private CDOID id;
 
-    private int version;
+    private CDOBranchPoint branchPoint;
 
-    private long created;
+    private int version;
 
     private long revised;
 
     public TestRevision(long id, int version, long created, long revised)
     {
       this.id = CDOIDUtil.createLong(id);
+      branchPoint = CDOBranchUtil.createBranchPoint(new CDOBranchImpl(CDOBranch.MAIN_BRANCH_ID, null), created);
       this.version = version;
-      this.created = created;
       this.revised = revised;
     }
 
@@ -281,279 +274,70 @@ public class RevisionHolderTest extends AbstractCDOTest
       this(id, 0, CDORevision.UNSPECIFIED_DATE);
     }
 
-    public CDOClassInfo getClassInfo()
-    {
-      throw new UnsupportedOperationException();
-    }
-
+    @Override
     public EClass getEClass()
     {
-      throw new UnsupportedOperationException();
+      return null;
     }
 
+    @Override
     public CDOID getID()
     {
       return id;
     }
 
+    @Override
     public void setID(CDOID id)
     {
       this.id = id;
     }
 
+    @Override
+    public CDOBranch getBranch()
+    {
+      return branchPoint.getBranch();
+    }
+
+    @Override
+    public long getTimeStamp()
+    {
+      return branchPoint.getTimeStamp();
+    }
+
+    @Override
+    public void setBranchPoint(CDOBranchPoint branchPoint)
+    {
+      this.branchPoint = CDOBranchUtil.createBranchPoint(branchPoint);
+    }
+
+    @Override
     public int getVersion()
     {
       return version;
     }
 
+    @Override
     public void setVersion(int version)
     {
       this.version = version;
     }
 
-    public long getCreated()
-    {
-      return created;
-    }
-
-    public void setCreated(long created)
-    {
-      this.created = created;
-    }
-
+    @Override
     public long getRevised()
     {
       return revised;
     }
 
+    @Override
     public void setRevised(long revised)
     {
       this.revised = revised;
     }
 
-    public boolean isCurrent()
-    {
-      return revised == UNSPECIFIED_DATE;
-    }
-
-    public boolean isTransactional()
-    {
-      return version < 0;
-    }
-
-    public boolean isValid(long timeStamp)
-    {
-      return (revised == UNSPECIFIED_DATE || revised >= timeStamp) && timeStamp >= created;
-    }
-
-    public CDORevisionData data()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean isResourceNode()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean isResourceFolder()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean isResource()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public CDORevisionDelta compare(CDORevision origin)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void merge(CDORevisionDelta delta)
-    {
-      throw new UnsupportedOperationException();
-    }
-
+    @Override
     public CDORevision copy()
     {
-      return new TestRevision(CDOIDUtil.getLong(id), version, created, revised);
-    }
-
-    public void read(CDODataInput in) throws IOException
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void write(CDODataOutput out, int referenceChunk) throws IOException
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void convertEObjects(CDOIDProvider oidProvider)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void add(EStructuralFeature feature, int index, Object value)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void adjustReferences(CDOReferenceAdjuster revisionAdjuster)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void clear(EStructuralFeature feature)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean contains(EStructuralFeature feature, Object value)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public Object get(EStructuralFeature feature, int index)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public Object getContainerID()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public int getContainingFeatureID()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public CDOList getList(EStructuralFeature feature, int size)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public CDOList getList(EStructuralFeature feature)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public CDOID getResourceID()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public CDORevision revision()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public Object getValue(EStructuralFeature feature)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public int hashCode(EStructuralFeature feature)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public int indexOf(EStructuralFeature feature, Object value)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean isEmpty(EStructuralFeature feature)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public int lastIndexOf(EStructuralFeature feature, Object value)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public Object move(EStructuralFeature feature, int targetIndex, int sourceIndex)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public Object remove(EStructuralFeature feature, int index)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public Object set(EStructuralFeature feature, int index, Object value)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void setContainerID(Object containerID)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void setContainingFeatureID(int containingFeatureID)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void setListSize(EStructuralFeature feature, int size)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void setResourceID(CDOID resourceID)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public int setTransactional(boolean on)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public Object setValue(EStructuralFeature feature, Object value)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public int size(EStructuralFeature feature)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public <T> T[] toArray(EStructuralFeature feature, T[] array)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public Object[] toArray(EStructuralFeature feature)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void unset(EStructuralFeature feature)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void setList(EStructuralFeature feature, InternalCDOList list)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public Object getValue(EStructuralFeature feature, int index)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public Object setValue(EStructuralFeature feature, int index, Object value)
-    {
-      throw new UnsupportedOperationException();
+      return new TestRevision(CDOIDUtil.getLong(id), version, branchPoint.getTimeStamp(), revised);
     }
   }
 }

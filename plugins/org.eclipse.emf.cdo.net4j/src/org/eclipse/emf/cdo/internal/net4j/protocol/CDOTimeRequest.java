@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -45,7 +45,7 @@ public abstract class CDOTimeRequest<RESULT> extends CDOClientRequest<RESULT>
     repositoryTimeResult.setRequested(System.currentTimeMillis());
     if (TRACER.isEnabled())
     {
-      TRACER.format("Requested: {0,date} {0,time}", repositoryTimeResult.getRequested()); //$NON-NLS-1$
+      TRACER.format("Requested: {0,date} {0,time,HH:mm:ss:SSS}", repositoryTimeResult.getRequested()); //$NON-NLS-1$
     }
   }
 
@@ -55,19 +55,19 @@ public abstract class CDOTimeRequest<RESULT> extends CDOClientRequest<RESULT>
     repositoryTimeResult.setConfirmed(System.currentTimeMillis());
     if (TRACER.isEnabled())
     {
-      TRACER.format("Confirmed: {0,date} {0,time}", repositoryTimeResult.getConfirmed()); //$NON-NLS-1$
+      TRACER.format("Confirmed: {0,date} {0,time,HH:mm:ss:SSS}", repositoryTimeResult.getConfirmed()); //$NON-NLS-1$
     }
 
     repositoryTimeResult.setIndicated(in.readLong());
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read indicated: {0,date} {0,time}", repositoryTimeResult.getIndicated()); //$NON-NLS-1$
+      TRACER.format("Read indicated: {0,date} {0,time,HH:mm:ss:SSS}", repositoryTimeResult.getIndicated()); //$NON-NLS-1$
     }
 
     repositoryTimeResult.setResponded(in.readLong());
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read responded: {0,date} {0,time}", repositoryTimeResult.getResponded()); //$NON-NLS-1$
+      TRACER.format("Read responded: {0,date} {0,time,HH:mm:ss:SSS}", repositoryTimeResult.getResponded()); //$NON-NLS-1$
     }
 
     return null;

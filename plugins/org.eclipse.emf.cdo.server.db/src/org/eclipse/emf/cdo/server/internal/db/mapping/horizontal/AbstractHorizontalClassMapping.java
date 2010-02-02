@@ -9,9 +9,11 @@
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - 271444: [DB] Multiple refactorings bug 271444
  *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
+ *
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -26,6 +28,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
@@ -88,6 +91,9 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
     IDBField idField = table.addField(CDODBSchema.ATTRIBUTES_ID, DBType.BIGINT, true);
     IDBField versionField = table.addField(CDODBSchema.ATTRIBUTES_VERSION, DBType.INTEGER, true);
+
+    IDBField branchField = addBranchingField(table);
+
     table.addField(CDODBSchema.ATTRIBUTES_CLASS, DBType.BIGINT, true);
     table.addField(CDODBSchema.ATTRIBUTES_CREATED, DBType.BIGINT, true);
     IDBField revisedField = table.addField(CDODBSchema.ATTRIBUTES_REVISED, DBType.BIGINT, true);
@@ -95,8 +101,21 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     table.addField(CDODBSchema.ATTRIBUTES_CONTAINER, DBType.BIGINT, true);
     table.addField(CDODBSchema.ATTRIBUTES_FEATURE, DBType.INTEGER, true);
 
+    if (branchField != null)
+    {
+      table.addIndex(IDBIndex.Type.UNIQUE, idField, versionField, branchField);
+    }
+    else
+    {
     table.addIndex(IDBIndex.Type.UNIQUE, idField, versionField);
+    }
+
     table.addIndex(IDBIndex.Type.NON_UNIQUE, idField, revisedField);
+  }
+
+  protected IDBField addBranchingField(IDBTable table)
+  {
+    return null;
   }
 
   private void initFeatures()
@@ -204,7 +223,12 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       }
 
       revision.setVersion(resultSet.getInt(CDODBSchema.ATTRIBUTES_VERSION));
-      revision.setCreated(resultSet.getLong(CDODBSchema.ATTRIBUTES_CREATED));
+
+      long timeStamp = resultSet.getLong(CDODBSchema.ATTRIBUTES_CREATED);
+
+      CDOBranchPoint branchPoint = CDOBranchUtil.createBranchPoint(revision.getBranch(), timeStamp);
+
+      revision.setBranchPoint(branchPoint);
       revision.setRevised(resultSet.getLong(CDODBSchema.ATTRIBUTES_REVISED));
       revision.setResourceID(CDODBUtil.convertLongToCDOID(getExternalReferenceManager(), accessor, resultSet
           .getLong(CDODBSchema.ATTRIBUTES_RESOURCE)));
@@ -249,19 +273,19 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     }
   }
 
-  public final void detachObject(IDBStoreAccessor accessor, CDOID id, long revised, OMMonitor monitor)
+  public final void detachObject(IDBStoreAccessor accessor, CDOID id, long timeStamp, OMMonitor monitor)
   {
     Async async = null;
     try
     {
       monitor.begin(getListMappings().size() + 1);
       async = monitor.forkAsync();
-      reviseObject(accessor, id, revised);
+      reviseObject(accessor, id, timeStamp);
       async.stop();
       async = monitor.forkAsync(getListMappings().size());
       for (IListMapping mapping : getListMappings())
       {
-        mapping.objectRevised(accessor, id, revised);
+        mapping.objectRevised(accessor, id, timeStamp);
       }
     }
     finally
@@ -354,8 +378,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
   {
     CDOID folderID = (CDOID)revision.data().getContainerID();
     String name = (String)revision.data().get(EresourcePackage.eINSTANCE.getCDOResourceNode_Name(), 0);
-
-    CDOID existingID = accessor.readResourceID(folderID, name, CDORevision.UNSPECIFIED_DATE);
+    CDOID existingID = accessor.readResourceID(folderID, name, revision.getBranch().getHead());
     if (existingID != null && !existingID.equals(revision.getID()))
     {
       throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder " + folderID); //$NON-NLS-1$ //$NON-NLS-2$
@@ -379,13 +402,14 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       async = monitor.forkAsync();
 
       CDOID id = revision.getID();
-      if (revision.getVersion() == 1)
+      if (revision.getVersion() == CDORevision.FIRST_VERSION)
       {
+        // XXX Assumption no longer valid with branches!
         mappingStrategy.putObjectType(accessor, id, eClass);
       }
       else
       {
-        long revised = revision.getCreated() - 1;
+        long revised = revision.getTimeStamp() - 1;
         reviseObject(accessor, id, revised);
         for (IListMapping mapping : getListMappings())
         {

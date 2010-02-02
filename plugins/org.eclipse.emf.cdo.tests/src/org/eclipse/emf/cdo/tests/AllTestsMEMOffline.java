@@ -10,6 +10,10 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
+
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -21,6 +25,14 @@ public class AllTestsMEMOffline extends AllTestsAllConfigs
   public static Test suite()
   {
     return new AllTestsMEMOffline().getTestSuite(AllTestsAllConfigs.class.getName());
+  }
+
+  @Override
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  {
+    // super.initTestClasses(testClasses);
+
+    testClasses.add(OfflineTest.class);
   }
 
   @Override

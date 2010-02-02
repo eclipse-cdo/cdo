@@ -4,19 +4,17 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - bug 201266
- *    Simon McDuff - bug 233490    
+ *    Simon McDuff - bug 233490
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.ISession;
-
-import org.eclipse.net4j.channel.IChannel;
 
 import java.io.IOException;
 
@@ -29,9 +27,9 @@ public class RemoteSessionNotificationRequest extends CDOServerRequest
 
   private ISession session;
 
-  public RemoteSessionNotificationRequest(IChannel channel, byte opcode, ISession session)
+  public RemoteSessionNotificationRequest(CDOServerProtocol serverProtocol, byte opcode, ISession session)
   {
-    super(channel, CDOProtocolConstants.SIGNAL_REMOTE_SESSION_NOTIFICATION);
+    super(serverProtocol, CDOProtocolConstants.SIGNAL_REMOTE_SESSION_NOTIFICATION);
     this.opcode = opcode;
     this.session = session;
   }

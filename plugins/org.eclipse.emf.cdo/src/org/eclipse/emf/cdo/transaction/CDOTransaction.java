@@ -41,8 +41,6 @@ import java.util.Set;
  */
 public interface CDOTransaction extends CDOView, CDOUserTransaction
 {
-  public long getLastCommitTime();
-
   /**
    * Returns <code>true</code> if this transaction is not closed and contains uncommitted changes, <code>false</code>
    * otherwise.
@@ -65,24 +63,6 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
   public CDOResource createResource(String path);
 
   public CDOResource getOrCreateResource(String path);
-
-  /**
-   * @deprecated Use {@link #addTransactionHandler(CDOTransactionHandler)} instead.
-   */
-  @Deprecated
-  public void addHandler(CDOTransactionHandler handler);
-
-  /**
-   * @deprecated Use {@link #removeTransactionHandler(CDOTransactionHandler)} instead.
-   */
-  @Deprecated
-  public void removeHandler(CDOTransactionHandler handler);
-
-  /**
-   * @deprecated Use {@link #getTransactionHandlers()} instead.
-   */
-  @Deprecated
-  public CDOTransactionHandler[] getHandlers();
 
   /**
    * @since 3.0

@@ -11,8 +11,14 @@
  */
 package org.eclipse.emf.cdo.internal.common.io;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersionAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
@@ -31,6 +37,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDAndBranchImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionAndBranchImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
@@ -49,6 +57,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDORemoveFeatureDeltaI
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaImpl;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -147,6 +156,26 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return CDOModelUtil.getType(typeID);
   }
 
+  public CDOBranch readCDOBranch() throws IOException
+  {
+    int branchID = readInt();
+    return getBranchManager().getBranch(branchID);
+  }
+
+  public CDOBranchPoint readCDOBranchPoint() throws IOException
+  {
+    CDOBranch branch = readCDOBranch();
+    long timeStamp = readLong();
+    return CDOBranchUtil.createBranchPoint(branch, timeStamp);
+  }
+
+  public CDOBranchVersion readCDOBranchVersion() throws IOException
+  {
+    CDOBranch branch = readCDOBranch();
+    int version = readInt();
+    return CDOBranchUtil.createBranchVersion(branch, version);
+  }
+
   public CDOID readCDOID() throws IOException
   {
     byte ordinal = readByte();
@@ -237,6 +266,16 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   public CDOIDAndVersion readCDOIDAndVersion() throws IOException
   {
     return new CDOIDAndVersionImpl(this);
+  }
+
+  public CDOIDAndBranch readCDOIDAndBranch() throws IOException
+  {
+    return new CDOIDAndBranchImpl(this);
+  }
+
+  public CDOIDAndVersionAndBranch readCDOIDAndVersionAndBranch() throws IOException
+  {
+    return new CDOIDAndVersionAndBranchImpl(this);
   }
 
   public CDOIDMetaRange readCDOIDMetaRange() throws IOException
@@ -393,6 +432,8 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   }
 
   protected abstract CDOPackageRegistry getPackageRegistry();
+
+  protected abstract CDOBranchManager getBranchManager();
 
   protected abstract CDORevisionFactory getRevisionFactory();
 

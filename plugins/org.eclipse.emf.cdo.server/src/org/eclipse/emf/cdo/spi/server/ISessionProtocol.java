@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -18,6 +19,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 
 import java.util.List;
 
@@ -29,8 +31,10 @@ public interface ISessionProtocol extends CDOProtocol
 {
   public CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken) throws Exception;
 
-  public void sendCommitNotification(long timeStamp, CDOPackageUnit[] packageUnits, List<CDOIDAndVersion> dirtyIDs,
-      List<CDOID> detachedObjects, List<CDORevisionDelta> newDeltas);
+  public void sendBranchNotification(InternalCDOBranch branch);
+
+  public void sendCommitNotification(CDOBranchPoint branchPoint, CDOPackageUnit[] packageUnits,
+      List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> newDeltas);
 
   public void sendRemoteSessionNotification(byte opcode, ISession session);
 

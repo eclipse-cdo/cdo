@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 /**
  * EOpposite reference is not removed
@@ -35,6 +36,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(resourcePath);
     res.getContents().add(getModel1Factory().createCompany());
+
     transaction1.commit();
 
     Supplier supplier = getModel1Factory().createSupplier();
@@ -42,26 +44,36 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
     res.getContents().add(supplier);
     res.getContents().add(purchaseOrder);
     supplier.getPurchaseOrders().add(purchaseOrder);
+
+    assertEquals(0, CDOUtil.getCDOObject(purchaseOrder).cdoRevision().getVersion());
     transaction1.commit();
+    assertEquals(1, CDOUtil.getCDOObject(purchaseOrder).cdoRevision().getVersion());
 
     res.getContents().remove(purchaseOrder);
     Supplier supplier2 = purchaseOrder.getSupplier();
     PurchaseOrder purchaseOrder2 = supplier.getPurchaseOrders().get(0);
     assertSame(purchaseOrder2, purchaseOrder);
     assertSame(supplier2, supplier);
+    assertTransient(purchaseOrder2);
 
     try
     {
       transaction1.commit();
-      fail("Should have dangling reference");
+      fail("Dangling Reference Exception expected");
     }
-    catch (Exception ignore)
+    catch (Exception expected)
     {
+      // Success
     }
+
+    assertTransient(purchaseOrder2);
 
     CDOResource resB = transaction1.createResource("testB");
     resB.getContents().add(purchaseOrder2);
+
+    assertEquals(1, CDOUtil.getCDOObject(purchaseOrder2).cdoRevision().getVersion());
     transaction1.commit();
+    assertEquals(2, CDOUtil.getCDOObject(purchaseOrder2).cdoRevision().getVersion());
   }
 
   public void testEOpposite_AdjustSingleRef() throws Exception

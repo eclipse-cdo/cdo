@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -22,6 +23,7 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -236,11 +238,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
-  /**
-   * @since 2.0
-   */
-  public void handleCommitNotification(long timeStamp, CDOPackageUnit[] packageUnits, List<CDOIDAndVersion> dirtyIDs,
-      List<CDOID> detachedObjects, List<CDORevisionDelta> deltas, InternalSession excludedSession)
+  public void handleBranchNotification(InternalCDOBranch branch, InternalSession excludedSession)
   {
     for (InternalSession session : getSessions())
     {
@@ -248,7 +246,30 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       {
         try
         {
-          session.handleCommitNotification(timeStamp, packageUnits, dirtyIDs, detachedObjects, deltas);
+          session.handleBranchNotification(branch);
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.warn("A problem occured while notifying session " + session, ex);
+        }
+      }
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void handleCommitNotification(CDOBranchPoint branchPoint, CDOPackageUnit[] packageUnits,
+      List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> deltas,
+      InternalSession excludedSession)
+  {
+    for (InternalSession session : getSessions())
+    {
+      if (session != excludedSession)
+      {
+        try
+        {
+          session.handleCommitNotification(branchPoint, packageUnits, dirtyIDs, detachedObjects, deltas);
         }
         catch (Exception ex)
         {

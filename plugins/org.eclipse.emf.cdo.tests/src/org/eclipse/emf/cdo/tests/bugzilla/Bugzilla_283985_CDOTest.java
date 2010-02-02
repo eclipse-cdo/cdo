@@ -248,7 +248,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
 
       int versionAfter = CDOUtil.getCDOObject(detail).cdoRevision().getVersion();
       int versionBefore = versionsBefore[i];
-      assertEquals(versionBefore + 1, versionAfter);
+      assertEquals(versionBefore, versionAfter);
 
       i++;
     }
@@ -363,7 +363,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     tx.commit();
 
     order2.getOrderDetails().remove(detail1);
-    assertTrue((CDOUtil.getCDOObject(detail1)).cdoState() == CDOState.TRANSIENT);
+    assertTrue(CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);
 
     boolean contains;
 

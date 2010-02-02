@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.commit.CDOCommit;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
@@ -278,6 +279,7 @@ public class InitialTest extends AbstractCDOTest
     assertNew(supplier, transaction);
     assertEquals(transaction, CDOUtil.getCDOObject(supplier).cdoView());
     assertEquals(resource, CDOUtil.getCDOObject(supplier).cdoDirectResource());
+    assertEquals(0, CDOUtil.getCDOObject(supplier).cdoRevision().getVersion());
     assertEquals(resource, supplier.eResource());
     assertEquals(null, supplier.eContainer());
   }
@@ -303,11 +305,12 @@ public class InitialTest extends AbstractCDOTest
     resource.getContents().add(supplier);
 
     msg("Committing");
-    transaction.commit();
+    CDOCommit commit = transaction.commit();
     assertEquals(CDOState.CLEAN, resource.cdoState());
     assertEquals(CDOState.CLEAN, CDOUtil.getCDOObject(supplier).cdoState());
-    assertCreatedTime(resource);
-    assertCreatedTime(supplier);
+    assertEquals(1, CDOUtil.getCDOObject(supplier).cdoRevision().getVersion());
+    assertCreatedTime(resource, commit.getTimeStamp());
+    assertCreatedTime(supplier, commit.getTimeStamp());
   }
 
   public void testReadResourceClean() throws Exception
@@ -331,13 +334,14 @@ public class InitialTest extends AbstractCDOTest
     resource.getContents().add(supplier);
 
     msg("Committing");
-    transaction.commit();
+    long commitTime = transaction.commit().getTimeStamp();
 
     msg("Getting supplier");
     EList<EObject> contents = resource.getContents();
     Supplier s = (Supplier)contents.get(0);
+    assertEquals(1, CDOUtil.getCDOObject(s).cdoRevision().getVersion());
     assertEquals(supplier, s);
-    assertCreatedTime(s);
+    assertCreatedTime(s, commitTime);
   }
 
   public void testReadObjectClean() throws Exception
@@ -365,6 +369,7 @@ public class InitialTest extends AbstractCDOTest
 
     msg("Getting supplier");
     Supplier s = (Supplier)resource.getContents().get(0);
+    assertEquals(1, CDOUtil.getCDOObject(s).cdoRevision().getVersion());
 
     msg("Verifying name");
     assertEquals("Stepper", s.getName());
@@ -405,41 +410,26 @@ public class InitialTest extends AbstractCDOTest
 
   public void testCommitDirty() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openModel1Session();
-
-    msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");
 
-    msg("Creating supplier");
     Supplier supplier = getModel1Factory().createSupplier();
-
-    msg("Setting name");
     supplier.setName("Stepper");
 
-    msg("Adding supplier");
     resource.getContents().add(supplier);
 
-    msg("Committing");
-    transaction.commit();
-    long commitTime1 = transaction.getLastCommitTime();
-    assertCreatedTime(supplier);
+    CDOCommit commit = transaction.commit();
+    long commitTime1 = commit.getTimeStamp();
+    assertCreatedTime(supplier, commitTime1);
 
-    msg("Setting name");
     supplier.setName("Eike");
 
-    sleep(100);
-    msg("Committing");
-    transaction.commit();
-    long commitTime2 = transaction.getLastCommitTime();
+    long commitTime2 = transaction.commit().getTimeStamp();
     assertTrue(commitTime1 < commitTime2);
-
     assertEquals(CDOState.CLEAN, resource.cdoState());
     assertEquals(CDOState.CLEAN, CDOUtil.getCDOObject(supplier).cdoState());
-    assertCreatedTime(supplier);
+    assertCreatedTime(supplier, commitTime2);
   }
 
   public void testGetResource() throws Exception

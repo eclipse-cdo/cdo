@@ -55,6 +55,7 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
 
   public void setRevisionManager(CDORevisionManager revisionManager)
   {
+    checkNotOpen();
     this.revisionManager = (InternalCDORevisionManager)revisionManager;
   }
 
@@ -87,6 +88,7 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
     session.setRepositoryInfo(new RepositoryInfo());
 
     revisionManager = new CDORevisionManagerImpl();
+    revisionManager.setSupportingBranches(session.getRepositoryInfo().isSupportingBranches());
     revisionManager.setCache(CDORevisionCache.NOOP);
     revisionManager.setRevisionLoader(session.getSessionProtocol());
     revisionManager.setRevisionLocker(session);
@@ -115,12 +117,12 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
       return repository.getCreationTime();
     }
 
-    public long getCurrentTime()
+    public long getTimeStamp()
     {
-      return getCurrentTime(false);
+      return getTimeStamp(false);
     }
 
-    public long getCurrentTime(boolean forceRefresh)
+    public long getTimeStamp(boolean forceRefresh)
     {
       return System.currentTimeMillis();
     }
@@ -138,6 +140,11 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
     public boolean isSupportingAudits()
     {
       return repository.isSupportingAudits();
+    }
+
+    public boolean isSupportingBranches()
+    {
+      return repository.isSupportingBranches();
     }
   }
 }

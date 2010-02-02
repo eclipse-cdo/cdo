@@ -79,6 +79,11 @@ public interface IStore
   public CDOIDMetaRange getNextMetaIDRange(int count);
 
   /**
+   * @since 3.0
+   */
+  public int getNextBranchID();
+
+  /**
    * Returns the store creation time.
    * 
    * @since 2.0

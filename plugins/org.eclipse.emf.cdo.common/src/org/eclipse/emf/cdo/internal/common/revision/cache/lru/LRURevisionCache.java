@@ -11,9 +11,12 @@
  */
 package org.eclipse.emf.cdo.internal.common.revision.cache.lru;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
+import org.eclipse.emf.cdo.common.revision.cache.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.revision.cache.EvictionEventImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -34,7 +37,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class LRURevisionCache extends Lifecycle implements CDORevisionCache
+public class LRURevisionCache extends Lifecycle implements InternalCDORevisionCache
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, LRURevisionCache.class);
 
@@ -50,6 +53,19 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
 
   public LRURevisionCache()
   {
+  }
+
+  public InternalCDORevisionCache instantiate(CDORevision revision)
+  {
+    LRURevisionCache cache = new LRURevisionCache();
+    cache.setCapacityCurrent(capacityCurrent);
+    cache.setCapacityRevised(capacityRevised);
+    return cache;
+  }
+
+  public boolean isSupportingBranches()
+  {
+    return false;
   }
 
   public int getCapacityCurrent()
@@ -88,13 +104,13 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     }
   }
 
-  public synchronized List<CDORevision> getRevisions()
+  public synchronized List<CDORevision> getCurrentRevisions()
   {
     List<CDORevision> currentRevisions = new ArrayList<CDORevision>();
     for (RevisionHolder holder : revisions.values())
     {
       InternalCDORevision revision = holder.getRevision();
-      if (revision != null && revision.isCurrent())
+      if (revision != null && !revision.isHistorical())
       {
         currentRevisions.add(revision);
       }
@@ -115,30 +131,19 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     return revision.getEClass();
   }
 
-  public synchronized InternalCDORevision getRevision(CDOID id)
+  public synchronized InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint)
   {
     RevisionHolder holder = getHolder(id);
-    InternalCDORevision revision = holder == null ? null : holder.getRevision();
-    if (revision == null || !revision.isCurrent())
-    {
-      return null;
-    }
-
-    return revision;
+    return getRevision(holder, branchPoint.getTimeStamp());
   }
 
-  public synchronized InternalCDORevision getRevisionByTime(CDOID id, long timeStamp)
-  {
-    RevisionHolder holder = getHolder(id);
-    return getRevisionByTime(holder, timeStamp);
-  }
-
-  public synchronized InternalCDORevision getRevisionByVersion(CDOID id, int version)
+  public synchronized InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion)
   {
     RevisionHolder holder = getHolder(id);
     while (holder != null)
     {
       int holderVersion = holder.getVersion();
+      int version = branchVersion.getVersion();
       if (holderVersion > version)
       {
         holder = holder.getNext();
@@ -161,8 +166,10 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     CheckUtil.checkArg(revision, "revision");
     if (TRACER.isEnabled())
     {
-      TRACER.format("Adding revision: {0}, created={1,date} {1,time}, revised={2,date} {2,time}, current={3}", //$NON-NLS-1$
-          revision, revision.getCreated(), revision.getRevised(), revision.isCurrent());
+      TRACER
+          .format(
+              "Adding revision: {0}, timeStamp={1,date} {1,time,HH:mm:ss:SSS}, revised={2,date} {2,time,HH:mm:ss:SSS}, historical={3}", //$NON-NLS-1$
+              revision, revision.getTimeStamp(), revision.getRevised(), revision.isHistorical());
     }
 
     int version = revision.getVersion();
@@ -188,25 +195,21 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
 
     // Create holder only if require
     RevisionHolder newHolder = createHolder((InternalCDORevision)revision);
-    LRU list = revision.isCurrent() ? currentLRU : revisedLRU;
+    LRU list = revision.isHistorical() ? revisedLRU : currentLRU;
     list.add((DLRevisionHolder)newHolder);
 
     adjustHolder((InternalCDORevision)revision, newHolder, lastHolder, holder);
     return true;
   }
 
-  public synchronized void removeRevision(CDORevision revision)
-  {
-    removeRevision(revision.getID(), revision.getVersion());
-  }
-
-  public synchronized InternalCDORevision removeRevision(CDOID id, int version)
+  public synchronized InternalCDORevision removeRevision(CDOID id, CDOBranchVersion branchVersion)
   {
     InternalCDORevision revision = null;
     RevisionHolder holder = getHolder(id);
     while (holder != null)
     {
       int holderVersion = holder.getVersion();
+      int version = branchVersion.getVersion();
       if (holderVersion > version)
       {
         holder = holder.getNext();
@@ -216,7 +219,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
         if (holderVersion == version)
         {
           revision = holder.getRevision();
-          LRU list = revision.isCurrent() ? currentLRU : revisedLRU;
+          LRU list = revision.isHistorical() ? revisedLRU : currentLRU;
           list.remove((DLRevisionHolder)holder);
           removeHolder(holder);
         }
@@ -228,7 +231,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     return revision;
   }
 
-  public synchronized boolean removeRevisions(CDOID id)
+  public synchronized boolean removeRevisions(CDOID id, CDOBranch branch)
   {
     RevisionHolder lookupHolder = getHolder(id);
     RevisionHolder holder = lookupHolder;
@@ -249,7 +252,12 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     revisedLRU = new LRU(capacityRevised);
   }
 
-  private InternalCDORevision getRevisionByTime(RevisionHolder holder, long timeStamp)
+  public Map<CDOBranch, List<CDORevision>> getAllRevisions()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  private InternalCDORevision getRevision(RevisionHolder holder, long timeStamp)
   {
     while (holder != null)
     {

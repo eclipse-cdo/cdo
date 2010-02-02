@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
@@ -81,12 +82,6 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
     return confirming(new CDODataInputImpl(in)
     {
       @Override
-      protected CDOListFactory getListFactory()
-      {
-        return CDOListWithElementProxiesImpl.FACTORY;
-      }
-
-      @Override
       protected CDOPackageRegistry getPackageRegistry()
       {
         return getSession().getPackageRegistry();
@@ -99,9 +94,21 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
       }
 
       @Override
+      protected CDOBranchManager getBranchManager()
+      {
+        return getSession().getBranchManager();
+      }
+
+      @Override
       protected CDORevisionFactory getRevisionFactory()
       {
         return getSession().getRevisionManager().getFactory();
+      }
+
+      @Override
+      protected CDOListFactory getListFactory()
+      {
+        return CDOListWithElementProxiesImpl.FACTORY;
       }
     });
   }

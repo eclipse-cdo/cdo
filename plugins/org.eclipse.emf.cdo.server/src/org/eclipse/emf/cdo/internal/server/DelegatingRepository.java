@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -21,9 +23,11 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.InternalNotificationManager;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.spi.server.InternalCommitManager;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalQueryManager;
@@ -37,7 +41,6 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -178,6 +181,11 @@ public abstract class DelegatingRepository implements InternalRepository
     return getDelegate().isSupportingAudits();
   }
 
+  public boolean isSupportingBranches()
+  {
+    return getDelegate().isSupportingBranches();
+  }
+
   public boolean isSupportingRevisionDeltas()
   {
     return getDelegate().isSupportingRevisionDeltas();
@@ -193,30 +201,40 @@ public abstract class DelegatingRepository implements InternalRepository
     return getDelegate().loadPackages(packageUnit);
   }
 
-  public InternalCDORevision loadRevision(CDOID id, int referenceChunk, int prefetchDepth)
+  public InternalCDOBranchManager getBranchManager()
   {
-    return getDelegate().loadRevision(id, referenceChunk, prefetchDepth);
+    return getDelegate().getBranchManager();
   }
 
-  public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, int prefetchDepth, long timeStamp)
+  public void setBranchManager(InternalCDOBranchManager branchManager)
   {
-    return getDelegate().loadRevisionByTime(id, referenceChunk, prefetchDepth, timeStamp);
+    getDelegate().setBranchManager(branchManager);
   }
 
-  public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int prefetchDepth, int version)
+  public int createBranch(BranchInfo branchInfo)
   {
-    return getDelegate().loadRevisionByVersion(id, referenceChunk, prefetchDepth, version);
+    return getDelegate().createBranch(branchInfo);
   }
 
-  public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk, int prefetchDepth)
+  public BranchInfo loadBranch(int branchID)
   {
-    return getDelegate().loadRevisions(ids, referenceChunk, prefetchDepth);
+    return getDelegate().loadBranch(branchID);
   }
 
-  public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, int prefetchDepth,
-      long timeStamp)
+  public SubBranchInfo[] loadSubBranches(int branchID)
   {
-    return getDelegate().loadRevisionsByTime(ids, referenceChunk, prefetchDepth, timeStamp);
+    return getDelegate().loadSubBranches(branchID);
+  }
+
+  public List<InternalCDORevision> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
+      int referenceChunk, int prefetchDepth)
+  {
+    return getDelegate().loadRevisions(infos, branchPoint, referenceChunk, prefetchDepth);
+  }
+
+  public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk)
+  {
+    return getDelegate().loadRevisionByVersion(id, branchVersion, referenceChunk);
   }
 
   public void notifyReadAccessHandlers(InternalSession session, CDORevision[] revisions,
@@ -270,13 +288,14 @@ public abstract class DelegatingRepository implements InternalRepository
     getDelegate().setStore(store);
   }
 
+  public long getTimeStamp()
+  {
+    return getDelegate().getTimeStamp();
+
+  }
+
   public void validateTimeStamp(long timeStamp) throws IllegalArgumentException
   {
     getDelegate().validateTimeStamp(timeStamp);
-  }
-
-  public InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
-  {
-    return getDelegate().verifyRevision(revision, referenceChunk);
   }
 }

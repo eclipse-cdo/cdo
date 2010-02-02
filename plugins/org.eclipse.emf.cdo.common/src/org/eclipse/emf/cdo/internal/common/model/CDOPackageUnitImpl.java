@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -311,7 +311,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
   @Override
   public String toString()
   {
-    String fmt = "CDOPackageUnit[id={0}, state={1}, type={2}, originalType={3}, timeStamp={4,date} {4,time}]"; //$NON-NLS-1$
+    String fmt = "CDOPackageUnit[id={0}, state={1}, type={2}, originalType={3}, timeStamp={4,date} {4,time,HH:mm:ss:SSS}]"; //$NON-NLS-1$
     return MessageFormat.format(fmt, getID(), getState(), getType(), getOriginalType(), getTimeStamp());
   }
 

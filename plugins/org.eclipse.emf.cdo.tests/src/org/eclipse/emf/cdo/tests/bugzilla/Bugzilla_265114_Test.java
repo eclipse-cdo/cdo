@@ -109,9 +109,9 @@ public class Bugzilla_265114_Test extends AbstractCDOTest
       return null;
     }
 
-    public CDOView getView(URI uri, ResourceSet viewSet)
+    public CDOView getView(URI uri, ResourceSet resourceSet)
     {
-      return session.openTransaction(viewSet);
+      return session.openTransaction(resourceSet);
     }
 
     public boolean matchesRegex(URI uri)

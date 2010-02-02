@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
@@ -81,12 +82,6 @@ public abstract class CDOServerIndication extends IndicationWithResponse
     indicating(new CDODataInputImpl(in)
     {
       @Override
-      protected CDORevisionFactory getRevisionFactory()
-      {
-        return getRepository().getRevisionManager().getFactory();
-      }
-
-      @Override
       protected CDOPackageRegistry getPackageRegistry()
       {
         return getRepository().getPackageRegistry();
@@ -96,6 +91,18 @@ public abstract class CDOServerIndication extends IndicationWithResponse
       protected StringIO getPackageURICompressor()
       {
         return getProtocol().getPackageURICompressor();
+      }
+
+      @Override
+      protected CDOBranchManager getBranchManager()
+      {
+        return getRepository().getBranchManager();
+      }
+
+      @Override
+      protected CDORevisionFactory getRevisionFactory()
+      {
+        return getRepository().getRevisionManager().getFactory();
       }
 
       @Override

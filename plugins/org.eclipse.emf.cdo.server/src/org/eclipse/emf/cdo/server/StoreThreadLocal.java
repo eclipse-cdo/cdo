@@ -40,7 +40,7 @@ public final class StoreThreadLocal
   }
 
   /**
-   *Returns the session associated with the current thread.
+   * Returns the session associated with the current thread.
    * 
    * @return Never <code>null</code>.
    * @throws IllegalStateException

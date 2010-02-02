@@ -4,27 +4,21 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.common.CDOCommonView;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 
 /**
  * @author Eike Stepper
  * @since 2.0
  */
-public interface IQueryContext
+public interface IQueryContext extends CDOBranchPoint
 {
   public IView getView();
-
-  /**
-   * The timeStamp of the view or ({@link CDOCommonView#UNSPECIFIED_DATE} if the view is <b>not</b> an
-   * {@link CDOCommonView.Type#AUDIT audit} view.
-   */
-  public long getTimeStamp();
 
   /**
    * Adds the given object to the results of the associated query.

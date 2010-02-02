@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -49,7 +50,7 @@ import java.util.ArrayList;
 
 /**
  * This is a list-to-table mapping optimized for non-audit-mode. It doesn't care about version and has delta support.
- *
+ * 
  * @author Eike Stepper
  * @since 2.0
  */
@@ -57,6 +58,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     IListMappingDeltaSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, NonAuditListTableMapping.class);
+
+  private static final FieldInfo[] KEY_FIELDS = { new FieldInfo(CDODBSchema.LIST_REVISION_ID, DBType.BIGINT) };
+
+  private static final int UNBOUNDED_SHIFT = -1;
 
   /**
    * The central data structure which is used to calculate the outcomes of the list deltas.
@@ -67,11 +72,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
    * This is a flag to remember if a delta of type "clear" has been encountered. If so, the list in the DB has to be
    * cleared before writing out the changes.
    */
-  private boolean clearFirst = false;
-
-  private static final FieldInfo[] KEY_FIELDS = { new FieldInfo(CDODBSchema.LIST_REVISION_ID, DBType.BIGINT) };
-
-  private static final int UNBOUNDED_SHIFT = -1;
+  private boolean clearFirst;
 
   private String sqlClear;
 
@@ -170,7 +171,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
   /**
    * Clear a list of a given revision.
-   *
+   * 
    * @param accessor
    *          the accessor to use
    * @param id
@@ -199,8 +200,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   public void processDelta(final IDBStoreAccessor accessor, final CDOID id, int oldVersion, final int newVersion,
       long created, CDOListFeatureDelta delta)
   {
+    CDOBranchPoint main = accessor.getStore().getRepository().getBranchManager().getMainBranch().getHead();
+
     InternalCDORevision originalRevision = (InternalCDORevision)accessor.getStore().getRepository()
-        .getRevisionManager().getRevision(id, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE);
+        .getRevisionManager().getRevision(id, main, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
     int oldListSize = originalRevision.getList(getFeature()).size();
 
     // reset the clear-flag
@@ -251,7 +254,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
   /**
    * Write calculated changes to the database
-   *
+   * 
    * @param accessor
    *          ,
    */
@@ -642,7 +645,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     return new ManipulationElement(ManipulationConstants.NONE, index, value, ManipulationConstants.INSERT);
   }
 
-  private class ListDeltaVisitor implements CDOFeatureDeltaVisitor
+  /**
+   * @author Eike Stepper
+   */
+  private final class ListDeltaVisitor implements CDOFeatureDeltaVisitor
   {
     public void visit(CDOAddFeatureDelta delta)
     {
@@ -766,7 +772,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     }
   }
 
-  private static class ManipulationConstants
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ManipulationConstants
   {
     public static final int NO_INDEX = Integer.MIN_VALUE;
 
@@ -783,7 +792,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     public static final int NONE = 0;
   }
 
-  private class ManipulationElement
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ManipulationElement
   {
     public int type;
 

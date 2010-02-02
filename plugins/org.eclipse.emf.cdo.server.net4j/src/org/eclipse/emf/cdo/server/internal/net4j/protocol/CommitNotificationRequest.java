@@ -4,14 +4,15 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - bug 201266
- *    Simon McDuff - bug 233490    
+ *    Simon McDuff - bug 233490
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
@@ -20,7 +21,6 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class CommitNotificationRequest extends CDOServerRequest
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CommitNotificationRequest.class);
 
-  private long timeStamp;
+  private CDOBranchPoint branchPoint;
 
   private final CDOPackageUnit[] packageUnits;
 
@@ -43,11 +43,12 @@ public class CommitNotificationRequest extends CDOServerRequest
 
   private List<CDOID> detachedObjects;
 
-  public CommitNotificationRequest(IChannel channel, long timeStamp, CDOPackageUnit[] packageUnits,
-      List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> deltas)
+  public CommitNotificationRequest(CDOServerProtocol serverProtocol, CDOBranchPoint branchPoint,
+      CDOPackageUnit[] packageUnits, List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects,
+      List<CDORevisionDelta> deltas)
   {
-    super(channel, CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION);
-    this.timeStamp = timeStamp;
+    super(serverProtocol, CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION);
+    this.branchPoint = branchPoint;
     this.packageUnits = packageUnits;
     this.dirtyIDs = dirtyIDs;
     this.deltas = deltas;
@@ -59,10 +60,10 @@ public class CommitNotificationRequest extends CDOServerRequest
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing timeStamp: {0,date} {0,time}", timeStamp); //$NON-NLS-1$
+      TRACER.format("Writing branchPoint: {0}", branchPoint); //$NON-NLS-1$
     }
 
-    out.writeLong(timeStamp);
+    out.writeCDOBranchPoint(branchPoint);
     if (TRACER.isEnabled())
     {
       TRACER.format("Writing {0} dirty IDs", dirtyIDs.size()); //$NON-NLS-1$

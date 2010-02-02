@@ -40,6 +40,6 @@ public class CDORevisionProxyFactory implements ProxyFactory
 
   public HibernateProxy getProxy(Serializable id, SessionImplementor session) throws HibernateException
   {
-    return new CDORevisionProxy(new CDORevisionLazyInitializer(entityName, id, session));
+    return new CDORevisionProxyHibernate(new CDORevisionLazyInitializer(entityName, id, session));
   }
 }

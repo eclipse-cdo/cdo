@@ -10,9 +10,12 @@
  */
 package org.eclipse.emf.cdo.internal.common.revision.cache.noop;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
+import org.eclipse.emf.cdo.common.revision.cache.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.CheckUtil;
@@ -22,11 +25,12 @@ import org.eclipse.emf.ecore.EClass;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public class NOOPRevisionCache extends Lifecycle implements CDORevisionCache
+public class NOOPRevisionCache extends Lifecycle implements InternalCDORevisionCache
 {
   public static final NOOPRevisionCache INSTANCE = new NOOPRevisionCache();
 
@@ -36,12 +40,22 @@ public class NOOPRevisionCache extends Lifecycle implements CDORevisionCache
   {
   }
 
+  public InternalCDORevisionCache instantiate(CDORevision revision)
+  {
+    return this;
+  }
+
+  public boolean isSupportingBranches()
+  {
+    return true;
+  }
+
   public EClass getObjectType(CDOID id)
   {
     return null;
   }
 
-  public List<CDORevision> getRevisions()
+  public List<CDORevision> getCurrentRevisions()
   {
     return EMPTY;
   }
@@ -51,12 +65,12 @@ public class NOOPRevisionCache extends Lifecycle implements CDORevisionCache
     return null;
   }
 
-  public InternalCDORevision getRevisionByTime(CDOID id, long timeStamp)
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint)
   {
     return null;
   }
 
-  public InternalCDORevision getRevisionByVersion(CDOID id, int version)
+  public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion)
   {
     return null;
   }
@@ -67,11 +81,7 @@ public class NOOPRevisionCache extends Lifecycle implements CDORevisionCache
     return false;
   }
 
-  public void removeRevision(CDORevision revision)
-  {
-  }
-
-  public InternalCDORevision removeRevision(CDOID id, int version)
+  public InternalCDORevision removeRevision(CDOID id, CDOBranchVersion branchVersion)
   {
     return null;
   }
@@ -79,5 +89,10 @@ public class NOOPRevisionCache extends Lifecycle implements CDORevisionCache
   public void clear()
   {
     // Do nothing
+  }
+
+  public Map<CDOBranch, List<CDORevision>> getAllRevisions()
+  {
+    return Collections.emptyMap();
   }
 }

@@ -10,272 +10,256 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import junit.framework.Assert;
+import org.eclipse.net4j.util.transaction.TransactionException;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Concurrency problem: attribute of enumeration type not updated correctly between two clients
  * <p>
- * See bug 273565
  * 
  * @author Simon McDuff
+ * @see bug 273565
  */
 public class Bugzilla_273565_Test extends AbstractCDOTest
 {
   /**
-   * Thread 1 : Update the value at 1 only when the value is at 2.<br>
-   * Thread 2 : Update the value at 3 and 2 only when the value is at 1.<br>
-   * Thread 1 will load objects... but at the same time will update remote changes... causing to not have the latest
-   * version.
+   * Thread A: Update the value to 3 and 2 only if the value is at 1.<br>
+   * Thread B: Update the value to 1 only if the value is at 2.
+   * <p>
+   * Thread B will load objects.<br>
+   * But at the same time will update remote changes.<br>
+   * Causing not to have the latest version.
+   * 
+   * @see bug 273565
    */
   public void testBugzilla_273565() throws Exception
   {
-    // TODO Clarify why this test sometimes enters infinite loop with this trace:
-    // TCPSelector [TCPSelector] Writing java.nio.channels.SocketChannel[connected local=/127.0.0.1:2036
-    // remote=/127.0.0.1:59580]
-    skipConfig(TCP);
+    final CountDownLatch start = new CountDownLatch(1);
+    final boolean[] done = { false };
+    final Exception exception[] = { null };
 
     final OrderDetail orderDetail = getModel1Factory().createOrderDetail();
-    final boolean done[] = new boolean[1];
-    final Exception exception[] = new Exception[1];
-    done[0] = false;
     orderDetail.setPrice(2);
-    CDOSession session = openModel1Session();
-    CDOTransaction transaction = session.openTransaction();
+
+    final CDOSession session = openModel1Session();
+    final CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     resource.getContents().add(orderDetail);
     transaction.commit();
 
-    Runnable changeObjects = new Runnable()
+    final CDOID id = CDOUtil.getCDOObject(orderDetail).cdoID();
+    Thread threadA = new Thread()
     {
+      @Override
       public void run()
       {
+        CDOSession session = openModel1Session();
+        CDOTransaction transaction = session.openTransaction();
+        OrderDetail orderDetail = (OrderDetail)transaction.getObject(id);
+
         try
         {
-          CDOSession session = openModel1Session();
-          CDOTransaction transaction = session.openTransaction();
-          OrderDetail orderDetail2 = (OrderDetail)transaction.getObject(CDOUtil.getCDOObject(orderDetail).cdoID());
-
+          start.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
           while (!done[0])
           {
-            int counter = 0;
-            while (orderDetail2.getPrice() != 1 && !done[0])
+            while (orderDetail.getPrice() != 1 && !done[0])
             {
-              if (counter++ >= 20)
-              {
-                throw new IllegalStateException("Object should have changed");
-              }
-
-              Thread.sleep(100);
+              sleep(1);
             }
 
-            orderDetail2.setPrice(3);
-            transaction.commit();
-            orderDetail2.setPrice(2);
-            transaction.commit();
-          }
+            try
+            {
+              orderDetail.setPrice(3);
+              transaction.commit();
+            }
+            catch (TransactionException ex)
+            {
+              transaction.rollback();
+              continue;
+            }
 
-          transaction.close();
-          session.close();
+            try
+            {
+              orderDetail.setPrice(2);
+              transaction.commit();
+            }
+            catch (TransactionException ex)
+            {
+              transaction.rollback();
+              continue;
+            }
+          }
         }
         catch (Exception ex)
         {
+          ex.printStackTrace();
           exception[0] = ex;
+        }
+        finally
+        {
+          session.close();
         }
       }
     };
 
-    new Thread(changeObjects).start();
+    threadA.setDaemon(true);
+    threadA.start();
 
-    for (int i = 0; i < 50 && exception[0] == null; i++)
+    Thread threadB = new Thread()
     {
-      orderDetail.setPrice(1);
-      transaction.commit();
-
-      int counter = 0;
-      while (orderDetail.getPrice() != 2)
-      {
-        if (counter++ >= 20)
-        {
-          throw new IllegalStateException("Object should have changed");
-        }
-
-        Thread.sleep(100);
-      }
-    }
-
-    done[0] = true;
-    if (exception[0] != null)
-    {
-      exception[0].printStackTrace();
-      Assert.fail(exception[0].getMessage());
-    }
-
-    session.close();
-  }
-
-  public void _testBugzilla_273565_List() throws Exception
-  {
-    final OrderDetail orderDetail = getModel1Factory().createOrderDetail();
-    final Order order = getModel1Factory().createOrder();
-    final boolean done[] = new boolean[1];
-    final Exception exception[] = new Exception[1];
-    done[0] = false;
-    order.getOrderDetails().add(orderDetail);
-    orderDetail.setPrice(2);
-    CDOSession session = openModel1Session();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
-    resource.getContents().add(order);
-    transaction.commit();
-
-    Runnable changeObjects = new Runnable()
-    {
+      @Override
       public void run()
       {
         try
         {
-          CDOSession session = openModel1Session();
-          CDOTransaction transaction = session.openTransaction();
-          OrderDetail orderDetail2 = (OrderDetail)transaction.getObject(CDOUtil.getCDOObject(orderDetail).cdoID());
-
-          while (!done[0])
+          start.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+          for (int i = 0; i < 50 && exception[0] == null; i++)
           {
-            int counter = 0;
-            while (orderDetail2.getPrice() != 1 && !done[0])
+            try
             {
-              if (counter++ >= 100)
-              {
-                throw new IllegalStateException("Object should have changed");
-              }
-
-              Thread.sleep(100);
+              orderDetail.setPrice(1);
+              transaction.commit();
+            }
+            catch (TransactionException ex)
+            {
+              transaction.rollback();
+              continue;
             }
 
-            transaction.getLock().lock();
-            transaction.getLock().unlock();
-
-            orderDetail2.setPrice(3);
-
-            transaction.commit();
-            orderDetail2.getOrder().getOrderDetails().remove(1);
-            orderDetail2.setPrice(2);
-            transaction.commit();
+            while (orderDetail.getPrice() != 2)
+            {
+              sleep(1);
+            }
           }
-
-          transaction.close();
-          session.close();
         }
         catch (Exception ex)
         {
+          ex.printStackTrace();
           exception[0] = ex;
         }
+
+        done[0] = true;
       }
     };
 
-    new Thread(changeObjects).start();
+    threadB.setDaemon(true);
+    threadB.start();
 
-    for (int i = 0; i < 50 && exception[0] == null; i++)
-    {
-      orderDetail.setPrice(1);
-      CDOUtil.getCDOObject(orderDetail.getOrder()).cdoWriteLock().lock();
-      orderDetail.getOrder().getOrderDetails().add(getModel1Factory().createOrderDetail());
-      transaction.commit();
+    start.countDown();
+    threadA.join(DEFAULT_TIMEOUT);
+    threadB.join(DEFAULT_TIMEOUT);
 
-      int counter = 0;
-      while (orderDetail.getPrice() != 2)
-      {
-        if (counter++ >= 100)
-        {
-          throw new IllegalStateException("Object should have changed");
-        }
-
-        Thread.sleep(100);
-      }
-
-      transaction.getLock().lock();
-      transaction.getLock().unlock();
-    }
-
-    done[0] = true;
     if (exception[0] != null)
     {
-      exception[0].printStackTrace();
-      Assert.fail(exception[0].getMessage());
+      throw exception[0];
     }
-
-    session.close();
   }
 
+  /**
+   * @see bug 273565
+   */
   public void testBugzilla_273565_Lock() throws Exception
   {
-    // TODO Clarify why this test sometimes enters infinite loop with this trace:
-    // TCPSelector [TCPSelector] Writing java.nio.channels.SocketChannel[connected local=/127.0.0.1:2036
-    // remote=/127.0.0.1:59580]
-    // Update Could be related to bug 289584: Deadlock in CDOView that is now fixed!
-
-    skipConfig(TCP);
-    final OrderDetail orderDetail = getModel1Factory().createOrderDetail();
-    final boolean done[] = new boolean[1];
-    final Exception exception[] = new Exception[1];
-    done[0] = false;
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     orderDetail.setPrice(2);
+
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     resource.getContents().add(orderDetail);
     transaction.commit();
 
-    Runnable changeObjects = new Runnable()
+    final CDOID id = CDOUtil.getCDOObject(orderDetail).cdoID();
+    final CountDownLatch start = new CountDownLatch(1);
+    final Exception exception[] = { null };
+
+    class Modifier extends Thread
     {
+      private float price;
+
+      public Modifier(float price)
+      {
+        setDaemon(true);
+        this.price = price;
+      }
+
+      @Override
       public void run()
       {
+        CDOSession session = openModel1Session();
+        CDOTransaction transaction = session.openTransaction();
+        OrderDetail orderDetail = (OrderDetail)transaction.getObject(id);
+
         try
         {
-          CDOSession session = openModel1Session();
-          CDOTransaction transaction = session.openTransaction();
-          OrderDetail orderDetail2 = (OrderDetail)transaction.getObject(CDOUtil.getCDOObject(orderDetail).cdoID());
-
-          while (!done[0])
+          start.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+          for (int i = 0; i < 50 && exception[0] == null; i++)
           {
-            CDOUtil.getCDOObject(orderDetail2).cdoWriteLock().lock();
-            orderDetail2.setPrice(3);
+            CDOUtil.getCDOObject(orderDetail).cdoWriteLock().lock();
+            orderDetail.setPrice(price);
             transaction.commit();
           }
-
-          transaction.close();
-          session.close();
         }
         catch (Exception ex)
         {
+          ex.printStackTrace();
           exception[0] = ex;
         }
+        finally
+        {
+          session.close();
+        }
       }
-    };
-
-    new Thread(changeObjects).start();
-
-    for (int i = 0; i < 50 && exception[0] == null; i++)
-    {
-      CDOUtil.getCDOObject(orderDetail).cdoWriteLock().lock();
-      orderDetail.setPrice(1);
-      transaction.commit();
     }
 
-    done[0] = true;
+    Modifier threadA = new Modifier(3);
+    threadA.start();
+
+    Modifier threadB = new Modifier(1);
+    threadB.start();
+
+    start.countDown();
+    threadA.join(DEFAULT_TIMEOUT);
+    threadB.join(DEFAULT_TIMEOUT);
+
     if (exception[0] != null)
     {
-      exception[0].printStackTrace();
-      Assert.fail(exception[0].getMessage());
+      throw exception[0];
     }
+  }
 
-    session.close();
+  /**
+   * @see bug 273565
+   */
+  public void testBugzilla_273565_NoThreads() throws Exception
+  {
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+    orderDetail.setPrice(1);
+
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+    resource.getContents().add(orderDetail);
+    transaction.commit();
+
+    CDOTransaction transaction2 = session.openTransaction();
+    OrderDetail orderDetail2 = transaction2.getObject(orderDetail);
+
+    CDOUtil.getCDOObject(orderDetail).cdoWriteLock().lock();
+    orderDetail.setPrice(2);
+
+    boolean locked = CDOUtil.getCDOObject(orderDetail2).cdoWriteLock().tryLock(DEFAULT_TIMEOUT_EXPECTED,
+        TimeUnit.MILLISECONDS);
+    assertEquals(false, locked);
   }
 }

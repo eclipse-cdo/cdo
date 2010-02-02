@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.tests.revisioncache;
 import org.eclipse.emf.cdo.common.db.CDOCommonDBUtil;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
+import org.eclipse.emf.cdo.common.revision.cache.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.db.DBUtil;
@@ -35,7 +36,7 @@ public abstract class AbstractDBRevisionCacheTest extends AbstractCDORevisionCac
   private DataSource dataSource;
 
   @Override
-  protected CDORevisionCache createRevisionCache(CDOSession session) throws Exception
+  protected InternalCDORevisionCache createRevisionCache(CDOSession session) throws Exception
   {
     DataSource dataSource = getDataSource();
 
@@ -48,7 +49,7 @@ public abstract class AbstractDBRevisionCacheTest extends AbstractCDORevisionCac
         , session.getPackageRegistry() //
         , ((InternalCDOSession)session).getRevisionManager().getFactory());
     LifecycleUtil.activate(revisionCache);
-    return revisionCache;
+    return (InternalCDORevisionCache)revisionCache;
   }
 
   private DataSource getDataSource()

@@ -12,6 +12,8 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -95,11 +97,12 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     return null;
   }
 
-  public CDOID readResourceID(CDOID folderID, String name, long timeStamp)
+  /**
+   * @since 3.0
+   */
+  public CDOID readResourceID(CDOID folderID, String name, CDOBranchPoint branchPoint)
   {
-    IStoreAccessor.QueryResourcesContext.ExactMatch context = //
-    Store.createExactMatchContext(folderID, name, timeStamp);
-
+    QueryResourcesContext.ExactMatch context = Store.createExactMatchContext(folderID, name, branchPoint);
     queryResources(context);
     return context.getResourceID();
   }
@@ -117,8 +120,11 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     }
 
     commitContexts.add(context);
-    long timeStamp = context.getTimeStamp();
+    CDOBranch branch = context.getBranchPoint().getBranch();
+    long timeStamp = context.getBranchPoint().getTimeStamp();
+
     boolean deltas = store.getRepository().isSupportingRevisionDeltas();
+
     InternalCDOPackageUnit[] newPackageUnits = context.getNewPackageUnits();
     InternalCDORevision[] newObjects = context.getNewObjects();
     CDOID[] detachedObjects = context.getDetachedObjects();
@@ -137,23 +143,23 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
 
       if (detachedObjects.length != 0)
       {
-        detachObjects(detachedObjects, timeStamp - 1, monitor.fork(detachedObjects.length));
+        detachObjects(detachedObjects, branch, timeStamp, monitor.fork(detachedObjects.length));
       }
 
       if (newObjects.length != 0)
       {
-        writeRevisions(newObjects, monitor.fork(newObjects.length));
+        writeRevisions(newObjects, branch, monitor.fork(newObjects.length));
       }
 
       if (dirtyCount != 0)
       {
         if (deltas)
         {
-          writeRevisionDeltas(context.getDirtyObjectDeltas(), timeStamp, monitor.fork(dirtyCount));
+          writeRevisionDeltas(context.getDirtyObjectDeltas(), branch, timeStamp, monitor.fork(dirtyCount));
         }
         else
         {
-          writeRevisions(context.getDirtyObjects(), monitor.fork(dirtyCount));
+          writeRevisions(context.getDirtyObjects(), branch, monitor.fork(dirtyCount));
         }
       }
     }
@@ -176,7 +182,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     }
   }
 
-  protected abstract void rollback(IStoreAccessor.CommitContext commitContext);
+  protected abstract void rollback(CommitContext commitContext);
 
   public final void release()
   {
@@ -191,11 +197,21 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
    */
   protected abstract void addIDMappings(CommitContext context, OMMonitor monitor);
 
-  protected abstract void writeRevisions(InternalCDORevision[] revisions, OMMonitor monitor);
+  /**
+   * @since 3.0
+   */
+  protected abstract void writeRevisions(InternalCDORevision[] revisions, CDOBranch branch, OMMonitor monitor);
 
-  protected abstract void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, long created, OMMonitor monitor);
+  /**
+   * @since 3.0
+   */
+  protected abstract void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch,
+      long created, OMMonitor monitor);
 
-  protected abstract void detachObjects(CDOID[] detachedObjects, long revised, OMMonitor monitor);
+  /**
+   * @since 3.0
+   */
+  protected abstract void detachObjects(CDOID[] detachedObjects, CDOBranch branch, long timeStamp, OMMonitor monitor);
 
   @Override
   protected abstract void doActivate() throws Exception;

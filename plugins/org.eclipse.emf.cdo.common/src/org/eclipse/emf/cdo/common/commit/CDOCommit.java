@@ -12,8 +12,6 @@ package org.eclipse.emf.cdo.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 
-import java.util.List;
-
 /**
  * @author Eike Stepper
  * @since 3.0
@@ -22,7 +20,7 @@ public interface CDOCommit extends CDOBranchPoint
 {
   public String getUserID();
 
-  public List<String> getComments();
+  public String getComment();
 
   // public Set<CDOID> getNewResources();
   //

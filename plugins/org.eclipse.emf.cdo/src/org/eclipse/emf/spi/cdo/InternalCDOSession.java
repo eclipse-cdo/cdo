@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.spi.cdo;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -17,6 +18,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageProcessor;
@@ -50,6 +53,11 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   public void setSessionProtocol(CDOSessionProtocol sessionProtocol);
 
   public InternalCDOPackageRegistry getPackageRegistry();
+
+  /**
+   * @since 3.0
+   */
+  public InternalCDOBranchManager getBranchManager();
 
   /**
    * @since 3.0
@@ -100,20 +108,31 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   /**
    * @since 3.0
    */
-  public Object getCommitLock();
+  public Object getInvalidationLock();
 
-  public void handleCommitNotification(long timeStamp, Collection<CDOPackageUnit> newPackageUnits,
-      Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects, Collection<CDORevisionDelta> deltas,
+  /**
+   * @since 3.0
+   */
+  public void handleBranchNotification(InternalCDOBranch branch);
+
+  /**
+   * @since 3.0
+   */
+  public void handleCommitNotification(CDOBranchPoint branchPoint, Collection<CDOPackageUnit> newPackageUnits,
+      Set<CDOIDAndVersion> dirtyOIDandVersions, Collection<CDOID> detachedOIDs, Collection<CDORevisionDelta> deltas,
       InternalCDOView excludedView);
 
-  public void handleSyncResponse(long timestamp, Collection<CDOPackageUnit> newPackageUnits,
-      Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects);
+  /**
+   * @since 3.0
+   */
+  public void handleSyncResponse(CDOBranchPoint branchPoint, Collection<CDOPackageUnit> newPackageUnits,
+      Set<CDOIDAndVersion> dirtyOIDandVersions, Collection<CDOID> detachedOIDs);
 
   /**
    * In some cases we need to sync without propagating event. Lock is a good example.
    * 
    * @since 3.0
    */
-  public void reviseRevisions(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects,
-      InternalCDOView excludedView);
+  public void reviseRevisions(CDOBranchPoint branchPoint, Set<CDOIDAndVersion> dirtyOIDandVersions,
+      Collection<CDOID> detachedOIDs, InternalCDOView excludedView);
 }

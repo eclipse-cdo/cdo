@@ -39,6 +39,11 @@ public class HorizontalAuditMappingStrategyWithRanges extends AbstractHorizontal
     return true;
   }
 
+  public boolean hasBranchingSupport()
+  {
+    return false;
+  }
+
   @Override
   public IClassMapping doCreateClassMapping(EClass eClass)
   {

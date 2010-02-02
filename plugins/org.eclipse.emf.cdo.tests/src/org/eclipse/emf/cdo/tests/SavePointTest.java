@@ -44,23 +44,23 @@ public class SavePointTest extends AbstractCDOTest
     Category category1 = getModel1Factory().createCategory();
     company1.getCategories().add(category1);
 
-    assertEquals(1, CDOUtil.getCDOObject(company1).cdoRevision().getVersion());
+    assertEquals(0, CDOUtil.getCDOObject(company1).cdoRevision().getVersion());
     transaction1.setSavepoint();
-    assertEquals(1, CDOUtil.getCDOObject(company1).cdoRevision().getVersion());
+    assertEquals(0, CDOUtil.getCDOObject(company1).cdoRevision().getVersion());
 
     Category category2 = getModel1Factory().createCategory();
     company1.getCategories().add(category2);
 
     CDOUserSavepoint savePoint2 = transaction1.setSavepoint();
-    assertEquals(1, CDOUtil.getCDOObject(company1).cdoRevision().getVersion());
+    assertEquals(0, CDOUtil.getCDOObject(company1).cdoRevision().getVersion());
 
     Category category3 = getModel1Factory().createCategory();
     company1.getCategories().add(category3);
 
     transaction1.setSavepoint();
-    assertEquals(1, CDOUtil.getCDOObject(company1).cdoRevision().getVersion());
+    assertEquals(0, CDOUtil.getCDOObject(company1).cdoRevision().getVersion());
     savePoint2.rollback();
-    assertEquals(1, CDOUtil.getCDOObject(company1).cdoRevision().getVersion());
+    assertEquals(0, CDOUtil.getCDOObject(company1).cdoRevision().getVersion());
 
     assertNew(category1, transaction1);
     assertNew(company1, transaction1);
@@ -68,6 +68,7 @@ public class SavePointTest extends AbstractCDOTest
     assertEquals(2, company1.getCategories().size());
 
     transaction1.commit();
+    assertEquals(1, CDOUtil.getCDOObject(company1).cdoRevision().getVersion());
   }
 
   public void testRollbackWithNewObject_Commit() throws Exception
@@ -233,7 +234,7 @@ public class SavePointTest extends AbstractCDOTest
 
     // Test NEW TO NEW
     assertEquals(false, FSMUtil.isTransient(CDOUtil.getCDOObject(category2)));
-    assertEquals(true, transaction1.getNewObjects().containsKey((CDOUtil.getCDOObject(category2)).cdoID()));
+    assertEquals(true, transaction1.getNewObjects().containsKey(CDOUtil.getCDOObject(category2).cdoID()));
 
     // Test rollback NEW
     assertEquals("CITY1", company1.getCity());
@@ -273,7 +274,7 @@ public class SavePointTest extends AbstractCDOTest
    * CDORepositoryInfo: object1 not modified, object2 is modified
    * client1: same as repository
    * client2: same as repository
-   *</pre>
+   * </pre>
    */
   public void _testScenario1()
   {

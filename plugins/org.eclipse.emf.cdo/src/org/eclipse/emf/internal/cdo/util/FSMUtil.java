@@ -237,8 +237,9 @@ public final class FSMUtil
   {
     if (revision == null)
     {
+      CDOView view = object.cdoView();
       CDOStateMachine.INSTANCE.detachRemote((InternalCDOObject)object);
-      throw new InvalidObjectException(object.cdoID());
+      throw new InvalidObjectException(object.cdoID(), view);
     }
   }
 

@@ -10,8 +10,12 @@
  */
 package org.eclipse.emf.cdo.common.revision.cache;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.internal.common.revision.cache.mem.MEMRevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
 
 import org.eclipse.net4j.util.event.IEvent;
@@ -25,62 +29,50 @@ import java.util.List;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface CDORevisionCache extends INotifier, CDORevisionCacheAdder
+public interface CDORevisionCache extends INotifier
 {
   /**
    * @since 3.0
    */
   public static final CDORevisionCache NOOP = NOOPRevisionCache.INSTANCE;
 
+  /**
+   * @since 3.0
+   */
+  public boolean isSupportingBranches();
+
   public EClass getObjectType(CDOID id);
 
   /**
    * @since 3.0
    */
-  public CDORevision getRevision(CDOID id);
+  public CDORevision getRevision(CDOID id, CDOBranchPoint branchPoint);
 
   /**
    * @since 3.0
    */
-  public CDORevision getRevisionByTime(CDOID id, long timeStamp);
-
-  /**
-   * @since 3.0
-   */
-  public CDORevision getRevisionByVersion(CDOID id, int version);
-
-  /**
-   * @since 3.0
-   */
-  public void removeRevision(CDORevision revision);
-
-  /**
-   * @since 3.0
-   */
-  public CDORevision removeRevision(CDOID id, int version);
+  public CDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion);
 
   /**
    * Returns a list of {@link CDORevision revisions} that are current.
+   * 
+   * @since 3.0
    */
-  public List<CDORevision> getRevisions();
-
-  public void clear();
+  public List<CDORevision> getCurrentRevisions();
 
   /**
    * @author Eike Stepper
    */
-  public interface EvictionEvent extends IEvent
+  public interface EvictionEvent extends IEvent, CDORevisionKey
   {
     /**
      * @since 3.0
      */
     public CDORevisionCache getSource();
 
-    public CDOID getID();
-
-    public int getVersion();
-
     /**
+     * May be <code>null</code> for certain cache implementations, e.g. {@link MEMRevisionCache}.
+     * 
      * @since 3.0
      */
     public CDORevision getRevision();

@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.InternalNotificationManager;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -32,8 +34,12 @@ import java.util.List;
  * @author Eike Stepper
  * @since 3.0
  */
-public interface InternalRepository extends IRepository, PackageLoader, RevisionLoader
+public interface InternalRepository extends IRepository, PackageLoader, BranchLoader, RevisionLoader
 {
+  public InternalCDOBranchManager getBranchManager();
+
+  public void setBranchManager(InternalCDOBranchManager branchManager);
+
   public InternalCDORevisionManager getRevisionManager();
 
   public void setRevisionManager(InternalCDORevisionManager revisionManager);

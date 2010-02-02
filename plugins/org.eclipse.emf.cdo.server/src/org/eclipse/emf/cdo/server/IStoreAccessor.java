@@ -10,11 +10,13 @@
  */
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -32,7 +34,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public interface IStoreAccessor extends IQueryHandlerProvider
+public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader
 {
   /**
    * Returns the store this accessor is associated with.
@@ -81,12 +83,14 @@ public interface IStoreAccessor extends IQueryHandlerProvider
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit);
 
   /**
-   * Reads a current revision (i.e. one with revised == 0) from the back-end. Returns <code>null</code> if the id is
+   * Reads a revision from the back-end that was valid at the given timeStamp. This method will only be called by the
+   * framework if {@link IRepository#isSupportingAudits()} is <code>true</code>. Returns <code>null</code> if the id is
    * invalid.
    * 
    * @since 3.0
    */
-  public InternalCDORevision readRevision(CDOID id, int listChunk, CDORevisionCacheAdder cache);
+  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
+      CDORevisionCacheAdder cache);
 
   /**
    * Reads a revision with the given version from the back-end. This method will only be called by the framework if
@@ -94,24 +98,16 @@ public interface IStoreAccessor extends IQueryHandlerProvider
    * 
    * @since 3.0
    */
-  public InternalCDORevision readRevisionByVersion(CDOID id, int listChunk, CDORevisionCacheAdder cache, int version);
-
-  /**
-   * Reads a revision from the back-end that was valid at the given timeStamp. This method will only be called by the
-   * framework if {@link IRepository#isSupportingAudits()} is <code>true</code>. Returns <code>null</code> if the id is
-   * invalid.
-   * 
-   * @since 3.0
-   */
-  public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, CDORevisionCacheAdder cache, long timeStamp);
+  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
+      CDORevisionCacheAdder cache);
 
   /**
    * Returns the <code>CDOID</code> of the resource node with the given folderID and name if a resource with this
    * folderID and name exists in the store, <code>null</code> otherwise.
    * 
-   * @since 2.0
+   * @since 3.0
    */
-  public CDOID readResourceID(CDOID folderID, String name, long timeStamp);
+  public CDOID readResourceID(CDOID folderID, String name, CDOBranchPoint branchPoint);
 
   /**
    * @since 2.0
@@ -203,9 +199,11 @@ public interface IStoreAccessor extends IQueryHandlerProvider
     public int getTransactionID();
 
     /**
-     * Returns the time stamp of this commit operation.
+     * Returns the branch ID and timestamp of this commit operation.
+     * 
+     * @since 3.0
      */
-    public long getTimeStamp();
+    public CDOBranchPoint getBranchPoint();
 
     /**
      * Returns the temporary, transactional package manager associated with the commit operation represented by this
@@ -248,7 +246,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider
 
     /**
      * Returns an unmodifiable map from all temporary IDs (meta or not) to their persistent counter parts. It is
-     * initially populated with the mappings of all new meta objects.
+     * initially populated with the mappings of all new <b>meta</b> objects.
      */
     public Map<CDOIDTemp, CDOID> getIDMappings();
 
@@ -262,14 +260,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider
    * @since 2.0
    * @noimplement This interface is not intended to be implemented by clients.
    */
-  public interface QueryResourcesContext
+  public interface QueryResourcesContext extends CDOBranchPoint
   {
-    /**
-     * The timeStamp of the view ({@link CDOCommonView#UNSPECIFIED_DATE} if the view is an
-     * {@link CDOCommonView.Type#AUDIT audit} view.
-     */
-    public long getTimeStamp();
-
     public CDOID getFolderID();
 
     public String getName();

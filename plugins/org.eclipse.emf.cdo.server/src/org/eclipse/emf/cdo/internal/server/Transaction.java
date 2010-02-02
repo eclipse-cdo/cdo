@@ -12,7 +12,7 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.CDOCommonView;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
@@ -25,26 +25,21 @@ import java.text.MessageFormat;
  */
 public class Transaction extends View implements InternalTransaction
 {
-  public Transaction(InternalSession session, int viewID)
+  public Transaction(InternalSession session, int viewID, CDOBranchPoint branchPoint)
   {
-    super(session, viewID);
+    super(session, viewID, branchPoint);
   }
 
   @Override
-  public Type getViewType()
+  public boolean isReadOnly()
   {
-    return CDOCommonView.Type.TRANSACTION;
-  }
-
-  public int getTransactionID()
-  {
-    return getViewID();
+    return false;
   }
 
   @Override
   public String toString()
   {
-    return MessageFormat.format("Transaction[{0}]", getTransactionID()); //$NON-NLS-1$
+    return MessageFormat.format("Transaction[{0}]", getViewID()); //$NON-NLS-1$
   }
 
   /**
@@ -72,6 +67,15 @@ public class Transaction extends View implements InternalTransaction
         return timeStamp;
       }
     };
+  }
+
+  @Override
+  protected void validateTimeStamp(long timeStamp) throws IllegalArgumentException
+  {
+    if (timeStamp != UNSPECIFIED_DATE)
+    {
+      throw new IllegalArgumentException("Changing the target time is not supported by transactions");
+    }
   }
 
   private void checkOpen()

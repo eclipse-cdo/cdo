@@ -56,6 +56,7 @@ public class HibernateQueryHandler implements IQueryHandler
     // get a transaction, the hibernateStoreAccessor is placed in a threadlocal
     // so all db access uses the same session.
     final Session session = hibernateStoreAccessor.getHibernateSession();
+
     try
     {
       // create the query

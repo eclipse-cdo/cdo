@@ -1,5 +1,6 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append("= ?  * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -31,7 +32,7 @@ public interface IClassMappingAuditSupport
    * Read a specific version of a revision. If this method returns <code>true</code> it is guaranteed that
    * <code>revision.getVersion() == version</code>
    * 
-   * @param dbStoreAccessor
+   * @param storeAccessor
    *          the accessor to use.
    * @param revision
    *          the revision object into which the data should be read. The revision has to be have its ID set to the
@@ -43,27 +44,7 @@ public interface IClassMappingAuditSupport
    *          the chunk size to read attribute lists.
    * @return <code>true</code>, if the revision has been found and read correctly. <code>false</code> if the revision
    *         could not be found. In this case, the content of <code>revision</code> is undefined.
+   * @since 3.0
    */
-  public boolean readRevisionByVersion(IDBStoreAccessor dbStoreAccessor, InternalCDORevision revision, int version,
-      int listChunk);
-
-  /**
-   * Read a specific past version of a revision. If this method returns <code>true</code> it is guaranteed that
-   * <code>revision.getCreated() <= timeStamp && (getRevised() == 0 || getRevised() >= timeStamp))</code>
-   * 
-   * @param dbStoreAccessor
-   *          the accessor to use.
-   * @param revision
-   *          the revision object into which the data should be read. The revision has to be have its ID set to the
-   *          requested object's ID. The version is ignored, as the version parameter is used to determine the version
-   *          to be read.
-   * @param timeStamp
-   *          the timeStamp which should be used to determine the revision's version.
-   * @param listChunk
-   *          the chunk size to read attribute lists.
-   * @return <code>true</code>, if the revision has been found and read correctly. <code>false</code> if the revision
-   *         could not be found. In this case, the content of <code>revision</code> is undefined.
-   */
-  public boolean readRevisionByTime(IDBStoreAccessor dbStoreAccessor, InternalCDORevision revision, long timeStamp,
-      int listChunk);
+  public boolean readRevisionByVersion(IDBStoreAccessor storeAccessor, InternalCDORevision revision, int listChunk);
 }

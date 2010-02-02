@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.tests.AuditTest.LocalAuditTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_241464_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_243310_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_246442_Test;
@@ -79,6 +78,10 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
     // General
+    testClasses.add(RevisionManagerTest.class);
+    testClasses.add(RevisionManagerTest.ClientSide.class);
+    testClasses.add(BranchingTest.class);
+    testClasses.add(BranchingTest.SameSession.class);
     testClasses.add(InitialTest.class);
     testClasses.add(CDOIDTest.class);
     testClasses.add(ComplexTest.class);
@@ -93,7 +96,7 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(TransactionTest.class);
     testClasses.add(PushTransactionTest.class);
     testClasses.add(AuditTest.class);
-    testClasses.add(LocalAuditTest.class);
+    testClasses.add(AuditTest.SameSession.class);
     testClasses.add(ResourceTest.class);
     testClasses.add(ContainmentTest.class);
     testClasses.add(InvalidationTest.class);
@@ -103,8 +106,7 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(ChunkingWithMEMTest.class);
     testClasses.add(PackageRegistryTest.class);
     testClasses.add(MetaTest.class);
-    testClasses.add(RevisionDeltaWithDeltaSupportTest.class);
-    testClasses.add(RevisionDeltaWithoutDeltaSupportTest.class);
+    testClasses.add(RevisionDeltaTest.class);
     testClasses.add(RevisionHolderTest.class);
     testClasses.add(IndexReconstructionTest.class);
     testClasses.add(AutoAttacherTest.class);

@@ -11,8 +11,8 @@
  */
 package org.eclipse.emf.cdo.common.revision.delta;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -22,24 +22,12 @@ import java.util.List;
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDORevisionDelta
+public interface CDORevisionDelta extends CDORevisionKey
 {
-  public CDOID getID();
-
   /**
    * @since 3.0
    */
   public EClass getEClass();
-
-  /**
-   * Specify the version of the object BEFORE it was modified.
-   */
-  public int getOriginVersion();
-
-  /**
-   * Specify the version of the object AFTER it was modified.
-   */
-  public int getDirtyVersion();
 
   public List<CDOFeatureDelta> getFeatureDeltas();
 

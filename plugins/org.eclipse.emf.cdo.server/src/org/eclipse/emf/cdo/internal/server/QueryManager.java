@@ -12,11 +12,14 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.server.InternalQueryManager;
 import org.eclipse.emf.cdo.spi.server.InternalQueryResult;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -160,7 +163,7 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
    */
   private class QueryContext implements IQueryContext, Runnable
   {
-    private long timeStamp;
+    private CDOBranchPoint branchPoint;
 
     private InternalQueryResult queryResult;
 
@@ -193,9 +196,9 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
     {
       this.queryResult = queryResult;
 
-      // Remember the timeStamp because it can change for audits
+      // Remember the branchPoint because it can change
       InternalView view = getView();
-      timeStamp = view.getTimeStamp();
+      branchPoint = CDOBranchUtil.createBranchPoint(view);
     }
 
     public InternalQueryResult getQueryResult()
@@ -208,9 +211,14 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
       return queryResult.getView();
     }
 
+    public CDOBranch getBranch()
+    {
+      return branchPoint.getBranch();
+    }
+
     public long getTimeStamp()
     {
-      return timeStamp;
+      return branchPoint.getTimeStamp();
     }
 
     public Future<?> getFuture()
@@ -283,6 +291,11 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
     {
       InternalView view = getQueryResult().getView();
       view.getSession().removeListener(sessionListener);
+    }
+
+    public int compareTo(CDOBranchPoint o)
+    {
+      return branchPoint.compareTo(o);
     }
   }
 }

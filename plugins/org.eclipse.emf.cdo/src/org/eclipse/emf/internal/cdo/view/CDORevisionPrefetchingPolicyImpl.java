@@ -4,13 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  */
 package org.eclipse.emf.internal.cdo.view;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
@@ -19,9 +20,10 @@ import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,10 +39,10 @@ public class CDORevisionPrefetchingPolicyImpl implements CDORevisionPrefetchingP
     this.chunkSize = chunkSize;
   }
 
-  public Collection<CDOID> loadAhead(CDORevisionManager revisionManager, EObject eObject, EStructuralFeature feature,
-      CDOList list, int accessIndex, CDOID accessID)
+  public List<CDOID> loadAhead(CDORevisionManager revisionManager, CDOBranchPoint branchPoint, EObject eObject,
+      EStructuralFeature feature, CDOList list, int accessIndex, CDOID accessID)
   {
-    if (chunkSize > 1 && !revisionManager.containsRevision(accessID))
+    if (chunkSize > 1 && !revisionManager.containsRevision(accessID, branchPoint))
     {
       int fromIndex = accessIndex;
       int toIndex = Math.min(accessIndex + chunkSize, list.size()) - 1;
@@ -54,7 +56,7 @@ public class CDORevisionPrefetchingPolicyImpl implements CDORevisionPrefetchingP
           CDOID idElement = (CDOID)element;
           if (!idElement.isTemporary())
           {
-            if (!revisionManager.containsRevision(idElement))
+            if (!revisionManager.containsRevision(idElement, branchPoint))
             {
               if (!notRegistered.contains(idElement))
               {
@@ -65,9 +67,9 @@ public class CDORevisionPrefetchingPolicyImpl implements CDORevisionPrefetchingP
         }
       }
 
-      return notRegistered;
+      return new ArrayList<CDOID>(notRegistered);
     }
 
-    return Collections.emptySet();
+    return Collections.emptyList();
   }
 }

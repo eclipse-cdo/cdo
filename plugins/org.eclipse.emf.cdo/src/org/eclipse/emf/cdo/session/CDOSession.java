@@ -13,14 +13,15 @@
 package org.eclipse.emf.cdo.session;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
-import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
+import org.eclipse.emf.cdo.transaction.CDORefreshContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.view.CDOAudit;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -72,6 +73,14 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
   public CDOPackageRegistry getPackageRegistry();
 
   /**
+   * Returns the CDO {@link CDOBranchManager branch manager} that manages the {@link CDOBranch branches} of the
+   * repository of this session.
+   * 
+   * @since 3.0
+   */
+  public CDOBranchManager getBranchManager();
+
+  /**
    * Returns the CDO {@link CDORevisionManager revision manager} that manages the {@link CDORevision revisions} of the
    * repository of this session.
    * 
@@ -96,8 +105,27 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
    * Opens and returns a new {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set}.
    * 
    * @see #openTransaction()
+   * @since 3.0
+   */
+  public CDOTransaction openTransaction(CDOBranch branch, ResourceSet resourceSet);
+
+  /**
+   * Opens and returns a new {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set}.
+   * 
+   * @see #openTransaction()
+   * @since 3.0
    */
   public CDOTransaction openTransaction(ResourceSet resourceSet);
+
+  /**
+   * Opens and returns a new {@link CDOTransaction transaction} on a new EMF {@link ResourceSet resource set}.
+   * <p>
+   * Same as calling <code>openTransaction(new ResourceSetImpl())</code>.
+   * 
+   * @see #openTransaction(ResourceSet)
+   * @since 3.0
+   */
+  public CDOTransaction openTransaction(CDOBranch branch);
 
   /**
    * Opens and returns a new {@link CDOTransaction transaction} on a new EMF {@link ResourceSet resource set}.
@@ -112,8 +140,39 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
    * Opens and returns a new {@link CDOView view} on the given EMF {@link ResourceSet resource set}.
    * 
    * @see #openView()
+   * @since 3.0
    */
-  public CDOView openView(ResourceSet resourceSet);
+  public CDOView openView(CDOBranch branch, long timeStamp, ResourceSet resourceSet);
+
+  /**
+   * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
+   * <p>
+   * Same as calling <code>openView(new ResourceSetImpl())</code>.
+   * 
+   * @see #openView(ResourceSet)
+   * @since 3.0
+   */
+  public CDOView openView(CDOBranch branch, long timeStamp);
+
+  /**
+   * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
+   * <p>
+   * Same as calling <code>openView(new ResourceSetImpl())</code>.
+   * 
+   * @see #openView(ResourceSet)
+   * @since 3.0
+   */
+  public CDOView openView(CDOBranch branch);
+
+  /**
+   * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
+   * <p>
+   * Same as calling <code>openView(new ResourceSetImpl())</code>.
+   * 
+   * @see #openView(ResourceSet)
+   * @since 3.0
+   */
+  public CDOView openView(long timeStamp);
 
   /**
    * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
@@ -123,22 +182,6 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
    * @see #openView(ResourceSet)
    */
   public CDOView openView();
-
-  /**
-   * Opens and returns a new {@link CDOAudit audit} on the given EMF {@link ResourceSet resource set}.
-   * 
-   * @see #openAudit()
-   */
-  public CDOAudit openAudit(ResourceSet resourceSet, long timeStamp);
-
-  /**
-   * Opens and returns a new {@link CDOAudit audit} on a new EMF {@link ResourceSet resource set}.
-   * <p>
-   * Same as calling <code>openAudit(new ResourceSetImpl(), timeStamp)</code>.
-   * 
-   * @see #openAudit(ResourceSet, long)
-   */
-  public CDOAudit openAudit(long timeStamp);
 
   /**
    * Returns an array of all open {@link CDOView views}, {@link CDOTransaction transactions} and {@link CDOAudit audits}
@@ -153,11 +196,11 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
   /**
    * Refreshes the objects cache.
    * <p>
-   * Takes CDOID and version of all objects in the cache and sends it to the server. {@link CDOTimeStampContext}
-   * contains informations of which objects changed/detached. The collection is ordered by timestamp. In the case where
+   * Takes CDOID and version of all objects in the cache and sends it to the server. {@link CDORefreshContext} contains
+   * informations of which objects changed/detached. The collection is ordered by timestamp. In the case where
    * {@link #isPassiveUpdateEnabled()} is <code>true</code>, this method will return immediately without doing anything.
    */
-  public Collection<CDOTimeStampContext> refresh();
+  public Collection<CDORefreshContext> refresh();
 
   /**
    * Returns the time stamp of the last commit operation. May not be accurate if

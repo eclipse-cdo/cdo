@@ -36,7 +36,7 @@ public interface CDOSavepoint extends CDOUserSavepoint
   /**
    * @since 3.0
    */
-  public boolean isDirty();
+  public boolean wasDirty();
 
   /**
    * @since 3.0

@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.view;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
@@ -18,8 +19,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Simon McDuff
@@ -29,7 +30,7 @@ public interface CDORevisionPrefetchingPolicy
 {
   public static final CDORevisionPrefetchingPolicy NO_PREFETCHING = new CDORevisionPrefetchingPolicy()
   {
-    public Collection<CDOID> loadAhead(CDORevisionManager revisionManager, EObject targetObject,
+    public List<CDOID> loadAhead(CDORevisionManager revisionManager, CDOBranchPoint branchPoint, EObject targetObject,
         EStructuralFeature feature, CDOList list, int accessIndex, CDOID accessID)
     {
       return Collections.emptyList();
@@ -48,6 +49,6 @@ public interface CDORevisionPrefetchingPolicy
    * @return Should return a list of id's to be fetch.
    * @since 3.0
    */
-  public Collection<CDOID> loadAhead(CDORevisionManager revisionManager, EObject targetObject,
+  public List<CDOID> loadAhead(CDORevisionManager revisionManager, CDOBranchPoint branchPoint, EObject targetObject,
       EStructuralFeature feature, CDOList list, int accessIndex, CDOID accessID);
 }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
@@ -35,7 +35,6 @@ import org.eclipse.emf.cdo.internal.ui.actions.RollbackTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.view.CDOAudit;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.container.IContainer;
@@ -49,6 +48,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IWorkbenchPage;
@@ -139,15 +139,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     if (obj instanceof CDOView)
     {
       CDOView view = (CDOView)obj;
-      switch (view.getViewType())
-      {
-      case TRANSACTION:
-        return SharedIcons.getImage(SharedIcons.OBJ_EDITOR);
-      case READONLY:
-        return SharedIcons.getImage(SharedIcons.OBJ_EDITOR_READONLY);
-      case AUDIT:
-        return SharedIcons.getImage(SharedIcons.OBJ_EDITOR_HISTORICAL);
-      }
+      return getViewImage(view);
     }
 
     return super.getImage(obj);
@@ -159,7 +151,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   public static String getSessionLabel(CDOSession session)
   {
     return MessageFormat.format(
-        Messages.getString("CDOItemProvider.0"), session.getRepositoryInfo().getName(), session.getSessionID()); //$NON-NLS-1$ 
+        Messages.getString("CDOItemProvider.0"), session.getRepositoryInfo().getName(), session.getSessionID()); //$NON-NLS-1$
   }
 
   /**
@@ -174,10 +166,10 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
           Messages.getString("CDOItemProvider.3"), transaction.isDirty() ? "*" : "", transaction.getViewID()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
-    if (view instanceof CDOAudit)
+    long timeStamp = view.getTimeStamp();
+    if (timeStamp != CDOView.UNSPECIFIED_DATE)
     {
-      CDOAudit audit = (CDOAudit)view;
-      return MessageFormat.format(Messages.getString("CDOItemProvider.6"), audit.getTimeStamp()); //$NON-NLS-1$
+      return MessageFormat.format(Messages.getString("CDOItemProvider.6"), timeStamp); //$NON-NLS-1$
     }
 
     return MessageFormat.format(Messages.getString("CDOItemProvider.7"), view.getViewID()); //$NON-NLS-1$
@@ -280,7 +272,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     manager.add(new LoadResourceAction(page, view));
     manager.add(new ExportResourceAction(page, view));
     manager.add(new Separator());
-    if (view.getViewType() == CDOView.Type.TRANSACTION)
+    if (!view.isReadOnly())
     {
       manager.add(new CreateResourceAction(page, view));
       manager.add(new ImportResourceAction(page, view));
@@ -312,5 +304,41 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     {
       // CDOView view = (CDOView)element;
     }
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static ImageDescriptor getViewImageDescriptor(CDOView view)
+  {
+    if (view.isReadOnly())
+    {
+      if (view.getTimeStamp() != CDOView.UNSPECIFIED_DATE)
+      {
+        return SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR_HISTORICAL);
+      }
+
+      return SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR_READONLY);
+    }
+
+    return SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static Image getViewImage(CDOView view)
+  {
+    if (view.isReadOnly())
+    {
+      if (view.getTimeStamp() != CDOView.UNSPECIFIED_DATE)
+      {
+        return SharedIcons.getImage(SharedIcons.OBJ_EDITOR_HISTORICAL);
+      }
+
+      return SharedIcons.getImage(SharedIcons.OBJ_EDITOR_READONLY);
+    }
+
+    return SharedIcons.getImage(SharedIcons.OBJ_EDITOR);
   }
 }

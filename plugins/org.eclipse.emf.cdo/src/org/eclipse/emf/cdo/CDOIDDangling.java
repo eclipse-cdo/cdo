@@ -21,18 +21,4 @@ import org.eclipse.emf.ecore.EObject;
 public interface CDOIDDangling extends CDOID
 {
   public EObject getTarget();
-
-  // public List<Reference> getReferences();
-  //
-  // /**
-  // * @author Eike Stepper
-  // */
-  // public interface Reference
-  // {
-  // public CDOObject getSourceObject();
-  //
-  // public EStructuralFeature getSourceFeature();
-  //
-  // public CDOIDDangling getTargetID();
-  // }
 }

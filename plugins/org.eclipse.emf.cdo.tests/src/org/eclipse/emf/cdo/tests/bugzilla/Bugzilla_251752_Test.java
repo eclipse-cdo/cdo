@@ -44,13 +44,14 @@ public class Bugzilla_251752_Test extends AbstractCDOTest
     try
     {
       transaction1.commit();
-      fail("Should have any exception");
+      fail("Exception expected");
     }
-    catch (Exception ex)
+    catch (Exception expected)
     {
+      // Success
     }
 
-    assertTrue(res.cdoRevision().isTransactional());
+    assertEquals(1, res.cdoRevision().getVersion());
   }
 
   public void testBug_251752_XA() throws Exception
@@ -72,12 +73,13 @@ public class Bugzilla_251752_Test extends AbstractCDOTest
     try
     {
       transaction1.commit();
-      fail("Should have any exception");
+      fail("Exception expected");
     }
-    catch (Exception ex)
+    catch (Exception expected)
     {
+      // Success
     }
 
-    assertTrue(res.cdoRevision().isTransactional());
+    assertEquals(1, res.cdoRevision().getVersion());
   }
 }

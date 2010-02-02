@@ -14,6 +14,7 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -22,13 +23,12 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
-import org.eclipse.emf.cdo.spi.server.InternalAudit;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
@@ -219,10 +219,10 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
-  public InternalView openView(int viewID)
+  public InternalView openView(int viewID, CDOBranchPoint branchPoint)
   {
     checkActive();
-    InternalView view = new View(this, viewID);
+    InternalView view = new View(this, viewID, branchPoint);
     addView(view);
     return view;
   }
@@ -230,21 +230,10 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
-  public InternalAudit openAudit(int viewID, long timeStamp)
+  public InternalTransaction openTransaction(int viewID, CDOBranchPoint branchPoint)
   {
     checkActive();
-    InternalAudit audit = new Audit(this, viewID, timeStamp);
-    addView(audit);
-    return audit;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public ITransaction openTransaction(int viewID)
-  {
-    checkActive();
-    InternalTransaction transaction = new Transaction(this, viewID);
+    InternalTransaction transaction = new Transaction(this, viewID, branchPoint);
     addView(transaction);
     return transaction;
   }
@@ -268,11 +257,16 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
+  public void handleBranchNotification(InternalCDOBranch branch)
+  {
+    protocol.sendBranchNotification(branch);
+  }
+
   /**
    * @since 2.0
    */
-  public void handleCommitNotification(long timeStamp, CDOPackageUnit[] packageUnits, List<CDOIDAndVersion> dirtyIDs,
-      List<CDOID> detachedObjects, List<CDORevisionDelta> deltas)
+  public void handleCommitNotification(CDOBranchPoint branchPoint, CDOPackageUnit[] packageUnits,
+      List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> deltas)
   {
     if (!isPassiveUpdateEnabled())
     {
@@ -314,7 +308,7 @@ public class Session extends Container<IView> implements InternalSession
       detachedObjects = subDetached;
     }
 
-    protocol.sendCommitNotification(timeStamp, packageUnits, dirtyIDs, detachedObjects, newDeltas);
+    protocol.sendCommitNotification(branchPoint, packageUnits, dirtyIDs, detachedObjects, newDeltas);
   }
 
   public CDOID provideCDOID(Object idObject)
@@ -327,8 +321,8 @@ public class Session extends Container<IView> implements InternalSession
    * 
    * @since 2.0
    */
-  public void collectContainedRevisions(InternalCDORevision revision, int referenceChunk, Set<CDOID> revisions,
-      List<CDORevision> additionalRevisions)
+  public void collectContainedRevisions(InternalCDORevision revision, CDOBranchPoint branchPoint, int referenceChunk,
+      Set<CDOID> revisions, List<CDORevision> additionalRevisions)
   {
     InternalCDORevisionManager revisionManager = getManager().getRepository().getRevisionManager();
     EClass eClass = revision.getEClass();
@@ -345,12 +339,13 @@ public class Session extends Container<IView> implements InternalSession
           CDOID id = (CDOID)value;
           if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
           {
-            InternalCDORevision containedRevision = (InternalCDORevision)revisionManager.getRevision(id,
-                referenceChunk, CDORevision.DEPTH_NONE);
+            InternalCDORevision containedRevision = (InternalCDORevision)revisionManager.getRevision(id, branchPoint,
+                referenceChunk, CDORevision.DEPTH_NONE, true);
             revisions.add(id);
             additionalRevisions.add(containedRevision);
 
-            collectContainedRevisions(containedRevision, referenceChunk, revisions, additionalRevisions);
+            // Recurse
+            collectContainedRevisions(containedRevision, branchPoint, referenceChunk, revisions, additionalRevisions);
           }
         }
       }

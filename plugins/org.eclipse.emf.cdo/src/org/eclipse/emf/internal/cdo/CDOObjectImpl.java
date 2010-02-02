@@ -722,7 +722,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       notifications = ((InternalEList<?>)oldResource.getContents()).basicRemove(this, notifications);
 
       // When setting the resource to null we assume that detach has already been called in the resource implementation
-
       if (!isSameView && resource != null)
       {
         oldResource.detached(this);

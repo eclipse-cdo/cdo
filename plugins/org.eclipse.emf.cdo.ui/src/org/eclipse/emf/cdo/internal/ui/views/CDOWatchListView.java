@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.internal.ui.views;
 
 import org.eclipse.emf.cdo.CDODeltaNotification;
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.ui.actions.RemoveAllContainerItemAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RemoveContainerItemAction;
 import org.eclipse.emf.cdo.internal.ui.dnd.CDOObjectDropAdapter;
@@ -84,7 +83,6 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -819,15 +817,15 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
         return object.cdoResource().getURI().toString();
 
       case 2:
-        CDOView view = object.cdoView();
-        if (view instanceof CDOTransaction)
-        {
-          long time = ((CDOTransaction)view).getLastCommitTime();
-          if (time != CDORevision.UNSPECIFIED_DATE)
-          {
-            return new Date(time).toString();
-          }
-        }
+        // XXX CDOView view = object.cdoView();
+        // if (view instanceof CDOTransaction)
+        // {
+        // long time = ((CDOTransaction)view).getLastCommitTime();
+        // if (time != CDORevision.UNSPECIFIED_DATE)
+        // {
+        // return new Date(time).toString();
+        // }
+        // }
 
         return "?"; //$NON-NLS-1$
 

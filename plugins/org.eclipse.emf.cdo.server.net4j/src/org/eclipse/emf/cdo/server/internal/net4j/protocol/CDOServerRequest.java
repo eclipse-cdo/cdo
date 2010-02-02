@@ -16,11 +16,9 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.StringIO;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.io.IOException;
 
@@ -29,9 +27,9 @@ import java.io.IOException;
  */
 public abstract class CDOServerRequest extends Request
 {
-  public CDOServerRequest(IChannel channel, short signalID)
+  public CDOServerRequest(CDOServerProtocol serverProtocol, short signalID)
   {
-    super(extractProtocol(channel), signalID);
+    super(serverProtocol, signalID);
   }
 
   @Override
@@ -69,14 +67,4 @@ public abstract class CDOServerRequest extends Request
   }
 
   protected abstract void requesting(CDODataOutput out) throws IOException;
-
-  private static CDOServerProtocol extractProtocol(IChannel channel)
-  {
-    if (LifecycleUtil.isActive(channel))
-    {
-      return (CDOServerProtocol)channel.getReceiveHandler();
-    }
-
-    throw new IllegalStateException("Channel is inactive: " + channel); //$NON-NLS-1$
-  }
 }

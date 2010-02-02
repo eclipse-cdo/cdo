@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
+import org.eclipse.emf.cdo.transaction.CDORefreshContext;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -41,16 +41,16 @@ public class SyncRevisionsRequest extends AbstractSyncRevisionsRequest
   }
 
   @Override
-  protected Collection<CDOTimeStampContext> confirming(CDODataInput in) throws IOException
+  protected Collection<CDORefreshContext> confirming(CDODataInput in) throws IOException
   {
-    Collection<CDOTimeStampContext> contexts = super.confirming(in);
+    Collection<CDORefreshContext> refreshContexts = super.confirming(in);
     Collection<CDOPackageUnit> emptyNewPackageUnits = Collections.emptyList();
-    for (CDOTimeStampContext timestampContext : contexts)
+    for (CDORefreshContext refreshContext : refreshContexts)
     {
-      getSession().handleSyncResponse(timestampContext.getTimeStamp(), emptyNewPackageUnits,
-          timestampContext.getDirtyObjects(), timestampContext.getDetachedObjects());
+      getSession().handleSyncResponse(refreshContext.getBranchPoint(), emptyNewPackageUnits,
+          refreshContext.getDirtyObjects(), refreshContext.getDetachedObjects());
     }
 
-    return contexts;
+    return refreshContexts;
   }
 }

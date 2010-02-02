@@ -10,14 +10,15 @@
  */
 package org.eclipse.emf.cdo.common.branch;
 
-
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public interface CDOBranchPoint
+public interface CDOBranchPoint extends Comparable<CDOBranchPoint>
 {
-  public int getBranchID();
+  public static final long UNSPECIFIED_DATE = 0;
+
+  public CDOBranch getBranch();
 
   public long getTimeStamp();
 }

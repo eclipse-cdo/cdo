@@ -13,6 +13,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -36,6 +37,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
@@ -53,8 +55,6 @@ import java.sql.SQLException;
 import java.util.Map;
 
 /**
- * TODO use async monitors
- * 
  * @author Eike Stepper
  * @since 2.0
  */
@@ -235,17 +235,25 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     sqlSelectAllObjectIds = builder.toString();
   }
 
-  public boolean readRevisionByTime(IDBStoreAccessor accessor, InternalCDORevision revision, long timeStamp,
-      int listChunk)
+  public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     PreparedStatement pstmt = null;
 
     try
     {
+      long timeStamp = revision.getTimeStamp();
+      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+      {
       pstmt = accessor.getStatementCache().getPreparedStatement(sqlSelectAttributesByTime, ReuseProbability.MEDIUM);
       pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
       pstmt.setLong(2, timeStamp);
       pstmt.setLong(3, timeStamp);
+      }
+      else
+      {
+        pstmt = accessor.getStatementCache().getPreparedStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
+        pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
+      }
 
       // Read singleval-attribute table always (even without modeled attributes!)
       boolean success = readValuesFromStatement(pstmt, revision, accessor);
@@ -268,15 +276,14 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     }
   }
 
-  public boolean readRevisionByVersion(IDBStoreAccessor accessor, InternalCDORevision revision, int version,
-      int listChunk)
+  public boolean readRevisionByVersion(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     PreparedStatement pstmt = null;
     try
     {
       pstmt = accessor.getStatementCache().getPreparedStatement(sqlSelectAttributesByVersion, ReuseProbability.HIGH);
       pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
-      pstmt.setInt(2, version);
+      pstmt.setInt(2, revision.getVersion());
 
       // Read singleval-attribute table always (even without modeled attributes!)
       boolean success = readValuesFromStatement(pstmt, revision, accessor);
@@ -300,9 +307,10 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
   }
 
   public PreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,
-      boolean exactMatch, long timeStamp)
+      boolean exactMatch, CDOBranchPoint branchPoint)
   {
     EStructuralFeature nameFeature = EresourcePackage.eINSTANCE.getCDOResourceNode_Name();
+    long timeStamp = branchPoint.getTimeStamp();
 
     ITypeMapping nameValueMapping = getValueMapping(nameFeature);
     if (nameValueMapping == null)
@@ -389,35 +397,6 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     return accessor.getStatementCache().getPreparedStatement(sqlSelectAllObjectIds, ReuseProbability.HIGH);
   }
 
-  public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
-  {
-    PreparedStatement pstmt = null;
-    try
-    {
-      pstmt = accessor.getStatementCache().getPreparedStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
-      pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
-
-      // Read singleval-attribute table always (even without modeled attributes!)
-      boolean success = readValuesFromStatement(pstmt, revision, accessor);
-
-      // Read multival tables only if revision exists
-      if (success)
-      {
-        readLists(accessor, revision, listChunk);
-      }
-
-      return success;
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      accessor.getStatementCache().releasePreparedStatement(pstmt);
-    }
-  }
-
   @Override
   protected final void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
@@ -432,7 +411,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
       stmt.setLong(col++, CDOIDUtil.getLong(revision.getID()));
       stmt.setInt(col++, revision.getVersion());
       stmt.setLong(col++, accessor.getStore().getMetaDataManager().getMetaID(revision.getEClass()));
-      stmt.setLong(col++, revision.getCreated());
+      stmt.setLong(col++, revision.getTimeStamp());
       stmt.setLong(col++, revision.getRevised());
       stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, revision
           .getResourceID()));
@@ -540,25 +519,25 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
       this.accessor = accessor;
       this.created = created;
       id = delta.getID();
-      oldVersion = delta.getOriginVersion();
-      newVersion = delta.getDirtyVersion();
+      oldVersion = delta.getVersion();
+
       if (TRACER.isEnabled())
       {
         TRACER.format("FeatureDeltaWriter: old version: {0}, new version: {1}", oldVersion, newVersion); //$NON-NLS-1$
       }
 
       InternalCDORevision originalRevision = (InternalCDORevision)accessor.getStore().getRepository()
-          .getRevisionManager().getRevision(id, 0, CDORevision.DEPTH_NONE);
+          .getRevisionManager().getRevisionByVersion(id, delta, 0, true);
 
       newRevision = (InternalCDORevision)originalRevision.copy();
 
       newRevision.setVersion(newVersion);
-      newRevision.setCreated(created);
+      newRevision.setBranchPoint(CDOBranchUtil.createBranchPoint(delta.getBranch(), created));
 
       // process revision delta tree
       delta.accept(this);
 
-      long revised = newRevision.getCreated() - 1;
+      long revised = newRevision.getTimeStamp() - 1;
       reviseObject(accessor, id, revised);
 
       writeValues(accessor, newRevision);

@@ -43,11 +43,14 @@ public class CDODBSchema extends DBSchema
   public static final IDBField REPOSITORY_STOPPED = //
   REPOSITORY.addField("stopped", DBType.BIGINT); //$NON-NLS-1$
 
-  public static final IDBField REPOSITORY_NEXT_CDOID = //
-  REPOSITORY.addField("next_cdoid", DBType.BIGINT); //$NON-NLS-1$
+  public static final IDBField REPOSITORY_LAST_CDOID = //
+  REPOSITORY.addField("last_cdoid", DBType.BIGINT); //$NON-NLS-1$
 
-  public static final IDBField REPOSITORY_NEXT_METAID = //
-  REPOSITORY.addField("next_metaid", DBType.BIGINT); //$NON-NLS-1$
+  public static final IDBField REPOSITORY_LAST_METAID = //
+  REPOSITORY.addField("last_metaid", DBType.BIGINT); //$NON-NLS-1$
+
+  public static final IDBField REPOSITORY_LAST_BRANCHID = //
+  REPOSITORY.addField("last_branchid", DBType.INTEGER); //$NON-NLS-1$
 
   /**
    * DBTable cdo_package_units
@@ -99,6 +102,35 @@ public class CDODBSchema extends DBSchema
   PACKAGE_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, PACKAGE_INFOS_UNIT);
 
   /**
+   * DBTable cdo_branches
+   */
+  public static final IDBTable BRANCHES = INSTANCE.addTable("cdo_branches"); //$NON-NLS-1$
+
+  public static final IDBField BRANCHES_ID = //
+  BRANCHES.addField("id", DBType.INTEGER); //$NON-NLS-1$
+
+  public static final IDBField BRANCHES_NAME = //
+  BRANCHES.addField("name", DBType.VARCHAR); //$NON-NLS-1$
+
+  public static final IDBField BRANCHES_BASE_BRANCH_ID = //
+  BRANCHES.addField("base_id", DBType.INTEGER); //$NON-NLS-1$
+
+  public static final IDBField BRANCHES_BASE_TIMESTAMP = //
+  BRANCHES.addField("base_time", DBType.BIGINT); //$NON-NLS-1$
+
+  public static final IDBIndex INDEX_BRANCHES_ID = //
+  BRANCHES.addIndex(IDBIndex.Type.PRIMARY_KEY, BRANCHES_ID);
+
+  public static final String SQL_CREATE_BRANCH = "INSERT INTO " + BRANCHES + " (" + BRANCHES_ID + ", " + BRANCHES_NAME
+      + ", " + BRANCHES_BASE_BRANCH_ID + ", " + BRANCHES_BASE_TIMESTAMP + ") VALUES (?, ?, ?, ?)";
+
+  public static final String SQL_LOAD_BRANCH = "SELECT " + BRANCHES_NAME + ", " + BRANCHES_BASE_BRANCH_ID + ", "
+      + BRANCHES_BASE_TIMESTAMP + " FROM " + BRANCHES + " WHERE " + BRANCHES_ID + "=?";
+
+  public static final String SQL_LOAD_SUB_BRANCHES = "SELECT " + BRANCHES_ID + ", " + BRANCHES_NAME + ", "
+      + BRANCHES_BASE_TIMESTAMP + " FROM " + BRANCHES + " WHERE " + BRANCHES_BASE_BRANCH_ID + "=?";
+
+  /**
    * DBTable cdo_external_refs
    */
   public static final IDBTable EXTERNAL_REFS = INSTANCE.addTable("cdo_external_refs"); //$NON-NLS-1$
@@ -124,6 +156,8 @@ public class CDODBSchema extends DBSchema
    * Field names of attribute tables
    */
   public static final String ATTRIBUTES_ID = "cdo_id"; //$NON-NLS-1$
+
+  public static final String ATTRIBUTES_BRANCH = "cdo_branch"; //$NON-NLS-1$
 
   public static final String ATTRIBUTES_VERSION = "cdo_version"; //$NON-NLS-1$
 
@@ -151,6 +185,8 @@ public class CDODBSchema extends DBSchema
   public static final String LIST_REVISION_VERSION_ADDED = "cdo_version_added"; //$NON-NLS-1$
 
   public static final String LIST_REVISION_VERSION_REMOVED = "cdo_version_removed"; //$NON-NLS-1$
+  
+  public static final String LIST_REVISION_BRANCH = "cdo_branch"; //$NON-NLS-1$ 
 
   public static final String LIST_IDX = "cdo_idx"; //$NON-NLS-1$
 
@@ -166,6 +202,8 @@ public class CDODBSchema extends DBSchema
   public static final String FEATUREMAP_VERSION_ADDED = "cdo_version_added"; //$NON-NLS-1$
 
   public static final String FEATUREMAP_VERSION_REMOVED = "cdo_version_removed"; //$NON-NLS-1$
+
+  public static final String FEATUREMAP_BRANCH = "cdo_branch"; //$NON-NLS-1$ 
 
   public static final String FEATUREMAP_IDX = "cdo_idx"; //$NON-NLS-1$
 

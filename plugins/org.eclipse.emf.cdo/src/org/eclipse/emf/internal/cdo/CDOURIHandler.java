@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -127,7 +126,7 @@ public class CDOURIHandler implements URIHandler
 
       if (requestedAttributes == null || requestedAttributes.contains(URIConverter.ATTRIBUTE_READ_ONLY))
       {
-        result.put(URIConverter.ATTRIBUTE_READ_ONLY, view.getViewType() != CDOView.Type.TRANSACTION);
+        result.put(URIConverter.ATTRIBUTE_READ_ONLY, view.isReadOnly());
       }
     }
 

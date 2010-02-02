@@ -10,7 +10,9 @@
  */
 package org.eclipse.emf.cdo.internal.common.revision.cache;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache.EvictionEvent;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -24,25 +26,12 @@ public class EvictionEventImpl extends Event implements EvictionEvent
 {
   private static final long serialVersionUID = 1L;
 
-  private CDOID id;
+  private CDORevisionKey key;
 
-  private int version;
-
-  private InternalCDORevision revision;
-
-  public EvictionEventImpl(CDORevisionCache cache, InternalCDORevision revision)
+  public EvictionEventImpl(CDORevisionCache cache, CDORevisionKey key)
   {
     super(cache);
-    id = revision.getID();
-    version = revision.getVersion();
-    this.revision = revision;
-  }
-
-  public EvictionEventImpl(CDORevisionCache cache, CDOID id, int version)
-  {
-    super(cache);
-    this.id = id;
-    this.version = version;
+    this.key = key;
   }
 
   @Override
@@ -53,16 +42,26 @@ public class EvictionEventImpl extends Event implements EvictionEvent
 
   public CDOID getID()
   {
-    return id;
+    return key.getID();
+  }
+
+  public CDOBranch getBranch()
+  {
+    return key.getBranch();
   }
 
   public int getVersion()
   {
-    return version;
+    return key.getVersion();
   }
 
   public InternalCDORevision getRevision()
   {
-    return revision;
+    if (key instanceof InternalCDORevision)
+    {
+      return (InternalCDORevision)key;
+    }
+
+    return null;
   }
 }

@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -35,9 +34,10 @@ public class RemoteMessageNotificationRequest extends CDOServerRequest
 
   private CDORemoteSessionMessage message;
 
-  public RemoteMessageNotificationRequest(IChannel channel, InternalSession sender, CDORemoteSessionMessage message)
+  public RemoteMessageNotificationRequest(CDOServerProtocol serverProtocol, InternalSession sender,
+      CDORemoteSessionMessage message)
   {
-    super(channel, CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE_NOTIFICATION);
+    super(serverProtocol, CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE_NOTIFICATION);
     senderID = sender.getSessionID();
     this.message = message;
   }

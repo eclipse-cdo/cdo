@@ -15,6 +15,9 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
@@ -34,12 +37,17 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.InternalNotificationManager;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider;
 import org.eclipse.emf.cdo.spi.server.InternalCommitManager;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
@@ -89,9 +97,13 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private boolean supportingAudits;
 
+  private boolean supportingBranches;
+
   private boolean verifyingRevisions;
 
   private InternalCDOPackageRegistry packageRegistry;
+
+  private InternalCDOBranchManager branchManager;
 
   private InternalCDORevisionManager revisionManager;
 
@@ -116,6 +128,9 @@ public class Repository extends Container<Object> implements InternalRepository
 
   @ExcludeFromDump
   private transient Object lastCommitTimeStampLock = new Object();
+
+  @ExcludeFromDump
+  private transient Object createBranchLock = new Object();
 
   public Repository()
   {
@@ -185,6 +200,11 @@ public class Repository extends Container<Object> implements InternalRepository
     return supportingAudits;
   }
 
+  public boolean isSupportingBranches()
+  {
+    return supportingBranches;
+  }
+
   public boolean isVerifyingRevisions()
   {
     return verifyingRevisions;
@@ -196,87 +216,143 @@ public class Repository extends Container<Object> implements InternalRepository
     return accessor.loadPackageUnit((InternalCDOPackageUnit)packageUnit);
   }
 
-  public InternalCDORevision loadRevision(CDOID id, int referenceChunk, int prefetchDepth)
+  public int createBranch(BranchInfo branchInfo)
   {
-    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-    return accessor.readRevision(id, referenceChunk, revisionManager.getCache());
-  }
-
-  public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, int prefetchDepth, long timeStamp)
-  {
-    if (isSupportingAudits())
+    synchronized (createBranchLock)
     {
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-      return accessor.readRevisionByTime(id, referenceChunk, revisionManager.getCache(), timeStamp);
+      return accessor.createBranch(branchInfo);
     }
-
-    // TODO Simon*: Is this check necessary here?
-    // TODO Eike: To have better exception message.
-    // By knowing if the back-end supports it, it let know the user that it could be achieved by changing its
-    // configuration file at the server.
-    // if (getRepository().getStore().hasAuditingSupport())
-    // {
-    // throw new UnsupportedOperationException(
-    // "Auditing supports isn't activated (see IRepository.Props.PROP_SUPPORTING_AUDITS).");
-    // }
-
-    throw new IllegalStateException("No support for auditing mode"); //$NON-NLS-1$
   }
 
-  public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int prefetchDepth, int version)
+  public BranchInfo loadBranch(int branchID)
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-    if (isSupportingAudits())
-    {
-      return accessor.readRevisionByVersion(id, referenceChunk, revisionManager.getCache(), version);
-    }
-
-    InternalCDORevision revision = loadRevision(id, referenceChunk, prefetchDepth);
-    if (revision.getVersion() == version)
-    {
-      return revision;
-    }
-
-    throw new IllegalStateException("Cannot access object with id " + id + " and version " + version); //$NON-NLS-1$ //$NON-NLS-2$
+    return accessor.loadBranch(branchID);
   }
 
-  public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk, int prefetchDepth)
+  public SubBranchInfo[] loadSubBranches(int branchID)
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-    List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
-    for (CDOID id : ids)
-    {
-      InternalCDORevision revision = accessor.readRevision(id, referenceChunk, revisionManager.getCache());
-      revisions.add(revision);
-    }
-
-    return revisions;
+    return accessor.loadSubBranches(branchID);
   }
 
-  public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, int prefetchDepth,
-      long timeStamp)
+  public List<InternalCDORevision> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
+      int referenceChunk, int prefetchDepth)
   {
-    List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
-    for (CDOID id : ids)
+    for (RevisionInfo info : infos)
     {
-      InternalCDORevision revision = loadRevisionByTime(id, referenceChunk, prefetchDepth, timeStamp);
-      revisions.add(revision);
+      CDOID id = info.getID();
+      RevisionInfo.Type type = info.getType();
+      switch (type)
+      {
+      case AVAILABLE_NORMAL: // direct == false
+      {
+        RevisionInfo.Available.Normal availableInfo = (RevisionInfo.Available.Normal)info;
+        checkArg(availableInfo.isDirect() == false, "Load is not needed");
+        break;
+      }
+
+      case AVAILABLE_POINTER: // direct == false || target == null
+      {
+        RevisionInfo.Available.Pointer pointerInfo = (RevisionInfo.Available.Pointer)info;
+        boolean needsTarget = !pointerInfo.hasTarget();
+        checkArg(pointerInfo.isDirect() == false || needsTarget, "Load is not needed");
+
+        if (needsTarget)
+        {
+          CDOBranchVersion targetBranchVersion = pointerInfo.getTargetBranchVersion();
+          InternalCDORevision target = loadRevisionByVersion(id, targetBranchVersion, referenceChunk);
+          PointerCDORevision pointer = new PointerCDORevision(id, pointerInfo.getAvailableBranchVersion().getBranch(),
+              CDORevision.UNSPECIFIED_DATE, target);
+
+          info.setResult(target);
+          info.setSynthetic(pointer);
+          continue;
+        }
+
+        break;
+      }
+
+      case AVAILABLE_DETACHED: // direct == false
+      {
+        RevisionInfo.Available.Detached detachedInfo = (RevisionInfo.Available.Detached)info;
+        checkArg(detachedInfo.isDirect() == false, "Load is not needed");
+        break;
+      }
+
+      case MISSING:
+      {
+        break;
+      }
+
+      default:
+        throw new IllegalStateException("Invalid revision info type: " + type);
+      }
+
+      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+      InternalCDORevision revision = accessor.readRevision(id, branchPoint, referenceChunk, revisionManager);
+      if (revision == null)
+      {
+        // Case "Pointer"
+        InternalCDORevision target = loadRevisionTarget(id, branchPoint, referenceChunk, accessor);
+
+        CDOBranch branch = branchPoint.getBranch();
+        long revised = loadRevisionRevised(id, branch);
+        PointerCDORevision pointer = new PointerCDORevision(id, branch, revised, target);
+
+        info.setResult(target);
+        info.setSynthetic(pointer);
+      }
+      else if (revision instanceof DetachedCDORevision)
+      {
+        DetachedCDORevision detached = (DetachedCDORevision)revision;
+        info.setSynthetic(detached);
+      }
+      else
+      {
+        info.setResult(revision);
+      }
     }
 
-    return revisions;
+    return null;
   }
 
-  public InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
+  private InternalCDORevision loadRevisionTarget(CDOID id, CDOBranchPoint branchPoint, int referenceChunk,
+      IStoreAccessor accessor)
   {
-    IStoreAccessor accessor = null;
-    if (isVerifyingRevisions())
+    CDOBranch branch = branchPoint.getBranch();
+    while (!branch.isMainBranch())
     {
-      accessor = StoreThreadLocal.getAccessor();
-      revision = accessor.verifyRevision(revision);
+      branchPoint = branch.getBase();
+      branch = branchPoint.getBranch();
+
+      InternalCDORevision revision = accessor.readRevision(id, branchPoint, referenceChunk, revisionManager);
+      if (revision != null)
+      {
+        return revision;
+      }
     }
 
-    ensureChunks(revision, referenceChunk, accessor);
-    return revision;
+    return null;
+  }
+
+  private long loadRevisionRevised(CDOID id, CDOBranch branch)
+  {
+    InternalCDORevision revision = loadRevisionByVersion(id, branch.getVersion(CDORevision.FIRST_VERSION),
+        CDORevision.UNCHUNKED);
+    if (revision != null)
+    {
+      return revision.getTimeStamp() - 1;
+    }
+
+    return CDORevision.UNSPECIFIED_DATE;
+  }
+
+  public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk)
+  {
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    return accessor.readRevisionByVersion(id, branchVersion, referenceChunk, revisionManager);
   }
 
   protected void ensureChunks(InternalCDORevision revision, int referenceChunk, IStoreAccessor accessor)
@@ -428,6 +504,16 @@ public class Repository extends Container<Object> implements InternalRepository
     this.sessionManager = sessionManager;
   }
 
+  public InternalCDOBranchManager getBranchManager()
+  {
+    return branchManager;
+  }
+
+  public void setBranchManager(InternalCDOBranchManager branchManager)
+  {
+    this.branchManager = branchManager;
+  }
+
   public InternalCDORevisionManager getRevisionManager()
   {
     return revisionManager;
@@ -518,7 +604,7 @@ public class Repository extends Container<Object> implements InternalRepository
    */
   public long createCommitTimeStamp()
   {
-    long now = System.currentTimeMillis();
+    long now = getTimeStamp();
     synchronized (lastCommitTimeStampLock)
     {
       if (lastCommitTimeStamp != 0)
@@ -526,7 +612,7 @@ public class Repository extends Container<Object> implements InternalRepository
         while (lastCommitTimeStamp == now)
         {
           ConcurrencyUtil.sleep(1);
-          now = System.currentTimeMillis();
+          now = getTimeStamp();
         }
       }
 
@@ -588,8 +674,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public Object[] getElements()
   {
-    final Object[] elements = { packageRegistry, sessionManager, revisionManager, queryManager, notificationManager,
-        commitManager, lockManager, store };
+    final Object[] elements = { packageRegistry, branchManager, revisionManager, sessionManager, queryManager,
+        notificationManager, commitManager, lockManager, store };
     return elements;
   }
 
@@ -615,14 +701,25 @@ public class Repository extends Container<Object> implements InternalRepository
     long creationTimeStamp = getCreationTime();
     if (timeStamp < creationTimeStamp)
     {
-      throw new IllegalArgumentException("timeStamp < repository creation time: " + creationTimeStamp); //$NON-NLS-1$
+      throw new IllegalArgumentException(
+          MessageFormat
+              .format(
+                  "timeStamp ({0,date} {0,time,HH:mm:ss:SSS}) < repository creation time ({1,date} {1,time,HH:mm:ss:SSS})", timeStamp, creationTimeStamp)); //$NON-NLS-1$
     }
 
-    long currentTimeStamp = System.currentTimeMillis();
+    long currentTimeStamp = getTimeStamp();
     if (timeStamp > currentTimeStamp)
     {
-      throw new IllegalArgumentException("timeStamp > current time: " + currentTimeStamp); //$NON-NLS-1$
+      throw new IllegalArgumentException(
+          MessageFormat
+              .format(
+                  "timeStamp ({0,date} {0,time,HH:mm:ss:SSS}) > current time ({1,date} {1,time,HH:mm:ss:SSS})", timeStamp, currentTimeStamp)); //$NON-NLS-1$
     }
+  }
+
+  public long getTimeStamp()
+  {
+    return System.currentTimeMillis();
   }
 
   /**
@@ -752,6 +849,7 @@ public class Repository extends Container<Object> implements InternalRepository
     checkState(!StringUtil.isEmpty(name), "name is empty"); //$NON-NLS-1$
     checkState(packageRegistry, "packageRegistry"); //$NON-NLS-1$
     checkState(sessionManager, "sessionManager"); //$NON-NLS-1$
+    checkState(branchManager, "branchManager"); //$NON-NLS-1$
     checkState(revisionManager, "revisionManager"); //$NON-NLS-1$
     checkState(queryManager, "queryManager"); //$NON-NLS-1$
     checkState(notificationManager, "notificationManager"); //$NON-NLS-1$
@@ -760,6 +858,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
     packageRegistry.setReplacingDescriptors(true);
     packageRegistry.setPackageLoader(this);
+    branchManager.setBranchLoader(this);
+    branchManager.setTimeProvider(this);
     revisionManager.setRevisionLoader(this);
     sessionManager.setRepository(this);
     queryManager.setRepository(this);
@@ -783,12 +883,28 @@ public class Repository extends Container<Object> implements InternalRepository
       }
     }
 
+    {
+      String value = getProperties().get(Props.SUPPORTING_BRANCHES);
+      if (value != null)
+      {
+        supportingBranches = Boolean.valueOf(value);
+        store.setRevisionParallelism(supportingBranches ? IStore.RevisionParallelism.BRANCHING
+            : IStore.RevisionParallelism.NONE);
+      }
+      else
+      {
+        supportingBranches = store.getRevisionParallelism() == IStore.RevisionParallelism.NONE;
+      }
+    }
+
     supportingRevisionDeltas = store.getSupportedChangeFormats().contains(IStore.ChangeFormat.DELTA);
 
     {
       String value = getProperties().get(Props.VERIFYING_REVISIONS);
       verifyingRevisions = value == null ? false : Boolean.valueOf(value);
     }
+
+    revisionManager.setSupportingBranches(supportingBranches);
   }
 
   @Override
@@ -806,6 +922,8 @@ public class Repository extends Container<Object> implements InternalRepository
     LifecycleUtil.activate(lockManager);
 
     lastCommitTimeStamp = getCreationTime();
+    branchManager.initMainBranch(lastCommitTimeStamp);
+    LifecycleUtil.activate(branchManager);
     if (store.isFirstTime())
     {
       initSystemPackages();
@@ -827,6 +945,7 @@ public class Repository extends Container<Object> implements InternalRepository
     LifecycleUtil.deactivate(revisionManager);
     LifecycleUtil.deactivate(sessionManager);
     LifecycleUtil.deactivate(store);
+    LifecycleUtil.deactivate(branchManager);
     LifecycleUtil.deactivate(packageRegistry);
     super.doDeactivate();
   }
@@ -909,6 +1028,11 @@ public class Repository extends Container<Object> implements InternalRepository
         setSessionManager(createSessionManager());
       }
 
+      if (getBranchManager() == null)
+      {
+        setBranchManager(createBranchManager());
+      }
+
       if (getRevisionManager() == null)
       {
         setRevisionManager(createRevisionManager());
@@ -945,6 +1069,11 @@ public class Repository extends Container<Object> implements InternalRepository
     protected InternalSessionManager createSessionManager()
     {
       return new SessionManager();
+    }
+
+    protected InternalCDOBranchManager createBranchManager()
+    {
+      return CDOBranchUtil.createBranchManager();
     }
 
     protected InternalCDORevisionManager createRevisionManager()

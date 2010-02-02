@@ -12,9 +12,13 @@
  */
 package org.eclipse.emf.cdo.internal.common.revision.cache.two;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
+import org.eclipse.emf.cdo.common.revision.cache.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -29,38 +33,52 @@ import org.eclipse.emf.ecore.EClass;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache, IListener
+public class TwoLevelRevisionCache extends Lifecycle implements InternalCDORevisionCache, IListener
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, TwoLevelRevisionCache.class);
 
-  private CDORevisionCache level1;
+  private InternalCDORevisionCache level1;
 
-  private CDORevisionCache level2;
+  private InternalCDORevisionCache level2;
 
   public TwoLevelRevisionCache()
   {
   }
 
-  public CDORevisionCache getLevel1()
+  public InternalCDORevisionCache instantiate(CDORevision revision)
+  {
+    TwoLevelRevisionCache cache = new TwoLevelRevisionCache();
+    cache.setLevel1(level1.instantiate(revision));
+    cache.setLevel2(level2.instantiate(revision));
+    return cache;
+  }
+
+  public boolean isSupportingBranches()
+  {
+    return false;
+  }
+
+  public InternalCDORevisionCache getLevel1()
   {
     return level1;
   }
 
-  public void setLevel1(CDORevisionCache level1)
+  public void setLevel1(InternalCDORevisionCache level1)
   {
     this.level1 = level1;
   }
 
-  public CDORevisionCache getLevel2()
+  public InternalCDORevisionCache getLevel2()
   {
     return level2;
   }
 
-  public void setLevel2(CDORevisionCache level2)
+  public void setLevel2(InternalCDORevisionCache level2)
   {
     this.level2 = level2;
   }
@@ -76,44 +94,33 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
     return objectType;
   }
 
-  public CDORevision getRevision(CDOID id)
+  public CDORevision getRevision(CDOID id, CDOBranchPoint branchPoint)
   {
-    CDORevision revision = level1.getRevision(id);
+    CDORevision revision = level1.getRevision(id, branchPoint);
     if (revision == null)
     {
-      revision = level2.getRevision(id);
+      revision = level2.getRevision(id, branchPoint);
     }
 
     return revision;
   }
 
-  public CDORevision getRevisionByTime(CDOID id, long timeStamp)
+  public CDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion)
   {
-    CDORevision revision = level1.getRevisionByTime(id, timeStamp);
+    CDORevision revision = level1.getRevisionByVersion(id, branchVersion);
     if (revision == null)
     {
-      revision = level2.getRevisionByTime(id, timeStamp);
+      revision = level2.getRevisionByVersion(id, branchVersion);
     }
 
     return revision;
   }
 
-  public CDORevision getRevisionByVersion(CDOID id, int version)
-  {
-    CDORevision revision = level1.getRevisionByVersion(id, version);
-    if (revision == null)
-    {
-      revision = level2.getRevisionByVersion(id, version);
-    }
-
-    return revision;
-  }
-
-  public List<CDORevision> getRevisions()
+  public List<CDORevision> getCurrentRevisions()
   {
     List<CDORevision> revisions = new ArrayList<CDORevision>();
-    revisions.addAll(level1.getRevisions());
-    revisions.addAll(level2.getRevisions());
+    revisions.addAll(level1.getCurrentRevisions());
+    revisions.addAll(level2.getCurrentRevisions());
     return revisions;
   }
 
@@ -124,20 +131,20 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
 
     // Bugzilla 292372: If a new current revision was added to level1, we must check whether
     // level2 contains a stale current revision, and revise that revision if possible
-    if (added && revision.isCurrent())
+    if (added && !revision.isHistorical())
     {
       CDOID id = revision.getID();
-      CDORevision revisionInLevel2 = level2.getRevision(id);
-      if (revisionInLevel2 != null && revisionInLevel2.isCurrent())
+      CDORevision revisionInLevel2 = level2.getRevision(id, revision);
+      if (revisionInLevel2 != null && !revisionInLevel2.isHistorical())
       {
         // We can only revise if the revisions are consecutive
         if (revision.getVersion() == revisionInLevel2.getVersion() + 1)
         {
-          ((InternalCDORevision)revisionInLevel2).setRevised(revision.getCreated() - 1);
+          ((InternalCDORevision)revisionInLevel2).setRevised(revision.getTimeStamp() - 1);
         }
         else
         {
-          level2.removeRevision(id, revisionInLevel2.getVersion());
+          level2.removeRevision(id, revision.getBranch().getVersion(revisionInLevel2.getVersion()));
         }
       }
     }
@@ -145,26 +152,22 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
     return added;
   }
 
-  public void removeRevision(CDORevision revision)
+  public CDORevision removeRevision(CDOID id, CDOBranchVersion branchVersion)
   {
-    removeRevision(revision.getID(), revision.getVersion());
-  }
-
-  public CDORevision removeRevision(CDOID id, int version)
-  {
-    CDORevision revision = level1.removeRevision(id, version);
-    if (revision == null)
-    {
-      revision = level2.removeRevision(id, version);
-    }
-
-    return revision;
+    CDORevision revision1 = level1.removeRevision(id, branchVersion);
+    CDORevision revision2 = level2.removeRevision(id, branchVersion);
+    return revision1 != null ? revision1 : revision2;
   }
 
   public void clear()
   {
     level1.clear();
     level2.clear();
+  }
+
+  public Map<CDOBranch, List<CDORevision>> getAllRevisions()
+  {
+    throw new UnsupportedOperationException();
   }
 
   public void notifyEvent(IEvent event)

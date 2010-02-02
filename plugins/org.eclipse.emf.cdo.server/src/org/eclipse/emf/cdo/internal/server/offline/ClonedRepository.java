@@ -15,9 +15,43 @@ import org.eclipse.emf.cdo.internal.server.Repository;
 /**
  * @author Eike Stepper
  */
-public class ClonedRepository extends Repository
+public class ClonedRepository extends Repository.Default
 {
+  private MasterInterface masterInterface;
+
   public ClonedRepository()
   {
+  }
+
+  public MasterInterface getMasterInterface()
+  {
+    return masterInterface;
+  }
+
+  public void setMasterInterface(MasterInterface masterInterface)
+  {
+    checkInactive();
+    this.masterInterface = masterInterface;
+  }
+
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+    checkState(masterInterface, "masterInterface");
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    masterInterface.activate();
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    masterInterface.deactivate();
+    super.doDeactivate();
   }
 }

@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.server.db.mapping;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
@@ -52,7 +54,9 @@ public interface IClassMapping
   public IListMapping getListMapping(EStructuralFeature feature);
 
   /**
-   * Read the current version of a revision.
+   * Read a revision. The branch and timestamp to be read are derived from the branchPoint which is set to the Revision.
+   * Note that non-audit stores only support {@link CDOBranchPoint#UNSPECIFIED_DATE} and non-branching stores only
+   * support the main branch.
    * 
    * @param dbStoreAccessor
    *          the accessor to use.
@@ -87,12 +91,12 @@ public interface IClassMapping
    *          the accessor to use.
    * @param id
    *          the ID of the object to remove.
-   * @param revised
+   * @param timeStamp
    *          the timeStamp when this object became detached.
    * @param monitor
    *          the monitor to indicate progress.
    */
-  public void detachObject(IDBStoreAccessor dbStoreAccessor, CDOID id, long revised, OMMonitor monitor);
+  public void detachObject(IDBStoreAccessor dbStoreAccessor, CDOID id, long timeStamp, OMMonitor monitor);
 
   /**
    * Create a prepared statement which returns all IDs of instances of the corresponding class.
@@ -115,13 +119,15 @@ public interface IClassMapping
    * @param exactMatch
    *          if <code>true</code>, <code>name</code> must match exactly, otherwise all resource nodes starting with
    *          <code>name</code> are returned.
-   * @param timeStamp
-   *          a timestamp in the past if past versions should be looked up. In case of no audit support, this must be
-   *          {@link CDORevision#UNSPECIFIED_DATE}.
+   * @param a
+   *          branchPoint (branch and timestamp) a timestamp in the past if past versions should be looked up. In case
+   *          of no audit support, this must be {@link CDORevision#UNSPECIFIED_DATE}. In case of non branching support
+   *          the branch id must be equal to {@link CDOBranch#MAIN_BRANCH_ID}.
    * @return the prepared statement ready to be executed using <code>result.executeQuery()</code>.
    * @throws ImplementationError
    *           if called on a mapping which does not map an <code>EClass instanceof CDOResourceNode</code>.
+   * @since 3.0
    */
   public PreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,
-      boolean exactMatch, long timeStamp);
+      boolean exactMatch, CDOBranchPoint branchPoint);
 }

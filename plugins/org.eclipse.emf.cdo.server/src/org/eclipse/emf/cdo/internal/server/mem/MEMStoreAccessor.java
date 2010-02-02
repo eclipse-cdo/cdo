@@ -13,6 +13,9 @@
 package org.eclipse.emf.cdo.internal.server.mem;
 
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.server.IQueryContext;
@@ -142,41 +145,31 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     throw new UnsupportedOperationException();
   }
 
-  public InternalCDORevision readRevision(CDOID id, int listChunk, CDORevisionCacheAdder cache)
+  public int createBranch(BranchInfo branchInfo)
   {
-    InternalCDORevision storeRevision = getStore().getRevision(id);
-    // CDORevisionManager revisionManager = getStore().getRepository().getRevisionManager();
-    // InternalCDORevision newRevision = new InternalCDORevision(revisionManager, storeRevision.getEClass(),
-    // storeRevision
-    // .getID());
-    // newRevision.setResourceID(storeRevision.getResourceID());
-    //
-    // for (EStructuralFeature feature : storeRevision.TODO.getAllPersistentFeatures(getEClass()))
-    // {
-    // if (feature.isMany())
-    // {
-    // newRevision.setListSize(feature, storeRevision.getList(feature).size());
-    // MoveableList<Object> list = newRevision.getList(feature);
-    // int size = referenceChunk == CDORevision.UNCHUNKED ? list.size() : referenceChunk;
-    // for (int i = 0; i < size; i++)
-    // {
-    // list.set(i, storeRevision.get(feature, i));
-    // }
-    // }
-    // }
-    //
-    // return newRevision;
-    return storeRevision;
+    return getStore().createBranch(branchInfo);
   }
 
-  public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, CDORevisionCacheAdder cache, long timeStamp)
+  public BranchInfo loadBranch(int branchID)
   {
-    return getStore().getRevisionByTime(id, timeStamp);
+    return getStore().loadBranch(branchID);
   }
 
-  public InternalCDORevision readRevisionByVersion(CDOID id, int listChunk, CDORevisionCacheAdder cache, int version)
+  public SubBranchInfo[] loadSubBranches(int branchID)
   {
-    return getStore().getRevisionByVersion(id, version);
+    return getStore().loadSubBranches(branchID);
+  }
+
+  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
+      CDORevisionCacheAdder cache)
+  {
+    return getStore().getRevision(id, branchPoint);
+  }
+
+  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
+      CDORevisionCacheAdder cache)
+  {
+    return getStore().getRevisionByVersion(id, branchVersion);
   }
 
   /**
@@ -216,7 +209,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
   }
 
   @Override
-  protected void writeRevisions(InternalCDORevision[] revisions, OMMonitor monitor)
+  protected void writeRevisions(InternalCDORevision[] revisions, CDOBranch branch, OMMonitor monitor)
   {
     for (InternalCDORevision revision : revisions)
     {
@@ -234,47 +227,51 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
    * @since 2.0
    */
   @Override
-  protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, long created, OMMonitor monitor)
+  protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created,
+      OMMonitor monitor)
   {
     for (InternalCDORevisionDelta revisionDelta : revisionDeltas)
     {
-      writeRevisionDelta(revisionDelta, created);
+      writeRevisionDelta(revisionDelta, branch, created);
     }
   }
 
   /**
    * @since 2.0
    */
-  protected void writeRevisionDelta(InternalCDORevisionDelta revisionDelta, long created)
+  protected void writeRevisionDelta(InternalCDORevisionDelta revisionDelta, CDOBranch branch, long created)
   {
-    InternalCDORevision revision = getStore().getRevision(revisionDelta.getID());
-    if (revision.getVersion() != revisionDelta.getOriginVersion())
+    CDOID id = revisionDelta.getID();
+    CDOBranchVersion version = revisionDelta.getBranch().getVersion(revisionDelta.getVersion());
+    InternalCDORevision revision = getStore().getRevisionByVersion(id, version);
+    if (revision.getVersion() != revisionDelta.getVersion())
     {
-      throw new ConcurrentModificationException("Trying to update object " + revisionDelta.getID() //$NON-NLS-1$
+      throw new ConcurrentModificationException("Trying to update object " + id //$NON-NLS-1$
           + " that was already modified"); //$NON-NLS-1$
     }
 
     InternalCDORevision newRevision = (InternalCDORevision)revision.copy();
+    newRevision.adjustForCommit(branch, created);
+
     revisionDelta.apply(newRevision);
-    newRevision.setCreated(created);
     writeRevision(newRevision);
   }
 
   @Override
-  protected void detachObjects(CDOID[] detachedObjects, long revised, OMMonitor monitor)
+  protected void detachObjects(CDOID[] detachedObjects, CDOBranch branch, long timeStamp, OMMonitor monitor)
   {
     for (CDOID id : detachedObjects)
     {
-      detachObject(id);
+      detachObject(id, branch, timeStamp);
     }
   }
 
   /**
-   * @since 2.0
+   * @since 3.0
    */
-  protected void detachObject(CDOID id)
+  protected void detachObject(CDOID id, CDOBranch branch, long timeStamp)
   {
-    getStore().removeID(id);
+    getStore().detachObject(id, branch, timeStamp);
   }
 
   /**

@@ -131,7 +131,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   // //////////////////////// Container //////////////////////////////////////
 
   /**
-   *@category Container
+   * @category Container
    */
   public IContainerConfig getContainerConfig()
   {
@@ -139,7 +139,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Container
+   * @category Container
    */
   public boolean hasClientContainer()
   {
@@ -147,7 +147,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Container
+   * @category Container
    */
   public boolean hasServerContainer()
   {
@@ -155,7 +155,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Container
+   * @category Container
    */
   public IManagedContainer getClientContainer()
   {
@@ -163,7 +163,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Container
+   * @category Container
    */
   public IManagedContainer getServerContainer()
   {
@@ -174,7 +174,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   // //////////////////////// CDORepositoryInfo /////////////////////////////////////
 
   /**
-   *@category CDORepositoryInfo
+   * @category CDORepositoryInfo
    */
   public IRepositoryConfig getRepositoryConfig()
   {
@@ -182,7 +182,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category CDORepositoryInfo
+   * @category CDORepositoryInfo
    */
   public Map<String, String> getRepositoryProperties()
   {
@@ -190,7 +190,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category CDORepositoryInfo
+   * @category CDORepositoryInfo
    */
   public IRepository getRepository(String name)
   {
@@ -198,7 +198,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category CDORepositoryInfo
+   * @category CDORepositoryInfo
    */
   public InternalRepository getRepository()
   {
@@ -209,7 +209,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   // //////////////////////// Session ////////////////////////////////////////
 
   /**
-   *@category Session
+   * @category Session
    */
   public ISessionConfig getSessionConfig()
   {
@@ -217,7 +217,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Session
+   * @category Session
    */
   public void startTransport() throws Exception
   {
@@ -225,7 +225,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Session
+   * @category Session
    */
   public void stopTransport() throws Exception
   {
@@ -233,7 +233,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Session
+   * @category Session
    */
   public CDOSession openMangoSession()
   {
@@ -241,7 +241,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Session
+   * @category Session
    */
   public CDOSession openModel1Session()
   {
@@ -249,7 +249,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Session
+   * @category Session
    */
   public CDOSession openModel2Session()
   {
@@ -257,7 +257,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Session
+   * @category Session
    */
   public CDOSession openModel3Session()
   {
@@ -265,7 +265,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Session
+   * @category Session
    */
   public CDOSession openSession(EPackage ePackage)
   {
@@ -273,7 +273,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Session
+   * @category Session
    */
   public CDOSession openSession(String repositoryName)
   {
@@ -281,7 +281,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Session
+   * @category Session
    */
   public CDOSession openSession()
   {
@@ -292,7 +292,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   // //////////////////////// Model //////////////////////////////////////////
 
   /**
-   *@category Model
+   * @category Model
    */
   public IModelConfig getModelConfig()
   {
@@ -300,7 +300,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Model
+   * @category Model
    */
   public MangoFactory getMangoFactory()
   {
@@ -308,7 +308,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Model
+   * @category Model
    */
   public MangoPackage getMangoPackage()
   {
@@ -316,7 +316,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Model
+   * @category Model
    */
   public Model1Factory getModel1Factory()
   {
@@ -324,7 +324,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Model
+   * @category Model
    */
   public Model1Package getModel1Package()
   {
@@ -332,7 +332,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Model
+   * @category Model
    */
   public Model2Factory getModel2Factory()
   {
@@ -340,7 +340,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Model
+   * @category Model
    */
   public Model2Package getModel2Package()
   {
@@ -348,7 +348,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Model
+   * @category Model
    */
   public Model3Factory getModel3Factory()
   {
@@ -356,7 +356,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Model
+   * @category Model
    */
   public Model3Package getModel3Package()
   {
@@ -364,7 +364,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Model
+   * @category Model
    */
   public SubpackageFactory getModel3SubpackageFactory()
   {
@@ -372,7 +372,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Model
+   * @category Model
    */
   public SubpackagePackage getModel3SubpackagePackage()
   {
@@ -380,7 +380,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Model
+   * @category Model
    */
   public model4Factory getModel4Factory()
   {
@@ -388,7 +388,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Model
+   * @category Model
    */
   public model4Package getModel4Package()
   {
@@ -396,7 +396,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Model
+   * @category Model
    */
   public model4interfacesPackage getModel4InterfacesPackage()
   {
@@ -404,7 +404,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Model
+   * @category Model
    */
   public Model5Factory getModel5Factory()
   {
@@ -412,7 +412,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Model
+   * @category Model
    */
   public Model5Package getModel5Package()
   {

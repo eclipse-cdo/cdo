@@ -17,6 +17,7 @@ package org.eclipse.emf.cdo.internal.net4j;
 
 import org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest;
 import org.eclipse.emf.cdo.net4j.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
@@ -45,6 +46,11 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   public InternalCDOPackageRegistry getPackageRegistry()
   {
     return getConfiguration().getPackageRegistry();
+  }
+
+  public InternalCDOBranchManager getBranchManager()
+  {
+    return getConfiguration().getBranchManager();
   }
 
   public InternalCDORevisionManager getRevisionManager()

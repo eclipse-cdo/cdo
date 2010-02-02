@@ -29,67 +29,97 @@ public interface CDOProtocolConstants
 
   public static final short SIGNAL_AUTHENTICATION = 2;
 
-  public static final short SIGNAL_VIEWS_CHANGED = 4;
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_OPEN_VIEW = 3;
+
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_CHANGE_VIEW = 4;
+
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_CLOSE_VIEW = 5;
 
   public static final short SIGNAL_LOAD_PACKAGES = 6;
 
-  public static final short SIGNAL_LOAD_REVISION = 7;
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_LOAD_REVISIONS = 7;
 
-  public static final short SIGNAL_LOAD_REVISION_BY_TIME = 8;
+  public static final short SIGNAL_LOAD_REVISION_BY_VERSION = 8;
 
-  public static final short SIGNAL_LOAD_REVISION_BY_VERSION = 9;
+  public static final short SIGNAL_LOAD_CHUNK = 9;
 
-  public static final short SIGNAL_LOAD_CHUNK = 10;
+  public static final short SIGNAL_COMMIT_TRANSACTION = 10;
 
-  public static final short SIGNAL_VERIFY_REVISION = 11;
+  public static final short SIGNAL_COMMIT_TRANSACTION_PHASE1 = 11;
 
-  public static final short SIGNAL_COMMIT_TRANSACTION = 12;
+  public static final short SIGNAL_COMMIT_TRANSACTION_PHASE2 = 12;
 
-  public static final short SIGNAL_COMMIT_TRANSACTION_PHASE1 = 13;
+  public static final short SIGNAL_COMMIT_TRANSACTION_PHASE3 = 13;
 
-  public static final short SIGNAL_COMMIT_TRANSACTION_PHASE2 = 14;
+  public static final short SIGNAL_COMMIT_TRANSACTION_CANCEL = 14;
 
-  public static final short SIGNAL_COMMIT_TRANSACTION_PHASE3 = 15;
+  public static final short SIGNAL_COMMIT_NOTIFICATION = 15;
 
-  public static final short SIGNAL_COMMIT_TRANSACTION_CANCEL = 16;
+  public static final short SIGNAL_QUERY = 16;
 
-  public static final short SIGNAL_COMMIT_NOTIFICATION = 17;
+  public static final short SIGNAL_QUERY_CANCEL = 17;
 
-  public static final short SIGNAL_QUERY = 18;
+  public static final short SIGNAL_SYNC_REVISIONS = 18;
 
-  public static final short SIGNAL_QUERY_CANCEL = 19;
+  public static final short SIGNAL_PASSIVE_UPDATE = 19;
 
-  public static final short SIGNAL_SYNC_REVISIONS = 20;
+  public static final short SIGNAL_CHANGE_SUBSCRIPTION = 20;
 
-  public static final short SIGNAL_PASSIVE_UPDATE = 21;
+  public static final short SIGNAL_REPOSITORY_TIME = 21;
 
-  public static final short SIGNAL_CHANGE_SUBSCRIPTION = 22;
+  public static final short SIGNAL_LOCK_OBJECTS = 22;
 
-  public static final short SIGNAL_SET_AUDIT = 23;
+  public static final short SIGNAL_UNLOCK_OBJECTS = 23;
 
-  public static final short SIGNAL_REPOSITORY_TIME = 24;
+  public static final short SIGNAL_OBJECT_LOCKED = 24;
 
-  public static final short SIGNAL_LOCK_OBJECTS = 25;
-
-  public static final short SIGNAL_UNLOCK_OBJECTS = 26;
-
-  public static final short SIGNAL_OBJECT_LOCKED = 27;
-
-  public static final short SIGNAL_GET_REMOTE_SESSIONS = 28;
+  public static final short SIGNAL_GET_REMOTE_SESSIONS = 25;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_REMOTE_MESSAGE = 29;
+  public static final short SIGNAL_REMOTE_MESSAGE = 26;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_REMOTE_MESSAGE_NOTIFICATION = 30;
+  public static final short SIGNAL_REMOTE_MESSAGE_NOTIFICATION = 27;
 
-  public static final short SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS = 31;
+  public static final short SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS = 28;
 
-  public static final short SIGNAL_REMOTE_SESSION_NOTIFICATION = 32;
+  public static final short SIGNAL_REMOTE_SESSION_NOTIFICATION = 29;
+
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_CREATE_BRANCH = 30;
+
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_LOAD_BRANCH = 31;
+
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_LOAD_SUB_BRANCHES = 32;
+
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_BRANCH_NOTIFICATION = 33;
 
   // //////////////////////////////////////////////////////////////////////
   // Session Management
@@ -97,11 +127,6 @@ public interface CDOProtocolConstants
   public static final int ERROR_REPOSITORY_NOT_FOUND = -1;
 
   public static final int ERROR_NO_SESSION = -2;
-
-  // //////////////////////////////////////////////////////////////////////
-  // View Management
-
-  public static final byte VIEW_CLOSED = -1;
 
   // //////////////////////////////////////////////////////////////////////
   // Query Support

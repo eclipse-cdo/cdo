@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -140,17 +139,12 @@ public abstract class AbstractCDOTest extends ConfigTest
     assertEquals(false, CDOLegacyWrapper.isLegacyProxy(object));
   }
 
-  protected static void assertCreatedTime(EObject eObject)
+  protected static void assertCreatedTime(EObject eObject, long timeStamp)
   {
     CDOObject object = CDOUtil.getCDOObject(eObject);
     if (object != null)
     {
-      CDOView view = object.cdoView();
-      if (view instanceof CDOTransaction)
-      {
-        CDOTransaction transaction = (CDOTransaction)view;
-        assertEquals(transaction.getLastCommitTime(), object.cdoRevision().getCreated());
-      }
+      assertEquals(timeStamp, object.cdoRevision().getTimeStamp());
     }
   }
 }

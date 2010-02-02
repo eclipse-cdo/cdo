@@ -674,7 +674,7 @@ public class LockingManagerTest extends AbstractCDOTest
 
   public void testWriteLockPerformance() throws Exception
   {
-    final int ITERATION = 1000;
+    final int ITERATION = 100;
     Company company = getModel1Factory().createCompany();
 
     CDOSession session = openModel1Session();

@@ -10,11 +10,12 @@
  */
 package org.eclipse.emf.cdo.common.revision;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.emf.ecore.EClass;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -28,28 +29,16 @@ public interface CDORevisionManager
    */
   public EClass getObjectType(CDOID id);
 
-  public boolean containsRevision(CDOID id);
+  public boolean containsRevision(CDOID id, CDOBranchPoint branchPoint);
 
-  public boolean containsRevisionByTime(CDOID id, long timeStamp);
-
-  public boolean containsRevisionByVersion(CDOID id, int version);
-
-  public CDORevision getRevision(CDOID id, int referenceChunk, int prefetchDepth);
-
-  public CDORevision getRevision(CDOID id, int referenceChunk, int prefetchDepth, boolean loadOnDemand);
-
-  public CDORevision getRevisionByTime(CDOID id, int referenceChunk, int prefetchDepth, long timeStamp);
-
-  public CDORevision getRevisionByTime(CDOID id, int referenceChunk, int prefetchDepth, long timeStamp,
+  public CDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
       boolean loadOnDemand);
 
-  public CDORevision getRevisionByVersion(CDOID id, int referenceChunk, int prefetchDepth, int version);
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk,
+      int prefetchDepth, boolean loadOnDemand);
 
-  public CDORevision getRevisionByVersion(CDOID id, int referenceChunk, int prefetchDepth, int version,
+  public boolean containsRevisionByVersion(CDOID id, CDOBranchVersion branchVersion);
+
+  public CDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk,
       boolean loadOnDemand);
-
-  public List<CDORevision> getRevisions(Collection<CDOID> ids, int referenceChunk, int prefetchDepth);
-
-  public List<CDORevision> getRevisionsByTime(Collection<CDOID> ids, int referenceChunk, int prefetchDepth,
-      long timeStamp, boolean loadOnDemand);
 }

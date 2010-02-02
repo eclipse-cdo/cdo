@@ -11,7 +11,8 @@
  */
 package org.eclipse.emf.cdo.common.revision;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
 import org.eclipse.emf.ecore.EClass;
@@ -19,14 +20,17 @@ import org.eclipse.emf.ecore.EClass;
 /**
  * @author Eike Stepper
  */
-public interface CDORevision
+public interface CDORevision extends CDORevisionKey, CDOBranchPoint
 {
-  public static final long UNSPECIFIED_DATE = 0;
+  /**
+   * @since 3.0
+   */
+  public static final int MAIN_BRANCH_ID = CDOBranch.MAIN_BRANCH_ID;
 
   /**
-   * @since 2.0
+   * @since 3.0
    */
-  public static final int UNSPECIFIED_VERSION = 0;
+  public static final int FIRST_VERSION = 1;
 
   public static final int UNCHUNKED = -1;
 
@@ -45,24 +49,19 @@ public interface CDORevision
    */
   public EClass getEClass();
 
-  public CDOID getID();
-
-  // /**
-  // * @since 3.0
-  // */
-  // public int getBranchID();
-
   public int getVersion();
-
-  public long getCreated();
 
   public long getRevised();
 
-  public boolean isCurrent();
+  /**
+   * Returns <code>true</code> exactly if {@link #getTimeStamp()} does not return {@link #UNSPECIFIED_DATE},
+   * <code>false</code> otherwise.
+   * 
+   * @since 3.0
+   */
+  public boolean isHistorical();
 
   public boolean isValid(long timeStamp);
-
-  public boolean isTransactional();
 
   /**
    * @since 2.0

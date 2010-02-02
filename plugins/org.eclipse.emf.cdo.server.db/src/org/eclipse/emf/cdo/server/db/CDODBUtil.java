@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.SmartPreparedStatementCache;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalBranchingMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalNonAuditMappingStrategy;
 
 import org.eclipse.net4j.db.DBUtil;
@@ -84,6 +85,25 @@ public final class CDODBUtil
     }
 
     return new HorizontalNonAuditMappingStrategy();
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static IMappingStrategy createHorizontalMappingStrategy(boolean auditing, boolean branching)
+  {
+    if (branching)
+    {
+      if (auditing)
+      {
+        return new HorizontalBranchingMappingStrategy();
+      }
+      else
+      {
+        throw new IllegalArgumentException("Misconfiguration: Branching requires Auditing!");
+      }
+    }
+    return createHorizontalMappingStrategy(auditing);
   }
 
   /**

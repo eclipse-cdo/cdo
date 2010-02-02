@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -19,6 +20,8 @@ import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -48,6 +51,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   private IFailOverStrategy failOverStrategy;
 
   private InternalCDOPackageRegistry packageRegistry;
+
+  private InternalCDOBranchManager branchManager;
 
   private InternalCDORevisionManager revisionManager;
 
@@ -99,6 +104,17 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     this.packageRegistry = (InternalCDOPackageRegistry)packageRegistry;
   }
 
+  public InternalCDOBranchManager getBranchManager()
+  {
+    return branchManager;
+  }
+
+  public void setBranchManager(CDOBranchManager branchManager)
+  {
+    checkNotOpen();
+    this.branchManager = (InternalCDOBranchManager)branchManager;
+  }
+
   public InternalCDORevisionManager getRevisionManager()
   {
     return revisionManager;
@@ -143,20 +159,32 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       protocol.setFailOverStrategy(failOverStrategy);
     }
 
+    OpenSessionResult result = protocol.openSession(repositoryName, isPassiveUpdateEnabled());
+    session.setSessionID(result.getSessionID());
+    session.setLastUpdateTime(result.getLastUpdateTime());
+    session.setRepositoryInfo(new RepositoryInfo(repositoryName, result));
+
     packageRegistry = new CDOPackageRegistryImpl();
     packageRegistry.setPackageProcessor(session);
     packageRegistry.setPackageLoader(session);
     packageRegistry.activate();
 
     revisionManager = new CDORevisionManagerImpl();
+    revisionManager.setSupportingBranches(session.getRepositoryInfo().isSupportingBranches());
     revisionManager.setRevisionLoader(session.getSessionProtocol());
     revisionManager.setRevisionLocker(session);
+    // if (result.isRepositorySupportingBranches())
+    // {
+    // revisionManager = new DelegatingCDORevisionManager.SyntheticsConverter(revisionManager);
+    // }
+
     revisionManager.activate();
 
-    OpenSessionResult result = protocol.openSession(repositoryName, isPassiveUpdateEnabled());
-    session.setSessionID(result.getSessionID());
-    session.setLastUpdateTime(result.getLastUpdateTime());
-    session.setRepositoryInfo(new RepositoryInfo(repositoryName, result));
+    branchManager = CDOBranchUtil.createBranchManager();
+    branchManager.setBranchLoader(session.getSessionProtocol());
+    branchManager.setTimeProvider(session.getRepositoryInfo());
+    branchManager.initMainBranch(session.getRepositoryInfo().getCreationTime());
+    branchManager.activate();
 
     for (InternalCDOPackageUnit packageUnit : result.getPackageUnits())
     {
@@ -202,6 +230,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     private boolean supportingAudits;
 
+    private boolean supportingBranches;
+
     public RepositoryInfo(String name, OpenSessionResult result)
     {
       this.name = name;
@@ -209,6 +239,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       creationTime = result.getRepositoryCreationTime();
       timeResult = result.getRepositoryTimeResult();
       supportingAudits = result.isRepositorySupportingAudits();
+      supportingBranches = result.isRepositorySupportingBranches();
     }
 
     public String getName()
@@ -229,12 +260,12 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       return creationTime;
     }
 
-    public long getCurrentTime()
+    public long getTimeStamp()
     {
-      return getCurrentTime(false);
+      return getTimeStamp(false);
     }
 
-    public long getCurrentTime(boolean forceRefresh)
+    public long getTimeStamp(boolean forceRefresh)
     {
       if (timeResult == null || forceRefresh)
       {
@@ -247,6 +278,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     public boolean isSupportingAudits()
     {
       return supportingAudits;
+    }
+
+    public boolean isSupportingBranches()
+    {
+      return supportingBranches;
     }
 
     private RepositoryTimeResult refreshTime()

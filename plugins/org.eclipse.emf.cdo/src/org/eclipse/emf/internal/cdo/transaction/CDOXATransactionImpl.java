@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.internal.cdo.transaction;
 
+import org.eclipse.emf.cdo.common.commit.CDOCommit;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -275,12 +276,12 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     return transactions;
   }
 
-  public void commit() throws TransactionException
+  public CDOCommit commit() throws TransactionException
   {
-    commit(new NullProgressMonitor());
+    return commit(new NullProgressMonitor());
   }
 
-  public void commit(IProgressMonitor progressMonitor) throws TransactionException
+  public CDOCommit commit(IProgressMonitor progressMonitor) throws TransactionException
   {
     CheckUtil.checkArg(progressMonitor, "progressMonitor"); //$NON-NLS-1$
     progressMonitor.beginTask(Messages.getString("CDOXATransactionImpl.4"), 3); //$NON-NLS-1$
@@ -302,6 +303,8 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
         send(activeContexts.values(), new SubProgressMonitor(progressMonitor, 1));
         ++phase;
       }
+
+      return null;
     }
     catch (Exception ex)
     {
@@ -519,10 +522,11 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       }
     }
 
-    public void commit(InternalCDOTransaction transactionCommit, IProgressMonitor progressMonitor) throws Exception
+    public CDOCommit commit(InternalCDOTransaction transactionCommit, IProgressMonitor progressMonitor)
+        throws Exception
     {
       checkAccess();
-      xaTransaction.commit(progressMonitor);
+      return xaTransaction.commit(progressMonitor);
     }
 
     public void rollback(InternalCDOTransaction transaction, InternalCDOUserSavepoint savepoint)

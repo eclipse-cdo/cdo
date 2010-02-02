@@ -11,8 +11,8 @@
  */
 package org.eclipse.emf.cdo.tests.revisioncache;
 
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheUtil;
+import org.eclipse.emf.cdo.common.revision.cache.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 /**
@@ -28,8 +28,8 @@ public class MEMRevisionCacheTest extends AbstractCDORevisionCacheTest
   }
 
   @Override
-  protected CDORevisionCache createRevisionCache(CDOSession session) throws Exception
+  protected InternalCDORevisionCache createRevisionCache(CDOSession session) throws Exception
   {
-    return CDORevisionCacheUtil.createMEMCache();
+    return (InternalCDORevisionCache)CDORevisionCacheUtil.createMEMCache();
   }
 }

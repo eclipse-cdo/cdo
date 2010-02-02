@@ -4,13 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - bug 233490    
+ *    Simon McDuff - bug 233490
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
@@ -47,10 +48,10 @@ public class CommitNotificationIndication extends CDOClientIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    long timeStamp = in.readLong();
+    CDOBranchPoint branchPoint = in.readCDOBranchPoint();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read timeStamp: {0,date} {0,time}", timeStamp); //$NON-NLS-1$
+      TRACER.format("Read branchpoint: {0}", branchPoint); //$NON-NLS-1$
     }
 
     CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);
@@ -67,16 +68,16 @@ public class CommitNotificationIndication extends CDOClientIndication
     }
 
     InternalCDOSession session = getSession();
-    Set<CDOIDAndVersion> dirtyOIDs = new HashSet<CDOIDAndVersion>();
+    Set<CDOIDAndVersion> dirtyOIDandVersions = new HashSet<CDOIDAndVersion>();
     for (int i = 0; i < size; i++)
     {
-      CDOIDAndVersion dirtyOID = in.readCDOIDAndVersion();
+      CDOIDAndVersion dirtyOIDandVersion = in.readCDOIDAndVersion();
       if (TRACER.isEnabled())
       {
-        TRACER.format("Read dirty ID: {0}", dirtyOID); //$NON-NLS-1$
+        TRACER.format("Read dirty ID: {0}", dirtyOIDandVersion); //$NON-NLS-1$
       }
 
-      dirtyOIDs.add(dirtyOID);
+      dirtyOIDandVersions.add(dirtyOIDandVersion);
     }
 
     size = in.readInt();
@@ -104,6 +105,7 @@ public class CommitNotificationIndication extends CDOClientIndication
       detachedObjects.add(in.readCDOID());
     }
 
-    session.handleCommitNotification(timeStamp, Arrays.asList(packageUnits), dirtyOIDs, detachedObjects, deltas, null);
+    session.handleCommitNotification(branchPoint, Arrays.asList(packageUnits), dirtyOIDandVersions, detachedObjects,
+        deltas, null);
   }
 }

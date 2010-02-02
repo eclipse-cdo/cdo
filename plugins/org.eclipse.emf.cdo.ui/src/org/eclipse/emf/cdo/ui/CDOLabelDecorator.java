@@ -106,7 +106,7 @@ public class CDOLabelDecorator implements ILabelDecorator
         InternalCDOView view = ((InternalCDOObject)element).cdoView();
         InternalCDOObject obj = FSMUtil.adapt(element, view);
         CDORevision rev = obj.cdoRevision();
-        long created = rev == null ? CDORevision.UNSPECIFIED_DATE : rev.getCreated();
+        long created = rev == null ? CDORevision.UNSPECIFIED_DATE : rev.getTimeStamp();
         long revised = rev == null ? CDORevision.UNSPECIFIED_DATE : rev.getRevised();
         text = MessageFormat.format(pattern, text, obj.cdoID(), obj.cdoState(), created, revised);
       }

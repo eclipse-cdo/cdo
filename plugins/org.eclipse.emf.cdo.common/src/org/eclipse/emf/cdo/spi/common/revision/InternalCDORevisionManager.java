@@ -10,22 +10,31 @@
  */
 package org.eclipse.emf.cdo.spi.common.revision;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
+import org.eclipse.emf.cdo.common.revision.cache.InternalCDORevisionCache;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public interface InternalCDORevisionManager extends CDORevisionManager, ILifecycle
+public interface InternalCDORevisionManager extends CDORevisionManager, CDORevisionCacheAdder, ILifecycle
 {
+  public boolean isSupportingBranches();
+
+  public void setSupportingBranches(boolean on);
+
   public RevisionLoader getRevisionLoader();
 
   public void setRevisionLoader(RevisionLoader revisionLoader);
@@ -38,35 +47,35 @@ public interface InternalCDORevisionManager extends CDORevisionManager, ILifecyc
 
   public void setFactory(CDORevisionFactory factory);
 
-  public CDORevisionCache getCache();
+  public InternalCDORevisionCache getCache();
 
   public void setCache(CDORevisionCache cache);
 
-  public void reviseLatest(CDOID id);
+  public void reviseLatest(CDOID id, CDOBranch branch);
 
-  public void reviseVersion(CDOID id, int version, long timeStamp);
+  public void reviseVersion(CDOID id, CDOBranchVersion branchVersion, long timeStamp);
+
+  public CDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
+      boolean loadOnDemand, SyntheticCDORevision[] synthetics);
+
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk,
+      int prefetchDepth, boolean loadOnDemand, SyntheticCDORevision[] synthetics);
 
   /**
    * @author Eike Stepper
+   * @since 3.0
    */
   public interface RevisionLoader
   {
-    public InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk);
+    public List<InternalCDORevision> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
+        int referenceChunk, int prefetchDepth);
 
-    public InternalCDORevision loadRevision(CDOID id, int referenceChunk, int prefetchDepth);
-
-    public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, int prefetchDepth, long timeStamp);
-
-    public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int prefetchDepth, int version);
-
-    public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk, int prefetchDepth);
-
-    public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, int prefetchDepth,
-        long timeStamp);
+    public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk);
   }
 
   /**
    * @author Eike Stepper
+   * @since 3.0
    */
   public interface RevisionLocker
   {

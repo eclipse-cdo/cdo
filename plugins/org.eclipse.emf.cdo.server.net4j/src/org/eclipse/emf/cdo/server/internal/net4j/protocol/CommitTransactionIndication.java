@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -139,12 +140,6 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     indicating(new CDODataInputImpl(in)
     {
       @Override
-      protected CDORevisionFactory getRevisionFactory()
-      {
-        return CommitTransactionIndication.this.getRepository().getRevisionManager().getFactory();
-      }
-
-      @Override
       protected CDOPackageRegistry getPackageRegistry()
       {
         return commitContext.getPackageRegistry();
@@ -154,6 +149,18 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       protected StringIO getPackageURICompressor()
       {
         return getProtocol().getPackageURICompressor();
+      }
+
+      @Override
+      protected CDOBranchManager getBranchManager()
+      {
+        return CommitTransactionIndication.this.getRepository().getBranchManager();
+      }
+
+      @Override
+      protected CDORevisionFactory getRevisionFactory()
+      {
+        return CommitTransactionIndication.this.getRepository().getRevisionManager().getFactory();
       }
 
       @Override
@@ -337,7 +344,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
 
   protected void respondingTimestamp(CDODataOutput out) throws Exception
   {
-    out.writeLong(commitContext.getTimeStamp());
+    out.writeLong(commitContext.getBranchPoint().getTimeStamp());
   }
 
   protected void respondingMappingNewPackages(CDODataOutput out) throws Exception

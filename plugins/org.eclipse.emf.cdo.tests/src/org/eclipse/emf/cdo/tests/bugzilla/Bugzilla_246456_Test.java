@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
+import org.eclipse.emf.cdo.common.revision.cache.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.cache.two.TwoLevelRevisionCache;
@@ -23,6 +24,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 /**
  * @author Simon McDuff
+ * @see bug 246456
  */
 public class Bugzilla_246456_Test extends AbstractCDOTest
 {
@@ -30,35 +32,45 @@ public class Bugzilla_246456_Test extends AbstractCDOTest
   {
     msg("Opening session");
     InternalCDOSession session = (InternalCDOSession)openModel1Session();
-
-    msg("Opening transaction");
-    InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction();
-    InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
-    ((LRURevisionCache)((TwoLevelRevisionCache)revisionManager.getCache()).getLevel1()).setCapacityRevised(10);
-    ((LRURevisionCache)((TwoLevelRevisionCache)revisionManager.getCache()).getLevel1()).setCapacityCurrent(10);
-
-    msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
-
-    msg("Creating supplier");
-    Supplier supplier = getModel1Factory().createSupplier();
-
-    msg("Adding supplier");
-    resource.getContents().add(supplier);
-
-    msg("Committing");
-    transaction.commit();
-    for (int i = 0; i < 10; i++)
+    InternalCDORevisionManager revisionManager = session.getRevisionManager();
+    InternalCDORevisionCache cache = revisionManager.getCache();
+    if (cache instanceof TwoLevelRevisionCache)
     {
-      Supplier supplier2 = getModel1Factory().createSupplier();
-      resource.getContents().add(supplier2);
-      transaction.commit();
+      TwoLevelRevisionCache twoLevel = (TwoLevelRevisionCache)cache;
+      InternalCDORevisionCache level1 = twoLevel.getLevel1();
+      if (level1 instanceof LRURevisionCache)
+      {
+        LRURevisionCache lruCache = (LRURevisionCache)level1;
+
+        msg("Opening transaction");
+        InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction();
+        lruCache.setCapacityRevised(10);
+        lruCache.setCapacityCurrent(10);
+
+        msg("Creating resource");
+        CDOResource resource = transaction.createResource("/test1");
+
+        msg("Creating supplier");
+        Supplier supplier = getModel1Factory().createSupplier();
+
+        msg("Adding supplier");
+        resource.getContents().add(supplier);
+
+        msg("Committing");
+        transaction.commit();
+        for (int i = 0; i < 10; i++)
+        {
+          Supplier supplier2 = getModel1Factory().createSupplier();
+          resource.getContents().add(supplier2);
+          transaction.commit();
+        }
+
+        Supplier supplier2 = getModel1Factory().createSupplier();
+        resource.getContents().add(supplier2);
+
+        msg("Committing");
+        transaction.commit();
+      }
     }
-
-    Supplier supplier2 = getModel1Factory().createSupplier();
-    resource.getContents().add(supplier2);
-
-    msg("Committing");
-    transaction.commit();
   }
 }

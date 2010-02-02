@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.internal.ui;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
-import org.eclipse.emf.cdo.view.CDOAudit;
+import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -72,20 +72,7 @@ public class CDOEditorInputImpl extends PlatformObject implements CDOEditorInput
 
   public ImageDescriptor getImageDescriptor()
   {
-    switch (view.getViewType())
-    {
-    case TRANSACTION:
-      return SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR);
-
-    case READONLY:
-      return SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR_READONLY);
-
-    case AUDIT:
-      return SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR_HISTORICAL);
-
-    default:
-      return null;
-    }
+    return CDOItemProvider.getViewImageDescriptor(view);
   }
 
   public String getName()
@@ -126,14 +113,15 @@ public class CDOEditorInputImpl extends PlatformObject implements CDOEditorInput
     builder.append(view.getViewID());
     builder.append("]"); //$NON-NLS-1$
 
-    if (view.getViewType() != CDOView.Type.TRANSACTION)
+    if (view.isReadOnly())
     {
       builder.append(" readonly"); //$NON-NLS-1$
     }
 
-    if (view instanceof CDOAudit)
+    long timeStamp = view.getTimeStamp();
+    if (timeStamp != CDOView.UNSPECIFIED_DATE)
     {
-      builder.append(MessageFormat.format(" {0,date} {0,time}", ((CDOAudit)view).getTimeStamp())); //$NON-NLS-1$
+      builder.append(MessageFormat.format(" {0,date} {0,time,HH:mm:ss:SSS}", timeStamp)); //$NON-NLS-1$
     }
 
     return builder.toString();

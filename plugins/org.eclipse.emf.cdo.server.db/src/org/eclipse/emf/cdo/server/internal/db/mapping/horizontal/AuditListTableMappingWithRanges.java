@@ -14,6 +14,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
@@ -28,6 +29,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
@@ -593,9 +595,11 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
       TRACER.format("objectRevised {0} {1}", id, revised);
     }
 
+    CDOBranch main = getMappingStrategy().getStore().getRepository().getBranchManager().getMainBranch();
+
     // get revision from cache to find out version number
-    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id, 0,
-        CDORevision.DEPTH_NONE);
+    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id,
+        main.getHead(), /* chunksize = */0, CDORevision.DEPTH_NONE, true);
 
     // set cdo_revision_removed for all list items (so we have no NULL values)
     clearList(accessor, id, revision.getVersion(), FINAL_VERSION);
@@ -604,8 +608,10 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
   public void processDelta(final IDBStoreAccessor accessor, final CDOID id, int oldVersion, final int newVersion,
       long created, CDOListFeatureDelta delta)
   {
-    InternalCDORevision originalRevision = (InternalCDORevision)accessor.getStore().getRepository()
-        .getRevisionManager().getRevision(id, 0, CDORevision.DEPTH_NONE);
+    IRepository repo = accessor.getStore().getRepository();
+    InternalCDORevision originalRevision = (InternalCDORevision)repo.getRevisionManager().getRevision(id,
+        repo.getBranchManager().getMainBranch().getHead(), /* chunksize = */0, CDORevision.DEPTH_NONE, true);
+
     int oldListSize = originalRevision.getList(getFeature()).size();
 
     if (TRACER.isEnabled())

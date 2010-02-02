@@ -14,6 +14,7 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -192,6 +193,12 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
       protected CDOPackageRegistry getPackageRegistry()
       {
         return getSession().getPackageRegistry();
+      }
+
+      @Override
+      protected CDOBranchManager getBranchManager()
+      {
+        return getSession().getBranchManager();
       }
 
       @Override

@@ -11,7 +11,8 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.CDOCommonView;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -24,7 +25,8 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
+import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
+import org.eclipse.emf.cdo.transaction.CDORefreshContext;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.signal.RemoteException;
@@ -48,7 +50,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -99,71 +100,61 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new LoadPackagesRequest(this, (InternalCDOPackageUnit)packageUnit));
   }
 
+  public int createBranch(BranchInfo branchInfo)
+  {
+    return send(new CreateBranchRequest(this, branchInfo));
+  }
+
+  public BranchInfo loadBranch(int branchID)
+  {
+    return send(new LoadBranchRequest(this, branchID));
+  }
+
+  public SubBranchInfo[] loadSubBranches(int branchID)
+  {
+    return send(new LoadSubBranchesRequest(this, branchID));
+  }
+
   public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
       int fromIndex, int toIndex)
   {
     return send(new LoadChunkRequest(this, revision, feature, accessIndex, fetchIndex, fromIndex, toIndex));
   }
 
-  public InternalCDORevision loadRevision(CDOID id, int referenceChunk, int prefetchDepth)
+  public List<InternalCDORevision> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
+      int referenceChunk, int prefetchDepth)
   {
-    return loadRevisions(Collections.singleton(id), referenceChunk, prefetchDepth).get(0);
+    return send(new LoadRevisionsRequest(this, infos, branchPoint, referenceChunk, prefetchDepth));
   }
 
-  public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, int prefetchDepth, long timeStamp)
+  public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk)
   {
-    return loadRevisionsByTime(Collections.singleton(id), referenceChunk, prefetchDepth, timeStamp).get(0);
+    return send(new LoadRevisionByVersionRequest(this, id, branchVersion, referenceChunk));
   }
 
-  public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk, int prefetchDepth)
-  {
-    return send(new LoadRevisionRequest(this, ids, referenceChunk, prefetchDepth));
-  }
-
-  public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, int prefetchDepth,
-      long timeStamp)
-  {
-    return send(new LoadRevisionByTimeRequest(this, ids, referenceChunk, prefetchDepth, timeStamp));
-  }
-
-  public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int prefetchDepth, int version)
-  {
-    return send(new LoadRevisionByVersionRequest(this, id, referenceChunk, prefetchDepth, version)).get(0);
-  }
-
-  public InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
-  {
-    return revision;
-  }
-
-  public List<InternalCDORevision> verifyRevisions(List<InternalCDORevision> revisions) throws TransportException
-  {
-    return send(new VerifyRevisionRequest(this, revisions));
-  }
-
-  public Collection<CDOTimeStampContext> syncRevisions(Map<CDOID, CDOIDAndVersion> idAndVersions, int initialChunkSize)
+  public Collection<CDORefreshContext> syncRevisions(Map<CDOID, CDOIDAndVersion> idAndVersions, int initialChunkSize)
   {
     return send(new SyncRevisionsRequest(this, idAndVersions, initialChunkSize));
   }
 
-  public void openView(int viewId, CDOCommonView.Type viewType, long timeStamp)
+  public void openView(int viewID, CDOBranchPoint branchPoint, boolean readOnly)
   {
-    send(new ViewsChangedRequest(this, viewId, viewType, timeStamp));
+    send(new OpenViewRequest(this, viewID, branchPoint, readOnly));
   }
 
-  public void closeView(int viewId)
+  public boolean[] changeView(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects)
   {
-    send(new ViewsChangedRequest(this, viewId));
+    return send(new ChangeViewRequest(this, viewID, branchPoint, invalidObjects));
   }
 
-  public boolean[] setAudit(int viewId, long timeStamp, List<InternalCDOObject> invalidObjects)
+  public void closeView(int viewID)
   {
-    return send(new SetAuditRequest(this, viewId, timeStamp, invalidObjects));
+    send(new CloseViewRequest(this, viewID));
   }
 
-  public void changeSubscription(int viewId, List<CDOID> cdoIDs, boolean subscribeMode, boolean clear)
+  public void changeSubscription(int viewID, List<CDOID> cdoIDs, boolean subscribeMode, boolean clear)
   {
-    send(new ChangeSubscriptionRequest(this, viewId, cdoIDs, subscribeMode, clear));
+    send(new ChangeSubscriptionRequest(this, viewID, cdoIDs, subscribeMode, clear));
   }
 
   public void query(int viewID, AbstractQueryIterator<?> queryResult)
@@ -279,6 +270,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     case CDOProtocolConstants.SIGNAL_AUTHENTICATION:
       return new AuthenticationIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_BRANCH_NOTIFICATION:
+      return new BranchNotificationIndication(this);
+
     case CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION:
       return new CommitNotificationIndication(this);
 
@@ -335,7 +329,7 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     }
   }
 
-  private List<InternalCDORevision> send(LoadRevisionRequest request)
+  private List<InternalCDORevision> send(LoadRevisionsRequest request)
   {
     try
     {

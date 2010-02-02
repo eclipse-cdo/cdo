@@ -244,6 +244,11 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
       pstmt = statementCache.getPreparedStatement(sql, ReuseProbability.HIGH);
       setKeyFields(pstmt, revision);
 
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(pstmt.toString());
+      }
+
       if (listChunk != CDORevision.UNCHUNKED)
       {
         pstmt.setMaxRows(listChunk); // optimization - don't read unneeded rows.
@@ -307,6 +312,11 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
     {
       pstmt = statementCache.getPreparedStatement(sqlGetListLastIndex, ReuseProbability.HIGH);
       setKeyFields(pstmt, revision);
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(pstmt.toString());
+      }
 
       resultSet = pstmt.executeQuery();
       if (!resultSet.next())

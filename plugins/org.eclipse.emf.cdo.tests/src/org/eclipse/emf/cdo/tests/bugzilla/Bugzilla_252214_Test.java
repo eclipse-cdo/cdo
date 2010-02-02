@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.view.CDOAudit;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 
@@ -58,21 +58,19 @@ public class Bugzilla_252214_Test extends AbstractCDOTest
       Company company = getModel1Factory().createCompany();
       company.setName("ESC");
       resource.getContents().add(company);
-      transaction.commit();
-      commitTime1 = transaction.getLastCommitTime();
+      commitTime1 = transaction.commit().getTimeStamp();
       assertTrue(session.getRepositoryInfo().getCreationTime() < commitTime1);
       assertEquals("ESC", company.getName());
 
       company.setName("Sympedia");
-      transaction.commit();
-      commitTime2 = transaction.getLastCommitTime();
+      commitTime2 = transaction.commit().getTimeStamp();
       assertTrue(commitTime1 < commitTime2);
       assertTrue(session.getRepositoryInfo().getCreationTime() < commitTime2);
       assertEquals("Sympedia", company.getName());
     }
 
     CDOSession session = openModel1Session();
-    CDOAudit audit = session.openAudit(commitTime1);
+    CDOView audit = session.openView(commitTime1);
 
     {
       CDOResource auditResource = audit.getResource("/res1");

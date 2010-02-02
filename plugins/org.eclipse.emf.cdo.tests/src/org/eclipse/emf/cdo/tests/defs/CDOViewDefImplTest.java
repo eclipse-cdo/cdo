@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.tests.defs;
 
-import org.eclipse.emf.cdo.common.CDOCommonView.Type;
 import org.eclipse.emf.cdo.defs.CDODefsFactory;
 import org.eclipse.emf.cdo.defs.CDOSessionDef;
 import org.eclipse.emf.cdo.defs.CDOViewDef;
@@ -66,7 +65,7 @@ public class CDOViewDefImplTest extends AbstractCDOTest
   public void testCreateView()
   {
     CDOView cdoView = (CDOView)cdoViewDef.getInstance();
-    assertTrue(cdoView.getViewType() == Type.READONLY);
+    assertTrue(cdoView.isReadOnly());
   }
 
   public void testCreateViewCreatesOnceAndReuses()

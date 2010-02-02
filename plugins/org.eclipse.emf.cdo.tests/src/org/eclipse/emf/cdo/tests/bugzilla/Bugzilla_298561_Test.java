@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOObject;
@@ -15,6 +25,9 @@ import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+/**
+ * @author Eike Stepper
+ */
 public class Bugzilla_298561_Test extends AbstractCDOTest
 {
   private static String RESOURCENAME = "/r1";
@@ -49,12 +62,9 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     try
     {
       boolean isSet = referencer.eIsSet(model4Package.eINSTANCE.getRefSingleNonContainedNPL_Element());
-      System.out.println("---> " + isSet);
-
       if (isSet)
       {
-        ContainedElementNoOpposite e = referencer.getElement();
-        System.out.println("---> " + e);
+        referencer.getElement();
       }
     }
     catch (ObjectNotFoundException e)
@@ -80,8 +90,6 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     r1.getContents().add(referencee);
     tx.commit();
 
-    System.out.println("---> " + ((CDOObject)referencee).cdoID());
-
     // Create referencer, store it, then make it DIRTY
     RefSingleNonContainedNPL referencer = model4Factory.eINSTANCE.createRefSingleNonContainedNPL();
     r1.getContents().add(referencer);
@@ -97,16 +105,12 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     // Refresh
     session.refresh();
 
-    //
     try
     {
       boolean isSet = referencer.eIsSet(model4Package.eINSTANCE.getRefSingleNonContainedNPL_Element());
-      System.out.println("---> " + isSet);
-
       if (isSet)
       {
-        ContainedElementNoOpposite e = referencer.getElement();
-        System.out.println("---> " + e);
+        referencer.getElement();
       }
     }
     catch (ObjectNotFoundException e)
@@ -144,8 +148,6 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     r1.getContents().add(referencee);
     tx.commit();
 
-    System.out.println("---> " + ((CDOObject)referencee).cdoID());
-
     // Create referencer, don't store it -- keep it as NEW
     RefMultiNonContainedNPL referencer = model4Factory.eINSTANCE.createRefMultiNonContainedNPL();
     r1.getContents().add(referencer);
@@ -162,12 +164,9 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     try
     {
       boolean isSet = referencer.eIsSet(model4Package.eINSTANCE.getRefMultiNonContainedNPL_Elements());
-      System.out.println("---> " + isSet);
-
       if (isSet && referencer.getElements().size() > 0)
       {
-        ContainedElementNoOpposite e = referencer.getElements().get(0);
-        System.out.println("---> " + e);
+        referencer.getElements().get(0);
       }
     }
     catch (ObjectNotFoundException e)
@@ -193,8 +192,6 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     r1.getContents().add(referencee);
     tx.commit();
 
-    System.out.println("---> " + ((CDOObject)referencee).cdoID());
-
     // Create referencer, store it, then make it DIRTY
     RefMultiNonContainedNPL referencer = model4Factory.eINSTANCE.createRefMultiNonContainedNPL();
     r1.getContents().add(referencer);
@@ -214,12 +211,9 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     try
     {
       boolean isSet = referencer.eIsSet(model4Package.eINSTANCE.getRefMultiNonContainedNPL_Elements());
-      System.out.println("---> " + isSet);
-
       if (isSet && referencer.getElements().size() > 0)
       {
-        ContainedElementNoOpposite e = referencer.getElements().get(0);
-        System.out.println("---> " + e);
+        referencer.getElements().get(0);
       }
     }
     catch (ObjectNotFoundException e)

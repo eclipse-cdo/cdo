@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.tests.FeatureMapTest;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
 import org.eclipse.emf.cdo.tests.MultiValuedOfAttributeTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
-import org.eclipse.emf.cdo.tests.AuditTest.LocalAuditTest;
+import org.eclipse.emf.cdo.tests.AuditTest.SameSession;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_272861_Test;
@@ -66,7 +66,7 @@ public class AllTestsHibernate extends AllTestsAllConfigs
     // audit support to do
     // bug 244141
     testClasses.remove(AuditTest.class);
-    testClasses.remove(LocalAuditTest.class);
+    testClasses.remove(SameSession.class);
     testClasses.remove(Bugzilla_252214_Test.class);
 
     // replace a test with our local implementation:

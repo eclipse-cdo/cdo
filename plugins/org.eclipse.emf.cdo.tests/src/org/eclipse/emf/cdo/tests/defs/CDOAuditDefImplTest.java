@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.view.CDOAudit;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.defs.util.Net4jDefsUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
@@ -54,7 +54,7 @@ public class CDOAuditDefImplTest extends AbstractCDOTest
                 SessionConfig.TCP.CONNECTOR_HOST)));
     cdoAuditDef.setTimeStamp(new Date());
 
-    CDOAudit cdoAudit = (CDOAudit)cdoAuditDef.getInstance();
+    CDOView cdoAudit = (CDOView)cdoAuditDef.getInstance();
     EObject object = cdoAudit.getResource(RESOURCE_ID).getContents().get(0);
     assertTrue(object instanceof Customer && customerName.equals(customer.getName()));
   }
@@ -69,13 +69,13 @@ public class CDOAuditDefImplTest extends AbstractCDOTest
                 SessionConfig.TCP.CONNECTOR_HOST)));
     cdoAuditDef.setTimeStamp(new Date());
 
-    CDOAudit thisCdoAuditReference = (CDOAudit)cdoAuditDef.getInstance();
+    CDOView thisCdoAuditReference = (CDOView)cdoAuditDef.getInstance();
 
     Calendar calendar = GregorianCalendar.getInstance();
     ConcurrencyUtil.sleep(1000l);
     calendar.roll(Calendar.SECOND, true);
     cdoAuditDef.setTimeStamp(calendar.getTime());
-    CDOAudit thatCdoAuditReference = (CDOAudit)cdoAuditDef.getInstance();
+    CDOView thatCdoAuditReference = (CDOView)cdoAuditDef.getInstance();
     assertTrue(thisCdoAuditReference == thatCdoAuditReference);
   }
 }

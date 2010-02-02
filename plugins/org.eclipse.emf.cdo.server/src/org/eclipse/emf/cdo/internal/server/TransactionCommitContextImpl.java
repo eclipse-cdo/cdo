@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
@@ -24,6 +25,7 @@ import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -112,9 +114,9 @@ public class TransactionCommitContextImpl implements InternalCommitContext
     return transaction;
   }
 
-  public long getTimeStamp()
+  public CDOBranchPoint getBranchPoint()
   {
-    return timeStamp;
+    return CDOBranchUtil.createBranchPoint(transaction.getBranch(), timeStamp);
   }
 
   public InternalCDOPackageRegistry getPackageRegistry()
@@ -260,7 +262,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
       timeStamp = createTimeStamp();
       dirtyObjects = new InternalCDORevision[dirtyObjectDeltas.length];
 
-      adjustTimeStamps();
+      adjustForCommit();
       monitor.worked();
 
       InternalRepository repository = transaction.getRepository();
@@ -354,7 +356,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
     }
   }
 
-  private void adjustTimeStamps()
+  private void adjustForCommit()
   {
     for (InternalCDOPackageUnit newPackageUnit : newPackageUnits)
     {
@@ -363,7 +365,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
 
     for (InternalCDORevision newObject : newObjects)
     {
-      newObject.setCreated(timeStamp);
+      newObject.adjustForCommit(transaction.getBranch(), timeStamp);
     }
   }
 
@@ -465,42 +467,39 @@ public class TransactionCommitContextImpl implements InternalCommitContext
   private InternalCDORevision computeDirtyObject(InternalCDORevisionDelta dirtyObjectDelta, boolean loadOnDemand)
   {
     CDOID id = dirtyObjectDelta.getID();
-    int version = dirtyObjectDelta.getOriginVersion();
 
     InternalRepository repository = transaction.getRepository();
     InternalCDORevisionManager revisionManager = repository.getRevisionManager();
 
-    CDORevision originObject = revisionManager.getRevisionByVersion(id, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE,
-        version, loadOnDemand);
+    CDORevision originObject = revisionManager.getRevisionByVersion(id, dirtyObjectDelta, CDORevision.UNCHUNKED, true);
     if (originObject != null)
     {
       if (loadOnDemand)
       {
-        // make sure all chunks are loaded
+        // Make sure all chunks are loaded
         for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(originObject.getEClass()))
         {
           if (feature.isMany())
           {
             InternalCDORevision internalOriginObject = (InternalCDORevision)originObject;
-            // TODO ensureChunk should get promoted to API because the cast is not really nice here.
             repository.ensureChunk(internalOriginObject, feature, 0, internalOriginObject.getList(feature).size());
           }
         }
       }
 
-      if (!originObject.isCurrent())
+      if (originObject.isHistorical())
       {
-        throw new ConcurrentModificationException("Trying to update object " + dirtyObjectDelta.getID() //$NON-NLS-1$
-            + " that was already modified"); //$NON-NLS-1$
+        throw new ConcurrentModificationException("Trying to update object " + id + " that was already modified"); //$NON-NLS-1$
       }
 
       InternalCDORevision dirtyObject = (InternalCDORevision)originObject.copy();
+      dirtyObject.adjustForCommit(transaction.getBranch(), timeStamp);
+
       dirtyObjectDelta.apply(dirtyObject);
-      dirtyObject.setCreated(timeStamp);
       return dirtyObject;
     }
 
-    return null;
+    throw new IllegalStateException("Origin revision not found for " + dirtyObjectDelta);
   }
 
   private void applyIDMappings(InternalCDORevision[] revisions, OMMonitor monitor)
@@ -531,7 +530,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
 
   public synchronized void rollback(String message)
   {
-    // Check if we already rolledBack
+    // Check if we already rolled back
     if (rollbackMessage == null)
     {
       rollbackMessage = message;
@@ -574,11 +573,6 @@ public class TransactionCommitContextImpl implements InternalCommitContext
 
       monitor.worked();
     }
-    catch (RuntimeException ex)
-    {
-      // TODO Rethink this case
-      OM.LOG.error("FATAL: Memory infrastructure corrupted after successful commit operation of the store"); //$NON-NLS-1$
-    }
     finally
     {
       monitor.done();
@@ -620,7 +614,10 @@ public class TransactionCommitContextImpl implements InternalCommitContext
       {
         if (revision != null)
         {
-          revisionManager.getCache().addRevision(revision);
+          if (!revisionManager.addRevision(revision))
+          {
+            throw new IllegalStateException("Revision was not registered: " + revision);
+          }
         }
 
         monitor.worked();
@@ -637,9 +634,10 @@ public class TransactionCommitContextImpl implements InternalCommitContext
     try
     {
       monitor.begin(detachedRevisions.size());
+      long revised = getBranchPoint().getTimeStamp() - 1;
       for (InternalCDORevision revision : detachedRevisions)
       {
-        revision.setRevised(getTimeStamp() - 1);
+        revision.setRevised(revised);
         monitor.worked();
       }
     }
@@ -660,8 +658,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
       monitor.begin(detachedObjects.length);
       for (CDOID id : detachedObjects)
       {
-        InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevision(id, CDORevision.UNCHUNKED,
-            CDORevision.DEPTH_NONE, false);
+        InternalCDORevision revision = (InternalCDORevision)revisionManager.getCache().getRevision(id, transaction);
         if (revision != null)
         {
           detachedRevisions.add(revision);

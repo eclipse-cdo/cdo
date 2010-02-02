@@ -10,6 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.transaction;
 
+import org.eclipse.emf.cdo.common.commit.CDOCommit;
+import org.eclipse.emf.cdo.internal.common.commit.CDOCommitImpl;
+
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
@@ -41,7 +44,7 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
   {
   }
 
-  public void commit(InternalCDOTransaction transaction, IProgressMonitor progressMonitor) throws Exception
+  public CDOCommit commit(InternalCDOTransaction transaction, IProgressMonitor progressMonitor) throws Exception
   {
     InternalCDOCommitContext commitContext = transaction.createCommitContext();
     if (TRACER.isEnabled())
@@ -69,7 +72,15 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
       TRACER.format("CDOCommitContext.postCommit"); //$NON-NLS-1$
     }
 
+    // Needed even for non-dirty transactions to release locks
     commitContext.postCommit(result);
+
+    if (result == null)
+    {
+      return null;
+    }
+
+    return new CDOCommitImpl(transaction.getBranch(), result.getTimeStamp(), null, null);
   }
 
   public void rollback(InternalCDOTransaction transaction, InternalCDOUserSavepoint savepoint)

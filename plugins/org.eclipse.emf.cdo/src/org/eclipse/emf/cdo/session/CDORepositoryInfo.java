@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.session;
 
+import org.eclipse.emf.cdo.common.CDOTimeProvider;
+
 /**
  * Describes a model repository a {@link CDOSession session} is connected to.
  * 
@@ -17,7 +19,7 @@ package org.eclipse.emf.cdo.session;
  * @see CDOSession#getRepositoryInfo()
  * @since 3.0
  */
-public interface CDORepositoryInfo
+public interface CDORepositoryInfo extends CDOTimeProvider
 {
   /**
    * Returns the name of this repository.
@@ -45,14 +47,14 @@ public interface CDORepositoryInfo
    * <p>
    * Same as calling <code>getCurrentTime(false)</code>.
    * 
-   * @see #getCurrentTime(boolean)
+   * @see #getTimeStamp(boolean)
    */
-  public long getCurrentTime();
+  public long getTimeStamp();
 
   /**
    * Returns the approximate current time of this repository by optionally refreshing the approximation from the server.
    */
-  public long getCurrentTime(boolean forceRefresh);
+  public long getTimeStamp(boolean forceRefresh);
 
   /**
    * Returns <code>true</code> if this repository supports auditing, <code>false</code> otherwise.
@@ -60,4 +62,11 @@ public interface CDORepositoryInfo
    * @see IRepository#isSupportingAudits()
    */
   public boolean isSupportingAudits();
+
+  /**
+   * Returns <code>true</code> if this repository supports auditing, <code>false</code> otherwise.
+   * 
+   * @see IRepository#isSupportingAudits()
+   */
+  public boolean isSupportingBranches();
 }

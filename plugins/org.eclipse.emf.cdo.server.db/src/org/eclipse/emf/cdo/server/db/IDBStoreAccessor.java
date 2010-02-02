@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 
 import java.sql.Connection;
@@ -27,4 +28,9 @@ public interface IDBStoreAccessor extends IStoreAccessor
    * @since 2.0
    */
   public IPreparedStatementCache getStatementCache();
+
+  /**
+   * @since 3.0
+   */
+  public boolean isNewObject(CDOID id);
 }

@@ -24,9 +24,9 @@ public interface IConstants
 
   public static final ContainerConfig SEPARATED = ContainerConfig.Separated.INSTANCE;
 
-  public static final RepositoryConfig MEM = RepositoryConfig.MEM.INSTANCE;
+  public static final RepositoryConfig.MEM MEM = RepositoryConfig.MEM.INSTANCE;
 
-  public static final RepositoryConfig MEM_OFFLINE = RepositoryConfig.MEMOffline.INSTANCE;
+  public static final RepositoryConfig.MEMOffline MEM_OFFLINE = RepositoryConfig.MEMOffline.INSTANCE;
 
   public static final SessionConfig EMBEDDED = SessionConfig.Embedded.INSTANCE;
 

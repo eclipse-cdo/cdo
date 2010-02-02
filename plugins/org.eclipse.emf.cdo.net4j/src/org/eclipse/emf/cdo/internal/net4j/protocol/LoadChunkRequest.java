@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
@@ -67,15 +68,17 @@ public class LoadChunkRequest extends CDOClientRequest<Object>
     }
 
     out.writeCDOID(id);
-    int version = revision.getVersion();
-    if (revision.isTransactional())
-    {
-      --version;
-    }
-
+    CDOBranch branch = revision.getBranch();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing revision version: {0}", version); //$NON-NLS-1$
+      TRACER.format("Writing branch: {0}", branch); //$NON-NLS-1$
+    }
+
+    out.writeCDOBranch(branch);
+    int version = revision.getVersion();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Writing  version: {0}", version); //$NON-NLS-1$
     }
 
     out.writeInt(version);

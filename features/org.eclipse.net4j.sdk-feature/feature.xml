@@ -58,6 +58,7 @@
          id="org.eclipse.net4j.doc"
          version="0.0.0"/-->
 
+<!--
 		<plugin id="org.eclipse.net4j.buddies.chat.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.buddies.chat.ui.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.buddies.common.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
@@ -89,5 +90,6 @@
 		<plugin id="org.eclipse.net4j.util.defs.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.util.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.util.ui.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+-->
 
 </feature>

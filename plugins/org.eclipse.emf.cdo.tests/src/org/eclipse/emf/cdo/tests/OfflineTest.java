@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.MEMOffline;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -25,6 +26,12 @@ public class OfflineTest extends AbstractCDOTest
   {
     skipUnlessConfig(MEM_OFFLINE);
     super.doSetUp();
+  }
+
+  @Override
+  public MEMOffline getRepositoryConfig()
+  {
+    return (MEMOffline)super.getRepositoryConfig();
   }
 
   public void testMasterInterface() throws Exception

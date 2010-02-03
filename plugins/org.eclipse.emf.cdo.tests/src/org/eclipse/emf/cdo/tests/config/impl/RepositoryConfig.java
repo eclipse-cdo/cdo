@@ -269,6 +269,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
       MasterInterface masterInterface = new MasterInterface();
       masterInterface.setSessionConfiguration(config);
+      masterInterface.setRetryInterval(1);
+      masterInterface.setSyncedTimeStamp(MasterInterface.NEVER_SYNCHRONIZED);
 
       IStore store = createStore(name);
       return (InternalRepository)CDOServerUtil.createClonedRepository(name, store, props, masterInterface);

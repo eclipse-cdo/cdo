@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.server.offline;
 
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -30,11 +31,11 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
  */
 public class MasterInterface extends QueueRunner
 {
+  public static final long NEVER_SYNCHRONIZED = -1;
+
   public static final int DEFAULT_RETRY_INTERVAL = 3;
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, MasterInterface.class);
-
-  private static final int NEVER_SYNCHRONIZED = -1;
 
   private int retryInterval = DEFAULT_RETRY_INTERVAL;
 
@@ -135,11 +136,17 @@ public class MasterInterface extends QueueRunner
     return syncedTimeStamp.getValue();
   }
 
+  public void setSyncedTimeStamp(long syncedTimeStamp)
+  {
+    this.syncedTimeStamp.setValue(syncedTimeStamp);
+  }
+
   @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
     checkState(sessionConfiguration, "sessionConfiguration");
+    checkState(syncedTimeStamp.isSpecified(), "syncedTimeStamp");
   }
 
   @Override
@@ -165,56 +172,54 @@ public class MasterInterface extends QueueRunner
 
   private void connect()
   {
-    if (session == null)
+    addWork(new Runnable()
     {
-      addWork(new Runnable()
+      public void run()
       {
-        public void run()
+        try
         {
-          try
+          checkActive();
+          if (TRACER.isEnabled())
           {
-            checkActive();
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("Connecting to master ({0})...", CDOCommonUtil.formatTimeStamp());
-            }
-
-            session = sessionConfiguration.openSession();
-
-            OM.LOG.info("Connected to master");
-            session.addListener(deactivationListener);
-
-            masterTimeStamp.setValue(0);
-            syncedTimeStamp.setValue(NEVER_SYNCHRONIZED);
-            session.addListener(invalidationListener);
-
-            sync();
+            TRACER.format("Connecting to master ({0})...", CDOCommonUtil.formatTimeStamp());
           }
-          catch (Exception ex)
-          {
-            OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...");
 
-            checkActive();
-            ConcurrencyUtil.sleep(1000L * retryInterval); // TODO Respect deactivation
+          session = sessionConfiguration.openSession();
 
-            checkActive();
-            connect();
-          }
+          OM.LOG.info("Connected to master.");
+          session.addListener(deactivationListener);
+
+          masterTimeStamp.setValue(0);
+          syncedTimeStamp.setValue(NEVER_SYNCHRONIZED);
+          session.addListener(invalidationListener);
+
+          sync();
         }
-      });
-    }
+        catch (Exception ex)
+        {
+          OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...");
+
+          checkActive();
+          ConcurrencyUtil.sleep(1000L * retryInterval); // TODO Respect deactivation
+
+          checkActive();
+          connect();
+        }
+      }
+    });
   }
 
   private void sync()
   {
-    final long masterTimeStamp = getMasterTimeStamp();
-    if (masterTimeStamp > getSyncedTimeStamp())
+    addWork(new Runnable()
     {
-      addWork(new Runnable()
+      public void run()
       {
-        public void run()
+        checkActive();
+        long masterTimeStamp = getMasterTimeStamp();
+        long syncedTimeStamp = getSyncedTimeStamp();
+        if (masterTimeStamp > syncedTimeStamp)
         {
-          checkActive();
           if (TRACER.isEnabled())
           {
             TRACER.format("Synchronizing with master ({0})...", CDOCommonUtil.formatTimeStamp(masterTimeStamp));
@@ -222,8 +227,8 @@ public class MasterInterface extends QueueRunner
 
           OM.LOG.info("Synchronized with master.");
         }
-      });
-    }
+      }
+    });
   }
 
   /**
@@ -239,10 +244,15 @@ public class MasterInterface extends QueueRunner
    */
   private static final class MutableLong
   {
-    private long value;
+    private long value = CDORevision.UNSPECIFIED_DATE;
 
     public MutableLong()
     {
+    }
+
+    public synchronized boolean isSpecified()
+    {
+      return value != CDORevision.UNSPECIFIED_DATE;
     }
 
     public synchronized long getValue()

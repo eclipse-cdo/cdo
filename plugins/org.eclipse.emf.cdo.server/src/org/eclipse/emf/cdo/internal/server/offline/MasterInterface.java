@@ -143,6 +143,13 @@ public class MasterInterface extends QueueRunner
   }
 
   @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    connect();
+  }
+
+  @Override
   protected void doDeactivate() throws Exception
   {
     if (session != null)

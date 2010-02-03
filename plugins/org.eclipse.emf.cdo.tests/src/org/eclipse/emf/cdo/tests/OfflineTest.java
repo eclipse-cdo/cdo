@@ -27,9 +27,9 @@ public class OfflineTest extends AbstractCDOTest
     super.doSetUp();
   }
 
-  public void testNewObjectDeletion() throws Exception
+  public void testMasterInterface() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession(getRepository().getName() + "_master");
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
@@ -41,10 +41,26 @@ public class OfflineTest extends AbstractCDOTest
     for (int i = 0; i < 10; i++)
     {
       sleep(1000);
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
       c1.setName("Test" + i);
       transaction.commit();
     }
 
+    System.out.println();
+    System.out.println();
+    System.out.println();
+    System.out.println();
+    System.out.println();
+    System.out.println();
+    System.out.println();
+    System.out.println();
     session.close();
   }
 }

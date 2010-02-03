@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: MetaRefImpl.java,v 1.6 2010-01-08 19:43:42 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.impl;
 
@@ -30,7 +28,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl#getEPackageRef <em>EPackage Ref</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class MetaRefImpl extends EObjectImpl implements MetaRef
@@ -38,7 +36,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
   /**
    * The cached value of the '{@link #getEPackageRef() <em>EPackage Ref</em>}' reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getEPackageRef()
    * @generated
    * @ordered
@@ -47,7 +45,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected MetaRefImpl()
@@ -57,7 +55,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -68,7 +66,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EPackage getEPackageRef()
@@ -89,7 +87,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EPackage basicGetEPackageRef()
@@ -99,7 +97,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setEPackageRef(EPackage newEPackageRef)
@@ -113,7 +111,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -131,7 +129,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -148,7 +146,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -165,7 +163,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

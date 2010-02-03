@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: ProductToOrderImpl.java,v 1.2 2010-01-08 19:43:17 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model1.impl;
 
@@ -45,7 +43,7 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
    * 
    * @generated
    */
-  public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+  public static final String copyright = "Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * The cached value of the '{@link #getTypedKey() <em>Key</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
@@ -102,7 +100,9 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
       if (key != oldKey)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.PRODUCT_TO_ORDER__KEY, oldKey, key));
+        }
       }
     }
     return key;
@@ -128,7 +128,9 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
     Product1 oldKey = key;
     key = newKey;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.PRODUCT_TO_ORDER__KEY, oldKey, key));
+    }
   }
 
   /**
@@ -145,8 +147,10 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
       if (value != oldValue)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.PRODUCT_TO_ORDER__VALUE, oldValue,
               value));
+        }
       }
     }
     return value;
@@ -172,7 +176,9 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
     SalesOrder oldValue = value;
     value = newValue;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.PRODUCT_TO_ORDER__VALUE, oldValue, value));
+    }
   }
 
   /**
@@ -187,11 +193,15 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
     {
     case Model1Package.PRODUCT_TO_ORDER__KEY:
       if (resolve)
+      {
         return getTypedKey();
+      }
       return basicGetTypedKey();
     case Model1Package.PRODUCT_TO_ORDER__VALUE:
       if (resolve)
+      {
         return getTypedValue();
+      }
       return basicGetTypedValue();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -272,7 +282,7 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
     if (hash == -1)
     {
       Object theKey = getKey();
-      hash = (theKey == null ? 0 : theKey.hashCode());
+      hash = theKey == null ? 0 : theKey.hashCode();
     }
     return hash;
   }

@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: TaskContainerImpl.java,v 1.1 2010-01-08 19:43:27 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model2.impl;
 
@@ -34,7 +32,7 @@ import java.util.Collection;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.TaskContainerImpl#getTasks <em>Tasks</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TaskContainerImpl extends EObjectImpl implements TaskContainer
@@ -42,7 +40,7 @@ public class TaskContainerImpl extends EObjectImpl implements TaskContainer
   /**
    * The cached value of the '{@link #getTasks() <em>Tasks</em>}' containment reference list. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getTasks()
    * @generated
    * @ordered
@@ -51,7 +49,7 @@ public class TaskContainerImpl extends EObjectImpl implements TaskContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected TaskContainerImpl()
@@ -61,7 +59,7 @@ public class TaskContainerImpl extends EObjectImpl implements TaskContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -72,7 +70,7 @@ public class TaskContainerImpl extends EObjectImpl implements TaskContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EList<Task> getTasks()
@@ -87,7 +85,7 @@ public class TaskContainerImpl extends EObjectImpl implements TaskContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -104,7 +102,7 @@ public class TaskContainerImpl extends EObjectImpl implements TaskContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -120,7 +118,7 @@ public class TaskContainerImpl extends EObjectImpl implements TaskContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -136,7 +134,7 @@ public class TaskContainerImpl extends EObjectImpl implements TaskContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -155,7 +153,7 @@ public class TaskContainerImpl extends EObjectImpl implements TaskContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -172,7 +170,7 @@ public class TaskContainerImpl extends EObjectImpl implements TaskContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

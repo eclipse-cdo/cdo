@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: Unsettable2WithDefaultImpl.java,v 1.1 2010-01-08 19:43:28 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model2.impl;
 
@@ -55,7 +53,7 @@ import java.util.Date;
  * VAT</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettable2WithDefault
@@ -63,7 +61,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The default value of the '{@link #isUnsettableBoolean() <em>Unsettable Boolean</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #isUnsettableBoolean()
    * @generated
    * @ordered
@@ -73,7 +71,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The cached value of the '{@link #isUnsettableBoolean() <em>Unsettable Boolean</em>}' attribute. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #isUnsettableBoolean()
    * @generated
    * @ordered
@@ -82,7 +80,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * This is true if the Unsettable Boolean attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -91,7 +89,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The default value of the '{@link #getUnsettableByte() <em>Unsettable Byte</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableByte()
    * @generated
    * @ordered
@@ -101,7 +99,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The cached value of the '{@link #getUnsettableByte() <em>Unsettable Byte</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableByte()
    * @generated
    * @ordered
@@ -110,7 +108,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * This is true if the Unsettable Byte attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -119,7 +117,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The default value of the '{@link #getUnsettableChar() <em>Unsettable Char</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableChar()
    * @generated
    * @ordered
@@ -129,7 +127,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The cached value of the '{@link #getUnsettableChar() <em>Unsettable Char</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableChar()
    * @generated
    * @ordered
@@ -138,7 +136,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * This is true if the Unsettable Char attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -147,7 +145,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The default value of the '{@link #getUnsettableDate() <em>Unsettable Date</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableDate()
    * @generated
    * @ordered
@@ -158,7 +156,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The cached value of the '{@link #getUnsettableDate() <em>Unsettable Date</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableDate()
    * @generated
    * @ordered
@@ -167,7 +165,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * This is true if the Unsettable Date attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -176,7 +174,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The default value of the '{@link #getUnsettableDouble() <em>Unsettable Double</em>}' attribute. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableDouble()
    * @generated
    * @ordered
@@ -186,7 +184,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The cached value of the '{@link #getUnsettableDouble() <em>Unsettable Double</em>}' attribute. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableDouble()
    * @generated
    * @ordered
@@ -195,7 +193,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * This is true if the Unsettable Double attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -204,7 +202,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The default value of the '{@link #getUnsettableFloat() <em>Unsettable Float</em>}' attribute. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableFloat()
    * @generated
    * @ordered
@@ -214,7 +212,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The cached value of the '{@link #getUnsettableFloat() <em>Unsettable Float</em>}' attribute. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableFloat()
    * @generated
    * @ordered
@@ -223,7 +221,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * This is true if the Unsettable Float attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -232,7 +230,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The default value of the '{@link #getUnsettableInt() <em>Unsettable Int</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableInt()
    * @generated
    * @ordered
@@ -242,7 +240,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The cached value of the '{@link #getUnsettableInt() <em>Unsettable Int</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableInt()
    * @generated
    * @ordered
@@ -251,7 +249,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * This is true if the Unsettable Int attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -260,7 +258,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The default value of the '{@link #getUnsettableLong() <em>Unsettable Long</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableLong()
    * @generated
    * @ordered
@@ -270,7 +268,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The cached value of the '{@link #getUnsettableLong() <em>Unsettable Long</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableLong()
    * @generated
    * @ordered
@@ -279,7 +277,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * This is true if the Unsettable Long attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -288,7 +286,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The default value of the '{@link #getUnsettableShort() <em>Unsettable Short</em>}' attribute. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableShort()
    * @generated
    * @ordered
@@ -298,7 +296,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The cached value of the '{@link #getUnsettableShort() <em>Unsettable Short</em>}' attribute. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableShort()
    * @generated
    * @ordered
@@ -307,7 +305,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * This is true if the Unsettable Short attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -316,7 +314,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The default value of the '{@link #getUnsettableString() <em>Unsettable String</em>}' attribute. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableString()
    * @generated
    * @ordered
@@ -326,7 +324,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The cached value of the '{@link #getUnsettableString() <em>Unsettable String</em>}' attribute. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableString()
    * @generated
    * @ordered
@@ -335,7 +333,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * This is true if the Unsettable String attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -344,7 +342,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The default value of the '{@link #getUnsettableVAT() <em>Unsettable VAT</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableVAT()
    * @generated
    * @ordered
@@ -354,7 +352,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The cached value of the '{@link #getUnsettableVAT() <em>Unsettable VAT</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getUnsettableVAT()
    * @generated
    * @ordered
@@ -363,7 +361,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * This is true if the Unsettable VAT attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -371,7 +369,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected Unsettable2WithDefaultImpl()
@@ -381,7 +379,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -392,7 +390,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public boolean isUnsettableBoolean()
@@ -402,7 +400,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setUnsettableBoolean(boolean newUnsettableBoolean)
@@ -418,7 +416,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void unsetUnsettableBoolean()
@@ -435,7 +433,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public boolean isSetUnsettableBoolean()
@@ -445,7 +443,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public byte getUnsettableByte()
@@ -455,7 +453,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setUnsettableByte(byte newUnsettableByte)
@@ -471,7 +469,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void unsetUnsettableByte()
@@ -487,7 +485,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public boolean isSetUnsettableByte()
@@ -497,7 +495,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public char getUnsettableChar()
@@ -507,7 +505,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setUnsettableChar(char newUnsettableChar)
@@ -523,7 +521,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void unsetUnsettableChar()
@@ -539,7 +537,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public boolean isSetUnsettableChar()
@@ -549,7 +547,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Date getUnsettableDate()
@@ -559,7 +557,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setUnsettableDate(Date newUnsettableDate)
@@ -575,7 +573,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void unsetUnsettableDate()
@@ -591,7 +589,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public boolean isSetUnsettableDate()
@@ -601,7 +599,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public double getUnsettableDouble()
@@ -611,7 +609,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setUnsettableDouble(double newUnsettableDouble)
@@ -627,7 +625,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void unsetUnsettableDouble()
@@ -644,7 +642,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public boolean isSetUnsettableDouble()
@@ -654,7 +652,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public float getUnsettableFloat()
@@ -664,7 +662,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setUnsettableFloat(float newUnsettableFloat)
@@ -680,7 +678,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void unsetUnsettableFloat()
@@ -696,7 +694,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public boolean isSetUnsettableFloat()
@@ -706,7 +704,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public int getUnsettableInt()
@@ -716,7 +714,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setUnsettableInt(int newUnsettableInt)
@@ -732,7 +730,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void unsetUnsettableInt()
@@ -748,7 +746,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public boolean isSetUnsettableInt()
@@ -758,7 +756,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public long getUnsettableLong()
@@ -768,7 +766,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setUnsettableLong(long newUnsettableLong)
@@ -784,7 +782,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void unsetUnsettableLong()
@@ -800,7 +798,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public boolean isSetUnsettableLong()
@@ -810,7 +808,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public short getUnsettableShort()
@@ -820,7 +818,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setUnsettableShort(short newUnsettableShort)
@@ -836,7 +834,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void unsetUnsettableShort()
@@ -852,7 +850,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public boolean isSetUnsettableShort()
@@ -862,7 +860,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getUnsettableString()
@@ -872,7 +870,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setUnsettableString(String newUnsettableString)
@@ -888,7 +886,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void unsetUnsettableString()
@@ -905,7 +903,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public boolean isSetUnsettableString()
@@ -915,7 +913,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public VAT getUnsettableVAT()
@@ -925,7 +923,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setUnsettableVAT(VAT newUnsettableVAT)
@@ -941,7 +939,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void unsetUnsettableVAT()
@@ -957,7 +955,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public boolean isSetUnsettableVAT()
@@ -967,7 +965,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -1003,7 +1001,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -1050,7 +1048,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -1097,7 +1095,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -1133,7 +1131,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

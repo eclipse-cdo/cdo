@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: ImplSingleRefNonContainerNPLImpl.java,v 1.6 2010-01-08 19:43:50 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -32,7 +30,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * </li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements ImplSingleRefNonContainerNPL
@@ -40,7 +38,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
   /**
    * The cached value of the '{@link #getElement() <em>Element</em>}' reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getElement()
    * @generated
    * @ordered
@@ -49,7 +47,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ImplSingleRefNonContainerNPLImpl()
@@ -59,7 +57,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -70,7 +68,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public IContainedElementNoParentLink getElement()
@@ -91,7 +89,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public IContainedElementNoParentLink basicGetElement()
@@ -101,7 +99,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setElement(IContainedElementNoParentLink newElement)
@@ -115,7 +113,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -133,7 +131,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -150,7 +148,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -167,7 +165,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

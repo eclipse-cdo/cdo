@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: GenRefMapNonContainedImpl.java,v 1.3 2010-01-08 19:43:49 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -34,7 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMapNonContainedImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapNonContained
@@ -42,7 +40,7 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
   /**
    * The cached value of the '{@link #getElements() <em>Elements</em>}' map. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getElements()
    * @generated
    * @ordered
@@ -51,7 +49,7 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected GenRefMapNonContainedImpl()
@@ -61,7 +59,7 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -72,7 +70,7 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EMap<String, EObject> getElements()
@@ -87,7 +85,7 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -103,7 +101,7 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -122,7 +120,7 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -139,7 +137,7 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -156,7 +154,7 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

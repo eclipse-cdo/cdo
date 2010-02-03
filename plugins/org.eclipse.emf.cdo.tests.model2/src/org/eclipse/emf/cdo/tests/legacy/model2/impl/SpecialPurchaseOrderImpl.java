@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: SpecialPurchaseOrderImpl.java,v 1.4 2010-01-08 19:43:28 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model2.impl;
 
@@ -35,7 +33,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * Address</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements SpecialPurchaseOrder
@@ -43,7 +41,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
   /**
    * The default value of the '{@link #getDiscountCode() <em>Discount Code</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getDiscountCode()
    * @generated
    * @ordered
@@ -53,7 +51,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
   /**
    * The cached value of the '{@link #getDiscountCode() <em>Discount Code</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getDiscountCode()
    * @generated
    * @ordered
@@ -63,7 +61,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
   /**
    * The cached value of the '{@link #getShippingAddress() <em>Shipping Address</em>}' containment reference. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getShippingAddress()
    * @generated
    * @ordered
@@ -72,7 +70,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected SpecialPurchaseOrderImpl()
@@ -82,7 +80,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -93,7 +91,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getDiscountCode()
@@ -103,7 +101,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setDiscountCode(String newDiscountCode)
@@ -117,7 +115,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Address getShippingAddress()
@@ -127,7 +125,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public NotificationChain basicSetShippingAddress(Address newShippingAddress, NotificationChain msgs)
@@ -148,7 +146,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setShippingAddress(Address newShippingAddress)
@@ -173,7 +171,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -189,7 +187,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -207,7 +205,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -227,7 +225,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -247,7 +245,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -265,7 +263,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

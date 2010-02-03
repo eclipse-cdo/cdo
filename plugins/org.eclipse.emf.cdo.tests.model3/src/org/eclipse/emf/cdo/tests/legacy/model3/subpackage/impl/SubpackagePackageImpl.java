@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: SubpackagePackageImpl.java,v 1.6 2010-01-08 19:43:43 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl;
 
@@ -26,14 +24,14 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass class2EClass = null;
@@ -45,7 +43,7 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackagePackage#eNS_URI
    * @see #init()
@@ -58,7 +56,7 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static boolean isInited = false;
@@ -69,7 +67,7 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
    * This method is used to initialize {@link SubpackagePackage#eINSTANCE} when that field is accessed. Clients should
    * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -113,7 +111,7 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getClass2()
@@ -123,7 +121,7 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getClass2_Class1()
@@ -133,7 +131,7 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public SubpackageFactory getSubpackageFactory()
@@ -143,7 +141,7 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isCreated = false;
@@ -151,7 +149,7 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
   /**
    * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
    * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void createPackageContents()
@@ -167,7 +165,7 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isInitialized = false;
@@ -175,7 +173,7 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
   /**
    * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
    * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void initializePackageContents()

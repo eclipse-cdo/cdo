@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: Model3Package.java,v 1.6 2010-01-08 19:43:42 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3;
 
@@ -24,7 +22,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.cdo.tests.legacy.model3.Model3Factory
  * @model kind="package"
  * @generated
@@ -33,28 +31,28 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
 {
   /**
    * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNAME = "model3";
 
   /**
    * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/legacy/model3/1.0.0";
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNS_PREFIX = "model3";
 
   /**
    * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   Model3Package eINSTANCE = org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl.init();
@@ -62,7 +60,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.Class1Impl <em>Class1</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Class1Impl
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getClass1()
    * @generated
@@ -71,7 +69,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
 
   /**
    * The feature id for the '<em><b>Class2</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -79,7 +77,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
 
   /**
    * The number of structural features of the '<em>Class1</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -88,7 +86,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl <em>Meta Ref</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getMetaRef()
    * @generated
@@ -97,7 +95,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
 
   /**
    * The feature id for the '<em><b>EPackage Ref</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -105,7 +103,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
 
   /**
    * The number of structural features of the '<em>Meta Ref</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -114,7 +112,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.Class1 <em>Class1</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Class1</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.Class1
    * @generated
@@ -124,7 +122,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.Class1#getClass2
    * <em>Class2</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference list '<em>Class2</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.Class1#getClass2()
    * @see #getClass1()
@@ -135,7 +133,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.MetaRef <em>Meta Ref</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Meta Ref</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.MetaRef
    * @generated
@@ -145,7 +143,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.legacy.model3.MetaRef#getEPackageRef
    * <em>EPackage Ref</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference '<em>EPackage Ref</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.MetaRef#getEPackageRef()
    * @see #getMetaRef()
@@ -155,7 +153,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -170,7 +168,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   interface Literals
@@ -178,7 +176,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.Class1Impl <em>Class1</em>}'
      * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Class1Impl
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getClass1()
      * @generated
@@ -188,7 +186,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
     /**
      * The meta object literal for the '<em><b>Class2</b></em>' reference list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference CLASS1__CLASS2 = eINSTANCE.getClass1_Class2();
@@ -196,7 +194,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl
      * <em>Meta Ref</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getMetaRef()
      * @generated
@@ -206,7 +204,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
     /**
      * The meta object literal for the '<em><b>EPackage Ref</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference META_REF__EPACKAGE_REF = eINSTANCE.getMetaRef_EPackageRef();

@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: Model5FactoryImpl.java,v 1.1 2010-01-08 19:43:21 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model5.impl;
 
@@ -36,21 +34,21 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
-  public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+  public static final String copyright = "Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public static Model5Factory init()
@@ -73,7 +71,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Model5FactoryImpl()
@@ -83,7 +81,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -124,7 +122,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public TestFeatureMap createTestFeatureMap()
@@ -135,7 +133,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Manager createManager()
@@ -146,7 +144,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Doctor createDoctor()
@@ -157,7 +155,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public GenListOfString createGenListOfString()
@@ -168,7 +166,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public GenListOfInt createGenListOfInt()
@@ -179,7 +177,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public GenListOfInteger createGenListOfInteger()
@@ -190,7 +188,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public GenListOfLong createGenListOfLong()
@@ -201,7 +199,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public GenListOfBoolean createGenListOfBoolean()
@@ -212,7 +210,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public GenListOfShort createGenListOfShort()
@@ -223,7 +221,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public GenListOfFloat createGenListOfFloat()
@@ -234,7 +232,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public GenListOfDouble createGenListOfDouble()
@@ -245,7 +243,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public GenListOfDate createGenListOfDate()
@@ -256,7 +254,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public GenListOfChar createGenListOfChar()
@@ -267,7 +265,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Model5Package getModel5Package()
@@ -277,7 +275,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @deprecated
    * @generated
    */

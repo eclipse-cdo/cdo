@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: RefSingleNonContainedImpl.java,v 1.6 2010-01-08 19:43:49 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -32,7 +30,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleNonContainedImpl#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleNonContained
@@ -40,7 +38,7 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
   /**
    * The cached value of the '{@link #getElement() <em>Element</em>}' reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getElement()
    * @generated
    * @ordered
@@ -49,7 +47,7 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected RefSingleNonContainedImpl()
@@ -59,7 +57,7 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -70,7 +68,7 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public SingleNonContainedElement getElement()
@@ -91,7 +89,7 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public SingleNonContainedElement basicGetElement()
@@ -101,7 +99,7 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public NotificationChain basicSetElement(SingleNonContainedElement newElement, NotificationChain msgs)
@@ -122,7 +120,7 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setElement(SingleNonContainedElement newElement)
@@ -147,7 +145,7 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -166,7 +164,7 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -182,7 +180,7 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -200,7 +198,7 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -217,7 +215,7 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -234,7 +232,7 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

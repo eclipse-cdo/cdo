@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: SubpackagePackage.java,v 1.6 2010-01-08 19:43:42 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.subpackage;
 
@@ -24,7 +22,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackageFactory
  * @model kind="package"
  * @generated
@@ -33,28 +31,28 @@ public interface SubpackagePackage extends org.eclipse.emf.cdo.tests.model3.subp
 {
   /**
    * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNAME = "subpackage";
 
   /**
    * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/legacy/subpackage/1.0.0";
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNS_PREFIX = "subpackage";
 
   /**
    * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   SubpackagePackage eINSTANCE = org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.SubpackagePackageImpl.init();
@@ -62,7 +60,7 @@ public interface SubpackagePackage extends org.eclipse.emf.cdo.tests.model3.subp
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.Class2Impl
    * <em>Class2</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.Class2Impl
    * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.SubpackagePackageImpl#getClass2()
    * @generated
@@ -71,7 +69,7 @@ public interface SubpackagePackage extends org.eclipse.emf.cdo.tests.model3.subp
 
   /**
    * The feature id for the '<em><b>Class1</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -79,7 +77,7 @@ public interface SubpackagePackage extends org.eclipse.emf.cdo.tests.model3.subp
 
   /**
    * The number of structural features of the '<em>Class2</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -88,7 +86,7 @@ public interface SubpackagePackage extends org.eclipse.emf.cdo.tests.model3.subp
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.subpackage.Class2
    * <em>Class2</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Class2</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.Class2
    * @generated
@@ -99,7 +97,7 @@ public interface SubpackagePackage extends org.eclipse.emf.cdo.tests.model3.subp
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model3.subpackage.Class2#getClass1 <em>Class1</em>}'. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference list '<em>Class1</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.Class2#getClass1()
    * @see #getClass2()
@@ -109,7 +107,7 @@ public interface SubpackagePackage extends org.eclipse.emf.cdo.tests.model3.subp
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -124,7 +122,7 @@ public interface SubpackagePackage extends org.eclipse.emf.cdo.tests.model3.subp
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   interface Literals
@@ -132,7 +130,7 @@ public interface SubpackagePackage extends org.eclipse.emf.cdo.tests.model3.subp
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.Class2Impl
      * <em>Class2</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.Class2Impl
      * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.SubpackagePackageImpl#getClass2()
      * @generated
@@ -142,7 +140,7 @@ public interface SubpackagePackage extends org.eclipse.emf.cdo.tests.model3.subp
     /**
      * The meta object literal for the '<em><b>Class1</b></em>' reference list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference CLASS2__CLASS1 = eINSTANCE.getClass2_Class1();

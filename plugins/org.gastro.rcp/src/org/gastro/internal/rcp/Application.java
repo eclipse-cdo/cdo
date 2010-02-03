@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,7 +21,7 @@ import org.eclipse.ui.PlatformUI;
 
 /**
  * This class controls all aspects of the application's execution
- * 
+ *
  * @author Eike Stepper
  */
 public class Application implements IApplication

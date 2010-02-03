@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: MangoPackageImpl.java,v 1.7 2010-01-08 19:43:12 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.mango.impl;
 
@@ -28,7 +26,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class MangoPackageImpl extends EPackageImpl implements MangoPackage
@@ -40,28 +38,28 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass mangoValueListEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass mangoValueEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass mangoParameterEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EEnum parameterPassingEEnum = null;
@@ -73,7 +71,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage#eNS_URI
    * @see #init()
@@ -86,7 +84,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static boolean isInited = false;
@@ -97,7 +95,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    * This method is used to initialize {@link MangoPackage#eINSTANCE} when that field is accessed. Clients should not
    * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -131,7 +129,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getMangoValueList()
@@ -141,7 +139,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getMangoValueList_Name()
@@ -151,7 +149,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getMangoValueList_Values()
@@ -161,7 +159,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getMangoValue()
@@ -171,7 +169,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getMangoValue_Name()
@@ -181,7 +179,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getMangoParameter()
@@ -191,7 +189,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getMangoParameter_Name()
@@ -201,7 +199,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getMangoParameter_Passing()
@@ -211,7 +209,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EEnum getParameterPassing()
@@ -221,7 +219,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public MangoFactory getMangoFactory()
@@ -231,7 +229,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isCreated = false;
@@ -239,7 +237,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
   /**
    * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
    * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void createPackageContents()
@@ -266,7 +264,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isInitialized = false;
@@ -274,7 +272,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
   /**
    * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
    * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void initializePackageContents()

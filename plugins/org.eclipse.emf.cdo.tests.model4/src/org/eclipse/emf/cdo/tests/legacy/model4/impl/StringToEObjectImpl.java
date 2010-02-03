@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: StringToEObjectImpl.java,v 1.2 2009-08-22 09:34:57 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -32,7 +30,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.StringToEObjectImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<String, EObject>
@@ -40,7 +38,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   /**
    * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -50,7 +48,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   /**
    * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -60,7 +58,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   /**
    * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getTypedValue()
    * @generated
    * @ordered
@@ -69,7 +67,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected StringToEObjectImpl()
@@ -79,7 +77,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -90,7 +88,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getTypedKey()
@@ -100,7 +98,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setTypedKey(String newKey)
@@ -113,7 +111,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EObject getTypedValue()
@@ -123,7 +121,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setTypedValue(EObject newValue)
@@ -136,7 +134,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -154,7 +152,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -174,7 +172,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -194,7 +192,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -212,7 +210,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -230,14 +228,14 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected int hash = -1;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public int getHash()
@@ -252,7 +250,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setHash(int hash)
@@ -262,7 +260,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getKey()
@@ -272,7 +270,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setKey(String key)
@@ -282,7 +280,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EObject getValue()
@@ -292,7 +290,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EObject setValue(EObject value)
@@ -304,7 +302,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")

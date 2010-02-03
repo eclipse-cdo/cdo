@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: Model2Package.java,v 1.4 2010-01-08 19:43:26 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model2;
 
@@ -27,7 +25,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.cdo.tests.legacy.model2.Model2Factory
  * @model kind="package"
  * @generated
@@ -36,28 +34,28 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 {
   /**
    * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNAME = "model2";
 
   /**
    * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/legacy/model2/1.0.0";
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNS_PREFIX = "model2";
 
   /**
    * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   Model2Package eINSTANCE = org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl.init();
@@ -65,7 +63,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.SpecialPurchaseOrderImpl
    * <em>Special Purchase Order</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.SpecialPurchaseOrderImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl#getSpecialPurchaseOrder()
    * @generated
@@ -75,7 +73,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The feature id for the '<em><b>Order Details</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -83,7 +81,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Date</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -91,7 +89,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Supplier</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -99,7 +97,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Discount Code</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -108,7 +106,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The feature id for the '<em><b>Shipping Address</b></em>' containment reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -117,7 +115,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The number of structural features of the '<em>Special Purchase Order</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -126,7 +124,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.TaskContainerImpl
    * <em>Task Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.TaskContainerImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl#getTaskContainer()
    * @generated
@@ -136,7 +134,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The feature id for the '<em><b>Tasks</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -145,7 +143,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The number of structural features of the '<em>Task Container</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -154,7 +152,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.TaskImpl <em>Task</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.TaskImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl#getTask()
    * @generated
@@ -164,7 +162,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The feature id for the '<em><b>Task Container</b></em>' container reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -172,7 +170,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -180,7 +178,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Done</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -188,7 +186,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The number of structural features of the '<em>Task</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -197,7 +195,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.Unsettable1Impl
    * <em>Unsettable1</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Unsettable1Impl
    * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl#getUnsettable1()
    * @generated
@@ -207,7 +205,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The feature id for the '<em><b>Unsettable Boolean</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -215,7 +213,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable Byte</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -223,7 +221,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable Char</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -231,7 +229,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable Date</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -239,7 +237,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable Double</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -247,7 +245,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable Float</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -255,7 +253,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable Int</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -263,7 +261,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable Long</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -271,7 +269,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable Short</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -279,7 +277,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable String</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -287,7 +285,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable VAT</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -296,7 +294,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The number of structural features of the '<em>Unsettable1</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -305,7 +303,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.Unsettable2WithDefaultImpl
    * <em>Unsettable2 With Default</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Unsettable2WithDefaultImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl#getUnsettable2WithDefault()
    * @generated
@@ -315,7 +313,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The feature id for the '<em><b>Unsettable Boolean</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -323,7 +321,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable Byte</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -331,7 +329,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable Char</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -339,7 +337,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable Date</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -347,7 +345,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable Double</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -355,7 +353,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable Float</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -363,7 +361,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable Int</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -371,7 +369,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable Long</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -379,7 +377,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable Short</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -387,7 +385,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable String</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -395,7 +393,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Unsettable VAT</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -404,7 +402,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The number of structural features of the '<em>Unsettable2 With Default</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -413,7 +411,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.PersistentContainmentImpl
    * <em>Persistent Containment</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.PersistentContainmentImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl#getPersistentContainment()
    * @generated
@@ -422,7 +420,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Attr Before</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -431,7 +429,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -439,7 +437,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Attr After</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -448,7 +446,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The number of structural features of the '<em>Persistent Containment</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -457,7 +455,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.TransientContainerImpl
    * <em>Transient Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.TransientContainerImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl#getTransientContainer()
    * @generated
@@ -466,7 +464,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Attr Before</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -474,7 +472,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -482,7 +480,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * The feature id for the '<em><b>Attr After</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -491,7 +489,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * The number of structural features of the '<em>Transient Container</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -500,7 +498,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model2.SpecialPurchaseOrder
    * <em>Special Purchase Order</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Special Purchase Order</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.SpecialPurchaseOrder
    * @generated
@@ -511,7 +509,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.SpecialPurchaseOrder#getDiscountCode <em>Discount Code</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Discount Code</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.SpecialPurchaseOrder#getDiscountCode()
    * @see #getSpecialPurchaseOrder()
@@ -523,7 +521,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the containment reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.SpecialPurchaseOrder#getShippingAddress <em>Shipping Address</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference '<em>Shipping Address</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.SpecialPurchaseOrder#getShippingAddress()
    * @see #getSpecialPurchaseOrder()
@@ -534,7 +532,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model2.TaskContainer
    * <em>Task Container</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Task Container</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.TaskContainer
    * @generated
@@ -545,7 +543,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.TaskContainer#getTasks <em>Tasks</em>}'. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference list '<em>Tasks</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.TaskContainer#getTasks()
    * @see #getTaskContainer()
@@ -556,7 +554,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model2.Task <em>Task</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Task</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Task
    * @generated
@@ -567,7 +565,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the container reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Task#getTaskContainer <em>Task Container</em>}'. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the container reference '<em>Task Container</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Task#getTaskContainer()
    * @see #getTask()
@@ -578,7 +576,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model2.Task#getDescription
    * <em>Description</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Description</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Task#getDescription()
    * @see #getTask()
@@ -589,7 +587,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model2.Task#isDone
    * <em>Done</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Done</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Task#isDone()
    * @see #getTask()
@@ -600,7 +598,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1 <em>Unsettable1</em>}
    * '. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Unsettable1</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1
    * @generated
@@ -611,7 +609,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#isUnsettableBoolean <em>Unsettable Boolean</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Boolean</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#isUnsettableBoolean()
    * @see #getUnsettable1()
@@ -623,7 +621,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableByte <em>Unsettable Byte</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Byte</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableByte()
    * @see #getUnsettable1()
@@ -635,7 +633,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableChar <em>Unsettable Char</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Char</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableChar()
    * @see #getUnsettable1()
@@ -647,7 +645,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableDate <em>Unsettable Date</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Date</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableDate()
    * @see #getUnsettable1()
@@ -659,7 +657,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableDouble <em>Unsettable Double</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Double</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableDouble()
    * @see #getUnsettable1()
@@ -671,7 +669,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableFloat <em>Unsettable Float</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Float</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableFloat()
    * @see #getUnsettable1()
@@ -683,7 +681,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableInt <em>Unsettable Int</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Int</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableInt()
    * @see #getUnsettable1()
@@ -695,7 +693,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableLong <em>Unsettable Long</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Long</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableLong()
    * @see #getUnsettable1()
@@ -707,7 +705,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableShort <em>Unsettable Short</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Short</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableShort()
    * @see #getUnsettable1()
@@ -719,7 +717,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableString <em>Unsettable String</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable String</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableString()
    * @see #getUnsettable1()
@@ -731,7 +729,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableVAT <em>Unsettable VAT</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable VAT</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableVAT()
    * @see #getUnsettable1()
@@ -742,7 +740,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault
    * <em>Unsettable2 With Default</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Unsettable2 With Default</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault
    * @generated
@@ -753,7 +751,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#isUnsettableBoolean
    * <em>Unsettable Boolean</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Boolean</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#isUnsettableBoolean()
    * @see #getUnsettable2WithDefault()
@@ -765,7 +763,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableByte <em>Unsettable Byte</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Byte</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableByte()
    * @see #getUnsettable2WithDefault()
@@ -777,7 +775,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableChar <em>Unsettable Char</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Char</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableChar()
    * @see #getUnsettable2WithDefault()
@@ -789,7 +787,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableDate <em>Unsettable Date</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Date</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableDate()
    * @see #getUnsettable2WithDefault()
@@ -801,7 +799,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableDouble
    * <em>Unsettable Double</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Double</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableDouble()
    * @see #getUnsettable2WithDefault()
@@ -813,7 +811,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableFloat <em>Unsettable Float</em>}
    * '. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Float</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableFloat()
    * @see #getUnsettable2WithDefault()
@@ -825,7 +823,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableInt <em>Unsettable Int</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Int</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableInt()
    * @see #getUnsettable2WithDefault()
@@ -837,7 +835,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableLong <em>Unsettable Long</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Long</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableLong()
    * @see #getUnsettable2WithDefault()
@@ -849,7 +847,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableShort <em>Unsettable Short</em>}
    * '. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Short</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableShort()
    * @see #getUnsettable2WithDefault()
@@ -861,7 +859,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableString
    * <em>Unsettable String</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable String</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableString()
    * @see #getUnsettable2WithDefault()
@@ -873,7 +871,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableVAT <em>Unsettable VAT</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable VAT</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Unsettable2WithDefault#getUnsettableVAT()
    * @see #getUnsettable2WithDefault()
@@ -884,7 +882,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model2.PersistentContainment
    * <em>Persistent Containment</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Persistent Containment</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.PersistentContainment
    * @generated
@@ -895,7 +893,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.PersistentContainment#getAttrBefore <em>Attr Before</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Attr Before</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.PersistentContainment#getAttrBefore()
    * @see #getPersistentContainment()
@@ -907,7 +905,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.PersistentContainment#getChildren <em>Children</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference list '<em>Children</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.PersistentContainment#getChildren()
    * @see #getPersistentContainment()
@@ -919,7 +917,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.PersistentContainment#getAttrAfter <em>Attr After</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Attr After</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.PersistentContainment#getAttrAfter()
    * @see #getPersistentContainment()
@@ -930,7 +928,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model2.TransientContainer
    * <em>Transient Container</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Transient Container</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.TransientContainer
    * @generated
@@ -941,7 +939,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.TransientContainer#getAttrBefore <em>Attr Before</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Attr Before</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.TransientContainer#getAttrBefore()
    * @see #getTransientContainer()
@@ -953,7 +951,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the container reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.TransientContainer#getParent <em>Parent</em>}'. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the container reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.TransientContainer#getParent()
    * @see #getTransientContainer()
@@ -965,7 +963,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.TransientContainer#getAttrAfter <em>Attr After</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Attr After</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model2.TransientContainer#getAttrAfter()
    * @see #getTransientContainer()
@@ -975,7 +973,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -990,7 +988,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   interface Literals
@@ -998,7 +996,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.SpecialPurchaseOrderImpl
      * <em>Special Purchase Order</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.SpecialPurchaseOrderImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl#getSpecialPurchaseOrder()
      * @generated
@@ -1008,7 +1006,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Discount Code</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute SPECIAL_PURCHASE_ORDER__DISCOUNT_CODE = eINSTANCE.getSpecialPurchaseOrder_DiscountCode();
@@ -1016,7 +1014,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Shipping Address</b></em>' containment reference feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS = eINSTANCE.getSpecialPurchaseOrder_ShippingAddress();
@@ -1024,7 +1022,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.TaskContainerImpl
      * <em>Task Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.TaskContainerImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl#getTaskContainer()
      * @generated
@@ -1034,7 +1032,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Tasks</b></em>' containment reference list feature. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference TASK_CONTAINER__TASKS = eINSTANCE.getTaskContainer_Tasks();
@@ -1042,7 +1040,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.TaskImpl <em>Task</em>}'
      * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.TaskImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl#getTask()
      * @generated
@@ -1052,7 +1050,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Task Container</b></em>' container reference feature. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference TASK__TASK_CONTAINER = eINSTANCE.getTask_TaskContainer();
@@ -1060,7 +1058,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Description</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute TASK__DESCRIPTION = eINSTANCE.getTask_Description();
@@ -1068,7 +1066,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Done</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute TASK__DONE = eINSTANCE.getTask_Done();
@@ -1076,7 +1074,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.Unsettable1Impl
      * <em>Unsettable1</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Unsettable1Impl
      * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl#getUnsettable1()
      * @generated
@@ -1086,7 +1084,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Boolean</b></em>' attribute feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE1__UNSETTABLE_BOOLEAN = eINSTANCE.getUnsettable1_UnsettableBoolean();
@@ -1094,7 +1092,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Byte</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE1__UNSETTABLE_BYTE = eINSTANCE.getUnsettable1_UnsettableByte();
@@ -1102,7 +1100,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Char</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE1__UNSETTABLE_CHAR = eINSTANCE.getUnsettable1_UnsettableChar();
@@ -1110,7 +1108,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Date</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE1__UNSETTABLE_DATE = eINSTANCE.getUnsettable1_UnsettableDate();
@@ -1118,7 +1116,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Double</b></em>' attribute feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE1__UNSETTABLE_DOUBLE = eINSTANCE.getUnsettable1_UnsettableDouble();
@@ -1126,7 +1124,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Float</b></em>' attribute feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE1__UNSETTABLE_FLOAT = eINSTANCE.getUnsettable1_UnsettableFloat();
@@ -1134,7 +1132,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Int</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE1__UNSETTABLE_INT = eINSTANCE.getUnsettable1_UnsettableInt();
@@ -1142,7 +1140,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Long</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE1__UNSETTABLE_LONG = eINSTANCE.getUnsettable1_UnsettableLong();
@@ -1150,7 +1148,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Short</b></em>' attribute feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE1__UNSETTABLE_SHORT = eINSTANCE.getUnsettable1_UnsettableShort();
@@ -1158,7 +1156,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable String</b></em>' attribute feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE1__UNSETTABLE_STRING = eINSTANCE.getUnsettable1_UnsettableString();
@@ -1166,7 +1164,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable VAT</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE1__UNSETTABLE_VAT = eINSTANCE.getUnsettable1_UnsettableVAT();
@@ -1174,7 +1172,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.Unsettable2WithDefaultImpl
      * <em>Unsettable2 With Default</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Unsettable2WithDefaultImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl#getUnsettable2WithDefault()
      * @generated
@@ -1184,7 +1182,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Boolean</b></em>' attribute feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BOOLEAN = eINSTANCE.getUnsettable2WithDefault_UnsettableBoolean();
@@ -1192,7 +1190,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Byte</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BYTE = eINSTANCE.getUnsettable2WithDefault_UnsettableByte();
@@ -1200,7 +1198,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Char</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_CHAR = eINSTANCE.getUnsettable2WithDefault_UnsettableChar();
@@ -1208,7 +1206,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Date</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DATE = eINSTANCE.getUnsettable2WithDefault_UnsettableDate();
@@ -1216,7 +1214,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Double</b></em>' attribute feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DOUBLE = eINSTANCE.getUnsettable2WithDefault_UnsettableDouble();
@@ -1224,7 +1222,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Float</b></em>' attribute feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_FLOAT = eINSTANCE.getUnsettable2WithDefault_UnsettableFloat();
@@ -1232,7 +1230,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Int</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_INT = eINSTANCE.getUnsettable2WithDefault_UnsettableInt();
@@ -1240,7 +1238,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Long</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_LONG = eINSTANCE.getUnsettable2WithDefault_UnsettableLong();
@@ -1248,7 +1246,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable Short</b></em>' attribute feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_SHORT = eINSTANCE.getUnsettable2WithDefault_UnsettableShort();
@@ -1256,7 +1254,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable String</b></em>' attribute feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_STRING = eINSTANCE.getUnsettable2WithDefault_UnsettableString();
@@ -1264,7 +1262,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Unsettable VAT</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_VAT = eINSTANCE.getUnsettable2WithDefault_UnsettableVAT();
@@ -1272,7 +1270,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.PersistentContainmentImpl
      * <em>Persistent Containment</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.PersistentContainmentImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl#getPersistentContainment()
      * @generated
@@ -1282,7 +1280,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Attr Before</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute PERSISTENT_CONTAINMENT__ATTR_BEFORE = eINSTANCE.getPersistentContainment_AttrBefore();
@@ -1290,7 +1288,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference PERSISTENT_CONTAINMENT__CHILDREN = eINSTANCE.getPersistentContainment_Children();
@@ -1298,7 +1296,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Attr After</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute PERSISTENT_CONTAINMENT__ATTR_AFTER = eINSTANCE.getPersistentContainment_AttrAfter();
@@ -1306,7 +1304,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.TransientContainerImpl
      * <em>Transient Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.TransientContainerImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl#getTransientContainer()
      * @generated
@@ -1316,7 +1314,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Attr Before</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute TRANSIENT_CONTAINER__ATTR_BEFORE = eINSTANCE.getTransientContainer_AttrBefore();
@@ -1324,7 +1322,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Parent</b></em>' container reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference TRANSIENT_CONTAINER__PARENT = eINSTANCE.getTransientContainer_Parent();
@@ -1332,7 +1330,7 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
     /**
      * The meta object literal for the '<em><b>Attr After</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute TRANSIENT_CONTAINER__ATTR_AFTER = eINSTANCE.getTransientContainer_AttrAfter();

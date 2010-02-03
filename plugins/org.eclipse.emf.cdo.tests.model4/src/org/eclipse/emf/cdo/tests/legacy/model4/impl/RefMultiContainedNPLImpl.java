@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: RefMultiContainedNPLImpl.java,v 1.6 2010-01-08 19:43:50 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -35,7 +33,7 @@ import java.util.Collection;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiContainedNPLImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiContainedNPL
@@ -43,7 +41,7 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
   /**
    * The cached value of the '{@link #getElements() <em>Elements</em>}' containment reference list. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getElements()
    * @generated
    * @ordered
@@ -52,7 +50,7 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected RefMultiContainedNPLImpl()
@@ -62,7 +60,7 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -73,7 +71,7 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EList<ContainedElementNoOpposite> getElements()
@@ -88,7 +86,7 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -104,7 +102,7 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -120,7 +118,7 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -139,7 +137,7 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -156,7 +154,7 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

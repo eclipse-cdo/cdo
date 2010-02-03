@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: ImplMultiRefNonContainedElementImpl.java,v 1.6 2010-01-08 19:43:49 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -35,7 +33,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainedElementImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements ImplMultiRefNonContainedElement
@@ -43,7 +41,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
   /**
    * The cached value of the '{@link #getParent() <em>Parent</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getParent()
    * @generated
    * @ordered
@@ -53,7 +51,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -62,7 +60,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
 
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -71,7 +69,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ImplMultiRefNonContainedElementImpl()
@@ -81,7 +79,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -92,7 +90,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public IMultiRefNonContainer getParent()
@@ -113,7 +111,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public IMultiRefNonContainer basicGetParent()
@@ -123,7 +121,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public NotificationChain basicSetParent(IMultiRefNonContainer newParent, NotificationChain msgs)
@@ -144,7 +142,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setParent(IMultiRefNonContainer newParent)
@@ -169,7 +167,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getName()
@@ -179,7 +177,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setName(String newName)
@@ -193,7 +191,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -212,7 +210,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -228,7 +226,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -248,7 +246,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -268,7 +266,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -288,7 +286,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -306,7 +304,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

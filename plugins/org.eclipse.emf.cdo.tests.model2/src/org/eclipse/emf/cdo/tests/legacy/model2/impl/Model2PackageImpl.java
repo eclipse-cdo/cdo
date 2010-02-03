@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: Model2PackageImpl.java,v 1.4 2010-01-08 19:43:27 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model2.impl;
 
@@ -31,56 +29,56 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class Model2PackageImpl extends EPackageImpl implements Model2Package
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass specialPurchaseOrderEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass taskContainerEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass taskEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass unsettable1EClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass unsettable2WithDefaultEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass persistentContainmentEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass transientContainerEClass = null;
@@ -92,7 +90,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.emf.cdo.tests.legacy.model2.Model2Package#eNS_URI
    * @see #init()
@@ -105,7 +103,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static boolean isInited = false;
@@ -116,7 +114,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * This method is used to initialize {@link Model2Package#eINSTANCE} when that field is accessed. Clients should not
    * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -153,7 +151,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getSpecialPurchaseOrder()
@@ -163,7 +161,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getSpecialPurchaseOrder_DiscountCode()
@@ -173,7 +171,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getSpecialPurchaseOrder_ShippingAddress()
@@ -183,7 +181,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getTaskContainer()
@@ -193,7 +191,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getTaskContainer_Tasks()
@@ -203,7 +201,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getTask()
@@ -213,7 +211,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getTask_TaskContainer()
@@ -223,7 +221,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getTask_Description()
@@ -233,7 +231,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getTask_Done()
@@ -243,7 +241,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getUnsettable1()
@@ -253,7 +251,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable1_UnsettableBoolean()
@@ -263,7 +261,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable1_UnsettableByte()
@@ -273,7 +271,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable1_UnsettableChar()
@@ -283,7 +281,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable1_UnsettableDate()
@@ -293,7 +291,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable1_UnsettableDouble()
@@ -303,7 +301,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable1_UnsettableFloat()
@@ -313,7 +311,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable1_UnsettableInt()
@@ -323,7 +321,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable1_UnsettableLong()
@@ -333,7 +331,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable1_UnsettableShort()
@@ -343,7 +341,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable1_UnsettableString()
@@ -353,7 +351,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable1_UnsettableVAT()
@@ -363,7 +361,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getUnsettable2WithDefault()
@@ -373,7 +371,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable2WithDefault_UnsettableBoolean()
@@ -383,7 +381,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable2WithDefault_UnsettableByte()
@@ -393,7 +391,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable2WithDefault_UnsettableChar()
@@ -403,7 +401,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable2WithDefault_UnsettableDate()
@@ -413,7 +411,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable2WithDefault_UnsettableDouble()
@@ -423,7 +421,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable2WithDefault_UnsettableFloat()
@@ -433,7 +431,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable2WithDefault_UnsettableInt()
@@ -443,7 +441,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable2WithDefault_UnsettableLong()
@@ -453,7 +451,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable2WithDefault_UnsettableShort()
@@ -463,7 +461,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable2WithDefault_UnsettableString()
@@ -473,7 +471,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getUnsettable2WithDefault_UnsettableVAT()
@@ -483,7 +481,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getPersistentContainment()
@@ -493,7 +491,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getPersistentContainment_AttrBefore()
@@ -503,7 +501,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getPersistentContainment_Children()
@@ -513,7 +511,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getPersistentContainment_AttrAfter()
@@ -523,7 +521,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getTransientContainer()
@@ -533,7 +531,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getTransientContainer_AttrBefore()
@@ -543,7 +541,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getTransientContainer_Parent()
@@ -553,7 +551,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getTransientContainer_AttrAfter()
@@ -563,7 +561,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Model2Factory getModel2Factory()
@@ -573,7 +571,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isCreated = false;
@@ -581,7 +579,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
   /**
    * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
    * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void createPackageContents()
@@ -642,7 +640,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isInitialized = false;
@@ -650,7 +648,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
   /**
    * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
    * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void initializePackageContents()

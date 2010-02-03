@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: SingleContainedElementImpl.java,v 1.6 2010-01-08 19:43:49 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -34,7 +32,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.SingleContainedElementImpl#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class SingleContainedElementImpl extends EObjectImpl implements SingleContainedElement
@@ -42,7 +40,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -51,7 +49,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
 
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -60,7 +58,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected SingleContainedElementImpl()
@@ -70,7 +68,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -81,7 +79,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getName()
@@ -91,7 +89,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setName(String newName)
@@ -104,7 +102,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public RefSingleContained getParent()
@@ -116,7 +114,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public NotificationChain basicSetParent(RefSingleContained newParent, NotificationChain msgs)
@@ -127,7 +125,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setParent(RefSingleContained newParent)
@@ -154,7 +152,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -172,7 +170,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -188,7 +186,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -205,7 +203,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -223,7 +221,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -243,7 +241,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -263,7 +261,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -281,7 +279,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

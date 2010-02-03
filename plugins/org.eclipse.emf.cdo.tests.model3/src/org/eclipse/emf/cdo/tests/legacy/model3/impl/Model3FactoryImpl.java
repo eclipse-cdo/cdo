@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: Model3FactoryImpl.java,v 1.6 2010-01-08 19:43:42 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.impl;
 
@@ -25,14 +23,14 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 {
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public static Model3Factory init()
@@ -55,7 +53,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 
   /**
    * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Model3FactoryImpl()
@@ -65,7 +63,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -84,7 +82,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Class1 createClass1()
@@ -95,7 +93,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public MetaRef createMetaRef()
@@ -106,7 +104,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Model3Package getModel3Package()
@@ -116,7 +114,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @deprecated
    * @generated
    */

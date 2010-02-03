@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: ImplMultiRefNonContainerImpl.java,v 1.6 2010-01-08 19:43:50 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -36,7 +34,7 @@ import java.util.Collection;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainerImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMultiRefNonContainer
@@ -44,7 +42,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
   /**
    * The cached value of the '{@link #getElements() <em>Elements</em>}' reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getElements()
    * @generated
    * @ordered
@@ -53,7 +51,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ImplMultiRefNonContainerImpl()
@@ -63,7 +61,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -74,7 +72,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EList<IMultiRefNonContainedElement> getElements()
@@ -90,7 +88,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -107,7 +105,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -123,7 +121,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -139,7 +137,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -158,7 +156,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -175,7 +173,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

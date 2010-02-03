@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: OrderAddressImpl.java,v 1.7 2010-01-08 19:43:18 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model1.impl;
 
@@ -52,7 +50,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
    * 
    * @generated
    */
-  public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+  public static final String copyright = "Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * The cached value of the '{@link #getOrderDetails() <em>Order Details</em>}' containment reference list. <!--
@@ -158,7 +156,9 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   public Order getOrder()
   {
     if (eContainerFeatureID() != Model1Package.ORDER_ADDRESS__ORDER)
+    {
       return null;
+    }
     return (Order)eContainer();
   }
 
@@ -180,22 +180,32 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
    */
   public void setOrder(Order newOrder)
   {
-    if (newOrder != eInternalContainer()
-        || (eContainerFeatureID() != Model1Package.ORDER_ADDRESS__ORDER && newOrder != null))
+    if (newOrder != eInternalContainer() || eContainerFeatureID() != Model1Package.ORDER_ADDRESS__ORDER
+        && newOrder != null)
     {
       if (EcoreUtil.isAncestor(this, newOrder))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newOrder != null)
+      {
         msgs = ((InternalEObject)newOrder).eInverseAdd(this, Model1Package.ORDER__ORDER_DETAILS, Order.class, msgs);
+      }
       msgs = basicSetOrder(newOrder, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__ORDER, newOrder, newOrder));
+    }
   }
 
   /**
@@ -212,8 +222,10 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
       if (product != oldProduct)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.ORDER_ADDRESS__PRODUCT, oldProduct,
               product));
+        }
       }
     }
     return product;
@@ -243,9 +255,13 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           Model1Package.ORDER_ADDRESS__PRODUCT, oldProduct, newProduct);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -261,18 +277,26 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     {
       NotificationChain msgs = null;
       if (product != null)
+      {
         msgs = ((InternalEObject)product).eInverseRemove(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class,
             msgs);
+      }
       if (newProduct != null)
+      {
         msgs = ((InternalEObject)newProduct).eInverseAdd(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class,
             msgs);
+      }
       msgs = basicSetProduct(newProduct, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__PRODUCT, newProduct,
           newProduct));
+    }
   }
 
   /**
@@ -295,7 +319,9 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     float oldPrice = price;
     price = newPrice;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__PRICE, oldPrice, price));
+    }
   }
 
   /**
@@ -318,8 +344,10 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     boolean oldTestAttribute = testAttribute;
     testAttribute = newTestAttribute;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__TEST_ATTRIBUTE,
           oldTestAttribute, testAttribute));
+    }
   }
 
   /**
@@ -337,12 +365,16 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getOrderDetails()).basicAdd(otherEnd, msgs);
     case Model1Package.ORDER_ADDRESS__ORDER:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetOrder((Order)otherEnd, msgs);
     case Model1Package.ORDER_ADDRESS__PRODUCT:
       if (product != null)
+      {
         msgs = ((InternalEObject)product).eInverseRemove(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class,
             msgs);
+      }
       return basicSetProduct((Product1)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -400,7 +432,9 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
       return getOrder();
     case Model1Package.ORDER_ADDRESS__PRODUCT:
       if (resolve)
+      {
         return getProduct();
+      }
       return basicGetProduct();
     case Model1Package.ORDER_ADDRESS__PRICE:
       return getPrice();
@@ -573,7 +607,9 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (price: ");

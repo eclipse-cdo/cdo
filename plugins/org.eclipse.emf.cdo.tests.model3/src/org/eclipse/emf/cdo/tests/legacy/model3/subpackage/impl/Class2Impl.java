@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: Class2Impl.java,v 1.6 2010-01-08 19:43:43 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl;
 
@@ -35,7 +33,7 @@ import java.util.Collection;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.Class2Impl#getClass1 <em>Class1</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class Class2Impl extends EObjectImpl implements Class2
@@ -43,7 +41,7 @@ public class Class2Impl extends EObjectImpl implements Class2
   /**
    * The cached value of the '{@link #getClass1() <em>Class1</em>}' reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getClass1()
    * @generated
    * @ordered
@@ -52,7 +50,7 @@ public class Class2Impl extends EObjectImpl implements Class2
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected Class2Impl()
@@ -62,7 +60,7 @@ public class Class2Impl extends EObjectImpl implements Class2
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -73,7 +71,7 @@ public class Class2Impl extends EObjectImpl implements Class2
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EList<Class1> getClass1()
@@ -88,7 +86,7 @@ public class Class2Impl extends EObjectImpl implements Class2
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -105,7 +103,7 @@ public class Class2Impl extends EObjectImpl implements Class2
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -121,7 +119,7 @@ public class Class2Impl extends EObjectImpl implements Class2
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -137,7 +135,7 @@ public class Class2Impl extends EObjectImpl implements Class2
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -156,7 +154,7 @@ public class Class2Impl extends EObjectImpl implements Class2
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -173,7 +171,7 @@ public class Class2Impl extends EObjectImpl implements Class2
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

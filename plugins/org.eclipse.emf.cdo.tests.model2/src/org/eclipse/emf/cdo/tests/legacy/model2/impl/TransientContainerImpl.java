@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: TransientContainerImpl.java,v 1.1 2010-01-08 19:43:27 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model2.impl;
 
@@ -35,7 +33,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.TransientContainerImpl#getAttrAfter <em>Attr After</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TransientContainerImpl extends EObjectImpl implements TransientContainer
@@ -43,7 +41,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
   /**
    * The default value of the '{@link #getAttrBefore() <em>Attr Before</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getAttrBefore()
    * @generated
    * @ordered
@@ -53,7 +51,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
   /**
    * The cached value of the '{@link #getAttrBefore() <em>Attr Before</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getAttrBefore()
    * @generated
    * @ordered
@@ -63,7 +61,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
   /**
    * The default value of the '{@link #getAttrAfter() <em>Attr After</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getAttrAfter()
    * @generated
    * @ordered
@@ -73,7 +71,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
   /**
    * The cached value of the '{@link #getAttrAfter() <em>Attr After</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getAttrAfter()
    * @generated
    * @ordered
@@ -82,7 +80,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected TransientContainerImpl()
@@ -92,7 +90,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -103,7 +101,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getAttrBefore()
@@ -113,7 +111,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setAttrBefore(String newAttrBefore)
@@ -127,7 +125,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public PersistentContainment getParent()
@@ -139,7 +137,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public NotificationChain basicSetParent(PersistentContainment newParent, NotificationChain msgs)
@@ -150,7 +148,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setParent(PersistentContainment newParent)
@@ -177,7 +175,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getAttrAfter()
@@ -187,7 +185,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setAttrAfter(String newAttrAfter)
@@ -201,7 +199,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -219,7 +217,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -235,7 +233,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -252,7 +250,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -272,7 +270,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -295,7 +293,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -318,7 +316,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -338,7 +336,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

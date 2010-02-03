@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: SubpackageFactoryImpl.java,v 1.6 2010-01-08 19:43:43 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl;
 
@@ -24,14 +22,14 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFactory
 {
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public static SubpackageFactory init()
@@ -54,7 +52,7 @@ public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFac
 
   /**
    * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public SubpackageFactoryImpl()
@@ -64,7 +62,7 @@ public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -81,7 +79,7 @@ public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Class2 createClass2()
@@ -92,7 +90,7 @@ public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public SubpackagePackage getSubpackagePackage()
@@ -102,7 +100,7 @@ public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @deprecated
    * @generated
    */

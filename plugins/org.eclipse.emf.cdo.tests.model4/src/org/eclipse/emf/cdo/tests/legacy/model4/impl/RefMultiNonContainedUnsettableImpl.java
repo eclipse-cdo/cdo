@@ -1,14 +1,12 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: RefMultiNonContainedUnsettableImpl.java,v 1.1 2010-01-08 19:43:50 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -36,7 +34,7 @@ import java.util.Collection;
  * </em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements RefMultiNonContainedUnsettable
@@ -44,7 +42,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
   /**
    * The cached value of the '{@link #getElements() <em>Elements</em>}' reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getElements()
    * @generated
    * @ordered
@@ -53,7 +51,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected RefMultiNonContainedUnsettableImpl()
@@ -63,7 +61,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -74,7 +72,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EList<MultiNonContainedUnsettableElement> getElements()
@@ -90,7 +88,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void unsetElements()
@@ -101,7 +99,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public boolean isSetElements()
@@ -111,7 +109,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -128,7 +126,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -144,7 +142,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -160,7 +158,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -179,7 +177,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -196,7 +194,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

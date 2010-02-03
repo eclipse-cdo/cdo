@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,7 +22,7 @@ import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
- * 
+ *
  * @author Eike Stepper
  */
 public class Activator extends AbstractUIPlugin
@@ -63,7 +63,7 @@ public class Activator extends AbstractUIPlugin
 
   /**
    * Returns the shared instance
-   * 
+   *
    * @return the shared instance
    */
   public static Activator getDefault()
@@ -73,7 +73,7 @@ public class Activator extends AbstractUIPlugin
 
   /**
    * Returns an image descriptor for the image file at the given plug-in relative path
-   * 
+   *
    * @param path
    *          the path
    * @return the image descriptor

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.server.offline;
 
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
@@ -29,11 +30,13 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
  */
 public class MasterInterface extends QueueRunner
 {
+  public static final int DEFAULT_RETRY_INTERVAL = 3;
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, MasterInterface.class);
 
   private static final int NEVER_SYNCHRONIZED = -1;
 
-  private int retryInterval = 3;
+  private int retryInterval = DEFAULT_RETRY_INTERVAL;
 
   private CDOSessionConfiguration sessionConfiguration;
 
@@ -62,8 +65,9 @@ public class MasterInterface extends QueueRunner
         long timeStamp = e.getTimeStamp();
         if (TRACER.isEnabled())
         {
-          TRACER.format("{0}", e);
+          TRACER.format("Invalidation from master: {0}", CDOCommonUtil.formatTimeStamp(timeStamp));
         }
+
         masterTimeStamp.setValue(timeStamp);
         sync();
       }
@@ -162,7 +166,12 @@ public class MasterInterface extends QueueRunner
         {
           try
           {
-            OM.LOG.info("Connecting to master...");
+            checkActive();
+            if (TRACER.isEnabled())
+            {
+              TRACER.format("Connecting to master ({0})...", CDOCommonUtil.formatTimeStamp());
+            }
+
             session = sessionConfiguration.openSession();
 
             OM.LOG.info("Connected to master");
@@ -177,24 +186,32 @@ public class MasterInterface extends QueueRunner
           catch (Exception ex)
           {
             OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...");
+
+            checkActive();
             ConcurrencyUtil.sleep(1000L * retryInterval); // TODO Respect deactivation
+
+            checkActive();
             connect();
           }
         }
       });
-
     }
   }
 
   private void sync()
   {
-    if (getState() == State.SYNCING)
+    final long masterTimeStamp = getMasterTimeStamp();
+    if (masterTimeStamp > getSyncedTimeStamp())
     {
       addWork(new Runnable()
       {
         public void run()
         {
-          OM.LOG.info("Synchronizing with master...");
+          checkActive();
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Synchronizing with master ({0})...", CDOCommonUtil.formatTimeStamp(masterTimeStamp));
+          }
 
           OM.LOG.info("Synchronized with master.");
         }

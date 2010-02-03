@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.revision;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.CDOFeatureMapEntryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
@@ -23,7 +24,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMap;
 
 import java.io.PrintStream;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -126,13 +126,9 @@ public final class CDORevisionUtil
       buffer.append(' ');
     }
 
-    String revised = "*";
-    if (t2 != CDORevision.UNSPECIFIED_DATE)
-    {
-      revised = MessageFormat.format("{0,date} {0,time,HH:mm:ss:SSS}", t2);
-    }
-
-    buffer.append(MessageFormat.format("{0,date} {0,time,HH:mm:ss:SSS}/{1}", t1, revised));
+    buffer.append(CDOCommonUtil.formatTimeStamp(t1));
+    buffer.append("/");
+    buffer.append(CDOCommonUtil.formatTimeStamp(t2));
     return buffer.toString();
   }
 

@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -311,8 +312,9 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
   @Override
   public String toString()
   {
-    String fmt = "CDOPackageUnit[id={0}, state={1}, type={2}, originalType={3}, timeStamp={4,date} {4,time,HH:mm:ss:SSS}]"; //$NON-NLS-1$
-    return MessageFormat.format(fmt, getID(), getState(), getType(), getOriginalType(), getTimeStamp());
+    String fmt = "CDOPackageUnit[id={0}, state={1}, type={2}, originalType={3}, timeStamp={4}]"; //$NON-NLS-1$
+    return MessageFormat.format(fmt, getID(), getState(), getType(), getOriginalType(), CDOCommonUtil
+        .formatTimeStamp(getTimeStamp()));
   }
 
   private void initPackageInfos(EPackage ePackage, List<InternalCDOPackageInfo> result)

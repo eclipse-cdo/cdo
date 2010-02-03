@@ -23,6 +23,11 @@ public final class CDOCommonUtil
   {
   }
 
+  public static String formatTimeStamp()
+  {
+    return formatTimeStamp(System.currentTimeMillis());
+  }
+
   public static String formatTimeStamp(long timeStamp)
   {
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)

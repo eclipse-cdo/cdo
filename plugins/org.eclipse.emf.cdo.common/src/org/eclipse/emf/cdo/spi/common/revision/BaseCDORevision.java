@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -334,12 +335,13 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     long created = branchPoint.getTimeStamp();
     if (revised != UNSPECIFIED_DATE && revised < Math.max(0, created))
     {
-      throw new IllegalArgumentException("revision=" + this + ", created=" + created + ", revised=" + revised);
+      throw new IllegalArgumentException("revision=" + this + ", created=" + CDOCommonUtil.formatTimeStamp(created)
+          + ", revised=" + CDOCommonUtil.formatTimeStamp(revised));
     }
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting revised {0}: {1,date} {1,time,HH:mm:ss:SSS}", this, revised);
+      TRACER.format("Setting revised {0}: {1}", this, CDOCommonUtil.formatTimeStamp(revised));
     }
 
     this.revised = revised;

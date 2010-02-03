@@ -1078,9 +1078,9 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       return view == null;
     }
 
-    public int getBranchID()
+    public CDOBranch getBranch()
     {
-      return branchPoint.getBranch().getID();
+      return branchPoint.getBranch();
     }
 
     public long getTimeStamp()
@@ -1101,6 +1101,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     public Collection<CDOPackageUnit> getNewPackageUnits()
     {
       return newPackageUnits;
+    }
+
+    public int compareTo(CDOBranchPoint o)
+    {
+      return branchPoint.compareTo(o);
     }
 
     @Override

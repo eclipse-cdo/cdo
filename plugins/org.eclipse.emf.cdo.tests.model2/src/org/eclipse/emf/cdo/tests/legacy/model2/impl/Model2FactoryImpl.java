@@ -28,14 +28,14 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 {
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated NOT
    */
   public static Model2Factory init()
@@ -58,7 +58,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public Model2FactoryImpl()
@@ -68,7 +68,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -97,7 +97,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public SpecialPurchaseOrder createSpecialPurchaseOrder()
@@ -108,7 +108,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public TaskContainer createTaskContainer()
@@ -119,7 +119,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public Task createTask()
@@ -130,7 +130,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public Unsettable1 createUnsettable1()
@@ -141,7 +141,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public Unsettable2WithDefault createUnsettable2WithDefault()
@@ -152,7 +152,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public PersistentContainment createPersistentContainment()
@@ -163,7 +163,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public TransientContainer createTransientContainer()
@@ -174,7 +174,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public Model2Package getModel2Package()
@@ -184,7 +184,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @deprecated
    * @generated
    */

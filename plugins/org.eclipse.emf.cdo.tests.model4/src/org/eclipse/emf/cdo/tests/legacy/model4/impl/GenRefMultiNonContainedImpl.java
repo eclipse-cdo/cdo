@@ -30,7 +30,7 @@ import java.util.Collection;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMultiNonContainedImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMultiNonContained
@@ -38,7 +38,7 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
   /**
    * The cached value of the '{@link #getElements() <em>Elements</em>}' reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @see #getElements()
    * @generated
    * @ordered
@@ -47,7 +47,7 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected GenRefMultiNonContainedImpl()
@@ -57,7 +57,7 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -68,7 +68,7 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public EList<EObject> getElements()
@@ -83,7 +83,7 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -99,7 +99,7 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -118,7 +118,7 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -135,7 +135,7 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

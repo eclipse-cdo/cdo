@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.MangoValueImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class MangoValueImpl extends EObjectImpl implements MangoValue
@@ -34,7 +34,7 @@ public class MangoValueImpl extends EObjectImpl implements MangoValue
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -43,7 +43,7 @@ public class MangoValueImpl extends EObjectImpl implements MangoValue
 
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -52,7 +52,7 @@ public class MangoValueImpl extends EObjectImpl implements MangoValue
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected MangoValueImpl()
@@ -62,7 +62,7 @@ public class MangoValueImpl extends EObjectImpl implements MangoValue
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -73,7 +73,7 @@ public class MangoValueImpl extends EObjectImpl implements MangoValue
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public String getName()
@@ -83,7 +83,7 @@ public class MangoValueImpl extends EObjectImpl implements MangoValue
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -96,7 +96,7 @@ public class MangoValueImpl extends EObjectImpl implements MangoValue
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -112,7 +112,7 @@ public class MangoValueImpl extends EObjectImpl implements MangoValue
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -129,7 +129,7 @@ public class MangoValueImpl extends EObjectImpl implements MangoValue
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -146,7 +146,7 @@ public class MangoValueImpl extends EObjectImpl implements MangoValue
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -162,7 +162,7 @@ public class MangoValueImpl extends EObjectImpl implements MangoValue
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

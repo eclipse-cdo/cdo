@@ -34,7 +34,7 @@ import java.util.Collection;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainerImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMultiRefNonContainer
@@ -42,7 +42,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
   /**
    * The cached value of the '{@link #getElements() <em>Elements</em>}' reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @see #getElements()
    * @generated
    * @ordered
@@ -51,7 +51,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected ImplMultiRefNonContainerImpl()
@@ -61,7 +61,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -72,7 +72,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public EList<IMultiRefNonContainedElement> getElements()
@@ -88,7 +88,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -105,7 +105,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -121,7 +121,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -137,7 +137,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -156,7 +156,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -173,7 +173,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

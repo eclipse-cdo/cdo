@@ -192,14 +192,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   protected boolean setBranchPoint(CDOBranchPoint branchPoint)
   {
     if (branchPoint.getTimeStamp() != UNSPECIFIED_DATE)
-  {
+    {
       throw new IllegalArgumentException("Changing the target time is not supported by transactions");
-  }
+    }
 
     if (isDirty() && !getBranch().equals(branchPoint.getBranch()))
-  {
+    {
       throw new IllegalStateException("Changing the target branch is impossible while transaction is dirty");
-  }
+    }
 
     return super.setBranchPoint(branchPoint);
   }

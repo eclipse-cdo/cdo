@@ -31,7 +31,7 @@ import java.util.Collection;
  * </em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ImplMultiRefNonContainerNPLImpl extends EObjectImpl implements ImplMultiRefNonContainerNPL
@@ -39,7 +39,7 @@ public class ImplMultiRefNonContainerNPLImpl extends EObjectImpl implements Impl
   /**
    * The cached value of the '{@link #getElements() <em>Elements</em>}' reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @see #getElements()
    * @generated
    * @ordered
@@ -48,7 +48,7 @@ public class ImplMultiRefNonContainerNPLImpl extends EObjectImpl implements Impl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected ImplMultiRefNonContainerNPLImpl()
@@ -58,7 +58,7 @@ public class ImplMultiRefNonContainerNPLImpl extends EObjectImpl implements Impl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -69,7 +69,7 @@ public class ImplMultiRefNonContainerNPLImpl extends EObjectImpl implements Impl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public EList<IContainedElementNoParentLink> getElements()
@@ -84,7 +84,7 @@ public class ImplMultiRefNonContainerNPLImpl extends EObjectImpl implements Impl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -100,7 +100,7 @@ public class ImplMultiRefNonContainerNPLImpl extends EObjectImpl implements Impl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -119,7 +119,7 @@ public class ImplMultiRefNonContainerNPLImpl extends EObjectImpl implements Impl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -136,7 +136,7 @@ public class ImplMultiRefNonContainerNPLImpl extends EObjectImpl implements Impl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

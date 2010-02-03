@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefContainerImpl#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingleRefContainer
@@ -39,7 +39,7 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
   /**
    * The cached value of the '{@link #getElement() <em>Element</em>}' containment reference. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @see #getElement()
    * @generated
    * @ordered
@@ -48,7 +48,7 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected ImplSingleRefContainerImpl()
@@ -58,7 +58,7 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -69,7 +69,7 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public ISingleRefContainedElement getElement()
@@ -79,7 +79,7 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public NotificationChain basicSetElement(ISingleRefContainedElement newElement, NotificationChain msgs)
@@ -100,7 +100,7 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setElement(ISingleRefContainedElement newElement)
@@ -125,7 +125,7 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -144,7 +144,7 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -160,7 +160,7 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -176,7 +176,7 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -193,7 +193,7 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -210,7 +210,7 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

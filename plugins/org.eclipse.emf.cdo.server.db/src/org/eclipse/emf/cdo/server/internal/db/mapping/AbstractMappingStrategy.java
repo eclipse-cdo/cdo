@@ -300,12 +300,13 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   public String getUnsettableFieldName(EStructuralFeature feature)
   {
     String name = DBAnnotation.COLUMN_NAME.getValue(feature);
-    if(name != null) {
-    	return CDO_SET_PREFIX + name;
-    }
-    else 
+    if (name != null)
     {
-    	return getName(CDO_SET_PREFIX + feature.getName(), TYPE_PREFIX_FEATURE + getMetaDataManager().getMetaID(feature),
+      return CDO_SET_PREFIX + name;
+    }
+    else
+    {
+      return getName(CDO_SET_PREFIX + feature.getName(), TYPE_PREFIX_FEATURE + getMetaDataManager().getMetaID(feature),
           getMaxFieldNameLength());
     }
   }

@@ -32,7 +32,7 @@ import java.util.Collection;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.MangoValueListImpl#getValues <em>Values</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class MangoValueListImpl extends EObjectImpl implements MangoValueList
@@ -40,7 +40,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -49,7 +49,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -59,7 +59,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
   /**
    * The cached value of the '{@link #getValues() <em>Values</em>}' reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @see #getValues()
    * @generated
    * @ordered
@@ -68,7 +68,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected MangoValueListImpl()
@@ -78,7 +78,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -89,7 +89,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public String getName()
@@ -99,7 +99,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -112,7 +112,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public EList<MangoValue> getValues()
@@ -126,7 +126,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -144,7 +144,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -166,7 +166,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -186,7 +186,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -204,7 +204,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

@@ -198,7 +198,8 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   }
 
   /**
-   * Handles a given (incoming) buffer. Creates a signal to act upon the given buffer or uses a previously created signal.
+   * Handles a given (incoming) buffer. Creates a signal to act upon the given buffer or uses a previously created
+   * signal.
    */
   public void handleBuffer(IBuffer buffer)
   {

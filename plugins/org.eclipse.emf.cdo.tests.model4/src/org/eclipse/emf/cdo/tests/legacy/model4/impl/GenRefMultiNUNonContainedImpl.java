@@ -30,7 +30,7 @@ import java.util.Collection;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMultiNUNonContainedImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class GenRefMultiNUNonContainedImpl extends EObjectImpl implements GenRefMultiNUNonContained
@@ -38,7 +38,7 @@ public class GenRefMultiNUNonContainedImpl extends EObjectImpl implements GenRef
   /**
    * The cached value of the '{@link #getElements() <em>Elements</em>}' reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @see #getElements()
    * @generated
    * @ordered
@@ -47,7 +47,7 @@ public class GenRefMultiNUNonContainedImpl extends EObjectImpl implements GenRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected GenRefMultiNUNonContainedImpl()
@@ -57,7 +57,7 @@ public class GenRefMultiNUNonContainedImpl extends EObjectImpl implements GenRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -68,7 +68,7 @@ public class GenRefMultiNUNonContainedImpl extends EObjectImpl implements GenRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public EList<EObject> getElements()
@@ -82,7 +82,7 @@ public class GenRefMultiNUNonContainedImpl extends EObjectImpl implements GenRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -98,7 +98,7 @@ public class GenRefMultiNUNonContainedImpl extends EObjectImpl implements GenRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -117,7 +117,7 @@ public class GenRefMultiNUNonContainedImpl extends EObjectImpl implements GenRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -134,7 +134,7 @@ public class GenRefMultiNUNonContainedImpl extends EObjectImpl implements GenRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

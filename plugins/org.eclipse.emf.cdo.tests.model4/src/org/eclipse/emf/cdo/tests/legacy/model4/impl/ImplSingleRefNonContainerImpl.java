@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefNonContainerImpl#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSingleRefNonContainer
@@ -39,7 +39,7 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
   /**
    * The cached value of the '{@link #getElement() <em>Element</em>}' reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @see #getElement()
    * @generated
    * @ordered
@@ -48,7 +48,7 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected ImplSingleRefNonContainerImpl()
@@ -58,7 +58,7 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -69,7 +69,7 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public ISingleRefNonContainedElement getElement()
@@ -90,7 +90,7 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public ISingleRefNonContainedElement basicGetElement()
@@ -100,7 +100,7 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public NotificationChain basicSetElement(ISingleRefNonContainedElement newElement, NotificationChain msgs)
@@ -121,7 +121,7 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setElement(ISingleRefNonContainedElement newElement)
@@ -148,7 +148,7 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -168,7 +168,7 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -184,7 +184,7 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -202,7 +202,7 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -219,7 +219,7 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -236,7 +236,7 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

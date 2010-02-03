@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefContainedElementImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ImplMultiRefContainedElementImpl extends EObjectImpl implements ImplMultiRefContainedElement
@@ -41,7 +41,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -50,7 +50,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
 
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -59,7 +59,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected ImplMultiRefContainedElementImpl()
@@ -69,7 +69,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -80,7 +80,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public IMultiRefContainer getParent()
@@ -92,7 +92,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public NotificationChain basicSetParent(IMultiRefContainer newParent, NotificationChain msgs)
@@ -103,7 +103,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setParent(IMultiRefContainer newParent)
@@ -130,7 +130,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public String getName()
@@ -140,7 +140,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -154,7 +154,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -172,7 +172,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -188,7 +188,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -205,7 +205,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -223,7 +223,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -243,7 +243,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -263,7 +263,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -281,7 +281,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

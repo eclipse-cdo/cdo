@@ -71,7 +71,7 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
   }
 
   /**
-   *Same as <code>start(rate, 2 * rate)</code>.
+   * Same as <code>start(rate, 2 * rate)</code>.
    * 
    * @see #start(long, long)
    */

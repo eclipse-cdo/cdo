@@ -189,14 +189,15 @@ public abstract class AbstractItemProvider extends ContainerItemProvider<IContai
       else if (obj instanceof IBuddyCollaboration)
       {
         final IBuddyCollaboration collaboration = (IBuddyCollaboration)obj;
-        manager.add(new SafeAction(Messages.getString("AbstractItemProvider.0"), Messages.getString("AbstractItemProvider.1")) //$NON-NLS-1$ //$NON-NLS-2$
-        {
-          @Override
-          protected void safeRun() throws Exception
-          {
-            collaboration.leave();
-          }
-        });
+        manager.add(new SafeAction(
+            Messages.getString("AbstractItemProvider.0"), Messages.getString("AbstractItemProvider.1")) //$NON-NLS-1$ //$NON-NLS-2$
+            {
+              @Override
+              protected void safeRun() throws Exception
+              {
+                collaboration.leave();
+              }
+            });
       }
     }
   }
@@ -218,7 +219,8 @@ public abstract class AbstractItemProvider extends ContainerItemProvider<IContai
 
     public RemoveAction(Object object)
     {
-      super(Messages.getString("AbstractItemProvider.2"), Messages.getString("AbstractItemProvider.3"), ContainerView.getDeleteImageDescriptor()); //$NON-NLS-1$ //$NON-NLS-2$
+      super(
+          Messages.getString("AbstractItemProvider.2"), Messages.getString("AbstractItemProvider.3"), ContainerView.getDeleteImageDescriptor()); //$NON-NLS-1$ //$NON-NLS-2$
       this.object = object;
     }
 

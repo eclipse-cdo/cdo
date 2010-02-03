@@ -33,7 +33,7 @@ import java.util.Collection;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefContainerNPLImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ImplMultiRefContainerNPLImpl extends EObjectImpl implements ImplMultiRefContainerNPL
@@ -41,7 +41,7 @@ public class ImplMultiRefContainerNPLImpl extends EObjectImpl implements ImplMul
   /**
    * The cached value of the '{@link #getElements() <em>Elements</em>}' containment reference list. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getElements()
    * @generated
    * @ordered
@@ -50,7 +50,7 @@ public class ImplMultiRefContainerNPLImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected ImplMultiRefContainerNPLImpl()
@@ -60,7 +60,7 @@ public class ImplMultiRefContainerNPLImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -71,7 +71,7 @@ public class ImplMultiRefContainerNPLImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public EList<IContainedElementNoParentLink> getElements()
@@ -86,7 +86,7 @@ public class ImplMultiRefContainerNPLImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -102,7 +102,7 @@ public class ImplMultiRefContainerNPLImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -118,7 +118,7 @@ public class ImplMultiRefContainerNPLImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -137,7 +137,7 @@ public class ImplMultiRefContainerNPLImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -154,7 +154,7 @@ public class ImplMultiRefContainerNPLImpl extends EObjectImpl implements ImplMul
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

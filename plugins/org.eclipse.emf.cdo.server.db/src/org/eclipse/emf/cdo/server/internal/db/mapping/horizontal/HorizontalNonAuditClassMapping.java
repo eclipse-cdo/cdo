@@ -273,7 +273,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
             stmt.setBoolean(isSetCol++, true);
           }
         }
-        
+
         mapping.setValueFromRevision(stmt, col++, revision);
       }
 
@@ -615,7 +615,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
         typeMapping.setValue(stmt, col++, change.getElement2());
       }
     }
-    
+
     return col;
   }
 

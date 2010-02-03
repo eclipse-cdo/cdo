@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleContainedNPLImpl#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleContainedNPL
@@ -38,7 +38,7 @@ public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleC
   /**
    * The cached value of the '{@link #getElement() <em>Element</em>}' containment reference. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @see #getElement()
    * @generated
    * @ordered
@@ -47,7 +47,7 @@ public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected RefSingleContainedNPLImpl()
@@ -57,7 +57,7 @@ public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -68,7 +68,7 @@ public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public ContainedElementNoOpposite getElement()
@@ -78,7 +78,7 @@ public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public NotificationChain basicSetElement(ContainedElementNoOpposite newElement, NotificationChain msgs)
@@ -99,7 +99,7 @@ public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setElement(ContainedElementNoOpposite newElement)
@@ -124,7 +124,7 @@ public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -140,7 +140,7 @@ public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -156,7 +156,7 @@ public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -173,7 +173,7 @@ public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -190,7 +190,7 @@ public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

@@ -34,7 +34,7 @@ import java.util.Collection;
  * </em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements RefMultiNonContainedUnsettable
@@ -42,7 +42,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
   /**
    * The cached value of the '{@link #getElements() <em>Elements</em>}' reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @see #getElements()
    * @generated
    * @ordered
@@ -51,7 +51,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected RefMultiNonContainedUnsettableImpl()
@@ -61,7 +61,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -72,7 +72,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public EList<MultiNonContainedUnsettableElement> getElements()
@@ -88,7 +88,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void unsetElements()
@@ -99,7 +99,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public boolean isSetElements()
@@ -109,7 +109,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -126,7 +126,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -142,7 +142,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -158,7 +158,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -177,7 +177,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -194,7 +194,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

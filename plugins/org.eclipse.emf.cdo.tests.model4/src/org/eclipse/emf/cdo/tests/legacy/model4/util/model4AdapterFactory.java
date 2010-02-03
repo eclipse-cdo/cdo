@@ -70,7 +70,7 @@ import java.util.Map;
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
  * method for each class of the model. <!-- end-user-doc -->
- *
+ * 
  * @see org.eclipse.emf.cdo.tests.legacy.model4.model4Package
  * @generated
  */
@@ -78,14 +78,14 @@ public class model4AdapterFactory extends AdapterFactoryImpl
 {
   /**
    * The cached model package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected static model4Package modelPackage;
 
   /**
    * Creates an instance of the adapter factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public model4AdapterFactory()
@@ -100,7 +100,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * Returns whether this factory is applicable for the type of the object. <!-- begin-user-doc --> This implementation
    * returns <code>true</code> if the object is either the model's package or is an instance object of the model. <!--
    * end-user-doc -->
-   *
+   * 
    * @return whether this factory is applicable for the type of the object.
    * @generated
    */
@@ -120,7 +120,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
 
   /**
    * The switch that delegates to the <code>createXXX</code> methods. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected model4Switch<Adapter> modelSwitch = new model4Switch<Adapter>()
@@ -428,7 +428,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
 
   /**
    * Creates an adapter for the <code>target</code>. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @param target
    *          the object to adapt.
    * @return the adapter for the <code>target</code>.
@@ -445,7 +445,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Ref Single Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefSingleContained
    * @generated
@@ -460,7 +460,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.SingleContainedElement <em>Single Contained Element</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.SingleContainedElement
    * @generated
@@ -475,7 +475,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Ref Single Non Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContained
    * @generated
@@ -490,7 +490,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.SingleNonContainedElement <em>Single Non Contained Element</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.SingleNonContainedElement
    * @generated
@@ -505,7 +505,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Ref Multi Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContained
    * @generated
@@ -520,7 +520,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Multi Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.MultiContainedElement
    * @generated
@@ -535,7 +535,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Ref Multi Non Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContained
    * @generated
@@ -550,7 +550,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedElement <em>Multi Non Contained Element</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedElement
    * @generated
@@ -566,7 +566,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Ref Multi Non Contained Unsettable</em>}'. <!-- begin-user-doc --> This default implementation returns null so
    * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedUnsettable
    * @generated
@@ -582,7 +582,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Multi Non Contained Unsettable Element</em>}'. <!-- begin-user-doc --> This default implementation returns null
    * so that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedUnsettableElement
    * @generated
@@ -597,7 +597,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Ref Single Contained NPL</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefSingleContainedNPL
    * @generated
@@ -612,7 +612,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContainedNPL <em>Ref Single Non Contained NPL</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContainedNPL
    * @generated
@@ -627,7 +627,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Ref Multi Contained NPL</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContainedNPL
    * @generated
@@ -642,7 +642,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedNPL <em>Ref Multi Non Contained NPL</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedNPL
    * @generated
@@ -657,7 +657,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ContainedElementNoOpposite <em>Contained Element No Opposite</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ContainedElementNoOpposite
    * @generated
@@ -672,7 +672,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Gen Ref Single Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleContained
    * @generated
@@ -687,7 +687,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleNonContained <em>Gen Ref Single Non Contained</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleNonContained
    * @generated
@@ -702,7 +702,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Gen Ref Multi Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiContained
    * @generated
@@ -717,7 +717,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNonContained <em>Gen Ref Multi Non Contained</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNonContained
    * @generated
@@ -732,7 +732,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainer <em>Impl Single Ref Container</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainer
    * @generated
@@ -748,7 +748,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Impl Single Ref Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so
    * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainedElement
    * @generated
@@ -763,7 +763,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainer <em>Impl Single Ref Non Container</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainer
    * @generated
@@ -779,7 +779,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Impl Single Ref Non Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null
    * so that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainedElement
    * @generated
@@ -794,7 +794,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainer <em>Impl Multi Ref Non Container</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainer
    * @generated
@@ -810,7 +810,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Impl Multi Ref Non Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null
    * so that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainedElement
    * @generated
@@ -825,7 +825,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Impl Multi Ref Container</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainer
    * @generated
@@ -841,7 +841,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Impl Multi Ref Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so
    * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainedElement
    * @generated
@@ -856,7 +856,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainerNPL <em>Impl Single Ref Container NPL</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainerNPL
    * @generated
@@ -872,7 +872,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Impl Single Ref Non Container NPL</em>}'. <!-- begin-user-doc --> This default implementation returns null so
    * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainerNPL
    * @generated
@@ -887,7 +887,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainerNPL <em>Impl Multi Ref Container NPL</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainerNPL
    * @generated
@@ -903,7 +903,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Impl Multi Ref Non Container NPL</em>}'. <!-- begin-user-doc --> This default implementation returns null so
    * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainerNPL
    * @generated
@@ -918,7 +918,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ImplContainedElementNPL <em>Impl Contained Element NPL</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplContainedElementNPL
    * @generated
@@ -933,7 +933,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNUNonContained <em>Gen Ref Multi NU Non Contained</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNUNonContained
    * @generated
@@ -948,7 +948,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>Gen Ref Map Non Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefMapNonContained
    * @generated
@@ -962,7 +962,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To EObject</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see java.util.Map.Entry
    * @generated
@@ -977,7 +977,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefContainer <em>ISingle Ref Container</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefContainer
    * @generated
@@ -993,7 +993,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>ISingle Ref Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefContainedElement
    * @generated
@@ -1008,7 +1008,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainer <em>ISingle Ref Non Container</em>}
    * '. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
    * to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainer
    * @generated
@@ -1024,7 +1024,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>ISingle Ref Non Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so
    * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainedElement
    * @generated
@@ -1039,7 +1039,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefNonContainer <em>IMulti Ref Non Container</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefNonContainer
    * @generated
@@ -1055,7 +1055,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>IMulti Ref Non Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so
    * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefNonContainedElement
    * @generated
@@ -1070,7 +1070,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefContainer <em>IMulti Ref Container</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefContainer
    * @generated
@@ -1086,7 +1086,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>IMulti Ref Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefContainedElement
    * @generated
@@ -1101,7 +1101,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefContainerNPL <em>ISingle Ref Container NPL</em>}
    * '. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
    * to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefContainerNPL
    * @generated
@@ -1117,7 +1117,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>ISingle Ref Non Container NPL</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainerNPL
    * @generated
@@ -1132,7 +1132,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefContainerNPL <em>IMulti Ref Container NPL</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefContainerNPL
    * @generated
@@ -1148,7 +1148,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>IMulti Ref Non Container NPL</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefNonContainerNPL
    * @generated
@@ -1164,7 +1164,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * <em>IContained Element No Parent Link</em>}'. <!-- begin-user-doc --> This default implementation returns null so
    * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.IContainedElementNoParentLink
    * @generated
@@ -1179,7 +1179,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * {@link org.eclipse.emf.cdo.tests.legacy.model4interfaces.INamedElement <em>INamed Element</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.INamedElement
    * @generated
@@ -1192,7 +1192,7 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for the default case. <!-- begin-user-doc --> This default implementation returns null. <!--
    * end-user-doc -->
-   *
+   * 
    * @return the new adapter.
    * @generated
    */

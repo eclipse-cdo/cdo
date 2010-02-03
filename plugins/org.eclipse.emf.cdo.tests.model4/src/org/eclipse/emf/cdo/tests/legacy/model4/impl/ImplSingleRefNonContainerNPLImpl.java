@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * </li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements ImplSingleRefNonContainerNPL
@@ -38,7 +38,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
   /**
    * The cached value of the '{@link #getElement() <em>Element</em>}' reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @see #getElement()
    * @generated
    * @ordered
@@ -47,7 +47,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected ImplSingleRefNonContainerNPLImpl()
@@ -57,7 +57,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -68,7 +68,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public IContainedElementNoParentLink getElement()
@@ -89,7 +89,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public IContainedElementNoParentLink basicGetElement()
@@ -99,7 +99,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setElement(IContainedElementNoParentLink newElement)
@@ -113,7 +113,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -131,7 +131,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -148,7 +148,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -165,7 +165,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

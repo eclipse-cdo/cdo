@@ -23,14 +23,14 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 {
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated NOT
    */
   public static Model3Factory init()
@@ -53,7 +53,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 
   /**
    * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public Model3FactoryImpl()
@@ -63,7 +63,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -82,7 +82,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public Class1 createClass1()
@@ -93,7 +93,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public MetaRef createMetaRef()
@@ -104,7 +104,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public Model3Package getModel3Package()
@@ -114,7 +114,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @deprecated
    * @generated
    */

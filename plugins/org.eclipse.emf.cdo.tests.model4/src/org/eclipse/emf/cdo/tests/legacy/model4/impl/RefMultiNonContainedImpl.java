@@ -33,7 +33,7 @@ import java.util.Collection;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiNonContainedImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class RefMultiNonContainedImpl extends EObjectImpl implements RefMultiNonContained
@@ -41,7 +41,7 @@ public class RefMultiNonContainedImpl extends EObjectImpl implements RefMultiNon
   /**
    * The cached value of the '{@link #getElements() <em>Elements</em>}' reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @see #getElements()
    * @generated
    * @ordered
@@ -50,7 +50,7 @@ public class RefMultiNonContainedImpl extends EObjectImpl implements RefMultiNon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected RefMultiNonContainedImpl()
@@ -60,7 +60,7 @@ public class RefMultiNonContainedImpl extends EObjectImpl implements RefMultiNon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -71,7 +71,7 @@ public class RefMultiNonContainedImpl extends EObjectImpl implements RefMultiNon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public EList<MultiNonContainedElement> getElements()
@@ -86,7 +86,7 @@ public class RefMultiNonContainedImpl extends EObjectImpl implements RefMultiNon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -103,7 +103,7 @@ public class RefMultiNonContainedImpl extends EObjectImpl implements RefMultiNon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -119,7 +119,7 @@ public class RefMultiNonContainedImpl extends EObjectImpl implements RefMultiNon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -135,7 +135,7 @@ public class RefMultiNonContainedImpl extends EObjectImpl implements RefMultiNon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -154,7 +154,7 @@ public class RefMultiNonContainedImpl extends EObjectImpl implements RefMultiNon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -171,7 +171,7 @@ public class RefMultiNonContainedImpl extends EObjectImpl implements RefMultiNon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

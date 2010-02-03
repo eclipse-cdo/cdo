@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- *
+ * 
  * @see org.eclipse.emf.cdo.tests.legacy.model4.model4Factory
  * @model kind="package"
  * @generated
@@ -34,28 +34,28 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 {
   /**
    * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   String eNAME = "model4";
 
   /**
    * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated NOT
    */
   String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/legacy/model4/1.0.0";
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   String eNS_PREFIX = "model4";
 
   /**
    * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   model4Package eINSTANCE = org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl.init();
@@ -63,7 +63,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleContainedImpl
    * <em>Ref Single Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleContainedImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefSingleContained()
    * @generated
@@ -73,7 +73,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -82,7 +82,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Ref Single Contained</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -91,7 +91,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.SingleContainedElementImpl
    * <em>Single Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.SingleContainedElementImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getSingleContainedElement()
    * @generated
@@ -100,7 +100,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -108,7 +108,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -117,7 +117,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Single Contained Element</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -126,7 +126,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleNonContainedImpl
    * <em>Ref Single Non Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleNonContainedImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefSingleNonContained()
    * @generated
@@ -135,7 +135,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Element</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -144,7 +144,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Ref Single Non Contained</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -153,7 +153,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.SingleNonContainedElementImpl
    * <em>Single Non Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.SingleNonContainedElementImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getSingleNonContainedElement()
    * @generated
@@ -162,7 +162,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -170,7 +170,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -179,7 +179,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Single Non Contained Element</em>' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -188,7 +188,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiContainedImpl
    * <em>Ref Multi Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiContainedImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefMultiContained()
    * @generated
@@ -198,7 +198,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -207,7 +207,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Ref Multi Contained</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -216,7 +216,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.MultiContainedElementImpl
    * <em>Multi Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.MultiContainedElementImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getMultiContainedElement()
    * @generated
@@ -225,7 +225,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -233,7 +233,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -242,7 +242,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Multi Contained Element</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -251,7 +251,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiNonContainedImpl
    * <em>Ref Multi Non Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiNonContainedImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefMultiNonContained()
    * @generated
@@ -260,7 +260,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -269,7 +269,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Ref Multi Non Contained</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -278,7 +278,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.MultiNonContainedElementImpl
    * <em>Multi Non Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.MultiNonContainedElementImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getMultiNonContainedElement()
    * @generated
@@ -287,7 +287,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -295,7 +295,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -304,7 +304,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Multi Non Contained Element</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -313,7 +313,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiNonContainedUnsettableImpl
    * <em>Ref Multi Non Contained Unsettable</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiNonContainedUnsettableImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefMultiNonContainedUnsettable()
    * @generated
@@ -322,7 +322,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -331,7 +331,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Ref Multi Non Contained Unsettable</em>' class. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -341,7 +341,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * The meta object id for the '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.MultiNonContainedUnsettableElementImpl
    * <em>Multi Non Contained Unsettable Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.MultiNonContainedUnsettableElementImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getMultiNonContainedUnsettableElement()
    * @generated
@@ -350,7 +350,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -358,7 +358,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -367,7 +367,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Multi Non Contained Unsettable Element</em>' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -376,7 +376,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleContainedNPLImpl
    * <em>Ref Single Contained NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleContainedNPLImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefSingleContainedNPL()
    * @generated
@@ -386,7 +386,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -395,7 +395,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Ref Single Contained NPL</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -404,7 +404,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleNonContainedNPLImpl
    * <em>Ref Single Non Contained NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleNonContainedNPLImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefSingleNonContainedNPL()
    * @generated
@@ -413,7 +413,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Element</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -422,7 +422,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Ref Single Non Contained NPL</em>' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -431,7 +431,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiContainedNPLImpl
    * <em>Ref Multi Contained NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiContainedNPLImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefMultiContainedNPL()
    * @generated
@@ -441,7 +441,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -450,7 +450,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Ref Multi Contained NPL</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -459,7 +459,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiNonContainedNPLImpl
    * <em>Ref Multi Non Contained NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiNonContainedNPLImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefMultiNonContainedNPL()
    * @generated
@@ -468,7 +468,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -477,7 +477,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Ref Multi Non Contained NPL</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -486,7 +486,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ContainedElementNoOppositeImpl
    * <em>Contained Element No Opposite</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ContainedElementNoOppositeImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getContainedElementNoOpposite()
    * @generated
@@ -495,7 +495,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -504,7 +504,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Contained Element No Opposite</em>' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -513,7 +513,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefSingleContainedImpl
    * <em>Gen Ref Single Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefSingleContainedImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getGenRefSingleContained()
    * @generated
@@ -523,7 +523,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -532,7 +532,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Gen Ref Single Contained</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -541,7 +541,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefSingleNonContainedImpl
    * <em>Gen Ref Single Non Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefSingleNonContainedImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getGenRefSingleNonContained()
    * @generated
@@ -550,7 +550,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Element</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -559,7 +559,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Gen Ref Single Non Contained</em>' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -568,7 +568,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMultiContainedImpl
    * <em>Gen Ref Multi Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMultiContainedImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getGenRefMultiContained()
    * @generated
@@ -578,7 +578,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -587,7 +587,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Gen Ref Multi Contained</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -596,7 +596,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMultiNonContainedImpl
    * <em>Gen Ref Multi Non Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMultiNonContainedImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getGenRefMultiNonContained()
    * @generated
@@ -605,7 +605,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -614,7 +614,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Gen Ref Multi Non Contained</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -623,7 +623,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefContainerImpl
    * <em>Impl Single Ref Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefContainerImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplSingleRefContainer()
    * @generated
@@ -633,7 +633,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -642,7 +642,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Impl Single Ref Container</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -651,7 +651,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefContainedElementImpl
    * <em>Impl Single Ref Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefContainedElementImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplSingleRefContainedElement()
    * @generated
@@ -660,7 +660,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -668,7 +668,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -677,7 +677,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Impl Single Ref Contained Element</em>' class. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -686,7 +686,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefNonContainerImpl
    * <em>Impl Single Ref Non Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefNonContainerImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplSingleRefNonContainer()
    * @generated
@@ -695,7 +695,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Element</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -704,7 +704,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Impl Single Ref Non Container</em>' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -714,7 +714,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * The meta object id for the '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefNonContainedElementImpl
    * <em>Impl Single Ref Non Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefNonContainedElementImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplSingleRefNonContainedElement()
    * @generated
@@ -723,7 +723,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -731,7 +731,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -740,7 +740,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Impl Single Ref Non Contained Element</em>' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -749,7 +749,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainerImpl
    * <em>Impl Multi Ref Non Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainerImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplMultiRefNonContainer()
    * @generated
@@ -758,7 +758,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -767,7 +767,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Impl Multi Ref Non Container</em>' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -777,7 +777,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * The meta object id for the '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainedElementImpl
    * <em>Impl Multi Ref Non Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainedElementImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplMultiRefNonContainedElement()
    * @generated
@@ -786,7 +786,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -794,7 +794,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -803,7 +803,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Impl Multi Ref Non Contained Element</em>' class. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -812,7 +812,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefContainerImpl
    * <em>Impl Multi Ref Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefContainerImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplMultiRefContainer()
    * @generated
@@ -822,7 +822,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -831,7 +831,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Impl Multi Ref Container</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -840,7 +840,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefContainedElementImpl
    * <em>Impl Multi Ref Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefContainedElementImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplMultiRefContainedElement()
    * @generated
@@ -849,7 +849,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -857,7 +857,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -866,7 +866,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Impl Multi Ref Contained Element</em>' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -875,7 +875,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefContainerNPLImpl
    * <em>Impl Single Ref Container NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefContainerNPLImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplSingleRefContainerNPL()
    * @generated
@@ -885,7 +885,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -894,7 +894,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Impl Single Ref Container NPL</em>' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -903,7 +903,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefNonContainerNPLImpl
    * <em>Impl Single Ref Non Container NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefNonContainerNPLImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplSingleRefNonContainerNPL()
    * @generated
@@ -912,7 +912,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Element</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -921,7 +921,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Impl Single Ref Non Container NPL</em>' class. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -930,7 +930,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefContainerNPLImpl
    * <em>Impl Multi Ref Container NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefContainerNPLImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplMultiRefContainerNPL()
    * @generated
@@ -940,7 +940,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -949,7 +949,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Impl Multi Ref Container NPL</em>' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -958,7 +958,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainerNPLImpl
    * <em>Impl Multi Ref Non Container NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainerNPLImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplMultiRefNonContainerNPL()
    * @generated
@@ -967,7 +967,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -976,7 +976,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Impl Multi Ref Non Container NPL</em>' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -985,7 +985,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplContainedElementNPLImpl
    * <em>Impl Contained Element NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplContainedElementNPLImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplContainedElementNPL()
    * @generated
@@ -994,7 +994,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -1003,7 +1003,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Impl Contained Element NPL</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -1012,7 +1012,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMultiNUNonContainedImpl
    * <em>Gen Ref Multi NU Non Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMultiNUNonContainedImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getGenRefMultiNUNonContained()
    * @generated
@@ -1021,7 +1021,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -1030,7 +1030,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Gen Ref Multi NU Non Contained</em>' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -1039,7 +1039,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMapNonContainedImpl
    * <em>Gen Ref Map Non Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMapNonContainedImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getGenRefMapNonContained()
    * @generated
@@ -1048,7 +1048,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' map. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -1057,7 +1057,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>Gen Ref Map Non Contained</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -1066,7 +1066,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.StringToEObjectImpl
    * <em>String To EObject</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.StringToEObjectImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getStringToEObject()
    * @generated
@@ -1075,7 +1075,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Key</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -1083,7 +1083,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * The feature id for the '<em><b>Value</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -1092,7 +1092,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * The number of structural features of the '<em>String To EObject</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -1101,7 +1101,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.RefSingleContained
    * <em>Ref Single Contained</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Ref Single Contained</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefSingleContained
    * @generated
@@ -1112,7 +1112,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the containment reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefSingleContained#getElement <em>Element</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the containment reference '<em>Element</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefSingleContained#getElement()
    * @see #getRefSingleContained()
@@ -1123,7 +1123,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.SingleContainedElement
    * <em>Single Contained Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Single Contained Element</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.SingleContainedElement
    * @generated
@@ -1134,7 +1134,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.SingleContainedElement#getName <em>Name</em>}'. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.SingleContainedElement#getName()
    * @see #getSingleContainedElement()
@@ -1146,7 +1146,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the container reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.SingleContainedElement#getParent <em>Parent</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the container reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.SingleContainedElement#getParent()
    * @see #getSingleContainedElement()
@@ -1157,7 +1157,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContained
    * <em>Ref Single Non Contained</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Ref Single Non Contained</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContained
    * @generated
@@ -1168,7 +1168,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContained#getElement <em>Element</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the reference '<em>Element</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContained#getElement()
    * @see #getRefSingleNonContained()
@@ -1179,7 +1179,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.SingleNonContainedElement
    * <em>Single Non Contained Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Single Non Contained Element</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.SingleNonContainedElement
    * @generated
@@ -1190,7 +1190,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.SingleNonContainedElement#getName <em>Name</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.SingleNonContainedElement#getName()
    * @see #getSingleNonContainedElement()
@@ -1202,7 +1202,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.SingleNonContainedElement#getParent <em>Parent</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.SingleNonContainedElement#getParent()
    * @see #getSingleNonContainedElement()
@@ -1213,7 +1213,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContained
    * <em>Ref Multi Contained</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Ref Multi Contained</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContained
    * @generated
@@ -1224,7 +1224,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContained#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the containment reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContained#getElements()
    * @see #getRefMultiContained()
@@ -1235,7 +1235,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.MultiContainedElement
    * <em>Multi Contained Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Multi Contained Element</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.MultiContainedElement
    * @generated
@@ -1246,7 +1246,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiContainedElement#getName <em>Name</em>}'. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.MultiContainedElement#getName()
    * @see #getMultiContainedElement()
@@ -1258,7 +1258,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the container reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiContainedElement#getParent <em>Parent</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the container reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.MultiContainedElement#getParent()
    * @see #getMultiContainedElement()
@@ -1269,7 +1269,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContained
    * <em>Ref Multi Non Contained</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Ref Multi Non Contained</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContained
    * @generated
@@ -1280,7 +1280,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContained#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContained#getElements()
    * @see #getRefMultiNonContained()
@@ -1291,7 +1291,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedElement
    * <em>Multi Non Contained Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Multi Non Contained Element</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedElement
    * @generated
@@ -1302,7 +1302,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedElement#getName <em>Name</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedElement#getName()
    * @see #getMultiNonContainedElement()
@@ -1314,7 +1314,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedElement#getParent <em>Parent</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedElement#getParent()
    * @see #getMultiNonContainedElement()
@@ -1325,7 +1325,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedUnsettable
    * <em>Ref Multi Non Contained Unsettable</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Ref Multi Non Contained Unsettable</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedUnsettable
    * @generated
@@ -1336,7 +1336,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedUnsettable#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedUnsettable#getElements()
    * @see #getRefMultiNonContainedUnsettable()
@@ -1348,7 +1348,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for class '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedUnsettableElement
    * <em>Multi Non Contained Unsettable Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Multi Non Contained Unsettable Element</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedUnsettableElement
    * @generated
@@ -1359,7 +1359,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedUnsettableElement#getName <em>Name</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedUnsettableElement#getName()
    * @see #getMultiNonContainedUnsettableElement()
@@ -1371,7 +1371,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedUnsettableElement#getParent <em>Parent</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedUnsettableElement#getParent()
    * @see #getMultiNonContainedUnsettableElement()
@@ -1382,7 +1382,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.RefSingleContainedNPL
    * <em>Ref Single Contained NPL</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Ref Single Contained NPL</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefSingleContainedNPL
    * @generated
@@ -1393,7 +1393,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the containment reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefSingleContainedNPL#getElement <em>Element</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the containment reference '<em>Element</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefSingleContainedNPL#getElement()
    * @see #getRefSingleContainedNPL()
@@ -1404,7 +1404,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContainedNPL
    * <em>Ref Single Non Contained NPL</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Ref Single Non Contained NPL</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContainedNPL
    * @generated
@@ -1415,7 +1415,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContainedNPL#getElement <em>Element</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the reference '<em>Element</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContainedNPL#getElement()
    * @see #getRefSingleNonContainedNPL()
@@ -1426,7 +1426,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContainedNPL
    * <em>Ref Multi Contained NPL</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Ref Multi Contained NPL</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContainedNPL
    * @generated
@@ -1437,7 +1437,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContainedNPL#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the containment reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContainedNPL#getElements()
    * @see #getRefMultiContainedNPL()
@@ -1448,7 +1448,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedNPL
    * <em>Ref Multi Non Contained NPL</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Ref Multi Non Contained NPL</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedNPL
    * @generated
@@ -1459,7 +1459,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedNPL#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedNPL#getElements()
    * @see #getRefMultiNonContainedNPL()
@@ -1470,7 +1470,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.ContainedElementNoOpposite
    * <em>Contained Element No Opposite</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Contained Element No Opposite</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ContainedElementNoOpposite
    * @generated
@@ -1481,7 +1481,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ContainedElementNoOpposite#getName <em>Name</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ContainedElementNoOpposite#getName()
    * @see #getContainedElementNoOpposite()
@@ -1492,7 +1492,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleContained
    * <em>Gen Ref Single Contained</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Gen Ref Single Contained</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleContained
    * @generated
@@ -1503,7 +1503,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the containment reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleContained#getElement <em>Element</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the containment reference '<em>Element</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleContained#getElement()
    * @see #getGenRefSingleContained()
@@ -1514,7 +1514,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleNonContained
    * <em>Gen Ref Single Non Contained</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Gen Ref Single Non Contained</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleNonContained
    * @generated
@@ -1525,7 +1525,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleNonContained#getElement <em>Element</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the reference '<em>Element</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleNonContained#getElement()
    * @see #getGenRefSingleNonContained()
@@ -1536,7 +1536,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiContained
    * <em>Gen Ref Multi Contained</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Gen Ref Multi Contained</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiContained
    * @generated
@@ -1547,7 +1547,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiContained#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the containment reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiContained#getElements()
    * @see #getGenRefMultiContained()
@@ -1558,7 +1558,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNonContained
    * <em>Gen Ref Multi Non Contained</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Gen Ref Multi Non Contained</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNonContained
    * @generated
@@ -1569,7 +1569,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNonContained#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNonContained#getElements()
    * @see #getGenRefMultiNonContained()
@@ -1580,7 +1580,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainer
    * <em>Impl Single Ref Container</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Impl Single Ref Container</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainer
    * @generated
@@ -1590,7 +1590,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainedElement
    * <em>Impl Single Ref Contained Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Impl Single Ref Contained Element</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainedElement
    * @generated
@@ -1601,7 +1601,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainedElement#getName <em>Name</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainedElement#getName()
    * @see #getImplSingleRefContainedElement()
@@ -1612,7 +1612,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainer
    * <em>Impl Single Ref Non Container</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Impl Single Ref Non Container</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainer
    * @generated
@@ -1622,7 +1622,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainedElement
    * <em>Impl Single Ref Non Contained Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Impl Single Ref Non Contained Element</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainedElement
    * @generated
@@ -1633,7 +1633,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainedElement#getName <em>Name</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainedElement#getName()
    * @see #getImplSingleRefNonContainedElement()
@@ -1644,7 +1644,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainer
    * <em>Impl Multi Ref Non Container</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Impl Multi Ref Non Container</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainer
    * @generated
@@ -1654,7 +1654,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainedElement
    * <em>Impl Multi Ref Non Contained Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Impl Multi Ref Non Contained Element</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainedElement
    * @generated
@@ -1665,7 +1665,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainedElement#getName <em>Name</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainedElement#getName()
    * @see #getImplMultiRefNonContainedElement()
@@ -1676,7 +1676,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainer
    * <em>Impl Multi Ref Container</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Impl Multi Ref Container</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainer
    * @generated
@@ -1686,7 +1686,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainedElement
    * <em>Impl Multi Ref Contained Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Impl Multi Ref Contained Element</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainedElement
    * @generated
@@ -1697,7 +1697,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainedElement#getName <em>Name</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainedElement#getName()
    * @see #getImplMultiRefContainedElement()
@@ -1708,7 +1708,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainerNPL
    * <em>Impl Single Ref Container NPL</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Impl Single Ref Container NPL</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainerNPL
    * @generated
@@ -1718,7 +1718,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainerNPL
    * <em>Impl Single Ref Non Container NPL</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Impl Single Ref Non Container NPL</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainerNPL
    * @generated
@@ -1728,7 +1728,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainerNPL
    * <em>Impl Multi Ref Container NPL</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Impl Multi Ref Container NPL</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainerNPL
    * @generated
@@ -1738,7 +1738,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainerNPL
    * <em>Impl Multi Ref Non Container NPL</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Impl Multi Ref Non Container NPL</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainerNPL
    * @generated
@@ -1748,7 +1748,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.ImplContainedElementNPL
    * <em>Impl Contained Element NPL</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Impl Contained Element NPL</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.ImplContainedElementNPL
    * @generated
@@ -1758,7 +1758,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNUNonContained
    * <em>Gen Ref Multi NU Non Contained</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Gen Ref Multi NU Non Contained</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNUNonContained
    * @generated
@@ -1769,7 +1769,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNUNonContained#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNUNonContained#getElements()
    * @see #getGenRefMultiNUNonContained()
@@ -1780,7 +1780,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefMapNonContained
    * <em>Gen Ref Map Non Contained</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>Gen Ref Map Non Contained</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefMapNonContained
    * @generated
@@ -1791,7 +1791,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * Returns the meta object for the map '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefMapNonContained#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the map '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.GenRefMapNonContained#getElements()
    * @see #getGenRefMapNonContained()
@@ -1802,7 +1802,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>String To EObject</em>}'. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for class '<em>String To EObject</em>'.
    * @see java.util.Map.Entry
    * @model keyDataType="org.eclipse.emf.ecore.EString" valueType="org.eclipse.emf.ecore.EObject"
@@ -1814,7 +1814,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @return the meta object for the attribute '<em>Key</em>'.
    * @see java.util.Map.Entry
    * @see #getStringToEObject()
@@ -1825,7 +1825,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
   /**
    * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @return the meta object for the reference '<em>Value</em>'.
    * @see java.util.Map.Entry
    * @see #getStringToEObject()
@@ -1835,7 +1835,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -1850,7 +1850,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   interface Literals
@@ -1858,7 +1858,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleContainedImpl
      * <em>Ref Single Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleContainedImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefSingleContained()
      * @generated
@@ -1868,7 +1868,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Element</b></em>' containment reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference REF_SINGLE_CONTAINED__ELEMENT = eINSTANCE.getRefSingleContained_Element();
@@ -1876,7 +1876,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.SingleContainedElementImpl
      * <em>Single Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.SingleContainedElementImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getSingleContainedElement()
      * @generated
@@ -1886,7 +1886,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EAttribute SINGLE_CONTAINED_ELEMENT__NAME = eINSTANCE.getSingleContainedElement_Name();
@@ -1894,7 +1894,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Parent</b></em>' container reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference SINGLE_CONTAINED_ELEMENT__PARENT = eINSTANCE.getSingleContainedElement_Parent();
@@ -1902,7 +1902,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleNonContainedImpl
      * <em>Ref Single Non Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleNonContainedImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefSingleNonContained()
      * @generated
@@ -1912,7 +1912,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Element</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference REF_SINGLE_NON_CONTAINED__ELEMENT = eINSTANCE.getRefSingleNonContained_Element();
@@ -1921,7 +1921,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.SingleNonContainedElementImpl
      * <em>Single Non Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.SingleNonContainedElementImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getSingleNonContainedElement()
      * @generated
@@ -1931,7 +1931,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EAttribute SINGLE_NON_CONTAINED_ELEMENT__NAME = eINSTANCE.getSingleNonContainedElement_Name();
@@ -1939,7 +1939,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Parent</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference SINGLE_NON_CONTAINED_ELEMENT__PARENT = eINSTANCE.getSingleNonContainedElement_Parent();
@@ -1947,7 +1947,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiContainedImpl
      * <em>Ref Multi Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiContainedImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefMultiContained()
      * @generated
@@ -1957,7 +1957,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference REF_MULTI_CONTAINED__ELEMENTS = eINSTANCE.getRefMultiContained_Elements();
@@ -1965,7 +1965,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.MultiContainedElementImpl
      * <em>Multi Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.MultiContainedElementImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getMultiContainedElement()
      * @generated
@@ -1975,7 +1975,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EAttribute MULTI_CONTAINED_ELEMENT__NAME = eINSTANCE.getMultiContainedElement_Name();
@@ -1983,7 +1983,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Parent</b></em>' container reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference MULTI_CONTAINED_ELEMENT__PARENT = eINSTANCE.getMultiContainedElement_Parent();
@@ -1991,7 +1991,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiNonContainedImpl
      * <em>Ref Multi Non Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiNonContainedImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefMultiNonContained()
      * @generated
@@ -2001,7 +2001,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Elements</b></em>' reference list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference REF_MULTI_NON_CONTAINED__ELEMENTS = eINSTANCE.getRefMultiNonContained_Elements();
@@ -2010,7 +2010,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.MultiNonContainedElementImpl
      * <em>Multi Non Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.MultiNonContainedElementImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getMultiNonContainedElement()
      * @generated
@@ -2020,7 +2020,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EAttribute MULTI_NON_CONTAINED_ELEMENT__NAME = eINSTANCE.getMultiNonContainedElement_Name();
@@ -2028,7 +2028,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Parent</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference MULTI_NON_CONTAINED_ELEMENT__PARENT = eINSTANCE.getMultiNonContainedElement_Parent();
@@ -2037,7 +2037,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiNonContainedUnsettableImpl
      * <em>Ref Multi Non Contained Unsettable</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiNonContainedUnsettableImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefMultiNonContainedUnsettable()
      * @generated
@@ -2047,7 +2047,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Elements</b></em>' reference list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference REF_MULTI_NON_CONTAINED_UNSETTABLE__ELEMENTS = eINSTANCE.getRefMultiNonContainedUnsettable_Elements();
@@ -2056,7 +2056,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.MultiNonContainedUnsettableElementImpl
      * <em>Multi Non Contained Unsettable Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.MultiNonContainedUnsettableElementImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getMultiNonContainedUnsettableElement()
      * @generated
@@ -2066,7 +2066,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EAttribute MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__NAME = eINSTANCE.getMultiNonContainedUnsettableElement_Name();
@@ -2074,7 +2074,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Parent</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__PARENT = eINSTANCE
@@ -2083,7 +2083,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleContainedNPLImpl
      * <em>Ref Single Contained NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleContainedNPLImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefSingleContainedNPL()
      * @generated
@@ -2093,7 +2093,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Element</b></em>' containment reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference REF_SINGLE_CONTAINED_NPL__ELEMENT = eINSTANCE.getRefSingleContainedNPL_Element();
@@ -2102,7 +2102,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleNonContainedNPLImpl
      * <em>Ref Single Non Contained NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleNonContainedNPLImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefSingleNonContainedNPL()
      * @generated
@@ -2112,7 +2112,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Element</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference REF_SINGLE_NON_CONTAINED_NPL__ELEMENT = eINSTANCE.getRefSingleNonContainedNPL_Element();
@@ -2120,7 +2120,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiContainedNPLImpl
      * <em>Ref Multi Contained NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiContainedNPLImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefMultiContainedNPL()
      * @generated
@@ -2130,7 +2130,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference REF_MULTI_CONTAINED_NPL__ELEMENTS = eINSTANCE.getRefMultiContainedNPL_Elements();
@@ -2138,7 +2138,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiNonContainedNPLImpl
      * <em>Ref Multi Non Contained NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiNonContainedNPLImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getRefMultiNonContainedNPL()
      * @generated
@@ -2148,7 +2148,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Elements</b></em>' reference list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference REF_MULTI_NON_CONTAINED_NPL__ELEMENTS = eINSTANCE.getRefMultiNonContainedNPL_Elements();
@@ -2157,7 +2157,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ContainedElementNoOppositeImpl
      * <em>Contained Element No Opposite</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ContainedElementNoOppositeImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getContainedElementNoOpposite()
      * @generated
@@ -2167,7 +2167,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EAttribute CONTAINED_ELEMENT_NO_OPPOSITE__NAME = eINSTANCE.getContainedElementNoOpposite_Name();
@@ -2175,7 +2175,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefSingleContainedImpl
      * <em>Gen Ref Single Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefSingleContainedImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getGenRefSingleContained()
      * @generated
@@ -2185,7 +2185,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Element</b></em>' containment reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference GEN_REF_SINGLE_CONTAINED__ELEMENT = eINSTANCE.getGenRefSingleContained_Element();
@@ -2194,7 +2194,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefSingleNonContainedImpl
      * <em>Gen Ref Single Non Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefSingleNonContainedImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getGenRefSingleNonContained()
      * @generated
@@ -2204,7 +2204,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Element</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference GEN_REF_SINGLE_NON_CONTAINED__ELEMENT = eINSTANCE.getGenRefSingleNonContained_Element();
@@ -2212,7 +2212,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMultiContainedImpl
      * <em>Gen Ref Multi Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMultiContainedImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getGenRefMultiContained()
      * @generated
@@ -2222,7 +2222,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference GEN_REF_MULTI_CONTAINED__ELEMENTS = eINSTANCE.getGenRefMultiContained_Elements();
@@ -2230,7 +2230,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMultiNonContainedImpl
      * <em>Gen Ref Multi Non Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMultiNonContainedImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getGenRefMultiNonContained()
      * @generated
@@ -2240,7 +2240,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Elements</b></em>' reference list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference GEN_REF_MULTI_NON_CONTAINED__ELEMENTS = eINSTANCE.getGenRefMultiNonContained_Elements();
@@ -2248,7 +2248,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefContainerImpl
      * <em>Impl Single Ref Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefContainerImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplSingleRefContainer()
      * @generated
@@ -2259,7 +2259,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefContainedElementImpl
      * <em>Impl Single Ref Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefContainedElementImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplSingleRefContainedElement()
      * @generated
@@ -2269,7 +2269,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EAttribute IMPL_SINGLE_REF_CONTAINED_ELEMENT__NAME = eINSTANCE.getImplSingleRefContainedElement_Name();
@@ -2278,7 +2278,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefNonContainerImpl
      * <em>Impl Single Ref Non Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefNonContainerImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplSingleRefNonContainer()
      * @generated
@@ -2289,7 +2289,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefNonContainedElementImpl
      * <em>Impl Single Ref Non Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefNonContainedElementImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplSingleRefNonContainedElement()
      * @generated
@@ -2299,7 +2299,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EAttribute IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT__NAME = eINSTANCE.getImplSingleRefNonContainedElement_Name();
@@ -2308,7 +2308,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainerImpl
      * <em>Impl Multi Ref Non Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainerImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplMultiRefNonContainer()
      * @generated
@@ -2319,7 +2319,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainedElementImpl
      * <em>Impl Multi Ref Non Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainedElementImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplMultiRefNonContainedElement()
      * @generated
@@ -2329,7 +2329,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EAttribute IMPL_MULTI_REF_NON_CONTAINED_ELEMENT__NAME = eINSTANCE.getImplMultiRefNonContainedElement_Name();
@@ -2337,7 +2337,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefContainerImpl
      * <em>Impl Multi Ref Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefContainerImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplMultiRefContainer()
      * @generated
@@ -2348,7 +2348,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefContainedElementImpl
      * <em>Impl Multi Ref Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefContainedElementImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplMultiRefContainedElement()
      * @generated
@@ -2358,7 +2358,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EAttribute IMPL_MULTI_REF_CONTAINED_ELEMENT__NAME = eINSTANCE.getImplMultiRefContainedElement_Name();
@@ -2367,7 +2367,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefContainerNPLImpl
      * <em>Impl Single Ref Container NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefContainerNPLImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplSingleRefContainerNPL()
      * @generated
@@ -2378,7 +2378,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefNonContainerNPLImpl
      * <em>Impl Single Ref Non Container NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefNonContainerNPLImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplSingleRefNonContainerNPL()
      * @generated
@@ -2389,7 +2389,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefContainerNPLImpl
      * <em>Impl Multi Ref Container NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefContainerNPLImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplMultiRefContainerNPL()
      * @generated
@@ -2400,7 +2400,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainerNPLImpl
      * <em>Impl Multi Ref Non Container NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainerNPLImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplMultiRefNonContainerNPL()
      * @generated
@@ -2410,7 +2410,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplContainedElementNPLImpl
      * <em>Impl Contained Element NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplContainedElementNPLImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getImplContainedElementNPL()
      * @generated
@@ -2421,7 +2421,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMultiNUNonContainedImpl
      * <em>Gen Ref Multi NU Non Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMultiNUNonContainedImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getGenRefMultiNUNonContained()
      * @generated
@@ -2431,7 +2431,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Elements</b></em>' reference list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference GEN_REF_MULTI_NU_NON_CONTAINED__ELEMENTS = eINSTANCE.getGenRefMultiNUNonContained_Elements();
@@ -2439,7 +2439,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMapNonContainedImpl
      * <em>Gen Ref Map Non Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMapNonContainedImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getGenRefMapNonContained()
      * @generated
@@ -2449,7 +2449,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Elements</b></em>' map feature. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     *
+     * 
      * @generated
      */
     EReference GEN_REF_MAP_NON_CONTAINED__ELEMENTS = eINSTANCE.getGenRefMapNonContained_Elements();
@@ -2457,7 +2457,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.StringToEObjectImpl
      * <em>String To EObject</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     *
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.StringToEObjectImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model4.impl.model4PackageImpl#getStringToEObject()
      * @generated
@@ -2467,7 +2467,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Key</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EAttribute STRING_TO_EOBJECT__KEY = eINSTANCE.getStringToEObject_Key();
@@ -2475,7 +2475,7 @@ public interface model4Package extends org.eclipse.emf.cdo.tests.model4.model4Pa
     /**
      * The meta object literal for the '<em><b>Value</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     *
+     * 
      * @generated
      */
     EReference STRING_TO_EOBJECT__VALUE = eINSTANCE.getStringToEObject_Value();

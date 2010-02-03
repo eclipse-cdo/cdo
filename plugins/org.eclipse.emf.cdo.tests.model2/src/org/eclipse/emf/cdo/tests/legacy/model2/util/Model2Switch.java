@@ -31,7 +31,7 @@ import java.util.List;
  * {@link #doSwitch(EObject) doSwitch(object)} to invoke the <code>caseXXX</code> method for each class of the model,
  * starting with the actual class of the object and proceeding up the inheritance hierarchy until a non-null result is
  * returned, which is the result of the switch. <!-- end-user-doc -->
- *
+ * 
  * @see org.eclipse.emf.cdo.tests.legacy.model2.Model2Package
  * @generated
  */
@@ -39,14 +39,14 @@ public class Model2Switch<T>
 {
   /**
    * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected static Model2Package modelPackage;
 
   /**
    * Creates an instance of the switch. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public Model2Switch()
@@ -60,7 +60,7 @@ public class Model2Switch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -72,7 +72,7 @@ public class Model2Switch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -92,7 +92,7 @@ public class Model2Switch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -169,7 +169,7 @@ public class Model2Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Special Purchase Order</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   *
+   * 
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Special Purchase Order</em>'.
@@ -184,7 +184,7 @@ public class Model2Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Task Container</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   *
+   * 
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Task Container</em>'.
@@ -199,7 +199,7 @@ public class Model2Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Task</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   *
+   * 
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Task</em>'.
@@ -214,7 +214,7 @@ public class Model2Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Unsettable1</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   *
+   * 
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Unsettable1</em>'.
@@ -230,7 +230,7 @@ public class Model2Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Unsettable2 With Default</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   *
+   * 
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Unsettable2 With Default</em>'.
@@ -246,7 +246,7 @@ public class Model2Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Persistent Containment</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   *
+   * 
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Persistent Containment</em>'.
@@ -261,7 +261,7 @@ public class Model2Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Transient Container</em>'. <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   *
+   * 
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Transient Container</em>'.
@@ -276,7 +276,7 @@ public class Model2Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Order</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   *
+   * 
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Order</em>'.
@@ -291,7 +291,7 @@ public class Model2Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Purchase Order</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   *
+   * 
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Purchase Order</em>'.
@@ -307,7 +307,7 @@ public class Model2Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>EObject</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch, but this is the last case
    * anyway. <!-- end-user-doc -->
-   *
+   * 
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.

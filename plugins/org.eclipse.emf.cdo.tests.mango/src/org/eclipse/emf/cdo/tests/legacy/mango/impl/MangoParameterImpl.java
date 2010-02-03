@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.MangoParameterImpl#getPassing <em>Passing</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class MangoParameterImpl extends EObjectImpl implements MangoParameter
@@ -36,7 +36,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -45,7 +45,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
 
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -55,7 +55,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
   /**
    * The default value of the '{@link #getPassing() <em>Passing</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @see #getPassing()
    * @generated
    * @ordered
@@ -65,7 +65,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
   /**
    * The cached value of the '{@link #getPassing() <em>Passing</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   *
+   * 
    * @see #getPassing()
    * @generated
    * @ordered
@@ -74,7 +74,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected MangoParameterImpl()
@@ -84,7 +84,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -95,7 +95,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public String getName()
@@ -105,7 +105,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -118,7 +118,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public ParameterPassing getPassing()
@@ -128,7 +128,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setPassing(ParameterPassing newPassing)
@@ -141,7 +141,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -159,7 +159,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -179,7 +179,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -199,7 +199,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -217,7 +217,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

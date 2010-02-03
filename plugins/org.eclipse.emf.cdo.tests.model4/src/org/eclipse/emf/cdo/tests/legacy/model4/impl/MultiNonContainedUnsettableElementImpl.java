@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * </em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implements MultiNonContainedUnsettableElement
@@ -41,7 +41,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -50,7 +50,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -60,7 +60,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
   /**
    * The cached value of the '{@link #getParent() <em>Parent</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   *
+   * 
    * @see #getParent()
    * @generated
    * @ordered
@@ -69,7 +69,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * This is true if the Parent reference has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    * @ordered
    */
@@ -77,7 +77,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected MultiNonContainedUnsettableElementImpl()
@@ -87,7 +87,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -98,7 +98,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public String getName()
@@ -108,7 +108,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -122,7 +122,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public RefMultiNonContainedUnsettable getParent()
@@ -143,7 +143,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public RefMultiNonContainedUnsettable basicGetParent()
@@ -153,7 +153,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public NotificationChain basicSetParent(RefMultiNonContainedUnsettable newParent, NotificationChain msgs)
@@ -176,7 +176,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setParent(RefMultiNonContainedUnsettable newParent)
@@ -206,7 +206,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public NotificationChain basicUnsetParent(NotificationChain msgs)
@@ -229,7 +229,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void unsetParent()
@@ -255,7 +255,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public boolean isSetParent()
@@ -265,7 +265,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -284,7 +284,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -300,7 +300,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -320,7 +320,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -340,7 +340,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -360,7 +360,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -378,7 +378,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplContainedElementNPLImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplContainedElementNPL
@@ -37,7 +37,7 @@ public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplCont
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -46,7 +46,7 @@ public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplCont
 
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -55,7 +55,7 @@ public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected ImplContainedElementNPLImpl()
@@ -65,7 +65,7 @@ public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -76,7 +76,7 @@ public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public String getName()
@@ -86,7 +86,7 @@ public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -100,7 +100,7 @@ public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -116,7 +116,7 @@ public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -133,7 +133,7 @@ public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -150,7 +150,7 @@ public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -166,7 +166,7 @@ public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -187,7 +187,7 @@ public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -208,7 +208,7 @@ public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplCont
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

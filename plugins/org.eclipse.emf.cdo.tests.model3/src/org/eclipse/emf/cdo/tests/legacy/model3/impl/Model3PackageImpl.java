@@ -25,21 +25,21 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class Model3PackageImpl extends EPackageImpl implements Model3Package
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   private EClass class1EClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   private EClass metaRefEClass = null;
@@ -51,7 +51,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.emf.cdo.tests.legacy.model3.Model3Package#eNS_URI
    * @see #init()
@@ -64,7 +64,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   private static boolean isInited = false;
@@ -75,7 +75,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * This method is used to initialize {@link Model3Package#eINSTANCE} when that field is accessed. Clients should not
    * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -119,7 +119,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public EClass getClass1()
@@ -129,7 +129,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public EReference getClass1_Class2()
@@ -139,7 +139,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public EClass getMetaRef()
@@ -149,7 +149,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public EReference getMetaRef_EPackageRef()
@@ -159,7 +159,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public Model3Factory getModel3Factory()
@@ -169,7 +169,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   private boolean isCreated = false;
@@ -177,7 +177,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   /**
    * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
    * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void createPackageContents()
@@ -196,7 +196,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   private boolean isInitialized = false;
@@ -204,7 +204,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   /**
    * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
    * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void initializePackageContents()

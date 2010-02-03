@@ -242,8 +242,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   }
 
   /**
-   * Bug 249383: Dynamic models in the global EPackage.Registry are not committed
-   * bug 249383
+   * Bug 249383: Dynamic models in the global EPackage.Registry are not committed bug 249383
    */
   public void testGlobalDynamicPackageEager() throws Exception
   {
@@ -283,8 +282,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   }
 
   /**
-   * Bug 249383: Dynamic models in the global EPackage.Registry are not committed
-   * bug 249383
+   * Bug 249383: Dynamic models in the global EPackage.Registry are not committed bug 249383
    */
   public void testGlobalDynamicPackage() throws Exception
   {

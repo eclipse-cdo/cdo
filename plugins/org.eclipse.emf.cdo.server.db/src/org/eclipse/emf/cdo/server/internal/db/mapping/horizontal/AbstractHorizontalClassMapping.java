@@ -107,7 +107,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     }
     else
     {
-    table.addIndex(IDBIndex.Type.UNIQUE, idField, versionField);
+      table.addIndex(IDBIndex.Type.UNIQUE, idField, versionField);
     }
 
     table.addIndex(IDBIndex.Type.NON_UNIQUE, idField, revisedField);

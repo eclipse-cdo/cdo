@@ -24,8 +24,8 @@ import org.eclipse.net4j.util.security.INegotiator;
  * COORDS="449,133,549,159" HREF="ConnectorState.html#NEGOTIATING"> <AREA SHAPE="RECT" COORDS="451,216,545,240"
  * HREF="ConnectorState.html#CONNECTED"> <AREA SHAPE="POLYGON" COORDS="10,89,11,183,164,183,163,109,77,109,77,89,11,88"
  * HREF="../util/lifecycle/ILifecycle.html#isActive()"> <AREA SHAPE="POLYGON"
- * COORDS="429,10,428,262,597,263,597,30,483,29,483,10,428,11"
- * HREF="../util/lifecycle/ILifecycle.html#isActive()"> </MAP>
+ * COORDS="429,10,428,262,597,263,597,30,483,29,483,10,428,11" HREF="../util/lifecycle/ILifecycle.html#isActive()">
+ * </MAP>
  * 
  * @see IConnector#getState()
  * @author Eike Stepper

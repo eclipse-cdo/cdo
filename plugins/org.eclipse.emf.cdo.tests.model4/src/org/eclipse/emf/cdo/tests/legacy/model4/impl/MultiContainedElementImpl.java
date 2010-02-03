@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.MultiContainedElementImpl#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class MultiContainedElementImpl extends EObjectImpl implements MultiContainedElement
@@ -40,7 +40,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -49,7 +49,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
 
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -58,7 +58,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected MultiContainedElementImpl()
@@ -68,7 +68,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -79,7 +79,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public String getName()
@@ -89,7 +89,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -102,7 +102,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public RefMultiContained getParent()
@@ -114,7 +114,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public NotificationChain basicSetParent(RefMultiContained newParent, NotificationChain msgs)
@@ -125,7 +125,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setParent(RefMultiContained newParent)
@@ -152,7 +152,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -170,7 +170,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -186,7 +186,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -203,7 +203,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -221,7 +221,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -241,7 +241,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -261,7 +261,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -279,7 +279,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefSingleContainedImpl#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class GenRefSingleContainedImpl extends EObjectImpl implements GenRefSingleContained
@@ -38,7 +38,7 @@ public class GenRefSingleContainedImpl extends EObjectImpl implements GenRefSing
   /**
    * The cached value of the '{@link #getElement() <em>Element</em>}' containment reference. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
+   * 
    * @see #getElement()
    * @generated
    * @ordered
@@ -47,7 +47,7 @@ public class GenRefSingleContainedImpl extends EObjectImpl implements GenRefSing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected GenRefSingleContainedImpl()
@@ -57,7 +57,7 @@ public class GenRefSingleContainedImpl extends EObjectImpl implements GenRefSing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -68,7 +68,7 @@ public class GenRefSingleContainedImpl extends EObjectImpl implements GenRefSing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public EObject getElement()
@@ -78,7 +78,7 @@ public class GenRefSingleContainedImpl extends EObjectImpl implements GenRefSing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public NotificationChain basicSetElement(EObject newElement, NotificationChain msgs)
@@ -99,7 +99,7 @@ public class GenRefSingleContainedImpl extends EObjectImpl implements GenRefSing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setElement(EObject newElement)
@@ -124,7 +124,7 @@ public class GenRefSingleContainedImpl extends EObjectImpl implements GenRefSing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -140,7 +140,7 @@ public class GenRefSingleContainedImpl extends EObjectImpl implements GenRefSing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -156,7 +156,7 @@ public class GenRefSingleContainedImpl extends EObjectImpl implements GenRefSing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -173,7 +173,7 @@ public class GenRefSingleContainedImpl extends EObjectImpl implements GenRefSing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -190,7 +190,7 @@ public class GenRefSingleContainedImpl extends EObjectImpl implements GenRefSing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

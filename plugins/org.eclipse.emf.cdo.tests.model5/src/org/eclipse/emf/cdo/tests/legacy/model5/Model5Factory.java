@@ -27,7 +27,7 @@ import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 /**
  * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
  * the model. <!-- end-user-doc -->
- *
+ * 
  * @see org.eclipse.emf.cdo.tests.legacy.model5.Model5Package
  * @generated
  */
@@ -35,21 +35,21 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   String copyright = "Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * The singleton instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   Model5Factory eINSTANCE = org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5FactoryImpl.init();
 
   /**
    * Returns a new object of class '<em>Test Feature Map</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return a new object of class '<em>Test Feature Map</em>'.
    * @generated
    */
@@ -57,7 +57,7 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
 
   /**
    * Returns a new object of class '<em>Manager</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return a new object of class '<em>Manager</em>'.
    * @generated
    */
@@ -65,7 +65,7 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
 
   /**
    * Returns a new object of class '<em>Doctor</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return a new object of class '<em>Doctor</em>'.
    * @generated
    */
@@ -73,7 +73,7 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
 
   /**
    * Returns a new object of class '<em>Gen List Of String</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return a new object of class '<em>Gen List Of String</em>'.
    * @generated
    */
@@ -81,7 +81,7 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
 
   /**
    * Returns a new object of class '<em>Gen List Of Int</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return a new object of class '<em>Gen List Of Int</em>'.
    * @generated
    */
@@ -89,7 +89,7 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
 
   /**
    * Returns a new object of class '<em>Gen List Of Integer</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return a new object of class '<em>Gen List Of Integer</em>'.
    * @generated
    */
@@ -97,7 +97,7 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
 
   /**
    * Returns a new object of class '<em>Gen List Of Long</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return a new object of class '<em>Gen List Of Long</em>'.
    * @generated
    */
@@ -105,7 +105,7 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
 
   /**
    * Returns a new object of class '<em>Gen List Of Boolean</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return a new object of class '<em>Gen List Of Boolean</em>'.
    * @generated
    */
@@ -113,7 +113,7 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
 
   /**
    * Returns a new object of class '<em>Gen List Of Short</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return a new object of class '<em>Gen List Of Short</em>'.
    * @generated
    */
@@ -121,7 +121,7 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
 
   /**
    * Returns a new object of class '<em>Gen List Of Float</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return a new object of class '<em>Gen List Of Float</em>'.
    * @generated
    */
@@ -129,7 +129,7 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
 
   /**
    * Returns a new object of class '<em>Gen List Of Double</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return a new object of class '<em>Gen List Of Double</em>'.
    * @generated
    */
@@ -137,7 +137,7 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
 
   /**
    * Returns a new object of class '<em>Gen List Of Date</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return a new object of class '<em>Gen List Of Date</em>'.
    * @generated
    */
@@ -145,7 +145,7 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
 
   /**
    * Returns a new object of class '<em>Gen List Of Char</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return a new object of class '<em>Gen List Of Char</em>'.
    * @generated
    */
@@ -153,7 +153,7 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
 
   /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @return the package supported by this factory.
    * @generated
    */

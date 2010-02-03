@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.MultiNonContainedElementImpl#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNonContainedElement
@@ -39,7 +39,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -48,7 +48,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
 
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -58,7 +58,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
   /**
    * The cached value of the '{@link #getParent() <em>Parent</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   *
+   * 
    * @see #getParent()
    * @generated
    * @ordered
@@ -67,7 +67,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected MultiNonContainedElementImpl()
@@ -77,7 +77,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -88,7 +88,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public String getName()
@@ -98,7 +98,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -112,7 +112,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public RefMultiNonContained getParent()
@@ -133,7 +133,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public RefMultiNonContained basicGetParent()
@@ -143,7 +143,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public NotificationChain basicSetParent(RefMultiNonContained newParent, NotificationChain msgs)
@@ -164,7 +164,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public void setParent(RefMultiNonContained newParent)
@@ -189,7 +189,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -208,7 +208,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -224,7 +224,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -244,7 +244,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -264,7 +264,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -284,7 +284,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -302,7 +302,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

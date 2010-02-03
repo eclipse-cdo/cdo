@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -45,7 +46,7 @@ public abstract class CDOTimeRequest<RESULT> extends CDOClientRequest<RESULT>
     repositoryTimeResult.setRequested(System.currentTimeMillis());
     if (TRACER.isEnabled())
     {
-      TRACER.format("Requested: {0,date} {0,time,HH:mm:ss:SSS}", repositoryTimeResult.getRequested()); //$NON-NLS-1$
+      TRACER.format("Requested: {0}", CDOCommonUtil.formatTimeStamp(repositoryTimeResult.getRequested())); //$NON-NLS-1$
     }
   }
 
@@ -55,19 +56,19 @@ public abstract class CDOTimeRequest<RESULT> extends CDOClientRequest<RESULT>
     repositoryTimeResult.setConfirmed(System.currentTimeMillis());
     if (TRACER.isEnabled())
     {
-      TRACER.format("Confirmed: {0,date} {0,time,HH:mm:ss:SSS}", repositoryTimeResult.getConfirmed()); //$NON-NLS-1$
+      TRACER.format("Confirmed: {0}", CDOCommonUtil.formatTimeStamp(repositoryTimeResult.getConfirmed())); //$NON-NLS-1$
     }
 
     repositoryTimeResult.setIndicated(in.readLong());
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read indicated: {0,date} {0,time,HH:mm:ss:SSS}", repositoryTimeResult.getIndicated()); //$NON-NLS-1$
+      TRACER.format("Read indicated: {0}", CDOCommonUtil.formatTimeStamp(repositoryTimeResult.getIndicated())); //$NON-NLS-1$
     }
 
     repositoryTimeResult.setResponded(in.readLong());
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read responded: {0,date} {0,time,HH:mm:ss:SSS}", repositoryTimeResult.getResponded()); //$NON-NLS-1$
+      TRACER.format("Read responded: {0}", CDOCommonUtil.formatTimeStamp(repositoryTimeResult.getResponded())); //$NON-NLS-1$
     }
 
     return null;

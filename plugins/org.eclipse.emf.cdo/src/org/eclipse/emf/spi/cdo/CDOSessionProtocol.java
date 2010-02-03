@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
@@ -292,10 +293,9 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     @Override
     public String toString()
     {
-      return MessageFormat
-          .format(
-              "RepositoryTime[requested={0,date} {0,time,HH:mm:ss:SSS}, indicated={1,date} {1,time,HH:mm:ss:SSS}, responded={2,date} {2,time,HH:mm:ss:SSS}, confirmed={3,date} {3,time,HH:mm:ss:SSS}]",
-              requested, indicated, responded, confirmed);
+      return MessageFormat.format("RepositoryTime[requested={0}, indicated={1}, responded={2}, confirmed={3}]",
+          CDOCommonUtil.formatTimeStamp(requested), CDOCommonUtil.formatTimeStamp(indicated), CDOCommonUtil
+              .formatTimeStamp(responded), CDOCommonUtil.formatTimeStamp(confirmed));
     }
   }
 

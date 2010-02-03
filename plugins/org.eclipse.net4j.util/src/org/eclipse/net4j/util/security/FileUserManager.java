@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -128,7 +128,7 @@ public class FileUserManager extends UserManager
       properties.put(entry.getKey(), new String(entry.getValue()));
     }
 
-    String comment = MessageFormat.format("User database {0,date} {0,time}", System.currentTimeMillis()); //$NON-NLS-1$
+    String comment = MessageFormat.format("User database {0,date} {0,time,HH:mm:ss:SSS}", System.currentTimeMillis());
     properties.store(stream, comment);
   }
 }

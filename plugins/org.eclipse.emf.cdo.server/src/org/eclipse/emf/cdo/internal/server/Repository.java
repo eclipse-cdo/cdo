@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
@@ -704,7 +705,7 @@ public class Repository extends Container<Object> implements InternalRepository
       throw new IllegalArgumentException(
           MessageFormat
               .format(
-                  "timeStamp ({0,date} {0,time,HH:mm:ss:SSS}) < repository creation time ({1,date} {1,time,HH:mm:ss:SSS})", timeStamp, creationTimeStamp)); //$NON-NLS-1$
+                  "timeStamp ({0}) < repository creation time ({1})", CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(creationTimeStamp))); //$NON-NLS-1$
     }
 
     long currentTimeStamp = getTimeStamp();
@@ -713,7 +714,7 @@ public class Repository extends Container<Object> implements InternalRepository
       throw new IllegalArgumentException(
           MessageFormat
               .format(
-                  "timeStamp ({0,date} {0,time,HH:mm:ss:SSS}) > current time ({1,date} {1,time,HH:mm:ss:SSS})", timeStamp, currentTimeStamp)); //$NON-NLS-1$
+                  "timeStamp ({0}) > current time ({1})", CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(currentTimeStamp))); //$NON-NLS-1$
     }
   }
 

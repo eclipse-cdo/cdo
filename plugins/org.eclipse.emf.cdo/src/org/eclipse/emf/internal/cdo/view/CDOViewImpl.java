@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -316,7 +317,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       throw new IllegalArgumentException(
           MessageFormat
               .format(
-                  "timeStamp ({0,date} {0,time,HH:mm:ss:SSS}) < repository creation time ({1,date} {1,time,HH:mm:ss:SSS})", timeStamp, creationTimeStamp)); //$NON-NLS-1$
+                  "timeStamp ({0}) < repository creation time ({1})", CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(creationTimeStamp))); //$NON-NLS-1$
     }
 
     if (branchPoint.equals(this.branchPoint))

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.internal.net4j.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -96,13 +97,13 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
     long repositoryCreationTime = in.readLong();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read repositoryCreationTime: {0,date} {0,time,HH:mm:ss:SSS}", repositoryCreationTime); //$NON-NLS-1$
+      TRACER.format("Read repositoryCreationTime: {0}", CDOCommonUtil.formatTimeStamp(repositoryCreationTime)); //$NON-NLS-1$
     }
 
     long lastUpdateTime = in.readLong();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read lastUpdateTime: {0,date} {0,time,HH:mm:ss:SSS}", lastUpdateTime); //$NON-NLS-1$
+      TRACER.format("Read lastUpdateTime: {0}", CDOCommonUtil.formatTimeStamp(lastUpdateTime)); //$NON-NLS-1$
     }
 
     boolean repositorySupportingAudits = in.readBoolean();

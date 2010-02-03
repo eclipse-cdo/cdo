@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.internal.ui;
 
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
@@ -23,8 +24,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IPersistableElement;
-
-import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -121,7 +120,7 @@ public class CDOEditorInputImpl extends PlatformObject implements CDOEditorInput
     long timeStamp = view.getTimeStamp();
     if (timeStamp != CDOView.UNSPECIFIED_DATE)
     {
-      builder.append(MessageFormat.format(" {0,date} {0,time,HH:mm:ss:SSS}", timeStamp)); //$NON-NLS-1$
+      builder.append(CDOCommonUtil.formatTimeStamp(timeStamp));
     }
 
     return builder.toString();

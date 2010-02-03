@@ -243,7 +243,6 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
         {
           if (!resultSet.getBoolean(unsettableFields.get(feature)))
           {
-
             // isSet==false -- setValue: null
             revision.setValue(feature, null);
             continue;

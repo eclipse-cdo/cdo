@@ -155,6 +155,7 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
           queueWorker.addWork(createWork(currentWorkProduced));
           Thread.sleep(random.nextInt(1000));
         }
+
         // correct last increment
         workProduced.decrementAndGet();
         IOUtil.OUT().println("work producer " + this + " stopped its production");

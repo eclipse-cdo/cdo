@@ -399,6 +399,7 @@ public class AuditTest extends AbstractCDOTest
     {
       result += " " + i;
     }
+
     return result;
   }
 

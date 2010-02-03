@@ -35,5 +35,4 @@ public class HibernateBugzilla_258933_Test extends Bugzilla_258933_Test
   public void testBugzilla_258933_String_SetToNull_unsettable() throws Exception
   {
   }
-
 }

@@ -66,6 +66,7 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
     {
       return null;
     }
+
     // hibernate sees eenums, CDO sees int
     if (isEEnum)
     {

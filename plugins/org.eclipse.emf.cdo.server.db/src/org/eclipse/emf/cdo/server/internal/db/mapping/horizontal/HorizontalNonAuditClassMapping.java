@@ -364,7 +364,6 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
-
     long timeStamp = revision.getTimeStamp();
     if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
     {
@@ -669,7 +668,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       {
         builder.append(", "); //$NON-NLS-1$
         builder.append(getUnsettableFields().get(typeMapping.getFeature()));
-        builder.append(" =? "); //$NON-NLS-1$            
+        builder.append(" =? "); //$NON-NLS-1$
       }
     }
 

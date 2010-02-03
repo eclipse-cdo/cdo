@@ -40,7 +40,6 @@ import java.util.Date;
  */
 public class UnsetTest extends AbstractCDOTest
 {
-
   /**
    * needed for {@link #commitAndLoadTx(CDOObject)}
    */

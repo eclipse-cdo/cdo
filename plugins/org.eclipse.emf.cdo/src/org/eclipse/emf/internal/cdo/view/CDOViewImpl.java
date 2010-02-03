@@ -409,7 +409,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
       try
       {
-
         getCDOIDAndVersion(uniqueObjects, objects);
         for (CDOObject object : objects)
         {

@@ -291,7 +291,6 @@ public abstract class DelegatingRepository implements InternalRepository
   public long getTimeStamp()
   {
     return getDelegate().getTimeStamp();
-
   }
 
   public void validateTimeStamp(long timeStamp) throws IllegalArgumentException

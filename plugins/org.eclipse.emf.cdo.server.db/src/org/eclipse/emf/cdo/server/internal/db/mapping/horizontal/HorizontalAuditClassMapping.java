@@ -440,6 +440,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
             stmt.setBoolean(isSetCol++, true);
           }
         }
+
         mapping.setValueFromRevision(stmt, col++, revision);
       }
 

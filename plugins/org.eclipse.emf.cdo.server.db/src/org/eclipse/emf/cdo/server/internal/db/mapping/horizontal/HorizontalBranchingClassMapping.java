@@ -446,6 +446,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
             stmt.setBoolean(isSetCol++, true);
           }
         }
+
         mapping.setValueFromRevision(stmt, col++, revision);
       }
 
@@ -531,6 +532,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
             stmt.setBoolean(isSetCol++, true);
           }
         }
+
         mapping.setValueFromRevision(stmt, col++, revision);
       }
 

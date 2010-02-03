@@ -940,8 +940,8 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       {
         TRACER.format("Delta Clearing"); //$NON-NLS-1$
       }
-      clearList(accessor, id, oldVersion, newVersion);
 
+      clearList(accessor, id, oldVersion, newVersion);
       lastIndex = -1;
     }
 

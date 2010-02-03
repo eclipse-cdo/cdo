@@ -1613,5 +1613,4 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       return stringBuffer.toString();
     }
   }
-
 }

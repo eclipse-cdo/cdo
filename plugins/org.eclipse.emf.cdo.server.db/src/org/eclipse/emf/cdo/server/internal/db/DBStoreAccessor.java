@@ -176,6 +176,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       {
         return new DetachedCDORevision(id, branchPoint.getBranch(), 1, branchPoint.getTimeStamp());
       }
+
       return revision;
     }
 
@@ -227,6 +228,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
             + " - version requested was " + branchVersion + "."); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
+
     return success ? revision : null;
   }
 

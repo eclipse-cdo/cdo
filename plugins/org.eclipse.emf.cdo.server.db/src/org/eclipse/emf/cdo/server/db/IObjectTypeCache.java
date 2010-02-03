@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Stefan Winkler - 271444: [DB] Multiple refactorings bug 271444  
+ *    Stefan Winkler - 271444: [DB] Multiple refactorings bug 271444
  */
 package org.eclipse.emf.cdo.server.db;
 
@@ -43,8 +43,8 @@ public interface IObjectTypeCache
    * 
    * @param connection
    *          the DB connection to use.
-   * @return the maximum object id.
-   * @since 2.0
+   * @return the maximum object ID.
+   * @since 3.0
    */
-  public long getMaxId(Connection connection);
+  public long getMaxID(Connection connection);
 }

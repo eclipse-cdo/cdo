@@ -49,7 +49,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -360,9 +359,9 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     return table;
   }
 
-  public Collection<IDBTable> getDBTables()
+  public List<IDBTable> getDBTables()
   {
-    ArrayList<IDBTable> tables = new ArrayList<IDBTable>();
+    List<IDBTable> tables = new ArrayList<IDBTable>();
     tables.add(table);
 
     for (IListMapping listMapping : listMappings)

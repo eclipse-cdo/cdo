@@ -162,7 +162,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     }
   }
 
-  public long getMaxId(Connection connection)
+  public long getMaxID(Connection connection)
   {
     return DBUtil.selectMaximumLong(connection, idField);
   }

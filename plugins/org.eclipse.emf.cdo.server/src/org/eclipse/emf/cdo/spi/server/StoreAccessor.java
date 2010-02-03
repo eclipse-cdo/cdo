@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -168,6 +169,31 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
       monitor.done();
     }
   }
+
+  /**
+   * @since 3.0
+   */
+  public final void commit(OMMonitor monitor)
+  {
+    doCommit(monitor);
+
+    long latest = CDORevision.UNSPECIFIED_DATE;
+    for (CommitContext commitContext : commitContexts)
+    {
+      long timeStamp = commitContext.getBranchPoint().getTimeStamp();
+      if (timeStamp > latest)
+      {
+        latest = timeStamp;
+      }
+    }
+
+    store.setLastCommitTime(latest);
+  }
+
+  /**
+   * @since 3.0
+   */
+  protected abstract void doCommit(OMMonitor monitor);
 
   public void rollback()
   {

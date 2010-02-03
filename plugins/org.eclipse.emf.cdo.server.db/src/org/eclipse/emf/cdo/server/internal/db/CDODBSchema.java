@@ -52,6 +52,9 @@ public class CDODBSchema extends DBSchema
   public static final IDBField REPOSITORY_LAST_BRANCHID = //
   REPOSITORY.addField("last_branchid", DBType.INTEGER); //$NON-NLS-1$
 
+  public static final IDBField REPOSITORY_LAST_COMMITTIME = //
+  REPOSITORY.addField("last_committime", DBType.BIGINT); //$NON-NLS-1$
+
   /**
    * DBTable cdo_package_units
    */
@@ -186,7 +189,7 @@ public class CDODBSchema extends DBSchema
 
   public static final String LIST_REVISION_VERSION_REMOVED = "cdo_version_removed"; //$NON-NLS-1$
 
-  public static final String LIST_REVISION_BRANCH = "cdo_branch"; //$NON-NLS-1$ 
+  public static final String LIST_REVISION_BRANCH = "cdo_branch"; //$NON-NLS-1$
 
   public static final String LIST_IDX = "cdo_idx"; //$NON-NLS-1$
 
@@ -203,7 +206,7 @@ public class CDODBSchema extends DBSchema
 
   public static final String FEATUREMAP_VERSION_REMOVED = "cdo_version_removed"; //$NON-NLS-1$
 
-  public static final String FEATUREMAP_BRANCH = "cdo_branch"; //$NON-NLS-1$ 
+  public static final String FEATUREMAP_BRANCH = "cdo_branch"; //$NON-NLS-1$
 
   public static final String FEATUREMAP_IDX = "cdo_idx"; //$NON-NLS-1$
 

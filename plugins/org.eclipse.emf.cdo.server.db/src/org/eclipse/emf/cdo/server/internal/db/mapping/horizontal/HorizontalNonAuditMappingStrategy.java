@@ -41,13 +41,11 @@ public class HorizontalNonAuditMappingStrategy extends AbstractHorizontalMapping
     return new NonAuditFeatureMapTableMapping(this, containingClass, feature);
   }
 
-  @Override
   public boolean hasAuditSupport()
   {
     return false;
   }
 
-  @Override
   public boolean hasDeltaSupport()
   {
     return true;

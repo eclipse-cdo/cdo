@@ -27,13 +27,11 @@ public class HorizontalAuditMappingStrategyWithRanges extends AbstractHorizontal
   {
   }
 
-  @Override
   public boolean hasDeltaSupport()
   {
     return true;
   }
 
-  @Override
   public boolean hasAuditSupport()
   {
     return true;

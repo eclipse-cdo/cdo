@@ -422,7 +422,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     return connection;
   }
 
-  public final void commit(OMMonitor monitor)
+  @Override
+  protected final void doCommit(OMMonitor monitor)
   {
     monitor.begin();
     Async async = monitor.forkAsync();

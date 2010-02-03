@@ -208,7 +208,7 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
    * 
    * @since 3.0
    */
-  public long getLastUpdateTime();
+  public long getLastCommitTime();
 
   /**
    * Blocks the calling thread until a commit operation with the given time stamp or higher has occured.

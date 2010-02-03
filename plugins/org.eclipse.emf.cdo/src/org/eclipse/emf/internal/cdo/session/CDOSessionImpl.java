@@ -498,7 +498,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return Collections.emptyList();
   }
 
-  public long getLastUpdateTime()
+  public long getLastCommitTime()
   {
     synchronized (lastUpdateTimeLock)
     {

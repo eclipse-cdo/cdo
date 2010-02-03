@@ -14,6 +14,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
@@ -286,29 +287,33 @@ public class DBStore extends LongIDStore implements IDBStore
     firstTime = true;
 
     DBUtil.insertRow(connection, dbAdapter, CDODBSchema.REPOSITORY, creationTime, 1, creationTime, 0, CRASHED_OID,
-        CRASHED_OID, CRASHED_BRANCHID);
+        CRASHED_OID, CRASHED_BRANCHID, CDORevision.UNSPECIFIED_DATE);
     OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.8"), creationTime)); //$NON-NLS-1$
   }
 
   protected void reStart(Connection connection)
   {
     creationTime = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_CREATED);
-    long lastMetaId = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_LAST_METAID);
     long lastObjectID = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_LAST_CDOID);
-    int lastBranchID = DBUtil.selectMaximumInt(connection, CDODBSchema.BRANCHES_ID);
+    long lastMetaID = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_LAST_METAID);
+    int lastBranchID = DBUtil.selectMaximumInt(connection, CDODBSchema.REPOSITORY_LAST_BRANCHID);
+    long lastCommitTime = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_LAST_COMMITTIME);
 
-    if (lastObjectID == CRASHED_OID || getLastMetaID() == CRASHED_OID || getLastBranchID() == CRASHED_BRANCHID)
+    if (lastObjectID == CRASHED_OID)
     {
       OM.LOG.info(Messages.getString("DBStore.9")); //$NON-NLS-1$
-      lastObjectID = mappingStrategy.repairAfterCrash(dbAdapter, connection);
-      lastMetaId = DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGE_INFOS_META_UB);
+      long[] result = mappingStrategy.repairAfterCrash(dbAdapter, connection);
+      lastObjectID = result[0];
+      lastCommitTime = result[1];
+      lastMetaID = DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGE_INFOS_META_UB);
       lastBranchID = DBUtil.selectMaximumInt(connection, CDODBSchema.BRANCHES_ID);
-      OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.10"), lastObjectID, lastMetaId)); //$NON-NLS-1$
+      OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.10"), lastObjectID, lastMetaID)); //$NON-NLS-1$
     }
 
-    setLastMetaID(lastMetaId);
+    setLastMetaID(lastMetaID);
     setLastObjectID(lastObjectID);
     setLastBranchID(lastBranchID);
+    setLastCommitTime(lastCommitTime);
 
     StringBuilder builder = new StringBuilder();
     builder.append("UPDATE "); //$NON-NLS-1$
@@ -327,14 +332,6 @@ public class DBStore extends LongIDStore implements IDBStore
     builder.append(CDODBSchema.REPOSITORY_LAST_CDOID);
     builder.append("="); //$NON-NLS-1$
     builder.append(CRASHED_OID);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.REPOSITORY_LAST_METAID);
-    builder.append("="); //$NON-NLS-1$
-    builder.append(CRASHED_OID);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.REPOSITORY_LAST_BRANCHID);
-    builder.append("="); //$NON-NLS-1$
-    builder.append(CRASHED_BRANCHID);
 
     String sql = builder.toString();
     int count = DBUtil.update(connection, sql);
@@ -380,6 +377,10 @@ public class DBStore extends LongIDStore implements IDBStore
       builder.append(CDODBSchema.REPOSITORY_LAST_BRANCHID);
       builder.append("="); //$NON-NLS-1$
       builder.append(getLastBranchID());
+      builder.append(", "); //$NON-NLS-1$
+      builder.append(CDODBSchema.REPOSITORY_LAST_COMMITTIME);
+      builder.append("="); //$NON-NLS-1$
+      builder.append(getLastCommitTime());
 
       String sql = builder.toString();
       int count = DBUtil.update(connection, sql);

@@ -446,9 +446,10 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
    * Commits the session, {@see {@link #commitRollbackHibernateSession()}.
    * 
    * @param monitor
-   *          , not used
+   *          not used
    */
-  public void commit(OMMonitor monitor)
+  @Override
+  protected void doCommit(OMMonitor monitor)
   {
     commitRollbackHibernateSession();
     HibernateThreadContext.setCommitContext(null);

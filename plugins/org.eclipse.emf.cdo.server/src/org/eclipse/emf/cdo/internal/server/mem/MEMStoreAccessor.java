@@ -175,7 +175,8 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
   /**
    * @since 2.0
    */
-  public void commit(OMMonitor monitor)
+  @Override
+  protected void doCommit(OMMonitor monitor)
   {
     // Do nothing
   }

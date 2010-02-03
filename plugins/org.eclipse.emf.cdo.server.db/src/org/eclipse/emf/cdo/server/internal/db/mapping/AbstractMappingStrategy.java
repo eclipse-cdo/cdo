@@ -16,10 +16,8 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
-import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
@@ -34,7 +32,6 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringUtil;
@@ -163,10 +160,6 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     return getStore().getMetaDataManager();
   }
 
-  public abstract boolean hasAuditSupport();
-
-  public abstract boolean hasDeltaSupport();
-
   // -- object id related methods ----------------------------------------
 
   public CloseableIterator<CDOID> readObjectIDs(IDBStoreAccessor dbStoreAccessor)
@@ -214,15 +207,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     };
   };
 
-  public abstract CDOClassifierRef readObjectType(IDBStoreAccessor dbStoreAccessor, CDOID id);
-
-  public abstract long repairAfterCrash(IDBAdapter dbAdapter, Connection connection);
-
   protected abstract Collection<EClass> getClassesWithObjectInfo();
-
-  // -- resource query handling ------------------------------------------
-
-  public abstract void queryResources(IDBStoreAccessor dbStoreAccessor, QueryResourcesContext context);
 
   // -- database name demangling methods ---------------------------------
 
@@ -391,7 +376,6 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   private Set<IDBTable> getModelTables()
   {
     Set<IDBTable> tables = new HashSet<IDBTable>();
-
     for (IClassMapping mapping : classMappings.values())
     {
       tables.addAll(mapping.getDBTables());
@@ -403,7 +387,6 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   private IClassMapping createClassMapping(EClass eClass)
   {
     IClassMapping mapping = doCreateClassMapping(eClass);
-
     if (mapping != null)
     {
       classMappings.put(eClass, mapping);

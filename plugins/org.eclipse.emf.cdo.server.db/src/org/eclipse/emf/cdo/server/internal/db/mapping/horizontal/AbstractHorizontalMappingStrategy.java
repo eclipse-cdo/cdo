@@ -21,12 +21,15 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IObjectTypeCache;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
+import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -58,7 +61,6 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
    */
   private IObjectTypeCache objectTypeCache;
 
-  @Override
   public CDOClassifierRef readObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     return objectTypeCache.getObjectType(accessor, id);
@@ -69,10 +71,34 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     objectTypeCache.putObjectType(accessor, id, type);
   }
 
-  @Override
-  public long repairAfterCrash(IDBAdapter dbAdapter, Connection connection)
+  public long[] repairAfterCrash(IDBAdapter dbAdapter, Connection connection)
   {
-    return objectTypeCache.getMaxId(connection) + 1;
+    long maxID = objectTypeCache.getMaxID(connection);
+    long maxTime = getMaxTime(connection);
+
+    long[] result = { maxID, maxTime };
+    return result;
+  }
+
+  public void queryResources(IDBStoreAccessor dbStoreAccessor, QueryResourcesContext context)
+  {
+    // only support timestamp in audit mode
+    if (context.getTimeStamp() != CDORevision.UNSPECIFIED_DATE && !hasAuditSupport())
+    {
+      throw new UnsupportedOperationException("Mapping Strategy does not support audits."); //$NON-NLS-1$
+    }
+
+    EresourcePackage resourcesPackage = EresourcePackage.eINSTANCE;
+
+    // first query folders
+    boolean shallContinue = queryResources(dbStoreAccessor, getClassMapping(resourcesPackage.getCDOResourceFolder()),
+        context);
+
+    // not enough results? -> query resources
+    if (shallContinue)
+    {
+      queryResources(dbStoreAccessor, getClassMapping(resourcesPackage.getCDOResource()), context);
+    }
   }
 
   @Override
@@ -105,28 +131,6 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     ObjectTypeCache cache = new ObjectTypeCache();
     cache.setMappingStrategy(this);
     return cache;
-  }
-
-  @Override
-  public void queryResources(IDBStoreAccessor dbStoreAccessor, QueryResourcesContext context)
-  {
-    // only support timestamp in audit mode
-    if (context.getTimeStamp() != CDORevision.UNSPECIFIED_DATE && !hasAuditSupport())
-    {
-      throw new UnsupportedOperationException("Mapping Strategy does not support audits."); //$NON-NLS-1$
-    }
-
-    EresourcePackage resourcesPackage = EresourcePackage.eINSTANCE;
-
-    // first query folders
-    boolean shallContinue = queryResources(dbStoreAccessor, getClassMapping(resourcesPackage.getCDOResourceFolder()),
-        context);
-
-    // not enough results? -> query resources
-    if (shallContinue)
-    {
-      queryResources(dbStoreAccessor, getClassMapping(resourcesPackage.getCDOResource()), context);
-    }
   }
 
   /**
@@ -183,5 +187,22 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       DBUtil.close(rset);
       accessor.getStatementCache().releasePreparedStatement(stmt);
     }
+  }
+
+  private long getMaxTime(Connection connection)
+  {
+    long max = CDORevision.UNSPECIFIED_DATE;
+    for (IClassMapping classMapping : getClassMappings().values())
+    {
+      IDBTable table = classMapping.getDBTables().get(0);
+      IDBField field = table.getField(CDODBSchema.ATTRIBUTES_CREATED);
+      long timeStamp = DBUtil.selectMaximumLong(connection, field);
+      if (timeStamp > max)
+      {
+        max = timeStamp;
+      }
+    }
+
+    return max;
   }
 }

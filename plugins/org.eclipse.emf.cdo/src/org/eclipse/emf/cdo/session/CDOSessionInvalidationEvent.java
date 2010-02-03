@@ -12,6 +12,8 @@
 package org.eclipse.emf.cdo.session;
 
 import org.eclipse.emf.cdo.CDOInvalidationNotification;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -34,7 +36,7 @@ import java.util.Set;
  * @noimplement This interface is not intended to be implemented by clients.
  * @since 2.0
  */
-public interface CDOSessionInvalidationEvent extends CDOSessionEvent
+public interface CDOSessionInvalidationEvent extends CDOSessionEvent, CDOBranchPoint
 {
   public static final long LOCAL_ROLLBACK = CDORevision.UNSPECIFIED_DATE;
 
@@ -50,12 +52,12 @@ public interface CDOSessionInvalidationEvent extends CDOSessionEvent
   public boolean isRemote();
 
   /**
-   * Returns the branch ID of the server transaction if this event was sent as a result of a successfully committed
+   * Returns the branch of the server transaction if this event was sent as a result of a successfully committed
    * transaction.
    * 
    * @since 3.0
    */
-  public int getBranchID();
+  public CDOBranch getBranch();
 
   /**
    * Returns the time stamp of the server transaction if this event was sent as a result of a successfully committed

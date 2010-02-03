@@ -25,7 +25,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.sql.PreparedStatement;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Basic interface for class mappings.
@@ -40,8 +40,9 @@ public interface IClassMapping
    * Returns all DB tables which are used by this class and all its contained features.
    * 
    * @return a collection of all tables of this class and all its contained features.
+   * @since 3.0
    */
-  public Collection<IDBTable> getDBTables();
+  public List<IDBTable> getDBTables();
 
   /**
    * Get the mapping of the many-valued feature.

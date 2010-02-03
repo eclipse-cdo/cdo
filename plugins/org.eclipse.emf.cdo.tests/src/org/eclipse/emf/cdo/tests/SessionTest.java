@@ -71,14 +71,14 @@ public class SessionTest extends AbstractCDOTest
     session2.close();
   }
 
-  private void waitForUpdate(final long updateTime, final CDOSession session) throws InterruptedException
+  private void waitForUpdate(final long commitTime, final CDOSession session) throws InterruptedException
   {
     new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
-        return updateTime == session.getLastUpdateTime();
+        return commitTime == session.getLastCommitTime();
       }
     }.assertNoTimeOut();
   }

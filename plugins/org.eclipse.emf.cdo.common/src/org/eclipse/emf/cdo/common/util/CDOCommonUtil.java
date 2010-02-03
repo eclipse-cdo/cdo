@@ -16,6 +16,7 @@ import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
 public final class CDOCommonUtil
 {

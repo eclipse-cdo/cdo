@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryFactory;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
+import org.eclipse.emf.cdo.server.InternalStore;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -114,11 +116,11 @@ public class RepositoryConfigurator
       TRACER.format("Configuring repository {0} (type={1})", repositoryName, repositoryType); //$NON-NLS-1$
     }
 
-    IRepository repository = createRepository(repositoryType);
+    InternalRepository repository = (InternalRepository)createRepository(repositoryType);
     repository.setName(repositoryName);
 
     Element storeConfig = getStoreConfig(repositoryConfig);
-    IStore store = configureStore(storeConfig);
+    InternalStore store = (InternalStore)configureStore(storeConfig);
     repository.setStore(store);
 
     Map<String, String> properties = getProperties(repositoryConfig, 1);

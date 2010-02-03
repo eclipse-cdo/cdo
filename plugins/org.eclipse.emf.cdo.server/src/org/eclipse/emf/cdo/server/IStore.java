@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
 import java.util.Set;
@@ -25,13 +23,6 @@ public interface IStore
    * @since 2.0
    */
   public IRepository getRepository();
-
-  /**
-   * Internal.
-   * 
-   * @since 2.0
-   */
-  public void setRepository(IRepository repository);
 
   /**
    * @since 2.0
@@ -61,27 +52,14 @@ public interface IStore
   /**
    * @since 2.0
    */
-  public void setRevisionTemporality(RevisionTemporality revisionTemporality);
-
-  /**
-   * @since 2.0
-   */
   public RevisionParallelism getRevisionParallelism();
 
   /**
+   * Returns <code>true</code>if this store was activated for the first time, <code>false</code> otherwise.
+   * 
    * @since 2.0
    */
-  public void setRevisionParallelism(RevisionParallelism revisionParallelism);
-
-  /**
-   * @since 2.0
-   */
-  public CDOIDMetaRange getNextMetaIDRange(int count);
-
-  /**
-   * @since 3.0
-   */
-  public int getNextBranchID();
+  public boolean isFirstTime();
 
   /**
    * Returns the store creation time.
@@ -91,11 +69,11 @@ public interface IStore
   public long getCreationTime();
 
   /**
-   * Returns <code>true</code>if this store was activated for the first time, <code>false</code> otherwise.
+   * Returns the time stamp of the last csuccessful commit operation.
    * 
-   * @since 2.0
+   * @since 3.0
    */
-  public boolean isFirstTime();
+  public long getLastCommitTime();
 
   /**
    * Returns a reader that can be used to read from this store in the context of the given session.

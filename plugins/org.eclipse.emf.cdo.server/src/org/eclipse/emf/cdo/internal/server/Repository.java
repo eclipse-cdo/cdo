@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.InternalNotificationManager;
+import org.eclipse.emf.cdo.server.InternalStore;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -88,7 +89,7 @@ public class Repository extends Container<Object> implements InternalRepository
 {
   private String name;
 
-  private IStore store;
+  private InternalStore store;
 
   private String uuid;
 
@@ -147,12 +148,12 @@ public class Repository extends Container<Object> implements InternalRepository
     this.name = name;
   }
 
-  public IStore getStore()
+  public InternalStore getStore()
   {
     return store;
   }
 
-  public void setStore(IStore store)
+  public void setStore(InternalStore store)
   {
     this.store = store;
     store.setRepository(this);
@@ -922,9 +923,6 @@ public class Repository extends Container<Object> implements InternalRepository
     LifecycleUtil.activate(queryHandlerProvider);
     LifecycleUtil.activate(lockManager);
 
-    lastCommitTimeStamp = getCreationTime();
-    branchManager.initMainBranch(lastCommitTimeStamp);
-    LifecycleUtil.activate(branchManager);
     if (store.isFirstTime())
     {
       initSystemPackages();
@@ -933,6 +931,10 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       readPackageUnits();
     }
+
+    lastCommitTimeStamp = store.getLastCommitTime();
+    branchManager.initMainBranch(lastCommitTimeStamp);
+    LifecycleUtil.activate(branchManager);
   }
 
   @Override

@@ -18,10 +18,10 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
-import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.InternalNotificationManager;
+import org.eclipse.emf.cdo.server.InternalStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -156,7 +156,7 @@ public abstract class DelegatingRepository implements InternalRepository
     return getDelegate().getSessionManager();
   }
 
-  public IStore getStore()
+  public InternalStore getStore()
   {
     return getDelegate().getStore();
   }
@@ -283,7 +283,7 @@ public abstract class DelegatingRepository implements InternalRepository
     getDelegate().setSessionManager(sessionManager);
   }
 
-  public void setStore(IStore store)
+  public void setStore(InternalStore store)
   {
     getDelegate().setStore(store);
   }

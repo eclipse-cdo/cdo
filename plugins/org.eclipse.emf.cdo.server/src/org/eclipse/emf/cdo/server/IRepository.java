@@ -32,15 +32,9 @@ public interface IRepository extends IContainer<Object>, IQueryHandlerProvider, 
 {
   public String getName();
 
-  public void setName(String name);
-
   public IStore getStore();
 
-  public void setStore(IStore store);
-
   public Map<String, String> getProperties();
-
-  public void setProperties(Map<String, String> properties);
 
   public String getUUID();
 

@@ -62,7 +62,7 @@ public final class CDOServerUtil
   {
     Repository repository = new Repository.Default();
     repository.setName(name);
-    repository.setStore(store);
+    repository.setStore((InternalStore)store);
     repository.setProperties(props);
     return repository;
   }
@@ -75,7 +75,7 @@ public final class CDOServerUtil
   {
     ClonedRepository repository = new ClonedRepository();
     repository.setName(name);
-    repository.setStore(store);
+    repository.setStore((InternalStore)store);
     repository.setProperties(props);
     repository.setMasterInterface(masterInterface);
     return repository;

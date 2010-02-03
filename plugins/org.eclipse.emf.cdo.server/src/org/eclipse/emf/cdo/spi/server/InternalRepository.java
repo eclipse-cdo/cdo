@@ -38,7 +38,6 @@ import java.util.Map;
  */
 public interface InternalRepository extends IRepository, PackageLoader, BranchLoader, RevisionLoader
 {
-
   public void setName(String name);
 
   public InternalStore getStore();

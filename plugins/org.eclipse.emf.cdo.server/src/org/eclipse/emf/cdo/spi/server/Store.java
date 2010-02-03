@@ -21,10 +21,10 @@ import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
-import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.InternalStore;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -45,7 +45,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class Store extends Lifecycle implements IStore
+public abstract class Store extends Lifecycle implements InternalStore
 {
   /**
    * @since 3.0
@@ -75,17 +75,23 @@ public abstract class Store extends Lifecycle implements IStore
 
   private InternalRepository repository;
 
+  /**
+   * Is protected against concurrent thread access through {@link Repository#createBranchLock}.
+   */
+  @ExcludeFromDump
+  private transient int lastBranchID;
+
   @ExcludeFromDump
   private transient long lastMetaID;
 
   @ExcludeFromDump
   private transient Object lastMetaIDLock = new Object();
 
-  /**
-   * Is protected against concurrent thread access through {@link Repository#createBranchLock}.
-   */
   @ExcludeFromDump
-  private transient int lastBranchID;
+  private transient long lastCommitTime;
+
+  @ExcludeFromDump
+  private transient Object lastCommitTimeLock = new Object();
 
   @ExcludeFromDump
   private transient ProgressDistributor indicatingCommitDistributor = new ProgressDistributor.Geometric()
@@ -180,6 +186,30 @@ public abstract class Store extends Lifecycle implements IStore
     this.revisionParallelism = revisionParallelism;
   }
 
+  /**
+   * @since 3.0
+   */
+  public int getLastBranchID()
+  {
+    return lastBranchID;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void setLastBranchID(int lastBranchID)
+  {
+    this.lastBranchID = lastBranchID;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public int getNextBranchID()
+  {
+    return ++lastBranchID;
+  }
+
   public long getLastMetaID()
   {
     synchronized (lastMetaIDLock)
@@ -206,28 +236,23 @@ public abstract class Store extends Lifecycle implements IStore
     }
   }
 
-  /**
-   * @since 3.0
-   */
-  public int getLastBranchID()
+  public long getLastCommitTime()
   {
-    return lastBranchID;
+    synchronized (lastCommitTimeLock)
+    {
+      return lastCommitTime;
+    }
   }
 
-  /**
-   * @since 3.0
-   */
-  public void setLastBranchID(int lastBranchID)
+  public void setLastCommitTime(long lastCommitTime)
   {
-    this.lastBranchID = lastBranchID;
-  }
-
-  /**
-   * @since 3.0
-   */
-  public int getNextBranchID()
-  {
-    return ++lastBranchID;
+    synchronized (lastCommitTimeLock)
+    {
+      if (this.lastCommitTime < lastCommitTime)
+      {
+        this.lastCommitTime = lastCommitTime;
+      }
+    }
   }
 
   public IStoreAccessor getReader(ISession session)

@@ -205,6 +205,10 @@ public class DBStore extends LongIDStore implements IDBStore
   protected Connection getConnection()
   {
     Connection connection = dbConnectionProvider.getConnection();
+    if (connection == null)
+    {
+      throw new DBException("No connection from connection provider: " + dbConnectionProvider); //$NON-NLS-1$
+    }
 
     try
     {
@@ -213,11 +217,6 @@ public class DBStore extends LongIDStore implements IDBStore
     catch (SQLException ex)
     {
       throw new DBException(ex);
-    }
-
-    if (connection == null)
-    {
-      throw new DBException("No connection from connection provider: " + dbConnectionProvider); //$NON-NLS-1$
     }
 
     return connection;

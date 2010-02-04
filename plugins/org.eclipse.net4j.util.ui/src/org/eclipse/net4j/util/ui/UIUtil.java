@@ -105,11 +105,6 @@ public final class UIUtil
       display = new Display();
     }
 
-    if (display == null)
-    {
-      throw new IllegalStateException("No display available"); //$NON-NLS-1$
-    }
-
     return display;
   }
 

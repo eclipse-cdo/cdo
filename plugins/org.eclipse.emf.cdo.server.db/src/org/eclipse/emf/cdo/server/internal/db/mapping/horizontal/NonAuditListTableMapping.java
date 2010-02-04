@@ -28,7 +28,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
-import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
@@ -54,8 +53,7 @@ import java.util.ArrayList;
  * @author Eike Stepper
  * @since 2.0
  */
-public class NonAuditListTableMapping extends AbstractListTableMapping implements IListMapping,
-    IListMappingDeltaSupport
+public class NonAuditListTableMapping extends AbstractListTableMapping implements IListMappingDeltaSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, NonAuditListTableMapping.class);
 

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -74,11 +74,9 @@ public class InterfaceSwitch<T>
     {
       return doSwitch(theEClass.getClassifierID(), theEObject);
     }
-    else
-    {
-      List<EClass> eSuperTypes = theEClass.getESuperTypes();
-      return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
-    }
+
+    List<EClass> eSuperTypes = theEClass.getESuperTypes();
+    return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
   }
 
   /**
@@ -97,7 +95,9 @@ public class InterfaceSwitch<T>
       IInterface iInterface = (IInterface)theEObject;
       T result = caseIInterface(iInterface);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

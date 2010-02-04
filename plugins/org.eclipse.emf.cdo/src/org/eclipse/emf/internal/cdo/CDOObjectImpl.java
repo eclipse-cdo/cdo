@@ -1402,10 +1402,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
           InternalEList<Object> list = (InternalEList<Object>)eObject.eGet(feature);
           return list != null && !list.isEmpty();
         }
-        else
-        {
-          return eObject.eGet(feature) != feature.getDefaultValue();
-        }
+
+        return eObject.eGet(feature) != feature.getDefaultValue();
       }
 
       Object[] settings = ((CDOObjectImpl)eObject).cdoBasicSettings();

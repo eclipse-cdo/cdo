@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 /**
  * @author Eike Stepper
  */
-public class CDOResourceFactoryImpl implements Resource.Factory, CDOResourceFactory
+public class CDOResourceFactoryImpl implements CDOResourceFactory
 {
   private static final String RESOURCE_SET_CLASS_NAME = ResourceSetImpl.class.getName();
 

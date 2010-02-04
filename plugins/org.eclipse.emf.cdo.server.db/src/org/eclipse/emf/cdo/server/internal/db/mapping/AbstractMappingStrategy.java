@@ -289,11 +289,9 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     {
       return CDO_SET_PREFIX + name;
     }
-    else
-    {
-      return getName(CDO_SET_PREFIX + feature.getName(), TYPE_PREFIX_FEATURE + getMetaDataManager().getMetaID(feature),
-          getMaxFieldNameLength());
-    }
+
+    return getName(CDO_SET_PREFIX + feature.getName(), TYPE_PREFIX_FEATURE + getMetaDataManager().getMetaID(feature),
+        getMaxFieldNameLength());
   }
 
   private String getName(String name, String suffix, int maxLength)

@@ -98,10 +98,8 @@ public final class CDODBUtil
       {
         return new HorizontalBranchingMappingStrategy();
       }
-      else
-      {
-        throw new IllegalArgumentException("Misconfiguration: Branching requires Auditing!");
-      }
+
+      throw new IllegalArgumentException("Misconfiguration: Branching requires Auditing!");
     }
 
     return createHorizontalMappingStrategy(auditing);

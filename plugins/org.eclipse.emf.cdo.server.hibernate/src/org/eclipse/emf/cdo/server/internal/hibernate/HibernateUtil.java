@@ -328,10 +328,8 @@ public class HibernateUtil
     {
       return (InternalCDORevision)((CDOObject)target).cdoRevision();
     }
-    else
-    {
-      return (InternalCDORevision)target;
-    }
+
+    return (InternalCDORevision)target;
   }
 
   /**
@@ -485,10 +483,8 @@ public class HibernateUtil
       final EReference containerEReference = eReference.getEOpposite();
       return contained.eClass().getFeatureID(containerEReference);
     }
-    else
-    {
-      return InternalEObject.EOPPOSITE_FEATURE_BASE - containingEClass.getFeatureID(eReference);
-    }
+
+    return InternalEObject.EOPPOSITE_FEATURE_BASE - containingEClass.getFeatureID(eReference);
   }
 
   /**

@@ -30,7 +30,6 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
-import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
@@ -58,8 +57,8 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 2.0
  */
-public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping implements IClassMapping,
-    IClassMappingAuditSupport, IClassMappingDeltaSupport
+public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping implements IClassMappingAuditSupport,
+    IClassMappingDeltaSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalAuditClassMapping.class);
 
@@ -435,10 +434,8 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
 
             continue;
           }
-          else
-          {
-            stmt.setBoolean(isSetCol++, true);
-          }
+
+          stmt.setBoolean(isSetCol++, true);
         }
 
         mapping.setValueFromRevision(stmt, col++, revision);

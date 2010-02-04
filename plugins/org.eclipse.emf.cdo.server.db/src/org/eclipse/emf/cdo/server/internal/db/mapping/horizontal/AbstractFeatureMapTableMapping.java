@@ -296,11 +296,9 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
         // list is empty - take shortcut
         return;
       }
-      else
-      {
-        // subtract amount of items we are going to read now
-        listSize -= listChunk;
-      }
+
+      // subtract amount of items we are going to read now
+      listSize -= listChunk;
     }
 
     if (TRACER.isEnabled())
@@ -407,16 +405,14 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
 
         return -1;
       }
-      else
-      {
-        int result = resultSet.getInt(1);
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("Read list last index = " + result);
-        }
 
-        return result;
+      int result = resultSet.getInt(1);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Read list last index = " + result);
       }
+
+      return result;
     }
     catch (SQLException ex)
     {

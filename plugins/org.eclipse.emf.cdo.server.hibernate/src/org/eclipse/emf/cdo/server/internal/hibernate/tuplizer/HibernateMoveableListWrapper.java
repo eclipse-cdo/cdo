@@ -33,7 +33,7 @@ import java.util.ListIterator;
  * 
  * @author Martin Taal
  */
-public class HibernateMoveableListWrapper implements List<Object>, MoveableList<Object>
+public class HibernateMoveableListWrapper implements MoveableList<Object>
 {
   private List<Object> delegate;
 

@@ -302,7 +302,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    * @since 2.0
    * @author Victor Roldan Betancort
    */
-  public static class IDDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
+  public static class IDDescriptor extends CDOPropertyDescriptor
   {
     private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.1"); //$NON-NLS-1$
 
@@ -346,7 +346,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    * @since 2.0
    * @author Victor Roldan Betancort
    */
-  public static class VersionDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
+  public static class VersionDescriptor extends CDOPropertyDescriptor
   {
     private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.4"); //$NON-NLS-1$
 
@@ -413,7 +413,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    * @since 2.0
    * @author Victor Roldan Betancort
    */
-  public static class StateDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
+  public static class StateDescriptor extends CDOPropertyDescriptor
   {
     private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.7"); //$NON-NLS-1$
 
@@ -462,7 +462,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    * @since 2.0
    * @author Victor Roldan Betancort
    */
-  public static class ViewDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
+  public static class ViewDescriptor extends CDOPropertyDescriptor
   {
     private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.10"); //$NON-NLS-1$
 
@@ -511,7 +511,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    * @since 2.0
    * @author Victor Roldan Betancort
    */
-  public static class ContainerDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
+  public static class ContainerDescriptor extends CDOPropertyDescriptor
   {
     private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.13"); //$NON-NLS-1$
 
@@ -589,7 +589,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    * @since 2.0
    * @author Victor Roldan Betancort
    */
-  public static class DirectResourceDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
+  public static class DirectResourceDescriptor extends CDOPropertyDescriptor
   {
     private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.16"); //$NON-NLS-1$
 
@@ -656,7 +656,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    * @since 2.0
    * @author Victor Roldan Betancort
    */
-  public static class ReadLockedDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
+  public static class ReadLockedDescriptor extends CDOPropertyDescriptor
   {
     private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.19"); //$NON-NLS-1$
 
@@ -723,7 +723,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    * @since 2.0
    * @author Victor Roldan Betancort
    */
-  public static class WriteLockedDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
+  public static class WriteLockedDescriptor extends CDOPropertyDescriptor
   {
     private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.22"); //$NON-NLS-1$
 
@@ -790,7 +790,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    * @since 2.0
    * @author Victor Roldan Betancort
    */
-  public static class AdaptersDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
+  public static class AdaptersDescriptor extends CDOPropertyDescriptor
   {
     private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.25"); //$NON-NLS-1$
 
@@ -839,8 +839,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    * @since 2.0
    * @author Victor Roldan Betancort
    */
-  public static class ChangeSubscriptionPoliciesDescriptor extends CDOPropertyDescriptor implements
-      IItemPropertyDescriptor
+  public static class ChangeSubscriptionPoliciesDescriptor extends CDOPropertyDescriptor
   {
     private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.28"); //$NON-NLS-1$
 
@@ -919,7 +918,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    * @since 2.0
    * @author Victor Roldan Betancort
    */
-  public static class URIDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
+  public static class URIDescriptor extends CDOPropertyDescriptor
   {
     private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.31"); //$NON-NLS-1$
 

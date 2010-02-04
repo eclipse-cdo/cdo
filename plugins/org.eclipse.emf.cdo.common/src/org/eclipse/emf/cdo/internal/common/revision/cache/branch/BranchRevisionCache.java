@@ -352,10 +352,8 @@ public class BranchRevisionCache extends ReferenceQueueWorker<InternalCDORevisio
             {
               return revision;
             }
-            else
-            {
-              break;
-            }
+
+            break;
           }
         }
         else

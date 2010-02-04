@@ -523,16 +523,14 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       {
         throw new DBException("count expects exactly one result.");
       }
-      else
-      {
-        int result = resultSet.getInt(1) - 1;
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("Read list last index = " + result);
-        }
 
-        return result;
+      int result = resultSet.getInt(1) - 1;
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Read list last index = " + result);
       }
+
+      return result;
     }
     catch (SQLException ex)
     {

@@ -156,11 +156,9 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
       {
         return null;
       }
-      else
-      {
-        lists[result.getProbability().ordinal()].remove(result);
-        return result;
-      }
+
+      lists[result.getProbability().ordinal()].remove(result);
+      return result;
     }
 
     private class CacheList

@@ -60,18 +60,16 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
     {
       return HibernateUtil.getInstance().getIdValue(revision.getID());
     }
-    else
-    {
-      Object id = super.get(target);
-      setCDOID(revision, id);
 
-      // TODO: does this make sense?
-      // if (cdoID.getId() == null)
-      // {
-      // cdoID.setId((Serializable)id);
-      // }
-      return id;
-    }
+    Object id = super.get(target);
+    setCDOID(revision, id);
+
+    // TODO: does this make sense?
+    // if (cdoID.getId() == null)
+    // {
+    // cdoID.setId((Serializable)id);
+    // }
+    return id;
   }
 
   private void setCDOID(CDORevision target, Object value)

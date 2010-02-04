@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
-import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingBranchingSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
@@ -51,7 +50,7 @@ import java.util.Map;
  * @author Stefan Winkler
  * @since 3.0
  */
-public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapping implements IClassMapping,
+public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapping implements
     IClassMappingBranchingSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalBranchingClassMapping.class);
@@ -441,10 +440,8 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
             continue;
           }
-          else
-          {
-            stmt.setBoolean(isSetCol++, true);
-          }
+
+          stmt.setBoolean(isSetCol++, true);
         }
 
         mapping.setValueFromRevision(stmt, col++, revision);
@@ -527,10 +524,8 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
             continue;
           }
-          else
-          {
-            stmt.setBoolean(isSetCol++, true);
-          }
+
+          stmt.setBoolean(isSetCol++, true);
         }
 
         mapping.setValueFromRevision(stmt, col++, revision);

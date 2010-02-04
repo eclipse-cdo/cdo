@@ -221,11 +221,9 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
         // list is empty - take shortcut
         return;
       }
-      else
-      {
-        // subtract amount of items we are going to read now
-        listSize -= listChunk;
-      }
+
+      // subtract amount of items we are going to read now
+      listSize -= listChunk;
     }
 
     if (TRACER.isEnabled())
@@ -328,16 +326,14 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
 
         return -1;
       }
-      else
-      {
-        int result = resultSet.getInt(1);
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("Read list last index = " + result); //$NON-NLS-1$
-        }
 
-        return result;
+      int result = resultSet.getInt(1);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Read list last index = " + result); //$NON-NLS-1$
       }
+
+      return result;
     }
     catch (SQLException ex)
     {

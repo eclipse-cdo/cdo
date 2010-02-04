@@ -189,10 +189,8 @@ public final class CDOStore implements EStore
         InternalEList<Object> list = (InternalEList<Object>)eObject.eGet(feature);
         return list != null && !list.isEmpty();
       }
-      else
-      {
-        return eObject.eGet(feature) != feature.getDefaultValue();
-      }
+
+      return eObject.eGet(feature) != feature.getDefaultValue();
     }
 
     InternalCDOObject cdoObject = getCDOObject(eObject);

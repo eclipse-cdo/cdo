@@ -21,7 +21,6 @@ import org.eclipse.net4j.buddies.internal.common.protocol.BuddyStateNotification
 import org.eclipse.net4j.internal.buddies.bundle.OM;
 import org.eclipse.net4j.internal.buddies.protocol.BuddiesClientProtocol;
 import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
@@ -34,7 +33,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class ClientSession extends BuddyContainer implements IBuddySession, IListener
+public class ClientSession extends BuddyContainer implements IBuddySession
 {
   private BuddiesClientProtocol protocol;
 

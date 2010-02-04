@@ -366,10 +366,8 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
       return notification;
     }
-    else
-    {
-      return null;
-    }
+
+    return null;
   }
 
   /**

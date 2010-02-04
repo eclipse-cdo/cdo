@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -32,7 +31,7 @@ import java.text.MessageFormat;
 /**
  * @author Simon McDuff
  */
-public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOFeatureDelta
+public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
 {
   private int index;
 

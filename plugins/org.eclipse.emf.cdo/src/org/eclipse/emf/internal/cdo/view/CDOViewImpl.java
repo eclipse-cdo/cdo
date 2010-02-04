@@ -669,10 +669,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       {
         throw new CDOException(Messages.getString("CDOViewImpl.6")); //$NON-NLS-1$
       }
-      else
-      {
-        throw new CDOException(MessageFormat.format(Messages.getString("CDOViewImpl.7"), name)); //$NON-NLS-1$
-      }
+
+      throw new CDOException(MessageFormat.format(Messages.getString("CDOViewImpl.7"), name)); //$NON-NLS-1$
     }
 
     if (ids.size() > 1)

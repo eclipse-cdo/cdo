@@ -141,17 +141,15 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     {
       return getEntityName();
     }
-    else
-    {
-      String entityName = getEntityMetamodel().findEntityNameByEntityClass(concreteEntityClass);
-      if (entityName == null)
-      {
-        throw new HibernateException("Unable to resolve entity name from Class [" + concreteEntityClass.getName() + "]"
-            + " expected instance/subclass of [" + getEntityName() + "]");
-      }
 
-      return entityName;
+    String entityName = getEntityMetamodel().findEntityNameByEntityClass(concreteEntityClass);
+    if (entityName == null)
+    {
+      throw new HibernateException("Unable to resolve entity name from Class [" + concreteEntityClass.getName() + "]"
+          + " expected instance/subclass of [" + getEntityName() + "]");
     }
+
+    return entityName;
   }
 
   public EntityMode getEntityMode()

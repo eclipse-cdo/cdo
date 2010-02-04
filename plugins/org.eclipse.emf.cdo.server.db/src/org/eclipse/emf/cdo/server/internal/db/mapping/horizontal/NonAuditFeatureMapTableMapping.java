@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - 271444: [DB] Multiple refactorings bug 271444
- *    Christopher Albert - 254455: [DB] Support FeatureMaps bug 254455  
+ *    Christopher Albert - 254455: [DB] Support FeatureMaps bug 254455
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -28,7 +28,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
-import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
@@ -53,8 +52,7 @@ import java.util.Iterator;
  * @author Eike Stepper
  * @since 3.0
  */
-public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMapping implements IListMapping,
-    IListMappingDeltaSupport
+public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMapping implements IListMappingDeltaSupport
 {
   private static final FieldInfo[] KEY_FIELDS = { new FieldInfo(CDODBSchema.FEATUREMAP_REVISION_ID, DBType.BIGINT) };
 

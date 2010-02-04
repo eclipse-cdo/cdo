@@ -54,7 +54,6 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.IColorProvider;
-import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -754,8 +753,8 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
   /**
    * @author Victor Roldan Betancort
    */
-  private final class CDOSubscriptionViewLabelProvider extends LabelProvider implements ILabelProvider,
-      ITableLabelProvider, IColorProvider
+  private final class CDOSubscriptionViewLabelProvider extends LabelProvider implements ITableLabelProvider,
+      IColorProvider
   {
     private final Color YELLOW = UIUtil.getDisplay().getSystemColor(SWT.COLOR_YELLOW);
 

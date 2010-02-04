@@ -302,10 +302,8 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
             {
               return revision;
             }
-            else
-            {
-              break;
-            }
+
+            break;
           }
         }
         else

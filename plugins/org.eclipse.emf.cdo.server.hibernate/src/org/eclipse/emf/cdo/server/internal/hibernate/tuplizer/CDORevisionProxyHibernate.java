@@ -17,12 +17,10 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.proxy.LazyInitializer;
 
-import java.io.Serializable;
-
 /**
  * @author Eike Stepper
  */
-public class CDORevisionProxyHibernate extends DelegatingCDORevision implements HibernateProxy, Serializable
+public class CDORevisionProxyHibernate extends DelegatingCDORevision implements HibernateProxy
 {
   private static final long serialVersionUID = 1L;
 

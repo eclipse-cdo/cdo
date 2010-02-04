@@ -226,11 +226,9 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
       {
         return rs.getLong(1);
       }
-      else
-      {
-        // not found ...
-        return 0;
-      }
+
+      // Not found ...
+      return 0;
     }
     catch (SQLException e)
     {

@@ -4,14 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.internal.util.om.pref;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
-import org.eclipse.net4j.util.om.pref.OMPreference;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -20,7 +19,7 @@ import java.net.URLEncoder;
 /**
  * @author Eike Stepper
  */
-public final class ArrayPreference extends Preference<String[]> implements OMPreference<String[]>
+public final class ArrayPreference extends Preference<String[]>
 {
   private static final String SEPARATOR = ","; //$NON-NLS-1$
 

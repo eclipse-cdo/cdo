@@ -154,10 +154,8 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
         new RemoteMessageNotificationRequest(this, sender, message).sendAsync();
         return true;
       }
-      else
-      {
-        OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
-      }
+
+      OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
     }
     catch (Exception ex)
     {
@@ -255,9 +253,6 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
 
     case CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE:
       return new RemoteMessageIndication(this);
-
-    case CDOProtocolConstants.SIGNAL_CLONE_REPOSITORY:
-      return new CloneRepositoryIndication(this);
 
     default:
       return super.createSignalReactor(signalID);

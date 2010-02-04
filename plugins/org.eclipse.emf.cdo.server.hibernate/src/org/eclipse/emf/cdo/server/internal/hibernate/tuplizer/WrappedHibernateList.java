@@ -299,10 +299,8 @@ public class WrappedHibernateList implements InternalCDOList
     {
       return getDelegate().set(index, element);
     }
-    else
-    {
-      return getDelegate().set(index, getCDOID(element));
-    }
+
+    return getDelegate().set(index, getCDOID(element));
   }
 
   public int size()

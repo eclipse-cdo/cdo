@@ -30,7 +30,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * @author Eike Stepper
  */
-public class BufferPool extends BufferProvider implements IBufferPool, IBufferPool.Introspection
+public class BufferPool extends BufferProvider implements IBufferPool.Introspection
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_BUFFER, BufferPool.class);
 

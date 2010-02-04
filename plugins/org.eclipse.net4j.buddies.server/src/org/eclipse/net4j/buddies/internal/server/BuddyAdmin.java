@@ -31,7 +31,6 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -47,7 +46,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, IListener
+public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin
 {
   public static final BuddyAdmin INSTANCE = new BuddyAdmin();
 

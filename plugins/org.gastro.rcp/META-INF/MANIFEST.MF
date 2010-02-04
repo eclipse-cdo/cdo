@@ -15,12 +15,12 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";visibili
  org.gastro.inventory.edit;bundle-version="[3.0.0,4.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.nebula.animation,
- org.eclipse.nebula.animation.effects,
- org.eclipse.nebula.animation.movement,
- org.eclipse.nebula.jface.galleryviewer,
- org.eclipse.nebula.widgets.gallery,
- org.eclipse.nebula.widgets.pshelf,
+Export-Package: org.eclipse.nebula.animation;version="0.5.2",
+ org.eclipse.nebula.animation.effects;version="0.5.2",
+ org.eclipse.nebula.animation.movement;version="0.5.2",
+ org.eclipse.nebula.jface.galleryviewer;version="0.5.2",
+ org.eclipse.nebula.widgets.gallery;version="0.5.2",
+ org.eclipse.nebula.widgets.pshelf;version="1.0.0",
  org.gastro.internal.rcp;version="3.0.0";x-internal:=true,
  org.gastro.rcp;version="3.0.0"
 Bundle-ClassPath: .,

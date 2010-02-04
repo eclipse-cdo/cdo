@@ -19,7 +19,7 @@ Export-Package: org.eclipse.net4j.buddies.internal.ui;version="3.0.0",
  org.eclipse.net4j.buddies.internal.ui.actions;version="3.0.0",
  org.eclipse.net4j.buddies.internal.ui.bundle;version="3.0.0";x-internal:=true,
  org.eclipse.net4j.buddies.internal.ui.dnd;version="3.0.0",
- org.eclipse.net4j.buddies.internal.ui.messages;x-internal:=true,
+ org.eclipse.net4j.buddies.internal.ui.messages;version="3.0.0";x-internal:=true,
  org.eclipse.net4j.buddies.internal.ui.preferences;version="3.0.0",
  org.eclipse.net4j.buddies.internal.ui.views;version="3.0.0",
  org.eclipse.net4j.buddies.ui;version="3.0.0"

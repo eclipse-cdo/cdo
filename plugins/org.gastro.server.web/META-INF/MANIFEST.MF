@@ -6,7 +6,7 @@ Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: org.gastro.server.internal.web.OM$Activator
 Bundle-Vendor: www.gastro.org
 Require-Bundle: org.apache.commons.logging;bundle-version="1.0.0",
- org.eclipse.core.runtime,
+ org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.equinox.http.registry;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.equinox.http.servlet;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.equinox.http.jetty;bundle-version="[2.0.0,4.0.0)",
@@ -16,18 +16,18 @@ Require-Bundle: org.apache.commons.logging;bundle-version="1.0.0",
  org.gastro.business;bundle-version="1.0.0",
  org.gastro.inventory;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: javax.servlet,
- javax.servlet.http
+Import-Package: javax.servlet;version="[2.5.0,2.6.0)",
+ javax.servlet.http;version="[2.5.0,2.6.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  org.apache.commons.lang_2.3.0.v200803061910.jar
-Export-Package: org.apache.commons.lang;x-internal:=true,
- org.apache.commons.lang.builder;x-internal:=true,
- org.apache.commons.lang.enums;x-internal:=true,
- org.apache.commons.lang.exception;x-internal:=true,
- org.apache.commons.lang.math;x-internal:=true,
- org.apache.commons.lang.mutable;x-internal:=true,
- org.apache.commons.lang.text;x-internal:=true,
- org.apache.commons.lang.time;x-internal:=true,
+Export-Package: org.apache.commons.lang;version="2.3.0";x-internal:=true,
+ org.apache.commons.lang.builder;version="2.3.0";x-internal:=true,
+ org.apache.commons.lang.enums;version="2.3.0";x-internal:=true,
+ org.apache.commons.lang.exception;version="2.3.0";x-internal:=true,
+ org.apache.commons.lang.math;version="2.3.0";x-internal:=true,
+ org.apache.commons.lang.mutable;version="2.3.0";x-internal:=true,
+ org.apache.commons.lang.text;version="2.3.0";x-internal:=true,
+ org.apache.commons.lang.time;version="2.3.0";x-internal:=true,
  org.gastro.server.internal.web;version="3.0.0";x-internal:=true,
- templates;x-internal:=true
+ templates;version="3.0.0";x-internal:=true

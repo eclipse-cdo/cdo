@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.internal.net4j.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
+import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
@@ -260,6 +261,11 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   public boolean unsubscribeRemoteSessions()
   {
     return send(new UnsubscribeRemoteSessionsRequest(this));
+  }
+
+  public void cloneRepository(CDOCloningContext context)
+  {
+    send(new CloneRepositoryRequest(this, context));
   }
 
   @Override

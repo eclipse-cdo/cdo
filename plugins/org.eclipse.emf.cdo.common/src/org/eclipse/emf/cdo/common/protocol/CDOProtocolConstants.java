@@ -121,6 +121,11 @@ public interface CDOProtocolConstants
    */
   public static final short SIGNAL_BRANCH_NOTIFICATION = 33;
 
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_CLONE_REPOSITORY = 34;
+
   // //////////////////////////////////////////////////////////////////////
   // Session Management
 
@@ -159,4 +164,27 @@ public interface CDOProtocolConstants
    * @since 3.0
    */
   public static final byte REMOTE_SESSION_CUSTOM_DATA = 5;
+
+  // //////////////////////////////////////////////////////////////////////
+  // Cloning
+
+  /**
+   * @since 3.0
+   */
+  public static final byte CLONING_FINISHED = 0;
+
+  /**
+   * @since 3.0
+   */
+  public static final byte CLONING_PACKAGE = 1;
+
+  /**
+   * @since 3.0
+   */
+  public static final byte CLONING_BRANCH = 2;
+
+  /**
+   * @since 3.0
+   */
+  public static final byte CLONING_REVISION = 3;
 }

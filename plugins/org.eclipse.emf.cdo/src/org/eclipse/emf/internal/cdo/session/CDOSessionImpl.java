@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
+import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -498,7 +499,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return Collections.emptyList();
   }
 
-  public long getLastCommitTime()
+  public long getLastUpdateTime()
   {
     synchronized (lastUpdateTimeLock)
     {
@@ -722,6 +723,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     {
       revisionManager.reviseLatest(id, branch);
     }
+  }
+
+  public void cloneRepository(CDOCloningContext context)
+  {
+    getSessionProtocol().cloneRepository(context);
   }
 
   public Object getInvalidationLock()
@@ -1583,6 +1589,23 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         try
         {
           return delegate.unsubscribeRemoteSessions();
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public void cloneRepository(CDOCloningContext context)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          delegate.cloneRepository(context);
+          return;
         }
         catch (Exception ex)
         {

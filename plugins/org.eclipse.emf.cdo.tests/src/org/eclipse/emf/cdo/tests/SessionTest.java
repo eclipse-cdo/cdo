@@ -78,7 +78,7 @@ public class SessionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return commitTime == session.getLastCommitTime();
+        return commitTime == session.getLastUpdateTime();
       }
     }.assertNoTimeOut();
   }

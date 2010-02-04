@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.server.InternalNotificationManager;
 import org.eclipse.emf.cdo.server.InternalStore;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
+import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -836,6 +837,10 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       monitor.done();
     }
+  }
+
+  public void clone(CDOCloningContext context)
+  {
   }
 
   @Override

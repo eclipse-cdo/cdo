@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -135,4 +136,9 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
    */
   public void reviseRevisions(CDOBranchPoint branchPoint, Set<CDOIDAndVersion> dirtyOIDandVersions,
       Collection<CDOID> detachedOIDs, InternalCDOView excludedView);
+
+  /**
+   * @since 3.0
+   */
+  public void cloneRepository(CDOCloningContext context);
 }

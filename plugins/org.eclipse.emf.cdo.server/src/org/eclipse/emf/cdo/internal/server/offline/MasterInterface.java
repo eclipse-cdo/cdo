@@ -25,6 +25,8 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
+
 /**
  * @author Eike Stepper
  * @since 3.0
@@ -41,7 +43,7 @@ public class MasterInterface extends QueueRunner
 
   private CDOSessionConfiguration sessionConfiguration;
 
-  private CDOSession session;
+  private InternalCDOSession session;
 
   private IListener deactivationListener = new LifecycleEventAdapter()
   {
@@ -62,20 +64,10 @@ public class MasterInterface extends QueueRunner
     {
       if (event instanceof CDOSessionInvalidationEvent)
       {
-        CDOSessionInvalidationEvent e = (CDOSessionInvalidationEvent)event;
-        long timeStamp = e.getTimeStamp();
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Invalidation from master: {0}", CDOCommonUtil.formatTimeStamp(timeStamp));
-        }
-
-        masterTimeStamp.setValue(timeStamp);
         sync();
       }
     }
   };
-
-  private MutableLong masterTimeStamp = new MutableLong();
 
   private MutableLong syncedTimeStamp = new MutableLong();
 
@@ -111,7 +103,7 @@ public class MasterInterface extends QueueRunner
       return State.OFFLINE;
     }
 
-    long masterTimeStamp = getMasterTimeStamp();
+    long masterTimeStamp = session.getLastUpdateTime();
     long syncedTimeStamp = getSyncedTimeStamp();
     if (masterTimeStamp > syncedTimeStamp)
     {
@@ -124,11 +116,6 @@ public class MasterInterface extends QueueRunner
   public CDOSession getSession()
   {
     return session;
-  }
-
-  public long getMasterTimeStamp()
-  {
-    return masterTimeStamp.getValue();
   }
 
   public long getSyncedTimeStamp()
@@ -184,12 +171,11 @@ public class MasterInterface extends QueueRunner
             TRACER.format("Connecting to master ({0})...", CDOCommonUtil.formatTimeStamp());
           }
 
-          session = sessionConfiguration.openSession();
+          session = (InternalCDOSession)sessionConfiguration.openSession();
 
           OM.LOG.info("Connected to master.");
           session.addListener(deactivationListener);
 
-          masterTimeStamp.setValue(0);
           syncedTimeStamp.setValue(NEVER_SYNCHRONIZED);
           session.addListener(invalidationListener);
 
@@ -216,7 +202,7 @@ public class MasterInterface extends QueueRunner
       public void run()
       {
         checkActive();
-        long masterTimeStamp = getMasterTimeStamp();
+        long masterTimeStamp = session.getLastUpdateTime();
         long syncedTimeStamp = getSyncedTimeStamp();
         if (masterTimeStamp > syncedTimeStamp)
         {

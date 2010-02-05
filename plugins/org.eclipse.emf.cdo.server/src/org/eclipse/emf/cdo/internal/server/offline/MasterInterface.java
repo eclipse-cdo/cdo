@@ -168,7 +168,7 @@ public class MasterInterface extends QueueRunner
           checkActive();
           if (TRACER.isEnabled())
           {
-            TRACER.format("Connecting to master ({0})...", CDOCommonUtil.formatTimeStamp());
+            TRACER.format("Connecting to master ({0})...", CDOCommonUtil.formatTimeStamp()); //$NON-NLS-1$
           }
 
           session = (InternalCDOSession)sessionConfiguration.openSession();

@@ -414,7 +414,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     externalResource.getContents().add(customer);
 
     transaction.commit();
-    CDORevisionData data = (CDOUtil.getCDOObject(salesOrder)).cdoRevision().data();
+    CDORevisionData data = CDOUtil.getCDOObject(salesOrder).cdoRevision().data();
     CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
     assertTrue(id.isExternal());
   }
@@ -445,7 +445,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     company.getCustomers().add(customer);
 
     transaction.commit();
-    CDORevisionData data = (CDOUtil.getCDOObject(salesOrder)).cdoRevision().data();
+    CDORevisionData data = CDOUtil.getCDOObject(salesOrder).cdoRevision().data();
     CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
     assertFalse(id.isExternal());
   }

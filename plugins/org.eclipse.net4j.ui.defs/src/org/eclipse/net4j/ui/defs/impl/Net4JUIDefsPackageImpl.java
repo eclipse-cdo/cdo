@@ -74,7 +74,9 @@ public class Net4JUIDefsPackageImpl extends EPackageImpl implements Net4JUIDefsP
   public static Net4JUIDefsPackage init()
   {
     if (isInited)
+    {
       return (Net4JUIDefsPackage)EPackage.Registry.INSTANCE.getEPackage(Net4JUIDefsPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     Net4JUIDefsPackageImpl theNet4JUIDefsPackage = (Net4JUIDefsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Net4JUIDefsPackageImpl ? EPackage.Registry.INSTANCE
@@ -136,7 +138,9 @@ public class Net4JUIDefsPackageImpl extends EPackageImpl implements Net4JUIDefsP
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -159,7 +163,9 @@ public class Net4JUIDefsPackageImpl extends EPackageImpl implements Net4JUIDefsP
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package

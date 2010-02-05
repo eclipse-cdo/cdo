@@ -163,7 +163,9 @@ public class GenListOfStringImpl extends EObjectImpl implements GenListOfString
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (elements: ");

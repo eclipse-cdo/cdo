@@ -99,8 +99,10 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
     String oldPassword = password;
     password = newPassword;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           Net4jUtilDefsPackage.PASSWORD_CREDENTIALS_PROVIDER_DEF__PASSWORD, oldPassword, password));
+    }
   }
 
   /**
@@ -178,7 +180,9 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (password: ");

@@ -172,8 +172,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
       if (connectorDef != oldConnectorDef)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF,
               oldConnectorDef, connectorDef));
+        }
       }
     }
     return connectorDef;
@@ -223,8 +225,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     boolean oldConnectorDefESet = connectorDefESet;
     connectorDefESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF,
           oldConnectorDef, connectorDef, !oldConnectorDefESet));
+    }
   }
 
   /**
@@ -239,8 +243,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     connectorDef = null;
     connectorDefESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF,
           oldConnectorDef, null, oldConnectorDefESet));
+    }
   }
 
   /**
@@ -273,8 +279,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     String oldRepositoryName = repositoryName;
     repositoryName = newRepositoryName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__REPOSITORY_NAME,
           oldRepositoryName, repositoryName));
+    }
   }
 
   /**
@@ -291,8 +299,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
       if (cdoPackageRegistryDef != oldCdoPackageRegistryDef)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF, oldCdoPackageRegistryDef, cdoPackageRegistryDef));
+        }
       }
     }
     return cdoPackageRegistryDef;
@@ -318,8 +328,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     CDOPackageRegistryDef oldCdoPackageRegistryDef = cdoPackageRegistryDef;
     cdoPackageRegistryDef = newCdoPackageRegistryDef;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF,
           oldCdoPackageRegistryDef, cdoPackageRegistryDef));
+    }
   }
 
   /**
@@ -342,8 +354,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     boolean oldLegacySupportEnabled = legacySupportEnabled;
     legacySupportEnabled = newLegacySupportEnabled;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED,
           oldLegacySupportEnabled, legacySupportEnabled));
+    }
   }
 
   /**
@@ -360,8 +374,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
       if (failOverStrategyDef != oldFailOverStrategyDef)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF, oldFailOverStrategyDef, failOverStrategyDef));
+        }
       }
     }
     return failOverStrategyDef;
@@ -410,8 +426,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     boolean oldFailOverStrategyDefESet = failOverStrategyDefESet;
     failOverStrategyDefESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF,
           oldFailOverStrategyDef, failOverStrategyDef, !oldFailOverStrategyDefESet));
+    }
   }
 
   /**
@@ -426,8 +444,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     failOverStrategyDef = null;
     failOverStrategyDefESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF,
           oldFailOverStrategyDef, null, oldFailOverStrategyDefESet));
+    }
   }
 
   /**
@@ -452,19 +472,25 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     {
     case CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF:
       if (resolve)
+      {
         return getConnectorDef();
+      }
       return basicGetConnectorDef();
     case CDODefsPackage.CDO_SESSION_DEF__REPOSITORY_NAME:
       return getRepositoryName();
     case CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF:
       if (resolve)
+      {
         return getCdoPackageRegistryDef();
+      }
       return basicGetCdoPackageRegistryDef();
     case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
       return isLegacySupportEnabled();
     case CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF:
       if (resolve)
+      {
         return getFailOverStrategyDef();
+      }
       return basicGetFailOverStrategyDef();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -562,7 +588,9 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (repositoryName: ");

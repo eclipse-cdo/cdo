@@ -116,7 +116,9 @@ public class Model5Switch<T>
       TestFeatureMap testFeatureMap = (TestFeatureMap)theEObject;
       T result = caseTestFeatureMap(testFeatureMap);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model5Package.MANAGER:
@@ -124,7 +126,9 @@ public class Model5Switch<T>
       Manager manager = (Manager)theEObject;
       T result = caseManager(manager);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model5Package.DOCTOR:
@@ -132,7 +136,9 @@ public class Model5Switch<T>
       Doctor doctor = (Doctor)theEObject;
       T result = caseDoctor(doctor);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model5Package.GEN_LIST_OF_STRING:
@@ -140,7 +146,9 @@ public class Model5Switch<T>
       GenListOfString genListOfString = (GenListOfString)theEObject;
       T result = caseGenListOfString(genListOfString);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model5Package.GEN_LIST_OF_INT:
@@ -148,7 +156,9 @@ public class Model5Switch<T>
       GenListOfInt genListOfInt = (GenListOfInt)theEObject;
       T result = caseGenListOfInt(genListOfInt);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model5Package.GEN_LIST_OF_INTEGER:
@@ -156,7 +166,9 @@ public class Model5Switch<T>
       GenListOfInteger genListOfInteger = (GenListOfInteger)theEObject;
       T result = caseGenListOfInteger(genListOfInteger);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model5Package.GEN_LIST_OF_LONG:
@@ -164,7 +176,9 @@ public class Model5Switch<T>
       GenListOfLong genListOfLong = (GenListOfLong)theEObject;
       T result = caseGenListOfLong(genListOfLong);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model5Package.GEN_LIST_OF_BOOLEAN:
@@ -172,7 +186,9 @@ public class Model5Switch<T>
       GenListOfBoolean genListOfBoolean = (GenListOfBoolean)theEObject;
       T result = caseGenListOfBoolean(genListOfBoolean);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model5Package.GEN_LIST_OF_SHORT:
@@ -180,7 +196,9 @@ public class Model5Switch<T>
       GenListOfShort genListOfShort = (GenListOfShort)theEObject;
       T result = caseGenListOfShort(genListOfShort);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model5Package.GEN_LIST_OF_FLOAT:
@@ -188,7 +206,9 @@ public class Model5Switch<T>
       GenListOfFloat genListOfFloat = (GenListOfFloat)theEObject;
       T result = caseGenListOfFloat(genListOfFloat);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model5Package.GEN_LIST_OF_DOUBLE:
@@ -196,7 +216,9 @@ public class Model5Switch<T>
       GenListOfDouble genListOfDouble = (GenListOfDouble)theEObject;
       T result = caseGenListOfDouble(genListOfDouble);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model5Package.GEN_LIST_OF_DATE:
@@ -204,7 +226,9 @@ public class Model5Switch<T>
       GenListOfDate genListOfDate = (GenListOfDate)theEObject;
       T result = caseGenListOfDate(genListOfDate);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model5Package.GEN_LIST_OF_CHAR:
@@ -212,7 +236,9 @@ public class Model5Switch<T>
       GenListOfChar genListOfChar = (GenListOfChar)theEObject;
       T result = caseGenListOfChar(genListOfChar);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

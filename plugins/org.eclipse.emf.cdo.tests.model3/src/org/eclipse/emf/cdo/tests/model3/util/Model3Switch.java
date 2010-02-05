@@ -98,7 +98,9 @@ public class Model3Switch<T>
       Class1 class1 = (Class1)theEObject;
       T result = caseClass1(class1);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.META_REF:
@@ -106,7 +108,9 @@ public class Model3Switch<T>
       MetaRef metaRef = (MetaRef)theEObject;
       T result = caseMetaRef(metaRef);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

@@ -111,9 +111,13 @@ public class Net4jDefsSwitch<T>
       ConnectorDef connectorDef = (ConnectorDef)theEObject;
       T result = caseConnectorDef(connectorDef);
       if (result == null)
+      {
         result = caseDef(connectorDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jDefsPackage.CLIENT_PROTOCOL_FACTORY_DEF:
@@ -121,11 +125,17 @@ public class Net4jDefsSwitch<T>
       ClientProtocolFactoryDef clientProtocolFactoryDef = (ClientProtocolFactoryDef)theEObject;
       T result = caseClientProtocolFactoryDef(clientProtocolFactoryDef);
       if (result == null)
+      {
         result = caseProtocolProviderDef(clientProtocolFactoryDef);
+      }
       if (result == null)
+      {
         result = caseDef(clientProtocolFactoryDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jDefsPackage.TCP_CONNECTOR_DEF:
@@ -133,11 +143,17 @@ public class Net4jDefsSwitch<T>
       TCPConnectorDef tcpConnectorDef = (TCPConnectorDef)theEObject;
       T result = caseTCPConnectorDef(tcpConnectorDef);
       if (result == null)
+      {
         result = caseConnectorDef(tcpConnectorDef);
+      }
       if (result == null)
+      {
         result = caseDef(tcpConnectorDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jDefsPackage.ACCEPTOR_DEF:
@@ -145,9 +161,13 @@ public class Net4jDefsSwitch<T>
       AcceptorDef acceptorDef = (AcceptorDef)theEObject;
       T result = caseAcceptorDef(acceptorDef);
       if (result == null)
+      {
         result = caseDef(acceptorDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jDefsPackage.TCP_ACCEPTOR_DEF:
@@ -155,11 +175,17 @@ public class Net4jDefsSwitch<T>
       TCPAcceptorDef tcpAcceptorDef = (TCPAcceptorDef)theEObject;
       T result = caseTCPAcceptorDef(tcpAcceptorDef);
       if (result == null)
+      {
         result = caseAcceptorDef(tcpAcceptorDef);
+      }
       if (result == null)
+      {
         result = caseDef(tcpAcceptorDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jDefsPackage.JVM_ACCEPTOR_DEF:
@@ -167,11 +193,17 @@ public class Net4jDefsSwitch<T>
       JVMAcceptorDef jvmAcceptorDef = (JVMAcceptorDef)theEObject;
       T result = caseJVMAcceptorDef(jvmAcceptorDef);
       if (result == null)
+      {
         result = caseAcceptorDef(jvmAcceptorDef);
+      }
       if (result == null)
+      {
         result = caseDef(jvmAcceptorDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jDefsPackage.JVM_CONNECTOR_DEF:
@@ -179,11 +211,17 @@ public class Net4jDefsSwitch<T>
       JVMConnectorDef jvmConnectorDef = (JVMConnectorDef)theEObject;
       T result = caseJVMConnectorDef(jvmConnectorDef);
       if (result == null)
+      {
         result = caseConnectorDef(jvmConnectorDef);
+      }
       if (result == null)
+      {
         result = caseDef(jvmConnectorDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jDefsPackage.HTTP_CONNECTOR_DEF:
@@ -191,11 +229,17 @@ public class Net4jDefsSwitch<T>
       HTTPConnectorDef httpConnectorDef = (HTTPConnectorDef)theEObject;
       T result = caseHTTPConnectorDef(httpConnectorDef);
       if (result == null)
+      {
         result = caseConnectorDef(httpConnectorDef);
+      }
       if (result == null)
+      {
         result = caseDef(httpConnectorDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jDefsPackage.TCP_SELECTOR_DEF:
@@ -203,9 +247,13 @@ public class Net4jDefsSwitch<T>
       TCPSelectorDef tcpSelectorDef = (TCPSelectorDef)theEObject;
       T result = caseTCPSelectorDef(tcpSelectorDef);
       if (result == null)
+      {
         result = caseDef(tcpSelectorDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jDefsPackage.SERVER_PROTOCOL_FACTORY_DEF:
@@ -213,11 +261,17 @@ public class Net4jDefsSwitch<T>
       ServerProtocolFactoryDef serverProtocolFactoryDef = (ServerProtocolFactoryDef)theEObject;
       T result = caseServerProtocolFactoryDef(serverProtocolFactoryDef);
       if (result == null)
+      {
         result = caseProtocolProviderDef(serverProtocolFactoryDef);
+      }
       if (result == null)
+      {
         result = caseDef(serverProtocolFactoryDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jDefsPackage.BUFFER_PROVIDER_DEF:
@@ -225,9 +279,13 @@ public class Net4jDefsSwitch<T>
       BufferProviderDef bufferProviderDef = (BufferProviderDef)theEObject;
       T result = caseBufferProviderDef(bufferProviderDef);
       if (result == null)
+      {
         result = caseDef(bufferProviderDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jDefsPackage.BUFFER_POOL_DEF:
@@ -235,11 +293,17 @@ public class Net4jDefsSwitch<T>
       BufferPoolDef bufferPoolDef = (BufferPoolDef)theEObject;
       T result = caseBufferPoolDef(bufferPoolDef);
       if (result == null)
+      {
         result = caseBufferProviderDef(bufferPoolDef);
+      }
       if (result == null)
+      {
         result = caseDef(bufferPoolDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jDefsPackage.PROTOCOL_PROVIDER_DEF:
@@ -247,9 +311,13 @@ public class Net4jDefsSwitch<T>
       ProtocolProviderDef protocolProviderDef = (ProtocolProviderDef)theEObject;
       T result = caseProtocolProviderDef(protocolProviderDef);
       if (result == null)
+      {
         result = caseDef(protocolProviderDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

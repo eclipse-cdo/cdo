@@ -94,7 +94,9 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
     String oldUrl = url;
     url = newUrl;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL, oldUrl, url));
+    }
   }
 
   /**
@@ -172,7 +174,9 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (url: ");

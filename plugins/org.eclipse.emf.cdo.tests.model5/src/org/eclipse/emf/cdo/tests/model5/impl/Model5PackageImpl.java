@@ -177,7 +177,9 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   public static Model5Package init()
   {
     if (isInited)
+    {
       return (Model5Package)EPackage.Registry.INSTANCE.getEPackage(Model5Package.eNS_URI);
+    }
 
     // Obtain or create and register package
     Model5PackageImpl theModel5Package = (Model5PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model5PackageImpl ? EPackage.Registry.INSTANCE
@@ -486,7 +488,9 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -546,7 +550,9 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -563,10 +569,10 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
     // Initialize classes and features; add operations and parameters
     initEClass(testFeatureMapEClass, TestFeatureMap.class, "TestFeatureMap", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTestFeatureMap_Managers(), this.getManager(), null, "managers", null, 0, -1,
-        TestFeatureMap.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTestFeatureMap_Doctors(), this.getDoctor(), null, "doctors", null, 0, -1, TestFeatureMap.class,
+    initEReference(getTestFeatureMap_Managers(), getManager(), null, "managers", null, 0, -1, TestFeatureMap.class,
+        IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getTestFeatureMap_Doctors(), getDoctor(), null, "doctors", null, 0, -1, TestFeatureMap.class,
         IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTestFeatureMap_People(), ecorePackage.getEFeatureMapEntry(), "people", null, 0, -1,

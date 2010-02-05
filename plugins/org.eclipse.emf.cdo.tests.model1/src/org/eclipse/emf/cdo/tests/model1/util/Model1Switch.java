@@ -115,7 +115,9 @@ public class Model1Switch<T>
       Address address = (Address)theEObject;
       T result = caseAddress(address);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.COMPANY:
@@ -123,9 +125,13 @@ public class Model1Switch<T>
       Company company = (Company)theEObject;
       T result = caseCompany(company);
       if (result == null)
+      {
         result = caseAddress(company);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.SUPPLIER:
@@ -133,9 +139,13 @@ public class Model1Switch<T>
       Supplier supplier = (Supplier)theEObject;
       T result = caseSupplier(supplier);
       if (result == null)
+      {
         result = caseAddress(supplier);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.CUSTOMER:
@@ -143,9 +153,13 @@ public class Model1Switch<T>
       Customer customer = (Customer)theEObject;
       T result = caseCustomer(customer);
       if (result == null)
+      {
         result = caseAddress(customer);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.ORDER:
@@ -153,7 +167,9 @@ public class Model1Switch<T>
       Order order = (Order)theEObject;
       T result = caseOrder(order);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.ORDER_DETAIL:
@@ -161,7 +177,9 @@ public class Model1Switch<T>
       OrderDetail orderDetail = (OrderDetail)theEObject;
       T result = caseOrderDetail(orderDetail);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.PURCHASE_ORDER:
@@ -169,9 +187,13 @@ public class Model1Switch<T>
       PurchaseOrder purchaseOrder = (PurchaseOrder)theEObject;
       T result = casePurchaseOrder(purchaseOrder);
       if (result == null)
+      {
         result = caseOrder(purchaseOrder);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.SALES_ORDER:
@@ -179,9 +201,13 @@ public class Model1Switch<T>
       SalesOrder salesOrder = (SalesOrder)theEObject;
       T result = caseSalesOrder(salesOrder);
       if (result == null)
+      {
         result = caseOrder(salesOrder);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.CATEGORY:
@@ -189,7 +215,9 @@ public class Model1Switch<T>
       Category category = (Category)theEObject;
       T result = caseCategory(category);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.PRODUCT1:
@@ -197,7 +225,9 @@ public class Model1Switch<T>
       Product1 product1 = (Product1)theEObject;
       T result = caseProduct1(product1);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.ORDER_ADDRESS:
@@ -205,13 +235,21 @@ public class Model1Switch<T>
       OrderAddress orderAddress = (OrderAddress)theEObject;
       T result = caseOrderAddress(orderAddress);
       if (result == null)
+      {
         result = caseAddress(orderAddress);
+      }
       if (result == null)
+      {
         result = caseOrder(orderAddress);
+      }
       if (result == null)
+      {
         result = caseOrderDetail(orderAddress);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.PRODUCT_TO_ORDER:
@@ -220,7 +258,9 @@ public class Model1Switch<T>
       Map.Entry<Product1, SalesOrder> productToOrder = (Map.Entry<Product1, SalesOrder>)theEObject;
       T result = caseProductToOrder(productToOrder);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

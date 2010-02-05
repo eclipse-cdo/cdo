@@ -110,8 +110,10 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
       if (defaultDefinition != oldDefaultDefinition)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               Net4jUtilDefsPackage.DEF_CONTAINER__DEFAULT_DEFINITION, oldDefaultDefinition, defaultDefinition));
+        }
       }
     }
     return defaultDefinition;
@@ -137,8 +139,10 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
     Def oldDefaultDefinition = defaultDefinition;
     defaultDefinition = newDefaultDefinition;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.DEF_CONTAINER__DEFAULT_DEFINITION,
           oldDefaultDefinition, defaultDefinition));
+    }
   }
 
   /**
@@ -171,7 +175,9 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
       return getDefinitions();
     case Net4jUtilDefsPackage.DEF_CONTAINER__DEFAULT_DEFINITION:
       if (resolve)
+      {
         return getDefaultDefinition();
+      }
       return basicGetDefaultDefinition();
     }
     return super.eGet(featureID, resolve, coreType);

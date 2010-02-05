@@ -123,8 +123,10 @@ public class TestDefImpl extends DefImpl implements TestDef
     String oldAttribute = attribute;
     attribute = newAttribute;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, TestDefsPackage.TEST_DEF__ATTRIBUTE, oldAttribute,
           attribute));
+    }
   }
 
   /**
@@ -214,7 +216,9 @@ public class TestDefImpl extends DefImpl implements TestDef
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (attribute: ");

@@ -111,7 +111,9 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
   public static BusinessPackage init()
   {
     if (isInited)
+    {
       return (BusinessPackage)EPackage.Registry.INSTANCE.getEPackage(BusinessPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     BusinessPackageImpl theBusinessPackage = (BusinessPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof BusinessPackageImpl ? EPackage.Registry.INSTANCE
@@ -403,7 +405,9 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -454,7 +458,9 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -480,47 +486,47 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
     initEReference(getBusinessDay_MenuCard(), theInventoryPackage.getMenuCard(), null, "menuCard", null, 1, 1,
         BusinessDay.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getBusinessDay_Orders(), this.getOrder(), this.getOrder_BusinessDay(), "orders", null, 0, -1,
+    initEReference(getBusinessDay_Orders(), getOrder(), getOrder_BusinessDay(), "orders", null, 0, -1,
         BusinessDay.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getBusinessDay_Waiters(), this.getWaiter(), this.getWaiter_BusinessDay(), "waiters", null, 1, -1,
+    initEReference(getBusinessDay_Waiters(), getWaiter(), getWaiter_BusinessDay(), "waiters", null, 1, -1,
         BusinessDay.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getBusinessDay_Closed(), ecorePackage.getEBoolean(), "closed", null, 0, 1, BusinessDay.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(orderEClass, Order.class, "Order", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getOrder_BusinessDay(), this.getBusinessDay(), this.getBusinessDay_Orders(), "businessDay", null, 1,
-        1, Order.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+    initEReference(getOrder_BusinessDay(), getBusinessDay(), getBusinessDay_Orders(), "businessDay", null, 1, 1,
+        Order.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getOrder_Table(), theInventoryPackage.getTable(), null, "table", null, 1, 1, Order.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getOrder_OrderDetails(), this.getOrderDetail(), this.getOrderDetail_Order(), "orderDetails", null,
-        1, -1, Order.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getOrder_OrderDetails(), getOrderDetail(), getOrderDetail_Order(), "orderDetails", null, 1, -1,
+        Order.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getOrder_Number(), ecorePackage.getEInt(), "number", null, 0, 1, Order.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(orderDetailEClass, OrderDetail.class, "OrderDetail", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getOrderDetail_Order(), this.getOrder(), this.getOrder_OrderDetails(), "order", null, 1, 1,
-        OrderDetail.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getOrderDetail_Order(), getOrder(), getOrder_OrderDetails(), "order", null, 1, 1, OrderDetail.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
     initEReference(getOrderDetail_Offering(), theInventoryPackage.getOffering(), null, "offering", null, 1, 1,
         OrderDetail.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getOrderDetail_Quantity(), ecorePackage.getEInt(), "quantity", null, 0, 1, OrderDetail.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getOrderDetail_State(), this.getOrderState(), "state", null, 0, 1, OrderDetail.class, !IS_TRANSIENT,
+    initEAttribute(getOrderDetail_State(), getOrderState(), "state", null, 0, 1, OrderDetail.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getOrderDetail_Price(), ecorePackage.getEFloat(), "price", null, 0, 1, OrderDetail.class,
         IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
     initEClass(waiterEClass, Waiter.class, "Waiter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getWaiter_BusinessDay(), this.getBusinessDay(), this.getBusinessDay_Waiters(), "businessDay", null,
-        0, 1, Waiter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getWaiter_BusinessDay(), getBusinessDay(), getBusinessDay_Waiters(), "businessDay", null, 0, 1,
+        Waiter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getWaiter_Tables(), theInventoryPackage.getTable(), null, "tables", null, 0, -1, Waiter.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);

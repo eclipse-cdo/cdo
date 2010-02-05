@@ -95,8 +95,10 @@ public class EditorDefImpl extends DefImpl implements EditorDef
     String oldEditorID = editorID;
     editorID = newEditorID;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDOUIDefsPackage.EDITOR_DEF__EDITOR_ID, oldEditorID,
           editorID));
+    }
   }
 
   /**
@@ -174,7 +176,9 @@ public class EditorDefImpl extends DefImpl implements EditorDef
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (editorID: ");

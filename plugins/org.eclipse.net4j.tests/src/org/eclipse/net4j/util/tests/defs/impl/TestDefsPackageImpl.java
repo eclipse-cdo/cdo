@@ -76,7 +76,9 @@ public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
   public static TestDefsPackage init()
   {
     if (isInited)
+    {
       return (TestDefsPackage)EPackage.Registry.INSTANCE.getEPackage(TestDefsPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     TestDefsPackageImpl theTestDefsPackage = (TestDefsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TestDefsPackageImpl ? EPackage.Registry.INSTANCE
@@ -158,7 +160,9 @@ public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -183,7 +187,9 @@ public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package

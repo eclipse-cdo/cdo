@@ -105,11 +105,17 @@ public class Model2Switch<T>
       SpecialPurchaseOrder specialPurchaseOrder = (SpecialPurchaseOrder)theEObject;
       T result = caseSpecialPurchaseOrder(specialPurchaseOrder);
       if (result == null)
+      {
         result = casePurchaseOrder(specialPurchaseOrder);
+      }
       if (result == null)
+      {
         result = caseOrder(specialPurchaseOrder);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model2Package.TASK_CONTAINER:
@@ -117,7 +123,9 @@ public class Model2Switch<T>
       TaskContainer taskContainer = (TaskContainer)theEObject;
       T result = caseTaskContainer(taskContainer);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model2Package.TASK:
@@ -125,7 +133,9 @@ public class Model2Switch<T>
       Task task = (Task)theEObject;
       T result = caseTask(task);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model2Package.UNSETTABLE1:
@@ -133,7 +143,9 @@ public class Model2Switch<T>
       Unsettable1 unsettable1 = (Unsettable1)theEObject;
       T result = caseUnsettable1(unsettable1);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model2Package.UNSETTABLE2_WITH_DEFAULT:
@@ -141,7 +153,9 @@ public class Model2Switch<T>
       Unsettable2WithDefault unsettable2WithDefault = (Unsettable2WithDefault)theEObject;
       T result = caseUnsettable2WithDefault(unsettable2WithDefault);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model2Package.PERSISTENT_CONTAINMENT:
@@ -149,7 +163,9 @@ public class Model2Switch<T>
       PersistentContainment persistentContainment = (PersistentContainment)theEObject;
       T result = casePersistentContainment(persistentContainment);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model2Package.TRANSIENT_CONTAINER:
@@ -157,7 +173,9 @@ public class Model2Switch<T>
       TransientContainer transientContainer = (TransientContainer)theEObject;
       T result = caseTransientContainer(transientContainer);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

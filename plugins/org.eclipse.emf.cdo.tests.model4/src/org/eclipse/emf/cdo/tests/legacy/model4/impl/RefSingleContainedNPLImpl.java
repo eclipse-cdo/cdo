@@ -90,9 +90,13 @@ public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleC
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           model4Package.REF_SINGLE_CONTAINED_NPL__ELEMENT, oldElement, newElement);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -108,18 +112,26 @@ public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleC
     {
       NotificationChain msgs = null;
       if (element != null)
+      {
         msgs = ((InternalEObject)element).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
             - model4Package.REF_SINGLE_CONTAINED_NPL__ELEMENT, null, msgs);
+      }
       if (newElement != null)
+      {
         msgs = ((InternalEObject)newElement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
             - model4Package.REF_SINGLE_CONTAINED_NPL__ELEMENT, null, msgs);
+      }
       msgs = basicSetElement(newElement, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.REF_SINGLE_CONTAINED_NPL__ELEMENT,
           newElement, newElement));
+    }
   }
 
   /**

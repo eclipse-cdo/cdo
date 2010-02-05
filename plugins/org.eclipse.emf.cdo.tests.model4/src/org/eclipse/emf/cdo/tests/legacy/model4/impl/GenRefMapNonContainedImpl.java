@@ -111,9 +111,13 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
     {
     case model4Package.GEN_REF_MAP_NON_CONTAINED__ELEMENTS:
       if (coreType)
+      {
         return getElements();
+      }
       else
+      {
         return getElements().map();
+      }
     }
     return super.eGet(featureID, resolve, coreType);
   }

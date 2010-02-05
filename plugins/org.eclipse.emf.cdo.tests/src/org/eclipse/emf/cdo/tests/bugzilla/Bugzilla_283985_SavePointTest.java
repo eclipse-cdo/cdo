@@ -87,7 +87,7 @@ public class Bugzilla_283985_SavePointTest extends AbstractCDOTest
     assertDirty(detail1, transaction);
 
     transaction.commit();
-    assertEquals(id, (CDOUtil.getCDOObject(detail1)).cdoID());
+    assertEquals(id, CDOUtil.getCDOObject(detail1).cdoID());
     assertEquals(detail1, transaction.getObject(id));
     assertClean(detail1, transaction);
   }

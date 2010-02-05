@@ -84,7 +84,9 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   public static Model3Package init()
   {
     if (isInited)
+    {
       return (Model3Package)EPackage.Registry.INSTANCE.getEPackage(Model3Package.eNS_URI);
+    }
 
     // Obtain or create and register package
     Model3PackageImpl theModel3Package = (Model3PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model3PackageImpl ? EPackage.Registry.INSTANCE
@@ -183,7 +185,9 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -210,7 +214,9 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package

@@ -85,7 +85,9 @@ public class JVMAcceptorDefImpl extends AcceptorDefImpl implements JVMAcceptorDe
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.JVM_ACCEPTOR_DEF__NAME, oldName, name));
+    }
   }
 
   /**
@@ -163,7 +165,9 @@ public class JVMAcceptorDefImpl extends AcceptorDefImpl implements JVMAcceptorDe
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

@@ -73,7 +73,9 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
   public static InterfacePackage init()
   {
     if (isInited)
+    {
       return (InterfacePackage)EPackage.Registry.INSTANCE.getEPackage(InterfacePackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     InterfacePackageImpl theInterfacePackage = (InterfacePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof InterfacePackageImpl ? EPackage.Registry.INSTANCE
@@ -142,7 +144,9 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -166,7 +170,9 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package

@@ -94,8 +94,10 @@ public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplCont
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_CONTAINED_ELEMENT_NPL__NAME, oldName,
           name));
+    }
   }
 
   /**
@@ -215,7 +217,9 @@ public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplCont
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

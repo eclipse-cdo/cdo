@@ -114,7 +114,9 @@ public class CompanySwitch<T>
       Address address = (Address)theEObject;
       T result = caseAddress(address);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CompanyPackage.COMPANY:
@@ -122,9 +124,13 @@ public class CompanySwitch<T>
       Company company = (Company)theEObject;
       T result = caseCompany(company);
       if (result == null)
+      {
         result = caseAddress(company);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CompanyPackage.SUPPLIER:
@@ -132,9 +138,13 @@ public class CompanySwitch<T>
       Supplier supplier = (Supplier)theEObject;
       T result = caseSupplier(supplier);
       if (result == null)
+      {
         result = caseAddress(supplier);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CompanyPackage.CUSTOMER:
@@ -142,9 +152,13 @@ public class CompanySwitch<T>
       Customer customer = (Customer)theEObject;
       T result = caseCustomer(customer);
       if (result == null)
+      {
         result = caseAddress(customer);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CompanyPackage.ORDER:
@@ -152,7 +166,9 @@ public class CompanySwitch<T>
       Order order = (Order)theEObject;
       T result = caseOrder(order);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CompanyPackage.ORDER_DETAIL:
@@ -160,7 +176,9 @@ public class CompanySwitch<T>
       OrderDetail orderDetail = (OrderDetail)theEObject;
       T result = caseOrderDetail(orderDetail);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CompanyPackage.ORDER_ADDRESS:
@@ -168,13 +186,21 @@ public class CompanySwitch<T>
       OrderAddress orderAddress = (OrderAddress)theEObject;
       T result = caseOrderAddress(orderAddress);
       if (result == null)
+      {
         result = caseAddress(orderAddress);
+      }
       if (result == null)
+      {
         result = caseOrder(orderAddress);
+      }
       if (result == null)
+      {
         result = caseOrderDetail(orderAddress);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CompanyPackage.PURCHASE_ORDER:
@@ -182,9 +208,13 @@ public class CompanySwitch<T>
       PurchaseOrder purchaseOrder = (PurchaseOrder)theEObject;
       T result = casePurchaseOrder(purchaseOrder);
       if (result == null)
+      {
         result = caseOrder(purchaseOrder);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CompanyPackage.SALES_ORDER:
@@ -192,9 +222,13 @@ public class CompanySwitch<T>
       SalesOrder salesOrder = (SalesOrder)theEObject;
       T result = caseSalesOrder(salesOrder);
       if (result == null)
+      {
         result = caseOrder(salesOrder);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CompanyPackage.CATEGORY:
@@ -202,7 +236,9 @@ public class CompanySwitch<T>
       Category category = (Category)theEObject;
       T result = caseCategory(category);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CompanyPackage.PRODUCT:
@@ -210,7 +246,9 @@ public class CompanySwitch<T>
       Product product = (Product)theEObject;
       T result = caseProduct(product);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

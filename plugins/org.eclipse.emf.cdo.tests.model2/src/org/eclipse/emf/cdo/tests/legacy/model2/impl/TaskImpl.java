@@ -104,7 +104,9 @@ public class TaskImpl extends EObjectImpl implements Task
   public TaskContainer getTaskContainer()
   {
     if (eContainerFeatureID() != Model2Package.TASK__TASK_CONTAINER)
+    {
       return null;
+    }
     return (TaskContainer)eContainer();
   }
 
@@ -126,24 +128,34 @@ public class TaskImpl extends EObjectImpl implements Task
    */
   public void setTaskContainer(TaskContainer newTaskContainer)
   {
-    if (newTaskContainer != eInternalContainer()
-        || (eContainerFeatureID() != Model2Package.TASK__TASK_CONTAINER && newTaskContainer != null))
+    if (newTaskContainer != eInternalContainer() || eContainerFeatureID() != Model2Package.TASK__TASK_CONTAINER
+        && newTaskContainer != null)
     {
       if (EcoreUtil.isAncestor(this, newTaskContainer))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newTaskContainer != null)
+      {
         msgs = ((InternalEObject)newTaskContainer).eInverseAdd(this, Model2Package.TASK_CONTAINER__TASKS,
             TaskContainer.class, msgs);
+      }
       msgs = basicSetTaskContainer(newTaskContainer, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.TASK__TASK_CONTAINER, newTaskContainer,
           newTaskContainer));
+    }
   }
 
   /**
@@ -166,8 +178,10 @@ public class TaskImpl extends EObjectImpl implements Task
     String oldDescription = description;
     description = newDescription;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.TASK__DESCRIPTION, oldDescription,
           description));
+    }
   }
 
   /**
@@ -190,7 +204,9 @@ public class TaskImpl extends EObjectImpl implements Task
     boolean oldDone = done;
     done = newDone;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.TASK__DONE, oldDone, done));
+    }
   }
 
   /**
@@ -205,7 +221,9 @@ public class TaskImpl extends EObjectImpl implements Task
     {
     case Model2Package.TASK__TASK_CONTAINER:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetTaskContainer((TaskContainer)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -338,7 +356,9 @@ public class TaskImpl extends EObjectImpl implements Task
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (description: ");

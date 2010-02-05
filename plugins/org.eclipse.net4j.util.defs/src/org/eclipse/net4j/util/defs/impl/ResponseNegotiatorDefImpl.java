@@ -82,9 +82,11 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
       if (credentialsProvider != oldCredentialsProvider)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER, oldCredentialsProvider,
               credentialsProvider));
+        }
       }
     }
     return credentialsProvider;
@@ -110,9 +112,11 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
     CredentialsProviderDef oldCredentialsProvider = credentialsProvider;
     credentialsProvider = newCredentialsProvider;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER, oldCredentialsProvider,
           credentialsProvider));
+    }
   }
 
   /**
@@ -127,7 +131,9 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
     {
     case Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER:
       if (resolve)
+      {
         return getCredentialsProvider();
+      }
       return basicGetCredentialsProvider();
     }
     return super.eGet(featureID, resolve, coreType);

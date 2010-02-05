@@ -95,8 +95,10 @@ public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicP
     String oldResourceURI = resourceURI;
     resourceURI = newResourceURI;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.EDYNAMIC_PACKAGE_DEF__RESOURCE_URI,
           oldResourceURI, resourceURI));
+    }
   }
 
   /**
@@ -174,7 +176,9 @@ public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicP
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (resourceURI: ");

@@ -129,7 +129,9 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
     String oldHost = host;
     host = newHost;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.TCP_ACCEPTOR_DEF__HOST, oldHost, host));
+    }
   }
 
   /**
@@ -152,7 +154,9 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
     int oldPort = port;
     port = newPort;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.TCP_ACCEPTOR_DEF__PORT, oldPort, port));
+    }
   }
 
   /**
@@ -169,8 +173,10 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
       if (tcpSelectorDef != oldTcpSelectorDef)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               Net4jDefsPackage.TCP_ACCEPTOR_DEF__TCP_SELECTOR_DEF, oldTcpSelectorDef, tcpSelectorDef));
+        }
       }
     }
     return tcpSelectorDef;
@@ -196,8 +202,10 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
     TCPSelectorDef oldTcpSelectorDef = tcpSelectorDef;
     tcpSelectorDef = newTcpSelectorDef;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.TCP_ACCEPTOR_DEF__TCP_SELECTOR_DEF,
           oldTcpSelectorDef, tcpSelectorDef));
+    }
   }
 
   /**
@@ -216,7 +224,9 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
       return getPort();
     case Net4jDefsPackage.TCP_ACCEPTOR_DEF__TCP_SELECTOR_DEF:
       if (resolve)
+      {
         return getTcpSelectorDef();
+      }
       return basicGetTcpSelectorDef();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -297,7 +307,9 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (host: ");

@@ -115,9 +115,13 @@ public class CDODefsSwitch<T>
       CDOViewDef cdoViewDef = (CDOViewDef)theEObject;
       T result = caseCDOViewDef(cdoViewDef);
       if (result == null)
+      {
         result = caseDef(cdoViewDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CDODefsPackage.CDO_TRANSACTION_DEF:
@@ -125,11 +129,17 @@ public class CDODefsSwitch<T>
       CDOTransactionDef cdoTransactionDef = (CDOTransactionDef)theEObject;
       T result = caseCDOTransactionDef(cdoTransactionDef);
       if (result == null)
+      {
         result = caseCDOViewDef(cdoTransactionDef);
+      }
       if (result == null)
+      {
         result = caseDef(cdoTransactionDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CDODefsPackage.CDO_AUDIT_DEF:
@@ -137,11 +147,17 @@ public class CDODefsSwitch<T>
       CDOAuditDef cdoAuditDef = (CDOAuditDef)theEObject;
       T result = caseCDOAuditDef(cdoAuditDef);
       if (result == null)
+      {
         result = caseCDOViewDef(cdoAuditDef);
+      }
       if (result == null)
+      {
         result = caseDef(cdoAuditDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CDODefsPackage.CDO_SESSION_DEF:
@@ -149,9 +165,13 @@ public class CDODefsSwitch<T>
       CDOSessionDef cdoSessionDef = (CDOSessionDef)theEObject;
       T result = caseCDOSessionDef(cdoSessionDef);
       if (result == null)
+      {
         result = caseDef(cdoSessionDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CDODefsPackage.FAIL_OVER_STRATEGY_DEF:
@@ -159,9 +179,13 @@ public class CDODefsSwitch<T>
       FailOverStrategyDef failOverStrategyDef = (FailOverStrategyDef)theEObject;
       T result = caseFailOverStrategyDef(failOverStrategyDef);
       if (result == null)
+      {
         result = caseDef(failOverStrategyDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF:
@@ -169,11 +193,17 @@ public class CDODefsSwitch<T>
       RetryFailOverStrategyDef retryFailOverStrategyDef = (RetryFailOverStrategyDef)theEObject;
       T result = caseRetryFailOverStrategyDef(retryFailOverStrategyDef);
       if (result == null)
+      {
         result = caseFailOverStrategyDef(retryFailOverStrategyDef);
+      }
       if (result == null)
+      {
         result = caseDef(retryFailOverStrategyDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF:
@@ -181,9 +211,13 @@ public class CDODefsSwitch<T>
       CDOPackageRegistryDef cdoPackageRegistryDef = (CDOPackageRegistryDef)theEObject;
       T result = caseCDOPackageRegistryDef(cdoPackageRegistryDef);
       if (result == null)
+      {
         result = caseDef(cdoPackageRegistryDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CDODefsPackage.CDO_EAGER_PACKAGE_REGISTRY_DEF:
@@ -191,11 +225,17 @@ public class CDODefsSwitch<T>
       CDOEagerPackageRegistryDef cdoEagerPackageRegistryDef = (CDOEagerPackageRegistryDef)theEObject;
       T result = caseCDOEagerPackageRegistryDef(cdoEagerPackageRegistryDef);
       if (result == null)
+      {
         result = caseCDOPackageRegistryDef(cdoEagerPackageRegistryDef);
+      }
       if (result == null)
+      {
         result = caseDef(cdoEagerPackageRegistryDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CDODefsPackage.CDO_LAZY_PACKAGE_REGISTRY_DEF:
@@ -203,11 +243,17 @@ public class CDODefsSwitch<T>
       CDOLazyPackageRegistryDef cdoLazyPackageRegistryDef = (CDOLazyPackageRegistryDef)theEObject;
       T result = caseCDOLazyPackageRegistryDef(cdoLazyPackageRegistryDef);
       if (result == null)
+      {
         result = caseCDOPackageRegistryDef(cdoLazyPackageRegistryDef);
+      }
       if (result == null)
+      {
         result = caseDef(cdoLazyPackageRegistryDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CDODefsPackage.EPACKAGE_DEF:
@@ -215,9 +261,13 @@ public class CDODefsSwitch<T>
       EPackageDef ePackageDef = (EPackageDef)theEObject;
       T result = caseEPackageDef(ePackageDef);
       if (result == null)
+      {
         result = caseDef(ePackageDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CDODefsPackage.EDYNAMIC_PACKAGE_DEF:
@@ -225,11 +275,17 @@ public class CDODefsSwitch<T>
       EDynamicPackageDef eDynamicPackageDef = (EDynamicPackageDef)theEObject;
       T result = caseEDynamicPackageDef(eDynamicPackageDef);
       if (result == null)
+      {
         result = caseEPackageDef(eDynamicPackageDef);
+      }
       if (result == null)
+      {
         result = caseDef(eDynamicPackageDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CDODefsPackage.EGLOBAL_PACKAGE_DEF:
@@ -237,11 +293,17 @@ public class CDODefsSwitch<T>
       EGlobalPackageDef eGlobalPackageDef = (EGlobalPackageDef)theEObject;
       T result = caseEGlobalPackageDef(eGlobalPackageDef);
       if (result == null)
+      {
         result = caseEPackageDef(eGlobalPackageDef);
+      }
       if (result == null)
+      {
         result = caseDef(eGlobalPackageDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CDODefsPackage.CDO_CLIENT_PROTOCOL_FACTORY_DEF:
@@ -249,13 +311,21 @@ public class CDODefsSwitch<T>
       CDOClientProtocolFactoryDef cdoClientProtocolFactoryDef = (CDOClientProtocolFactoryDef)theEObject;
       T result = caseCDOClientProtocolFactoryDef(cdoClientProtocolFactoryDef);
       if (result == null)
+      {
         result = caseClientProtocolFactoryDef(cdoClientProtocolFactoryDef);
+      }
       if (result == null)
+      {
         result = caseProtocolProviderDef(cdoClientProtocolFactoryDef);
+      }
       if (result == null)
+      {
         result = caseDef(cdoClientProtocolFactoryDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CDODefsPackage.CDO_RESOURCE_DEF:
@@ -263,9 +333,13 @@ public class CDODefsSwitch<T>
       CDOResourceDef cdoResourceDef = (CDOResourceDef)theEObject;
       T result = caseCDOResourceDef(cdoResourceDef);
       if (result == null)
+      {
         result = caseDef(cdoResourceDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

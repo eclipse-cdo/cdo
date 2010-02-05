@@ -79,8 +79,10 @@ public class RefSingleNonContainedNPLImpl extends EObjectImpl implements RefSing
       if (element != oldElement)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               model4Package.REF_SINGLE_NON_CONTAINED_NPL__ELEMENT, oldElement, element));
+        }
       }
     }
     return element;
@@ -106,8 +108,10 @@ public class RefSingleNonContainedNPLImpl extends EObjectImpl implements RefSing
     ContainedElementNoOpposite oldElement = element;
     element = newElement;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.REF_SINGLE_NON_CONTAINED_NPL__ELEMENT,
           oldElement, element));
+    }
   }
 
   /**
@@ -122,7 +126,9 @@ public class RefSingleNonContainedNPLImpl extends EObjectImpl implements RefSing
     {
     case model4Package.REF_SINGLE_NON_CONTAINED_NPL__ELEMENT:
       if (resolve)
+      {
         return getElement();
+      }
       return basicGetElement();
     }
     return super.eGet(featureID, resolve, coreType);

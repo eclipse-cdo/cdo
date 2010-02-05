@@ -179,8 +179,10 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
     boolean oldAlgorithmNameESet = algorithmNameESet;
     algorithmNameESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.RANDOMIZER_DEF__ALGORITHM_NAME,
           oldAlgorithmName, algorithmName, !oldAlgorithmNameESet));
+    }
   }
 
   /**
@@ -195,8 +197,10 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
     algorithmName = ALGORITHM_NAME_EDEFAULT;
     algorithmNameESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Net4jUtilDefsPackage.RANDOMIZER_DEF__ALGORITHM_NAME,
           oldAlgorithmName, ALGORITHM_NAME_EDEFAULT, oldAlgorithmNameESet));
+    }
   }
 
   /**
@@ -231,8 +235,10 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
     boolean oldProviderNameESet = providerNameESet;
     providerNameESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.RANDOMIZER_DEF__PROVIDER_NAME,
           oldProviderName, providerName, !oldProviderNameESet));
+    }
   }
 
   /**
@@ -247,8 +253,10 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
     providerName = PROVIDER_NAME_EDEFAULT;
     providerNameESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Net4jUtilDefsPackage.RANDOMIZER_DEF__PROVIDER_NAME,
           oldProviderName, PROVIDER_NAME_EDEFAULT, oldProviderNameESet));
+    }
   }
 
   /**
@@ -283,8 +291,10 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
     boolean oldSeedESet = seedESet;
     seedESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.RANDOMIZER_DEF__SEED, oldSeed, seed,
           !oldSeedESet));
+    }
   }
 
   /**
@@ -299,8 +309,10 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
     seed = SEED_EDEFAULT;
     seedESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Net4jUtilDefsPackage.RANDOMIZER_DEF__SEED, oldSeed,
           SEED_EDEFAULT, oldSeedESet));
+    }
   }
 
   /**
@@ -408,24 +420,38 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (algorithmName: ");
     if (algorithmNameESet)
+    {
       result.append(algorithmName);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", providerName: ");
     if (providerNameESet)
+    {
       result.append(providerName);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", seed: ");
     if (seedESet)
+    {
       result.append(seed);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(')');
     return result.toString();
   }

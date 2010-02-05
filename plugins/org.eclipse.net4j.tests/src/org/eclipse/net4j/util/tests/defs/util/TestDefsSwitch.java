@@ -99,9 +99,13 @@ public class TestDefsSwitch<T>
       TestDef testDef = (TestDef)theEObject;
       T result = caseTestDef(testDef);
       if (result == null)
+      {
         result = caseDef(testDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

@@ -94,7 +94,9 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
   public void unsetElements()
   {
     if (elements != null)
+    {
       ((InternalEList.Unsettable<?>)elements).unset();
+    }
   }
 
   /**

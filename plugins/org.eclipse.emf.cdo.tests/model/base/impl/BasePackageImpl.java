@@ -73,7 +73,9 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
   public static BasePackage init()
   {
     if (isInited)
+    {
       return (BasePackage)EPackage.Registry.INSTANCE.getEPackage(BasePackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     BasePackageImpl theBasePackage = (BasePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof BasePackageImpl ? EPackage.Registry.INSTANCE
@@ -142,7 +144,9 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -166,7 +170,9 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package

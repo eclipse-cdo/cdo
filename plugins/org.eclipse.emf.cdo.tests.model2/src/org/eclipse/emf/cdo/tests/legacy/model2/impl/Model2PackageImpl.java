@@ -123,7 +123,9 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
   public static Model2Package init()
   {
     if (isInited)
+    {
       return (Model2Package)EPackage.Registry.INSTANCE.getEPackage(Model2Package.eNS_URI);
+    }
 
     // Obtain or create and register package
     Model2PackageImpl theModel2Package = (Model2PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model2PackageImpl ? EPackage.Registry.INSTANCE
@@ -585,7 +587,9 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -654,7 +658,9 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -684,14 +690,14 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
     initEClass(taskContainerEClass, TaskContainer.class, "TaskContainer", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTaskContainer_Tasks(), this.getTask(), this.getTask_TaskContainer(), "tasks", null, 0, -1,
+    initEReference(getTaskContainer_Tasks(), getTask(), getTask_TaskContainer(), "tasks", null, 0, -1,
         TaskContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTask_TaskContainer(), this.getTaskContainer(), this.getTaskContainer_Tasks(), "taskContainer",
-        null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTask_TaskContainer(), getTaskContainer(), getTaskContainer_Tasks(), "taskContainer", null, 0, 1,
+        Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTask_Description(), ecorePackage.getEString(), "description", null, 0, 1, Task.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTask_Done(), ecorePackage.getEBoolean(), "done", null, 0, 1, Task.class, !IS_TRANSIENT,
@@ -774,10 +780,9 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     initEAttribute(getPersistentContainment_AttrBefore(), ecorePackage.getEString(), "attrBefore", null, 0, 1,
         PersistentContainment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getPersistentContainment_Children(), this.getTransientContainer(), this
-        .getTransientContainer_Parent(), "children", null, 0, -1, PersistentContainment.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        !IS_ORDERED);
+    initEReference(getPersistentContainment_Children(), getTransientContainer(), getTransientContainer_Parent(),
+        "children", null, 0, -1, PersistentContainment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
     initEAttribute(getPersistentContainment_AttrAfter(), ecorePackage.getEString(), "attrAfter", null, 0, 1,
         PersistentContainment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
@@ -787,10 +792,9 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     initEAttribute(getTransientContainer_AttrBefore(), ecorePackage.getEString(), "attrBefore", null, 0, 1,
         TransientContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getTransientContainer_Parent(), this.getPersistentContainment(), this
-        .getPersistentContainment_Children(), "parent", null, 0, 1, TransientContainer.class, IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+    initEReference(getTransientContainer_Parent(), getPersistentContainment(), getPersistentContainment_Children(),
+        "parent", null, 0, 1, TransientContainer.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTransientContainer_AttrAfter(), ecorePackage.getEString(), "attrAfter", null, 0, 1,
         TransientContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);

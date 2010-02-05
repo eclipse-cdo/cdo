@@ -73,7 +73,9 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
   public static DerivedPackage init()
   {
     if (isInited)
+    {
       return (DerivedPackage)EPackage.Registry.INSTANCE.getEPackage(DerivedPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     DerivedPackageImpl theDerivedPackage = (DerivedPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof DerivedPackageImpl ? EPackage.Registry.INSTANCE
@@ -135,7 +137,9 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -158,7 +162,9 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package

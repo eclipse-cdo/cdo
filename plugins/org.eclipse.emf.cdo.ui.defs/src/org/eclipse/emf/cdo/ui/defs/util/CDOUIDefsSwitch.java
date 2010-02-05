@@ -103,9 +103,13 @@ public class CDOUIDefsSwitch<T>
       EditorDef editorDef = (EditorDef)theEObject;
       T result = caseEditorDef(editorDef);
       if (result == null)
+      {
         result = caseDef(editorDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case CDOUIDefsPackage.CDO_EDITOR_DEF:
@@ -113,11 +117,17 @@ public class CDOUIDefsSwitch<T>
       CDOEditorDef cdoEditorDef = (CDOEditorDef)theEObject;
       T result = caseCDOEditorDef(cdoEditorDef);
       if (result == null)
+      {
         result = caseEditorDef(cdoEditorDef);
+      }
       if (result == null)
+      {
         result = caseDef(cdoEditorDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

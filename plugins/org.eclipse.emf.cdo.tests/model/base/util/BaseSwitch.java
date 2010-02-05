@@ -97,7 +97,9 @@ public class BaseSwitch<T>
       BaseClass baseClass = (BaseClass)theEObject;
       T result = caseBaseClass(baseClass);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

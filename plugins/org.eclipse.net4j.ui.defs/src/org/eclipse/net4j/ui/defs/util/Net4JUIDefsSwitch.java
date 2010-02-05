@@ -99,9 +99,13 @@ public class Net4JUIDefsSwitch<T>
       InteractiveCredentialsProviderDef interactiveCredentialsProviderDef = (InteractiveCredentialsProviderDef)theEObject;
       T result = caseInteractiveCredentialsProviderDef(interactiveCredentialsProviderDef);
       if (result == null)
+      {
         result = caseDef(interactiveCredentialsProviderDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

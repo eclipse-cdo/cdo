@@ -74,7 +74,9 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
   public static ReferencePackage init()
   {
     if (isInited)
+    {
       return (ReferencePackage)EPackage.Registry.INSTANCE.getEPackage(ReferencePackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     ReferencePackageImpl theReferencePackage = (ReferencePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ReferencePackageImpl ? EPackage.Registry.INSTANCE
@@ -146,7 +148,9 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -170,7 +174,9 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package

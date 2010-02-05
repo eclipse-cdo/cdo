@@ -84,8 +84,10 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
       if (cdoSessionDef != oldCdoSessionDef)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF,
               oldCdoSessionDef, cdoSessionDef));
+        }
       }
     }
     return cdoSessionDef;
@@ -111,8 +113,10 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
     CDOSessionDef oldCdoSessionDef = cdoSessionDef;
     cdoSessionDef = newCdoSessionDef;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF,
           oldCdoSessionDef, cdoSessionDef));
+    }
   }
 
   /**
@@ -127,7 +131,9 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
     {
     case CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF:
       if (resolve)
+      {
         return getCdoSessionDef();
+      }
       return basicGetCdoSessionDef();
     }
     return super.eGet(featureID, resolve, coreType);

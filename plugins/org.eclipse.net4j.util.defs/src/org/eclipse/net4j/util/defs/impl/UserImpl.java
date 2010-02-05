@@ -114,7 +114,9 @@ public class UserImpl extends EObjectImpl implements User
     String oldUserID = userID;
     userID = newUserID;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.USER__USER_ID, oldUserID, userID));
+    }
   }
 
   /**
@@ -137,7 +139,9 @@ public class UserImpl extends EObjectImpl implements User
     String oldPassword = password;
     password = newPassword;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.USER__PASSWORD, oldPassword, password));
+    }
   }
 
   /**
@@ -225,7 +229,9 @@ public class UserImpl extends EObjectImpl implements User
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (userID: ");

@@ -93,8 +93,10 @@ public abstract class CredentialsProviderDefImpl extends DefImpl implements Cred
     String oldUserID = userID;
     userID = newUserID;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.CREDENTIALS_PROVIDER_DEF__USER_ID,
           oldUserID, userID));
+    }
   }
 
   /**
@@ -172,7 +174,9 @@ public abstract class CredentialsProviderDefImpl extends DefImpl implements Cred
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (userID: ");

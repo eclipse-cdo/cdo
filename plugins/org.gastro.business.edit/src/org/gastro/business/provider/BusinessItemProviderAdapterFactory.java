@@ -234,7 +234,7 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
+      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
       {
         return adapter;
       }
@@ -287,13 +287,21 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   public void dispose()
   {
     if (businessDayItemProvider != null)
+    {
       businessDayItemProvider.dispose();
+    }
     if (orderItemProvider != null)
+    {
       orderItemProvider.dispose();
+    }
     if (orderDetailItemProvider != null)
+    {
       orderDetailItemProvider.dispose();
+    }
     if (waiterItemProvider != null)
+    {
       waiterItemProvider.dispose();
+    }
   }
 
 }

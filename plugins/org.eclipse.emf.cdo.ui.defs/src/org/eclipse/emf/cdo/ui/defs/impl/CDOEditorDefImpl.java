@@ -185,8 +185,10 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
       if (cdoView != oldCdoView)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW,
               oldCdoView, cdoView));
+        }
       }
     }
     return cdoView;
@@ -212,8 +214,10 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
     CDOViewDef oldCdoView = cdoView;
     cdoView = newCdoView;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW, oldCdoView,
           cdoView));
+    }
   }
 
   /**
@@ -236,8 +240,10 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
     String oldResourcePath = resourcePath;
     resourcePath = newResourcePath;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDOUIDefsPackage.CDO_EDITOR_DEF__RESOURCE_PATH,
           oldResourcePath, resourcePath));
+    }
   }
 
   /**
@@ -252,7 +258,9 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
     {
     case CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW:
       if (resolve)
+      {
         return getCdoView();
+      }
       return basicGetCdoView();
     case CDOUIDefsPackage.CDO_EDITOR_DEF__RESOURCE_PATH:
       return getResourcePath();
@@ -327,7 +335,9 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (resourcePath: ");

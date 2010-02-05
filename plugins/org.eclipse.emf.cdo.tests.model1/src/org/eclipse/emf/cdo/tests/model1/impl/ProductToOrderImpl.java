@@ -132,7 +132,7 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
     if (hash == -1)
     {
       Object theKey = getKey();
-      hash = (theKey == null ? 0 : theKey.hashCode());
+      hash = theKey == null ? 0 : theKey.hashCode();
     }
     return hash;
   }

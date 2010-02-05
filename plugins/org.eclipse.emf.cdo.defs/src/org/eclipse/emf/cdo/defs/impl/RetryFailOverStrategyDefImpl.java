@@ -107,8 +107,10 @@ public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implem
     boolean oldRetriesESet = retriesESet;
     retriesESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES,
           oldRetries, retries, !oldRetriesESet));
+    }
   }
 
   /**
@@ -123,8 +125,10 @@ public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implem
     retries = RETRIES_EDEFAULT;
     retriesESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES,
           oldRetries, RETRIES_EDEFAULT, oldRetriesESet));
+    }
   }
 
   /**
@@ -212,14 +216,20 @@ public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implem
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (retries: ");
     if (retriesESet)
+    {
       result.append(retries);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(')');
     return result.toString();
   }

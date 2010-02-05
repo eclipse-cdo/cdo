@@ -112,7 +112,9 @@ public class InventorySwitch<T>
       Stock stock = (Stock)theEObject;
       T result = caseStock(stock);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case InventoryPackage.PRODUCT:
@@ -120,7 +122,9 @@ public class InventorySwitch<T>
       Product product = (Product)theEObject;
       T result = caseProduct(product);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case InventoryPackage.STOCK_PRODUCT:
@@ -128,9 +132,13 @@ public class InventorySwitch<T>
       StockProduct stockProduct = (StockProduct)theEObject;
       T result = caseStockProduct(stockProduct);
       if (result == null)
+      {
         result = caseProduct(stockProduct);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case InventoryPackage.RECIPE:
@@ -138,9 +146,13 @@ public class InventorySwitch<T>
       Recipe recipe = (Recipe)theEObject;
       T result = caseRecipe(recipe);
       if (result == null)
+      {
         result = caseProduct(recipe);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case InventoryPackage.INGREDIENT:
@@ -148,7 +160,9 @@ public class InventorySwitch<T>
       Ingredient ingredient = (Ingredient)theEObject;
       T result = caseIngredient(ingredient);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case InventoryPackage.MENU_CARD:
@@ -156,7 +170,9 @@ public class InventorySwitch<T>
       MenuCard menuCard = (MenuCard)theEObject;
       T result = caseMenuCard(menuCard);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case InventoryPackage.RESTAURANT:
@@ -164,7 +180,9 @@ public class InventorySwitch<T>
       Restaurant restaurant = (Restaurant)theEObject;
       T result = caseRestaurant(restaurant);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case InventoryPackage.DEPARTMENT:
@@ -172,9 +190,13 @@ public class InventorySwitch<T>
       Department department = (Department)theEObject;
       T result = caseDepartment(department);
       if (result == null)
+      {
         result = caseStation(department);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case InventoryPackage.OFFERING:
@@ -182,7 +204,9 @@ public class InventorySwitch<T>
       Offering offering = (Offering)theEObject;
       T result = caseOffering(offering);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case InventoryPackage.TABLE:
@@ -190,9 +214,13 @@ public class InventorySwitch<T>
       Table table = (Table)theEObject;
       T result = caseTable(table);
       if (result == null)
+      {
         result = caseStation(table);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case InventoryPackage.EMPLOYEE:
@@ -200,7 +228,9 @@ public class InventorySwitch<T>
       Employee employee = (Employee)theEObject;
       T result = caseEmployee(employee);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case InventoryPackage.STATION:
@@ -208,7 +238,9 @@ public class InventorySwitch<T>
       Station station = (Station)theEObject;
       T result = caseStation(station);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case InventoryPackage.SECTION:
@@ -216,7 +248,9 @@ public class InventorySwitch<T>
       Section section = (Section)theEObject;
       T result = caseSection(section);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

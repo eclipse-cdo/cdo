@@ -79,13 +79,13 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
     switch (eClass.getClassifierID())
     {
     case BusinessPackage.BUSINESS_DAY:
-      return (EObject)createBusinessDay();
+      return createBusinessDay();
     case BusinessPackage.ORDER:
-      return (EObject)createOrder();
+      return createOrder();
     case BusinessPackage.ORDER_DETAIL:
-      return (EObject)createOrderDetail();
+      return createOrderDetail();
     case BusinessPackage.WAITER:
-      return (EObject)createWaiter();
+      return createWaiter();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -178,8 +178,10 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
   {
     OrderState result = OrderState.get(initialValue);
     if (result == null)
+    {
       throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
           + eDataType.getName() + "'");
+    }
     return result;
   }
 

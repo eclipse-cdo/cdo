@@ -76,7 +76,9 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
   public static SubpackagePackage init()
   {
     if (isInited)
+    {
       return (SubpackagePackage)EPackage.Registry.INSTANCE.getEPackage(SubpackagePackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     SubpackagePackageImpl theSubpackagePackage = (SubpackagePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof SubpackagePackageImpl ? EPackage.Registry.INSTANCE
@@ -155,7 +157,9 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -179,7 +183,9 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package

@@ -86,7 +86,9 @@ public class CDOUIDefsPackageImpl extends EPackageImpl implements CDOUIDefsPacka
   public static CDOUIDefsPackage init()
   {
     if (isInited)
+    {
       return (CDOUIDefsPackage)EPackage.Registry.INSTANCE.getEPackage(CDOUIDefsPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     CDOUIDefsPackageImpl theCDOUIDefsPackage = (CDOUIDefsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof CDOUIDefsPackageImpl ? EPackage.Registry.INSTANCE
@@ -188,7 +190,9 @@ public class CDOUIDefsPackageImpl extends EPackageImpl implements CDOUIDefsPacka
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -216,7 +220,9 @@ public class CDOUIDefsPackageImpl extends EPackageImpl implements CDOUIDefsPacka
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -235,7 +241,7 @@ public class CDOUIDefsPackageImpl extends EPackageImpl implements CDOUIDefsPacka
 
     // Add supertypes to classes
     editorDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    cdoEditorDefEClass.getESuperTypes().add(this.getEditorDef());
+    cdoEditorDefEClass.getESuperTypes().add(getEditorDef());
 
     // Initialize classes and features; add operations and parameters
     initEClass(editorDefEClass, EditorDef.class, "EditorDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

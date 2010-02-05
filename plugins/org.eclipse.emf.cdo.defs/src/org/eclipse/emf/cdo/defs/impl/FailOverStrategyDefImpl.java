@@ -81,8 +81,10 @@ public abstract class FailOverStrategyDefImpl extends DefImpl implements FailOve
       if (connectorDef != oldConnectorDef)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               CDODefsPackage.FAIL_OVER_STRATEGY_DEF__CONNECTOR_DEF, oldConnectorDef, connectorDef));
+        }
       }
     }
     return connectorDef;
@@ -108,8 +110,10 @@ public abstract class FailOverStrategyDefImpl extends DefImpl implements FailOve
     ConnectorDef oldConnectorDef = connectorDef;
     connectorDef = newConnectorDef;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.FAIL_OVER_STRATEGY_DEF__CONNECTOR_DEF,
           oldConnectorDef, connectorDef));
+    }
   }
 
   /**
@@ -124,7 +128,9 @@ public abstract class FailOverStrategyDefImpl extends DefImpl implements FailOve
     {
     case CDODefsPackage.FAIL_OVER_STRATEGY_DEF__CONNECTOR_DEF:
       if (resolve)
+      {
         return getConnectorDef();
+      }
       return basicGetConnectorDef();
     }
     return super.eGet(featureID, resolve, coreType);

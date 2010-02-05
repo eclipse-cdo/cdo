@@ -109,7 +109,9 @@ public class Net4jUtilDefsSwitch<T>
       DefContainer defContainer = (DefContainer)theEObject;
       T result = caseDefContainer(defContainer);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jUtilDefsPackage.DEF:
@@ -117,7 +119,9 @@ public class Net4jUtilDefsSwitch<T>
       Def def = (Def)theEObject;
       T result = caseDef(def);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jUtilDefsPackage.EXECUTOR_SERVICE_DEF:
@@ -125,9 +129,13 @@ public class Net4jUtilDefsSwitch<T>
       ExecutorServiceDef executorServiceDef = (ExecutorServiceDef)theEObject;
       T result = caseExecutorServiceDef(executorServiceDef);
       if (result == null)
+      {
         result = caseDef(executorServiceDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jUtilDefsPackage.THREAD_POOL_DEF:
@@ -135,11 +143,17 @@ public class Net4jUtilDefsSwitch<T>
       ThreadPoolDef threadPoolDef = (ThreadPoolDef)theEObject;
       T result = caseThreadPoolDef(threadPoolDef);
       if (result == null)
+      {
         result = caseExecutorServiceDef(threadPoolDef);
+      }
       if (result == null)
+      {
         result = caseDef(threadPoolDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jUtilDefsPackage.RANDOMIZER_DEF:
@@ -147,9 +161,13 @@ public class Net4jUtilDefsSwitch<T>
       RandomizerDef randomizerDef = (RandomizerDef)theEObject;
       T result = caseRandomizerDef(randomizerDef);
       if (result == null)
+      {
         result = caseDef(randomizerDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jUtilDefsPackage.USER_MANAGER_DEF:
@@ -157,9 +175,13 @@ public class Net4jUtilDefsSwitch<T>
       UserManagerDef userManagerDef = (UserManagerDef)theEObject;
       T result = caseUserManagerDef(userManagerDef);
       if (result == null)
+      {
         result = caseDef(userManagerDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jUtilDefsPackage.USER:
@@ -167,7 +189,9 @@ public class Net4jUtilDefsSwitch<T>
       User user = (User)theEObject;
       T result = caseUser(user);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jUtilDefsPackage.PASSWORD_CREDENTIALS_PROVIDER_DEF:
@@ -175,11 +199,17 @@ public class Net4jUtilDefsSwitch<T>
       PasswordCredentialsProviderDef passwordCredentialsProviderDef = (PasswordCredentialsProviderDef)theEObject;
       T result = casePasswordCredentialsProviderDef(passwordCredentialsProviderDef);
       if (result == null)
+      {
         result = caseCredentialsProviderDef(passwordCredentialsProviderDef);
+      }
       if (result == null)
+      {
         result = caseDef(passwordCredentialsProviderDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jUtilDefsPackage.CREDENTIALS_PROVIDER_DEF:
@@ -187,9 +217,13 @@ public class Net4jUtilDefsSwitch<T>
       CredentialsProviderDef credentialsProviderDef = (CredentialsProviderDef)theEObject;
       T result = caseCredentialsProviderDef(credentialsProviderDef);
       if (result == null)
+      {
         result = caseDef(credentialsProviderDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jUtilDefsPackage.NEGOTIATOR_DEF:
@@ -197,9 +231,13 @@ public class Net4jUtilDefsSwitch<T>
       NegotiatorDef negotiatorDef = (NegotiatorDef)theEObject;
       T result = caseNegotiatorDef(negotiatorDef);
       if (result == null)
+      {
         result = caseDef(negotiatorDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF:
@@ -207,11 +245,17 @@ public class Net4jUtilDefsSwitch<T>
       ResponseNegotiatorDef responseNegotiatorDef = (ResponseNegotiatorDef)theEObject;
       T result = caseResponseNegotiatorDef(responseNegotiatorDef);
       if (result == null)
+      {
         result = caseNegotiatorDef(responseNegotiatorDef);
+      }
       if (result == null)
+      {
         result = caseDef(responseNegotiatorDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF:
@@ -219,11 +263,17 @@ public class Net4jUtilDefsSwitch<T>
       ChallengeNegotiatorDef challengeNegotiatorDef = (ChallengeNegotiatorDef)theEObject;
       T result = caseChallengeNegotiatorDef(challengeNegotiatorDef);
       if (result == null)
+      {
         result = caseNegotiatorDef(challengeNegotiatorDef);
+      }
       if (result == null)
+      {
         result = caseDef(challengeNegotiatorDef);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

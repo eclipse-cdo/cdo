@@ -74,7 +74,7 @@ public class ThreadPoolDefImpl extends ExecutorServiceDefImpl implements ThreadP
     public DaemonThreadFactory(String threadGroupIdentifier)
     {
       super();
-      this.threadGroup = new ThreadGroup(threadGroupIdentifier);
+      threadGroup = new ThreadGroup(threadGroupIdentifier);
     }
 
     public Thread newThread(Runnable r)

@@ -81,8 +81,10 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
       if (element != oldElement)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               model4Package.IMPL_SINGLE_REF_NON_CONTAINER__ELEMENT, oldElement, element));
+        }
       }
     }
     return element;
@@ -112,9 +114,13 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           model4Package.IMPL_SINGLE_REF_NON_CONTAINER__ELEMENT, oldElement, newElement);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -130,20 +136,28 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
     {
       NotificationChain msgs = null;
       if (element != null)
+      {
         msgs = ((InternalEObject)element).eInverseRemove(this,
             model4interfacesPackage.ISINGLE_REF_NON_CONTAINED_ELEMENT__PARENT, ISingleRefNonContainedElement.class,
             msgs);
+      }
       if (newElement != null)
+      {
         msgs = ((InternalEObject)newElement).eInverseAdd(this,
             model4interfacesPackage.ISINGLE_REF_NON_CONTAINED_ELEMENT__PARENT, ISingleRefNonContainedElement.class,
             msgs);
+      }
       msgs = basicSetElement(newElement, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_NON_CONTAINER__ELEMENT,
           newElement, newElement));
+    }
   }
 
   /**
@@ -158,9 +172,11 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
     {
     case model4Package.IMPL_SINGLE_REF_NON_CONTAINER__ELEMENT:
       if (element != null)
+      {
         msgs = ((InternalEObject)element).eInverseRemove(this,
             model4interfacesPackage.ISINGLE_REF_NON_CONTAINED_ELEMENT__PARENT, ISingleRefNonContainedElement.class,
             msgs);
+      }
       return basicSetElement((ISingleRefNonContainedElement)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -194,7 +210,9 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
     {
     case model4Package.IMPL_SINGLE_REF_NON_CONTAINER__ELEMENT:
       if (resolve)
+      {
         return getElement();
+      }
       return basicGetElement();
     }
     return super.eGet(featureID, resolve, coreType);

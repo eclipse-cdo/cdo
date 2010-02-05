@@ -97,7 +97,9 @@ public class InterfaceSwitch<T>
       IInterface iInterface = (IInterface)theEObject;
       T result = caseIInterface(iInterface);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

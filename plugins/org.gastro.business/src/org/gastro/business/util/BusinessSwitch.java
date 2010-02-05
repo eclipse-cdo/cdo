@@ -103,7 +103,9 @@ public class BusinessSwitch<T>
       BusinessDay businessDay = (BusinessDay)theEObject;
       T result = caseBusinessDay(businessDay);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case BusinessPackage.ORDER:
@@ -111,7 +113,9 @@ public class BusinessSwitch<T>
       Order order = (Order)theEObject;
       T result = caseOrder(order);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case BusinessPackage.ORDER_DETAIL:
@@ -119,7 +123,9 @@ public class BusinessSwitch<T>
       OrderDetail orderDetail = (OrderDetail)theEObject;
       T result = caseOrderDetail(orderDetail);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case BusinessPackage.WAITER:
@@ -127,7 +133,9 @@ public class BusinessSwitch<T>
       Waiter waiter = (Waiter)theEObject;
       T result = caseWaiter(waiter);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

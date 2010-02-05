@@ -90,7 +90,9 @@ public class UserManagerDefImpl extends DefImpl implements UserManagerDef
   public void unsetUser()
   {
     if (user != null)
+    {
       ((InternalEList.Unsettable<?>)user).unset();
+    }
   }
 
   /**

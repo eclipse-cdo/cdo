@@ -79,8 +79,10 @@ public class GenRefSingleNonContainedImpl extends EObjectImpl implements GenRefS
       if (element != oldElement)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               model4Package.GEN_REF_SINGLE_NON_CONTAINED__ELEMENT, oldElement, element));
+        }
       }
     }
     return element;
@@ -106,8 +108,10 @@ public class GenRefSingleNonContainedImpl extends EObjectImpl implements GenRefS
     EObject oldElement = element;
     element = newElement;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.GEN_REF_SINGLE_NON_CONTAINED__ELEMENT,
           oldElement, element));
+    }
   }
 
   /**
@@ -122,7 +126,9 @@ public class GenRefSingleNonContainedImpl extends EObjectImpl implements GenRefS
     {
     case model4Package.GEN_REF_SINGLE_NON_CONTAINED__ELEMENT:
       if (resolve)
+      {
         return getElement();
+      }
       return basicGetElement();
     }
     return super.eGet(featureID, resolve, coreType);

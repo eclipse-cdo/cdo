@@ -98,9 +98,13 @@ public class DerivedSwitch<T>
       DerivedClass derivedClass = (DerivedClass)theEObject;
       T result = caseDerivedClass(derivedClass);
       if (result == null)
+      {
         result = caseBaseClass(derivedClass);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

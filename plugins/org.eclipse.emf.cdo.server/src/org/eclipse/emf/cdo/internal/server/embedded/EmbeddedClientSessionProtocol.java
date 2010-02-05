@@ -396,7 +396,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public void cloneRepository(long startTime, long endTime, CDOCloningContext context)
+  public void cloneRepository(CDOCloningContext context)
   {
     throw new UnsupportedOperationException();
   }

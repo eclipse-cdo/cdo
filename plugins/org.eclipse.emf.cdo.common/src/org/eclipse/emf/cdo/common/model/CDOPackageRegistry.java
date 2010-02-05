@@ -36,6 +36,8 @@ public interface CDOPackageRegistry extends EPackage.Registry
    */
   public CDOPackageUnit[] getPackageUnits();
 
+  public CDOPackageUnit[] getPackageUnits(long startTime, long endTime);
+
   public CDOPackageInfo getPackageInfo(EPackage ePackage);
 
   /**

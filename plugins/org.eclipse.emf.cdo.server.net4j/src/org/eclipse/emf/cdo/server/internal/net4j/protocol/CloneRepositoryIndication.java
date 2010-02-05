@@ -30,6 +30,8 @@ public class CloneRepositoryIndication extends CDOServerIndication
 
   private long endTime;
 
+  private int branchID;
+
   public CloneRepositoryIndication(CDOServerProtocol protocol)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_CLONE_REPOSITORY);
@@ -40,13 +42,29 @@ public class CloneRepositoryIndication extends CDOServerIndication
   {
     startTime = in.readLong();
     endTime = in.readLong();
+    branchID = in.readInt();
   }
 
   @Override
   protected void responding(final CDODataOutput out) throws IOException
   {
-    getRepository().clone(startTime, endTime, new CDOCloningContext()
+    getRepository().clone(new CDOCloningContext()
     {
+      public long getStartTime()
+      {
+        return startTime;
+      }
+
+      public long getEndTime()
+      {
+        return endTime;
+      }
+
+      public int getBranchID()
+      {
+        return branchID;
+      }
+
       public void addPackageUnit(String id)
       {
         try

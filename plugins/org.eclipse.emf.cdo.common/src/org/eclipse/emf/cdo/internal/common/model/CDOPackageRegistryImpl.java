@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.common.model;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
@@ -370,13 +371,13 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
           packageUnit = packageInfo.getPackageUnit();
         }
       }
-  
+
       if (packageUnit != null && id.equals(packageUnit.getID()))
       {
         return packageUnit;
       }
     }
-  
+
     return null;
   }
 
@@ -408,6 +409,41 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     }
 
     return packageUnits;
+  }
+
+  public InternalCDOPackageUnit[] getPackageUnits(long startTime, long endTime)
+  {
+    LifecycleUtil.checkActive(this);
+    CheckUtil.checkArg(endTime != CDOBranchPoint.UNSPECIFIED_DATE, "endTime"); //$NON-NLS-1$
+
+    Set<InternalCDOPackageUnit> result = new HashSet<InternalCDOPackageUnit>();
+    for (Object value : values())
+    {
+      InternalCDOPackageUnit packageUnit = null;
+      if (value instanceof InternalCDOPackageInfo)
+      {
+        packageUnit = ((InternalCDOPackageInfo)value).getPackageUnit();
+      }
+      else if (value instanceof EPackage)
+      {
+        InternalCDOPackageInfo packageInfo = getPackageInfo((EPackage)value);
+        if (packageInfo != null)
+        {
+          packageUnit = packageInfo.getPackageUnit();
+        }
+      }
+
+      if (packageUnit != null)
+      {
+        long timeStamp = packageUnit.getTimeStamp();
+        if (startTime <= timeStamp && timeStamp <= endTime)
+        {
+          result.add(packageUnit);
+        }
+      }
+    }
+
+    return result.toArray(new InternalCDOPackageUnit[result.size()]);
   }
 
   public synchronized EPackage[] getEPackages()

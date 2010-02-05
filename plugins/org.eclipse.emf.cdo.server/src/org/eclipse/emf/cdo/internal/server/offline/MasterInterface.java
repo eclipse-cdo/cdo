@@ -206,8 +206,8 @@ public class MasterInterface extends QueueRunner
       public void run()
       {
         checkActive();
-        long masterTimeStamp = session.getLastUpdateTime();
-        long syncedTimeStamp = getSyncedTimeStamp();
+        final long masterTimeStamp = session.getLastUpdateTime();
+        final long syncedTimeStamp = getSyncedTimeStamp();
         if (syncedTimeStamp < masterTimeStamp)
         {
           if (TRACER.isEnabled())
@@ -215,8 +215,23 @@ public class MasterInterface extends QueueRunner
             TRACER.format("Synchronizing with master ({0})...", CDOCommonUtil.formatTimeStamp(masterTimeStamp)); //$NON-NLS-1$
           }
 
-          session.cloneRepository(syncedTimeStamp, masterTimeStamp, new CDOCloningContext()
+          session.cloneRepository(new CDOCloningContext()
           {
+            public long getStartTime()
+            {
+              return syncedTimeStamp;
+            }
+
+            public long getEndTime()
+            {
+              return masterTimeStamp;
+            }
+
+            public int getBranchID()
+            {
+              return 0;
+            }
+
             public void addPackageUnit(String id)
             {
               InternalCDOPackageUnit packageUnit = session.getPackageRegistry().getPackageUnit(id);

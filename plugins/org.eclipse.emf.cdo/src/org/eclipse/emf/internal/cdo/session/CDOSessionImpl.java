@@ -725,9 +725,9 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
   }
 
-  public void cloneRepository(long startTime, long endTime, CDOCloningContext context)
+  public void cloneRepository(CDOCloningContext context)
   {
-    getSessionProtocol().cloneRepository(startTime, endTime, context);
+    getSessionProtocol().cloneRepository(context);
   }
 
   public Object getInvalidationLock()
@@ -1597,14 +1597,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public void cloneRepository(long startTime, long endTime, CDOCloningContext context)
+    public void cloneRepository(CDOCloningContext context)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          delegate.cloneRepository(startTime, endTime, context);
+          delegate.cloneRepository(context);
           return;
         }
         catch (Exception ex)

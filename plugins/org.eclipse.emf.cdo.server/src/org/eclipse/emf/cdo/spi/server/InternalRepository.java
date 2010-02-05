@@ -84,5 +84,5 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
   public void notifyWriteAccessHandlers(ITransaction transaction, IStoreAccessor.CommitContext commitContext,
       OMMonitor monitor);
 
-  public void clone(long startTime, long endTime, CDOCloningContext context);
+  public void clone(CDOCloningContext context);
 }

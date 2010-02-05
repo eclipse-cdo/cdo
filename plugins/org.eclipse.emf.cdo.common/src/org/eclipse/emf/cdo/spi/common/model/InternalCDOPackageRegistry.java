@@ -50,6 +50,8 @@ public interface InternalCDOPackageRegistry extends CDOPackageRegistry, ILifecyc
 
   public InternalCDOPackageUnit[] getPackageUnits();
 
+  public InternalCDOPackageUnit[] getPackageUnits(long startTime, long endTime);
+
   public InternalCDOPackageInfo getPackageInfo(EPackage ePackage);
 
   public InternalCDOPackageInfo[] getPackageInfos();

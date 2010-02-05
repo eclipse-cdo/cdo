@@ -8,6 +8,12 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
  */
 public interface CDOCloningContext
 {
+  public long getStartTime();
+
+  public long getEndTime();
+
+  public int getBranchID();
+
   public void addPackageUnit(String id);
 
   public void addBranch(int id);

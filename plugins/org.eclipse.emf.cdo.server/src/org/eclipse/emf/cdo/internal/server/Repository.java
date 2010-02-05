@@ -839,9 +839,16 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  public void clone(long startTime, long endTime, CDOCloningContext context)
+  public void clone(CDOCloningContext context)
   {
-    throw new UnsupportedOperationException();
+    long endTime = context.getEndTime();
+    long startTime = context.getStartTime();
+    InternalCDOPackageRegistry packageRegistry = getPackageRegistry(false);
+    for (InternalCDOPackageUnit packageUnit : packageRegistry.getPackageUnits(startTime, endTime))
+    {
+      context.addPackageUnit(packageUnit.getID());
+    }
+
   }
 
   @Override

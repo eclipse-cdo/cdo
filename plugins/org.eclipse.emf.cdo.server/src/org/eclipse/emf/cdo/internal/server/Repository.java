@@ -937,7 +937,7 @@ public class Repository extends Container<Object> implements InternalRepository
       readPackageUnits();
     }
 
-    lastCommitTimeStamp = store.getLastCommitTime();
+    lastCommitTimeStamp = Math.max(store.getCreationTime(), store.getLastCommitTime());
     branchManager.initMainBranch(lastCommitTimeStamp);
     LifecycleUtil.activate(branchManager);
   }

@@ -27,6 +27,8 @@ public interface CDOPackageRegistry extends EPackage.Registry
    */
   public Object putEPackage(EPackage ePackage);
 
+  public CDOPackageUnit getPackageUnit(String id);
+
   public CDOPackageUnit getPackageUnit(EPackage ePackage);
 
   /**

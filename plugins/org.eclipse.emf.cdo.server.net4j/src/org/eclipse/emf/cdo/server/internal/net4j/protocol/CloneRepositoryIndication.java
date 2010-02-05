@@ -45,18 +45,8 @@ public class CloneRepositoryIndication extends CDOServerIndication
   @Override
   protected void responding(final CDODataOutput out) throws IOException
   {
-    getRepository().clone(new CDOCloningContext()
+    getRepository().clone(startTime, endTime, new CDOCloningContext()
     {
-      public long getStartTime()
-      {
-        return startTime;
-      }
-
-      public long getEndTime()
-      {
-        return endTime;
-      }
-
       public void addPackageUnit(String id)
       {
         try

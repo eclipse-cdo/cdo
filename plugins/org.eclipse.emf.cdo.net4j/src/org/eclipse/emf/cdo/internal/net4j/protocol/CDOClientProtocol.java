@@ -262,9 +262,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new UnsubscribeRemoteSessionsRequest(this));
   }
 
-  public void cloneRepository(CDOCloningContext context)
+  public void cloneRepository(long startTime, long endTime, CDOCloningContext context)
   {
-    send(new CloneRepositoryRequest(this, context));
+    send(new CloneRepositoryRequest(this, startTime, endTime, context));
   }
 
   @Override

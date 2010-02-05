@@ -352,6 +352,34 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return (InternalCDOPackageUnit)packageInfo.getPackageUnit();
   }
 
+  public synchronized InternalCDOPackageUnit getPackageUnit(String id)
+  {
+    LifecycleUtil.checkActive(this);
+    for (Object value : values())
+    {
+      InternalCDOPackageUnit packageUnit = null;
+      if (value instanceof InternalCDOPackageInfo)
+      {
+        packageUnit = ((InternalCDOPackageInfo)value).getPackageUnit();
+      }
+      else if (value instanceof EPackage)
+      {
+        InternalCDOPackageInfo packageInfo = getPackageInfo((EPackage)value);
+        if (packageInfo != null)
+        {
+          packageUnit = packageInfo.getPackageUnit();
+        }
+      }
+  
+      if (packageUnit != null && id.equals(packageUnit.getID()))
+      {
+        return packageUnit;
+      }
+    }
+  
+    return null;
+  }
+
   public synchronized InternalCDOPackageUnit[] getPackageUnits()
   {
     LifecycleUtil.checkActive(this);

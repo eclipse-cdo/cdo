@@ -23,19 +23,25 @@ import java.io.IOException;
  */
 public class CloneRepositoryRequest extends CDOClientRequest<Boolean>
 {
+  private long startTime;
+
+  private long endTime;
+
   private CDOCloningContext context;
 
-  public CloneRepositoryRequest(CDOClientProtocol protocol, CDOCloningContext context)
+  public CloneRepositoryRequest(CDOClientProtocol protocol, long startTime, long endTime, CDOCloningContext context)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_OPEN_VIEW);
+    this.startTime = startTime;
+    this.endTime = endTime;
     this.context = context;
   }
 
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeLong(context.getStartTime());
-    out.writeLong(context.getEndTime());
+    out.writeLong(startTime);
+    out.writeLong(endTime);
   }
 
   @Override

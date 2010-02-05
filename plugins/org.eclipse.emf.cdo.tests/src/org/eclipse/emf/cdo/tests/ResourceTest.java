@@ -709,7 +709,7 @@ public class ResourceTest extends AbstractCDOTest
     CDOResource resource = createResource(transaction, "/resource1");
     CDOID resourceID = resource.cdoID();
 
-    CDOObject object = (CDOObject)CDOUtil.getCDOObject(resource.getContents().get(0));
+    CDOObject object = CDOUtil.getCDOObject(resource.getContents().get(0));
     CDOID objectID = object.cdoID();
 
     transaction.commit();
@@ -767,7 +767,7 @@ public class ResourceTest extends AbstractCDOTest
     CDOResource resource = createResource(transaction, "/resource1");
     CDOID resourceID = resource.cdoID();
 
-    CDOObject object = (CDOObject)CDOUtil.getCDOObject(resource.getContents().get(0));
+    CDOObject object = CDOUtil.getCDOObject(resource.getContents().get(0));
     CDOID objectID = object.cdoID();
 
     transaction.commit();
@@ -980,7 +980,7 @@ public class ResourceTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = createResource(transaction, "/folder/resource1");
-    CDOObject object = (CDOObject)CDOUtil.getCDOObject(resource.getContents().get(0));
+    CDOObject object = CDOUtil.getCDOObject(resource.getContents().get(0));
     transaction.commit();
 
     CDOResourceFolder folder = resource.getFolder();
@@ -1057,7 +1057,7 @@ public class ResourceTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = createResource(transaction, "/folder/resource1");
-    CDOObject object = (CDOObject)CDOUtil.getCDOObject(resource.getContents().get(0));
+    CDOObject object = CDOUtil.getCDOObject(resource.getContents().get(0));
     transaction.commit();
 
     CDOResourceFolder folder = resource.getFolder();
@@ -1549,5 +1549,5 @@ public class ResourceTest extends AbstractCDOTest
     {
       return super.isAdapterForType(type);
     }
-  };
+  }
 }

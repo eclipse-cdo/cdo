@@ -63,15 +63,16 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
+  @SuppressWarnings("cast")
   @Override
   public EObject create(EClass eClass)
   {
     switch (eClass.getClassifierID())
     {
     case BasePackage.BASE_CLASS:
-      return createBaseClass();
+      return (EObject)createBaseClass();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

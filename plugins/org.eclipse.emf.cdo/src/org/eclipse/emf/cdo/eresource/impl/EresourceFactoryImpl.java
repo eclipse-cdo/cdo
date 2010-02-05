@@ -69,15 +69,16 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
    * 
    * @generated
    */
+  @SuppressWarnings("cast")
   @Override
   public EObject create(EClass eClass)
   {
     switch (eClass.getClassifierID())
     {
     case EresourcePackage.CDO_RESOURCE_FOLDER:
-      return createCDOResourceFolder();
+      return (EObject)createCDOResourceFolder();
     case EresourcePackage.CDO_RESOURCE:
-      return createCDOResource();
+      return (EObject)createCDOResource();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }

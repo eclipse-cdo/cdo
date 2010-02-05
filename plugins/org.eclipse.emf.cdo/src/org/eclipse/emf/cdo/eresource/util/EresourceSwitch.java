@@ -68,7 +68,7 @@ public class EresourceSwitch<T>
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
-   * @generated
+   * @generated NOT
    */
   protected T doSwitch(EClass theEClass, EObject theEObject)
   {

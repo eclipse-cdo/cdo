@@ -63,15 +63,16 @@ public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
+  @SuppressWarnings("cast")
   @Override
   public EObject create(EClass eClass)
   {
     switch (eClass.getClassifierID())
     {
     case DerivedPackage.DERIVED_CLASS:
-      return createDerivedClass();
+      return (EObject)createDerivedClass();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

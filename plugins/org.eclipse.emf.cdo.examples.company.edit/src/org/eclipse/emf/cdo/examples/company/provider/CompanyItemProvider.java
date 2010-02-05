@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.examples.company.CompanyPackage;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
 import org.eclipse.emf.edit.provider.IItemFontProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -38,9 +39,9 @@ import java.util.List;
  * 
  * @generated
  */
-public class CompanyItemProvider extends AddressItemProvider implements IStructuredItemContentProvider,
-    ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource, ITableItemLabelProvider,
-    ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+public class CompanyItemProvider extends AddressItemProvider implements IEditingDomainItemProvider,
+    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -121,6 +122,17 @@ public class CompanyItemProvider extends AddressItemProvider implements IStructu
   public Object getImage(Object object)
   {
     return overlayImage(object, getResourceLocator().getImage("full/obj16/Company"));
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  protected boolean shouldComposeCreationImage()
+  {
+    return true;
   }
 
   /**

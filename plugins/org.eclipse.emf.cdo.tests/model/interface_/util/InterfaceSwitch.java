@@ -74,9 +74,11 @@ public class InterfaceSwitch<T>
     {
       return doSwitch(theEClass.getClassifierID(), theEObject);
     }
-
-    List<EClass> eSuperTypes = theEClass.getESuperTypes();
-    return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
+    else
+    {
+      List<EClass> eSuperTypes = theEClass.getESuperTypes();
+      return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
+    }
   }
 
   /**
@@ -95,9 +97,7 @@ public class InterfaceSwitch<T>
       IInterface iInterface = (IInterface)theEObject;
       T result = caseIInterface(iInterface);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     default:

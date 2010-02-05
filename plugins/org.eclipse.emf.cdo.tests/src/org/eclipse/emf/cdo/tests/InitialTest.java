@@ -847,7 +847,7 @@ public class InitialTest extends AbstractCDOTest
   public void testDirectResource() throws Exception
   {
     CDOSession session = openModel1Session();
-    CDOTransaction transaction = (CDOTransaction)session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
 
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
     // Resource resource1 = new XMIResourceImpl();

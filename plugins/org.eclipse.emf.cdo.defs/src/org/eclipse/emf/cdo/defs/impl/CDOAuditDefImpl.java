@@ -97,10 +97,8 @@ public class CDOAuditDefImpl extends CDOViewDefImpl implements CDOAuditDef
     Date oldTimeStamp = timeStamp;
     timeStamp = newTimeStamp;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_AUDIT_DEF__TIME_STAMP, oldTimeStamp,
           timeStamp));
-    }
   }
 
   /**
@@ -178,9 +176,7 @@ public class CDOAuditDefImpl extends CDOViewDefImpl implements CDOAuditDef
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (timeStamp: ");

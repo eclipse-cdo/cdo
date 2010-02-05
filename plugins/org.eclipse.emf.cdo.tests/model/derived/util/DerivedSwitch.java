@@ -75,9 +75,11 @@ public class DerivedSwitch<T>
     {
       return doSwitch(theEClass.getClassifierID(), theEObject);
     }
-
-    List<EClass> eSuperTypes = theEClass.getESuperTypes();
-    return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
+    else
+    {
+      List<EClass> eSuperTypes = theEClass.getESuperTypes();
+      return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
+    }
   }
 
   /**
@@ -96,13 +98,9 @@ public class DerivedSwitch<T>
       DerivedClass derivedClass = (DerivedClass)theEObject;
       T result = caseDerivedClass(derivedClass);
       if (result == null)
-      {
         result = caseBaseClass(derivedClass);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     default:

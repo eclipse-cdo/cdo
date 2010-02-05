@@ -41,8 +41,8 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
@@ -51,49 +51,34 @@ public class InvalidationTest extends AbstractCDOTest
 {
   public void testSeparateView() throws Exception
   {
-    msg("Opening session");
     final CDOSession session = openModel1Session();
 
     // ************************************************************* //
 
-    msg("Creating category1");
     final Category category1A = getModel1Factory().createCategory();
     category1A.setName("category1");
 
-    msg("Creating category2");
     final Category category2A = getModel1Factory().createCategory();
     category2A.setName("category2");
 
-    msg("Creating category3");
     final Category category3A = getModel1Factory().createCategory();
     category3A.setName("category3");
 
-    msg("Creating company");
     final Company companyA = getModel1Factory().createCompany();
 
-    msg("Adding categories");
     companyA.getCategories().add(category1A);
     category1A.getCategories().add(category2A);
     category2A.getCategories().add(category3A);
 
-    msg("Opening transaction");
     final CDOTransaction transaction = session.openTransaction();
-
-    msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
-
-    msg("Adding company");
     resourceA.getContents().add(companyA);
-
-    msg("Committing");
     transaction.commit();
 
     // ************************************************************* //
 
-    msg("Opening view");
     final CDOView view = session.openTransaction();
 
-    msg("Loading resource");
     final CDOResource resourceB = view.getResource("/test1");
     assertProxy(resourceB);
 
@@ -121,17 +106,10 @@ public class InvalidationTest extends AbstractCDOTest
 
     // ************************************************************* //
 
-    msg("Changing name");
     category1A.setName("CHANGED NAME");
-    sleep(500);
-
-    msg("Checking before commit");
     assertEquals("category1", category1B.getName());
-
-    msg("Committing");
     transaction.commit();
 
-    msg("Checking after commit");
     new PollingTimeOuter()
     {
       @Override
@@ -145,49 +123,33 @@ public class InvalidationTest extends AbstractCDOTest
 
   public void testSeparateViewNotification() throws Exception
   {
-    msg("Opening session");
     final CDOSession session = openModel1Session();
 
     // ************************************************************* //
 
-    msg("Creating category1");
     final Category category1A = getModel1Factory().createCategory();
     category1A.setName("category1");
 
-    msg("Creating category2");
     final Category category2A = getModel1Factory().createCategory();
     category2A.setName("category2");
 
-    msg("Creating category3");
     final Category category3A = getModel1Factory().createCategory();
     category3A.setName("category3");
 
-    msg("Creating company");
     final Company companyA = getModel1Factory().createCompany();
 
-    msg("Adding categories");
     companyA.getCategories().add(category1A);
     category1A.getCategories().add(category2A);
     category2A.getCategories().add(category3A);
 
-    msg("Attaching transaction");
     final CDOTransaction transaction = session.openTransaction();
-
-    msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
-
-    msg("Adding company");
     resourceA.getContents().add(companyA);
-
-    msg("Committing");
     transaction.commit();
 
     // ************************************************************* //
 
-    msg("Attaching viewB");
     final CDOView viewB = session.openTransaction();
-
-    msg("Loading resource");
     final CDOResource resourceB = viewB.getResource("/test1");
     assertProxy(resourceB);
 
@@ -215,9 +177,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     // ************************************************************* //
 
-    final boolean unlocked[] = { false };
-    final Lock lock = new ReentrantLock();
-    lock.lock();
+    final CountDownLatch latch = new CountDownLatch(1);
     viewB.getSession().addListener(new IListener()
     {
       public void notifyEvent(IEvent event)
@@ -225,35 +185,20 @@ public class InvalidationTest extends AbstractCDOTest
         if (event instanceof CDOSessionInvalidationEvent)
         {
           CDOSessionInvalidationEvent e = (CDOSessionInvalidationEvent)event;
-          if (e.getView() == viewB)
+          if (e.getView() == transaction)
           {
             msg("CDOSessionInvalidationEvent: " + e);
-            // TODO This code has no influence
-            unlocked[0] = true;
-            lock.unlock();
+            latch.countDown();
           }
         }
       }
     });
 
-    msg("Changing name");
     category1A.setName("CHANGED NAME");
-
-    msg("Checking before commit");
-    LockTimeOuter timeOuter = new LockTimeOuter(lock);
-    boolean timedOut = timeOuter.timedOut(10000);
-    assertEquals(true, timedOut);
-    assertEquals(false, unlocked[0]);
-
-    msg("Committing");
     transaction.commit();
 
-    msg("Checking after commit");
-    if (!unlocked[0])
-    {
-      timedOut = timeOuter.timedOut(10000);
-      assertEquals(true, timedOut);
-    }
+    boolean notified = latch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+    assertEquals(true, notified);
   }
 
   public void testConflictSameSession() throws InterruptedException, IOException
@@ -377,50 +322,30 @@ public class InvalidationTest extends AbstractCDOTest
 
   public void testSeparateSession() throws Exception
   {
-    msg("Creating category1");
     final Category category1A = getModel1Factory().createCategory();
     category1A.setName("category1");
 
-    msg("Creating category2");
     final Category category2A = getModel1Factory().createCategory();
     category2A.setName("category2");
 
-    msg("Creating category3");
     final Category category3A = getModel1Factory().createCategory();
     category3A.setName("category3");
 
-    msg("Creating company");
     final Company companyA = getModel1Factory().createCompany();
-
-    msg("Adding categories");
     companyA.getCategories().add(category1A);
     category1A.getCategories().add(category2A);
     category2A.getCategories().add(category3A);
 
-    msg("Opening sessionA");
     final CDOSession sessionA = openModel1Session();
-
-    msg("Attaching transaction");
     final CDOTransaction transaction = sessionA.openTransaction();
-
-    msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
-
-    msg("Adding company");
     resourceA.getContents().add(companyA);
-
-    msg("Committing");
     transaction.commit();
 
     // ************************************************************* //
 
-    msg("Opening sessionB");
     final CDOSession sessionB = openModel1Session();
-
-    msg("Attaching viewB");
     final CDOView viewB = sessionB.openTransaction();
-
-    msg("Loading resource");
     final CDOResource resourceB = viewB.getResource("/test1");
     assertProxy(resourceB);
 
@@ -448,23 +373,9 @@ public class InvalidationTest extends AbstractCDOTest
 
     // ************************************************************* //
 
-    msg("Changing name");
     category1A.setName("CHANGED NAME");
-
-    msg("Checking before commit");
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return "CHANGED NAME".equals(category1B.getName());
-      }
-    }.assertTimeOut();
-
-    msg("Committing");
     transaction.commit();
 
-    msg("Checking after commit");
     new PollingTimeOuter()
     {
       @Override
@@ -601,35 +512,11 @@ public class InvalidationTest extends AbstractCDOTest
 
     // ************************************************************* //
 
-    msg("Changing name");
     category1A.setName("CHANGED NAME");
-
-    msg("Checking before commit");
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return "CHANGED NAME".equals(category1B.getName());
-      }
-    }.assertTimeOut();
-
-    msg("Committing");
     transaction.commit();
-
-    msg("Checking after commit");
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return "CHANGED NAME".equals(category1B.getName());
-      }
-    }.assertTimeOut();
 
     assertEquals(1, sessionB.refresh().size());
 
-    msg("Checking after sync");
     new PollingTimeOuter()
     {
       @Override
@@ -722,15 +609,8 @@ public class InvalidationTest extends AbstractCDOTest
       }
     }
 
-    msg("Checking before commit");
-    new TimeOuterB().assertTimeOut();
-    new TimeOuterC().assertTimeOut();
-
-    msg("Committing");
     transaction.commit();
 
-    msg("Checking after commit");
-    new TimeOuterB().assertTimeOut();
     new TimeOuterC().assertNoTimeOut();
 
     // It should refresh the session
@@ -760,14 +640,8 @@ public class InvalidationTest extends AbstractCDOTest
       }
     }
 
-    msg("Checking after sync");
-    new TimeOuterB_2().assertTimeOut();
-    new TimeOuterC_2().assertTimeOut();
-
-    msg("Committing");
     transaction.commit();
 
-    msg("Checking after sync");
     new TimeOuterB_2().assertNoTimeOut();
     new TimeOuterC_2().assertNoTimeOut();
   }
@@ -814,22 +688,10 @@ public class InvalidationTest extends AbstractCDOTest
     // ************************************************************* //
 
     resourceA.getContents().remove(categoryA);
-
-    msg("Checking before commit");
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return FSMUtil.isInvalid(CDOUtil.getCDOObject(categoryB));
-      }
-    }.assertTimeOut();
-
     assertEquals(0, testAdapter.getNotifications().size());
-    msg("Committing");
+
     transaction.commit();
 
-    msg("Checking after commit");
     new PollingTimeOuter()
     {
       @Override
@@ -903,19 +765,8 @@ public class InvalidationTest extends AbstractCDOTest
     // ************************************************************* //
 
     resourceA.getContents().remove(categoryA);
-
-    msg("Checking before commit");
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return FSMUtil.isInvalid(CDOUtil.getCDOObject(categoryB));
-      }
-    }.assertTimeOut();
-
     assertEquals(0, testAdapter.getNotifications().size());
-    msg("Committing");
+
     transaction.commit();
 
     final Category categoryA2 = getModel1Factory().createCategory();
@@ -932,21 +783,9 @@ public class InvalidationTest extends AbstractCDOTest
           resourceA.cdoRevision().getBranch().getVersion(2));
     }
 
-    msg("Checking after commit");
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return FSMUtil.isInvalid(CDOUtil.getCDOObject(categoryB));
-      }
-    }.assertTimeOut();
-
     assertEquals(0, testAdapter.getNotifications().size());
-
     sessionB.refresh();
 
-    msg("Checking after commit");
     new PollingTimeOuter()
     {
       @Override

@@ -427,7 +427,14 @@ public abstract class AbstractOMTest extends TestCase
    */
   public static abstract class PollingTimeOuter extends TimeOuter
   {
-    private static final long SLEEP_MILLIS = 100;
+    public static final long DEFAULT_SLEEP_MILLIS = 1;
+
+    private long sleepMillis = DEFAULT_SLEEP_MILLIS;
+
+    public PollingTimeOuter(long sleepMillis)
+    {
+      this.sleepMillis = sleepMillis;
+    }
 
     public PollingTimeOuter()
     {
@@ -435,7 +442,7 @@ public abstract class AbstractOMTest extends TestCase
 
     public boolean timedOut(long timeoutMillis) throws InterruptedException
     {
-      int retries = (int)Math.round(timeoutMillis / SLEEP_MILLIS + .5d);
+      int retries = (int)Math.round(timeoutMillis / sleepMillis + .5d);
       for (int i = 0; i < retries; i++)
       {
         if (successful())
@@ -443,7 +450,7 @@ public abstract class AbstractOMTest extends TestCase
           return false;
         }
 
-        sleep(SLEEP_MILLIS);
+        sleep(sleepMillis);
       }
 
       return true;

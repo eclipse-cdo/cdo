@@ -16,6 +16,10 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
+import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.QueueRunner;
@@ -204,17 +208,61 @@ public class MasterInterface extends QueueRunner
         checkActive();
         long masterTimeStamp = session.getLastUpdateTime();
         long syncedTimeStamp = getSyncedTimeStamp();
-        if (masterTimeStamp > syncedTimeStamp)
+        if (syncedTimeStamp < masterTimeStamp)
         {
           if (TRACER.isEnabled())
           {
-            TRACER.format("Synchronizing with master ({0})...", CDOCommonUtil.formatTimeStamp(masterTimeStamp));
+            TRACER.format("Synchronizing with master ({0})...", CDOCommonUtil.formatTimeStamp(masterTimeStamp)); //$NON-NLS-1$
           }
+
+          session.cloneRepository(syncedTimeStamp, masterTimeStamp, new CDOCloningContext()
+          {
+            public void addPackageUnit(String id)
+            {
+              InternalCDOPackageUnit packageUnit = session.getPackageRegistry().getPackageUnit(id);
+              sync(packageUnit);
+            }
+
+            public void addBranch(int id)
+            {
+              InternalCDOBranch branch = session.getBranchManager().getBranch(id);
+              sync(branch);
+            }
+
+            public void addRevision(InternalCDORevision revision)
+            {
+              sync(revision);
+            }
+          });
 
           OM.LOG.info("Synchronized with master.");
         }
       }
     });
+  }
+
+  private void sync(InternalCDOPackageUnit packageUnit)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Syncronized package unit {0}", packageUnit); //$NON-NLS-1$
+    }
+  }
+
+  private void sync(InternalCDOBranch branch)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Syncronized branch {0}", branch); //$NON-NLS-1$
+    }
+  }
+
+  private void sync(InternalCDORevision revision)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Syncronized revision {0}", revision); //$NON-NLS-1$
+    }
   }
 
   /**

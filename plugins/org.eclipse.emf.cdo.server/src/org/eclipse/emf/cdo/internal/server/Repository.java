@@ -839,8 +839,9 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  public void clone(CDOCloningContext context)
+  public void clone(long startTime, long endTime, CDOCloningContext context)
   {
+    throw new UnsupportedOperationException();
   }
 
   @Override

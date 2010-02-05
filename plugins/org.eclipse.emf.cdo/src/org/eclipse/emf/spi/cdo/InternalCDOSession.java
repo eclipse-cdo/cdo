@@ -140,5 +140,5 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   /**
    * @since 3.0
    */
-  public void cloneRepository(CDOCloningContext context);
+  public void cloneRepository(long startTime, long endTime, CDOCloningContext context);
 }

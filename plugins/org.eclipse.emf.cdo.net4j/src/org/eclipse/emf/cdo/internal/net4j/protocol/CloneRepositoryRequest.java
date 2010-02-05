@@ -31,7 +31,7 @@ public class CloneRepositoryRequest extends CDOClientRequest<Boolean>
 
   public CloneRepositoryRequest(CDOClientProtocol protocol, long startTime, long endTime, CDOCloningContext context)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_OPEN_VIEW);
+    super(protocol, CDOProtocolConstants.SIGNAL_CLONE_REPOSITORY);
     this.startTime = startTime;
     this.endTime = endTime;
     this.context = context;

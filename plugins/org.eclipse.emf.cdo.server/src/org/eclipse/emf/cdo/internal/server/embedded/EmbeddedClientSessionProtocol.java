@@ -40,7 +40,6 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.emf.cdo.transaction.CDORefreshContext;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -98,22 +97,22 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
   public EPackage[] loadPackages(CDOPackageUnit packageUnit)
   {
-    throw new ImplementationError("Should not be called");
+    throw new UnsupportedOperationException();
   }
 
   public int createBranch(BranchInfo branchInfo)
   {
-    throw new ImplementationError("Should not be called");
+    throw new UnsupportedOperationException();
   }
 
   public BranchInfo loadBranch(int branchID)
   {
-    throw new ImplementationError("Should not be called");
+    throw new UnsupportedOperationException();
   }
 
   public SubBranchInfo[] loadSubBranches(int branchID)
   {
-    throw new ImplementationError("Should not be called");
+    throw new UnsupportedOperationException();
   }
 
   public RepositoryTimeResult getRepositoryTime()
@@ -397,25 +396,9 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public void cloneRepository(CDOCloningContext context)
+  public void cloneRepository(long startTime, long endTime, CDOCloningContext context)
   {
     throw new UnsupportedOperationException();
-  }
-
-  @Override
-  protected void doActivate() throws Exception
-  {
-    super.doActivate();
-    serverSessionProtocol = new EmbeddedServerSessionProtocol(this);
-    serverSessionProtocol.activate();
-  }
-
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    serverSessionProtocol.deactivate();
-    serverSessionProtocol = null;
-    super.doDeactivate();
   }
 
   public CDOAuthenticationResult handleAuthenticationChallenge(byte[] randomToken) throws Exception
@@ -445,5 +428,21 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     }
 
     return result;
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    serverSessionProtocol = new EmbeddedServerSessionProtocol(this);
+    serverSessionProtocol.activate();
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    serverSessionProtocol.deactivate();
+    serverSessionProtocol = null;
+    super.doDeactivate();
   }
 }

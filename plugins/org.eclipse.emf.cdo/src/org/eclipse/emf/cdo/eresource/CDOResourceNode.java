@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -13,8 +13,6 @@ package org.eclipse.emf.cdo.eresource;
 import org.eclipse.emf.cdo.CDOObject;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIConverter;
 
 import java.io.IOException;
 import java.util.Map;
@@ -143,18 +141,6 @@ public interface CDOResourceNode extends CDOObject
   public URI getURI();
 
   /**
-   * {@link URIConverter#delete(URI, Map) deletes} the resource using the specified options, {@link #unload() unloads}
-   * it, and then removes it from the {@link #getResourceSet() containing} resource set.
-   * <p>
-   * Options are handled generically as feature-to-setting entries; the resource will ignore options it doesn't
-   * recognize. The options could even include things like an Eclipse progress monitor...
-   * </p>
-   * <p>
-   * An implementation typically uses the {@link ResourceSet#getURIConverter URI converter} of the
-   * {@link #getResourceSet containing} resource set to {@link URIConverter#delete(URI, Map)} the resource's
-   * {@link #getURI() URI}.
-   * </p>
-   * 
    * @ADDED
    */
   public void delete(Map<?, ?> options) throws IOException;

@@ -18,7 +18,6 @@ import org.eclipse.net4j.defs.ClientProtocolFactoryDef;
 import org.eclipse.net4j.defs.ConnectorDef;
 import org.eclipse.net4j.defs.Net4jDefsPackage;
 import org.eclipse.net4j.defs.util.Net4jDefsUtil;
-import org.eclipse.net4j.protocol.IProtocolProvider;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.defs.ExecutorServiceDef;
 import org.eclipse.net4j.util.defs.NegotiatorDef;

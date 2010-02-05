@@ -82,11 +82,7 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
    * @see #close()
    * @see #isClosed()
    * @see CDOSession#openView()
-   * @see CDOSession#openView(ResourceSet)
-   * @see CDOSession#openAudit(long)
-   * @see CDOSession#openAudit(ResourceSet, long)
    * @see CDOSession#openTransaction()
-   * @see CDOSession#openTransaction(ResourceSet)
    */
   public CDOSession getSession();
 
@@ -264,7 +260,7 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
    * <p>
    * Same as <code>getObject(id, true)</code>.
    * 
-   * @see getObject(CDOID, boolean)
+   * @see #getObject(CDOID, boolean)
    */
   public CDOObject getObject(CDOID id);
 
@@ -384,7 +380,7 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
      * Returns the current set of {@link CDOAdapterPolicy change subscription policies}.
      * 
      * @return The current set of change subscription policies, never <code>null</code>.
-     * @see #setChangeSubscriptionPolicy(CDOAdapterPolicy)
+     * @see #addChangeSubscriptionPolicy(CDOAdapterPolicy)
      */
     public CDOAdapterPolicy[] getChangeSubscriptionPolicies();
 

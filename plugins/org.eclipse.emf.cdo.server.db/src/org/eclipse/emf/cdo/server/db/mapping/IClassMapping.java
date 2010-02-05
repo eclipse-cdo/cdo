@@ -120,10 +120,10 @@ public interface IClassMapping
    * @param exactMatch
    *          if <code>true</code>, <code>name</code> must match exactly, otherwise all resource nodes starting with
    *          <code>name</code> are returned.
-   * @param a
-   *          branchPoint (branch and timestamp) a timestamp in the past if past versions should be looked up. In case
-   *          of no audit support, this must be {@link CDORevision#UNSPECIFIED_DATE}. In case of non branching support
-   *          the branch id must be equal to {@link CDOBranch#MAIN_BRANCH_ID}.
+   * @param branchPoint
+   *          a branchPoint (branch and timestamp). A timestamp in the past if past versions should be looked up. In
+   *          case of no audit support, this must be {@link CDORevision#UNSPECIFIED_DATE}. In case of non branching
+   *          support the branch id must be equal to {@link CDOBranch#MAIN_BRANCH_ID}.
    * @return the prepared statement ready to be executed using <code>result.executeQuery()</code>.
    * @throws ImplementationError
    *           if called on a mapping which does not map an <code>EClass instanceof CDOResourceNode</code>.

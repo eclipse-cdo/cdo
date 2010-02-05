@@ -109,7 +109,8 @@ public final class CDODBUtil
    * Can only be used when Eclipse is running. In standalone scenarios create the mapping strategy instance by directly
    * calling the constructor of the mapping strategy class.
    * 
-   * @see #createHorizontalMappingStrategy()
+   * @see #createHorizontalMappingStrategy(boolean)
+   * @see #createHorizontalMappingStrategy(boolean, boolean)
    * @since 2.0
    */
   public static IMappingStrategy createMappingStrategy(String type)

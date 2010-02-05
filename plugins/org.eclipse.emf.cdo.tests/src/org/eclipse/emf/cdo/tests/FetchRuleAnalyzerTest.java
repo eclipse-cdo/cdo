@@ -33,7 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @see bug 202063
+ * See bug 202063
+ * 
  * @author Simon McDuff
  */
 public class FetchRuleAnalyzerTest extends AbstractCDOTest

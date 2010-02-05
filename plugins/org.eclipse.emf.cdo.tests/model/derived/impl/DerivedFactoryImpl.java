@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -71,7 +71,7 @@ public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
     switch (eClass.getClassifierID())
     {
     case DerivedPackage.DERIVED_CLASS:
-      return (EObject)createDerivedClass();
+      return createDerivedClass();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

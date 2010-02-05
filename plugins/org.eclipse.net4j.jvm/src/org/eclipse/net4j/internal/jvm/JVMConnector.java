@@ -63,6 +63,7 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
     this.peer = peer;
   }
 
+  @Override
   public String getURL()
   {
     return "jvm://" + name; //$NON-NLS-1$

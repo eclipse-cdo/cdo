@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
-
 import java.io.IOException;
 
 /**

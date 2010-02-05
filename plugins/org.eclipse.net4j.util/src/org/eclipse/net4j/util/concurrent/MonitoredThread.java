@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -128,8 +128,7 @@ public abstract class MonitoredThread extends Thread
     /**
      * @param idleTimeOut
      *          The number of milli seconds one of the threads may be idle (i.e. not having called
-     *          {@link MonitoredThread#heartBeat()}) before {@link #handleTimeoutExpiration(MonitoredThread, long)} is
-     *          called.
+     *          {@link MonitoredThread#heartBeat()}) before {@link #handleTimeoutExpiration(MonitoredThread)} is called.
      * @param startOffset
      *          The number of milli seconds to sleep between threads are started. Zero means not to sleep and
      *          {@link #SYNCED_START} means that all threads start at the same time by waiting on a shared latch.

@@ -134,6 +134,12 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
   final public static Object PHASEAPPLYMAPPING = new Object()
   {
     @Override
+    public int hashCode()
+    {
+      return CommitState.APPLY_ID_MAPPING.hashCode();
+    }
+
+    @Override
     public boolean equals(Object object)
     {
       if (object == CommitState.ROLLED_BACK)
@@ -150,6 +156,12 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
    */
   final public static Object PHASEAPPLYMAPPING_DONE = new Object()
   {
+    @Override
+    public int hashCode()
+    {
+      return CommitState.APPLY_ID_MAPPING_DONE.hashCode();
+    }
+
     @Override
     public boolean equals(Object object)
     {
@@ -169,5 +181,5 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
   public enum CommitState
   {
     STARTING, APPLY_ID_MAPPING, APPLY_ID_MAPPING_DONE, ROLLED_BACK
-  };
+  }
 }

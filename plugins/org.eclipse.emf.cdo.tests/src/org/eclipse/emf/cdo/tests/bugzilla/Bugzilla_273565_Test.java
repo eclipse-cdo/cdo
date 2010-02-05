@@ -26,9 +26,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * Concurrency problem: attribute of enumeration type not updated correctly between two clients
  * <p>
+ * See bug 273565
  * 
  * @author Simon McDuff
- * @see bug 273565
  */
 public class Bugzilla_273565_Test extends AbstractCDOTest
 {
@@ -39,8 +39,8 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
    * Thread B will load objects.<br>
    * But at the same time will update remote changes.<br>
    * Causing not to have the latest version.
-   * 
-   * @see bug 273565
+   * <p>
+   * See bug 273565
    */
   public void testBugzilla_273565() throws Exception
   {
@@ -166,7 +166,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
   }
 
   /**
-   * @see bug 273565
+   * See bug 273565
    */
   public void testBugzilla_273565_Lock() throws Exception
   {
@@ -239,7 +239,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
   }
 
   /**
-   * @see bug 273565
+   * See bug 273565
    */
   public void testBugzilla_273565_NoThreads() throws Exception
   {

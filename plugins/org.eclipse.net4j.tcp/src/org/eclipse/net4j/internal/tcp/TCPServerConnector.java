@@ -33,6 +33,7 @@ public class TCPServerConnector extends TCPConnector
     return acceptor;
   }
 
+  @Override
   public Location getLocation()
   {
     return Location.SERVER;

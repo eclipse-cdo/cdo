@@ -17,9 +17,6 @@ import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 
 /**
- * Is registered with each {@link IChannel} of this {@link IConnector}.
- * <p>
- * 
  * @author Eike Stepper
  */
 public class LifecycleEventConverter<E> implements IListener

@@ -107,7 +107,7 @@ public class RevisionManagerTest extends AbstractCDOTest
   private static AtomicInteger loadCounter;
 
   @Override
-  public Map<String, Object> getTestProperties()
+  public synchronized Map<String, Object> getTestProperties()
   {
     Map<String, Object> testProperties = super.getTestProperties();
     testProperties.put(IRepository.Props.SUPPORTING_AUDITS, "true");

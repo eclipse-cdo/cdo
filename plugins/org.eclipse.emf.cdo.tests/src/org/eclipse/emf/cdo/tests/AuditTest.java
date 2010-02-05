@@ -39,7 +39,7 @@ public class AuditTest extends AbstractCDOTest
   protected CDOSession session1;
 
   @Override
-  public Map<String, Object> getTestProperties()
+  public synchronized Map<String, Object> getTestProperties()
   {
     Map<String, Object> testProperties = super.getTestProperties();
     testProperties.put(IRepository.Props.SUPPORTING_AUDITS, "true");

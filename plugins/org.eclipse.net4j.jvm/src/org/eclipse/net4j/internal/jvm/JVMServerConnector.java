@@ -22,6 +22,7 @@ public class JVMServerConnector extends JVMConnector
     setPeer(clientPeer);
   }
 
+  @Override
   public Location getLocation()
   {
     return Location.SERVER;

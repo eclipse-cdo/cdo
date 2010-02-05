@@ -127,6 +127,12 @@ public class CDOEditorInputImpl extends PlatformObject implements CDOEditorInput
   }
 
   @Override
+  public int hashCode()
+  {
+    return ObjectUtil.hashCode(view) ^ ObjectUtil.hashCode(resourcePath);
+  }
+
+  @Override
   public boolean equals(Object obj)
   {
     if (obj == this)

@@ -126,7 +126,7 @@ public class HibernatePackageHandler extends Lifecycle
 
   private int nextFeatureID;
 
-  private Collection<InternalCDOPackageUnit> packageUnits = null;
+  private Collection<InternalCDOPackageUnit> packageUnits;
 
   private Map<String, byte[]> ePackageBlobsByRootUri = new HashMap<String, byte[]>();
 
@@ -134,7 +134,7 @@ public class HibernatePackageHandler extends Lifecycle
 
   private HibernateStore hibernateStore;
 
-  private boolean doDropSchema = false;
+  private boolean doDropSchema;
 
   /**
    * TODO Necessary to pass/store/dump the properties from the store?

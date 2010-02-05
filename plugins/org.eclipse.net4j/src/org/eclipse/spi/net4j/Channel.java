@@ -165,7 +165,7 @@ public class Channel extends Lifecycle implements InternalChannel
    * send queue.
    * 
    * @see IBuffer#getState
-   * @see BufferState.PUTTING
+   * @see BufferState#PUTTING
    * @see Channel#sendQueue
    */
   public void handleBuffer(IBuffer buffer)

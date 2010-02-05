@@ -15,14 +15,11 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 /**
- * Interface which complements {@link IClassMapping} with methods to facilitate
- * audit support.
- *
- * @see {@link IMappingStrategy#hasAuditSupport()
- *
+ * Interface which complements {@link IClassMapping} with methods to facilitate audit support.
+ * 
+ * @see IMappingStrategy#hasAuditSupport()
  * @author Eike Stepper
  * @author Stefan Winkler
- *
  * @since 2.0
  */
 public interface IClassMappingAuditSupport
@@ -37,8 +34,6 @@ public interface IClassMappingAuditSupport
    *          the revision object into which the data should be read. The revision has to be have its ID set to the
    *          requested object's ID. The version is ignored, as the version parameter is used to determine the version
    *          to be read.
-   * @param version
-   *          the version which should be read.
    * @param listChunk
    *          the chunk size to read attribute lists.
    * @return <code>true</code>, if the revision has been found and read correctly. <code>false</code> if the revision

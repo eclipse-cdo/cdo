@@ -41,7 +41,6 @@ import java.util.Collection;
  * <ul>
  * <li> {@link CDOSession#getRepositoryInfo() CDORepositoryInfo information}
  * <li> {@link CDOSession#getPackageRegistry() Package registry}
- * <li> {@link CDOSession#getPackageUnitManager() Package unit management}
  * <li> {@link CDOSession#getRevisionManager() Data management}
  * <li> {@link CDOSession#getViews() View management}
  * </ul>
@@ -67,8 +66,6 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
    * packages} that are already persisted in the repository of this session are automatically registered with this
    * registry. New packages can be locally registered with this registry and are committed to the repository through a
    * {@link CDOTransaction transaction}, if needed.
-   * 
-   * @see #getPackageUnitManager()
    */
   public CDOPackageRegistry getPackageRegistry();
 
@@ -149,7 +146,7 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
    * <p>
    * Same as calling <code>openView(new ResourceSetImpl())</code>.
    * 
-   * @see #openView(ResourceSet)
+   * @see #openView(CDOBranch, long, ResourceSet)
    * @since 3.0
    */
   public CDOView openView(CDOBranch branch, long timeStamp);
@@ -159,7 +156,7 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
    * <p>
    * Same as calling <code>openView(new ResourceSetImpl())</code>.
    * 
-   * @see #openView(ResourceSet)
+   * @see #openView(CDOBranch, long, ResourceSet)
    * @since 3.0
    */
   public CDOView openView(CDOBranch branch);
@@ -169,7 +166,7 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
    * <p>
    * Same as calling <code>openView(new ResourceSetImpl())</code>.
    * 
-   * @see #openView(ResourceSet)
+   * @see #openView(CDOBranch, long, ResourceSet)
    * @since 3.0
    */
   public CDOView openView(long timeStamp);
@@ -179,17 +176,15 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
    * <p>
    * Same as calling <code>openView(new ResourceSetImpl())</code>.
    * 
-   * @see #openView(ResourceSet)
+   * @see #openView(CDOBranch, long, ResourceSet)
    */
   public CDOView openView();
 
   /**
-   * Returns an array of all open {@link CDOView views}, {@link CDOTransaction transactions} and {@link CDOAudit audits}
-   * of this session.
+   * Returns an array of all open {@link CDOView views} and {@link CDOTransaction transactions} of this session.
    * 
    * @see #openView()
    * @see #openTransaction()
-   * @see #openAudit(long)
    */
   public CDOView[] getViews();
 
@@ -198,7 +193,8 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
    * <p>
    * Takes CDOID and version of all objects in the cache and sends it to the server. {@link CDORefreshContext} contains
    * informations of which objects changed/detached. The collection is ordered by timestamp. In the case where
-   * {@link #isPassiveUpdateEnabled()} is <code>true</code>, this method will return immediately without doing anything.
+   * {@link Options#isPassiveUpdateEnabled()} is <code>true</code>, this method will return immediately without doing
+   * anything.
    */
   public Collection<CDORefreshContext> refresh();
 

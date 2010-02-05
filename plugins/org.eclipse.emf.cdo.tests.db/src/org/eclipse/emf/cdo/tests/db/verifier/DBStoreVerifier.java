@@ -51,7 +51,7 @@ public abstract class DBStoreVerifier
 
   private IRepository repository;
 
-  private IDBStoreAccessor accessor = null;
+  private IDBStoreAccessor accessor;
 
   public DBStoreVerifier(IRepository repository)
   {
@@ -322,7 +322,6 @@ public abstract class DBStoreVerifier
       }
 
       String tableName = mapping.getDBTables().iterator().next().getName();
-      ;
       String sql = "SELECT " + CDODBSchema.ATTRIBUTES_ID + ", " + CDODBSchema.ATTRIBUTES_VERSION + " FROM " + tableName;
 
       ArrayList<Pair<Long, Integer>> idVersions = new ArrayList<Pair<Long, Integer>>();

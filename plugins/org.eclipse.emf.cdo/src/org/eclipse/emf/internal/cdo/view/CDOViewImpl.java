@@ -111,7 +111,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.StringTokenizer;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.ReentrantLock;
@@ -716,38 +715,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     {
       return objects.values().toArray(new InternalCDOObject[objects.size()]);
     }
-  }
-
-  /**
-   * TODO Remove me
-   * 
-   * @since 2.0
-   */
-  @Deprecated
-  public CDOResourceFolder getResourceFolder(String path)
-  {
-    if (path == null)
-    {
-      return null;
-    }
-
-    CDOResourceFolder folder = null;
-    StringTokenizer tokenizer = new StringTokenizer(path, CDOURIUtil.SEGMENT_SEPARATOR);
-    while (tokenizer.hasMoreTokens())
-    {
-      String segment = tokenizer.nextToken();
-      if (segment != null)
-      {
-        if (folder == null)
-        {
-        }
-        else
-        {
-        }
-      }
-    }
-
-    return folder;
   }
 
   /**
@@ -1851,7 +1818,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
       oldObject.clear();
     }
-  };
+  }
 
   /**
    * @author Simon McDuff

@@ -20,8 +20,6 @@ import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
 
-import org.eclipse.emf.internal.cdo.session.CDOSessionConfigurationImpl;
-
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.defs.ConnectorDef;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;

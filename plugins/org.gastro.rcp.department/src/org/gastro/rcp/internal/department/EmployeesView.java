@@ -52,6 +52,7 @@ public class EmployeesView extends ViewPart
   /**
    * Passing the focus request to the viewer's control.
    */
+  @Override
   public void setFocus()
   {
   }
@@ -59,6 +60,7 @@ public class EmployeesView extends ViewPart
   /**
    * This is a callback that will allow us to create the viewer and initialize it.
    */
+  @Override
   public void createPartControl(Composite parent)
   {
     Department department = (Department)IModel.INSTANCE.getStation();
@@ -89,26 +91,24 @@ public class EmployeesView extends ViewPart
     {
       return null;
     }
-    else
+
+    String name = fakeImages.get(employee);
+    if (name != null)
     {
-      String name = fakeImages.get(employee);
-      if (name != null)
+      return name;
+    }
+
+    for (;;)
+    {
+      name = "employee-" + ++fakeImageID;
+      Image image = getCachedImage(name);
+      if (image != null)
       {
+        fakeImages.put(employee, name);
         return name;
       }
 
-      for (;;)
-      {
-        name = "employee-" + (++fakeImageID);
-        Image image = getCachedImage(name);
-        if (image != null)
-        {
-          fakeImages.put(employee, name);
-          return name;
-        }
-
-        fakeImageID = 0;
-      }
+      fakeImageID = 0;
     }
   }
 

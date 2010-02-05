@@ -184,6 +184,7 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
   /**
    * @ADDED
    */
+  @Override
   protected IHTTPConnector createInstance()
   {
     HTTPClientConnector connector = new HTTPClientConnector();

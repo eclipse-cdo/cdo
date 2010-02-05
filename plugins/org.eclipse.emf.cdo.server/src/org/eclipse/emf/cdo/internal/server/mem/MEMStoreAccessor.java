@@ -60,6 +60,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
           filters.add(new Object()
           {
             @Override
+            public int hashCode()
+            {
+              return eClass.hashCode();
+            }
+
+            @Override
             public boolean equals(Object obj)
             {
               InternalCDORevision revision = (InternalCDORevision)obj;

@@ -11,16 +11,13 @@
 package org.eclipse.emf.cdo.internal.server.offline;
 
 import org.eclipse.emf.cdo.internal.server.Repository;
-import org.eclipse.emf.cdo.internal.server.bundle.OM;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 /**
  * @author Eike Stepper
  */
 public class ClonedRepository extends Repository.Default
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, ClonedRepository.class);
+  // private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, ClonedRepository.class);
 
   private MasterInterface masterInterface;
 

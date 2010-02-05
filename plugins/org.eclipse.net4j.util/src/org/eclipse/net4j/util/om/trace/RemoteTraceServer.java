@@ -36,7 +36,7 @@ public class RemoteTraceServer
 
   public static final int ANY_PORT = 0;
 
-  private static long lastEventID = 0;
+  private static long lastEventID;
 
   private int port;
 

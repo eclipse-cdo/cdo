@@ -71,13 +71,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader
   /**
    * Demand loads a given package proxy that has been created on startup of the repository.
    * <p>
-   * It's left to the implementor's choice whether to load the {@link EPackage#getEcore() ecore xml} at this time
-   * already. In case it is <b>not</b> loaded at this time {@link #readPackageEcore(EPackage) readPackageEcore()} is
-   * called later on demand.
-   * <p>
    * This method must only load the given package, <b>not</b> possible contained packages.
    * 
-   * @see InternalEPackage
    * @since 2.0
    */
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit);

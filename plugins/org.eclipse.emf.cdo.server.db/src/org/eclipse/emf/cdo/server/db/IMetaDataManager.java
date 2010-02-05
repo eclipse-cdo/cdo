@@ -60,13 +60,13 @@ public interface IMetaDataManager
    */
   public EPackage[] loadPackageUnit(Connection connection, InternalCDOPackageUnit packageUnit);
 
-/**
+  /**
    * Reads information about package units present in the database.
-   * @param connection the DB connection to read from.
-   * @return a collection of package unit information records which can be
-   *   passed to {@link IMetaDataManager#loadPackageUnit(Connection, InternalCDOPackageUnit))
-   *   in order to read the EPackage.
-   *
+   * 
+   * @param connection
+   *          the DB connection to read from.
+   * @return a collection of package unit information records which can be passed to
+   *         {@link IMetaDataManager#loadPackageUnit(Connection, InternalCDOPackageUnit)} in order to read the EPackage.
    * @since 2.0
    */
   public Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection);

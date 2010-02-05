@@ -88,8 +88,6 @@ public class HibernateUtil
   /**
    * Uses the repository package repository to find the EClass of the identified by the CDOClassifierRef.
    * 
-   * @param the
-   *          {@link CDOClassifierRef} which identifies an EClass
    * @return the EClass instance identified by the EPackage nsuri and classifier name in the CDOClassifierRef
    * @throws IllegalArgumentException
    *           if the EClass can not be found
@@ -231,8 +229,8 @@ public class HibernateUtil
   }
 
   /**
-   * Converts a CDOID to an unique String representations. Null, {@link CDOIDTemp} and {@link CDOIDNull} are returned as
-   * null value. Supports {@link CDOIDHibernate}, {@link CDOIDMeta} and {@link CDOIDExternal}.
+   * Converts a CDOID to an unique String representations. Null, {@link CDOIDTemp} and {@link CDOID#NULL} are returned
+   * as null value. Supports {@link CDOIDMeta} and {@link CDOIDExternal}.
    * 
    * @param cdoID
    *          the cdoID to convert
@@ -490,10 +488,7 @@ public class HibernateUtil
   /**
    * Creates the correct subclass of {@link CDOID} for the passed EClass and hibernate id object.
    * 
-   * @param eClass
-   *          the EClass to set in the CDOID
    * @return a supported instance of CDOID.
-   * @see CDOIDEClassProvider
    */
   public CDOID createCDOID(CDOClassifierRef classifierRef, Object idValue)
   {
@@ -543,8 +538,6 @@ public class HibernateUtil
   }
 
   /**
-   * @param the
-   *          CDOID to get the internal id from
    * @return the id used by Hibernate, the String or Long value in the CDOID object.
    */
   public Serializable getIdValue(CDOID cdoID)
@@ -566,7 +559,7 @@ public class HibernateUtil
    * Retrieves the entity name for the EClass present in the CDOID.
    * 
    * @param cdoID
-   *          the {@link CDOID} to get the EClass from, the cdoID must be a {@link CDOIDEClassProvider}.
+   *          the {@link CDOID} to get the EClass from.
    * @return the entity name for the EClass of the CDOID.
    * @see HibernateStore#getEntityName(EClass)
    */

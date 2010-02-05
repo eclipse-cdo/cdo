@@ -52,6 +52,7 @@ public class CDOLazyPackageRegistryDefImpl extends CDOPackageRegistryDefImpl imp
    * 
    * @return the CDO package registry
    */
+  @Override
   protected Object createInstance()
   {
     // TODO: implement CDOLazyPackageRegistryDefImpl.createInstance()

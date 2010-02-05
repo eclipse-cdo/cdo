@@ -38,7 +38,7 @@ import java.util.Set;
  * <li> {@link CDORemoteSessionEvent.SubscriptionChanged} to reflect the ability of the remote session to receive and
  * possibly handle remote messages from other sessions.
  * <li> {@link CDORemoteSessionEvent.MessageReceived} to deliver custom data
- * {@link CDORemoteSession#sendCustomData(String, byte[]) sent} from other sessions .
+ * {@link CDORemoteSession#sendMessage(CDORemoteSessionMessage) sent} from other sessions .
  * </ul>
  * 
  * @author Eike Stepper

@@ -39,7 +39,8 @@ public interface CDORevisionPrefetchingPolicy
 
   /**
    * @param revisionManager
-   *          Lookup availability of objects in the cache with {@link CDORevisionManager#containsRevision(CDOID)}.
+   *          Lookup availability of objects in the cache with
+   *          {@link CDORevisionManager#containsRevision(CDOID, CDOBranchPoint)}.
    * @param targetObject
    *          Container of the list
    * @param feature

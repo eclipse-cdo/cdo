@@ -785,10 +785,9 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
         {
           return ExtendedImageRegistry.getInstance().getImage(labelProvider.getImage(object));
         }
-
-      default:
-        return null;
       }
+
+      return null;
     }
 
     public String getColumnText(Object element, int columnIndex)

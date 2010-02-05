@@ -82,7 +82,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     protected FeatureDeltaWriter initialValue()
     {
       return new FeatureDeltaWriter();
-    };
+    }
   };
 
   public HorizontalNonAuditClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
@@ -442,7 +442,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     private IDBStoreAccessor accessor;
 
-    private boolean updateContainer = false;
+    private boolean updateContainer;
 
     private List<Pair<ITypeMapping, Object>> attributeChanges;
 

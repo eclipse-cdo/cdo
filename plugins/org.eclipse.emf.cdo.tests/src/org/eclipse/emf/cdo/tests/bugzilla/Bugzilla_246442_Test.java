@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -29,8 +29,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 /**
  * ArrayIndexOutOfBoundsException when importing resources.
  * <p>
+ * See bug 246442
  * 
- * @see bug 246442
  * @author Simon McDuff
  */
 public class Bugzilla_246442_Test extends AbstractCDOTest

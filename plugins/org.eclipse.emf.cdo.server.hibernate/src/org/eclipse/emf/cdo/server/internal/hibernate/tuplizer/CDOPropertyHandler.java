@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Taal - copied from CDORevisionPropertyHandler and adapted
  *    Eike Stepper - maintenance
@@ -28,7 +28,7 @@ public abstract class CDOPropertyHandler
 
   private EStructuralFeature feature;
 
-  private boolean virtualProperty = false;
+  private boolean virtualProperty;
 
   public CDOPropertyHandler(CDORevisionTuplizer tuplizer, String propertyName)
   {

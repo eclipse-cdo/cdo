@@ -23,8 +23,9 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 /**
+ * See bug 246456
+ * 
  * @author Simon McDuff
- * @see bug 246456
  */
 public class Bugzilla_246456_Test extends AbstractCDOTest
 {

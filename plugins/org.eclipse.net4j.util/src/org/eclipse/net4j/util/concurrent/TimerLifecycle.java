@@ -35,7 +35,7 @@ public class TimerLifecycle extends Timer implements ILifecycle
     protected void doDeactivate() throws Exception
     {
       cancel();
-    };
+    }
   };
 
   public TimerLifecycle()

@@ -275,7 +275,6 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
             }
             catch (IOException ignore)
             {
-              ;
             }
             finally
             {

@@ -93,6 +93,7 @@ public class RecipeImpl extends ProductImpl implements Recipe
    * 
    * @generated NOT
    */
+  @Override
   public float getCost()
   {
     float cost = 0f;

@@ -53,7 +53,7 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
 
   private ExecutorService executors;
 
-  private boolean shutdownExecutorService = false;
+  private boolean shutdownExecutorService;
 
   private int nextQuery;
 

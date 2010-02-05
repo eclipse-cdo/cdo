@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 /**
  * Is responsible for converting container related information from and to a string representation.
  * 
- * @see CDOIDConverter
  * @see InternalCDORevision#getContainerID()
  * @see InternalCDORevision#getContainingFeatureID()
  * @see InternalCDORevision#getContainingFeatureID()
@@ -61,7 +60,6 @@ public class ContainerInfoConverter
    *          the InternalCDORevision which has the container information
    * @return a String representation of the container information which can be stored in a single varchar in the
    *         database.
-   * @see CDOIDConverter
    */
   public String convertContainerRelationToString(InternalCDORevision cdoRevision)
   {
@@ -79,7 +77,6 @@ public class ContainerInfoConverter
    *          the CDOID of the container
    * @return a String representation of the container information which can be stored in a single varchar in the
    *         database.
-   * @see CDOIDConverter
    */
   public String convertContainerRelationToString(InternalCDORevision cdoRevision, CDOID containerID)
   {
@@ -119,7 +116,6 @@ public class ContainerInfoConverter
    *          the InternalCDORevision in which the container info is stored.
    * @param containerInfo
    *          the containerInfo coded as a String
-   * @see CDOIDConverter
    */
   public void setContainerRelationFromString(InternalCDORevision cdoRevision, String containerInfo)
   {

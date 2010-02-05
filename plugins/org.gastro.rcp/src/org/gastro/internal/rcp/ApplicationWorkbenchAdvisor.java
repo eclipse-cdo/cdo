@@ -24,11 +24,13 @@ import org.gastro.rcp.IConfiguration;
  */
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor
 {
+  @Override
   public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer)
   {
     return new ApplicationWorkbenchWindowAdvisor(configurer);
   }
 
+  @Override
   public String getInitialWindowPerspectiveId()
   {
     return "org.gastro.rcp." + IConfiguration.INSTANCE.getPerspective() + ".perspective";

@@ -23,22 +23,16 @@ public interface CDORepositoryInfo extends CDOTimeProvider
 {
   /**
    * Returns the name of this repository.
-   * 
-   * @see IRepository#getName()
    */
   public String getName();
 
   /**
    * Returns the UUID of this repository.
-   * 
-   * @see IRepository#getUUID()
    */
   public String getUUID();
 
   /**
    * Returns the creation time of this repository.
-   * 
-   * @see IRepository#getCreationTime()
    */
   public long getCreationTime();
 
@@ -58,15 +52,11 @@ public interface CDORepositoryInfo extends CDOTimeProvider
 
   /**
    * Returns <code>true</code> if this repository supports auditing, <code>false</code> otherwise.
-   * 
-   * @see IRepository#isSupportingAudits()
    */
   public boolean isSupportingAudits();
 
   /**
-   * Returns <code>true</code> if this repository supports auditing, <code>false</code> otherwise.
-   * 
-   * @see IRepository#isSupportingAudits()
+   * Returns <code>true</code> if this repository supports branching, <code>false</code> otherwise.
    */
   public boolean isSupportingBranches();
 }

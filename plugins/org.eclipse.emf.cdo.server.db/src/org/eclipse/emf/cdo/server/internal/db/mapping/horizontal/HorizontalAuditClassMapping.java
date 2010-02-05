@@ -80,7 +80,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     protected FeatureDeltaWriter initialValue()
     {
       return new FeatureDeltaWriter();
-    };
+    }
   };
 
   public HorizontalAuditClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)

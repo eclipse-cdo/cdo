@@ -64,15 +64,15 @@ public class HibernateStore extends Store implements IHibernateStore
 
   private IHibernateMappingProvider mappingProvider;
 
-  private boolean doDropSchema = false;
+  private boolean doDropSchema;
 
   private SystemInformation systemInformation;
 
-  private Map<String, EClass> entityNameToEClass = null;
+  private Map<String, EClass> entityNameToEClass;
 
-  private Map<String, String> eClassToEntityName = null;
+  private Map<String, String> eClassToEntityName;
 
-  private Map<String, String> identifierPropertyNameByEntity = null;
+  private Map<String, String> identifierPropertyNameByEntity;
 
   public String getIdentifierPropertyName(String entityName)
   {

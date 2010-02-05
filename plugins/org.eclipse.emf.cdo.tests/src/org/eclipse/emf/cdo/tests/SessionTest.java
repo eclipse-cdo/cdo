@@ -107,7 +107,7 @@ public class SessionTest extends AbstractCDOTest
         ConcurrencyUtil.sleep(4000);
         msg("Committing NOW!");
         transaction.commit();
-      };
+      }
     }.start();
 
     CDOSession session2 = openSession();

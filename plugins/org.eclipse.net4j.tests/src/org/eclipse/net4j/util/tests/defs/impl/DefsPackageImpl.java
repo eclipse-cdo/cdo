@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -34,7 +34,7 @@ public class DefsPackageImpl extends EPackageImpl implements DefsPackage
    * 
    * @generated
    */
-  private EClass testDefEClass = null;
+  private EClass testDefEClass;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry

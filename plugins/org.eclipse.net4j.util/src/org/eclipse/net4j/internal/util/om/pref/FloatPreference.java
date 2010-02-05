@@ -10,7 +10,6 @@
  */
 package org.eclipse.net4j.internal.util.om.pref;
 
-
 /**
  * @author Eike Stepper
  */

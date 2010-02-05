@@ -102,7 +102,6 @@ public interface IMappingStrategy
    *          the class containing the feature.
    * @param feature
    *          the feature for which a mapping should be created. It must hold <code>feature.isMany() == true</code>.
-   * @return
    */
   public IListMapping createListMapping(EClass containingClass, EStructuralFeature feature);
 

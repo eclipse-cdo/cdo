@@ -26,11 +26,12 @@ public class DBRevisionCacheUtil
 {
   /**
    * Gets the name of a revision of a CDOResourceNode.
+   * <p>
+   * See bug 279817
    * 
    * @param revision
    *          the revision
    * @return the resource node name
-   * @see bug 279817
    */
   // TODO: this should be refactored and put in a place, that's more generic
   // than this class. The same snippet's used in LRURevisionCache and

@@ -74,11 +74,11 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreAccessor.class);
 
-  private Connection connection = null;
+  private Connection connection;
 
-  private IPreparedStatementCache statementCache = null;
+  private IPreparedStatementCache statementCache;
 
-  private Timer connectionKeepAliveTimer = null;
+  private Timer connectionKeepAliveTimer;
 
   private Set<CDOID> newObjects = new HashSet<CDOID>();
 

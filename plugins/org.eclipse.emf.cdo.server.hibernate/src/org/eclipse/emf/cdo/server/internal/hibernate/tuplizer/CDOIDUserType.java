@@ -28,10 +28,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 /**
- * Persists a CDOID in the DB. Currently {@link CDOIDHibernate}, {@link CDOIDMeta} and {@link CDOIDExternal} are
- * supported.
- * 
- * @see CDOIDConverter
+ * Persists a CDOID in the DB. Currently {@link CDOIDMeta} and {@link CDOIDExternal} are supported.
  */
 public class CDOIDUserType implements UserType
 {

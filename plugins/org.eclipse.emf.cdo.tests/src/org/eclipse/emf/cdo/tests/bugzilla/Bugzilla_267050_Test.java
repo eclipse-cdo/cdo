@@ -25,8 +25,9 @@ import java.util.Collection;
 
 /**
  * Add new packages infos in the Notifications process at the client side
+ * <p>
+ * See bug 267050
  * 
- * @see bug 267050
  * @author Simon McDuff
  */
 public class Bugzilla_267050_Test extends AbstractCDOTest

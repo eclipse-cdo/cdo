@@ -400,9 +400,9 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
     private List<CDOObject> listOfModifyinObject = new ArrayList<CDOObject>();
 
-    private int numberOfCommit = 0;
+    private int numberOfCommit;
 
-    private int numberOfRollback = 0;
+    private int numberOfRollback;
 
     public CDOAccumulateTransactionHandler()
     {

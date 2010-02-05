@@ -80,7 +80,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
 
   private List<CDOID> lockedObjects = new ArrayList<CDOID>();
 
-  private List<InternalCDORevision> detachedRevisions = new ArrayList<InternalCDORevision>();;
+  private List<InternalCDORevision> detachedRevisions = new ArrayList<InternalCDORevision>();
 
   private InternalCDORevisionDelta[] dirtyObjectDeltas;
 
@@ -687,7 +687,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
     }
 
     @Override
-    public void putPackageUnit(InternalCDOPackageUnit packageUnit)
+    public synchronized void putPackageUnit(InternalCDOPackageUnit packageUnit)
     {
       packageUnit.setPackageRegistry(this);
       for (InternalCDOPackageInfo packageInfo : packageUnit.getPackageInfos())

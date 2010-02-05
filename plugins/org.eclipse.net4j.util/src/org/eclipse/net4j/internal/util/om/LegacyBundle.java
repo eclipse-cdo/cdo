@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -83,13 +83,11 @@ public class LegacyBundle extends AbstractBundle
         }
         catch (RuntimeException ignore)
         {
-          ;
         }
       }
     }
     catch (IOException ignore)
     {
-      ;
     }
     finally
     {
@@ -110,7 +108,7 @@ public class LegacyBundle extends AbstractBundle
     // For a plugin.xml with runtime="runtime/common.jar":
     // jar:file:/D:/sandbox/unpackage1-3.1M7/eclipse/plugins/org.eclipse.emf.common/runtime/common.jar!/org/eclipse/common
     // /CommonPlugin.class
-    // 
+    //
     // For a plugin.xml with runtime="." where the plugin is jarred:
     // jar:file:/D:/sandbox/unpackage1-3.1M7/eclipse/plugins/org.eclipse.emf.common.jar!/org/eclipse/common/CommonPlugin.
     // class

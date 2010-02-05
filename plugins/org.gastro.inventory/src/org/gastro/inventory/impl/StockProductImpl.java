@@ -82,6 +82,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
    * 
    * @generated
    */
+  @Override
   public float getCost()
   {
     return (Float)eGet(InventoryPackage.Literals.STOCK_PRODUCT__COST, true);

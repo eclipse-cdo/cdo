@@ -51,7 +51,7 @@ public abstract class AbstractLogHandler implements OMLogHandler
     }
     catch (Throwable ignore)
     {
-      ; // Ignore
+      // Ignore
     }
   }
 

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff  - initial API and implementation
  **************************************************************************/
@@ -44,6 +44,12 @@ public abstract class AbstractQueryIterator<T> extends AbstractQueryResult<T>
   {
     queryIDSet.acquire(new Object()
     {
+      @Override
+      public int hashCode()
+      {
+        return 1;
+      }
+
       @Override
       public boolean equals(Object obj)
       {

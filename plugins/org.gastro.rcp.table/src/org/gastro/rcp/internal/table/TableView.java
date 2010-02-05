@@ -165,6 +165,7 @@ public class TableView extends ViewPart
   /**
    * Passing the focus request to the viewer's control.
    */
+  @Override
   public void setFocus()
   {
     // Do nothing
@@ -185,6 +186,7 @@ public class TableView extends ViewPart
   /**
    * This is a callback that will allow us to create the viewer and initialize it.
    */
+  @Override
   public void createPartControl(Composite parent)
   {
     BusinessDay businessDay = IModel.INSTANCE.getBusinessDay();
@@ -326,6 +328,7 @@ public class TableView extends ViewPart
             buttonPrev.setToolTipText("Voriger Eintrag");
             buttonPrev.addSelectionListener(new SelectionAdapter()
             {
+              @Override
               public void widgetSelected(SelectionEvent e)
               {
                 prevMenu();
@@ -362,6 +365,7 @@ public class TableView extends ViewPart
               buttonDelete.setToolTipText("Weniger bestellen");
               buttonDelete.addSelectionListener(new SelectionAdapter()
               {
+                @Override
                 public void widgetSelected(SelectionEvent e)
                 {
                   deleteOrder();
@@ -377,6 +381,7 @@ public class TableView extends ViewPart
               buttonAdd.setImage(ResourceManager.getPluginImage("org.gastro.rcp.table", "icons/add.gif"));
               buttonAdd.addSelectionListener(new SelectionAdapter()
               {
+                @Override
                 public void widgetSelected(SelectionEvent e)
                 {
                   addOrder();
@@ -395,6 +400,7 @@ public class TableView extends ViewPart
             buttonNext.setToolTipText("N\u00E4chster Eintrag");
             buttonNext.addSelectionListener(new SelectionAdapter()
             {
+              @Override
               public void widgetSelected(SelectionEvent e)
               {
                 nextMenu();
@@ -507,6 +513,7 @@ public class TableView extends ViewPart
             Button buttonCancel = new Button(composite, SWT.NONE);
             buttonCancel.addSelectionListener(new SelectionAdapter()
             {
+              @Override
               public void widgetSelected(SelectionEvent e)
               {
                 cancelOrder();
@@ -528,6 +535,7 @@ public class TableView extends ViewPart
             Button buttonSend = new Button(composite, SWT.NONE);
             buttonSend.addSelectionListener(new SelectionAdapter()
             {
+              @Override
               public void widgetSelected(SelectionEvent e)
               {
                 sendOrder();
@@ -557,6 +565,7 @@ public class TableView extends ViewPart
 
       shelf.addSelectionListener(new SelectionAdapter()
       {
+        @Override
         public void widgetSelected(SelectionEvent e)
         {
           orderViewer.refresh(true);
@@ -684,7 +693,7 @@ public class TableView extends ViewPart
     EList<EObject> result = new BasicEList<EObject>();
     for (Iterator<EObject> it = menuCard.eAllContents(); it.hasNext();)
     {
-      result.add((EObject)it.next());
+      result.add(it.next());
     }
 
     return result;
@@ -741,7 +750,7 @@ public class TableView extends ViewPart
       {
         for (;;)
         {
-          name = "meal-" + (++fakeImageID);
+          name = "meal-" + ++fakeImageID;
           Image image = getCachedImage(name);
           if (image != null)
           {

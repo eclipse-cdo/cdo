@@ -26,8 +26,9 @@ import java.util.List;
 
 /**
  * Change subscription are not registered correctly for new CDOResource objects
+ * <p>
+ * See bug 266857
  * 
- * @see bug 266857
  * @author Simon McDuff
  */
 public class Bugzilla_266857_Test extends AbstractCDOTest

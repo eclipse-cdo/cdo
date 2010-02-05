@@ -213,7 +213,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
       LifecycleUtil.activate(protocol);
       if (TRACER.isEnabled())
       {
-        String protocolType = protocol == null ? null : protocol.getType();
+        String protocolType = protocol.getType();
         TRACER.format("Opening channel with protocol {0}", protocolType); //$NON-NLS-1$
       }
 

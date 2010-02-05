@@ -66,7 +66,7 @@ public class ResourceManager extends SWTResourceManager
   {
     try
     {
-      return ImageDescriptor.createFromURL((new File(path)).toURL());
+      return ImageDescriptor.createFromURL(new File(path).toURL());
     }
     catch (MalformedURLException e)
     {
@@ -157,6 +157,7 @@ public class ResourceManager extends SWTResourceManager
       final Point baseImageSize = new Point(bib.width, bib.height);
       CompositeImageDescriptor compositImageDesc = new CompositeImageDescriptor()
       {
+        @Override
         protected void drawCompositeImage(int width, int height)
         {
           drawImage(baseImage.getImageData(), 0, 0);
@@ -178,6 +179,7 @@ public class ResourceManager extends SWTResourceManager
           }
         }
 
+        @Override
         protected Point getSize()
         {
           return baseImageSize;
@@ -262,7 +264,7 @@ public class ResourceManager extends SWTResourceManager
   /**
    * Instance of {@link PluginResourceProvider}, used by WindowBuilder at design time.
    */
-  private static PluginResourceProvider m_designTimePluginResourceProvider = null;
+  private static PluginResourceProvider m_designTimePluginResourceProvider;
 
   /**
    * Returns an {@link Image} based on a plugin and file path.
@@ -274,6 +276,7 @@ public class ResourceManager extends SWTResourceManager
    * @return the {@link Image} stored in the file at the specified path
    * @deprecated Use {@link #getPluginImage(String, String)} instead.
    */
+  @Deprecated
   public static Image getPluginImage(Object plugin, String name)
   {
     try
@@ -371,6 +374,7 @@ public class ResourceManager extends SWTResourceManager
    * @return the {@link ImageDescriptor} stored in the file at the specified path.
    * @deprecated Use {@link #getPluginImageDescriptor(String, String)} instead.
    */
+  @Deprecated
   public static ImageDescriptor getPluginImageDescriptor(Object plugin, String name)
   {
     try

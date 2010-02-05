@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
-import org.eclipse.emf.cdo.internal.net4j.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
@@ -290,16 +289,6 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
 
     default:
       return super.createSignalReactor(signalID);
-    }
-  }
-
-  @Override
-  protected void doBeforeActivate() throws Exception
-  {
-    super.doBeforeActivate();
-    if (!(getInfraStructure() instanceof CDOSession))
-    {
-      throw new IllegalStateException(Messages.getString("CDOClientProtocol.0")); //$NON-NLS-1$
     }
   }
 

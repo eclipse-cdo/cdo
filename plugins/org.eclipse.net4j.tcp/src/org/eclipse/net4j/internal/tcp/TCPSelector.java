@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -171,11 +171,11 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
             }
             catch (CancelledKeyException ignore)
             {
-              ; // Do nothing
+              // Do nothing
             }
             catch (NullPointerException ignore)
             {
-              ; // Do nothing
+              // Do nothing
             }
             catch (Exception ex)
             {
@@ -302,10 +302,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     }
     catch (RuntimeException ex)
     {
-      if (exception == null)
-      {
-        exception = ex;
-      }
+      exception = ex;
     }
     finally
     {

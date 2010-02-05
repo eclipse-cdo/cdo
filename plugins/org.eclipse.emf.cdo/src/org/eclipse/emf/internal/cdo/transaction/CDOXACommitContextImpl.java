@@ -199,4 +199,4 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
   {
     return MessageFormat.format("CDOXACommitContext[{0}, {1}]", transactionManager, state);
   }
-};
+}

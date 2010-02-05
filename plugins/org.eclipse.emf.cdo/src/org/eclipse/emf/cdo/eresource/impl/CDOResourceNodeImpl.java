@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -176,7 +176,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
         CDOResourceFolder parent = getFolder();
         if (parent != null)
         {
-          String newPath = (parent == null ? "" : parent.getPath()) + CDOURIUtil.SEGMENT_SEPARATOR + getName(); //$NON-NLS-1$
+          String newPath = parent.getPath() + CDOURIUtil.SEGMENT_SEPARATOR + getName();
           checkDuplicates(newPath);
         }
       }

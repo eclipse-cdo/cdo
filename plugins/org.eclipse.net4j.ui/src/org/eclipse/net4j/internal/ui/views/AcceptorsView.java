@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -29,8 +29,8 @@ import org.eclipse.jface.action.IToolBarManager;
  */
 public class AcceptorsView extends ContainerView
 {
-  private Action addAcceptorAction2036 = new SafeAction(Messages.getString("AcceptorsView_0"), Messages
-      .getString("AcceptorsView_1"), //$NON-NLS-1$ //$NON-NLS-2$
+  private Action addAcceptorAction2036 = new SafeAction(Messages.getString("AcceptorsView_0"), //$NON-NLS-1$
+      Messages.getString("AcceptorsView_1"), //$NON-NLS-1$
       getAddImageDescriptor())
   {
     @Override
@@ -41,7 +41,7 @@ public class AcceptorsView extends ContainerView
   };
 
   private Action addAcceptorAction2037 = new SafeAction(Messages.getString("AcceptorsView_4"), Messages
-      .getString("AcceptorsView_5"), //$NON-NLS-1$ //$NON-NLS-2$
+      .getString("AcceptorsView_5"), //$NON-NLS-1$
       getAddImageDescriptor())
   {
     @Override

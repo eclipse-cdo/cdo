@@ -82,6 +82,7 @@ public class MYSQLAdapter extends DBAdapter
   /**
    * @since 2.0
    */
+  @Override
   public int getMaxTableNameLength()
   {
     return 64;
@@ -90,6 +91,7 @@ public class MYSQLAdapter extends DBAdapter
   /**
    * @since 2.0
    */
+  @Override
   public int getMaxFieldNameLength()
   {
     return 64;

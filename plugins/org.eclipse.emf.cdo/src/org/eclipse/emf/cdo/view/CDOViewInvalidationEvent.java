@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -21,7 +21,7 @@ import java.util.Set;
 
 /**
  * An event that is emitted to registered {@link IListener listeners} of a {@link CDOView} if
- * {@link CDOSession#setPassiveUpdateEnabled(boolean) passive update} is enabled for the session.
+ * {@link CDOSession.Options#setPassiveUpdateEnabled(boolean) passive update} is enabled for the session.
  * 
  * @author Simon McDuff
  * @see CDOInvalidationNotification

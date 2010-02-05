@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -23,7 +23,7 @@ import java.util.Collection;
  * <ul>
  * <li>It doesn't provide the old value, only the new index or new value.
  * <li>{@link Notification#REMOVE_MANY REMOVE_MANY} indicates that {@link Collection#clear() clear()} was called.
- * <li>{@link Notification#Add_MANY Add_MANY} is not used.
+ * <li>{@link Notification#ADD_MANY Add_MANY} is not used.
  * </ul>
  * 
  * @since 2.0

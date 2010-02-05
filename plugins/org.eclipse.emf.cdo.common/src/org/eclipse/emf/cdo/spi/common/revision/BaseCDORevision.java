@@ -627,7 +627,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       else
       {
         checkNoFeatureMap(feature);
-        if (value != null && feature instanceof EReference)
+        if (feature instanceof EReference)
         {
           value = out.getIDProvider().provideCDOID(value);
         }

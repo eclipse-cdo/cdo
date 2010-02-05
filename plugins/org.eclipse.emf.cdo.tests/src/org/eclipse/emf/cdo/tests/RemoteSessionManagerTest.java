@@ -277,5 +277,5 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
 
     session2.close();
     session1.close();
-  };
+  }
 }

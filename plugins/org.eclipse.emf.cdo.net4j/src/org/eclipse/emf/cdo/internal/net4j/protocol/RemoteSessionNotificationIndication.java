@@ -33,7 +33,7 @@ public class RemoteSessionNotificationIndication extends CDOClientIndication
   {
     byte opcode = in.readByte();
     int sessionID = in.readInt();
-    InternalCDORemoteSessionManager manager = (InternalCDORemoteSessionManager)getSession().getRemoteSessionManager();
+    InternalCDORemoteSessionManager manager = getSession().getRemoteSessionManager();
 
     switch (opcode)
     {

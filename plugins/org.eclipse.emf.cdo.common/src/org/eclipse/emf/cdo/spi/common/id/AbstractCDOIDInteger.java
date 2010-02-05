@@ -50,16 +50,19 @@ public abstract class AbstractCDOIDInteger extends AbstractCDOID
     return String.valueOf(value);
   }
 
+  @Override
   public void read(String fragmentPart)
   {
     value = Integer.valueOf(fragmentPart);
   }
 
+  @Override
   public void read(ExtendedDataInput in) throws IOException
   {
     value = in.readInt();
   }
 
+  @Override
   public void write(ExtendedDataOutput out) throws IOException
   {
     out.writeInt(value);

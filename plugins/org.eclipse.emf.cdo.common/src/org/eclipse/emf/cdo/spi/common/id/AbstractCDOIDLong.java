@@ -53,16 +53,19 @@ public abstract class AbstractCDOIDLong extends AbstractCDOID
     return String.valueOf(value);
   }
 
+  @Override
   public void read(String fragmentPart)
   {
     value = Long.valueOf(fragmentPart);
   }
 
+  @Override
   public void read(ExtendedDataInput in) throws IOException
   {
     value = in.readLong();
   }
 
+  @Override
   public void write(ExtendedDataOutput out) throws IOException
   {
     out.writeLong(value);

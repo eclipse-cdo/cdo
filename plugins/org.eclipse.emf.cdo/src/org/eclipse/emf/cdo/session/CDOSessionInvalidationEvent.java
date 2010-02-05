@@ -28,7 +28,7 @@ import java.util.Set;
 
 /**
  * An event that is emitted to registered {@link IListener listeners} of a {@link CDOSession} if
- * {@link CDOSession#setPassiveUpdateEnabled(boolean) passive update} is enabled for the session.
+ * {@link CDOSession.Options#setPassiveUpdateEnabled(boolean) passive update} is enabled for the session.
  * 
  * @author Eike Stepper
  * @see CDOInvalidationNotification

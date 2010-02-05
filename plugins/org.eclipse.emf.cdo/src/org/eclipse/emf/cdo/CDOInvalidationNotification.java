@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -21,8 +21,8 @@ import org.eclipse.emf.common.notify.Notification;
 
 /**
  * A custom EMF {@link Notification notification} that is emitted to {@link Adapter adapters} of the objects in a
- * {@link CDOView view} if {@link CDOView#setInvalidationNotificationEnabled(boolean) invalidation notification} is
- * enabled for the view. Since the notifications are constructed out of the information in a
+ * {@link CDOView view} if {@link CDOView.Options#setInvalidationNotificationEnabled(boolean) invalidation notification}
+ * is enabled for the view. Since the notifications are constructed out of the information in a
  * {@link CDOSessionInvalidationEvent} (i.e. {@link CDOID CDOIDs}) they don't carry detailed change deltas. All the
  * methods related to change deltas throw {@link UnsupportedOperationException UnsupportedOperationExceptions}.
  * 

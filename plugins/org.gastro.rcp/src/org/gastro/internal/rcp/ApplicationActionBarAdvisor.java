@@ -38,6 +38,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor
     super(configurer);
   }
 
+  @Override
   protected void makeActions(final IWorkbenchWindow window)
   {
     // Creates the actions and registers them.

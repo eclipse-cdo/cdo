@@ -170,7 +170,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     }
 
     viewSet.eAdapters().remove(internalAdapter);
-  };
+  }
 
   public void add(InternalCDOTransaction transaction, CDOID object)
   {
@@ -570,8 +570,8 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     public String toString()
     {
       return "PHASE1";
-    };
-  };
+    }
+  }
 
   /**
    * @author Simon McDuff
@@ -602,8 +602,8 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     public String toString()
     {
       return "PHASE2";
-    };
-  };
+    }
+  }
 
   /**
    * @author Simon McDuff
@@ -635,8 +635,8 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     public String toString()
     {
       return "PHASE3";
-    };
-  };
+    }
+  }
 
   /**
    * @author Simon McDuff
@@ -662,6 +662,6 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     public String toString()
     {
       return "CANCEL";
-    };
+    }
   }
 }

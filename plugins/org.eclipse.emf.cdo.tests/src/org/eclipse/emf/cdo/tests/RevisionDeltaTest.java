@@ -44,7 +44,8 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import junit.framework.Assert;
 
 /**
- * @see bug 201266
+ * See bug 201266
+ * 
  * @author Simon McDuff
  */
 public class RevisionDeltaTest extends AbstractCDOTest
@@ -110,8 +111,8 @@ public class RevisionDeltaTest extends AbstractCDOTest
 
   /**
    * Sending deltas doesn't adjust CDOIDs
-   * 
-   * @see bug 214374
+   * <p>
+   * See bug 214374
    */
   public void testBugzilla214374() throws Exception
   {
@@ -144,8 +145,8 @@ public class RevisionDeltaTest extends AbstractCDOTest
 
   /**
    * CDOView.getRevision() does not work for transactions/dirty objects (INVALID)
-   * 
-   * @see bug 214431
+   * <p>
+   * See bug 214431
    */
   public void testBugzilla214431() throws Exception
   {
@@ -168,8 +169,8 @@ public class RevisionDeltaTest extends AbstractCDOTest
 
   /**
    * CDOView.getRevision() does not work for transactions/dirty objects (INVALID)
-   * 
-   * @see bug 214374
+   * <p>
+   * See bug 214374
    */
   public void testBugzilla214374_HandleClear() throws Exception
   {
@@ -198,8 +199,8 @@ public class RevisionDeltaTest extends AbstractCDOTest
 
   /**
    * java.lang.IllegalStateException with MEMStore
-   * 
-   * @see bug 243282
+   * <p>
+   * See bug 243282
    */
   public void testBugzilla243282_Exception() throws Exception
   {

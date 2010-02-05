@@ -23,6 +23,7 @@ public class JVMClientConnector extends JVMConnector
   {
   }
 
+  @Override
   public Location getLocation()
   {
     return Location.CLIENT;

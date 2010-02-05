@@ -763,6 +763,15 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   /**
+   * Specializing the behaviour of {@link #hashCode()} is not permitted as per {@link EObject} specification.
+   */
+  @Override
+  public final int hashCode()
+  {
+    return super.hashCode();
+  }
+
+  /**
    * Specializing the behaviour of {@link #equals(Object)} is not permitted as per {@link EObject} specification.
    */
   @Override
@@ -1211,10 +1220,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       }
     }
 
-    /**
-     * @throws will
-     *           throw an exception if timeout is reached.
-     */
     public boolean tryLock(long time, TimeUnit unit) throws InterruptedException
     {
       try

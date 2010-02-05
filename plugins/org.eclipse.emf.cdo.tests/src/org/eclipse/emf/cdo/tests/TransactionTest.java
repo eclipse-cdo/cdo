@@ -30,8 +30,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @see bug 213782
- * @see bug 201366
+ * See bug 213782, bug 201366
+ * 
  * @author Simon McDuff
  */
 public class TransactionTest extends AbstractCDOTest

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - bug 208689
@@ -40,7 +40,7 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
   private boolean closed;
 
   /**
-   * Creates an iterator over all objects in a store. It is important to {@link #dispose()} of this iterator after usage
+   * Creates an iterator over all objects in a store. It is important to {@link #close()} of this iterator after usage
    * to properly close internal result sets.
    */
   public ObjectIDIterator(IMappingStrategy mappingStrategy, IDBStoreAccessor accessor)

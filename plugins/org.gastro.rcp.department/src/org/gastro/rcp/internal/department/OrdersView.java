@@ -95,6 +95,7 @@ public class OrdersView extends ViewPart
   /**
    * Passing the focus request to the viewer's control.
    */
+  @Override
   public void setFocus()
   {
   }
@@ -109,6 +110,7 @@ public class OrdersView extends ViewPart
   /**
    * This is a callback that will allow us to create the viewer and initialize it.
    */
+  @Override
   public void createPartControl(Composite parent)
   {
     BusinessDay businessDay = IModel.INSTANCE.getBusinessDay();
@@ -292,10 +294,8 @@ public class OrdersView extends ViewPart
             {
               return ResourceManager.getPluginImage("org.gastro.rcp.department", "icons/ordered.gif");
             }
-            else
-            {
-              return ResourceManager.getPluginImage("org.gastro.rcp.department", "icons/served.gif");
-            }
+
+            return ResourceManager.getPluginImage("org.gastro.rcp.department", "icons/served.gif");
           }
 
           return null;

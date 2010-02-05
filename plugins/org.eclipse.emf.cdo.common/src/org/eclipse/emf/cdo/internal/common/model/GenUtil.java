@@ -28,7 +28,7 @@ public final class GenUtil
   }
 
   /**
-   * @see GenGenBaseImpl#isPrimitiveType
+   * See GenGenBaseImpl.isPrimitiveType
    */
   public static boolean isPrimitiveType(EClassifier eType)
   {
@@ -51,7 +51,7 @@ public final class GenUtil
   }
 
   /**
-   * @see GenFeatureImpl#getUpperName
+   * See GenFeatureImpl.getUpperName
    */
   public static String getFeatureUpperName(String featureName)
   {
@@ -59,7 +59,7 @@ public final class GenUtil
   }
 
   /**
-   * @see GenFeatureImpl#getGetAccessor
+   * See GenFeatureImpl.getGetAccessor
    */
   public static String getFeatureGetterName(String featureName, boolean isBooleanType)
   {

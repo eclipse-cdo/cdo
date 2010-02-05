@@ -54,7 +54,7 @@ public class BranchRevisionCache extends ReferenceQueueWorker<InternalCDORevisio
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, BranchRevisionCache.class);
 
-  private static boolean disableGC = false;
+  private static boolean disableGC;
 
   private Map<CDOIDAndBranch, RevisionList> revisionLists = new HashMap<CDOIDAndBranch, RevisionList>();
 

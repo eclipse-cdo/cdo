@@ -71,7 +71,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   private Session hibernateSession;
 
-  private boolean errorOccured = false;
+  private boolean errorOccured;
 
   public void addToRevisionCache(Object object)
   {
@@ -310,7 +310,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
    * 
    * @param id
    *          identifies the CDORevision to read
-   * @param timeStamp
+   * @param branchPoint
    *          ignored until auditing is supported.
    * @param listChunk
    *          not used by Hibernate
@@ -443,7 +443,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   /**
-   * Commits the session, {@see {@link #commitRollbackHibernateSession()}.
+   * Commits the session, see {@link #commitRollbackHibernateSession()}.
    * 
    * @param monitor
    *          not used
@@ -498,19 +498,16 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       for (InternalCDORevision revision : context.getNewObjects())
       {
         // keep track for which cdoRevisions the container id needs to be repaired afterwards
-        if (revision instanceof InternalCDORevision)
+        final CDOID containerID = (CDOID)revision.getContainerID();
+        if (containerID instanceof CDOIDTemp && !containerID.isNull())
         {
-          final CDOID containerID = (CDOID)revision.getContainerID();
-          if (containerID instanceof CDOIDTemp && !containerID.isNull())
-          {
-            repairContainerIDs.add(revision);
-          }
+          repairContainerIDs.add(revision);
+        }
 
-          final CDOID resourceID = revision.getResourceID();
-          if (resourceID instanceof CDOIDTemp && !resourceID.isNull())
-          {
-            repairResourceIDs.add(revision);
-          }
+        final CDOID resourceID = revision.getResourceID();
+        if (resourceID instanceof CDOIDTemp && !resourceID.isNull())
+        {
+          repairResourceIDs.add(revision);
         }
 
         final String entityName = getStore().getEntityName(revision.getEClass());

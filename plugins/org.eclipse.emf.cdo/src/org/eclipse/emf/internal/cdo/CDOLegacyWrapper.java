@@ -606,7 +606,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    * at runtime. Note also that the proxy object might even not be cast to the concrete type of the target object. The
    * proxy can only guaranteed to be of <em>any</em> concrete subtype of the declared type of the given feature.
    * <p>
-   * TODO {@link InternalEObject#eResolveProxy(InternalEObject)
+   * TODO {@link InternalEObject#eResolveProxy(InternalEObject)}
    */
   protected InternalEObject createProxy(InternalCDOView view, EStructuralFeature feature, CDOID id)
   {

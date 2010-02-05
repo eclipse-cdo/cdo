@@ -52,6 +52,7 @@ public class CDOEagerPackageRegistryDefImpl extends CDOPackageRegistryDefImpl im
    * 
    * @return the CDO package registry
    */
+  @Override
   protected Object createInstance()
   {
     // TODO: implement CDOEagerPackageRegistryDefImpl.createInstance()

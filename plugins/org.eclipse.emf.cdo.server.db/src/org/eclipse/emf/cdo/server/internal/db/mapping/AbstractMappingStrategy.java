@@ -169,7 +169,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
     return new ObjectIDIterator(this, dbStoreAccessor)
     {
-      private PreparedStatement currentStatement = null;
+      private PreparedStatement currentStatement;
 
       @Override
       protected ResultSet getNextResultSet()
@@ -205,7 +205,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
         currentStatement = null;
       }
     };
-  };
+  }
 
   protected abstract Collection<EClass> getClassesWithObjectInfo();
 

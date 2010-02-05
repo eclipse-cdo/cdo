@@ -163,13 +163,13 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
 
     private class CacheList
     {
-      private CachedPreparedStatement first = null;
+      private CachedPreparedStatement first;
 
-      private CachedPreparedStatement last = null;
+      private CachedPreparedStatement last;
 
       public CacheList()
       {
-      };
+      }
 
       public void add(CachedPreparedStatement s)
       {
@@ -224,7 +224,7 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
         return first == null;
       }
     }
-  };
+  }
 
   private static final class CachedPreparedStatement
   {

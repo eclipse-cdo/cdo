@@ -53,7 +53,7 @@ public interface CDOObject extends EObject
    * changes, <code>false</code> otherwise.
    * <p>
    * This method is a convenience method to determine whether the {@link #cdoState() state} of this object is either
-   * {@link CDOState.CONFLICT CONFLICT} or {@link CDOState.INVALID_CONFLICT INVALID_CONFLICT}.
+   * {@link CDOState#CONFLICT CONFLICT} or {@link CDOState#INVALID_CONFLICT INVALID_CONFLICT}.
    * 
    * @since 2.0
    */
@@ -64,7 +64,7 @@ public interface CDOObject extends EObject
    * this state means) , <code>false</code> otherwise.
    * <p>
    * This method is a convenience method to determine whether the {@link #cdoState() state} of this object is either
-   * {@link CDOState.INVALID INVALID} or {@link CDOState.INVALID_CONFLICT INVALID_CONFLICT}.
+   * {@link CDOState#INVALID INVALID} or {@link CDOState#INVALID_CONFLICT INVALID_CONFLICT}.
    * 
    * @since 2.0
    */

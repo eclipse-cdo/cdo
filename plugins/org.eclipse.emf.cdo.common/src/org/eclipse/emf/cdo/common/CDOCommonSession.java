@@ -48,7 +48,7 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
      * <code>session.setPassiveUpdateEnabled(false);</code>
      * <p>
      * By default this property is enabled. If this property is disabled the latest versions of objects can still be
-     * obtained by calling {@link #refresh()}.
+     * obtained by calling refresh().
      * <p>
      * Passive update can be disabled in cases where more performance is needed and/or more control over when objects
      * will be refreshed.

@@ -41,7 +41,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
     try
     {
       EresourceFactory theEresourceFactory = (EresourceFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/Eresource/2.0.0"); //$NON-NLS-1$ 
+          .getEFactory("http://www.eclipse.org/emf/CDO/Eresource/2.0.0"); //$NON-NLS-1$
       if (theEresourceFactory != null)
       {
         return theEresourceFactory;
@@ -75,9 +75,9 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
     switch (eClass.getClassifierID())
     {
     case EresourcePackage.CDO_RESOURCE_FOLDER:
-      return (EObject)createCDOResourceFolder();
+      return createCDOResourceFolder();
     case EresourcePackage.CDO_RESOURCE:
-      return (EObject)createCDOResource();
+      return createCDOResource();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }

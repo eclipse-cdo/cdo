@@ -51,10 +51,7 @@ public interface IRepository extends IContainer<Object>, IQueryHandlerProvider, 
 
   /**
    * Returns the EMF {@link EPackage.Registry package registry} that is used by this repository.
-   * <p>
-   * This registry is managed by the {@link CDOPackageUnitManager package manager} of this repository.
    * 
-   * @see #getPackageUnitManager()
    * @since 2.0
    */
   public CDOPackageRegistry getPackageRegistry();

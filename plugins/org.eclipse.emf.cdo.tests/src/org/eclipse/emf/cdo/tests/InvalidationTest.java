@@ -476,7 +476,7 @@ public class InvalidationTest extends AbstractCDOTest
   }
 
   /**
-   * @see bug 236784
+   * See bug 236784
    */
   public void testInvalidateAndCache() throws Exception
   {

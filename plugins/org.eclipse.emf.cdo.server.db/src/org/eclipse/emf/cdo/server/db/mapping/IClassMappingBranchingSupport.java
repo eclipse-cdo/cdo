@@ -19,14 +19,11 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 /**
- * Interface which complements {@link IClassMappingAuditSupport} with methods to facilitate
- * branching support.
- *
- * @see {@link IMappingStrategy#hasAuditSupport()
- *
+ * Interface which complements {@link IClassMappingAuditSupport} with methods to facilitate branching support.
+ * 
+ * @see IMappingStrategy#hasAuditSupport()
  * @author Eike Stepper
  * @author Stefan Winkler
- *
  * @since 3.0
  */
 public interface IClassMappingBranchingSupport extends IClassMappingAuditSupport

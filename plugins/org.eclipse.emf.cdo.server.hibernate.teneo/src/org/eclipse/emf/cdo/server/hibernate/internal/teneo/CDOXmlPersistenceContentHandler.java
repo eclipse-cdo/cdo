@@ -28,7 +28,7 @@ import org.xml.sax.SAXException;
  */
 public class CDOXmlPersistenceContentHandler extends XmlPersistenceContentHandler
 {
-  private PAnnotatedEPackage localPAPackage = null;
+  private PAnnotatedEPackage localPAPackage;
 
   // is also present in super class, should be made protected there
   private static final int ROOT = 0;

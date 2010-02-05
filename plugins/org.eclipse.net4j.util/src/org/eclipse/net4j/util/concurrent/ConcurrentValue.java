@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -31,7 +31,7 @@ package org.eclipse.net4j.util.concurrent;
  * // Thread 1,2,3 and 4 are blocked
  * // Thread 5 isn't blocked.
  * 
- * MainThread cv.set(3); 
+ * MainThread cv.set(3);
  * 
  * // Thread 1 and 4 are unblocked.
  * // Thread 2 and 3 are still blocked.
@@ -69,8 +69,8 @@ public final class ConcurrentValue<T>
   }
 
   /**
-   * Reevaluate the condition. It is only useful if a thread is blocked at {@link ConcurrentValue#acquire()} and the
-   * parameter passed changed. {@link ConcurrentValue#acquire()} generates a reevaluation automatically.
+   * Reevaluate the condition. It is only useful if a thread is blocked at {@link #acquire(Object)} and the parameter
+   * passed changed. {@link #acquire(Object)} generates a reevaluation automatically.
    */
   public void reevaluate()
   {
@@ -83,7 +83,7 @@ public final class ConcurrentValue<T>
   /**
    * Blocking call.
    * <p>
-   * Return when value accept is equal to {@link ConcurrentValue#get()}.
+   * Return when value accept is equal to {@link #get()}.
    */
   public void acquire(Object accept) throws InterruptedException
   {

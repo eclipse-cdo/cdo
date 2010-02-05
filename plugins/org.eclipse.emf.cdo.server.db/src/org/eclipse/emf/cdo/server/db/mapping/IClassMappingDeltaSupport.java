@@ -17,11 +17,9 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 /**
- * Interface which complements {@link IClassMapping} with methods to facilitate
- * revision delta support.
- *
- * @see {@link IMappingStrategy#hasDeltaSupport()
- *
+ * Interface which complements {@link IClassMapping} with methods to facilitate revision delta support.
+ * 
+ * @see IMappingStrategy#hasDeltaSupport()
  * @author Eike Stepper
  * @author Stefan Winkler
  * @since 2.0

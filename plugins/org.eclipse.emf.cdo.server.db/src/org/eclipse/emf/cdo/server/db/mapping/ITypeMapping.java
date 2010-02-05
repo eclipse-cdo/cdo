@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - major refactoring
- *    Christopher Albert - 254455: [DB] Support FeatureMaps bug 254455  
+ *    Christopher Albert - 254455: [DB] Support FeatureMaps bug 254455
  */
 package org.eclipse.emf.cdo.server.db.mapping;
 
@@ -115,7 +115,7 @@ public interface ITypeMapping
    *          the prepared statement to set the value
    * @param index
    *          the index to use for the <code>setXxx</code> method.
-   * @param revision
+   * @param value
    *          the revision to get the value to set from.
    * @throws SQLException
    *           if the <code>setXxx</code> throws it.

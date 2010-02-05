@@ -91,7 +91,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
     }
   };
 
-  private boolean modified = false;
+  private boolean modified;
 
   private boolean stopped = true;
 

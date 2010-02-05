@@ -46,7 +46,7 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
     protected void onDeactivated(ILifecycle lifecycle)
     {
       handleChannelDeactivation();
-    };
+    }
   };
 
   private String userID;

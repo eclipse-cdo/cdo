@@ -61,7 +61,7 @@ public abstract class AbstractCapabilityTest extends TestCase
         {
           throw new Error(e);
         }
-      };
+      }
     };
 
     t.start();

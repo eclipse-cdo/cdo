@@ -35,13 +35,13 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
  * @author Eike Stepper
  * @since 3.0
  */
-public class MasterInterface extends QueueRunner
+public class CloneSynchronizer extends QueueRunner
 {
   public static final long NEVER_SYNCHRONIZED = -1;
 
   public static final int DEFAULT_RETRY_INTERVAL = 3;
 
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, MasterInterface.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, CloneSynchronizer.class);
 
   private int retryInterval = DEFAULT_RETRY_INTERVAL;
 
@@ -75,7 +75,7 @@ public class MasterInterface extends QueueRunner
 
   private MutableLong syncedTimeStamp = new MutableLong();
 
-  public MasterInterface()
+  public CloneSynchronizer()
   {
   }
 

@@ -12,6 +12,9 @@ package org.eclipse.emf.cdo.internal.server.offline;
 
 import org.eclipse.emf.cdo.internal.server.Repository;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Eike Stepper
  */
@@ -28,6 +31,14 @@ public class CloneRepository extends Repository.Default
   public CloneSynchronizer getSynchronizer()
   {
     return synchronizer;
+  }
+
+  @Override
+  public Object[] getElements()
+  {
+    List<Object> list = Arrays.asList(super.getElements());
+    list.add(synchronizer);
+    return list.toArray();
   }
 
   public void setSynchronizer(CloneSynchronizer synchronizer)

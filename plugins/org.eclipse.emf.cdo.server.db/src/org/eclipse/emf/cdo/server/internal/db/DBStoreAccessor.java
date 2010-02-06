@@ -720,7 +720,10 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       where = true;
     }
 
+    builder.append(" ORDER BY "); //$NON-NLS-1$
+    builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
     String sql = builder.toString();
+
     PreparedStatement pstmt = null;
     ResultSet resultSet = null;
 

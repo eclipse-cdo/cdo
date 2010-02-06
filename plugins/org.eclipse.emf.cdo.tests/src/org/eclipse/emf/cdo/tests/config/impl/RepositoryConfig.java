@@ -268,7 +268,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       config.setRepositoryName(masterName);
 
       CloneSynchronizer synchronizer = new CloneSynchronizer();
-      synchronizer.setSessionConfiguration(config);
+      synchronizer.setMasterConfiguration(config);
       synchronizer.setRetryInterval(1);
       synchronizer.setSyncedTimeStamp(CloneSynchronizer.NEVER_SYNCHRONIZED);
 

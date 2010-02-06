@@ -25,8 +25,7 @@ import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.QueueRunner;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -45,30 +44,28 @@ public class CloneSynchronizer extends QueueRunner
 
   private int retryInterval = DEFAULT_RETRY_INTERVAL;
 
-  private CDOSessionConfiguration sessionConfiguration;
+  private CDOSessionConfiguration masterConfiguration;
 
-  private InternalCDOSession session;
+  private InternalCDOSession master;
 
-  private IListener deactivationListener = new LifecycleEventAdapter()
-  {
-    @Override
-    protected void onDeactivated(ILifecycle lifecycle)
-    {
-      OM.LOG.info("Disconnected from master.");
-      session.removeListener(deactivationListener);
-      session.removeListener(invalidationListener);
-      session = null;
-      connect();
-    }
-  };
-
-  private IListener invalidationListener = new IListener()
+  private IListener masterListener = new IListener()
   {
     public void notifyEvent(IEvent event)
     {
       if (event instanceof CDOSessionInvalidationEvent)
       {
         sync();
+      }
+      else if (event instanceof ILifecycleEvent)
+      {
+        ILifecycleEvent e = (ILifecycleEvent)event;
+        if (e.getKind() == ILifecycleEvent.Kind.DEACTIVATED)
+        {
+          OM.LOG.info("Disconnected from master.");
+          master.removeListener(masterListener);
+          master = null;
+          connect();
+        }
       }
     }
   };
@@ -89,25 +86,25 @@ public class CloneSynchronizer extends QueueRunner
     this.retryInterval = retryInterval;
   }
 
-  public CDOSessionConfiguration getSessionConfiguration()
+  public CDOSessionConfiguration getMasterConfiguration()
   {
-    return sessionConfiguration;
+    return masterConfiguration;
   }
 
-  public void setSessionConfiguration(CDOSessionConfiguration sessionConfiguration)
+  public void setMasterConfiguration(CDOSessionConfiguration masterConfiguration)
   {
     checkInactive();
-    this.sessionConfiguration = sessionConfiguration;
+    this.masterConfiguration = masterConfiguration;
   }
 
   public State getState()
   {
-    if (session == null)
+    if (master == null)
     {
       return State.OFFLINE;
     }
 
-    long masterTimeStamp = session.getLastUpdateTime();
+    long masterTimeStamp = master.getLastUpdateTime();
     long syncedTimeStamp = getSyncedTimeStamp();
     if (masterTimeStamp > syncedTimeStamp)
     {
@@ -117,9 +114,9 @@ public class CloneSynchronizer extends QueueRunner
     return State.ONLINE;
   }
 
-  public CDOSession getSession()
+  public CDOSession getMaster()
   {
-    return session;
+    return master;
   }
 
   public long getSyncedTimeStamp()
@@ -136,8 +133,8 @@ public class CloneSynchronizer extends QueueRunner
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(sessionConfiguration, "sessionConfiguration");
-    checkState(syncedTimeStamp.isSpecified(), "syncedTimeStamp");
+    checkState(masterConfiguration, "masterConfiguration"); //$NON-NLS-1$
+    checkState(syncedTimeStamp.isSpecified(), "syncedTimeStamp"); //$NON-NLS-1$
   }
 
   @Override
@@ -150,12 +147,11 @@ public class CloneSynchronizer extends QueueRunner
   @Override
   protected void doDeactivate() throws Exception
   {
-    if (session != null)
+    if (master != null)
     {
-      session.removeListener(deactivationListener);
-      session.removeListener(invalidationListener);
-      session.close();
-      session = null;
+      master.removeListener(masterListener);
+      master.close();
+      master = null;
     }
 
     super.doDeactivate();
@@ -175,14 +171,11 @@ public class CloneSynchronizer extends QueueRunner
             TRACER.format("Connecting to master ({0})...", CDOCommonUtil.formatTimeStamp()); //$NON-NLS-1$
           }
 
-          session = (InternalCDOSession)sessionConfiguration.openSession();
+          syncedTimeStamp.setValue(NEVER_SYNCHRONIZED);
+          master = (InternalCDOSession)masterConfiguration.openSession();
 
           OM.LOG.info("Connected to master.");
-          session.addListener(deactivationListener);
-
-          syncedTimeStamp.setValue(NEVER_SYNCHRONIZED);
-          session.addListener(invalidationListener);
-
+          master.addListener(masterListener);
           sync();
         }
         catch (Exception ex)
@@ -206,7 +199,7 @@ public class CloneSynchronizer extends QueueRunner
       public void run()
       {
         checkActive();
-        final long masterTimeStamp = session.getLastUpdateTime();
+        final long masterTimeStamp = master.getLastUpdateTime();
         final long syncedTimeStamp = getSyncedTimeStamp();
         if (syncedTimeStamp < masterTimeStamp)
         {
@@ -215,7 +208,7 @@ public class CloneSynchronizer extends QueueRunner
             TRACER.format("Synchronizing with master ({0})...", CDOCommonUtil.formatTimeStamp(masterTimeStamp)); //$NON-NLS-1$
           }
 
-          session.cloneRepository(new CDOCloningContext()
+          master.cloneRepository(new CDOCloningContext()
           {
             public long getStartTime()
             {
@@ -234,13 +227,13 @@ public class CloneSynchronizer extends QueueRunner
 
             public void addPackageUnit(String id)
             {
-              InternalCDOPackageUnit packageUnit = session.getPackageRegistry().getPackageUnit(id);
+              InternalCDOPackageUnit packageUnit = master.getPackageRegistry().getPackageUnit(id);
               sync(packageUnit);
             }
 
             public void addBranch(int id)
             {
-              InternalCDOBranch branch = session.getBranchManager().getBranch(id);
+              InternalCDOBranch branch = master.getBranchManager().getBranch(id);
               sync(branch);
             }
 

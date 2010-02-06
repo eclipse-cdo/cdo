@@ -25,6 +25,8 @@ import java.text.MessageFormat;
  */
 public class Transaction extends View implements InternalTransaction
 {
+  private String commitComment;
+
   public Transaction(InternalSession session, int viewID, CDOBranchPoint branchPoint)
   {
     super(session, viewID, branchPoint);
@@ -84,5 +86,15 @@ public class Transaction extends View implements InternalTransaction
     {
       throw new IllegalStateException("View closed"); //$NON-NLS-1$
     }
+  }
+
+  public void setCommitComment(String comment)
+  {
+    commitComment = comment;
+  }
+
+  public String getCommitComment()
+  {
+    return commitComment;
   }
 }

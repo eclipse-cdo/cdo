@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.internal.cdo.transaction;
 
-import org.eclipse.emf.cdo.common.commit.CDOCommit;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -276,12 +276,12 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     return transactions;
   }
 
-  public CDOCommit commit() throws TransactionException
+  public CDOCommitInfo commit() throws TransactionException
   {
     return commit(new NullProgressMonitor());
   }
 
-  public CDOCommit commit(IProgressMonitor progressMonitor) throws TransactionException
+  public CDOCommitInfo commit(IProgressMonitor progressMonitor) throws TransactionException
   {
     CheckUtil.checkArg(progressMonitor, "progressMonitor"); //$NON-NLS-1$
     progressMonitor.beginTask(Messages.getString("CDOXATransactionImpl.4"), 3); //$NON-NLS-1$
@@ -522,7 +522,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       }
     }
 
-    public CDOCommit commit(InternalCDOTransaction transactionCommit, IProgressMonitor progressMonitor)
+    public CDOCommitInfo commit(InternalCDOTransaction transactionCommit, IProgressMonitor progressMonitor)
         throws Exception
     {
       checkAccess();

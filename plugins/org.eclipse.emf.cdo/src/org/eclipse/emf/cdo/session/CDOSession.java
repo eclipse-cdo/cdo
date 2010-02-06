@@ -9,12 +9,14 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
  *    Victor Roldan Betancort - maintenance
+ *    Andre Dietisheim - bug 256649
  */
 package org.eclipse.emf.cdo.session;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -95,6 +97,13 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
    * sessions served by the repository of this local session.
    */
   public CDORemoteSessionManager getRemoteSessionManager();
+
+  /**
+   * Returns the CDO {@link CDOCommitInfoManager commit info manager} of this session.
+   * 
+   * @since 3.0
+   */
+  public CDOCommitInfoManager getCommitInfoManager();
 
   public ExceptionHandler getExceptionHandler();
 

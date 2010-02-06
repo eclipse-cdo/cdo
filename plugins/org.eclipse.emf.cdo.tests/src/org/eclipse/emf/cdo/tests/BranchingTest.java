@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.commit.CDOCommit;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -228,10 +228,10 @@ public class BranchingTest extends AbstractCDOTest
     resource.getContents().add(product);
     resource.getContents().add(orderDetail);
 
-    CDOCommit commit = transaction.commit();
+    CDOCommitInfo commitInfo = transaction.commit();
     dumpAll(session);
-    assertEquals(mainBranch, commit.getBranch());
-    long commitTime1 = commit.getTimeStamp();
+    assertEquals(mainBranch, commitInfo.getBranch());
+    long commitTime1 = commitInfo.getTimeStamp();
     transaction.close();
 
     // Commit to sub branch
@@ -248,10 +248,10 @@ public class BranchingTest extends AbstractCDOTest
 
     // Modify
     orderDetail.setPrice(10);
-    commit = transaction.commit();
+    commitInfo = transaction.commit();
     dumpAll(session);
-    assertEquals(subBranch, commit.getBranch());
-    long commitTime2 = commit.getTimeStamp();
+    assertEquals(subBranch, commitInfo.getBranch());
+    long commitTime2 = commitInfo.getTimeStamp();
 
     transaction.close();
     closeSession1();
@@ -294,9 +294,9 @@ public class BranchingTest extends AbstractCDOTest
     resource.getContents().add(product);
     resource.getContents().add(orderDetail);
 
-    CDOCommit commit = transaction.commit();
-    assertEquals(mainBranch, commit.getBranch());
-    long commitTime1 = commit.getTimeStamp();
+    CDOCommitInfo commitInfo = transaction.commit();
+    assertEquals(mainBranch, commitInfo.getBranch());
+    long commitTime1 = commitInfo.getTimeStamp();
     transaction.close();
 
     // Commit to sub branch
@@ -313,9 +313,9 @@ public class BranchingTest extends AbstractCDOTest
 
     // Modify
     orderDetail.setPrice(10);
-    commit = transaction.commit();
-    assertEquals(subBranch, commit.getBranch());
-    long commitTime2 = commit.getTimeStamp();
+    commitInfo = transaction.commit();
+    assertEquals(subBranch, commitInfo.getBranch());
+    long commitTime2 = commitInfo.getTimeStamp();
 
     // Detach an object that already has revision in subBranch
     resource.getContents().remove(1);
@@ -323,7 +323,7 @@ public class BranchingTest extends AbstractCDOTest
     try
     {
       // product.getOrderDetails() contains pointer to detached orderDetail
-      commit = transaction.commit();
+      commitInfo = transaction.commit();
       fail("TransactionException expected");
     }
     catch (TransactionException expected)
@@ -333,9 +333,9 @@ public class BranchingTest extends AbstractCDOTest
 
     orderDetail.setProduct(null);
 
-    commit = transaction.commit();
-    assertEquals(subBranch, commit.getBranch());
-    long commitTime3 = commit.getTimeStamp();
+    commitInfo = transaction.commit();
+    assertEquals(subBranch, commitInfo.getBranch());
+    long commitTime3 = commitInfo.getTimeStamp();
 
     orderDetail = getModel1Factory().createOrderDetail();
     orderDetail.setPrice(777);
@@ -355,7 +355,7 @@ public class BranchingTest extends AbstractCDOTest
     try
     {
       // New orderDetail is not attached
-      commit = transaction.commit();
+      commitInfo = transaction.commit();
       fail("TransactionException expected");
     }
     catch (TransactionException expected)
@@ -365,9 +365,9 @@ public class BranchingTest extends AbstractCDOTest
 
     resource.getContents().add(orderDetail);
 
-    commit = transaction.commit();
-    assertEquals(subBranch, commit.getBranch());
-    long commitTime4 = commit.getTimeStamp();
+    commitInfo = transaction.commit();
+    assertEquals(subBranch, commitInfo.getBranch());
+    long commitTime4 = commitInfo.getTimeStamp();
 
     transaction.close();
     closeSession1();
@@ -437,9 +437,9 @@ public class BranchingTest extends AbstractCDOTest
     CDOResource resource = transaction.createResource("/res");
     resource.getContents().add(product);
 
-    CDOCommit commit = transaction.commit();
-    assertEquals(mainBranch, commit.getBranch());
-    long commitTime1 = commit.getTimeStamp();
+    CDOCommitInfo commitInfo = transaction.commit();
+    assertEquals(mainBranch, commitInfo.getBranch());
+    long commitTime1 = commitInfo.getTimeStamp();
     transaction.close();
 
     // Commit to sub branch
@@ -455,9 +455,9 @@ public class BranchingTest extends AbstractCDOTest
     // Detach an object that has no revision in subBranch
     resource.getContents().remove(0);
 
-    commit = transaction.commit();
-    assertEquals(subBranch, commit.getBranch());
-    long commitTime2 = commit.getTimeStamp();
+    commitInfo = transaction.commit();
+    assertEquals(subBranch, commitInfo.getBranch());
+    long commitTime2 = commitInfo.getTimeStamp();
 
     transaction.close();
     closeSession1();
@@ -509,9 +509,9 @@ public class BranchingTest extends AbstractCDOTest
     CDOResource resource = transaction.createResource("/res");
     resource.getContents().add(product);
 
-    CDOCommit commit = transaction.commit();
-    assertEquals(mainBranch, commit.getBranch());
-    long commitTime1 = commit.getTimeStamp();
+    CDOCommitInfo commitInfo = transaction.commit();
+    assertEquals(mainBranch, commitInfo.getBranch());
+    long commitTime1 = commitInfo.getTimeStamp();
     transaction.close();
 
     // Commit to sub branch
@@ -527,9 +527,9 @@ public class BranchingTest extends AbstractCDOTest
     // Detach an object that has no revision in subBranch
     resource.getContents().remove(0);
 
-    commit = transaction.commit();
-    assertEquals(subBranch, commit.getBranch());
-    long commitTime2 = commit.getTimeStamp();
+    commitInfo = transaction.commit();
+    assertEquals(subBranch, commitInfo.getBranch());
+    long commitTime2 = commitInfo.getTimeStamp();
 
     transaction.close();
     closeSession1();

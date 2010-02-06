@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.spi.cdo;
 
-import org.eclipse.emf.cdo.common.commit.CDOCommit;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 
 import org.eclipse.emf.internal.cdo.transaction.CDOSingleTransactionStrategyImpl;
 
@@ -38,7 +38,7 @@ public interface CDOTransactionStrategy
    * 
    * @since 3.0
    */
-  public CDOCommit commit(InternalCDOTransaction transaction, IProgressMonitor progressMonitor) throws Exception;
+  public CDOCommitInfo commit(InternalCDOTransaction transaction, IProgressMonitor progressMonitor) throws Exception;
 
   /**
    * @since 3.0

@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.common.commit.CDOCommit;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
@@ -305,7 +305,7 @@ public class InitialTest extends AbstractCDOTest
     resource.getContents().add(supplier);
 
     msg("Committing");
-    CDOCommit commit = transaction.commit();
+    CDOCommitInfo commit = transaction.commit();
     assertEquals(CDOState.CLEAN, resource.cdoState());
     assertEquals(CDOState.CLEAN, CDOUtil.getCDOObject(supplier).cdoState());
     assertEquals(1, CDOUtil.getCDOObject(supplier).cdoRevision().getVersion());
@@ -419,7 +419,7 @@ public class InitialTest extends AbstractCDOTest
 
     resource.getContents().add(supplier);
 
-    CDOCommit commit = transaction.commit();
+    CDOCommitInfo commit = transaction.commit();
     long commitTime1 = commit.getTimeStamp();
     assertCreatedTime(supplier, commitTime1);
 

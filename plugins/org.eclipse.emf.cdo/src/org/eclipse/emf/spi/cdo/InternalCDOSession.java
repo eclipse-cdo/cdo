@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageProcessor;
@@ -64,6 +65,11 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
    * @since 3.0
    */
   public InternalCDORevisionManager getRevisionManager();
+
+  /**
+   * @since 3.0
+   */
+  public InternalCDOCommitInfoManager getCommitInfoManager();
 
   public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler);
 

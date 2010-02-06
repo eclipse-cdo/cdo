@@ -70,6 +70,10 @@ public class TransactionCommitContextImpl implements InternalCommitContext
 
   private long timeStamp = CDORevision.UNSPECIFIED_DATE;
 
+  private String userID;
+
+  private String commitComment;
+
   private InternalCDOPackageUnit[] newPackageUnits;
 
   private InternalCDORevision[] newObjects;
@@ -227,21 +231,34 @@ public class TransactionCommitContextImpl implements InternalCommitContext
     this.detachedObjects = detachedObjects;
   }
 
-  public boolean setAutoReleaseLocksEnabled(boolean on)
+  public void setAutoReleaseLocksEnabled(boolean on)
   {
-    try
-    {
-      return autoReleaseLocksEnabled;
-    }
-    finally
-    {
-      autoReleaseLocksEnabled = on;
-    }
+    autoReleaseLocksEnabled = on;
   }
 
   public boolean isAutoReleaseLocksEnabled()
   {
     return autoReleaseLocksEnabled;
+  }
+
+  public String getUserID()
+  {
+    return userID;
+  }
+
+  public void setUserID(String userID)
+  {
+    this.userID = userID;
+  }
+
+  public String getCommitComment()
+  {
+    return commitComment;
+  }
+
+  public void setCommitComment(String commitComment)
+  {
+    this.commitComment = commitComment;
   }
 
   /**

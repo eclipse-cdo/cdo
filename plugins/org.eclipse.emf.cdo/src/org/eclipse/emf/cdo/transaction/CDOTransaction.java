@@ -12,10 +12,12 @@
  *    Simon McDuff - bug 213402
  *    Victor Roldan Betancort - maintenance
  *    Gonzague Reydet - bug 298334
+ *    Andre Dietisheim - bug 256649
  */
 package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -111,6 +113,22 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
    * @since 3.0
    */
   public CDOSavepoint[] importChanges(InputStream in, boolean reconstructSavepoints) throws IOException;
+
+  /**
+   * Returns the comment to be used in the next commit operation.
+   * 
+   * @see CDOCommitInfo#getComment()
+   * @since 3.0
+   */
+  public String getCommitComment();
+
+  /**
+   * Sets the comment to be used in the next commit operation.
+   * 
+   * @see CDOCommitInfo#getComment()
+   * @since 3.0
+   */
+  public void setCommitComment(String comment);
 
   public Options options();
 

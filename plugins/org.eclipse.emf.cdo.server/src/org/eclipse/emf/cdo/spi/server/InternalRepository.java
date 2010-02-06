@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.server.InternalStore;
 import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -51,9 +52,15 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
 
   public void setBranchManager(InternalCDOBranchManager branchManager);
 
+  public InternalCDOPackageRegistry getPackageRegistry();
+
+  public InternalCDOPackageRegistry getPackageRegistry(boolean considerCommitContext);
+
   public InternalCDORevisionManager getRevisionManager();
 
   public void setRevisionManager(InternalCDORevisionManager revisionManager);
+
+  public InternalCDOCommitInfoManager getCommitInfoManager();
 
   public InternalSessionManager getSessionManager();
 
@@ -68,10 +75,6 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
   public InternalCommitManager getCommitManager();
 
   public InternalNotificationManager getNotificationManager();
-
-  public InternalCDOPackageRegistry getPackageRegistry();
-
-  public InternalCDOPackageRegistry getPackageRegistry(boolean considerCommitContext);
 
   public long createCommitTimeStamp();
 

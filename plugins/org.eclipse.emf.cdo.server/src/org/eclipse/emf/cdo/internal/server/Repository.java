@@ -11,6 +11,7 @@
  *    Simon McDuff - bug 233273
  *    Simon McDuff - bug 233490
  *    Stefan Winkler - changed order of determining audit and revision delta support.
+ *    Andre Dietisheim - bug 256649
  */
 package org.eclipse.emf.cdo.internal.server;
 
@@ -42,6 +43,8 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -109,6 +112,8 @@ public class Repository extends Container<Object> implements InternalRepository
   private InternalCDOBranchManager branchManager;
 
   private InternalCDORevisionManager revisionManager;
+
+  private InternalCDOCommitInfoManager commitInfoManager;
 
   private InternalSessionManager sessionManager;
 
@@ -491,6 +496,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry)
   {
+    checkInactive();
     this.packageRegistry = packageRegistry;
   }
 
@@ -504,6 +510,7 @@ public class Repository extends Container<Object> implements InternalRepository
    */
   public void setSessionManager(InternalSessionManager sessionManager)
   {
+    checkInactive();
     this.sessionManager = sessionManager;
   }
 
@@ -514,7 +521,19 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public void setBranchManager(InternalCDOBranchManager branchManager)
   {
+    checkInactive();
     this.branchManager = branchManager;
+  }
+
+  public InternalCDOCommitInfoManager getCommitInfoManager()
+  {
+    return commitInfoManager;
+  }
+
+  public void setCommitInfoManager(InternalCDOCommitInfoManager commitInfoManager)
+  {
+    checkInactive();
+    this.commitInfoManager = commitInfoManager;
   }
 
   public InternalCDORevisionManager getRevisionManager()
@@ -527,6 +546,7 @@ public class Repository extends Container<Object> implements InternalRepository
    */
   public void setRevisionManager(InternalCDORevisionManager revisionManager)
   {
+    checkInactive();
     this.revisionManager = revisionManager;
   }
 
@@ -543,6 +563,7 @@ public class Repository extends Container<Object> implements InternalRepository
    */
   public void setQueryManager(InternalQueryManager queryManager)
   {
+    checkInactive();
     this.queryManager = queryManager;
   }
 
@@ -559,6 +580,7 @@ public class Repository extends Container<Object> implements InternalRepository
    */
   public void setNotificationManager(InternalNotificationManager notificationManager)
   {
+    checkInactive();
     this.notificationManager = notificationManager;
   }
 
@@ -575,6 +597,7 @@ public class Repository extends Container<Object> implements InternalRepository
    */
   public void setCommitManager(InternalCommitManager commitManager)
   {
+    checkInactive();
     this.commitManager = commitManager;
   }
 
@@ -591,6 +614,7 @@ public class Repository extends Container<Object> implements InternalRepository
    */
   public void setLockManager(InternalLockManager lockManager)
   {
+    checkInactive();
     this.lockManager = lockManager;
   }
 
@@ -678,7 +702,7 @@ public class Repository extends Container<Object> implements InternalRepository
   public Object[] getElements()
   {
     final Object[] elements = { packageRegistry, branchManager, revisionManager, sessionManager, queryManager,
-        notificationManager, commitManager, lockManager, store };
+        notificationManager, commitManager, commitInfoManager, lockManager, store };
     return elements;
   }
 
@@ -868,6 +892,7 @@ public class Repository extends Container<Object> implements InternalRepository
     checkState(revisionManager, "revisionManager"); //$NON-NLS-1$
     checkState(queryManager, "queryManager"); //$NON-NLS-1$
     checkState(notificationManager, "notificationManager"); //$NON-NLS-1$
+    checkState(commitInfoManager, "commitInfoManager"); //$NON-NLS-1$
     checkState(commitManager, "commitManager"); //$NON-NLS-1$
     checkState(lockManager, "lockingManager"); //$NON-NLS-1$
 
@@ -908,7 +933,7 @@ public class Repository extends Container<Object> implements InternalRepository
       }
       else
       {
-        supportingBranches = store.getRevisionParallelism() == IStore.RevisionParallelism.NONE;
+        supportingBranches = store.getRevisionParallelism() == IStore.RevisionParallelism.BRANCHING;
       }
     }
 
@@ -932,6 +957,7 @@ public class Repository extends Container<Object> implements InternalRepository
     LifecycleUtil.activate(revisionManager);
     LifecycleUtil.activate(queryManager);
     LifecycleUtil.activate(notificationManager);
+    LifecycleUtil.activate(commitInfoManager);
     LifecycleUtil.activate(commitManager);
     LifecycleUtil.activate(queryHandlerProvider);
     LifecycleUtil.activate(lockManager);
@@ -956,6 +982,7 @@ public class Repository extends Container<Object> implements InternalRepository
     LifecycleUtil.deactivate(lockManager);
     LifecycleUtil.deactivate(queryHandlerProvider);
     LifecycleUtil.deactivate(commitManager);
+    LifecycleUtil.deactivate(commitInfoManager);
     LifecycleUtil.deactivate(notificationManager);
     LifecycleUtil.deactivate(queryManager);
     LifecycleUtil.deactivate(revisionManager);
@@ -1064,6 +1091,11 @@ public class Repository extends Container<Object> implements InternalRepository
         setNotificationManager(createNotificationManager());
       }
 
+      if (getCommitInfoManager() == null)
+      {
+        setCommitInfoManager(createCommitInfoManager());
+      }
+
       if (getCommitManager() == null)
       {
         setCommitManager(createCommitManager());
@@ -1105,6 +1137,11 @@ public class Repository extends Container<Object> implements InternalRepository
     protected InternalNotificationManager createNotificationManager()
     {
       return new NotificationManager();
+    }
+
+    protected InternalCDOCommitInfoManager createCommitInfoManager()
+    {
+      return CDOCommitInfoUtil.createCommitInfoManager();
     }
 
     protected InternalCommitManager createCommitManager()

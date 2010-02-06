@@ -9,6 +9,7 @@
  *    Simon McDuff - initial API and implementation
  *    Simon McDuff - bug 233273
  *    Eike Stepper - maintenance
+ *    Andre Dietisheim - bug 256649
  */
 package org.eclipse.emf.cdo.internal.server.mem;
 
@@ -45,6 +46,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.Map.Entry;
 
 /**
@@ -59,6 +62,8 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
   private Map<Integer, BranchInfo> branchInfos = new HashMap<Integer, BranchInfo>();
 
   private Map<Object, List<InternalCDORevision>> revisions = new HashMap<Object, List<InternalCDORevision>>();
+
+  private SortedMap<Long, CommitInfo> commitInfos = new TreeMap<Long, CommitInfo>();
 
   private int listLimit;
 
@@ -212,6 +217,12 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     }
 
     addRevision(list, revision);
+  }
+
+  public synchronized void addCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment)
+  {
+    CommitInfo commitInfo = new CommitInfo(branch, timeStamp, userID, comment);
+    commitInfos.put(timeStamp, commitInfo);
   }
 
   /**
@@ -502,7 +513,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     InternalCDORevision rev = getRevisionByVersion(list, version);
     if (rev != null)
     {
-      throw new IllegalStateException("Concurrent modification of " + rev.getEClass().getName() + "@" + rev.getID()); //$NON-NLS-1$
+      throw new IllegalStateException("Concurrent modification of " + rev.getEClass().getName() + "@" + rev.getID());
     }
 
     // Revise old revision
@@ -609,6 +620,49 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     public String toString()
     {
       return MessageFormat.format("{0}:{1}", id, branch.getID());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  @SuppressWarnings("unused")
+  private static final class CommitInfo
+  {
+    private CDOBranch branch;
+
+    private long timeStamp;
+
+    private String userID;
+
+    private String comment;
+
+    public CommitInfo(CDOBranch branch, long timeStamp, String userID, String comment)
+    {
+      this.branch = branch;
+      this.timeStamp = timeStamp;
+      this.userID = userID;
+      this.comment = comment;
+    }
+
+    public CDOBranch getBranch()
+    {
+      return branch;
+    }
+
+    public long getTimeStamp()
+    {
+      return timeStamp;
+    }
+
+    public String getUserID()
+    {
+      return userID;
+    }
+
+    public String getComment()
+    {
+      return comment;
     }
   }
 }

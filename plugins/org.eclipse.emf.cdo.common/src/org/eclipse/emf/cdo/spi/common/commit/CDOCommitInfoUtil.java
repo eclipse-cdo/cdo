@@ -8,25 +8,22 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.common.commit;
+package org.eclipse.emf.cdo.spi.common.commit;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.internal.common.commit.CDOCommitInfoManagerImpl;
 
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public interface CDOCommit extends CDOBranchPoint
+public final class CDOCommitInfoUtil
 {
-  public String getUserID();
+  private CDOCommitInfoUtil()
+  {
+  }
 
-  public String getComment();
-
-  // public Set<CDOID> getNewResources();
-  //
-  // public Set<CDOID> getNewObjects();
-  //
-  // public Set<CDOID> getDetachedObjects();
-  //
-  // public Set<CDOID> getDirtyObjects();
+  public static InternalCDOCommitInfoManager createCommitInfoManager()
+  {
+    return new CDOCommitInfoManagerImpl();
+  }
 }

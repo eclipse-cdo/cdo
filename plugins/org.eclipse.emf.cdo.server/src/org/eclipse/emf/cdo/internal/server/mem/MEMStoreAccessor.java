@@ -198,6 +198,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
   }
 
   @Override
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment, OMMonitor monitor)
+  {
+    getStore().addCommitInfo(branch, timeStamp, userID, comment);
+  }
+
+  @Override
   protected void rollback(CommitContext context)
   {
     MEMStore store = getStore();

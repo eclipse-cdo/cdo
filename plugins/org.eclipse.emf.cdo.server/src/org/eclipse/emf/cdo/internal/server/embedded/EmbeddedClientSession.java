@@ -7,11 +7,13 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Andre Dietisheim - bug 256649
  */
 package org.eclipse.emf.cdo.internal.server.embedded;
 
 import org.eclipse.emf.cdo.server.embedded.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -52,5 +54,10 @@ public class EmbeddedClientSession extends CDOSessionImpl implements CDOSession
   public InternalCDORevisionManager getRevisionManager()
   {
     return getConfiguration().getRevisionManager();
+  }
+
+  public InternalCDOCommitInfoManager getCommitInfoManager()
+  {
+    return getRepository().getCommitInfoManager();
   }
 }

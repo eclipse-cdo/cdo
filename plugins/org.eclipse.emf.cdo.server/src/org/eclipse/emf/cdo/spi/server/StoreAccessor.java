@@ -123,6 +123,8 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     commitContexts.add(context);
     CDOBranch branch = context.getBranchPoint().getBranch();
     long timeStamp = context.getBranchPoint().getTimeStamp();
+    String userID = context.getUserID();
+    String commitComment = context.getCommitComment();
 
     boolean deltas = store.getRepository().isSupportingRevisionDeltas();
 
@@ -133,7 +135,9 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
 
     try
     {
-      monitor.begin(newPackageUnits.length + 2 + newObjects.length + detachedObjects.length + dirtyCount);
+      monitor.begin(1 + newPackageUnits.length + 2 + newObjects.length + detachedObjects.length + dirtyCount);
+      writeCommitInfo(branch, timeStamp, userID, commitComment, monitor.fork(1));
+
       if (newPackageUnits.length != 0)
       {
         writePackageUnits(newPackageUnits, monitor.fork(newPackageUnits.length));
@@ -222,6 +226,9 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
    * {@link CommitContext#addIDMapping(CDOIDTemp, CDOID)}.
    */
   protected abstract void addIDMappings(CommitContext context, OMMonitor monitor);
+
+  protected abstract void writeCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment,
+      OMMonitor monitor);
 
   /**
    * @since 3.0

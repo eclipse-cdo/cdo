@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - bug 259402
  *    Stefan Winkler - 271444: [DB] Multiple refactorings bug 271444
+ *    Andre Dietisheim - bug 256649
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
@@ -16,6 +17,7 @@ import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
@@ -274,6 +276,31 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
 
     super.write(context, monitor);
+  }
+
+  @Override
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment, OMMonitor monitor)
+  {
+    PreparedStatement pstmt = null;
+
+    try
+    {
+      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_CREATE_COMMIT_INFO, ReuseProbability.HIGH);
+      pstmt.setLong(1, timeStamp);
+      pstmt.setInt(2, branch.getID());
+      pstmt.setString(3, userID);
+      pstmt.setString(4, comment);
+
+      CDODBUtil.sqlUpdate(pstmt, true);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      statementCache.releasePreparedStatement(pstmt);
+    }
   }
 
   @Override
@@ -536,7 +563,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   {
     if (!getStore().getMappingStrategy().hasBranchingSupport())
     {
-      throw new UnsupportedOperationException("Mapping strategy does not support revision deltas."); //$NON-NLS-1$
+      throw new UnsupportedOperationException("Mapping strategy does not support branching."); //$NON-NLS-1$
     }
 
     int id = getStore().getNextBranchID();
@@ -565,6 +592,11 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
   public BranchInfo loadBranch(int branchID)
   {
+    if (!getStore().getMappingStrategy().hasBranchingSupport())
+    {
+      throw new UnsupportedOperationException("Mapping strategy does not support branching."); //$NON-NLS-1$
+    }
+
     PreparedStatement pstmt = null;
     ResultSet resultSet = null;
 
@@ -631,6 +663,43 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       DBUtil.close(resultSet);
       statementCache.releasePreparedStatement(pstmt);
     }
+  }
+
+  protected CDOCommitInfo[] readCommitInfo(int branchID)
+  {
+    return null;
+    // PreparedStatement pstmt = null;
+    // ResultSet resultSet = null;
+    //
+    // try
+    // {
+    // pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_READ_COMMIT_INFO_BY_BRANCH, ReuseProbability.HIGH);
+    // pstmt.setInt(1, branchID);
+    //
+    // resultSet = pstmt.executeQuery();
+    // List<CDOCommitInfo> result = new ArrayList<CDOCommitInfo>();
+    // while (resultSet.next())
+    // {
+    // int id = resultSet.getInt(1);
+    // long timeStamp = resultSet.getLong(2);
+    // String userID = resultSet.getString(3);
+    // String comment = resultSet.getString(4);
+    // InternalCDOBranch branch = getSession().getManager().getRepository().getBranchManager().getBranch(id);
+    //
+    // result.add(new CDOCommitInfoImpl(branch, timeStamp, userID, comment));
+    // }
+    //
+    // return result.toArray(new CDOCommitInfo[result.size()]);
+    // }
+    // catch (SQLException ex)
+    // {
+    // throw new DBException(ex);
+    // }
+    // finally
+    // {
+    // DBUtil.close(resultSet);
+    // statementCache.releasePreparedStatement(pstmt);
+    // }
   }
 
   /**

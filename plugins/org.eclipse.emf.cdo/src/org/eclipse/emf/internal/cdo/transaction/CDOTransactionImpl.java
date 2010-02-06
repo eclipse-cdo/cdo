@@ -10,6 +10,7 @@
  *    Simon McDuff - maintenance
  *    Victor Roldan Betancort - maintenance
  *    Gonzague Reydet - bug 298334
+ *    Andre Dietisheim - bug 256649
  */
 package org.eclipse.emf.internal.cdo.transaction;
 
@@ -18,7 +19,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.commit.CDOCommit;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -146,6 +147,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private CDOTransactionStrategy transactionStrategy;
 
+  private String commitComment;
+
   // Bug 283985 (Re-attachment)
   private WeakHashMap<InternalCDOObject, InternalCDORevision> formerRevisions = new WeakHashMap<InternalCDOObject, InternalCDORevision>();
 
@@ -192,14 +195,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   protected boolean setBranchPoint(CDOBranchPoint branchPoint)
   {
     if (branchPoint.getTimeStamp() != UNSPECIFIED_DATE)
-    {
+  {
       throw new IllegalArgumentException("Changing the target time is not supported by transactions");
-    }
+  }
 
     if (isDirty() && !getBranch().equals(branchPoint.getBranch()))
-    {
+  {
       throw new IllegalStateException("Changing the target branch is impossible while transaction is dirty");
-    }
+  }
 
     return super.setBranchPoint(branchPoint);
   }
@@ -653,7 +656,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public CDOCommit commit(IProgressMonitor progressMonitor) throws TransactionException
+  public CDOCommitInfo commit(IProgressMonitor progressMonitor) throws TransactionException
   {
     checkActive();
     synchronized (getSession().getInvalidationLock())
@@ -689,7 +692,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  public CDOCommit commit() throws TransactionException
+  public CDOCommitInfo commit() throws TransactionException
   {
     return commit(null);
   }
@@ -1198,7 +1201,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * TODO Simon: Should this method go to CDOSavePointImpl?
    */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @SuppressWarnings( { "rawtypes", "unchecked" })
   private void registerNew(Map map, InternalCDOObject object)
   {
     Object old = map.put(object.cdoID(), object);
@@ -1614,6 +1617,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
       }
     }
+  }
+
+  public String getCommitComment()
+  {
+    return commitComment;
+  }
+
+  public void setCommitComment(String comment)
+  {
+    commitComment = comment;
   }
 
   /**

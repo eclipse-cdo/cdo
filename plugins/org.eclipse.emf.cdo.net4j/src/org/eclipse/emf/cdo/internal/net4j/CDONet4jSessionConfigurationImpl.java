@@ -7,10 +7,12 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Andre Dietisheim - bug 256649
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -22,6 +24,8 @@ import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -50,11 +54,13 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
   private IFailOverStrategy failOverStrategy;
 
-  private InternalCDOPackageRegistry packageRegistry;
-
   private InternalCDOBranchManager branchManager;
 
+  private InternalCDOPackageRegistry packageRegistry;
+
   private InternalCDORevisionManager revisionManager;
+
+  private InternalCDOCommitInfoManager commitInfoManager;
 
   public CDONet4jSessionConfigurationImpl()
   {
@@ -93,17 +99,6 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     this.failOverStrategy = failOverStrategy;
   }
 
-  public InternalCDOPackageRegistry getPackageRegistry()
-  {
-    return packageRegistry;
-  }
-
-  public void setPackageRegistry(CDOPackageRegistry packageRegistry)
-  {
-    checkNotOpen();
-    this.packageRegistry = (InternalCDOPackageRegistry)packageRegistry;
-  }
-
   public InternalCDOBranchManager getBranchManager()
   {
     return branchManager;
@@ -115,6 +110,17 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     this.branchManager = (InternalCDOBranchManager)branchManager;
   }
 
+  public InternalCDOPackageRegistry getPackageRegistry()
+  {
+    return packageRegistry;
+  }
+
+  public void setPackageRegistry(CDOPackageRegistry packageRegistry)
+  {
+    checkNotOpen();
+    this.packageRegistry = (InternalCDOPackageRegistry)packageRegistry;
+  }
+
   public InternalCDORevisionManager getRevisionManager()
   {
     return revisionManager;
@@ -124,6 +130,31 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   {
     checkNotOpen();
     this.revisionManager = (InternalCDORevisionManager)revisionManager;
+  }
+
+  /**
+   * Returns the commit info manager. The commit info manager may be used to query commit infos.
+   * 
+   * @return the commit info manager
+   * @see CDOCommitInfoManager
+   */
+  public InternalCDOCommitInfoManager getCommitInfoManager()
+  {
+    return commitInfoManager;
+  }
+
+  /**
+   * Sets the commit info manager. The commit info manager may be used to query commit infos. May only be called as long
+   * as the session's not opened yet
+   * 
+   * @param commitInfoManager
+   *          the new commit info manager
+   * @see CDOCommitInfoManager
+   */
+  public void setCommitInfoManager(CDOCommitInfoManager commitInfoManager)
+  {
+    checkNotOpen();
+    this.commitInfoManager = (InternalCDOCommitInfoManager)commitInfoManager;
   }
 
   @Override
@@ -173,11 +204,6 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     revisionManager.setSupportingBranches(session.getRepositoryInfo().isSupportingBranches());
     revisionManager.setRevisionLoader(session.getSessionProtocol());
     revisionManager.setRevisionLocker(session);
-    // if (result.isRepositorySupportingBranches())
-    // {
-    // revisionManager = new DelegatingCDORevisionManager.SyntheticsConverter(revisionManager);
-    // }
-
     revisionManager.activate();
 
     branchManager = CDOBranchUtil.createBranchManager();
@@ -185,6 +211,9 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     branchManager.setTimeProvider(session.getRepositoryInfo());
     branchManager.initMainBranch(session.getRepositoryInfo().getCreationTime());
     branchManager.activate();
+
+    commitInfoManager = CDOCommitInfoUtil.createCommitInfoManager();
+    commitInfoManager.activate();
 
     for (InternalCDOPackageUnit packageUnit : result.getPackageUnits())
     {

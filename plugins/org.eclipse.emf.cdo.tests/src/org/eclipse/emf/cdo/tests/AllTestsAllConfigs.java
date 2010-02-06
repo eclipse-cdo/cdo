@@ -78,10 +78,6 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
     // General
-    testClasses.add(RevisionManagerTest.class);
-    testClasses.add(RevisionManagerTest.ClientSide.class);
-    testClasses.add(BranchingTest.class);
-    testClasses.add(BranchingTest.SameSession.class);
     testClasses.add(InitialTest.class);
     testClasses.add(CDOIDTest.class);
     testClasses.add(ComplexTest.class);
@@ -92,9 +88,14 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(StateMachineTest.class);
     testClasses.add(SessionTest.class);
     testClasses.add(RemoteSessionManagerTest.class);
+    testClasses.add(RevisionManagerTest.class);
+    testClasses.add(RevisionManagerTest.ClientSide.class);
+    testClasses.add(BranchingTest.class);
+    testClasses.add(BranchingTest.SameSession.class);
     testClasses.add(ViewTest.class);
     testClasses.add(TransactionTest.class);
     testClasses.add(PushTransactionTest.class);
+    testClasses.add(CommitInfoTest.class);
     testClasses.add(AuditTest.class);
     testClasses.add(AuditTest.SameSession.class);
     testClasses.add(ResourceTest.class);

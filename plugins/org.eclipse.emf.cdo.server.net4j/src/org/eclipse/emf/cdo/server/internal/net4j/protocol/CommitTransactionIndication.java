@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - bug 201266
  *    Simon McDuff - bug 213402
+ *    Andre Dietisheim - bug 256649
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
@@ -202,6 +203,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
 
     boolean autoReleaseLocksEnabled = in.readBoolean();
     commitContext.setAutoReleaseLocksEnabled(autoReleaseLocksEnabled);
+    String commitComment = in.readString();
 
     InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[in.readInt()];
     InternalCDORevision[] newObjects = new InternalCDORevision[in.readInt()];
@@ -268,6 +270,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       commitContext.setNewObjects(newObjects);
       commitContext.setDirtyObjectDeltas(dirtyObjectDeltas);
       commitContext.setDetachedObjects(detachedObjects);
+      commitContext.setCommitComment(commitComment);
     }
     finally
     {

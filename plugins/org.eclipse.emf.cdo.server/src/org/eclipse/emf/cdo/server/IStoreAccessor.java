@@ -200,6 +200,10 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader
      */
     public CDOBranchPoint getBranchPoint();
 
+    public String getUserID();
+
+    public String getCommitComment();
+
     /**
      * Returns the temporary, transactional package manager associated with the commit operation represented by this
      * <code>CommitContext</code>. In addition to the packages registered with the session this package manager also

@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - 271444: [DB] Multiple refactorings bug 271444
  *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
+ *    Andre Dietisheim - bug 256649
  *
  */
 package org.eclipse.emf.cdo.server.internal.db;
@@ -124,14 +125,48 @@ public class CDODBSchema extends DBSchema
   public static final IDBIndex INDEX_BRANCHES_ID = //
   BRANCHES.addIndex(IDBIndex.Type.PRIMARY_KEY, BRANCHES_ID);
 
-  public static final String SQL_CREATE_BRANCH = "INSERT INTO " + BRANCHES + " (" + BRANCHES_ID + ", " + BRANCHES_NAME
-      + ", " + BRANCHES_BASE_BRANCH_ID + ", " + BRANCHES_BASE_TIMESTAMP + ") VALUES (?, ?, ?, ?)";
+  public static final String SQL_CREATE_BRANCH = "INSERT INTO " + BRANCHES + " (" + BRANCHES_ID + ", " + BRANCHES_NAME //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      + ", " + BRANCHES_BASE_BRANCH_ID + ", " + BRANCHES_BASE_TIMESTAMP + ") VALUES (?, ?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-  public static final String SQL_LOAD_BRANCH = "SELECT " + BRANCHES_NAME + ", " + BRANCHES_BASE_BRANCH_ID + ", "
-      + BRANCHES_BASE_TIMESTAMP + " FROM " + BRANCHES + " WHERE " + BRANCHES_ID + "=?";
+  public static final String SQL_LOAD_BRANCH = "SELECT " + BRANCHES_NAME + ", " + BRANCHES_BASE_BRANCH_ID + ", " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      + BRANCHES_BASE_TIMESTAMP + " FROM " + BRANCHES + " WHERE " + BRANCHES_ID + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-  public static final String SQL_LOAD_SUB_BRANCHES = "SELECT " + BRANCHES_ID + ", " + BRANCHES_NAME + ", "
-      + BRANCHES_BASE_TIMESTAMP + " FROM " + BRANCHES + " WHERE " + BRANCHES_BASE_BRANCH_ID + "=?";
+  public static final String SQL_LOAD_SUB_BRANCHES = "SELECT " + BRANCHES_ID + ", " + BRANCHES_NAME + ", " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      + BRANCHES_BASE_TIMESTAMP + " FROM " + BRANCHES + " WHERE " + BRANCHES_BASE_BRANCH_ID + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+  /**
+   * DBTable cdo_commit_infos
+   */
+  public static final IDBTable COMMIT_INFOS = INSTANCE.addTable("cdo_commit_infos"); //$NON-NLS-1$
+
+  public static final IDBField COMMIT_INFOS_TIMESTAMP = //
+  COMMIT_INFOS.addField("timestamp", DBType.BIGINT); //$NON-NLS-1$
+
+  public static final IDBField COMMIT_INFOS_BRANCH = //
+  COMMIT_INFOS.addField("branch", DBType.INTEGER); //$NON-NLS-1$
+
+  public static final IDBField COMMIT_INFOS_USER = //
+  COMMIT_INFOS.addField("user", DBType.VARCHAR); //$NON-NLS-1$
+
+  public static final IDBField COMMIT_INFOS_COMMENT = //
+  COMMIT_INFOS.addField("comment", DBType.VARCHAR); //$NON-NLS-1$
+
+  public static final IDBIndex INDEX_COMMIT_INFOS_PK = //
+  BRANCHES.addIndex(IDBIndex.Type.PRIMARY_KEY, COMMIT_INFOS_TIMESTAMP);
+
+  public static final IDBIndex INDEX_COMMIT_INFOS_BRANCH = //
+  COMMIT_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, COMMIT_INFOS_BRANCH);
+
+  public static final IDBIndex INDEX_COMMIT_INFOS_USER = //
+  COMMIT_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, COMMIT_INFOS_USER);
+
+  public static final String SQL_CREATE_COMMIT_INFO = "INSERT INTO " + COMMIT_INFOS + "(" + COMMIT_INFOS_TIMESTAMP //$NON-NLS-1$ //$NON-NLS-2$
+      + ", " + COMMIT_INFOS_BRANCH + ", " + COMMIT_INFOS_USER + ", " + COMMIT_INFOS_COMMENT + ") " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+      + "VALUES (?, ?, ?, ?)"; //$NON-NLS-1$
+
+  public static final String SQL_READ_COMMIT_INFOS = "SELECT " + COMMIT_INFOS_TIMESTAMP + ", " + COMMIT_INFOS_BRANCH //$NON-NLS-1$ //$NON-NLS-2$
+      + ", " + COMMIT_INFOS_USER + ", " + COMMIT_INFOS_COMMENT + " FROM " + COMMIT_INFOS + " WHERE " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+      + COMMIT_INFOS_BRANCH + "=?"; //$NON-NLS-1$
 
   /**
    * DBTable cdo_external_refs

@@ -10,6 +10,7 @@
  *    Simon McDuff - bug 201266
  *    Simon McDuff - bug 215688
  *    Simon McDuff - bug 213402
+ *    Andre Dietisheim - bug 256649
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
@@ -47,6 +48,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 
@@ -132,13 +134,15 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
 
   protected void requestingCommit(CDODataOutput out) throws IOException
   {
+    InternalCDOTransaction transaction = commitContext.getTransaction();
     List<CDOPackageUnit> newPackageUnits = commitContext.getNewPackageUnits();
     Collection<CDOResource> newResources = commitContext.getNewResources().values();
     Collection<CDOObject> newObjects = commitContext.getNewObjects().values();
     Collection<CDORevisionDelta> revisionDeltas = commitContext.getRevisionDeltas().values();
     Collection<CDOID> detachedObjects = commitContext.getDetachedObjects().keySet();
 
-    out.writeBoolean(commitContext.getTransaction().options().isAutoReleaseLocksEnabled());
+    out.writeBoolean(transaction.options().isAutoReleaseLocksEnabled());
+    out.writeString(transaction.getCommitComment());
     out.writeInt(newPackageUnits.size());
     out.writeInt(newResources.size() + newObjects.size());
     out.writeInt(revisionDeltas.size());

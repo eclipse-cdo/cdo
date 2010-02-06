@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.cdo.transaction;
 
-import org.eclipse.emf.cdo.common.commit.CDOCommit;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
 
@@ -28,12 +28,12 @@ public interface CDOUserTransaction
   /**
    * @since 3.0
    */
-  public CDOCommit commit() throws TransactionException;
+  public CDOCommitInfo commit() throws TransactionException;
 
   /**
    * @since 3.0
    */
-  public CDOCommit commit(IProgressMonitor progressMonitor) throws TransactionException;
+  public CDOCommitInfo commit(IProgressMonitor progressMonitor) throws TransactionException;
 
   public void rollback();
 

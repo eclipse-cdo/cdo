@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.transaction;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.commit.CDOCommit;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -196,12 +196,12 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     }
   }
 
-  public CDOCommit commit() throws TransactionException
+  public CDOCommitInfo commit() throws TransactionException
   {
     return commit(null);
   }
 
-  public CDOCommit commit(IProgressMonitor progressMonitor) throws TransactionException
+  public CDOCommitInfo commit(IProgressMonitor progressMonitor) throws TransactionException
   {
     OutputStream out = null;
 
@@ -532,5 +532,15 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public URIHandler getURIHandler()
   {
     return delegate.getURIHandler();
+  }
+
+  public String getCommitComment()
+  {
+    return delegate.getCommitComment();
+  }
+
+  public void setCommitComment(String comment)
+  {
+    delegate.setCommitComment(comment);
   }
 }

@@ -51,7 +51,11 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext
 
   public void setDetachedObjects(CDOID[] detachedObjects);
 
-  public boolean setAutoReleaseLocksEnabled(boolean on);
-
   public boolean isAutoReleaseLocksEnabled();
+
+  public void setAutoReleaseLocksEnabled(boolean on);
+
+  public void setUserID(String userID);
+
+  public void setCommitComment(String comment);
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cq:componentQuery xmlns:cq="http://www.eclipse.org/buckminster/CQuery-1.0" resourceMap="build.rmap">
     <cq:rootRequest name="org.eclipse.emf.cdo.releng.buckminster" componentType="buckminster"/>
-    <cq:advisorNode namePattern=".*.source" componentType="eclipse.feature" skipComponent="true"/>
+    <cq:advisorNode namePattern="org.eclipse.emf.cdo.*.source" componentType="eclipse.feature" skipComponent="true"/>
+    <cq:advisorNode namePattern="org.eclipse.net4j.*.source" componentType="eclipse.feature" skipComponent="true"/>
     <cq:advisorNode filter="(build.type=R)" branchTagPath="R2_0_maintenance,main"/>
 </cq:componentQuery>

@@ -15,45 +15,45 @@ import org.eclipse.emf.cdo.internal.server.Repository;
 /**
  * @author Eike Stepper
  */
-public class ClonedRepository extends Repository.Default
+public class CloneRepository extends Repository.Default
 {
   // private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, ClonedRepository.class);
 
-  private MasterInterface masterInterface;
+  private CloneSynchronizer synchronizer;
 
-  public ClonedRepository()
+  public CloneRepository()
   {
   }
 
-  public MasterInterface getMasterInterface()
+  public CloneSynchronizer getSynchronizer()
   {
-    return masterInterface;
+    return synchronizer;
   }
 
-  public void setMasterInterface(MasterInterface masterInterface)
+  public void setSynchronizer(CloneSynchronizer synchronizer)
   {
     checkInactive();
-    this.masterInterface = masterInterface;
+    this.synchronizer = synchronizer;
   }
 
   @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(masterInterface, "masterInterface");
+    checkState(synchronizer, "synchronizer"); //$NON-NLS-1$
   }
 
   @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    masterInterface.activate();
+    synchronizer.activate();
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    masterInterface.deactivate();
+    synchronizer.deactivate();
     super.doDeactivate();
   }
 }

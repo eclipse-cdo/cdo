@@ -12,7 +12,7 @@
 package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.internal.server.SessionManager;
-import org.eclipse.emf.cdo.internal.server.offline.MasterInterface;
+import org.eclipse.emf.cdo.internal.server.offline.CloneSynchronizer;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
@@ -267,13 +267,13 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       config.setConnector(connector);
       config.setRepositoryName(masterName);
 
-      MasterInterface masterInterface = new MasterInterface();
-      masterInterface.setSessionConfiguration(config);
-      masterInterface.setRetryInterval(1);
-      masterInterface.setSyncedTimeStamp(MasterInterface.NEVER_SYNCHRONIZED);
+      CloneSynchronizer synchronizer = new CloneSynchronizer();
+      synchronizer.setSessionConfiguration(config);
+      synchronizer.setRetryInterval(1);
+      synchronizer.setSyncedTimeStamp(CloneSynchronizer.NEVER_SYNCHRONIZED);
 
       IStore store = createStore(name);
-      return (InternalRepository)CDOServerUtil.createClonedRepository(name, store, props, masterInterface);
+      return (InternalRepository)CDOServerUtil.createCloneRepository(name, store, props, synchronizer);
     }
 
     public void startMasterTransport()

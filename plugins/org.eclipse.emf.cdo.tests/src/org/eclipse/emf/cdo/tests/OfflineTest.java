@@ -34,7 +34,7 @@ public class OfflineTest extends AbstractCDOTest
     return (MEMOffline)super.getRepositoryConfig();
   }
 
-  public void testMasterInterface() throws Exception
+  public void testSynchronizer() throws Exception
   {
     CDOSession session = openSession(getRepository().getName() + "_master");
     CDOTransaction transaction = session.openTransaction();

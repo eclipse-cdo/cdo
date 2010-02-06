@@ -72,6 +72,8 @@ public class CloneSynchronizer extends QueueRunner
 
   private MutableLong syncedTimeStamp = new MutableLong();
 
+  private CloneRepository clone;
+
   public CloneSynchronizer()
   {
   }
@@ -95,6 +97,17 @@ public class CloneSynchronizer extends QueueRunner
   {
     checkInactive();
     this.masterConfiguration = masterConfiguration;
+  }
+
+  public CloneRepository getClone()
+  {
+    return clone;
+  }
+
+  public void setClone(CloneRepository clone)
+  {
+    checkInactive();
+    this.clone = clone;
   }
 
   public State getState()
@@ -135,6 +148,7 @@ public class CloneSynchronizer extends QueueRunner
     super.doBeforeActivate();
     checkState(masterConfiguration, "masterConfiguration"); //$NON-NLS-1$
     checkState(syncedTimeStamp.isSpecified(), "syncedTimeStamp"); //$NON-NLS-1$
+    checkState(clone, "clone"); //$NON-NLS-1$
   }
 
   @Override

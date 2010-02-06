@@ -58,6 +58,7 @@ public class CloneRepository extends Repository.Default
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    synchronizer.setClone(this);
     synchronizer.activate();
   }
 

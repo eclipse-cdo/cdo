@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -38,7 +39,7 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 3.0
  */
-public interface InternalRepository extends IRepository, PackageLoader, BranchLoader, RevisionLoader
+public interface InternalRepository extends IRepository, PackageLoader, BranchLoader, RevisionLoader, CommitInfoLoader
 {
   public void setName(String name);
 

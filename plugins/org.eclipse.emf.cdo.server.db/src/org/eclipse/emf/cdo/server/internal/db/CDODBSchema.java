@@ -164,10 +164,6 @@ public class CDODBSchema extends DBSchema
       + ", " + COMMIT_INFOS_BRANCH + ", " + COMMIT_INFOS_USER + ", " + COMMIT_INFOS_COMMENT + ") " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
       + "VALUES (?, ?, ?, ?)"; //$NON-NLS-1$
 
-  public static final String SQL_READ_COMMIT_INFOS = "SELECT " + COMMIT_INFOS_TIMESTAMP + ", " + COMMIT_INFOS_BRANCH //$NON-NLS-1$ //$NON-NLS-2$
-      + ", " + COMMIT_INFOS_USER + ", " + COMMIT_INFOS_COMMENT + " FROM " + COMMIT_INFOS + " WHERE " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-      + COMMIT_INFOS_BRANCH + "=?"; //$NON-NLS-1$
-
   /**
    * DBTable cdo_external_refs
    */

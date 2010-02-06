@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -34,7 +35,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader
+public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, CommitInfoLoader
 {
   /**
    * Returns the store this accessor is associated with.

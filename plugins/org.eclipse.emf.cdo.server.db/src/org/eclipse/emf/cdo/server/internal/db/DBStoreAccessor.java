@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
@@ -38,10 +39,13 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingBranchingSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 
 import org.eclipse.net4j.db.DBException;
@@ -155,6 +159,11 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
 
     return result;
+  }
+
+  public boolean isNewObject(CDOID id)
+  {
+    return newObjects.contains(id);
   }
 
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
@@ -665,41 +674,90 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
   }
 
-  protected CDOCommitInfo[] readCommitInfo(int branchID)
+  public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
-    return null;
-    // PreparedStatement pstmt = null;
-    // ResultSet resultSet = null;
-    //
-    // try
-    // {
-    // pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_READ_COMMIT_INFO_BY_BRANCH, ReuseProbability.HIGH);
-    // pstmt.setInt(1, branchID);
-    //
-    // resultSet = pstmt.executeQuery();
-    // List<CDOCommitInfo> result = new ArrayList<CDOCommitInfo>();
-    // while (resultSet.next())
-    // {
-    // int id = resultSet.getInt(1);
-    // long timeStamp = resultSet.getLong(2);
-    // String userID = resultSet.getString(3);
-    // String comment = resultSet.getString(4);
-    // InternalCDOBranch branch = getSession().getManager().getRepository().getBranchManager().getBranch(id);
-    //
-    // result.add(new CDOCommitInfoImpl(branch, timeStamp, userID, comment));
-    // }
-    //
-    // return result.toArray(new CDOCommitInfo[result.size()]);
-    // }
-    // catch (SQLException ex)
-    // {
-    // throw new DBException(ex);
-    // }
-    // finally
-    // {
-    // DBUtil.close(resultSet);
-    // statementCache.releasePreparedStatement(pstmt);
-    // }
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT "); //$NON-NLS-1$
+    builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.COMMIT_INFOS_USER);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.COMMIT_INFOS_COMMENT);
+    if (branch == null)
+    {
+      builder.append(", "); //$NON-NLS-1$
+      builder.append(CDODBSchema.COMMIT_INFOS_BRANCH);
+    }
+
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(CDODBSchema.COMMIT_INFOS);
+    boolean where = false;
+
+    if (branch != null)
+    {
+      builder.append(where ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
+      builder.append(CDODBSchema.COMMIT_INFOS_BRANCH);
+      builder.append("="); //$NON-NLS-1$
+      builder.append(branch.getID());
+      where = true;
+    }
+
+    if (startTime != CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      builder.append(where ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
+      builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
+      builder.append(">="); //$NON-NLS-1$
+      builder.append(startTime);
+      where = true;
+    }
+
+    if (endTime != CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      builder.append(where ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
+      builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
+      builder.append("<="); //$NON-NLS-1$
+      builder.append(endTime);
+      where = true;
+    }
+
+    String sql = builder.toString();
+    PreparedStatement pstmt = null;
+    ResultSet resultSet = null;
+
+    InternalRepository repository = getSession().getManager().getRepository();
+    InternalCDOBranchManager branchManager = repository.getBranchManager();
+    InternalCDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
+
+    try
+    {
+      pstmt = statementCache.getPreparedStatement(sql, ReuseProbability.LOW);
+
+      resultSet = pstmt.executeQuery();
+      while (resultSet.next())
+      {
+        long timeStamp = resultSet.getLong(1);
+        String userID = resultSet.getString(2);
+        String comment = resultSet.getString(3);
+        CDOBranch br = branch;
+        if (br == null)
+        {
+          int id = resultSet.getInt(4);
+          br = branchManager.getBranch(id);
+        }
+
+        CDOCommitInfo commitInfo = commitInfoManager.createCommitInfo(br, timeStamp, userID, comment);
+        handler.handleCommitInfo(commitInfo);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+      statementCache.releasePreparedStatement(pstmt);
+    }
   }
 
   /**
@@ -733,10 +791,5 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
         DBUtil.close(stmt);
       }
     }
-  }
-
-  public boolean isNewObject(CDOID id)
-  {
-    return newObjects.contains(id);
   }
 }

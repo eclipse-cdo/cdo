@@ -213,6 +213,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     branchManager.activate();
 
     commitInfoManager = CDOCommitInfoUtil.createCommitInfoManager();
+    commitInfoManager.setCommitInfoLoader(session.getSessionProtocol());
     commitInfoManager.activate();
 
     for (InternalCDOPackageUnit packageUnit : result.getPackageUnits())

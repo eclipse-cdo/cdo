@@ -50,7 +50,9 @@ public class Transaction extends View implements InternalTransaction
   public InternalCommitContext createCommitContext()
   {
     checkOpen();
-    return new TransactionCommitContextImpl(this);
+    InternalCommitContext context = new TransactionCommitContextImpl(this);
+    context.setUserID(getSession().getUserID());
+    return context;
   }
 
   /**

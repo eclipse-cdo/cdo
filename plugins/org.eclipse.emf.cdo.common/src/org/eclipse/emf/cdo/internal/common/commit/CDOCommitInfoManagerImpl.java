@@ -12,7 +12,9 @@
 package org.eclipse.emf.cdo.internal.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -22,18 +24,49 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
  */
 public class CDOCommitInfoManagerImpl extends Lifecycle implements InternalCDOCommitInfoManager
 {
+  private CommitInfoLoader commitInfoLoader;
 
   public CDOCommitInfoManagerImpl()
   {
   }
 
+  public CommitInfoLoader getCommitInfoLoader()
+  {
+    return commitInfoLoader;
+  }
+
+  public void setCommitInfoLoader(CommitInfoLoader commitInfoLoader)
+  {
+    checkInactive();
+    this.commitInfoLoader = commitInfoLoader;
+  }
+
   public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment)
   {
+    checkActive();
     return new CDOCommitInfoImpl(this, branch, timeStamp, userID, comment);
   }
 
-  public CDOCommitInfo[] getCommitInfos(CDOBranch branch)
+  public void getCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
-    throw new UnsupportedOperationException();
+    checkActive();
+    commitInfoLoader.loadCommitInfos(branch, startTime, endTime, handler);
+  }
+
+  public void getCommitInfos(CDOBranch branch, CDOCommitInfoHandler handler)
+  {
+    getCommitInfos(branch, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
+  }
+
+  public void getCommitInfos(long startTime, long endTime, CDOCommitInfoHandler handler)
+  {
+    getCommitInfos(null, startTime, endTime, handler);
+  }
+
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+    checkState(commitInfoLoader, "commitInfoLoader"); //$NON-NLS-1$
   }
 }

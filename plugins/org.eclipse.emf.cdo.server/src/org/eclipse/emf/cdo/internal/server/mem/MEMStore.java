@@ -16,6 +16,8 @@ package org.eclipse.emf.cdo.internal.server.mem;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelConstants;
@@ -29,6 +31,7 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
@@ -46,8 +49,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.Map.Entry;
 
 /**
@@ -63,7 +64,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
 
   private Map<Object, List<InternalCDORevision>> revisions = new HashMap<Object, List<InternalCDORevision>>();
 
-  private SortedMap<Long, CommitInfo> commitInfos = new TreeMap<Long, CommitInfo>();
+  private List<CommitInfo> commitInfos = new ArrayList<CommitInfo>();
 
   private int listLimit;
 
@@ -101,7 +102,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     return branchInfos.get(branchID);
   }
 
-  public SubBranchInfo[] loadSubBranches(int branchID)
+  public synchronized SubBranchInfo[] loadSubBranches(int branchID)
   {
     List<SubBranchInfo> result = new ArrayList<SubBranchInfo>();
     for (Entry<Integer, BranchInfo> entry : branchInfos.entrySet())
@@ -115,6 +116,31 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     }
 
     return result.toArray(new SubBranchInfo[result.size()]);
+  }
+
+  public synchronized void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
+  {
+    InternalCDOCommitInfoManager manager = getRepository().getCommitInfoManager();
+    for (int i = 0; i < commitInfos.size(); i++)
+    {
+      CommitInfo info = commitInfos.get(i);
+      if (startTime != CDOBranchPoint.UNSPECIFIED_DATE && info.getTimeStamp() < startTime)
+      {
+        continue;
+      }
+
+      if (endTime != CDOBranchPoint.UNSPECIFIED_DATE && info.getTimeStamp() > endTime)
+      {
+        continue;
+      }
+
+      if (branch != null && info.getBranch() != branch)
+      {
+        continue;
+      }
+
+      info.handle(manager, handler);
+    }
   }
 
   /**
@@ -221,8 +247,18 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
 
   public synchronized void addCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment)
   {
+    int index = commitInfos.size() - 1;
+    while (index > 0)
+    {
+      CommitInfo info = commitInfos.get(index);
+      if (timeStamp > info.getTimeStamp())
+      {
+        break;
+      }
+    }
+
     CommitInfo commitInfo = new CommitInfo(branch, timeStamp, userID, comment);
-    commitInfos.put(timeStamp, commitInfo);
+    commitInfos.add(index + 1, commitInfo);
   }
 
   /**
@@ -626,7 +662,6 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
   /**
    * @author Eike Stepper
    */
-  @SuppressWarnings("unused")
   private static final class CommitInfo
   {
     private CDOBranch branch;
@@ -655,14 +690,10 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
       return timeStamp;
     }
 
-    public String getUserID()
+    public void handle(InternalCDOCommitInfoManager manager, CDOCommitInfoHandler handler)
     {
-      return userID;
-    }
-
-    public String getComment()
-    {
-      return comment;
+      CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, userID, comment);
+      handler.handleCommitInfo(commitInfo);
     }
   }
 }

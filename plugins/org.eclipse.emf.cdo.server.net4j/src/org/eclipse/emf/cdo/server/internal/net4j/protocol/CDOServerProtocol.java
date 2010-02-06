@@ -254,6 +254,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE:
       return new RemoteMessageIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_LOAD_COMMIT_INFOS:
+      return new LoadCommitInfosIndication(this);
+
     case CDOProtocolConstants.SIGNAL_CLONE_REPOSITORY:
       return new CloneRepositoryIndication(this);
 

@@ -824,7 +824,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       InternalCDOTransaction transaction = object.cdoView().toTransaction();
       InternalCDORevision revision = object.cdoRevision();
-      Map<CDOIDTemp, CDOID> idMappings = data.getIDMappings();
+      Map<CDOID, CDOID> idMappings = data.getIDMappings();
 
       // Adjust object
       CDOID oldID = object.cdoID();

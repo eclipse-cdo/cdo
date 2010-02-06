@@ -687,7 +687,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
   }
 
-  public static Object remapID(Object value, Map<CDOIDTemp, CDOID> idMappings)
+  public static Object remapID(Object value, Map<CDOID, CDOID> idMappings)
   {
     if (value instanceof CDOIDTemp)
     {

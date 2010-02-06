@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.CDOFeatureMapEntryImpl;
@@ -73,7 +72,7 @@ public final class CDORevisionUtil
     return new CDOFeatureMapEntryImpl();
   }
 
-  public static Object remapID(Object value, Map<CDOIDTemp, CDOID> idMappings)
+  public static Object remapID(Object value, Map<CDOID, CDOID> idMappings)
   {
     return CDORevisionImpl.remapID(value, idMappings);
   }

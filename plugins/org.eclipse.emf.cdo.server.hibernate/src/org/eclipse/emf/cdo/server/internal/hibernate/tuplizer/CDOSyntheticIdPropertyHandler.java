@@ -109,7 +109,7 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
         commitContext.setNewID(cdoID, newCDOID);
         if (cdoID instanceof CDOIDTemp)
         {
-          commitContext.getCommitContext().addIDMapping((CDOIDTemp)cdoID, newCDOID);
+          commitContext.getCommitContext().addIDMapping(cdoID, newCDOID);
         }
       }
     }

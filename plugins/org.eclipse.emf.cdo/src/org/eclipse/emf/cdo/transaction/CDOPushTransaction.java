@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -187,7 +186,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
             return Type.COMMITTED;
           }
 
-          public Map<CDOIDTemp, CDOID> getIDMappings()
+          public Map<CDOID, CDOID> getIDMappings()
           {
             return Collections.emptyMap();
           }

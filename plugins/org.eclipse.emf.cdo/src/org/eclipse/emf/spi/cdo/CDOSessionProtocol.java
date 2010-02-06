@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
@@ -315,7 +314,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private long timeStamp;
 
-    private Map<CDOIDTemp, CDOID> idMappings = new HashMap<CDOIDTemp, CDOID>();
+    private Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
 
     private CDOReferenceAdjuster referenceAdjuster;
 
@@ -363,12 +362,12 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       return timeStamp;
     }
 
-    public Map<CDOIDTemp, CDOID> getIDMappings()
+    public Map<CDOID, CDOID> getIDMappings()
     {
       return idMappings;
     }
 
-    public void addIDMapping(CDOIDTemp oldID, CDOID newID)
+    public void addIDMapping(CDOID oldID, CDOID newID)
     {
       idMappings.put(oldID, newID);
     }

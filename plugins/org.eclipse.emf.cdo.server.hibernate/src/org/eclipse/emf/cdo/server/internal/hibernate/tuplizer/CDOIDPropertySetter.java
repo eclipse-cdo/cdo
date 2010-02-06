@@ -61,7 +61,7 @@ public class CDOIDPropertySetter extends CDOPropertySetter
         commitContext.setNewID(revisionID, newCDOID);
         if (revisionID instanceof CDOIDTemp)
         {
-          commitContext.getCommitContext().addIDMapping((CDOIDTemp)revisionID, newCDOID);
+          commitContext.getCommitContext().addIDMapping(revisionID, newCDOID);
         }
       }
     }

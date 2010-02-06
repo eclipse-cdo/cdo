@@ -88,7 +88,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
 
   private List<CDOIDMetaRange> metaIDRanges = new ArrayList<CDOIDMetaRange>();
 
-  private ConcurrentMap<CDOIDTemp, CDOID> idMappings = new ConcurrentHashMap<CDOIDTemp, CDOID>();
+  private ConcurrentMap<CDOID, CDOID> idMappings = new ConcurrentHashMap<CDOID, CDOID>();
 
   private CDOReferenceAdjuster idMapper = new CDOIDMapper(idMappings);
 
@@ -156,12 +156,12 @@ public class TransactionCommitContextImpl implements InternalCommitContext
     return Collections.unmodifiableList(metaIDRanges);
   }
 
-  public Map<CDOIDTemp, CDOID> getIDMappings()
+  public Map<CDOID, CDOID> getIDMappings()
   {
     return Collections.unmodifiableMap(idMappings);
   }
 
-  public void addIDMapping(CDOIDTemp oldID, CDOID newID)
+  public void addIDMapping(CDOID oldID, CDOID newID)
   {
     if (CDOIDUtil.isNull(newID) || newID.isTemporary())
     {

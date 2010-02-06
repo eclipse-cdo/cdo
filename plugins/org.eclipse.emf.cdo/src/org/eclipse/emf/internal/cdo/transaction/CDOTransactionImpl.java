@@ -195,14 +195,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   protected boolean setBranchPoint(CDOBranchPoint branchPoint)
   {
     if (branchPoint.getTimeStamp() != UNSPECIFIED_DATE)
-  {
+    {
       throw new IllegalArgumentException("Changing the target time is not supported by transactions");
-  }
+    }
 
     if (isDirty() && !getBranch().equals(branchPoint.getBranch()))
-  {
+    {
       throw new IllegalStateException("Changing the target branch is impossible while transaction is dirty");
-  }
+    }
 
     return super.setBranchPoint(branchPoint);
   }
@@ -1018,7 +1018,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         viewLock.unlock();
       }
 
-      Map<CDOIDTemp, CDOID> idMappings = Collections.emptyMap();
+      Map<CDOID, CDOID> idMappings = Collections.emptyMap();
       IListener[] listeners = getListeners();
       if (listeners != null)
       {
@@ -1201,7 +1201,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * TODO Simon: Should this method go to CDOSavePointImpl?
    */
-  @SuppressWarnings( { "rawtypes", "unchecked" })
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   private void registerNew(Map map, InternalCDOObject object)
   {
     Object old = map.put(object.cdoID(), object);
@@ -1392,7 +1392,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
       };
 
-      Map<CDOIDTemp, CDOID> idMappings = new HashMap<CDOIDTemp, CDOID>();
+      Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
       while (in.readBoolean())
       {
         if (reconstructSavepoints)
@@ -1447,7 +1447,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return savepoints.toArray(new CDOSavepoint[savepoints.size()]);
   }
 
-  private void importNewRevisions(CDODataInput in, List<InternalCDORevision> revisions, Map<CDOIDTemp, CDOID> idMappings)
+  private void importNewRevisions(CDODataInput in, List<InternalCDORevision> revisions, Map<CDOID, CDOID> idMappings)
       throws IOException
   {
     int size = in.readInt();
@@ -1455,7 +1455,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       InternalCDORevision revision = (InternalCDORevision)in.readCDORevision();
 
-      CDOIDTemp oldID = (CDOIDTemp)revision.getID();
+      CDOID oldID = revision.getID();
       CDOIDTemp newID = getNextTemporaryID();
       idMappings.put(oldID, newID);
       revision.setID(newID);
@@ -1793,7 +1793,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           getAdapterManager().committedTransaction(getTransaction(), this);
 
           cleanUp();
-          Map<CDOIDTemp, CDOID> idMappings = result.getIDMappings();
+          Map<CDOID, CDOID> idMappings = result.getIDMappings();
           IListener[] listeners = getListeners();
           if (listeners != null)
           {
@@ -1871,9 +1871,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     private Type type;
 
-    private Map<CDOIDTemp, CDOID> idMappings;
+    private Map<CDOID, CDOID> idMappings;
 
-    private FinishedEvent(Type type, Map<CDOIDTemp, CDOID> idMappings)
+    private FinishedEvent(Type type, Map<CDOID, CDOID> idMappings)
     {
       this.type = type;
       this.idMappings = idMappings;
@@ -1884,7 +1884,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return type;
     }
 
-    public Map<CDOIDTemp, CDOID> getIDMappings()
+    public Map<CDOID, CDOID> getIDMappings()
     {
       return idMappings;
     }

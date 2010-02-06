@@ -70,8 +70,6 @@ public class TransactionCommitContextImpl implements InternalCommitContext
 
   private long timeStamp = CDORevision.UNSPECIFIED_DATE;
 
-  private String userID;
-
   private String commitComment;
 
   private InternalCDOPackageUnit[] newPackageUnits;
@@ -243,12 +241,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
 
   public String getUserID()
   {
-    return userID;
-  }
-
-  public void setUserID(String userID)
-  {
-    this.userID = userID;
+    return getTransaction().getSession().getUserID();
   }
 
   public String getCommitComment()

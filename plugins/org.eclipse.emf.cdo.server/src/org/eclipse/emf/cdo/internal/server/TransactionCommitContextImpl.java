@@ -379,7 +379,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
     }
   }
 
-  private void adjustMetaRanges()
+  protected void adjustMetaRanges()
   {
     for (InternalCDOPackageUnit newPackageUnit : newPackageUnits)
     {

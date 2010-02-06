@@ -107,19 +107,19 @@
 
 
   <rm:searchPath name="target.platform">
-    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="eclipse.import" source="false" mutable="false" resolutionFilter="(build.type=N)">
+    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false" resolutionFilter="(build.type=N)">
       <rm:uri format="http://download.eclipse.org/eclipse/updates/3.6milestones"/>
     </rm:provider>
-    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="eclipse.import" source="false" mutable="false" resolutionFilter="(build.type=N)">
+    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false" resolutionFilter="(build.type=N)">
       <rm:uri format="http://download.eclipse.org/releases/helios"/>
     </rm:provider>
-    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="eclipse.import" source="false" mutable="false" resolutionFilter="">
+    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false" resolutionFilter="">
       <rm:uri format="http://net4j.sourceforge.net/update"/>
     </rm:provider>
   </rm:searchPath>
 
   <rm:searchPath name="modeling">
-    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="eclipse.import" source="false" mutable="false" resolutionFilter="(build.type=N)">
+    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false" resolutionFilter="(build.type=N)">
       <rm:uri format="http://download.eclipse.org/modeling/emf/updates/milestones"/>
     </rm:provider>
   </rm:searchPath>

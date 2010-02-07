@@ -213,7 +213,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
 
     fireElementAddedEvent(session);
-    handleRemoteSessionNotification(CDOProtocolConstants.REMOTE_SESSION_OPENED, session);
+    sendRemoteSessionNotification(session, CDOProtocolConstants.REMOTE_SESSION_OPENED);
     return session;
   }
 
@@ -234,19 +234,19 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     if (removeSession != null)
     {
       fireElementRemovedEvent(session);
-      handleRemoteSessionNotification(CDOProtocolConstants.REMOTE_SESSION_CLOSED, session);
+      sendRemoteSessionNotification(session, CDOProtocolConstants.REMOTE_SESSION_CLOSED);
     }
   }
 
-  public void handleBranchNotification(InternalCDOBranch branch, InternalSession excludedSession)
+  public void sendBranchNotification(InternalSession sender, InternalCDOBranch branch)
   {
     for (InternalSession session : getSessions())
     {
-      if (session != excludedSession)
+      if (session != sender)
       {
         try
         {
-          session.handleBranchNotification(branch);
+          session.sendBranchNotification(branch);
         }
         catch (Exception ex)
         {
@@ -259,17 +259,16 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   /**
    * @since 2.0
    */
-  public void handleCommitNotification(CDOBranchPoint branchPoint, CDOPackageUnit[] packageUnits,
-      List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> deltas,
-      InternalSession excludedSession)
+  public void sendCommitNotification(InternalSession sender, CDOBranchPoint branchPoint, CDOPackageUnit[] packageUnits,
+      List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> deltas)
   {
     for (InternalSession session : getSessions())
     {
-      if (session != excludedSession)
+      if (session != sender)
       {
         try
         {
-          session.handleCommitNotification(branchPoint, packageUnits, dirtyIDs, detachedObjects, deltas);
+          session.sendCommitNotification(branchPoint, packageUnits, dirtyIDs, detachedObjects, deltas);
         }
         catch (Exception ex)
         {
@@ -282,17 +281,17 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   /**
    * @since 2.0
    */
-  public void handleRemoteSessionNotification(byte opcode, InternalSession excludedSession)
+  public void sendRemoteSessionNotification(InternalSession sender, byte opcode)
   {
     try
     {
       for (InternalSession session : getSessions())
       {
-        if (session != excludedSession && session.isSubscribed())
+        if (session != sender && session.isSubscribed())
         {
           try
           {
-            session.getProtocol().sendRemoteSessionNotification(opcode, excludedSession);
+            session.sendRemoteSessionNotification(sender, opcode);
           }
           catch (Exception ex)
           {
@@ -307,7 +306,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
-  public List<Integer> sendMessage(InternalSession sender, CDORemoteSessionMessage message, int[] recipients)
+  public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message, int[] recipients)
   {
     List<Integer> result = new ArrayList<Integer>();
     for (int i = 0; i < recipients.length; i++)
@@ -315,7 +314,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       InternalSession recipient = getSession(recipients[i]);
       if (recipient != null && recipient.isSubscribed())
       {
-        recipient.getProtocol().sendRemoteMessageNotification(sender, message);
+        recipient.sendRemoteMessageNotification(sender, message);
         result.add(recipient.getSessionID());
       }
     }

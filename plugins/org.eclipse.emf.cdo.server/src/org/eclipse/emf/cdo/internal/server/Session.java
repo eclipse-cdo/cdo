@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -165,7 +166,7 @@ public class Session extends Container<IView> implements InternalSession
       this.subscribed = subscribed;
       byte opcode = subscribed ? CDOProtocolConstants.REMOTE_SESSION_SUBSCRIBED
           : CDOProtocolConstants.REMOTE_SESSION_UNSUBSCRIBED;
-      manager.handleRemoteSessionNotification(opcode, this);
+      manager.sendRemoteSessionNotification(this, opcode);
     }
   }
 
@@ -257,7 +258,48 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
-  public void handleBranchNotification(InternalCDOBranch branch)
+  /**
+   * TODO I can't see how recursion is controlled/limited
+   * 
+   * @since 2.0
+   */
+  public void collectContainedRevisions(InternalCDORevision revision, CDOBranchPoint branchPoint, int referenceChunk,
+      Set<CDOID> revisions, List<CDORevision> additionalRevisions)
+  {
+    InternalCDORevisionManager revisionManager = getManager().getRepository().getRevisionManager();
+    EClass eClass = revision.getEClass();
+    EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(eClass);
+    for (int i = 0; i < features.length; i++)
+    {
+      EStructuralFeature feature = features[i];
+      // TODO Clarify feature maps
+      if (feature instanceof EReference && !feature.isMany() && ((EReference)feature).isContainment())
+      {
+        Object value = revision.getValue(feature);
+        if (value instanceof CDOID)
+        {
+          CDOID id = (CDOID)value;
+          if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
+          {
+            InternalCDORevision containedRevision = (InternalCDORevision)revisionManager.getRevision(id, branchPoint,
+                referenceChunk, CDORevision.DEPTH_NONE, true);
+            revisions.add(id);
+            additionalRevisions.add(containedRevision);
+
+            // Recurse
+            collectContainedRevisions(containedRevision, branchPoint, referenceChunk, revisions, additionalRevisions);
+          }
+        }
+      }
+    }
+  }
+
+  public CDOID provideCDOID(Object idObject)
+  {
+    return (CDOID)idObject;
+  }
+
+  public void sendBranchNotification(InternalCDOBranch branch)
   {
     protocol.sendBranchNotification(branch);
   }
@@ -265,7 +307,7 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
-  public void handleCommitNotification(CDOBranchPoint branchPoint, CDOPackageUnit[] packageUnits,
+  public void sendCommitNotification(CDOBranchPoint branchPoint, CDOPackageUnit[] packageUnits,
       List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> deltas)
   {
     if (!isPassiveUpdateEnabled())
@@ -311,45 +353,14 @@ public class Session extends Container<IView> implements InternalSession
     protocol.sendCommitNotification(branchPoint, packageUnits, dirtyIDs, detachedObjects, newDeltas);
   }
 
-  public CDOID provideCDOID(Object idObject)
+  public void sendRemoteSessionNotification(InternalSession sender, byte opcode)
   {
-    return (CDOID)idObject;
+    protocol.sendRemoteSessionNotification(sender, opcode);
   }
 
-  /**
-   * TODO I can't see how recursion is controlled/limited
-   * 
-   * @since 2.0
-   */
-  public void collectContainedRevisions(InternalCDORevision revision, CDOBranchPoint branchPoint, int referenceChunk,
-      Set<CDOID> revisions, List<CDORevision> additionalRevisions)
+  public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message)
   {
-    InternalCDORevisionManager revisionManager = getManager().getRepository().getRevisionManager();
-    EClass eClass = revision.getEClass();
-    EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(eClass);
-    for (int i = 0; i < features.length; i++)
-    {
-      EStructuralFeature feature = features[i];
-      // TODO Clarify feature maps
-      if (feature instanceof EReference && !feature.isMany() && ((EReference)feature).isContainment())
-      {
-        Object value = revision.getValue(feature);
-        if (value instanceof CDOID)
-        {
-          CDOID id = (CDOID)value;
-          if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
-          {
-            InternalCDORevision containedRevision = (InternalCDORevision)revisionManager.getRevision(id, branchPoint,
-                referenceChunk, CDORevision.DEPTH_NONE, true);
-            revisions.add(id);
-            additionalRevisions.add(containedRevision);
-
-            // Recurse
-            collectContainedRevisions(containedRevision, branchPoint, referenceChunk, revisions, additionalRevisions);
-          }
-        }
-      }
-    }
+    protocol.sendRemoteMessageNotification(sender, message);
   }
 
   @Override

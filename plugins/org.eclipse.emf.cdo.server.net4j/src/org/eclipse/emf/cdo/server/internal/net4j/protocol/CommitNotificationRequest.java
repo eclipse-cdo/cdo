@@ -35,7 +35,7 @@ public class CommitNotificationRequest extends CDOServerRequest
 
   private CDOBranchPoint branchPoint;
 
-  private final CDOPackageUnit[] packageUnits;
+  private CDOPackageUnit[] packageUnits;
 
   private List<CDOIDAndVersion> dirtyIDs;
 

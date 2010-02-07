@@ -47,13 +47,12 @@ public interface InternalSessionManager extends ISessionManager
 
   public void sessionClosed(InternalSession session);
 
-  public void handleBranchNotification(InternalCDOBranch branch, InternalSession session);
+  public void sendBranchNotification(InternalSession sender, InternalCDOBranch branch);
 
-  public void handleCommitNotification(CDOBranchPoint branchPoint, CDOPackageUnit[] packageUnits,
-      List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> deltas,
-      InternalSession excludedSession);
+  public void sendCommitNotification(InternalSession sender, CDOBranchPoint branchPoint, CDOPackageUnit[] packageUnits,
+      List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> deltas);
 
-  public void handleRemoteSessionNotification(byte opcode, InternalSession excludedSession);
+  public void sendRemoteSessionNotification(InternalSession sender, byte opcode);
 
-  public List<Integer> sendMessage(InternalSession sender, CDORemoteSessionMessage message, int[] recipients);
+  public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message, int[] recipients);
 }

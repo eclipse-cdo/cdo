@@ -48,6 +48,6 @@ public class CreateBranchIndication extends CDOReadIndication
     out.writeInt(branch.getID());
 
     InternalSessionManager sessionManager = getRepository().getSessionManager();
-    sessionManager.handleBranchNotification(branch, getSession());
+    sessionManager.sendBranchNotification(getSession(), branch);
   }
 }

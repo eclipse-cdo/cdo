@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
@@ -80,12 +79,12 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
         dirtyIDs), detachedObjects, newDeltas, null);
   }
 
-  public void sendRemoteSessionNotification(byte opcode, ISession session)
+  public void sendRemoteSessionNotification(InternalSession sender, byte opcode)
   {
     throw new UnsupportedOperationException();
   }
 
-  public boolean sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message)
+  public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message)
   {
     throw new UnsupportedOperationException();
   }

@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
-import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -126,13 +125,13 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     }
   }
 
-  public void sendRemoteSessionNotification(byte opcode, ISession session)
+  public void sendRemoteSessionNotification(InternalSession sender, byte opcode)
   {
     try
     {
       if (LifecycleUtil.isActive(getChannel()))
       {
-        new RemoteSessionNotificationRequest(this, opcode, session).sendAsync();
+        new RemoteSessionNotificationRequest(this, sender, opcode).sendAsync();
       }
       else
       {
@@ -145,14 +144,13 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     }
   }
 
-  public boolean sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message)
+  public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message)
   {
     try
     {
       if (LifecycleUtil.isActive(getChannel()))
       {
         new RemoteMessageNotificationRequest(this, sender, message).sendAsync();
-        return true;
       }
 
       OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
@@ -161,8 +159,6 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     {
       OM.LOG.error(ex);
     }
-
-    return false;
   }
 
   @Override

@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import java.io.IOException;
 
@@ -23,25 +23,25 @@ import java.io.IOException;
  */
 public class RemoteSessionNotificationRequest extends CDOServerRequest
 {
+  private InternalSession sender;
+
   private byte opcode;
 
-  private ISession session;
-
-  public RemoteSessionNotificationRequest(CDOServerProtocol serverProtocol, byte opcode, ISession session)
+  public RemoteSessionNotificationRequest(CDOServerProtocol serverProtocol, InternalSession sender, byte opcode)
   {
     super(serverProtocol, CDOProtocolConstants.SIGNAL_REMOTE_SESSION_NOTIFICATION);
+    this.sender = sender;
     this.opcode = opcode;
-    this.session = session;
   }
 
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
+    out.writeInt(sender.getSessionID());
     out.writeByte(opcode);
-    out.writeInt(session.getSessionID());
     if (opcode == CDOProtocolConstants.REMOTE_SESSION_OPENED)
     {
-      out.writeString(session.getUserID());
+      out.writeString(sender.getUserID());
     }
   }
 }

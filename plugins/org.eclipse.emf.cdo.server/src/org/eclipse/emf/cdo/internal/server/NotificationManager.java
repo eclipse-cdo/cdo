@@ -80,7 +80,7 @@ public class NotificationManager extends Lifecycle implements InternalNotificati
       }
     }
 
-    sessionManager.handleCommitNotification(commitContext.getBranchPoint(), arrayOfNewPackageUnit, dirtyIDs,
-        detachedObjects, deltas, session);
+    sessionManager.sendCommitNotification(session, commitContext.getBranchPoint(), arrayOfNewPackageUnit,
+        dirtyIDs, detachedObjects, deltas);
   }
 }

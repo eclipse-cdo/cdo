@@ -58,7 +58,7 @@ public class RemoteMessageIndication extends CDOReadIndication
     }
 
     InternalSessionManager sessionManager = getRepository().getSessionManager();
-    result = sessionManager.sendMessage(getSession(), message, recipients);
+    result = sessionManager.sendRemoteMessageNotification(getSession(), message, recipients);
   }
 
   @Override

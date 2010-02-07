@@ -10,12 +10,8 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.ISessionManager;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -49,10 +45,10 @@ public interface InternalSessionManager extends ISessionManager
 
   public void sendBranchNotification(InternalSession sender, InternalCDOBranch branch);
 
-  public void sendCommitNotification(InternalSession sender, CDOBranchPoint branchPoint, CDOPackageUnit[] packageUnits,
-      List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> deltas);
+  public void sendCommitNotification(InternalSession sender, IStoreAccessor.CommitContext commitContext);
 
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode);
 
-  public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message, int[] recipients);
+  public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message,
+      int[] recipients);
 }

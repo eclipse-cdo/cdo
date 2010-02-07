@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 
 import org.eclipse.net4j.util.WrappedException;
@@ -194,7 +195,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
   }
 
   @Override
-  public void write(CommitContext context, OMMonitor monitor)
+  public void write(InternalCommitContext context, OMMonitor monitor)
   {
     MEMStore store = getStore();
     synchronized (store)

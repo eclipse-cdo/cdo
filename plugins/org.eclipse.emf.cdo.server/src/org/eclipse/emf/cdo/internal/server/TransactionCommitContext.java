@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -59,10 +60,10 @@ import java.util.concurrent.ConcurrentMap;
  * @author Simon McDuff
  * @since 2.0
  */
-public class TransactionCommitContextImpl implements InternalCommitContext
+public class TransactionCommitContext implements InternalCommitContext
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION,
-      TransactionCommitContextImpl.class);
+      TransactionCommitContext.class);
 
   private TransactionPackageRegistry packageRegistry;
 
@@ -98,7 +99,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
 
   private boolean autoReleaseLocksEnabled;
 
-  public TransactionCommitContextImpl(InternalTransaction transaction)
+  public TransactionCommitContext(InternalTransaction transaction)
   {
     this.transaction = transaction;
     InternalRepository repository = transaction.getRepository();
@@ -336,7 +337,8 @@ public class TransactionCommitContextImpl implements InternalCommitContext
     {
       if (success)
       {
-        transaction.getRepository().getNotificationManager().notifyCommit(transaction.getSession(), this);
+        InternalSessionManager sessionManager = transaction.getRepository().getSessionManager();
+        sessionManager.sendCommitNotification(transaction.getSession(), this);
       }
     }
     catch (Exception ex)

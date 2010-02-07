@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
-import org.eclipse.emf.cdo.server.InternalNotificationManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -31,11 +30,11 @@ import java.util.List;
  * @author Simon McDuff
  * @since 2.0
  */
-public class NotificationManager extends Lifecycle implements InternalNotificationManager
+class _________________NotificationManager extends Lifecycle
 {
   private InternalRepository repository;
 
-  public NotificationManager()
+  public _________________NotificationManager()
   {
   }
 
@@ -54,33 +53,27 @@ public class NotificationManager extends Lifecycle implements InternalNotificati
     CDORevisionDelta[] arrayOfDeltas = commitContext.getDirtyObjectDeltas();
     CDOID[] arrayOfDetachedObjects = commitContext.getDetachedObjects();
     InternalCDOPackageUnit[] arrayOfNewPackageUnit = commitContext.getNewPackageUnits();
+
     int dirtyIDSize = arrayOfDeltas == null ? 0 : arrayOfDeltas.length;
-    int detachedObjectsSize = arrayOfDetachedObjects == null ? 0 : arrayOfDetachedObjects.length;
-
-    InternalSessionManager sessionManager = repository.getSessionManager();
     List<CDOIDAndVersion> dirtyIDs = new ArrayList<CDOIDAndVersion>(dirtyIDSize);
-    List<CDOID> detachedObjects = new ArrayList<CDOID>(detachedObjectsSize);
     List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>(dirtyIDSize);
-    if (dirtyIDSize > 0 || detachedObjectsSize > 0)
+    for (int i = 0; i < dirtyIDSize; i++)
     {
-      for (int i = 0; i < dirtyIDSize; i++)
-      {
-        CDORevisionDelta delta = arrayOfDeltas[i];
-        CDOIDAndVersion dirtyIDAndVersion = CDOIDUtil.createIDAndVersion(delta.getID(), delta.getVersion());
-        dirtyIDs.add(dirtyIDAndVersion);
+      CDORevisionDelta delta = arrayOfDeltas[i];
+      deltas.add(delta);
 
-        // TODO Avoid creating a temp list
-        deltas.add(delta);
-      }
-
-      for (int i = 0; i < detachedObjectsSize; i++)
-      {
-        // TODO Avoid creating a temp list
-        detachedObjects.add(arrayOfDetachedObjects[i]);
-      }
+      CDOIDAndVersion dirtyIDAndVersion = CDOIDUtil.createIDAndVersion(delta.getID(), delta.getVersion());
+      dirtyIDs.add(dirtyIDAndVersion);
     }
 
-    sessionManager.sendCommitNotification(session, commitContext.getBranchPoint(), arrayOfNewPackageUnit,
-        dirtyIDs, detachedObjects, deltas);
+    int detachedObjectsSize = arrayOfDetachedObjects == null ? 0 : arrayOfDetachedObjects.length;
+    List<CDOID> detachedObjects = new ArrayList<CDOID>(detachedObjectsSize);
+    for (int i = 0; i < detachedObjectsSize; i++)
+    {
+      detachedObjects.add(arrayOfDetachedObjects[i]);
+    }
+
+    InternalSessionManager sessionManager = repository.getSessionManager();
+    sessionManager.sendCommitNotification(session, commitContext);
   }
 }

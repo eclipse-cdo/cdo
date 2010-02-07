@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.server.InternalNotificationManager;
 import org.eclipse.emf.cdo.server.InternalStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
@@ -109,11 +108,6 @@ public abstract class DelegatingRepository implements InternalRepository
   public String getName()
   {
     return getDelegate().getName();
-  }
-
-  public InternalNotificationManager getNotificationManager()
-  {
-    return getDelegate().getNotificationManager();
   }
 
   public InternalCDOPackageRegistry getPackageRegistry()

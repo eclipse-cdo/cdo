@@ -12,15 +12,11 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -256,11 +252,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
-  /**
-   * @since 2.0
-   */
-  public void sendCommitNotification(InternalSession sender, CDOBranchPoint branchPoint, CDOPackageUnit[] packageUnits,
-      List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> deltas)
+  public void sendCommitNotification(InternalSession sender, IStoreAccessor.CommitContext commitContext)
   {
     for (InternalSession session : getSessions())
     {
@@ -268,7 +260,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       {
         try
         {
-          session.sendCommitNotification(branchPoint, packageUnits, dirtyIDs, detachedObjects, deltas);
+          session.sendCommitNotification(commitContext);
         }
         catch (Exception ex)
         {
@@ -306,7 +298,8 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
-  public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message, int[] recipients)
+  public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message,
+      int[] recipients)
   {
     List<Integer> result = new ArrayList<Integer>();
     for (int i = 0; i < recipients.length; i++)

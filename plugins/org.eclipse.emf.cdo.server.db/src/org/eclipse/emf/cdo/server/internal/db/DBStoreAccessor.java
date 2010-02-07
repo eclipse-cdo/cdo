@@ -45,6 +45,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 
@@ -275,7 +276,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   }
 
   @Override
-  public void write(CommitContext context, OMMonitor monitor)
+  public void write(InternalCommitContext context, OMMonitor monitor)
   {
     // remember CDOIDs of new objects
     newObjects.clear();

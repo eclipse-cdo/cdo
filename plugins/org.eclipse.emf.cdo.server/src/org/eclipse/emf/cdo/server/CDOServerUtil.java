@@ -68,6 +68,8 @@ public final class CDOServerUtil
   }
 
   /**
+   * TODO Add SPI for CloneSynchronizer
+   * 
    * @since 3.0
    */
   public static IRepository createCloneRepository(String name, IStore store, Map<String, String> props,

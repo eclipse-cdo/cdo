@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
@@ -302,6 +303,51 @@ public class Session extends Container<IView> implements InternalSession
   public void sendBranchNotification(InternalCDOBranch branch)
   {
     protocol.sendBranchNotification(branch);
+  }
+
+  public void sendCommitNotification(IStoreAccessor.CommitContext commitContext)
+  {
+    // if (!isPassiveUpdateEnabled())
+    // {
+    // dirtyIDs = Collections.emptyList();
+    // }
+    //
+    // InternalView[] views = getViews();
+    //
+    // // Look if someone needs to know something about modified objects
+    // List<CDORevisionDelta> newDeltas = new ArrayList<CDORevisionDelta>();
+    // for (CDORevisionDelta delta : deltas)
+    // {
+    // CDOID lookupID = delta.getID();
+    // for (InternalView view : views)
+    // {
+    // if (view.hasSubscription(lookupID))
+    // {
+    // newDeltas.add(delta);
+    // break;
+    // }
+    // }
+    // }
+    //
+    // if (!isPassiveUpdateEnabled())
+    // {
+    // List<CDOID> subDetached = new ArrayList<CDOID>();
+    // for (CDOID id : detachedObjects)
+    // {
+    // for (InternalView view : views)
+    // {
+    // if (view.hasSubscription(id))
+    // {
+    // subDetached.add(id);
+    // break;
+    // }
+    // }
+    // }
+    //
+    // detachedObjects = subDetached;
+    // }
+    //
+    // protocol.sendCommitNotification(branchPoint, packageUnits, dirtyIDs, detachedObjects, newDeltas);
   }
 
   /**

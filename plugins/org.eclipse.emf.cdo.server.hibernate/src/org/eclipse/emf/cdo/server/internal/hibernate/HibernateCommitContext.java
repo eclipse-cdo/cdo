@@ -12,9 +12,8 @@
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
-import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 
 import java.util.HashMap;
 
@@ -26,18 +25,18 @@ import java.util.HashMap;
  */
 public class HibernateCommitContext
 {
-  private CommitContext commitContext;
+  private InternalCommitContext commitContext;
 
   private HashMap<CDOID, InternalCDORevision> dirtyObjects;
 
   private HashMap<CDOID, InternalCDORevision> newObjects;
 
-  public IStoreAccessor.CommitContext getCommitContext()
+  public InternalCommitContext getCommitContext()
   {
     return commitContext;
   }
 
-  public void setCommitContext(IStoreAccessor.CommitContext commitContext)
+  public void setCommitContext(InternalCommitContext commitContext)
   {
     this.commitContext = commitContext;
   }

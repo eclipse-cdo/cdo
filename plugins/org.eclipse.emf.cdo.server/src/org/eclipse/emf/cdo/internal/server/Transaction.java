@@ -48,7 +48,7 @@ public class Transaction extends View implements InternalTransaction
   public InternalCommitContext createCommitContext()
   {
     checkOpen();
-    return new TransactionCommitContextImpl(this);
+    return new TransactionCommitContext(this);
   }
 
   /**
@@ -59,7 +59,7 @@ public class Transaction extends View implements InternalTransaction
   public InternalCommitContext testCreateCommitContext(final long timeStamp)
   {
     checkOpen();
-    return new TransactionCommitContextImpl(this)
+    return new TransactionCommitContext(this)
     {
       @Override
       protected long createTimeStamp()

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader;
@@ -21,6 +22,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -29,6 +31,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -138,20 +141,20 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * Called before committing. An instance of this accessor represents an instance of a back-end transaction. Could be
    * called multiple times before commit it called. {@link IStoreAccessor#commit(OMMonitor)} or
    * {@link IStoreAccessor#rollback()} will be called after any numbers of
-   * {@link IStoreAccessor#write(CommitContext, OMMonitor)}.
+   * {@link IStoreAccessor#write(InternalCommitContext, OMMonitor)}.
    * <p>
-   * <b>Note</b>: {@link IStoreAccessor#write(CommitContext, OMMonitor)} and {@link IStoreAccessor#commit(OMMonitor)}
-   * could be called from different threads.
+   * <b>Note</b>: {@link IStoreAccessor#write(InternalCommitContext, OMMonitor)} and
+   * {@link IStoreAccessor#commit(OMMonitor)} could be called from different threads.
    * 
    * @since 2.0
    */
-  public void write(CommitContext context, OMMonitor monitor);
+  public void write(InternalCommitContext context, OMMonitor monitor);
 
   /**
    * Flushes to the back-end and makes available the data for others.
    * <p>
-   * <b>Note</b>: {@link IStoreAccessor#write(CommitContext, OMMonitor)} and {@link IStoreAccessor#commit(OMMonitor)}
-   * could be called from different threads.
+   * <b>Note</b>: {@link IStoreAccessor#write(InternalCommitContext, OMMonitor)} and
+   * {@link IStoreAccessor#commit(OMMonitor)} could be called from different threads.
    * <p>
    * <b>Note</b>: Implementors should detect if dirty write occurred. In this case it should throw an exception.
    * 
@@ -168,8 +171,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   public void commit(OMMonitor monitor);
 
   /**
-   * <b>Note</b>: {@link IStoreAccessor#write(CommitContext, OMMonitor)} and {@link IStoreAccessor#rollback()} could be
-   * called from different threads.
+   * <b>Note</b>: {@link IStoreAccessor#write(InternalCommitContext, OMMonitor)} and {@link IStoreAccessor#rollback()}
+   * could be called from different threads.
    * 
    * @since 2.0
    */
@@ -203,6 +206,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public String getUserID();
 
     public String getCommitComment();
+
+    public boolean isAutoReleaseLocksEnabled();
 
     /**
      * Returns the temporary, transactional package manager associated with the commit operation represented by this
@@ -249,9 +254,9 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      */
     public Map<CDOID, CDOID> getIDMappings();
 
-    public void addIDMapping(CDOID oldID, CDOID newID);
+    public List<CDOIDMetaRange> getMetaIDRanges();
 
-    public void applyIDMappings(OMMonitor monitor);
+    public String getRollbackMessage();
   }
 
   /**

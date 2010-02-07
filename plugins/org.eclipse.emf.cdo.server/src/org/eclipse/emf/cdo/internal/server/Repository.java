@@ -37,7 +37,6 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.server.InternalNotificationManager;
 import org.eclipse.emf.cdo.server.InternalStore;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
@@ -119,8 +118,6 @@ public class Repository extends Container<Object> implements InternalRepository
   private InternalSessionManager sessionManager;
 
   private InternalQueryManager queryManager;
-
-  private InternalNotificationManager notificationManager;
 
   private InternalCommitManager commitManager;
 
@@ -577,23 +574,6 @@ public class Repository extends Container<Object> implements InternalRepository
   /**
    * @since 2.0
    */
-  public InternalNotificationManager getNotificationManager()
-  {
-    return notificationManager;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void setNotificationManager(InternalNotificationManager notificationManager)
-  {
-    checkInactive();
-    this.notificationManager = notificationManager;
-  }
-
-  /**
-   * @since 2.0
-   */
   public InternalCommitManager getCommitManager()
   {
     return commitManager;
@@ -709,7 +689,7 @@ public class Repository extends Container<Object> implements InternalRepository
   public Object[] getElements()
   {
     final Object[] elements = { packageRegistry, branchManager, revisionManager, sessionManager, queryManager,
-        notificationManager, commitManager, commitInfoManager, lockManager, store };
+        commitManager, commitInfoManager, lockManager, store };
     return elements;
   }
 
@@ -898,7 +878,6 @@ public class Repository extends Container<Object> implements InternalRepository
     checkState(branchManager, "branchManager"); //$NON-NLS-1$
     checkState(revisionManager, "revisionManager"); //$NON-NLS-1$
     checkState(queryManager, "queryManager"); //$NON-NLS-1$
-    checkState(notificationManager, "notificationManager"); //$NON-NLS-1$
     checkState(commitInfoManager, "commitInfoManager"); //$NON-NLS-1$
     checkState(commitManager, "commitManager"); //$NON-NLS-1$
     checkState(lockManager, "lockingManager"); //$NON-NLS-1$
@@ -910,7 +889,6 @@ public class Repository extends Container<Object> implements InternalRepository
     revisionManager.setRevisionLoader(this);
     sessionManager.setRepository(this);
     queryManager.setRepository(this);
-    notificationManager.setRepository(this);
     commitInfoManager.setCommitInfoLoader(this);
     commitManager.setRepository(this);
     lockManager.setRepository(this);
@@ -964,7 +942,6 @@ public class Repository extends Container<Object> implements InternalRepository
     LifecycleUtil.activate(sessionManager);
     LifecycleUtil.activate(revisionManager);
     LifecycleUtil.activate(queryManager);
-    LifecycleUtil.activate(notificationManager);
     LifecycleUtil.activate(commitInfoManager);
     LifecycleUtil.activate(commitManager);
     LifecycleUtil.activate(queryHandlerProvider);
@@ -991,7 +968,6 @@ public class Repository extends Container<Object> implements InternalRepository
     LifecycleUtil.deactivate(queryHandlerProvider);
     LifecycleUtil.deactivate(commitManager);
     LifecycleUtil.deactivate(commitInfoManager);
-    LifecycleUtil.deactivate(notificationManager);
     LifecycleUtil.deactivate(queryManager);
     LifecycleUtil.deactivate(revisionManager);
     LifecycleUtil.deactivate(sessionManager);
@@ -1094,11 +1070,6 @@ public class Repository extends Container<Object> implements InternalRepository
         setQueryManager(createQueryManager());
       }
 
-      if (getNotificationManager() == null)
-      {
-        setNotificationManager(createNotificationManager());
-      }
-
       if (getCommitInfoManager() == null)
       {
         setCommitInfoManager(createCommitInfoManager());
@@ -1140,11 +1111,6 @@ public class Repository extends Container<Object> implements InternalRepository
     protected InternalQueryManager createQueryManager()
     {
       return new QueryManager();
-    }
-
-    protected InternalNotificationManager createNotificationManager()
-    {
-      return new NotificationManager();
     }
 
     protected InternalCDOCommitInfoManager createCommitInfoManager()

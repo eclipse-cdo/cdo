@@ -25,7 +25,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
  * @author Simon McDuff
  * @since 2.0
  */
-public class XATransactionCommitContext extends TransactionCommitContextImpl
+public class XATransactionCommitContext extends TransactionCommitContext
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION, XATransactionCommitContext.class);
 

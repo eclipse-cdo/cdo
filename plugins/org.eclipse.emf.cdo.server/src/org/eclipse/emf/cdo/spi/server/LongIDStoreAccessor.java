@@ -38,12 +38,12 @@ public abstract class LongIDStoreAccessor extends StoreAccessor
   }
 
   @Override
-  protected void addIDMappings(CommitContext context, OMMonitor monitor)
+  protected void addIDMappings(InternalCommitContext commitContext, OMMonitor monitor)
   {
     try
     {
       LongIDStore longIDStore = (LongIDStore)getStore();
-      CDORevision[] newObjects = context.getNewObjects();
+      CDORevision[] newObjects = commitContext.getNewObjects();
       monitor.begin(newObjects.length);
       for (CDORevision revision : newObjects)
       {
@@ -54,7 +54,7 @@ public abstract class LongIDStoreAccessor extends StoreAccessor
           throw new IllegalStateException("newID=" + newID); //$NON-NLS-1$
         }
 
-        context.addIDMapping(oldID, newID);
+        commitContext.addIDMapping(oldID, newID);
         monitor.worked();
       }
     }

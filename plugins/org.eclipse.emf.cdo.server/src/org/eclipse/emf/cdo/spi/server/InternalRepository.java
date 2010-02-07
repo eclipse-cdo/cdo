@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.server.InternalNotificationManager;
 import org.eclipse.emf.cdo.server.InternalStore;
 import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
@@ -74,8 +73,6 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
   public void setQueryHandlerProvider(IQueryHandlerProvider queryHandlerProvider);
 
   public InternalCommitManager getCommitManager();
-
-  public InternalNotificationManager getNotificationManager();
 
   public long createCommitTimeStamp();
 

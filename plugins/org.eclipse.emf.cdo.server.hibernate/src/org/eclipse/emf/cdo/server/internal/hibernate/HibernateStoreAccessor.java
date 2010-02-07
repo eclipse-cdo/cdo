@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHol
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessor;
 import org.eclipse.emf.cdo.spi.server.StoreChunkReader;
@@ -59,7 +60,7 @@ import java.util.List;
  * Implements the runtime behavior of accessing the hibernate store using queries and doing write and commit. The
  * HibernateStoreAccessor corresponds roughly to a Hibernate session. It offers methods to create and close them and
  * implements transaction handling. The main update/create/delete operations are done in the
- * {@link #write(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, OMMonitor)} method.
+ * {@link #write(InternalCommitContext, OMMonitor)} method.
  * 
  * @see HibernateStore
  * @see HibernatePackageHandler
@@ -472,7 +473,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
    *          not used by this method
    */
   @Override
-  public void write(IStoreAccessor.CommitContext context, OMMonitor monitor)
+  public void write(InternalCommitContext context, OMMonitor monitor)
   {
     HibernateThreadContext.setCommitContext(context);
     if (context.getNewPackageUnits().length > 0)
@@ -650,7 +651,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   @Override
-  protected void addIDMappings(CommitContext context, OMMonitor monitor)
+  protected void addIDMappings(InternalCommitContext commitContext, OMMonitor monitor)
   {
     // Do nothing
   }

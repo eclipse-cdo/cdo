@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
@@ -307,52 +308,38 @@ public class Session extends Container<IView> implements InternalSession
 
   public void sendCommitNotification(IStoreAccessor.CommitContext commitContext)
   {
-    // if (!isPassiveUpdateEnabled())
-    // {
-    // dirtyIDs = Collections.emptyList();
-    // }
-    //
-    // InternalView[] views = getViews();
-    //
-    // // Look if someone needs to know something about modified objects
-    // List<CDORevisionDelta> newDeltas = new ArrayList<CDORevisionDelta>();
-    // for (CDORevisionDelta delta : deltas)
-    // {
-    // CDOID lookupID = delta.getID();
-    // for (InternalView view : views)
-    // {
-    // if (view.hasSubscription(lookupID))
-    // {
-    // newDeltas.add(delta);
-    // break;
-    // }
-    // }
-    // }
-    //
-    // if (!isPassiveUpdateEnabled())
-    // {
-    // List<CDOID> subDetached = new ArrayList<CDOID>();
-    // for (CDOID id : detachedObjects)
-    // {
-    // for (InternalView view : views)
-    // {
-    // if (view.hasSubscription(id))
-    // {
-    // subDetached.add(id);
-    // break;
-    // }
-    // }
-    // }
-    //
-    // detachedObjects = subDetached;
-    // }
-    //
-    // protocol.sendCommitNotification(branchPoint, packageUnits, dirtyIDs, detachedObjects, newDeltas);
+    CDORevisionDelta[] arrayOfDeltas = commitContext.getDirtyObjectDeltas();
+    CDOID[] arrayOfDetachedObjects = commitContext.getDetachedObjects();
+    InternalCDOPackageUnit[] arrayOfNewPackageUnit = commitContext.getNewPackageUnits();
+
+    int dirtyIDSize = arrayOfDeltas == null ? 0 : arrayOfDeltas.length;
+    List<CDOIDAndVersion> dirtyIDs = new ArrayList<CDOIDAndVersion>(dirtyIDSize);
+    List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>(dirtyIDSize);
+    for (int i = 0; i < dirtyIDSize; i++)
+    {
+      CDORevisionDelta delta = arrayOfDeltas[i];
+      deltas.add(delta);
+
+      CDOIDAndVersion dirtyIDAndVersion = CDOIDUtil.createIDAndVersion(delta.getID(), delta.getVersion());
+      dirtyIDs.add(dirtyIDAndVersion);
+    }
+
+    int detachedObjectsSize = arrayOfDetachedObjects == null ? 0 : arrayOfDetachedObjects.length;
+    List<CDOID> detachedObjects = new ArrayList<CDOID>(detachedObjectsSize);
+    for (int i = 0; i < detachedObjectsSize; i++)
+    {
+      detachedObjects.add(arrayOfDetachedObjects[i]);
+    }
+
+    sendCommitNotification(commitContext.getBranchPoint(), arrayOfNewPackageUnit, dirtyIDs, detachedObjects, deltas);
   }
 
   /**
+   * TODO Pass commit context/info to signal directly
+   * 
    * @since 2.0
    */
+  @Deprecated
   public void sendCommitNotification(CDOBranchPoint branchPoint, CDOPackageUnit[] packageUnits,
       List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> deltas)
   {

@@ -757,7 +757,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       @Override
       protected String getThreadName()
       {
-        return "InvalidationRunner";
+        return "InvalidationRunner"; //$NON-NLS-1$
       }
 
       @Override

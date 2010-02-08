@@ -108,7 +108,7 @@
   <extension
         point="org.eclipse.ui.perspectives">
      <perspective
-           class="org.eclipse.emf.cdo.internal.perspective.CDOExplorerPerspective"
+           class="org.eclipse.emf.cdo.internal.ui.perspectives.CDOExplorerPerspective"
            icon="icons/full/view16/cdo_sessions.gif"
            id="org.eclipse.emf.cdo.ui.CDOExplorerPerspective"
            name="%perspective.name">

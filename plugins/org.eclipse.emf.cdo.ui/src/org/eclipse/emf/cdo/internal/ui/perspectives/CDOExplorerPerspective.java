@@ -9,7 +9,7 @@
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper            - maintenance
  */
-package org.eclipse.emf.cdo.internal.perspective;
+package org.eclipse.emf.cdo.internal.ui.perspectives;
 
 import org.eclipse.emf.cdo.internal.ui.views.CDORemoteSessionsView;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
@@ -64,7 +64,6 @@ public class CDOExplorerPerspective implements IPerspectiveFactory
     IFolderLayout BrowsingFolderLayout3 = pageLayout.createFolder("cdoFolderLayout2", IPageLayout.RIGHT, 0.8f, //$NON-NLS-1$
         pageLayout.getEditorArea());
     BrowsingFolderLayout3.addView(IPageLayout.ID_OUTLINE);
-
   }
 
   protected void addViewShortcuts()

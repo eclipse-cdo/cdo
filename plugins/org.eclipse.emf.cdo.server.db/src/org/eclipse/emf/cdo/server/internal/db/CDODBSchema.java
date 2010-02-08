@@ -140,13 +140,13 @@ public class CDODBSchema extends DBSchema
   public static final IDBTable COMMIT_INFOS = INSTANCE.addTable("cdo_commit_infos"); //$NON-NLS-1$
 
   public static final IDBField COMMIT_INFOS_TIMESTAMP = //
-  COMMIT_INFOS.addField("timestamp", DBType.BIGINT); //$NON-NLS-1$
+  COMMIT_INFOS.addField("commit_time", DBType.BIGINT); //$NON-NLS-1$
 
   public static final IDBField COMMIT_INFOS_BRANCH = //
-  COMMIT_INFOS.addField("branch", DBType.INTEGER); //$NON-NLS-1$
+  COMMIT_INFOS.addField("branch_id", DBType.INTEGER); //$NON-NLS-1$
 
   public static final IDBField COMMIT_INFOS_USER = //
-  COMMIT_INFOS.addField("user", DBType.VARCHAR); //$NON-NLS-1$
+  COMMIT_INFOS.addField("user_id", DBType.VARCHAR); //$NON-NLS-1$
 
   public static final IDBField COMMIT_INFOS_COMMENT = //
   COMMIT_INFOS.addField("comment", DBType.VARCHAR); //$NON-NLS-1$

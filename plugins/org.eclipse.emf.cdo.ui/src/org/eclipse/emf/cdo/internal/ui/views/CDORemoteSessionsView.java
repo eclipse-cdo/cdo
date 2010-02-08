@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.ui.views;
 
+import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
@@ -30,12 +31,16 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
 public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessionManager>
 {
-  private static final String TYPE_TEXT_MESSAGE = "org.eclipse.emf.cdo.ui.TextMessage";
+  public static final String ID = "org.eclipse.emf.cdo.ui.CDORemoteSessionsView"; //$NON-NLS-1$
+
+  private static final String TYPE_TEXT_MESSAGE = "org.eclipse.emf.cdo.ui.TextMessage"; //$NON-NLS-1$
 
   private ISelectionListener selectionListener = new ISelectionListener()
   {
@@ -86,17 +91,20 @@ public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessio
             {
               try
               {
-                MessageDialog.openInformation(getShell(), "Message from " + remoteSession,
+                MessageDialog.openInformation(getShell(), MessageFormat.format(Messages
+                    .getString("CDORemoteSessionsView_0"), remoteSession), //$NON-NLS-1$
                     new String(message.getData()));
               }
               catch (RuntimeException ignore)
               {
+                // ignore
               }
             }
           });
         }
         catch (RuntimeException ignore)
         {
+          // ignore
         }
       }
     }
@@ -151,7 +159,9 @@ public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessio
       CDORemoteSession remoteSession = (CDORemoteSession)element;
       if (remoteSession.isSubscribed())
       {
-        InputDialog dlg = new InputDialog(getShell(), "Message to " + remoteSession, "Message:", "", null);
+        InputDialog dlg = new InputDialog(getShell(), MessageFormat.format(Messages
+            .getString("CDORemoteSessionsView_1"), remoteSession), //$NON-NLS-1$
+            Messages.getString("CDORemoteSessionsView_2"), "", null); //$NON-NLS-1$ //$NON-NLS-2$
         if (dlg.open() == InputDialog.OK)
         {
           String message = dlg.getValue();

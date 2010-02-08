@@ -49,7 +49,7 @@ public class CDOLabelDecorator implements ILabelDecorator
   private static final String[] DECORATION_ARGS = {
       "{0}", "{1}", "{2}", "{3,date} {3,time,HH:mm:ss:SSS}", "{4,date} {4,time,HH:mm:ss:SSS}" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
-  public static final String DECORATOR_ID = "org.eclipse.emf.cdo.ui.cdolabeldecorator"; //$NON-NLS-1$
+  public static final String DECORATOR_ID = "org.eclipse.emf.cdo.ui.CDOLabelDecorator"; //$NON-NLS-1$
 
   private String pattern;
 

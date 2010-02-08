@@ -99,6 +99,8 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
 
   private static final int[] columnWidths = { 110, 280, 170, 230 };
 
+  public static final String ID = "org.eclipse.emf.cdo.ui.CDOWatchListView"; //$NON-NLS-1$
+
   private WatchedObjectsDataRegistry dataRegistry = new WatchedObjectsDataRegistry();
 
   private TableViewer viewer;

@@ -6,18 +6,17 @@
 	are made available under the terms of the Eclipse Public License v1.0
 	which accompanies this distribution, and is available at
 	http://www.eclipse.org/legal/epl-v10.html
-	
+
 	Contributors:
 	  Eike Stepper - initial API and implementation
 -->
 
 <plugin>
 
-<!--
-  <extension point="org.eclipse.net4j.util.elementProcessors">
-     <elementProcessor class="org.eclipse.emf.cdo.common.io.CDOGZIPStreamWrapperInjector"/>
+  <extension
+        point="org.eclipse.net4j.util.elementProcessors">
+     <elementProcessor class="org.eclipse.emf.cdo.ui.CDOInteractiveExceptionHandler"/>
   </extension>
--->
 
    <extension
          point="org.eclipse.ui.views">
@@ -29,49 +28,49 @@
             category="org.eclipse.emf.cdo"
             class="org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView"
             icon="icons/full/view16/cdo_sessions.gif"
-            id="org.eclipse.emf.cdo.CDOSessionsView"
+            id="org.eclipse.emf.cdo.ui.CDOSessionsView"
             name="%view.name.0">
       </view>
       <view
             category="org.eclipse.emf.cdo"
             class="org.eclipse.emf.cdo.internal.ui.views.CDOWatchListView"
             icon="icons/full/view16/watch_list.gif"
-            id="org.eclipse.emf.cdo.CDOWatchListView"
+            id="org.eclipse.emf.cdo.ui.CDOWatchListView"
             name="%view.name.1">
       </view>
       <view
             category="org.eclipse.emf.cdo"
             class="org.eclipse.emf.cdo.internal.ui.views.CDORemoteSessionsView"
             icon="icons/full/view16/watch_list.gif"
-            id="org.eclipse.emf.cdo.CDORemoteSessionsView"
+            id="org.eclipse.emf.cdo.ui.CDORemoteSessionsView"
             name="%view.name.2">
       </view>
    </extension>
-   
+
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="org.eclipse.ui.resourcePerspective">
          <view
-               id="org.eclipse.emf.cdo.CDOSessionsView"
+               id="org.eclipse.emf.cdo.ui.CDOSessionsView"
                ratio="0.2"
                relationship="bottom"
                relative="org.eclipse.ui.views.ResourceNavigator">
          </view>
       </perspectiveExtension>
    </extension>
-   
+
   <extension point = "org.eclipse.ui.editors">
     <editor
         id = "org.eclipse.emf.cdo.ui.CDOEditor"
         name = "%editor.name.0"
         icon = "icons/full/obj16/cdo_editor.gif"
         extensions = "*"
-        class = "org.eclipse.emf.cdo.internal.ui.editor.CDOEditor" 
+        class = "org.eclipse.emf.cdo.internal.ui.editor.CDOEditor"
         contributorClass="org.eclipse.emf.cdo.internal.ui.editor.CDOActionBarContributor" >
     </editor>
   </extension>
-  
+
   <extension
         point="org.eclipse.ui.preferencePages">
      <page
@@ -86,12 +85,12 @@
            name="%page.name.1">
      </page>
   </extension>
-  
+
   <extension
         point="org.eclipse.ui.decorators">
      <decorator
            class="org.eclipse.emf.cdo.ui.CDOLabelDecorator"
-           id="org.eclipse.emf.cdo.ui.cdolabeldecorator"
+           id="org.eclipse.emf.cdo.ui.CDOLabelDecorator"
            label="%_UI_CDOLabelDecorator_label"
            lightweight="false"
            state="true">
@@ -105,11 +104,15 @@
         </description>
      </decorator>
   </extension>
+
   <extension
-        point="org.eclipse.net4j.util.elementProcessors">
-     <elementProcessor
-           class="org.eclipse.emf.cdo.ui.CDOInteractiveExceptionHandler">
-     </elementProcessor>
+        point="org.eclipse.ui.perspectives">
+     <perspective
+           class="org.eclipse.emf.cdo.internal.perspective.CDOExplorerPerspective"
+           icon="icons/full/view16/cdo_sessions.gif"
+           id="org.eclipse.emf.cdo.ui.CDOExplorerPerspective"
+           name="%perspective.name">
+     </perspective>
   </extension>
-  
+
 </plugin>

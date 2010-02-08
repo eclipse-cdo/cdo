@@ -235,8 +235,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
   private void compare(CDORevision originRevision, CDORevision dirtyRevision)
   {
     EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(eClass);
-    int count = eClass.getFeatureCount();
-    for (int i = 0; i < count; i++)
+    for (int i = 0; i < features.length; i++)
     {
       EStructuralFeature feature = features[i];
       if (feature.isMany())

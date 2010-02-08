@@ -54,6 +54,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewAdaptersNotifiedEvent;
 import org.eclipse.emf.cdo.view.CDOViewEvent;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
+import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.emf.internal.cdo.CDODeltaNotificationImpl;
 import org.eclipse.emf.internal.cdo.CDOInvalidationNotificationImpl;
@@ -326,7 +327,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Changing view target to {0}", branchPoint);
+      TRACER.format("Changing view target to {0}", branchPoint); //$NON-NLS-1$
     }
 
     List<InternalCDOObject> invalidObjects = getInvalidObjects(timeStamp);
@@ -349,6 +350,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       }
     }
 
+    fireEvent(new ViewTargetChangedEvent(branchPoint));
     return true;
   }
 
@@ -434,7 +436,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     if (!getBranch().isMainBranch())
     {
       // XXX Fix for branching!!
-      throw new UnsupportedOperationException("Fix for branching");
+      throw new UnsupportedOperationException("Fix for branching"); //$NON-NLS-1$
     }
   }
 
@@ -790,7 +792,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
   public void prefetchRevisions(CDOID id, int depth)
   {
-    checkArg(depth != CDORevision.DEPTH_NONE, "Prefetch depth must not be zero");
+    checkArg(depth != CDORevision.DEPTH_NONE, "Prefetch depth must not be zero"); //$NON-NLS-1$
     int initialChunkSize = session.options().getCollectionLoadingPolicy().getInitialChunkSize();
     prefetchRevisions(id, depth, initialChunkSize);
   }
@@ -2145,6 +2147,32 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     public String toString()
     {
       return "CDOViewAdaptersNotifiedEvent: " + timeStamp; //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * @author Victor Roldan Betancort
+   */
+  private final class ViewTargetChangedEvent extends Event implements CDOViewTargetChangedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private CDOBranchPoint branchPoint;
+
+    public ViewTargetChangedEvent(CDOBranchPoint branchPoint)
+    {
+      this.branchPoint = CDOBranchUtil.createBranchPoint(branchPoint);
+    }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("CDOViewTargetChangedEvent: {0}", branchPoint); //$NON-NLS-1$
+    }
+
+    public CDOBranchPoint getBranchPoint()
+    {
+      return branchPoint;
     }
   }
 

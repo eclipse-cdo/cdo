@@ -23,7 +23,8 @@ import org.eclipse.emf.teneo.PersistenceOptions;
  * This class shows how the hibernate mapping can be generated programmatically. The hibernate mapping can be stored
  * locally and used in the server.
  * <p/>
- * See <a href="TBD">this</a> wiki page for more information.
+ * See <a href="http://wiki.eclipse.org/CDO_Hibernate_Store_Model_Relational_Mapping#Generating_the_mapping.2C_manually_changing_it_and_then_use_the_manual_mapping"
+ * >this</a> wiki page for more information.
  * <p/>
  * The generated hbm is printed to the console. For the rest see the inline comments.
  * <p/>

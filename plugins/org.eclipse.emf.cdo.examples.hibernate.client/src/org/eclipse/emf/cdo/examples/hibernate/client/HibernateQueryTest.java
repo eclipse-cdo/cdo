@@ -61,12 +61,16 @@ public class HibernateQueryTest extends BaseTest
     {
       final CDOSession session = openSession();
       final CDOTransaction transaction = session.openTransaction();
-      final CDOResource resource = transaction.getOrCreateResource("/test1"); //$NON-NLS-1$
-      if (resource != null)
+      if (transaction.hasResource("/test1")) //$NON-NLS-1$
       {
-        resource.getContents().clear();
-        transaction.commit();
+        final CDOResource resource = transaction.getResource("/test1"); //$NON-NLS-1$
+        if (resource != null)
+        {
+          resource.getContents().clear();
+        }
       }
+      transaction.commit();
+
     }
 
     // then create new one

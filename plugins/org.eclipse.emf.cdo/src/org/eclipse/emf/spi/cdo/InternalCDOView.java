@@ -12,6 +12,7 @@ package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -64,6 +65,8 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
    * @since 3.0
    */
   public void handleObjectStateChanged(InternalCDOObject object, CDOState oldState, CDOState newState);
+
+  public void invalidate(CDOCommitInfo commitInfo);
 
   /**
    * Returns the conflicting objects.

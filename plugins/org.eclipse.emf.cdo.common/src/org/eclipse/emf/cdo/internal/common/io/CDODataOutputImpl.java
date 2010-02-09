@@ -13,26 +13,28 @@ package org.eclipse.emf.cdo.internal.common.io;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersionAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndBranchImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionAndBranchImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl;
@@ -59,6 +61,7 @@ import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Collection;
 
 /**
  * @author Eike Stepper
@@ -139,6 +142,64 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     writeInt(branchVersion.getVersion());
   }
 
+  public void writeCDOCommitData(CDOCommitData commitData) throws IOException
+  {
+    Collection<CDOPackageUnit> newPackageUnits = commitData.getNewPackageUnits();
+    writeInt(newPackageUnits.size());
+    for (CDOPackageUnit data : newPackageUnits)
+    {
+      writeCDOPackageUnit(data, false);
+    }
+
+    Collection<CDOIDAndVersion> newObjects = commitData.getNewObjects();
+    writeInt(newObjects.size());
+    for (CDOIDAndVersion data : newObjects)
+    {
+      if (data instanceof CDORevision)
+      {
+        writeBoolean(true);
+        writeCDORevision((CDORevision)data, CDORevision.UNCHUNKED);
+      }
+      else
+      {
+        writeBoolean(false);
+        writeCDOIDAndVersion(data);
+      }
+    }
+
+    Collection<CDORevisionKey> changedObjects = commitData.getChangedObjects();
+    writeInt(changedObjects.size());
+    for (CDORevisionKey data : changedObjects)
+    {
+      if (data instanceof CDORevision)
+      {
+        writeBoolean(true);
+        writeCDORevisionDelta((CDORevisionDelta)data);
+      }
+      else
+      {
+        writeBoolean(false);
+        writeCDORevisionKey(data);
+      }
+    }
+
+    Collection<CDOIDAndVersion> detachedObjects = commitData.getDetachedObjects();
+    writeInt(detachedObjects.size());
+    for (CDOIDAndVersion data : detachedObjects)
+    {
+      writeCDOIDAndVersion(data);
+    }
+  }
+
+  public void writeCDOCommitInfo(CDOCommitInfo commitInfo) throws IOException
+  {
+    writeCDOBranch(commitInfo.getBranch());
+    writeLong(commitInfo.getTimeStamp());
+    writeString(commitInfo.getUserID());
+    writeString(commitInfo.getComment());
+    writeCDOCommitData(commitInfo);
+  }
+
   public void writeCDOID(CDOID id) throws IOException
   {
     if (id == null)
@@ -184,11 +245,6 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     ((CDOIDAndBranchImpl)idAndBranch).write(this);
   }
 
-  public void writeCDOIDAndVersionAndBranch(CDOIDAndVersionAndBranch idAndVersionAndBranch) throws IOException
-  {
-    ((CDOIDAndVersionAndBranchImpl)idAndVersionAndBranch).write(this);
-  }
-
   public void writeCDOIDMetaRange(CDOIDMetaRange metaRange) throws IOException
   {
     if (metaRange == null)
@@ -201,6 +257,23 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
       writeCDOID(metaRange.getLowerBound());
       writeInt(metaRange.size());
     }
+  }
+
+  public CDOPackageRegistry getPackageRegistry()
+  {
+    return null;
+  }
+
+  public CDOIDProvider getIDProvider()
+  {
+    return null;
+  }
+
+  public void writeCDORevisionKey(CDORevisionKey revisionKey) throws IOException
+  {
+    writeCDOID(revisionKey.getID());
+    writeCDOBranch(revisionKey.getBranch());
+    writeInt(revisionKey.getVersion());
   }
 
   public void writeCDORevision(CDORevision revision, int referenceChunk) throws IOException

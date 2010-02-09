@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.spi.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
@@ -26,7 +27,8 @@ public interface InternalCDOCommitInfoManager extends CDOCommitInfoManager, ILif
 
   public void setCommitInfoLoader(CommitInfoLoader commitInfoLoader);
 
-  public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment);
+  public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment,
+      CDOCommitData commitData);
 
   /**
    * @author Eike Stepper
@@ -34,5 +36,7 @@ public interface InternalCDOCommitInfoManager extends CDOCommitInfoManager, ILif
   public interface CommitInfoLoader
   {
     public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler);
+
+    public CDOCommitData loadCommitData(long timeStamp);
   }
 }

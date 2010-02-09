@@ -201,8 +201,8 @@ public class LoadRevisionsIndication extends CDOReadIndication
 
   private InternalCDORevision getRevision(CDOID id)
   {
-    return (InternalCDORevision)getRepository().getRevisionManager().getRevision(id, branchPoint, referenceChunk,
-        CDORevision.DEPTH_NONE, true);
+    return getRepository().getRevisionManager().getRevision(id, branchPoint, referenceChunk, CDORevision.DEPTH_NONE,
+        true);
   }
 
   private void collectRevisions(InternalCDORevision revision, Set<CDOID> revisions,

@@ -51,15 +51,22 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
 
   public void setCache(CDORevisionCache cache);
 
+  @Deprecated
   public void reviseLatest(CDOID id, CDOBranch branch);
 
   public void reviseVersion(CDOID id, CDOBranchVersion branchVersion, long timeStamp);
 
-  public CDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
       boolean loadOnDemand, SyntheticCDORevision[] synthetics);
 
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk,
       int prefetchDepth, boolean loadOnDemand, SyntheticCDORevision[] synthetics);
+
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
+      boolean loadOnDemand);
+
+  public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk,
+      boolean loadOnDemand);
 
   /**
    * @author Eike Stepper

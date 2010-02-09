@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -280,6 +281,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     boolean withPackages = in.readBoolean();
     if (withPackages)
     {
+      CheckUtil.checkArg(packageRegistry, "packageRegistry");
       ePackage = CDOModelUtil.readPackage(in, packageRegistry);
       setState(State.LOADED);
     }

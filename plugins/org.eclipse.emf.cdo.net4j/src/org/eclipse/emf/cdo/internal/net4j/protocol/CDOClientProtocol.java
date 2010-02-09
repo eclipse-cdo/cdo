@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
@@ -120,6 +121,12 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
     send(new LoadCommitInfosRequest(this, branch, startTime, endTime, handler));
+  }
+
+  public CDOCommitData loadCommitData(long timeStamp)
+  {
+    // TODO: implement CDOClientProtocol.loadCommitData(timeStamp, dataType)
+    throw new UnsupportedOperationException();
   }
 
   public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,

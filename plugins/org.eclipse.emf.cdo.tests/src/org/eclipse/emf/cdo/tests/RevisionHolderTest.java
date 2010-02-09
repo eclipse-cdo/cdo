@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionHolder;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionList;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.RevisionHolder;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.StubCDORevision;
 
 import org.eclipse.emf.ecore.EClass;
@@ -335,7 +336,7 @@ public class RevisionHolderTest extends AbstractCDOTest
     }
 
     @Override
-    public CDORevision copy()
+    public InternalCDORevision copy()
     {
       return new TestRevision(CDOIDUtil.getLong(id), version, branchPoint.getTimeStamp(), revised);
     }

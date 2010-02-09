@@ -19,13 +19,17 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
@@ -36,6 +40,8 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
@@ -512,7 +518,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   {
     synchronized (lastUpdateTimeLock)
     {
-      this.lastUpdateTime = lastUpdateTime;
+      if (this.lastUpdateTime < lastUpdateTime)
+      {
+        this.lastUpdateTime = lastUpdateTime;
+      }
+
       lastUpdateTimeLock.notifyAll();
     }
   }
@@ -561,15 +571,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return policy.resolveProxy(this, revision, feature, accessIndex, serverIndex);
   }
 
-  /**
-   * @since 2.0
-   */
-  public void handleSyncResponse(CDOBranchPoint branchPoint, Collection<CDOPackageUnit> newPackageUnits,
-      Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects)
-  {
-    handleCommitNotification(branchPoint, newPackageUnits, dirtyOIDs, detachedObjects, null, null, true, false);
-  }
-
   public void handleBranchNotification(InternalCDOBranch branch)
   {
     getBranchManager().handleBranchCreated(branch);
@@ -578,18 +579,17 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   /**
    * @since 2.0
    */
-  public void handleCommitNotification(CDOBranchPoint branchPoint, Collection<CDOPackageUnit> newPackageUnits,
-      Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects, Collection<CDORevisionDelta> deltas,
-      InternalCDOView excludedView)
+  public void handleSyncResponse(CDOBranchPoint branchPoint, Collection<CDOPackageUnit> newPackageUnits,
+      Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects)
   {
-    handleCommitNotification(branchPoint, newPackageUnits, dirtyOIDs, detachedObjects, deltas, excludedView, options()
-        .isPassiveUpdateEnabled(), true);
+    handleCommitNotification___OLD(branchPoint, newPackageUnits, dirtyOIDs, detachedObjects, null, null, true, false);
   }
 
-  private void handleCommitNotification(CDOBranchPoint branchPoint, final Collection<CDOPackageUnit> newPackageUnits,
-      Set<CDOIDAndVersion> dirtyOIDs, final Collection<CDOID> detachedObjects,
-      final Collection<CDORevisionDelta> deltas, InternalCDOView excludedView, final boolean reviseAndInvalidate,
-      final boolean async)
+  @Deprecated
+  private void handleCommitNotification___OLD(CDOBranchPoint branchPoint,
+      final Collection<CDOPackageUnit> newPackageUnits, Set<CDOIDAndVersion> dirtyOIDs,
+      final Collection<CDOID> detachedObjects, final Collection<CDORevisionDelta> deltas, InternalCDOView excludedView,
+      final boolean reviseAndInvalidate, final boolean async)
   {
     final CDOBranch branch = branchPoint.getBranch();
     final long timeStamp = branchPoint.getTimeStamp();
@@ -700,10 +700,12 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     setLastUpdateTime(timeStamp);
-    fireInvalidationEvent(branchPoint, newPackageUnits, dirtyOIDs, detachedObjects, excludedView);
+    throw new UnsupportedOperationException();
+    // fireInvalidationEvent(branchPoint, newPackageUnits, dirtyOIDs, detachedObjects, excludedView);
   }
 
-  public void reviseRevisions(CDOBranchPoint branchPoint, Set<CDOIDAndVersion> dirtyOIDs,
+  @Deprecated
+  private void reviseRevisions(CDOBranchPoint branchPoint, Set<CDOIDAndVersion> dirtyOIDs,
       Collection<CDOID> detachedObjects, InternalCDOView excludedView)
   {
     InternalCDORevisionManager revisionManager = getRevisionManager();
@@ -724,6 +726,123 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     {
       revisionManager.reviseLatest(id, branch);
     }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void handleCommitNotification(CDOCommitInfo commitInfo)
+  {
+    try
+    {
+      synchronized (invalidationLock)
+      {
+        registerPackageUnits(commitInfo);
+        reviseRevisions(commitInfo);
+        invalidate(commitInfo, null);
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      if (isActive())
+      {
+        OM.LOG.error(ex);
+      }
+      else
+      {
+        OM.LOG.info(Messages.getString("CDOSessionImpl.2")); //$NON-NLS-1$
+      }
+    }
+  }
+
+  private void registerPackageUnits(final CDOCommitInfo commitInfo)
+  {
+    InternalCDOPackageRegistry packageRegistry = getPackageRegistry();
+    for (CDOPackageUnit newPackageUnit : commitInfo.getNewPackageUnits())
+    {
+      packageRegistry.putPackageUnit((InternalCDOPackageUnit)newPackageUnit);
+    }
+  }
+
+  private void reviseRevisions(CDOCommitInfo commitInfo)
+  {
+    CDOBranch newBranch = commitInfo.getBranch();
+    long timeStamp = commitInfo.getTimeStamp();
+    InternalCDORevisionManager revisionManager = getRevisionManager();
+
+    // Cache new revisions
+    for (CDOIDAndVersion key : commitInfo.getNewObjects())
+    {
+      if (key instanceof InternalCDORevision)
+      {
+        InternalCDORevision newRevision = (InternalCDORevision)key;
+        revisionManager.addRevision(newRevision);
+      }
+    }
+
+    // Apply deltas and cache the resulting new revisions, if possible...
+    for (CDORevisionKey key : commitInfo.getChangedObjects())
+    {
+      InternalCDORevision newRevision = createNewRevision(key, commitInfo);
+      if (newRevision != null)
+      {
+        revisionManager.addRevision(newRevision);
+      }
+      else
+      {
+        // ... Otherwise try to revise old revision if it is in the same branch
+        if (key.getBranch() == newBranch)
+        {
+          revisionManager.reviseVersion(key.getID(), key, timeStamp);
+        }
+      }
+    }
+
+    // Revise old revisions
+    for (CDOIDAndVersion key : commitInfo.getDetachedObjects())
+    {
+      CDOBranchVersion branchVersion = newBranch.getVersion(key.getVersion());
+      revisionManager.reviseVersion(key.getID(), branchVersion, timeStamp);
+    }
+  }
+
+  private InternalCDORevision createNewRevision(CDORevisionKey potentialDelta, CDOCommitInfo commitInfo)
+  {
+    if (potentialDelta instanceof CDORevisionDelta)
+    {
+      CDORevisionDelta delta = (CDORevisionDelta)potentialDelta;
+      CDOID id = delta.getID();
+
+      InternalCDORevisionManager revisionManager = getRevisionManager();
+      InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, potentialDelta, CDORevision.UNCHUNKED, false);
+      if (oldRevision != null)
+      {
+        InternalCDORevision newRevision = oldRevision.copy();
+        newRevision.adjustForCommit(commitInfo.getBranch(), commitInfo.getTimeStamp());
+        delta.apply(newRevision);
+        return newRevision;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void invalidate(final CDOCommitInfo commitInfo, final InternalCDOTransaction sender)
+  {
+    for (InternalCDOView view : getViews())
+    {
+      if (view != sender && view.getBranch() == commitInfo.getBranch())
+      {
+        QueueRunner runner = getInvalidationRunner();
+        runner.addWork(new InvalidationRunnable(view, commitInfo));
+      }
+    }
+
+    setLastUpdateTime(commitInfo.getTimeStamp());
+    fireInvalidationEvent(sender, commitInfo);
   }
 
   public void cloneRepository(CDOCloningContext context)
@@ -769,13 +888,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   }
 
   /**
-   * @param packageUnits
    * @since 2.0
    */
-  public void fireInvalidationEvent(CDOBranchPoint branchPoint, Collection<CDOPackageUnit> packageUnits,
-      Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects, InternalCDOView excludedView)
+  public void fireInvalidationEvent(InternalCDOView excludedView, CDOCommitInfo commitInfo)
   {
-    fireEvent(new InvalidationEvent(excludedView, branchPoint, packageUnits, dirtyOIDs, detachedObjects));
+    fireEvent(new InvalidationEvent(excludedView, commitInfo));
   }
 
   @Override
@@ -1044,29 +1161,59 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   /**
    * @author Eike Stepper
    */
+  private static final class InvalidationRunnable implements Runnable
+  {
+    private InternalCDOView view;
+
+    private CDOCommitInfo commitInfo;
+
+    private InvalidationRunnable(InternalCDOView view, CDOCommitInfo commitInfo)
+    {
+      this.view = view;
+      this.commitInfo = commitInfo;
+    }
+
+    public void run()
+    {
+      try
+      {
+        invalidationRunnerActive.set(true);
+        view.invalidate(commitInfo);
+      }
+      catch (RuntimeException ex)
+      {
+        if (view.isActive())
+        {
+          OM.LOG.error(ex);
+        }
+        else
+        {
+          OM.LOG.info(Messages.getString("CDOSessionImpl.1")); //$NON-NLS-1$
+        }
+      }
+      finally
+      {
+        invalidationRunnerActive.set(false);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   private final class InvalidationEvent extends Event implements CDOSessionInvalidationEvent
   {
     private static final long serialVersionUID = 1L;
 
     private InternalCDOView view;
 
-    private CDOBranchPoint branchPoint;
+    private CDOCommitInfo commitInfo;
 
-    private Set<CDOIDAndVersion> dirtyOIDs;
-
-    private Collection<CDOID> detachedObjects;
-
-    private Collection<CDOPackageUnit> newPackageUnits;
-
-    public InvalidationEvent(InternalCDOView view, CDOBranchPoint branchPoint,
-        Collection<CDOPackageUnit> newPackageUnits, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects)
+    public InvalidationEvent(InternalCDOView view, CDOCommitInfo commitInfo)
     {
       super(CDOSessionImpl.this);
       this.view = view;
-      this.branchPoint = branchPoint;
-      this.newPackageUnits = newPackageUnits;
-      this.dirtyOIDs = dirtyOIDs;
-      this.detachedObjects = detachedObjects;
+      this.commitInfo = commitInfo;
     }
 
     @Override
@@ -1087,38 +1234,58 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     public CDOBranch getBranch()
     {
-      return branchPoint.getBranch();
+      return commitInfo.getBranch();
+    }
+
+    public CDOCommitInfoManager getCommitInfoManager()
+    {
+      return commitInfo.getCommitInfoManager();
     }
 
     public long getTimeStamp()
     {
-      return branchPoint.getTimeStamp();
-    }
-
-    public Set<CDOIDAndVersion> getDirtyOIDs()
-    {
-      return dirtyOIDs;
-    }
-
-    public Collection<CDOID> getDetachedObjects()
-    {
-      return detachedObjects;
+      return commitInfo.getTimeStamp();
     }
 
     public Collection<CDOPackageUnit> getNewPackageUnits()
     {
-      return newPackageUnits;
+      return commitInfo.getNewPackageUnits();
+    }
+
+    public String getUserID()
+    {
+      return commitInfo.getUserID();
+    }
+
+    public String getComment()
+    {
+      return commitInfo.getComment();
+    }
+
+    public Collection<CDOIDAndVersion> getNewObjects()
+    {
+      return commitInfo.getNewObjects();
+    }
+
+    public Collection<CDORevisionKey> getChangedObjects()
+    {
+      return commitInfo.getChangedObjects();
+    }
+
+    public Collection<CDOIDAndVersion> getDetachedObjects()
+    {
+      return commitInfo.getDetachedObjects();
     }
 
     public int compareTo(CDOBranchPoint o)
     {
-      return branchPoint.compareTo(o);
+      return commitInfo.compareTo(o);
     }
 
     @Override
     public String toString()
     {
-      return "CDOSessionInvalidationEvent: " + dirtyOIDs;
+      return "CDOSessionInvalidationEvent[" + commitInfo + "]";
     }
   }
 
@@ -1423,6 +1590,22 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         {
           delegate.loadCommitInfos(branch, startTime, endTime, handler);
           return;
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public CDOCommitData loadCommitData(long timeStamp)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.loadCommitData(timeStamp);
         }
         catch (Exception ex)
         {

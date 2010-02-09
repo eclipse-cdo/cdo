@@ -294,11 +294,13 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
   {
     responding(new CDODataOutputImpl(out)
     {
+      @Override
       public CDOPackageRegistry getPackageRegistry()
       {
         return commitContext.getPackageRegistry();
       }
 
+      @Override
       public CDOIDProvider getIDProvider()
       {
         return CommitTransactionIndication.this.getSession();

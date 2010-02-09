@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
@@ -352,6 +353,12 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
     // TODO: implement HibernateStoreAccessor.loadCommitInfos(branch, startTime, endTime, handler)
+    throw new UnsupportedOperationException();
+  }
+
+  public CDOCommitData loadCommitData(long timeStamp)
+  {
+    // TODO: implement HibernateStoreAccessor.loadCommitData(timeStamp, dataType)
     throw new UnsupportedOperationException();
   }
 

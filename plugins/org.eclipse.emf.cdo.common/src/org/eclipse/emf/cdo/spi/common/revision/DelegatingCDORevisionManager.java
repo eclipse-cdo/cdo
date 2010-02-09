@@ -105,19 +105,19 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
     return getDelegate().getObjectType(id);
   }
 
-  public CDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk,
+  public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk,
       boolean loadOnDemand)
   {
     return getDelegate().getRevisionByVersion(id, branchVersion, referenceChunk, loadOnDemand);
   }
 
-  public CDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
       boolean loadOnDemand)
   {
     return getDelegate().getRevision(id, branchPoint, referenceChunk, prefetchDepth, loadOnDemand);
   }
 
-  public CDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
       boolean loadOnDemand, SyntheticCDORevision[] synthetics)
   {
     return getDelegate().getRevision(id, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, synthetics);

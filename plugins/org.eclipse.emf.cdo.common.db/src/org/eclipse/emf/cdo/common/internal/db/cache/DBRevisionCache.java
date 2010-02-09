@@ -774,11 +774,13 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   {
     return new CDODataOutputImpl(extendedDataOutputStream)
     {
+      @Override
       public CDOPackageRegistry getPackageRegistry()
       {
         return packageRegistry;
       }
 
+      @Override
       public CDOIDProvider getIDProvider()
       {
         return idProvider;

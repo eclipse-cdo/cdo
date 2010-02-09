@@ -88,8 +88,8 @@ public abstract class AbstractSyncRevisionsIndication extends CDOReadIndication
     try
     {
       CDOBranchPoint branchPoint = getRepository().getBranchManager().getMainBranch().getHead();
-      InternalCDORevision revision = (InternalCDORevision)getRepository().getRevisionManager().getRevision(id,
-          branchPoint, referenceChunk, CDORevision.DEPTH_NONE, true);
+      InternalCDORevision revision = getRepository().getRevisionManager().getRevision(id, branchPoint, referenceChunk,
+          CDORevision.DEPTH_NONE, true);
       if (revision == null)
       {
         detachedObjects.add(new Pair<CDOID, Long>(id, getTimestamp(id, version)));

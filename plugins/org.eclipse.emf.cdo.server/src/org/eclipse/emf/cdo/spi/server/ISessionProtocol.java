@@ -10,17 +10,11 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
-
-import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -32,8 +26,7 @@ public interface ISessionProtocol extends CDOProtocol
 
   public void sendBranchNotification(InternalCDOBranch branch);
 
-  public void sendCommitNotification(CDOBranchPoint branchPoint, CDOPackageUnit[] packageUnits,
-      List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> newDeltas);
+  public void sendCommitNotification(CDOCommitInfo commitInfo);
 
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode);
 

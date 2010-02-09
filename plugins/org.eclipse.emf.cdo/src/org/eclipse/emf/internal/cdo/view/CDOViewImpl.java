@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
@@ -1275,6 +1276,33 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         handler.objectStateChanged(this, object, oldState, newState);
       }
     }
+  }
+
+  public void invalidate(CDOCommitInfo commitInfo)
+  {
+    Set<CDOObject> conflicts = null;
+
+    boolean reviseAndInvalidate = session.options().isPassiveUpdateEnabled();
+    if (reviseAndInvalidate)
+    {
+      conflicts = handleInvalidation(timeStamp, finalDirtyOIDs, finalDetachedObjects, true);
+    }
+
+    boolean skipChangeSubscription = (deltas == null || deltas.size() <= 0)
+        && (detachedObjects == null || detachedObjects.size() <= 0);
+
+    if (!skipChangeSubscription)
+    {
+      handleChangeSubscription(deltas, detachedObjects, true);
+    }
+
+    if (conflicts != null)
+    {
+      InternalCDOTransaction transaction = (InternalCDOTransaction)this;
+      transaction.handleConflicts(conflicts);
+    }
+
+    fireAdaptersNotifiedEvent(commitInfo.getTimeStamp());
   }
 
   /**

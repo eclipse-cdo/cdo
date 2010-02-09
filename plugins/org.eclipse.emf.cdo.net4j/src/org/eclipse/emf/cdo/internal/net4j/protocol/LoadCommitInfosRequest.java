@@ -74,7 +74,7 @@ public class LoadCommitInfosRequest extends CDOClientRequest<Boolean>
 
       try
       {
-        CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, userID, comment);
+        CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, userID, comment, null);
         handler.handleCommitInfo(commitInfo);
       }
       catch (Exception ex)

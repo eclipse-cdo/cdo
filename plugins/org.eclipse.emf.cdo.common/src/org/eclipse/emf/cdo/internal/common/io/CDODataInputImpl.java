@@ -15,10 +15,12 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersionAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
@@ -33,12 +35,13 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
+import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndBranchImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionAndBranchImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
@@ -58,6 +61,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -78,6 +82,8 @@ import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -174,6 +180,59 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     CDOBranch branch = readCDOBranch();
     int version = readInt();
     return CDOBranchUtil.createBranchVersion(branch, version);
+  }
+
+  public CDOCommitData readCDOCommitData() throws IOException
+  {
+    int size;
+
+    size = readInt();
+    List<CDOPackageUnit> newPackageUnits = new ArrayList<CDOPackageUnit>(size);
+    for (int i = 0; i < size; i++)
+    {
+      CDOPackageUnit data = readCDOPackageUnit(null);
+      newPackageUnits.add(data);
+    }
+
+    size = readInt();
+    List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>(size);
+    for (int i = 0; i < size; i++)
+    {
+      boolean revision = readBoolean();
+      CDOIDAndVersion data = revision ? readCDORevision() : readCDOIDAndVersion();
+      newObjects.add(data);
+    }
+
+    size = readInt();
+    List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>(size);
+    for (int i = 0; i < size; i++)
+    {
+      boolean delta = readBoolean();
+      CDORevisionKey data = delta ? readCDORevisionDelta() : readCDORevisionKey();
+      changedObjects.add(data);
+    }
+
+    size = readInt();
+    List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>(size);
+    for (int i = 0; i < size; i++)
+    {
+      CDOIDAndVersion data = readCDOIDAndVersion();
+      detachedObjects.add(data);
+    }
+
+    return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);
+  }
+
+  public CDOCommitInfo readCDOCommitInfo(CDOCommitInfoManager commitInfoManager) throws IOException
+  {
+    CDOBranch branch = readCDOBranch();
+    long timeStamp = readLong();
+    String userID = readString();
+    String comment = readString();
+    CDOCommitData commitData = readCDOCommitData();
+
+    return ((InternalCDOCommitInfoManager)commitInfoManager).createCommitInfo(branch, timeStamp, userID, comment,
+        commitData);
   }
 
   public CDOID readCDOID() throws IOException
@@ -273,11 +332,6 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return new CDOIDAndBranchImpl(this);
   }
 
-  public CDOIDAndVersionAndBranch readCDOIDAndVersionAndBranch() throws IOException
-  {
-    return new CDOIDAndVersionAndBranchImpl(this);
-  }
-
   public CDOIDMetaRange readCDOIDMetaRange() throws IOException
   {
     boolean exist = readBoolean();
@@ -287,6 +341,14 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     }
 
     return null;
+  }
+
+  public CDORevisionKey readCDORevisionKey() throws IOException
+  {
+    CDOID id = readCDOID();
+    CDOBranch branch = readCDOBranch();
+    int version = readInt();
+    return CDORevisionUtil.createRevisionKey(id, branch, version);
   }
 
   public CDORevision readCDORevision() throws IOException

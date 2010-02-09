@@ -14,12 +14,10 @@ package org.eclipse.emf.cdo.common.io;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
-import org.eclipse.emf.cdo.common.commit.CDOCommitData;
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersionAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
@@ -28,7 +26,6 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
@@ -82,16 +79,6 @@ public interface CDODataInput extends ExtendedDataInput
    */
   public CDOBranchVersion readCDOBranchVersion() throws IOException;
 
-  /**
-   * @since 3.0
-   */
-  public CDOCommitData readCDOCommitData() throws IOException;
-
-  /**
-   * @since 3.0
-   */
-  public CDOCommitInfo readCDOCommitInfo(CDOCommitInfoManager commitInfoManager) throws IOException;
-
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 
   public CDOID readCDOID() throws IOException;
@@ -103,14 +90,14 @@ public interface CDODataInput extends ExtendedDataInput
    */
   public CDOIDAndBranch readCDOIDAndBranch() throws IOException;
 
-  public CDOIDMetaRange readCDOIDMetaRange() throws IOException;
-
-  // /////////////////////////////////////////////////////////////////////////////////////////////////
-
   /**
    * @since 3.0
    */
-  public CDORevisionKey readCDORevisionKey() throws IOException;
+  public CDOIDAndVersionAndBranch readCDOIDAndVersionAndBranch() throws IOException;
+
+  public CDOIDMetaRange readCDOIDMetaRange() throws IOException;
+
+  // /////////////////////////////////////////////////////////////////////////////////////////////////
 
   public CDORevision readCDORevision() throws IOException;
 

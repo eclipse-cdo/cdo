@@ -47,7 +47,7 @@ public interface CDOStaleReferencePolicy
     @Override
     public String toString()
     {
-      return Messages.getString("CDOStaleReferencePolicy.0"); //$NON-NLS-1$
+      return Messages.getString("CDOStaleReferencePolicy.0");
     }
   };
 
@@ -66,12 +66,12 @@ public interface CDOStaleReferencePolicy
       {
         public Object invoke(Object arg0, Method arg1, Object[] arg2) throws Throwable
         {
-          if (arg1.getName().equals("eIsProxy")) //$NON-NLS-1$
+          if (arg1.getName().equals("eIsProxy"))
           {
             return false;
           }
 
-          if (arg1.getName().equals("eClass")) //$NON-NLS-1$
+          if (arg1.getName().equals("eClass"))
           {
             return type;
           }
@@ -99,7 +99,7 @@ public interface CDOStaleReferencePolicy
     @Override
     public String toString()
     {
-      return Messages.getString("CDOStaleReferencePolicy.1"); //$NON-NLS-1$
+      return Messages.getString("CDOStaleReferencePolicy.1");
     }
   };
 

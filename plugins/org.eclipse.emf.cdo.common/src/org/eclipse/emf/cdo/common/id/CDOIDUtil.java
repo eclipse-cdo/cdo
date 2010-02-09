@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOID.Type;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndBranchImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionAndBranchImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
@@ -358,6 +359,14 @@ public final class CDOIDUtil
   public static CDOIDAndBranch createIDAndBranch(CDOID id, CDOBranch branch)
   {
     return new CDOIDAndBranchImpl(id, branch);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static CDOIDAndVersionAndBranch createIDAndVersionAndBranch(CDOID id, int version, int branchID)
+  {
+    return new CDOIDAndVersionAndBranchImpl(id, version, branchID);
   }
 
   /**

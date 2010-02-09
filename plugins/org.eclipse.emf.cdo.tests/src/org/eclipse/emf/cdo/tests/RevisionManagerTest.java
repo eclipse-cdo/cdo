@@ -247,7 +247,8 @@ public class RevisionManagerTest extends AbstractCDOTest
   {
     CDOBranchPoint branchPoint = branch.getPoint(timeStamp);
     dumpCache(branchPoint);
-    return revisionManager.getRevision(ID, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+    return (InternalCDORevision)revisionManager.getRevision(ID, branchPoint, CDORevision.UNCHUNKED,
+        CDORevision.DEPTH_NONE, true);
   }
 
   private void prefetchBaseline(CDOBranch branch, int levelsUp)

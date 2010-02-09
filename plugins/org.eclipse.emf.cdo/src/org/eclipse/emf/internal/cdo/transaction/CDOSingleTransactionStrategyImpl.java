@@ -82,7 +82,7 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
 
     InternalCDOCommitInfoManager commitInfoManager = transaction.getSession().getCommitInfoManager();
     return commitInfoManager.createCommitInfo(transaction.getBranch(), result.getTimeStamp(), transaction.getSession()
-        .getUserID(), transaction.getCommitComment(), null);
+        .getUserID(), transaction.getCommitComment());
   }
 
   public void rollback(InternalCDOTransaction transaction, InternalCDOUserSavepoint savepoint)

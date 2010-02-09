@@ -10,8 +10,12 @@
  */
 package org.eclipse.emf.cdo.internal.server.embedded;
 
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
@@ -19,6 +23,10 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -63,10 +71,12 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
     clientSession.handleBranchNotification(branch);
   }
 
-  public void sendCommitNotification(CDOCommitInfo commitInfo)
+  public void sendCommitNotification(CDOBranchPoint branchPoint, CDOPackageUnit[] packageUnits,
+      List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> newDeltas)
   {
     EmbeddedClientSession clientSession = clientSessionProtocol.getSession();
-    clientSession.handleCommitNotification(commitInfo);
+    clientSession.handleCommitNotification(branchPoint, Arrays.asList(packageUnits), new HashSet<CDOIDAndVersion>(
+        dirtyIDs), detachedObjects, newDeltas, null);
   }
 
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode)

@@ -103,13 +103,11 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
   {
     requesting(new CDODataOutputImpl(out)
     {
-      @Override
       public CDOPackageRegistry getPackageRegistry()
       {
         return getSession().getPackageRegistry();
       }
 
-      @Override
       public CDOIDProvider getIDProvider()
       {
         return CommitTransactionRequest.this.getIDProvider();

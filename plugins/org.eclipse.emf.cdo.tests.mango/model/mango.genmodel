@@ -15,16 +15,16 @@
       <genEnumLiterals ecoreEnumLiteral="mango.ecore#//ParameterPassing/ByValue"/>
       <genEnumLiterals ecoreEnumLiteral="mango.ecore#//ParameterPassing/ByReference"/>
     </genEnums>
-    <genClasses ecoreClass="mango.ecore#//MangoValueList">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mango.ecore#//MangoValueList/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference mango.ecore#//MangoValueList/values"/>
+    <genClasses ecoreClass="mango.ecore#//ValueList">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mango.ecore#//ValueList/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference mango.ecore#//ValueList/values"/>
     </genClasses>
-    <genClasses ecoreClass="mango.ecore#//MangoValue">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mango.ecore#//MangoValue/name"/>
+    <genClasses ecoreClass="mango.ecore#//Value">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mango.ecore#//Value/name"/>
     </genClasses>
-    <genClasses ecoreClass="mango.ecore#//MangoParameter">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mango.ecore#//MangoParameter/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mango.ecore#//MangoParameter/passing"/>
+    <genClasses ecoreClass="mango.ecore#//Parameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mango.ecore#//Parameter/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mango.ecore#//Parameter/passing"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

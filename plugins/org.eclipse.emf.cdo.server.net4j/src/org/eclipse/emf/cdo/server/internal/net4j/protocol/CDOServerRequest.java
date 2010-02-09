@@ -48,7 +48,6 @@ public abstract class CDOServerRequest extends Request
   {
     requesting(new CDODataOutputImpl(out)
     {
-      @Override
       public CDOPackageRegistry getPackageRegistry()
       {
         return getSession().getManager().getRepository().getPackageRegistry();
@@ -60,7 +59,6 @@ public abstract class CDOServerRequest extends Request
         return getProtocol().getPackageURICompressor();
       }
 
-      @Override
       public CDOIDProvider getIDProvider()
       {
         return getSession();

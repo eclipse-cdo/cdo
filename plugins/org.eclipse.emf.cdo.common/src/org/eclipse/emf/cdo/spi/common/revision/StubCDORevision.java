@@ -171,7 +171,7 @@ public class StubCDORevision extends AbstractCDORevision
     throw new UnsupportedOperationException();
   }
 
-  public InternalCDORevision copy()
+  public CDORevision copy()
   {
     throw new UnsupportedOperationException();
   }

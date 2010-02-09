@@ -15,7 +15,7 @@ import java.util.Properties;
 import junit.framework.TestCase;
 
 import org.eclipse.emf.cdo.examples.company.CompanyPackage;
-import org.eclipse.emf.cdo.server.hibernate.teneo.CDOHelper;
+import org.eclipse.emf.cdo.server.hibernate.teneo.CDOMappingGenerator;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.teneo.PersistenceOptions;
 
@@ -56,7 +56,8 @@ public class GenerateHBMTest extends TestCase
     final EPackage[] ePackages = new EPackage[] { CompanyPackage.eINSTANCE };
 
     // generate the mapping
-    final String mapping = CDOHelper.getInstance().generateMapping(ePackages, props);
+    final CDOMappingGenerator mappingGenerator = new CDOMappingGenerator();
+    final String mapping = mappingGenerator.generateMapping(ePackages, props);
 
     // show it somewhere....
     // then store the hbm somewhere in a file and change it manually

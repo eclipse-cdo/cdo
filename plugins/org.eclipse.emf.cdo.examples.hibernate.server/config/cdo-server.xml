@@ -81,6 +81,8 @@
 			 -->
 		<store type="hibernate">
 			<mappingProvider type="teneo">
+				<extension name="org.eclipse.emf.teneo.annotations.mapper.EFeatureAnnotator" 
+					value="org.eclipse.emf.cdo.examples.hibernate.server.CDOExampleEFeatureAnnotator"/>
 			</mappingProvider>
 		<!-- 
 			<mappingProvider type="file">

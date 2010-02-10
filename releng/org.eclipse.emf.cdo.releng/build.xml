@@ -9,7 +9,7 @@
 		<isset property="env.WORKSPACE" />
 	</condition>
 
-	<property file="build.properties" />
+	<property file="buckminster.properties" />
 
 	<!-- Default properties intended to be overridden by entries in the above property file -->
 	<property name="tools" location="${build.root}/tools" />
@@ -121,6 +121,7 @@
 		</eclipse.launch>
 	</target>
 
+	<!--
 	<target name="get.workspace" unless="workspace.gzip.exists">
 		<echo message="Fetching workspace template from ${template.workspace.site}/${workspace.gzip}" />
 		<mkdir dir="${template.dir}" />
@@ -130,6 +131,11 @@
 	<target name="init.workspace" depends="get.workspace" unless="workspace.exists">
 		<mkdir dir="${workspace}" />
 		<untar src="${local.workspace.gzip}" compression="gzip" dest="${workspace}" />
+	</target>
+	-->
+
+	<target name="init.workspace" unless="workspace.exists">
+		<mkdir dir="${workspace}" />
 	</target>
 
 	<target name="init.build.properties">

@@ -161,13 +161,6 @@
 	</target>
 
 	<target name="provision" depends="init.checks,init.workspace,install.buckminster,init.build.properties">
-		<echo message="Copying the releng component into workspace ${workspace}" />
-		<copy todir="${workspace}" verbose="true">
-			<fileset dir="${build.root}/org.eclipse.emf/org.eclipse.emf.cdo/releng">
-				<include name="org.eclipse.emf.cdo.releng/**/*" />
-			</fileset>
-		</copy>
-
 		<echo message="Importing projects into workspace ${workspace} and binaries into target platform ${targetPlatformPath}" />
 		<buckminster command="installJRE">
 			<cmdargs>

@@ -34,7 +34,7 @@
         <bc:propertyRef key="buckminster.component"/>
       </rm:uri>
     </rm:provider>
-    <rm:provider componentTypes="osgi.bundle" readerType="cvs">
+    <rm:provider componentTypes="buckminster" readerType="cvs">
       <rm:uri format=":pserver:anonymous@dev.eclipse.org:/cvsroot/modeling,org.eclipse.emf/org.eclipse.emf.cdo/releng/{0}">
         <bc:propertyRef key="buckminster.component"/>
       </rm:uri>

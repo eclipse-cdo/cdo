@@ -9,6 +9,14 @@
 		<isset property="env.WORKSPACE" />
 	</condition>
 
+	<condition property="site.pack200" value="${env.SITE_PACK200}">
+		<isset property="env.SITE_PACK200" />
+	</condition>
+
+	<condition property="site.signing" value="${env.SITE_SIGNING}">
+		<isset property="SITE_SIGNING" />
+	</condition>
+
 	<property file="buckminster.properties" />
 
 	<!-- Default properties intended to be overridden by entries in the above property file -->

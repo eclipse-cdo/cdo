@@ -134,6 +134,11 @@
 
 	<target name="init.workspace" unless="workspace.exists">
 		<mkdir dir="${workspace}" />
+		<copy todir="${workspace}">
+			<fileset dir="${build.root}/org.eclipse.emf/org.eclipse.emf.cdo/releng">
+				<include name="org.eclipse.emf.cdo.releng/**/*" />
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="init.build.properties">

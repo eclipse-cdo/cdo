@@ -207,7 +207,6 @@
 		</buckminster>
 	</target>
 
-	<target name="clean.all" depends="clean.tools,clean.workspace,clean.tp,clean.output" />
 	<target name="clean.tools">
 		<delete dir="${tools}/director" failonerror="true" quiet="true" />
 		<delete dir="${tools}/buckminster" failonerror="true" quiet="true" />
@@ -225,4 +224,7 @@
 		<delete dir="${buckminster.output.temp}" failonerror="true" quiet="true" />
 		<delete dir="${buckminster.output.root}" failonerror="true" quiet="true" />
 	</target>
+
+	<target name="clean.all" depends="clean.tools,clean.workspace,clean.tp,clean.output" />
+
 </project>

@@ -103,8 +103,6 @@
 				<jvmarg value="-Declipse.p2.mirrors=false" />
 				<arg value="-r" />
 				<arg value="${bm.headless.site}" />
-				<arg value="-r" />
-				<arg value="${bm.external.site}" />
 				<arg value="-d" />
 				<arg value="${tools}/buckminster" />
 				<arg value="-p" />

@@ -74,6 +74,7 @@
 					<arg value="@{workspace}" />
 					<arg value="--loglevel" />
 					<arg value="${env.BUCKMINSTER_LOGLEVEL}" />
+					<arg value="--displaystacktrace" />
 					<globargs />
 					<arg value="@{command}" />
 					<arg value="-P" />

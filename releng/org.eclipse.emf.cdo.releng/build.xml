@@ -177,7 +177,7 @@
 		<buckminster command="import">
 			<cmdargs>
 				<arg value="-P" />
-				<arg value="${basedir}/build.properties" />
+				<arg value="${basedir}/buckminster.properties" />
 				<arg value="${basedir}/build.mspec" />
 			</cmdargs>
 		</buckminster>

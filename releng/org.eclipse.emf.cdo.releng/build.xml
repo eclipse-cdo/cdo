@@ -185,14 +185,26 @@
 		</buckminster>
 	</target>
 
+	<target name="site.p2" depends="provision">
+		<echo message="Building all projects in workspace ${workspace}" />
+		<buckminster command="build" />
+
+		<echo message="Performing org.eclipse.emf.cdo.site#site.p2" />
+		<buckminster command="perform">
+			<cmdargs>
+				<arg value="org.eclipse.emf.cdo.site#site.p2" />
+			</cmdargs>
+		</buckminster>
+	</target>
+
 	<target name="promote.sites" depends="provision">
 		<echo message="Building all projects in workspace ${workspace}" />
 		<buckminster command="build" />
 
-		<echo message="Performing org.eclipse.buckminster.releng#promote" />
+		<echo message="Performing org.eclipse.emf.cdo.releng#promote" />
 		<buckminster command="perform">
 			<cmdargs>
-				<arg value="org.eclipse.buckminster.releng#promote" />
+				<arg value="org.eclipse.emf.cdo.releng#promote" />
 			</cmdargs>
 		</buckminster>
 	</target>

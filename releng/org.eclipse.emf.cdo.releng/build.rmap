@@ -109,8 +109,6 @@
     </rm:provider>
   </rm:searchPath>
 
-
-
   <rm:searchPath name="target.platform">
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false" resolutionFilter="(build.type=N)">
       <rm:uri format="http://download.eclipse.org/eclipse/updates/3.6milestones"/>

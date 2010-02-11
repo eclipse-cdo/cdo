@@ -184,6 +184,13 @@
 				<arg value="targetPlatformPath=${targetPlatformPath}" />
 			</cmdargs>
 		</buckminster>
+
+		<buckminster command="setpref">
+			<cmdargs>
+				<arg value="maxParallelResolutions=2" />
+			</cmdargs>
+		</buckminster>
+
 		<buckminster command="import">
 			<cmdargs>
 				<arg value="-P" />

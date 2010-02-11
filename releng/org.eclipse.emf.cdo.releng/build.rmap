@@ -2,63 +2,44 @@
 <rm:rmap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bc="http://www.eclipse.org/buckminster/Common-1.0" xmlns:psf="http://www.eclipse.org/buckminster/PSFProvider-1.0" xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0">
   <rm:property key="build.type" mutable="true" value="N"/>
 
-  <rm:locator pattern="^org\.eclipse\.emf\.cdo*" searchPathRef="cdo.source"/>
-  <rm:locator pattern="^org\.gastro*" searchPathRef="cdo.source"/>
-  <rm:locator pattern="^org\.eclipse\.net4j*" searchPathRef="net4j.source"/>
+  <rm:locator pattern="^org\.eclipse\.emf\.cdo\.releng" searchPathRef="cdo.releng"/>
+  <rm:locator pattern="^org\.eclipse\.emf\.cdo\.formatchecker" searchPathRef="cdo.releng"/>
+
+  <rm:locator pattern="^org\.eclipse\.emf\.cdo\.doc.*" searchPathRef="cdo.doc"/>
+  <rm:locator pattern="^org\.gastro.*" searchPathRef="cdo.examples.gastro"/>
+  <rm:locator pattern="^org\.eclipse\.emf\.cdo\.hibernate.*" searchPathRef="cdo.hibernate"/>
+  <rm:locator pattern="^org\.eclipse\.emf\.cdo\.examples.*" searchPathRef="cdo.examples"/>
+  <rm:locator pattern="^org\.eclipse\.emf\.cdo\.tests.*" searchPathRef="cdo.tests"/>
+  <rm:locator pattern="^org\.eclipse\.emf\.cdo.*-feature" searchPathRef="cdo.features"/>
+  <rm:locator pattern="^org\.eclipse\.emf\.cdo.*" searchPathRef="cdo.plugins"/>
+
+  <rm:locator pattern="^org\.eclipse\.net4j\.examples.*" searchPathRef="net4j.examples"/>
+  <rm:locator pattern="^org\.eclipse\.net4j\.buddies.*" searchPathRef="net4j.examples"/>
+  <rm:locator pattern="^org\.eclipse\.net4j\.fshare.*" searchPathRef="net4j.examples"/>
+  <rm:locator pattern="^org\.eclipse\.net4j\.jms.*" searchPathRef="net4j.examples"/>
+  <rm:locator pattern="^org\.eclipse\.net4j\.tests.*" searchPathRef="net4j.tests"/>
+  <rm:locator pattern="^org\.eclipse\.net4j\.db\.tests.*" searchPathRef="net4j.tests"/>
+  <rm:locator pattern="^org\.eclipse\.net4j\.jms\.tests.*" searchPathRef="net4j.tests"/>
+  <rm:locator pattern="^org\.eclipse\.net4j.*-feature" searchPathRef="net4j.features"/>
+  <rm:locator pattern="^org\.eclipse\.net4j.*" searchPathRef="net4j.plugins"/>
+
   <rm:locator searchPathRef="modeling" failOnError="false"/>
   <rm:locator searchPathRef="target.platform"/>
 
-  <rm:searchPath name="cdo.source">
-    <rm:provider componentTypes="osgi.bundle" readerType="cvs">
-      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/plugins/{1}">
+
+
+  <rm:searchPath name="cdo.releng">
+    <rm:provider componentTypes="osgi.bundle,eclipse.feature" readerType="cvs">
+      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/releng/{1}">
         <bc:propertyRef key="cvs.repository"/>
         <bc:propertyRef key="buckminster.component"/>
       </rm:uri>
     </rm:provider>
+  </rm:searchPath>
+
+  <rm:searchPath name="cdo.doc">
     <rm:provider componentTypes="osgi.bundle" readerType="cvs">
       <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/doc/{1}">
-        <bc:propertyRef key="cvs.repository"/>
-        <bc:propertyRef key="buckminster.component"/>
-      </rm:uri>
-    </rm:provider>
-    <rm:provider componentTypes="osgi.bundle" readerType="cvs">
-      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/examples/{1}">
-        <bc:propertyRef key="cvs.repository"/>
-        <bc:propertyRef key="buckminster.component"/>
-      </rm:uri>
-    </rm:provider>
-    <rm:provider componentTypes="osgi.bundle" readerType="cvs">
-      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/hibernate/{1}">
-        <bc:propertyRef key="cvs.repository"/>
-        <bc:propertyRef key="buckminster.component"/>
-      </rm:uri>
-    </rm:provider>
-    <rm:provider componentTypes="osgi.bundle" readerType="cvs">
-      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/tests/{1}">
-        <bc:propertyRef key="cvs.repository"/>
-        <bc:propertyRef key="buckminster.component"/>
-      </rm:uri>
-    </rm:provider>
-    <rm:provider componentTypes="osgi.bundle" readerType="cvs">
-      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/releng/{1}">
-        <bc:propertyRef key="cvs.repository"/>
-        <bc:propertyRef key="buckminster.component"/>
-      </rm:uri>
-    </rm:provider>
-    <rm:provider componentTypes="buckminster" readerType="cvs">
-      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/releng/{1}">
-        <bc:propertyRef key="cvs.repository"/>
-        <bc:propertyRef key="buckminster.component"/>
-      </rm:uri>
-    </rm:provider>
-    <rm:provider componentTypes="eclipse.feature" readerType="cvs">
-      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/features/{1}-feature">
-        <bc:propertyRef key="cvs.repository"/>
-        <bc:propertyRef key="buckminster.component"/>
-      </rm:uri>
-    </rm:provider>
-    <rm:provider componentTypes="eclipse.feature" readerType="cvs">
-      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/features/{1}">
         <bc:propertyRef key="cvs.repository"/>
         <bc:propertyRef key="buckminster.component"/>
       </rm:uri>
@@ -69,8 +50,26 @@
         <bc:propertyRef key="buckminster.component"/>
       </rm:uri>
     </rm:provider>
+  </rm:searchPath>
+
+  <rm:searchPath name="cdo.examples.gastro">
+    <rm:provider componentTypes="osgi.bundle" readerType="cvs">
+      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/examples/{1}">
+        <bc:propertyRef key="cvs.repository"/>
+        <bc:propertyRef key="buckminster.component"/>
+      </rm:uri>
+    </rm:provider>
     <rm:provider componentTypes="eclipse.feature" readerType="cvs">
       <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/examples/{1}-feature">
+        <bc:propertyRef key="cvs.repository"/>
+        <bc:propertyRef key="buckminster.component"/>
+      </rm:uri>
+    </rm:provider>
+  </rm:searchPath>
+
+  <rm:searchPath name="cdo.hibernate">
+    <rm:provider componentTypes="osgi.bundle" readerType="cvs">
+      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/hibernate/{1}">
         <bc:propertyRef key="cvs.repository"/>
         <bc:propertyRef key="buckminster.component"/>
       </rm:uri>
@@ -81,47 +80,76 @@
         <bc:propertyRef key="buckminster.component"/>
       </rm:uri>
     </rm:provider>
-    <rm:provider componentTypes="eclipse.feature" readerType="cvs">
-      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/tests/{1}-feature">
+  </rm:searchPath>
+
+  <rm:searchPath name="cdo.examples">
+    <rm:provider componentTypes="osgi.bundle" readerType="cvs">
+      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/examples/{1}">
         <bc:propertyRef key="cvs.repository"/>
         <bc:propertyRef key="buckminster.component"/>
       </rm:uri>
     </rm:provider>
   </rm:searchPath>
 
-  <rm:searchPath name="net4j.source">
+  <rm:searchPath name="cdo.tests">
     <rm:provider componentTypes="osgi.bundle" readerType="cvs">
-      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.net4j/plugins/{1}">
+      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/tests/{1}">
         <bc:propertyRef key="cvs.repository"/>
         <bc:propertyRef key="buckminster.component"/>
       </rm:uri>
     </rm:provider>
-    <rm:provider componentTypes="osgi.bundle" readerType="cvs">
-      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.net4j/doc/{1}">
+  </rm:searchPath>
+
+  <rm:searchPath name="cdo.features">
+    <rm:provider componentTypes="eclipse.feature" readerType="cvs">
+      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/features/{1}-feature">
         <bc:propertyRef key="cvs.repository"/>
         <bc:propertyRef key="buckminster.component"/>
       </rm:uri>
     </rm:provider>
+  </rm:searchPath>
+
+  <rm:searchPath name="cdo.plugins">
+    <rm:provider componentTypes="osgi.bundle" readerType="cvs">
+      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/plugins/{1}">
+        <bc:propertyRef key="cvs.repository"/>
+        <bc:propertyRef key="buckminster.component"/>
+      </rm:uri>
+    </rm:provider>
+  </rm:searchPath>
+
+
+
+  <rm:searchPath name="net4j.examples">
     <rm:provider componentTypes="osgi.bundle" readerType="cvs">
       <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.net4j/examples/{1}">
         <bc:propertyRef key="cvs.repository"/>
         <bc:propertyRef key="buckminster.component"/>
       </rm:uri>
     </rm:provider>
+  </rm:searchPath>
+
+  <rm:searchPath name="net4j.tests">
     <rm:provider componentTypes="osgi.bundle" readerType="cvs">
       <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.net4j/tests/{1}">
         <bc:propertyRef key="cvs.repository"/>
         <bc:propertyRef key="buckminster.component"/>
       </rm:uri>
     </rm:provider>
+  </rm:searchPath>
+
+  <rm:searchPath name="net4j.features">
     <rm:provider componentTypes="eclipse.feature" readerType="cvs">
       <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.net4j/features/{1}-feature">
         <bc:propertyRef key="cvs.repository"/>
         <bc:propertyRef key="buckminster.component"/>
       </rm:uri>
     </rm:provider>
-    <rm:provider componentTypes="eclipse.feature" readerType="cvs">
-      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.net4j/doc/{1}-feature">
+  </rm:searchPath>
+
+  <rm:searchPath name="net4j.plugins">
+    <rm:provider componentTypes="osgi.bundle" readerType="cvs">
+      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.net4j/plugins/{1}">
         <bc:propertyRef key="cvs.repository"/>
         <bc:propertyRef key="buckminster.component"/>
       </rm:uri>
@@ -141,6 +169,8 @@
       <rm:uri format="http://net4j.sourceforge.net/update"/>
     </rm:provider>
   </rm:searchPath>
+
+
 
   <rm:searchPath name="modeling">
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false" resolutionFilter="(build.type=N)">

@@ -110,6 +110,7 @@
 		<eclipse.launch app="director">
 			<args>
 				<jvmarg value="-Declipse.p2.mirrors=false" />
+				<jvmarg value="-Dorg.eclipse.update.jarprocessor.pack200=${org.eclipse.update.jarprocessor.pack200}" />
 				<arg value="-r" />
 				<arg value="${bm.headless.site}" />
 				<arg value="-d" />

@@ -181,10 +181,10 @@
 
   <rm:searchPath name="target.platform">
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false" resolutionFilter="(build.type=N)">
-      <rm:uri format="file:/home/thhal/Download/eclipse.download/eclipse/updates/3.6milestones"/>
+      <rm:uri format="http://download.eclipse.org/eclipse/updates/3.6milestones"/>
     </rm:provider>
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false" resolutionFilter="(build.type=N)">
-      <rm:uri format="file:/home/thhal/Download/eclipse.download/releases/helios"/>
+      <rm:uri format="http://download.eclipse.org/releases/helios"/>
     </rm:provider>
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false" resolutionFilter="">
       <rm:uri format="http://net4j.sourceforge.net/update"/>
@@ -193,7 +193,7 @@
 
   <rm:searchPath name="modeling">
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false" resolutionFilter="(build.type=N)">
-      <rm:uri format="file:/home/thhal/Download/eclipse.download/modeling/emf/updates/milestones"/>
+      <rm:uri format="http://download.eclipse.org/modeling/emf/updates/milestones"/>
     </rm:provider>
   </rm:searchPath>
 </rm:rmap>

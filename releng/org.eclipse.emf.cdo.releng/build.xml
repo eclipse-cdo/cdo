@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <project name="CDO">
 
-	<property environment="env" />
 	<property file="build.properties" />
+	<property environment="env" />
 
 	<condition property="build.root" value="${env.WORKSPACE}" else="${basedir}/../build">
 		<isset property="env.WORKSPACE" />

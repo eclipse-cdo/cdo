@@ -202,7 +202,11 @@
 
 	<target name="site.p2" depends="provision">
 		<echo message="Building all projects in workspace ${workspace}" />
-		<buckminster command="build" />
+		<buckminster command="build">
+			<cmdargs>
+				<arg value="--thorough" />
+			</cmdargs>
+		</buckminster>
 
 		<echo message="Performing org.eclipse.emf.cdo.site#site.p2" />
 		<buckminster command="perform">

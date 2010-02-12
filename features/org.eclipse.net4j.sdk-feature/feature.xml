@@ -83,7 +83,6 @@
 		<plugin id="org.eclipse.net4j.jvm.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.tcp.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.ui.capabilities.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.ui.defs.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.ui.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.util.defs.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>

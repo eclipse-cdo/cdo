@@ -76,7 +76,6 @@
 		<plugin id="org.eclipse.emf.cdo.server.net4j.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.emf.cdo.server.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.emf.cdo.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.emf.cdo.ui.capabilities.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.emf.cdo.ui.defs.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.emf.cdo.ui.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 

@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
 <project name="CDO">
 
-	<!-- Property file containing overrides for the default properties -->
 	<property environment="env" />
+	<property file="build.properties" />
 
-	<!-- If we are not runing in Hudson, we set up with a reasonable default -->
 	<condition property="build.root" value="${env.WORKSPACE}" else="${basedir}/../build">
 		<isset property="env.WORKSPACE" />
 	</condition>
@@ -16,8 +15,6 @@
 	<condition property="site.signing" value="${env.SITE_SIGNING}">
 		<isset property="SITE_SIGNING" />
 	</condition>
-
-	<property file="build.properties" />
 
 	<!-- Default properties intended to be overridden by entries in the above property file -->
 	<property name="tools" location="${build.root}/tools" />
@@ -182,12 +179,6 @@
 		<buckminster command="setpref">
 			<cmdargs>
 				<arg value="targetPlatformPath=${targetPlatformPath}" />
-			</cmdargs>
-		</buckminster>
-
-		<buckminster command="setpref">
-			<cmdargs>
-				<arg value="maxParallelResolutions=2" />
 			</cmdargs>
 		</buckminster>
 

@@ -191,7 +191,7 @@
 		</buckminster>
 	</target>
 
-	<target name="site.p2" depends="provision">
+	<target name="site.p2" depends="init.build.properties">
 		<echo message="Building all projects in workspace ${workspace}" />
 		<buckminster command="build">
 			<cmdargs>

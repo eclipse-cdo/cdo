@@ -38,7 +38,7 @@
 
   <rm:searchPath name="cdo.doc">
     <rm:provider componentTypes="osgi.bundle" readerType="cvs">
-      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/doc/{1}",{2}>
+      <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/doc/{1},{2}">
         <bc:propertyRef key="cvs.repository"/>
         <bc:propertyRef key="buckminster.component"/>
         <bc:propertyRef key="cvs.branch"/>
@@ -177,8 +177,8 @@
       <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.net4j/features/{1}-feature,{2}">
         <bc:propertyRef key="cvs.repository"/>
         <bc:propertyRef key="buckminster.component"/>
-      </rm:uri>
         <bc:propertyRef key="cvs.branch"/>
+      </rm:uri>
     </rm:provider>
   </rm:searchPath>
 

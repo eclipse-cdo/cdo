@@ -1,7 +1,11 @@
 <?xml version="1.0"?>
 <project name="CDO">
 
-	<property file="build.properties" />
+	<condition property="properties.file" value="build.properties" else="local.properties">
+		<isset property="server.build" />
+	</condition>
+
+	<property file="${properties.file}"  />
 	<property environment="env" />
 
 	<condition property="build.root" value="${env.WORKSPACE}" else="${basedir}/../build">

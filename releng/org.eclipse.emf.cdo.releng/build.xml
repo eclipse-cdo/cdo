@@ -207,6 +207,16 @@
 		</buckminster>
 	</target>
 
+	<target name="test" depends="site.p2">
+		<echo message="Running JUnit tests" />
+		<buckminster command="junit">
+			<cmdargs>
+				<arg value="-l" />
+				<arg value="org.eclipse.emf.cdo.tests/CDO AllTests.launch" />
+			</cmdargs>
+		</buckminster>
+	</target>
+
 	<target name="promote.sites" depends="provision">
 		<echo message="Building all projects in workspace ${workspace}" />
 		<buckminster command="build" />

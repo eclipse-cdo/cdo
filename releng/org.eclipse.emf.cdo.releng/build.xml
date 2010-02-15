@@ -5,11 +5,19 @@
 		<isset property="server.build" />
 	</condition>
 
+	<condition property="mspec.file" value="build.mspec" else="local.mspec">
+		<isset property="server.build" />
+	</condition>
+
 	<property file="${properties.file}"  />
 	<property environment="env" />
 
 	<condition property="build.root" value="${env.WORKSPACE}" else="${basedir}/../build">
 		<isset property="env.WORKSPACE" />
+	</condition>
+
+	<condition property="buckminster.loglevel" value="${env.BUCKMINSTER_LOGLEVEL}" else="INFO">
+		<isset property="env.BUCKMINSTER_LOGLEVEL" />
 	</condition>
 
 	<condition property="site.pack200" value="${env.SITE_PACK200}">
@@ -74,7 +82,7 @@
 					<arg value="-data" />
 					<arg value="@{workspace}" />
 					<arg value="--loglevel" />
-					<arg value="${env.BUCKMINSTER_LOGLEVEL}" />
+					<arg value="${buckminster.loglevel}" />
 					<arg value="--displaystacktrace" />
 					<globargs />
 					<arg value="@{command}" />
@@ -173,13 +181,6 @@
 
 	<target name="provision" depends="init.checks,init.workspace,install.buckminster,init.build.properties">
 		<echo message="Importing projects into workspace ${workspace} and binaries into target platform ${targetPlatformPath}" />
-		<buckminster command="installJRE">
-			<cmdargs>
-				<arg value="--location" />
-				<arg value="${jdk1.4.dir}" />
-			</cmdargs>
-		</buckminster>
-
 		<buckminster command="setpref">
 			<cmdargs>
 				<arg value="targetPlatformPath=${targetPlatformPath}" />
@@ -189,8 +190,8 @@
 		<buckminster command="import">
 			<cmdargs>
 				<arg value="-P" />
-				<arg value="${basedir}/build.properties" />
-				<arg value="${basedir}/build.mspec" />
+				<arg value="${basedir}/${properties.file}" />
+				<arg value="${basedir}/${mspec.file}" />
 			</cmdargs>
 		</buckminster>
 	</target>

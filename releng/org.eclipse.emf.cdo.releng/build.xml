@@ -16,7 +16,7 @@
 		<isset property="env.WORKSPACE" />
 	</condition>
 
-	<condition property="buckminster.loglevel" value="${env.BUCKMINSTER_LOGLEVEL}" else="INFO">
+	<condition property="buckminster.loglevel" value="${env.BUCKMINSTER_LOGLEVEL}" else="DEBUG">
 		<isset property="env.BUCKMINSTER_LOGLEVEL" />
 	</condition>
 

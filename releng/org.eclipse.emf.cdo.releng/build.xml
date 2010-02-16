@@ -128,6 +128,8 @@
 				<arg value="org.eclipse.buckminster.pde.headless.feature.feature.group" />
 				<arg value="-i" />
 				<arg value="org.eclipse.buckminster.cvs.headless.feature.feature.group" />
+				<arg value="-i" />
+				<arg value="org.eclipse.buckminster.emma.headless.feature.feature.group" />
 			</args>
 		</eclipse.launch>
 	</target>
@@ -195,10 +197,14 @@
 
 	<target name="test" depends="site.p2">
 		<echo message="Running JUnit tests" />
-		<buckminster command="junit">
+		<buckminster command="emma">
 			<cmdargs>
 				<arg value="-l" />
 				<arg value="org.eclipse.emf.cdo.tests/CDO AllTests.launch" />
+				<arg value="-o" />
+				<arg value="result/testReport.xml" />
+				<arg value="--xml" />
+				<arg value="result/coverageReport.xml" />
 			</cmdargs>
 		</buckminster>
 	</target>

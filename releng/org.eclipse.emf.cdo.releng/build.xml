@@ -37,10 +37,6 @@
 	<property name="buckminster.output.root" location="${result}/output" />
 	<property name="buckminster.output.temp" location="${result}/temp" />
 
-	<property name="workspace.gzip" value="workspace-template.tar.gz" />
-	<property name="template.dir" location="${tools}/templates" />
-	<property name="local.workspace.gzip" location="${template.dir}/${workspace.gzip}" />
-
 	<!-- This macro executes the default application of an eclipse installation
 			 that resides in the folder ${buildtools}/@app -->
 	<macrodef name="eclipse.launch">
@@ -97,8 +93,6 @@
 	<target name="init.checks">
 		<available file="${tools}/director/director" property="director.exists" />
 		<available file="${tools}/buckminster/buckminster" property="buckminster.exists" />
-		<available file="${local.workspace.gzip}" property="workspace.gzip.exists" />
-		<available file="${workspace}" type="dir" property="workspace.exists" />
 	</target>
 
 	<target name="get.director" unless="director.exists">
@@ -108,7 +102,7 @@
 		          suffix=".zip"
 		          property="director.zip"
 		          deleteonexit="true" />
-		<get src="${director.url}" dest="${director.zip}" />
+		<get src="${eclipse.downloads}/${director.path}" dest="${director.zip}" />
 		<mkdir dir="${tools}" />
 		<unzip src="${director.zip}" dest="${tools}" />
 		<delete file="${director.zip}" />
@@ -121,7 +115,7 @@
 				<jvmarg value="-Declipse.p2.mirrors=false" />
 				<jvmarg value="-Dorg.eclipse.update.jarprocessor.pack200=${org.eclipse.update.jarprocessor.pack200}" />
 				<arg value="-r" />
-				<arg value="${bm.headless.site}" />
+				<arg value="${eclipse.downloads}/${bm.headless.path}" />
 				<arg value="-d" />
 				<arg value="${tools}/buckminster" />
 				<arg value="-p" />
@@ -138,21 +132,14 @@
 		</eclipse.launch>
 	</target>
 
-	<!--
-	<target name="get.workspace" unless="workspace.gzip.exists">
-		<echo message="Fetching workspace template from ${template.workspace.site}/${workspace.gzip}" />
-		<mkdir dir="${template.dir}" />
-		<get src="${template.workspace.site}/${workspace.gzip}" dest="${local.workspace.gzip}" />
-	</target>
-
-	<target name="init.workspace" depends="get.workspace" unless="workspace.exists">
-		<mkdir dir="${workspace}" />
-		<untar src="${local.workspace.gzip}" compression="gzip" dest="${workspace}" />
-	</target>
-	-->
-
 	<target name="init.workspace" unless="workspace.exists">
 		<mkdir dir="${workspace}" />
+		<delete>
+			<fileset dir=".">
+				<include name="site.p2/**" />
+			</fileset>
+		</delete>
+
 	</target>
 
 	<target name="init.build.properties">

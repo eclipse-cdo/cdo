@@ -90,7 +90,27 @@
 		</sequential>
 	</macrodef>
 
-	<target name="init.checks">
+	<target name="init.clean.tools" if="${env.CLEAN_TOOLS}">
+		<echo message="Cleaning tools..."/>
+		<antcall target="clean.tools" />
+	</target>
+
+	<target name="init.clean.tp" if="${env.CLEAN_TP}">
+		<echo message="Cleaning target platform..."/>
+		<antcall target="clean.tp" />
+	</target>
+
+	<target name="init.clean.workspace" if="${env.CLEAN_WORKSPACE}">
+		<echo message="Cleaning workspace..."/>
+		<antcall target="clean.workspace" />
+	</target>
+
+	<target name="init.clean.output" if="${env.CLEAN_OUTPUT}">
+		<echo message="Cleaning output..."/>
+		<antcall target="clean.output" />
+	</target>
+
+	<target name="init.checks" depends="init.clean.tools,init.clean.tp,init.clean.workspace,init.clean.output">
 		<available file="${tools}/director/director" property="director.exists" />
 		<available file="${tools}/buckminster/buckminster" property="buckminster.exists" />
 	</target>
@@ -128,18 +148,14 @@
 				<arg value="org.eclipse.buckminster.pde.headless.feature.feature.group" />
 				<arg value="-i" />
 				<arg value="org.eclipse.buckminster.cvs.headless.feature.feature.group" />
+				<arg value="-i" />
+				<arg value="org.eclipse.buckminster.emma.headless.feature.feature.group" />
 			</args>
 		</eclipse.launch>
 	</target>
 
 	<target name="init.workspace" unless="workspace.exists">
 		<mkdir dir="${workspace}" />
-		<delete>
-			<fileset dir=".">
-				<include name="site.p2/**" />
-			</fileset>
-		</delete>
-
 	</target>
 
 	<target name="init.build.properties">
@@ -201,10 +217,14 @@
 
 	<target name="test" depends="site.p2">
 		<echo message="Running JUnit tests" />
-		<buckminster command="junit">
+		<buckminster command="emma">
 			<cmdargs>
 				<arg value="-l" />
 				<arg value="org.eclipse.emf.cdo.tests/CDO AllTests.launch" />
+				<arg value="-o" />
+				<arg value="${result}/testReport.xml" />
+				<arg value="--xml" />
+				<arg value="${result}/coverageReport.xml" />
 			</cmdargs>
 		</buckminster>
 	</target>

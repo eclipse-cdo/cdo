@@ -90,7 +90,23 @@
 		</sequential>
 	</macrodef>
 
-	<target name="init.checks">
+	<target name="init.clean.tools" if="${env.CLEAN_TOOLS}">
+		<antcall target="clean.tools" />
+	</target>
+
+	<target name="init.clean.tp" if="${env.CLEAN_TP}">
+		<antcall target="clean.tp" />
+	</target>
+
+	<target name="init.clean.workspace" if="${env.CLEAN_WORKSPACE}">
+		<antcall target="clean.workspace" />
+	</target>
+
+	<target name="init.clean.output" if="${env.CLEAN_OUTPUT}">
+		<antcall target="clean.output" />
+	</target>
+
+	<target name="init.checks" depends="init.clean.tools,init.clean.tp,init.clean.workspace,init.clean.output">
 		<available file="${tools}/director/director" property="director.exists" />
 		<available file="${tools}/buckminster/buckminster" property="buckminster.exists" />
 	</target>

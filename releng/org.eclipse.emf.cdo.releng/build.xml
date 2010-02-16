@@ -134,12 +134,6 @@
 
 	<target name="init.workspace" unless="workspace.exists">
 		<mkdir dir="${workspace}" />
-		<delete>
-			<fileset dir=".">
-				<include name="site.p2/**" />
-			</fileset>
-		</delete>
-
 	</target>
 
 	<target name="init.build.properties">
@@ -167,6 +161,12 @@
 	</target>
 
 	<target name="provision" depends="init.checks,init.workspace,install.buckminster,init.build.properties">
+		<delete verbose="true">
+			<fileset dir=".">
+				<include name="site.p2/**" />
+				<include name="site.p2" />
+			</fileset>
+		</delete>
 		<echo message="Importing projects into workspace ${workspace} and binaries into target platform ${targetPlatformPath}" />
 		<buckminster command="setpref">
 			<cmdargs>

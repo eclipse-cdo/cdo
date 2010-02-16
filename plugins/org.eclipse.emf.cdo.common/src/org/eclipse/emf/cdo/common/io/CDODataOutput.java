@@ -14,10 +14,11 @@ package org.eclipse.emf.cdo.common.io;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersionAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
@@ -27,6 +28,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
@@ -87,6 +89,16 @@ public interface CDODataOutput extends ExtendedDataOutput
    */
   public void writeCDOBranchVersion(CDOBranchVersion branchVersion) throws IOException;
 
+  /**
+   * @since 3.0
+   */
+  public void writeCDOCommitData(CDOCommitData commitData) throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  public void writeCDOCommitInfo(CDOCommitInfo commitInfo) throws IOException;
+
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 
   public void writeCDOID(CDOID id) throws IOException;
@@ -98,14 +110,14 @@ public interface CDODataOutput extends ExtendedDataOutput
    */
   public void writeCDOIDAndBranch(CDOIDAndBranch idAndBranch) throws IOException;
 
-  /**
-   * @since 3.0
-   */
-  public void writeCDOIDAndVersionAndBranch(CDOIDAndVersionAndBranch idAndVersionAndBranch) throws IOException;
-
   public void writeCDOIDMetaRange(CDOIDMetaRange metaRange) throws IOException;
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * @since 3.0
+   */
+  public void writeCDORevisionKey(CDORevisionKey revisionKey) throws IOException;
 
   public void writeCDORevision(CDORevision revision, int referenceChunk) throws IOException;
 

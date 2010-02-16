@@ -14,9 +14,9 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.TransportException;
@@ -28,7 +28,6 @@ import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
-import org.eclipse.emf.cdo.transaction.CDORefreshContext;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.signal.RemoteException;
@@ -86,10 +85,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new OpenSessionRequest(this, repositoryName, passiveUpdateEnabled));
   }
 
-  public void setPassiveUpdate(Map<CDOID, CDOIDAndVersion> idAndVersions, int initialChunkSize,
-      boolean passiveUpdateEnabled)
+  public void disablePassiveUpdates()
   {
-    send(new SetPassiveUpdateRequest(this, idAndVersions, initialChunkSize, passiveUpdateEnabled));
+    send(new DisablePassiveUpdatesRequest(this));
   }
 
   public RepositoryTimeResult getRepositoryTime()
@@ -122,6 +120,12 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     send(new LoadCommitInfosRequest(this, branch, startTime, endTime, handler));
   }
 
+  public CDOCommitData loadCommitData(long timeStamp)
+  {
+    // TODO: implement CDOClientProtocol.loadCommitData(timeStamp, dataType)
+    throw new UnsupportedOperationException();
+  }
+
   public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
       int fromIndex, int toIndex)
   {
@@ -139,9 +143,11 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new LoadRevisionByVersionRequest(this, id, branchVersion, referenceChunk));
   }
 
-  public Collection<CDORefreshContext> syncRevisions(Map<CDOID, CDOIDAndVersion> idAndVersions, int initialChunkSize)
+  public RefreshSessionResult refresh(long lastUpdateTime,
+      Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
+      boolean enablePassiveUpdates)
   {
-    return send(new SyncRevisionsRequest(this, idAndVersions, initialChunkSize));
+    return send(new RefreshSessionRequest(this, lastUpdateTime, viewedRevisions, initialChunkSize, enablePassiveUpdates));
   }
 
   public void openView(int viewID, CDOBranchPoint branchPoint, boolean readOnly)
@@ -181,16 +187,15 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     }
   }
 
-  public void lockObjects(CDOView view, Map<CDOID, CDOIDAndVersion> objects, long timeout, LockType lockType)
-      throws InterruptedException
+  public void lockObjects(long lastUpdateTime, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions,
+      int viewID, LockType lockType, long timeout) throws InterruptedException
   {
     InterruptedException interruptedException = null;
     RuntimeException runtimeException = null;
 
     try
     {
-      new LockObjectsRequest(this, view, objects, view.getSession().options().getCollectionLoadingPolicy()
-          .getInitialChunkSize(), timeout, lockType).send();
+      new LockObjectsRequest(this, lastUpdateTime, viewedRevisions, viewID, lockType, timeout).send();
     }
     catch (RemoteException ex)
     {

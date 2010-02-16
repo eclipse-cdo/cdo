@@ -11,7 +11,8 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -42,15 +43,17 @@ public class ObjectLockedIndication extends CDOReadIndication
     InternalLockManager lockManager = getRepository().getLockManager();
 
     LockType lockType = in.readCDOLockType();
-    CDOIDAndBranch idBranch = in.readCDOIDAndBranch();
+    CDOID id = in.readCDOID();
+    Object key = getRepository().isSupportingBranches() ? CDOIDUtil.createIDAndBranch(id, view.getBranch()) : id;
+
     boolean byOthers = in.readBoolean();
     if (byOthers)
     {
-      isLocked = lockManager.hasLockByOthers(lockType, view, idBranch.getID());
+      isLocked = lockManager.hasLockByOthers(lockType, view, key);
     }
     else
     {
-      isLocked = lockManager.hasLock(lockType, view, idBranch.getID());
+      isLocked = lockManager.hasLock(lockType, view, key);
     }
   }
 

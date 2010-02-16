@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -31,7 +30,7 @@ public class CDORevisionProxyHibernate extends DelegatingCDORevision implements 
     this.li = li;
   }
 
-  public CDORevision copy()
+  public InternalCDORevision copy()
   {
     return new CDORevisionProxyHibernate(li);
   }

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -41,10 +42,11 @@ public class CDOCommitInfoManagerImpl extends Lifecycle implements InternalCDOCo
     this.commitInfoLoader = commitInfoLoader;
   }
 
-  public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment)
+  public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment,
+      CDOCommitData commitData)
   {
     checkActive();
-    return new CDOCommitInfoImpl(this, branch, timeStamp, userID, comment);
+    return new CDOCommitInfoImpl(this, branch, timeStamp, userID, comment, commitData);
   }
 
   public void getCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)

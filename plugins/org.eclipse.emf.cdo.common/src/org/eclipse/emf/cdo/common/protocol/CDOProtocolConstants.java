@@ -71,9 +71,9 @@ public interface CDOProtocolConstants
 
   public static final short SIGNAL_QUERY_CANCEL = 17;
 
-  public static final short SIGNAL_SYNC_REVISIONS = 18;
+  public static final short SIGNAL_REFRESH_SESSION = 18;
 
-  public static final short SIGNAL_PASSIVE_UPDATE = 19;
+  public static final short SIGNAL_DISABLE_PASSIVE_UPDATES = 19;
 
   public static final short SIGNAL_CHANGE_SUBSCRIPTION = 20;
 
@@ -137,6 +137,17 @@ public interface CDOProtocolConstants
   public static final int ERROR_REPOSITORY_NOT_FOUND = -1;
 
   public static final int ERROR_NO_SESSION = -2;
+
+  // //////////////////////////////////////////////////////////////////////
+  // Session Refresh
+
+  public static final byte REFRESH_FINISHED = 0;
+
+  public static final byte REFRESH_PACKAGE_UNIT = 1;
+
+  public static final byte REFRESH_CHANGED_OBJECT = 2;
+
+  public static final byte REFRESH_DETACHED_OBJECT = 3;
 
   // //////////////////////////////////////////////////////////////////////
   // Query Support

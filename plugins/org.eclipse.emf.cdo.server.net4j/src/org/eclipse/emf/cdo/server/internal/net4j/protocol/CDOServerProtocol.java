@@ -14,13 +14,9 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
@@ -33,8 +29,6 @@ import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-
-import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -104,15 +98,13 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     }
   }
 
-  public void sendCommitNotification(CDOBranchPoint branchPoint, CDOPackageUnit[] packageUnits,
-      List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> newDeltas)
+  public void sendCommitNotification(CDOCommitInfo commitInfo)
   {
     try
     {
       if (LifecycleUtil.isActive(getChannel()))
       {
-        new CommitNotificationRequest(this, branchPoint, packageUnits, dirtyIDs, detachedObjects, newDeltas)
-            .sendAsync();
+        new CommitNotificationRequest(this, commitInfo).sendAsync();
       }
       else
       {
@@ -220,11 +212,11 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_QUERY_CANCEL:
       return new QueryCancelIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_SYNC_REVISIONS:
-      return new SyncRevisionsIndication(this);
+    case CDOProtocolConstants.SIGNAL_REFRESH_SESSION:
+      return new RefreshSessionIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_PASSIVE_UPDATE:
-      return new SetPassiveUpdateIndication(this);
+    case CDOProtocolConstants.SIGNAL_DISABLE_PASSIVE_UPDATES:
+      return new DisablePassiveUpdatesIndication(this);
 
     case CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION:
       return new ChangeSubscriptionIndication(this);

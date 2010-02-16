@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDTempMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -139,9 +138,9 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     result.addAll(keySet());
     if (delegateRegistry != null)
     {
-      if (delegateRegistry instanceof CDOPackageRegistry)
+      if (delegateRegistry instanceof InternalCDOPackageRegistry)
       {
-        result.addAll(((CDOPackageRegistry)delegateRegistry).getAllKeys());
+        result.addAll(((InternalCDOPackageRegistry)delegateRegistry).getAllKeys());
       }
       else
       {
@@ -773,6 +772,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     {
       range = range.increase();
       CDOID id = range.getUpperBound();
+      checkID(id);
       if (METAID_TRACER.isEnabled())
       {
         METAID_TRACER.format("Registering meta instance: {0} <-> {1}", id, metaInstance); //$NON-NLS-1$
@@ -798,8 +798,17 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
 
     private void map(CDOID metaID, InternalEObject metaInstance)
     {
+      checkID(metaID);
       idToMetaInstanceMap.put(metaID, metaInstance);
       metaInstanceToIDMap.put(metaInstance, metaID);
+    }
+
+    private void checkID(CDOID id)
+    {
+      if (!id.isMeta())
+      {
+        throw new IllegalArgumentException("Not a meta ID: " + id);
+      }
     }
   }
 }

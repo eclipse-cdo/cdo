@@ -27,5 +27,7 @@ public class AllTests extends AllTestsAllConfigs
   protected void initConfigSuites(TestSuite parent)
   {
     addScenario(parent, COMBINED, MEM, JVM, NATIVE);
+    addScenario(parent, COMBINED, MEM_AUDITS, JVM, NATIVE);
+    addScenario(parent, COMBINED, MEM_BRANCHES, JVM, NATIVE);
   }
 }

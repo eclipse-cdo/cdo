@@ -11,12 +11,15 @@
 package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
@@ -28,7 +31,6 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLo
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader;
-import org.eclipse.emf.cdo.transaction.CDORefreshContext;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -42,6 +44,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitConte
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,14 +56,15 @@ import java.util.Set;
  */
 public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLoader, RevisionLoader, CommitInfoLoader
 {
-  public void setPassiveUpdate(Map<CDOID, CDOIDAndVersion> idAndVersions, int initialChunkSize,
-      boolean passiveUpdateEnabled);
-
   public RepositoryTimeResult getRepositoryTime();
 
+  public void disablePassiveUpdates();
+
+  public RefreshSessionResult refresh(long lastUpdateTime,
+      Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
+      boolean enablePassiveUpdates);
+
   /**
-   * @param revision
-   * @param feature
    * @param accessIndex
    *          Index of the item access at the client (with modifications)
    * @param fetchIndex
@@ -72,8 +76,6 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    */
   public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
       int fromIndex, int toIndex);
-
-  public Collection<CDORefreshContext> syncRevisions(Map<CDOID, CDOIDAndVersion> allRevisions, int initialChunkSize);
 
   /**
    * @since 3.0
@@ -99,8 +101,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   /**
    * @since 3.0
    */
-  public void lockObjects(CDOView view, Map<CDOID, CDOIDAndVersion> objects, long timeout, LockType lockType)
-      throws InterruptedException;
+  public void lockObjects(long lastUpdateTime, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions,
+      int viewID, LockType lockType, long timeout) throws InterruptedException;
 
   /**
    * @since 3.0
@@ -229,6 +231,88 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   /**
    * @author Eike Stepper
    */
+  public static final class RefreshSessionResult
+  {
+    private long lastUpdateTime;
+
+    private List<CDOPackageUnit> packageUnits = new ArrayList<CDOPackageUnit>();
+
+    private Map<CDOBranch, List<InternalCDORevision>> changedObjects = new HashMap<CDOBranch, List<InternalCDORevision>>();
+
+    private Map<CDOBranch, List<CDOIDAndVersion>> detachedObjects = new HashMap<CDOBranch, List<CDOIDAndVersion>>();
+
+    public RefreshSessionResult(long lastUpdateTime)
+    {
+      this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public long getLastUpdateTime()
+    {
+      return lastUpdateTime;
+    }
+
+    public List<CDOPackageUnit> getPackageUnits()
+    {
+      return packageUnits;
+    }
+
+    public List<InternalCDORevision> getChangedObjects(CDOBranch branch)
+    {
+      List<InternalCDORevision> list = changedObjects.get(branch);
+      if (list == null)
+      {
+        return Collections.emptyList();
+      }
+
+      return list;
+    }
+
+    public List<CDOIDAndVersion> getDetachedObjects(CDOBranch branch)
+    {
+      List<CDOIDAndVersion> list = detachedObjects.get(branch);
+      if (list == null)
+      {
+        return Collections.emptyList();
+      }
+
+      return list;
+    }
+
+    public void addPackageUnit(CDOPackageUnit packageUnit)
+    {
+      packageUnits.add(packageUnit);
+    }
+
+    public void addChangedObject(InternalCDORevision revision)
+    {
+      CDOBranch branch = revision.getBranch();
+      List<InternalCDORevision> list = changedObjects.get(branch);
+      if (list == null)
+      {
+        list = new ArrayList<InternalCDORevision>();
+        changedObjects.put(branch, list);
+      }
+
+      list.add(revision);
+    }
+
+    public void addDetachedObject(CDORevisionKey revision)
+    {
+      CDOBranch branch = revision.getBranch();
+      List<CDOIDAndVersion> list = detachedObjects.get(branch);
+      if (list == null)
+      {
+        list = new ArrayList<CDOIDAndVersion>();
+        detachedObjects.put(branch, list);
+      }
+
+      list.add(revision);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public final class RepositoryTimeResult
   {
     private long requested;
@@ -299,7 +383,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     @Override
     public String toString()
     {
-      return MessageFormat.format("RepositoryTime[requested={0}, indicated={1}, responded={2}, confirmed={3}]",
+      return MessageFormat.format("RepositoryTime[requested={0}, indicated={1}, responded={2}, confirmed={3}]", //$NON-NLS-1$
           CDOCommonUtil.formatTimeStamp(requested), CDOCommonUtil.formatTimeStamp(indicated), CDOCommonUtil
               .formatTimeStamp(responded), CDOCommonUtil.formatTimeStamp(confirmed));
     }

@@ -10,12 +10,8 @@
  */
 package org.eclipse.emf.spi.cdo;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
@@ -32,9 +28,6 @@ import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-
-import java.util.Collection;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -125,23 +118,18 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   /**
    * @since 3.0
    */
-  public void handleCommitNotification(CDOBranchPoint branchPoint, Collection<CDOPackageUnit> newPackageUnits,
-      Set<CDOIDAndVersion> dirtyOIDandVersions, Collection<CDOID> detachedOIDs, Collection<CDORevisionDelta> deltas,
-      InternalCDOView excludedView);
+  public void handleCommitNotification(CDOCommitInfo commitInfo);
 
   /**
    * @since 3.0
    */
-  public void handleSyncResponse(CDOBranchPoint branchPoint, Collection<CDOPackageUnit> newPackageUnits,
-      Set<CDOIDAndVersion> dirtyOIDandVersions, Collection<CDOID> detachedOIDs);
+  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender);
 
-  /**
-   * In some cases we need to sync without propagating event. Lock is a good example.
-   * 
-   * @since 3.0
-   */
-  public void reviseRevisions(CDOBranchPoint branchPoint, Set<CDOIDAndVersion> dirtyOIDandVersions,
-      Collection<CDOID> detachedOIDs, InternalCDOView excludedView);
+  // /**
+  // * @since 3.0
+  // */
+  // public void handleSyncResponse(CDOBranchPoint branchPoint, Collection<CDOPackageUnit> newPackageUnits,
+  // Set<CDOIDAndVersion> dirtyOIDandVersions, Collection<CDOID> detachedOIDs);
 
   /**
    * @since 3.0

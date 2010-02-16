@@ -118,11 +118,13 @@ public abstract class CDOServerIndication extends IndicationWithResponse
   {
     responding(new CDODataOutputImpl(out)
     {
+      @Override
       public CDOPackageRegistry getPackageRegistry()
       {
         return getRepository().getPackageRegistry();
       }
 
+      @Override
       public CDOIDProvider getIDProvider()
       {
         return getSession();

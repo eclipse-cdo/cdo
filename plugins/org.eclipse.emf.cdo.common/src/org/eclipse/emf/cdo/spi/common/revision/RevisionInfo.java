@@ -124,8 +124,8 @@ public abstract class RevisionInfo
   public void execute(InternalCDORevisionManager revisionManager, int referenceChunk)
   {
     SyntheticCDORevision[] synthetics = new SyntheticCDORevision[1];
-    result = (InternalCDORevision)revisionManager.getRevision(getID(), requestedBranchPoint, referenceChunk,
-        CDORevision.DEPTH_NONE, true, synthetics);
+    result = revisionManager.getRevision(getID(), requestedBranchPoint, referenceChunk, CDORevision.DEPTH_NONE, true,
+        synthetics);
     synthetic = synthetics[0];
   }
 

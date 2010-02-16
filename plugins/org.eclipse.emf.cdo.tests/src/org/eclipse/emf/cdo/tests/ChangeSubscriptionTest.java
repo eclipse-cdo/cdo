@@ -42,7 +42,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     testSameSession(CDOAdapterPolicy.ALL);
   }
 
-  public void testSameSession_disable() throws Exception
+  public void testSameSession_WithoutPolicy() throws Exception
   {
     testSameSession(null);
   }
@@ -51,8 +51,6 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
   {
     msg("Opening session");
     final CDOSession session = openModel1Session();
-
-    session.options().setPassiveUpdateEnabled(false);
 
     // ************************************************************* //
 
@@ -155,69 +153,45 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     testSeparateSession(CDOAdapterPolicy.ALL);
   }
 
-  public void testSeparateSession_disable() throws Exception
+  public void testSeparateSession_WithoutPolicy() throws Exception
   {
     testSeparateSession(null);
   }
 
   private void testSeparateSession(final CDOAdapterPolicy policy) throws Exception
   {
-    msg("Opening session");
-    final CDOSession session = openModel1Session();
-
-    session.options().setPassiveUpdateEnabled(false);
-
-    // ************************************************************* //
-
-    msg("Creating category1");
-    final Category category1A = getModel1Factory().createCategory();
+    Category category1A = getModel1Factory().createCategory();
     category1A.setName("category1");
 
-    msg("Creating company");
-    final Company companyA = getModel1Factory().createCompany();
-
-    msg("Adding categories");
+    Company companyA = getModel1Factory().createCompany();
     companyA.getCategories().add(category1A);
 
-    msg("Opening transaction");
-    final CDOTransaction transaction = session.openTransaction();
-
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
     if (policy != null)
     {
       transaction.options().addChangeSubscriptionPolicy(policy);
     }
 
-    msg("Creating resource");
-    final CDOResource resourceA = transaction.createResource("/test1");
-
-    msg("Adding company");
+    CDOResource resourceA = transaction.createResource("/test1");
     resourceA.getContents().add(companyA);
-
-    msg("Committing");
     transaction.commit();
+
     final TestAdapter adapter = new TestAdapter();
     category1A.eAdapters().add(adapter);
 
     // ************************************************************* //
 
-    msg("Opening view");
-    final CDOSession session2 = openModel1Session();
-    session2.options().setPassiveUpdateEnabled(false);
+    CDOSession session2 = openModel1Session();
+    CDOTransaction transaction2 = session2.openTransaction();
 
-    final CDOTransaction transaction2 = session2.openTransaction();
-
-    final Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A)
-        .cdoID(), true));
-
-    msg("Changing name");
+    Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(),
+        true));
     category1B.setName("CHANGED NAME");
-
     assertEquals(0, adapter.getNotifications().size());
 
-    msg("Committing");
     transaction2.commit();
 
-    msg("Checking after commit");
     new PollingTimeOuter()
     {
       @Override
@@ -238,15 +212,11 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     adapter.getNotifications().clear();
 
-    msg("Changing name");
     category1B.setName("CHANGED NAME_VERSION 2");
-
     assertEquals(0, adapter.getNotifications().size());
 
-    msg("Committing");
     transaction2.commit();
 
-    msg("Checking after commit");
     new PollingTimeOuter()
     {
       @Override
@@ -262,8 +232,6 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
   {
     msg("Opening session");
     final CDOSession session = openModel1Session();
-
-    session.options().setPassiveUpdateEnabled(false);
 
     // ************************************************************* //
 
@@ -297,8 +265,6 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     msg("Opening view");
     final CDOSession session2 = openModel1Session();
-    session2.options().setPassiveUpdateEnabled(false);
-
     final CDOTransaction transaction2 = session2.openTransaction();
     transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
@@ -330,8 +296,6 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     msg("Opening session");
     final CDOSession session = openModel1Session();
-
-    session.options().setPassiveUpdateEnabled(false);
 
     // ************************************************************* //
 
@@ -370,8 +334,6 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     msg("Opening view");
     final CDOSession session2 = openModel1Session();
-    session2.options().setPassiveUpdateEnabled(false);
-
     final CDOTransaction transaction2 = session2.openTransaction();
 
     final Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A)
@@ -428,8 +390,6 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Opening session");
     final CDOSession session = openModel1Session();
 
-    session.options().setPassiveUpdateEnabled(false);
-
     // ************************************************************* //
 
     msg("Creating category1");
@@ -464,8 +424,6 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     msg("Opening view");
     final CDOSession session2 = openModel1Session();
-    session2.options().setPassiveUpdateEnabled(false);
-
     final CDOTransaction transaction2 = session2.openTransaction();
 
     final Company company1B = (Company)CDOUtil.getEObject(transaction2.getObject(

@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
@@ -173,6 +174,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     getStore().loadCommitInfos(branch, startTime, endTime, handler);
   }
 
+  public CDOCommitData loadCommitData(long timeStamp)
+  {
+    // TODO: implement MEMStoreAccessor.loadCommitData(timeStamp, dataType)
+    throw new UnsupportedOperationException();
+  }
+
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
       CDORevisionCacheAdder cache)
   {
@@ -270,7 +277,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
           + " that was already modified"); //$NON-NLS-1$
     }
 
-    InternalCDORevision newRevision = (InternalCDORevision)revision.copy();
+    InternalCDORevision newRevision = revision.copy();
     newRevision.adjustForCommit(branch, created);
 
     revisionDelta.apply(newRevision);

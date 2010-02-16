@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
-import org.eclipse.emf.cdo.transaction.CDORefreshContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -33,8 +32,6 @@ import org.eclipse.net4j.util.options.IOptionsEvent;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-
-import java.util.Collection;
 
 /**
  * Represents and controls the connection to a model repository.
@@ -198,14 +195,9 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
   public CDOView[] getViews();
 
   /**
-   * Refreshes the objects cache.
-   * <p>
-   * Takes CDOID and version of all objects in the cache and sends it to the server. {@link CDORefreshContext} contains
-   * informations of which objects changed/detached. The collection is ordered by timestamp. In the case where
-   * {@link Options#isPassiveUpdateEnabled()} is <code>true</code>, this method will return immediately without doing
-   * anything.
+   * Refreshes the object caches of all (non-historical) {@link CDOView views}.
    */
-  public Collection<CDORefreshContext> refresh();
+  public long refresh();
 
   /**
    * Returns the time stamp of the last commit operation. May not be accurate if

@@ -12,19 +12,12 @@
 package org.eclipse.emf.cdo.session;
 
 import org.eclipse.emf.cdo.CDOInvalidationNotification;
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.event.IListener;
-
-import java.util.Collection;
-import java.util.Set;
 
 /**
  * An event that is emitted to registered {@link IListener listeners} of a {@link CDOSession} if
@@ -36,7 +29,7 @@ import java.util.Set;
  * @noimplement This interface is not intended to be implemented by clients.
  * @since 2.0
  */
-public interface CDOSessionInvalidationEvent extends CDOSessionEvent, CDOBranchPoint
+public interface CDOSessionInvalidationEvent extends CDOSessionEvent, CDOCommitInfo
 {
   public static final long LOCAL_ROLLBACK = CDORevision.UNSPECIFIED_DATE;
 
@@ -50,33 +43,4 @@ public interface CDOSessionInvalidationEvent extends CDOSessionEvent, CDOBranchP
    * @since 3.0
    */
   public boolean isRemote();
-
-  /**
-   * Returns the branch of the server transaction if this event was sent as a result of a successfully committed
-   * transaction.
-   * 
-   * @since 3.0
-   */
-  public CDOBranch getBranch();
-
-  /**
-   * Returns the time stamp of the server transaction if this event was sent as a result of a successfully committed
-   * transaction or <code>LOCAL_ROLLBACK</code> if this event was sent due to a local rollback.
-   */
-  public long getTimeStamp();
-
-  /**
-   * Returns a set of the {@link CDOID CDOIDs} and versions of the modified objects.
-   */
-  public Set<CDOIDAndVersion> getDirtyOIDs();
-
-  /**
-   * Returns a collection of the {@link CDOID CDOIDs} of the removed objects.
-   */
-  public Collection<CDOID> getDetachedObjects();
-
-  /**
-   * Returns a collection of the new {@link CDOPackageUnit package units}.
-   */
-  public Collection<CDOPackageUnit> getNewPackageUnits();
 }

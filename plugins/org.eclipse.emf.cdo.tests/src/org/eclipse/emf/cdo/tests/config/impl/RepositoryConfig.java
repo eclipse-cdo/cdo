@@ -215,6 +215,72 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       return MEMStoreUtil.createMEMStore();
     }
+
+    @Override
+    protected void initRepositoryProperties(Map<String, String> props)
+    {
+      super.initRepositoryProperties(props);
+      props.put(Props.SUPPORTING_AUDITS, "false");
+      props.put(Props.SUPPORTING_BRANCHES, "false");
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class MEMAudits extends RepositoryConfig
+  {
+    public static final MEMAudits INSTANCE = new MEMAudits();
+
+    private static final long serialVersionUID = 1L;
+
+    public MEMAudits()
+    {
+      super("MEMAudits");
+    }
+
+    @Override
+    protected IStore createStore(String repoName)
+    {
+      return MEMStoreUtil.createMEMStore();
+    }
+
+    @Override
+    protected void initRepositoryProperties(Map<String, String> props)
+    {
+      super.initRepositoryProperties(props);
+      props.put(Props.SUPPORTING_AUDITS, "true");
+      props.put(Props.SUPPORTING_BRANCHES, "false");
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class MEMBranches extends RepositoryConfig
+  {
+    public static final MEMBranches INSTANCE = new MEMBranches();
+
+    private static final long serialVersionUID = 1L;
+
+    public MEMBranches()
+    {
+      super("MEMBranches");
+    }
+
+    @Override
+    protected IStore createStore(String repoName)
+    {
+      return MEMStoreUtil.createMEMStore();
+    }
+
+    @Override
+    protected void initRepositoryProperties(Map<String, String> props)
+    {
+      super.initRepositoryProperties(props);
+      props.put(Props.SUPPORTING_AUDITS, "true");
+      props.put(Props.SUPPORTING_BRANCHES, "true");
+    }
   }
 
   /**

@@ -75,10 +75,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
 
   public CDORevisionDeltaImpl(CDORevision originRevision, CDORevision dirtyRevision)
   {
-    if ( //
-    originRevision.getEClass() //
-    != //
-    dirtyRevision.getEClass())
+    if (originRevision.getEClass() != dirtyRevision.getEClass())
     {
       throw new IllegalArgumentException();
     }
@@ -165,8 +162,6 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
 
   public void apply(CDORevision revision)
   {
-    // ((InternalCDORevision)revision).setBranchPoint(branch.getPoint(revision.getTimeStamp()));
-    // ((InternalCDORevision)revision).setVersion(version);
     for (CDOFeatureDelta featureDelta : featureDeltas.values())
     {
       ((CDOFeatureDeltaImpl)featureDelta).apply(revision);

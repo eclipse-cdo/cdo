@@ -58,11 +58,13 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
   {
     requesting(new CDODataOutputImpl(out)
     {
+      @Override
       public CDOPackageRegistry getPackageRegistry()
       {
         return getSession().getPackageRegistry();
       }
 
+      @Override
       public CDOIDProvider getIDProvider()
       {
         throw new UnsupportedOperationException();

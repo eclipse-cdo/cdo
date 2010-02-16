@@ -59,6 +59,16 @@ public interface InternalCDOPackageRegistry extends CDOPackageRegistry, ILifecyc
   public EPackage[] getEPackages();
 
   /**
+   * @since 3.0
+   */
+  public Set<String> getAllKeys();
+
+  /**
+   * @since 3.0
+   */
+  public Object getWithDelegation(String nsURI, boolean resolve);
+
+  /**
    * @author Eike Stepper
    */
   public interface PackageProcessor

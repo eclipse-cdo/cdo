@@ -81,7 +81,6 @@ public class Bugzilla_251087_Test extends AbstractCDOTest
     CDOTransaction transB1 = sessionB.openTransaction();
     CDOID companyID = CDOUtil.getCDOObject(obj2).cdoID();
     Company companyB = (Company)CDOUtil.getEObject(transB1.getObject(companyID));
-    sessionB.options().setPassiveUpdateEnabled(false);
     transB1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     final TestAdapter testAdapter = new TestAdapter();
     companyB.eAdapters().add(testAdapter);

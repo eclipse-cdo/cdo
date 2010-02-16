@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -435,8 +436,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       TRACER.format("Detaching object: {0} in branch {1}", id, branch); //$NON-NLS-1$
     }
 
-    InternalCDORevision oldRevision = (InternalCDORevision)getStore().getRepository().getRevisionManager().getRevision(
-        id, branch.getPoint(revised), 0, CDORevision.DEPTH_NONE, true);
+    InternalCDORevision oldRevision = getStore().getRepository().getRevisionManager().getRevision(id,
+        branch.getPoint(revised), 0, CDORevision.DEPTH_NONE, true);
     EClass eClass = oldRevision.getEClass();
 
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
@@ -742,14 +743,14 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
         long timeStamp = resultSet.getLong(1);
         String userID = resultSet.getString(2);
         String comment = resultSet.getString(3);
-        CDOBranch br = branch;
-        if (br == null)
+        CDOBranch infoBranch = branch;
+        if (infoBranch == null)
         {
           int id = resultSet.getInt(4);
-          br = branchManager.getBranch(id);
+          infoBranch = branchManager.getBranch(id);
         }
 
-        CDOCommitInfo commitInfo = commitInfoManager.createCommitInfo(br, timeStamp, userID, comment);
+        CDOCommitInfo commitInfo = commitInfoManager.createCommitInfo(infoBranch, timeStamp, userID, comment, null);
         handler.handleCommitInfo(commitInfo);
       }
     }
@@ -762,6 +763,12 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       DBUtil.close(resultSet);
       statementCache.releasePreparedStatement(pstmt);
     }
+  }
+
+  public CDOCommitData loadCommitData(long timeStamp)
+  {
+    // TODO: implement DBStoreAccessor.loadCommitData(timeStamp, dataType)
+    throw new UnsupportedOperationException();
   }
 
   /**

@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.server.ISessionManager;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -45,7 +45,7 @@ public interface InternalSessionManager extends ISessionManager
 
   public void sendBranchNotification(InternalSession sender, InternalCDOBranch branch);
 
-  public void sendCommitNotification(InternalSession sender, IStoreAccessor.CommitContext commitContext);
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo);
 
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode);
 

@@ -11,8 +11,6 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -60,8 +58,7 @@ public class ObjectLockedRequest extends CDOClientRequest<Boolean>
 
     out.writeInt(view.getViewID());
     out.writeCDOLockType(lockType);
-    CDOIDAndBranch idAndBranch = CDOIDUtil.createIDAndBranch(object.cdoID(), view.getBranch());
-    out.writeCDOIDAndBranch(idAndBranch);
+    out.writeCDOID(object.cdoID());
     out.writeBoolean(byOthers);
   }
 

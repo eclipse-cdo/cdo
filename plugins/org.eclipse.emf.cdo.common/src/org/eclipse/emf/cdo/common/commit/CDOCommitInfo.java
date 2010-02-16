@@ -16,19 +16,11 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
  * @author Eike Stepper
  * @since 3.0
  */
-public interface CDOCommitInfo extends CDOBranchPoint
+public interface CDOCommitInfo extends CDOBranchPoint, CDOCommitData
 {
   public CDOCommitInfoManager getCommitInfoManager();
 
   public String getUserID();
 
   public String getComment();
-
-  // public Set<CDOID> getNewResources();
-  //
-  // public Set<CDOID> getNewObjects();
-  //
-  // public Set<CDOID> getDetachedObjects();
-  //
-  // public Set<CDOID> getDirtyObjects();
 }

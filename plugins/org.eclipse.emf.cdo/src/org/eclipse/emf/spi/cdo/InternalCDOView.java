@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
@@ -29,9 +29,8 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -65,35 +64,15 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
    */
   public void handleObjectStateChanged(InternalCDOObject object, CDOState oldState, CDOState newState);
 
-  /**
-   * Returns the conflicting objects.
-   * 
-   * @since 3.0
-   */
-  public Set<CDOObject> handleInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
-      Collection<CDOID> detachedOIDs, boolean async);
-
-  /**
-   * @since 3.0
-   */
-  public Set<CDOObject> handleInvalidationWithoutNotification(Set<CDOIDAndVersion> dirtyOIDs,
-      Collection<CDOID> detachedOIDs, Set<InternalCDOObject> dirtyObjects, Set<InternalCDOObject> detachedObjects,
-      boolean async);
-
-  /**
-   * @since 3.0
-   */
-  public void handleChangeSubscription(Collection<CDORevisionDelta> deltas, Collection<CDOID> detachedObjects,
-      boolean async);
-
-  public void getCDOIDAndVersion(Map<CDOID, CDOIDAndVersion> uniqueObjects, Collection<? extends CDOObject> objects);
+  public void invalidate(long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
+      List<CDOIDAndVersion> allDetachedObjects);
 
   /**
    * @since 3.0
    */
   public void fireAdaptersNotifiedEvent(long timeStamp);
 
-  public InternalCDOObject[] getObjectsArray();
+  public void collectViewedRevisions(Map<CDOID, InternalCDORevision> revisions);
 
   public void remapObject(CDOID oldID);
 

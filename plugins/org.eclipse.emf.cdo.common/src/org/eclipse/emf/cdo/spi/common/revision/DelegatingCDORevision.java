@@ -190,7 +190,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
     getDelegate().setRevised(revised);
   }
 
-  public CDORevisionDelta compare(CDORevision origin)
+  public InternalCDORevisionDelta compare(CDORevision origin)
   {
     return getDelegate().compare(origin);
   }

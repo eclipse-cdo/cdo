@@ -12,10 +12,7 @@ package org.eclipse.emf.cdo.internal.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.io.CDODataInput;
-import org.eclipse.emf.cdo.common.io.CDODataOutput;
 
-import java.io.IOException;
 import java.text.MessageFormat;
 
 /**
@@ -31,18 +28,6 @@ public class CDOIDAndVersionImpl implements CDOIDAndVersion
   {
     this.id = id;
     this.version = version;
-  }
-
-  public CDOIDAndVersionImpl(CDODataInput in) throws IOException
-  {
-    id = in.readCDOID();
-    version = in.readInt();
-  }
-
-  public void write(CDODataOutput out) throws IOException
-  {
-    out.writeCDOID(id);
-    out.writeInt(version);
   }
 
   public CDOID getID()

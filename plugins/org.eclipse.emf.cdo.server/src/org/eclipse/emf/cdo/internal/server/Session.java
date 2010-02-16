@@ -15,20 +15,20 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
-import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.internal.common.commit.DelegatingCommitInfo;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
@@ -52,8 +53,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -183,10 +182,11 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
-  public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
+  public int setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
   {
     checkActive();
     this.passiveUpdateEnabled = passiveUpdateEnabled;
+    return 0;
   }
 
   public InternalView[] getElements()
@@ -283,8 +283,8 @@ public class Session extends Container<IView> implements InternalSession
           CDOID id = (CDOID)value;
           if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
           {
-            InternalCDORevision containedRevision = (InternalCDORevision)revisionManager.getRevision(id, branchPoint,
-                referenceChunk, CDORevision.DEPTH_NONE, true);
+            InternalCDORevision containedRevision = revisionManager.getRevision(id, branchPoint, referenceChunk,
+                CDORevision.DEPTH_NONE, true);
             revisions.add(id);
             additionalRevisions.add(containedRevision);
 
@@ -306,84 +306,88 @@ public class Session extends Container<IView> implements InternalSession
     protocol.sendBranchNotification(branch);
   }
 
-  public void sendCommitNotification(IStoreAccessor.CommitContext commitContext)
+  public void sendCommitNotification(final CDOCommitInfo commitInfo)
   {
-    CDORevisionDelta[] arrayOfDeltas = commitContext.getDirtyObjectDeltas();
-    CDOID[] arrayOfDetachedObjects = commitContext.getDetachedObjects();
-    InternalCDOPackageUnit[] arrayOfNewPackageUnit = commitContext.getNewPackageUnits();
-
-    int dirtyIDSize = arrayOfDeltas == null ? 0 : arrayOfDeltas.length;
-    List<CDOIDAndVersion> dirtyIDs = new ArrayList<CDOIDAndVersion>(dirtyIDSize);
-    List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>(dirtyIDSize);
-    for (int i = 0; i < dirtyIDSize; i++)
+    if (!isPassiveUpdateEnabled())
     {
-      CDORevisionDelta delta = arrayOfDeltas[i];
-      deltas.add(delta);
-
-      CDOIDAndVersion dirtyIDAndVersion = CDOIDUtil.createIDAndVersion(delta.getID(), delta.getVersion());
-      dirtyIDs.add(dirtyIDAndVersion);
+      return;
     }
 
-    int detachedObjectsSize = arrayOfDetachedObjects == null ? 0 : arrayOfDetachedObjects.length;
-    List<CDOID> detachedObjects = new ArrayList<CDOID>(detachedObjectsSize);
-    for (int i = 0; i < detachedObjectsSize; i++)
+    final InternalView[] views = getViews();
+    protocol.sendCommitNotification(new DelegatingCommitInfo()
     {
-      detachedObjects.add(arrayOfDetachedObjects[i]);
-    }
+      @Override
+      protected CDOCommitInfo getDelegate()
+      {
+        return commitInfo;
+      }
 
-    sendCommitNotification(commitContext.getBranchPoint(), arrayOfNewPackageUnit, dirtyIDs, detachedObjects, deltas);
+      @Override
+      public List<CDOIDAndVersion> getNewObjects()
+      {
+        final List<CDOIDAndVersion> newObjects = super.getNewObjects();
+        return new IndexedList<CDOIDAndVersion>()
+        {
+          @Override
+          public CDOIDAndVersion get(int index)
+          {
+            // The following will always be a CDORevision!
+            CDOIDAndVersion newObject = newObjects.get(index);
+
+            // Prevent sending whole revisions by copying the id and version
+            return CDOIDUtil.createIDAndVersion(newObject);
+          }
+
+          @Override
+          public int size()
+          {
+            return newObjects.size();
+          }
+        };
+      }
+
+      @Override
+      public List<CDORevisionKey> getChangedObjects()
+      {
+        final List<CDORevisionKey> changedObjects = super.getChangedObjects();
+        return new IndexedList<CDORevisionKey>()
+        {
+          @Override
+          public CDORevisionKey get(int index)
+          {
+            // The following will always be a CDORevisionDelta!
+            CDORevisionKey changedObject = changedObjects.get(index);
+
+            if (hasSubscription(changedObject.getID(), views))
+            {
+              return changedObject;
+            }
+
+            // Prevent sending whole revisions by copying the id and version
+            return CDORevisionUtil.createRevisionKey(changedObject);
+          }
+
+          @Override
+          public int size()
+          {
+            return changedObjects.size();
+          }
+        };
+      }
+    });
   }
 
-  /**
-   * TODO Pass commit context/info to signal directly
-   * 
-   * @since 2.0
-   */
-  @Deprecated
-  public void sendCommitNotification(CDOBranchPoint branchPoint, CDOPackageUnit[] packageUnits,
-      List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> deltas)
+  private boolean hasSubscription(CDOID id, InternalView[] views)
   {
-    if (!isPassiveUpdateEnabled())
+    for (InternalView view : views)
     {
-      dirtyIDs = Collections.emptyList();
-    }
-
-    InternalView[] views = getViews();
-
-    // Look if someone needs to know something about modified objects
-    List<CDORevisionDelta> newDeltas = new ArrayList<CDORevisionDelta>();
-    for (CDORevisionDelta delta : deltas)
-    {
-      CDOID lookupID = delta.getID();
-      for (InternalView view : views)
+      if (view.hasSubscription(id))
       {
-        if (view.hasSubscription(lookupID))
-        {
-          newDeltas.add(delta);
-          break;
-        }
+        return true;
       }
     }
 
-    if (!isPassiveUpdateEnabled())
-    {
-      List<CDOID> subDetached = new ArrayList<CDOID>();
-      for (CDOID id : detachedObjects)
-      {
-        for (InternalView view : views)
-        {
-          if (view.hasSubscription(id))
-          {
-            subDetached.add(id);
-            break;
-          }
-        }
-      }
-
-      detachedObjects = subDetached;
-    }
-
-    protocol.sendCommitNotification(branchPoint, packageUnits, dirtyIDs, detachedObjects, newDeltas);
+    return false;
   }
 
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode)

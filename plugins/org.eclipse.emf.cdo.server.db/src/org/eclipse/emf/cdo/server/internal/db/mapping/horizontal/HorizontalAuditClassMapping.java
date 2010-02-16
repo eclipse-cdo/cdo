@@ -525,7 +525,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
       InternalCDORevision originalRevision = (InternalCDORevision)accessor.getStore().getRepository()
           .getRevisionManager().getRevisionByVersion(id, delta, 0, true);
 
-      newRevision = (InternalCDORevision)originalRevision.copy();
+      newRevision = originalRevision.copy();
 
       newRevision.setVersion(oldVersion + 1);
       newRevision.setBranchPoint(CDOBranchUtil.createBranchPoint(delta.getBranch(), created));

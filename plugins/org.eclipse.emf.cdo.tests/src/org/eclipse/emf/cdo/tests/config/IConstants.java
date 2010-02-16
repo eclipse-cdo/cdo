@@ -26,6 +26,10 @@ public interface IConstants
 
   public static final RepositoryConfig.MEM MEM = RepositoryConfig.MEM.INSTANCE;
 
+  public static final RepositoryConfig.MEMAudits MEM_AUDITS = RepositoryConfig.MEMAudits.INSTANCE;
+
+  public static final RepositoryConfig.MEMBranches MEM_BRANCHES = RepositoryConfig.MEMBranches.INSTANCE;
+
   public static final RepositoryConfig.MEMOffline MEM_OFFLINE = RepositoryConfig.MEMOffline.INSTANCE;
 
   public static final SessionConfig EMBEDDED = SessionConfig.Embedded.INSTANCE;

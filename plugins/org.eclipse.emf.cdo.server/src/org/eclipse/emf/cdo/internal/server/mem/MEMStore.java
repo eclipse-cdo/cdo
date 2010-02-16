@@ -186,19 +186,14 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
 
   public synchronized InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion)
   {
-    if (getRepository().isSupportingAudits())
+    Object listKey = getListKey(id, branchVersion.getBranch());
+    List<InternalCDORevision> list = revisions.get(listKey);
+    if (list == null)
     {
-      Object listKey = getListKey(id, branchVersion.getBranch());
-      List<InternalCDORevision> list = revisions.get(listKey);
-      if (list != null)
-      {
-        return getRevisionByVersion(list, branchVersion.getVersion());
-      }
-
       return null;
     }
 
-    throw new UnsupportedOperationException();
+    return getRevisionByVersion(list, branchVersion.getVersion());
   }
 
   /**
@@ -210,12 +205,12 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     if (branchPoint.getTimeStamp() == CDORevision.UNSPECIFIED_DATE)
     {
       List<InternalCDORevision> list = revisions.get(listKey);
-      if (list != null)
+      if (list == null)
       {
-        return list.get(list.size() - 1);
+        return null;
       }
 
-      return null;
+      return list.get(list.size() - 1);
     }
 
     if (!getRepository().isSupportingAudits())
@@ -224,12 +219,12 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     }
 
     List<InternalCDORevision> list = revisions.get(listKey);
-    if (list != null)
+    if (list == null)
     {
-      return getRevision(list, branchPoint);
+      return null;
     }
 
-    return null;
+    return getRevision(list, branchPoint);
   }
 
   public synchronized void addRevision(InternalCDORevision revision)
@@ -692,7 +687,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
 
     public void handle(InternalCDOCommitInfoManager manager, CDOCommitInfoHandler handler)
     {
-      CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, userID, comment);
+      CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, userID, comment, null);
       handler.handleCommitInfo(commitInfo);
     }
   }

@@ -40,7 +40,6 @@ public class Bugzilla_260764_Test extends AbstractCDOTest
   {
     msg("Opening session");
     final CDOSession session = openModel1Session();
-    session.options().setPassiveUpdateEnabled(false);
 
     // ************************************************************* //
     msg("Opening transaction");
@@ -59,7 +58,6 @@ public class Bugzilla_260764_Test extends AbstractCDOTest
 
     msg("Opening view");
     final CDOSession session2 = openModel1Session();
-    session2.options().setPassiveUpdateEnabled(false);
 
     final CDOTransaction transaction2 = session2.openTransaction();
     final OrderAddress orderAddress2 = (OrderAddress)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(

@@ -12,11 +12,11 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -252,7 +252,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
-  public void sendCommitNotification(InternalSession sender, IStoreAccessor.CommitContext commitContext)
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo)
   {
     for (InternalSession session : getSessions())
     {
@@ -260,7 +260,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       {
         try
         {
-          session.sendCommitNotification(commitContext);
+          session.sendCommitNotification(commitInfo);
         }
         catch (Exception ex)
         {

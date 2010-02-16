@@ -13,10 +13,7 @@ package org.eclipse.emf.cdo.internal.common.id;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
-import org.eclipse.emf.cdo.common.io.CDODataInput;
-import org.eclipse.emf.cdo.common.io.CDODataOutput;
 
-import java.io.IOException;
 import java.text.MessageFormat;
 
 /**
@@ -32,18 +29,6 @@ public class CDOIDAndBranchImpl implements CDOIDAndBranch
   {
     this.id = id;
     this.branch = branch;
-  }
-
-  public CDOIDAndBranchImpl(CDODataInput in) throws IOException
-  {
-    id = in.readCDOID();
-    branch = in.readCDOBranch();
-  }
-
-  public void write(CDODataOutput out) throws IOException
-  {
-    out.writeCDOID(id);
-    out.writeCDOBranch(branch);
   }
 
   public CDOID getID()

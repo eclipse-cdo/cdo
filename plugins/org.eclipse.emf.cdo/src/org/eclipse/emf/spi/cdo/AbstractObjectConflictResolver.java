@@ -83,18 +83,18 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
 
   public void resolveConflicts(Set<CDOObject> conflicts)
   {
-    Map<CDOID, CDORevisionDelta> revisionDeltas = transaction.getRevisionDeltas();
+    Map<CDOID, CDORevisionDelta> localDeltas = transaction.getRevisionDeltas();
     for (CDOObject conflict : conflicts)
     {
-      CDORevisionDelta revisionDelta = revisionDeltas.get(conflict.cdoID());
-      resolveConflict(conflict, revisionDelta);
+      CDORevisionDelta localDelta = localDeltas.get(conflict.cdoID());
+      resolveConflict(conflict, localDelta);
     }
   }
 
   /**
    * Resolves the conflict of a single object in the current transaction.
    */
-  protected abstract void resolveConflict(CDOObject conflict, CDORevisionDelta revisionDelta);
+  protected abstract void resolveConflict(CDOObject conflict, CDORevisionDelta localDelta);
 
   protected void hookTransaction(CDOTransaction transaction)
   {

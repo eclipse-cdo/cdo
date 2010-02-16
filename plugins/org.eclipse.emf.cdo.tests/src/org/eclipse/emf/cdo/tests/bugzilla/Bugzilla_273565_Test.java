@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
+import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -205,7 +206,9 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
           start.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
           for (int i = 0; i < 50 && exception[0] == null; i++)
           {
-            CDOUtil.getCDOObject(orderDetail).cdoWriteLock().lock();
+            CDOLock writeLock = CDOUtil.getCDOObject(orderDetail).cdoWriteLock();
+            writeLock.lock();
+
             orderDetail.setPrice(price);
             transaction.commit();
           }

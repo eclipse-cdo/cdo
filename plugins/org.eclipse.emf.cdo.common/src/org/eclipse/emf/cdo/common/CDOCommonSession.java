@@ -55,9 +55,10 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
      * <p>
      * When enabled again, a refresh will be automatically performed to be in sync with the server.
      * 
+     * @return The number of remotely changed or detached objects if enabled, zero otherwise.
      * @since 3.0
      */
-    public void setPassiveUpdateEnabled(boolean enabled);
+    public int setPassiveUpdateEnabled(boolean enabled);
 
     /**
      * @author Eike Stepper

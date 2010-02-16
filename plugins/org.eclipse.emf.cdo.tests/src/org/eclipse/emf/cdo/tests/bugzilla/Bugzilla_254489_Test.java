@@ -41,8 +41,6 @@ public class Bugzilla_254489_Test extends AbstractCDOTest
     msg("Opening session");
     final CDOSession session = openModel1Session();
 
-    session.options().setPassiveUpdateEnabled(false);
-
     // ************************************************************* //
     msg("Opening transaction");
     final CDOTransaction transaction1 = session.openTransaction();

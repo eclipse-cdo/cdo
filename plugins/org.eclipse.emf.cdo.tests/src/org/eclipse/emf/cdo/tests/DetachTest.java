@@ -87,7 +87,8 @@ public class DetachTest extends AbstractCDOTest
 
     try
     {
-      transaction.getObject(id);
+      CDOObject object = transaction.getObject(id);
+      System.out.println(object);
       fail("ObjectNotFoundException expected");
     }
     catch (ObjectNotFoundException expected)

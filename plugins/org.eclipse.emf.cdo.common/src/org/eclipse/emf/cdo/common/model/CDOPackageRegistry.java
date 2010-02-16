@@ -12,8 +12,6 @@ package org.eclipse.emf.cdo.common.model;
 
 import org.eclipse.emf.ecore.EPackage;
 
-import java.util.Set;
-
 /**
  * @author Eike Stepper
  * @since 2.0
@@ -44,14 +42,4 @@ public interface CDOPackageRegistry extends EPackage.Registry
    * Returns all package infos that are registered in this package registry.
    */
   public CDOPackageInfo[] getPackageInfos();
-
-  /**
-   * @since 3.0
-   */
-  public Set<String> getAllKeys();
-
-  /**
-   * @since 3.0
-   */
-  public Object getWithDelegation(String nsURI, boolean resolve);
 }

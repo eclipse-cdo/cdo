@@ -15,12 +15,12 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClassifier;
@@ -498,7 +498,7 @@ public abstract class CDOTypeImpl implements CDOType
       }
       else
       {
-        eEnum = findEnum(out.getPackageRegistry(), value);
+        eEnum = findEnum((InternalCDOPackageRegistry)out.getPackageRegistry(), value);
       }
 
       out.writeCDOClassifierRef(eEnum);
@@ -520,7 +520,7 @@ public abstract class CDOTypeImpl implements CDOType
       return literal.getInstance();
     }
 
-    private EEnum findEnum(CDOPackageRegistry registry, Object value)
+    private EEnum findEnum(InternalCDOPackageRegistry registry, Object value)
     {
       Set<String> keys = registry.getAllKeys();
 

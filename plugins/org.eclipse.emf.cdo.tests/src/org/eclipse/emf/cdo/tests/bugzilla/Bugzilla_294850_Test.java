@@ -34,8 +34,6 @@ public class Bugzilla_294850_Test extends AbstractCDOTest
   public void testBugzilla_294850()
   {
     CDOSession session = openModel1Session();
-    session.options().setPassiveUpdateEnabled(false);
-
     CDOTransaction tx = session.openTransaction();
 
     TestResolver resolver = new TestResolver();

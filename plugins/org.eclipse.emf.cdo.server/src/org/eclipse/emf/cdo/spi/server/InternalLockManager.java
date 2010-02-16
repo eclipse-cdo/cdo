@@ -11,15 +11,19 @@
 package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
 import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
 
 /**
+ * The type of the to-be-locked objects is either {@link CDOIDAndBranch} or {@link CDOID}, depending on whether
+ * branching is supported by the repository or not.
+ * 
  * @author Eike Stepper
  * @since 3.0
  */
-public interface InternalLockManager extends IRWLockManager<CDOID, IView>
+public interface InternalLockManager extends IRWLockManager<Object, IView>
 {
   public InternalRepository getRepository();
 

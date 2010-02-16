@@ -32,83 +32,85 @@ import java.util.Map.Entry;
  * @author Simon McDuff
  * @since 2.0
  */
-public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, V>
+public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLockManager<OBJECT, CONTEXT>
 {
-  private LockStrategy<K, V> writeLockStrategy = new LockStrategy<K, V>()
+  private LockStrategy<OBJECT, CONTEXT> writeLockStrategy = new LockStrategy<OBJECT, CONTEXT>()
   {
-    public boolean canObtainLock(LockEntry<K, V> entry, V context)
+    public boolean canObtainLock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.canObtainWriteLock(context);
     }
 
-    public LockEntry<K, V> lock(LockEntry<K, V> entry, V context)
+    public LockEntry<OBJECT, CONTEXT> lock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.writeLock(context);
     }
 
-    public LockEntry<K, V> unlock(LockEntry<K, V> entry, V context)
+    public LockEntry<OBJECT, CONTEXT> unlock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.writeUnlock(context);
     }
 
-    public boolean isLocked(LockEntry<K, V> entry, V context)
+    public boolean isLocked(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.isWriteLock(context);
     }
 
-    public boolean isLockedByOthers(LockEntry<K, V> entry, V context)
+    public boolean isLockedByOthers(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.isWriteLockByOthers(context);
     }
   };
 
-  private LockStrategy<K, V> readLockStrategy = new LockStrategy<K, V>()
+  private LockStrategy<OBJECT, CONTEXT> readLockStrategy = new LockStrategy<OBJECT, CONTEXT>()
   {
-    public boolean canObtainLock(LockEntry<K, V> entry, V context)
+    public boolean canObtainLock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.canObtainReadLock(context);
     }
 
-    public LockEntry<K, V> lock(LockEntry<K, V> entry, V context)
+    public LockEntry<OBJECT, CONTEXT> lock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.readLock(context);
     }
 
-    public LockEntry<K, V> unlock(LockEntry<K, V> entry, V context)
+    public LockEntry<OBJECT, CONTEXT> unlock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.readUnlock(context);
     }
 
-    public boolean isLocked(LockEntry<K, V> entry, V context)
+    public boolean isLocked(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.isReadLock(context);
     }
 
-    public boolean isLockedByOthers(LockEntry<K, V> entry, V context)
+    public boolean isLockedByOthers(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.isReadLockByOthers(context);
     }
   };
 
-  private Map<K, LockEntry<K, V>> lockEntries = new HashMap<K, LockEntry<K, V>>();
+  private Map<OBJECT, LockEntry<OBJECT, CONTEXT>> lockEntries = new HashMap<OBJECT, LockEntry<OBJECT, CONTEXT>>();
 
   private Object lockChanged = new Object();
 
   /**
    * @since 3.0
    */
-  public void lock(LockType type, V context, Collection<? extends K> objectsToLock, long timeout)
+  public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout)
       throws InterruptedException
   {
-    lock(getLockingStrategy(type), context, objectsToLock, timeout);
+    LockStrategy<OBJECT, CONTEXT> lockingStrategy = getLockingStrategy(type);
+    lock(lockingStrategy, context, objectsToLock, timeout);
   }
 
   /**
    * @since 3.0
    */
-  public void lock(LockType type, V context, K objectToLock, long timeout) throws InterruptedException
+  public void lock(LockType type, CONTEXT context, OBJECT objectToLock, long timeout) throws InterruptedException
   {
-    lock(type, context, Collections.singletonList(objectToLock), timeout);
+    List<OBJECT> objectsToLock = Collections.singletonList(objectToLock);
+    lock(type, context, objectsToLock, timeout);
   }
 
   /**
@@ -118,27 +120,29 @@ public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, 
    *           Unlocking objects without lock.
    * @since 3.0
    */
-  public void unlock(LockType type, V context, Collection<? extends K> objectsToUnlock)
+  public void unlock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
   {
-    unlock(getLockingStrategy(type), context, objectsToUnlock);
+    LockStrategy<OBJECT, CONTEXT> lockingStrategy = getLockingStrategy(type);
+    unlock(lockingStrategy, context, objectsToUnlock);
   }
 
   /**
    * Attempts to release all locks(read and write) for a given context.
    */
-  public void unlock(V context)
+  public void unlock(CONTEXT context)
   {
     synchronized (lockChanged)
     {
-      List<LockEntry<K, V>> lockEntrysToRemove = new ArrayList<LockEntry<K, V>>();
-      List<LockEntry<K, V>> lockEntrysToAdd = new ArrayList<LockEntry<K, V>>();
+      List<LockEntry<OBJECT, CONTEXT>> lockEntrysToRemove = new ArrayList<LockEntry<OBJECT, CONTEXT>>();
+      List<LockEntry<OBJECT, CONTEXT>> lockEntrysToAdd = new ArrayList<LockEntry<OBJECT, CONTEXT>>();
 
-      for (Entry<K, LockEntry<K, V>> entry : lockEntries.entrySet())
+      for (Entry<OBJECT, LockEntry<OBJECT, CONTEXT>> entry : lockEntries.entrySet())
       {
-        LockEntry<K, V> newEntry = entry.getValue().clearLock(context);
+        LockEntry<OBJECT, CONTEXT> lockedContext = entry.getValue();
+        LockEntry<OBJECT, CONTEXT> newEntry = lockedContext.clearLock(context);
         if (newEntry == null)
         {
-          lockEntrysToRemove.add(entry.getValue());
+          lockEntrysToRemove.add(lockedContext);
         }
         else if (newEntry != entry)
         {
@@ -146,14 +150,16 @@ public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, 
         }
       }
 
-      for (LockEntry<K, V> lockEntry : lockEntrysToRemove)
+      for (LockEntry<OBJECT, CONTEXT> lockEntry : lockEntrysToRemove)
       {
-        lockEntries.remove(lockEntry.getKey());
+        OBJECT object = lockEntry.getKey();
+        lockEntries.remove(object);
       }
 
-      for (LockEntry<K, V> lockEntry : lockEntrysToAdd)
+      for (LockEntry<OBJECT, CONTEXT> lockEntry : lockEntrysToAdd)
       {
-        lockEntries.put(lockEntry.getKey(), lockEntry);
+        OBJECT object = lockEntry.getKey();
+        lockEntries.put(object, lockEntry);
       }
 
       lockChanged.notifyAll();
@@ -163,22 +169,23 @@ public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, 
   /**
    * @since 3.0
    */
-  public boolean hasLock(LockType type, V context, K objectToLock)
+  public boolean hasLock(LockType type, CONTEXT context, OBJECT objectToLock)
   {
-    return hasLock(getLockingStrategy(type), context, objectToLock);
+    LockStrategy<OBJECT, CONTEXT> lockingStrategy = getLockingStrategy(type);
+    return hasLock(lockingStrategy, context, objectToLock);
   }
 
   /**
    * @since 3.0
    */
-  public boolean hasLockByOthers(LockType type, V context, K objectToLock)
+  public boolean hasLockByOthers(LockType type, CONTEXT context, OBJECT objectToLock)
   {
-    LockStrategy<K, V> lockingStrategy = getLockingStrategy(type);
-    LockEntry<K, V> entry = getLockEntry(objectToLock);
-    return null != entry && lockingStrategy.isLockedByOthers(entry, context);
+    LockStrategy<OBJECT, CONTEXT> lockingStrategy = getLockingStrategy(type);
+    LockEntry<OBJECT, CONTEXT> entry = getLockEntry(objectToLock);
+    return entry != null && lockingStrategy.isLockedByOthers(entry, context);
   }
 
-  private LockStrategy<K, V> getLockingStrategy(LockType type)
+  private LockStrategy<OBJECT, CONTEXT> getLockingStrategy(LockType type)
   {
     if (type == LockType.READ)
     {
@@ -190,7 +197,7 @@ public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, 
       return writeLockStrategy;
     }
 
-    throw new IllegalArgumentException(type.toString());
+    throw new IllegalArgumentException("Invalid lock type: " + type);
   }
 
   /**
@@ -201,23 +208,22 @@ public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, 
    * @throws IllegalMonitorStateException
    *           Unlocking object not locked.
    */
-  private void unlock(LockStrategy<K, V> lockingStrategy, V context, Collection<? extends K> objectsToLock)
+  private void unlock(LockStrategy<OBJECT, CONTEXT> lockingStrategy, CONTEXT context,
+      Collection<? extends OBJECT> objectsToLock)
   {
     synchronized (lockChanged)
     {
-      List<LockEntry<K, V>> lockEntrysToRemove = new ArrayList<LockEntry<K, V>>();
-      List<LockEntry<K, V>> lockEntrysToAdd = new ArrayList<LockEntry<K, V>>();
-      for (K objectToLock : objectsToLock)
+      List<LockEntry<OBJECT, CONTEXT>> lockEntrysToRemove = new ArrayList<LockEntry<OBJECT, CONTEXT>>();
+      List<LockEntry<OBJECT, CONTEXT>> lockEntrysToAdd = new ArrayList<LockEntry<OBJECT, CONTEXT>>();
+      for (OBJECT objectToLock : objectsToLock)
       {
-        LockEntry<K, V> entry = lockEntries.get(objectToLock);
-
+        LockEntry<OBJECT, CONTEXT> entry = lockEntries.get(objectToLock);
         if (entry == null)
         {
           throw new IllegalMonitorStateException();
         }
 
-        LockEntry<K, V> newEntry = lockingStrategy.unlock(entry, context);
-
+        LockEntry<OBJECT, CONTEXT> newEntry = lockingStrategy.unlock(entry, context);
         if (newEntry == null)
         {
           lockEntrysToRemove.add(entry);
@@ -228,35 +234,37 @@ public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, 
         }
       }
 
-      for (LockEntry<K, V> lockEntry : lockEntrysToRemove)
+      for (LockEntry<OBJECT, CONTEXT> lockEntry : lockEntrysToRemove)
       {
-        lockEntries.remove(lockEntry.getKey());
+        OBJECT object = lockEntry.getKey();
+        lockEntries.remove(object);
       }
 
-      for (LockEntry<K, V> lockEntry : lockEntrysToAdd)
+      for (LockEntry<OBJECT, CONTEXT> lockEntry : lockEntrysToAdd)
       {
-        lockEntries.put(lockEntry.getKey(), lockEntry);
+        OBJECT object = lockEntry.getKey();
+        lockEntries.put(object, lockEntry);
       }
 
       lockChanged.notifyAll();
     }
   }
 
-  private boolean hasLock(LockStrategy<K, V> lockingStrategy, V context, K objectToLock)
+  private boolean hasLock(LockStrategy<OBJECT, CONTEXT> lockingStrategy, CONTEXT context, OBJECT objectToLock)
   {
-    LockEntry<K, V> entry = getLockEntry(objectToLock);
+    LockEntry<OBJECT, CONTEXT> entry = getLockEntry(objectToLock);
     return entry != null && lockingStrategy.isLocked(entry, context);
   }
 
-  private void lock(LockStrategy<K, V> lockStrategy, V context, Collection<? extends K> objectsToLocks, long timeout)
-      throws InterruptedException
+  private void lock(LockStrategy<OBJECT, CONTEXT> lockStrategy, CONTEXT context,
+      Collection<? extends OBJECT> objectsToLocks, long timeout) throws InterruptedException
   {
     long startTime = System.currentTimeMillis();
     while (true)
     {
       synchronized (lockChanged)
       {
-        K conflict = obtainLock(lockStrategy, context, objectsToLocks);
+        OBJECT conflict = obtainLock(lockStrategy, context, objectsToLocks);
         if (conflict == null)
         {
           lockChanged.notifyAll();
@@ -281,15 +289,16 @@ public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, 
     }
   }
 
-  private K obtainLock(LockStrategy<K, V> lockingStrategy, V context, Collection<? extends K> objectsToLock)
+  private OBJECT obtainLock(LockStrategy<OBJECT, CONTEXT> lockingStrategy, CONTEXT context,
+      Collection<? extends OBJECT> objectsToLock)
   {
-    List<LockEntry<K, V>> lockEntrys = new ArrayList<LockEntry<K, V>>();
-    for (K objectToLock : objectsToLock)
+    List<LockEntry<OBJECT, CONTEXT>> lockEntrys = new ArrayList<LockEntry<OBJECT, CONTEXT>>();
+    for (OBJECT objectToLock : objectsToLock)
     {
-      LockEntry<K, V> entry = lockEntries.get(objectToLock);
+      LockEntry<OBJECT, CONTEXT> entry = lockEntries.get(objectToLock);
       if (entry == null)
       {
-        entry = new NoLockEntry<K, V>(objectToLock);
+        entry = new NoLockEntry<OBJECT, CONTEXT>(objectToLock);
       }
 
       if (lockingStrategy.canObtainLock(entry, context))
@@ -302,15 +311,17 @@ public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, 
       }
     }
 
-    for (LockEntry<K, V> lockEntry : lockEntrys)
+    for (LockEntry<OBJECT, CONTEXT> lockEntry : lockEntrys)
     {
-      lockEntries.put(lockEntry.getKey(), lockingStrategy.lock(lockEntry, context));
+      OBJECT object = lockEntry.getKey();
+      LockEntry<OBJECT, CONTEXT> lock = lockingStrategy.lock(lockEntry, context);
+      lockEntries.put(object, lock);
     }
 
     return null;
   }
 
-  private LockEntry<K, V> getLockEntry(K objectToLock)
+  private LockEntry<OBJECT, CONTEXT> getLockEntry(OBJECT objectToLock)
   {
     synchronized (lockChanged)
     {
@@ -494,7 +505,8 @@ public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, 
 
     public LockEntry<K, V> readLock(V context)
     {
-      getReadLock().readLock(context);
+      ReadLockEntry<K, V> lock = getReadLock();
+      lock.readLock(context);
       return this;
     }
 
@@ -513,7 +525,7 @@ public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, 
     {
       if (readLock != null)
       {
-        if (getReadLock().readUnlock(context) == null)
+        if (readLock.readUnlock(context) == null)
         {
           readLock = null;
         }
@@ -543,7 +555,7 @@ public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, 
     {
       if (readLock != null)
       {
-        if (getReadLock().clearLock(context) == null)
+        if (readLock.clearLock(context) == null)
         {
           readLock = null;
         }

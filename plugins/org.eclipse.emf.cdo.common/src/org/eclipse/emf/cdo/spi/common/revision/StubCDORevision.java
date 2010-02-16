@@ -161,7 +161,7 @@ public class StubCDORevision extends AbstractCDORevision
     throw new UnsupportedOperationException();
   }
 
-  public CDORevisionDelta compare(CDORevision origin)
+  public InternalCDORevisionDelta compare(CDORevision origin)
   {
     throw new UnsupportedOperationException();
   }
@@ -171,7 +171,7 @@ public class StubCDORevision extends AbstractCDORevision
     throw new UnsupportedOperationException();
   }
 
-  public CDORevision copy()
+  public InternalCDORevision copy()
   {
     throw new UnsupportedOperationException();
   }

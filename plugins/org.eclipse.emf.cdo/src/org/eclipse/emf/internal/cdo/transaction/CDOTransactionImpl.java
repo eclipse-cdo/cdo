@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
@@ -34,6 +36,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
@@ -44,8 +47,10 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
+import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -340,31 +345,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     conflict -= resolved;
-  }
-
-  @Override
-  public void getCDOIDAndVersion(Map<CDOID, CDOIDAndVersion> uniqueObjects, Collection<? extends CDOObject> cdoObjects)
-  {
-    Map<CDOID, CDORevisionDelta> deltaMap = getRevisionDeltas();
-    for (CDOObject cdoObject : cdoObjects)
-    {
-      CDORevision cdoRevision = CDOStateMachine.INSTANCE.readNoLoad((InternalCDOObject)cdoObject);
-      CDOID cdoId = cdoObject.cdoID();
-      if (cdoRevision != null && !cdoId.isTemporary() && !uniqueObjects.containsKey(cdoId))
-      {
-        int version = cdoRevision.getVersion();
-        if (deltaMap != null)
-        {
-          CDORevisionDelta delta = deltaMap.get(cdoId);
-          if (delta != null)
-          {
-            version = delta.getVersion();
-          }
-        }
-
-        uniqueObjects.put(cdoId, CDOIDUtil.createIDAndVersion(cdoId, version));
-      }
-    }
   }
 
   public CDOIDTemp getNextTemporaryID()
@@ -1309,11 +1289,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     CDODataOutput out = new CDODataOutputImpl(new ExtendedDataOutputStream(stream))
     {
+      @Override
       public CDOIDProvider getIDProvider()
       {
         return CDOTransactionImpl.this;
       }
 
+      @Override
       public CDOPackageRegistry getPackageRegistry()
       {
         return getSession().getPackageRegistry();
@@ -1588,19 +1570,18 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * @since 3.0
    */
   @Override
-  public Set<CDOObject> handleInvalidationWithoutNotification(Set<CDOIDAndVersion> dirtyOIDs,
-      Collection<CDOID> detachedOIDs, Set<InternalCDOObject> dirtyObjects, Set<InternalCDOObject> detachedObjects,
-      boolean async)
+  protected Set<CDOObject> invalidate(List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
+      List<CDORevisionDelta> deltas, Set<InternalCDOObject> dirtyObjects, Set<CDOObject> detachedObjects)
   {
     // Bugzilla 298561: This override removes references to remotely
     // detached objects that are present in any DIRTY or NEW objects
-    removeCrossReferences(getDirtyObjects().values(), detachedOIDs);
-    removeCrossReferences(getNewObjects().values(), detachedOIDs);
+    removeCrossReferences(getDirtyObjects().values(), allDetachedObjects);
+    removeCrossReferences(getNewObjects().values(), allDetachedObjects);
 
-    return super.handleInvalidationWithoutNotification(dirtyOIDs, detachedOIDs, dirtyObjects, detachedObjects, async);
+    return super.invalidate(allChangedObjects, allDetachedObjects, deltas, dirtyObjects, detachedObjects);
   }
 
-  private void removeCrossReferences(Collection<CDOObject> objects, Collection<CDOID> referencedOIDs)
+  private void removeCrossReferences(Collection<CDOObject> objects, Collection<CDOIDAndVersion> referencedOIDs)
   {
     for (CDOObject object : objects)
     {
@@ -1734,50 +1715,48 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         try
         {
-          Collection<CDORevisionDelta> deltas = getRevisionDeltas().values();
-
-          postCommit(getNewResources(), result);
-          postCommit(getNewObjects(), result);
-          postCommit(getDirtyObjects(), result);
-          for (Entry<CDOID, CDOObject> entry : getDetachedObjects().entrySet())
-          {
-            removeObject(entry.getKey());
-          }
-
-          InternalCDOSession session = getSession();
           for (CDOPackageUnit newPackageUnit : newPackageUnits)
           {
             ((InternalCDOPackageUnit)newPackageUnit).setState(CDOPackageUnit.State.LOADED);
           }
 
-          Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
-          Set<CDOIDAndVersion> dirtyIDs = new HashSet<CDOIDAndVersion>();
-          for (CDOObject dirtyObject : dirtyObjects.values())
+          postCommit(getNewResources(), result);
+          postCommit(getNewObjects(), result);
+          postCommit(getDirtyObjects(), result);
+
+          List<CDOIDAndVersion> revisions = new ArrayList<CDOIDAndVersion>();
+          for (CDOObject newObject : getNewObjects().values())
           {
-            CDORevision revision = dirtyObject.cdoRevision();
-            CDOIDAndVersion dirtyID = CDOIDUtil.createIDAndVersion(revision.getID(), revision.getVersion() - 1);
-            dirtyIDs.add(dirtyID);
+            revisions.add(newObject.cdoRevision());
           }
 
-          if (!dirtyIDs.isEmpty() || !getDetachedObjects().isEmpty())
+          for (CDOObject newObject : getNewResources().values())
           {
-            Set<CDOID> detachedIDs = new HashSet<CDOID>(getDetachedObjects().keySet());
-            Collection<CDORevisionDelta> deltasCopy = new ArrayList<CDORevisionDelta>(deltas);
-
-            // Adjust references in the deltas. Could be used in
-            // ChangeSubscription from others CDOView
-            for (CDORevisionDelta dirtyObjectDelta : deltasCopy)
-            {
-              ((InternalCDORevisionDelta)dirtyObjectDelta).adjustReferences(result.getReferenceAdjuster());
-            }
-
-            session.handleCommitNotification(getBranch().getPoint(result.getTimeStamp()), newPackageUnits, dirtyIDs,
-                detachedIDs, deltasCopy, getTransaction());
+            revisions.add(newObject.cdoRevision());
           }
-          else
+
+          List<CDORevisionKey> deltas = new ArrayList<CDORevisionKey>();
+          for (CDORevisionDelta delta : getRevisionDeltas().values())
           {
-            session.setLastUpdateTime(result.getTimeStamp());
+            ((InternalCDORevisionDelta)delta).adjustReferences(result.getReferenceAdjuster());
+            deltas.add(delta);
           }
+
+          List<CDOIDAndVersion> detached = new ArrayList<CDOIDAndVersion>();
+          for (CDOID id : getDetachedObjects().keySet())
+          {
+            // Add "version-less" key.
+            // CDOSessionImpl.reviseRevisions() will call reviseLatest() accordingly.
+            detached.add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
+            removeObject(id);
+          }
+
+          InternalCDOSession session = getSession();
+          CDOTransactionImpl transaction = getTransaction();
+          long timeStamp = result.getTimeStamp();
+
+          CDOCommitInfo commitInfo = makeCommitInfo(timeStamp, revisions, deltas, detached);
+          session.invalidate(commitInfo, transaction);
 
           CDOTransactionHandler[] handlers = getTransactionHandlers();
           if (handlers != null)
@@ -1785,12 +1764,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             for (int i = 0; i < handlers.length; i++)
             {
               CDOTransactionHandler handler = handlers[i];
-              handler.committedTransaction(getTransaction(), this);
+              handler.committedTransaction(transaction, this);
             }
           }
 
-          getChangeSubscriptionManager().committedTransaction(getTransaction(), this);
-          getAdapterManager().committedTransaction(getTransaction(), this);
+          getChangeSubscriptionManager().committedTransaction(transaction, this);
+          getAdapterManager().committedTransaction(transaction, this);
 
           cleanUp();
           Map<CDOID, CDOID> idMappings = result.getIDMappings();
@@ -1817,6 +1796,20 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           unlockObjects(null, null);
         }
       }
+    }
+
+    private CDOCommitInfo makeCommitInfo(long timeStamp, List<CDOIDAndVersion> newRevisions,
+        List<CDORevisionKey> deltas, List<CDOIDAndVersion> detachedIDsAndVersions)
+    {
+      InternalCDOSession session = getSession();
+      InternalCDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
+
+      CDOBranch branch = getBranch();
+      String userID = session.getUserID();
+      String comment = getCommitComment();
+      CDOCommitData commitData = new CDOCommitDataImpl(newPackageUnits, newRevisions, deltas, detachedIDsAndVersions);
+
+      return commitInfoManager.createCommitInfo(branch, timeStamp, userID, comment, commitData);
     }
 
     @SuppressWarnings("rawtypes")

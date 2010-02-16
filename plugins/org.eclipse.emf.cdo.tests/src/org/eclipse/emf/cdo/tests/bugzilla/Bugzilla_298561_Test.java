@@ -18,11 +18,10 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
 import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.RefSingleNonContainedNPL;
-import org.eclipse.emf.cdo.tests.model4.model4Factory;
-import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
@@ -36,18 +35,18 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
-    session.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
+    session.getPackageRegistry().putEPackage(getModel4Package());
 
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.createResource(RESOURCENAME);
 
     // Create referencee and store it
-    ContainedElementNoOpposite referencee = model4Factory.eINSTANCE.createContainedElementNoOpposite();
+    ContainedElementNoOpposite referencee = getModel4Factory().createContainedElementNoOpposite();
     r1.getContents().add(referencee);
     tx.commit();
 
     // Create referencer, don't store it -- keep it as NEW
-    RefSingleNonContainedNPL referencer = model4Factory.eINSTANCE.createRefSingleNonContainedNPL();
+    RefSingleNonContainedNPL referencer = getModel4Factory().createRefSingleNonContainedNPL();
     r1.getContents().add(referencer);
     referencer.setElement(referencee);
     assertEquals(CDOState.NEW, ((CDOObject)referencer).cdoState());
@@ -61,7 +60,8 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     //
     try
     {
-      boolean isSet = referencer.eIsSet(model4Package.eINSTANCE.getRefSingleNonContainedNPL_Element());
+      EReference ref = getModel4Package().getRefSingleNonContainedNPL_Element();
+      boolean isSet = referencer.eIsSet(ref);
       if (isSet)
       {
         referencer.getElement();
@@ -80,18 +80,18 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
-    session.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
+    session.getPackageRegistry().putEPackage(getModel4Package());
 
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.createResource(RESOURCENAME);
 
     // Create referencee and store it
-    ContainedElementNoOpposite referencee = model4Factory.eINSTANCE.createContainedElementNoOpposite();
+    ContainedElementNoOpposite referencee = getModel4Factory().createContainedElementNoOpposite();
     r1.getContents().add(referencee);
     tx.commit();
 
     // Create referencer, store it, then make it DIRTY
-    RefSingleNonContainedNPL referencer = model4Factory.eINSTANCE.createRefSingleNonContainedNPL();
+    RefSingleNonContainedNPL referencer = getModel4Factory().createRefSingleNonContainedNPL();
     r1.getContents().add(referencer);
     referencer.setElement(referencee);
     tx.commit();
@@ -107,7 +107,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
 
     try
     {
-      boolean isSet = referencer.eIsSet(model4Package.eINSTANCE.getRefSingleNonContainedNPL_Element());
+      boolean isSet = referencer.eIsSet(getModel4Package().getRefSingleNonContainedNPL_Element());
       if (isSet)
       {
         referencer.getElement();
@@ -138,18 +138,18 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
-    session.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
+    session.getPackageRegistry().putEPackage(getModel4Package());
 
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.createResource(RESOURCENAME);
 
     // Create referencee and store it
-    ContainedElementNoOpposite referencee = model4Factory.eINSTANCE.createContainedElementNoOpposite();
+    ContainedElementNoOpposite referencee = getModel4Factory().createContainedElementNoOpposite();
     r1.getContents().add(referencee);
     tx.commit();
 
     // Create referencer, don't store it -- keep it as NEW
-    RefMultiNonContainedNPL referencer = model4Factory.eINSTANCE.createRefMultiNonContainedNPL();
+    RefMultiNonContainedNPL referencer = getModel4Factory().createRefMultiNonContainedNPL();
     r1.getContents().add(referencer);
     referencer.getElements().add(referencee);
     assertEquals(CDOState.NEW, ((CDOObject)referencer).cdoState());
@@ -163,7 +163,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     //
     try
     {
-      boolean isSet = referencer.eIsSet(model4Package.eINSTANCE.getRefMultiNonContainedNPL_Elements());
+      boolean isSet = referencer.eIsSet(getModel4Package().getRefMultiNonContainedNPL_Elements());
       if (isSet && referencer.getElements().size() > 0)
       {
         referencer.getElements().get(0);
@@ -182,18 +182,18 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
-    session.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
+    session.getPackageRegistry().putEPackage(getModel4Package());
 
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.createResource(RESOURCENAME);
 
     // Create referencee and store it
-    ContainedElementNoOpposite referencee = model4Factory.eINSTANCE.createContainedElementNoOpposite();
+    ContainedElementNoOpposite referencee = getModel4Factory().createContainedElementNoOpposite();
     r1.getContents().add(referencee);
     tx.commit();
 
     // Create referencer, store it, then make it DIRTY
-    RefMultiNonContainedNPL referencer = model4Factory.eINSTANCE.createRefMultiNonContainedNPL();
+    RefMultiNonContainedNPL referencer = getModel4Factory().createRefMultiNonContainedNPL();
     r1.getContents().add(referencer);
     referencer.getElements().add(referencee);
     tx.commit();
@@ -210,7 +210,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     //
     try
     {
-      boolean isSet = referencer.eIsSet(model4Package.eINSTANCE.getRefMultiNonContainedNPL_Elements());
+      boolean isSet = referencer.eIsSet(getModel4Package().getRefMultiNonContainedNPL_Elements());
       if (isSet && referencer.getElements().size() > 0)
       {
         referencer.getElements().get(0);

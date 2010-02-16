@@ -1,11 +1,23 @@
 <?xml version="1.0"?>
 <project name="CDO">
 
-	<property file="build.properties" />
+	<condition property="properties.file" value="build.properties" else="local.properties">
+		<isset property="server.build" />
+	</condition>
+
+	<condition property="mspec.file" value="build.mspec" else="local.mspec">
+		<isset property="server.build" />
+	</condition>
+
+	<property file="${properties.file}" />
 	<property environment="env" />
 
 	<condition property="build.root" value="${env.WORKSPACE}" else="${basedir}/../build">
 		<isset property="env.WORKSPACE" />
+	</condition>
+
+	<condition property="buckminster.loglevel" value="${env.BUCKMINSTER_LOGLEVEL}" else="DEBUG">
+		<isset property="env.BUCKMINSTER_LOGLEVEL" />
 	</condition>
 
 	<condition property="site.pack200" value="${env.SITE_PACK200}">
@@ -70,7 +82,7 @@
 					<arg value="-data" />
 					<arg value="@{workspace}" />
 					<arg value="--loglevel" />
-					<arg value="${env.BUCKMINSTER_LOGLEVEL}" />
+					<arg value="${buckminster.loglevel}" />
 					<arg value="--displaystacktrace" />
 					<globargs />
 					<arg value="@{command}" />
@@ -169,13 +181,6 @@
 
 	<target name="provision" depends="init.checks,init.workspace,install.buckminster,init.build.properties">
 		<echo message="Importing projects into workspace ${workspace} and binaries into target platform ${targetPlatformPath}" />
-		<buckminster command="installJRE">
-			<cmdargs>
-				<arg value="--location" />
-				<arg value="${jdk1.4.dir}" />
-			</cmdargs>
-		</buckminster>
-
 		<buckminster command="setpref">
 			<cmdargs>
 				<arg value="targetPlatformPath=${targetPlatformPath}" />
@@ -185,8 +190,8 @@
 		<buckminster command="import">
 			<cmdargs>
 				<arg value="-P" />
-				<arg value="${basedir}/build.properties" />
-				<arg value="${basedir}/build.mspec" />
+				<arg value="${basedir}/${properties.file}" />
+				<arg value="${basedir}/${mspec.file}" />
 			</cmdargs>
 		</buckminster>
 	</target>
@@ -203,6 +208,16 @@
 		<buckminster command="perform">
 			<cmdargs>
 				<arg value="org.eclipse.emf.cdo.site#site.p2" />
+			</cmdargs>
+		</buckminster>
+	</target>
+
+	<target name="test" depends="site.p2">
+		<echo message="Running JUnit tests" />
+		<buckminster command="junit">
+			<cmdargs>
+				<arg value="-l" />
+				<arg value="org.eclipse.emf.cdo.tests/CDO AllTests.launch" />
 			</cmdargs>
 		</buckminster>
 	</target>

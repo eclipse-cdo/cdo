@@ -115,8 +115,8 @@
     <rm:provider componentTypes="eclipse.feature" readerType="cvs">
       <rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/features/{1}-feature,{2}">
         <bc:propertyRef key="cvs.repository"/>
-        <bc:propertyRef key="cvs.branch"/>
         <bc:propertyRef key="buckminster.component"/>
+        <bc:propertyRef key="cvs.branch"/>
       </rm:uri>
     </rm:provider>
   </rm:searchPath>

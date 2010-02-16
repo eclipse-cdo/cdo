@@ -91,18 +91,22 @@
 	</macrodef>
 
 	<target name="init.clean.tools" if="${env.CLEAN_TOOLS}">
+		<echo message="Cleaning tools..."/>
 		<antcall target="clean.tools" />
 	</target>
 
 	<target name="init.clean.tp" if="${env.CLEAN_TP}">
+		<echo message="Cleaning target platform..."/>
 		<antcall target="clean.tp" />
 	</target>
 
 	<target name="init.clean.workspace" if="${env.CLEAN_WORKSPACE}">
+		<echo message="Cleaning workspace..."/>
 		<antcall target="clean.workspace" />
 	</target>
 
 	<target name="init.clean.output" if="${env.CLEAN_OUTPUT}">
+		<echo message="Cleaning output..."/>
 		<antcall target="clean.output" />
 	</target>
 

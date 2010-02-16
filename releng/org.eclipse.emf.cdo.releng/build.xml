@@ -9,7 +9,7 @@
 		<isset property="server.build" />
 	</condition>
 
-	<property file="${properties.file}"  />
+	<property file="${properties.file}" />
 	<property environment="env" />
 
 	<condition property="build.root" value="${env.WORKSPACE}" else="${basedir}/../build">

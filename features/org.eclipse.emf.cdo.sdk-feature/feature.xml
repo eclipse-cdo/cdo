@@ -61,7 +61,6 @@
          version="0.0.0"
          unpack="false"/>
 
-		<plugin id="org.eclipse.emf.cdo.common.db.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.emf.cdo.common.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.emf.cdo.defs.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.emf.cdo.edit.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>

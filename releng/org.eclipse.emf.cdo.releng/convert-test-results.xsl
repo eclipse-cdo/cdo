@@ -5,7 +5,6 @@ See here: http://old.nabble.com/schema-for-junit-xml-output-td22193385.html
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
-<xsl:param name="timeStamp"/>
 <xsl:param name="testName"/>
 <xsl:param name="testPackage"/>
 
@@ -14,7 +13,7 @@ See here: http://old.nabble.com/schema-for-junit-xml-output-td22193385.html
 </xsl:template>
 
 <xsl:template match="testsuites">
-	<testsuite errors="{@errors}" failures="{@failures}" hostname="build" id="0" name="{$testName}" package="{$testPackage}" tests="{@tests}" time="100" timestamp="{$timeStamp}">
+	<testsuite errors="{@errors}" failures="{@failures}" hostname="build" id="0" name="{$testName}" package="{$testPackage}" tests="{@tests}" time="100"">
 	<properties/>
 	<xsl:for-each select="testsuite//testcase">
 		<testcase classname="{../@name}" name="{@name}" time="{@time}">

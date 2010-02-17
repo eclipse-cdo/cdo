@@ -238,7 +238,7 @@
 			<param name="testName" expression="CDO Tests" />
 			<param name="testPackage" expression="org.eclipse.emf.cdo.tests" />
 		</xslt>
-		<!--delete file="${result}/testReport.xml.tmp" failonerror="fale" quiet="true" /-->
+		<!--delete file="${result}/testReport.xml.tmp" failonerror="false" quiet="true" /-->
 	</target>
 
 	<target name="promote.sites" depends="provision">

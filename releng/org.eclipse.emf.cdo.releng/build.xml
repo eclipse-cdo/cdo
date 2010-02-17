@@ -20,12 +20,28 @@
 		<isset property="env.BUCKMINSTER_LOGLEVEL" />
 	</condition>
 
-	<condition property="site.pack200" value="${env.SITE_PACK200}">
+	<condition property="site.pack200" value="${env.SITE_PACK200}" else="false">
 		<isset property="env.SITE_PACK200" />
 	</condition>
 
-	<condition property="site.signing" value="${env.SITE_SIGNING}">
+	<condition property="site.signing" value="${env.SITE_SIGNING}" else="false">
 		<isset property="SITE_SIGNING" />
+	</condition>
+
+	<condition property="clean.tools" value="${env.CLEAN_TOOLS}" else="false">
+		<isset property="CLEAN_TOOLS" />
+	</condition>
+
+	<condition property="clean.tp" value="${env.CLEAN_TP}" else="false">
+		<isset property="CLEAN_TP" />
+	</condition>
+
+	<condition property="clean.workspace" value="${env.CLEAN_WORKSPACE}" else="true">
+		<isset property="CLEAN_WORKSPACE" />
+	</condition>
+
+	<condition property="clean.output" value="${env.CLEAN_OUTPUT}" else="true">
+		<isset property="CLEAN_OUTPUT" />
 	</condition>
 
 	<!-- Default properties intended to be overridden by entries in the above property file -->
@@ -90,22 +106,22 @@
 		</sequential>
 	</macrodef>
 
-	<target name="init.clean.tools" if="${env.CLEAN_TOOLS}">
+	<target name="init.clean.tools" if="${clean.tools}">
 		<echo message="Cleaning tools..." />
 		<antcall target="clean.tools" />
 	</target>
 
-	<target name="init.clean.tp" if="${env.CLEAN_TP}">
+	<target name="init.clean.tp" if="${clean.tp}}">
 		<echo message="Cleaning target platform..." />
 		<antcall target="clean.tp" />
 	</target>
 
-	<target name="init.clean.workspace" if="${env.CLEAN_WORKSPACE}">
+	<target name="init.clean.workspace" if="${clean.workspace}">
 		<echo message="Cleaning workspace..." />
 		<antcall target="clean.workspace" />
 	</target>
 
-	<target name="init.clean.output" if="${env.CLEAN_OUTPUT}">
+	<target name="init.clean.output" if="${clean.output}">
 		<echo message="Cleaning output..." />
 		<antcall target="clean.output" />
 	</target>

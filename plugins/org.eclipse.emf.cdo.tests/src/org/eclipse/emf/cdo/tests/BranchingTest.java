@@ -604,22 +604,4 @@ public class BranchingTest extends AbstractCDOTest
     System.out.println();
     System.out.println();
   }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static class SameSession extends BranchingTest
-  {
-    @Override
-    protected void closeSession1()
-    {
-      // Do nothing
-    }
-
-    @Override
-    protected CDOSession openSession2()
-    {
-      return session1;
-    }
-  }
 }

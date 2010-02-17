@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.tests.AuditTest;
+import org.eclipse.emf.cdo.tests.AuditTestSameSession;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.db.bundle.OM;
@@ -66,7 +67,7 @@ public class AllTestsDBPsql extends DBConfigs
 
     // non-audit mode - remove audit tests
     testClasses.remove(AuditTest.class);
-    testClasses.remove(AuditTest.SameSession.class);
+    testClasses.remove(AuditTestSameSession.class);
     testClasses.remove(Bugzilla_252214_Test.class);
   }
 

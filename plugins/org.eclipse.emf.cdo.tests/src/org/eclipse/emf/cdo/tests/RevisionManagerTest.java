@@ -43,31 +43,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class RevisionManagerTest extends AbstractCDOTest
 {
-  /**
-   * @author Eike Stepper
-   */
-  public static class ClientSide extends RevisionManagerTest
-  {
-    @Override
-    protected InternalCDORevisionManager getRevisionManager(InternalRepository repository, InternalCDOSession session)
-    {
-      return session.getRevisionManager();
-    }
-
-    @Override
-    protected String getLocation()
-    {
-      return "Client";
-    }
-
-    @Override
-    protected void dumpCache(CDOBranchPoint branchPoint)
-    {
-      BranchingTest.dump("ServerCache", repository.getRevisionManager().getCache().getAllRevisions());
-      super.dumpCache(branchPoint);
-    }
-  }
-
   private static final CDOID ID = CDOIDUtil.createLong(1);
 
   private static final EClass CLASS = EcorePackage.Literals.EANNOTATION;

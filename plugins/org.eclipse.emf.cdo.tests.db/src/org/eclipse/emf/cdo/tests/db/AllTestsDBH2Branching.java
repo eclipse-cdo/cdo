@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.tests.BranchingTest;
+import org.eclipse.emf.cdo.tests.BranchingTestSameSession;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import org.eclipse.net4j.db.DBUtil;
@@ -59,7 +60,7 @@ public class AllTestsDBH2Branching extends DBConfigs
   {
     // add branching tests for this testsuite
     testClasses.add(BranchingTest.class);
-    testClasses.add(BranchingTest.SameSession.class);
+    testClasses.add(BranchingTestSameSession.class);
 
     super.initTestClasses(testClasses);
   }

@@ -1,10 +1,6 @@
 <?xml version="1.0"?>
 <project name="CDO">
 
-	<tstamp>
-		<format property="buildTimeStamp" pattern="yyyyMMddHHmm" />
-	</tstamp>
-
 	<condition property="properties.file" value="build.properties" else="local.properties">
 		<isset property="server.build" />
 	</condition>
@@ -234,11 +230,10 @@
 
 		<!-- convert the xml to a format which can be read by junit report -->
 		<xslt in="${result}/testReport.xml.tmp" out="${result}/testReport.xml" style="convert-test-results.xsl">
-			<param name="timeStamp" expression="${buildTimeStamp}" />
 			<param name="testName" expression="CDO Tests" />
 			<param name="testPackage" expression="org.eclipse.emf.cdo.tests" />
 		</xslt>
-		<!--delete file="${result}/testReport.xml.tmp" failonerror="fale" quiet="true" /-->
+		<!--delete file="${result}/testReport.xml.tmp" failonerror="false" quiet="true" /-->
 	</target>
 
 	<target name="promote.sites" depends="provision">

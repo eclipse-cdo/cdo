@@ -32,6 +32,22 @@
 		<isset property="SITE_SIGNING" />
 	</condition>
 
+	<condition property="clean.tools" value="true">
+		<equals arg1="${env.CLEAN_TOOLS}" arg2="true" />
+	</condition>
+
+	<condition property="clean.tp" value="true">
+		<equals arg1="${env.CLEAN_TP}" arg2="true" />
+	</condition>
+
+	<condition property="clean.workspace" value="true">
+		<equals arg1="${env.CLEAN_WORKSPACE}" arg2="true" />
+	</condition>
+
+	<condition property="clean.output" value="true">
+		<equals arg1="${env.CLEAN_OUTPUT}" arg2="true" />
+	</condition>
+
 	<!-- Default properties intended to be overridden by entries in the above property file -->
 	<property name="tools" location="${build.root}/tools" />
 	<property name="result" location="${build.root}/result" />
@@ -94,22 +110,22 @@
 		</sequential>
 	</macrodef>
 
-	<target name="init.clean.tools" if="env.CLEAN_TOOLS">
+	<target name="init.clean.tools" if="clean.tools">
 		<echo message="Cleaning tools..." />
 		<antcall target="clean.tools" />
 	</target>
 
-	<target name="init.clean.tp" if="env.CLEAN_TP">
+	<target name="init.clean.tp" if="clean.tp">
 		<echo message="Cleaning target platform..." />
 		<antcall target="clean.tp" />
 	</target>
 
-	<target name="init.clean.workspace" if="env.CLEAN_WORKSPACE">
+	<target name="init.clean.workspace" if="clean.workspace">
 		<echo message="Cleaning workspace..." />
 		<antcall target="clean.workspace" />
 	</target>
 
-	<target name="init.clean.output" if="env.CLEAN_OUTPUT">
+	<target name="init.clean.output" if="clean.output">
 		<echo message="Cleaning output..." />
 		<antcall target="clean.output" />
 	</target>

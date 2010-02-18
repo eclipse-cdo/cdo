@@ -135,19 +135,23 @@ public class LegacyBundle extends AbstractBundle
     // class
 
     String className = accessor.getName();
-    stream.print("className: " + className);
+    stream
+        .println("============================================================================================================");
+    stream.println("className: " + className);
+    stream
+        .println("============================================================================================================");
 
     URL url = accessor.getResource(ReflectUtil.getSimpleName(accessor) + ".class"); //$NON-NLS-1$
-    stream.print("url: " + url);
+    stream.println("url: " + url);
 
     int segmentsToTrim = 1 + StringUtil.occurrences(className, '.');
     url = trimSegments(url, segmentsToTrim);
-    stream.print("url: " + url);
+    stream.println("url: " + url);
 
     // For an archive URI, check for the plugin.properties in the archive.
     if (isArchiveProtocol(url.getProtocol()))
     {
-      stream.print("isArchiveProtocol: " + true);
+      stream.println("isArchiveProtocol: " + true);
       try
       {
         // If we can open an input stream, then the plugin.properties is there,
@@ -155,7 +159,7 @@ public class LegacyBundle extends AbstractBundle
         InputStream inputStream = new URL(url.toString() + "plugin.properties").openStream(); //$NON-NLS-1$
         inputStream.close();
         baseURL = url;
-        stream.print("baseURL found: " + baseURL);
+        stream.println("baseURL found: " + baseURL);
       }
       catch (IOException exception)
       {
@@ -163,7 +167,7 @@ public class LegacyBundle extends AbstractBundle
         // a new URI for the folder location of the archive, so we can look in
         // the folder that contains it.
         url = trimSegments(new URL(url.getFile()), 1);
-        stream.print("url: " + url);
+        stream.println("url: " + url);
       }
     }
 
@@ -173,11 +177,11 @@ public class LegacyBundle extends AbstractBundle
     {
       // Trim off the "bin" or "runtime" segment.
       String lastSegment = lastSegment(url);
-      stream.print("lastSegment" + lastSegment);
+      stream.println("lastSegment" + lastSegment);
       if ("bin".equals(lastSegment) || "runtime".equals(lastSegment)) //$NON-NLS-1$ //$NON-NLS-2$
       {
         url = trimSegments(url, 1);
-        stream.print("url: " + url);
+        stream.println("url: " + url);
       }
 
       try
@@ -187,7 +191,7 @@ public class LegacyBundle extends AbstractBundle
         InputStream inputStream = new URL(url.toString() + "plugin.properties").openStream(); //$NON-NLS-1$
         inputStream.close();
         baseURL = url;
-        stream.print("baseURL found: " + baseURL);
+        stream.println("baseURL found: " + baseURL);
       }
       catch (IOException exception)
       {

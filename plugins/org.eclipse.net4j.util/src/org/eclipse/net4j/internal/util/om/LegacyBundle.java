@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -36,10 +37,12 @@ public class LegacyBundle extends AbstractBundle
   public LegacyBundle(AbstractPlatform platform, String bundleID, Class<?> accessor)
   {
     super(platform, bundleID, accessor);
+    PrintStream stream = null;
 
     try
     {
-      computeBaseURL(accessor);
+      stream = new PrintStream(new FileOutputStream("LegacyBundle.error.log", true));
+      computeBaseURL(accessor, stream);
       if (baseURL == null)
       {
         throw new IllegalStateException("No base URL");
@@ -49,21 +52,12 @@ public class LegacyBundle extends AbstractBundle
     }
     catch (Exception ex)
     {
-      PrintStream stream = null;
-      try
-      {
-        stream = new PrintStream("LegacyBundle.error.log");
-        IOUtil.print(ex, stream);
-      }
-      catch (Exception ignore)
-      {
-      }
-      finally
-      {
-        IOUtil.close(stream);
-      }
-
+      IOUtil.print(ex, stream);
       IOUtil.print(ex);
+    }
+    finally
+    {
+      IOUtil.close(stream);
     }
   }
 
@@ -115,7 +109,7 @@ public class LegacyBundle extends AbstractBundle
     }
   }
 
-  private void computeBaseURL(Class<?> accessor) throws MalformedURLException
+  private void computeBaseURL(Class<?> accessor, PrintStream stream) throws MalformedURLException
   {
     // Determine the URL for the class itself. The URL will be of one of the
     // following forms, so there are a few good places to consider looking for
@@ -141,14 +135,19 @@ public class LegacyBundle extends AbstractBundle
     // class
 
     String className = accessor.getName();
+    stream.print("className: " + className);
+
     URL url = accessor.getResource(ReflectUtil.getSimpleName(accessor) + ".class"); //$NON-NLS-1$
+    stream.print("url: " + url);
 
     int segmentsToTrim = 1 + StringUtil.occurrences(className, '.');
     url = trimSegments(url, segmentsToTrim);
+    stream.print("url: " + url);
 
     // For an archive URI, check for the plugin.properties in the archive.
     if (isArchiveProtocol(url.getProtocol()))
     {
+      stream.print("isArchiveProtocol: " + true);
       try
       {
         // If we can open an input stream, then the plugin.properties is there,
@@ -156,6 +155,7 @@ public class LegacyBundle extends AbstractBundle
         InputStream inputStream = new URL(url.toString() + "plugin.properties").openStream(); //$NON-NLS-1$
         inputStream.close();
         baseURL = url;
+        stream.print("baseURL found: " + baseURL);
       }
       catch (IOException exception)
       {
@@ -163,6 +163,7 @@ public class LegacyBundle extends AbstractBundle
         // a new URI for the folder location of the archive, so we can look in
         // the folder that contains it.
         url = trimSegments(new URL(url.getFile()), 1);
+        stream.print("url: " + url);
       }
     }
 
@@ -172,9 +173,11 @@ public class LegacyBundle extends AbstractBundle
     {
       // Trim off the "bin" or "runtime" segment.
       String lastSegment = lastSegment(url);
+      stream.print("lastSegment" + lastSegment);
       if ("bin".equals(lastSegment) || "runtime".equals(lastSegment)) //$NON-NLS-1$ //$NON-NLS-2$
       {
         url = trimSegments(url, 1);
+        stream.print("url: " + url);
       }
 
       try
@@ -184,17 +187,18 @@ public class LegacyBundle extends AbstractBundle
         InputStream inputStream = new URL(url.toString() + "plugin.properties").openStream(); //$NON-NLS-1$
         inputStream.close();
         baseURL = url;
+        stream.print("baseURL found: " + baseURL);
       }
       catch (IOException exception)
       {
+        exception.printStackTrace(stream);
       }
     }
 
     // If we still don't have a good base URL, complain about it.
     if (baseURL == null)
     {
-      String resourceName = ReflectUtil.getPackageName(className).replace('.', '/') + "/plugin.properties"; //$NON-NLS-1$
-      throw new MissingResourceException("Missing properties: " + resourceName, accessor.getName(), //$NON-NLS-1$
+      throw new MissingResourceException("Missing properties: " + accessor.getName(), accessor.getName(), //$NON-NLS-1$
           "plugin.properties"); //$NON-NLS-1$
     }
   }

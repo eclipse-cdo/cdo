@@ -5,6 +5,7 @@
     <cq:advisorNode namePattern=".*doc\.user" skipComponent="true"/>
     <cq:advisorNode namePattern="org\.eclipse\.emf\.cdo.*\.source" skipComponent="true"/>
     <cq:advisorNode namePattern="org\.eclipse\.net4j.*\.source" skipComponent="true"/>
+    <cq:advisorNode namePattern="org\.gastro.*\.source" skipComponent="true"/>
     <cq:advisorNode namePattern="org\.eclipse\.emf\.cdo.*" branchTagPath="R2_0_maintenance"/>
     <cq:advisorNode namePattern="org\.eclipse\.net4j.*" branchTagPath="R2_0_maintenance"/>
     <cq:advisorNode namePattern="org\.gastro.*" branchTagPath="R2_0_maintenance"/>

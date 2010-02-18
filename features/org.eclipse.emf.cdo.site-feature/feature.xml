@@ -66,4 +66,12 @@
          id="org.eclipse.emf.cdo.server.hibernate"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.cdo.tests"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.tests"
+         version="0.0.0"/>
+
 </feature>

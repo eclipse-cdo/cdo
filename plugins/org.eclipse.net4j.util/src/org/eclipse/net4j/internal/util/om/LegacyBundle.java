@@ -12,6 +12,7 @@ package org.eclipse.net4j.internal.util.om;
 
 import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
+import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -48,6 +49,7 @@ public class LegacyBundle extends AbstractBundle
     }
     catch (Exception ex)
     {
+      OM.LOG.error(ex);
       IOUtil.print(ex);
     }
   }

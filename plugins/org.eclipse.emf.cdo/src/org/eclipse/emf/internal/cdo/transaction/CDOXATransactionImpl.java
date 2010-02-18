@@ -137,7 +137,10 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
   public void remove(InternalCDOTransaction transaction)
   {
-    transaction.setTransactionStrategy(null);
+    if (transaction != null)
+    {
+      transaction.setTransactionStrategy(null);
+    }
   }
 
   public synchronized void add(CDOViewSet viewSet)

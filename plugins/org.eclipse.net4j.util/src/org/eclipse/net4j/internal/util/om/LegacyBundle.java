@@ -14,7 +14,6 @@ import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.File;
@@ -44,14 +43,7 @@ public class LegacyBundle extends AbstractBundle
       {
         throw new IllegalStateException("No base URL");
       }
-    }
-    catch (MalformedURLException ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
 
-    try
-    {
       loadOptions();
     }
     catch (Exception ex)

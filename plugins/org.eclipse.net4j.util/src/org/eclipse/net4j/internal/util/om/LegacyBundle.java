@@ -12,7 +12,6 @@ package org.eclipse.net4j.internal.util.om;
 
 import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
-import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -20,6 +19,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.MissingResourceException;
@@ -49,7 +49,20 @@ public class LegacyBundle extends AbstractBundle
     }
     catch (Exception ex)
     {
-      OM.LOG.error(ex);
+      PrintStream stream = null;
+      try
+      {
+        stream = new PrintStream("LegacyBundle.error.log");
+        IOUtil.print(ex, stream);
+      }
+      catch (Exception ignore)
+      {
+      }
+      finally
+      {
+        IOUtil.close(stream);
+      }
+
       IOUtil.print(ex);
     }
   }

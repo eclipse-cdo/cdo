@@ -59,6 +59,14 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.net4j.tests"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.examples"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.sdk"
          version="0.0.0"/>
 
@@ -71,7 +79,11 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.net4j.tests"
+         id="org.eclipse.emf.cdo.examples"
+         version="0.0.0"/>
+
+   <includes
+         id="org.gastro"
          version="0.0.0"/>
 
 </feature>

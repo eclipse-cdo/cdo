@@ -21,6 +21,12 @@
    <feature id="org.eclipse.emf.cdo.server.product" version="0.0.0">
       <category name="org.eclipse.emf.cdo"/>
    </feature>
+   <feature url="features/org.gastro_3.0.0.qualifier.jar" id="org.gastro" version="3.0.0.qualifier">
+      <category name="org.eclipse.emf.cdo"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.cdo.tests_3.0.0.qualifier.jar" id="org.eclipse.emf.cdo.tests" version="3.0.0.qualifier">
+      <category name="org.eclipse.emf.cdo"/>
+   </feature>
    <feature id="org.eclipse.net4j" version="0.0.0">
       <category name="org.eclipse.net4j"/>
    </feature>
@@ -53,9 +59,6 @@
    </feature>
    <feature id="org.eclipse.net4j.sdk" version="0.0.0">
       <category name="org.eclipse.net4j"/>
-   </feature>
-   <feature url="features/org.eclipse.emf.cdo.tests_3.0.0.qualifier.jar" id="org.eclipse.emf.cdo.tests" version="3.0.0.qualifier">
-      <category name="org.eclipse.emf.cdo"/>
    </feature>
    <feature url="features/org.eclipse.net4j.tests_3.0.0.qualifier.jar" id="org.eclipse.net4j.tests" version="3.0.0.qualifier">
       <category name="org.eclipse.net4j"/>

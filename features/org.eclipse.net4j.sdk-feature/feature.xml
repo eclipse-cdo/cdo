@@ -47,19 +47,9 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.net4j.examples"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.net4j.defs"
          version="0.0.0"/>
 
-		<plugin id="org.eclipse.net4j.buddies.chat.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.buddies.chat.ui.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.buddies.common.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.buddies.server.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.buddies.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.buddies.ui.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.db.derby.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.db.h2.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.db.hsqldb.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
@@ -67,15 +57,9 @@
 		<plugin id="org.eclipse.net4j.db.postgresql.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.db.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.defs.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.examples.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.http.common.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.http.server.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.http.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.jms.admin.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.jms.api.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.jms.server.jdbc.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.jms.server.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.jms.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.jvm.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.tcp.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>

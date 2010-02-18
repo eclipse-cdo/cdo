@@ -55,4 +55,8 @@
          version="0.0.0"
          unpack="false"/>
 
+		<plugin id="org.eclipse.emf.cdo.examples.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.examples.company.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.eclipse.emf.cdo.examples.company.edit.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
 </feature>

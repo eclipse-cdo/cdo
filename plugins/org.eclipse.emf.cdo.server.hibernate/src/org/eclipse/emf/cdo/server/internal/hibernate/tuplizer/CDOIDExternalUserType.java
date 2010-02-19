@@ -34,7 +34,7 @@ import java.util.Properties;
  */
 public class CDOIDExternalUserType implements UserType, ParameterizedType
 {
-  private static final String META_PREFIX = "MID";
+  private static final String META_PREFIX = "MID"; //$NON-NLS-1$
 
   private static final int[] SQL_TYPES = { Types.VARCHAR };
 
@@ -121,7 +121,7 @@ public class CDOIDExternalUserType implements UserType, ParameterizedType
     }
     else
     {
-      throw new IllegalArgumentException("CDOID type " + localValue.getClass().getName() + " not supported here");
+      throw new IllegalArgumentException("CDOID type " + localValue.getClass().getName() + " not supported here"); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 

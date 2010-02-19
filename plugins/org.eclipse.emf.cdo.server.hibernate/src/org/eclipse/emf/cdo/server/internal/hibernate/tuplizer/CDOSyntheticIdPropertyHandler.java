@@ -118,7 +118,7 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
       final Serializable idValue = HibernateUtil.getInstance().getIdValue(cdoID);
       if (!idValue.equals(value))
       {
-        throw new IllegalStateException("Current id and new id are different " + value + "/" + idValue);
+        throw new IllegalStateException("Current id and new id are different " + value + "/" + idValue); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
   }

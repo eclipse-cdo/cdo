@@ -67,6 +67,7 @@ public class HibernateConfig extends RepositoryConfig
   @Override
   protected IStore createStore(String repoName)
   {
+    // note the provider properties are read from the store/repository level
     IHibernateMappingProvider mappingProvider = TeneoUtil.createMappingProvider();
     return CDOHibernateUtil.createStore(mappingProvider);
   }

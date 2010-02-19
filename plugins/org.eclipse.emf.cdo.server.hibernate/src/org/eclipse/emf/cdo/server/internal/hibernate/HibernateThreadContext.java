@@ -36,7 +36,7 @@ public class HibernateThreadContext
     HibernateCommitContext result = commitContext.get();
     if (result == null)
     {
-      throw new IllegalStateException("CommitContext not set");
+      throw new IllegalStateException("CommitContext not set"); //$NON-NLS-1$
     }
 
     return result;
@@ -59,11 +59,11 @@ public class HibernateThreadContext
     {
       if (newCommitContext == null)
       {
-        TRACER.trace("Clearing commitcontext in threadlocal");
+        TRACER.trace("Clearing commitcontext in threadlocal"); //$NON-NLS-1$
       }
       else
       {
-        TRACER.trace("Setting commitcontext in threadlocal");
+        TRACER.trace("Setting commitcontext in threadlocal"); //$NON-NLS-1$
       }
     }
 

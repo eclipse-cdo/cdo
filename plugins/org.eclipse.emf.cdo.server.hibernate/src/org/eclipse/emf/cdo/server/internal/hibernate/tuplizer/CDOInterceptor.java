@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
@@ -34,6 +35,24 @@ public class CDOInterceptor extends EmptyInterceptor
 
   public CDOInterceptor()
   {
+  }
+
+  @Override
+  public Boolean isTransient(Object entity)
+  {
+    if (!(entity instanceof CDORevision))
+    {
+      return super.isTransient(entity);
+    }
+
+    final CDORevision revision = (CDORevision)entity;
+    final CDOID cdoID = revision.getID();
+    if (cdoID.isNull() || cdoID.isTemporary())
+    {
+      return true;
+    }
+
+    return null;
   }
 
   @Override

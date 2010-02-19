@@ -39,6 +39,10 @@ import java.util.Properties;
  */
 public class CDOENumStringType implements UserType, ParameterizedType
 {
+  private static final String EPACKAGE_META = "epackage"; //$NON-NLS-1$
+
+  private static final String ECLASSIFIER_META = "eclassifier"; //$NON-NLS-1$
+
   /** The sql types used for enums */
   private static final int[] SQL_TYPES = new int[] { Types.VARCHAR };
 
@@ -132,26 +136,26 @@ public class CDOENumStringType implements UserType, ParameterizedType
    */
   public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws HibernateException, SQLException
   {
-    final String name = rs.getString(names[0]);
+    final String literal = rs.getString(names[0]);
     if (rs.wasNull())
     {
       return null;
     }
 
-    Enumerator enumValue = localCache.get(name);
+    Enumerator enumValue = localCache.get(literal);
     if (enumValue != null)
     {
       return enumValue;
     }
 
-    enumValue = getEEnum().getEEnumLiteralByLiteral(name.trim());
+    enumValue = getEEnum().getEEnumLiteralByLiteral(literal.trim());
     if (enumValue == null)
     {
-      throw new IllegalStateException("The enum value " + name + " is not valid for enumerator: "
+      throw new IllegalStateException("The enum value " + literal + " is not valid for enumerator: " //$NON-NLS-1$ //$NON-NLS-2$
           + getEEnum().getName());
     }
 
-    localCache.put(name, enumValue);
+    localCache.put(literal, enumValue);
     return enumValue;
   }
 
@@ -163,23 +167,25 @@ public class CDOENumStringType implements UserType, ParameterizedType
   {
     if (value == null)
     {
-      st.setNull(index, Types.VARCHAR);
+      // don't support null value for enums, they must always be set anyway
+      st.setString(index, ((Enumerator)getEEnum().getDefaultValue()).getLiteral());
+      // st.setNull(index, Types.VARCHAR);
     }
     else
     {
       if (value instanceof Integer)
       {
         final EEnumLiteral literal = getEEnum().getEEnumLiteral((Integer)value);
-        st.setString(index, literal.getName());
+        st.setString(index, literal.getLiteral());
       }
       else if (value instanceof String)
       {
         final EEnumLiteral literal = getEEnum().getEEnumLiteral((String)value);
-        st.setString(index, literal.getName());
+        st.setString(index, literal.getLiteral());
       }
       else
       {
-        st.setString(index, ((Enumerator)value).getName());
+        st.setString(index, ((Enumerator)value).getLiteral());
       }
     }
   }
@@ -213,13 +219,13 @@ public class CDOENumStringType implements UserType, ParameterizedType
       final EPackage ePackage = packageRegistry.getEPackage(ePackageNsUri);
       if (ePackage == null)
       {
-        throw new IllegalStateException("EPackage with nsuri " + ePackageNsUri + " not found"); //$NON-NLS-1$
+        throw new IllegalStateException("EPackage with nsuri " + ePackageNsUri + " not found"); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
       final EClassifier eClassifier = ePackage.getEClassifier(eClassifierName);
       if (eClassifier == null || !(eClassifier instanceof EEnum))
       {
-        throw new IllegalStateException("EPackage " + ePackage.getName() + " does not have an EEnum with name "
+        throw new IllegalStateException("EPackage " + ePackage.getName() + " does not have an EEnum with name " //$NON-NLS-1$ //$NON-NLS-2$
             + eClassifierName);
       }
 
@@ -232,7 +238,7 @@ public class CDOENumStringType implements UserType, ParameterizedType
   /** Sets the enumclass */
   public void setParameterValues(Properties parameters)
   {
-    ePackageNsUri = parameters.getProperty("epackage");
-    eClassifierName = parameters.getProperty("eclassifier");
+    ePackageNsUri = parameters.getProperty(EPACKAGE_META);
+    eClassifierName = parameters.getProperty(ECLASSIFIER_META);
   }
 }

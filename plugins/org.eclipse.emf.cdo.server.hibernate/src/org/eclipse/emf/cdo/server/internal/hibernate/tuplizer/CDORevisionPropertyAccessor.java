@@ -69,7 +69,7 @@ public class CDORevisionPropertyAccessor implements PropertyAccessor
       feature = propertyAccessor.getTuplizer().getEClass().getEStructuralFeature(propertyName);
       if (feature == null)
       {
-        throw new IllegalStateException("Feature not found: " + propertyName);
+        throw new IllegalStateException("Feature not found: " + propertyName); //$NON-NLS-1$
       }
     }
 

@@ -81,9 +81,7 @@ public class HibernateQueryTest extends AbstractCDOTest
     {
       msg("Query for products with VAT15");
       CDOQuery cdoQuery = transaction.createQuery("hql", "from Product1 where vat=:vat");
-      // it is nicer to use the enum directly, see bugzilla:
-      // bug 282610
-      cdoQuery.setParameter("vat", VAT.VAT15.getValue());
+      cdoQuery.setParameter("vat", VAT.VAT15);
       final List<Product1> products = cdoQuery.getResult(Product1.class);
       assertEquals(10, products.size());
       for (Product1 p : products)
@@ -116,8 +114,7 @@ public class HibernateQueryTest extends AbstractCDOTest
 
     {
       msg("Orders with sum of order details");
-      // result with arrays are not yet supported, see this bugzilla:
-      // bug 282612
+      // result with arrays are tested below
       // CDOQuery cdoQuery = transaction.createQuery("hql",
       // "select so.id, sum(od.price) from SalesOrder so, OrderDetail od where od.order=so group by so.id");
       CDOQuery cdoQuery = transaction.createQuery("hql",

@@ -94,7 +94,7 @@ public class FeatureMapEntryTuplizer extends AbstractComponentTuplizer
     else if (mappedProperty.getName().endsWith(CDOHibernateConstants.FEATUREMAP_PROPERTY_ANY_PRIMITIVE))
     {
       final WildCardAttributePropertyHandler propertyHandler = new WildCardAttributePropertyHandler();
-      final int index = mappedProperty.getName().lastIndexOf("_");
+      final int index = mappedProperty.getName().lastIndexOf(CDOHibernateConstants.PROPERTY_SEPARATOR);
       final String propName = mappedProperty.getName().substring(0, index);
       propertyHandler.setPropertyName(propName);
       return propertyHandler;
@@ -102,7 +102,7 @@ public class FeatureMapEntryTuplizer extends AbstractComponentTuplizer
     else if (mappedProperty.getName().endsWith(CDOHibernateConstants.FEATUREMAP_PROPERTY_ANY_REFERENCE))
     {
       final FeatureMapEntryPropertyHandler propertyHandler = new FeatureMapEntryPropertyHandler();
-      final int index = mappedProperty.getName().lastIndexOf("_");
+      final int index = mappedProperty.getName().lastIndexOf(CDOHibernateConstants.PROPERTY_SEPARATOR);
       final String propName = mappedProperty.getName().substring(0, index);
       propertyHandler.setPropertyName(propName);
       return propertyHandler;

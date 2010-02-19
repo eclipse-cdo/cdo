@@ -17,11 +17,23 @@ import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import java.util.Properties;
+
 /**
  * @author Eike Stepper
  */
 public class HibernateStoreFactory implements IStoreFactory
 {
+  private static final String PROPERTY_TAG = "property"; //$NON-NLS-1$
+
+  private static final String MAPPINGPROVIDER_TAG = "mappingProvider"; //$NON-NLS-1$
+
+  private static final String NAME_ATTRIBUTE = "name"; //$NON-NLS-1$
+
+  private static final String VALUE_ATTRIBUTE = "value"; //$NON-NLS-1$
+
+  private static final String TYPE_ATTRIBUTE = "type"; //$NON-NLS-1$
+
   public HibernateStoreFactory()
   {
   }
@@ -33,31 +45,41 @@ public class HibernateStoreFactory implements IStoreFactory
 
   public IHibernateStore createStore(Element storeConfig)
   {
-    IHibernateMappingProvider mappingProvider = getMappingProvider(storeConfig);
-    return HibernateUtil.getInstance().createStore(mappingProvider);
+    final IHibernateMappingProvider mappingProvider = getMappingProvider(storeConfig);
+
+    final Properties properties = new Properties();
+    final NodeList propertyNodes = storeConfig.getElementsByTagName(PROPERTY_TAG);
+    for (int i = 0; i < propertyNodes.getLength(); i++)
+    {
+      final Element propertyElement = (Element)propertyNodes.item(i);
+      properties.setProperty(propertyElement.getAttribute(NAME_ATTRIBUTE), propertyElement
+          .getAttribute(VALUE_ATTRIBUTE));
+    }
+
+    return HibernateUtil.getInstance().createStore(mappingProvider, properties);
   }
 
   private IHibernateMappingProvider getMappingProvider(Element storeConfig)
   {
-    NodeList mappingProviderConfigs = storeConfig.getElementsByTagName("mappingProvider");
+    NodeList mappingProviderConfigs = storeConfig.getElementsByTagName(MAPPINGPROVIDER_TAG);
     if (mappingProviderConfigs.getLength() != 1)
     {
-      throw new IllegalStateException("Exactly one mapping provider must be configured for Hibernate store");
+      throw new IllegalStateException("Exactly one mapping provider must be configured for Hibernate store"); //$NON-NLS-1$
     }
 
     Element mappingProviderConfig = (Element)mappingProviderConfigs.item(0);
-    String mappingProviderType = mappingProviderConfig.getAttribute("type");
+    String mappingProviderType = mappingProviderConfig.getAttribute(TYPE_ATTRIBUTE);
     IHibernateMappingProvider.Factory factory = HibernateUtil.getInstance().createMappingProviderFactory(
         mappingProviderType);
     if (factory == null)
     {
-      throw new IllegalArgumentException("Unknown mapping provider type: " + mappingProviderType);
+      throw new IllegalArgumentException("Unknown mapping provider type: " + mappingProviderType); //$NON-NLS-1$
     }
 
     IHibernateMappingProvider mappingProvider = factory.create(mappingProviderConfig);
     if (mappingProvider == null)
     {
-      throw new IllegalArgumentException("No mapping provider created: " + mappingProviderType);
+      throw new IllegalArgumentException("No mapping provider created: " + mappingProviderType); //$NON-NLS-1$
     }
 
     return mappingProvider;

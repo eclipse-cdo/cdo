@@ -13,11 +13,10 @@ package org.eclipse.emf.cdo.server.hibernate.internal.teneo;
 
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle.OM;
-import org.eclipse.emf.cdo.server.hibernate.teneo.CDOHelper;
+import org.eclipse.emf.cdo.server.hibernate.teneo.CDOMappingGenerator;
 import org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateConstants;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateMappingProvider;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
-import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -28,10 +27,10 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.teneo.PackageRegistryProvider;
 import org.eclipse.emf.teneo.PersistenceOptions;
-import org.eclipse.emf.teneo.extension.ExtensionManager;
-import org.eclipse.emf.teneo.extension.ExtensionManagerFactory;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -39,20 +38,23 @@ import java.util.Properties;
  * 
  * @author Martin Taal
  * @author Eike Stepper
+ * @since 3.0
  */
 public class TeneoHibernateMappingProvider extends HibernateMappingProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, TeneoHibernateMappingProvider.class);
 
-  private ExtensionManager extensionManager = ExtensionManagerFactory.getInstance().create();
+  private Map<String, String> extensions = new HashMap<String, String>();
+
+  private Properties mappingProviderProperties = new Properties();
 
   public TeneoHibernateMappingProvider()
   {
   }
 
-  public ExtensionManager getExtensionManager()
+  public void putExtension(String extensionClassName, String extendingClassName)
   {
-    return extensionManager;
+    extensions.put(extensionClassName, extendingClassName);
   }
 
   @Override
@@ -61,23 +63,16 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     return (HibernateStore)super.getHibernateStore();
   }
 
-  @SuppressWarnings("restriction")
-  public void addMapping(org.hibernate.cfg.Configuration configuration)
+  public String getMapping()
   {
     final String mapping = generateMapping();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Generated hibernate mapping:");
+      TRACER.trace("Generated hibernate mapping:"); //$NON-NLS-1$
       TRACER.trace(mapping);
     }
 
-    System.err.println(mapping);
-
-    configuration.addXML(mapping);
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Added mapping to configuration");
-    }
+    return mapping;
   }
 
   // the passed modelObjects collection is defined as a collection of Objects
@@ -86,10 +81,17 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Generating Hibernate Mapping");
+      TRACER.trace("Generating Hibernate Mapping"); //$NON-NLS-1$
     }
 
-    final Properties properties = HibernateUtil.getInstance().getPropertiesFromStore(getHibernateStore());
+    final Properties storeProperties = getHibernateStore().getProperties();
+
+    // merge the store properties with the mapping provider properties
+    // the mapping provider props take precedence
+    final Properties properties = new Properties();
+
+    properties.putAll(storeProperties);
+    properties.putAll(mappingProviderProperties);
 
     PackageRegistryProvider.getInstance().setThreadPackageRegistry(
         getHibernateStore().getRepository().getPackageRegistry());
@@ -110,10 +112,13 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
       properties.remove(PersistenceOptions.PERSISTENCE_XML);
     }
 
-    String hbm = CDOHelper.getInstance().generateMapping(ePackageArray, properties, extensionManager);
+    final CDOMappingGenerator mappingGenerator = new CDOMappingGenerator();
+    mappingGenerator.getExtensions().putAll(extensions);
+    String hbm = mappingGenerator.generateMapping(ePackageArray, properties);
     // System.err.println(hbm);
     // to solve an issue with older versions of teneo
-    hbm = hbm.replaceAll("_cont", "cont");
+    hbm = hbm.replaceAll("_cont", "cont"); //$NON-NLS-1$ //$NON-NLS-2$
+
     return hbm;
   }
 
@@ -123,17 +128,27 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
   {
     final EClass eClass = EresourcePackage.eINSTANCE.getCDOResourceNode();
     // already been here
-    if (eClass.getEAnnotation("teneo.jpa") != null)
+    if (eClass.getEAnnotation("teneo.jpa") != null) //$NON-NLS-1$
     {
       return;
     }
 
     final EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
-    annotation.setSource("teneo.jpa");
-    final String tableAnnotation = "@Table(uniqueConstraints={@UniqueConstraint(columnNames={\""
-        + CDOHibernateConstants.CONTAINER_PROPERTY_COLUMN + "\", \""
-        + EresourcePackage.eINSTANCE.getCDOResourceNode_Name().getName() + "\"})})";
-    annotation.getDetails().put("value", tableAnnotation);
+    annotation.setSource("teneo.jpa"); //$NON-NLS-1$
+    final String tableAnnotation = "@Table(uniqueConstraints={@UniqueConstraint(columnNames={\"" //$NON-NLS-1$
+        + CDOHibernateConstants.CONTAINER_PROPERTY_COLUMN + "\", \"" //$NON-NLS-1$
+        + EresourcePackage.eINSTANCE.getCDOResourceNode_Name().getName() + "\"})})"; //$NON-NLS-1$
+    annotation.getDetails().put("value", tableAnnotation); //$NON-NLS-1$
     eClass.getEAnnotations().add(annotation);
+  }
+
+  public Properties getMappingProviderProperties()
+  {
+    return mappingProviderProperties;
+  }
+
+  public void setMappingProviderProperties(Properties mappingProviderProperties)
+  {
+    this.mappingProviderProperties = mappingProviderProperties;
   }
 }

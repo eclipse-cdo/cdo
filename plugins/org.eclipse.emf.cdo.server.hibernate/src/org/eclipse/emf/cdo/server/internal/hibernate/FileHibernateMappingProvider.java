@@ -17,9 +17,9 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.hibernate.cfg.Configuration;
-
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * Reads the hibernate mapping file from one or more resource locations and adds them to the configuration.
@@ -30,53 +30,47 @@ public class FileHibernateMappingProvider extends HibernateMappingProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, FileHibernateMappingProvider.class);
 
-  private final String[] mappingFileLocations;
+  private final String mappingFileLocation;
 
-  public FileHibernateMappingProvider(String... mappingFileLocations)
+  public FileHibernateMappingProvider(String mappingFileLocation)
   {
-    if (mappingFileLocations == null || mappingFileLocations.length == 0)
+    if (mappingFileLocation == null || mappingFileLocation.length() == 0)
     {
-      throw new IllegalArgumentException("mappingFileLocations");
+      throw new IllegalArgumentException("mappingFileLocation"); //$NON-NLS-1$
     }
 
-    this.mappingFileLocations = mappingFileLocations;
+    this.mappingFileLocation = mappingFileLocation;
   }
 
-  public void addMapping(Configuration configuration)
+  public String getMapping()
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Adding hibernate mapping from location(s):");
+      TRACER.trace("Adding hibernate mapping from location(s): " + mappingFileLocation); //$NON-NLS-1$
     }
 
-    for (String location : mappingFileLocations)
+    InputStream is = null;
+
+    try
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace(location);
-      }
+      is = getClass().getResourceAsStream(mappingFileLocation);
 
-      InputStream is = null;
-
-      try
+      StringBuilder sb = new StringBuilder();
+      String line;
+      BufferedReader reader = new BufferedReader(new InputStreamReader(is, CDOHibernateConstants.UTF8));
+      while ((line = reader.readLine()) != null)
       {
-        // MT.Question: the mapping file is in a dependent plugin but when using the OM.BUNDLE
-        // it tries to find it in this plugin and I get:
-        // filenotfound:
-        // /home/mtaal/mydata/dev/workspaces/nextspace/org.eclipse.emf.cdo.server.hibernate/mappings/product.hbm.xml
-        // I have set Eclipse-BuddyPolicy to dependent
-        // is = OM.BUNDLE.getInputStream(location);
-        is = getClass().getResourceAsStream(location);
-        configuration.addInputStream(is);
+        sb.append(line).append(CDOHibernateConstants.NL);
       }
-      catch (Exception e)
-      {
-        throw WrappedException.wrap(e);
-      }
-      finally
-      {
-        IOUtil.close(is);
-      }
+      return sb.toString();
+    }
+    catch (Exception e)
+    {
+      throw WrappedException.wrap(e);
+    }
+    finally
+    {
+      IOUtil.close(is);
     }
   }
 }

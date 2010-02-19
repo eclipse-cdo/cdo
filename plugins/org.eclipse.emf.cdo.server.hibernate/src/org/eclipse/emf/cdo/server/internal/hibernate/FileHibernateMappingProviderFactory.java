@@ -18,9 +18,6 @@ import org.eclipse.net4j.util.StringUtil;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Reads the hibernate mapping file from one or more resource locations and adds them to the configuration.
  * 
@@ -28,7 +25,11 @@ import java.util.List;
  */
 public class FileHibernateMappingProviderFactory implements IHibernateMappingProvider.Factory
 {
-  public static final String TYPE = "file";
+  public static final String TYPE = "file"; //$NON-NLS-1$
+
+  private static final String FILE_ELEMENT_TAG_NAME = "mappingFile"; //$NON-NLS-1$
+
+  private static final String LOCATION_ATTRIBUTE_NAME = "location"; //$NON-NLS-1$
 
   public FileHibernateMappingProviderFactory()
   {
@@ -41,23 +42,20 @@ public class FileHibernateMappingProviderFactory implements IHibernateMappingPro
 
   public FileHibernateMappingProvider create(Element config)
   {
-    List<String> locations = new ArrayList<String>();
-    NodeList mappingFileConfigs = config.getElementsByTagName("mappingFile");
-    for (int i = 0; i < mappingFileConfigs.getLength(); i++)
+    NodeList mappingFileConfigs = config.getElementsByTagName(FILE_ELEMENT_TAG_NAME);
+    if (mappingFileConfigs.getLength() != 1)
     {
-      Element mappingFile = (Element)mappingFileConfigs.item(i);
-      String location = mappingFile.getAttribute("location");
-      if (!StringUtil.isEmpty(location))
-      {
-        locations.add(location);
-      }
+      throw new IllegalArgumentException(
+          "Zero or More than one mapping file location specified, only one location is supported."); //$NON-NLS-1$
     }
 
-    if (locations.isEmpty())
+    final Element mappingFile = (Element)mappingFileConfigs.item(0);
+    final String location = mappingFile.getAttribute(LOCATION_ATTRIBUTE_NAME);
+    if (StringUtil.isEmpty(location))
     {
-      throw new IllegalStateException("No mapping file configured for file mapping provider");
+      throw new IllegalArgumentException("Mapping file location is empty"); //$NON-NLS-1$
     }
 
-    return new FileHibernateMappingProvider(locations.toArray(new String[locations.size()]));
+    return new FileHibernateMappingProvider(location);
   }
 }

@@ -94,7 +94,7 @@ public interface Product extends EObject
    * @see org.eclipse.emf.cdo.examples.company.VAT
    * @see #setVat(VAT)
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getProduct_Vat()
-   * @model default="vat15"
+   * @model default="vat15" annotation="teneo.jpa value='@Basic(optional=false)\n@Column(nullable=false)'"
    * @generated
    */
   VAT getVat();

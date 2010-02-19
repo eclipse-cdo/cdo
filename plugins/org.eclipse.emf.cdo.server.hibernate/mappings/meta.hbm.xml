@@ -9,7 +9,11 @@
 		<property name="originalType" access="field" />
 		<property name="timeStamp" access="field" />
 
-		<property name="EPackageBlob" access="property" length="40000"/>
+		<!-- Need to set an explicit length for derby:
+		http://opensource.atlassian.com/projects/hibernate/browse/HHH-2614
+		setting it to an arbitrary large value
+		 -->		
+		<property name="EPackageBlob" access="property" type="blob" length="65500"/>
 
 		<array name="packageInfos" cascade="all, delete-orphan" access="field">
 			<key column="cdo_package_unit_id"/>

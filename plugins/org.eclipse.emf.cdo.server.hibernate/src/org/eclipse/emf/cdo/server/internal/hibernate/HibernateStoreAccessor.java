@@ -31,7 +31,9 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
@@ -72,6 +74,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateStoreAccessor.class);
 
+  private static final String NAME_EFEATURE_NAME = "name";//$NON-NLS-1$
+
   private Session hibernateSession;
 
   private boolean errorOccured;
@@ -108,7 +112,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     super(store, session);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
+      TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName()); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 
@@ -125,7 +129,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     super(store, transaction);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
+      TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName()); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 
@@ -154,7 +158,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Creating hibernate session and transaction");
+      TRACER.trace("Creating hibernate session and transaction"); //$NON-NLS-1$
     }
 
     assert hibernateSession == null;
@@ -182,7 +186,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Closing hibernate session");
+      TRACER.trace("Closing hibernate session"); //$NON-NLS-1$
     }
 
     if (hibernateSession != null && hibernateSession.isOpen())
@@ -193,14 +197,14 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         {
           if (TRACER.isEnabled())
           {
-            TRACER.trace("Commiting hibernate session");
+            TRACER.trace("Commiting hibernate session"); //$NON-NLS-1$
           }
 
           if (isErrorOccured())
           {
             if (TRACER.isEnabled())
             {
-              TRACER.trace("Rolling back hb transaction");
+              TRACER.trace("Rolling back hb transaction"); //$NON-NLS-1$
             }
 
             hibernateSession.getTransaction().rollback();
@@ -209,7 +213,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
           {
             if (TRACER.isEnabled())
             {
-              TRACER.trace("Committing hb transaction");
+              TRACER.trace("Committing hb transaction"); //$NON-NLS-1$
             }
 
             hibernateSession.getTransaction().commit();
@@ -252,7 +256,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
     if (hibernateSession != null)
     {
-      throw new IllegalStateException("Hibernate session should be null");
+      throw new IllegalStateException("Hibernate session should be null"); //$NON-NLS-1$
     }
 
     beginHibernateSession();
@@ -329,7 +333,14 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       return null;
     }
 
-    return HibernateUtil.getInstance().getCDORevision(id);
+    final InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(id);
+    if (revision == null)
+    {
+      return new DetachedCDORevision(id, branchPoint.getBranch(), 0, 0);
+    }
+
+    revision.setBranchPoint(getStore().getBranchPoint());
+    return revision;
   }
 
   public int createBranch(BranchInfo branchInfo)
@@ -363,12 +374,14 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   /**
-   * Not supported by the Hibernate Store, auditing is not supported
+   * Not supported by the Hibernate Store, auditing is not supported. Currently ignores the branchVersion and calls the
+   * {@readRevision(CDOID, CDOBranchPoint, int, CDORevisionCacheAdder)} .
    */
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
       CDORevisionCacheAdder cache)
   {
-    throw new UnsupportedOperationException();
+    return readRevision(id, CDOBranchUtil.createBranchPoint(branchVersion.getBranch(), System.currentTimeMillis()),
+        listChunk, cache);
   }
 
   /**
@@ -399,18 +412,18 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     final Criteria criteria = session.createCriteria(EresourcePackage.eINSTANCE.getCDOResourceNode().getName());
     if (folderID == null)
     {
-      criteria.add(org.hibernate.criterion.Restrictions.isNull("containerID"));
+      criteria.add(org.hibernate.criterion.Restrictions.isNull(CDOHibernateConstants.CONTAINER_PROPERTY));
     }
     else
     {
-      criteria.add(org.hibernate.criterion.Restrictions.eq("containerID", folderID));
+      criteria.add(org.hibernate.criterion.Restrictions.eq(CDOHibernateConstants.CONTAINER_PROPERTY, folderID));
     }
 
     List<?> result = criteria.list();
     for (Object o : result)
     {
       final CDORevision revision = (CDORevision)o;
-      final EStructuralFeature feature = revision.getEClass().getEStructuralFeature("name");
+      final EStructuralFeature feature = revision.getEClass().getEStructuralFeature(NAME_EFEATURE_NAME);
       if (feature != null)
       {
         String revisionName = (String)revision.data().get(feature, 0);
@@ -529,7 +542,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         session.saveOrUpdate(entityName, revision);
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Persisted new Object " + revision.getEClass().getName() + " id: " + revision.getID());
+          TRACER.trace("Persisted new Object " + revision.getEClass().getName() + " id: " + revision.getID()); //$NON-NLS-1$ //$NON-NLS-2$
         }
       }
 
@@ -541,7 +554,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         session.saveOrUpdate(entityName, revision);
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Updated Object " + revision.getEClass().getName() + " id: " + revision.getID());
+          TRACER.trace("Updated Object " + revision.getEClass().getName() + " id: " + revision.getID()); //$NON-NLS-1$ //$NON-NLS-2$
         }
       }
 
@@ -582,15 +595,15 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       final CDORevision container = HibernateUtil.getInstance().getCDORevision((CDOID)revision.getContainerID());
       final String entityName = getStore().getEntityName(revision.getEClass());
       final CDOID id = revision.getID();
-      final String hqlUpdate = "update " + entityName + " set " + CDOHibernateConstants.CONTAINER_PROPERTY
-          + " = :containerInfo where " + getStore().getIdentifierPropertyName(entityName) + " = :id";
+      final String hqlUpdate = "update " + entityName + " set " + CDOHibernateConstants.CONTAINER_PROPERTY //$NON-NLS-1$  //$NON-NLS-2$
+          + " = :containerInfo where " + getStore().getIdentifierPropertyName(entityName) + " = :id"; //$NON-NLS-1$ //$NON-NLS-2$
       final Query qry = session.createQuery(hqlUpdate);
-      qry.setParameter("containerInfo", ContainerInfoConverter.getInstance().convertContainerRelationToString(revision,
+      qry.setParameter("containerInfo", ContainerInfoConverter.getInstance().convertContainerRelationToString(revision, //$NON-NLS-1$
           container.getID()));
-      qry.setParameter("id", HibernateUtil.getInstance().getIdValue(id));
+      qry.setParameter("id", HibernateUtil.getInstance().getIdValue(id)); //$NON-NLS-1$
       if (qry.executeUpdate() != 1)
       {
-        throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id);
+        throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
   }
@@ -602,14 +615,14 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       final CDORevision resource = HibernateUtil.getInstance().getCDORevision(revision.getResourceID());
       final String entityName = getStore().getEntityName(revision.getEClass());
       final CDOID id = revision.getID();
-      final String hqlUpdate = "update " + entityName + " set " + CDOHibernateConstants.RESOURCE_PROPERTY
-          + " = :resourceInfo where " + getStore().getIdentifierPropertyName(entityName) + " = :id";
+      final String hqlUpdate = "update " + entityName + " set " + CDOHibernateConstants.RESOURCE_PROPERTY //$NON-NLS-1$ //$NON-NLS-2$
+          + " = :resourceInfo where " + getStore().getIdentifierPropertyName(entityName) + " = :id"; //$NON-NLS-1$ //$NON-NLS-2$
       final Query qry = session.createQuery(hqlUpdate);
-      qry.setParameter("resourceInfo", resource.getID());
-      qry.setParameter("id", HibernateUtil.getInstance().getIdValue(id));
+      qry.setParameter("resourceInfo", resource.getID()); //$NON-NLS-1$
+      qry.setParameter("id", HibernateUtil.getInstance().getIdValue(id)); //$NON-NLS-1$
       if (qry.executeUpdate() != 1)
       {
-        throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id);
+        throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
   }
@@ -676,7 +689,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     // TODO This method is called when this accessor is not needed anymore
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Committing/rollback and closing hibernate session");
+      TRACER.trace("Committing/rollback and closing hibernate session"); //$NON-NLS-1$
     }
 
     try

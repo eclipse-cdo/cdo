@@ -47,7 +47,7 @@ public class PersistableListHolder
     getListMapping().put(key, collection);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Stored hb list in threadlocal: " + ((CDORevision)target).getEClass().getName() + "."
+      TRACER.trace("Stored hb list in threadlocal: " + ((CDORevision)target).getEClass().getName() + "." //$NON-NLS-1$ //$NON-NLS-2$
           + feature.getName());
     }
   }

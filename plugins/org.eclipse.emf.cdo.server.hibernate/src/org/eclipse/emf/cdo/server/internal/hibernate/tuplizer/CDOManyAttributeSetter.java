@@ -43,12 +43,12 @@ public class CDOManyAttributeSetter extends CDOPropertySetter
 
     if (!(value instanceof PersistentCollection))
     {
-      throw new IllegalArgumentException("Value is not a PersistentCollection but a " + value.getClass().getName());
+      throw new IllegalArgumentException("Value is not a PersistentCollection but a " + value.getClass().getName()); //$NON-NLS-1$
     }
 
     if (!(value instanceof List<?>))
     {
-      throw new IllegalArgumentException("Value is not a list but a " + value.getClass().getName());
+      throw new IllegalArgumentException("Value is not a list but a " + value.getClass().getName()); //$NON-NLS-1$
     }
 
     // Only set it in the listholder

@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionPropertyAccessor.CDORevisionSetter;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -63,6 +64,11 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
     InternalCDORevision revision = (InternalCDORevision)target;
     final Object value = revision.getValue(getEStructuralFeature());
     if (value == null)
+    {
+      return null;
+    }
+
+    if (value == CDORevisionData.NIL)
     {
       return null;
     }

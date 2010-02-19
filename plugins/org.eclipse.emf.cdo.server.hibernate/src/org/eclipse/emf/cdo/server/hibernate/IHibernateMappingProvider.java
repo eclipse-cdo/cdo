@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.server.hibernate;
 
-import org.hibernate.cfg.Configuration;
 import org.w3c.dom.Element;
 
 /**
@@ -22,9 +21,10 @@ import org.w3c.dom.Element;
 public interface IHibernateMappingProvider
 {
   /**
-   * Adds a mapping to a configuration object
+   * @return the mapping as a String.
+   * @since 3.0
    */
-  public void addMapping(Configuration configuration);
+  public String getMapping();
 
   /**
    * Sets the Store in the mapping provider, is called before addMapping.

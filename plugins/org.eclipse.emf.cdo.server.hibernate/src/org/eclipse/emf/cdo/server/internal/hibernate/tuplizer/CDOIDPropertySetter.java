@@ -70,11 +70,12 @@ public class CDOIDPropertySetter extends CDOPropertySetter
       final Serializable idValue = HibernateUtil.getInstance().getIdValue(revisionID);
       if (idValue == null)
       {
-        throw new IllegalStateException("ID value is null for revision " + revision);
+        throw new IllegalStateException("ID value is null for revision " + revision); //$NON-NLS-1$
       }
-      else if (!idValue.equals(value))
+
+      if (!idValue.equals(value))
       {
-        throw new IllegalStateException("Current id and new id are different " + value + "/" + idValue);
+        throw new IllegalStateException("Current id and new id are different " + value + "/" + idValue); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
 

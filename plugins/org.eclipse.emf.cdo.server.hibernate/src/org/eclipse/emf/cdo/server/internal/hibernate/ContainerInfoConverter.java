@@ -30,7 +30,9 @@ import org.eclipse.emf.ecore.InternalEObject;
  */
 public class ContainerInfoConverter
 {
-  private static String SEPARATOR = "_:_";
+  private static String SEPARATOR = "_:_"; //$NON-NLS-1$
+
+  private static String CONTAINER_PREFIX = "-"; //$NON-NLS-1$
 
   private static ContainerInfoConverter instance = new ContainerInfoConverter();
 
@@ -100,7 +102,7 @@ public class ContainerInfoConverter
       final EClass containerEClass = store.getEClass(entityName);
       final int featureID = InternalEObject.EOPPOSITE_FEATURE_BASE - cdoRevision.getContainingFeatureID();
       final EStructuralFeature eFeature = containerEClass.getEStructuralFeature(featureID);
-      return strCDOID + SEPARATOR + "-" + eFeature.getName();
+      return strCDOID + SEPARATOR + "-" + eFeature.getName(); //$NON-NLS-1$
     }
 
     final EClass eContainedEClass = cdoRevision.getEClass();
@@ -142,7 +144,7 @@ public class ContainerInfoConverter
       return;
     }
 
-    if (containerFeatureStr.startsWith("-"))
+    if (containerFeatureStr.startsWith(CONTAINER_PREFIX))
     {
       // part of the container eClass
       final CDOClassifierRef classifierRef = ((CDOClassifierRef.Provider)containerID).getClassifierRef();

@@ -34,7 +34,7 @@ public abstract class HibernateMappingProvider implements IHibernateMappingProvi
   {
     if (hibernateStore == null)
     {
-      throw new IllegalStateException("hibernateStore is null");
+      throw new IllegalStateException("hibernateStore is null"); //$NON-NLS-1$
     }
 
     return hibernateStore;

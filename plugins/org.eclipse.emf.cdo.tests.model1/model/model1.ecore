@@ -3,6 +3,9 @@
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model1"
     nsURI="http://www.eclipse.org/emf/CDO/tests/model1/1.0.0" nsPrefix="model1">
+  <eAnnotations source="teneo.jpa">
+    <details key="value" value="@hbGenericGenerators({@GenericGenerator(name=&quot;system-uuid&quot;, strategy = &quot;org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOUUIDHexGenerator&quot;)})"/>
+  </eAnnotations>
   <eClassifiers xsi:type="ecore:EClass" name="Address">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="street" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

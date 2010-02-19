@@ -37,7 +37,7 @@ public abstract class CDOPropertyHandler
     if (getTracer().isEnabled())
     {
       getTracer().trace(
-          "Created " + this.getClass().getName() + " for eClass/feature: " + tuplizer.getEClass().getName() + "."
+          "Created " + this.getClass().getName() + " for eClass/feature: " + tuplizer.getEClass().getName() + "." //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
               + propertyName);
     }
 
@@ -48,12 +48,12 @@ public abstract class CDOPropertyHandler
         virtualProperty = true;
         if (getTracer().isEnabled())
         {
-          getTracer().trace("This is a virtual property");
+          getTracer().trace("This is a virtual property"); //$NON-NLS-1$
         }
       }
       else
       {
-        throw new IllegalStateException("Feature not found: " + propertyName);
+        throw new IllegalStateException("Feature not found: " + propertyName); //$NON-NLS-1$
       }
     }
   }

@@ -60,11 +60,17 @@ import java.util.Properties;
  */
 public class HibernateUtil
 {
-  private static final String EXT_POINT = "mappingProviderFactories";
+  private static final String EXT_POINT = "mappingProviderFactories"; //$NON-NLS-1$
 
   private static HibernateUtil instance = new HibernateUtil();
 
-  private static String SEPARATOR = "_;_";
+  private static final String SEPARATOR = "_;_"; //$NON-NLS-1$
+
+  private static final String MAPPING_PROVIDER_FACTORY_TAG = "mappingProviderFactory"; //$NON-NLS-1$
+
+  private static final String TYPE_ATTRIBUTE = "type"; //$NON-NLS-1$
+
+  private static final String CLASS = "class"; //$NON-NLS-1$
 
   /**
    * @return the global singleton instance
@@ -88,6 +94,8 @@ public class HibernateUtil
   /**
    * Uses the repository package repository to find the EClass of the identified by the CDOClassifierRef.
    * 
+   * @param classifierRef
+   *          {@link CDOClassifierRef} which identifies an EClass
    * @return the EClass instance identified by the EPackage nsuri and classifier name in the CDOClassifierRef
    * @throws IllegalArgumentException
    *           if the EClass can not be found
@@ -99,13 +107,13 @@ public class HibernateUtil
     final EPackage ePackage = registry.getEPackage(classifierRef.getPackageURI());
     if (ePackage == null)
     {
-      throw new IllegalArgumentException("No EPackage found with nsuri " + classifierRef.getPackageURI());
+      throw new IllegalArgumentException("No EPackage found with nsuri " + classifierRef.getPackageURI()); //$NON-NLS-1$
     }
 
     final EClass eClass = (EClass)ePackage.getEClassifier(classifierRef.getClassifierName());
     if (eClass == null)
     {
-      throw new IllegalArgumentException("No EClass " + classifierRef.getClassifierName() + " in EPackage "
+      throw new IllegalArgumentException("No EClass " + classifierRef.getClassifierName() + " in EPackage " //$NON-NLS-1$ //$NON-NLS-2$
           + ePackage.getNsURI());
     }
 
@@ -128,13 +136,15 @@ public class HibernateUtil
    * 
    * @param mappingProvider
    *          the provider which generates a mapping.
+   * @param properties
+   *          hibernate and teneo properties combined
    * @return the created HibernateStore
    * @see HibernateStore
    * @since 2.0
    */
-  public IHibernateStore createStore(IHibernateMappingProvider mappingProvider)
+  public IHibernateStore createStore(IHibernateMappingProvider mappingProvider, Properties properties)
   {
-    HibernateStore store = new HibernateStore(mappingProvider);
+    HibernateStore store = new HibernateStore(mappingProvider, properties);
     mappingProvider.setHibernateStore(store);
     return store;
   }
@@ -143,7 +153,7 @@ public class HibernateUtil
    * Can only be used when Eclipse is running. In standalone scenarios create the mapping strategy instance by directly
    * calling the constructor of the mapping strategy class.
    * 
-   * @see #createFileMappingProvider(String...)
+   * @see #createFileMappingProvider(String)
    * @since 2.0
    */
   public IHibernateMappingProvider.Factory createMappingProviderFactory(String type)
@@ -152,14 +162,14 @@ public class HibernateUtil
     IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, EXT_POINT);
     for (final IConfigurationElement element : elements)
     {
-      if ("mappingProviderFactory".equals(element.getName()))
+      if (MAPPING_PROVIDER_FACTORY_TAG.equals(element.getName()))
       {
-        String typeAttr = element.getAttribute("type");
+        String typeAttr = element.getAttribute(TYPE_ATTRIBUTE);
         if (ObjectUtil.equals(typeAttr, type))
         {
           try
           {
-            return (IHibernateMappingProvider.Factory)element.createExecutableExtension("class");
+            return (IHibernateMappingProvider.Factory)element.createExecutableExtension(CLASS);
           }
           catch (CoreException ex)
           {
@@ -175,14 +185,14 @@ public class HibernateUtil
   /**
    * Creates a FileMappingProvider using the passed locations.
    * 
-   * @param locations
+   * @param location
    *          the locations to load the mappings from
    * @return a {@link FileHibernateMappingProvider}
-   * @since 2.0
+   * @since 3.0
    */
-  public IHibernateMappingProvider createFileMappingProvider(String... locations)
+  public IHibernateMappingProvider createFileMappingProvider(String location)
   {
-    return new FileHibernateMappingProvider(locations);
+    return new FileHibernateMappingProvider(location);
   }
 
   /**
@@ -206,7 +216,7 @@ public class HibernateUtil
    *          the properties of this store are converted to a real Properties object
    * @return a Properties object with the store properties
    */
-  public Properties getPropertiesFromStore(IStore store)
+  public Properties getPropertiesFromStore(IHibernateStore store)
   {
     final Properties props = new Properties();
 
@@ -229,8 +239,8 @@ public class HibernateUtil
   }
 
   /**
-   * Converts a CDOID to an unique String representations. Null, {@link CDOIDTemp} and {@link CDOID#NULL} are returned
-   * as null value. Supports {@link CDOIDMeta} and {@link CDOIDExternal}.
+   * Converts a CDOID to an unique String representations. Null, {@link CDOIDTemp} and null CDOID's are returned as null
+   * value. Supports {@link CDOID}, {@link CDOIDMeta} and {@link CDOIDExternal}.
    * 
    * @param cdoID
    *          the cdoID to convert
@@ -326,7 +336,6 @@ public class HibernateUtil
     {
       return (InternalCDORevision)((CDOObject)target).cdoRevision();
     }
-
     return (InternalCDORevision)target;
   }
 
@@ -481,14 +490,18 @@ public class HibernateUtil
       final EReference containerEReference = eReference.getEOpposite();
       return contained.eClass().getFeatureID(containerEReference);
     }
-
     return InternalEObject.EOPPOSITE_FEATURE_BASE - containingEClass.getFeatureID(eReference);
   }
 
   /**
    * Creates the correct subclass of {@link CDOID} for the passed EClass and hibernate id object.
    * 
+   * @param classifierRef
+   *          the EClass to set in the CDOID
+   * @param idValue
+   *          the real id value
    * @return a supported instance of CDOID.
+   * @see CDOIDUtil
    */
   public CDOID createCDOID(CDOClassifierRef classifierRef, Object idValue)
   {
@@ -502,8 +515,8 @@ public class HibernateUtil
       return CDOIDUtil.createLongWithClassifier(classifierRef, (Long)idValue);
     }
 
-    throw new IllegalArgumentException("The ID value type " + idValue.getClass()
-        + " is not supported by this store. Method called with " + classifierRef);
+    throw new IllegalArgumentException("The ID value type " + idValue.getClass() //$NON-NLS-1$
+        + " is not supported by this store. Method called with " + classifierRef); //$NON-NLS-1$
   }
 
   /**
@@ -532,12 +545,14 @@ public class HibernateUtil
   {
     if (!isStoreCreatedID(cdoID))
     {
-      throw new IllegalArgumentException("This CDOID type " + cdoID + " is not supported by this store. "
+      throw new IllegalArgumentException("This CDOID type " + cdoID + " is not supported by this store. " //$NON-NLS-1$ //$NON-NLS-2$
           + cdoID.getClass().getName());
     }
   }
 
   /**
+   * @param cdoID
+   *          CDOID to get the internal id from
    * @return the id used by Hibernate, the String or Long value in the CDOID object.
    */
   public Serializable getIdValue(CDOID cdoID)
@@ -552,14 +567,14 @@ public class HibernateUtil
       return ((AbstractCDOIDLong)cdoID).getLongValue();
     }
 
-    throw new IllegalArgumentException("This CDOID type " + cdoID + " is not supported by this store.");
+    throw new IllegalArgumentException("This CDOID type " + cdoID + " is not supported by this store."); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   /**
    * Retrieves the entity name for the EClass present in the CDOID.
    * 
    * @param cdoID
-   *          the {@link CDOID} to get the EClass from.
+   *          the {@link CDOID} to get the EClass from
    * @return the entity name for the EClass of the CDOID.
    * @see HibernateStore#getEntityName(EClass)
    */
@@ -572,6 +587,6 @@ public class HibernateUtil
       return accessor.getStore().getEntityName(classifierRef);
     }
 
-    throw new IllegalArgumentException("This CDOID type " + cdoID + " is not supported by this store.");
+    throw new IllegalArgumentException("This CDOID type " + cdoID + " is not supported by this store."); //$NON-NLS-1$ //$NON-NLS-2$
   }
 }

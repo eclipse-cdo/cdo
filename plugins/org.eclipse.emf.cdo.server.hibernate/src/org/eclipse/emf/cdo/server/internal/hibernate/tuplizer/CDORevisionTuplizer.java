@@ -46,6 +46,10 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDORevisionTuplizer.class);
 
+  private static final String EPACKAGE_META = "epackage"; //$NON-NLS-1$
+
+  private static final String ECLASSNAME_META = "eclassName"; //$NON-NLS-1$
+
   private EClass eClass;
 
   public CDORevisionTuplizer(EntityMetamodel entityMetamodel, PersistentClass mappingInfo)
@@ -53,7 +57,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     super(entityMetamodel, mappingInfo);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Created CDORevisionTuplizer for entity " + mappingInfo.getEntityName());
+      TRACER.trace("Created CDORevisionTuplizer for entity " + mappingInfo.getEntityName()); //$NON-NLS-1$
     }
 
     initEClass(mappingInfo);
@@ -70,19 +74,19 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
 
     // find the EClass/Package
     String entityName = mappingInfo.getEntityName();
-    String ePackageURI = mappingInfo.getMetaAttribute("epackage").getValue();
-    String eClassName = mappingInfo.getMetaAttribute("eclassName").getValue();
+    String ePackageURI = mappingInfo.getMetaAttribute(EPACKAGE_META).getValue();
+    String eClassName = mappingInfo.getMetaAttribute(ECLASSNAME_META).getValue();
 
     if (ePackageURI == null || eClassName == null)
     {
-      throw new IllegalArgumentException("The mapping for the persistentclass " + mappingInfo.getEntityName()
-          + " is incorrect, there should be meta data tags for both epackage and "
-          + "eclassname, one or both are missing.");
+      throw new IllegalArgumentException("The mapping for the persistentclass " + mappingInfo.getEntityName() //$NON-NLS-1$
+          + " is incorrect, there should be meta data tags for both epackage and " //$NON-NLS-1$
+          + "eclassname, one or both are missing."); //$NON-NLS-1$
     }
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace("EntityName/eclassname/packageURI " + entityName + "/" + eClassName + "/" + ePackageURI);
+      TRACER.trace("EntityName/eclassname/packageURI " + entityName + "/" + eClassName + "/" + ePackageURI); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     for (EPackage ePackage : hbStore.getPackageHandler().getEPackages())
@@ -111,7 +115,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
           eClass = localCdoClass;
           if (TRACER.isEnabled())
           {
-            TRACER.trace("Class is CDOResource class");
+            TRACER.trace("Class is CDOResource class"); //$NON-NLS-1$
           }
 
           break;
@@ -124,8 +128,8 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
 
     if (eClass == null)
     {
-      throw new IllegalArgumentException("The mapped class " + mappingInfo.getEntityName()
-          + " does not have a eClass equivalent");
+      throw new IllegalArgumentException("The mapped class " + mappingInfo.getEntityName() //$NON-NLS-1$
+          + " does not have a eClass equivalent"); //$NON-NLS-1$
     }
   }
 
@@ -145,8 +149,8 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     String entityName = getEntityMetamodel().findEntityNameByEntityClass(concreteEntityClass);
     if (entityName == null)
     {
-      throw new HibernateException("Unable to resolve entity name from Class [" + concreteEntityClass.getName() + "]"
-          + " expected instance/subclass of [" + getEntityName() + "]");
+      throw new HibernateException("Unable to resolve entity name from Class [" + concreteEntityClass.getName() + "]" //$NON-NLS-1$ //$NON-NLS-2$
+          + " expected instance/subclass of [" + getEntityName() + "]"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     return entityName;
@@ -238,7 +242,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     initEClass(mappedEntity);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Building property getter for " + eClass.getName() + "." + mappedProperty.getName());
+      TRACER.trace("Building property getter for " + eClass.getName() + "." + mappedProperty.getName()); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     if (mappedProperty.isBackRef())
@@ -285,7 +289,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     initEClass(mappedEntity);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Building property setter for " + eClass.getName() + "." + mappedProperty.getName());
+      TRACER.trace("Building property setter for " + eClass.getName() + "." + mappedProperty.getName()); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     if (mappedProperty.isBackRef())
@@ -352,7 +356,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     }
     catch (HibernateException ex)
     {
-      OM.LOG.error("Could not create proxy factory for " + getEntityName(), ex);
+      OM.LOG.error("Could not create proxy factory for " + getEntityName(), ex); //$NON-NLS-1$
       pf = null;
     }
 

@@ -33,7 +33,7 @@ public class CDOIDAnyUserType implements UserType
 {
   private static final int[] SQL_TYPES = { Types.VARCHAR };
 
-  private static final String SEPARATOR = "__;__";
+  private static final String SEPARATOR = "__;__"; //$NON-NLS-1$
 
   /** Constructor by id */
   private final HashMap<String, Constructor<?>> constructors = new HashMap<String, Constructor<?>>();
@@ -134,7 +134,7 @@ public class CDOIDAnyUserType implements UserType
       Constructor<?> constructor = constructors.get(idType);
       if (constructor == null)
       {
-        Class<?> idClass = this.getClass().getClassLoader().loadClass(idType);
+        final Class<?> idClass = Thread.currentThread().getContextClassLoader().loadClass(idType);
         constructor = idClass.getConstructor(new Class[] { String.class });
         constructors.put(idType, constructor);
       }

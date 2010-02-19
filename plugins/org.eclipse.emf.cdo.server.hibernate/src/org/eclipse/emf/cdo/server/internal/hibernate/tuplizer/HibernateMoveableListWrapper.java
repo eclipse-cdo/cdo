@@ -46,12 +46,12 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
     int size = size();
     if (sourceIndex >= size)
     {
-      throw new IndexOutOfBoundsException("sourceIndex=" + sourceIndex + ", size=" + size);
+      throw new IndexOutOfBoundsException("sourceIndex=" + sourceIndex + ", size=" + size); //$NON-NLS-1$  //$NON-NLS-2$ 
     }
 
     if (targetIndex >= size)
     {
-      throw new IndexOutOfBoundsException("targetIndex=" + targetIndex + ", size=" + size);
+      throw new IndexOutOfBoundsException("targetIndex=" + targetIndex + ", size=" + size); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     Object object = get(sourceIndex);

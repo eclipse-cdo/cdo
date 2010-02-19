@@ -29,9 +29,9 @@ import java.io.Serializable;
  */
 public class HibernateQueryHandler implements IQueryHandler
 {
-  public static final String QUERY_LANGUAGE = "hql";
+  public static final String QUERY_LANGUAGE = "hql"; //$NON-NLS-1$
 
-  public static final String FIRST_RESULT = "firstResult";
+  public static final String FIRST_RESULT = "firstResult"; //$NON-NLS-1$
 
   private HibernateStoreAccessor hibernateStoreAccessor;
 
@@ -50,7 +50,7 @@ public class HibernateQueryHandler implements IQueryHandler
   {
     if (!QUERY_LANGUAGE.equals(info.getQueryLanguage().toLowerCase()))
     {
-      throw new IllegalArgumentException("Query language " + info.getQueryLanguage() + " not supported by this store");
+      throw new IllegalArgumentException("Query language " + info.getQueryLanguage() + " not supported by this store"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     // get a transaction, the hibernateStoreAccessor is placed in a threadlocal
@@ -77,8 +77,8 @@ public class HibernateQueryHandler implements IQueryHandler
             }
             catch (ClassCastException e)
             {
-              throw new IllegalArgumentException("Parameter firstResult must be an integer but it is a " + o
-                  + " class " + o.getClass().getName());
+              throw new IllegalArgumentException("Parameter firstResult must be an integer but it is a " + o //$NON-NLS-1$
+                  + " class " + o.getClass().getName()); //$NON-NLS-1$
             }
           }
         }

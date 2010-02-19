@@ -38,7 +38,7 @@ import java.util.Map;
  */
 public class FeatureMapEntryFeatureURIPropertyHandler implements PropertyAccessor, Getter, Setter
 {
-  private static final String EFEATURE_SEPARATOR = "#";
+  private static final String EFEATURE_SEPARATOR = "#"; //$NON-NLS-1$
 
   private static final long serialVersionUID = 1L;
 
@@ -101,7 +101,7 @@ public class FeatureMapEntryFeatureURIPropertyHandler implements PropertyAccesso
     final int lastSeparator = eFeatureURI.lastIndexOf(EFEATURE_SEPARATOR);
     if (firstSeparator == -1 || lastSeparator == -1 || firstSeparator == lastSeparator)
     {
-      throw new IllegalArgumentException("EFeature URI " + eFeatureURI + " has an illegal format");
+      throw new IllegalArgumentException("EFeature URI " + eFeatureURI + " has an illegal format"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     final String ePackageURI = eFeatureURI.substring(0, firstSeparator);
@@ -112,20 +112,20 @@ public class FeatureMapEntryFeatureURIPropertyHandler implements PropertyAccesso
     final EPackage ePackage = hbCommitContext.getCommitContext().getPackageRegistry().getEPackage(ePackageURI);
     if (ePackage == null)
     {
-      throw new IllegalArgumentException("EPackage not found using " + eFeatureURI + " and EPackageURI: " + ePackageURI);
+      throw new IllegalArgumentException("EPackage not found using " + eFeatureURI + " and EPackageURI: " + ePackageURI); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     final EClass eClass = (EClass)ePackage.getEClassifier(eClassName);
     if (eClass == null)
     {
-      throw new IllegalArgumentException("EClass not found using " + eFeatureURI + " and EClass name " + eClassName);
+      throw new IllegalArgumentException("EClass not found using " + eFeatureURI + " and EClass name " + eClassName); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     final EStructuralFeature eFeature = eClass.getEStructuralFeature(eFeatureName);
     if (eFeature == null)
     {
-      throw new IllegalArgumentException("EClass not found using " + eFeatureURI + ", EClass name " + eClassName
-          + " and EFeature name " + eFeatureName);
+      throw new IllegalArgumentException("EClass not found using " + eFeatureURI + ", EClass name " + eClassName //$NON-NLS-1$ //$NON-NLS-2$
+          + " and EFeature name " + eFeatureName); //$NON-NLS-1$
     }
 
     fmEntry.setEStructuralFeature(eFeature);

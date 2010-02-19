@@ -14,13 +14,14 @@ import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
 import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.AuditTestSameSession;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
-import org.eclipse.emf.cdo.tests.FeatureMapTest;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
 import org.eclipse.emf.cdo.tests.MultiValuedOfAttributeTest;
+import org.eclipse.emf.cdo.tests.UnsetTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_272861_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_273565_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
@@ -55,10 +56,13 @@ public class AllTestsHibernate extends AllTestsAllConfigs
     // if (true)
     // {
     // testClasses.clear();
-    // // // current failing tests to solve:
-    // testClasses.add(ContainmentTest.class);
+    // testClasses.add(InitialTest.class);
     // return;
     // }
+
+    // results in infinite loops it seems
+    // runs okay when run standalone
+    testClasses.remove(Bugzilla_273565_Test.class);
 
     // add a testcase which has an annotation file
     testClasses.add(HibernateExternalAnnotationTest.class);
@@ -89,10 +93,6 @@ public class AllTestsHibernate extends AllTestsAllConfigs
     testClasses.remove(ExternalReferenceTest.class);
     testClasses.add(HibernateExternalReferenceTest.class);
 
-    // Feature map is not yet supported
-    // bug 282711
-    testClasses.remove(FeatureMapTest.class);
-
     // this testcases removes and creates a resource with the
     // same path in one transaction, that's not supported
     // by hibernate.. because of unique key constraints
@@ -105,5 +105,11 @@ public class AllTestsHibernate extends AllTestsAllConfigs
     // has a different meaning of unset
     testClasses.remove(Bugzilla_258933_Test.class);
     testClasses.add(HibernateBugzilla_258933_Test.class);
+
+    // remove as unsettable has to be re-visited for the hb store
+    // see bugzilla 298579
+    testClasses.remove(UnsetTest.class);
+
+    testClasses.add(HibernateBugzilla_301104_Test.class);
   }
 }

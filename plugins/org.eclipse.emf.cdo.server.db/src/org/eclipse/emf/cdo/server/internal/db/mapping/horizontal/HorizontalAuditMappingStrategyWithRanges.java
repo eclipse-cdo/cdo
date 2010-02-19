@@ -27,11 +27,6 @@ public class HorizontalAuditMappingStrategyWithRanges extends AbstractHorizontal
   {
   }
 
-  public boolean hasDeltaSupport()
-  {
-    return true;
-  }
-
   public boolean hasAuditSupport()
   {
     return true;
@@ -40,6 +35,11 @@ public class HorizontalAuditMappingStrategyWithRanges extends AbstractHorizontal
   public boolean hasBranchingSupport()
   {
     return false;
+  }
+
+  public boolean hasDeltaSupport()
+  {
+    return true;
   }
 
   @Override

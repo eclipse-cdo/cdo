@@ -23,6 +23,25 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  */
 public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappingStrategy
 {
+  public HorizontalBranchingMappingStrategy()
+  {
+  }
+
+  public boolean hasAuditSupport()
+  {
+    return true;
+  }
+
+  public boolean hasBranchingSupport()
+  {
+    return true;
+  }
+
+  public boolean hasDeltaSupport()
+  {
+    return false;
+  }
+
   @Override
   public IClassMapping doCreateClassMapping(EClass eClass)
   {
@@ -39,20 +58,5 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
   public IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature)
   {
     return new BranchingFeatureMapTableMapping(this, containingClass, feature);
-  }
-
-  public boolean hasAuditSupport()
-  {
-    return true;
-  }
-
-  public boolean hasDeltaSupport()
-  {
-    return false;
-  }
-
-  public boolean hasBranchingSupport()
-  {
-    return true;
   }
 }

@@ -23,10 +23,23 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  */
 public class HorizontalNonAuditMappingStrategy extends AbstractHorizontalMappingStrategy
 {
-  @Override
-  protected IClassMapping doCreateClassMapping(EClass eClass)
+  public HorizontalNonAuditMappingStrategy()
   {
-    return new HorizontalNonAuditClassMapping(this, eClass);
+  }
+
+  public boolean hasAuditSupport()
+  {
+    return false;
+  }
+
+  public boolean hasBranchingSupport()
+  {
+    return false;
+  }
+
+  public boolean hasDeltaSupport()
+  {
+    return true;
   }
 
   @Override
@@ -41,18 +54,9 @@ public class HorizontalNonAuditMappingStrategy extends AbstractHorizontalMapping
     return new NonAuditFeatureMapTableMapping(this, containingClass, feature);
   }
 
-  public boolean hasAuditSupport()
+  @Override
+  protected IClassMapping doCreateClassMapping(EClass eClass)
   {
-    return false;
-  }
-
-  public boolean hasDeltaSupport()
-  {
-    return true;
-  }
-
-  public boolean hasBranchingSupport()
-  {
-    return false;
+    return new HorizontalNonAuditClassMapping(this, eClass);
   }
 }

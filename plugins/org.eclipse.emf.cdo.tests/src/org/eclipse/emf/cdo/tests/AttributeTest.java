@@ -343,4 +343,12 @@ public class AttributeTest extends AbstractCDOTest
     schoolPackage.getEClassifiers().add(schoolBookEClass);
     return schoolPackage;
   }
+
+  public void testManyValuedCustomDataType() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOView view = session.openView();
+    CDOResource resource = view.getResource("/my/resource");
+
+  }
 }

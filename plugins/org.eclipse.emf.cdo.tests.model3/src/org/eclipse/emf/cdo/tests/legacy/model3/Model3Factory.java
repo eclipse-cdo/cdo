@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.legacy.model3;
 
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
+import org.eclipse.emf.cdo.tests.model3.Polygon;
 
 /**
  * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
@@ -44,6 +45,14 @@ public interface Model3Factory extends org.eclipse.emf.cdo.tests.model3.Model3Fa
    * @generated
    */
   MetaRef createMetaRef();
+
+  /**
+   * Returns a new object of class '<em>Polygon</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Polygon</em>'.
+   * @generated
+   */
+  Polygon createPolygon();
 
   /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->

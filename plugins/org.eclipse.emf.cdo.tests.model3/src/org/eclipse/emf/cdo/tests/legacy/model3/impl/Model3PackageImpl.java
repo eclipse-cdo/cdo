@@ -16,8 +16,12 @@ import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackagePackage;
 import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.SubpackagePackageImpl;
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
+import org.eclipse.emf.cdo.tests.model3.Point;
+import org.eclipse.emf.cdo.tests.model3.Polygon;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -43,6 +47,20 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * @generated
    */
   private EClass metaRefEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass polygonEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EDataType pointEDataType = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -164,6 +182,36 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * 
    * @generated
    */
+  public EClass getPolygon()
+  {
+    return polygonEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getPolygon_Point()
+  {
+    return (EAttribute)polygonEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EDataType getPoint()
+  {
+    return pointEDataType;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public Model3Factory getModel3Factory()
   {
     return (Model3Factory)getEFactoryInstance();
@@ -196,6 +244,12 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
     metaRefEClass = createEClass(META_REF);
     createEReference(metaRefEClass, META_REF__EPACKAGE_REF);
+
+    polygonEClass = createEClass(POLYGON);
+    createEAttribute(polygonEClass, POLYGON__POINT);
+
+    // Create data types
+    pointEDataType = createEDataType(POINT);
   }
 
   /**
@@ -248,6 +302,13 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     initEReference(getMetaRef_EPackageRef(), theEcorePackage.getEPackage(), null, "ePackageRef", null, 0, 1,
         MetaRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(polygonEClass, Polygon.class, "Polygon", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPolygon_Point(), getPoint(), "Point", null, 1, -1, Polygon.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    // Initialize data types
+    initEDataType(pointEDataType, Point.class, "Point", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

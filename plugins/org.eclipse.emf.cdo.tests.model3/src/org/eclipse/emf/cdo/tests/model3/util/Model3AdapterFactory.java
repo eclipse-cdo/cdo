@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.model3.util;
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
+import org.eclipse.emf.cdo.tests.model3.Polygon;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -90,6 +91,12 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter casePolygon(Polygon object)
+    {
+      return createPolygonAdapter();
+    }
+
+    @Override
     public Adapter defaultCase(EObject object)
     {
       return createEObjectAdapter();
@@ -134,6 +141,20 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createMetaRefAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model3.Polygon <em>Polygon</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model3.Polygon
+   * @generated
+   */
+  public Adapter createPolygonAdapter()
   {
     return null;
   }

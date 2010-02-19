@@ -10,6 +10,11 @@
   <eClassifiers xsi:type="ecore:EClass" name="MetaRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ePackageRef" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Point" instanceClassName="org.eclipse.emf.cdo.tests.model3.Point"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Polygon">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Point" lowerBound="1" upperBound="-1"
+        eType="#//Point"/>
+  </eClassifiers>
   <eSubpackages name="subpackage" nsURI="http://www.eclipse.org/emf/CDO/tests/subpackage/1.0.0"
       nsPrefix="subpackage">
     <eClassifiers xsi:type="ecore:EClass" name="Class2">

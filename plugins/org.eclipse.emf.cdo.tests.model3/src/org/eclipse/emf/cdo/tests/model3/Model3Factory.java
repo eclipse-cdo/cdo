@@ -45,6 +45,14 @@ public interface Model3Factory extends EFactory
   MetaRef createMetaRef();
 
   /**
+   * Returns a new object of class '<em>Polygon</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Polygon</em>'.
+   * @generated
+   */
+  Polygon createPolygon();
+
+  /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the package supported by this factory.

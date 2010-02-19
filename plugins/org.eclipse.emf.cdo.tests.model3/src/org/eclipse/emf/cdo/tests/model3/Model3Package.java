@@ -10,7 +10,9 @@
  */
 package org.eclipse.emf.cdo.tests.model3;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -111,6 +113,41 @@ public interface Model3Package extends EPackage
   int META_REF_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.PolygonImpl <em>Polygon</em>}' class. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model3.impl.PolygonImpl
+   * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getPolygon()
+   * @generated
+   */
+  int POLYGON = 2;
+
+  /**
+   * The feature id for the '<em><b>Point</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int POLYGON__POINT = 0;
+
+  /**
+   * The number of structural features of the '<em>Polygon</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int POLYGON_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '<em>Point</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model3.Point
+   * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getPoint()
+   * @generated
+   */
+  int POINT = 3;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.Class1 <em>Class1</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -151,6 +188,38 @@ public interface Model3Package extends EPackage
    * @generated
    */
   EReference getMetaRef_EPackageRef();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.Polygon <em>Polygon</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Polygon</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.Polygon
+   * @generated
+   */
+  EClass getPolygon();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model3.Polygon#getPoint
+   * <em>Point</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute list '<em>Point</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.Polygon#getPoint()
+   * @see #getPolygon()
+   * @generated
+   */
+  EAttribute getPolygon_Point();
+
+  /**
+   * Returns the meta object for data type '{@link org.eclipse.emf.cdo.tests.model3.Point <em>Point</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for data type '<em>Point</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.Point
+   * @model instanceClass="org.eclipse.emf.cdo.tests.model3.Point"
+   * @generated
+   */
+  EDataType getPoint();
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -209,6 +278,33 @@ public interface Model3Package extends EPackage
      * @generated
      */
     EReference META_REF__EPACKAGE_REF = eINSTANCE.getMetaRef_EPackageRef();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model3.impl.PolygonImpl <em>Polygon</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model3.impl.PolygonImpl
+     * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getPolygon()
+     * @generated
+     */
+    EClass POLYGON = eINSTANCE.getPolygon();
+
+    /**
+     * The meta object literal for the '<em><b>Point</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute POLYGON__POINT = eINSTANCE.getPolygon_Point();
+
+    /**
+     * The meta object literal for the '<em>Point</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model3.Point
+     * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getPoint()
+     * @generated
+     */
+    EDataType POINT = eINSTANCE.getPoint();
 
   }
 

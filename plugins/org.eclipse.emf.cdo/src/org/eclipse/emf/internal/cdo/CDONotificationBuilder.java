@@ -4,13 +4,16 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  */
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
@@ -22,11 +25,15 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
+
+import java.util.Set;
 
 /**
  * @author Simon McDuff
@@ -34,22 +41,41 @@ import org.eclipse.emf.ecore.InternalEObject;
  */
 public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 {
+  private InternalCDORevisionManager revisionManager;
+
+  private InternalEObject object;
+
+  private CDORevisionDelta revisionDelta;
+
   private CDODeltaNotificationImpl notification;
 
-  private CDORevisionDelta delta;
+  private InternalCDORevision revision;
 
-  private InternalEObject internalObject;
+  private boolean revisionLookedUp;
 
-  public CDONotificationBuilder()
+  private Set<CDOObject> detachedObjects;
+
+  public CDONotificationBuilder(InternalCDORevisionManager revisionManager)
   {
+    this.revisionManager = revisionManager;
   }
 
-  public synchronized NotificationImpl buildNotification(InternalEObject internalObject, CDORevisionDelta delta)
+  public InternalCDORevisionManager getRevisionManager()
+  {
+    return revisionManager;
+  }
+
+  public synchronized NotificationImpl buildNotification(InternalEObject object, CDORevisionDelta revisionDelta,
+      Set<CDOObject> detachedObjects)
   {
     notification = null;
-    this.internalObject = internalObject;
-    this.delta = delta;
-    delta.accept(this);
+    revision = null;
+    revisionLookedUp = false;
+
+    this.object = object;
+    this.revisionDelta = revisionDelta;
+    this.detachedObjects = detachedObjects;
+    revisionDelta.accept(this);
     return notification;
   }
 
@@ -57,32 +83,53 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
   {
     int oldPosition = delta.getOldPosition();
     int newPosition = delta.getNewPosition();
-    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.MOVE, getEFeatureID(delta.getFeature()),
-        new Integer(oldPosition), null, newPosition));
+    add(new CDODeltaNotificationImpl(object, NotificationImpl.MOVE, getEFeatureID(delta.getFeature()), new Integer(
+        oldPosition), null, newPosition));
   }
 
   public void visit(CDOAddFeatureDelta delta)
   {
-    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.ADD, getEFeatureID(delta.getFeature()), null,
-        delta.getValue(), delta.getIndex()));
+    add(new CDODeltaNotificationImpl(object, NotificationImpl.ADD, getEFeatureID(delta.getFeature()), null, delta
+        .getValue(), delta.getIndex()));
   }
 
   public void visit(CDORemoveFeatureDelta delta)
   {
-    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.REMOVE, getEFeatureID(delta.getFeature()), null,
-        null, delta.getIndex()));
+    EStructuralFeature feature = delta.getFeature();
+    int index = delta.getIndex();
+    if (!revisionLookedUp)
+    {
+      revision = revisionManager.getRevisionByVersion(revisionDelta.getID(), revisionDelta, CDORevision.UNCHUNKED,
+          false);
+    }
+
+    Object oldValue = revision == null ? null : revision.get(feature, index);
+    if (oldValue instanceof CDOID)
+    {
+      CDOID id = (CDOID)oldValue;
+      oldValue = null;
+      for (CDOObject detachedObject : detachedObjects)
+      {
+        if (detachedObject.cdoID().equals(id))
+        {
+          oldValue = detachedObject;
+          break;
+        }
+      }
+    }
+
+    add(new CDODeltaNotificationImpl(object, NotificationImpl.REMOVE, getEFeatureID(feature), oldValue, null, index));
   }
 
   public void visit(CDOSetFeatureDelta delta)
   {
-    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.SET, getEFeatureID(delta.getFeature()), null,
-        delta.getValue()));
+    add(new CDODeltaNotificationImpl(object, NotificationImpl.SET, getEFeatureID(delta.getFeature()), null, delta
+        .getValue()));
   }
 
   public void visit(CDOUnsetFeatureDelta delta)
   {
-    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.UNSET, getEFeatureID(delta.getFeature()), null,
-        null));
+    add(new CDODeltaNotificationImpl(object, NotificationImpl.UNSET, getEFeatureID(delta.getFeature()), null, null));
   }
 
   public void visit(CDOListFeatureDelta deltas)
@@ -95,19 +142,19 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 
   public void visit(CDOClearFeatureDelta delta)
   {
-    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.REMOVE_MANY, getEFeatureID(delta.getFeature()),
-        null, null));
+    add(new CDODeltaNotificationImpl(object, NotificationImpl.REMOVE_MANY, getEFeatureID(delta.getFeature()), null,
+        null));
   }
 
   public void visit(CDOContainerFeatureDelta delta)
   {
-    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.SET,
-        EcorePackage.eINSTANCE.eContainmentFeature(), null, delta.getContainerID()));
+    add(new CDODeltaNotificationImpl(object, NotificationImpl.SET, EcorePackage.eINSTANCE.eContainmentFeature(), null,
+        delta.getContainerID()));
   }
 
   protected void add(CDODeltaNotificationImpl newNotificaton)
   {
-    newNotificaton.setRevisionDelta(delta);
+    newNotificaton.setRevisionDelta(revisionDelta);
     if (notification == null)
     {
       notification = newNotificaton;
@@ -120,6 +167,6 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 
   private int getEFeatureID(EStructuralFeature eFeature)
   {
-    return internalObject.eClass().getFeatureID(eFeature);
+    return object.eClass().getFeatureID(eFeature);
   }
 }

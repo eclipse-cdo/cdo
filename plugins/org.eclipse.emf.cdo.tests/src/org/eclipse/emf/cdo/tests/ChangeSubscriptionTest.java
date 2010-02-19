@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -28,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -487,6 +489,130 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
       count++;
     }
+  }
+
+  public void testRemove() throws Exception
+  {
+    List<Category> categories = new ArrayList<Category>();
+    categories.add(getModel1Factory().createCategory());
+
+    Company company = getModel1Factory().createCompany();
+    company.getCategories().add(getModel1Factory().createCategory());
+    company.getCategories().add(getModel1Factory().createCategory());
+    company.getCategories().add(getModel1Factory().createCategory());
+    company.getCategories().addAll(categories);
+    company.getCategories().add(getModel1Factory().createCategory());
+    company.getCategories().add(getModel1Factory().createCategory());
+    company.getCategories().add(getModel1Factory().createCategory());
+
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+    resource.getContents().add(company);
+    transaction.commit();
+
+    CDOSession session2 = openModel1Session();
+    CDOView view = session2.openView();
+    view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+
+    CDOResource resource2 = view.getResource("/test1");
+    Company company2 = (Company)resource2.getContents().get(0);
+
+    Object[] strongRefs = company2.getCategories().toArray(); // Keep those in memory
+    msg(strongRefs);
+
+    final TestAdapter adapter = new TestAdapter();
+    company2.eAdapters().add(adapter);
+
+    company.getCategories().removeAll(categories);
+    transaction.commit();
+
+    final Object[] oldValue = { null };
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        List<Notification> notifications = adapter.getNotifications();
+        for (Notification notification : notifications)
+        {
+          if (notification.getEventType() == Notification.REMOVE
+              && notification.getFeature() == getModel1Package().getCompany_Categories())
+          {
+            oldValue[0] = notification.getOldValue();
+            return true;
+          }
+        }
+
+        return false;
+      }
+    }.assertNoTimeOut();
+
+    assertInstanceOf(Category.class, oldValue[0]);
+  }
+
+  public void testRemoveMany() throws Exception
+  {
+    List<Category> categories = new ArrayList<Category>();
+    categories.add(getModel1Factory().createCategory());
+    categories.add(getModel1Factory().createCategory());
+    categories.add(getModel1Factory().createCategory());
+    categories.add(getModel1Factory().createCategory());
+
+    Company company = getModel1Factory().createCompany();
+    company.getCategories().add(getModel1Factory().createCategory());
+    company.getCategories().add(getModel1Factory().createCategory());
+    company.getCategories().add(getModel1Factory().createCategory());
+    company.getCategories().addAll(categories);
+    company.getCategories().add(getModel1Factory().createCategory());
+    company.getCategories().add(getModel1Factory().createCategory());
+    company.getCategories().add(getModel1Factory().createCategory());
+
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+    resource.getContents().add(company);
+    transaction.commit();
+
+    CDOSession session2 = openModel1Session();
+    CDOView view = session2.openView();
+    view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+
+    CDOResource resource2 = view.getResource("/test1");
+    Company company2 = (Company)resource2.getContents().get(0);
+
+    Object[] strongRefs = company2.getCategories().toArray(); // Keep those in memory
+    msg(strongRefs);
+
+    final TestAdapter adapter = new TestAdapter();
+    company2.eAdapters().add(adapter);
+
+    company.getCategories().removeAll(categories);
+    transaction.commit();
+
+    final Object[] oldValue = { null };
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        List<Notification> notifications = adapter.getNotifications();
+        for (Notification notification : notifications)
+        {
+          if (notification.getEventType() == Notification.REMOVE_MANY
+              && notification.getFeature() == getModel1Package().getCompany_Categories())
+          {
+            oldValue[0] = notification.getOldValue();
+            return true;
+          }
+        }
+
+        return false;
+      }
+    }.assertNoTimeOut();
+
+    assertInstanceOf(Collection.class, oldValue[0]);
+    assertEquals(categories.size(), ((Collection<?>)oldValue[0]).size());
   }
 
   /**

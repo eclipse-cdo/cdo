@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDODeltaNotification;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -189,7 +190,7 @@ public class CDODeltaNotificationImpl extends ENotificationImpl implements CDODe
   public Object getOldValue()
   {
     Object oldValue = super.getOldValue();
-    if (oldValue == null)
+    if (oldValue == null && getEventType() == Notification.REMOVE_MANY)
     {
       Object feature = getFeature();
       if (feature instanceof EStructuralFeature)

@@ -1303,9 +1303,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     fireInvalidationEvent(lastUpdateTime, Collections.unmodifiableSet(changedObjects), Collections
         .unmodifiableSet(detachedObjects));
 
-    boolean skipChangeSubscription = deltas.isEmpty() && detachedObjects.isEmpty();
-
-    if (!skipChangeSubscription)
+    if (!deltas.isEmpty() || !detachedObjects.isEmpty())
     {
       handleChangeSubscription(deltas, detachedObjects);
     }
@@ -1441,7 +1439,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     if (deltas != null)
     {
-      CDONotificationBuilder builder = new CDONotificationBuilder();
+      CDONotificationBuilder builder = new CDONotificationBuilder(session.getRevisionManager());
       for (CDORevisionDelta delta : deltas)
       {
         InternalCDOObject object = changeSubscriptionManager.getSubcribeObject(delta.getID());
@@ -1449,7 +1447,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         {
           if (!isLocked(object))
           {
-            NotificationImpl notification = builder.buildNotification(object, delta);
+            NotificationImpl notification = builder.buildNotification(object, delta, detachedObjects);
             if (notification != null)
             {
               notification.dispatch();
@@ -1463,8 +1461,9 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     {
       for (CDOObject detachedObject : detachedObjects)
       {
-        CDOID id = detachedObject.cdoID();
-        InternalCDOObject object = changeSubscriptionManager.getSubcribeObject(id);
+        // CDOID id = detachedObject.cdoID();
+        // InternalCDOObject object = changeSubscriptionManager.getSubcribeObject(id);
+        InternalCDOObject object = (InternalCDOObject)detachedObject;
         if (object != null && object.eNotificationRequired())
         {
           if (!isLocked(object))

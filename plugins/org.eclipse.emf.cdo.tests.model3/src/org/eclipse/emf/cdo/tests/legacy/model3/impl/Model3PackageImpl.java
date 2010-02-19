@@ -192,7 +192,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * 
    * @generated
    */
-  public EAttribute getPolygon_Point()
+  public EAttribute getPolygon_Points()
   {
     return (EAttribute)polygonEClass.getEStructuralFeatures().get(0);
   }
@@ -246,7 +246,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     createEReference(metaRefEClass, META_REF__EPACKAGE_REF);
 
     polygonEClass = createEClass(POLYGON);
-    createEAttribute(polygonEClass, POLYGON__POINT);
+    createEAttribute(polygonEClass, POLYGON__POINTS);
 
     // Create data types
     pointEDataType = createEDataType(POINT);
@@ -304,7 +304,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(polygonEClass, Polygon.class, "Polygon", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPolygon_Point(), getPoint(), "Point", null, 1, -1, Polygon.class, !IS_TRANSIENT, !IS_VOLATILE,
+    initEAttribute(getPolygon_Points(), getPoint(), "points", null, 1, -1, Polygon.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types

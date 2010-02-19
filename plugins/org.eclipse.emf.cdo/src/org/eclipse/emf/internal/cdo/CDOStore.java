@@ -305,15 +305,20 @@ public final class CDOStore implements EStore
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
     Object[] result = revision.toArray(feature);
-    // TODO Clarify feature maps
-    if (feature instanceof EReference)
+    for (int i = 0; i < result.length; i++)
     {
-      for (int i = 0; i < result.length; i++)
-      {
-        result[i] = resolveProxy(revision, feature, i, result[i]);
-        result[i] = convertIdToObject(cdoObject.cdoView(), eObject, feature, i, result[i]);
-      }
+      result[i] = convertToEMF(eObject, revision, feature, i, result[i]);
     }
+
+    // // TODO Clarify feature maps
+    // if (feature instanceof EReference)
+    // {
+    // for (int i = 0; i < result.length; i++)
+    // {
+    // result[i] = resolveProxy(revision, feature, i, result[i]);
+    // result[i] = convertIdToObject(cdoObject.cdoView(), eObject, feature, i, result[i]);
+    // }
+    // }
 
     return result;
   }

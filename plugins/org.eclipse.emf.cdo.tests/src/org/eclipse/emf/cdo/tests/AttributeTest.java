@@ -18,9 +18,12 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model1.VAT;
+import org.eclipse.emf.cdo.tests.model3.Point;
+import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -346,9 +349,95 @@ public class AttributeTest extends AbstractCDOTest
 
   public void testManyValuedCustomDataType() throws Exception
   {
-    CDOSession session = openSession();
-    CDOView view = session.openView();
-    CDOResource resource = view.getResource("/my/resource");
+    Polygon polygon = getModel3Factory().createPolygon();
+    EList<Point> points = polygon.getPoints();
+    points.add(new Point(1, 2));
+    points.add(new Point(3, 4));
+    points.add(new Point(5, 6));
 
+    points = polygon.getPoints();
+    assertEquals(3, points.size());
+    assertInstanceOf(Point.class, points.get(0));
+    assertInstanceOf(Point.class, points.get(1));
+    assertInstanceOf(Point.class, points.get(2));
+
+    Object[] array1 = points.toArray();
+    assertEquals(points.size(), array1.length);
+    assertInstanceOf(Point.class, array1[0]);
+    assertInstanceOf(Point.class, array1[1]);
+    assertInstanceOf(Point.class, array1[2]);
+
+    Point[] array2 = points.toArray(new Point[3]);
+    assertEquals(points.size(), array2.length);
+    assertInstanceOf(Point.class, array2[0]);
+    assertInstanceOf(Point.class, array2[1]);
+    assertInstanceOf(Point.class, array2[2]);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+    resource.getContents().add(polygon);
+
+    points = polygon.getPoints();
+    assertEquals(3, points.size());
+    assertInstanceOf(Point.class, points.get(0));
+    assertInstanceOf(Point.class, points.get(1));
+    assertInstanceOf(Point.class, points.get(2));
+
+    array1 = points.toArray();
+    assertEquals(points.size(), array1.length);
+    assertInstanceOf(Point.class, array1[0]);
+    assertInstanceOf(Point.class, array1[1]);
+    assertInstanceOf(Point.class, array1[2]);
+
+    array2 = points.toArray(new Point[3]);
+    assertEquals(points.size(), array2.length);
+    assertInstanceOf(Point.class, array2[0]);
+    assertInstanceOf(Point.class, array2[1]);
+    assertInstanceOf(Point.class, array2[2]);
+
+    transaction.commit();
+
+    points = polygon.getPoints();
+    assertEquals(3, points.size());
+    assertInstanceOf(Point.class, points.get(0));
+    assertInstanceOf(Point.class, points.get(1));
+    assertInstanceOf(Point.class, points.get(2));
+
+    array1 = points.toArray();
+    assertEquals(points.size(), array1.length);
+    assertInstanceOf(Point.class, array1[0]);
+    assertInstanceOf(Point.class, array1[1]);
+    assertInstanceOf(Point.class, array1[2]);
+
+    array2 = points.toArray(new Point[3]);
+    assertEquals(points.size(), array2.length);
+    assertInstanceOf(Point.class, array2[0]);
+    assertInstanceOf(Point.class, array2[1]);
+    assertInstanceOf(Point.class, array2[2]);
+
+    session.close();
+    session = openSession();
+    transaction = session.openTransaction();
+    resource = transaction.getResource("/my/resource");
+    polygon = (Polygon)resource.getContents().get(0);
+
+    points = polygon.getPoints();
+    assertEquals(3, points.size());
+    assertInstanceOf(Point.class, points.get(0));
+    assertInstanceOf(Point.class, points.get(1));
+    assertInstanceOf(Point.class, points.get(2));
+
+    array1 = points.toArray();
+    assertEquals(points.size(), array1.length);
+    assertInstanceOf(Point.class, array1[0]);
+    assertInstanceOf(Point.class, array1[1]);
+    assertInstanceOf(Point.class, array1[2]);
+
+    array2 = points.toArray(new Point[3]);
+    assertEquals(points.size(), array2.length);
+    assertInstanceOf(Point.class, array2[0]);
+    assertInstanceOf(Point.class, array2[1]);
+    assertInstanceOf(Point.class, array2[2]);
   }
 }

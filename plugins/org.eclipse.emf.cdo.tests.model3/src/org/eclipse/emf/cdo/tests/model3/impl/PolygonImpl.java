@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.PolygonImpl#getPoint <em>Point</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.PolygonImpl#getPoints <em>Points</em>}</li>
  * </ul>
  * </p>
  * 
@@ -70,9 +70,9 @@ public class PolygonImpl extends CDOObjectImpl implements Polygon
    * @generated
    */
   @SuppressWarnings("unchecked")
-  public EList<Point> getPoint()
+  public EList<Point> getPoints()
   {
-    return (EList<Point>)eGet(Model3Package.Literals.POLYGON__POINT, true);
+    return (EList<Point>)eGet(Model3Package.Literals.POLYGON__POINTS, true);
   }
 
 } // PolygonImpl

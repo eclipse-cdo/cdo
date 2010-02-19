@@ -26,7 +26,7 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonImpl#getPoint <em>Point</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonImpl#getPoints <em>Points</em>}</li>
  * </ul>
  * </p>
  * 
@@ -35,14 +35,14 @@ import java.util.Collection;
 public class PolygonImpl extends EObjectImpl implements Polygon
 {
   /**
-   * The cached value of the '{@link #getPoint() <em>Point</em>}' attribute list. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getPoints() <em>Points</em>}' attribute list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 
-   * @see #getPoint()
+   * @see #getPoints()
    * @generated
    * @ordered
    */
-  protected EList<Point> point;
+  protected EList<Point> points;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -70,13 +70,13 @@ public class PolygonImpl extends EObjectImpl implements Polygon
    * 
    * @generated
    */
-  public EList<Point> getPoint()
+  public EList<Point> getPoints()
   {
-    if (point == null)
+    if (points == null)
     {
-      point = new EDataTypeUniqueEList<Point>(Point.class, this, Model3Package.POLYGON__POINT);
+      points = new EDataTypeUniqueEList<Point>(Point.class, this, Model3Package.POLYGON__POINTS);
     }
-    return point;
+    return points;
   }
 
   /**
@@ -89,8 +89,8 @@ public class PolygonImpl extends EObjectImpl implements Polygon
   {
     switch (featureID)
     {
-    case Model3Package.POLYGON__POINT:
-      return getPoint();
+    case Model3Package.POLYGON__POINTS:
+      return getPoints();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -106,9 +106,9 @@ public class PolygonImpl extends EObjectImpl implements Polygon
   {
     switch (featureID)
     {
-    case Model3Package.POLYGON__POINT:
-      getPoint().clear();
-      getPoint().addAll((Collection<? extends Point>)newValue);
+    case Model3Package.POLYGON__POINTS:
+      getPoints().clear();
+      getPoints().addAll((Collection<? extends Point>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -124,8 +124,8 @@ public class PolygonImpl extends EObjectImpl implements Polygon
   {
     switch (featureID)
     {
-    case Model3Package.POLYGON__POINT:
-      getPoint().clear();
+    case Model3Package.POLYGON__POINTS:
+      getPoints().clear();
       return;
     }
     super.eUnset(featureID);
@@ -141,8 +141,8 @@ public class PolygonImpl extends EObjectImpl implements Polygon
   {
     switch (featureID)
     {
-    case Model3Package.POLYGON__POINT:
-      return point != null && !point.isEmpty();
+    case Model3Package.POLYGON__POINTS:
+      return points != null && !points.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -161,8 +161,8 @@ public class PolygonImpl extends EObjectImpl implements Polygon
     }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (Point: ");
-    result.append(point);
+    result.append(" (points: ");
+    result.append(points);
     result.append(')');
     return result.toString();
   }

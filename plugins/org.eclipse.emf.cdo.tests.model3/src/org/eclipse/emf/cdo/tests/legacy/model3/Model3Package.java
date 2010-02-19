@@ -122,12 +122,12 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   int POLYGON = 2;
 
   /**
-   * The feature id for the '<em><b>Point</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Points</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int POLYGON__POINT = 0;
+  int POLYGON__POINTS = 0;
 
   /**
    * The number of structural features of the '<em>Polygon</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -199,15 +199,15 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EClass getPolygon();
 
   /**
-   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.legacy.model3.Polygon#getPoint
-   * <em>Point</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.legacy.model3.Polygon#getPoints
+   * <em>Points</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @return the meta object for the attribute list '<em>Point</em>'.
-   * @see org.eclipse.emf.cdo.tests.legacy.model3.Polygon#getPoint()
+   * @return the meta object for the attribute list '<em>Points</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.Polygon#getPoints()
    * @see #getPolygon()
    * @generated
    */
-  EAttribute getPolygon_Point();
+  EAttribute getPolygon_Points();
 
   /**
    * Returns the meta object for data type '{@link org.eclipse.emf.cdo.tests.model3.Point <em>Point</em>}'. <!--
@@ -289,12 +289,12 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
     EClass POLYGON = eINSTANCE.getPolygon();
 
     /**
-     * The meta object literal for the '<em><b>Point</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Points</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * 
      * @generated
      */
-    EAttribute POLYGON__POINT = eINSTANCE.getPolygon_Point();
+    EAttribute POLYGON__POINTS = eINSTANCE.getPolygon_Points();
 
     /**
      * The meta object literal for the '<em>Point</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->

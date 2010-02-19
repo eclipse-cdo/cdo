@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -41,7 +42,7 @@ import java.util.Set;
  */
 public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 {
-  private InternalCDORevisionManager revisionManager;
+  private CDOView view;
 
   private InternalEObject object;
 
@@ -55,14 +56,14 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 
   private Set<CDOObject> detachedObjects;
 
-  public CDONotificationBuilder(InternalCDORevisionManager revisionManager)
+  public CDONotificationBuilder(CDOView view)
   {
-    this.revisionManager = revisionManager;
+    this.view = view;
   }
 
-  public InternalCDORevisionManager getRevisionManager()
+  public CDOView getView()
   {
-    return revisionManager;
+    return view;
   }
 
   public synchronized NotificationImpl buildNotification(InternalEObject object, CDORevisionDelta revisionDelta,
@@ -99,6 +100,7 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
     int index = delta.getIndex();
     if (!revisionLookedUp)
     {
+      InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)view.getSession().getRevisionManager();
       revision = revisionManager.getRevisionByVersion(revisionDelta.getID(), revisionDelta, CDORevision.UNCHUNKED,
           false);
     }
@@ -107,13 +109,16 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
     if (oldValue instanceof CDOID)
     {
       CDOID id = (CDOID)oldValue;
-      oldValue = null;
-      for (CDOObject detachedObject : detachedObjects)
+      oldValue = view.getObject(id, false);
+      if (oldValue == null)
       {
-        if (detachedObject.cdoID().equals(id))
+        for (CDOObject detachedObject : detachedObjects)
         {
-          oldValue = detachedObject;
-          break;
+          if (detachedObject.cdoID().equals(id))
+          {
+            oldValue = detachedObject;
+            break;
+          }
         }
       }
     }

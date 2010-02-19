@@ -1439,7 +1439,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     if (deltas != null)
     {
-      CDONotificationBuilder builder = new CDONotificationBuilder(session.getRevisionManager());
+      CDONotificationBuilder builder = new CDONotificationBuilder(this);
       for (CDORevisionDelta delta : deltas)
       {
         InternalCDOObject object = changeSubscriptionManager.getSubcribeObject(delta.getID());

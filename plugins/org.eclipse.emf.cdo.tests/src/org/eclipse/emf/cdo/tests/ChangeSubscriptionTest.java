@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.OrderDetail;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
@@ -613,6 +615,144 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     assertInstanceOf(Collection.class, oldValue[0]);
     assertEquals(categories.size(), ((Collection<?>)oldValue[0]).size());
+  }
+
+  public void testRemoveXRef() throws Exception
+  {
+    List<OrderDetail> details = new ArrayList<OrderDetail>();
+    details.add(getModel1Factory().createOrderDetail());
+    details.add(getModel1Factory().createOrderDetail());
+    details.add(getModel1Factory().createOrderDetail());
+    details.add(getModel1Factory().createOrderDetail());
+    details.add(getModel1Factory().createOrderDetail());
+    details.add(getModel1Factory().createOrderDetail());
+    details.add(getModel1Factory().createOrderDetail());
+
+    Product1 product = getModel1Factory().createProduct1();
+    product.getOrderDetails().addAll(details);
+
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+    resource.getContents().add(product);
+    resource.getContents().addAll(details);
+    transaction.commit();
+
+    CDOSession session2 = openModel1Session();
+    CDOView view = session2.openView();
+    view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+
+    CDOResource resource2 = view.getResource("/test1");
+    Product1 product2 = (Product1)resource2.getContents().get(0);
+
+    Object[] strongRefs = product2.getOrderDetails().toArray(); // Keep those in memory
+    msg(strongRefs);
+
+    final TestAdapter adapter = new TestAdapter();
+    product2.eAdapters().add(adapter);
+
+    details.remove(0);
+    details.remove(0);
+    details.remove(0);
+    details.remove(1);
+    details.remove(1);
+    details.remove(1);
+    product.getOrderDetails().removeAll(details);
+    transaction.commit();
+
+    final Object[] oldValue = { null };
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        List<Notification> notifications = adapter.getNotifications();
+        for (Notification notification : notifications)
+        {
+          if (notification.getEventType() == Notification.REMOVE
+              && notification.getFeature() == getModel1Package().getProduct1_OrderDetails())
+          {
+            oldValue[0] = notification.getOldValue();
+            return true;
+          }
+        }
+
+        return false;
+      }
+    }.assertNoTimeOut();
+
+    assertInstanceOf(OrderDetail.class, oldValue[0]);
+  }
+
+  public void testRemoveManyXRef() throws Exception
+  {
+    List<OrderDetail> details = new ArrayList<OrderDetail>();
+    details.add(getModel1Factory().createOrderDetail());
+    details.add(getModel1Factory().createOrderDetail());
+    details.add(getModel1Factory().createOrderDetail());
+    details.add(getModel1Factory().createOrderDetail());
+    details.add(getModel1Factory().createOrderDetail());
+    details.add(getModel1Factory().createOrderDetail());
+    details.add(getModel1Factory().createOrderDetail());
+    details.add(getModel1Factory().createOrderDetail());
+    details.add(getModel1Factory().createOrderDetail());
+    details.add(getModel1Factory().createOrderDetail());
+
+    Product1 product = getModel1Factory().createProduct1();
+    product.getOrderDetails().addAll(details);
+
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+    resource.getContents().add(product);
+    resource.getContents().addAll(details);
+    transaction.commit();
+
+    CDOSession session2 = openModel1Session();
+    CDOView view = session2.openView();
+    view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+
+    CDOResource resource2 = view.getResource("/test1");
+    Product1 product2 = (Product1)resource2.getContents().get(0);
+
+    Object[] strongRefs = product2.getOrderDetails().toArray(); // Keep those in memory
+    msg(strongRefs);
+
+    final TestAdapter adapter = new TestAdapter();
+    product2.eAdapters().add(adapter);
+
+    details.remove(0);
+    details.remove(0);
+    details.remove(0);
+    details.remove(4);
+    details.remove(4);
+    details.remove(4);
+    product.getOrderDetails().removeAll(details);
+    transaction.commit();
+
+    final Object[] oldValue = { null };
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        List<Notification> notifications = adapter.getNotifications();
+        for (Notification notification : notifications)
+        {
+          if (notification.getEventType() == Notification.REMOVE_MANY
+              && notification.getFeature() == getModel1Package().getProduct1_OrderDetails())
+          {
+            oldValue[0] = notification.getOldValue();
+            return true;
+          }
+        }
+
+        return false;
+      }
+    }.assertNoTimeOut();
+
+    assertInstanceOf(Collection.class, oldValue[0]);
+    assertEquals(details.size(), ((Collection<?>)oldValue[0]).size());
   }
 
   /**

@@ -1461,10 +1461,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     {
       for (CDOObject detachedObject : detachedObjects)
       {
-        // CDOID id = detachedObject.cdoID();
-        // InternalCDOObject object = changeSubscriptionManager.getSubcribeObject(id);
         InternalCDOObject object = (InternalCDOObject)detachedObject;
-        if (object != null && object.eNotificationRequired())
+        if (object.eNotificationRequired())
         {
           if (!isLocked(object))
           {

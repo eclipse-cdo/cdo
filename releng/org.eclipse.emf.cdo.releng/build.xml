@@ -91,6 +91,7 @@
 			<eclipse.launch app="buckminster">
 				<args>
 					<jvmarg value="-Dbugfix.288796=true" />
+					<jvmarg value="-Xmx1024m" />
 					<arg value="-data" />
 					<arg value="@{workspace}" />
 					<arg value="--loglevel" />
@@ -237,8 +238,6 @@
 				<arg value="${result}/testReport.xml.tmp" />
 				<arg value="--xml" />
 				<arg value="${result}/coverageReport.xml" />
-				<arg value="-vmargs" />
-				<arg value="-Xmx1024m" />
 			</cmdargs>
 		</buckminster>
 

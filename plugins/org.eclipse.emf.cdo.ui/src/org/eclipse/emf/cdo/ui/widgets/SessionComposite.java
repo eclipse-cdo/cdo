@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper - maintenance
@@ -14,11 +14,14 @@ package org.eclipse.emf.cdo.ui.widgets;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.IHistory;
 import org.eclipse.net4j.util.collection.PreferenceHistory;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.HistoryText;
 import org.eclipse.net4j.util.ui.widgets.PreferenceButton;
+
+import org.eclipse.emf.common.util.URI;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
@@ -31,6 +34,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 
 /**
  * @author Victor Roldan Betancort
@@ -178,10 +182,35 @@ public class SessionComposite extends Composite
     return builder.toString();
   }
 
+  public boolean isDescriptionValid()
+  {
+    URI uri = URI.createURI(getSessionDescription());
+    return uri.hasAuthority() && uri.host() != null && !StringUtil.isEmpty(uri.host())
+        && !StringUtil.isEmpty(repositoryName);
+  }
+
   public void rememberSettings()
   {
     connectorText.getHistory().add(connectorDescription);
     repositoryText.getHistory().add(repositoryName);
     automaticButton.getPreference().setValue(automaticRegistry);
+  }
+
+  @Override
+  public void addListener(int eventType, Listener listener)
+  {
+    super.addListener(eventType, listener);
+    connectorText.addListener(eventType, listener);
+    repositoryText.addListener(eventType, listener);
+    automaticButton.addListener(eventType, listener);
+  }
+
+  @Override
+  public void removeListener(int eventType, Listener listener)
+  {
+    super.removeListener(eventType, listener);
+    connectorText.removeListener(eventType, listener);
+    repositoryText.removeListener(eventType, listener);
+    automaticButton.removeListener(eventType, listener);
   }
 }

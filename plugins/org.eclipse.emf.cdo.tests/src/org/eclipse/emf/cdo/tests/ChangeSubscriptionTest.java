@@ -491,7 +491,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     }
   }
 
-  public void testRemove() throws Exception
+  public void testRemoveContained() throws Exception
   {
     List<Category> categories = new ArrayList<Category>();
     categories.add(getModel1Factory().createCategory());
@@ -551,7 +551,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     assertInstanceOf(Category.class, oldValue[0]);
   }
 
-  public void testRemoveMany() throws Exception
+  public void testRemoveManyContained() throws Exception
   {
     List<Category> categories = new ArrayList<Category>();
     categories.add(getModel1Factory().createCategory());

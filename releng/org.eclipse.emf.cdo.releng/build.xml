@@ -237,6 +237,8 @@
 				<arg value="${result}/testReport.xml.tmp" />
 				<arg value="--xml" />
 				<arg value="${result}/coverageReport.xml" />
+				<arg value="-vmargs" />
+				<arg value="-Xmx1024m" />
 			</cmdargs>
 		</buckminster>
 

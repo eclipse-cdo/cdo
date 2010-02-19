@@ -16,12 +16,12 @@
 
 - Team|Switch to BRANCH (not tag!) R2_0_maintenance for CDO 2.0
 
-- Right-click build.mspec, Buckminster|Import..., wait, press Finish
+- Right-click local.mspec, Buckminster|Import..., wait, press Finish
 
 BUILD p2 repository:
 
 - Right-click org.eclipse.emf.cdo.site-feature, Buckminster|Invoke action...|site.p2(.zip).
-  DO NOT FORGET to point to the properties file, e.g. /org.eclipse.emf.cdo.releng/build-local.properties !!!!
+  DO NOT FORGET to point to the properties file, e.g. /org.eclipse.emf.cdo.releng/local.properties !!!!
 
 PROMOTE:
 

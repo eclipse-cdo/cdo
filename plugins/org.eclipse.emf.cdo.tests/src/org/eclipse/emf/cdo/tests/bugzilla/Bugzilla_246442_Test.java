@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -49,7 +50,7 @@ public class Bugzilla_246442_Test extends AbstractCDOTest
       session.getPackageRegistry().putEPackage(topPackage);
 
       CDOTransaction transaction = session.openTransaction();
-      CDOObject instance = (CDOObject)EcoreUtil.create(class1Class);
+      CDOObject instance = CDOUtil.getCDOObject(EcoreUtil.create(class1Class));
 
       CDOResource resource = transaction.createResource("/test1");
       resource.getContents().add(instance);

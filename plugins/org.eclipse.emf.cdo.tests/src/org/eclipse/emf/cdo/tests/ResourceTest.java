@@ -832,7 +832,7 @@ public class ResourceTest extends AbstractCDOTest
     CDOResource resource = createResource(transaction, "/resource1");
     CDOID resourceID = resource.cdoID();
 
-    CDOObject object = (CDOObject)resource.getContents().get(0);
+    CDOObject object = CDOUtil.getCDOObject(resource.getContents().get(0));
     CDOID objectID = object.cdoID();
 
     transaction.commit();
@@ -898,7 +898,7 @@ public class ResourceTest extends AbstractCDOTest
     CDOResource resource = createResource(transaction, "/resource1");
     CDOID resourceID = resource.cdoID();
 
-    CDOObject object = (CDOObject)resource.getContents().get(0);
+    CDOObject object = CDOUtil.getCDOObject(resource.getContents().get(0));
     CDOID objectID = object.cdoID();
 
     transaction.commit();
@@ -1140,7 +1140,7 @@ public class ResourceTest extends AbstractCDOTest
 
     CDOResource resource = createResource(transaction, "/folder/resource1");
     CDOResourceFolder folder = resource.getFolder();
-    CDOObject object = (CDOObject)resource.getContents().get(0);
+    CDOObject object = CDOUtil.getCDOObject(resource.getContents().get(0));
 
     transaction.commit();
     assertEquals(true, view.hasResource("/folder/resource1"));
@@ -1226,7 +1226,7 @@ public class ResourceTest extends AbstractCDOTest
 
     CDOResource resource = createResource(transaction, "/folder/resource1");
     CDOResourceFolder folder = resource.getFolder();
-    CDOObject object = (CDOObject)resource.getContents().get(0);
+    CDOObject object = CDOUtil.getCDOObject(resource.getContents().get(0));
 
     transaction.commit();
     assertEquals(true, view.hasResource("/folder/resource1"));

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Christopher Albert - adaption to XSD
@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -56,7 +57,7 @@ public class DynamicXSDTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.getResource("/res");
 
-      CDOObject company = (CDOObject)res.getContents().get(0);
+      CDOObject company = CDOUtil.getCDOObject(res.getContents().get(0));
       EClass companyClass = company.eClass();
       EAttribute nameAttribute = (EAttribute)companyClass.getEStructuralFeature("name");
       String name = (String)company.eGet(nameAttribute);

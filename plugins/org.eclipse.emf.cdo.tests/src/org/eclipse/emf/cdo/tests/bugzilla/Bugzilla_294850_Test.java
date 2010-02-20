@@ -72,10 +72,10 @@ public class Bugzilla_294850_Test extends AbstractCDOTest
     }.assertNoTimeOut();
 
     // Lock company to trigger a refresh
-    ((CDOObject)company).cdoWriteLock().lock();
+    CDOUtil.getCDOObject(company).cdoWriteLock().lock();
 
     // Object should be in conflict state now
-    assertSame(CDOState.CONFLICT, ((CDOObject)company).cdoState());
+    assertSame(CDOState.CONFLICT, CDOUtil.getCDOObject(company).cdoState());
 
     // And therefore, resolver should have been called
     assertTrue(resolver.gotCalled);

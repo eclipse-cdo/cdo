@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 
 import org.eclipse.emf.internal.cdo.CDOObjectMerger;
@@ -292,7 +293,7 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
               if (list == null)
               {
                 list = new ArrayList<CDORevisionDelta>(1);
-                deltas.put((CDOObject)notifier, list);
+                deltas.put(CDOUtil.getCDOObject((EObject)notifier), list);
               }
 
               list.add(revisionDelta);

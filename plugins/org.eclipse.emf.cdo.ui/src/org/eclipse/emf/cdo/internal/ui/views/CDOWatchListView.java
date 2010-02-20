@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -377,7 +378,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
       if (((CDODeltaNotification)msg).getEventType() == CDODeltaNotification.DETACH_OBJECT)
       {
         Object obj = msg.getNotifier();
-        container.removeElement((CDOObject)obj);
+        container.removeElement(CDOUtil.getCDOObject((EObject)obj));
         getDataRegistry().removeData(obj);
       }
     }
@@ -774,7 +775,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     public Image getColumnImage(Object object, int columnIndex)
     {
       // In case an invalid object arrives (i.e., detached), return CDOState
-      if (FSMUtil.isInvalid((CDOObject)object))
+      if (FSMUtil.isInvalid(CDOUtil.getCDOObject((EObject)object)))
       {
         return null;
       }
@@ -794,7 +795,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
 
     public String getColumnText(Object element, int columnIndex)
     {
-      CDOObject object = (CDOObject)element;
+      CDOObject object = CDOUtil.getCDOObject((EObject)element);
 
       // In case an invalid object arrives (i.e., detached), return CDOState
       if (FSMUtil.isInvalid(object))

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -127,7 +128,7 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
     EStructuralFeature feature = class1Class.getEStructuralFeature(featureName);
 
     CDOTransaction transaction = session.openTransaction();
-    CDOObject instance = (CDOObject)transaction.getResource("/test1").getContents().get(0);
+    CDOObject instance = CDOUtil.getCDOObject(transaction.getResource("/test1").getContents().get(0));
     assertEquals(isSet, instance.eIsSet(feature));
 
     transaction.getResource("/test1").getContents().remove(0);

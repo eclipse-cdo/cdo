@@ -64,6 +64,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOViewResourcesEvent;
 
 import org.eclipse.emf.internal.cdo.CDOObjectMerger;
@@ -1590,7 +1591,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         EObject crossReferencedObject = it.next();
         if (crossReferencedObject instanceof CDOObject
-            && referencedOIDs.contains(((CDOObject)crossReferencedObject).cdoID()))
+            && referencedOIDs.contains(CDOUtil.getCDOObject(crossReferencedObject).cdoID()))
         {
           EReference eReference = (EReference)it.feature();
           Setting setting = ((InternalEObject)object).eSetting(eReference);

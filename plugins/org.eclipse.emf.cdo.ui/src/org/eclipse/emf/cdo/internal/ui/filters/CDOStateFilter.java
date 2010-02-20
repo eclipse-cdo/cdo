@@ -11,9 +11,11 @@
  */
 package org.eclipse.emf.cdo.internal.ui.filters;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
+import org.eclipse.emf.cdo.util.CDOUtil;
+
+import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -76,7 +78,7 @@ public class CDOStateFilter extends CDOObjectFilter
   {
     if (stateFilter != null)
     {
-      return ((CDOObject)element).cdoState() == stateFilter;
+      return CDOUtil.getCDOObject((EObject)element).cdoState() == stateFilter;
     }
 
     return true;

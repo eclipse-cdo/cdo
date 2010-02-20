@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -19,6 +18,7 @@ import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 /**
  * @author Caspar De Groot
@@ -90,7 +90,7 @@ public class Bugzilla_283985_CDOTest2 extends AbstractCDOTest
       order2 = (Order)r1.getContents().get(1);
 
       // lookup detail object in new transaction
-      detail1 = (OrderDetail)tx.getObject(((CDOObject)detail1).cdoID());
+      detail1 = (OrderDetail)tx.getObject(CDOUtil.getCDOObject(detail1).cdoID());
 
       boolean contains1 = order1.getOrderDetails().contains(detail1);
       boolean contains2 = order2.getOrderDetails().contains(detail1);
@@ -146,7 +146,7 @@ public class Bugzilla_283985_CDOTest2 extends AbstractCDOTest
       CDOResource r1 = tx.getResource("/r1");
       order1 = (Order)r1.getContents().get(0);
       order2 = (Order)r1.getContents().get(1);
-      detail1 = (OrderDetail)tx.getObject(((CDOObject)detail1).cdoID());
+      detail1 = (OrderDetail)tx.getObject(CDOUtil.getCDOObject(detail1).cdoID());
 
       boolean contains1 = order1.getOrderDetails().contains(detail1);
       boolean contains2 = order2.getOrderDetails().contains(detail1);

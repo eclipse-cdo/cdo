@@ -12,11 +12,14 @@
 package org.eclipse.emf.cdo.internal.ui.dnd;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.ui.dnd.DNDDropAdapter;
+
+import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeSelection;
@@ -50,7 +53,7 @@ public class CDOObjectDropAdapter extends DNDDropAdapter<TreeSelection>
       {
         if (FSMUtil.isWatchable(obj))
         {
-          elementsToAdd.add((CDOObject)obj);
+          elementsToAdd.add(CDOUtil.getCDOObject((EObject)obj));
         }
       }
 

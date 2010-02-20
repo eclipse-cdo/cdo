@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -19,6 +18,7 @@ import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
 import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.RefSingleNonContainedNPL;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.emf.ecore.EReference;
@@ -51,7 +51,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     RefSingleNonContainedNPL referencer = getModel4Factory().createRefSingleNonContainedNPL();
     r1.getContents().add(referencer);
     referencer.setElement(referencee);
-    assertEquals(CDOState.NEW, ((CDOObject)referencer).cdoState());
+    assertEquals(CDOState.NEW, CDOUtil.getCDOObject(referencer).cdoState());
 
     // Delete the referencee in 2nd session
     doSecondSession();
@@ -99,7 +99,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     tx.commit();
     referencer.setElement(null);
     referencer.setElement(referencee);
-    assertEquals(CDOState.DIRTY, ((CDOObject)referencer).cdoState());
+    assertEquals(CDOState.DIRTY, CDOUtil.getCDOObject(referencer).cdoState());
 
     // Delete the referencee in 2nd session
     doSecondSession();
@@ -142,7 +142,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     RefMultiNonContainedNPL referencer = getModel4Factory().createRefMultiNonContainedNPL();
     r1.getContents().add(referencer);
     referencer.getElements().add(referencee);
-    assertEquals(CDOState.NEW, ((CDOObject)referencer).cdoState());
+    assertEquals(CDOState.NEW, CDOUtil.getCDOObject(referencer).cdoState());
 
     // Delete the referencee in 2nd session
     doSecondSession();
@@ -189,7 +189,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     tx.commit();
     referencer.getElements().remove(referencee);
     referencer.getElements().add(referencee);
-    assertEquals(CDOState.DIRTY, ((CDOObject)referencer).cdoState());
+    assertEquals(CDOState.DIRTY, CDOUtil.getCDOObject(referencer).cdoState());
 
     // Delete the referencee in 2nd session
     doSecondSession();

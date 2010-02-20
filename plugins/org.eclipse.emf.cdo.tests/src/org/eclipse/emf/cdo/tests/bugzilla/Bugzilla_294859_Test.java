@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.transaction.CDOSavepointImpl;
 
@@ -66,7 +67,7 @@ public class Bugzilla_294859_Test extends AbstractCDOTest
     doSecondSession();
 
     // Convenience
-    CDOObject cdoPurchaseOrder = (CDOObject)purchaseOrder;
+    CDOObject cdoPurchaseOrder = CDOUtil.getCDOObject(purchaseOrder);
 
     // The purchaseOrder was touched in both this and 2nd session;
     // we refresh now go cause a conflict

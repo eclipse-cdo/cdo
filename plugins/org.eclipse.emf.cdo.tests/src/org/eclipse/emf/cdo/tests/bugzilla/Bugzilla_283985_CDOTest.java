@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -278,11 +277,11 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     i = 0;
     for (OrderDetail detail : details)
     {
-      CDOID idAfter = ((CDOObject)detail).cdoID();
+      CDOID idAfter = CDOUtil.getCDOObject(detail).cdoID();
       CDOID idBefore = cdoIDsBefore[i];
       assertEquals(idBefore, idAfter);
 
-      int versionAfter = ((CDOObject)detail).cdoRevision().getVersion();
+      int versionAfter = CDOUtil.getCDOObject(detail).cdoRevision().getVersion();
       int versionBefore = versionsBefore[i];
       assertEquals(versionBefore + 1, versionAfter);
 
@@ -370,26 +369,26 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     order1.getOrderDetails().add(detail1);
     contains = order1.getOrderDetails().contains(detail1);
     assertTrue(contains);
-    assertTrue(((CDOObject)detail1).cdoState() == CDOState.DIRTY);
+    assertTrue(CDOUtil.getCDOObject(detail1).cdoState() == CDOState.DIRTY);
 
     order1.getOrderDetails().remove(detail1);
-    assertTrue(((CDOObject)detail1).cdoState() == CDOState.TRANSIENT);
+    assertTrue(CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);
 
     order2.getOrderDetails().add(detail1);
     contains = order2.getOrderDetails().contains(detail1);
     assertTrue(contains);
-    assertTrue(((CDOObject)detail1).cdoState() == CDOState.DIRTY);
+    assertTrue(CDOUtil.getCDOObject(detail1).cdoState() == CDOState.DIRTY);
 
     order2.getOrderDetails().remove(detail1);
-    assertTrue(((CDOObject)detail1).cdoState() == CDOState.TRANSIENT);
+    assertTrue(CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);
 
     order1.getOrderDetails().add(detail1);
     contains = order1.getOrderDetails().contains(detail1);
     assertTrue(contains);
-    assertTrue(((CDOObject)detail1).cdoState() == CDOState.DIRTY);
+    assertTrue(CDOUtil.getCDOObject(detail1).cdoState() == CDOState.DIRTY);
 
     order1.getOrderDetails().remove(detail1);
-    assertTrue(((CDOObject)detail1).cdoState() == CDOState.TRANSIENT);
+    assertTrue(CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);
 
     tx.commit();
 

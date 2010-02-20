@@ -886,21 +886,18 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   public <T extends EObject> T getObject(T objectFromDifferentView)
   {
     checkActive();
-    if (objectFromDifferentView instanceof CDOObject)
+    CDOObject object = CDOUtil.getCDOObject(objectFromDifferentView);
+    CDOView view = object.cdoView();
+    if (view != this)
     {
-      CDOObject object = (CDOObject)objectFromDifferentView;
-      CDOView view = object.cdoView();
-      if (view != this)
+      if (view.getSession() != session)
       {
-        if (view.getSession() != session)
-        {
-          throw new IllegalArgumentException(MessageFormat.format(
-              Messages.getString("CDOViewImpl.11"), objectFromDifferentView)); //$NON-NLS-1$
-        }
-
-        CDOID id = object.cdoID();
-        objectFromDifferentView = (T)getObject(id, true);
+        throw new IllegalArgumentException(MessageFormat.format(
+            Messages.getString("CDOViewImpl.11"), objectFromDifferentView)); //$NON-NLS-1$
       }
+
+      CDOID id = object.cdoID();
+      objectFromDifferentView = (T)getObject(id, true);
     }
 
     return objectFromDifferentView;

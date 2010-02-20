@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -101,9 +102,9 @@ public final class FSMUtil
   public static boolean isWatchable(Object obj)
   {
     // Only CLEAN and DIRTY CDOObjects are watchable
-    if (obj instanceof CDOObject)
+    if (obj instanceof EObject)
     {
-      CDOObject cdoObject = (CDOObject)obj;
+      CDOObject cdoObject = CDOUtil.getCDOObject((EObject)obj);
       return cdoObject.cdoState() == CDOState.CLEAN || cdoObject.cdoState() == CDOState.DIRTY;
     }
 

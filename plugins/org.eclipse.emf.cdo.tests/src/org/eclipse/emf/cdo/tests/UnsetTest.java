@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -41,12 +40,12 @@ import java.util.Date;
 public class UnsetTest extends AbstractCDOTest
 {
   /**
-   * needed for {@link #commitAndLoadTx(CDOObject)}
+   * needed for commitAndLoadTx()
    */
   private CDOSession commitAndLoadSession;
 
   /**
-   * needed for {@link #commitAndLoadTx(CDOObject)}
+   * needed for commitAndLoadTx()
    */
   private CDOTransaction commitAndLoadTransaction;
 

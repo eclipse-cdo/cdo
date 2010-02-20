@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.edit.messages.Messages;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -316,7 +317,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
 
     public Object getPropertyValue(Object object)
     {
-      return ((CDOObject)object).cdoID();
+      return CDOUtil.getCDOObject((EObject)object).cdoID();
     }
 
     public String getDescription(Object object)
@@ -362,7 +363,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
     {
       if (object instanceof CDOObject)
       {
-        return ((CDOObject)object).cdoRevision();
+        return CDOUtil.getCDOObject((EObject)object).cdoRevision();
       }
 
       return null;
@@ -429,7 +430,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
     {
       if (object instanceof CDOObject)
       {
-        return ((CDOObject)object).cdoState();
+        return CDOUtil.getCDOObject((EObject)object).cdoState();
       }
 
       return null;
@@ -476,9 +477,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
 
     public Object getPropertyValue(Object object)
     {
-      if (object instanceof CDOObject)
+      if (object instanceof EObject)
       {
-        return ((CDOObject)object).cdoView();
+        return CDOUtil.getCDOObject((EObject)object).cdoView();
       }
 
       return null;
@@ -528,7 +529,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
 
     public Object getPropertyValue(Object object)
     {
-      return ((CDOObject)object).eContainer();
+      return CDOUtil.getCDOObject((EObject)object).eContainer();
     }
 
     public String getDescription(Object object)
@@ -571,7 +572,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
 
         public String getText(Object object)
         {
-          if ((CDOObject)object != null)
+          if (object != null)
           {
             return ((IItemLabelProvider)ContainerDescriptor.adapterFactory.adapt(object, IItemLabelProvider.class))
                 .getText(object);
@@ -670,9 +671,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
 
     public Object getPropertyValue(Object object)
     {
-      if (object instanceof CDOObject)
+      if (object instanceof EObject)
       {
-        return ((CDOObject)object).cdoReadLock();
+        return CDOUtil.getCDOObject((EObject)object).cdoReadLock();
       }
 
       return null;
@@ -737,9 +738,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
 
     public Object getPropertyValue(Object object)
     {
-      if (object instanceof CDOObject)
+      if (object instanceof EObject)
       {
-        return ((CDOObject)object).cdoWriteLock();
+        return CDOUtil.getCDOObject((EObject)object).cdoWriteLock();
       }
 
       return null;
@@ -804,9 +805,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
 
     public Object getPropertyValue(Object object)
     {
-      if (object instanceof CDOObject)
+      if (object instanceof EObject)
       {
-        return ((CDOObject)object).eAdapters();
+        return CDOUtil.getCDOObject((EObject)object).eAdapters();
       }
 
       return null;
@@ -853,9 +854,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
 
     public Object getPropertyValue(Object object)
     {
-      if (object instanceof CDOObject)
+      if (object instanceof EObject)
       {
-        CDOView cdoView = ((CDOObject)object).cdoView();
+        CDOView cdoView = CDOUtil.getCDOObject((EObject)object).cdoView();
         if (cdoView != null)
         {
           return cdoView.options().getChangeSubscriptionPolicies();
@@ -932,9 +933,10 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
 
     public Object getPropertyValue(Object object)
     {
-      if (object instanceof CDOObject)
+      if (object instanceof EObject)
       {
-        return ((CDOObject)object).eResource().getURI().toString() + "#" + ((CDOObject)object).cdoID().toURIFragment(); //$NON-NLS-1$
+        CDOObject cdoObject = CDOUtil.getCDOObject((EObject)object);
+        return cdoObject.eResource().getURI().toString() + "#" + cdoObject.cdoID().toURIFragment(); //$NON-NLS-1$
       }
 
       return null;

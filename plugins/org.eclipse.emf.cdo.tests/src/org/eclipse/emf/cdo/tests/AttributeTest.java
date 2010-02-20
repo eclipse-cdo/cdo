@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -21,6 +20,7 @@ import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.EList;
@@ -228,7 +228,7 @@ public class AttributeTest extends AbstractCDOTest
       CDOResource resource = transaction.createResource("/my/resource");
       resource.getContents().add(gen);
 
-      CDORevisionData data = ((CDOObject)gen).cdoRevision().data();
+      CDORevisionData data = CDOUtil.getCDOObject(gen).cdoRevision().data();
       assertEquals(BigDecimal.class, data.get(bigDecimalFeature, -1).getClass());
       assertEquals(BigInteger.class, data.get(bigIntegerFeature, -1).getClass());
 

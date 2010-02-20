@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -108,7 +107,7 @@ public class Bugzilla_283985_SavePointTest extends AbstractCDOTest
     assertDirty(detail1, transaction);
 
     sp.rollback();
-    System.out.println(((CDOObject)detail1).cdoState());
+    System.out.println(CDOUtil.getCDOObject(detail1).cdoState());
     assertTransient(detail1);
 
     transaction.commit();
@@ -139,6 +138,6 @@ public class Bugzilla_283985_SavePointTest extends AbstractCDOTest
     transaction.commit();
 
     assertTrue(order1.getOrderDetails().contains(detail1));
-    assertEquals(id, ((CDOObject)detail1).cdoID());
+    assertEquals(id, CDOUtil.getCDOObject(detail1).cdoID());
   }
 }

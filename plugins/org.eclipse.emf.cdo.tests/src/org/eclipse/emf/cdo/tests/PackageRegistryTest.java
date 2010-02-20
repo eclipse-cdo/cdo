@@ -411,7 +411,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
-      CDOObject company = (CDOObject)EcoreUtil.create(companyClass);
+      CDOObject company = CDOUtil.getCDOObject(EcoreUtil.create(companyClass));
       company.eSet(nameAttribute, "Eike");
       res.getContents().add(company);
       transaction.commit();

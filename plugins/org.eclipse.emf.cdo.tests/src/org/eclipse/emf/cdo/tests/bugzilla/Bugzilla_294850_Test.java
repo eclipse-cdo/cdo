@@ -44,7 +44,7 @@ public class Bugzilla_294850_Test extends AbstractCDOTest
 
   public void testConflictResolverOnLock() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
 
     final TestResolver resolver = new TestResolver();
@@ -86,7 +86,7 @@ public class Bugzilla_294850_Test extends AbstractCDOTest
 
   private void doSecondSession()
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.getResource(RESOURCE_NAME);
     EList<EObject> contents = r1.getContents();

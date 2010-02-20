@@ -32,7 +32,7 @@ public class SavePointTest extends AbstractCDOTest
 {
   public void testRollbackWithNewObject_Collection() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(getModel1Package());
 
     CDOTransaction transaction1 = session.openTransaction();
@@ -93,7 +93,7 @@ public class SavePointTest extends AbstractCDOTest
 
   public void testWrongSavePoint() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(getModel1Package());
 
     CDOTransaction transaction1 = session.openTransaction();
@@ -121,7 +121,7 @@ public class SavePointTest extends AbstractCDOTest
 
   public void testIsDirty() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(getModel1Package());
 
     CDOTransaction transaction1 = session.openTransaction();
@@ -162,7 +162,7 @@ public class SavePointTest extends AbstractCDOTest
 
   private void flow1(boolean commitBegin, boolean commitEnd) throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(getModel1Package());
 
     CDOTransaction transaction1 = session.openTransaction();

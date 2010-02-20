@@ -38,7 +38,7 @@ public class Bugzilla_260756_Test extends AbstractCDOTest
     skipUnlessConfig(MEM);
 
     Set<Object> objects = new HashSet<Object>();
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
     CDOResource resource1 = transaction.createResource("/test1");

@@ -51,7 +51,7 @@ public class Bugzilla_252214_Test extends AbstractCDOTest
     long commitTime2 = 0;
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/res1");
 
@@ -69,7 +69,7 @@ public class Bugzilla_252214_Test extends AbstractCDOTest
       assertEquals("Sympedia", company.getName());
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView audit = session.openView(commitTime1);
 
     {

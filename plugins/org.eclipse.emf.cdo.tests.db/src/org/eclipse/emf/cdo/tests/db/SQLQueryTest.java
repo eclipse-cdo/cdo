@@ -49,7 +49,7 @@ public class SQLQueryTest extends AbstractCDOTest
   public void testSimpleQueries() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     createTestSet(session);
 
@@ -97,7 +97,7 @@ public class SQLQueryTest extends AbstractCDOTest
   public void testFunctions() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     createTestSet(session);
 
@@ -136,7 +136,7 @@ public class SQLQueryTest extends AbstractCDOTest
   public void testComplexQuerySalesOrderJoinCustomerProduct() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     createTestSet(session);
 
@@ -162,7 +162,7 @@ public class SQLQueryTest extends AbstractCDOTest
   public void testPaging() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     createTestSet(session);
 
@@ -200,7 +200,7 @@ public class SQLQueryTest extends AbstractCDOTest
   public void testIterator() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     createTestSet(session);
 
@@ -232,7 +232,7 @@ public class SQLQueryTest extends AbstractCDOTest
   public void _testNonCdoObjectQueries() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     createTestSet(session);
 
@@ -254,7 +254,7 @@ public class SQLQueryTest extends AbstractCDOTest
   public void _testNonCdoObjectQueries_Null() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     createTestSet(session);
 

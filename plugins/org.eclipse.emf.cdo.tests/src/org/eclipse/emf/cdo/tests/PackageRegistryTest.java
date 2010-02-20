@@ -54,7 +54,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   {
     {
       // Create resource in session 1
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
@@ -99,7 +99,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   public void testCommitUnrelatedPackage() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
@@ -110,7 +110,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openMangoSession();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.getResource("/res");
 
@@ -510,8 +510,11 @@ public class PackageRegistryTest extends AbstractCDOTest
 
   public void testConcurrentPackageRegistration() throws Exception
   {
-    CDOSession session1 = openModel1Session();
-    CDOSession session2 = openModel1Session();
+    CDOSession session1 = openSession();
+    session1.getPackageRegistry().putEPackage(getModel1Package());
+
+    CDOSession session2 = openSession();
+    session2.getPackageRegistry().putEPackage(getModel1Package());
 
     try
     {

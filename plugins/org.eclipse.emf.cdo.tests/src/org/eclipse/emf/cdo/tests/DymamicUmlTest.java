@@ -39,7 +39,7 @@ public class DymamicUmlTest extends AbstractCDOTest
   {
     {
       // Create resource in session 1
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
@@ -69,7 +69,7 @@ public class DymamicUmlTest extends AbstractCDOTest
       EAttribute nameAttribute = (EAttribute)companyClass.getEStructuralFeature("name");
 
       // Create resource in session 1
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 

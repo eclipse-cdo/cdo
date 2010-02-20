@@ -126,7 +126,7 @@ public class InitialTest extends AbstractCDOTest
   public void testOpenSession() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     assertNotNull(session);
     assertEquals(false, session.isClosed());
     assertEquals(RepositoryConfig.REPOSITORY_NAME, session.getRepositoryInfo().getName());
@@ -136,7 +136,7 @@ public class InitialTest extends AbstractCDOTest
   public void testStartTransaction() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -147,7 +147,7 @@ public class InitialTest extends AbstractCDOTest
   public void testAttachResource() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -177,7 +177,7 @@ public class InitialTest extends AbstractCDOTest
     assertTransient(resource);
 
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction(resourceSet);
@@ -230,7 +230,7 @@ public class InitialTest extends AbstractCDOTest
     assertEquals(1, contents.size());
 
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction(resourceSet);
@@ -263,7 +263,7 @@ public class InitialTest extends AbstractCDOTest
     supplier.setName("Stepper");
 
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -287,7 +287,7 @@ public class InitialTest extends AbstractCDOTest
   public void testCommitNew() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -316,7 +316,7 @@ public class InitialTest extends AbstractCDOTest
   public void testReadResourceClean() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -347,7 +347,7 @@ public class InitialTest extends AbstractCDOTest
   public void testReadObjectClean() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -378,7 +378,7 @@ public class InitialTest extends AbstractCDOTest
   public void testWriteClean() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -410,7 +410,7 @@ public class InitialTest extends AbstractCDOTest
 
   public void testCommitDirty() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
 
@@ -435,7 +435,7 @@ public class InitialTest extends AbstractCDOTest
   public void testGetResource() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     {
       disableConsole();
@@ -494,7 +494,7 @@ public class InitialTest extends AbstractCDOTest
   public void testGetContents() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     {
       disableConsole();
@@ -532,7 +532,7 @@ public class InitialTest extends AbstractCDOTest
   public void testReadObjectProxy() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     {
       disableConsole();
@@ -576,7 +576,7 @@ public class InitialTest extends AbstractCDOTest
   public void testReadTransientValue() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     {
       disableConsole();
@@ -631,7 +631,7 @@ public class InitialTest extends AbstractCDOTest
     {
       // disableConsole();
       msg("Opening session");
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
 
       msg("Opening transaction");
       CDOTransaction transaction = session.openTransaction();
@@ -655,7 +655,7 @@ public class InitialTest extends AbstractCDOTest
     }
 
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -678,7 +678,7 @@ public class InitialTest extends AbstractCDOTest
     {
       // disableConsole();
       msg("Opening session");
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
 
       msg("Opening transaction");
       CDOTransaction transaction = session.openTransaction();
@@ -702,7 +702,7 @@ public class InitialTest extends AbstractCDOTest
     }
 
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -726,7 +726,7 @@ public class InitialTest extends AbstractCDOTest
    */
   public void testMultipleInheritence() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     OrderAddress orderAddress = getModel1Factory().createOrderAddress();
@@ -753,7 +753,7 @@ public class InitialTest extends AbstractCDOTest
     transaction.commit();
     session.close();
 
-    session = openModel1Session();
+    session = openSession();
 
     msg("Opening transaction");
     transaction = session.openTransaction();
@@ -767,7 +767,7 @@ public class InitialTest extends AbstractCDOTest
     transaction.commit();
     session.close();
 
-    session = openModel1Session();
+    session = openSession();
 
     transaction = session.openTransaction();
     orderAddress = (OrderAddress)CDOUtil.getEObject(transaction.getObject(CDOUtil.getCDOObject(orderAddress).cdoID(),
@@ -785,7 +785,7 @@ public class InitialTest extends AbstractCDOTest
   {
     {
       msg("Opening session");
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
 
       msg("Opening transaction");
       CDOTransaction transaction = session.openTransaction();
@@ -808,7 +808,7 @@ public class InitialTest extends AbstractCDOTest
     }
 
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -846,7 +846,7 @@ public class InitialTest extends AbstractCDOTest
 
   public void testDirectResource() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
@@ -874,7 +874,7 @@ public class InitialTest extends AbstractCDOTest
   public void testResourceAccessor() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();

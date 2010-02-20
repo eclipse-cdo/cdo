@@ -74,7 +74,7 @@ public class BranchingTest extends AbstractCDOTest
 
   protected CDOSession openSession1()
   {
-    session1 = openModel1Session();
+    session1 = openSession();
     return session1;
   }
 
@@ -86,7 +86,7 @@ public class BranchingTest extends AbstractCDOTest
 
   protected CDOSession openSession2()
   {
-    return openModel1Session();
+    return openSession();
   }
 
   public void testMainBranch() throws Exception

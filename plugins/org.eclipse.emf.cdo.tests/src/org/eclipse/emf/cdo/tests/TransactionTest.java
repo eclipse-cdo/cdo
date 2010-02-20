@@ -76,7 +76,7 @@ public class TransactionTest extends AbstractCDOTest
   {
     {
       msg("Opening session");
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       transaction.createResource("/test2");
       transaction.commit();
@@ -87,7 +87,7 @@ public class TransactionTest extends AbstractCDOTest
     for (int i = 0; i < 100; i++)
     {
       msg("Session " + i);
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/test2");
       Category category = getModel1Factory().createCategory();
@@ -101,7 +101,7 @@ public class TransactionTest extends AbstractCDOTest
   public void testCreateManyTransactions() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test2");
     transaction.commit();
@@ -146,7 +146,7 @@ public class TransactionTest extends AbstractCDOTest
             msg("Thread " + id + ": Started");
             for (int i = 0; i < 100; i++)
             {
-              CDOSession session = openModel1Session();
+              CDOSession session = openSession();
               CDOTransaction transaction = session.openTransaction();
 
               msg("Thread " + id + ": Session + Transaction " + i);

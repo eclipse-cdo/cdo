@@ -62,35 +62,6 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   {
   }
 
-  public CDOSession openMangoSession()
-  {
-    return openSession(getCurrentTest().getMangoPackage());
-  }
-
-  public CDOSession openModel1Session()
-  {
-    return openSession(getCurrentTest().getModel1Package());
-  }
-
-  public CDOSession openModel2Session()
-  {
-    CDOSession session = openModel1Session();
-    session.getPackageRegistry().putEPackage(getCurrentTest().getModel2Package());
-    return session;
-  }
-
-  public CDOSession openModel3Session()
-  {
-    return openSession(getCurrentTest().getModel3Package());
-  }
-
-  public CDOSession openSession(EPackage ePackage)
-  {
-    CDOSession session = openSession();
-    session.getPackageRegistry().putEPackage(ePackage);
-    return session;
-  }
-
   public CDOSession openSession()
   {
     return openSession(IRepositoryConfig.REPOSITORY_NAME);

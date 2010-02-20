@@ -36,7 +36,7 @@ public class AdapterManagerTest extends AbstractCDOTest
   public void testAdapterPolicy_NONE() throws Exception
   {
     msg("Opening session");
-    final CDOSession session = openModel1Session();
+    final CDOSession session = openSession();
 
     session.options().setPassiveUpdateEnabled(false);
 
@@ -71,7 +71,7 @@ public class AdapterManagerTest extends AbstractCDOTest
   public void testAdapterPolicy_ALL() throws Exception
   {
     msg("Opening session");
-    final CDOSession session = openModel1Session();
+    final CDOSession session = openSession();
 
     session.options().setPassiveUpdateEnabled(false);
 
@@ -107,7 +107,7 @@ public class AdapterManagerTest extends AbstractCDOTest
   public void testAdapterPolicy_AttachObject() throws Exception
   {
     msg("Opening session");
-    final CDOSession session = openModel1Session();
+    final CDOSession session = openSession();
 
     session.options().setPassiveUpdateEnabled(false);
 
@@ -146,7 +146,7 @@ public class AdapterManagerTest extends AbstractCDOTest
   public void testAdapterPolicy_DetachObject() throws Exception
   {
     msg("Opening session");
-    final CDOSession session = openModel1Session();
+    final CDOSession session = openSession();
 
     session.options().setPassiveUpdateEnabled(false);
 
@@ -192,7 +192,7 @@ public class AdapterManagerTest extends AbstractCDOTest
   public void testAdapterPolicy_ChangePolicy() throws Exception
   {
     msg("Opening session");
-    final CDOSession session = openModel1Session();
+    final CDOSession session = openSession();
 
     session.options().setPassiveUpdateEnabled(false);
 

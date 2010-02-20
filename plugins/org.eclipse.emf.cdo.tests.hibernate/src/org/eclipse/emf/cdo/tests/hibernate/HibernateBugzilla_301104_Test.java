@@ -41,7 +41,7 @@ public class HibernateBugzilla_301104_Test extends AbstractCDOTest
 
     Category category1;
     {
-      final CDOSession session = openModel1Session();
+      final CDOSession session = openSession();
       final CDOTransaction transaction = session.openTransaction();
 
       final CDOResource resource = transaction.createResource("/test1");
@@ -52,7 +52,7 @@ public class HibernateBugzilla_301104_Test extends AbstractCDOTest
       transaction.commit();
     }
     {
-      final CDOSession session = openModel1Session();
+      final CDOSession session = openSession();
       final CDOTransaction transaction = session.openTransaction();
       final CDOResource resource = transaction.getResource("/test1");
       final Category category2 = (Category)resource.getContents().get(0);

@@ -32,7 +32,7 @@ public class Bugzilla_258850_Test extends AbstractCDOTest
   public void testBugzilla_258278() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
 
       TestListener listener = new TestListener()

@@ -56,7 +56,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
 
   public void testBasicRevisionDelta() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource1 = transaction.createResource("/test1");
 
@@ -116,7 +116,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
    */
   public void testBugzilla214374() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
 
@@ -150,7 +150,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
    */
   public void testBugzilla214431() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
 
@@ -174,7 +174,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
    */
   public void testBugzilla214374_HandleClear() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
 
@@ -204,7 +204,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
    */
   public void testBugzilla243282_Exception() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
 
@@ -454,7 +454,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     BasicEList<Company> reference = new BasicEList<Company>();
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/test1");
 
@@ -478,7 +478,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/test1");
 
@@ -493,7 +493,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOView view = session.openView();
       CDOResource resource = view.getResource("/test1");
 

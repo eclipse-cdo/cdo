@@ -35,7 +35,7 @@ public class Bugzilla_250757_Test extends AbstractCDOTest
 {
   public void testAddAndRemoveFromPersistedList() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(resourcePath);
@@ -58,7 +58,7 @@ public class Bugzilla_250757_Test extends AbstractCDOTest
 
   public void testAddAndModifyAndRemoveFromPersistedList() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(resourcePath);
@@ -80,7 +80,7 @@ public class Bugzilla_250757_Test extends AbstractCDOTest
 
   public void testAddAndMoveAndRemoveFromPersistedList() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(resourcePath);
@@ -104,7 +104,7 @@ public class Bugzilla_250757_Test extends AbstractCDOTest
 
   public void testAddAndMoveAndRemoveFromPersistedListWithSavePoint() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(resourcePath);
@@ -132,7 +132,7 @@ public class Bugzilla_250757_Test extends AbstractCDOTest
 
   public void testAddAndMoveAndRemoveFromPersistedListWithManySavePoint() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(resourcePath);

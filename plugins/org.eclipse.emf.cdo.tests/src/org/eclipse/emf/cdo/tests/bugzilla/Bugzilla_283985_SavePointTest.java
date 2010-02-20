@@ -57,7 +57,7 @@ public class Bugzilla_283985_SavePointTest extends AbstractCDOTest
     order1.getOrderDetails().add(detail3);
     order1.getOrderDetails().add(detail4);
 
-    session = openModel1Session();
+    session = openSession();
     transaction = session.openTransaction();
     resource = transaction.getOrCreateResource("/r1");
     resource.getContents().clear();

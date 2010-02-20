@@ -33,7 +33,7 @@ public class Bugzilla_248915_Test extends AbstractCDOTest
   public void testBugzilla_248915_IncompleteResource() throws Exception
   {
     /* 1) Open first session ready to populate the CDO Server with the data */
-    CDOSession session1 = openModel1Session();
+    CDOSession session1 = openSession();
     /* 2) Open first transaction ready to populate the CDO server with the data */
     CDOTransaction transaction1 = session1.openTransaction();
 
@@ -72,7 +72,7 @@ public class Bugzilla_248915_Test extends AbstractCDOTest
     /* #### Start of second phase where the data is fetched from the CDO Server #### */
 
     /* 7) Open a completely new session and transaction onto the persisted data */
-    CDOSession session2 = openModel1Session();
+    CDOSession session2 = openSession();
     CDOTransaction transaction2 = session2.openTransaction();
 
     /* 8) Load the supplier from transaction2, fetching it into transaction2's empty resourceSet */
@@ -102,7 +102,7 @@ public class Bugzilla_248915_Test extends AbstractCDOTest
 
   public void testBugzilla_248915_DuplicateID() throws Exception
   {
-    CDOSession session1 = openModel1Session();
+    CDOSession session1 = openSession();
     CDOTransaction transaction1 = session1.openTransaction();
 
     CDOResource supplierResource = transaction1.createResource("/supplierResource");
@@ -112,7 +112,7 @@ public class Bugzilla_248915_Test extends AbstractCDOTest
     transaction1.close();
     session1.close();
 
-    CDOSession session2 = openModel1Session();
+    CDOSession session2 = openSession();
     CDOTransaction transaction2 = session2.openTransaction();
     CDOResource resource = (CDOResource)transaction2.getObject(resID);
     CDOResource resource1 = transaction2.getResource("/supplierResource");

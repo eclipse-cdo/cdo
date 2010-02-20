@@ -35,7 +35,7 @@ public class EMapTest extends AbstractCDOTest
   public void testEMap() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     createTestSet(session);
 

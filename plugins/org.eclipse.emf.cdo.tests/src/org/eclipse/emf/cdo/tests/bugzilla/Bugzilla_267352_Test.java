@@ -37,7 +37,7 @@ public class Bugzilla_267352_Test extends AbstractCDOTest
     done[0] = false;
     customer.setName("customer");
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     resource.getContents().add(customer);
@@ -49,7 +49,7 @@ public class Bugzilla_267352_Test extends AbstractCDOTest
       {
         try
         {
-          CDOSession session = openModel1Session();
+          CDOSession session = openSession();
           CDOTransaction transaction = session.openTransaction();
           CDOObject customerToLoad = transaction.getObject(CDOUtil.getCDOObject(customer).cdoID());
           while (!done[0])

@@ -35,7 +35,7 @@ public class ChunkingTest extends AbstractCDOTest
   public void testReadNative() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/test1");
 
@@ -58,7 +58,7 @@ public class ChunkingTest extends AbstractCDOTest
 
     // ************************************************************* //
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     CDOTransaction transaction = session.openTransaction();
@@ -78,7 +78,7 @@ public class ChunkingTest extends AbstractCDOTest
   public void testWriteNative() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/test1");
 
@@ -101,7 +101,7 @@ public class ChunkingTest extends AbstractCDOTest
 
     // ************************************************************* //
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     CDOTransaction transaction = session.openTransaction();
@@ -123,7 +123,7 @@ public class ChunkingTest extends AbstractCDOTest
   public void testChunkWithTemporaryObject() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/test1");
 
@@ -138,7 +138,7 @@ public class ChunkingTest extends AbstractCDOTest
 
     // ************************************************************* //
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     transaction.options().setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(10));
     CDOResource resource = transaction.getResource("/test1");
@@ -157,7 +157,7 @@ public class ChunkingTest extends AbstractCDOTest
   public void testReadAfterUpdateBeforeCommit() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/test1");
 
@@ -175,7 +175,7 @@ public class ChunkingTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
     // ************************************************************* //
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     CDOTransaction transaction = session.openTransaction();
@@ -200,7 +200,7 @@ public class ChunkingTest extends AbstractCDOTest
   public void testReadAfterUpdateAfterCommit() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/test1");
 
@@ -218,7 +218,7 @@ public class ChunkingTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
     // ************************************************************* //
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     msg("Creating resource");
@@ -247,7 +247,7 @@ public class ChunkingTest extends AbstractCDOTest
   {
     createInitialList();
 
-    CDOSession session = openSession(getModel5Package());
+    CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(3, 1));
     CDOTransaction tx = session.openTransaction();
     CDOResource resource = tx.getResource(RESOURCE_PATH);
@@ -267,7 +267,7 @@ public class ChunkingTest extends AbstractCDOTest
   {
     createInitialList();
 
-    CDOSession session = openSession(getModel5Package());
+    CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(3, 1));
     CDOTransaction tx = session.openTransaction();
     CDOResource resource = tx.getResource(RESOURCE_PATH);
@@ -287,7 +287,7 @@ public class ChunkingTest extends AbstractCDOTest
   {
     createInitialList();
 
-    CDOSession session = openSession(getModel5Package());
+    CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(3, 1));
     CDOTransaction tx = session.openTransaction();
     CDOResource resource = tx.getResource(RESOURCE_PATH);
@@ -307,7 +307,7 @@ public class ChunkingTest extends AbstractCDOTest
   {
     createInitialList();
 
-    CDOSession session = openSession(getModel5Package());
+    CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(3, 1));
     CDOTransaction tx = session.openTransaction();
     CDOResource resource = tx.getResource(RESOURCE_PATH);
@@ -325,7 +325,7 @@ public class ChunkingTest extends AbstractCDOTest
 
   private void createInitialList()
   {
-    CDOSession session = openSession(getModel5Package());
+    CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource resource = tx.createResource(RESOURCE_PATH);
 
@@ -346,7 +346,7 @@ public class ChunkingTest extends AbstractCDOTest
   {
     List<Integer> expectedList = Arrays.asList(expected);
 
-    CDOSession session = openSession(getModel5Package());
+    CDOSession session = openSession();
     CDOView view = session.openView();
     CDOResource resource = view.getResource(RESOURCE_PATH);
 

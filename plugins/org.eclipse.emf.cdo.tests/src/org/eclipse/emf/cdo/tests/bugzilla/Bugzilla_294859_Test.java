@@ -44,7 +44,7 @@ public class Bugzilla_294859_Test extends AbstractCDOTest
 
   public void test()
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
 
     CDOTransaction tx = session.openTransaction();
@@ -107,7 +107,7 @@ public class Bugzilla_294859_Test extends AbstractCDOTest
 
   private void doSecondSession()
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.getResource(RESOURCE_NAME);
     Company c = (Company)r1.getContents().get(0);

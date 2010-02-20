@@ -43,7 +43,7 @@ public class DetachTest extends AbstractCDOTest
 {
   public void testNewObjectDeletion() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
@@ -64,7 +64,7 @@ public class DetachTest extends AbstractCDOTest
 
   public void testCleanObjectDeletion() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
@@ -102,7 +102,7 @@ public class DetachTest extends AbstractCDOTest
 
   public void testSavePointNewObjectDeletion() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
@@ -115,7 +115,7 @@ public class DetachTest extends AbstractCDOTest
 
   public void testSavePointCleanObjectDeletion() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
@@ -186,7 +186,7 @@ public class DetachTest extends AbstractCDOTest
   public void testKeepValue() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/my/resource");
 
@@ -197,7 +197,7 @@ public class DetachTest extends AbstractCDOTest
       transaction.commit();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getOrCreateResource("/my/resource");
 
@@ -258,7 +258,7 @@ public class DetachTest extends AbstractCDOTest
   public void testDetachNewResource() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -274,7 +274,7 @@ public class DetachTest extends AbstractCDOTest
   public void testDetachPersistedResource() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -295,7 +295,7 @@ public class DetachTest extends AbstractCDOTest
   public void testDetachPersistedResourceWithPersistedData() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -316,7 +316,7 @@ public class DetachTest extends AbstractCDOTest
   public void testDetachEmptyNewResource() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -331,7 +331,7 @@ public class DetachTest extends AbstractCDOTest
 
   public void testDetachEmptyPersistedResource() throws IOException, InterruptedException
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
@@ -369,7 +369,7 @@ public class DetachTest extends AbstractCDOTest
   {
     {
       msg("Opening session");
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
 
       msg("Opening transaction");
       CDOTransaction transaction = session.openTransaction();
@@ -380,7 +380,7 @@ public class DetachTest extends AbstractCDOTest
     }
 
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();

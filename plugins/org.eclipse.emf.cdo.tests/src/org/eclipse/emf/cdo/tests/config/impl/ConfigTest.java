@@ -42,8 +42,6 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
-import org.eclipse.emf.ecore.EPackage;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -234,41 +232,9 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   /**
    * @category Session
    */
-  public CDOSession openMangoSession()
+  public CDOSession openSession()
   {
-    return getSessionConfig().openMangoSession();
-  }
-
-  /**
-   * @category Session
-   */
-  public CDOSession openModel1Session()
-  {
-    return getSessionConfig().openModel1Session();
-  }
-
-  /**
-   * @category Session
-   */
-  public CDOSession openModel2Session()
-  {
-    return getSessionConfig().openModel2Session();
-  }
-
-  /**
-   * @category Session
-   */
-  public CDOSession openModel3Session()
-  {
-    return getSessionConfig().openModel3Session();
-  }
-
-  /**
-   * @category Session
-   */
-  public CDOSession openSession(EPackage ePackage)
-  {
-    return getSessionConfig().openSession(ePackage);
+    return getSessionConfig().openSession();
   }
 
   /**
@@ -277,14 +243,6 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   public CDOSession openSession(String repositoryName)
   {
     return getSessionConfig().openSession(repositoryName);
-  }
-
-  /**
-   * @category Session
-   */
-  public CDOSession openSession()
-  {
-    return getSessionConfig().openSession();
   }
 
   // /////////////////////////////////////////////////////////////////////////

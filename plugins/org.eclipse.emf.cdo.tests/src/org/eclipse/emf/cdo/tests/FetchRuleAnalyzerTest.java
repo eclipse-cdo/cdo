@@ -46,7 +46,7 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
     {
       // disableConsole();
       msg("Opening session");
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
 
       msg("Opening transaction");
       CDOTransaction transaction = session.openTransaction();
@@ -86,7 +86,7 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
     }
 
     msg("Opening session");
-    InternalCDOSession session = (InternalCDOSession)openModel1Session();
+    InternalCDOSession session = (InternalCDOSession)openSession();
     session.setFetchRuleManager(new CDOFetchRuleManagerThreadLocal());
 
     msg("Opening transaction");

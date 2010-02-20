@@ -313,7 +313,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
   public void testObjectNotAttached() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -344,7 +344,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
   public void testUsingObjectsBetweenSameTransaction() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction1 = session.openTransaction();

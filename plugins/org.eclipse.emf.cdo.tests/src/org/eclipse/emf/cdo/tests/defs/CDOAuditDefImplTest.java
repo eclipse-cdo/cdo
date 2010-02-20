@@ -40,7 +40,7 @@ public class CDOAuditDefImplTest extends AbstractCDOTest
   {
     final String customerName = "Heino";
 
-    CDOTransaction transaction = openModel1Session().openTransaction();
+    CDOTransaction transaction = openSession().openTransaction();
     Customer customer = getModel1Factory().createCustomer();
     customer.setName(customerName);
     transaction.createResource(RESOURCE_ID).getContents().add(customer);

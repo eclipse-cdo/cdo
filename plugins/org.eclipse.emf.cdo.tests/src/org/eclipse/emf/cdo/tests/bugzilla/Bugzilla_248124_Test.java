@@ -30,7 +30,7 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
 {
   public void testBugzilla_248124_hasResourceWithCommit() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
 
     String resourcePath = "/test1";
@@ -47,7 +47,7 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
 
   public void testBugzilla_248124_getResourceWithCommit() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
 
     String resourcePath = "/test1";
@@ -83,7 +83,7 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
 
   public void testBugzilla_248124_hasResourceWithoutCommit() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
 
     String resourcePath = "/test1";
@@ -98,7 +98,7 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
 
   public void testBugzilla_248124_getResourceWithoutCommit() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
 
     String resourcePath = "/test1";

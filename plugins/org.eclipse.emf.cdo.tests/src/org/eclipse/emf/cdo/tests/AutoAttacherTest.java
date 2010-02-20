@@ -31,7 +31,7 @@ public class AutoAttacherTest extends AbstractCDOTest
 
   public void testSimple() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     new CDOAutoAttacher(transaction);
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
@@ -59,7 +59,7 @@ public class AutoAttacherTest extends AbstractCDOTest
 
   public void testAddingObjectAndCrawl() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     new CDOAutoAttacher(transaction);
     CDOResource resource1 = transaction.getOrCreateResource("/test1");

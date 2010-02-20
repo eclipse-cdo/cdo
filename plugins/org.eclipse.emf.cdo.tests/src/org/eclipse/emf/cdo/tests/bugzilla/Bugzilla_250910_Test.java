@@ -37,7 +37,7 @@ public class Bugzilla_250910_Test extends AbstractCDOTest
 {
   public void testBugzilla_250910() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
@@ -52,7 +52,7 @@ public class Bugzilla_250910_Test extends AbstractCDOTest
     for (int i = 0; i < 20; i++)
     {
       TestAdapter testAdapter = new TestAdapter();
-      CDOSession session2 = openModel1Session();
+      CDOSession session2 = openSession();
       CDOTransaction transaction2 = session2.openTransaction();
       company.setName(String.valueOf(i));
 

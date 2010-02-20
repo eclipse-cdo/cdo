@@ -455,7 +455,8 @@ public class UnsetTest extends AbstractCDOTest
       assertEquals(23, test4.eGet(baseElement));
       assertEquals(42, test4.eGet(objectElement));
 
-      CDOSession session = openSession(pkg);
+      CDOSession session = openSession();
+      session.getPackageRegistry().putEPackage(pkg);
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/test1");
 
@@ -472,7 +473,8 @@ public class UnsetTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     {
-      CDOSession session = openSession(pkg);
+      CDOSession session = openSession();
+      session.getPackageRegistry().putEPackage(pkg);
       CDOView view = session.openTransaction();
       CDOResource res = view.getResource("/test1");
 

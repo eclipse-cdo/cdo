@@ -93,7 +93,7 @@ public class ResourceTest extends AbstractCDOTest
     URI resourceURI = null;
     String resourcePath = "test1";
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       ResourceSet resourceSet = new ResourceSetImpl();
       CDOTransaction transaction = session.openTransaction(resourceSet);
 
@@ -105,7 +105,7 @@ public class ResourceTest extends AbstractCDOTest
       resourceURI = EcoreUtil.getURI((EObject)res1);
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOTransaction transaction = session.openTransaction(resourceSet);
     CDOResource rootResource = (CDOResource)resourceSet.getEObject(rootResourceURI, true);
@@ -122,7 +122,7 @@ public class ResourceTest extends AbstractCDOTest
 
   public void testCreateResource_FromResourceSet() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOTransaction transaction = session.openTransaction(resourceSet);
 
@@ -155,7 +155,7 @@ public class ResourceTest extends AbstractCDOTest
 
   public void testCreateNestedResource_FromResourceSet() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOTransaction transaction = session.openTransaction(resourceSet);
 
@@ -175,7 +175,7 @@ public class ResourceTest extends AbstractCDOTest
 
   public void testCreateResource_FromTransaction() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
     // Test if Resource is well-formed after CDOResourceFactoryImpl.
@@ -195,14 +195,14 @@ public class ResourceTest extends AbstractCDOTest
   public void testCreateResource_WithDeepPath() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       transaction.createResource("/org/eclipse/net4j/core");
       transaction.commit();
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource("/org/eclipse/net4j/core");
     assertEquals(CDOURIUtil.createResourceURI(session, "/org/eclipse/net4j/core"), resource.getURI());
@@ -212,7 +212,7 @@ public class ResourceTest extends AbstractCDOTest
 
   public void testLoadAbsentResource_FromResourceSet() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOTransaction transaction = session.openTransaction(resourceSet);
 
@@ -234,7 +234,7 @@ public class ResourceTest extends AbstractCDOTest
   public void testRemoveResourceWithCloseView() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       ResourceSet rset = transaction.getResourceSet();
       CDOResource resource = transaction.createResource("/test1");
@@ -251,7 +251,7 @@ public class ResourceTest extends AbstractCDOTest
     }
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = (CDOResource)transaction.getResourceSet().getResource(
           CDOURIUtil.createResourceURI(transaction, "/test1"), true);
@@ -266,7 +266,7 @@ public class ResourceTest extends AbstractCDOTest
 
   public void testAttachManyResources() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
     CDOResource resource1 = transaction.createResource("/my/resource1");
@@ -296,7 +296,7 @@ public class ResourceTest extends AbstractCDOTest
 
   public void testDetachManyResources() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
     CDOResource resource1 = transaction.createResource("/my/resource1");
@@ -362,7 +362,7 @@ public class ResourceTest extends AbstractCDOTest
 
   public void testDuplicatePath() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     transaction.createResource("/my/resource");
     transaction.commit();
@@ -386,7 +386,7 @@ public class ResourceTest extends AbstractCDOTest
 
   public void testDuplicatePathAfterDetach() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
     transaction.commit();
@@ -442,7 +442,7 @@ public class ResourceTest extends AbstractCDOTest
   public void testChangeResourceURI() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/my/resource");
       transaction.commit();
@@ -457,7 +457,7 @@ public class ResourceTest extends AbstractCDOTest
 
     clearCache(getRepository().getRevisionManager());
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
     assertFalse(transaction.hasResource("/my/resource"));
@@ -467,7 +467,7 @@ public class ResourceTest extends AbstractCDOTest
   public void testChangeResourceFolderURI() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/my/resource");
       transaction.commit();
@@ -482,7 +482,7 @@ public class ResourceTest extends AbstractCDOTest
 
     clearCache(getRepository().getRevisionManager());
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
     assertFalse(transaction.hasResource("/my/resource"));
@@ -492,7 +492,7 @@ public class ResourceTest extends AbstractCDOTest
   public void testPathNotNull() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/res1");
       assertEquals("/res1", resource.getPath());
@@ -505,7 +505,7 @@ public class ResourceTest extends AbstractCDOTest
     }
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/res1");
       assertEquals("/res1", resource.getPath());
@@ -522,7 +522,7 @@ public class ResourceTest extends AbstractCDOTest
     }
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOView view = session.openView();
       CDOResource resource2 = view.getResource("/res2");
       assertEquals("/res2", resource2.getPath());
@@ -596,7 +596,7 @@ public class ResourceTest extends AbstractCDOTest
   public void testQueryResources() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       createResource(transaction, "/aresource");
       createResource(transaction, "/aaresource");
@@ -624,7 +624,7 @@ public class ResourceTest extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView view = session.openView();
     queryResources(view, "a", 6);
     queryResources(view, "b", 8);
@@ -640,7 +640,7 @@ public class ResourceTest extends AbstractCDOTest
   public void testQueryModifiedResources() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       createResource(transaction, "/aresource");
       createResource(transaction, "/aaresource");
@@ -691,7 +691,7 @@ public class ResourceTest extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView view = session.openView();
     queryResources(view, "a", 6);
     queryResources(view, "b", 8);
@@ -703,7 +703,7 @@ public class ResourceTest extends AbstractCDOTest
 
   public void testDeleteResource() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
     CDOResource resource = createResource(transaction, "/resource1");
@@ -761,7 +761,7 @@ public class ResourceTest extends AbstractCDOTest
 
   public void testDeleteResourceFresh() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
     CDOResource resource = createResource(transaction, "/resource1");
@@ -977,7 +977,7 @@ public class ResourceTest extends AbstractCDOTest
 
   public void testDeleteResourceFolder() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = createResource(transaction, "/folder/resource1");
     CDOObject object = CDOUtil.getCDOObject(resource.getContents().get(0));
@@ -1054,7 +1054,7 @@ public class ResourceTest extends AbstractCDOTest
 
   public void testDeleteResourceFolderFresh() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = createResource(transaction, "/folder/resource1");
     CDOObject object = CDOUtil.getCDOObject(resource.getContents().get(0));
@@ -1311,7 +1311,7 @@ public class ResourceTest extends AbstractCDOTest
    */
   private void attachDetachResourceDepth1(int depth, boolean callDelete, int depthtoRemove) throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOTransaction transaction = session.openTransaction(resourceSet);
     CDOResource rootResource = transaction.getRootResource();
@@ -1426,7 +1426,7 @@ public class ResourceTest extends AbstractCDOTest
     String oldPath = createPath(prefixA, depthFrom, "test");
     String newPath = createPath(prefixB, depthTo, "test2");
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource(oldPath);
       Order order = getModel1Factory().createOrder();
@@ -1464,7 +1464,7 @@ public class ResourceTest extends AbstractCDOTest
     }
 
     clearCache(getRepository().getRevisionManager());
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
     try

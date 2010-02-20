@@ -186,7 +186,7 @@ public class FeatureMapTest extends AbstractCDOTest
   public void _testFeatureMaps() throws Exception
   {
     {
-      CDOSession session = openSession(getModel5Package());
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/res1");
 
@@ -212,7 +212,7 @@ public class FeatureMapTest extends AbstractCDOTest
 
     clearCache(getRepository().getRevisionManager());
 
-    CDOSession session = openSession(getModel5Package());
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource("/res1");
 

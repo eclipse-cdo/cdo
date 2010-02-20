@@ -29,7 +29,7 @@ public class EnumTest extends AbstractCDOTest
       product.setName("Normal Product");
       product.setVat(VAT.VAT7);
 
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/my/resource");
       resource.getContents().add(product);
@@ -38,7 +38,7 @@ public class EnumTest extends AbstractCDOTest
     }
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/my/resource");
       Product1 product = (Product1)resource.getContents().get(0);
@@ -50,7 +50,7 @@ public class EnumTest extends AbstractCDOTest
     }
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/my/resource");
       Product1 product = (Product1)resource.getContents().get(0);
@@ -66,7 +66,7 @@ public class EnumTest extends AbstractCDOTest
       product.setName("Normal Product");
       product.setVat(VAT.VAT7);
 
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/my/resource");
       resource.getContents().add(product);
@@ -77,7 +77,7 @@ public class EnumTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/my/resource");
       Product1 product = (Product1)resource.getContents().get(0);
@@ -91,7 +91,7 @@ public class EnumTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/my/resource");
       Product1 product = (Product1)resource.getContents().get(0);
@@ -104,7 +104,7 @@ public class EnumTest extends AbstractCDOTest
   {
     {
       Category category = getModel1Factory().createCategory();
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/my/resource");
       resource.getContents().add(category);
@@ -119,7 +119,7 @@ public class EnumTest extends AbstractCDOTest
     }
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/my/resource");
       Category category = (Category)resource.getContents().get(0);
@@ -132,7 +132,7 @@ public class EnumTest extends AbstractCDOTest
     }
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/my/resource");
       Category category = (Category)resource.getContents().get(0);
@@ -146,7 +146,7 @@ public class EnumTest extends AbstractCDOTest
   {
     {
       Category category = getModel1Factory().createCategory();
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/my/resource");
       resource.getContents().add(category);
@@ -163,7 +163,7 @@ public class EnumTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/my/resource");
       Category category = (Category)resource.getContents().get(0);
@@ -178,7 +178,7 @@ public class EnumTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/my/resource");
       Category category = (Category)resource.getContents().get(0);

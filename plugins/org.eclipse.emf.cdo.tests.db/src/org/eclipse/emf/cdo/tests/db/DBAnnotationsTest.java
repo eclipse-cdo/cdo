@@ -43,7 +43,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addLengthAnnotation(model1, "8");
-    CDOSession session = openSession(model1);
+    CDOSession session = openSession();
 
     disableConsole();
     msg("Opening transaction");
@@ -72,7 +72,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addLengthAnnotation(model1, "8");
-    CDOSession session = openSession(model1);
+    CDOSession session = openSession();
 
     disableConsole();
     msg("Opening transaction");
@@ -106,7 +106,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addLengthAnnotation(model1, "8");
-    CDOSession session = openSession(model1);
+    CDOSession session = openSession();
 
     disableConsole();
 
@@ -149,7 +149,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addTypeAnnotation(model1, "CLOB");
-    CDOSession session = openSession(model1);
+    CDOSession session = openSession();
 
     disableConsole();
 
@@ -188,7 +188,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addTableNameAnnotation(model1, "Subject");
-    CDOSession session = openSession(model1);
+    CDOSession session = openSession();
 
     disableConsole();
 
@@ -227,7 +227,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addColumnNameAnnotation(model1, "TOPIC");
-    CDOSession session = openSession(model1);
+    CDOSession session = openSession();
 
     disableConsole();
 
@@ -270,7 +270,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addColumnNameAndTypeAnnoation(model1, "TOPIC", "CLOB");
-    CDOSession session = openSession(model1);
+    CDOSession session = openSession();
 
     disableConsole();
 
@@ -307,7 +307,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addTableMappingAnnotation(model1, "OrderDetail", "Company");
-    CDOSession session = openSession(model1);
+    CDOSession session = openSession();
 
     disableConsole();
 

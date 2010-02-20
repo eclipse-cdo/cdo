@@ -28,7 +28,7 @@ public class Bugzilla_258278_Test extends AbstractCDOTest
   public void testBugzilla_258278() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       transaction.createResource("/root/folder1/resource1");
       transaction.createResource("/root/folder1/resource2");
@@ -36,7 +36,7 @@ public class Bugzilla_258278_Test extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource1 = transaction.getResource("/root/folder1/resource1");

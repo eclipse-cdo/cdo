@@ -217,7 +217,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
 
   private void doSecondSession()
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.getResource(RESOURCENAME);
     ContainedElementNoOpposite referencee = (ContainedElementNoOpposite)r1.getContents().get(0);

@@ -32,7 +32,7 @@ public class Bugzilla_246456_Test extends AbstractCDOTest
   public void testBugzilla_246456() throws Exception
   {
     msg("Opening session");
-    InternalCDOSession session = (InternalCDOSession)openModel1Session();
+    InternalCDOSession session = (InternalCDOSession)openSession();
     InternalCDORevisionManager revisionManager = session.getRevisionManager();
     InternalCDORevisionCache cache = revisionManager.getCache();
     if (cache instanceof TwoLevelRevisionCache)

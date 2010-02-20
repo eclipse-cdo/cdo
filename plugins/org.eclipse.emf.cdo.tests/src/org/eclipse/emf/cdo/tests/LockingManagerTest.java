@@ -145,7 +145,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
@@ -170,7 +170,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
@@ -191,7 +191,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
@@ -221,7 +221,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
@@ -242,7 +242,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
@@ -281,7 +281,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
@@ -314,7 +314,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
@@ -342,7 +342,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
@@ -369,7 +369,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
@@ -397,7 +397,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
@@ -414,7 +414,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
@@ -437,7 +437,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
@@ -455,7 +455,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
@@ -534,7 +534,7 @@ public class LockingManagerTest extends AbstractCDOTest
     Company company = getModel1Factory().createCompany();
 
     InternalRepository repo = getRepository();
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     CDOTransaction transaction = session.openTransaction();
     IView view = repo.getSessionManager().getSession(session.getSessionID()).getView(transaction.getViewID());
@@ -553,7 +553,7 @@ public class LockingManagerTest extends AbstractCDOTest
     Company company = getModel1Factory().createCompany();
 
     InternalRepository repo = getRepository();
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     CDOTransaction transaction = session.openTransaction();
     IView view = repo.getSessionManager().getSession(session.getSessionID()).getView(transaction.getViewID());
@@ -574,7 +574,7 @@ public class LockingManagerTest extends AbstractCDOTest
     Company company1 = getModel1Factory().createCompany();
     Company company2 = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     CDOTransaction transaction2 = session.openTransaction();
     CDOResource res = transaction1.getOrCreateResource("/res1");
@@ -596,7 +596,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
@@ -636,7 +636,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
@@ -677,7 +677,7 @@ public class LockingManagerTest extends AbstractCDOTest
     final int ITERATION = 100;
     Company company = getModel1Factory().createCompany();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);

@@ -43,7 +43,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   {
     CDOAccumulateTransactionHandler handler = new CDOAccumulateTransactionHandler();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     transaction.addTransactionHandler(handler);
 
@@ -65,7 +65,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
   public void testAttachingResourceVeto() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     transaction.addTransactionHandler(new CDODefaultTransactionHandler()
     {
@@ -97,7 +97,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
   public void testAttachingObjectVeto() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
     Order order = getModel1Factory().createOrder();
@@ -133,7 +133,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   {
     CDOAccumulateTransactionHandler handler = new CDOAccumulateTransactionHandler();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     transaction.addTransactionHandler(handler);
 
@@ -159,7 +159,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
   public void testDetachingObjectVeto() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     transaction.addTransactionHandler(new CDODefaultTransactionHandler()
     {
@@ -196,7 +196,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   {
     CDOAccumulateTransactionHandler handler = new CDOAccumulateTransactionHandler();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     transaction.addTransactionHandler(handler);
 
@@ -219,7 +219,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
   public void testModifyingResourceVeto() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     transaction.addTransactionHandler(new CDODefaultTransactionHandler()
     {
@@ -251,7 +251,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
   public void testModifyingObjectVeto() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
     Order order = getModel1Factory().createOrder();
@@ -289,7 +289,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   {
     CDOAccumulateTransactionHandler handler = new CDOAccumulateTransactionHandler();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     transaction.addTransactionHandler(handler);
 
@@ -305,7 +305,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   {
     CDOAccumulateTransactionHandler handler = new CDOAccumulateTransactionHandler();
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     transaction.addTransactionHandler(handler);
 
@@ -322,7 +322,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   {
     final CDOAccumulateTransactionHandler handler = new CDOAccumulateTransactionHandler();
     CDOAsyncTransactionHandler asyncHandler = new CDOAsyncTransactionHandler(handler);
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
     Order order = getModel1Factory().createOrder();

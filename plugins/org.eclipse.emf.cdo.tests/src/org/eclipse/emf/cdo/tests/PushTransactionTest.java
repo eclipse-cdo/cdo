@@ -91,7 +91,7 @@ public class PushTransactionTest extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView view = session.openView();
     CDOResource resource = view.getResource(resourcePath);
     assertEquals(2, resource.getContents().size());
@@ -130,7 +130,7 @@ public class PushTransactionTest extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView view = session.openView();
     CDOResource resource = view.getResource(resourcePath);
     assertEquals(1, resource.getContents().size());
@@ -169,7 +169,7 @@ public class PushTransactionTest extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView view = session.openView();
     CDOResource resource = view.getResource(resourcePath);
     assertEquals(3, resource.getContents().size());
@@ -247,7 +247,7 @@ public class PushTransactionTest extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView view = session.openView();
     assertEquals(1, view.getRootResource().getContents().size());
     CDOResource resource = view.getResource(resourcePath);
@@ -300,7 +300,7 @@ public class PushTransactionTest extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView view = session.openView();
     CDOResource resource = view.getResource(resourcePath);
     assertEquals(4, resource.getContents().size());
@@ -351,7 +351,7 @@ public class PushTransactionTest extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView view = session.openView();
     assertEquals(1, view.getRootResource().getContents().size());
     CDOResource resource = view.getResource(resourcePath);
@@ -391,7 +391,7 @@ public class PushTransactionTest extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView view = session.openView();
     CDOResource resource = view.getResource(resourcePath);
     assertEquals(0, resource.getContents().size());
@@ -427,7 +427,7 @@ public class PushTransactionTest extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView view = session.openView();
     CDOResource resource = view.getResource(resourcePath);
     Supplier supplier = (Supplier)resource.getContents().get(0);
@@ -453,7 +453,7 @@ public class PushTransactionTest extends AbstractCDOTest
 
     {
       msg("Open transaction & commit changes to repo");
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getOrCreateResource(resourcePath);
       resource.getContents().remove(0);
@@ -495,7 +495,7 @@ public class PushTransactionTest extends AbstractCDOTest
 
     {
       msg("Open transaction & commit changes to repo");
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getOrCreateResource(resourcePath);
       Supplier supplier = (Supplier)resource.getContents().get(0);
@@ -525,7 +525,7 @@ public class PushTransactionTest extends AbstractCDOTest
   {
     msg("Populate the repository the classic way");
     msg("Create resource");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(resourcePath);
     msg("Populate resource");

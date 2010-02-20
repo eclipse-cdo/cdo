@@ -39,7 +39,7 @@ public class Bugzilla_254489_Test extends AbstractCDOTest
   public void testBugzilla_254489() throws Exception
   {
     msg("Opening session");
-    final CDOSession session = openModel1Session();
+    final CDOSession session = openSession();
 
     // ************************************************************* //
     msg("Opening transaction");

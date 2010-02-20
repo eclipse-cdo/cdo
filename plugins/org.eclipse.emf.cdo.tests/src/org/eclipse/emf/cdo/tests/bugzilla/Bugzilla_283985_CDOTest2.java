@@ -52,7 +52,7 @@ public class Bugzilla_283985_CDOTest2 extends AbstractCDOTest
   public void testMoveOnce()
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction tx = session.openTransaction();
       CDOResource r1 = tx.getOrCreateResource("/r1");
       r1.getContents().clear();
@@ -83,7 +83,7 @@ public class Bugzilla_283985_CDOTest2 extends AbstractCDOTest
 
     {
       // Check if all OK if we reload in a new session
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction tx = session.openTransaction();
       CDOResource r1 = tx.getResource("/r1");
       order1 = (Order)r1.getContents().get(0);
@@ -105,7 +105,7 @@ public class Bugzilla_283985_CDOTest2 extends AbstractCDOTest
   public void testMoveOnceAndBack()
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction tx = session.openTransaction();
       CDOResource r1 = tx.getOrCreateResource("/r1");
       r1.getContents().clear();
@@ -141,7 +141,7 @@ public class Bugzilla_283985_CDOTest2 extends AbstractCDOTest
 
     {
       // Check if all OK if we reload in a new session
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction tx = session.openTransaction();
       CDOResource r1 = tx.getResource("/r1");
       order1 = (Order)r1.getContents().get(0);

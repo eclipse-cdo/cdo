@@ -31,7 +31,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
 {
   public void testEOpposite_AdjustMany() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(resourcePath);
@@ -78,7 +78,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
 
   public void testEOpposite_AdjustSingleRef() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(resourcePath);
@@ -115,7 +115,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
 
   public void testEOpposite_AdjustSingleRef_NoCommit() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(resourcePath);
@@ -149,7 +149,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
 
   public void testEOpposite_AdjustMany_Persisted() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(resourcePath);

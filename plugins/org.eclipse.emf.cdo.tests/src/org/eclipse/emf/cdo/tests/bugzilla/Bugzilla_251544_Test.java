@@ -33,7 +33,7 @@ public class Bugzilla_251544_Test extends AbstractCDOTest
 {
   public void testFromPersistedToTransient() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
@@ -60,7 +60,7 @@ public class Bugzilla_251544_Test extends AbstractCDOTest
 
   public void testFromTransientToPersisted() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 

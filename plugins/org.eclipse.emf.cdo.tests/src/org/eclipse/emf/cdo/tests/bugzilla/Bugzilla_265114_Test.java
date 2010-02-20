@@ -51,7 +51,7 @@ public class Bugzilla_265114_Test extends AbstractCDOTest
   public void testResourceSet() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/res1");
       Company company = getModel1Factory().createCompany();
@@ -61,7 +61,7 @@ public class Bugzilla_265114_Test extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     ResourceSet rset = new ResourceSetImpl();
 
     Registry registry = rset.getResourceFactoryRegistry();

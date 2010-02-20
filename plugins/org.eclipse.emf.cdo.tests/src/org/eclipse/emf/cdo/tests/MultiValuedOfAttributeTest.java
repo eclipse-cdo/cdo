@@ -123,7 +123,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
   protected <T> void testMultiValuedIOfAttribute(List<T> list, EClass containerClass, EStructuralFeature feature)
   {
     {
-      CDOSession session = openSession(getModel5Package());
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/res1");
 
@@ -143,7 +143,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
 
     clearCache(getRepository().getRevisionManager());
     {
-      CDOSession session = openSession(getModel5Package());
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/res1");
 
@@ -164,7 +164,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     {
-      CDOSession session = openSession(getModel5Package());
+      CDOSession session = openSession();
       session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(0, 100));
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/res1");

@@ -28,7 +28,7 @@ public class Bugzilla_285441_Test extends AbstractCDOTest
 {
   public void testBugzilla_285441() throws Exception
   {
-    CDOSession session1 = openModel1Session();
+    CDOSession session1 = openSession();
     CDOTransaction transaction1 = session1.openTransaction();
     CDOResource resource1 = transaction1.createResource("/test1");
 
@@ -41,7 +41,7 @@ public class Bugzilla_285441_Test extends AbstractCDOTest
 
     company1.getCategories().remove(0);
 
-    CDOSession session2 = openModel1Session();
+    CDOSession session2 = openSession();
     session2.options().setPassiveUpdateEnabled(false);
     CDOTransaction transaction2 = session2.openTransaction();
     transaction2.options().addConflictResolver(new TakeRemoteChangesThenApplyLocalChanges());

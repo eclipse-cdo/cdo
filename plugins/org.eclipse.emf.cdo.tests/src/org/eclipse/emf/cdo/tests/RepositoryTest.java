@@ -38,7 +38,7 @@ public class RepositoryTest extends AbstractCDOTest
 {
   public void testSessionClosed() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/res1");
     resource.getContents().add(createCustomer("Eike"));
@@ -54,7 +54,7 @@ public class RepositoryTest extends AbstractCDOTest
 
   public void testWriteAccessHandlers() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/res1");
     resource.getContents().add(createCustomer("Eike"));
@@ -109,7 +109,7 @@ public class RepositoryTest extends AbstractCDOTest
   public void testReadAccessHandlers() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/res1");
       resource.getContents().add(createCustomer("Eike"));
@@ -145,7 +145,7 @@ public class RepositoryTest extends AbstractCDOTest
       }
     });
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView view = session.openView();
     CDOResource resource = view.getResource("/res1");
     int read = 0;

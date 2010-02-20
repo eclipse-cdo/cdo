@@ -59,7 +59,7 @@ public class ContentAdapterTest extends AbstractCDOTest
     CDOID supplierID = null;
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
 
       CDOResource resource = transaction.createResource("/test2");
@@ -81,7 +81,7 @@ public class ContentAdapterTest extends AbstractCDOTest
     }
 
     {
-      InternalCDOSession session = (InternalCDOSession)openModel1Session();
+      InternalCDOSession session = (InternalCDOSession)openSession();
 
       CDOFetchRuleManagerInfo info = new CDOFetchRuleManagerInfo();
       session.setFetchRuleManager(info);

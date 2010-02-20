@@ -40,7 +40,7 @@ public class Bugzilla_251087_Test extends AbstractCDOTest
 {
   public void testSubscription() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
 
     transaction1.options().setInvalidationNotificationEnabled(true);
@@ -65,8 +65,8 @@ public class Bugzilla_251087_Test extends AbstractCDOTest
 
   public void testSubscriptionDetached() throws Exception
   {
-    CDOSession sessionA = openModel1Session();
-    CDOSession sessionB = openModel1Session();
+    CDOSession sessionA = openSession();
+    CDOSession sessionB = openSession();
     CDOTransaction transaction1 = sessionA.openTransaction();
 
     transaction1.options().setInvalidationNotificationEnabled(true);

@@ -37,7 +37,7 @@ public class CrossReferenceTest extends AbstractCDOTest
   public void testLoadViaContainment() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     // ************************************************************* //
 
@@ -112,7 +112,7 @@ public class CrossReferenceTest extends AbstractCDOTest
   public void testLoadViaXRef() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     // ************************************************************* //
 
@@ -185,7 +185,7 @@ public class CrossReferenceTest extends AbstractCDOTest
   public void testTwoResources() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Attaching transaction");
     CDOTransaction transaction = session.openTransaction();

@@ -163,7 +163,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
 
   private void runWithClosure(IClosure closure)
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.getOrCreateResource("/r1");
     r1.getContents().clear();
@@ -346,7 +346,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
 
   public void testAddRemoveSequence()
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.getOrCreateResource("/r1");
     r1.getContents().clear();
@@ -413,7 +413,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
 
   public void testCanDaDmoreThanOnce()
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.getOrCreateResource("/r1");
     r1.getContents().clear();
@@ -469,7 +469,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
 
   public void testCanReattachDirtyObject()
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.getOrCreateResource("/r1");
     r1.getContents().clear();

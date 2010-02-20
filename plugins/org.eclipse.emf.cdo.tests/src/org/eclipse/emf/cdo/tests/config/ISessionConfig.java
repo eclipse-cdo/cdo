@@ -12,8 +12,6 @@ package org.eclipse.emf.cdo.tests.config;
 
 import org.eclipse.emf.cdo.session.CDOSession;
 
-import org.eclipse.emf.ecore.EPackage;
-
 /**
  * @author Eike Stepper
  */
@@ -23,21 +21,7 @@ public interface ISessionConfig extends IConfig
 
   public void stopTransport() throws Exception;
 
-  // public IAcceptor getAcceptor();
-  //
-  // public IConnector getConnector();
-
-  public CDOSession openMangoSession();
-
-  public CDOSession openModel1Session();
-
-  public CDOSession openModel2Session();
-
-  public CDOSession openModel3Session();
-
-  public CDOSession openSession(EPackage ePackage);
+  public CDOSession openSession();
 
   public CDOSession openSession(String repositoryName);
-
-  public CDOSession openSession();
 }

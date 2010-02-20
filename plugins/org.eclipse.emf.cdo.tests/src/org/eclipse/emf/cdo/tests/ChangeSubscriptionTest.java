@@ -54,7 +54,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
   private void testSameSession(final CDOAdapterPolicy policy) throws Exception
   {
     msg("Opening session");
-    final CDOSession session = openModel1Session();
+    final CDOSession session = openSession();
 
     // ************************************************************* //
 
@@ -170,7 +170,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     Company companyA = getModel1Factory().createCompany();
     companyA.getCategories().add(category1A);
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     if (policy != null)
     {
@@ -186,7 +186,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     // ************************************************************* //
 
-    CDOSession session2 = openModel1Session();
+    CDOSession session2 = openSession();
     CDOTransaction transaction2 = session2.openTransaction();
 
     Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(),
@@ -235,7 +235,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
   public void testTemporaryObject() throws Exception
   {
     msg("Opening session");
-    final CDOSession session = openModel1Session();
+    final CDOSession session = openSession();
 
     // ************************************************************* //
 
@@ -268,7 +268,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Opening view");
-    final CDOSession session2 = openModel1Session();
+    final CDOSession session2 = openSession();
     final CDOTransaction transaction2 = session2.openTransaction();
     transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
@@ -299,7 +299,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     CDOIDFilterChangeSubscriptionPolicy customPolicy = new CDOIDFilterChangeSubscriptionPolicy();
 
     msg("Opening session");
-    final CDOSession session = openModel1Session();
+    final CDOSession session = openSession();
 
     // ************************************************************* //
 
@@ -337,7 +337,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Opening view");
-    final CDOSession session2 = openModel1Session();
+    final CDOSession session2 = openSession();
     final CDOTransaction transaction2 = session2.openTransaction();
 
     final Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A)
@@ -392,7 +392,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
   public void testNotificationChain() throws Exception
   {
     msg("Opening session");
-    final CDOSession session = openModel1Session();
+    final CDOSession session = openSession();
 
     // ************************************************************* //
 
@@ -427,7 +427,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Opening view");
-    final CDOSession session2 = openModel1Session();
+    final CDOSession session2 = openSession();
     final CDOTransaction transaction2 = session2.openTransaction();
 
     final Company company1B = (Company)CDOUtil.getEObject(transaction2.getObject(
@@ -507,13 +507,13 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     company.getCategories().add(getModel1Factory().createCategory());
     company.getCategories().add(getModel1Factory().createCategory());
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     resource.getContents().add(company);
     transaction.commit();
 
-    CDOSession session2 = openModel1Session();
+    CDOSession session2 = openSession();
     CDOView view = session2.openView();
     view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
@@ -570,13 +570,13 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     company.getCategories().add(getModel1Factory().createCategory());
     company.getCategories().add(getModel1Factory().createCategory());
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     resource.getContents().add(company);
     transaction.commit();
 
-    CDOSession session2 = openModel1Session();
+    CDOSession session2 = openSession();
     CDOView view = session2.openView();
     view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
@@ -631,14 +631,14 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     Product1 product = getModel1Factory().createProduct1();
     product.getOrderDetails().addAll(details);
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     resource.getContents().add(product);
     resource.getContents().addAll(details);
     transaction.commit();
 
-    CDOSession session2 = openModel1Session();
+    CDOSession session2 = openSession();
     CDOView view = session2.openView();
     view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
@@ -701,14 +701,14 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     Product1 product = getModel1Factory().createProduct1();
     product.getOrderDetails().addAll(details);
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     resource.getContents().add(product);
     resource.getContents().addAll(details);
     transaction.commit();
 
-    CDOSession session2 = openModel1Session();
+    CDOSession session2 = openSession();
     CDOView view = session2.openView();
     view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 

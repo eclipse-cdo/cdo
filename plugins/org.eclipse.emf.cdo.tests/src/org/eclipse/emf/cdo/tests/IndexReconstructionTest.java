@@ -47,7 +47,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
   {
     super.doSetUp();
     OMPlatform.INSTANCE.setDebugging(false);
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     transaction = session.openTransaction();
     resource = transaction.createResource("/test1");
     expectedIndices = new HashSet<ReconstructedIndex>();

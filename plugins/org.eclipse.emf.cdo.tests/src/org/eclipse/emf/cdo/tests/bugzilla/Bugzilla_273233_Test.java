@@ -27,7 +27,7 @@ public class Bugzilla_273233_Test extends AbstractCDOTest
 {
   public void test_Bugzilla_273233_Simple() throws IOException
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
 
     CDOTransaction trans = session.openTransaction();
@@ -44,10 +44,10 @@ public class Bugzilla_273233_Test extends AbstractCDOTest
 
   public void test_Bugzilla_273233_TwoSessions() throws IOException
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
 
-    CDOSession session2 = openModel1Session();
+    CDOSession session2 = openSession();
 
     CDOTransaction trans = session.openTransaction();
     CDOTransaction trans2 = session2.openTransaction();
@@ -83,10 +83,10 @@ public class Bugzilla_273233_Test extends AbstractCDOTest
 
   public void test_Bugzilla_273233_TwoSessionsWithClearCache() throws IOException
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
 
-    CDOSession session2 = openModel1Session();
+    CDOSession session2 = openSession();
 
     CDOTransaction trans = session.openTransaction();
     CDOTransaction trans2 = session2.openTransaction();

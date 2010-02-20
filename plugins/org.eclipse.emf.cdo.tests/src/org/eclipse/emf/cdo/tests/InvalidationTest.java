@@ -58,7 +58,7 @@ public class InvalidationTest extends AbstractCDOTest
 
   public void testSeparateView() throws Exception
   {
-    final CDOSession session = openModel1Session();
+    final CDOSession session = openSession();
 
     // ************************************************************* //
 
@@ -130,7 +130,7 @@ public class InvalidationTest extends AbstractCDOTest
 
   public void testSeparateViewNotification() throws Exception
   {
-    final CDOSession session = openModel1Session();
+    final CDOSession session = openSession();
 
     // ************************************************************* //
 
@@ -210,7 +210,7 @@ public class InvalidationTest extends AbstractCDOTest
 
   public void testConflictSameSession() throws InterruptedException, IOException
   {
-    CDOSession session = openSession(getModel1Package());
+    CDOSession session = openSession();
     CDOTransaction trans1 = session.openTransaction();
     CDOTransaction trans2 = session.openTransaction();
     testConflict(trans1, trans2);
@@ -218,10 +218,10 @@ public class InvalidationTest extends AbstractCDOTest
 
   public void testConflictDifferentSession() throws InterruptedException, IOException
   {
-    CDOSession session1 = openSession(getModel1Package());
+    CDOSession session1 = openSession();
     CDOTransaction trans1 = session1.openTransaction();
 
-    CDOSession session2 = openSession(getModel1Package());
+    CDOSession session2 = openSession();
     CDOTransaction trans2 = session2.openTransaction();
 
     testConflict(trans1, trans2);
@@ -270,7 +270,7 @@ public class InvalidationTest extends AbstractCDOTest
 
   public void testDetachedConflictSameSession() throws InterruptedException, IOException
   {
-    CDOSession session = openSession(getModel1Package());
+    CDOSession session = openSession();
     CDOTransaction trans1 = session.openTransaction();
     CDOTransaction trans2 = session.openTransaction();
     testDetachedConflict(trans1, trans2);
@@ -278,10 +278,10 @@ public class InvalidationTest extends AbstractCDOTest
 
   public void testDetachedConflictDifferentSession() throws InterruptedException, IOException
   {
-    CDOSession session1 = openSession(getModel1Package());
+    CDOSession session1 = openSession();
     CDOTransaction trans1 = session1.openTransaction();
 
-    CDOSession session2 = openSession(getModel1Package());
+    CDOSession session2 = openSession();
     CDOTransaction trans2 = session2.openTransaction();
 
     testDetachedConflict(trans1, trans2);
@@ -342,7 +342,7 @@ public class InvalidationTest extends AbstractCDOTest
     category1A.getCategories().add(category2A);
     category2A.getCategories().add(category3A);
 
-    final CDOSession sessionA = openModel1Session();
+    final CDOSession sessionA = openSession();
     final CDOTransaction transaction = sessionA.openTransaction();
     final CDOResource resourceA = transaction.createResource("/test1");
     resourceA.getContents().add(companyA);
@@ -350,7 +350,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     // ************************************************************* //
 
-    final CDOSession sessionB = openModel1Session();
+    final CDOSession sessionB = openSession();
     final CDOView viewB = sessionB.openTransaction();
     final CDOResource resourceB = viewB.getResource("/test1");
     assertProxy(resourceB);
@@ -398,7 +398,7 @@ public class InvalidationTest extends AbstractCDOTest
   public void testInvalidateAndCache() throws Exception
   {
     msg("Opening sessionA");
-    CDOSession sessionA = openModel1Session();
+    CDOSession sessionA = openSession();
 
     msg("Opening transactionA");
     final CDOTransaction transactionA = sessionA.openTransaction();
@@ -459,7 +459,7 @@ public class InvalidationTest extends AbstractCDOTest
 
   public void testRefreshEmptyRepository() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     assertEquals(0, session.refresh());
     session.close();
   }
@@ -481,7 +481,7 @@ public class InvalidationTest extends AbstractCDOTest
     category1A.getCategories().add(category2A);
     category2A.getCategories().add(category3A);
 
-    CDOSession sessionA = openModel1Session();
+    CDOSession sessionA = openSession();
     CDOTransaction transaction = sessionA.openTransaction();
     CDOResource resourceA = transaction.createResource("/test1");
     resourceA.getContents().add(companyA);
@@ -491,7 +491,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     // ************************************************************* //
 
-    CDOSession sessionB = openModel1Session();
+    CDOSession sessionB = openSession();
     sessionB.options().setPassiveUpdateEnabled(false);
 
     CDOView viewB = sessionB.openTransaction();
@@ -538,7 +538,7 @@ public class InvalidationTest extends AbstractCDOTest
     category2A.getCategories().add(category3A);
 
     msg("Opening sessionA");
-    final CDOSession sessionA = openModel1Session();
+    final CDOSession sessionA = openSession();
 
     msg("Attaching transaction");
     final CDOTransaction transaction = sessionA.openTransaction();
@@ -556,7 +556,7 @@ public class InvalidationTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Opening sessionB");
-    final CDOSession sessionB = openModel1Session();
+    final CDOSession sessionB = openSession();
 
     sessionB.options().setPassiveUpdateEnabled(false);
 
@@ -567,7 +567,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     // ************************************************************* //
     msg("Opening sessionB");
-    final CDOSession sessionC = openModel1Session();
+    final CDOSession sessionC = openSession();
 
     assertEquals(true, sessionC.options().isPassiveUpdateEnabled());
 
@@ -641,7 +641,7 @@ public class InvalidationTest extends AbstractCDOTest
     categoryA.setName("category1");
 
     msg("Opening sessionA");
-    final CDOSession sessionA = openModel1Session();
+    final CDOSession sessionA = openSession();
 
     msg("Attaching transaction");
     final CDOTransaction transaction = sessionA.openTransaction();
@@ -658,7 +658,7 @@ public class InvalidationTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Opening sessionB");
-    final CDOSession sessionB = openModel1Session();
+    final CDOSession sessionB = openSession();
 
     msg("Attaching viewB");
     final CDOView viewB = sessionB.openTransaction();
@@ -716,7 +716,7 @@ public class InvalidationTest extends AbstractCDOTest
     categoryA.setName("category1");
 
     msg("Opening sessionA");
-    final CDOSession sessionA = openModel1Session();
+    final CDOSession sessionA = openSession();
 
     msg("Attaching transaction");
     final CDOTransaction transaction = sessionA.openTransaction();
@@ -733,7 +733,7 @@ public class InvalidationTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Opening sessionB");
-    final CDOSession sessionB = openModel1Session();
+    final CDOSession sessionB = openSession();
     sessionB.options().setPassiveUpdateEnabled(false);
 
     msg("Attaching viewB");

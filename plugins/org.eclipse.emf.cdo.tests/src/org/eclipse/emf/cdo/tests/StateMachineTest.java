@@ -47,7 +47,7 @@ public class StateMachineTest extends AbstractCDOTest
   public void test_TRANSIENT_with_ATTACH() throws Exception
   {
     // Attach resource
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     assertNew(resource, transaction);
@@ -328,7 +328,7 @@ public class StateMachineTest extends AbstractCDOTest
 
   public void test_NEW_with_ATTACH() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     assertNew(resource, transaction);
@@ -342,7 +342,7 @@ public class StateMachineTest extends AbstractCDOTest
   public void _____test_NEW_with_DETACH() throws Exception
   {
     // Detach single object
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     assertNew(resource, transaction);
@@ -390,7 +390,7 @@ public class StateMachineTest extends AbstractCDOTest
 
   public void test_REATTACH() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
 

@@ -30,7 +30,7 @@ public class Bugzilla_261218_Test extends AbstractCDOTest
   public void testBugzilla_261218_Containment() throws Exception
   {
     msg("Opening session");
-    final CDOSession session = openModel1Session();
+    final CDOSession session = openSession();
     String LOCATION = "res1";
     CDOTransaction transaction = session.openTransaction();
     Resource resource = transaction.getOrCreateResource(LOCATION);

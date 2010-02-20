@@ -33,7 +33,7 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
       Customer customer = getModel1Factory().createCustomer();
       customer.setName("customer");
 
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/test1");
       resource.getContents().add(customer);
@@ -42,7 +42,7 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     if (session instanceof org.eclipse.emf.cdo.net4j.CDOSession)
     {
       ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().getProtocol().setTimeout(2000L);

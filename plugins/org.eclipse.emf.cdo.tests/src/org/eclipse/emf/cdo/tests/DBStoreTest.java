@@ -29,7 +29,7 @@ public class DBStoreTest extends AbstractCDOTest
   // Bug 256462
   public void testInsertNull() throws Exception
   {
-    CDOSession s = openModel1Session();
+    CDOSession s = openSession();
     CDOTransaction t = s.openTransaction();
     CDOResource r = t.createResource("/dbStoreTest");
 
@@ -82,7 +82,7 @@ public class DBStoreTest extends AbstractCDOTest
 
   private void storeRetrieve(String s)
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getOrCreateResource("/test");
 
@@ -98,7 +98,7 @@ public class DBStoreTest extends AbstractCDOTest
     session.close();
     clearCache(getRepository().getRevisionManager());
 
-    session = openModel1Session();
+    session = openSession();
     CDOView view = session.openView();
     resource = view.getResource("/test");
 
@@ -110,7 +110,7 @@ public class DBStoreTest extends AbstractCDOTest
   // Bug 217255
   public void testStoreDate()
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getOrCreateResource("/test");
 
@@ -124,7 +124,7 @@ public class DBStoreTest extends AbstractCDOTest
     session.close();
     clearCache(getRepository().getRevisionManager());
 
-    session = openModel1Session();
+    session = openSession();
     CDOView view = session.openView();
     resource = view.getResource("/test");
 

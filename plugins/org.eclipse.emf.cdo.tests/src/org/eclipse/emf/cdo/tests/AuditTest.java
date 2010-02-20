@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
 import org.eclipse.emf.cdo.tests.model5.Model5Factory;
-import org.eclipse.emf.cdo.tests.model5.Model5Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -48,7 +47,7 @@ public class AuditTest extends AbstractCDOTest
 
   protected CDOSession openSession1()
   {
-    session1 = openModel1Session();
+    session1 = openSession();
     return session1;
   }
 
@@ -59,7 +58,7 @@ public class AuditTest extends AbstractCDOTest
 
   protected CDOSession openSession2()
   {
-    return openModel1Session();
+    return openSession();
   }
 
   public void testNewAudit() throws Exception
@@ -307,7 +306,7 @@ public class AuditTest extends AbstractCDOTest
     ArrayList<Long> timestamps = new ArrayList<Long>();
 
     {
-      CDOSession session = openSession(Model5Package.eINSTANCE);
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/res1");
 
@@ -373,7 +372,7 @@ public class AuditTest extends AbstractCDOTest
     }
 
     {
-      CDOSession session = openSession(Model5Package.eINSTANCE);
+      CDOSession session = openSession();
 
       for (int i = 0; i < timestamps.size(); i++)
       {
@@ -491,7 +490,7 @@ public class AuditTest extends AbstractCDOTest
     long commitTime2;
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/my/resource");
       commitTime1 = transaction.commit().getTimeStamp();
@@ -501,7 +500,7 @@ public class AuditTest extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView audit1 = session.openView(commitTime1);
     assertEquals(true, audit1.hasResource("/my/resource"));
     assertEquals(false, audit1.hasResource("/renamed"));
@@ -518,7 +517,7 @@ public class AuditTest extends AbstractCDOTest
     long commitTime2;
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/my/resource");
       commitTime1 = transaction.commit().getTimeStamp();
@@ -531,7 +530,7 @@ public class AuditTest extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView audit1 = session.openView(commitTime1);
     assertEquals(true, audit1.hasResource("/my/resource"));
     assertEquals(false, audit1.hasResource("/renamed"));

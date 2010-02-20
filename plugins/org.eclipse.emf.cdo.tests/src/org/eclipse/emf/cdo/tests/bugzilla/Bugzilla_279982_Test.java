@@ -34,7 +34,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
 {
   public void testBugzilla_279982_Single() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource res = tx.getOrCreateResource("/resource1");
     tx.options().setStaleReferenceBehaviour(CDOStaleReferencePolicy.PROXY);
@@ -99,7 +99,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
 
   public void testBugzilla_279982_Multi() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource res = tx.getOrCreateResource("/resource1");
     tx.options().setStaleReferenceBehaviour(CDOStaleReferencePolicy.PROXY);
@@ -148,7 +148,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
 
   public void testBugzilla_279982_Multi_RevisionPrefetchingPolicy() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     {
       CDOTransaction tx = session.openTransaction();
       CDOResource res = tx.getOrCreateResource("/resource1");

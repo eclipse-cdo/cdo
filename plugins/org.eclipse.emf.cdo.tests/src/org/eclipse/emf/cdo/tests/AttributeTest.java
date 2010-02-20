@@ -47,7 +47,7 @@ public class AttributeTest extends AbstractCDOTest
       supplier.setName("Preferred Supplier");
       assertEquals(true, supplier.isPreferred());
 
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/my/resource");
       resource.getContents().add(supplier);
@@ -58,7 +58,7 @@ public class AttributeTest extends AbstractCDOTest
     }
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOView view = session.openView();
       CDOResource resource = view.getResource("/my/resource");
       Supplier supplier = (Supplier)resource.getContents().get(0);
@@ -75,7 +75,7 @@ public class AttributeTest extends AbstractCDOTest
       product.setName("Test Product");
       assertEquals(VAT.VAT15, product.getVat());
 
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/my/resource");
       resource.getContents().add(product);
@@ -86,7 +86,7 @@ public class AttributeTest extends AbstractCDOTest
     }
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOView view = session.openView();
       CDOResource resource = view.getResource("/my/resource");
       Product1 product = (Product1)resource.getContents().get(0);
@@ -120,7 +120,7 @@ public class AttributeTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOView view = session.openView();
       CDOResource resource = view.getResource("/my/resource");
       EObject genOfByteArray = resource.getContents().get(0);
@@ -160,7 +160,7 @@ public class AttributeTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOView view = session.openView();
       CDOResource resource = view.getResource("/my/resource");
       EObject genOfByteArray = resource.getContents().get(0);
@@ -195,7 +195,7 @@ public class AttributeTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOView view = session.openView();
       CDOResource resource = view.getResource("/my/resource");
       EObject genOfByteArray = resource.getContents().get(0);

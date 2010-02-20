@@ -29,7 +29,7 @@ public class Bugzilla_243310_Test extends AbstractCDOTest
 {
   public void testBugzilla_243310() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     CDOTransaction transaction1 = session.openTransaction();
     CDOResource res = transaction1.createResource("/test1");

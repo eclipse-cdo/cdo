@@ -57,14 +57,14 @@ public class ViewTest extends AbstractCDOTest
   public void testHasResource() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       transaction.createResource("/test1");
       transaction.commit();
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView view = session.openView();
     assertEquals(true, view.hasResource("/test1"));
     assertEquals(false, view.hasResource("/test2"));
@@ -73,7 +73,7 @@ public class ViewTest extends AbstractCDOTest
 
   public void testIsObjectRegisteredWithNull() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView view = session.openView();
     assertFalse(view.isObjectRegistered(null));
     session.close();
@@ -83,7 +83,7 @@ public class ViewTest extends AbstractCDOTest
   {
     String id;
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/test1");
       transaction.commit();
@@ -91,7 +91,7 @@ public class ViewTest extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     assertEquals(id, transaction.getOrCreateResource("/test1").cdoID().toString());
     assertNotSame(id, transaction.getOrCreateResource("/test2").cdoID().toString());
@@ -101,7 +101,7 @@ public class ViewTest extends AbstractCDOTest
   public void testUniqueResourceContents() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/test1");
       EList<EObject> contents = resource.getContents();
@@ -116,7 +116,7 @@ public class ViewTest extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(2, 2));
 
     CDOTransaction transaction = session.openTransaction();
@@ -140,7 +140,7 @@ public class ViewTest extends AbstractCDOTest
   public void testNonUniqueResourceContents() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/test1");
       EList<EObject> contents = resource.getContents();
@@ -155,7 +155,7 @@ public class ViewTest extends AbstractCDOTest
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(2, 2));
 
     CDOTransaction transaction = session.openTransaction();
@@ -183,14 +183,14 @@ public class ViewTest extends AbstractCDOTest
   {
     {
       ResourceSet resourceSet = new ResourceSetImpl();
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction(resourceSet);
       transaction.createResource("/test1");
       transaction.commit();
       session.close();
     }
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView view = session.openView();
     assertEquals(true, view.hasResource("/test1"));
     assertEquals(false, view.hasResource("/test2"));
@@ -199,7 +199,7 @@ public class ViewTest extends AbstractCDOTest
 
   public void testContextify() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     transaction.commit();
@@ -212,12 +212,12 @@ public class ViewTest extends AbstractCDOTest
 
   public void testContextifyDifferentSession() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     transaction.commit();
 
-    CDOSession session2 = openModel1Session();
+    CDOSession session2 = openSession();
     CDOView view = session2.openView();
     try
     {
@@ -236,7 +236,7 @@ public class ViewTest extends AbstractCDOTest
 
   public void testCacheReferences() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     transaction.createResource("/my/test1");
     transaction.commit();
@@ -270,7 +270,7 @@ public class ViewTest extends AbstractCDOTest
 
   public void testViewNotifiesDeactivation()
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOView view = session.openView();
 
     final boolean[] deactivated = { false };

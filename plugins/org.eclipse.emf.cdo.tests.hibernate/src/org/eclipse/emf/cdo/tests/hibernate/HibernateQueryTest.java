@@ -50,7 +50,7 @@ public class HibernateQueryTest extends AbstractCDOTest
   public void testSimpleQueries() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     createTestSet(session);
 
@@ -98,7 +98,7 @@ public class HibernateQueryTest extends AbstractCDOTest
   public void testFunctions() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     createTestSet(session);
 
@@ -131,7 +131,7 @@ public class HibernateQueryTest extends AbstractCDOTest
   public void testComplexQuerySalesOrderJoinCustomerProduct() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     createTestSet(session);
 
@@ -206,7 +206,7 @@ public class HibernateQueryTest extends AbstractCDOTest
     // bug 282620
 
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     createTestSet(session);
 
@@ -237,7 +237,7 @@ public class HibernateQueryTest extends AbstractCDOTest
   public void testQueryWithID() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     createTestSet(session);
 
@@ -271,7 +271,7 @@ public class HibernateQueryTest extends AbstractCDOTest
   public void testQueryObjectArray() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     createTestSet(session);
 
@@ -302,7 +302,7 @@ public class HibernateQueryTest extends AbstractCDOTest
   public void testPaging() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     createTestSet(session);
 
@@ -340,7 +340,7 @@ public class HibernateQueryTest extends AbstractCDOTest
   public void testIterator() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     createTestSet(session);
 

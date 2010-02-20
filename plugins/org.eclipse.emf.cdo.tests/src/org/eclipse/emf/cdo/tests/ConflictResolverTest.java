@@ -26,7 +26,7 @@ public class ConflictResolverTest extends AbstractCDOTest
   public void testMergeLocalChangesPerFeature_Basic() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     CDOTransaction transaction = session.openTransaction();
 
@@ -61,7 +61,7 @@ public class ConflictResolverTest extends AbstractCDOTest
   public void testMergeLocalChangesPerFeature_BasicException() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     CDOTransaction transaction = session.openTransaction();
 

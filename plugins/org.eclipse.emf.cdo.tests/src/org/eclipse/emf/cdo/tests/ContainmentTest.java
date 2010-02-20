@@ -82,7 +82,7 @@ public class ContainmentTest extends AbstractCDOTest
     company.getSuppliers().add(supplier);
 
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -126,7 +126,7 @@ public class ContainmentTest extends AbstractCDOTest
     category2.getCategories().add(category3);
 
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -154,7 +154,7 @@ public class ContainmentTest extends AbstractCDOTest
   public void testSeparateView() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     {
       msg("Creating category1");
@@ -226,7 +226,7 @@ public class ContainmentTest extends AbstractCDOTest
   {
     {
       msg("Opening session");
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
 
       msg("Creating category1");
       Category category1 = getModel1Factory().createCategory();
@@ -264,7 +264,7 @@ public class ContainmentTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -306,7 +306,7 @@ public class ContainmentTest extends AbstractCDOTest
     SpecialPurchaseOrder order = getModel2Factory().createSpecialPurchaseOrder();
     order.setShippingAddress(address);
 
-    CDOSession session = openModel2Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
 
@@ -331,7 +331,7 @@ public class ContainmentTest extends AbstractCDOTest
     SpecialPurchaseOrder order = getModel2Factory().createSpecialPurchaseOrder();
     order.setShippingAddress(address);
 
-    CDOSession session = openModel2Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
 
@@ -353,7 +353,7 @@ public class ContainmentTest extends AbstractCDOTest
   {
     byte[] data = null;
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       ResourceSet resourceSet = new ResourceSetImpl();
       resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
 
@@ -411,7 +411,7 @@ public class ContainmentTest extends AbstractCDOTest
   public void testObjectNotSameResourceThanItsContainerCDO() throws Exception
   {
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       ResourceSet resourceSet = new ResourceSetImpl();
 
       CDOTransaction transaction = session.openTransaction(resourceSet);
@@ -494,7 +494,7 @@ public class ContainmentTest extends AbstractCDOTest
     assertEquals(taskContainer, task.eContainer());
     assertEquals(taskContainer, task.getTaskContainer());
 
-    CDOSession session = openModel2Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/resource1");
     resource.getContents().add(taskContainer);
@@ -585,7 +585,7 @@ public class ContainmentTest extends AbstractCDOTest
   // Do not support legacy system
   public void _testBug246540() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource1");
 

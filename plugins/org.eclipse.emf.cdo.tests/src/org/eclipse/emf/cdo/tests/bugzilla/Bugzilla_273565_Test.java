@@ -52,7 +52,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
     final OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     orderDetail.setPrice(2);
 
-    final CDOSession session = openModel1Session();
+    final CDOSession session = openSession();
     final CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     resource.getContents().add(orderDetail);
@@ -64,7 +64,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
       @Override
       public void run()
       {
-        CDOSession session = openModel1Session();
+        CDOSession session = openSession();
         CDOTransaction transaction = session.openTransaction();
         OrderDetail orderDetail = (OrderDetail)transaction.getObject(id);
 
@@ -174,7 +174,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     orderDetail.setPrice(2);
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     resource.getContents().add(orderDetail);
@@ -197,7 +197,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
       @Override
       public void run()
       {
-        CDOSession session = openModel1Session();
+        CDOSession session = openSession();
         CDOTransaction transaction = session.openTransaction();
         OrderDetail orderDetail = (OrderDetail)transaction.getObject(id);
 
@@ -249,7 +249,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     orderDetail.setPrice(1);
 
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     resource.getContents().add(orderDetail);

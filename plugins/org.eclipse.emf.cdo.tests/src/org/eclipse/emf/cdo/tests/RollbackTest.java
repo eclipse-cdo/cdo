@@ -30,7 +30,7 @@ public class RollbackTest extends AbstractCDOTest
 {
   public void testRollbackSameSession() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     CDOTransaction transaction2 = session.openTransaction();
     flow1(transaction1, transaction2);
@@ -39,11 +39,11 @@ public class RollbackTest extends AbstractCDOTest
   public void testRollbackSeparateSession() throws Exception
   {
     // Client1
-    CDOSession session1 = openModel1Session();
+    CDOSession session1 = openSession();
     CDOTransaction transaction1 = session1.openTransaction();
 
     // Client2
-    CDOSession session2 = openModel1Session();
+    CDOSession session2 = openSession();
     CDOTransaction transaction2 = session2.openTransaction();
 
     flow1(transaction1, transaction2);

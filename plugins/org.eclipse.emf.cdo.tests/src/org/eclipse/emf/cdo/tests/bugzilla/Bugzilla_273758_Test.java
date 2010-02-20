@@ -52,7 +52,7 @@ public class Bugzilla_273758_Test extends AbstractCDOTest
       product.getOrderDetails().add(detail1);
       product.getOrderDetails().add(detail2);
 
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/test1");
 
@@ -65,7 +65,7 @@ public class Bugzilla_273758_Test extends AbstractCDOTest
     }
 
     {
-      CDOSession session = openModel1Session();
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/test1");
 

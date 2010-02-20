@@ -35,6 +35,40 @@ import java.util.Map.Entry;
  */
 public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLockManager<OBJECT, CONTEXT>
 {
+  private LockStrategy<OBJECT, CONTEXT> readLockStrategy = new LockStrategy<OBJECT, CONTEXT>()
+  {
+    public boolean isLocked(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
+    {
+      return entry.isReadLock(context);
+    }
+  
+    public boolean isLockedByOthers(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
+    {
+      return entry.isReadLockByOthers(context);
+    }
+  
+    public boolean canObtainLock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
+    {
+      return entry.canObtainReadLock(context);
+    }
+  
+    public LockEntry<OBJECT, CONTEXT> lock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
+    {
+      return entry.readLock(context);
+    }
+  
+    public LockEntry<OBJECT, CONTEXT> unlock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
+    {
+      return entry.readUnlock(context);
+    }
+  
+    @Override
+    public String toString()
+    {
+      return "ReadLockStrategy";
+    }
+  };
+
   private LockStrategy<OBJECT, CONTEXT> writeLockStrategy = new LockStrategy<OBJECT, CONTEXT>()
   {
     public boolean isLocked(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
@@ -61,34 +95,12 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     {
       return entry.writeUnlock(context);
     }
-  };
 
-  private LockStrategy<OBJECT, CONTEXT> readLockStrategy = new LockStrategy<OBJECT, CONTEXT>()
-  {
-    public boolean isLocked(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
+    @Override
+    public String toString()
     {
-      return entry.isReadLock(context);
-    }
-
-    public boolean isLockedByOthers(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
-    {
-      return entry.isReadLockByOthers(context);
-    }
-
-    public boolean canObtainLock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
-    {
-      return entry.canObtainReadLock(context);
-    }
-
-    public LockEntry<OBJECT, CONTEXT> lock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
-    {
-      return entry.readLock(context);
-    }
-
-    public LockEntry<OBJECT, CONTEXT> unlock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
-    {
-      return entry.readUnlock(context);
-    }
+      return "WriteLockStrategy";
+    };
   };
 
   private Map<OBJECT, LockEntry<OBJECT, CONTEXT>> lockEntries = new HashMap<OBJECT, LockEntry<OBJECT, CONTEXT>>();
@@ -412,7 +424,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       {
         return false;
       }
-    
+
       return contexts.size() > (isReadLock(context) ? 1 : 0);
     }
 
@@ -583,7 +595,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       {
         readLock = new ReadLockEntry<OBJECT, CONTEXT>(object, context);
       }
-    
+
       return readLock;
     }
   }

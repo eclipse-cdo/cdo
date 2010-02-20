@@ -37,6 +37,16 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
 {
   private LockStrategy<OBJECT, CONTEXT> writeLockStrategy = new LockStrategy<OBJECT, CONTEXT>()
   {
+    public boolean isLocked(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
+    {
+      return entry.isWriteLock(context);
+    }
+
+    public boolean isLockedByOthers(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
+    {
+      return entry.isWriteLockByOthers(context);
+    }
+
     public boolean canObtainLock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.canObtainWriteLock(context);
@@ -51,20 +61,20 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     {
       return entry.writeUnlock(context);
     }
-
-    public boolean isLocked(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
-    {
-      return entry.isWriteLock(context);
-    }
-
-    public boolean isLockedByOthers(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
-    {
-      return entry.isWriteLockByOthers(context);
-    }
   };
 
   private LockStrategy<OBJECT, CONTEXT> readLockStrategy = new LockStrategy<OBJECT, CONTEXT>()
   {
+    public boolean isLocked(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
+    {
+      return entry.isReadLock(context);
+    }
+
+    public boolean isLockedByOthers(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
+    {
+      return entry.isReadLockByOthers(context);
+    }
+
     public boolean canObtainLock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.canObtainReadLock(context);
@@ -78,16 +88,6 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     public LockEntry<OBJECT, CONTEXT> unlock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.readUnlock(context);
-    }
-
-    public boolean isLocked(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
-    {
-      return entry.isReadLock(context);
-    }
-
-    public boolean isLockedByOthers(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
-    {
-      return entry.isReadLockByOthers(context);
     }
   };
 
@@ -337,13 +337,13 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   {
     public boolean isLocked(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context);
 
+    public boolean isLockedByOthers(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context);
+
     public boolean canObtainLock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context);
 
     public LockEntry<OBJECT, CONTEXT> lock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context);
 
     public LockEntry<OBJECT, CONTEXT> unlock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context);
-
-    public boolean isLockedByOthers(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context);
   }
 
   /**

@@ -133,6 +133,8 @@ public class RefreshSessionIndication extends CDOReadIndication
   private void writeRevisions(CDODataOutput out) throws IOException
   {
     InternalCDORevisionManager revisionManager = getRepository().getRevisionManager();
+    SyntheticCDORevision[] synthetics = new SyntheticCDORevision[1];
+
     for (Entry<CDOBranch, List<CDORevisionKey>> entry : viewedRevisions.entrySet())
     {
       CDOBranch branch = entry.getKey();
@@ -141,7 +143,7 @@ public class RefreshSessionIndication extends CDOReadIndication
       for (CDORevisionKey key : entry.getValue())
       {
         CDOID id = key.getID();
-        SyntheticCDORevision[] synthetics = new SyntheticCDORevision[1];
+        synthetics[0] = null;
         InternalCDORevision revision = revisionManager.getRevision(id, head, CDORevision.UNCHUNKED,
             CDORevision.DEPTH_NONE, true, synthetics);
 

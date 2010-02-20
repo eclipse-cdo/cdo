@@ -58,9 +58,8 @@ public class LockObjectsIndication extends RefreshSessionIndication
       view = getSession().getView(viewID);
       lockManager.lock(lockType, view, objectsToBeLocked, timeout);
     }
-    catch (Exception ex)
+    catch (InterruptedException ex)
     {
-      lockManager.unlock(lockType, view, objectsToBeLocked);
       throw WrappedException.wrap(ex);
     }
   }

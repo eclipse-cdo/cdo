@@ -19,7 +19,10 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver;
 
 /**
@@ -31,17 +34,25 @@ public class Bugzilla_294850_Test extends AbstractCDOTest
 {
   private static String RESOURCE_NAME = "/r1";
 
-  public void testBugzilla_294850()
+  public void testConflictResolverOnLock100() throws Exception
+  {
+    for (int i = 0; i < 100; i++)
+    {
+      testConflictResolverOnLock();
+    }
+  }
+
+  public void testConflictResolverOnLock() throws Exception
   {
     CDOSession session = openModel1Session();
     CDOTransaction tx = session.openTransaction();
 
-    TestResolver resolver = new TestResolver();
+    final TestResolver resolver = new TestResolver();
     tx.options().addConflictResolver(resolver);
 
-    CDOResource r1 = tx.createResource(RESOURCE_NAME);
+    CDOResource r1 = tx.getOrCreateResource(RESOURCE_NAME);
 
-    Company company = Model1Factory.eINSTANCE.createCompany();
+    final Company company = Model1Factory.eINSTANCE.createCompany();
     r1.getContents().add(company);
     tx.commit();
 
@@ -51,7 +62,14 @@ public class Bugzilla_294850_Test extends AbstractCDOTest
     // Touch in other session also
     doSecondSession();
 
-    assertSame(CDOState.DIRTY, ((CDOObject)company).cdoState());
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return resolver.gotCalled && CDOUtil.getCDOObject(company).cdoState() == CDOState.CONFLICT;
+      }
+    }.assertNoTimeOut();
 
     // Lock company to trigger a refresh
     ((CDOObject)company).cdoWriteLock().lock();
@@ -71,7 +89,8 @@ public class Bugzilla_294850_Test extends AbstractCDOTest
     CDOSession session = openModel1Session();
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.getResource(RESOURCE_NAME);
-    Company c = (Company)r1.getContents().get(0);
+    EList<EObject> contents = r1.getContents();
+    Company c = (Company)contents.get(contents.size() - 1);
 
     // Touch the company
     c.setName("bbb");

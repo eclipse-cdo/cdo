@@ -64,7 +64,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
-import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOViewResourcesEvent;
 
 import org.eclipse.emf.internal.cdo.CDOObjectMerger;
@@ -1576,8 +1575,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     // Bugzilla 298561: This override removes references to remotely
     // detached objects that are present in any DIRTY or NEW objects
-    removeCrossReferences(getDirtyObjects().values(), allDetachedObjects);
-    removeCrossReferences(getNewObjects().values(), allDetachedObjects);
+    Collection<CDOObject> cachedDirtyObjects = getDirtyObjects().values();
+    removeCrossReferences(cachedDirtyObjects, allDetachedObjects);
+
+    Collection<CDOObject> cachedNewObjects = getNewObjects().values();
+    removeCrossReferences(cachedNewObjects, allDetachedObjects);
 
     return super.invalidate(allChangedObjects, allDetachedObjects, deltas, dirtyObjects, detachedObjects);
   }
@@ -1586,16 +1588,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     for (CDOObject object : objects)
     {
-      for (EContentsEList.FeatureIterator<EObject> it = (FeatureIterator<EObject>)object.eCrossReferences().iterator(); it
-          .hasNext();)
+      EContentsEList.FeatureIterator<EObject> it = (FeatureIterator<EObject>)object.eCrossReferences().iterator();
+      while (it.hasNext())
       {
         EObject crossReferencedObject = it.next();
-        if (crossReferencedObject instanceof CDOObject
-            && referencedOIDs.contains(CDOUtil.getCDOObject(crossReferencedObject).cdoID()))
+        if (crossReferencedObject instanceof CDOObject)
         {
-          EReference eReference = (EReference)it.feature();
-          Setting setting = ((InternalEObject)object).eSetting(eReference);
-          EcoreUtil.remove(setting, crossReferencedObject);
+          CDOID id = ((CDOObject)crossReferencedObject).cdoID();
+          if (referencedOIDs.contains(id))
+          {
+            EReference eReference = (EReference)it.feature();
+            Setting setting = ((InternalEObject)object).eSetting(eReference);
+            EcoreUtil.remove(setting, crossReferencedObject);
+          }
         }
       }
     }

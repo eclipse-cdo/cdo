@@ -153,13 +153,13 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
 
       for (LockEntry<OBJECT, CONTEXT> lockEntry : lockEntrysToRemove)
       {
-        OBJECT object = lockEntry.getKey();
+        OBJECT object = lockEntry.getObject();
         lockEntries.remove(object);
       }
 
       for (LockEntry<OBJECT, CONTEXT> lockEntry : lockEntrysToAdd)
       {
-        OBJECT object = lockEntry.getKey();
+        OBJECT object = lockEntry.getObject();
         lockEntries.put(object, lockEntry);
       }
 
@@ -237,13 +237,13 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
 
       for (LockEntry<OBJECT, CONTEXT> lockEntry : lockEntrysToRemove)
       {
-        OBJECT object = lockEntry.getKey();
+        OBJECT object = lockEntry.getObject();
         lockEntries.remove(object);
       }
 
       for (LockEntry<OBJECT, CONTEXT> lockEntry : lockEntrysToAdd)
       {
-        OBJECT object = lockEntry.getKey();
+        OBJECT object = lockEntry.getObject();
         lockEntries.put(object, lockEntry);
       }
 
@@ -314,7 +314,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
 
     for (LockEntry<OBJECT, CONTEXT> lockEntry : lockEntrys)
     {
-      OBJECT object = lockEntry.getKey();
+      OBJECT object = lockEntry.getObject();
       LockEntry<OBJECT, CONTEXT> lock = lockingStrategy.lock(lockEntry, context);
       lockEntries.put(object, lock);
     }
@@ -351,7 +351,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
    */
   private interface LockEntry<OBJECT, CONTEXT>
   {
-    public OBJECT getKey();
+    public OBJECT getObject();
 
     public boolean isReadLock(CONTEXT context);
 
@@ -391,6 +391,36 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       contexts.add(context);
     }
 
+    public OBJECT getObject()
+    {
+      return object;
+    }
+
+    public boolean isReadLock(CONTEXT context)
+    {
+      return contexts.contains(context);
+    }
+
+    public boolean isWriteLock(CONTEXT context)
+    {
+      return false;
+    }
+
+    public boolean isReadLockByOthers(CONTEXT context)
+    {
+      if (contexts.isEmpty())
+      {
+        return false;
+      }
+    
+      return contexts.size() > (isReadLock(context) ? 1 : 0);
+    }
+
+    public boolean isWriteLockByOthers(CONTEXT context)
+    {
+      return false;
+    }
+
     public boolean canObtainReadLock(CONTEXT context)
     {
       return true;
@@ -412,11 +442,6 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       return new WriteLockEntry<OBJECT, CONTEXT>(object, context, this);
     }
 
-    public OBJECT getKey()
-    {
-      return object;
-    }
-
     public LockEntry<OBJECT, CONTEXT> readUnlock(CONTEXT context)
     {
       contexts.remove(context);
@@ -426,31 +451,6 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     public LockEntry<OBJECT, CONTEXT> writeUnlock(CONTEXT context)
     {
       throw new IllegalMonitorStateException();
-    }
-
-    public boolean isReadLock(CONTEXT context)
-    {
-      return contexts.contains(context);
-    }
-
-    public boolean isWriteLock(CONTEXT context)
-    {
-      return false;
-    }
-
-    public boolean isReadLockByOthers(CONTEXT context)
-    {
-      if (contexts.isEmpty())
-      {
-        return false;
-      }
-
-      return contexts.size() > (isReadLock(context) ? 1 : 0);
-    }
-
-    public boolean isWriteLockByOthers(CONTEXT context)
-    {
-      return false;
     }
 
     public LockEntry<OBJECT, CONTEXT> clearLock(CONTEXT context)
@@ -490,14 +490,29 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       this.count = 1;
     }
 
-    private ReadLockEntry<OBJECT, CONTEXT> getReadLock()
+    public OBJECT getObject()
     {
-      if (readLock == null)
-      {
-        readLock = new ReadLockEntry<OBJECT, CONTEXT>(object, context);
-      }
+      return object;
+    }
 
-      return readLock;
+    public boolean isReadLock(CONTEXT context)
+    {
+      return readLock != null ? readLock.isReadLock(context) : false;
+    }
+
+    public boolean isWriteLock(CONTEXT context)
+    {
+      return context == this.context;
+    }
+
+    public boolean isReadLockByOthers(CONTEXT context)
+    {
+      return readLock != null ? readLock.isReadLockByOthers(context) : false;
+    }
+
+    public boolean isWriteLockByOthers(CONTEXT context)
+    {
+      return context != this.context;
     }
 
     public boolean canObtainWriteLock(CONTEXT context)
@@ -523,11 +538,6 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       return this;
     }
 
-    public OBJECT getKey()
-    {
-      return object;
-    }
-
     public LockEntry<OBJECT, CONTEXT> readUnlock(CONTEXT context)
     {
       if (readLock != null)
@@ -548,16 +558,6 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       return --count <= 0 ? readLock : this;
     }
 
-    public boolean isReadLock(CONTEXT context)
-    {
-      return readLock != null ? readLock.isReadLock(context) : false;
-    }
-
-    public boolean isWriteLock(CONTEXT context)
-    {
-      return context == this.context;
-    }
-
     public LockEntry<OBJECT, CONTEXT> clearLock(CONTEXT context)
     {
       if (readLock != null)
@@ -571,20 +571,20 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       return this.context == context ? readLock : this;
     }
 
-    public boolean isReadLockByOthers(CONTEXT context)
-    {
-      return readLock != null ? readLock.isReadLockByOthers(context) : false;
-    }
-
-    public boolean isWriteLockByOthers(CONTEXT context)
-    {
-      return context != this.context;
-    }
-
     @Override
     public String toString()
     {
       return MessageFormat.format("WriteLockEntry[object={0}, context={1}, count={2}]", object, context, count);
+    }
+
+    private ReadLockEntry<OBJECT, CONTEXT> getReadLock()
+    {
+      if (readLock == null)
+      {
+        readLock = new ReadLockEntry<OBJECT, CONTEXT>(object, context);
+      }
+    
+      return readLock;
     }
   }
 
@@ -598,6 +598,31 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     public NoLockEntry(OBJECT objectToLock)
     {
       this.object = objectToLock;
+    }
+
+    public OBJECT getObject()
+    {
+      return object;
+    }
+
+    public boolean isReadLock(CONTEXT context)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isWriteLock(CONTEXT context)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isReadLockByOthers(CONTEXT context)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isWriteLockByOthers(CONTEXT context)
+    {
+      throw new UnsupportedOperationException();
     }
 
     public boolean canObtainWriteLock(CONTEXT context)
@@ -620,11 +645,6 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       return new WriteLockEntry<OBJECT, CONTEXT>(object, context, null);
     }
 
-    public OBJECT getKey()
-    {
-      return object;
-    }
-
     public LockEntry<OBJECT, CONTEXT> readUnlock(CONTEXT context)
     {
       throw new UnsupportedOperationException();
@@ -635,27 +655,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       throw new UnsupportedOperationException();
     }
 
-    public boolean isReadLock(CONTEXT context)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean isWriteLock(CONTEXT context)
-    {
-      throw new UnsupportedOperationException();
-    }
-
     public LockEntry<OBJECT, CONTEXT> clearLock(CONTEXT context)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean isReadLockByOthers(CONTEXT context)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean isWriteLockByOthers(CONTEXT context)
     {
       throw new UnsupportedOperationException();
     }

@@ -223,7 +223,6 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     ContainedElementNoOpposite referencee = (ContainedElementNoOpposite)r1.getContents().get(0);
     EcoreUtil.delete(referencee);
     tx.commit();
-    tx.close();
     session.close();
   }
 }

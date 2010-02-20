@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDString;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -334,7 +335,7 @@ public class HibernateUtil
   {
     if (target instanceof CDOObject)
     {
-      return (InternalCDORevision)((CDOObject)target).cdoRevision();
+      return (InternalCDORevision)CDOUtil.getCDOObject((EObject)target).cdoRevision();
     }
     return (InternalCDORevision)target;
   }

@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOQuery;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
@@ -251,7 +252,7 @@ public class HibernateQueryTest extends AbstractCDOTest
       {
         final CDOQuery orderQuery = transaction.createQuery("hql",
             "select so from SalesOrder so where so.customer.id=:customerId");
-        final CDOObject cdoObject = (CDOObject)customer;
+        final CDOObject cdoObject = CDOUtil.getCDOObject(customer);
         final CDOID cdoID = cdoObject.cdoID();
         orderQuery.setParameter("customerId", HibernateUtil.getInstance().getIdValue(cdoID));
         final List<SalesOrder> sos = orderQuery.getResult(SalesOrder.class);

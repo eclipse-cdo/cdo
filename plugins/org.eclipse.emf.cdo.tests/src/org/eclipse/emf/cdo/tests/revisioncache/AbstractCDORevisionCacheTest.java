@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.impl.AddressImpl;
 import org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
@@ -95,7 +96,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     InternalCDORevision cdoRevision = company.cdoRevision();
     addRevision(cdoRevision);
 
-    CDOID cdoID = ((CDOObject)company).cdoID();
+    CDOID cdoID = CDOUtil.getCDOObject(company).cdoID();
     CDORevision fetchedCDORevision = revisionCache.getRevision(cdoID, BRANCH_POINT);
     assertTrue(CDOIDUtil.equals(cdoRevision.getID(), fetchedCDORevision.getID()));
   }
@@ -180,7 +181,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
   public void testTheFormerRevisionOf2VersionsMayBeFetchedByTimestamp()
   {
     CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
-    CDOID cdoID = ((CDOObject)company).cdoID();
+    CDOID cdoID = CDOUtil.getCDOObject(company).cdoID();
     InternalCDORevision firstRevision = company.cdoRevision();
     addRevision(firstRevision);
 
@@ -395,7 +396,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     company.setName(name);
     resource.getContents().add(company);
     transaction.commit();
-    return (CDOObject)company;
+    return CDOUtil.getCDOObject(company);
   }
 
   private CDOResource createResource()

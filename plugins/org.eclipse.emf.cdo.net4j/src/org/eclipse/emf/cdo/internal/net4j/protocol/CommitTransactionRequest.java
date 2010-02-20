@@ -37,6 +37,7 @@ import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
 
@@ -47,6 +48,7 @@ import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
@@ -313,7 +315,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
   {
     for (Iterator<?> it = objects.iterator(); it.hasNext();)
     {
-      CDOObject object = (CDOObject)it.next();
+      CDOObject object = CDOUtil.getCDOObject((EObject)it.next());
       CDORevision revision = object.cdoRevision();
       out.writeCDORevision(revision, CDORevision.UNCHUNKED);
     }

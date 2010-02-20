@@ -25,13 +25,15 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
+ * See bug 298561
+ * 
  * @author Eike Stepper
  */
 public class Bugzilla_298561_Test extends AbstractCDOTest
 {
   private static String RESOURCENAME = "/r1";
 
-  public void test_new()
+  public void testNew()
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
@@ -76,7 +78,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     session.close();
   }
 
-  public void test_dirty()
+  public void testDirty()
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
@@ -122,19 +124,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     session.close();
   }
 
-  private void doSecondSession()
-  {
-    CDOSession session = openModel1Session();
-    CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.getResource(RESOURCENAME);
-    ContainedElementNoOpposite referencee = (ContainedElementNoOpposite)r1.getContents().get(0);
-    EcoreUtil.delete(referencee);
-    tx.commit();
-    tx.close();
-    session.close();
-  }
-
-  public void test_new_multi()
+  public void testNewMulti()
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
@@ -178,7 +168,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     session.close();
   }
 
-  public void test_dirty_multi()
+  public void testDirtyMulti()
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
@@ -221,6 +211,18 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
       fail("Should not have thrown ObjectNotFoundException");
     }
 
+    tx.close();
+    session.close();
+  }
+
+  private void doSecondSession()
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction tx = session.openTransaction();
+    CDOResource r1 = tx.getResource(RESOURCENAME);
+    ContainedElementNoOpposite referencee = (ContainedElementNoOpposite)r1.getContents().get(0);
+    EcoreUtil.delete(referencee);
+    tx.commit();
     tx.close();
     session.close();
   }

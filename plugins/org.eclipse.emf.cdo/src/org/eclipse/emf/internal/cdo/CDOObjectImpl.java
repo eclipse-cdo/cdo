@@ -60,6 +60,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOLoadable;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -189,7 +190,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     // Should we cache the locks ?
-    return new CDOLockImpl(LockType.READ);
+    return new CDOReadLock();
   }
 
   /**
@@ -203,7 +204,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     // Should we cache the locks ?
-    return new CDOLockImpl(LockType.WRITE);
+    return new CDOWriteLock();
   }
 
   public void cdoInternalSetID(CDOID id)
@@ -1154,23 +1155,15 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    * @author Simon McDuff
    * @since 2.0
    */
-  private final class CDOLockImpl implements CDOLock
+  public abstract class AbstractCDOLock implements CDOLock
   {
-    private LockType type;
-
-    public CDOLockImpl(LockType type)
+    public AbstractCDOLock()
     {
-      this.type = type;
-    }
-
-    public LockType getType()
-    {
-      return type;
     }
 
     public boolean isLocked()
     {
-      return cdoView().isObjectLocked(CDOObjectImpl.this, type, false);
+      return cdoView().isObjectLocked(CDOObjectImpl.this, getType(), false);
     }
 
     /**
@@ -1178,14 +1171,14 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
      */
     public boolean isLockedByOthers()
     {
-      return cdoView().isObjectLocked(CDOObjectImpl.this, type, true);
+      return cdoView().isObjectLocked(CDOObjectImpl.this, getType(), true);
     }
 
     public void lock()
     {
       try
       {
-        cdoView().lockObjects(Collections.singletonList(CDOObjectImpl.this), type, CDOLock.WAIT);
+        cdoView().lockObjects(Collections.singletonList(CDOObjectImpl.this), getType(), CDOLock.WAIT);
       }
       catch (InterruptedException ex)
       {
@@ -1207,7 +1200,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       try
       {
-        cdoView().lockObjects(Collections.singletonList(CDOObjectImpl.this), type, CDOLock.NO_WAIT);
+        cdoView().lockObjects(Collections.singletonList(CDOObjectImpl.this), getType(), CDOLock.NO_WAIT);
         return true;
       }
       catch (TimeoutRuntimeException ex)
@@ -1224,7 +1217,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       try
       {
-        cdoView().lockObjects(Collections.singletonList(CDOObjectImpl.this), type, unit.toMillis(time));
+        cdoView().lockObjects(Collections.singletonList(CDOObjectImpl.this), getType(), unit.toMillis(time));
         return true;
       }
       catch (TimeoutRuntimeException ex)
@@ -1235,7 +1228,43 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
     public void unlock()
     {
-      cdoView().unlockObjects(Collections.singletonList(CDOObjectImpl.this), type);
+      cdoView().unlockObjects(Collections.singletonList(CDOObjectImpl.this), getType());
+    }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("CDOLock[object={0}, type={1}]", CDOObjectImpl.this, getType());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public final class CDOReadLock extends AbstractCDOLock
+  {
+    public CDOReadLock()
+    {
+    }
+
+    public LockType getType()
+    {
+      return LockType.READ;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public final class CDOWriteLock extends AbstractCDOLock
+  {
+    public CDOWriteLock()
+    {
+    }
+
+    public LockType getType()
+    {
+      return LockType.WRITE;
     }
   }
 

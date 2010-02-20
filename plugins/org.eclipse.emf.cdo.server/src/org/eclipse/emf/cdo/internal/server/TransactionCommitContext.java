@@ -25,7 +25,9 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -56,6 +58,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
@@ -565,7 +568,9 @@ public class TransactionCommitContext implements InternalCommitContext
 
     if (oldRevision.isHistorical())
     {
-      throw new ConcurrentModificationException("Trying to update object " + id + " that was already modified");
+      String dump = CDORevisionUtil.dumpAllRevisions(revisionManager.getCache().getAllRevisions());
+      throw new ConcurrentModificationException("Trying to update " + oldRevision + " that was already modified\n"
+          + dump);
     }
 
     if (loadOnDemand)
@@ -756,6 +761,13 @@ public class TransactionCommitContext implements InternalCommitContext
     {
       monitor.done();
     }
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("TransactionCommitContext[{0}, {1}, {2}]", transaction.getSession(), transaction, //$NON-NLS-1$
+        CDOCommonUtil.formatTimeStamp(timeStamp));
   }
 
   /**

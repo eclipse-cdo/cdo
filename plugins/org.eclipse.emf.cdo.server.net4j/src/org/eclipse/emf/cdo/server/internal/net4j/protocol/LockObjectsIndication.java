@@ -51,11 +51,11 @@ public class LockObjectsIndication extends RefreshSessionIndication
     lockType = in.readCDOLockType();
     long timeout = in.readLong();
 
+    view = getSession().getView(viewID);
     InternalLockManager lockManager = getRepository().getLockManager();
 
     try
     {
-      view = getSession().getView(viewID);
       lockManager.lock(lockType, view, objectsToBeLocked, timeout);
     }
     catch (InterruptedException ex)

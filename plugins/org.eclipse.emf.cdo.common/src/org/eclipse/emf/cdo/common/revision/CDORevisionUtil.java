@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureMapEntry;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMap;
 
+import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -77,6 +78,14 @@ public final class CDORevisionUtil
     return CDORevisionImpl.remapID(value, idMappings);
   }
 
+  public static String dumpAllRevisions(Map<CDOBranch, List<CDORevision>> map)
+  {
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    PrintStream out = new PrintStream(baos);
+    dumpAllRevisions(map, out);
+    return baos.toString();
+  }
+
   /**
    * @since 3.0
    */
@@ -88,7 +97,7 @@ public final class CDORevisionUtil
 
     for (CDOBranch branch : branches)
     {
-      out.println(padTimeRange(branch.getName() + "[" + branch.getID() + "]", pad, branch.getBase().getTimeStamp(),
+      out.println(padTimeRange(branch.getName() + "[" + branch.getID() + "]", pad, branch.getBase().getTimeStamp(), //$NON-NLS-1$ //$NON-NLS-2$
           CDORevision.UNSPECIFIED_DATE));
 
       List<CDORevision> revisions = map.get(branch);
@@ -110,7 +119,7 @@ public final class CDORevisionUtil
 
       for (CDORevision revision : revisions)
       {
-        out.println(padTimeRange("  " + revision, pad, revision.getTimeStamp(), revision.getRevised()));
+        out.println(padTimeRange("  " + revision, pad, revision.getTimeStamp(), revision.getRevised())); //$NON-NLS-1$
       }
 
       out.println();

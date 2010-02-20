@@ -1476,15 +1476,15 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
   private boolean isLocked(InternalCDOObject object)
   {
-    if (object.cdoWriteLock().isLocked())
-    {
-      return true;
-    }
-
-    if (object.cdoReadLock().isLocked())
-    {
-      return true;
-    }
+    // if (object.cdoWriteLock().isLocked())
+    // {
+    // return true;
+    // }
+    //
+    // if (object.cdoReadLock().isLocked())
+    // {
+    // return true;
+    // }
 
     return false;
   }

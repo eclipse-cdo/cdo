@@ -56,6 +56,11 @@ public class RefreshSessionIndication extends CDOReadIndication
     super(protocol, signalID);
   }
 
+  public Map<CDOBranch, List<CDORevisionKey>> getViewedRevisions()
+  {
+    return viewedRevisions;
+  }
+
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {

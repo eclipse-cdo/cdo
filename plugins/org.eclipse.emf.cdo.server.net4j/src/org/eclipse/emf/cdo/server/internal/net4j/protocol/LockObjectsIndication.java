@@ -51,14 +51,16 @@ public class LockObjectsIndication extends RefreshSessionIndication
     lockType = in.readCDOLockType();
     long timeout = in.readLong();
 
+    InternalLockManager lockManager = getRepository().getLockManager();
+
     try
     {
       view = getSession().getView(viewID);
-      InternalLockManager lockManager = getRepository().getLockManager();
       lockManager.lock(lockType, view, objectsToBeLocked, timeout);
     }
-    catch (InterruptedException ex)
+    catch (Exception ex)
     {
+      lockManager.unlock(lockType, view, objectsToBeLocked);
       throw WrappedException.wrap(ex);
     }
   }
@@ -82,6 +84,6 @@ public class LockObjectsIndication extends RefreshSessionIndication
   protected void writeDetachedObject(CDODataOutput out, CDORevisionKey key) throws IOException
   {
     getRepository().getLockManager().unlock(lockType, view, objectsToBeLocked);
-    throw new IllegalArgumentException("Objects has been detached: " + key); //$NON-NLS-1$
+    throw new IllegalArgumentException("Object has been detached: " + key); //$NON-NLS-1$
   }
 }

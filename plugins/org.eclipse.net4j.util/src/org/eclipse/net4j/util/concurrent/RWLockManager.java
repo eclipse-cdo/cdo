@@ -15,6 +15,7 @@ import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -332,112 +333,112 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   /**
    * @author Simon McDuff
    */
-  private interface LockStrategy<K, V>
+  private interface LockStrategy<OBJECT, CONTEXT>
   {
-    public boolean isLocked(LockEntry<K, V> entry, V context);
+    public boolean isLocked(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context);
 
-    public boolean canObtainLock(LockEntry<K, V> entry, V context);
+    public boolean canObtainLock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context);
 
-    public LockEntry<K, V> lock(LockEntry<K, V> entry, V context);
+    public LockEntry<OBJECT, CONTEXT> lock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context);
 
-    public LockEntry<K, V> unlock(LockEntry<K, V> entry, V context);
+    public LockEntry<OBJECT, CONTEXT> unlock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context);
 
-    public boolean isLockedByOthers(LockEntry<K, V> entry, V context);
+    public boolean isLockedByOthers(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context);
   }
 
   /**
    * @author Simon McDuff
    */
-  private interface LockEntry<K, V>
+  private interface LockEntry<OBJECT, CONTEXT>
   {
-    public K getKey();
+    public OBJECT getKey();
 
-    public boolean isReadLock(V context);
+    public boolean isReadLock(CONTEXT context);
 
-    public boolean isWriteLock(V context);
+    public boolean isWriteLock(CONTEXT context);
 
-    public boolean isReadLockByOthers(V context);
+    public boolean isReadLockByOthers(CONTEXT context);
 
-    public boolean isWriteLockByOthers(V context);
+    public boolean isWriteLockByOthers(CONTEXT context);
 
-    public boolean canObtainReadLock(V context);
+    public boolean canObtainReadLock(CONTEXT context);
 
-    public boolean canObtainWriteLock(V context);
+    public boolean canObtainWriteLock(CONTEXT context);
 
-    public LockEntry<K, V> readLock(V context);
+    public LockEntry<OBJECT, CONTEXT> readLock(CONTEXT context);
 
-    public LockEntry<K, V> writeLock(V context);
+    public LockEntry<OBJECT, CONTEXT> writeLock(CONTEXT context);
 
-    public LockEntry<K, V> readUnlock(V context);
+    public LockEntry<OBJECT, CONTEXT> readUnlock(CONTEXT context);
 
-    public LockEntry<K, V> writeUnlock(V context);
+    public LockEntry<OBJECT, CONTEXT> writeUnlock(CONTEXT context);
 
-    public LockEntry<K, V> clearLock(V context);
+    public LockEntry<OBJECT, CONTEXT> clearLock(CONTEXT context);
   }
 
   /**
    * @author Simon McDuff
    */
-  private static final class ReadLockEntry<K, V> implements LockEntry<K, V>
+  private static final class ReadLockEntry<OBJECT, CONTEXT> implements LockEntry<OBJECT, CONTEXT>
   {
-    private K id;
+    private OBJECT object;
 
-    private Set<V> contexts = new HashBag<V>();
+    private Set<CONTEXT> contexts = new HashBag<CONTEXT>();
 
-    public ReadLockEntry(K objectToLock, V context)
+    public ReadLockEntry(OBJECT objectToLock, CONTEXT context)
     {
-      this.id = objectToLock;
+      this.object = objectToLock;
       contexts.add(context);
     }
 
-    public boolean canObtainReadLock(V context)
+    public boolean canObtainReadLock(CONTEXT context)
     {
       return true;
     }
 
-    public boolean canObtainWriteLock(V context)
+    public boolean canObtainWriteLock(CONTEXT context)
     {
       return contexts.size() == 1 && contexts.contains(context);
     }
 
-    public LockEntry<K, V> readLock(V context)
+    public LockEntry<OBJECT, CONTEXT> readLock(CONTEXT context)
     {
       contexts.add(context);
       return this;
     }
 
-    public LockEntry<K, V> writeLock(V context)
+    public LockEntry<OBJECT, CONTEXT> writeLock(CONTEXT context)
     {
-      return new WriteLockEntry<K, V>(id, context, this);
+      return new WriteLockEntry<OBJECT, CONTEXT>(object, context, this);
     }
 
-    public K getKey()
+    public OBJECT getKey()
     {
-      return id;
+      return object;
     }
 
-    public LockEntry<K, V> readUnlock(V context)
+    public LockEntry<OBJECT, CONTEXT> readUnlock(CONTEXT context)
     {
       contexts.remove(context);
       return contexts.isEmpty() ? null : this;
     }
 
-    public LockEntry<K, V> writeUnlock(V context)
+    public LockEntry<OBJECT, CONTEXT> writeUnlock(CONTEXT context)
     {
       throw new IllegalMonitorStateException();
     }
 
-    public boolean isReadLock(V context)
+    public boolean isReadLock(CONTEXT context)
     {
       return contexts.contains(context);
     }
 
-    public boolean isWriteLock(V context)
+    public boolean isWriteLock(CONTEXT context)
     {
       return false;
     }
 
-    public boolean isReadLockByOthers(V context)
+    public boolean isReadLockByOthers(CONTEXT context)
     {
       if (contexts.isEmpty())
       {
@@ -447,12 +448,12 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       return contexts.size() > (isReadLock(context) ? 1 : 0);
     }
 
-    public boolean isWriteLockByOthers(V context)
+    public boolean isWriteLockByOthers(CONTEXT context)
     {
       return false;
     }
 
-    public LockEntry<K, V> clearLock(V context)
+    public LockEntry<OBJECT, CONTEXT> clearLock(CONTEXT context)
     {
       while (contexts.remove(context))
       {
@@ -460,68 +461,74 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
 
       return contexts.isEmpty() ? null : this;
     }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("ReadLockEntry[object={0}, contexts={1}]", object, contexts);
+    }
   }
 
   /**
    * @author Simon McDuff
    */
-  private static final class WriteLockEntry<K, V> implements LockEntry<K, V>
+  private static final class WriteLockEntry<OBJECT, CONTEXT> implements LockEntry<OBJECT, CONTEXT>
   {
-    private K objectToLock;
+    private OBJECT object;
 
-    private V context;
+    private CONTEXT context;
 
     private int count;
 
-    private ReadLockEntry<K, V> readLock;
+    private ReadLockEntry<OBJECT, CONTEXT> readLock;
 
-    public WriteLockEntry(K objectToLock, V context, ReadLockEntry<K, V> readLock)
+    public WriteLockEntry(OBJECT object, CONTEXT context, ReadLockEntry<OBJECT, CONTEXT> readLock)
     {
-      this.objectToLock = objectToLock;
+      this.object = object;
       this.context = context;
       this.readLock = readLock;
       this.count = 1;
     }
 
-    private ReadLockEntry<K, V> getReadLock()
+    private ReadLockEntry<OBJECT, CONTEXT> getReadLock()
     {
       if (readLock == null)
       {
-        readLock = new ReadLockEntry<K, V>(objectToLock, context);
+        readLock = new ReadLockEntry<OBJECT, CONTEXT>(object, context);
       }
 
       return readLock;
     }
 
-    public boolean canObtainWriteLock(V context)
+    public boolean canObtainWriteLock(CONTEXT context)
     {
       return context == this.context;
     }
 
-    public boolean canObtainReadLock(V context)
+    public boolean canObtainReadLock(CONTEXT context)
     {
       return context == this.context;
     }
 
-    public LockEntry<K, V> readLock(V context)
+    public LockEntry<OBJECT, CONTEXT> readLock(CONTEXT context)
     {
-      ReadLockEntry<K, V> lock = getReadLock();
+      ReadLockEntry<OBJECT, CONTEXT> lock = getReadLock();
       lock.readLock(context);
       return this;
     }
 
-    public LockEntry<K, V> writeLock(V context)
+    public LockEntry<OBJECT, CONTEXT> writeLock(CONTEXT context)
     {
       count++;
       return this;
     }
 
-    public K getKey()
+    public OBJECT getKey()
     {
-      return objectToLock;
+      return object;
     }
 
-    public LockEntry<K, V> readUnlock(V context)
+    public LockEntry<OBJECT, CONTEXT> readUnlock(CONTEXT context)
     {
       if (readLock != null)
       {
@@ -536,22 +543,22 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       throw new IllegalMonitorStateException();
     }
 
-    public LockEntry<K, V> writeUnlock(V context)
+    public LockEntry<OBJECT, CONTEXT> writeUnlock(CONTEXT context)
     {
       return --count <= 0 ? readLock : this;
     }
 
-    public boolean isReadLock(V context)
+    public boolean isReadLock(CONTEXT context)
     {
       return readLock != null ? readLock.isReadLock(context) : false;
     }
 
-    public boolean isWriteLock(V context)
+    public boolean isWriteLock(CONTEXT context)
     {
       return context == this.context;
     }
 
-    public LockEntry<K, V> clearLock(V context)
+    public LockEntry<OBJECT, CONTEXT> clearLock(CONTEXT context)
     {
       if (readLock != null)
       {
@@ -564,87 +571,99 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       return this.context == context ? readLock : this;
     }
 
-    public boolean isReadLockByOthers(V context)
+    public boolean isReadLockByOthers(CONTEXT context)
     {
       return readLock != null ? readLock.isReadLockByOthers(context) : false;
     }
 
-    public boolean isWriteLockByOthers(V context)
+    public boolean isWriteLockByOthers(CONTEXT context)
     {
       return context != this.context;
+    }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("WriteLockEntry[object={0}, context={1}, count={2}]", object, context, count);
     }
   }
 
   /**
    * @author Simon McDuff
    */
-  private static final class NoLockEntry<K, V> implements LockEntry<K, V>
+  private static final class NoLockEntry<OBJECT, CONTEXT> implements LockEntry<OBJECT, CONTEXT>
   {
-    private K objectToLock;
+    private OBJECT object;
 
-    public NoLockEntry(K objectToLock)
+    public NoLockEntry(OBJECT objectToLock)
     {
-      this.objectToLock = objectToLock;
+      this.object = objectToLock;
     }
 
-    public boolean canObtainWriteLock(V context)
+    public boolean canObtainWriteLock(CONTEXT context)
     {
       return true;
     }
 
-    public boolean canObtainReadLock(V context)
+    public boolean canObtainReadLock(CONTEXT context)
     {
       return true;
     }
 
-    public LockEntry<K, V> readLock(V context)
+    public LockEntry<OBJECT, CONTEXT> readLock(CONTEXT context)
     {
-      return new ReadLockEntry<K, V>(objectToLock, context);
+      return new ReadLockEntry<OBJECT, CONTEXT>(object, context);
     }
 
-    public LockEntry<K, V> writeLock(V context)
+    public LockEntry<OBJECT, CONTEXT> writeLock(CONTEXT context)
     {
-      return new WriteLockEntry<K, V>(objectToLock, context, null);
+      return new WriteLockEntry<OBJECT, CONTEXT>(object, context, null);
     }
 
-    public K getKey()
+    public OBJECT getKey()
     {
-      return objectToLock;
+      return object;
     }
 
-    public LockEntry<K, V> readUnlock(V context)
+    public LockEntry<OBJECT, CONTEXT> readUnlock(CONTEXT context)
     {
       throw new UnsupportedOperationException();
     }
 
-    public LockEntry<K, V> writeUnlock(V context)
+    public LockEntry<OBJECT, CONTEXT> writeUnlock(CONTEXT context)
     {
       throw new UnsupportedOperationException();
     }
 
-    public boolean isReadLock(V context)
+    public boolean isReadLock(CONTEXT context)
     {
       throw new UnsupportedOperationException();
     }
 
-    public boolean isWriteLock(V context)
+    public boolean isWriteLock(CONTEXT context)
     {
       throw new UnsupportedOperationException();
     }
 
-    public LockEntry<K, V> clearLock(V context)
+    public LockEntry<OBJECT, CONTEXT> clearLock(CONTEXT context)
     {
       throw new UnsupportedOperationException();
     }
 
-    public boolean isReadLockByOthers(V context)
+    public boolean isReadLockByOthers(CONTEXT context)
     {
       throw new UnsupportedOperationException();
     }
 
-    public boolean isWriteLockByOthers(V context)
+    public boolean isWriteLockByOthers(CONTEXT context)
     {
       throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("NoLockEntry[object={0}]", object);
     }
   }
 }

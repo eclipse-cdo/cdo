@@ -1567,24 +1567,34 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   /**
+   * Bug 298561: This override removes references to remotely detached objects that are present in any DIRTY or NEW
+   * objects.
+   * 
    * @since 3.0
    */
   @Override
   protected Set<CDOObject> invalidate(List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
       List<CDORevisionDelta> deltas, Set<InternalCDOObject> dirtyObjects, Set<CDOObject> detachedObjects)
   {
-    // Bugzilla 298561: This override removes references to remotely
-    // detached objects that are present in any DIRTY or NEW objects
-    Collection<CDOObject> cachedDirtyObjects = getDirtyObjects().values();
-    removeCrossReferences(cachedDirtyObjects, allDetachedObjects);
+    if (!allDetachedObjects.isEmpty())
+    {
+      Set<CDOID> referencedOIDs = new HashSet<CDOID>();
+      for (CDOIDAndVersion key : allDetachedObjects)
+      {
+        referencedOIDs.add(key.getID());
+      }
 
-    Collection<CDOObject> cachedNewObjects = getNewObjects().values();
-    removeCrossReferences(cachedNewObjects, allDetachedObjects);
+      Collection<CDOObject> cachedDirtyObjects = getDirtyObjects().values();
+      removeCrossReferences(cachedDirtyObjects, referencedOIDs);
+
+      Collection<CDOObject> cachedNewObjects = getNewObjects().values();
+      removeCrossReferences(cachedNewObjects, referencedOIDs);
+    }
 
     return super.invalidate(allChangedObjects, allDetachedObjects, deltas, dirtyObjects, detachedObjects);
   }
 
-  private void removeCrossReferences(Collection<CDOObject> objects, Collection<CDOIDAndVersion> referencedOIDs)
+  private void removeCrossReferences(Collection<CDOObject> objects, Set<CDOID> referencedOIDs)
   {
     for (CDOObject object : objects)
     {

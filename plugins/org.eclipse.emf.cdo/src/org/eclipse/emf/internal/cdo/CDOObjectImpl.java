@@ -27,6 +27,7 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -1153,7 +1154,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   /**
    * @author Simon McDuff
-   * @since 2.0
+   * @since 3.0
    */
   public abstract class AbstractCDOLock implements CDOLock
   {
@@ -1240,6 +1241,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   /**
    * @author Eike Stepper
+   * @since 3.0
    */
   public final class CDOReadLock extends AbstractCDOLock
   {
@@ -1255,6 +1257,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   /**
    * @author Eike Stepper
+   * @since 3.0
    */
   public final class CDOWriteLock extends AbstractCDOLock
   {
@@ -1437,7 +1440,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
           return list != null && !list.isEmpty();
         }
 
-        return eObject.eGet(feature) != feature.getDefaultValue();
+        return !ObjectUtil.equals(eObject.eGet(feature), feature.getDefaultValue());
       }
 
       Object[] settings = ((CDOObjectImpl)eObject).cdoBasicSettings();

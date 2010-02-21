@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -50,7 +51,6 @@ import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
-import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.spi.cdo.CDOElementProxy;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -181,27 +181,27 @@ public final class CDOStore implements EStore
 
   public boolean isSet(InternalEObject eObject, EStructuralFeature feature)
   {
-    if (!feature.isUnsettable())
-    {
-      if (feature.isMany())
-      {
-        @SuppressWarnings("unchecked")
-        InternalEList<Object> list = (InternalEList<Object>)eObject.eGet(feature);
-        return list != null && !list.isEmpty();
-      }
-
-      return eObject.eGet(feature) != feature.getDefaultValue();
-    }
-
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
       TRACER.format("isSet({0}, {1})", cdoObject, feature); //$NON-NLS-1$
     }
 
-    InternalCDORevision revision = getRevisionForReading(cdoObject);
+    if (!feature.isUnsettable())
+    {
+      if (feature.isMany())
+      {
+        Object value = get(eObject, feature, NO_INDEX);
 
-    Object value = revision.get(feature, NO_INDEX);
+        @SuppressWarnings("unchecked")
+        List<Object> list = (List<Object>)value;
+        return list != null && !list.isEmpty();
+      }
+
+      return !ObjectUtil.equals(eObject.eGet(feature), feature.getDefaultValue());
+    }
+
+    Object value = get(eObject, feature, NO_INDEX);
     return value != null;
   }
 
@@ -385,8 +385,19 @@ public final class CDOStore implements EStore
     }
     else
     {
-      Object defaultValue = convertToCDO(cdoObject, feature, feature.getDefaultValue());
-      revision.set(feature, NO_INDEX, defaultValue);
+      if (feature.isMany())
+      {
+        Object value = revision.getValue(feature);
+
+        @SuppressWarnings("unchecked")
+        List<Object> list = (List<Object>)value;
+        list.clear();
+      }
+      else
+      {
+        Object defaultValue = convertToCDO(cdoObject, feature, feature.getDefaultValue());
+        revision.set(feature, NO_INDEX, defaultValue);
+      }
     }
   }
 

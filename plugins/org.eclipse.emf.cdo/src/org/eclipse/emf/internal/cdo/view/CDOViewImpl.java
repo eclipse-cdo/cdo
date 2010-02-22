@@ -1745,7 +1745,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       OM.LOG.error(ex);
     }
 
-    session = null;
     objects = null;
     store = null;
     viewSet = null;

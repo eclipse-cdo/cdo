@@ -46,9 +46,9 @@ public class View implements InternalView
   public View(InternalSession session, int viewID, CDOBranchPoint branchPoint)
   {
     this.session = session;
-    repository = session.getManager().getRepository();
-
     this.viewID = viewID;
+
+    repository = session.getManager().getRepository();
     setBranchPoint(branchPoint);
   }
 
@@ -187,9 +187,8 @@ public class View implements InternalView
   public void doClose()
   {
     clearChangeSubscription();
-    session = null;
-    repository = null;
     changeSubscriptionIDs = null;
+    repository = null;
   }
 
   /**
@@ -197,7 +196,7 @@ public class View implements InternalView
    */
   public boolean isClosed()
   {
-    return session == null;
+    return repository == null;
   }
 
   private void checkOpen()

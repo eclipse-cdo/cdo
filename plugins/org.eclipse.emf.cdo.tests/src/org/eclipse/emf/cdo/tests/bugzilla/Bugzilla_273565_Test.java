@@ -157,8 +157,12 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
     threadB.start();
 
     start.countDown();
+
     threadA.join(DEFAULT_TIMEOUT);
+    threadA.interrupt();
+
     threadB.join(DEFAULT_TIMEOUT);
+    threadB.interrupt();
 
     if (exception[0] != null)
     {
@@ -206,13 +210,15 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
         try
         {
           start.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
-          for (int i = 0; i < 50 && exception[0] == null; i++)
+          for (int i = 0; i < 500 && exception[0] == null; i++)
           {
             CDOLock writeLock = CDOUtil.getCDOObject(orderDetail).cdoWriteLock();
             writeLock.lock();
+            sleep(1L);
 
             orderDetail.setPrice(price);
             transaction.commit();
+            sleep(1L);
           }
         }
         catch (Exception ex)
@@ -234,8 +240,12 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
     threadB.start();
 
     start.countDown();
+
     threadA.join(DEFAULT_TIMEOUT);
+    threadA.interrupt();
+
     threadB.join(DEFAULT_TIMEOUT);
+    threadB.interrupt();
 
     if (exception[0] != null)
     {

@@ -48,11 +48,6 @@ public class CDONet4jSessionFactory extends CDOSessionFactory
     // The session will be activated by the container
     configuration.setActivateOnOpen(false);
     configuration.setRepositoryName(repositoryName);
-    // if (automaticPackageRegistry)
-    // {
-    // configuration.setPackageRegistry(new CDOPackageRegistryImpl.Eager());
-    // }
-
     return (InternalCDOSession)configuration.openSession();
   }
 }

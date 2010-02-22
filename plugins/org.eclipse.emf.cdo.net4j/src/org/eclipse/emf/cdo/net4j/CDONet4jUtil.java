@@ -13,6 +13,7 @@
 package org.eclipse.emf.cdo.net4j;
 
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
+import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionFactory;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocolFactory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -35,5 +36,6 @@ public final class CDONet4jUtil
   public static void prepareContainer(IManagedContainer container)
   {
     container.registerFactory(new CDOClientProtocolFactory());
+    container.registerFactory(new CDONet4jSessionFactory());
   }
 }

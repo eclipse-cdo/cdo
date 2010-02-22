@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -51,29 +51,13 @@ public abstract class CDOSessionFactory extends Factory
         throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOSessionFactory.1"), description)); //$NON-NLS-1$
       }
 
-      Map<String, String> result = new HashMap<String, String>();
-      StringTokenizer tokenizer = new StringTokenizer(query, "&"); //$NON-NLS-1$
-      while (tokenizer.hasMoreTokens())
+      Map<String, String> result = getParameters(query);
+      String repositoryName = result.get("repositoryName"); //$NON-NLS-1$
+      if (repositoryName == null)
       {
-        String parameter = tokenizer.nextToken();
-        if (!StringUtil.isEmpty(parameter))
-        {
-          int pos = parameter.indexOf('=');
-          if (pos == -1)
-          {
-            String key = parameter.trim();
-            result.put(key, ""); //$NON-NLS-1$
-          }
-          else
-          {
-            String key = parameter.substring(0, pos).trim();
-            String value = parameter.substring(pos + 1);
-            result.put(key, value);
-          }
-        }
+        throw new IllegalArgumentException("Repository name is missing: " + description);
       }
 
-      String repositoryName = result.get("repositoryName"); //$NON-NLS-1$
       boolean automaticPackageRegistry = TRUE.equals(result.get("automaticPackageRegistry")); //$NON-NLS-1$
       return createSession(repositoryName, automaticPackageRegistry);
     }
@@ -87,4 +71,31 @@ public abstract class CDOSessionFactory extends Factory
    * @since 2.0
    */
   protected abstract InternalCDOSession createSession(String repositoryName, boolean automaticPackageRegistry);
+
+  private Map<String, String> getParameters(String query)
+  {
+    Map<String, String> result = new HashMap<String, String>();
+    StringTokenizer tokenizer = new StringTokenizer(query, "&"); //$NON-NLS-1$
+    while (tokenizer.hasMoreTokens())
+    {
+      String parameter = tokenizer.nextToken();
+      if (!StringUtil.isEmpty(parameter))
+      {
+        int pos = parameter.indexOf('=');
+        if (pos == -1)
+        {
+          String key = parameter.trim();
+          result.put(key, ""); //$NON-NLS-1$
+        }
+        else
+        {
+          String key = parameter.substring(0, pos).trim();
+          String value = parameter.substring(pos + 1);
+          result.put(key, value);
+        }
+      }
+    }
+
+    return result;
+  }
 }

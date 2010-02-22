@@ -61,10 +61,24 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   private InternalCDORevisionCache cache;
 
   @ExcludeFromDump
-  private transient Object loadAndAddLock = new Object();
+  private transient Object loadAndAddLock = new Object()
+  {
+    @Override
+    public String toString()
+    {
+      return "LoadAndAddLock"; //$NON-NLS-1$
+    }
+  };
 
   @ExcludeFromDump
-  private transient Object revisedLock = new Object();
+  private transient Object reviseLock = new Object()
+  {
+    @Override
+    public String toString()
+    {
+      return "ReviseLock"; //$NON-NLS-1$
+    }
+  };
 
   @ExcludeFromDump
   private transient AtomicInteger loadCounterForTest;
@@ -150,7 +164,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
   public void reviseLatest(CDOID id, CDOBranch branch)
   {
-    acquireAtomicRequestLock(revisedLock);
+    acquireAtomicRequestLock(reviseLock);
 
     try
     {
@@ -162,13 +176,13 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     }
     finally
     {
-      releaseAtomicRequestLock(revisedLock);
+      releaseAtomicRequestLock(reviseLock);
     }
   }
 
   public void reviseVersion(CDOID id, CDOBranchVersion branchVersion, long timeStamp)
   {
-    acquireAtomicRequestLock(revisedLock);
+    acquireAtomicRequestLock(reviseLock);
 
     try
     {
@@ -187,7 +201,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     }
     finally
     {
-      releaseAtomicRequestLock(revisedLock);
+      releaseAtomicRequestLock(reviseLock);
     }
   }
 

@@ -282,7 +282,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
         OBJECT conflict = obtainLock(lockStrategy, context, objectsToLocks);
         if (conflict == null)
         {
-          System.out.println("Locked " + context);
+          System.out.println("    --> " + context);
           lockChanged.notifyAll();
           return;
         }

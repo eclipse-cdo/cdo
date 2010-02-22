@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -36,6 +37,7 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -103,6 +105,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -430,12 +433,28 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
         CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
         long lastUpdateTime = session.getLastUpdateTime();
-        sessionProtocol.lockObjects(lastUpdateTime, viewedRevisions, viewID, lockType, timeout);
+        RefreshSessionResult result = sessionProtocol.lockObjects(lastUpdateTime, viewedRevisions, viewID, lockType,
+            timeout);
+
+        registerPackageUnits(result.getPackageUnits());
+
+        InternalCDOView view = this;
+        List<InternalCDOView> views = Collections.singletonList(view);
+        session.processRefreshSessionResult(result, getBranch(), views, viewedRevisions);
       }
       finally
       {
         getLock().unlock();
       }
+    }
+  }
+
+  private void registerPackageUnits(List<CDOPackageUnit> packageUnits)
+  {
+    InternalCDOPackageRegistry packageRegistry = session.getPackageRegistry();
+    for (CDOPackageUnit newPackageUnit : packageUnits)
+    {
+      packageRegistry.putPackageUnit((InternalCDOPackageUnit)newPackageUnit);
     }
   }
 
@@ -1624,7 +1643,13 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOView[{0}:{1}]", session.getSessionID(), viewID); //$NON-NLS-1$
+    int sessionID = session == null ? 0 : session.getSessionID();
+    return MessageFormat.format("{0}[{1}:{2}]", getClassName(), sessionID, viewID); //$NON-NLS-1$
+  }
+
+  protected String getClassName()
+  {
+    return "CDOView"; //$NON-NLS-1$
   }
 
   public boolean isAdapterForType(Object type)

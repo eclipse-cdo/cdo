@@ -1070,9 +1070,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
-  public String toString()
+  protected String getClassName()
   {
-    return MessageFormat.format("CDOTransaction[{0}:{1}]", getSession().getSessionID(), getViewID()); //$NON-NLS-1$
+    return "CDOTransaction"; //$NON-NLS-1$
   }
 
   public void registerNew(InternalCDOObject object)

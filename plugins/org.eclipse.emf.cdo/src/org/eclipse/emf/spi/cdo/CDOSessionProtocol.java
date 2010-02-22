@@ -107,8 +107,9 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   /**
    * @since 3.0
    */
-  public void lockObjects(long lastUpdateTime, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions,
-      int viewID, LockType lockType, long timeout) throws InterruptedException;
+  public RefreshSessionResult lockObjects(long lastUpdateTime,
+      Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int viewID, LockType lockType, long timeout)
+      throws InterruptedException;
 
   /**
    * @since 3.0

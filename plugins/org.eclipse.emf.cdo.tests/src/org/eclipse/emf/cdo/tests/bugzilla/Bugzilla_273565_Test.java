@@ -171,8 +171,6 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
    */
   public void testBugzilla_273565_Lock() throws Exception
   {
-    disableConsole();
-
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     orderDetail.setPrice(2);
 
@@ -183,6 +181,8 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
     transaction.commit();
 
     final CDOID id = CDOUtil.getCDOObject(orderDetail).cdoID();
+    session.close();
+
     final CountDownLatch start = new CountDownLatch(1);
     final Exception exception[] = { null };
 

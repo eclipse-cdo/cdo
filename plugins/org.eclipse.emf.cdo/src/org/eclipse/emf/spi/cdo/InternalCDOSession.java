@@ -10,7 +10,9 @@
  */
 package org.eclipse.emf.spi.cdo;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -21,6 +23,7 @@ import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageProcessor;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
@@ -28,6 +31,10 @@ import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -125,11 +132,11 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
    */
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender);
 
-  // /**
-  // * @since 3.0
-  // */
-  // public void handleSyncResponse(CDOBranchPoint branchPoint, Collection<CDOPackageUnit> newPackageUnits,
-  // Set<CDOIDAndVersion> dirtyOIDandVersions, Collection<CDOID> detachedOIDs);
+  /**
+   * @since 3.0
+   */
+  public void processRefreshSessionResult(RefreshSessionResult result, CDOBranch branch,
+      List<InternalCDOView> branchViews, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions);
 
   /**
    * @since 3.0

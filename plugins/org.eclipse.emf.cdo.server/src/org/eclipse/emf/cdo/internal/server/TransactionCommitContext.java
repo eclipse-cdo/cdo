@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
@@ -568,9 +567,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
     if (oldRevision.isHistorical())
     {
-      String dump = CDORevisionUtil.dumpAllRevisions(revisionManager.getCache().getAllRevisions());
-      throw new ConcurrentModificationException("Trying to update " + oldRevision + " that was already modified\n"
-          + dump);
+      throw new ConcurrentModificationException("Attempt by " + transaction + " to modify historical revision: "
+          + oldRevision);
     }
 
     if (loadOnDemand)

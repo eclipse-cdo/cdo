@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
@@ -508,7 +509,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
       RefreshSessionResult result = sessionProtocol.refresh(lastUpdateTime, viewedRevisions, initialChunkSize,
           enablePassiveUpdates);
-      lastUpdateTime = result.getLastUpdateTime();
 
       registerPackageUnits(result.getPackageUnits());
 
@@ -517,32 +517,38 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         CDOBranch branch = entry.getKey();
         List<InternalCDOView> branchViews = entry.getValue();
 
-        Map<CDOID, InternalCDORevision> oldRevisions = viewedRevisions.get(branch);
-
-        List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
-        for (InternalCDORevision newRevision : result.getChangedObjects(branch))
-        {
-          getRevisionManager().addRevision(newRevision);
-
-          InternalCDORevision oldRevision = oldRevisions.get(newRevision.getID());
-          InternalCDORevisionDelta delta = newRevision.compare(oldRevision);
-          changedObjects.add(delta);
-        }
-
-        List<CDOIDAndVersion> detachedObjects = result.getDetachedObjects(branch);
-        for (CDOIDAndVersion detachedObject : detachedObjects)
-        {
-          getRevisionManager().reviseLatest(detachedObject.getID(), branch);
-        }
-
-        for (InternalCDOView view : branchViews)
-        {
-          view.invalidate(lastUpdateTime, changedObjects, detachedObjects);
-        }
+        processRefreshSessionResult(result, branch, branchViews, viewedRevisions);
       }
 
-      setLastUpdateTime(lastUpdateTime);
-      return lastUpdateTime;
+      setLastUpdateTime(result.getLastUpdateTime());
+      return result.getLastUpdateTime();
+    }
+  }
+
+  public void processRefreshSessionResult(RefreshSessionResult result, CDOBranch branch,
+      List<InternalCDOView> branchViews, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
+  {
+    Map<CDOID, InternalCDORevision> oldRevisions = viewedRevisions.get(branch);
+
+    List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
+    for (InternalCDORevision newRevision : result.getChangedObjects(branch))
+    {
+      getRevisionManager().addRevision(newRevision);
+
+      InternalCDORevision oldRevision = oldRevisions.get(newRevision.getID());
+      InternalCDORevisionDelta delta = newRevision.compare(oldRevision);
+      changedObjects.add(delta);
+    }
+
+    List<CDOIDAndVersion> detachedObjects = result.getDetachedObjects(branch);
+    for (CDOIDAndVersion detachedObject : detachedObjects)
+    {
+      getRevisionManager().reviseLatest(detachedObject.getID(), branch);
+    }
+
+    for (InternalCDOView view : branchViews)
+    {
+      view.invalidate(result.getLastUpdateTime(), changedObjects, detachedObjects);
     }
   }
 
@@ -1592,16 +1598,16 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public void lockObjects(long lastUpdateTime, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions,
-        int viewID, LockType lockType, long timeout) throws InterruptedException
+    public RefreshSessionResult lockObjects(long lastUpdateTime,
+        Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int viewID, LockType lockType, long timeout)
+        throws InterruptedException
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          delegate.lockObjects(lastUpdateTime, viewedRevisions, viewID, lockType, timeout);
-          return;
+          return delegate.lockObjects(lastUpdateTime, viewedRevisions, viewID, lockType, timeout);
         }
         catch (Exception ex)
         {

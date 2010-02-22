@@ -17,8 +17,6 @@ import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
-import java.text.MessageFormat;
-
 /**
  * @author Eike Stepper
  * @since 2.0
@@ -37,9 +35,9 @@ public class Transaction extends View implements InternalTransaction
   }
 
   @Override
-  public String toString()
+  protected String getClassName()
   {
-    return MessageFormat.format("Transaction[{0}:{1}]", getSession().getSessionID(), getViewID()); //$NON-NLS-1$
+    return "Transaction"; //$NON-NLS-1$
   }
 
   /**

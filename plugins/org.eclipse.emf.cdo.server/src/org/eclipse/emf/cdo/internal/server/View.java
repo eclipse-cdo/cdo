@@ -161,7 +161,13 @@ public class View implements InternalView
   @Override
   public String toString()
   {
-    return MessageFormat.format("View[{0}:{1}]", session.getSessionID(), viewID); //$NON-NLS-1$
+    int sessionID = session == null ? 0 : session.getSessionID();
+    return MessageFormat.format("{0}[{1}:{2}]", getClassName(), sessionID, viewID); //$NON-NLS-1$
+  }
+
+  protected String getClassName()
+  {
+    return "View"; //$NON-NLS-1$
   }
 
   /**

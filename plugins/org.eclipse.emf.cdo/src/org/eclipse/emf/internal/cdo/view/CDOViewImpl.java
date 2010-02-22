@@ -1354,7 +1354,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
       if (changedObject != null)
       {
-        if (!isLocked(changedObject))
+        // if (!isLocked(changedObject))
         {
           CDOStateMachine.INSTANCE.invalidate(changedObject, key.getVersion());
         }
@@ -1377,7 +1377,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       InternalCDOObject detachedObject = removeObject(key.getID());
       if (detachedObject != null)
       {
-        if (!isLocked(detachedObject))
+        // if (!isLocked(detachedObject))
         {
           CDOStateMachine.INSTANCE.detachRemote(detachedObject);
         }
@@ -1461,7 +1461,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         InternalCDOObject object = changeSubscriptionManager.getSubcribeObject(delta.getID());
         if (object != null && object.eNotificationRequired())
         {
-          if (!isLocked(object))
+          // if (!isLocked(object))
           {
             NotificationImpl notification = builder.buildNotification(object, delta, detachedObjects);
             if (notification != null)
@@ -1480,7 +1480,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         InternalCDOObject object = (InternalCDOObject)detachedObject;
         if (object.eNotificationRequired())
         {
-          if (!isLocked(object))
+          // if (!isLocked(object))
           {
             NotificationImpl notification = new CDODeltaNotificationImpl(object, CDONotification.DETACH_OBJECT,
                 Notification.NO_FEATURE_ID, null, null);
@@ -1495,15 +1495,15 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
   private boolean isLocked(InternalCDOObject object)
   {
-    // if (object.cdoWriteLock().isLocked())
-    // {
-    // return true;
-    // }
-    //
-    // if (object.cdoReadLock().isLocked())
-    // {
-    // return true;
-    // }
+    if (object.cdoWriteLock().isLocked())
+    {
+      return true;
+    }
+
+    if (object.cdoReadLock().isLocked())
+    {
+      return true;
+    }
 
     return false;
   }

@@ -12,6 +12,8 @@
 package org.eclipse.emf.cdo.ui.ide;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.team.IRepositoryManager;
@@ -19,18 +21,23 @@ import org.eclipse.emf.cdo.team.IRepositoryProject;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.ui.CDOEventHandler;
+import org.eclipse.emf.cdo.ui.ide.CommonNavigatorUtils.MessageType;
+import org.eclipse.emf.cdo.ui.ide.Node.BranchNode;
 import org.eclipse.emf.cdo.ui.ide.Node.PackagesNode;
 import org.eclipse.emf.cdo.ui.ide.Node.ResourcesNode;
 import org.eclipse.emf.cdo.ui.ide.Node.SessionsNode;
 import org.eclipse.emf.cdo.ui.internal.ide.actions.RemoveResourceActionDelegate;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
+import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -150,6 +157,20 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
 
   public Object[] getChildren(Object parentElement)
   {
+    try
+    {
+      return doGetChildren(parentElement);
+    }
+    catch (Exception e)
+    {
+      OM.LOG.error(e);
+      return CommonNavigatorUtils.createMessageProviderChild("An error happened. See Error Log for more details.",
+          MessageType.ERROR);
+    }
+  }
+
+  private Object[] doGetChildren(Object parentElement)
+  {
     if (parentElement instanceof IProject)
     {
       IProject project = (IProject)parentElement;
@@ -180,12 +201,6 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     return EMPTY;
   }
 
-  public boolean hasChildren(Object parentElement)
-  {
-    Object[] children = getChildren(parentElement);
-    return children != null && children.length != 0;
-  }
-
   public Object[] getElements(Object parentElement)
   {
     return getChildren(parentElement);
@@ -196,7 +211,7 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     if (element instanceof Node)
     {
       Node node = (Node)element;
-      return node.getRepositoryProject().getProject();
+      return node.getParent();
     }
 
     if (element instanceof Notifier)
@@ -218,12 +233,9 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     List<Object> children = new ArrayList<Object>();
     RepositoryInfo info = getRepositoryInfo(repositoryProject);
 
-    // First try virtual parent nodes
-    if (!isSessionsNodeHidden())
-    {
-      children.add(info.getSessions());
-    }
+    children.add(info.getMainBranch());
 
+    // First try virtual parent nodes
     if (!isPackagesNodeHidden())
     {
       children.add(info.getPackages());
@@ -234,12 +246,12 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
       children.add(info.getResources());
     }
 
-    // Then try flattened sub nodes
-    if (isSessionsNodeHidden())
+    if (!isSessionsNodeHidden())
     {
-      addChildren(children, info.getSessions());
+      children.add(info.getSessions());
     }
 
+    // Then try flattened sub nodes
     if (isPackagesNodeHidden())
     {
       addChildren(children, info.getPackages());
@@ -248,6 +260,11 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     if (isResourcesNodeHidden())
     {
       addChildren(children, info.getResources());
+    }
+
+    if (isSessionsNodeHidden())
+    {
+      addChildren(children, info.getSessions());
     }
 
     return children.toArray(new Object[children.size()]);
@@ -293,6 +310,28 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     // Handles invalidated objects
     eventHandlers.put(repositoryProject, new RepositoryCDOEventHandler(info.getResources(),
         repositoryProject.getView(), (TreeViewer)getViewer()));
+
+    repositoryProject.getView().getBranch().getBranchManager().addListener(new IListener()
+    {
+      public void notifyEvent(IEvent event)
+      {
+        if (event instanceof CDOBranchCreatedEvent)
+        {
+          refreshViewer(true);
+        }
+      }
+    });
+
+    repositoryProject.getView().addListener(new IListener()
+    {
+      public void notifyEvent(IEvent event)
+      {
+        if (event instanceof CDOViewInvalidationEvent || event instanceof CDOViewTargetChangedEvent)
+        {
+          refreshViewer(true);
+        }
+      }
+    });
   }
 
   public static ComposedAdapterFactory createAdapterFactory()
@@ -393,22 +432,26 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
    */
   private static final class RepositoryInfo
   {
-    private SessionsNode sessions;
+    private BranchNode mainBranch;
 
     private PackagesNode packages;
 
     private ResourcesNode resources;
 
+    private SessionsNode sessions;
+
     public RepositoryInfo(IRepositoryProject repositoryProject)
     {
-      sessions = new SessionsNode(repositoryProject);
+      CDOBranch main = repositoryProject.getView().getSession().getBranchManager().getMainBranch();
+      mainBranch = new BranchNode(repositoryProject, main);
       packages = new PackagesNode(repositoryProject);
       resources = new ResourcesNode(repositoryProject);
+      sessions = new SessionsNode(repositoryProject);
     }
 
-    public SessionsNode getSessions()
+    public BranchNode getMainBranch()
     {
-      return sessions;
+      return mainBranch;
     }
 
     public PackagesNode getPackages()
@@ -419,6 +462,11 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     public ResourcesNode getResources()
     {
       return resources;
+    }
+
+    public SessionsNode getSessions()
+    {
+      return sessions;
     }
   }
 
@@ -451,6 +499,12 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
         }
       }
     }
+  }
+
+  public boolean hasChildren(Object parentElement)
+  {
+    Object[] children = getChildren(parentElement);
+    return children != null && children.length != 0;
   }
 
   /**

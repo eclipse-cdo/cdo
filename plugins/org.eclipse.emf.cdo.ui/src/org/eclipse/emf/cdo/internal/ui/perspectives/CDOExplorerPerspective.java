@@ -7,7 +7,7 @@
  *
  * Contributors:
  *    Victor Roldan Betancort - initial API and implementation
- *    Eike Stepper            - maintenance
+ *    Eike Stepper - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.perspectives;
 
@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.internal.ui.views.CDOWatchListView;
 import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * @author Victor Roldan Betancort
@@ -80,4 +81,11 @@ public class CDOExplorerPerspective implements IPerspectiveFactory
   {
     pageLayout.addPerspectiveShortcut(ID);
   }
+
+  static public boolean isCurrent()
+  {
+    return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective().getId().equals(
+        CDOExplorerPerspective.ID);
+  }
+
 }

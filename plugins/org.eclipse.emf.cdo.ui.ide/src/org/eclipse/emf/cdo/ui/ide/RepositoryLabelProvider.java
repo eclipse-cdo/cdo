@@ -18,7 +18,9 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
@@ -66,6 +68,15 @@ public class RepositoryLabelProvider extends LabelProvider
       }
     }
 
+    if (element instanceof IAdaptable)
+    {
+      Object adapter = ((IAdaptable)element).getAdapter(ILabelProvider.class);
+      if (adapter != null)
+      {
+        return ((ILabelProvider)adapter).getText(element);
+      }
+    }
+
     return super.getText(element);
   }
 
@@ -87,6 +98,15 @@ public class RepositoryLabelProvider extends LabelProvider
       if (adapter != null)
       {
         return ExtendedImageRegistry.getInstance().getImage(adapter.getImage(notifier));
+      }
+    }
+
+    if (element instanceof IAdaptable)
+    {
+      Object adapter = ((IAdaptable)element).getAdapter(ILabelProvider.class);
+      if (adapter != null)
+      {
+        return ((ILabelProvider)adapter).getImage(element);
       }
     }
 

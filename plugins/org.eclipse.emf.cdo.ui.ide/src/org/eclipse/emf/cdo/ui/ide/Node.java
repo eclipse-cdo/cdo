@@ -11,10 +11,12 @@
 package org.eclipse.emf.cdo.ui.ide;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.ide.CommonNavigatorUtils.MessageType;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
 import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -55,6 +57,11 @@ public abstract class Node extends PlatformObject
     return EMPTY;
   }
 
+  public Object getParent()
+  {
+    return repositoryProject.getProject();
+  }
+
   public abstract Type getType();
 
   /**
@@ -62,35 +69,73 @@ public abstract class Node extends PlatformObject
    */
   public static enum Type
   {
-    SESSIONS, PACKAGES, RESOURCES
+    BRANCH, PACKAGES, RESOURCES, SESSIONS
   }
 
   /**
-   * @author Eike Stepper
+   * @author Victor Roldan Betancort
    */
-  public static final class SessionsNode extends Node
+  public static final class BranchNode extends Node
   {
-    public SessionsNode(IRepositoryProject repositoryProject)
+    private CDOBranch branch;
+
+    public BranchNode(IRepositoryProject repositoryProject, CDOBranch branch)
     {
       super(repositoryProject);
+      this.branch = branch;
+    }
+
+    public CDOBranch getBranch()
+    {
+      return branch;
     }
 
     @Override
     public Type getType()
     {
-      return Type.SESSIONS;
+      return Type.BRANCH;
     }
 
     @Override
     public String getText()
     {
-      return Messages.getString("Node.0"); //$NON-NLS-1$
+      return branch.getName();
     }
 
     @Override
     public String getImageKey()
     {
-      return "icons/full/obj16/Sessions.gif"; //$NON-NLS-1$
+      return OM.BRANCH_ICON;
+    }
+
+    @Override
+    public Object[] getChildren()
+    {
+      if (!getRepositoryProject().getView().getSession().getRepositoryInfo().isSupportingBranches())
+      {
+        return CommonNavigatorUtils.createMessageProviderChild("Repository does not support branching",
+            MessageType.INFO);
+      }
+
+      CDOBranch[] branches = branch.getBranches();
+      BranchNode[] nodes = new BranchNode[branches.length];
+      for (int i = 0; i < branches.length; i++)
+      {
+        nodes[i] = new BranchNode(getRepositoryProject(), branches[i]);
+      }
+
+      return nodes;
+    }
+
+    @Override
+    public Object getParent()
+    {
+      if (branch.isMainBranch())
+      {
+        return getRepositoryProject();
+      }
+
+      return branch.getBase().getBranch();
     }
   }
 
@@ -125,8 +170,7 @@ public abstract class Node extends PlatformObject
     @Override
     public EPackage[] getChildren()
     {
-      CDOView view = getRepositoryProject().getView();
-      CDOPackageRegistry packageRegistry = view.getSession().getPackageRegistry();
+      CDOPackageRegistry packageRegistry = getRepositoryProject().getView().getSession().getPackageRegistry();
       List<EPackage> children = new ArrayList<EPackage>();
       for (String nsURI : packageRegistry.keySet())
       {
@@ -212,4 +256,34 @@ public abstract class Node extends PlatformObject
       return children.toArray(new CDOResourceNode[children.size()]);
     }
   }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class SessionsNode extends Node
+  {
+    public SessionsNode(IRepositoryProject repositoryProject)
+    {
+      super(repositoryProject);
+    }
+
+    @Override
+    public Type getType()
+    {
+      return Type.SESSIONS;
+    }
+
+    @Override
+    public String getText()
+    {
+      return Messages.getString("Node.0"); //$NON-NLS-1$
+    }
+
+    @Override
+    public String getImageKey()
+    {
+      return "icons/full/obj16/Sessions.gif"; //$NON-NLS-1$
+    }
+  }
+
 }

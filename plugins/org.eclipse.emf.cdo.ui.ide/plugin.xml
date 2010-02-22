@@ -6,7 +6,7 @@
 	are made available under the terms of the Eclipse Public License v1.0
 	which accompanies this distribution, and is available at
 	http://www.eclipse.org/legal/epl-v10.html
-	
+
 	Contributors:
 	  Eike Stepper - initial API and implementation
 -->
@@ -52,7 +52,7 @@
          </triggerPoints>
       </navigatorContent>
    </extension>
-   
+
    <extension
          point="org.eclipse.ui.navigator.viewer">
       <viewerContentBinding
@@ -65,7 +65,7 @@
          </includes>
       </viewerContentBinding>
    </extension>
-   
+
    <extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution
@@ -183,6 +183,41 @@
                id="org.eclipse.emf.cdo.ui.ide.exportResource"
                label="%action.label.10">
          </action>
-      </objectContribution> </extension>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.eclipse.emf.cdo.ui.ide.BranchesNodeActions"
+            objectClass="org.eclipse.emf.cdo.ui.ide.Node$BranchNode">
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.CreateBranchActionDelegate"
+               icon="icons/full/obj16/fork.png"
+               id="org.eclipse.emf.cdo.ui.ide.createNewBranchAction"
+               label="%action.label.11"
+               tooltip="%action.tooltip.9">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.SwitchToBranchActionDelegate"
+               icon="icons/full/obj16/switch.png"
+               id="org.eclipse.emf.cdo.ui.ide.switchToBranchAction"
+               label="%action.label.12"
+               tooltip="%action.tooltip.10">
+         </action>
+      </objectContribution>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            canFinishEarly="false"
+            class="org.eclipse.emf.cdo.ui.internal.ide.wizards.CDOProjectCreationWizard"
+            finalPerspective="org.eclipse.emf.cdo.ui.CDOExplorerPerspective"
+            hasPages="true"
+            icon="icons/full/obj16/repository_content.gif"
+            id="org.eclipse.emf.cdo.ui.ide.createSharedProject"
+            name="%wizard.name.0"
+            preferredPerspectives="org.eclipse.ui.resourcePerspective"
+            project="true">
+      </wizard>
+   </extension>
 
 </plugin>

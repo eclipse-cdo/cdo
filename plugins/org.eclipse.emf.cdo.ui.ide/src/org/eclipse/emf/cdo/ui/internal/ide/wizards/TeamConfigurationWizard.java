@@ -18,10 +18,8 @@ import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 import org.eclipse.emf.cdo.ui.widgets.SessionComposite;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.team.ui.IConfigurationWizard;
 import org.eclipse.ui.IWorkbench;
 
@@ -32,7 +30,7 @@ public class TeamConfigurationWizard extends Wizard implements IConfigurationWiz
 {
   private IProject project;
 
-  private Page1 page1;
+  private CDOShareProjectWizardPage page1;
 
   public TeamConfigurationWizard()
   {
@@ -41,12 +39,17 @@ public class TeamConfigurationWizard extends Wizard implements IConfigurationWiz
   public void init(IWorkbench workbench, IProject project)
   {
     this.project = project;
+    setWindowTitle(Messages.getString("TeamConfigurationWizard_1")); //$NON-NLS-1$
+    ImageDescriptor desc = OM.getImageDescriptor("icons/full/wizban/wizard_icon.gif");//$NON-NLS-1$
+    setDefaultPageImageDescriptor(desc);
   }
 
   @Override
   public void addPages()
   {
-    addPage(page1 = new Page1());
+    page1 = new CDOShareProjectWizardPage("page1");
+    page1.setTitle(Messages.getString("TeamConfigurationWizard_2")); //$NON-NLS-1$    
+    addPage(page1);
   }
 
   @Override
@@ -66,43 +69,6 @@ public class TeamConfigurationWizard extends Wizard implements IConfigurationWiz
     {
       OM.LOG.error(ex);
       return false;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class Page1 extends WizardPage
-  {
-    private SessionComposite sessionComposite;
-
-    private Page1()
-    {
-      super("page1"); //$NON-NLS-1$
-    }
-
-    public SessionComposite getSessionComposite()
-    {
-      return sessionComposite;
-    }
-
-    public void createControl(Composite parent)
-    {
-      sessionComposite = new SessionComposite(parent, SWT.NONE);
-      setControl(sessionComposite);
-      setWindowTitle(Messages.getString("TeamConfigurationWizard_1")); //$NON-NLS-1$
-    }
-
-    @Override
-    public String getTitle()
-    {
-      return Messages.getString("TeamConfigurationWizard_2"); //$NON-NLS-1$
-    }
-
-    @Override
-    public String getDescription()
-    {
-      return Messages.getString("TeamConfigurationWizard_3"); //$NON-NLS-1$
     }
   }
 }

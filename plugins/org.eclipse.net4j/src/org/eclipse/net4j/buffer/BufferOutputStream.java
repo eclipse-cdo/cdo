@@ -98,6 +98,10 @@ public class BufferOutputStream extends OutputStream
     flushIfFilled();
     ensureBuffer();
 
+    // If this was called with a primitive byte with a negative value,
+    // the implicit conversion prepended 24 leading 1's. We'll undo those.
+    b = b & 0xFF;
+
     if (TRACER.isEnabled())
     {
       TRACER.trace("--> " + HexUtil.formatByte(b) //$NON-NLS-1$

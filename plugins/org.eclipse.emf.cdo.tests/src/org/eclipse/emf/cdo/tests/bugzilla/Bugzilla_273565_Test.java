@@ -171,6 +171,8 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
    */
   public void testBugzilla_273565_Lock() throws Exception
   {
+    disableConsole();
+
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     orderDetail.setPrice(2);
 

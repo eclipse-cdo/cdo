@@ -1624,7 +1624,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOView({0})", viewID); //$NON-NLS-1$
+    return MessageFormat.format("CDOView[{0}:{1}]", session.getSessionID(), viewID); //$NON-NLS-1$
   }
 
   public boolean isAdapterForType(Object type)

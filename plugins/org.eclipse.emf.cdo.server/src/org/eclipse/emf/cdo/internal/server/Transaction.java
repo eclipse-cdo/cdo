@@ -39,7 +39,7 @@ public class Transaction extends View implements InternalTransaction
   @Override
   public String toString()
   {
-    return MessageFormat.format("Transaction[{0}]", getViewID()); //$NON-NLS-1$
+    return MessageFormat.format("Transaction[{0}:{1}]", getSession().getSessionID(), getViewID()); //$NON-NLS-1$
   }
 
   /**

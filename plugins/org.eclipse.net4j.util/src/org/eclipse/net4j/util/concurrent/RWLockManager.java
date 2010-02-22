@@ -272,6 +272,8 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   private void lock(LockStrategy<OBJECT, CONTEXT> lockStrategy, CONTEXT context,
       Collection<? extends OBJECT> objectsToLocks, long timeout) throws InterruptedException
   {
+    System.out.println("Locking " + context);
+
     long startTime = System.currentTimeMillis();
     while (true)
     {
@@ -280,6 +282,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
         OBJECT conflict = obtainLock(lockStrategy, context, objectsToLocks);
         if (conflict == null)
         {
+          System.out.println("Locked " + context);
           lockChanged.notifyAll();
           return;
         }

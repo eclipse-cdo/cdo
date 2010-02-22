@@ -64,6 +64,9 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
    */
   public void handleObjectStateChanged(InternalCDOObject object, CDOState oldState, CDOState newState);
 
+  /**
+   * @since 3.0
+   */
   public void invalidate(long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
       List<CDOIDAndVersion> allDetachedObjects);
 
@@ -72,6 +75,9 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
    */
   public void fireAdaptersNotifiedEvent(long timeStamp);
 
+  /**
+   * @since 3.0
+   */
   public void collectViewedRevisions(Map<CDOID, InternalCDORevision> revisions);
 
   public void remapObject(CDOID oldID);

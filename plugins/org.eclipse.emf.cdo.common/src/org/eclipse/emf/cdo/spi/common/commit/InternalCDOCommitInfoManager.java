@@ -20,6 +20,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
 public interface InternalCDOCommitInfoManager extends CDOCommitInfoManager, ILifecycle
 {

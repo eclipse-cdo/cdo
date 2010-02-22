@@ -146,7 +146,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * <b>Note</b>: {@link IStoreAccessor#write(InternalCommitContext, OMMonitor)} and
    * {@link IStoreAccessor#commit(OMMonitor)} could be called from different threads.
    * 
-   * @since 2.0
+   * @since 3.0
    */
   public void write(InternalCommitContext context, OMMonitor monitor);
 
@@ -203,10 +203,19 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      */
     public CDOBranchPoint getBranchPoint();
 
+    /**
+     * @since 3.0
+     */
     public String getUserID();
 
+    /**
+     * @since 3.0
+     */
     public String getCommitComment();
 
+    /**
+     * @since 3.0
+     */
     public boolean isAutoReleaseLocksEnabled();
 
     /**
@@ -254,8 +263,14 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      */
     public Map<CDOID, CDOID> getIDMappings();
 
+    /**
+     * @since 3.0
+     */
     public List<CDOIDMetaRange> getMetaIDRanges();
 
+    /**
+     * @since 3.0
+     */
     public String getRollbackMessage();
   }
 

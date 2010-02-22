@@ -113,6 +113,9 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     return revision;
   }
 
+  /**
+   * @since 3.0
+   */
   public void write(InternalCommitContext context, OMMonitor monitor)
   {
     if (TRACER.isEnabled())
@@ -224,9 +227,14 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
    * Add ID mappings for all new objects of a transaction to the commit context. The implementor must, for each new
    * object of the commit context, determine a permanent CDOID and make it known to the context by calling
    * {@link CommitContext#addIDMapping(CDOIDTemp, CDOID)}.
+   * 
+   * @since 3.0
    */
   protected abstract void addIDMappings(InternalCommitContext commitContext, OMMonitor monitor);
 
+  /**
+   * @since 3.0
+   */
   protected abstract void writeCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment,
       OMMonitor monitor);
 

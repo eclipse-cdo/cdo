@@ -352,6 +352,9 @@ public final class CDOIDUtil
     return new CDOIDAndVersionImpl(id, version);
   }
 
+  /**
+   * @since 3.0
+   */
   public static CDOIDAndVersion createIDAndVersion(CDOIDAndVersion source)
   {
     return createIDAndVersion(source.getID(), source.getVersion());

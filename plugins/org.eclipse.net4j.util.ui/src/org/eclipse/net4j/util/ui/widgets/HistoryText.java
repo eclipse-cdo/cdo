@@ -194,11 +194,17 @@ public class HistoryText
     }
   }
 
+  /**
+   * @since 3.0
+   */
   public void addListener(int evenType, Listener listener)
   {
     combo.addListener(evenType, listener);
   }
 
+  /**
+   * @since 3.0
+   */
   public void removeListener(int evenType, Listener listener)
   {
     combo.removeListener(evenType, listener);

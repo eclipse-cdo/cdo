@@ -71,8 +71,14 @@ public interface CDOProtocolConstants
 
   public static final short SIGNAL_QUERY_CANCEL = 17;
 
+  /**
+   * @since 3.0
+   */
   public static final short SIGNAL_REFRESH_SESSION = 18;
 
+  /**
+   * @since 3.0
+   */
   public static final short SIGNAL_DISABLE_PASSIVE_UPDATES = 19;
 
   public static final short SIGNAL_CHANGE_SUBSCRIPTION = 20;
@@ -140,13 +146,24 @@ public interface CDOProtocolConstants
 
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh
-
+  /**
+   * @since 3.0
+   */
   public static final byte REFRESH_FINISHED = 0;
 
+  /**
+   * @since 3.0
+   */
   public static final byte REFRESH_PACKAGE_UNIT = 1;
 
+  /**
+   * @since 3.0
+   */
   public static final byte REFRESH_CHANGED_OBJECT = 2;
 
+  /**
+   * @since 3.0
+   */
   public static final byte REFRESH_DETACHED_OBJECT = 3;
 
   // //////////////////////////////////////////////////////////////////////

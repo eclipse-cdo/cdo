@@ -111,11 +111,17 @@ public class PreferenceButton
     return button.setFocus();
   }
 
+  /**
+   * @since 3.0
+   */
   public void addListener(int evenType, Listener listener)
   {
     button.addListener(evenType, listener);
   }
 
+  /**
+   * @since 3.0
+   */
   public void removeListener(int evenType, Listener listener)
   {
     button.removeListener(evenType, listener);

@@ -58,8 +58,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 {
   public RepositoryTimeResult getRepositoryTime();
 
+  /**
+   * @since 3.0
+   */
   public void disablePassiveUpdates();
 
+  /**
+   * @since 3.0
+   */
   public RefreshSessionResult refresh(long lastUpdateTime,
       Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
       boolean enablePassiveUpdates);
@@ -230,6 +236,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   /**
    * @author Eike Stepper
+   * @since 3.0
    */
   public static final class RefreshSessionResult
   {
@@ -391,6 +398,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   /**
    * @author Eike Stepper
+   * @since 3.0
    */
   public final class CommitTransactionResult
   {
@@ -451,6 +459,9 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       return idMappings;
     }
 
+    /**
+     * @since 3.0
+     */
     public void addIDMapping(CDOID oldID, CDOID newID)
     {
       idMappings.put(oldID, newID);

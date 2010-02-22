@@ -78,6 +78,9 @@ public final class CDORevisionUtil
     return CDORevisionImpl.remapID(value, idMappings);
   }
 
+  /**
+   * @since 3.0
+   */
   public static String dumpAllRevisions(Map<CDOBranch, List<CDORevision>> map)
   {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();

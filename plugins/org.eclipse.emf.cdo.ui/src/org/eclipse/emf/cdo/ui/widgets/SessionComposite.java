@@ -182,6 +182,9 @@ public class SessionComposite extends Composite
     return builder.toString();
   }
 
+  /**
+   * @since 3.0
+   */
   public boolean isDescriptionValid()
   {
     URI uri = URI.createURI(getSessionDescription());

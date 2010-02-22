@@ -25,15 +25,23 @@ public interface CDOPackageRegistry extends EPackage.Registry
    */
   public Object putEPackage(EPackage ePackage);
 
+  /**
+   * @since 3.0
+   */
   public CDOPackageUnit getPackageUnit(String id);
 
   public CDOPackageUnit getPackageUnit(EPackage ePackage);
 
   /**
    * Returns all package units that are registered in this package registry.
+   * 
+   * @since 3.0
    */
   public CDOPackageUnit[] getPackageUnits();
 
+  /**
+   * @since 3.0
+   */
   public CDOPackageUnit[] getPackageUnits(long startTime, long endTime);
 
   public CDOPackageInfo getPackageInfo(EPackage ePackage);

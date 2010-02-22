@@ -18,6 +18,7 @@ import java.util.NoSuchElementException;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
 public abstract class IndexedList<E> implements List<E>
 {

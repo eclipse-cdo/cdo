@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
  * Notifies about a change of the branch point of the view.
  * 
  * @author Victor Roldan Betancort
+ * @since 3.0
  */
 public interface CDOViewTargetChangedEvent extends CDOViewEvent
 {

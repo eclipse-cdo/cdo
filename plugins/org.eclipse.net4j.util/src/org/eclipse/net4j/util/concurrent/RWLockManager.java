@@ -41,27 +41,27 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     {
       return entry.isReadLock(context);
     }
-  
+
     public boolean isLockedByOthers(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.isReadLockByOthers(context);
     }
-  
+
     public boolean canObtainLock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.canObtainReadLock(context);
     }
-  
+
     public LockEntry<OBJECT, CONTEXT> lock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.readLock(context);
     }
-  
+
     public LockEntry<OBJECT, CONTEXT> unlock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.readUnlock(context);
     }
-  
+
     @Override
     public String toString()
     {
@@ -100,7 +100,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     public String toString()
     {
       return "WriteLockStrategy";
-    };
+    }
   };
 
   private Map<OBJECT, LockEntry<OBJECT, CONTEXT>> lockEntries = new HashMap<OBJECT, LockEntry<OBJECT, CONTEXT>>();

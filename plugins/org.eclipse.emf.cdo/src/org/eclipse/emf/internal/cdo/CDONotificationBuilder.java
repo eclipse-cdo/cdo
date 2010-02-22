@@ -56,16 +56,25 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 
   private Set<CDOObject> detachedObjects;
 
+  /**
+   * @since 3.0
+   */
   public CDONotificationBuilder(CDOView view)
   {
     this.view = view;
   }
 
+  /**
+   * @since 3.0
+   */
   public CDOView getView()
   {
     return view;
   }
 
+  /**
+   * @since 3.0
+   */
   public synchronized NotificationImpl buildNotification(InternalEObject object, CDORevisionDelta revisionDelta,
       Set<CDOObject> detachedObjects)
   {

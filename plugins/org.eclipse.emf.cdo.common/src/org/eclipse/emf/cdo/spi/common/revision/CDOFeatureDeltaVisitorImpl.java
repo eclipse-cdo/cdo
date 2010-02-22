@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 
 /**
  * @author Simon McDuff
+ * @since 3.0
  */
 public class CDOFeatureDeltaVisitorImpl implements CDOFeatureDeltaVisitor
 {

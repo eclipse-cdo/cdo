@@ -196,6 +196,8 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
 
   /**
    * Refreshes the object caches of all (non-historical) {@link CDOView views}.
+   * 
+   * @since 3.0
    */
   public long refresh();
 

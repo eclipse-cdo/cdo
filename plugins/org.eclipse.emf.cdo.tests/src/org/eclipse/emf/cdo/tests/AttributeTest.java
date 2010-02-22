@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
+import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -34,6 +35,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Arrays;
 
 /**
  * @author Eike Stepper
@@ -347,7 +349,7 @@ public class AttributeTest extends AbstractCDOTest
     return schoolPackage;
   }
 
-  public void testManyValuedCustomDataType() throws Exception
+  public void testManyValuedCustomDataType_Get() throws Exception
   {
     Polygon polygon = getModel3Factory().createPolygon();
     EList<Point> points = polygon.getPoints();
@@ -439,5 +441,331 @@ public class AttributeTest extends AbstractCDOTest
     assertInstanceOf(Point.class, array2[0]);
     assertInstanceOf(Point.class, array2[1]);
     assertInstanceOf(Point.class, array2[2]);
+  }
+
+  public void testManyValuedCustomDataType_Contains() throws Exception
+  {
+    Polygon polygon = getModel3Factory().createPolygon();
+    EList<Point> points = polygon.getPoints();
+    points.add(new Point(1, 2));
+    points.add(new Point(3, 4));
+    points.add(new Point(5, 6));
+    points.add(new Point(7, 8));
+    points.add(new Point(9, 0));
+
+    assertEquals(true, points.contains(new Point(1, 2)));
+    assertEquals(true, points.contains(new Point(3, 4)));
+    assertEquals(true, points.contains(new Point(5, 6)));
+    assertEquals(true, points.contains(new Point(7, 8)));
+    assertEquals(true, points.contains(new Point(9, 0)));
+
+    assertEquals(false, points.contains(new Point(0, 2)));
+    assertEquals(false, points.contains(new Point(0, 4)));
+    assertEquals(false, points.contains(new Point(0, 6)));
+    assertEquals(false, points.contains(new Point(0, 8)));
+    assertEquals(false, points.contains(new Point(0, 0)));
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+    resource.getContents().add(polygon);
+
+    points = polygon.getPoints();
+    assertEquals(true, points.contains(new Point(1, 2)));
+    assertEquals(true, points.contains(new Point(3, 4)));
+    assertEquals(true, points.contains(new Point(5, 6)));
+    assertEquals(true, points.contains(new Point(7, 8)));
+    assertEquals(true, points.contains(new Point(9, 0)));
+
+    assertEquals(false, points.contains(new Point(0, 2)));
+    assertEquals(false, points.contains(new Point(0, 4)));
+    assertEquals(false, points.contains(new Point(0, 6)));
+    assertEquals(false, points.contains(new Point(0, 8)));
+    assertEquals(false, points.contains(new Point(0, 0)));
+
+    transaction.commit();
+
+    points = polygon.getPoints();
+    assertEquals(true, points.contains(new Point(1, 2)));
+    assertEquals(true, points.contains(new Point(3, 4)));
+    assertEquals(true, points.contains(new Point(5, 6)));
+    assertEquals(true, points.contains(new Point(7, 8)));
+    assertEquals(true, points.contains(new Point(9, 0)));
+
+    assertEquals(false, points.contains(new Point(0, 2)));
+    assertEquals(false, points.contains(new Point(0, 4)));
+    assertEquals(false, points.contains(new Point(0, 6)));
+    assertEquals(false, points.contains(new Point(0, 8)));
+    assertEquals(false, points.contains(new Point(0, 0)));
+
+    session.close();
+    session = openSession();
+    transaction = session.openTransaction();
+    resource = transaction.getResource("/my/resource");
+    polygon = (Polygon)resource.getContents().get(0);
+
+    points = polygon.getPoints();
+    assertEquals(true, points.contains(new Point(1, 2)));
+    assertEquals(true, points.contains(new Point(3, 4)));
+    assertEquals(true, points.contains(new Point(5, 6)));
+    assertEquals(true, points.contains(new Point(7, 8)));
+    assertEquals(true, points.contains(new Point(9, 0)));
+
+    assertEquals(false, points.contains(new Point(0, 2)));
+    assertEquals(false, points.contains(new Point(0, 4)));
+    assertEquals(false, points.contains(new Point(0, 6)));
+    assertEquals(false, points.contains(new Point(0, 8)));
+    assertEquals(false, points.contains(new Point(0, 0)));
+  }
+
+  public void testManyValuedCustomDataType_ContainsAll() throws Exception
+  {
+    Polygon polygon = getModel3Factory().createPolygon();
+    EList<Point> points = polygon.getPoints();
+    points.add(new Point(1, 2));
+    points.add(new Point(3, 4));
+    points.add(new Point(5, 6));
+    points.add(new Point(7, 8));
+    points.add(new Point(9, 0));
+
+    assertEquals(true, points.containsAll(points));
+
+    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6),
+        new Point(7, 8), new Point(9, 0) })));
+    assertEquals(true, points.containsAll(Arrays
+        .asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(9, 0) })));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(9, 0) })));
+
+    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6),
+        new Point(7, 8), new Point(0, 0) })));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8),
+        new Point(0, 0) })));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(0, 0) })));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(0, 0) })));
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+    resource.getContents().add(polygon);
+
+    points = polygon.getPoints();
+    assertEquals(true, points.containsAll(points));
+
+    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6),
+        new Point(7, 8), new Point(9, 0) })));
+    assertEquals(true, points.containsAll(Arrays
+        .asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(9, 0) })));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(9, 0) })));
+
+    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6),
+        new Point(7, 8), new Point(0, 0) })));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8),
+        new Point(0, 0) })));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(0, 0) })));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(0, 0) })));
+
+    transaction.commit();
+
+    points = polygon.getPoints();
+    assertEquals(true, points.containsAll(points));
+
+    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6),
+        new Point(7, 8), new Point(9, 0) })));
+    assertEquals(true, points.containsAll(Arrays
+        .asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(9, 0) })));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(9, 0) })));
+
+    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6),
+        new Point(7, 8), new Point(0, 0) })));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8),
+        new Point(0, 0) })));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(0, 0) })));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(0, 0) })));
+
+    session.close();
+    session = openSession();
+    transaction = session.openTransaction();
+    resource = transaction.getResource("/my/resource");
+    polygon = (Polygon)resource.getContents().get(0);
+
+    points = polygon.getPoints();
+    assertEquals(true, points.containsAll(points));
+
+    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6),
+        new Point(7, 8), new Point(9, 0) })));
+    assertEquals(true, points.containsAll(Arrays
+        .asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(9, 0) })));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(9, 0) })));
+
+    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6),
+        new Point(7, 8), new Point(0, 0) })));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8),
+        new Point(0, 0) })));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(0, 0) })));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(0, 0) })));
+  }
+
+  public void testManyValuedCustomDataType_IndexOf() throws Exception
+  {
+    PolygonWithDuplicates polygon = getModel3Factory().createPolygonWithDuplicates();
+    EList<Point> points = polygon.getPoints();
+    points.add(new Point(1, 2));
+    points.add(new Point(3, 4));
+    points.add(new Point(5, 6));
+    points.add(new Point(7, 8));
+    points.add(new Point(9, 0));
+    points.add(new Point(1, 2));
+    points.add(new Point(3, 4));
+    points.add(new Point(5, 6));
+    points.add(new Point(7, 8));
+    points.add(new Point(9, 0));
+
+    assertEquals(0, points.indexOf(new Point(1, 2)));
+    assertEquals(1, points.indexOf(new Point(3, 4)));
+    assertEquals(2, points.indexOf(new Point(5, 6)));
+    assertEquals(3, points.indexOf(new Point(7, 8)));
+    assertEquals(4, points.indexOf(new Point(9, 0)));
+
+    assertEquals(-1, points.indexOf(new Point(0, 2)));
+    assertEquals(-1, points.indexOf(new Point(0, 4)));
+    assertEquals(-1, points.indexOf(new Point(0, 6)));
+    assertEquals(-1, points.indexOf(new Point(0, 8)));
+    assertEquals(-1, points.indexOf(new Point(0, 0)));
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+    resource.getContents().add(polygon);
+
+    points = polygon.getPoints();
+    assertEquals(0, points.indexOf(new Point(1, 2)));
+    assertEquals(1, points.indexOf(new Point(3, 4)));
+    assertEquals(2, points.indexOf(new Point(5, 6)));
+    assertEquals(3, points.indexOf(new Point(7, 8)));
+    assertEquals(4, points.indexOf(new Point(9, 0)));
+
+    assertEquals(-1, points.indexOf(new Point(0, 2)));
+    assertEquals(-1, points.indexOf(new Point(0, 4)));
+    assertEquals(-1, points.indexOf(new Point(0, 6)));
+    assertEquals(-1, points.indexOf(new Point(0, 8)));
+    assertEquals(-1, points.indexOf(new Point(0, 0)));
+
+    transaction.commit();
+
+    points = polygon.getPoints();
+    assertEquals(0, points.indexOf(new Point(1, 2)));
+    assertEquals(1, points.indexOf(new Point(3, 4)));
+    assertEquals(2, points.indexOf(new Point(5, 6)));
+    assertEquals(3, points.indexOf(new Point(7, 8)));
+    assertEquals(4, points.indexOf(new Point(9, 0)));
+
+    assertEquals(-1, points.indexOf(new Point(0, 2)));
+    assertEquals(-1, points.indexOf(new Point(0, 4)));
+    assertEquals(-1, points.indexOf(new Point(0, 6)));
+    assertEquals(-1, points.indexOf(new Point(0, 8)));
+    assertEquals(-1, points.indexOf(new Point(0, 0)));
+
+    session.close();
+    session = openSession();
+    transaction = session.openTransaction();
+    resource = transaction.getResource("/my/resource");
+    polygon = (PolygonWithDuplicates)resource.getContents().get(0);
+
+    points = polygon.getPoints();
+    assertEquals(0, points.indexOf(new Point(1, 2)));
+    assertEquals(1, points.indexOf(new Point(3, 4)));
+    assertEquals(2, points.indexOf(new Point(5, 6)));
+    assertEquals(3, points.indexOf(new Point(7, 8)));
+    assertEquals(4, points.indexOf(new Point(9, 0)));
+
+    assertEquals(-1, points.indexOf(new Point(0, 2)));
+    assertEquals(-1, points.indexOf(new Point(0, 4)));
+    assertEquals(-1, points.indexOf(new Point(0, 6)));
+    assertEquals(-1, points.indexOf(new Point(0, 8)));
+    assertEquals(-1, points.indexOf(new Point(0, 0)));
+  }
+
+  public void testManyValuedCustomDataType_LastIndexOf() throws Exception
+  {
+    PolygonWithDuplicates polygon = getModel3Factory().createPolygonWithDuplicates();
+    EList<Point> points = polygon.getPoints();
+    points.add(new Point(1, 2));
+    points.add(new Point(3, 4));
+    points.add(new Point(5, 6));
+    points.add(new Point(7, 8));
+    points.add(new Point(9, 0));
+    points.add(new Point(1, 2));
+    points.add(new Point(3, 4));
+    points.add(new Point(5, 6));
+    points.add(new Point(7, 8));
+    points.add(new Point(9, 0));
+
+    assertEquals(5, points.lastIndexOf(new Point(1, 2)));
+    assertEquals(6, points.lastIndexOf(new Point(3, 4)));
+    assertEquals(7, points.lastIndexOf(new Point(5, 6)));
+    assertEquals(8, points.lastIndexOf(new Point(7, 8)));
+    assertEquals(9, points.lastIndexOf(new Point(9, 0)));
+
+    assertEquals(-1, points.lastIndexOf(new Point(0, 2)));
+    assertEquals(-1, points.lastIndexOf(new Point(0, 4)));
+    assertEquals(-1, points.lastIndexOf(new Point(0, 6)));
+    assertEquals(-1, points.lastIndexOf(new Point(0, 8)));
+    assertEquals(-1, points.lastIndexOf(new Point(0, 0)));
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+    resource.getContents().add(polygon);
+
+    points = polygon.getPoints();
+    assertEquals(5, points.lastIndexOf(new Point(1, 2)));
+    assertEquals(6, points.lastIndexOf(new Point(3, 4)));
+    assertEquals(7, points.lastIndexOf(new Point(5, 6)));
+    assertEquals(8, points.lastIndexOf(new Point(7, 8)));
+    assertEquals(9, points.lastIndexOf(new Point(9, 0)));
+
+    assertEquals(-1, points.lastIndexOf(new Point(0, 2)));
+    assertEquals(-1, points.lastIndexOf(new Point(0, 4)));
+    assertEquals(-1, points.lastIndexOf(new Point(0, 6)));
+    assertEquals(-1, points.lastIndexOf(new Point(0, 8)));
+    assertEquals(-1, points.lastIndexOf(new Point(0, 0)));
+
+    transaction.commit();
+
+    points = polygon.getPoints();
+    assertEquals(5, points.lastIndexOf(new Point(1, 2)));
+    assertEquals(6, points.lastIndexOf(new Point(3, 4)));
+    assertEquals(7, points.lastIndexOf(new Point(5, 6)));
+    assertEquals(8, points.lastIndexOf(new Point(7, 8)));
+    assertEquals(9, points.lastIndexOf(new Point(9, 0)));
+
+    assertEquals(-1, points.lastIndexOf(new Point(0, 2)));
+    assertEquals(-1, points.lastIndexOf(new Point(0, 4)));
+    assertEquals(-1, points.lastIndexOf(new Point(0, 6)));
+    assertEquals(-1, points.lastIndexOf(new Point(0, 8)));
+    assertEquals(-1, points.lastIndexOf(new Point(0, 0)));
+
+    session.close();
+    session = openSession();
+    transaction = session.openTransaction();
+    resource = transaction.getResource("/my/resource");
+    polygon = (PolygonWithDuplicates)resource.getContents().get(0);
+
+    points = polygon.getPoints();
+    assertEquals(5, points.lastIndexOf(new Point(1, 2)));
+    assertEquals(6, points.lastIndexOf(new Point(3, 4)));
+    assertEquals(7, points.lastIndexOf(new Point(5, 6)));
+    assertEquals(8, points.lastIndexOf(new Point(7, 8)));
+    assertEquals(9, points.lastIndexOf(new Point(9, 0)));
+
+    assertEquals(-1, points.lastIndexOf(new Point(0, 2)));
+    assertEquals(-1, points.lastIndexOf(new Point(0, 4)));
+    assertEquals(-1, points.lastIndexOf(new Point(0, 6)));
+    assertEquals(-1, points.lastIndexOf(new Point(0, 8)));
+    assertEquals(-1, points.lastIndexOf(new Point(0, 0)));
   }
 }

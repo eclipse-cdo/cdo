@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
+import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -124,6 +125,16 @@ public class Model3Switch<T>
       }
       return result;
     }
+    case Model3Package.POLYGON_WITH_DUPLICATES:
+    {
+      PolygonWithDuplicates polygonWithDuplicates = (PolygonWithDuplicates)theEObject;
+      T result = casePolygonWithDuplicates(polygonWithDuplicates);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     default:
       return defaultCase(theEObject);
     }
@@ -170,6 +181,22 @@ public class Model3Switch<T>
    * @generated
    */
   public T casePolygon(Polygon object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Polygon With Duplicates</em>'. <!--
+   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
+   * end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Polygon With Duplicates</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePolygonWithDuplicates(PolygonWithDuplicates object)
   {
     return null;
   }

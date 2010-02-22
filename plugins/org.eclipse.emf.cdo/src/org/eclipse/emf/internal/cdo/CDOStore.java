@@ -237,11 +237,7 @@ public final class CDOStore implements EStore
       TRACER.format("contains({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
     }
 
-    // TODO Clarify feature maps
-    if (feature instanceof EReference)
-    {
-      value = cdoObject.cdoView().convertObjectToID(value, true);
-    }
+    value = convertToCDO(cdoObject, feature, value);
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
     return revision.contains(feature, value);
@@ -255,11 +251,7 @@ public final class CDOStore implements EStore
       TRACER.format("indexOf({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
     }
 
-    // TODO Clarify feature maps
-    if (feature instanceof EReference)
-    {
-      value = cdoObject.cdoView().convertObjectToID(value, true);
-    }
+    value = convertToCDO(cdoObject, feature, value);
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
     return revision.indexOf(feature, value);
@@ -273,11 +265,7 @@ public final class CDOStore implements EStore
       TRACER.format("lastIndexOf({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
     }
 
-    // TODO Clarify feature maps
-    if (feature instanceof EReference)
-    {
-      value = cdoObject.cdoView().convertObjectToID(value, true);
-    }
+    value = convertToCDO(cdoObject, feature, value);
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
     return revision.lastIndexOf(feature, value);
@@ -355,13 +343,6 @@ public final class CDOStore implements EStore
 
     CDOFeatureDelta delta = new CDOSetFeatureDeltaImpl(feature, index, value);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
-    // TODO Clarify feature maps
-    if (feature instanceof EReference)
-    {
-      Object oldValue = revision.get(feature, index);
-      oldValue = resolveProxy(revision, feature, index, oldValue);
-      value = cdoObject.cdoView().convertObjectToID(value, true);
-    }
 
     Object oldValue = revision.set(feature, index, value);
     oldValue = convertToEMF(eObject, revision, feature, index, oldValue);

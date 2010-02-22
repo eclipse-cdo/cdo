@@ -98,7 +98,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Changing name");
     category1B.setName("CHANGED NAME");
 
-    assertEquals(0, adapter.getNotifications().size());
+    assertEquals(0, adapter.getNotifications().length);
 
     msg("Committing");
     transaction2.commit();
@@ -113,8 +113,8 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return policy == CDOAdapterPolicy.ALL && adapter.getNotifications().size() == 1 || policy == null
-            && adapter.getNotifications().size() == 0;
+        return policy == CDOAdapterPolicy.ALL && adapter.getNotifications().length == 1 || policy == null
+            && adapter.getNotifications().length == 0;
       }
     }.assertNoTimeOut();
 
@@ -126,12 +126,12 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       transaction.options().addChangeSubscriptionPolicy(enabled2);
     }
 
-    adapter.getNotifications().clear();
+    adapter.clearNotifications();
 
     msg("Changing name");
     category1B.setName("CHANGED NAME_VERSION 2");
 
-    assertEquals(0, adapter.getNotifications().size());
+    assertEquals(0, adapter.getNotifications().length);
 
     msg("Committing");
     transaction2.commit();
@@ -146,8 +146,8 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return enabled2 == CDOAdapterPolicy.ALL && adapter.getNotifications().size() == 1 || enabled2 == null
-            && adapter.getNotifications().size() == 0;
+        return enabled2 == CDOAdapterPolicy.ALL && adapter.getNotifications().length == 1 || enabled2 == null
+            && adapter.getNotifications().length == 0;
       }
     }.assertNoTimeOut();
   }
@@ -192,7 +192,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(),
         true));
     category1B.setName("CHANGED NAME");
-    assertEquals(0, adapter.getNotifications().size());
+    assertEquals(0, adapter.getNotifications().length);
 
     transaction2.commit();
 
@@ -201,8 +201,8 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return policy == CDOAdapterPolicy.ALL && adapter.getNotifications().size() == 1 || policy == null
-            && adapter.getNotifications().size() == 0;
+        return policy == CDOAdapterPolicy.ALL && adapter.getNotifications().length == 1 || policy == null
+            && adapter.getNotifications().length == 0;
       }
     }.assertNoTimeOut();
 
@@ -214,10 +214,10 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       transaction.options().addChangeSubscriptionPolicy(enabled2);
     }
 
-    adapter.getNotifications().clear();
+    adapter.clearNotifications();
 
     category1B.setName("CHANGED NAME_VERSION 2");
-    assertEquals(0, adapter.getNotifications().size());
+    assertEquals(0, adapter.getNotifications().length);
 
     transaction2.commit();
 
@@ -226,8 +226,8 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return enabled2 == CDOAdapterPolicy.ALL && adapter.getNotifications().size() == 1 || enabled2 == null
-            && adapter.getNotifications().size() == 0;
+        return enabled2 == CDOAdapterPolicy.ALL && adapter.getNotifications().length == 1 || enabled2 == null
+            && adapter.getNotifications().length == 0;
       }
     }.assertNoTimeOut();
   }
@@ -278,7 +278,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Changing name");
     category1B.setName("CHANGED NAME");
 
-    assertEquals(0, adapter.getNotifications().size());
+    assertEquals(0, adapter.getNotifications().length);
 
     msg("Committing");
     transaction2.commit();
@@ -289,7 +289,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return adapter.getNotifications().size() == 1;
+        return adapter.getNotifications().length == 1;
       }
     }.assertNoTimeOut();
   }
@@ -349,7 +349,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     category1B.setName("CHANGED NAME");
     company1B.setName("TEST1");
 
-    assertEquals(0, adapter.getNotifications().size());
+    assertEquals(0, adapter.getNotifications().length);
 
     msg("Committing");
     transaction2.commit();
@@ -360,20 +360,20 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return adapter.getNotifications().size() == 1;
+        return adapter.getNotifications().length == 1;
       }
     }.assertNoTimeOut();
 
     // Switching policy to the other
     transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    adapter.getNotifications().clear();
+    adapter.clearNotifications();
 
     msg("Changing name");
     category1B.setName("CHANGED NAME_VERSION 2");
     company1B.setName("TEST2");
 
-    assertEquals(0, adapter.getNotifications().size());
+    assertEquals(0, adapter.getNotifications().length);
 
     msg("Committing");
     transaction2.commit();
@@ -384,7 +384,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return adapter.getNotifications().size() == 2;
+        return adapter.getNotifications().length == 2;
       }
     }.assertNoTimeOut();
   }
@@ -440,7 +440,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     final Category category2B = getModel1Factory().createCategory();
     company1B.getCategories().add(category2B);
 
-    assertEquals(0, adapter.getNotifications().size());
+    assertEquals(0, adapter.getNotifications().length);
 
     msg("Committing");
     transaction2.commit();
@@ -451,7 +451,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return adapter.getNotifications().size() == 3;
+        return adapter.getNotifications().length == 3;
       }
     }.assertNoTimeOut();
 
@@ -459,7 +459,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     for (Notification notification : adapter.getNotifications())
     {
       CDODeltaNotification cdoNotification = (CDODeltaNotification)notification;
-      if (adapter.getNotifications().size() - 1 == count)
+      if (adapter.getNotifications().length - 1 == count)
       {
         assertEquals(false, cdoNotification.hasNext());
       }
@@ -535,8 +535,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        List<Notification> notifications = adapter.getNotifications();
-        for (Notification notification : notifications)
+        for (Notification notification : adapter.getNotifications())
         {
           if (notification.getEventType() == Notification.REMOVE
               && notification.getFeature() == getModel1Package().getCompany_Categories())
@@ -598,8 +597,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        List<Notification> notifications = adapter.getNotifications();
-        for (Notification notification : notifications)
+        for (Notification notification : adapter.getNotifications())
         {
           if (notification.getEventType() == Notification.REMOVE_MANY
               && notification.getFeature() == getModel1Package().getCompany_Categories())
@@ -666,8 +664,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        List<Notification> notifications = adapter.getNotifications();
-        for (Notification notification : notifications)
+        for (Notification notification : adapter.getNotifications())
         {
           if (notification.getEventType() == Notification.REMOVE
               && notification.getFeature() == getModel1Package().getProduct1_OrderDetails())
@@ -736,8 +733,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        List<Notification> notifications = adapter.getNotifications();
-        for (Notification notification : notifications)
+        for (Notification notification : adapter.getNotifications())
         {
           if (notification.getEventType() == Notification.REMOVE_MANY
               && notification.getFeature() == getModel1Package().getProduct1_OrderDetails())
@@ -773,9 +769,20 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       return notifier;
     }
 
-    public List<Notification> getNotifications()
+    public Notification[] getNotifications()
     {
-      return notifications;
+      synchronized (notifications)
+      {
+        return notifications.toArray(new Notification[notifications.size()]);
+      }
+    }
+
+    public void clearNotifications()
+    {
+      synchronized (notifications)
+      {
+        notifications.clear();
+      }
     }
 
     public boolean isAdapterForType(Object type)
@@ -785,7 +792,10 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     public void notifyChanged(Notification notification)
     {
-      notifications.add(notification);
+      synchronized (notifications)
+      {
+        notifications.add(notification);
+      }
     }
 
     public void setTarget(Notifier newTarget)

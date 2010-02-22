@@ -138,13 +138,40 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   int POLYGON_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonWithDuplicatesImpl
+   * <em>Polygon With Duplicates</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonWithDuplicatesImpl
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getPolygonWithDuplicates()
+   * @generated
+   */
+  int POLYGON_WITH_DUPLICATES = 3;
+
+  /**
+   * The feature id for the '<em><b>Points</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int POLYGON_WITH_DUPLICATES__POINTS = 0;
+
+  /**
+   * The number of structural features of the '<em>Polygon With Duplicates</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int POLYGON_WITH_DUPLICATES_FEATURE_COUNT = 1;
+
+  /**
    * The meta object id for the '<em>Point</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @see org.eclipse.emf.cdo.tests.model3.Point
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getPoint()
    * @generated
    */
-  int POINT = 3;
+  int POINT = 4;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.Class1 <em>Class1</em>}'. <!--
@@ -208,6 +235,28 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
    * @generated
    */
   EAttribute getPolygon_Points();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.PolygonWithDuplicates
+   * <em>Polygon With Duplicates</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Polygon With Duplicates</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.PolygonWithDuplicates
+   * @generated
+   */
+  EClass getPolygonWithDuplicates();
+
+  /**
+   * Returns the meta object for the attribute list '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model3.PolygonWithDuplicates#getPoints <em>Points</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute list '<em>Points</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.PolygonWithDuplicates#getPoints()
+   * @see #getPolygonWithDuplicates()
+   * @generated
+   */
+  EAttribute getPolygonWithDuplicates_Points();
 
   /**
    * Returns the meta object for data type '{@link org.eclipse.emf.cdo.tests.model3.Point <em>Point</em>}'. <!--
@@ -295,6 +344,24 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
      * @generated
      */
     EAttribute POLYGON__POINTS = eINSTANCE.getPolygon_Points();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonWithDuplicatesImpl
+     * <em>Polygon With Duplicates</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonWithDuplicatesImpl
+     * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getPolygonWithDuplicates()
+     * @generated
+     */
+    EClass POLYGON_WITH_DUPLICATES = eINSTANCE.getPolygonWithDuplicates();
+
+    /**
+     * The meta object literal for the '<em><b>Points</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute POLYGON_WITH_DUPLICATES__POINTS = eINSTANCE.getPolygonWithDuplicates_Points();
 
     /**
      * The meta object literal for the '<em>Point</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->

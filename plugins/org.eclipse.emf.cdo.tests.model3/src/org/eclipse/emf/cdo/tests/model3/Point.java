@@ -36,6 +36,29 @@ public final class Point
   }
 
   @Override
+  public int hashCode()
+  {
+    return x ^ y;
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (obj == this)
+    {
+      return true;
+    }
+
+    if (obj instanceof Point)
+    {
+      Point that = (Point)obj;
+      return x == that.getX() && y == that.getY();
+    }
+
+    return false;
+  }
+
+  @Override
   public String toString()
   {
     return Integer.toString(x) + "," + Integer.toString(y);

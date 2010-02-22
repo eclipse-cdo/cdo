@@ -53,6 +53,14 @@ public interface Model3Factory extends EFactory
   Polygon createPolygon();
 
   /**
+   * Returns a new object of class '<em>Polygon With Duplicates</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Polygon With Duplicates</em>'.
+   * @generated
+   */
+  PolygonWithDuplicates createPolygonWithDuplicates();
+
+  /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the package supported by this factory.

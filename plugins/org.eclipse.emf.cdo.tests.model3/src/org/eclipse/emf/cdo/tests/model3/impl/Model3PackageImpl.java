@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.tests.model3.Model3Factory;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
+import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage;
 import org.eclipse.emf.cdo.tests.model3.subpackage.impl.SubpackagePackageImpl;
 
@@ -54,6 +55,13 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * @generated
    */
   private EClass polygonEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass polygonWithDuplicatesEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -202,6 +210,26 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * 
    * @generated
    */
+  public EClass getPolygonWithDuplicates()
+  {
+    return polygonWithDuplicatesEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getPolygonWithDuplicates_Points()
+  {
+    return (EAttribute)polygonWithDuplicatesEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EDataType getPoint()
   {
     return pointEDataType;
@@ -247,6 +275,9 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
     polygonEClass = createEClass(POLYGON);
     createEAttribute(polygonEClass, POLYGON__POINTS);
+
+    polygonWithDuplicatesEClass = createEClass(POLYGON_WITH_DUPLICATES);
+    createEAttribute(polygonWithDuplicatesEClass, POLYGON_WITH_DUPLICATES__POINTS);
 
     // Create data types
     pointEDataType = createEDataType(POINT);
@@ -306,6 +337,11 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     initEClass(polygonEClass, Polygon.class, "Polygon", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPolygon_Points(), getPoint(), "points", null, 1, -1, Polygon.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(polygonWithDuplicatesEClass, PolygonWithDuplicates.class, "PolygonWithDuplicates", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPolygonWithDuplicates_Points(), getPoint(), "points", null, 1, -1, PolygonWithDuplicates.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(pointEDataType, Point.class, "Point", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

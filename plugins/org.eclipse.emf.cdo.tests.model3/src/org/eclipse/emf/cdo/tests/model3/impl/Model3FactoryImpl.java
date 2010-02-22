@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.tests.model3.Model3Factory;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
+import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -80,6 +81,8 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
       return createMetaRef();
     case Model3Package.POLYGON:
       return createPolygon();
+    case Model3Package.POLYGON_WITH_DUPLICATES:
+      return createPolygonWithDuplicates();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -150,6 +153,17 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
   {
     PolygonImpl polygon = new PolygonImpl();
     return polygon;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public PolygonWithDuplicates createPolygonWithDuplicates()
+  {
+    PolygonWithDuplicatesImpl polygonWithDuplicates = new PolygonWithDuplicatesImpl();
+    return polygonWithDuplicates;
   }
 
   /**

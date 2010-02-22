@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -116,8 +117,10 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     list.add(10);
     list.add(null);
     list.add(20);
-    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfInteger(), getModel5Package()
-        .getGenListOfInteger_Elements());
+
+    EAttribute elements = getModel5Package().getGenListOfInteger_Elements();
+    EClass containerClass = getModel5Package().getGenListOfInteger();
+    testMultiValuedIOfAttribute(list, containerClass, elements);
   }
 
   protected <T> void testMultiValuedIOfAttribute(List<T> list, EClass containerClass, EStructuralFeature feature)

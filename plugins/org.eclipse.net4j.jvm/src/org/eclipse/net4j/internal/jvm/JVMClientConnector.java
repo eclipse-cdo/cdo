@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -38,10 +38,11 @@ public class JVMClientConnector extends JVMConnector
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    acceptor = JVMAcceptorManager.INSTANCE.getAcceptor(getName());
+    String name = getName();
+    acceptor = JVMAcceptorManager.INSTANCE.getAcceptor(name);
     if (acceptor == null)
     {
-      throw new IllegalStateException("acceptor == null"); //$NON-NLS-1$
+      throw new IllegalStateException("No acceptor " + name); //$NON-NLS-1$
     }
   }
 

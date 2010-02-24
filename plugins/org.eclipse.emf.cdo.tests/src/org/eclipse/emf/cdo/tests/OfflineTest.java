@@ -17,10 +17,13 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.server.InternalStore;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.MEMOffline;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
+import org.eclipse.net4j.util.event.IEvent;
 
 import java.util.List;
 import java.util.Map;
@@ -104,5 +107,73 @@ public class OfflineTest extends AbstractCDOTest
       List<CDORevision> revisions = allRevisions.get(repository.getBranchManager().getMainBranch());
       assertEquals(expectedRevisions, revisions.size());
     }
+  }
+
+  public void testCloneClient() throws Exception
+  {
+    CDOSession masterSession = openSession(getRepository().getName() + "_master");
+    CDOTransaction transaction = masterSession.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+
+    TestListener listener = new TestListener();
+    CDOSession cloneSession = openSession();
+    cloneSession.addListener(listener);
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("Test");
+
+    resource.getContents().add(company);
+    long timeStamp = transaction.commit().getTimeStamp();
+    assertEquals(true, cloneSession.waitForUpdate(timeStamp, DEFAULT_TIMEOUT));
+    checkEvent(listener, 1, 4, 0, 0);
+
+    for (int i = 0; i < 10; i++)
+    {
+      company.setName("Test" + i);
+      timeStamp = transaction.commit().getTimeStamp();
+      assertEquals(true, cloneSession.waitForUpdate(timeStamp, DEFAULT_TIMEOUT));
+      checkEvent(listener, 0, 0, 1, 0);
+    }
+
+    for (int i = 0; i < 10; i++)
+    {
+      company.getCategories().add(getModel1Factory().createCategory());
+      timeStamp = transaction.commit().getTimeStamp();
+      assertEquals(true, cloneSession.waitForUpdate(timeStamp, DEFAULT_TIMEOUT));
+      checkEvent(listener, 0, 1, 1, 0);
+    }
+
+    for (int i = 0; i < 10; i++)
+    {
+      company.getCategories().remove(0);
+      timeStamp = transaction.commit().getTimeStamp();
+      assertEquals(true, cloneSession.waitForUpdate(timeStamp, DEFAULT_TIMEOUT));
+      checkEvent(listener, 0, 0, 1, 1);
+    }
+
+    masterSession.close();
+  }
+
+  private void checkEvent(TestListener listener, int newPackageUnits, int newObjects, int changedObjects,
+      int detachedObjects)
+  {
+    IEvent[] events = listener.getEvents();
+    assertEquals(1, events.length);
+
+    IEvent event = events[0];
+    if (event instanceof CDOSessionInvalidationEvent)
+    {
+      CDOSessionInvalidationEvent e = (CDOSessionInvalidationEvent)event;
+      assertEquals(newPackageUnits, e.getNewPackageUnits().size());
+      assertEquals(newObjects, e.getNewObjects().size());
+      assertEquals(changedObjects, e.getChangedObjects().size());
+      assertEquals(detachedObjects, e.getDetachedObjects().size());
+    }
+    else
+    {
+      fail("Invalid event: " + event);
+    }
+
+    listener.clearEvents();
   }
 }

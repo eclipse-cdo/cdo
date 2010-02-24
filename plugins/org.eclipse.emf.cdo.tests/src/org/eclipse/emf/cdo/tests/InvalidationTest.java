@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -26,12 +27,11 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -39,8 +39,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -49,13 +47,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class InvalidationTest extends AbstractCDOTest
 {
-  @Override
-  protected void doSetUp() throws Exception
-  {
-    skipTest();
-    super.doSetUp();
-  }
-
   public void testSeparateView() throws Exception
   {
     final CDOSession session = openSession();
@@ -502,7 +493,7 @@ public class InvalidationTest extends AbstractCDOTest
     category1A.setName("CHANGED NAME");
     transaction.commit();
 
-    assertEquals(1, sessionB.refresh());
+    sessionB.refresh();
 
     // TODO Why poll? refresh is synchonous...
     new PollingTimeOuter()
@@ -636,35 +627,22 @@ public class InvalidationTest extends AbstractCDOTest
 
   public void testDetach() throws Exception
   {
-    msg("Creating category1");
     final Category categoryA = getModel1Factory().createCategory();
     categoryA.setName("category1");
 
-    msg("Opening sessionA");
     final CDOSession sessionA = openSession();
-
-    msg("Attaching transaction");
     final CDOTransaction transaction = sessionA.openTransaction();
-
-    msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
 
-    msg("Adding company");
     resourceA.getContents().add(categoryA);
-
-    msg("Committing");
     transaction.commit();
 
     // ************************************************************* //
 
-    msg("Opening sessionB");
     final CDOSession sessionB = openSession();
-
-    msg("Attaching viewB");
     final CDOView viewB = sessionB.openTransaction();
     viewB.options().setInvalidationNotificationEnabled(true);
 
-    msg("Loading resource");
     final CDOResource resourceB = viewB.getResource("/test1");
     assertProxy(resourceB);
 
@@ -676,7 +654,7 @@ public class InvalidationTest extends AbstractCDOTest
     // ************************************************************* //
 
     resourceA.getContents().remove(categoryA);
-    assertEquals(0, testAdapter.getNotifications().size());
+    assertEquals(0, testAdapter.getNotifications().length);
 
     transaction.commit();
 
@@ -694,7 +672,7 @@ public class InvalidationTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return testAdapter.getNotifications().size() == 1;
+        return testAdapter.getNotifications().length == 2;
       }
     }.assertNoTimeOut();
   }
@@ -753,7 +731,7 @@ public class InvalidationTest extends AbstractCDOTest
     // ************************************************************* //
 
     resourceA.getContents().remove(categoryA);
-    assertEquals(0, testAdapter.getNotifications().size());
+    assertEquals(0, testAdapter.getNotifications().length);
 
     transaction.commit();
 
@@ -771,7 +749,7 @@ public class InvalidationTest extends AbstractCDOTest
           resourceA.cdoRevision().getBranch().getVersion(2));
     }
 
-    assertEquals(0, testAdapter.getNotifications().size());
+    assertEquals(0, testAdapter.getNotifications().length);
     sessionB.refresh();
 
     new PollingTimeOuter()
@@ -788,47 +766,65 @@ public class InvalidationTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return testAdapter.getNotifications().size() == 1;
+        return testAdapter.getNotifications().length == 2;
       }
     }.assertNoTimeOut();
   }
 
-  /**
-   * @author Simon McDuff
-   */
-  private static class TestAdapter implements Adapter
+  public void testPassiveUpdateMode_CHANGES() throws Exception
   {
-    private List<Notification> notifications = new ArrayList<Notification>();
+    Category categoryA = getModel1Factory().createCategory();
+    categoryA.setName("category1");
 
-    private Notifier notifier;
+    CDOSession sessionA = openSession();
+    CDOTransaction transaction = sessionA.openTransaction();
+    CDOResource resourceA = transaction.createResource("/test1");
 
-    public TestAdapter()
+    resourceA.getContents().add(categoryA);
+    transaction.commit();
+
+    // ************************************************************* //
+
+    CDOSession sessionB = openSession();
+    sessionB.options().setPassiveUpdateMode(PassiveUpdateMode.CHANGES);
+
+    CDOView viewB = sessionB.openTransaction();
+    CDOResource resourceB = viewB.getResource("/test1");
+
+    Category categoryB = (Category)resourceB.getContents().get(0);
+
+    final TestAdapter testAdapter = new TestAdapter();
+    categoryB.eAdapters().add(testAdapter);
+
+    // ************************************************************* //
+
+    categoryA.setName("CHANGED");
+    assertEquals(0, testAdapter.getNotifications().length);
+    transaction.commit();
+
+    new PollingTimeOuter()
     {
-    }
+      @Override
+      protected boolean successful()
+      {
+        Notification[] notifications = testAdapter.getNotifications();
+        if (notifications.length != 0)
+        {
+          if (!ObjectUtil.equals(notifications[0].getOldStringValue(), "category1"))
+          {
+            fail("No old value");
+          }
 
-    public Notifier getTarget()
-    {
-      return notifier;
-    }
+          if (!ObjectUtil.equals(notifications[0].getNewStringValue(), "CHANGED"))
+          {
+            fail("No new value");
+          }
 
-    public List<Notification> getNotifications()
-    {
-      return notifications;
-    }
+          return true;
+        }
 
-    public boolean isAdapterForType(Object type)
-    {
-      return false;
-    }
-
-    public void notifyChanged(Notification notification)
-    {
-      notifications.add(notification);
-    }
-
-    public void setTarget(Notifier newTarget)
-    {
-      notifier = newTarget;
-    }
+        return false;
+      }
+    }.assertNoTimeOut();
   }
 }

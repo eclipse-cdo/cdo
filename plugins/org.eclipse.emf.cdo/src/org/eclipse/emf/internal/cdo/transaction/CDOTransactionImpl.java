@@ -1574,7 +1574,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   @Override
   protected Set<CDOObject> invalidate(List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
-      List<CDORevisionDelta> deltas, Set<InternalCDOObject> dirtyObjects, Set<CDOObject> detachedObjects)
+      List<CDORevisionDelta> deltas, Set<InternalCDOObject> changedObjects, Set<CDOObject> detachedObjects)
   {
     if (!allDetachedObjects.isEmpty())
     {
@@ -1591,7 +1591,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       removeCrossReferences(cachedNewObjects, referencedOIDs);
     }
 
-    return super.invalidate(allChangedObjects, allDetachedObjects, deltas, dirtyObjects, detachedObjects);
+    return super.invalidate(allChangedObjects, allDetachedObjects, deltas, changedObjects, detachedObjects);
   }
 
   private void removeCrossReferences(Collection<CDOObject> objects, Set<CDOID> referencedOIDs)

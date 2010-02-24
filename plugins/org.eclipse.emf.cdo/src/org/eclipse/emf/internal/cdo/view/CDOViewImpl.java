@@ -1298,7 +1298,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
    * Note that this method can block for an uncertain amount of time on the reentrant view lock!
    */
   public void invalidate(long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects)
+      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions)
   {
     Set<CDOObject> conflicts = null;
     List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>();
@@ -1315,13 +1315,13 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       lock.unlock();
     }
 
-    notifyAdapters(changedObjects, detachedObjects);
+    sendInvalidationNotifications(changedObjects, detachedObjects);
     fireInvalidationEvent(lastUpdateTime, Collections.unmodifiableSet(changedObjects), Collections
         .unmodifiableSet(detachedObjects));
 
     if (!deltas.isEmpty() || !detachedObjects.isEmpty())
     {
-      handleChangeSubscription(deltas, detachedObjects);
+      sendDeltaNotifications(deltas, detachedObjects, oldRevisions);
     }
 
     if (conflicts != null)
@@ -1398,7 +1398,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     return conflicts;
   }
 
-  private void notifyAdapters(Set<InternalCDOObject> dirtyObjects, Set<CDOObject> detachedObjects)
+  private void sendInvalidationNotifications(Set<InternalCDOObject> dirtyObjects, Set<CDOObject> detachedObjects)
   {
     if (options().isInvalidationNotificationEnabled())
     {
@@ -1446,24 +1446,33 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   /**
    * @since 2.0
    */
-  public void handleChangeSubscription(List<CDORevisionDelta> deltas, Set<CDOObject> detachedObjects)
+  public void sendDeltaNotifications(List<CDORevisionDelta> deltas, Set<CDOObject> detachedObjects,
+      Map<CDOID, InternalCDORevision> oldRevisions)
   {
-    if (!options().hasChangeSubscriptionPolicies())
-    {
-      return;
-    }
-
     if (deltas != null)
     {
       CDONotificationBuilder builder = new CDONotificationBuilder(this);
       for (CDORevisionDelta delta : deltas)
       {
-        InternalCDOObject object = changeSubscriptionManager.getSubcribeObject(delta.getID());
+        CDOID id = delta.getID();
+
+        InternalCDOObject object;
+        synchronized (objects)
+        {
+          object = objects.get(id);
+        }
+
         if (object != null && object.eNotificationRequired())
         {
           // if (!isLocked(object))
           {
-            NotificationImpl notification = builder.buildNotification(object, delta, detachedObjects);
+            InternalCDORevision oldRevision = null;
+            if (oldRevisions != null)
+            {
+              oldRevision = oldRevisions.get(id);
+            }
+
+            NotificationImpl notification = builder.buildNotification(object, oldRevision, delta, detachedObjects);
             if (notification != null)
             {
               notification.dispatch();
@@ -1493,6 +1502,9 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     }
   }
 
+  /**
+   * TODO For this method to be useable locks must be cached locally!
+   */
   private boolean isLocked(InternalCDOObject object)
   {
     if (object.cdoWriteLock().isLocked())

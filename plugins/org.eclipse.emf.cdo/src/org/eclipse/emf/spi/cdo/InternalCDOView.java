@@ -68,7 +68,7 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
    * @since 3.0
    */
   public void invalidate(long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects);
+      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions);
 
   /**
    * @since 3.0

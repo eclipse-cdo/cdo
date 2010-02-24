@@ -55,10 +55,43 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
      * <p>
      * When enabled again, a refresh will be automatically performed to be in sync with the server.
      * 
-     * @return The number of remotely changed or detached objects if enabled, zero otherwise.
      * @since 3.0
      */
-    public int setPassiveUpdateEnabled(boolean enabled);
+    public void setPassiveUpdateEnabled(boolean enabled);
+
+    /**
+     * @since 3.0
+     */
+    public PassiveUpdateMode getPassiveUpdateMode();
+
+    /**
+     * @since 3.0
+     */
+    public void setPassiveUpdateMode(PassiveUpdateMode mode);
+
+    /**
+     * @author Eike Stepper
+     * @since 3.0
+     */
+    public enum PassiveUpdateMode
+    {
+      /**
+       * This mode delivers change deltas only for change subscriptions, invalidation information for all other objects.
+       */
+      INVALIDATIONS,
+
+      /**
+       * This mode delivers change deltas for all changed objects, whether they have change subscriptions or not.
+       * Revisions for new objects are not delivered.
+       */
+      CHANGES,
+
+      /**
+       * This mode delivers change deltas for all changed objects, whether they have change subscriptions or not. In
+       * addition full revisions for new objects are delivered.
+       */
+      ADDITIONS
+    }
 
     /**
      * @author Eike Stepper

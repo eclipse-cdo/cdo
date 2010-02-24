@@ -15,16 +15,10 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.TestAdapter;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
-
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 250910: IllegalArgumentException: created > revised
@@ -67,40 +61,6 @@ public class Bugzilla_250910_Test extends AbstractCDOTest
       transaction2.getLock().unlock();
       assertEquals(String.valueOf(i), company2.getName());
       // Need a way to test if an error occured in the invalidation process.
-    }
-  }
-
-  /**
-   * @author Simon McDuff
-   */
-  private static class TestAdapter implements Adapter
-  {
-    private List<Notification> notifications = new ArrayList<Notification>();
-
-    private Notifier notifier;
-
-    public TestAdapter()
-    {
-    }
-
-    public Notifier getTarget()
-    {
-      return notifier;
-    }
-
-    public boolean isAdapterForType(Object type)
-    {
-      return false;
-    }
-
-    public void notifyChanged(Notification notification)
-    {
-      notifications.add(notification);
-    }
-
-    public void setTarget(Notifier newTarget)
-    {
-      notifier = newTarget;
     }
   }
 }

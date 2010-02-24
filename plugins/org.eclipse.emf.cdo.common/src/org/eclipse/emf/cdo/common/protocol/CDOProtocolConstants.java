@@ -79,63 +79,68 @@ public interface CDOProtocolConstants
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_DISABLE_PASSIVE_UPDATES = 19;
-
-  public static final short SIGNAL_CHANGE_SUBSCRIPTION = 20;
-
-  public static final short SIGNAL_REPOSITORY_TIME = 21;
-
-  public static final short SIGNAL_LOCK_OBJECTS = 22;
-
-  public static final short SIGNAL_UNLOCK_OBJECTS = 23;
-
-  public static final short SIGNAL_OBJECT_LOCKED = 24;
-
-  public static final short SIGNAL_GET_REMOTE_SESSIONS = 25;
+  public static final short SIGNAL_DISABLE_PASSIVE_UPDATE = 19;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_REMOTE_MESSAGE = 26;
+  public static final short SIGNAL_SET_PASSIVE_UPDATE_MODE = 20;
+
+  public static final short SIGNAL_CHANGE_SUBSCRIPTION = 21;
+
+  public static final short SIGNAL_REPOSITORY_TIME = 22;
+
+  public static final short SIGNAL_LOCK_OBJECTS = 23;
+
+  public static final short SIGNAL_UNLOCK_OBJECTS = 24;
+
+  public static final short SIGNAL_OBJECT_LOCKED = 25;
+
+  public static final short SIGNAL_GET_REMOTE_SESSIONS = 26;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_REMOTE_MESSAGE_NOTIFICATION = 27;
-
-  public static final short SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS = 28;
-
-  public static final short SIGNAL_REMOTE_SESSION_NOTIFICATION = 29;
+  public static final short SIGNAL_REMOTE_MESSAGE = 27;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_CREATE_BRANCH = 30;
+  public static final short SIGNAL_REMOTE_MESSAGE_NOTIFICATION = 28;
+
+  public static final short SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS = 29;
+
+  public static final short SIGNAL_REMOTE_SESSION_NOTIFICATION = 30;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_BRANCH = 31;
+  public static final short SIGNAL_CREATE_BRANCH = 31;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_SUB_BRANCHES = 32;
+  public static final short SIGNAL_LOAD_BRANCH = 32;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_BRANCH_NOTIFICATION = 33;
+  public static final short SIGNAL_LOAD_SUB_BRANCHES = 33;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_COMMIT_INFOS = 34;
+  public static final short SIGNAL_BRANCH_NOTIFICATION = 34;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_CLONE_REPOSITORY = 35;
+  public static final short SIGNAL_LOAD_COMMIT_INFOS = 35;
+
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_CLONE_REPOSITORY = 36;
 
   // //////////////////////////////////////////////////////////////////////
   // Session Management

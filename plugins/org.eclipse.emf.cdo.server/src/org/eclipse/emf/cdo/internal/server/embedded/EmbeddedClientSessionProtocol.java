@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.server.embedded;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
@@ -126,11 +127,17 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     return result;
   }
 
-  public void disablePassiveUpdates()
+  public void disablePassiveUpdate()
   {
     // serverSessionProtocol.getSession().setPassiveUpdateEnabled(passiveUpdateEnabled);
     // TODO: implement EmbeddedClientSessionProtocol.setPassiveUpdate(idAndVersions, initialChunkSize,
     // passiveUpdateEnabled)
+    throw new UnsupportedOperationException();
+  }
+
+  public void setPassiveUpdateMode(PassiveUpdateMode mode)
+  {
+    // TODO: implement EmbeddedClientSessionProtocol.setPassiveUpdateMode(mode)
     throw new UnsupportedOperationException();
   }
 

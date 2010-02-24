@@ -16,6 +16,7 @@
 package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
@@ -56,6 +57,7 @@ import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.QueueRunner;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
@@ -482,12 +484,12 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   public long refresh()
   {
     checkActive();
-    if (!options().isPassiveUpdateEnabled())
+    if (options().isPassiveUpdateEnabled())
     {
-      return refresh(false);
+      return CDOBranchPoint.UNSPECIFIED_DATE;
     }
 
-    return 0;
+    return refresh(false);
   }
 
   private long refresh(boolean enablePassiveUpdates)
@@ -528,6 +530,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       List<InternalCDOView> branchViews, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
   {
     Map<CDOID, InternalCDORevision> oldRevisions = viewedRevisions.get(branch);
+    Map<CDOID, Pair<InternalCDORevision, InternalCDORevision>> newRevisions = null;
 
     List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
     for (InternalCDORevision newRevision : result.getChangedObjects(branch))
@@ -537,6 +540,13 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       InternalCDORevision oldRevision = oldRevisions.get(newRevision.getID());
       InternalCDORevisionDelta delta = newRevision.compare(oldRevision);
       changedObjects.add(delta);
+
+      if (newRevisions == null)
+      {
+        newRevisions = new HashMap<CDOID, Pair<InternalCDORevision, InternalCDORevision>>();
+      }
+
+      newRevisions.put(delta.getID(), new Pair<InternalCDORevision, InternalCDORevision>(oldRevision, newRevision));
     }
 
     List<CDOIDAndVersion> detachedObjects = result.getDetachedObjects(branch);
@@ -547,7 +557,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     for (InternalCDOView view : branchViews)
     {
-      view.invalidate(result.getLastUpdateTime(), changedObjects, detachedObjects);
+      view.invalidate(result.getLastUpdateTime(), changedObjects, detachedObjects, oldRevisions);
     }
   }
 
@@ -689,8 +699,9 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
   }
 
-  private void reviseRevisions(CDOCommitInfo commitInfo)
+  private Map<CDOID, InternalCDORevision> reviseRevisions(CDOCommitInfo commitInfo)
   {
+    Map<CDOID, InternalCDORevision> oldRevisions = null;
     CDOBranch newBranch = commitInfo.getBranch();
     long timeStamp = commitInfo.getTimeStamp();
     InternalCDORevisionManager revisionManager = getRevisionManager();
@@ -708,17 +719,26 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     // Apply deltas and cache the resulting new revisions, if possible...
     for (CDORevisionKey key : commitInfo.getChangedObjects())
     {
-      InternalCDORevision newRevision = createNewRevision(key, commitInfo);
-      if (newRevision != null)
+      CDOID id = key.getID();
+      Pair<InternalCDORevision, InternalCDORevision> pair = createNewRevision(key, commitInfo);
+      if (pair != null)
       {
+        InternalCDORevision newRevision = pair.getElement2();
         revisionManager.addRevision(newRevision);
+        if (oldRevisions == null)
+        {
+          oldRevisions = new HashMap<CDOID, InternalCDORevision>();
+        }
+
+        InternalCDORevision oldRevision = pair.getElement1();
+        oldRevisions.put(id, oldRevision);
       }
       else
       {
         // ... otherwise try to revise old revision if it is in the same branch
         if (key.getBranch() == newBranch)
         {
-          revisionManager.reviseVersion(key.getID(), key, timeStamp);
+          revisionManager.reviseVersion(id, key, timeStamp);
         }
       }
     }
@@ -738,9 +758,12 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         revisionManager.reviseVersion(id, branchVersion, timeStamp);
       }
     }
+
+    return oldRevisions;
   }
 
-  private InternalCDORevision createNewRevision(CDORevisionKey potentialDelta, CDOCommitInfo commitInfo)
+  private Pair<InternalCDORevision, InternalCDORevision> createNewRevision(CDORevisionKey potentialDelta,
+      CDOCommitInfo commitInfo)
   {
     if (potentialDelta instanceof CDORevisionDelta)
     {
@@ -755,7 +778,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         InternalCDORevision newRevision = oldRevision.copy();
         newRevision.adjustForCommit(commitInfo.getBranch(), commitInfo.getTimeStamp());
         delta.apply(newRevision);
-        return newRevision;
+        return new Pair<InternalCDORevision, InternalCDORevision>(oldRevision, newRevision);
       }
     }
 
@@ -767,14 +790,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
    */
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
   {
-    reviseRevisions(commitInfo);
+    Map<CDOID, InternalCDORevision> oldRevisions = reviseRevisions(commitInfo);
 
     for (InternalCDOView view : getViews())
     {
       if (view != sender && view.getBranch() == commitInfo.getBranch())
       {
         QueueRunner runner = getInvalidationRunner();
-        runner.addWork(new InvalidationRunnable(view, commitInfo));
+        runner.addWork(new InvalidationRunnable(view, commitInfo, oldRevisions));
       }
     }
 
@@ -962,6 +985,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     private boolean passiveUpdateEnabled = true;
 
+    private PassiveUpdateMode passiveUpdateMode = PassiveUpdateMode.INVALIDATIONS;
+
     private CDOCollectionLoadingPolicy collectionLoadingPolicy = CDOCollectionLoadingPolicy.DEFAULT;
 
     public OptionsImpl()
@@ -999,9 +1024,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       return passiveUpdateEnabled;
     }
 
-    public synchronized int setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
+    public synchronized void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
     {
-      int result = 0;
       if (this.passiveUpdateEnabled != passiveUpdateEnabled)
       {
         this.passiveUpdateEnabled = passiveUpdateEnabled;
@@ -1011,7 +1035,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         }
         else
         {
-          getSessionProtocol().disablePassiveUpdates();
+          getSessionProtocol().disablePassiveUpdate();
         }
 
         IListener[] listeners = getListeners();
@@ -1020,8 +1044,27 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
           fireEvent(new PassiveUpdateEventImpl(), listeners);
         }
       }
+    }
 
-      return result;
+    public PassiveUpdateMode getPassiveUpdateMode()
+    {
+      return passiveUpdateMode;
+    }
+
+    public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
+    {
+      checkArg(passiveUpdateMode, "passiveUpdateMode");
+      if (this.passiveUpdateMode != passiveUpdateMode)
+      {
+        this.passiveUpdateMode = passiveUpdateMode;
+        getSessionProtocol().setPassiveUpdateMode(passiveUpdateMode);
+
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new PassiveUpdateEventImpl(), listeners);
+        }
+      }
     }
 
     public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
@@ -1097,10 +1140,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     private CDOCommitInfo commitInfo;
 
-    private InvalidationRunnable(InternalCDOView view, CDOCommitInfo commitInfo)
+    private Map<CDOID, InternalCDORevision> oldRevisions;
+
+    private InvalidationRunnable(InternalCDOView view, CDOCommitInfo commitInfo,
+        Map<CDOID, InternalCDORevision> oldRevisions)
     {
       this.view = view;
       this.commitInfo = commitInfo;
+      this.oldRevisions = oldRevisions;
     }
 
     public void run()
@@ -1111,7 +1158,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         long lastUpdateTime = commitInfo.getTimeStamp();
         List<CDORevisionKey> allChangedObjects = commitInfo.getChangedObjects();
         List<CDOIDAndVersion> allDetachedObjects = commitInfo.getDetachedObjects();
-        view.invalidate(lastUpdateTime, allChangedObjects, allDetachedObjects);
+        view.invalidate(lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions);
       }
       catch (RuntimeException ex)
       {
@@ -1632,14 +1679,31 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public void disablePassiveUpdates()
+    public void disablePassiveUpdate()
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          delegate.disablePassiveUpdates();
+          delegate.disablePassiveUpdate();
+          return;
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public void setPassiveUpdateMode(PassiveUpdateMode mode)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          delegate.setPassiveUpdateMode(mode);
           return;
         }
         catch (Exception ex)

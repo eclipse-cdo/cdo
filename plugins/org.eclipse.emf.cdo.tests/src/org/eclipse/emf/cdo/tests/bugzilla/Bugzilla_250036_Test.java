@@ -14,14 +14,13 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.TestAdapter;
 import org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleContained;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
@@ -74,17 +73,19 @@ public class Bugzilla_250036_Test extends AbstractCDOTest
       assertEquals(CDOUtil.getCDOObject(expectedValue.get(i)).cdoID(), CDOUtil.getCDOObject(object).cdoID());
     }
 
-    final TestAdapter counter = new TestAdapter();
-    genRefMap.eAdapters().add(counter);
+    final TestAdapter adapter = new TestAdapter();
+    genRefMap.eAdapters().add(adapter);
     transaction2.options().setInvalidationNotificationEnabled(true);
 
     /********* transaction 1 ***************/
+    final int counter[] = { 0 };
     for (int i = 10; i < 20; i++)
     {
       GenRefSingleContained value = getModel4Factory().createGenRefSingleContained();
       elementA.getElements().put(String.valueOf(i), value);
       resource2.getContents().add(value);
       expectedValue.add(value);
+      ++counter[0];
     }
 
     transaction.commit();
@@ -95,7 +96,9 @@ public class Bugzilla_250036_Test extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return counter.getNotifications().size() == 1;
+        // 10 delta notifications from local commit (same session) plus 1 invalidation notification
+        Notification[] notifications = adapter.getNotifications();
+        return notifications.length == 1 + counter[0];
       }
     }.assertNoTimeOut();
 
@@ -108,45 +111,6 @@ public class Bugzilla_250036_Test extends AbstractCDOTest
       EObject object = mapOfEObject.get(String.valueOf(i));
       assertNotNull(object);
       assertEquals(CDOUtil.getCDOObject(expectedValue.get(i)).cdoID(), CDOUtil.getCDOObject(object).cdoID());
-    }
-  }
-
-  /**
-   * @author Simon McDuff
-   */
-  private static class TestAdapter implements Adapter
-  {
-    private List<Notification> notifications = new ArrayList<Notification>();
-
-    private Notifier notifier;
-
-    public TestAdapter()
-    {
-    }
-
-    public Notifier getTarget()
-    {
-      return notifier;
-    }
-
-    public List<Notification> getNotifications()
-    {
-      return notifications;
-    }
-
-    public boolean isAdapterForType(Object type)
-    {
-      return false;
-    }
-
-    public void notifyChanged(Notification notification)
-    {
-      notifications.add(notification);
-    }
-
-    public void setTarget(Notifier newTarget)
-    {
-      notifier = newTarget;
     }
   }
 }

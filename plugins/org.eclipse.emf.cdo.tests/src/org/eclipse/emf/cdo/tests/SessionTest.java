@@ -21,12 +21,14 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.signal.RemoteException;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.security.PasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.UserManager;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
+
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @author Eike Stepper
@@ -164,19 +166,29 @@ public class SessionTest extends AbstractCDOTest
     final CDOTransaction transaction = openSession().openTransaction();
     transaction.createResource("ttt");
 
+    final CountDownLatch latch = new CountDownLatch(1);
     new Thread()
     {
       @Override
       public void run()
       {
-        ConcurrencyUtil.sleep(4000);
-        msg("Committing NOW!");
-        transaction.commit();
+        try
+        {
+          latch.await();
+          msg("Committing NOW!");
+          transaction.commit();
+        }
+        catch (Exception ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
       }
     }.start();
 
     CDOSession session2 = openSession();
-    assertEquals(true, session2.waitForUpdate(System.currentTimeMillis() + 2000L, DEFAULT_TIMEOUT));
+
+    latch.countDown();
+    assertEquals(true, session2.waitForUpdate(System.currentTimeMillis(), DEFAULT_TIMEOUT));
 
     transaction.getSession().close();
     session2.close();

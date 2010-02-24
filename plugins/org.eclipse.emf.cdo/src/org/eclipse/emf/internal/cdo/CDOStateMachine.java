@@ -465,7 +465,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   }
 
   /**
-   * @since 2.0
+   * @since 3.0
    */
   public void invalidate(InternalCDOObject object, int version)
   {
@@ -941,8 +941,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Integer version)
     {
-      InternalCDORevision revision = object.cdoRevision();
-      if (version == CDORevision.UNSPECIFIED_VERSION || revision.getVersion() <= version)
+      InternalCDORevision oldRevision = object.cdoRevision();
+      if (version == CDORevision.UNSPECIFIED_VERSION || oldRevision.getVersion() <= version)
       {
         changeState(object, CDOState.PROXY);
         object.cdoInternalSetRevision(null);
@@ -960,8 +960,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Integer version)
     {
-      InternalCDORevision revision = object.cdoRevision();
-      if (version == CDORevision.UNSPECIFIED_VERSION || revision.getVersion() <= version + 1)
+      InternalCDORevision oldRevision = object.cdoRevision();
+      if (version == CDORevision.UNSPECIFIED_VERSION || oldRevision.getVersion() <= version + 1)
       {
         InternalCDOView view = object.cdoView();
         InternalCDOTransaction transaction = view.toTransaction();

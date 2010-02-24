@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
@@ -43,126 +42,134 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 {
   public void testSameSession() throws Exception
   {
-    testSameSession(CDOAdapterPolicy.ALL);
-  }
+    final Category category1A = getModel1Factory().createCategory();
+    category1A.setName("category1");
 
-  public void testSameSession_WithoutPolicy() throws Exception
-  {
-    testSameSession(null);
-  }
+    final Company companyA = getModel1Factory().createCompany();
+    companyA.getCategories().add(category1A);
 
-  private void testSameSession(final CDOAdapterPolicy policy) throws Exception
-  {
-    msg("Opening session");
     final CDOSession session = openSession();
 
     // ************************************************************* //
 
-    msg("Creating category1");
-    final Category category1A = getModel1Factory().createCategory();
-    category1A.setName("category1");
-
-    msg("Creating company");
-    final Company companyA = getModel1Factory().createCompany();
-
-    msg("Adding categories");
-    companyA.getCategories().add(category1A);
-
-    msg("Opening transaction");
     final CDOTransaction transaction = session.openTransaction();
+    transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    if (policy != null)
-    {
-      transaction.options().addChangeSubscriptionPolicy(policy);
-    }
-
-    msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
-
-    msg("Adding company");
     resourceA.getContents().add(companyA);
 
-    msg("Committing");
     transaction.commit();
     final TestAdapter adapter = new TestAdapter();
     category1A.eAdapters().add(adapter);
 
     // ************************************************************* //
 
-    msg("Opening view");
     final CDOTransaction transaction2 = session.openTransaction();
 
     final Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A)
         .cdoID(), true));
-
-    msg("Changing name");
     category1B.setName("CHANGED NAME");
-
     assertEquals(0, adapter.getNotifications().length);
 
-    msg("Committing");
     transaction2.commit();
 
-    // Be sure the threading is done before changing the policy... since if we change the policy before the
-    // notifications happens... it will not produce the desire effect!
-    Thread.sleep(1000);
-
-    msg("Checking after commit");
     new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
-        return policy == CDOAdapterPolicy.ALL && adapter.getNotifications().length == 1 || policy == null
-            && adapter.getNotifications().length == 0;
+        // Commit notifications from the same session always have full deltas
+        Notification[] notifications = adapter.getNotifications();
+        return notifications.length == 1;
       }
     }.assertNoTimeOut();
 
-    // Switching policy to the other
-    transaction.options().removeChangeSubscriptionPolicy(policy);
-    final CDOAdapterPolicy enabled2 = policy == CDOAdapterPolicy.ALL ? null : CDOAdapterPolicy.ALL;
-    if (enabled2 != null)
-    {
-      transaction.options().addChangeSubscriptionPolicy(enabled2);
-    }
-
+    // Removing policy
+    transaction.options().removeChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     adapter.clearNotifications();
 
-    msg("Changing name");
     category1B.setName("CHANGED NAME_VERSION 2");
-
     assertEquals(0, adapter.getNotifications().length);
 
-    msg("Committing");
     transaction2.commit();
 
-    // Be sure the threading is done before changing the policy... since if we change the policy before the
-    // notifications happens... it will not produce the desire effect!
-    Thread.sleep(1000);
-
-    msg("Checking after commit");
     new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
-        return enabled2 == CDOAdapterPolicy.ALL && adapter.getNotifications().length == 1 || enabled2 == null
-            && adapter.getNotifications().length == 0;
+        // Commit notifications from the same session always have full deltas
+        Notification[] notifications = adapter.getNotifications();
+        return notifications.length == 1;
+      }
+    }.assertNoTimeOut();
+  }
+
+  public void testSameSession_WithoutPolicy() throws Exception
+  {
+    final Category category1A = getModel1Factory().createCategory();
+    category1A.setName("category1");
+
+    final Company companyA = getModel1Factory().createCompany();
+    companyA.getCategories().add(category1A);
+
+    final CDOSession session = openSession();
+
+    // ************************************************************* //
+
+    final CDOTransaction transaction = session.openTransaction();
+
+    final CDOResource resourceA = transaction.createResource("/test1");
+    resourceA.getContents().add(companyA);
+
+    transaction.commit();
+    final TestAdapter adapter = new TestAdapter();
+    category1A.eAdapters().add(adapter);
+
+    // ************************************************************* //
+
+    final CDOTransaction transaction2 = session.openTransaction();
+
+    final Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A)
+        .cdoID(), true));
+    category1B.setName("CHANGED NAME");
+    assertEquals(0, adapter.getNotifications().length);
+
+    transaction2.commit();
+
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        // Commit notifications from the same session always have full deltas
+        Notification[] notifications = adapter.getNotifications();
+        return notifications.length == 1;
+      }
+    }.assertNoTimeOut();
+
+    // Adding policy
+    transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    adapter.clearNotifications();
+
+    category1B.setName("CHANGED NAME_VERSION 2");
+    assertEquals(0, adapter.getNotifications().length);
+
+    transaction2.commit();
+
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        // Commit notifications from the same session always have full deltas
+        Notification[] notifications = adapter.getNotifications();
+        return notifications.length == 1;
       }
     }.assertNoTimeOut();
   }
 
   public void testSeparateSession() throws Exception
-  {
-    testSeparateSession(CDOAdapterPolicy.ALL);
-  }
-
-  public void testSeparateSession_WithoutPolicy() throws Exception
-  {
-    testSeparateSession(null);
-  }
-
-  private void testSeparateSession(final CDOAdapterPolicy policy) throws Exception
   {
     Category category1A = getModel1Factory().createCategory();
     category1A.setName("category1");
@@ -172,10 +179,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    if (policy != null)
-    {
-      transaction.options().addChangeSubscriptionPolicy(policy);
-    }
+    transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     CDOResource resourceA = transaction.createResource("/test1");
     resourceA.getContents().add(companyA);
@@ -201,19 +205,14 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return policy == CDOAdapterPolicy.ALL && adapter.getNotifications().length == 1 || policy == null
-            && adapter.getNotifications().length == 0;
+        // Change subscription leads to delta nnotification
+        Notification[] notifications = adapter.getNotifications();
+        return notifications.length == 1;
       }
     }.assertNoTimeOut();
 
-    // Switching policy to the other
-    transaction.options().removeChangeSubscriptionPolicy(policy);
-    final CDOAdapterPolicy enabled2 = policy == CDOAdapterPolicy.ALL ? null : CDOAdapterPolicy.ALL;
-    if (enabled2 != null)
-    {
-      transaction.options().addChangeSubscriptionPolicy(enabled2);
-    }
-
+    // Removing policy
+    transaction.options().removeChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     adapter.clearNotifications();
 
     category1B.setName("CHANGED NAME_VERSION 2");
@@ -226,8 +225,71 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return enabled2 == CDOAdapterPolicy.ALL && adapter.getNotifications().length == 1 || enabled2 == null
-            && adapter.getNotifications().length == 0;
+        // No change subscription, other session ==> no delta notification
+        Notification[] notifications = adapter.getNotifications();
+        return notifications.length != 0;
+      }
+    }.assertTimeOut();
+  }
+
+  public void testSeparateSession_WithoutPolicy() throws Exception
+  {
+    Category category1A = getModel1Factory().createCategory();
+    category1A.setName("category1");
+
+    Company companyA = getModel1Factory().createCompany();
+    companyA.getCategories().add(category1A);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOResource resourceA = transaction.createResource("/test1");
+    resourceA.getContents().add(companyA);
+    transaction.commit();
+
+    final TestAdapter adapter = new TestAdapter();
+    category1A.eAdapters().add(adapter);
+
+    // ************************************************************* //
+
+    CDOSession session2 = openSession();
+    CDOTransaction transaction2 = session2.openTransaction();
+
+    Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(),
+        true));
+    category1B.setName("CHANGED NAME");
+    assertEquals(0, adapter.getNotifications().length);
+
+    transaction2.commit();
+
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        // No change subscription, other session ==> no delta notification
+        Notification[] notifications = adapter.getNotifications();
+        return notifications.length != 0;
+      }
+    }.assertTimeOut();
+
+    // Adding policy
+    transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    adapter.clearNotifications();
+
+    category1B.setName("CHANGED NAME_VERSION 2");
+    assertEquals(0, adapter.getNotifications().length);
+
+    transaction2.commit();
+
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        // Change subscription leads to delta nnotification
+        Notification[] notifications = adapter.getNotifications();
+        return notifications.length == 1;
       }
     }.assertNoTimeOut();
   }
@@ -749,59 +811,6 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     assertInstanceOf(Collection.class, oldValue[0]);
     assertEquals(details.size(), ((Collection<?>)oldValue[0]).size());
-  }
-
-  /**
-   * @author Simon McDuff
-   */
-  private static class TestAdapter implements Adapter
-  {
-    private List<Notification> notifications = new ArrayList<Notification>();
-
-    private Notifier notifier;
-
-    public TestAdapter()
-    {
-    }
-
-    public Notifier getTarget()
-    {
-      return notifier;
-    }
-
-    public Notification[] getNotifications()
-    {
-      synchronized (notifications)
-      {
-        return notifications.toArray(new Notification[notifications.size()]);
-      }
-    }
-
-    public void clearNotifications()
-    {
-      synchronized (notifications)
-      {
-        notifications.clear();
-      }
-    }
-
-    public boolean isAdapterForType(Object type)
-    {
-      return false;
-    }
-
-    public void notifyChanged(Notification notification)
-    {
-      synchronized (notifications)
-      {
-        notifications.add(notification);
-      }
-    }
-
-    public void setTarget(Notifier newTarget)
-    {
-      notifier = newTarget;
-    }
   }
 
   /**

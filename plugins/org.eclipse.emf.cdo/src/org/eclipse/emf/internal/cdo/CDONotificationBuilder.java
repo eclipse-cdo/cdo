@@ -56,6 +56,8 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 
   private Set<CDOObject> detachedObjects;
 
+  private InternalCDORevision oldRevision;
+
   /**
    * @since 3.0
    */
@@ -75,8 +77,8 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
   /**
    * @since 3.0
    */
-  public synchronized NotificationImpl buildNotification(InternalEObject object, CDORevisionDelta revisionDelta,
-      Set<CDOObject> detachedObjects)
+  public synchronized NotificationImpl buildNotification(InternalEObject object, InternalCDORevision oldRevision,
+      CDORevisionDelta revisionDelta, Set<CDOObject> detachedObjects)
   {
     notification = null;
     revision = null;
@@ -85,21 +87,24 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
     this.object = object;
     this.revisionDelta = revisionDelta;
     this.detachedObjects = detachedObjects;
+    this.oldRevision = oldRevision;
     revisionDelta.accept(this);
     return notification;
   }
 
   public void visit(CDOMoveFeatureDelta delta)
   {
+    EStructuralFeature feature = delta.getFeature();
     int oldPosition = delta.getOldPosition();
     int newPosition = delta.getNewPosition();
-    add(new CDODeltaNotificationImpl(object, NotificationImpl.MOVE, getEFeatureID(delta.getFeature()), new Integer(
-        oldPosition), null, newPosition));
+    add(new CDODeltaNotificationImpl(object, NotificationImpl.MOVE, getEFeatureID(feature), new Integer(oldPosition),
+        getOldValue(feature), newPosition));
   }
 
   public void visit(CDOAddFeatureDelta delta)
   {
-    add(new CDODeltaNotificationImpl(object, NotificationImpl.ADD, getEFeatureID(delta.getFeature()), null, delta
+    EStructuralFeature feature = delta.getFeature();
+    add(new CDODeltaNotificationImpl(object, NotificationImpl.ADD, getEFeatureID(feature), getOldValue(feature), delta
         .getValue(), delta.getIndex()));
   }
 
@@ -137,13 +142,15 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 
   public void visit(CDOSetFeatureDelta delta)
   {
-    add(new CDODeltaNotificationImpl(object, NotificationImpl.SET, getEFeatureID(delta.getFeature()), null, delta
+    EStructuralFeature feature = delta.getFeature();
+    add(new CDODeltaNotificationImpl(object, NotificationImpl.SET, getEFeatureID(feature), getOldValue(feature), delta
         .getValue()));
   }
 
   public void visit(CDOUnsetFeatureDelta delta)
   {
-    add(new CDODeltaNotificationImpl(object, NotificationImpl.UNSET, getEFeatureID(delta.getFeature()), null, null));
+    EStructuralFeature feature = delta.getFeature();
+    add(new CDODeltaNotificationImpl(object, NotificationImpl.UNSET, getEFeatureID(feature), getOldValue(feature), null));
   }
 
   public void visit(CDOListFeatureDelta deltas)
@@ -156,14 +163,21 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 
   public void visit(CDOClearFeatureDelta delta)
   {
-    add(new CDODeltaNotificationImpl(object, NotificationImpl.REMOVE_MANY, getEFeatureID(delta.getFeature()), null,
-        null));
+    EStructuralFeature feature = delta.getFeature();
+    add(new CDODeltaNotificationImpl(object, NotificationImpl.REMOVE_MANY, getEFeatureID(feature),
+        getOldValue(feature), null));
   }
 
   public void visit(CDOContainerFeatureDelta delta)
   {
-    add(new CDODeltaNotificationImpl(object, NotificationImpl.SET, EcorePackage.eINSTANCE.eContainmentFeature(), null,
-        delta.getContainerID()));
+    Object oldValue = null;
+    if (oldRevision != null)
+    {
+      oldValue = oldRevision.getContainerID();
+    }
+
+    add(new CDODeltaNotificationImpl(object, NotificationImpl.SET, EcorePackage.eINSTANCE.eContainmentFeature(),
+        oldValue, delta.getContainerID()));
   }
 
   protected void add(CDODeltaNotificationImpl newNotificaton)
@@ -182,5 +196,15 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
   private int getEFeatureID(EStructuralFeature eFeature)
   {
     return object.eClass().getFeatureID(eFeature);
+  }
+
+  private Object getOldValue(EStructuralFeature feature)
+  {
+    if (oldRevision == null)
+    {
+      return null;
+    }
+
+    return oldRevision.getValue(feature);
   }
 }

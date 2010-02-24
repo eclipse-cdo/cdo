@@ -73,6 +73,8 @@ public class Session extends Container<IView> implements InternalSession
 
   private boolean passiveUpdateEnabled = true;
 
+  private PassiveUpdateMode passiveUpdateMode = PassiveUpdateMode.INVALIDATIONS;
+
   private ConcurrentMap<Integer, InternalView> views = new ConcurrentHashMap<Integer, InternalView>();
 
   @ExcludeFromDump
@@ -182,11 +184,22 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
-  public int setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
+  public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
   {
     checkActive();
     this.passiveUpdateEnabled = passiveUpdateEnabled;
-    return 0;
+  }
+
+  public PassiveUpdateMode getPassiveUpdateMode()
+  {
+    return passiveUpdateMode;
+  }
+
+  public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
+  {
+    checkActive();
+    checkArg(passiveUpdateMode, "passiveUpdateMode");
+    this.passiveUpdateMode = passiveUpdateMode;
   }
 
   public InternalView[] getElements()
@@ -316,6 +329,10 @@ public class Session extends Container<IView> implements InternalSession
     final InternalView[] views = getViews();
     protocol.sendCommitNotification(new DelegatingCommitInfo()
     {
+      final boolean additions = getPassiveUpdateMode() == PassiveUpdateMode.ADDITIONS;
+
+      final boolean changes = getPassiveUpdateMode() == PassiveUpdateMode.CHANGES;
+
       @Override
       protected CDOCommitInfo getDelegate()
       {
@@ -333,6 +350,11 @@ public class Session extends Container<IView> implements InternalSession
           {
             // The following will always be a CDORevision!
             CDOIDAndVersion newObject = newObjects.get(index);
+            if (additions)
+            {
+              // Return full revisions if not in INVALIDATION mode
+              return newObject;
+            }
 
             // Prevent sending whole revisions by copying the id and version
             return CDOIDUtil.createIDAndVersion(newObject);
@@ -357,8 +379,7 @@ public class Session extends Container<IView> implements InternalSession
           {
             // The following will always be a CDORevisionDelta!
             CDORevisionKey changedObject = changedObjects.get(index);
-
-            if (hasSubscription(changedObject.getID(), views))
+            if (changes || additions || hasSubscription(changedObject.getID(), views))
             {
               return changedObject;
             }

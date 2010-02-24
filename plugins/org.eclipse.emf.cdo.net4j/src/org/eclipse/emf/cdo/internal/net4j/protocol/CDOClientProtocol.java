@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
@@ -85,9 +86,14 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new OpenSessionRequest(this, repositoryName, passiveUpdateEnabled));
   }
 
-  public void disablePassiveUpdates()
+  public void disablePassiveUpdate()
   {
-    send(new DisablePassiveUpdatesRequest(this));
+    send(new DisablePassiveUpdateRequest(this));
+  }
+
+  public void setPassiveUpdateMode(PassiveUpdateMode mode)
+  {
+    send(new SetPassiveUpdateModeRequest(this, mode));
   }
 
   public RepositoryTimeResult getRepositoryTime()

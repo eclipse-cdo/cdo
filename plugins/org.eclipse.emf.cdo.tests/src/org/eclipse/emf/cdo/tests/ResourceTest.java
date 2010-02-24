@@ -1527,7 +1527,10 @@ public class ResourceTest extends AbstractCDOTest
     assertEquals(expected, nodes.size());
   }
 
-  static class TestAdapter extends AdapterImpl
+  /**
+   * @author Eike Stepper
+   */
+  private static class TestAdapter extends AdapterImpl
   {
     @Override
     public void notifyChanged(Notification msg)

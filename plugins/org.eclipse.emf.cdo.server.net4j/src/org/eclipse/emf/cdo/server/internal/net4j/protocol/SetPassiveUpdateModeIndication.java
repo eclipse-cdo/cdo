@@ -1,4 +1,4 @@
-/***************************************************************************
+/**
  * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,9 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - bug 230832
- **************************************************************************/
-package org.eclipse.emf.cdo.internal.net4j.protocol;
+ */
+package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -20,21 +21,24 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class DisablePassiveUpdatesRequest extends CDOClientRequest<Boolean>
+public class SetPassiveUpdateModeIndication extends CDOReadIndication
 {
-  public DisablePassiveUpdatesRequest(CDOClientProtocol protocol)
+  public SetPassiveUpdateModeIndication(CDOServerProtocol protocol)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_DISABLE_PASSIVE_UPDATES);
+    super(protocol, CDOProtocolConstants.SIGNAL_SET_PASSIVE_UPDATE_MODE);
   }
 
   @Override
-  protected void requesting(CDODataOutput out) throws IOException
+  protected void indicating(CDODataInput in) throws IOException
   {
+    byte ordinal = in.readByte();
+    PassiveUpdateMode mode = PassiveUpdateMode.values()[ordinal];
+    getSession().setPassiveUpdateMode(mode);
   }
 
   @Override
-  protected Boolean confirming(CDODataInput in) throws IOException
+  protected void responding(CDODataOutput out) throws IOException
   {
-    return in.readBoolean();
+    out.writeBoolean(true);
   }
 }

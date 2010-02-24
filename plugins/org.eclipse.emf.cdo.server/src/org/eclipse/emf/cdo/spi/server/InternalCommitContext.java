@@ -46,6 +46,10 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext
 
   public void setAutoReleaseLocksEnabled(boolean on);
 
+  public void setTimeStamp(long timeStamp);
+
+  public void setUserID(String userID);
+
   public void setCommitComment(String comment);
 
   public void addIDMapping(CDOID oldID, CDOID newID);

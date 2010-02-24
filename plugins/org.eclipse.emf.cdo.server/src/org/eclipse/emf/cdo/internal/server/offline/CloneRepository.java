@@ -26,6 +26,8 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
+import org.eclipse.net4j.util.om.monitor.Monitor;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -68,7 +70,8 @@ public class CloneRepository extends Repository.Default
     InternalTransaction transaction = openReplicatorTransaction(commitInfo);
     InternalCommitContext commitContext = createReplicatorCommitContext(transaction, commitInfo);
 
-    System.out.println(commitContext);
+    commitContext.write(new Monitor());
+    commitContext.commit(new Monitor());
   }
 
   private InternalTransaction openReplicatorTransaction(CDOCommitInfo commitInfo)
@@ -82,6 +85,8 @@ public class CloneRepository extends Repository.Default
       CDOCommitInfo commitInfo)
   {
     InternalCommitContext commitContext = transaction.createCommitContext();
+    commitContext.setTimeStamp(commitInfo.getTimeStamp());
+    commitContext.setUserID(commitInfo.getUserID());
     commitContext.setCommitComment(commitInfo.getComment());
 
     InternalCDOPackageUnit[] newPackageUnits = getNewPackageUnits(commitInfo);

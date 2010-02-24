@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
+import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -45,7 +46,6 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.monitor.ProgressDistributable;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -63,31 +63,6 @@ import java.util.Map.Entry;
 public class CommitTransactionIndication extends IndicationWithMonitoring
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CommitTransactionIndication.class);
-
-  @SuppressWarnings("unchecked")
-  private static final ProgressDistributable<InternalCommitContext>[] ops = ProgressDistributor.array( //
-      new ProgressDistributable.Default<InternalCommitContext>()
-      {
-        public void runLoop(int index, InternalCommitContext commitContext, OMMonitor monitor) throws Exception
-        {
-          commitContext.write(monitor.fork());
-        }
-      }, //
-
-      new ProgressDistributable.Default<InternalCommitContext>()
-      {
-        public void runLoop(int index, InternalCommitContext commitContext, OMMonitor monitor) throws Exception
-        {
-          if (commitContext.getRollbackMessage() == null)
-          {
-            commitContext.commit(monitor.fork());
-          }
-          else
-          {
-            monitor.worked();
-          }
-        }
-      });
 
   protected InternalCommitContext commitContext;
 
@@ -286,7 +261,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
   protected void indicatingCommit(OMMonitor monitor)
   {
     ProgressDistributor distributor = getStore().getIndicatingCommitDistributor();
-    distributor.run(ops, commitContext, monitor);
+    distributor.run(TransactionCommitContext.OPS, commitContext, monitor);
   }
 
   @Override

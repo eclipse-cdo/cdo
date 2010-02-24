@@ -52,6 +52,8 @@ import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.ProgressDistributable;
+import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -72,6 +74,31 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class TransactionCommitContext implements InternalCommitContext
 {
+  @SuppressWarnings("unchecked")
+  public static final ProgressDistributable<InternalCommitContext>[] OPS = ProgressDistributor.array( //
+      new ProgressDistributable.Default<InternalCommitContext>()
+      {
+        public void runLoop(int index, InternalCommitContext commitContext, OMMonitor monitor) throws Exception
+        {
+          commitContext.write(monitor.fork());
+        }
+      }, //
+
+      new ProgressDistributable.Default<InternalCommitContext>()
+      {
+        public void runLoop(int index, InternalCommitContext commitContext, OMMonitor monitor) throws Exception
+        {
+          if (commitContext.getRollbackMessage() == null)
+          {
+            commitContext.commit(monitor.fork());
+          }
+          else
+          {
+            monitor.worked();
+          }
+        }
+      });
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION, TransactionCommitContext.class);
 
   private TransactionPackageRegistry packageRegistry;
@@ -79,6 +106,8 @@ public class TransactionCommitContext implements InternalCommitContext
   private IStoreAccessor accessor;
 
   private long timeStamp = CDORevision.UNSPECIFIED_DATE;
+
+  private String userID;
 
   private String commitComment;
 
@@ -111,6 +140,8 @@ public class TransactionCommitContext implements InternalCommitContext
   public TransactionCommitContext(InternalTransaction transaction)
   {
     this.transaction = transaction;
+    userID = getTransaction().getSession().getUserID();
+
     InternalRepository repository = transaction.getRepository();
     packageRegistry = new TransactionPackageRegistry(repository.getPackageRegistry(false));
     packageRegistry.activate();
@@ -129,6 +160,26 @@ public class TransactionCommitContext implements InternalCommitContext
   public CDOBranchPoint getBranchPoint()
   {
     return CDOBranchUtil.createBranchPoint(transaction.getBranch(), timeStamp);
+  }
+
+  public String getUserID()
+  {
+    return userID;
+  }
+
+  public String getCommitComment()
+  {
+    return commitComment;
+  }
+
+  public boolean isAutoReleaseLocksEnabled()
+  {
+    return autoReleaseLocksEnabled;
+  }
+
+  public String getRollbackMessage()
+  {
+    return rollbackMessage;
   }
 
   public InternalCDOPackageRegistry getPackageRegistry()
@@ -204,11 +255,6 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  public String getRollbackMessage()
-  {
-    return rollbackMessage;
-  }
-
   public void preCommit()
   {
     // Allocate a store writer
@@ -244,19 +290,14 @@ public class TransactionCommitContext implements InternalCommitContext
     autoReleaseLocksEnabled = on;
   }
 
-  public boolean isAutoReleaseLocksEnabled()
+  public void setTimeStamp(long timeStamp)
   {
-    return autoReleaseLocksEnabled;
+    this.timeStamp = timeStamp;
   }
 
-  public String getUserID()
+  public void setUserID(String userID)
   {
-    return getTransaction().getSession().getUserID();
-  }
-
-  public String getCommitComment()
-  {
-    return commitComment;
+    this.userID = userID;
   }
 
   public void setCommitComment(String commitComment)
@@ -279,7 +320,11 @@ public class TransactionCommitContext implements InternalCommitContext
       lockObjects();
 
       // Could throw an exception
-      timeStamp = createTimeStamp();
+      if (timeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
+      {
+        timeStamp = createTimeStamp();
+      }
+
       dirtyObjects = new InternalCDORevision[dirtyObjectDeltas.length];
 
       adjustForCommit();

@@ -88,6 +88,14 @@ public interface IRepository extends IContainer<Object>, IQueryHandlerProvider, 
   public long getLastCommitTimeStamp();
 
   /**
+   * Blocks the calling thread until the next commit operation has succeeded and returns the last (highest) commit time
+   * stamp.
+   * 
+   * @since 3.0
+   */
+  public long waitForCommit(long timeout);
+
+  /**
    * Validates the given timeStamp against the repository time.
    * 
    * @throws IllegalArgumentException

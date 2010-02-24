@@ -51,53 +51,58 @@ public class OfflineTest extends AbstractCDOTest
 
     Company company = getModel1Factory().createCompany();
     company.setName("Test");
+
+    // Root resource + folder + resource + company
+    int expectedRevisions = 1 + 1 + 1 + 1;
+
     resource.getContents().add(company);
     long timeStamp = transaction.commit().getTimeStamp();
-    dumpClone(timeStamp);
+    checkClone(timeStamp, expectedRevisions);
 
     for (int i = 0; i < 10; i++)
     {
       company.setName("Test" + i);
-      transaction.commit();
-      dumpClone(timeStamp);
+      timeStamp = transaction.commit().getTimeStamp();
+      expectedRevisions += 1; // Changed company
+      checkClone(timeStamp, expectedRevisions);
     }
 
     for (int i = 0; i < 10; i++)
     {
       company.getCategories().add(getModel1Factory().createCategory());
       timeStamp = transaction.commit().getTimeStamp();
-      dumpClone(timeStamp);
+      expectedRevisions += 2; // Changed company + new category
+      checkClone(timeStamp, expectedRevisions);
     }
 
     for (int i = 0; i < 10; i++)
     {
       company.getCategories().remove(0);
       timeStamp = transaction.commit().getTimeStamp();
-      dumpClone(timeStamp);
+      expectedRevisions += 2; // Changed company + detached category
+      checkClone(timeStamp, expectedRevisions);
     }
 
     session.close();
   }
 
-  private void dumpClone(final long timeStamp) throws InterruptedException
+  private void checkClone(final long timeStamp, int expectedRevisions) throws InterruptedException
   {
     final InternalRepository repository = getRepository();
-    // new PollingTimeOuter()
-    // {
-    // @Override
-    // protected boolean successful()
-    // {
-    // return repository.getLastCommitTimeStamp() >= timeStamp;
-    // }
-    // }.assertNoTimeOut();
-
-    sleep(10);
+    long lastCommitTimeStamp = repository.getLastCommitTimeStamp();
+    while (lastCommitTimeStamp < timeStamp)
+    {
+      lastCommitTimeStamp = repository.waitForCommit(DEFAULT_TIMEOUT);
+    }
 
     InternalStore store = repository.getStore();
     if (store instanceof MEMStore)
     {
       Map<CDOBranch, List<CDORevision>> allRevisions = ((MEMStore)store).getAllRevisions();
       System.out.println("\n\n\n\n\n\n\n\n\n\n" + CDORevisionUtil.dumpAllRevisions(allRevisions));
+
+      List<CDORevision> revisions = allRevisions.get(repository.getBranchManager().getMainBranch());
+      assertEquals(expectedRevisions, revisions.size());
     }
   }
 }

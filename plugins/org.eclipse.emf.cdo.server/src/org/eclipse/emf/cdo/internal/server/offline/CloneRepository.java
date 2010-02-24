@@ -75,6 +75,7 @@ public class CloneRepository extends Repository.Default
     {
       commitContext.write(new Monitor());
       commitContext.commit(new Monitor());
+      setLastCommitTimeStamp(commitInfo.getTimeStamp());
     }
     finally
     {
@@ -109,6 +110,8 @@ public class CloneRepository extends Repository.Default
   }
 
   /**
+   * TODO Optimize createCommitInfo()
+   * 
    * @author Eike Stepper
    */
   private static final class ReplicatorCommitContext extends TransactionCommitContext

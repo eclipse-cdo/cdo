@@ -620,6 +620,34 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
+  protected void setLastCommitTimeStamp(long lastCommitTimeStamp)
+  {
+    synchronized (lastCommitTimeStampLock)
+    {
+      if (this.lastCommitTimeStamp < lastCommitTimeStamp)
+      {
+        this.lastCommitTimeStamp = lastCommitTimeStamp;
+        lastCommitTimeStampLock.notifyAll();
+      }
+    }
+  }
+
+  public long waitForCommit(long timeout)
+  {
+    synchronized (lastCommitTimeStampLock)
+    {
+      try
+      {
+        lastCommitTimeStampLock.wait(timeout);
+      }
+      catch (Exception ignore)
+      {
+      }
+
+      return lastCommitTimeStamp;
+    }
+  }
+
   /**
    * @since 2.0
    */
@@ -632,12 +660,12 @@ public class Repository extends Container<Object> implements InternalRepository
       {
         while (lastCommitTimeStamp == now)
         {
-          ConcurrencyUtil.sleep(1);
+          ConcurrencyUtil.sleep(1L);
           now = getTimeStamp();
         }
       }
 
-      // TODO Persist lastCommitTimeStamp in store
+      // TODO Don't remember it here, he commit could fail
       lastCommitTimeStamp = now;
       return now;
     }

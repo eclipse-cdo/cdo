@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
@@ -82,6 +83,12 @@ public class CloneRepository extends Repository.Default
       commitContext.postCommit(true);
       transaction.close();
     }
+  }
+
+  @Override
+  public InternalCommitContext createCommitContext(InternalTransaction transaction)
+  {
+    return new ClientCommitContext(transaction);
   }
 
   @Override
@@ -227,6 +234,17 @@ public class CloneRepository extends Repository.Default
       }
 
       return result;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ClientCommitContext extends TransactionCommitContext
+  {
+    public ClientCommitContext(InternalTransaction transaction)
+    {
+      super(transaction);
     }
   }
 }

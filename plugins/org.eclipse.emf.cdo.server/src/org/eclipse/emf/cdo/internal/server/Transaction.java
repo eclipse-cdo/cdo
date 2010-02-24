@@ -46,7 +46,7 @@ public class Transaction extends View implements InternalTransaction
   public InternalCommitContext createCommitContext()
   {
     checkOpen();
-    return new TransactionCommitContext(this);
+    return getRepository().createCommitContext(this);
   }
 
   /**

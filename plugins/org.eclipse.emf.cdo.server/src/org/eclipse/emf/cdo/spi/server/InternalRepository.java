@@ -74,6 +74,8 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
 
   public InternalCommitManager getCommitManager();
 
+  public InternalCommitContext createCommitContext(InternalTransaction transaction);
+
   public long createCommitTimeStamp();
 
   public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart,

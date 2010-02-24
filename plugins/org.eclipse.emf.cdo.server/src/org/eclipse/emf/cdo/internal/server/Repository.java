@@ -56,12 +56,14 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider;
+import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalCommitManager;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalQueryManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
+import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -610,6 +612,11 @@ public class Repository extends Container<Object> implements InternalRepository
   {
     checkInactive();
     this.lockManager = lockManager;
+  }
+
+  public InternalCommitContext createCommitContext(InternalTransaction transaction)
+  {
+    return new TransactionCommitContext(transaction);
   }
 
   public long getLastCommitTimeStamp()

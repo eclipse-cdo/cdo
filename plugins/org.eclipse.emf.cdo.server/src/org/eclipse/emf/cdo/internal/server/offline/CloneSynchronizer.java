@@ -10,16 +10,13 @@
  */
 package org.eclipse.emf.cdo.internal.server.offline;
 
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
-import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.QueueRunner;
@@ -54,7 +51,11 @@ public class CloneSynchronizer extends QueueRunner
     {
       if (event instanceof CDOSessionInvalidationEvent)
       {
-        sync();
+        CDOSessionInvalidationEvent e = (CDOSessionInvalidationEvent)event;
+        if (e.isRemote())
+        {
+          replicate(e);
+        }
       }
       else if (event instanceof ILifecycleEvent)
       {
@@ -208,83 +209,88 @@ public class CloneSynchronizer extends QueueRunner
 
   private void sync()
   {
-    addWork(new Runnable()
-    {
-      public void run()
-      {
-        checkActive();
-        final long masterTimeStamp = master.getLastUpdateTime();
-        final long syncedTimeStamp = getSyncedTimeStamp();
-        if (syncedTimeStamp < masterTimeStamp)
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("Synchronizing with master ({0})...", CDOCommonUtil.formatTimeStamp(masterTimeStamp)); //$NON-NLS-1$
-          }
-
-          master.cloneRepository(new CDOCloningContext()
-          {
-            public long getStartTime()
-            {
-              return syncedTimeStamp;
-            }
-
-            public long getEndTime()
-            {
-              return masterTimeStamp;
-            }
-
-            public int getBranchID()
-            {
-              return 0;
-            }
-
-            public void addPackageUnit(String id)
-            {
-              InternalCDOPackageUnit packageUnit = master.getPackageRegistry().getPackageUnit(id);
-              sync(packageUnit);
-            }
-
-            public void addBranch(int id)
-            {
-              InternalCDOBranch branch = master.getBranchManager().getBranch(id);
-              sync(branch);
-            }
-
-            public void addRevision(InternalCDORevision revision)
-            {
-              sync(revision);
-            }
-          });
-
-          OM.LOG.info("Synchronized with master.");
-        }
-      }
-    });
+    // addWork(new Runnable()
+    // {
+    // public void run()
+    // {
+    // checkActive();
+    // final long masterTimeStamp = master.getLastUpdateTime();
+    // final long syncedTimeStamp = getSyncedTimeStamp();
+    // if (syncedTimeStamp < masterTimeStamp)
+    // {
+    // if (TRACER.isEnabled())
+    // {
+    //            TRACER.format("Synchronizing with master ({0})...", CDOCommonUtil.formatTimeStamp(masterTimeStamp)); //$NON-NLS-1$
+    // }
+    //
+    // master.cloneRepository(new CDOCloningContext()
+    // {
+    // public long getStartTime()
+    // {
+    // return syncedTimeStamp;
+    // }
+    //
+    // public long getEndTime()
+    // {
+    // return masterTimeStamp;
+    // }
+    //
+    // public int getBranchID()
+    // {
+    // return 0;
+    // }
+    //
+    // public void addPackageUnit(String id)
+    // {
+    // InternalCDOPackageUnit packageUnit = master.getPackageRegistry().getPackageUnit(id);
+    // sync(packageUnit);
+    // }
+    //
+    // public void addBranch(int id)
+    // {
+    // InternalCDOBranch branch = master.getBranchManager().getBranch(id);
+    // sync(branch);
+    // }
+    //
+    // public void addRevision(InternalCDORevision revision)
+    // {
+    // sync(revision);
+    // }
+    // });
+    //
+    // OM.LOG.info("Synchronized with master.");
+    // }
+    // }
+    // });
   }
 
-  private void sync(InternalCDOPackageUnit packageUnit)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Syncronized package unit {0}", packageUnit); //$NON-NLS-1$
-    }
-  }
+  // private void sync(InternalCDOPackageUnit packageUnit)
+  // {
+  // if (TRACER.isEnabled())
+  // {
+  //      TRACER.format("Syncronized package unit {0}", packageUnit); //$NON-NLS-1$
+  // }
+  // }
+  //
+  // private void sync(InternalCDOBranch branch)
+  // {
+  // if (TRACER.isEnabled())
+  // {
+  //      TRACER.format("Syncronized branch {0}", branch); //$NON-NLS-1$
+  // }
+  // }
+  //
+  // private void sync(InternalCDORevision revision)
+  // {
+  // if (TRACER.isEnabled())
+  // {
+  //      TRACER.format("Syncronized revision {0}", revision); //$NON-NLS-1$
+  // }
+  // }
 
-  private void sync(InternalCDOBranch branch)
+  protected void replicate(CDOCommitInfo commitInfo)
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Syncronized branch {0}", branch); //$NON-NLS-1$
-    }
-  }
-
-  private void sync(InternalCDORevision revision)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Syncronized revision {0}", revision); //$NON-NLS-1$
-    }
+    clone.replicate(commitInfo);
   }
 
   /**

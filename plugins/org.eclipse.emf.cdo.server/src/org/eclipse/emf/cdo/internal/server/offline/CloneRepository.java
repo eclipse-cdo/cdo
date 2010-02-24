@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.server.offline;
 
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.internal.server.Repository;
 
 import java.util.Arrays;
@@ -33,6 +34,12 @@ public class CloneRepository extends Repository.Default
     return synchronizer;
   }
 
+  public void setSynchronizer(CloneSynchronizer synchronizer)
+  {
+    checkInactive();
+    this.synchronizer = synchronizer;
+  }
+
   @Override
   public Object[] getElements()
   {
@@ -41,10 +48,8 @@ public class CloneRepository extends Repository.Default
     return list.toArray();
   }
 
-  public void setSynchronizer(CloneSynchronizer synchronizer)
+  public void replicate(CDOCommitInfo commitInfo)
   {
-    checkInactive();
-    this.synchronizer = synchronizer;
   }
 
   @Override

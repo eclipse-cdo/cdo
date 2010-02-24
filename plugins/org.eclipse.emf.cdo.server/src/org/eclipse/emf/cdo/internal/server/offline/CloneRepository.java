@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.server.Repository;
+import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -82,12 +83,22 @@ public class CloneRepository extends Repository.Default
   }
 
   private static InternalCommitContext createReplicatorCommitContext(InternalTransaction transaction,
-      CDOCommitInfo commitInfo)
+      final CDOCommitInfo commitInfo)
   {
-    InternalCommitContext commitContext = transaction.createCommitContext();
-    commitContext.setTimeStamp(commitInfo.getTimeStamp());
-    commitContext.setUserID(commitInfo.getUserID());
-    commitContext.setCommitComment(commitInfo.getComment());
+    InternalCommitContext commitContext = new TransactionCommitContext(transaction)
+    {
+      @Override
+      public String getUserID()
+      {
+        return commitInfo.getUserID();
+      }
+
+      @Override
+      protected long createTimeStamp()
+      {
+        return commitInfo.getTimeStamp();
+      }
+    };
 
     InternalCDOPackageUnit[] newPackageUnits = getNewPackageUnits(commitInfo);
     commitContext.setNewPackageUnits(newPackageUnits);
@@ -101,6 +112,7 @@ public class CloneRepository extends Repository.Default
     CDOID[] detachedObjects = getDetachedObjects(commitInfo);
     commitContext.setDetachedObjects(detachedObjects);
 
+    commitContext.setCommitComment(commitInfo.getComment());
     return commitContext;
   }
 

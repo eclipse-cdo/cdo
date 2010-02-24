@@ -107,8 +107,6 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private long timeStamp = CDORevision.UNSPECIFIED_DATE;
 
-  private String userID;
-
   private String commitComment;
 
   private InternalCDOPackageUnit[] newPackageUnits;
@@ -140,7 +138,6 @@ public class TransactionCommitContext implements InternalCommitContext
   public TransactionCommitContext(InternalTransaction transaction)
   {
     this.transaction = transaction;
-    userID = getTransaction().getSession().getUserID();
 
     InternalRepository repository = transaction.getRepository();
     packageRegistry = new TransactionPackageRegistry(repository.getPackageRegistry(false));
@@ -164,7 +161,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   public String getUserID()
   {
-    return userID;
+    return getTransaction().getSession().getUserID();
   }
 
   public String getCommitComment()
@@ -290,16 +287,6 @@ public class TransactionCommitContext implements InternalCommitContext
     autoReleaseLocksEnabled = on;
   }
 
-  public void setTimeStamp(long timeStamp)
-  {
-    this.timeStamp = timeStamp;
-  }
-
-  public void setUserID(String userID)
-  {
-    this.userID = userID;
-  }
-
   public void setCommitComment(String commitComment)
   {
     this.commitComment = commitComment;
@@ -320,11 +307,7 @@ public class TransactionCommitContext implements InternalCommitContext
       lockObjects();
 
       // Could throw an exception
-      if (timeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
-      {
-        timeStamp = createTimeStamp();
-      }
-
+      timeStamp = createTimeStamp();
       dirtyObjects = new InternalCDORevision[dirtyObjectDeltas.length];
 
       adjustForCommit();

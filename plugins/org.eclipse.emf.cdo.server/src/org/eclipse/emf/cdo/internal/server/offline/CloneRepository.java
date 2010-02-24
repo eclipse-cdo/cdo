@@ -35,8 +35,6 @@ import java.util.List;
  */
 public class CloneRepository extends Repository.Default
 {
-  // private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, ClonedRepository.class);
-
   private CloneSynchronizer synchronizer;
 
   private InternalSession replicatorSession;
@@ -97,8 +95,6 @@ public class CloneRepository extends Repository.Default
     synchronizer.deactivate();
     super.doDeactivate();
   }
-
-  // private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, ClonedRepository.class);
 
   /**
    * @author Eike Stepper

@@ -43,23 +43,32 @@ public class OfflineTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
-    Company c1 = getModel1Factory().createCompany();
-    c1.setName("Test");
-    resource.getContents().add(c1);
+    Company company = getModel1Factory().createCompany();
+    company.setName("Test");
+    resource.getContents().add(company);
     transaction.commit();
+    dumpClone();
 
     for (int i = 0; i < 10; i++)
     {
-      // sleep(1000);
-      vspace();
-      dumpClone();
-
-      c1.setName("Test" + i);
+      company.setName("Test" + i);
       transaction.commit();
+      dumpClone();
     }
 
-    vspace();
-    dumpClone();
+    for (int i = 0; i < 10; i++)
+    {
+      company.getCategories().add(getModel1Factory().createCategory());
+      transaction.commit();
+      dumpClone();
+    }
+
+    for (int i = 0; i < 10; i++)
+    {
+      company.getCategories().remove(0);
+      transaction.commit();
+      dumpClone();
+    }
 
     session.close();
   }
@@ -69,20 +78,9 @@ public class OfflineTest extends AbstractCDOTest
     InternalStore store = getRepository().getStore();
     if (store instanceof MEMStore)
     {
-      System.out.println(CDORevisionUtil.dumpAllRevisions(((MEMStore)store).getAllRevisions()));
+      sleep(10);
+      System.out.println("\n\n\n\n\n\n\n\n\n\n" + //
+          CDORevisionUtil.dumpAllRevisions(((MEMStore)store).getAllRevisions()));
     }
-
-  }
-
-  private void vspace()
-  {
-    System.out.println();
-    System.out.println();
-    System.out.println();
-    System.out.println();
-    System.out.println();
-    System.out.println();
-    System.out.println();
-    System.out.println();
   }
 }

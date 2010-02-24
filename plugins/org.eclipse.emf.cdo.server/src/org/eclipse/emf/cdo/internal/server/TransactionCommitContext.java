@@ -252,7 +252,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  public void preCommit()
+  public void preWrite()
   {
     // Allocate a store writer
     accessor = transaction.getRepository().getStore().getWriter(transaction);
@@ -463,7 +463,7 @@ public class TransactionCommitContext implements InternalCommitContext
         detachedObjectsCollection);
   }
 
-  private void adjustForCommit()
+  protected void adjustForCommit()
   {
     for (InternalCDOPackageUnit newPackageUnit : newPackageUnits)
     {
@@ -514,7 +514,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private void lockObjects() throws InterruptedException
+  protected void lockObjects() throws InterruptedException
   {
     lockedObjects.clear();
     boolean supportingBranches = transaction.getRepository().isSupportingBranches();

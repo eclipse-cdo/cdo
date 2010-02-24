@@ -42,9 +42,9 @@ public class XATransactionCommitContext extends TransactionCommitContext
   }
 
   @Override
-  public void preCommit()
+  public void preWrite()
   {
-    super.preCommit();
+    super.preWrite();
     StoreThreadLocal.setAccessor(null);
   }
 

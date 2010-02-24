@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.tests.config.impl;
 
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
+import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.internal.server.offline.CloneSynchronizer;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
@@ -329,9 +331,13 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       IManagedContainer container = getCurrentTest().getServerContainer();
       IConnector connector = (IConnector)container.getElement("org.eclipse.net4j.connectors", "jvm", "master");
 
+      InternalCDORevisionManager revisionManager = new CDORevisionManagerImpl();
+      revisionManager.setCache(new NOOPRevisionCache());
+
       CDOSessionConfiguration config = CDONet4jUtil.createSessionConfiguration();
       config.setConnector(connector);
       config.setRepositoryName(masterName);
+      config.setRevisionManager(revisionManager);
 
       CloneSynchronizer synchronizer = new CloneSynchronizer();
       synchronizer.setMasterConfiguration(config);

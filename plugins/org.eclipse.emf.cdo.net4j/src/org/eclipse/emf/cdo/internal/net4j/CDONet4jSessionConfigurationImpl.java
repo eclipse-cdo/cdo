@@ -195,24 +195,40 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     session.setLastUpdateTime(result.getLastUpdateTime());
     session.setRepositoryInfo(new RepositoryInfo(repositoryName, result));
 
-    packageRegistry = new CDOPackageRegistryImpl();
+    if (packageRegistry == null)
+    {
+      packageRegistry = new CDOPackageRegistryImpl();
+    }
+
     packageRegistry.setPackageProcessor(session);
     packageRegistry.setPackageLoader(session);
     packageRegistry.activate();
 
-    revisionManager = new CDORevisionManagerImpl();
+    if (revisionManager == null)
+    {
+      revisionManager = new CDORevisionManagerImpl();
+    }
+
     revisionManager.setSupportingBranches(session.getRepositoryInfo().isSupportingBranches());
     revisionManager.setRevisionLoader(session.getSessionProtocol());
     revisionManager.setRevisionLocker(session);
     revisionManager.activate();
 
-    branchManager = CDOBranchUtil.createBranchManager();
+    if (branchManager == null)
+    {
+      branchManager = CDOBranchUtil.createBranchManager();
+    }
+
     branchManager.setBranchLoader(session.getSessionProtocol());
     branchManager.setTimeProvider(session.getRepositoryInfo());
     branchManager.initMainBranch(session.getRepositoryInfo().getCreationTime());
     branchManager.activate();
 
-    commitInfoManager = CDOCommitInfoUtil.createCommitInfoManager();
+    if (commitInfoManager == null)
+    {
+      commitInfoManager = CDOCommitInfoUtil.createCommitInfoManager();
+    }
+
     commitInfoManager.setCommitInfoLoader(session.getSessionProtocol());
     commitInfoManager.activate();
 

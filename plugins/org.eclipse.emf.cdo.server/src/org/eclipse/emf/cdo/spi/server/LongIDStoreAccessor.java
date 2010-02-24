@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - bug 201266
@@ -47,14 +47,19 @@ public abstract class LongIDStoreAccessor extends StoreAccessor
       monitor.begin(newObjects.length);
       for (CDORevision revision : newObjects)
       {
-        CDOIDTemp oldID = (CDOIDTemp)revision.getID();
-        CDOID newID = longIDStore.getNextCDOID();
-        if (CDOIDUtil.isNull(newID) || newID.isTemporary())
+        CDOID id = revision.getID();
+        if (id instanceof CDOIDTemp)
         {
-          throw new IllegalStateException("newID=" + newID); //$NON-NLS-1$
+          CDOIDTemp oldID = (CDOIDTemp)id;
+          CDOID newID = longIDStore.getNextCDOID();
+          if (CDOIDUtil.isNull(newID) || newID.isTemporary())
+          {
+            throw new IllegalStateException("newID=" + newID); //$NON-NLS-1$
+          }
+
+          commitContext.addIDMapping(oldID, newID);
         }
 
-        commitContext.addIDMapping(oldID, newID);
         monitor.worked();
       }
     }

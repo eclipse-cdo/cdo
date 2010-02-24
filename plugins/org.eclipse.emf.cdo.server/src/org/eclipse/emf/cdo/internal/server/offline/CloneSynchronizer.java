@@ -179,32 +179,34 @@ public class CloneSynchronizer extends QueueRunner
     {
       public void run()
       {
+        checkActive();
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("Connecting to master ({0})...", CDOCommonUtil.formatTimeStamp()); //$NON-NLS-1$
+        }
+
+        syncedTimeStamp.setValue(NEVER_SYNCHRONIZED);
+
         try
         {
-          checkActive();
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("Connecting to master ({0})...", CDOCommonUtil.formatTimeStamp()); //$NON-NLS-1$
-          }
-
-          syncedTimeStamp.setValue(NEVER_SYNCHRONIZED);
           master = (InternalCDOSession)masterConfiguration.openSession();
           master.options().setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
-
-          OM.LOG.info("Connected to master.");
-          master.addListener(masterListener);
-          sync();
         }
         catch (Exception ex)
         {
-          OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...");
+          OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...", ex);
 
           checkActive();
           ConcurrencyUtil.sleep(1000L * retryInterval); // TODO Respect deactivation
 
           checkActive();
           connect();
+          return;
         }
+
+        OM.LOG.info("Connected to master.");
+        master.addListener(masterListener);
+        sync();
       }
     });
   }

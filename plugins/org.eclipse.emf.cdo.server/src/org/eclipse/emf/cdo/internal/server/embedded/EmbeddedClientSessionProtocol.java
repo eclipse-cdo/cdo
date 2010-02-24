@@ -317,7 +317,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
       InternalTransaction serverTransaction = (InternalTransaction)serverSessionProtocol.getSession().getView(viewID);
       serverCommitContext = serverTransaction.createCommitContext();
-      serverCommitContext.preCommit();
+      serverCommitContext.preWrite();
       serverCommitContext.setAutoReleaseLocksEnabled(clientTransaction.options().isAutoReleaseLocksEnabled());
 
       List<CDOPackageUnit> npu = clientCommitContext.getNewPackageUnits();

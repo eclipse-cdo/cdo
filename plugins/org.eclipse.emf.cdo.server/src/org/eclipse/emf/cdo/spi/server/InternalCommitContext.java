@@ -26,7 +26,7 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext
 {
   public InternalTransaction getTransaction();
 
-  public void preCommit();
+  public void preWrite();
 
   public void write(OMMonitor monitor);
 

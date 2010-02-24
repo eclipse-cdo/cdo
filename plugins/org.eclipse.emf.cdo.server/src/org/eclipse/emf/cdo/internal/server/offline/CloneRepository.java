@@ -21,11 +21,11 @@ import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
-import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.om.monitor.Monitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +38,8 @@ public class CloneRepository extends Repository.Default
   private CloneSynchronizer synchronizer;
 
   private InternalSession replicatorSession;
+
+  private int lastTransactionID;
 
   public CloneRepository()
   {
@@ -65,11 +67,20 @@ public class CloneRepository extends Repository.Default
   public void replicate(CDOCommitInfo commitInfo)
   {
     CDOBranchPoint head = commitInfo.getBranch().getHead();
-    InternalTransaction transaction = replicatorSession.openTransaction(1, head);
-    InternalCommitContext commitContext = new ReplicatorCommitContext(transaction, commitInfo);
+    InternalTransaction transaction = replicatorSession.openTransaction(++lastTransactionID, head);
+    ReplicatorCommitContext commitContext = new ReplicatorCommitContext(transaction, commitInfo);
+    commitContext.preWrite();
 
-    commitContext.write(new Monitor());
-    commitContext.commit(new Monitor());
+    try
+    {
+      commitContext.write(new Monitor());
+      commitContext.commit(new Monitor());
+    }
+    finally
+    {
+      commitContext.postCommit(true);
+      transaction.close();
+    }
   }
 
   @Override
@@ -84,6 +95,7 @@ public class CloneRepository extends Repository.Default
   {
     super.doActivate();
     replicatorSession = getSessionManager().openSession(null);
+    replicatorSession.options().setPassiveUpdateEnabled(false);
 
     synchronizer.setClone(this);
     synchronizer.activate();
@@ -132,6 +144,30 @@ public class CloneRepository extends Repository.Default
     protected long createTimeStamp()
     {
       return commitInfo.getTimeStamp();
+    }
+
+    @Override
+    protected void adjustMetaRanges()
+    {
+      // Do nothing
+    }
+
+    @Override
+    protected void adjustForCommit()
+    {
+      // Do nothing
+    }
+
+    @Override
+    public void applyIDMappings(OMMonitor monitor)
+    {
+      monitor.done();
+    }
+
+    @Override
+    protected void lockObjects() throws InterruptedException
+    {
+      // Do nothing
     }
 
     private static InternalCDOPackageUnit[] getNewPackageUnits(CDOCommitInfo commitInfo)

@@ -173,7 +173,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
   {
     // Create commit context
     initializeCommitContext(in);
-    commitContext.preCommit();
+    commitContext.preWrite();
 
     boolean autoReleaseLocksEnabled = in.readBoolean();
     commitContext.setAutoReleaseLocksEnabled(autoReleaseLocksEnabled);

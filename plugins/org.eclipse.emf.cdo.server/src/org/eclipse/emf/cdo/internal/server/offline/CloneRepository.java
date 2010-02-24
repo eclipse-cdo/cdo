@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.internal.server.offline;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -23,7 +22,6 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
-import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
@@ -68,108 +66,12 @@ public class CloneRepository extends Repository.Default
 
   public void replicate(CDOCommitInfo commitInfo)
   {
-    InternalTransaction transaction = openReplicatorTransaction(commitInfo);
-    InternalCommitContext commitContext = createReplicatorCommitContext(transaction, commitInfo);
+    CDOBranchPoint head = commitInfo.getBranch().getHead();
+    InternalTransaction transaction = replicatorSession.openTransaction(1, head);
+    InternalCommitContext commitContext = new ReplicatorCommitContext(transaction, commitInfo);
 
     commitContext.write(new Monitor());
     commitContext.commit(new Monitor());
-  }
-
-  private InternalTransaction openReplicatorTransaction(CDOCommitInfo commitInfo)
-  {
-    CDOBranchPoint head = commitInfo.getBranch().getHead();
-    InternalTransaction transaction = replicatorSession.openTransaction(1, head);
-    return transaction;
-  }
-
-  private static InternalCommitContext createReplicatorCommitContext(InternalTransaction transaction,
-      final CDOCommitInfo commitInfo)
-  {
-    InternalCommitContext commitContext = new TransactionCommitContext(transaction)
-    {
-      @Override
-      public String getUserID()
-      {
-        return commitInfo.getUserID();
-      }
-
-      @Override
-      protected long createTimeStamp()
-      {
-        return commitInfo.getTimeStamp();
-      }
-    };
-
-    InternalCDOPackageUnit[] newPackageUnits = getNewPackageUnits(commitInfo);
-    commitContext.setNewPackageUnits(newPackageUnits);
-
-    InternalCDORevision[] newObjects = getNewObjects(commitInfo);
-    commitContext.setNewObjects(newObjects);
-
-    InternalCDORevisionDelta[] dirtyObjectDeltas = getDirtyObjectDeltas(commitInfo);
-    commitContext.setDirtyObjectDeltas(dirtyObjectDeltas);
-
-    CDOID[] detachedObjects = getDetachedObjects(commitInfo);
-    commitContext.setDetachedObjects(detachedObjects);
-
-    commitContext.setCommitComment(commitInfo.getComment());
-    return commitContext;
-  }
-
-  private static InternalCDOPackageUnit[] getNewPackageUnits(CDOCommitInfo commitInfo)
-  {
-    List<CDOPackageUnit> list = commitInfo.getNewPackageUnits();
-    InternalCDOPackageUnit[] result = new InternalCDOPackageUnit[list.size()];
-
-    int i = 0;
-    for (CDOPackageUnit packageUnit : list)
-    {
-      result[i++] = (InternalCDOPackageUnit)packageUnit;
-    }
-
-    return result;
-  }
-
-  private static InternalCDORevision[] getNewObjects(CDOCommitInfo commitInfo)
-  {
-    List<CDOIDAndVersion> list = commitInfo.getNewObjects();
-    InternalCDORevision[] result = new InternalCDORevision[list.size()];
-
-    int i = 0;
-    for (CDOIDAndVersion revision : list)
-    {
-      result[i++] = (InternalCDORevision)revision;
-    }
-
-    return result;
-  }
-
-  private static InternalCDORevisionDelta[] getDirtyObjectDeltas(CDOCommitInfo commitInfo)
-  {
-    List<CDORevisionKey> list = commitInfo.getChangedObjects();
-    InternalCDORevisionDelta[] result = new InternalCDORevisionDelta[list.size()];
-
-    int i = 0;
-    for (CDORevisionKey delta : list)
-    {
-      result[i++] = (InternalCDORevisionDelta)delta;
-    }
-
-    return result;
-  }
-
-  private static CDOID[] getDetachedObjects(CDOCommitInfo commitInfo)
-  {
-    List<CDOIDAndVersion> list = commitInfo.getDetachedObjects();
-    CDOID[] result = new CDOID[list.size()];
-
-    int i = 0;
-    for (CDOIDAndVersion key : list)
-    {
-      result[i++] = key.getID();
-    }
-
-    return result;
   }
 
   @Override
@@ -196,89 +98,100 @@ public class CloneRepository extends Repository.Default
     super.doDeactivate();
   }
 
+  // private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, ClonedRepository.class);
+
   /**
    * @author Eike Stepper
    */
-  private final class ReplicatorTransaction implements InternalTransaction
+  private static final class ReplicatorCommitContext extends TransactionCommitContext
   {
-    private CDOBranch branch;
+    private final CDOCommitInfo commitInfo;
 
-    public void unsubscribe(CDOID id)
+    public ReplicatorCommitContext(InternalTransaction transaction, CDOCommitInfo commitInfo)
     {
-      throw new UnsupportedOperationException();
+      super(transaction);
+      this.commitInfo = commitInfo;
+      setCommitComment(commitInfo.getComment());
+
+      InternalCDOPackageUnit[] newPackageUnits = getNewPackageUnits(commitInfo);
+      setNewPackageUnits(newPackageUnits);
+
+      InternalCDORevision[] newObjects = getNewObjects(commitInfo);
+      setNewObjects(newObjects);
+
+      InternalCDORevisionDelta[] dirtyObjectDeltas = getDirtyObjectDeltas(commitInfo);
+      setDirtyObjectDeltas(dirtyObjectDeltas);
+
+      CDOID[] detachedObjects = getDetachedObjects(commitInfo);
+      setDetachedObjects(detachedObjects);
     }
 
-    public void subscribe(CDOID id)
+    @Override
+    public String getUserID()
     {
-      throw new UnsupportedOperationException();
+      return commitInfo.getUserID();
     }
 
-    public boolean hasSubscription(CDOID id)
+    @Override
+    protected long createTimeStamp()
     {
-      return false;
+      return commitInfo.getTimeStamp();
     }
 
-    public void doClose()
+    private static InternalCDOPackageUnit[] getNewPackageUnits(CDOCommitInfo commitInfo)
     {
-      // Do nothing
+      List<CDOPackageUnit> list = commitInfo.getNewPackageUnits();
+      InternalCDOPackageUnit[] result = new InternalCDOPackageUnit[list.size()];
+
+      int i = 0;
+      for (CDOPackageUnit packageUnit : list)
+      {
+        result[i++] = (InternalCDOPackageUnit)packageUnit;
+      }
+
+      return result;
     }
 
-    public void clearChangeSubscription()
+    private static InternalCDORevision[] getNewObjects(CDOCommitInfo commitInfo)
     {
+      List<CDOIDAndVersion> list = commitInfo.getNewObjects();
+      InternalCDORevision[] result = new InternalCDORevision[list.size()];
+
+      int i = 0;
+      for (CDOIDAndVersion revision : list)
+      {
+        result[i++] = (InternalCDORevision)revision;
+      }
+
+      return result;
     }
 
-    public boolean[] changeTarget(CDOBranchPoint branchPoint, List<CDOID> invalidObjects)
+    private static InternalCDORevisionDelta[] getDirtyObjectDeltas(CDOCommitInfo commitInfo)
     {
-      throw new UnsupportedOperationException();
+      List<CDORevisionKey> list = commitInfo.getChangedObjects();
+      InternalCDORevisionDelta[] result = new InternalCDORevisionDelta[list.size()];
+
+      int i = 0;
+      for (CDORevisionKey delta : list)
+      {
+        result[i++] = (InternalCDORevisionDelta)delta;
+      }
+
+      return result;
     }
 
-    public boolean isClosed()
+    private static CDOID[] getDetachedObjects(CDOCommitInfo commitInfo)
     {
-      return false;
-    }
+      List<CDOIDAndVersion> list = commitInfo.getDetachedObjects();
+      CDOID[] result = new CDOID[list.size()];
 
-    public void close()
-    {
-    }
+      int i = 0;
+      for (CDOIDAndVersion key : list)
+      {
+        result[i++] = key.getID();
+      }
 
-    public int compareTo(CDOBranchPoint o)
-    {
-      return 0;
-    }
-
-    public long getTimeStamp()
-    {
-      return CDOBranchPoint.UNSPECIFIED_DATE;
-    }
-
-    public CDOBranch getBranch()
-    {
-      return branch;
-    }
-
-    public boolean isReadOnly()
-    {
-      return false;
-    }
-
-    public int getViewID()
-    {
-      return 0;
-    }
-
-    public InternalSession getSession()
-    {
-      return null;
-    }
-
-    public InternalRepository getRepository()
-    {
-      return CloneRepository.this;
-    }
-
-    public InternalCommitContext createCommitContext()
-    {
-      return null;
+      return result;
     }
   }
 }

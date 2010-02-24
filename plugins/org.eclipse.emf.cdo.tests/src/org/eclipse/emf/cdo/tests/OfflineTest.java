@@ -151,6 +151,7 @@ public class OfflineTest extends AbstractCDOTest
       checkEvent(listener, 0, 0, 1, 1);
     }
 
+    cloneSession.close();
     masterSession.close();
   }
 

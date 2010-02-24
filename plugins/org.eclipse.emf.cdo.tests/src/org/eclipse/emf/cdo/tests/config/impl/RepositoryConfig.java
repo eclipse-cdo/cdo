@@ -294,7 +294,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     private static final long serialVersionUID = 1L;
 
-    private IAcceptor masterAcceptor;
+    private transient IAcceptor masterAcceptor;
 
     public MEMOffline()
     {
@@ -306,6 +306,13 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       JVMUtil.prepareContainer(getCurrentTest().getServerContainer());
       super.setUp();
+    }
+
+    @Override
+    public void tearDown() throws Exception
+    {
+      stopMasterTransport();
+      super.tearDown();
     }
 
     @Override

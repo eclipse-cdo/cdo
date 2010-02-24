@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
-import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -261,7 +260,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
   protected void indicatingCommit(OMMonitor monitor)
   {
     ProgressDistributor distributor = getStore().getIndicatingCommitDistributor();
-    distributor.run(TransactionCommitContext.OPS, commitContext, monitor);
+    distributor.run(InternalCommitContext.OPS, commitContext, monitor);
   }
 
   @Override

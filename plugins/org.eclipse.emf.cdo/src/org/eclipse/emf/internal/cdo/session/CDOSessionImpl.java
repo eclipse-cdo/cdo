@@ -801,8 +801,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    setLastUpdateTime(commitInfo.getTimeStamp());
     fireInvalidationEvent(sender, commitInfo);
+    setLastUpdateTime(commitInfo.getTimeStamp());
   }
 
   public void cloneRepository(CDOCloningContext context)

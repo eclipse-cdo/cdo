@@ -52,8 +52,6 @@ import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.monitor.ProgressDistributable;
-import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -74,31 +72,6 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class TransactionCommitContext implements InternalCommitContext
 {
-  @SuppressWarnings("unchecked")
-  public static final ProgressDistributable<InternalCommitContext>[] OPS = ProgressDistributor.array( //
-      new ProgressDistributable.Default<InternalCommitContext>()
-      {
-        public void runLoop(int index, InternalCommitContext commitContext, OMMonitor monitor) throws Exception
-        {
-          commitContext.write(monitor.fork());
-        }
-      }, //
-
-      new ProgressDistributable.Default<InternalCommitContext>()
-      {
-        public void runLoop(int index, InternalCommitContext commitContext, OMMonitor monitor) throws Exception
-        {
-          if (commitContext.getRollbackMessage() == null)
-          {
-            commitContext.commit(monitor.fork());
-          }
-          else
-          {
-            monitor.worked();
-          }
-        }
-      });
-
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION, TransactionCommitContext.class);
 
   private TransactionPackageRegistry packageRegistry;

@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.ProgressDistributable;
+import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
 /**
  * @author Eike Stepper
@@ -24,6 +26,31 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
  */
 public interface InternalCommitContext extends IStoreAccessor.CommitContext
 {
+  @SuppressWarnings("unchecked")
+  public static final ProgressDistributable<InternalCommitContext>[] OPS = ProgressDistributor.array( //
+      new ProgressDistributable.Default<InternalCommitContext>()
+      {
+        public void runLoop(int index, InternalCommitContext commitContext, OMMonitor monitor) throws Exception
+        {
+          commitContext.write(monitor.fork());
+        }
+      }, //
+
+      new ProgressDistributable.Default<InternalCommitContext>()
+      {
+        public void runLoop(int index, InternalCommitContext commitContext, OMMonitor monitor) throws Exception
+        {
+          if (commitContext.getRollbackMessage() == null)
+          {
+            commitContext.commit(monitor.fork());
+          }
+          else
+          {
+            monitor.worked();
+          }
+        }
+      });
+
   public InternalTransaction getTransaction();
 
   public void preWrite();

@@ -13,7 +13,9 @@ package org.eclipse.emf.cdo.internal.server.offline;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.cache.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
@@ -191,6 +193,14 @@ public class CloneSynchronizer extends QueueRunner
         {
           master = (InternalCDOSession)masterConfiguration.openSession();
           master.options().setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
+
+          // Ensure that incoming revisions are not cached!
+          InternalCDORevisionCache cache = master.getRevisionManager().getCache();
+          if (!(cache instanceof NOOPRevisionCache))
+          {
+            throw new IllegalStateException("Master session does not use a NOOPRevisionCache: "
+                + cache.getClass().getName());
+          }
         }
         catch (Exception ex)
         {

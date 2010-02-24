@@ -47,7 +47,7 @@ public class OfflineTest extends AbstractCDOTest
 
     for (int i = 0; i < 10; i++)
     {
-      sleep(1000);
+      sleep(10000);
       System.out.println();
       System.out.println();
       System.out.println();

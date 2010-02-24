@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.server.offline;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
@@ -188,6 +189,7 @@ public class CloneSynchronizer extends QueueRunner
 
           syncedTimeStamp.setValue(NEVER_SYNCHRONIZED);
           master = (InternalCDOSession)masterConfiguration.openSession();
+          master.options().setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
 
           OM.LOG.info("Connected to master.");
           master.addListener(masterListener);

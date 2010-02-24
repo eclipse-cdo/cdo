@@ -184,14 +184,16 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
   public CDOCommitData readCDOCommitData() throws IOException
   {
+    InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)getPackageRegistry();
     int size;
 
     size = readInt();
     List<CDOPackageUnit> newPackageUnits = new ArrayList<CDOPackageUnit>(size);
     for (int i = 0; i < size; i++)
     {
-      CDOPackageUnit data = readCDOPackageUnit(null);
+      CDOPackageUnit data = readCDOPackageUnit(packageRegistry);
       newPackageUnits.add(data);
+      packageRegistry.putPackageUnit((InternalCDOPackageUnit)data);
     }
 
     size = readInt();

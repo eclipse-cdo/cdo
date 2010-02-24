@@ -317,6 +317,11 @@ public class SessionManager extends Container<ISession> implements InternalSessi
 
   protected String authenticateUser(ISessionProtocol protocol) throws SecurityException
   {
+    if (protocol == null)
+    {
+      return null;
+    }
+
     if (userManager == null)
     {
       return null;

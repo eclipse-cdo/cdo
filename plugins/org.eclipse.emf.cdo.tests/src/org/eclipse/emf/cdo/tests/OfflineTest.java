@@ -10,14 +10,20 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.server.InternalStore;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.MEMOffline;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -46,41 +52,52 @@ public class OfflineTest extends AbstractCDOTest
     Company company = getModel1Factory().createCompany();
     company.setName("Test");
     resource.getContents().add(company);
-    transaction.commit();
-    dumpClone();
+    long timeStamp = transaction.commit().getTimeStamp();
+    dumpClone(timeStamp);
 
     for (int i = 0; i < 10; i++)
     {
       company.setName("Test" + i);
       transaction.commit();
-      dumpClone();
+      dumpClone(timeStamp);
     }
 
     for (int i = 0; i < 10; i++)
     {
       company.getCategories().add(getModel1Factory().createCategory());
-      transaction.commit();
-      dumpClone();
+      timeStamp = transaction.commit().getTimeStamp();
+      dumpClone(timeStamp);
     }
 
     for (int i = 0; i < 10; i++)
     {
       company.getCategories().remove(0);
-      transaction.commit();
-      dumpClone();
+      timeStamp = transaction.commit().getTimeStamp();
+      dumpClone(timeStamp);
     }
 
     session.close();
   }
 
-  private void dumpClone()
+  private void dumpClone(final long timeStamp) throws InterruptedException
   {
-    InternalStore store = getRepository().getStore();
+    final InternalRepository repository = getRepository();
+    // new PollingTimeOuter()
+    // {
+    // @Override
+    // protected boolean successful()
+    // {
+    // return repository.getLastCommitTimeStamp() >= timeStamp;
+    // }
+    // }.assertNoTimeOut();
+
+    sleep(10);
+
+    InternalStore store = repository.getStore();
     if (store instanceof MEMStore)
     {
-      sleep(10);
-      System.out.println("\n\n\n\n\n\n\n\n\n\n" + //
-          CDORevisionUtil.dumpAllRevisions(((MEMStore)store).getAllRevisions()));
+      Map<CDOBranch, List<CDORevision>> allRevisions = ((MEMStore)store).getAllRevisions();
+      System.out.println("\n\n\n\n\n\n\n\n\n\n" + CDORevisionUtil.dumpAllRevisions(allRevisions));
     }
   }
 }

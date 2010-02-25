@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -49,11 +50,13 @@ import java.util.Date;
 /**
  * This is a default implementation for the {@link ITypeMapping} interface which provides default behavor for all common
  * types.
- * 
+ *
  * @author Eike Stepper
  */
 public abstract class TypeMapping implements ITypeMapping
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, TypeMapping.class);
+
   private IMappingStrategy mappingStrategy;
 
   private EStructuralFeature feature;
@@ -64,7 +67,7 @@ public abstract class TypeMapping implements ITypeMapping
 
   /**
    * Create a new type mapping
-   * 
+   *
    * @param mappingStrategy
    *          the associated mapping strategy.
    * @param feature
@@ -100,9 +103,35 @@ public abstract class TypeMapping implements ITypeMapping
 
   public final void setValue(PreparedStatement stmt, int index, Object value) throws SQLException
   {
-    if (value == null || value == CDORevisionData.NIL)
+    if (value == CDORevisionData.NIL)
     {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("TypeMapping for {0}: converting Revision.NIL to DB-null", feature.getName()); //$NON-NLS-1$
+      }
+
       stmt.setNull(index, getSqlType());
+    }
+    else if (value == null)
+    {
+      if (feature.isMany() || feature.getDefaultValue() == null)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("TypeMapping for {0}: writing Revision.null as DB.null", feature.getName()); //$NON-NLS-1$
+        }
+
+        stmt.setNull(index, getSqlType());
+      }
+      else
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("TypeMapping for {0}: converting Revision.null to default value", feature.getName()); //$NON-NLS-1$
+        }
+
+        setDefaultValue(stmt, index);
+      }
     }
     else
     {
@@ -143,7 +172,37 @@ public abstract class TypeMapping implements ITypeMapping
     Object value = getResultSetValue(resultSet);
     if (resultSet.wasNull())
     {
-      value = feature.isUnsettable() ? CDORevisionData.NIL : null;
+      if (feature.isMany())
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("TypeMapping for {0}: read db.null - setting Revision.null", feature.getName()); //$NON-NLS-1$
+        }
+
+        value = null;
+      }
+      else
+      {
+        if (feature.getDefaultValue() == null)
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.format(
+                "TypeMapping for {0}: read db.null - setting Revision.null, because of default", feature.getName()); //$NON-NLS-1$
+          }
+
+          value = null;
+        }
+        else
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("TypeMapping for {0}: read db.null - setting Revision.NIL", feature.getName()); //$NON-NLS-1$
+          }
+
+          value = CDORevisionData.NIL;
+        }
+      }
     }
 
     return value;
@@ -162,7 +221,7 @@ public abstract class TypeMapping implements ITypeMapping
   /**
    * Returns the SQL type of this TypeMapping. The default implementation considers the type map hold by the meta-data
    * manager (@see {@link MetaDataManager#getDBType(org.eclipse.emf.ecore.EClassifier)} Subclasses may override.
-   * 
+   *
    * @return The sql type of this TypeMapping.
    */
   protected int getSqlType()

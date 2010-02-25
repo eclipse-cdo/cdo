@@ -337,7 +337,10 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     List<InternalCDOObject> invalidObjects = getInvalidObjects(timeStamp);
     CDOSessionProtocol sessionProtocol = getSession().getSessionProtocol();
     boolean[] existanceFlags = sessionProtocol.changeView(viewID, branchPoint, invalidObjects);
+
     this.branchPoint = branchPoint;
+    rootResource = null;
+
     int i = 0;
     for (InternalCDOObject invalidObject : invalidObjects)
     {

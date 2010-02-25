@@ -39,6 +39,8 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -265,7 +267,7 @@ public class CloneRepository extends Repository.Default
     @Override
     public void commit(OMMonitor monitor)
     {
-      CDOBranch branch = getBranchPoint().getBranch();
+      CDOBranch branch = getTransaction().getBranch();
       String userID = getUserID();
       String comment = getCommitComment();
       CDOCommitData commitData = new CommitData();
@@ -278,6 +280,16 @@ public class CloneRepository extends Repository.Default
       if (rollbackMessage != null)
       {
         throw new TransactionException(rollbackMessage);
+      }
+
+      setTimeStamp(result.getTimeStamp());
+
+      Map<CDOID, CDOID> idMappings = result.getIDMappings();
+      for (Entry<CDOID, CDOID> idMapping : idMappings.entrySet())
+      {
+        CDOID oldID = idMapping.getKey();
+        CDOID newID = idMapping.getValue();
+        addIDMapping(oldID, newID);
       }
     }
 
@@ -294,9 +306,11 @@ public class CloneRepository extends Repository.Default
           @Override
           public CDOPackageUnit get(int index)
           {
-            return newPackageUnits[index];
+            InternalCDOPackageUnit packageUnit = newPackageUnits[index];
+            packageUnit.setState(CDOPackageUnit.State.NEW);
+            return packageUnit;
           }
-    
+
           @Override
           public int size()
           {
@@ -304,7 +318,7 @@ public class CloneRepository extends Repository.Default
           }
         };
       }
-    
+
       public List<CDOIDAndVersion> getNewObjects()
       {
         final InternalCDORevision[] newObjects = ClientCommitContext.this.getNewObjects();
@@ -315,7 +329,7 @@ public class CloneRepository extends Repository.Default
           {
             return newObjects[index];
           }
-    
+
           @Override
           public int size()
           {
@@ -323,10 +337,10 @@ public class CloneRepository extends Repository.Default
           }
         };
       }
-    
+
       public List<CDORevisionKey> getChangedObjects()
       {
-        final InternalCDORevisionDelta[] changedObjects = ClientCommitContext.this.getDirtyObjectDeltas();
+        final InternalCDORevisionDelta[] changedObjects = getDirtyObjectDeltas();
         return new IndexedList<CDORevisionKey>()
         {
           @Override
@@ -334,7 +348,7 @@ public class CloneRepository extends Repository.Default
           {
             return changedObjects[index];
           }
-    
+
           @Override
           public int size()
           {
@@ -342,7 +356,7 @@ public class CloneRepository extends Repository.Default
           }
         };
       }
-    
+
       public List<CDOIDAndVersion> getDetachedObjects()
       {
         final CDOID[] detachedObjects = ClientCommitContext.this.getDetachedObjects();
@@ -353,7 +367,7 @@ public class CloneRepository extends Repository.Default
           {
             return CDOIDUtil.createIDAndVersion(detachedObjects[index], CDOBranchVersion.UNSPECIFIED_VERSION);
           }
-    
+
           @Override
           public int size()
           {

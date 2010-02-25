@@ -32,7 +32,6 @@ import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
-import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -129,7 +128,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   public CDOBranchPoint getBranchPoint()
   {
-    return CDOBranchUtil.createBranchPoint(transaction.getBranch(), timeStamp);
+    return transaction.getBranch().getPoint(timeStamp);
   }
 
   public String getUserID()
@@ -339,6 +338,11 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     InternalRepository repository = transaction.getSession().getManager().getRepository();
     return repository.createCommitTimeStamp();
+  }
+
+  protected void setTimeStamp(long timeStamp)
+  {
+    this.timeStamp = timeStamp;
   }
 
   public void postCommit(boolean success)

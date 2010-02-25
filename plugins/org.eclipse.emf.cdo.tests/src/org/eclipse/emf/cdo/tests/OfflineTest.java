@@ -46,7 +46,7 @@ public class OfflineTest extends AbstractCDOTest
     return (MEMOffline)super.getRepositoryConfig();
   }
 
-  public void testSynchronizer() throws Exception
+  public void _testSynchronizer() throws Exception
   {
     CDOSession session = openSession(getRepository().getName() + "_master");
     CDOTransaction transaction = session.openTransaction();
@@ -109,7 +109,7 @@ public class OfflineTest extends AbstractCDOTest
     }
   }
 
-  public void testCloneClient() throws Exception
+  public void _testCloneClient() throws Exception
   {
     CDOSession masterSession = openSession(getRepository().getName() + "_master");
     CDOTransaction transaction = masterSession.openTransaction();
@@ -196,11 +196,10 @@ public class OfflineTest extends AbstractCDOTest
       resource.getContents().add(company);
       transaction.commit();
     }
-    catch (Exception ex)
+    finally
     {
-      ex.printStackTrace();
+      IEvent[] events = listener.getEvents();
+      System.out.println(events);
     }
-
-    System.out.println(listener.getEvents());
   }
 }

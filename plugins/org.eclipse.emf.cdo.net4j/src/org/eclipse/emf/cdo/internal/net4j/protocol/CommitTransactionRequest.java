@@ -37,7 +37,7 @@ import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.MetaInstanceMapper;
 
 import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
 
@@ -242,7 +242,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
     }
 
     result = confirmingTransactionResult(in);
-    confirmingNewPackage(in, result);
+    confirmingNewPackages(in, result);
     confirmingIDMappings(in, result);
     return result;
   }
@@ -266,9 +266,9 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
     return new CommitTransactionResult(idProvider, timeStamp);
   }
 
-  protected void confirmingNewPackage(CDODataInput in, CommitTransactionResult result) throws IOException
+  protected void confirmingNewPackages(CDODataInput in, CommitTransactionResult result) throws IOException
   {
-    InternalCDOPackageRegistry packageRegistry = getSession().getPackageRegistry();
+    MetaInstanceMapper metaInstanceMapper = getSession().getPackageRegistry().getMetaInstanceMapper();
     for (CDOPackageUnit newPackageUnit : commitData.getNewPackageUnits())
     {
       for (CDOPackageInfo packageInfo : newPackageUnit.getPackageInfos())
@@ -280,16 +280,13 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
         {
           CDOIDTemp oldID = (CDOIDTemp)oldRange.get(i);
           CDOID newID = newRange.get(i);
-          packageRegistry.getMetaInstanceMapper().remapMetaInstanceID(oldID, newID);
+          metaInstanceMapper.remapMetaInstanceID(oldID, newID);
           result.addIDMapping(oldID, newID);
         }
       }
     }
   }
 
-  /*
-   * Write IDs that are needed
-   */
   protected void confirmingIDMappings(CDODataInput in, CommitTransactionResult result) throws IOException
   {
     for (;;)

@@ -194,17 +194,17 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION:
       return new CommitTransactionIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE1:
-      return new CommitTransactionPhase1Indication(this);
+    case CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE1:
+      return new CommitXATransactionPhase1Indication(this);
 
-    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE2:
-      return new CommitTransactionPhase2Indication(this);
+    case CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE2:
+      return new CommitXATransactionPhase2Indication(this);
 
-    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE3:
-      return new CommitTransactionPhase3Indication(this);
+    case CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE3:
+      return new CommitXATransactionPhase3Indication(this);
 
-    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_CANCEL:
-      return new CommitTransactionCancelIndication(this);
+    case CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_CANCEL:
+      return new CommitXATransactionCancelIndication(this);
 
     case CDOProtocolConstants.SIGNAL_QUERY:
       return new QueryIndication(this);

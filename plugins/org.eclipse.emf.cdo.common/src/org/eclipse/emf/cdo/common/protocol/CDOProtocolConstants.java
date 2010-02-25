@@ -57,15 +57,27 @@ public interface CDOProtocolConstants
 
   public static final short SIGNAL_COMMIT_TRANSACTION = 10;
 
-  public static final short SIGNAL_COMMIT_TRANSACTION_PHASE1 = 11;
+  public static final short SIGNAL_COMMIT_NOTIFICATION = 11;
 
-  public static final short SIGNAL_COMMIT_TRANSACTION_PHASE2 = 12;
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_XA_COMMIT_TRANSACTION_PHASE1 = 12;
 
-  public static final short SIGNAL_COMMIT_TRANSACTION_PHASE3 = 13;
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_XA_COMMIT_TRANSACTION_PHASE2 = 13;
 
-  public static final short SIGNAL_COMMIT_TRANSACTION_CANCEL = 14;
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_XA_COMMIT_TRANSACTION_PHASE3 = 14;
 
-  public static final short SIGNAL_COMMIT_NOTIFICATION = 15;
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_XA_COMMIT_TRANSACTION_CANCEL = 15;
 
   public static final short SIGNAL_QUERY = 16;
 

@@ -38,221 +38,226 @@ public class StubCDORevision extends AbstractCDORevision
 
   public int compareTo(CDOBranchPoint o)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public CDOClassInfo getClassInfo()
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public void setID(CDOID id)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public void setVersion(int version)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public void setBranchPoint(CDOBranchPoint branchPoint)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public void setRevised(long revised)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public void setResourceID(CDOID resourceID)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public void setContainerID(Object containerID)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public void setContainingFeatureID(int containingFeatureID)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public void add(EStructuralFeature feature, int index, Object value)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public void clear(EStructuralFeature feature)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public Object move(EStructuralFeature feature, int targetIndex, int sourceIndex)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public Object remove(EStructuralFeature feature, int index)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public Object set(EStructuralFeature feature, int index, Object value)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public void unset(EStructuralFeature feature)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public Object getValue(EStructuralFeature feature)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public Object setValue(EStructuralFeature feature, Object value)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public void setList(EStructuralFeature feature, InternalCDOList list)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public CDOList getList(EStructuralFeature feature)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public CDOList getList(EStructuralFeature feature, int size)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public void read(CDODataInput in) throws IOException
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public void write(CDODataOutput out, int referenceChunk) throws IOException
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public void convertEObjects(CDOIDProvider oidProvider)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public int getVersion()
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public long getRevised()
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public InternalCDORevisionDelta compare(CDORevision origin)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public void merge(CDORevisionDelta delta)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public InternalCDORevision copy()
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public CDOID getID()
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public CDOBranch getBranch()
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public long getTimeStamp()
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public CDOID getResourceID()
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public Object getContainerID()
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public int getContainingFeatureID()
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public Object get(EStructuralFeature feature, int index)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public int size(EStructuralFeature feature)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public boolean isEmpty(EStructuralFeature feature)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public boolean contains(EStructuralFeature feature, Object value)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public int indexOf(EStructuralFeature feature, Object value)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public int lastIndexOf(EStructuralFeature feature, Object value)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public <T> T[] toArray(EStructuralFeature feature, T[] array)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public Object[] toArray(EStructuralFeature feature)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public int hashCode(EStructuralFeature feature)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 
   public void adjustReferences(CDOReferenceAdjuster revisionAdjuster)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
+  private String getExceptionMessage()
+  {
+    return "Unsupported operation in " + this;
   }
 }

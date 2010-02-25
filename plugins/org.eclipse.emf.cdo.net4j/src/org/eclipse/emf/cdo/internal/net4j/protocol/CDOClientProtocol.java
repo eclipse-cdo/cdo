@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.TransportException;
@@ -48,7 +49,6 @@ import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
-import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import java.util.Collection;
@@ -242,29 +242,31 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new ObjectLockedRequest(this, view, object, lockType, byOthers));
   }
 
-  public CommitTransactionResult commitTransaction(InternalCDOCommitContext commitContext, OMMonitor monitor)
+  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
+      CDOIDProvider idProvider, CDOCommitData commitData, OMMonitor monitor)
   {
-    return send(new CommitTransactionRequest(this, commitContext), monitor);
+    return send(new CommitTransactionRequest(this, transactionID, comment, releaseLocks, idProvider, commitData),
+        monitor);
   }
 
   public CommitTransactionResult commitTransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
-    return send(new CommitTransactionPhase1Request(this, xaContext), monitor);
+    return send(new CommitXATransactionPhase1Request(this, xaContext), monitor);
   }
 
   public CommitTransactionResult commitTransactionPhase2(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
-    return send(new CommitTransactionPhase2Request(this, xaContext), monitor);
+    return send(new CommitXATransactionPhase2Request(this, xaContext), monitor);
   }
 
   public CommitTransactionResult commitTransactionPhase3(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
-    return send(new CommitTransactionPhase3Request(this, xaContext), monitor);
+    return send(new CommitXATransactionPhase3Request(this, xaContext), monitor);
   }
 
   public CommitTransactionResult commitTransactionCancel(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
-    return send(new CommitTransactionCancelRequest(this, xaContext), monitor);
+    return send(new CommitXATransactionCancelRequest(this, xaContext), monitor);
   }
 
   public List<CDORemoteSession> getRemoteSessions(InternalCDORemoteSessionManager manager, boolean subscribe)

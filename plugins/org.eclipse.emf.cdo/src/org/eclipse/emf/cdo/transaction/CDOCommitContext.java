@@ -48,12 +48,12 @@ public interface CDOCommitContext
   public Map<CDOID, CDOObject> getDirtyObjects();
 
   /**
-   * Returns a map of the {@link CDORevisionDelta revision deltas} that are to be committed with this commit context.
-   */
-  public Map<CDOID, CDORevisionDelta> getRevisionDeltas();
-
-  /**
    * Returns a map of the detached {@link CDOObject objects} that are to be committed with this commit context.
    */
   public Map<CDOID, CDOObject> getDetachedObjects();
+
+  /**
+   * Returns a map of the {@link CDORevisionDelta revision deltas} that are to be committed with this commit context.
+   */
+  public Map<CDOID, CDORevisionDelta> getRevisionDeltas();
 }

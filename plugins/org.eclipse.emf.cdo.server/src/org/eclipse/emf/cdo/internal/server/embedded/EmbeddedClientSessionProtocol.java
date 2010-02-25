@@ -18,10 +18,12 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
@@ -50,8 +52,6 @@ import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
-import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
-import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import java.util.ArrayList;
@@ -59,7 +59,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -302,7 +301,8 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public CommitTransactionResult commitTransaction(InternalCDOCommitContext clientCommitContext, OMMonitor monitor)
+  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
+      CDOIDProvider idProvider, CDOCommitData commitData, OMMonitor monitor)
   {
     monitor.begin(2);
     boolean success = false;
@@ -311,33 +311,31 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
     try
     {
-      InternalCDOTransaction clientTransaction = clientCommitContext.getTransaction();
-      int viewID = clientTransaction.getViewID();
-
-      InternalTransaction serverTransaction = (InternalTransaction)serverSessionProtocol.getSession().getView(viewID);
+      InternalTransaction serverTransaction = (InternalTransaction)serverSessionProtocol.getSession().getView(
+          transactionID);
       serverCommitContext = serverTransaction.createCommitContext();
       serverCommitContext.preWrite();
-      serverCommitContext.setAutoReleaseLocksEnabled(clientTransaction.options().isAutoReleaseLocksEnabled());
+      serverCommitContext.setAutoReleaseLocksEnabled(releaseLocks);
 
-      List<CDOPackageUnit> npu = clientCommitContext.getNewPackageUnits();
+      List<CDOPackageUnit> npu = commitData.getNewPackageUnits();
       serverCommitContext.setNewPackageUnits(npu.toArray(new InternalCDOPackageUnit[npu.size()]));
 
-      Collection<CDOObject> no = clientCommitContext.getNewObjects().values();
+      List<CDOIDAndVersion> no = commitData.getNewObjects();
       InternalCDORevision[] array = new InternalCDORevision[no.size()];
       int index = 0;
-      for (CDOObject object : no)
+      for (CDOIDAndVersion object : no)
       {
-        InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
-        revision.convertEObjects(clientTransaction);
+        InternalCDORevision revision = (InternalCDORevision)object;
+        // revision.convertEObjects(clientTransaction);
         array[index++] = revision;
       }
 
       serverCommitContext.setNewObjects(array);
 
-      Collection<CDORevisionDelta> rd = clientCommitContext.getRevisionDeltas().values();
+      List<CDORevisionKey> rd = commitData.getChangedObjects();
       serverCommitContext.setDirtyObjectDeltas(rd.toArray(new InternalCDORevisionDelta[rd.size()]));
 
-      Set<CDOID> detachedObjects = clientCommitContext.getDetachedObjects().keySet();
+      List<CDOIDAndVersion> detachedObjects = commitData.getDetachedObjects();
       serverCommitContext.setDetachedObjects(detachedObjects.toArray(new CDOID[detachedObjects.size()]));
 
       serverCommitContext.write(monitor.fork());
@@ -351,11 +349,11 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
         monitor.worked();
       }
 
-      result = new CommitTransactionResult(clientCommitContext, serverCommitContext.getBranchPoint().getTimeStamp());
-      for (Entry<CDOID, CDOID> entry : serverCommitContext.getIDMappings().entrySet())
-      {
-        result.addIDMapping(entry.getKey(), entry.getValue());
-      }
+      // result = new CommitTransactionResult(commitData, serverCommitContext.getBranchPoint().getTimeStamp());
+      // for (Entry<CDOID, CDOID> entry : serverCommitContext.getIDMappings().entrySet())
+      // {
+      // result.addIDMapping(entry.getKey(), entry.getValue());
+      // }
     }
     finally
     {

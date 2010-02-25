@@ -29,14 +29,14 @@ import java.util.concurrent.ExecutionException;
 /**
  * @author Simon McDuff
  */
-public class CommitTransactionPhase2Indication extends CommitTransactionIndication
+public class CommitXATransactionPhase2Indication extends CommitTransactionIndication
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL,
-      CommitTransactionPhase2Indication.class);
+      CommitXATransactionPhase2Indication.class);
 
-  public CommitTransactionPhase2Indication(CDOServerProtocol protocol)
+  public CommitXATransactionPhase2Indication(CDOServerProtocol protocol)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE2);
+    super(protocol, CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE2);
   }
 
   @Override

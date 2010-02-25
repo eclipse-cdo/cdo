@@ -12,6 +12,7 @@
 package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -99,6 +100,11 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   public interface InternalCDOCommitContext extends CDOCommitContext
   {
     public InternalCDOTransaction getTransaction();
+
+    /**
+     * @since 3.0
+     */
+    public CDOCommitData getCommitData();
 
     public void preCommit();
 

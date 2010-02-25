@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  **************************************************************************/
@@ -31,11 +31,11 @@ import java.io.IOException;
  * 
  * @author Simon McDuff
  */
-public class CommitTransactionCancelRequest extends CommitTransactionRequest
+public class CommitXATransactionCancelRequest extends CommitXATransactionRequest
 {
-  public CommitTransactionCancelRequest(CDOClientProtocol protocol, InternalCDOXACommitContext xaContext)
+  public CommitXATransactionCancelRequest(CDOClientProtocol protocol, InternalCDOXACommitContext xaContext)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_CANCEL, xaContext);
+    super(protocol, CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_CANCEL, xaContext);
   }
 
   @Override

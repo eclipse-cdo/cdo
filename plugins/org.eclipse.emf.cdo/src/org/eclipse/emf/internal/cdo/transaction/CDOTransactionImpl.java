@@ -624,7 +624,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public InternalCDOCommitContext createCommitContext()
   {
-    return new CDOCommitContextImpl();
+    return new CDOCommitContextImpl(this, analyzeNewPackages());
   }
 
   /**
@@ -1594,54 +1594,70 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   private final class CDOCommitContextImpl implements InternalCDOCommitContext
   {
-    private Map<CDOID, CDOObject> newObjects;
+    private InternalCDOTransaction transaction;
 
-    private Map<CDOID, CDOObject> dirtyObjects;
+    private CDOCommitData commitData;
 
-    private Map<CDOID, CDORevisionDelta> revisionDeltas;
-
-    private Map<CDOID, CDOObject> detachedObjects;
-
-    private List<CDOPackageUnit> newPackageUnits;
-
-    public CDOCommitContextImpl()
+    public CDOCommitContextImpl(InternalCDOTransaction transaction, List<CDOPackageUnit> newPackageUnits)
     {
-      CDOTransactionImpl transaction = getTransaction();
-      newObjects = transaction.getNewObjects();
-      dirtyObjects = transaction.getDirtyObjects();
-      detachedObjects = transaction.getDetachedObjects();
-      revisionDeltas = transaction.getRevisionDeltas();
-      newPackageUnits = transaction.analyzeNewPackages();
+      this.transaction = transaction;
+
+      List<CDOIDAndVersion> revisions = new ArrayList<CDOIDAndVersion>(getNewObjects().size());
+      for (CDOObject newObject : getNewObjects().values())
+      {
+        revisions.add(newObject.cdoRevision());
+      }
+
+      List<CDORevisionKey> deltas = new ArrayList<CDORevisionKey>(getRevisionDeltas().size());
+      for (CDORevisionDelta delta : getRevisionDeltas().values())
+      {
+        deltas.add(delta);
+      }
+
+      List<CDOIDAndVersion> detached = new ArrayList<CDOIDAndVersion>(getDetachedObjects().size());
+      for (CDOID id : getDetachedObjects().keySet())
+      {
+        // Add "version-less" key.
+        // CDOSessionImpl.reviseRevisions() will call reviseLatest() accordingly.
+        detached.add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
+      }
+
+      commitData = new CDOCommitDataImpl(newPackageUnits, revisions, deltas, detached);
     }
 
-    public CDOTransactionImpl getTransaction()
+    public InternalCDOTransaction getTransaction()
     {
-      return CDOTransactionImpl.this;
+      return transaction;
+    }
+
+    public CDOCommitData getCommitData()
+    {
+      return commitData;
     }
 
     public Map<CDOID, CDOObject> getDirtyObjects()
     {
-      return dirtyObjects;
+      return transaction.getDirtyObjects();
     }
 
     public Map<CDOID, CDOObject> getNewObjects()
     {
-      return newObjects;
+      return transaction.getNewObjects();
     }
 
     public List<CDOPackageUnit> getNewPackageUnits()
     {
-      return newPackageUnits;
+      return commitData.getNewPackageUnits();
     }
 
     public Map<CDOID, CDOObject> getDetachedObjects()
     {
-      return detachedObjects;
+      return transaction.getDetachedObjects();
     }
 
     public Map<CDOID, CDORevisionDelta> getRevisionDeltas()
     {
-      return revisionDeltas;
+      return transaction.getRevisionDeltas();
     }
 
     public void preCommit()
@@ -1685,7 +1701,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         try
         {
-          for (CDOPackageUnit newPackageUnit : newPackageUnits)
+          for (CDOPackageUnit newPackageUnit : getNewPackageUnits())
           {
             ((InternalCDOPackageUnit)newPackageUnit).setState(CDOPackageUnit.State.LOADED);
           }
@@ -1693,33 +1709,20 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           postCommit(getNewObjects(), result);
           postCommit(getDirtyObjects(), result);
 
-          List<CDOIDAndVersion> revisions = new ArrayList<CDOIDAndVersion>();
-          for (CDOObject newObject : getNewObjects().values())
-          {
-            revisions.add(newObject.cdoRevision());
-          }
-
-          List<CDORevisionKey> deltas = new ArrayList<CDORevisionKey>();
           for (CDORevisionDelta delta : getRevisionDeltas().values())
           {
             ((InternalCDORevisionDelta)delta).adjustReferences(result.getReferenceAdjuster());
-            deltas.add(delta);
           }
 
-          List<CDOIDAndVersion> detached = new ArrayList<CDOIDAndVersion>();
           for (CDOID id : getDetachedObjects().keySet())
           {
-            // Add "version-less" key.
-            // CDOSessionImpl.reviseRevisions() will call reviseLatest() accordingly.
-            detached.add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
             removeObject(id);
           }
 
-          InternalCDOSession session = getSession();
-          CDOTransactionImpl transaction = getTransaction();
           long timeStamp = result.getTimeStamp();
+          CDOCommitInfo commitInfo = makeCommitInfo(timeStamp);
 
-          CDOCommitInfo commitInfo = makeCommitInfo(timeStamp, revisions, deltas, detached);
+          InternalCDOSession session = getSession();
           session.invalidate(commitInfo, transaction);
 
           CDOTransactionHandler[] handlers = getTransactionHandlers();
@@ -1762,38 +1765,33 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    private CDOCommitInfo makeCommitInfo(long timeStamp, List<CDOIDAndVersion> newRevisions,
-        List<CDORevisionKey> deltas, List<CDOIDAndVersion> detachedIDsAndVersions)
+    private CDOCommitInfo makeCommitInfo(long timeStamp)
     {
       InternalCDOSession session = getSession();
-      InternalCDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
-
       CDOBranch branch = getBranch();
       String userID = session.getUserID();
       String comment = getCommitComment();
-      CDOCommitData commitData = new CDOCommitDataImpl(newPackageUnits, newRevisions, deltas, detachedIDsAndVersions);
 
+      InternalCDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
       return commitInfoManager.createCommitInfo(branch, timeStamp, userID, comment, commitData);
     }
 
-    @SuppressWarnings("rawtypes")
-    private void preCommit(Map objects)
+    private void preCommit(Map<CDOID, CDOObject> objects)
     {
       if (!objects.isEmpty())
       {
-        for (Object object : objects.values())
+        for (CDOObject object : objects.values())
         {
           ((InternalCDOObject)object).cdoInternalPreCommit();
         }
       }
     }
 
-    @SuppressWarnings("rawtypes")
-    private void postCommit(Map objects, CommitTransactionResult result)
+    private void postCommit(Map<CDOID, CDOObject> objects, CommitTransactionResult result)
     {
       if (!objects.isEmpty())
       {
-        for (Object object : objects.values())
+        for (CDOObject object : objects.values())
         {
           CDOStateMachine.INSTANCE.commit((InternalCDOObject)object, result);
         }

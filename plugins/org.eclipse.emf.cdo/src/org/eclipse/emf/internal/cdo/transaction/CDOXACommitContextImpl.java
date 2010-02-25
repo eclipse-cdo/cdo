@@ -11,6 +11,7 @@
 package org.eclipse.emf.internal.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
@@ -126,6 +127,11 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas()
   {
     return delegateCommitContext.getRevisionDeltas();
+  }
+
+  public CDOCommitData getCommitData()
+  {
+    return delegateCommitContext.getCommitData();
   }
 
   public Object call() throws Exception

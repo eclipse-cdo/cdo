@@ -41,21 +41,16 @@ import java.util.Map.Entry;
  * 
  * @author Simon McDuff
  */
-public class CommitTransactionPhase2Request extends CommitTransactionRequest
+public class CommitXATransactionPhase2Request extends CommitXATransactionRequest
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL,
-      CommitTransactionPhase1Request.class);
+      CommitXATransactionPhase1Request.class);
 
-  public CommitTransactionPhase2Request(CDOClientProtocol protocol, InternalCDOXACommitContext xaContext)
+  public CommitXATransactionPhase2Request(CDOClientProtocol protocol, InternalCDOXACommitContext xaContext)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE2, xaContext);
+    super(protocol, CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE2, xaContext);
   }
 
-  @Override
-  protected InternalCDOXACommitContext getCommitContext()
-  {
-    return (InternalCDOXACommitContext)super.getCommitContext();
-  }
 
   @Override
   protected void requesting(CDODataOutput out, OMMonitor monitor) throws IOException

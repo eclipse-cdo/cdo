@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.transaction;
 
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 
@@ -46,6 +47,7 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
 
   public CDOCommitInfo commit(InternalCDOTransaction transaction, IProgressMonitor progressMonitor) throws Exception
   {
+    String comment = transaction.getCommitComment();
     InternalCDOCommitContext commitContext = transaction.createCommitContext();
     if (TRACER.isEnabled())
     {
@@ -54,11 +56,14 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
 
     commitContext.preCommit();
 
+    CDOCommitData commitData = commitContext.getCommitData();
     CommitTransactionResult result = null;
-    if (commitContext.getTransaction().isDirty())
+
+    if (transaction.isDirty())
     {
       OMMonitor monitor = new EclipseMonitor(progressMonitor);
-      result = transaction.getSession().getSessionProtocol().commitTransaction(commitContext, monitor);
+      result = transaction.getSession().getSessionProtocol().commitTransaction(transaction.getViewID(), comment,
+          transaction.options().isAutoReleaseLocksEnabled(), transaction, commitData, monitor);
 
       String rollbackMessage = result.getRollbackMessage();
       if (rollbackMessage != null)
@@ -82,7 +87,7 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
 
     InternalCDOCommitInfoManager commitInfoManager = transaction.getSession().getCommitInfoManager();
     return commitInfoManager.createCommitInfo(transaction.getBranch(), result.getTimeStamp(), transaction.getSession()
-        .getUserID(), transaction.getCommitComment(), null);
+        .getUserID(), comment, commitData);
   }
 
   public void rollback(InternalCDOTransaction transaction, InternalCDOUserSavepoint savepoint)

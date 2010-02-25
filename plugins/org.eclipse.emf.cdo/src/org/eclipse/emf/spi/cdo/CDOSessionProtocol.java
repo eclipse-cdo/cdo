@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -39,7 +40,6 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import java.text.MessageFormat;
@@ -127,7 +127,11 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    */
   public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType, boolean byOthers);
 
-  public CommitTransactionResult commitTransaction(InternalCDOCommitContext commitContext, OMMonitor monitor);
+  /**
+   * @since 3.0
+   */
+  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
+      CDOIDProvider idProvider, CDOCommitData commitData, OMMonitor monitor);
 
   public CommitTransactionResult commitTransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor);
 
@@ -409,6 +413,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    */
   public final class CommitTransactionResult
   {
+    private CDOIDProvider idProvider;
+
     private String rollbackMessage;
 
     private long timeStamp;
@@ -417,17 +423,21 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private CDOReferenceAdjuster referenceAdjuster;
 
-    private InternalCDOCommitContext commitContext;
-
-    public CommitTransactionResult(InternalCDOCommitContext commitContext, String rollbackMessage)
+    /**
+     * @since 3.0
+     */
+    public CommitTransactionResult(CDOIDProvider idProvider, String rollbackMessage)
     {
-      this.commitContext = commitContext;
+      this.idProvider = idProvider;
       this.rollbackMessage = rollbackMessage;
     }
 
-    public CommitTransactionResult(InternalCDOCommitContext commitContext, long timeStamp)
+    /**
+     * @since 3.0
+     */
+    public CommitTransactionResult(CDOIDProvider idProvider, long timeStamp)
     {
-      this.commitContext = commitContext;
+      this.idProvider = idProvider;
       this.timeStamp = timeStamp;
     }
 
@@ -444,11 +454,6 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public void setReferenceAdjuster(CDOReferenceAdjuster referenceAdjuster)
     {
       this.referenceAdjuster = referenceAdjuster;
-    }
-
-    public InternalCDOCommitContext getCommitContext()
-    {
-      return commitContext;
     }
 
     public String getRollbackMessage()
@@ -476,7 +481,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     protected PostCommitReferenceAdjuster createReferenceAdjuster()
     {
-      return new PostCommitReferenceAdjuster(commitContext.getTransaction(), new CDOIDMapper(idMappings));
+      return new PostCommitReferenceAdjuster(idProvider, new CDOIDMapper(idMappings));
     }
 
     /**

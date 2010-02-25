@@ -21,11 +21,11 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 /**
  * @author Simon McDuff
  */
-public class CommitTransactionPhase1Indication extends CommitTransactionIndication
+public class CommitXATransactionPhase1Indication extends CommitTransactionIndication
 {
-  public CommitTransactionPhase1Indication(CDOServerProtocol protocol)
+  public CommitXATransactionPhase1Indication(CDOServerProtocol protocol)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE1);
+    super(protocol, CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE1);
   }
 
   @Override

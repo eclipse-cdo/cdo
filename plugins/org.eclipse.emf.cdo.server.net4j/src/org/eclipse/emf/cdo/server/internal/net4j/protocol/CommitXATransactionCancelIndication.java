@@ -20,11 +20,11 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 /**
  * @author Simon McDuff
  */
-public class CommitTransactionPhase3Indication extends CommitTransactionIndication
+public class CommitXATransactionCancelIndication extends CommitTransactionIndication
 {
-  public CommitTransactionPhase3Indication(CDOServerProtocol protocol)
+  public CommitXATransactionCancelIndication(CDOServerProtocol protocol)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE3);
+    super(protocol, CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_CANCEL);
   }
 
   @Override
@@ -36,14 +36,25 @@ public class CommitTransactionPhase3Indication extends CommitTransactionIndicati
   @Override
   protected void responding(CDODataOutput out, OMMonitor monitor) throws Exception
   {
-    commitContext.commit(monitor);
-    boolean success = respondingException(out, commitContext.getRollbackMessage());
-    if (success)
+    String exceptionMessage = null;
+    try
     {
-      respondingMappingNewPackages(out);
+      if (commitContext != null)
+      {
+        getRepository().getCommitManager().rollback(commitContext);
+      }
+    }
+    catch (Exception exception)
+    {
+      exceptionMessage = exception.getMessage();
     }
 
-    commitContext.postCommit(success);
+    if (commitContext != null && exceptionMessage == null)
+    {
+      exceptionMessage = commitContext.getRollbackMessage();
+    }
+
+    respondingException(out, exceptionMessage);
   }
 
   @Override

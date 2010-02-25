@@ -133,13 +133,31 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
       CDOIDProvider idProvider, CDOCommitData commitData, OMMonitor monitor);
 
-  public CommitTransactionResult commitTransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor);
+  /**
+   * @since 3.0
+   */
+  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
+      CDOCommitData commitData, OMMonitor monitor);
 
-  public CommitTransactionResult commitTransactionPhase2(InternalCDOXACommitContext xaContext, OMMonitor monitor);
+  /**
+   * @since 3.0
+   */
+  public CommitTransactionResult commitXATransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor);
 
-  public CommitTransactionResult commitTransactionPhase3(InternalCDOXACommitContext xaContext, OMMonitor monitor);
+  /**
+   * @since 3.0
+   */
+  public CommitTransactionResult commitXATransactionPhase2(InternalCDOXACommitContext xaContext, OMMonitor monitor);
 
-  public CommitTransactionResult commitTransactionCancel(InternalCDOXACommitContext xaContext, OMMonitor monitor);
+  /**
+   * @since 3.0
+   */
+  public CommitTransactionResult commitXATransactionPhase3(InternalCDOXACommitContext xaContext, OMMonitor monitor);
+
+  /**
+   * @since 3.0
+   */
+  public CommitTransactionResult commitXATransactionCancel(InternalCDOXACommitContext xaContext, OMMonitor monitor);
 
   public List<CDORemoteSession> getRemoteSessions(InternalCDORemoteSessionManager manager, boolean subscribe);
 

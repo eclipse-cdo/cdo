@@ -249,22 +249,28 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
         monitor);
   }
 
-  public CommitTransactionResult commitTransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
+      CDOCommitData commitData, OMMonitor monitor)
+  {
+    return send(new CommitDelegationRequest(this, branch, userID, comment, commitData), monitor);
+  }
+
+  public CommitTransactionResult commitXATransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
     return send(new CommitXATransactionPhase1Request(this, xaContext), monitor);
   }
 
-  public CommitTransactionResult commitTransactionPhase2(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+  public CommitTransactionResult commitXATransactionPhase2(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
     return send(new CommitXATransactionPhase2Request(this, xaContext), monitor);
   }
 
-  public CommitTransactionResult commitTransactionPhase3(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+  public CommitTransactionResult commitXATransactionPhase3(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
     return send(new CommitXATransactionPhase3Request(this, xaContext), monitor);
   }
 
-  public CommitTransactionResult commitTransactionCancel(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+  public CommitTransactionResult commitXATransactionCancel(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
     return send(new CommitXATransactionCancelRequest(this, xaContext), monitor);
   }

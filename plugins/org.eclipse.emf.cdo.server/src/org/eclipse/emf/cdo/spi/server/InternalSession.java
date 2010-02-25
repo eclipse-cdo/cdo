@@ -30,6 +30,8 @@ import java.util.Set;
  */
 public interface InternalSession extends ISession, CDOIDProvider, CDOCommonSession.Options
 {
+  public static final int TEMP_VIEW_ID = 0;
+
   public InternalSessionManager getManager();
 
   public InternalView[] getViews();

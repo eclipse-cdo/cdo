@@ -57,6 +57,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Eike Stepper
@@ -76,6 +77,8 @@ public class Session extends Container<IView> implements InternalSession
   private PassiveUpdateMode passiveUpdateMode = PassiveUpdateMode.INVALIDATIONS;
 
   private ConcurrentMap<Integer, InternalView> views = new ConcurrentHashMap<Integer, InternalView>();
+
+  private AtomicInteger lastTempViewID = new AtomicInteger();
 
   @ExcludeFromDump
   private IListener protocolListener = new LifecycleEventAdapter()
@@ -238,6 +241,11 @@ public class Session extends Container<IView> implements InternalSession
   public InternalView openView(int viewID, CDOBranchPoint branchPoint)
   {
     checkActive();
+    if (viewID == TEMP_VIEW_ID)
+    {
+      viewID = -lastTempViewID.incrementAndGet();
+    }
+
     InternalView view = new View(this, viewID, branchPoint);
     addView(view);
     return view;
@@ -249,6 +257,11 @@ public class Session extends Container<IView> implements InternalSession
   public InternalTransaction openTransaction(int viewID, CDOBranchPoint branchPoint)
   {
     checkActive();
+    if (viewID == TEMP_VIEW_ID)
+    {
+      viewID = -lastTempViewID.incrementAndGet();
+    }
+
     InternalTransaction transaction = new Transaction(this, viewID, branchPoint);
     addView(transaction);
     return transaction;
@@ -257,7 +270,8 @@ public class Session extends Container<IView> implements InternalSession
   private void addView(InternalView view)
   {
     checkActive();
-    views.put(view.getViewID(), view);
+    int viewID = view.getViewID();
+    views.put(viewID, view);
     fireElementAddedEvent(view);
   }
 
@@ -266,7 +280,8 @@ public class Session extends Container<IView> implements InternalSession
    */
   public void viewClosed(InternalView view)
   {
-    if (views.remove(view.getViewID()) == view)
+    int viewID = view.getViewID();
+    if (views.remove(viewID) == view)
     {
       view.doClose();
       fireElementRemovedEvent(view);

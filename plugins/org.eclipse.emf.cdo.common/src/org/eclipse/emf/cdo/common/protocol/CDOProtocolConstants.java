@@ -55,104 +55,109 @@ public interface CDOProtocolConstants
 
   public static final short SIGNAL_LOAD_CHUNK = 9;
 
-  public static final short SIGNAL_COMMIT_TRANSACTION = 10;
+  public static final short SIGNAL_COMMIT_NOTIFICATION = 10;
 
-  public static final short SIGNAL_COMMIT_NOTIFICATION = 11;
-
-  /**
-   * @since 3.0
-   */
-  public static final short SIGNAL_XA_COMMIT_TRANSACTION_PHASE1 = 12;
+  public static final short SIGNAL_COMMIT_TRANSACTION = 11;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_XA_COMMIT_TRANSACTION_PHASE2 = 13;
+  public static final short SIGNAL_COMMIT_DELEGATION = 12;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_XA_COMMIT_TRANSACTION_PHASE3 = 14;
+  public static final short SIGNAL_XA_COMMIT_TRANSACTION_PHASE1 = 13;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_XA_COMMIT_TRANSACTION_CANCEL = 15;
-
-  public static final short SIGNAL_QUERY = 16;
-
-  public static final short SIGNAL_QUERY_CANCEL = 17;
+  public static final short SIGNAL_XA_COMMIT_TRANSACTION_PHASE2 = 14;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_REFRESH_SESSION = 18;
+  public static final short SIGNAL_XA_COMMIT_TRANSACTION_PHASE3 = 15;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_DISABLE_PASSIVE_UPDATE = 19;
+  public static final short SIGNAL_XA_COMMIT_TRANSACTION_CANCEL = 16;
+
+  public static final short SIGNAL_QUERY = 17;
+
+  public static final short SIGNAL_QUERY_CANCEL = 18;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_SET_PASSIVE_UPDATE_MODE = 20;
-
-  public static final short SIGNAL_CHANGE_SUBSCRIPTION = 21;
-
-  public static final short SIGNAL_REPOSITORY_TIME = 22;
-
-  public static final short SIGNAL_LOCK_OBJECTS = 23;
-
-  public static final short SIGNAL_UNLOCK_OBJECTS = 24;
-
-  public static final short SIGNAL_OBJECT_LOCKED = 25;
-
-  public static final short SIGNAL_GET_REMOTE_SESSIONS = 26;
+  public static final short SIGNAL_REFRESH_SESSION = 19;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_REMOTE_MESSAGE = 27;
+  public static final short SIGNAL_DISABLE_PASSIVE_UPDATE = 20;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_REMOTE_MESSAGE_NOTIFICATION = 28;
+  public static final short SIGNAL_SET_PASSIVE_UPDATE_MODE = 21;
 
-  public static final short SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS = 29;
+  public static final short SIGNAL_CHANGE_SUBSCRIPTION = 22;
 
-  public static final short SIGNAL_REMOTE_SESSION_NOTIFICATION = 30;
+  public static final short SIGNAL_REPOSITORY_TIME = 23;
 
-  /**
-   * @since 3.0
-   */
-  public static final short SIGNAL_CREATE_BRANCH = 31;
+  public static final short SIGNAL_LOCK_OBJECTS = 24;
 
-  /**
-   * @since 3.0
-   */
-  public static final short SIGNAL_LOAD_BRANCH = 32;
+  public static final short SIGNAL_UNLOCK_OBJECTS = 25;
+
+  public static final short SIGNAL_OBJECT_LOCKED = 26;
+
+  public static final short SIGNAL_GET_REMOTE_SESSIONS = 27;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_SUB_BRANCHES = 33;
+  public static final short SIGNAL_REMOTE_MESSAGE = 28;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_BRANCH_NOTIFICATION = 34;
+  public static final short SIGNAL_REMOTE_MESSAGE_NOTIFICATION = 29;
+
+  public static final short SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS = 30;
+
+  public static final short SIGNAL_REMOTE_SESSION_NOTIFICATION = 31;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_COMMIT_INFOS = 35;
+  public static final short SIGNAL_CREATE_BRANCH = 32;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_CLONE_REPOSITORY = 36;
+  public static final short SIGNAL_LOAD_BRANCH = 33;
+
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_LOAD_SUB_BRANCHES = 34;
+
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_BRANCH_NOTIFICATION = 35;
+
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_LOAD_COMMIT_INFOS = 36;
+
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_CLONE_REPOSITORY = 37;
 
   // //////////////////////////////////////////////////////////////////////
   // Session Management

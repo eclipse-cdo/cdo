@@ -561,7 +561,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       {
         CDOSessionProtocol sessionProtocol = xaContext.getTransaction().getSession().getSessionProtocol();
         OMMonitor monitor = new EclipseMonitor(progressMonitor);
-        result = sessionProtocol.commitTransactionPhase1(xaContext, monitor);
+        result = sessionProtocol.commitXATransactionPhase1(xaContext, monitor);
         check_result(result);
       }
 
@@ -594,7 +594,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       {
         CDOSessionProtocol sessionProtocol = xaContext.getTransaction().getSession().getSessionProtocol();
         OMMonitor monitor = new EclipseMonitor(progressMonitor);
-        CommitTransactionResult result = sessionProtocol.commitTransactionPhase2(xaContext, monitor);
+        CommitTransactionResult result = sessionProtocol.commitXATransactionPhase2(xaContext, monitor);
         check_result(result);
       }
 
@@ -626,7 +626,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       {
         CDOSessionProtocol sessionProtocol = xaContext.getTransaction().getSession().getSessionProtocol();
         OMMonitor monitor = new EclipseMonitor(progressMonitor);
-        CommitTransactionResult result = sessionProtocol.commitTransactionPhase3(xaContext, monitor);
+        CommitTransactionResult result = sessionProtocol.commitXATransactionPhase3(xaContext, monitor);
         check_result(result);
       }
 
@@ -657,7 +657,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     {
       CDOSessionProtocol sessionProtocol = xaContext.getTransaction().getSession().getSessionProtocol();
       OMMonitor monitor = new EclipseMonitor(progressMonitor);
-      CommitTransactionResult result = sessionProtocol.commitTransactionCancel(xaContext, monitor);
+      CommitTransactionResult result = sessionProtocol.commitXATransactionCancel(xaContext, monitor);
       check_result(result);
     }
 

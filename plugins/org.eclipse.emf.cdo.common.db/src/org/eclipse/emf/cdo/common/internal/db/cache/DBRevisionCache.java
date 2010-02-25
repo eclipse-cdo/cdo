@@ -90,12 +90,12 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
     return false;
   }
 
-  public CDOIDProvider getIdProvider()
+  public CDOIDProvider getIDProvider()
   {
     return idProvider;
   }
 
-  public void setIdProvider(CDOIDProvider idProvider)
+  public void setIDProvider(CDOIDProvider idProvider)
   {
     this.idProvider = idProvider;
   }

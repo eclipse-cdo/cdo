@@ -10,10 +10,14 @@
  */
 package org.eclipse.emf.cdo.internal.server.offline;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.server.Repository;
@@ -25,8 +29,13 @@ import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
+import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.transaction.TransactionException;
+
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.util.Arrays;
 import java.util.List;
@@ -256,24 +265,102 @@ public class CloneRepository extends Repository.Default
     @Override
     public void commit(OMMonitor monitor)
     {
-      // CDOBranch branch = getBranchPoint().getBranch();
-      // InternalCDOSession master = (InternalCDOSession)synchronizer.getMaster();
-      // InternalCDOTransaction masterTransaction = (InternalCDOTransaction)master.openTransaction(branch);
-      //
-      // CommitTransactionResult result = master.getSessionProtocol().commitTransaction(commitContext, monitor);
-      //
-      // String rollbackMessage = result.getRollbackMessage();
-      // if (rollbackMessage != null)
-      // {
-      // throw new TransactionException(rollbackMessage);
-      // }
-      //
-      // // Needed even for non-dirty transactions to release locks
-      // commitContext.postCommit(result);
+      CDOBranch branch = getBranchPoint().getBranch();
+      String userID = getUserID();
+      String comment = getCommitComment();
+      CDOCommitData commitData = new CommitData();
+
+      InternalCDOSession master = (InternalCDOSession)synchronizer.getMaster();
+      CommitTransactionResult result = master.getSessionProtocol().commitDelegation(branch, userID, comment,
+          commitData, monitor);
+
+      String rollbackMessage = result.getRollbackMessage();
+      if (rollbackMessage != null)
+      {
+        throw new TransactionException(rollbackMessage);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class CommitData implements CDOCommitData
+    {
+      public List<CDOPackageUnit> getNewPackageUnits()
+      {
+        final InternalCDOPackageUnit[] newPackageUnits = ClientCommitContext.this.getNewPackageUnits();
+        return new IndexedList<CDOPackageUnit>()
+        {
+          @Override
+          public CDOPackageUnit get(int index)
+          {
+            return newPackageUnits[index];
+          }
+    
+          @Override
+          public int size()
+          {
+            return newPackageUnits.length;
+          }
+        };
+      }
+    
+      public List<CDOIDAndVersion> getNewObjects()
+      {
+        final InternalCDORevision[] newObjects = ClientCommitContext.this.getNewObjects();
+        return new IndexedList<CDOIDAndVersion>()
+        {
+          @Override
+          public CDOIDAndVersion get(int index)
+          {
+            return newObjects[index];
+          }
+    
+          @Override
+          public int size()
+          {
+            return newObjects.length;
+          }
+        };
+      }
+    
+      public List<CDORevisionKey> getChangedObjects()
+      {
+        final InternalCDORevisionDelta[] changedObjects = ClientCommitContext.this.getDirtyObjectDeltas();
+        return new IndexedList<CDORevisionKey>()
+        {
+          @Override
+          public CDORevisionKey get(int index)
+          {
+            return changedObjects[index];
+          }
+    
+          @Override
+          public int size()
+          {
+            return changedObjects.length;
+          }
+        };
+      }
+    
+      public List<CDOIDAndVersion> getDetachedObjects()
+      {
+        final CDOID[] detachedObjects = ClientCommitContext.this.getDetachedObjects();
+        return new IndexedList<CDOIDAndVersion>()
+        {
+          @Override
+          public CDOIDAndVersion get(int index)
+          {
+            return CDOIDUtil.createIDAndVersion(detachedObjects[index], CDOBranchVersion.UNSPECIFIED_VERSION);
+          }
+    
+          @Override
+          public int size()
+          {
+            return detachedObjects.length;
+          }
+        };
+      }
     }
   }
-
-  // private final class MasterCommitContext extends CDOCommitContextImpl
-  // {
-  // }
 }

@@ -194,6 +194,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION:
       return new CommitTransactionIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_COMMIT_DELEGATION:
+      return new CommitDelegationIndication(this);
+
     case CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE1:
       return new CommitXATransactionPhase1Indication(this);
 

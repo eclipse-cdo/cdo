@@ -368,22 +368,28 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     return result;
   }
 
-  public CommitTransactionResult commitTransactionCancel(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
+      CDOCommitData commitData, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }
 
-  public CommitTransactionResult commitTransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+  public CommitTransactionResult commitXATransactionCancel(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }
 
-  public CommitTransactionResult commitTransactionPhase2(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+  public CommitTransactionResult commitXATransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }
 
-  public CommitTransactionResult commitTransactionPhase3(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+  public CommitTransactionResult commitXATransactionPhase2(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CommitTransactionResult commitXATransactionPhase3(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }

@@ -1402,14 +1402,15 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public CommitTransactionResult commitTransactionCancel(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+    public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
+        CDOCommitData commitData, OMMonitor monitor)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          return delegate.commitTransactionCancel(xaContext, monitor);
+          return delegate.commitDelegation(branch, userID, comment, commitData, monitor);
         }
         catch (Exception ex)
         {
@@ -1418,14 +1419,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public CommitTransactionResult commitTransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+    public CommitTransactionResult commitXATransactionCancel(InternalCDOXACommitContext xaContext, OMMonitor monitor)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          return delegate.commitTransactionPhase1(xaContext, monitor);
+          return delegate.commitXATransactionCancel(xaContext, monitor);
         }
         catch (Exception ex)
         {
@@ -1434,14 +1435,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public CommitTransactionResult commitTransactionPhase2(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+    public CommitTransactionResult commitXATransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          return delegate.commitTransactionPhase2(xaContext, monitor);
+          return delegate.commitXATransactionPhase1(xaContext, monitor);
         }
         catch (Exception ex)
         {
@@ -1450,14 +1451,30 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public CommitTransactionResult commitTransactionPhase3(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+    public CommitTransactionResult commitXATransactionPhase2(InternalCDOXACommitContext xaContext, OMMonitor monitor)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          return delegate.commitTransactionPhase3(xaContext, monitor);
+          return delegate.commitXATransactionPhase2(xaContext, monitor);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public CommitTransactionResult commitXATransactionPhase3(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.commitXATransactionPhase3(xaContext, monitor);
         }
         catch (Exception ex)
         {

@@ -180,14 +180,27 @@ public class OfflineTest extends AbstractCDOTest
 
   public void testClientCommit() throws Exception
   {
-    Company company = getModel1Factory().createCompany();
-    company.setName("Test");
+    TestListener listener = new TestListener();
+    CDOSession masterSession = openSession(getRepository().getName() + "_master");
+    masterSession.addListener(listener);
 
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    try
+    {
+      Company company = getModel1Factory().createCompany();
+      company.setName("Test");
 
-    resource.getContents().add(company);
-    transaction.commit();
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/my/resource");
+
+      resource.getContents().add(company);
+      transaction.commit();
+    }
+    catch (Exception ex)
+    {
+      ex.printStackTrace();
+    }
+
+    System.out.println(listener.getEvents());
   }
 }

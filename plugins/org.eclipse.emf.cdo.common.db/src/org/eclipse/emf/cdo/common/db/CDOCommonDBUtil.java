@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.common.db;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.internal.db.cache.DBRevisionCache;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
@@ -48,13 +47,7 @@ public final class CDOCommonDBUtil
     cache.setRevisionFactory(revisionFactory);
 
     // TODO Remove after branch "redesign-dangling" has been merged!
-    cache.setIdProvider(new CDOIDProvider()
-    {
-      public CDOID provideCDOID(Object idOrObject)
-      {
-        return (CDOID)idOrObject;
-      }
-    });
+    cache.setIDProvider(CDOIDProvider.NOOP);
 
     return cache;
   }

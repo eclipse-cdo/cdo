@@ -246,5 +246,34 @@ public class CloneRepository extends Repository.Default
     {
       super(transaction);
     }
+
+    @Override
+    public void write(OMMonitor monitor)
+    {
+      // Do nothing
+    }
+
+    @Override
+    public void commit(OMMonitor monitor)
+    {
+      // CDOBranch branch = getBranchPoint().getBranch();
+      // InternalCDOSession master = (InternalCDOSession)synchronizer.getMaster();
+      // InternalCDOTransaction masterTransaction = (InternalCDOTransaction)master.openTransaction(branch);
+      //
+      // CommitTransactionResult result = master.getSessionProtocol().commitTransaction(commitContext, monitor);
+      //
+      // String rollbackMessage = result.getRollbackMessage();
+      // if (rollbackMessage != null)
+      // {
+      // throw new TransactionException(rollbackMessage);
+      // }
+      //
+      // // Needed even for non-dirty transactions to release locks
+      // commitContext.postCommit(result);
+    }
   }
+
+  // private final class MasterCommitContext extends CDOCommitContextImpl
+  // {
+  // }
 }

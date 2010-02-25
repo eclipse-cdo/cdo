@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
-import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.InternalCDOFeatureDelta;
 
@@ -44,13 +43,13 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCDOSavepoint
 {
-  private Map<CDOID, CDOResource> newResources = new HashMap<CDOID, CDOResource>();
+  private Map<CDOID, CDORevision> baseNewObjects = new HashMap<CDOID, CDORevision>();
 
   private Map<CDOID, CDOObject> newObjects = new HashMap<CDOID, CDOObject>();
 
-  private Map<CDOID, CDORevision> baseNewObjects = new HashMap<CDOID, CDORevision>();
-
   private Map<CDOID, CDOObject> dirtyObjects = new HashMap<CDOID, CDOObject>();
+
+  private ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = new ConcurrentHashMap<CDOID, CDORevisionDelta>();
 
   private Map<CDOID, CDOObject> detachedObjects = new HashMap<CDOID, CDOObject>()
   {
@@ -63,7 +62,6 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
       dirtyObjects.remove(key);
       baseNewObjects.remove(key);
       newObjects.remove(key);
-      newResources.remove(key);
       revisionDeltas.remove(key);
       return super.put(key, object);
     }
@@ -71,8 +69,6 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
 
   // Bug 283985 (Re-attachment)
   private Map<CDOID, CDOObject> reattachedObjects = new HashMap<CDOID, CDOObject>();
-
-  private ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = new ConcurrentHashMap<CDOID, CDORevisionDelta>();
 
   /**
    * Contains all persistent CDOIDs that were removed. The same instance is shared between all save points that belong
@@ -134,7 +130,6 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
 
   public void clear()
   {
-    newResources.clear();
     newObjects.clear();
     dirtyObjects.clear();
     revisionDeltas.clear();
@@ -146,11 +141,6 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   public boolean wasDirty()
   {
     return wasDirty;
-  }
-
-  public Map<CDOID, CDOResource> getNewResources()
-  {
-    return newResources;
   }
 
   public Map<CDOID, CDOObject> getNewObjects()
@@ -242,42 +232,6 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     }
 
     return newObjects;
-  }
-
-  /**
-   * Return the list of new resources from this point without objects that are removed.
-   */
-  public Map<CDOID, CDOResource> getAllNewResources()
-  {
-    if (getPreviousSavepoint() == null)
-    {
-      return Collections.unmodifiableMap(getNewResources());
-    }
-
-    if (getSharedDetachedObjects().size() == 0)
-    {
-      MultiMap.ListBased<CDOID, CDOResource> newResources = new MultiMap.ListBased<CDOID, CDOResource>();
-      for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
-      {
-        newResources.getDelegates().add(savepoint.getNewResources());
-      }
-
-      return newResources;
-    }
-
-    Map<CDOID, CDOResource> newResources = new HashMap<CDOID, CDOResource>();
-    for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
-    {
-      for (Entry<CDOID, CDOResource> entry : savepoint.getNewResources().entrySet())
-      {
-        if (!getSharedDetachedObjects().contains(entry.getKey()))
-        {
-          newResources.put(entry.getKey(), entry.getValue());
-        }
-      }
-    }
-
-    return newResources;
   }
 
   /**

@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
-import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
@@ -323,17 +322,9 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
       List<CDOPackageUnit> npu = clientCommitContext.getNewPackageUnits();
       serverCommitContext.setNewPackageUnits(npu.toArray(new InternalCDOPackageUnit[npu.size()]));
 
-      Collection<CDOResource> nr = clientCommitContext.getNewResources().values();
       Collection<CDOObject> no = clientCommitContext.getNewObjects().values();
-      InternalCDORevision[] array = new InternalCDORevision[nr.size() + no.size()];
+      InternalCDORevision[] array = new InternalCDORevision[no.size()];
       int index = 0;
-      for (CDOResource resource : nr)
-      {
-        InternalCDORevision revision = (InternalCDORevision)resource.cdoRevision();
-        revision.convertEObjects(clientTransaction);
-        array[index++] = revision;
-      }
-
       for (CDOObject object : no)
       {
         InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();

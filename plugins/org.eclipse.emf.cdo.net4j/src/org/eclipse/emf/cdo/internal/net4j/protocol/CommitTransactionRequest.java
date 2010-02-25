@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
@@ -140,7 +139,6 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
   {
     InternalCDOTransaction transaction = commitContext.getTransaction();
     List<CDOPackageUnit> newPackageUnits = commitContext.getNewPackageUnits();
-    Collection<CDOResource> newResources = commitContext.getNewResources().values();
     Collection<CDOObject> newObjects = commitContext.getNewObjects().values();
     Collection<CDORevisionDelta> revisionDeltas = commitContext.getRevisionDeltas().values();
     Collection<CDOID> detachedObjects = commitContext.getDetachedObjects().keySet();
@@ -148,7 +146,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
     out.writeBoolean(transaction.options().isAutoReleaseLocksEnabled());
     out.writeString(transaction.getCommitComment());
     out.writeInt(newPackageUnits.size());
-    out.writeInt(newResources.size() + newObjects.size());
+    out.writeInt(newObjects.size());
     out.writeInt(revisionDeltas.size());
     out.writeInt(detachedObjects.size());
 
@@ -164,10 +162,9 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0} new objects", newResources.size() + newObjects.size()); //$NON-NLS-1$
+      TRACER.format("Writing {0} new objects", newObjects.size()); //$NON-NLS-1$
     }
 
-    writeRevisions(out, newResources);
     writeRevisions(out, newObjects);
 
     if (TRACER.isEnabled())

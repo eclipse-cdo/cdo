@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.eresource.CDOResource;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
@@ -42,11 +41,6 @@ public interface CDOSavepoint extends CDOUserSavepoint
    * @since 3.0
    */
   public Map<CDOID, CDORevision> getBaseNewObjects();
-
-  /**
-   * @since 3.0
-   */
-  public Map<CDOID, CDOResource> getNewResources();
 
   /**
    * @since 3.0
@@ -79,13 +73,6 @@ public interface CDOSavepoint extends CDOUserSavepoint
    * @since 3.0
    */
   public Map<CDOID, CDORevision> getAllBaseNewObjects();
-
-  /**
-   * Return the list of new resources from this point without objects that are removed.
-   * 
-   * @since 3.0
-   */
-  public Map<CDOID, CDOResource> getAllNewResources();
 
   /**
    * Return the list of new objects from this point without objects that are removed.

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.eresource.CDOResource;
 
 import java.util.List;
 import java.util.Map;
@@ -37,11 +36,6 @@ public interface CDOCommitContext
    * Returns a list of the new {@link CDOPackageUnit package units} that are to be committed with this commit context.
    */
   public List<CDOPackageUnit> getNewPackageUnits();
-
-  /**
-   * Returns a map of the new {@link CDOResource resources} that are to be committed with this commit context.
-   */
-  public Map<CDOID, CDOResource> getNewResources();
 
   /**
    * Returns a map of the new {@link CDOObject objects} that are to be committed with this commit context.

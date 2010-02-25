@@ -1803,11 +1803,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
           attachObject(object);
         }
 
-        for (CDOObject object : commitContext.getNewResources().values())
-        {
-          attachObject(object);
-        }
-
         for (CDOObject object : commitContext.getDetachedObjects().values())
         {
           detachObject(object);
@@ -1896,7 +1891,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
     {
-      handleNewObjects(commitContext.getNewResources().values());
       handleNewObjects(commitContext.getNewObjects().values());
       handleDetachedObjects(commitContext.getDetachedObjects().values());
     }

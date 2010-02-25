@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -117,11 +116,6 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
   public List<CDOPackageUnit> getNewPackageUnits()
   {
     return delegateCommitContext.getNewPackageUnits();
-  }
-
-  public Map<CDOID, CDOResource> getNewResources()
-  {
-    return delegateCommitContext.getNewResources();
   }
 
   public Map<CDOID, CDOObject> getDetachedObjects()

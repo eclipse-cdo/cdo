@@ -91,8 +91,6 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
    */
   public CDOSavepoint getLastSavepoint();
 
-  public Map<CDOID, CDOResource> getNewResources();
-
   public Map<CDOID, CDOObject> getNewObjects();
 
   /**

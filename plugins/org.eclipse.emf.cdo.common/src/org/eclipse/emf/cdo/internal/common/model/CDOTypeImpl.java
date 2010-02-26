@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -79,10 +80,9 @@ public abstract class CDOTypeImpl implements CDOType
       out.writeBoolean(v);
     }
 
-    public Object readValue(CDODataInput in) throws IOException
+    public Boolean readValue(CDODataInput in) throws IOException
     {
-      boolean v = in.readBoolean();
-      return new Boolean(v);
+      return in.readBoolean();
     }
   };
 
@@ -93,9 +93,9 @@ public abstract class CDOTypeImpl implements CDOType
       out.writeByte((Byte)(value == null ? getDefaultValue() : value));
     }
 
-    public Object readValue(CDODataInput in) throws IOException
+    public Byte readValue(CDODataInput in) throws IOException
     {
-      return new Byte(in.readByte());
+      return in.readByte();
     }
   };
 
@@ -106,9 +106,9 @@ public abstract class CDOTypeImpl implements CDOType
       out.writeChar(((Character)(value == null ? getDefaultValue() : value)).charValue());
     }
 
-    public Object readValue(CDODataInput in) throws IOException
+    public Character readValue(CDODataInput in) throws IOException
     {
-      return new Character(in.readChar());
+      return in.readChar();
     }
   };
 
@@ -119,9 +119,9 @@ public abstract class CDOTypeImpl implements CDOType
       out.writeDouble((Double)(value == null ? getDefaultValue() : value));
     }
 
-    public Object readValue(CDODataInput in) throws IOException
+    public Double readValue(CDODataInput in) throws IOException
     {
-      return new Double(in.readDouble());
+      return in.readDouble();
     }
   };
 
@@ -132,9 +132,9 @@ public abstract class CDOTypeImpl implements CDOType
       out.writeFloat((Float)(value == null ? getDefaultValue() : value));
     }
 
-    public Object readValue(CDODataInput in) throws IOException
+    public Float readValue(CDODataInput in) throws IOException
     {
-      return new Float(in.readFloat());
+      return in.readFloat();
     }
   };
 
@@ -145,9 +145,9 @@ public abstract class CDOTypeImpl implements CDOType
       out.writeInt((Integer)(value == null ? getDefaultValue() : value));
     }
 
-    public Object readValue(CDODataInput in) throws IOException
+    public Integer readValue(CDODataInput in) throws IOException
     {
-      return new Integer(in.readInt());
+      return in.readInt();
     }
   };
 
@@ -158,9 +158,9 @@ public abstract class CDOTypeImpl implements CDOType
       out.writeLong((Long)(value == null ? getDefaultValue() : value));
     }
 
-    public Object readValue(CDODataInput in) throws IOException
+    public Long readValue(CDODataInput in) throws IOException
     {
-      return new Long(in.readLong());
+      return in.readLong();
     }
   };
 
@@ -171,9 +171,9 @@ public abstract class CDOTypeImpl implements CDOType
       out.writeShort((Short)(value == null ? getDefaultValue() : value));
     }
 
-    public Object readValue(CDODataInput in) throws IOException
+    public Short readValue(CDODataInput in) throws IOException
     {
-      return new Short(in.readShort());
+      return in.readShort();
     }
   };
 
@@ -193,7 +193,7 @@ public abstract class CDOTypeImpl implements CDOType
       }
     }
 
-    public Object readValue(CDODataInput in) throws IOException
+    public BigDecimal readValue(CDODataInput in) throws IOException
     {
       byte[] array = in.readByteArray();
       if (array == null)
@@ -221,7 +221,7 @@ public abstract class CDOTypeImpl implements CDOType
       }
     }
 
-    public Object readValue(CDODataInput in) throws IOException
+    public BigInteger readValue(CDODataInput in) throws IOException
     {
       byte[] array = in.readByteArray();
       if (array == null)
@@ -247,7 +247,7 @@ public abstract class CDOTypeImpl implements CDOType
       }
     }
 
-    public Object readValue(CDODataInput in) throws IOException
+    public CDOID readValue(CDODataInput in) throws IOException
     {
       return in.readCDOID();
     }
@@ -268,7 +268,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
 
     @Override
-    protected Object doReadValue(CDODataInput in) throws IOException
+    protected Boolean doReadValue(CDODataInput in) throws IOException
     {
       return in.readBoolean();
     }
@@ -283,7 +283,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
 
     @Override
-    protected Object doReadValue(CDODataInput in) throws IOException
+    protected Byte doReadValue(CDODataInput in) throws IOException
     {
       return in.readByte();
     }
@@ -298,7 +298,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
 
     @Override
-    protected Object doReadValue(CDODataInput in) throws IOException
+    protected Character doReadValue(CDODataInput in) throws IOException
     {
       return in.readChar();
     }
@@ -313,7 +313,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
 
     @Override
-    protected Object doReadValue(CDODataInput in) throws IOException
+    protected Date doReadValue(CDODataInput in) throws IOException
     {
       return new Date(in.readLong());
     }
@@ -328,7 +328,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
 
     @Override
-    protected Object doReadValue(CDODataInput in) throws IOException
+    protected Double doReadValue(CDODataInput in) throws IOException
     {
       return in.readDouble();
     }
@@ -343,7 +343,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
 
     @Override
-    protected Object doReadValue(CDODataInput in) throws IOException
+    protected Float doReadValue(CDODataInput in) throws IOException
     {
       return in.readFloat();
     }
@@ -358,7 +358,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
 
     @Override
-    protected Object doReadValue(CDODataInput in) throws IOException
+    protected Integer doReadValue(CDODataInput in) throws IOException
     {
       return in.readInt();
     }
@@ -373,7 +373,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
 
     @Override
-    protected Object doReadValue(CDODataInput in) throws IOException
+    protected Long doReadValue(CDODataInput in) throws IOException
     {
       return in.readLong();
     }
@@ -388,7 +388,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
 
     @Override
-    protected Object doReadValue(CDODataInput in) throws IOException
+    protected Short doReadValue(CDODataInput in) throws IOException
     {
       return in.readShort();
     }
@@ -397,9 +397,9 @@ public abstract class CDOTypeImpl implements CDOType
   public static final CDOType STRING = new CDOTypeImpl("STRING", EcorePackage.ESTRING, true) //$NON-NLS-1$
   {
     @Override
-    public Object copyValue(Object value)
+    protected String doCopyValue(Object value)
     {
-      return value;
+      return (String)value;
     }
 
     public void writeValue(CDODataOutput out, Object value) throws IOException
@@ -407,7 +407,7 @@ public abstract class CDOTypeImpl implements CDOType
       out.writeString((String)value);
     }
 
-    public Object readValue(CDODataInput in) throws IOException
+    public String readValue(CDODataInput in) throws IOException
     {
       return in.readString();
     }
@@ -416,13 +416,8 @@ public abstract class CDOTypeImpl implements CDOType
   public static final CDOType BYTE_ARRAY = new CDOTypeImpl("BYTE_ARRAY", EcorePackage.EBYTE_ARRAY, true) //$NON-NLS-1$
   {
     @Override
-    public Object copyValue(Object value)
+    protected byte[] doCopyValue(Object value)
     {
-      if (value == null)
-      {
-        return null;
-      }
-
       byte[] array = (byte[])value;
       byte[] result = new byte[array.length];
       System.arraycopy(value, 0, result, 0, array.length);
@@ -434,7 +429,7 @@ public abstract class CDOTypeImpl implements CDOType
       out.writeByteArray((byte[])value);
     }
 
-    public Object readValue(CDODataInput in) throws IOException
+    public byte[] readValue(CDODataInput in) throws IOException
     {
       return in.readByteArray();
     }
@@ -445,9 +440,8 @@ public abstract class CDOTypeImpl implements CDOType
    */
   public static final CDOType ENUM_ORDINAL = new ObjectType("ENUM_ORDINAL", 998) //$NON-NLS-1$
   {
-    @SuppressWarnings("cast")
     @Override
-    public Object copyValue(Object value)
+    protected Integer doCopyValue(Object value)
     {
       return (Integer)value;
     }
@@ -459,7 +453,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
 
     @Override
-    public Object doReadValue(CDODataInput in) throws IOException
+    public Integer doReadValue(CDODataInput in) throws IOException
     {
       return in.readInt();
     }
@@ -576,9 +570,8 @@ public abstract class CDOTypeImpl implements CDOType
 
   public static final CDOType CUSTOM = new CDOTypeImpl("CUSTOM", 999, true) //$NON-NLS-1$
   {
-    @SuppressWarnings("cast")
     @Override
-    public Object copyValue(Object value)
+    protected String doCopyValue(Object value)
     {
       return (String)value;
     }
@@ -588,7 +581,7 @@ public abstract class CDOTypeImpl implements CDOType
       out.writeString((String)value);
     }
 
-    public Object readValue(CDODataInput in) throws IOException
+    public String readValue(CDODataInput in) throws IOException
     {
       return in.readString();
     }
@@ -610,7 +603,7 @@ public abstract class CDOTypeImpl implements CDOType
       false)
   {
     @Override
-    public Object copyValue(Object value)
+    protected FeatureMap.Entry doCopyValue(Object value)
     {
       FeatureMap.Entry entry = (FeatureMap.Entry)value;
       EStructuralFeature innerFeature = entry.getEStructuralFeature();
@@ -626,7 +619,7 @@ public abstract class CDOTypeImpl implements CDOType
       throw new UnsupportedOperationException();
     }
 
-    public Object readValue(CDODataInput in) throws IOException
+    public FeatureMap.Entry readValue(CDODataInput in) throws IOException
     {
       throw new UnsupportedOperationException();
     }
@@ -738,7 +731,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
 
     @Override
-    protected Object doReadValue(CDODataInput in) throws IOException
+    protected Object[] doReadValue(CDODataInput in) throws IOException
     {
       int size = in.readInt();
       final Object[] objects = new Object[size];
@@ -823,7 +816,17 @@ public abstract class CDOTypeImpl implements CDOType
     return name;
   }
 
-  public Object copyValue(Object value)
+  public final Object copyValue(Object value)
+  {
+    if (value == null || value == CDORevisionData.NIL)
+    {
+      return value;
+    }
+
+    return doCopyValue(value);
+  }
+
+  protected Object doCopyValue(Object value)
   {
     return value;
   }

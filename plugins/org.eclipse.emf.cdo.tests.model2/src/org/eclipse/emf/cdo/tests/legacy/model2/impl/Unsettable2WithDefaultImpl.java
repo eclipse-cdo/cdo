@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.tests.legacy.model2.impl;
 
+import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model1.VAT;
-import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -347,7 +347,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
    * @generated
    * @ordered
    */
-  protected static final VAT UNSETTABLE_VAT_EDEFAULT = VAT.VAT0;
+  protected static final VAT UNSETTABLE_VAT_EDEFAULT = VAT.VAT15;
 
   /**
    * The cached value of the '{@link #getUnsettableVAT() <em>Unsettable VAT</em>}' attribute. <!-- begin-user-doc -->

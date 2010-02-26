@@ -598,7 +598,7 @@ public interface Unsettable2WithDefault extends EObject
   boolean isSetUnsettableString();
 
   /**
-   * Returns the value of the '<em><b>Unsettable VAT</b></em>' attribute. The default value is <code>"VAT15"</code>. The
+   * Returns the value of the '<em><b>Unsettable VAT</b></em>' attribute. The default value is <code>"vat15"</code>. The
    * literals are from the enumeration {@link org.eclipse.emf.cdo.tests.model1.VAT}. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Unsettable VAT</em>' attribute isn't clear, there really should be more of a description
@@ -612,7 +612,7 @@ public interface Unsettable2WithDefault extends EObject
    * @see #unsetUnsettableVAT()
    * @see #setUnsettableVAT(VAT)
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable2WithDefault_UnsettableVAT()
-   * @model default="VAT15" unsettable="true"
+   * @model default="vat15" unsettable="true"
    * @generated
    */
   VAT getUnsettableVAT();

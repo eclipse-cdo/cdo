@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.tests.legacy.model2.impl;
 
 import org.eclipse.emf.cdo.tests.legacy.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model2.NotUnsettable;
+import org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault;
 import org.eclipse.emf.cdo.tests.model2.PersistentContainment;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Task;
@@ -90,6 +92,10 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
       return createPersistentContainment();
     case Model2Package.TRANSIENT_CONTAINER:
       return createTransientContainer();
+    case Model2Package.NOT_UNSETTABLE:
+      return createNotUnsettable();
+    case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT:
+      return createNotUnsettableWithDefault();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -170,6 +176,28 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
   {
     TransientContainerImpl transientContainer = new TransientContainerImpl();
     return transientContainer;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public NotUnsettable createNotUnsettable()
+  {
+    NotUnsettableImpl notUnsettable = new NotUnsettableImpl();
+    return notUnsettable;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public NotUnsettableWithDefault createNotUnsettableWithDefault()
+  {
+    NotUnsettableWithDefaultImpl notUnsettableWithDefault = new NotUnsettableWithDefaultImpl();
+    return notUnsettableWithDefault;
   }
 
   /**

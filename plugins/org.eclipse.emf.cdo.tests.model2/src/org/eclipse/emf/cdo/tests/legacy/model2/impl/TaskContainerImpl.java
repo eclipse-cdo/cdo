@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.legacy.model2.impl;
 
-import org.eclipse.emf.cdo.tests.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.Task;
 import org.eclipse.emf.cdo.tests.model2.TaskContainer;
 

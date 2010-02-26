@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.tests.model2.impl;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model2.NotUnsettable;
+import org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault;
 import org.eclipse.emf.cdo.tests.model2.PersistentContainment;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Task;
@@ -82,6 +84,20 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * @generated
    */
   private EClass transientContainerEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass notUnsettableEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass notUnsettableWithDefaultEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -566,6 +582,246 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * 
    * @generated
    */
+  public EClass getNotUnsettable()
+  {
+    return notUnsettableEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettable_NotUnsettableBoolean()
+  {
+    return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettable_NotUnsettableByte()
+  {
+    return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettable_NotUnsettableChar()
+  {
+    return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettable_NotUnsettableDate()
+  {
+    return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettable_NotUnsettableDouble()
+  {
+    return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettable_NotUnsettableFloat()
+  {
+    return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettable_NotUnsettableInt()
+  {
+    return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettable_NotUnsettableLong()
+  {
+    return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettable_NotUnsettableShort()
+  {
+    return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettable_NotUnsettableString()
+  {
+    return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettable_NotUnsettableVAT()
+  {
+    return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getNotUnsettableWithDefault()
+  {
+    return notUnsettableWithDefaultEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettableWithDefault_NotUnsettableBoolean()
+  {
+    return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettableWithDefault_NotUnsettableByte()
+  {
+    return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettableWithDefault_NotUnsettableChar()
+  {
+    return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettableWithDefault_NotUnsettableDate()
+  {
+    return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettableWithDefault_NotUnsettableDouble()
+  {
+    return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettableWithDefault_NotUnsettableFloat()
+  {
+    return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettableWithDefault_NotUnsettableInt()
+  {
+    return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettableWithDefault_NotUnsettableLong()
+  {
+    return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettableWithDefault_NotUnsettableShort()
+  {
+    return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettableWithDefault_NotUnsettableString()
+  {
+    return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNotUnsettableWithDefault_NotUnsettableVAT()
+  {
+    return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public Model2Factory getModel2Factory()
   {
     return (Model2Factory)getEFactoryInstance();
@@ -640,6 +896,32 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     createEAttribute(transientContainerEClass, TRANSIENT_CONTAINER__ATTR_BEFORE);
     createEReference(transientContainerEClass, TRANSIENT_CONTAINER__PARENT);
     createEAttribute(transientContainerEClass, TRANSIENT_CONTAINER__ATTR_AFTER);
+
+    notUnsettableEClass = createEClass(NOT_UNSETTABLE);
+    createEAttribute(notUnsettableEClass, NOT_UNSETTABLE__NOT_UNSETTABLE_BOOLEAN);
+    createEAttribute(notUnsettableEClass, NOT_UNSETTABLE__NOT_UNSETTABLE_BYTE);
+    createEAttribute(notUnsettableEClass, NOT_UNSETTABLE__NOT_UNSETTABLE_CHAR);
+    createEAttribute(notUnsettableEClass, NOT_UNSETTABLE__NOT_UNSETTABLE_DATE);
+    createEAttribute(notUnsettableEClass, NOT_UNSETTABLE__NOT_UNSETTABLE_DOUBLE);
+    createEAttribute(notUnsettableEClass, NOT_UNSETTABLE__NOT_UNSETTABLE_FLOAT);
+    createEAttribute(notUnsettableEClass, NOT_UNSETTABLE__NOT_UNSETTABLE_INT);
+    createEAttribute(notUnsettableEClass, NOT_UNSETTABLE__NOT_UNSETTABLE_LONG);
+    createEAttribute(notUnsettableEClass, NOT_UNSETTABLE__NOT_UNSETTABLE_SHORT);
+    createEAttribute(notUnsettableEClass, NOT_UNSETTABLE__NOT_UNSETTABLE_STRING);
+    createEAttribute(notUnsettableEClass, NOT_UNSETTABLE__NOT_UNSETTABLE_VAT);
+
+    notUnsettableWithDefaultEClass = createEClass(NOT_UNSETTABLE_WITH_DEFAULT);
+    createEAttribute(notUnsettableWithDefaultEClass, NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_BOOLEAN);
+    createEAttribute(notUnsettableWithDefaultEClass, NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_BYTE);
+    createEAttribute(notUnsettableWithDefaultEClass, NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_CHAR);
+    createEAttribute(notUnsettableWithDefaultEClass, NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DATE);
+    createEAttribute(notUnsettableWithDefaultEClass, NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DOUBLE);
+    createEAttribute(notUnsettableWithDefaultEClass, NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_FLOAT);
+    createEAttribute(notUnsettableWithDefaultEClass, NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_INT);
+    createEAttribute(notUnsettableWithDefaultEClass, NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_LONG);
+    createEAttribute(notUnsettableWithDefaultEClass, NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_SHORT);
+    createEAttribute(notUnsettableWithDefaultEClass, NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_STRING);
+    createEAttribute(notUnsettableWithDefaultEClass, NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_VAT);
   }
 
   /**
@@ -771,7 +1053,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     initEAttribute(getUnsettable2WithDefault_UnsettableString(), ecorePackage.getEString(), "unsettableString",
         "\"eike\"", 0, 1, Unsettable2WithDefault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE,
         !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettable2WithDefault_UnsettableVAT(), theModel1Package.getVAT(), "unsettableVAT", "VAT15", 0,
+    initEAttribute(getUnsettable2WithDefault_UnsettableVAT(), theModel1Package.getVAT(), "unsettableVAT", "vat15", 0,
         1, Unsettable2WithDefault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
@@ -798,6 +1080,78 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     initEAttribute(getTransientContainer_AttrAfter(), ecorePackage.getEString(), "attrAfter", null, 0, 1,
         TransientContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
+
+    initEClass(notUnsettableEClass, NotUnsettable.class, "NotUnsettable", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getNotUnsettable_NotUnsettableBoolean(), ecorePackage.getEBoolean(), "notUnsettableBoolean", null,
+        0, 1, NotUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettable_NotUnsettableByte(), ecorePackage.getEByte(), "notUnsettableByte", null, 0, 1,
+        NotUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettable_NotUnsettableChar(), ecorePackage.getEChar(), "notUnsettableChar", null, 0, 1,
+        NotUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettable_NotUnsettableDate(), ecorePackage.getEDate(), "notUnsettableDate", null, 0, 1,
+        NotUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettable_NotUnsettableDouble(), ecorePackage.getEDouble(), "notUnsettableDouble", null, 0,
+        1, NotUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettable_NotUnsettableFloat(), ecorePackage.getEFloat(), "notUnsettableFloat", null, 0, 1,
+        NotUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettable_NotUnsettableInt(), ecorePackage.getEInt(), "notUnsettableInt", null, 0, 1,
+        NotUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettable_NotUnsettableLong(), ecorePackage.getELong(), "notUnsettableLong", null, 0, 1,
+        NotUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettable_NotUnsettableShort(), ecorePackage.getEShort(), "notUnsettableShort", null, 0, 1,
+        NotUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettable_NotUnsettableString(), ecorePackage.getEString(), "notUnsettableString", null, 0,
+        1, NotUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettable_NotUnsettableVAT(), theModel1Package.getVAT(), "notUnsettableVAT", null, 0, 1,
+        NotUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(notUnsettableWithDefaultEClass, NotUnsettableWithDefault.class, "NotUnsettableWithDefault",
+        !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getNotUnsettableWithDefault_NotUnsettableBoolean(), ecorePackage.getEBoolean(),
+        "notUnsettableBoolean", "true", 0, 1, NotUnsettableWithDefault.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettableWithDefault_NotUnsettableByte(), ecorePackage.getEByte(), "notUnsettableByte", "3",
+        0, 1, NotUnsettableWithDefault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettableWithDefault_NotUnsettableChar(), ecorePackage.getEChar(), "notUnsettableChar",
+        "\'x\'", 0, 1, NotUnsettableWithDefault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettableWithDefault_NotUnsettableDate(), ecorePackage.getEDate(), "notUnsettableDate",
+        "1979-03-15T07:12:59", 0, 1, NotUnsettableWithDefault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettableWithDefault_NotUnsettableDouble(), ecorePackage.getEDouble(), "notUnsettableDouble",
+        "3.3", 0, 1, NotUnsettableWithDefault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettableWithDefault_NotUnsettableFloat(), ecorePackage.getEFloat(), "notUnsettableFloat",
+        "4.4", 0, 1, NotUnsettableWithDefault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettableWithDefault_NotUnsettableInt(), ecorePackage.getEInt(), "notUnsettableInt", "5", 0,
+        1, NotUnsettableWithDefault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettableWithDefault_NotUnsettableLong(), ecorePackage.getELong(), "notUnsettableLong", "6",
+        0, 1, NotUnsettableWithDefault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettableWithDefault_NotUnsettableShort(), ecorePackage.getEShort(), "notUnsettableShort",
+        "7", 0, 1, NotUnsettableWithDefault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettableWithDefault_NotUnsettableString(), ecorePackage.getEString(), "notUnsettableString",
+        "\"eike\"", 0, 1, NotUnsettableWithDefault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNotUnsettableWithDefault_NotUnsettableVAT(), theModel1Package.getVAT(), "notUnsettableVAT",
+        "vat15", 0, 1, NotUnsettableWithDefault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

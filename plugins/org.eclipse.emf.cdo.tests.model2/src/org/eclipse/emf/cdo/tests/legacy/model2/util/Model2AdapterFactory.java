@@ -10,9 +10,11 @@
  */
 package org.eclipse.emf.cdo.tests.legacy.model2.util;
 
+import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
-import org.eclipse.emf.cdo.tests.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model2.NotUnsettable;
+import org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault;
 import org.eclipse.emf.cdo.tests.model2.PersistentContainment;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Task;
@@ -124,6 +126,18 @@ public class Model2AdapterFactory extends AdapterFactoryImpl
     public Adapter caseTransientContainer(TransientContainer object)
     {
       return createTransientContainerAdapter();
+    }
+
+    @Override
+    public Adapter caseNotUnsettable(NotUnsettable object)
+    {
+      return createNotUnsettableAdapter();
+    }
+
+    @Override
+    public Adapter caseNotUnsettableWithDefault(NotUnsettableWithDefault object)
+    {
+      return createNotUnsettableWithDefaultAdapter();
     }
 
     @Override
@@ -257,6 +271,35 @@ public class Model2AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createTransientContainerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.legacy.model2.NotUnsettable
+   * <em>Not Unsettable</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.legacy.model2.NotUnsettable
+   * @generated
+   */
+  public Adapter createNotUnsettableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model2.NotUnsettableWithDefault <em>Not Unsettable With Default</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.legacy.model2.NotUnsettableWithDefault
+   * @generated
+   */
+  public Adapter createNotUnsettableWithDefaultAdapter()
   {
     return null;
   }

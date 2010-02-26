@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.tests.legacy.model2.impl;
 
+import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model1.VAT;
-import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.Unsettable1;
 
 import org.eclipse.emf.common.notify.Notification;

@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.tests.model2.util;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model2.NotUnsettable;
+import org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault;
 import org.eclipse.emf.cdo.tests.model2.PersistentContainment;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Task;
@@ -178,6 +180,26 @@ public class Model2Switch<T>
       }
       return result;
     }
+    case Model2Package.NOT_UNSETTABLE:
+    {
+      NotUnsettable notUnsettable = (NotUnsettable)theEObject;
+      T result = caseNotUnsettable(notUnsettable);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT:
+    {
+      NotUnsettableWithDefault notUnsettableWithDefault = (NotUnsettableWithDefault)theEObject;
+      T result = caseNotUnsettableWithDefault(notUnsettableWithDefault);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     default:
       return defaultCase(theEObject);
     }
@@ -287,6 +309,37 @@ public class Model2Switch<T>
    * @generated
    */
   public T caseTransientContainer(TransientContainer object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Not Unsettable</em>'. <!-- begin-user-doc -->
+   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Not Unsettable</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNotUnsettable(NotUnsettable object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Not Unsettable With Default</em>'. <!--
+   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
+   * end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Not Unsettable With Default</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNotUnsettableWithDefault(NotUnsettableWithDefault object)
   {
     return null;
   }

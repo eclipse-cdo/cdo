@@ -396,11 +396,10 @@ public abstract class CDOTypeImpl implements CDOType
 
   public static final CDOType STRING = new CDOTypeImpl("STRING", EcorePackage.ESTRING, true) //$NON-NLS-1$
   {
-    @SuppressWarnings("cast")
     @Override
     public Object copyValue(Object value)
     {
-      return (String)value;
+      return value;
     }
 
     public void writeValue(CDODataOutput out, Object value) throws IOException

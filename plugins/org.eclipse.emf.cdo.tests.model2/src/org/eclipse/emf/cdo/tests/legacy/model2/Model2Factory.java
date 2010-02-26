@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.tests.legacy.model2;
 
+import org.eclipse.emf.cdo.tests.model2.NotUnsettable;
+import org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault;
 import org.eclipse.emf.cdo.tests.model2.PersistentContainment;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Task;
@@ -89,6 +91,22 @@ public interface Model2Factory extends org.eclipse.emf.cdo.tests.model2.Model2Fa
    * @generated
    */
   TransientContainer createTransientContainer();
+
+  /**
+   * Returns a new object of class '<em>Not Unsettable</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Not Unsettable</em>'.
+   * @generated
+   */
+  NotUnsettable createNotUnsettable();
+
+  /**
+   * Returns a new object of class '<em>Not Unsettable With Default</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Not Unsettable With Default</em>'.
+   * @generated
+   */
+  NotUnsettableWithDefault createNotUnsettableWithDefault();
 
   /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->

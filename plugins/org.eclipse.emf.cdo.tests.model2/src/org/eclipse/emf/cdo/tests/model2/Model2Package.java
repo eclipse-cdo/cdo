@@ -497,6 +497,242 @@ public interface Model2Package extends EPackage
   int TRANSIENT_CONTAINER_FEATURE_COUNT = 3;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl <em>Not Unsettable</em>}
+   * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getNotUnsettable()
+   * @generated
+   */
+  int NOT_UNSETTABLE = 7;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Boolean</b></em>' attribute. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE__NOT_UNSETTABLE_BOOLEAN = 0;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Byte</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE__NOT_UNSETTABLE_BYTE = 1;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Char</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE__NOT_UNSETTABLE_CHAR = 2;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Date</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE__NOT_UNSETTABLE_DATE = 3;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Double</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE__NOT_UNSETTABLE_DOUBLE = 4;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Float</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE__NOT_UNSETTABLE_FLOAT = 5;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Int</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE__NOT_UNSETTABLE_INT = 6;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Long</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE__NOT_UNSETTABLE_LONG = 7;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Short</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE__NOT_UNSETTABLE_SHORT = 8;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable String</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE__NOT_UNSETTABLE_STRING = 9;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable VAT</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE__NOT_UNSETTABLE_VAT = 10;
+
+  /**
+   * The number of structural features of the '<em>Not Unsettable</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE_FEATURE_COUNT = 11;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableWithDefaultImpl
+   * <em>Not Unsettable With Default</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableWithDefaultImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getNotUnsettableWithDefault()
+   * @generated
+   */
+  int NOT_UNSETTABLE_WITH_DEFAULT = 8;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Boolean</b></em>' attribute. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_BOOLEAN = 0;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Byte</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_BYTE = 1;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Char</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_CHAR = 2;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Date</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DATE = 3;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Double</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DOUBLE = 4;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Float</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_FLOAT = 5;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Int</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_INT = 6;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Long</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_LONG = 7;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable Short</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_SHORT = 8;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable String</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_STRING = 9;
+
+  /**
+   * The feature id for the '<em><b>Not Unsettable VAT</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_VAT = 10;
+
+  /**
+   * The number of structural features of the '<em>Not Unsettable With Default</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NOT_UNSETTABLE_WITH_DEFAULT_FEATURE_COUNT = 11;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder
    * <em>Special Purchase Order</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -960,6 +1196,290 @@ public interface Model2Package extends EPackage
   EAttribute getTransientContainer_AttrAfter();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable <em>Not Unsettable</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Not Unsettable</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable
+   * @generated
+   */
+  EClass getNotUnsettable();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#isNotUnsettableBoolean <em>Not Unsettable Boolean</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Boolean</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#isNotUnsettableBoolean()
+   * @see #getNotUnsettable()
+   * @generated
+   */
+  EAttribute getNotUnsettable_NotUnsettableBoolean();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableByte <em>Not Unsettable Byte</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Byte</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableByte()
+   * @see #getNotUnsettable()
+   * @generated
+   */
+  EAttribute getNotUnsettable_NotUnsettableByte();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableChar <em>Not Unsettable Char</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Char</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableChar()
+   * @see #getNotUnsettable()
+   * @generated
+   */
+  EAttribute getNotUnsettable_NotUnsettableChar();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableDate <em>Not Unsettable Date</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Date</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableDate()
+   * @see #getNotUnsettable()
+   * @generated
+   */
+  EAttribute getNotUnsettable_NotUnsettableDate();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableDouble <em>Not Unsettable Double</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Double</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableDouble()
+   * @see #getNotUnsettable()
+   * @generated
+   */
+  EAttribute getNotUnsettable_NotUnsettableDouble();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableFloat <em>Not Unsettable Float</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Float</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableFloat()
+   * @see #getNotUnsettable()
+   * @generated
+   */
+  EAttribute getNotUnsettable_NotUnsettableFloat();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableInt <em>Not Unsettable Int</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Int</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableInt()
+   * @see #getNotUnsettable()
+   * @generated
+   */
+  EAttribute getNotUnsettable_NotUnsettableInt();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableLong <em>Not Unsettable Long</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Long</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableLong()
+   * @see #getNotUnsettable()
+   * @generated
+   */
+  EAttribute getNotUnsettable_NotUnsettableLong();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableShort <em>Not Unsettable Short</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Short</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableShort()
+   * @see #getNotUnsettable()
+   * @generated
+   */
+  EAttribute getNotUnsettable_NotUnsettableShort();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableString <em>Not Unsettable String</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable String</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableString()
+   * @see #getNotUnsettable()
+   * @generated
+   */
+  EAttribute getNotUnsettable_NotUnsettableString();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableVAT <em>Not Unsettable VAT</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable VAT</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableVAT()
+   * @see #getNotUnsettable()
+   * @generated
+   */
+  EAttribute getNotUnsettable_NotUnsettableVAT();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault
+   * <em>Not Unsettable With Default</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Not Unsettable With Default</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault
+   * @generated
+   */
+  EClass getNotUnsettableWithDefault();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#isNotUnsettableBoolean
+   * <em>Not Unsettable Boolean</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Boolean</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#isNotUnsettableBoolean()
+   * @see #getNotUnsettableWithDefault()
+   * @generated
+   */
+  EAttribute getNotUnsettableWithDefault_NotUnsettableBoolean();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableByte <em>Not Unsettable Byte</em>}
+   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Byte</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableByte()
+   * @see #getNotUnsettableWithDefault()
+   * @generated
+   */
+  EAttribute getNotUnsettableWithDefault_NotUnsettableByte();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableChar <em>Not Unsettable Char</em>}
+   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Char</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableChar()
+   * @see #getNotUnsettableWithDefault()
+   * @generated
+   */
+  EAttribute getNotUnsettableWithDefault_NotUnsettableChar();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableDate <em>Not Unsettable Date</em>}
+   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Date</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableDate()
+   * @see #getNotUnsettableWithDefault()
+   * @generated
+   */
+  EAttribute getNotUnsettableWithDefault_NotUnsettableDate();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableDouble
+   * <em>Not Unsettable Double</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Double</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableDouble()
+   * @see #getNotUnsettableWithDefault()
+   * @generated
+   */
+  EAttribute getNotUnsettableWithDefault_NotUnsettableDouble();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableFloat
+   * <em>Not Unsettable Float</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Float</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableFloat()
+   * @see #getNotUnsettableWithDefault()
+   * @generated
+   */
+  EAttribute getNotUnsettableWithDefault_NotUnsettableFloat();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableInt <em>Not Unsettable Int</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Int</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableInt()
+   * @see #getNotUnsettableWithDefault()
+   * @generated
+   */
+  EAttribute getNotUnsettableWithDefault_NotUnsettableInt();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableLong <em>Not Unsettable Long</em>}
+   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Long</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableLong()
+   * @see #getNotUnsettableWithDefault()
+   * @generated
+   */
+  EAttribute getNotUnsettableWithDefault_NotUnsettableLong();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableShort
+   * <em>Not Unsettable Short</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable Short</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableShort()
+   * @see #getNotUnsettableWithDefault()
+   * @generated
+   */
+  EAttribute getNotUnsettableWithDefault_NotUnsettableShort();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableString
+   * <em>Not Unsettable String</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable String</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableString()
+   * @see #getNotUnsettableWithDefault()
+   * @generated
+   */
+  EAttribute getNotUnsettableWithDefault_NotUnsettableString();
+
+  /**
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableVAT <em>Not Unsettable VAT</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Not Unsettable VAT</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableVAT()
+   * @see #getNotUnsettableWithDefault()
+   * @generated
+   */
+  EAttribute getNotUnsettableWithDefault_NotUnsettableVAT();
+
+  /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the factory that creates the instances of the model.
@@ -1322,6 +1842,213 @@ public interface Model2Package extends EPackage
      * @generated
      */
     EAttribute TRANSIENT_CONTAINER__ATTR_AFTER = eINSTANCE.getTransientContainer_AttrAfter();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl
+     * <em>Not Unsettable</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getNotUnsettable()
+     * @generated
+     */
+    EClass NOT_UNSETTABLE = eINSTANCE.getNotUnsettable();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Boolean</b></em>' attribute feature. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE__NOT_UNSETTABLE_BOOLEAN = eINSTANCE.getNotUnsettable_NotUnsettableBoolean();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Byte</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE__NOT_UNSETTABLE_BYTE = eINSTANCE.getNotUnsettable_NotUnsettableByte();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Char</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE__NOT_UNSETTABLE_CHAR = eINSTANCE.getNotUnsettable_NotUnsettableChar();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Date</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE__NOT_UNSETTABLE_DATE = eINSTANCE.getNotUnsettable_NotUnsettableDate();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Double</b></em>' attribute feature. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE__NOT_UNSETTABLE_DOUBLE = eINSTANCE.getNotUnsettable_NotUnsettableDouble();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Float</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE__NOT_UNSETTABLE_FLOAT = eINSTANCE.getNotUnsettable_NotUnsettableFloat();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Int</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE__NOT_UNSETTABLE_INT = eINSTANCE.getNotUnsettable_NotUnsettableInt();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Long</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE__NOT_UNSETTABLE_LONG = eINSTANCE.getNotUnsettable_NotUnsettableLong();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Short</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE__NOT_UNSETTABLE_SHORT = eINSTANCE.getNotUnsettable_NotUnsettableShort();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable String</b></em>' attribute feature. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE__NOT_UNSETTABLE_STRING = eINSTANCE.getNotUnsettable_NotUnsettableString();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable VAT</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE__NOT_UNSETTABLE_VAT = eINSTANCE.getNotUnsettable_NotUnsettableVAT();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableWithDefaultImpl
+     * <em>Not Unsettable With Default</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableWithDefaultImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getNotUnsettableWithDefault()
+     * @generated
+     */
+    EClass NOT_UNSETTABLE_WITH_DEFAULT = eINSTANCE.getNotUnsettableWithDefault();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Boolean</b></em>' attribute feature. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_BOOLEAN = eINSTANCE
+        .getNotUnsettableWithDefault_NotUnsettableBoolean();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Byte</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_BYTE = eINSTANCE
+        .getNotUnsettableWithDefault_NotUnsettableByte();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Char</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_CHAR = eINSTANCE
+        .getNotUnsettableWithDefault_NotUnsettableChar();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Date</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DATE = eINSTANCE
+        .getNotUnsettableWithDefault_NotUnsettableDate();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Double</b></em>' attribute feature. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DOUBLE = eINSTANCE
+        .getNotUnsettableWithDefault_NotUnsettableDouble();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Float</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_FLOAT = eINSTANCE
+        .getNotUnsettableWithDefault_NotUnsettableFloat();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Int</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_INT = eINSTANCE
+        .getNotUnsettableWithDefault_NotUnsettableInt();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Long</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_LONG = eINSTANCE
+        .getNotUnsettableWithDefault_NotUnsettableLong();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable Short</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_SHORT = eINSTANCE
+        .getNotUnsettableWithDefault_NotUnsettableShort();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable String</b></em>' attribute feature. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_STRING = eINSTANCE
+        .getNotUnsettableWithDefault_NotUnsettableString();
+
+    /**
+     * The meta object literal for the '<em><b>Not Unsettable VAT</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_VAT = eINSTANCE
+        .getNotUnsettableWithDefault_NotUnsettableVAT();
 
   }
 

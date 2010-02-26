@@ -337,7 +337,6 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
 
   protected void respondingMappingNewObjects(CDODataOutput out) throws Exception
   {
-    // ID mappings
     Map<CDOID, CDOID> idMappings = commitContext.getIDMappings();
     for (Entry<CDOID, CDOID> entry : idMappings.entrySet())
     {

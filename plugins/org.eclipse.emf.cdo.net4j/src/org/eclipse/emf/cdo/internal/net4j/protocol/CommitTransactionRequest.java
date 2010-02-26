@@ -242,8 +242,8 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
     }
 
     result = confirmingTransactionResult(in);
-    confirmingNewPackages(in, result);
-    confirmingIDMappings(in, result);
+    confirmingMappingNewPackages(in, result);
+    confirmingMappingNewObjects(in, result);
     return result;
   }
 
@@ -266,7 +266,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
     return new CommitTransactionResult(idProvider, timeStamp);
   }
 
-  protected void confirmingNewPackages(CDODataInput in, CommitTransactionResult result) throws IOException
+  protected void confirmingMappingNewPackages(CDODataInput in, CommitTransactionResult result) throws IOException
   {
     MetaInstanceMapper metaInstanceMapper = getSession().getPackageRegistry().getMetaInstanceMapper();
     for (CDOPackageUnit newPackageUnit : commitData.getNewPackageUnits())
@@ -287,18 +287,26 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
     }
   }
 
-  protected void confirmingIDMappings(CDODataInput in, CommitTransactionResult result) throws IOException
+  protected void confirmingMappingNewObjects(CDODataInput in, CommitTransactionResult result) throws IOException
   {
     for (;;)
     {
-      CDOIDTemp oldID = (CDOIDTemp)in.readCDOID();
-      if (CDOIDUtil.isNull(oldID))
+      CDOID id = in.readCDOID();
+      if (CDOIDUtil.isNull(id))
       {
         break;
       }
 
-      CDOID newID = in.readCDOID();
-      result.addIDMapping(oldID, newID);
+      if (id instanceof CDOIDTemp)
+      {
+        CDOIDTemp oldID = (CDOIDTemp)id;
+        CDOID newID = in.readCDOID();
+        result.addIDMapping(oldID, newID);
+      }
+      else
+      {
+        throw new ClassCastException("Not a temporary ID: " + id);
+      }
     }
   }
 

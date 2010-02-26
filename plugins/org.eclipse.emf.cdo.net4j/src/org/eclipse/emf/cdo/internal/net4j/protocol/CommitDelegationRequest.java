@@ -13,8 +13,11 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.io.IOException;
 
@@ -44,5 +47,17 @@ public class CommitDelegationRequest extends CommitTransactionRequest
   {
     out.writeCDOBranch(branch);
     out.writeString(userID);
+  }
+
+  @Override
+  protected void confirmingMappingNewPackages(CDODataInput in, CommitTransactionResult result) throws IOException
+  {
+    // Do nothing. Mappings and other results are delivered through CommitNotification signal.
+  }
+
+  @Override
+  protected void confirmingMappingNewObjects(CDODataInput in, CommitTransactionResult result) throws IOException
+  {
+    // Do nothing. Mappings and other results are delivered through CommitNotification signal.
   }
 }

@@ -64,4 +64,16 @@ public class CommitDelegationIndication extends CommitTransactionIndication
       transaction.close();
     }
   }
+
+  @Override
+  protected void respondingMappingNewPackages(CDODataOutput out) throws Exception
+  {
+    // Do nothing. Mappings and other results are delivered through CommitNotification signal.
+  }
+
+  @Override
+  protected void respondingMappingNewObjects(CDODataOutput out) throws Exception
+  {
+    // Do nothing. Mappings and other results are delivered through CommitNotification signal.
+  }
 }

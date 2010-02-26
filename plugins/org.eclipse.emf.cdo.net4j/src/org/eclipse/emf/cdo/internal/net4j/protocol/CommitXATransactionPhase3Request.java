@@ -54,7 +54,7 @@ public class CommitXATransactionPhase3Request extends CommitXATransactionRequest
     }
 
     InternalCDOXACommitContext context = getCommitContext();
-    confirmingNewPackages(in, context.getResult());
+    confirmingMappingNewPackages(in, context.getResult());
     return context.getResult();
   }
 }

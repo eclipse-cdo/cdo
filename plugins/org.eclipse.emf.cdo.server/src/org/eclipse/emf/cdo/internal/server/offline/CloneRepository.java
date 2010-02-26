@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.collection.IndexedList;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -39,8 +40,6 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -253,6 +252,8 @@ public class CloneRepository extends Repository.Default
    */
   private final class ClientCommitContext extends TransactionCommitContext
   {
+    private InternalCDOSession master = (InternalCDOSession)synchronizer.getMaster();
+
     public ClientCommitContext(InternalTransaction transaction)
     {
       super(transaction);
@@ -261,7 +262,13 @@ public class CloneRepository extends Repository.Default
     @Override
     public void write(OMMonitor monitor)
     {
-      // Do nothing
+      // InternalCDOPackageRegistry masterPackageRegistry = master.getPackageRegistry();
+      // for (InternalCDOPackageUnit packageUnit : getNewPackageUnits())
+      // {
+      // // packageUnit.setState(CDOPackageUnit.State.NEW);
+      // // getPackageRegistry().putPackageUnit(packageUnit);
+      // masterPackageRegistry.putPackageUnit(packageUnit);
+      // }
     }
 
     @Override
@@ -272,7 +279,6 @@ public class CloneRepository extends Repository.Default
       String comment = getCommitComment();
       CDOCommitData commitData = new CommitData();
 
-      InternalCDOSession master = (InternalCDOSession)synchronizer.getMaster();
       CommitTransactionResult result = master.getSessionProtocol().commitDelegation(branch, userID, comment,
           commitData, monitor);
 
@@ -282,15 +288,17 @@ public class CloneRepository extends Repository.Default
         throw new TransactionException(rollbackMessage);
       }
 
-      setTimeStamp(result.getTimeStamp());
+      long timeStamp = result.getTimeStamp();
+      setTimeStamp(timeStamp);
+      ConcurrencyUtil.sleep(100000000);
 
-      Map<CDOID, CDOID> idMappings = result.getIDMappings();
-      for (Entry<CDOID, CDOID> idMapping : idMappings.entrySet())
-      {
-        CDOID oldID = idMapping.getKey();
-        CDOID newID = idMapping.getValue();
-        addIDMapping(oldID, newID);
-      }
+      // Map<CDOID, CDOID> idMappings = result.getIDMappings();
+      // for (Entry<CDOID, CDOID> idMapping : idMappings.entrySet())
+      // {
+      // CDOID oldID = idMapping.getKey();
+      // CDOID newID = idMapping.getValue();
+      // addIDMapping(oldID, newID);
+      // }
     }
 
     /**
@@ -307,7 +315,7 @@ public class CloneRepository extends Repository.Default
           public CDOPackageUnit get(int index)
           {
             InternalCDOPackageUnit packageUnit = newPackageUnits[index];
-            packageUnit.setState(CDOPackageUnit.State.NEW);
+            // packageUnit.setState(CDOPackageUnit.State.NEW);
             return packageUnit;
           }
 

@@ -116,7 +116,7 @@ public class CommitManager extends Lifecycle implements InternalCommitManager
     {
       contextEntry.getFuture().cancel(true);
       commitContext.rollback("Remote rollback"); //$NON-NLS-1$
-      commitContext.postCommit(false);
+      commitContext.postCommit(false, false);
     }
   }
 

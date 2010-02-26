@@ -43,6 +43,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
@@ -345,14 +346,17 @@ public class TransactionCommitContext implements InternalCommitContext
     this.timeStamp = timeStamp;
   }
 
-  public void postCommit(boolean success)
+  public void postCommit(boolean success, boolean notifySender)
   {
     try
     {
       if (success)
       {
+        InternalSession sender = notifySender ? null : transaction.getSession();
+        CDOCommitInfo createCommitInfo = createCommitInfo();
+
         InternalSessionManager sessionManager = transaction.getRepository().getSessionManager();
-        sessionManager.sendCommitNotification(transaction.getSession(), createCommitInfo());
+        sessionManager.sendCommitNotification(sender, createCommitInfo);
       }
     }
     catch (Exception ex)

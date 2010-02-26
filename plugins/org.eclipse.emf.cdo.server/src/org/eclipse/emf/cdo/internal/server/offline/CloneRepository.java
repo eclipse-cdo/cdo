@@ -89,7 +89,7 @@ public class CloneRepository extends Repository.Default
     }
     finally
     {
-      commitContext.postCommit(true);
+      commitContext.postCommit(true, false);
       transaction.close();
     }
   }

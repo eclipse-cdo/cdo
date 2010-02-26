@@ -61,7 +61,7 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext
 
   public void rollback(String message);
 
-  public void postCommit(boolean success);
+  public void postCommit(boolean success, boolean notifySender);
 
   public void setNewPackageUnits(InternalCDOPackageUnit[] newPackageUnits);
 

@@ -77,12 +77,12 @@ public class XATransactionCommitContext extends TransactionCommitContext
   }
 
   @Override
-  public void postCommit(boolean success)
+  public void postCommit(boolean success, boolean notifySender)
   {
     StoreThreadLocal.setAccessor(getAccessor());
     InternalRepository repository = getTransaction().getRepository();
     repository.getCommitManager().remove(this);
-    super.postCommit(success);
+    super.postCommit(success, notifySender);
   }
 
   @Override

@@ -76,4 +76,10 @@ public class CommitDelegationIndication extends CommitTransactionIndication
   {
     // Do nothing. Mappings and other results are delivered through CommitNotification signal.
   }
+
+  @Override
+  protected boolean notifySender()
+  {
+    return true;
+  }
 }

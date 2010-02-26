@@ -359,7 +359,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     {
       if (serverCommitContext != null)
       {
-        serverCommitContext.postCommit(success);
+        serverCommitContext.postCommit(success, false);
       }
 
       monitor.done();

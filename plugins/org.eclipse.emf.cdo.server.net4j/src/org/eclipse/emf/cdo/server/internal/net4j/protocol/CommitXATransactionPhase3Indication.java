@@ -43,7 +43,7 @@ public class CommitXATransactionPhase3Indication extends CommitTransactionIndica
       respondingMappingNewPackages(out);
     }
 
-    commitContext.postCommit(success);
+    commitContext.postCommit(success, false);
   }
 
   @Override

@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.collection.IndexedList;
+import org.eclipse.net4j.util.concurrent.SynchronizingCorrelator;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -50,6 +51,8 @@ public class CloneRepository extends Repository.Default
   private InternalSession replicatorSession;
 
   private int lastTransactionID;
+
+  private SynchronizingCorrelator<Long, CDOCommitInfo> commitDelegations = new SynchronizingCorrelator<Long, CDOCommitInfo>();
 
   public CloneRepository()
   {
@@ -80,16 +83,25 @@ public class CloneRepository extends Repository.Default
     InternalTransaction transaction = replicatorSession.openTransaction(++lastTransactionID, head);
     ReplicatorCommitContext commitContext = new ReplicatorCommitContext(transaction, commitInfo);
     commitContext.preWrite();
+    boolean success = true;
 
     try
     {
       commitContext.write(new Monitor());
       commitContext.commit(new Monitor());
-      setLastCommitTimeStamp(commitInfo.getTimeStamp());
+
+      long timeStamp = commitInfo.getTimeStamp();
+      setLastCommitTimeStamp(timeStamp);
+      commitDelegations.putIfCorrelated(timeStamp, commitInfo);
+    }
+    catch (RuntimeException ex)
+    {
+      success = false;
+      throw ex;
     }
     finally
     {
-      commitContext.postCommit(true, false);
+      commitContext.postCommit(success, false);
       transaction.close();
     }
   }
@@ -289,8 +301,9 @@ public class CloneRepository extends Repository.Default
 
       long timeStamp = result.getTimeStamp();
       setTimeStamp(timeStamp);
+      CDOCommitInfo commitInfo = commitDelegations.get(timeStamp, 100000L);
+      System.out.println(commitInfo);
 
-      master.waitForUpdate(timeStamp);
       throw new RuntimeException();
 
       // ConcurrencyUtil.sleep(100000000);

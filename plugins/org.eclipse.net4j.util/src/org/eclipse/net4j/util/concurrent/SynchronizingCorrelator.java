@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -20,6 +20,14 @@ public class SynchronizingCorrelator<CORRELATION, RESULT> implements ICorrelator
 {
   private ConcurrentMap<CORRELATION, ISynchronizer<RESULT>> map = new ConcurrentHashMap<CORRELATION, ISynchronizer<RESULT>>(
       0);
+
+  /**
+   * @since 3.0
+   */
+  public ISynchronizer<RESULT> getSynchronizer(CORRELATION correlation)
+  {
+    return map.get(correlation);
+  }
 
   public boolean isCorrelated(CORRELATION correlation)
   {
@@ -62,6 +70,21 @@ public class SynchronizingCorrelator<CORRELATION, RESULT> implements ICorrelator
   public void put(CORRELATION correlation, RESULT result)
   {
     correlate(correlation).put(result);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public boolean putIfCorrelated(CORRELATION correlation, RESULT result)
+  {
+    ISynchronizer<RESULT> synchronizer = getSynchronizer(correlation);
+    if (synchronizer != null)
+    {
+      synchronizer.put(result);
+      return true;
+    }
+
+    return false;
   }
 
   public boolean put(CORRELATION correlation, RESULT result, long timeout)

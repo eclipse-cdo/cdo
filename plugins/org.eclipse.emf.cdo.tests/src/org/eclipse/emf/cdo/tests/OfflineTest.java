@@ -184,22 +184,17 @@ public class OfflineTest extends AbstractCDOTest
     CDOSession masterSession = openSession(getRepository().getName() + "_master");
     masterSession.addListener(listener);
 
-    try
-    {
-      Company company = getModel1Factory().createCompany();
-      company.setName("Test");
+    Company company = getModel1Factory().createCompany();
+    company.setName("Test");
 
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/my/resource");
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
 
-      resource.getContents().add(company);
-      transaction.commit();
-    }
-    finally
-    {
-      IEvent[] events = listener.getEvents();
-      System.out.println(events);
-    }
+    resource.getContents().add(company);
+    transaction.commit();
+
+    IEvent[] events = listener.getEvents();
+    assertEquals(1, events.length);
   }
 }

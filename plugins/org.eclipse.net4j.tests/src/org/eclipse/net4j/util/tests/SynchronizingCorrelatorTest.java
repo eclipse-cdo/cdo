@@ -36,7 +36,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
     consumer.start();
     sleep(100);
 
-    correlator.put("eike", true); //$NON-NLS-1$
+    correlator.put("eike", true, DEFAULT_TIMEOUT); //$NON-NLS-1$
     consumer.join(DEFAULT_TIMEOUT);
     assertEquals(Boolean.TRUE, result[0]);
   }
@@ -87,7 +87,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
   {
     final Boolean[] result = { false };
     final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
-    correlator.put("eike", true); //$NON-NLS-1$
+    correlator.put("eike", true, DEFAULT_TIMEOUT); //$NON-NLS-1$
 
     final Thread consumer = new Thread()
     {

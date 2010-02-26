@@ -304,7 +304,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     }
     finally
     {
-      commitContext.postCommit(success, notifySender());
+      commitContext.postCommit(success);
     }
   }
 
@@ -361,10 +361,5 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     }
 
     throw new IllegalStateException("Illegal transaction: " + view); //$NON-NLS-1$
-  }
-
-  protected boolean notifySender()
-  {
-    return false;
   }
 }

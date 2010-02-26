@@ -280,11 +280,16 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
         {
           CDOIDTemp oldID = (CDOIDTemp)oldRange.get(i);
           CDOID newID = newRange.get(i);
-          metaInstanceMapper.remapMetaInstanceID(oldID, newID);
           result.addIDMapping(oldID, newID);
+          remapMetaInstanceID(metaInstanceMapper, oldID, newID);
         }
       }
     }
+  }
+
+  protected void remapMetaInstanceID(MetaInstanceMapper metaInstanceMapper, CDOIDTemp oldID, CDOID newID)
+  {
+    metaInstanceMapper.remapMetaInstanceID(oldID, newID);
   }
 
   protected void confirmingMappingNewObjects(CDODataInput in, CommitTransactionResult result) throws IOException

@@ -204,13 +204,16 @@ public class CloneSynchronizer extends QueueRunner
         }
         catch (Exception ex)
         {
-          OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...", ex);
+          if (isActive())
+          {
+            OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...", ex);
 
-          checkActive();
-          ConcurrencyUtil.sleep(1000L * retryInterval); // TODO Respect deactivation
+            ConcurrencyUtil.sleep(1000L * retryInterval); // TODO Respect deactivation
 
-          checkActive();
-          connect();
+            checkActive();
+            connect();
+          }
+
           return;
         }
 

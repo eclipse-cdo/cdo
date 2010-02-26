@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.server.Repository;
@@ -30,7 +31,6 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.collection.IndexedList;
-import org.eclipse.net4j.util.concurrent.SynchronizingCorrelator;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -40,6 +40,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -51,8 +52,6 @@ public class CloneRepository extends Repository.Default
   private InternalSession replicatorSession;
 
   private int lastTransactionID;
-
-  private SynchronizingCorrelator<Long, CDOCommitInfo> commitDelegations = new SynchronizingCorrelator<Long, CDOCommitInfo>();
 
   public CloneRepository()
   {
@@ -92,7 +91,6 @@ public class CloneRepository extends Repository.Default
 
       long timeStamp = commitInfo.getTimeStamp();
       setLastCommitTimeStamp(timeStamp);
-      commitDelegations.putIfCorrelated(timeStamp, commitInfo);
     }
     catch (RuntimeException ex)
     {
@@ -101,7 +99,7 @@ public class CloneRepository extends Repository.Default
     }
     finally
     {
-      commitContext.postCommit(success, false);
+      commitContext.postCommit(success);
       transaction.close();
     }
   }
@@ -273,13 +271,7 @@ public class CloneRepository extends Repository.Default
     @Override
     public void write(OMMonitor monitor)
     {
-      // InternalCDOPackageRegistry masterPackageRegistry = master.getPackageRegistry();
-      // for (InternalCDOPackageUnit packageUnit : getNewPackageUnits())
-      // {
-      // // packageUnit.setState(CDOPackageUnit.State.NEW);
-      // // getPackageRegistry().putPackageUnit(packageUnit);
-      // masterPackageRegistry.putPackageUnit(packageUnit);
-      // }
+      // Do nothing
     }
 
     @Override
@@ -301,20 +293,22 @@ public class CloneRepository extends Repository.Default
 
       long timeStamp = result.getTimeStamp();
       setTimeStamp(timeStamp);
-      CDOCommitInfo commitInfo = commitDelegations.get(timeStamp, 100000L);
-      System.out.println(commitInfo);
 
-      throw new RuntimeException();
+      for (CDOPackageUnit newPackageUnit : commitData.getNewPackageUnits())
+      {
+        for (CDOPackageInfo packageInfo : newPackageUnit.getPackageInfos())
+        {
+          addMetaIDRange(packageInfo.getMetaIDRange());
+        }
+      }
 
-      // ConcurrencyUtil.sleep(100000000);
-
-      // Map<CDOID, CDOID> idMappings = result.getIDMappings();
-      // for (Entry<CDOID, CDOID> idMapping : idMappings.entrySet())
-      // {
-      // CDOID oldID = idMapping.getKey();
-      // CDOID newID = idMapping.getValue();
-      // addIDMapping(oldID, newID);
-      // }
+      Map<CDOID, CDOID> idMappings = result.getIDMappings();
+      for (Map.Entry<CDOID, CDOID> idMapping : idMappings.entrySet())
+      {
+        CDOID oldID = idMapping.getKey();
+        CDOID newID = idMapping.getValue();
+        addIDMapping(oldID, newID);
+      }
     }
 
     /**
@@ -330,9 +324,7 @@ public class CloneRepository extends Repository.Default
           @Override
           public CDOPackageUnit get(int index)
           {
-            InternalCDOPackageUnit packageUnit = newPackageUnits[index];
-            // packageUnit.setState(CDOPackageUnit.State.NEW);
-            return packageUnit;
+            return newPackageUnits[index];
           }
 
           @Override

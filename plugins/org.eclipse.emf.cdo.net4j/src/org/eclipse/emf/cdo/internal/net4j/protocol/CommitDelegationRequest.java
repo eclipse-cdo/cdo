@@ -12,12 +12,12 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
-import org.eclipse.emf.cdo.common.io.CDODataInput;
+import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.MetaInstanceMapper;
 
 import java.io.IOException;
 
@@ -50,14 +50,8 @@ public class CommitDelegationRequest extends CommitTransactionRequest
   }
 
   @Override
-  protected void confirmingMappingNewPackages(CDODataInput in, CommitTransactionResult result) throws IOException
+  protected void remapMetaInstanceID(MetaInstanceMapper metaInstanceMapper, CDOIDTemp oldID, CDOID newID)
   {
-    // Do nothing. Mappings and other results are delivered through CommitNotification signal.
-  }
-
-  @Override
-  protected void confirmingMappingNewObjects(CDODataInput in, CommitTransactionResult result) throws IOException
-  {
-    // Do nothing. Mappings and other results are delivered through CommitNotification signal.
+    // Do nothing
   }
 }

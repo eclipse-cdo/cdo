@@ -346,13 +346,13 @@ public class TransactionCommitContext implements InternalCommitContext
     this.timeStamp = timeStamp;
   }
 
-  public void postCommit(boolean success, boolean notifySender)
+  public void postCommit(boolean success)
   {
     try
     {
       if (success)
       {
-        InternalSession sender = notifySender ? null : transaction.getSession();
+        InternalSession sender = transaction.getSession();
         CDOCommitInfo createCommitInfo = createCommitInfo();
 
         InternalSessionManager sessionManager = transaction.getRepository().getSessionManager();
@@ -488,11 +488,16 @@ public class TransactionCommitContext implements InternalCommitContext
       idMappings.put(oldID, newID);
     }
 
-    metaIDRanges.add(newRange);
+    addMetaIDRange(newRange);
     if (TRACER.isEnabled())
     {
       TRACER.format("Mapping meta ID range: {0} --> {1}", oldRange, newRange); //$NON-NLS-1$
     }
+  }
+
+  protected void addMetaIDRange(CDOIDMetaRange range)
+  {
+    metaIDRanges.add(range);
   }
 
   protected void lockObjects() throws InterruptedException

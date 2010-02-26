@@ -291,6 +291,7 @@ public class CloneRepository extends Repository.Default
       setTimeStamp(timeStamp);
 
       master.waitForUpdate(timeStamp);
+      throw new RuntimeException();
 
       // ConcurrencyUtil.sleep(100000000);
 

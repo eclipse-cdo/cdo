@@ -116,7 +116,7 @@
                     name="org.eclipse.emf.cdo.session.CDOSession">
               </objectClass>
               <objectState
-                    name="org.eclipse.emf.cdo.CDOSession.repositoryState"
+                    name="org.eclipse.emf.cdo.session.repositoryState"
                     value="OFFLINE">
               </objectState>
            </and>

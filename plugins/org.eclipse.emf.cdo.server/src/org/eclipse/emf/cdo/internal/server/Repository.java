@@ -1083,17 +1083,13 @@ public class Repository extends Container<Object> implements InternalRepository
     commitContext.setDirtyObjectDeltas(new InternalCDORevisionDelta[0]);
     commitContext.setDetachedObjects(new CDOID[0]);
     commitContext.preWrite();
-    boolean success = true;
+    boolean success = false;
 
     try
     {
       commitContext.write(new Monitor());
       commitContext.commit(new Monitor());
-    }
-    catch (RuntimeException ex)
-    {
-      success = false;
-      throw ex;
+      success = true;
     }
     finally
     {

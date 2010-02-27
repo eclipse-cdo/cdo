@@ -89,7 +89,7 @@ public class CloneRepository extends Repository.Default
     InternalTransaction transaction = replicatorSession.openTransaction(++lastTransactionID, head);
     ReplicatorCommitContext commitContext = new ReplicatorCommitContext(transaction, commitInfo);
     commitContext.preWrite();
-    boolean success = true;
+    boolean success = false;
 
     try
     {
@@ -98,11 +98,7 @@ public class CloneRepository extends Repository.Default
 
       long timeStamp = commitInfo.getTimeStamp();
       setLastCommitTimeStamp(timeStamp);
-    }
-    catch (RuntimeException ex)
-    {
-      success = false;
-      throw ex;
+      success = true;
     }
     finally
     {

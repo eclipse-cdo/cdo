@@ -34,6 +34,9 @@ public class ExtendedDataOutputStream extends DataOutputStream implements Extend
     ExtendedIOUtil.writeString(this, str);
   }
 
+  /**
+   * @since 3.0
+   */
   public void writeEnum(Enum<?> literal) throws IOException
   {
     ExtendedIOUtil.writeEnum(this, literal);

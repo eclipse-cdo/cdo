@@ -182,6 +182,11 @@ public class Repository extends Container<Object> implements InternalRepository
     return uuid;
   }
 
+  public Type getType()
+  {
+    return Type.MASTER;
+  }
+
   public synchronized Map<String, String> getProperties()
   {
     if (properties == null)

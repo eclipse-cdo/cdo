@@ -11,6 +11,7 @@
 package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -185,6 +186,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private String repositoryUUID;
 
+    private CDOCommonRepository.Type repositoryType;
+
     private long repositoryCreationTime;
 
     private long lastUpdateTime;
@@ -200,11 +203,13 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 3.0
      */
-    public OpenSessionResult(int sessionID, String repositoryUUID, long repositoryCreationTime, long lastUpdateTime,
-        boolean repositorySupportingAudits, boolean repositorySupportingBranches)
+    public OpenSessionResult(int sessionID, String repositoryUUID, CDOCommonRepository.Type repositoryType,
+        long repositoryCreationTime, long lastUpdateTime, boolean repositorySupportingAudits,
+        boolean repositorySupportingBranches)
     {
       this.sessionID = sessionID;
       this.repositoryUUID = repositoryUUID;
+      this.repositoryType = repositoryType;
       this.repositoryCreationTime = repositoryCreationTime;
       this.lastUpdateTime = lastUpdateTime;
       this.repositorySupportingAudits = repositorySupportingAudits;
@@ -219,6 +224,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public String getRepositoryUUID()
     {
       return repositoryUUID;
+    }
+
+    /**
+     * @since 3.0
+     */
+    public CDOCommonRepository.Type getRepositoryType()
+    {
+      return repositoryType;
     }
 
     public long getRepositoryCreationTime()

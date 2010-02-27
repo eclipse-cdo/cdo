@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
@@ -106,6 +107,12 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
       TRACER.format("Read repositoryUUID: {0}", repositoryUUID); //$NON-NLS-1$
     }
 
+    CDOCommonRepository.Type repositoryType = in.readEnum(CDOCommonRepository.Type.class);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Read repositoryType: {0}", repositoryType); //$NON-NLS-1$
+    }
+
     long repositoryCreationTime = in.readLong();
     if (TRACER.isEnabled())
     {
@@ -130,7 +137,7 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
       TRACER.format("Read repositorySupportingBranches: {0}", repositorySupportingBranches); //$NON-NLS-1$
     }
 
-    result = new OpenSessionResult(sessionID, repositoryUUID, repositoryCreationTime, lastUpdateTime,
+    result = new OpenSessionResult(sessionID, repositoryUUID, repositoryType, repositoryCreationTime, lastUpdateTime,
         repositorySupportingAudits, repositorySupportingBranches);
 
     CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);

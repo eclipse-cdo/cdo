@@ -27,6 +27,11 @@ public interface CDOCommonRepository extends CDOTimeProvider
   public String getUUID();
 
   /**
+   * Returns the type of this repository.
+   */
+  public Type getType();
+
+  /**
    * Returns the creation time of this repository.
    */
   public long getCreationTime();
@@ -40,4 +45,12 @@ public interface CDOCommonRepository extends CDOTimeProvider
    * Returns <code>true</code> if this repository supports branching, <code>false</code> otherwise.
    */
   public boolean isSupportingBranches();
+
+  /**
+   * @author Eike Stepper
+   */
+  public enum Type
+  {
+    MASTER, BACKUP, CLONE
+  }
 }

@@ -112,6 +112,21 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
     {
     }
 
+    public String getName()
+    {
+      return repository.getName();
+    }
+
+    public String getUUID()
+    {
+      return repository.getUUID();
+    }
+
+    public Type getType()
+    {
+      return repository.getType();
+    }
+
     public long getCreationTime()
     {
       return repository.getCreationTime();
@@ -125,16 +140,6 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
     public long getTimeStamp(boolean forceRefresh)
     {
       return System.currentTimeMillis();
-    }
-
-    public String getName()
-    {
-      return repository.getName();
-    }
-
-    public String getUUID()
-    {
-      return repository.getUUID();
     }
 
     public boolean isSupportingAudits()

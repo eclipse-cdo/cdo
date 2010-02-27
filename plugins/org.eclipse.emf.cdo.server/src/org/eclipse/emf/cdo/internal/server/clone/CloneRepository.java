@@ -57,6 +57,12 @@ public class CloneRepository extends Repository.Default
   {
   }
 
+  @Override
+  public Type getType()
+  {
+    return Type.CLONE;
+  }
+
   public CloneSynchronizer getSynchronizer()
   {
     return synchronizer;

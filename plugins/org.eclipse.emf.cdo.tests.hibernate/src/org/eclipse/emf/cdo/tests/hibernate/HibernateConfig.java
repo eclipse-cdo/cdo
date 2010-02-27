@@ -46,7 +46,6 @@ public class HibernateConfig extends RepositoryConfig
   {
     super.initRepositoryProperties(props);
     props.put(Props.SUPPORTING_AUDITS, "false");
-    props.put(Props.VERIFYING_REVISIONS, "false");
 
     try
     {

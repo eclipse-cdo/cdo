@@ -101,7 +101,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private String uuid;
 
-  private State state = State.OFFLINE;
+  private State state = State.ONLINE;
 
   private Map<String, String> properties;
 

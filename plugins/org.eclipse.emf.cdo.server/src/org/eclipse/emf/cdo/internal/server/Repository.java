@@ -101,7 +101,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private String uuid;
 
-  private State state;
+  private State state = State.ONLINE;
 
   private Map<String, String> properties;
 
@@ -197,11 +197,13 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public void setState(State state)
   {
+    checkArg(state, "state"); //$NON-NLS-1$
     if (this.state != state)
     {
       State oldState = this.state;
       this.state = state;
       fireEvent(new RepositoryStateChangedEvent(this, oldState, state));
+      sessionManager.sendRepositoryStateNotification(oldState, state);
     }
   }
 

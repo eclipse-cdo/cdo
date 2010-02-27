@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -49,11 +50,14 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOCommonSessi
   public void collectContainedRevisions(InternalCDORevision revision, CDOBranchPoint branchPoint, int referenceChunk,
       Set<CDOID> revisions, List<CDORevision> additionalRevisions);
 
-  public void sendBranchNotification(InternalCDOBranch branch);
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
+      throws Exception;
 
-  public void sendCommitNotification(CDOCommitInfo commitInfo);
+  public void sendBranchNotification(InternalCDOBranch branch) throws Exception;
 
-  public void sendRemoteSessionNotification(InternalSession sender, byte opcode);
+  public void sendCommitNotification(CDOCommitInfo commitInfo) throws Exception;
 
-  public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message);
+  public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception;
+
+  public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message) throws Exception;
 }

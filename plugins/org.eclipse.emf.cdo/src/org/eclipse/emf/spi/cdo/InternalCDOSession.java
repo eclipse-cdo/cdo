@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.spi.cdo;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -116,6 +117,11 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
    * @since 3.0
    */
   public Object getInvalidationLock();
+
+  /**
+   * @since 3.0
+   */
+  public void handleRepositoryStateChanged(CDOCommonRepository.State oldState, CDOCommonRepository.State newState);
 
   /**
    * @since 3.0

@@ -264,7 +264,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   /**
    * @author Eike Stepper
    */
-  protected class RepositoryInfo implements CDORepositoryInfo
+  public class RepositoryInfo implements CDORepositoryInfo
   {
     private String name;
 
@@ -315,6 +315,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     public State getState()
     {
       return state;
+    }
+
+    public void setState(State state)
+    {
+      this.state = state;
     }
 
     public long getCreationTime()

@@ -14,6 +14,7 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -329,12 +330,18 @@ public class Session extends Container<IView> implements InternalSession
     return (CDOID)idObject;
   }
 
-  public void sendBranchNotification(InternalCDOBranch branch)
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
+      throws Exception
+  {
+    protocol.sendRepositoryStateNotification(oldState, newState);
+  }
+
+  public void sendBranchNotification(InternalCDOBranch branch) throws Exception
   {
     protocol.sendBranchNotification(branch);
   }
 
-  public void sendCommitNotification(final CDOCommitInfo commitInfo)
+  public void sendCommitNotification(final CDOCommitInfo commitInfo) throws Exception
   {
     if (!isPassiveUpdateEnabled())
     {
@@ -426,12 +433,12 @@ public class Session extends Container<IView> implements InternalSession
     return false;
   }
 
-  public void sendRemoteSessionNotification(InternalSession sender, byte opcode)
+  public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception
   {
     protocol.sendRemoteSessionNotification(sender, opcode);
   }
 
-  public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message)
+  public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message) throws Exception
   {
     protocol.sendRemoteMessageNotification(sender, message);
   }

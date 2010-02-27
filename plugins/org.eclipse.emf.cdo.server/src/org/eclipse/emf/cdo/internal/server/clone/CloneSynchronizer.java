@@ -114,23 +114,6 @@ public class CloneSynchronizer extends QueueRunner
     this.clone = clone;
   }
 
-  public State getState()
-  {
-    if (master == null)
-    {
-      return State.OFFLINE;
-    }
-
-    long masterTimeStamp = master.getLastUpdateTime();
-    long syncedTimeStamp = getSyncedTimeStamp();
-    if (masterTimeStamp > syncedTimeStamp)
-    {
-      return State.SYNCING;
-    }
-
-    return State.ONLINE;
-  }
-
   public CDOSession getMaster()
   {
     return master;
@@ -308,14 +291,6 @@ public class CloneSynchronizer extends QueueRunner
   protected void replicate(CDOCommitInfo commitInfo)
   {
     clone.replicate(commitInfo);
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static enum State
-  {
-    OFFLINE, SYNCING, ONLINE
   }
 
   /**

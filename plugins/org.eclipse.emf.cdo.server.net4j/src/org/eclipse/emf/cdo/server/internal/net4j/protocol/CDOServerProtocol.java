@@ -14,6 +14,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -79,78 +80,70 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     return new AuthenticationRequest(this, randomToken).send(negotiationTimeout);
   }
 
-  public void sendBranchNotification(InternalCDOBranch branch)
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
+      throws Exception
   {
-    try
+    if (LifecycleUtil.isActive(getChannel()))
     {
-      if (LifecycleUtil.isActive(getChannel()))
-      {
-        new BranchNotificationRequest(this, branch).sendAsync();
-      }
-      else
-      {
-        OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
-      }
+      new RepositoryStateNotificationRequest(this, oldState, newState).sendAsync();
     }
-    catch (Exception ex)
+    else
     {
-      OM.LOG.error(ex);
+      handleInactiveSession();
     }
   }
 
-  public void sendCommitNotification(CDOCommitInfo commitInfo)
+  public void sendBranchNotification(InternalCDOBranch branch) throws Exception
   {
-    try
+    if (LifecycleUtil.isActive(getChannel()))
     {
-      if (LifecycleUtil.isActive(getChannel()))
-      {
-        new CommitNotificationRequest(this, commitInfo).sendAsync();
-      }
-      else
-      {
-        OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
-      }
+      new BranchNotificationRequest(this, branch).sendAsync();
     }
-    catch (Exception ex)
+    else
     {
-      OM.LOG.error(ex);
+      handleInactiveSession();
     }
   }
 
-  public void sendRemoteSessionNotification(InternalSession sender, byte opcode)
+  public void sendCommitNotification(CDOCommitInfo commitInfo) throws Exception
   {
-    try
+    if (LifecycleUtil.isActive(getChannel()))
     {
-      if (LifecycleUtil.isActive(getChannel()))
-      {
-        new RemoteSessionNotificationRequest(this, sender, opcode).sendAsync();
-      }
-      else
-      {
-        OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
-      }
+      new CommitNotificationRequest(this, commitInfo).sendAsync();
     }
-    catch (Exception ex)
+    else
     {
-      OM.LOG.error(ex);
+      handleInactiveSession();
     }
   }
 
-  public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message)
+  public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception
   {
-    try
+    if (LifecycleUtil.isActive(getChannel()))
     {
-      if (LifecycleUtil.isActive(getChannel()))
-      {
-        new RemoteMessageNotificationRequest(this, sender, message).sendAsync();
-      }
+      new RemoteSessionNotificationRequest(this, sender, opcode).sendAsync();
+    }
+    else
+    {
+      handleInactiveSession();
+    }
+  }
 
-      OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
-    }
-    catch (Exception ex)
+  public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message) throws Exception
+  {
+    if (LifecycleUtil.isActive(getChannel()))
     {
-      OM.LOG.error(ex);
+      new RemoteMessageNotificationRequest(this, sender, message).sendAsync();
     }
+    else
+    {
+      handleInactiveSession();
+    }
+  }
+
+  protected void handleInactiveSession()
+  {
+    OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
   }
 
   @Override

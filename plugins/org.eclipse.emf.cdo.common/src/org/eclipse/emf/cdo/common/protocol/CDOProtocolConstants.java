@@ -147,17 +147,22 @@ public interface CDOProtocolConstants
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_BRANCH_NOTIFICATION = 35;
+  public static final short SIGNAL_REPOSITORY_STATE_NOTIFICATION = 35;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_COMMIT_INFOS = 36;
+  public static final short SIGNAL_BRANCH_NOTIFICATION = 36;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_CLONE_REPOSITORY = 37;
+  public static final short SIGNAL_LOAD_COMMIT_INFOS = 37;
+
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_CLONE_REPOSITORY = 38;
 
   // //////////////////////////////////////////////////////////////////////
   // Session Management

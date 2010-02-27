@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.server.embedded;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
@@ -55,6 +56,12 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
   public CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken) throws Exception
   {
     return clientSessionProtocol.handleAuthenticationChallenge(randomToken);
+  }
+
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
+  {
+    EmbeddedClientSession clientSession = clientSessionProtocol.getSession();
+    clientSession.handleRepositoryStateChanged(oldState, newState);
   }
 
   public void sendBranchNotification(InternalCDOBranch branch)

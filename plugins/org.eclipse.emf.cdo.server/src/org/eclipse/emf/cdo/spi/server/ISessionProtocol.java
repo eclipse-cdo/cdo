@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
@@ -24,11 +25,14 @@ public interface ISessionProtocol extends CDOProtocol
 {
   public CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken) throws Exception;
 
-  public void sendBranchNotification(InternalCDOBranch branch);
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
+      throws Exception;
 
-  public void sendCommitNotification(CDOCommitInfo commitInfo);
+  public void sendBranchNotification(InternalCDOBranch branch) throws Exception;
 
-  public void sendRemoteSessionNotification(InternalSession sender, byte opcode);
+  public void sendCommitNotification(CDOCommitInfo commitInfo) throws Exception;
 
-  public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message);
+  public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception;
+
+  public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message) throws Exception;
 }

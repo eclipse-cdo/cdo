@@ -55,6 +55,7 @@ public class CloneRepository extends Repository.Default
 
   public CloneRepository()
   {
+    setState(State.OFFLINE);
   }
 
   @Override

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.SessionCreationException;
@@ -42,6 +43,8 @@ public interface InternalSessionManager extends ISessionManager
   public InternalSession openSession(ISessionProtocol sessionProtocol) throws SessionCreationException;
 
   public void sessionClosed(InternalSession session);
+
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState);
 
   public void sendBranchNotification(InternalSession sender, InternalCDOBranch branch);
 

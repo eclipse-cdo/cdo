@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -234,6 +235,21 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
+  {
+    for (InternalSession session : getSessions())
+    {
+      try
+      {
+        session.sendRepositoryStateNotification(oldState, newState);
+      }
+      catch (Exception ex)
+      {
+        handleNotificationProblem(session, ex);
+      }
+    }
+  }
+
   public void sendBranchNotification(InternalSession sender, InternalCDOBranch branch)
   {
     for (InternalSession session : getSessions())
@@ -246,7 +262,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
         }
         catch (Exception ex)
         {
-          OM.LOG.warn("A problem occured while notifying session " + session, ex);
+          handleNotificationProblem(session, ex);
         }
       }
     }
@@ -264,7 +280,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
         }
         catch (Exception ex)
         {
-          OM.LOG.warn("A problem occured while notifying session " + session, ex);
+          handleNotificationProblem(session, ex);
         }
       }
     }
@@ -287,7 +303,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
           }
           catch (Exception ex)
           {
-            OM.LOG.warn("A problem occured while notifying session " + session, ex);
+            handleNotificationProblem(session, ex);
           }
         }
       }
@@ -305,14 +321,27 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     for (int i = 0; i < recipients.length; i++)
     {
       InternalSession recipient = getSession(recipients[i]);
-      if (recipient != null && recipient.isSubscribed())
+
+      try
       {
-        recipient.sendRemoteMessageNotification(sender, message);
-        result.add(recipient.getSessionID());
+        if (recipient != null && recipient.isSubscribed())
+        {
+          recipient.sendRemoteMessageNotification(sender, message);
+          result.add(recipient.getSessionID());
+        }
+      }
+      catch (Exception ex)
+      {
+        handleNotificationProblem(recipient, ex);
       }
     }
 
     return result;
+  }
+
+  protected void handleNotificationProblem(InternalSession session, Throwable t)
+  {
+    OM.LOG.warn("A problem occured while notifying session " + session, t);
   }
 
   protected String authenticateUser(ISessionProtocol protocol) throws SecurityException

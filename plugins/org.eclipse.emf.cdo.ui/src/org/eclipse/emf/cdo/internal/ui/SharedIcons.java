@@ -40,6 +40,10 @@ public class SharedIcons
 
   public static final String OBJ_SESSION = OBJ + "cdo_session"; //$NON-NLS-1$
 
+  public static final String OBJ_SESSION_SYNCING = OBJ + "cdo_session_syncing"; //$NON-NLS-1$
+
+  public static final String OBJ_SESSION_OFFLINE = OBJ + "cdo_session_offline"; //$NON-NLS-1$
+
   public static final String OBJ_EDITOR = OBJ + "cdo_editor"; //$NON-NLS-1$
 
   public static final String OBJ_EDITOR_READWRITE = OBJ + "cdo_editor_readwrite"; //$NON-NLS-1$

@@ -267,7 +267,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   }
 
   /**
-   * @return
    * @since 2.0
    */
   protected CDOResourceImpl createRootResource()

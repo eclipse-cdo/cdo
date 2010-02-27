@@ -26,8 +26,12 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IBaseLabelProvider;
+import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -46,6 +50,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
 
@@ -195,13 +200,38 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   {
     itemProvider = createContainerItemProvider();
     viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-    viewer.setContentProvider(itemProvider);
-    viewer.setLabelProvider(itemProvider);
+    viewer.setContentProvider(createContentProvider());
+    viewer.setLabelProvider(createLabelProvider());
     viewer.setSorter(new ContainerNameSorter());
     resetInput();
     viewer.addSelectionChangedListener(selectionListener);
     getSite().setSelectionProvider(this);
     return viewer.getControl();
+  }
+
+  /**
+   * @since 3.0
+   */
+  protected IContentProvider createContentProvider()
+  {
+    return itemProvider;
+  }
+
+  /**
+   * @since 3.0
+   */
+  protected IBaseLabelProvider createLabelProvider()
+  {
+    ILabelDecorator labelDecorator = createLabelDecorator();
+    return new DecoratingLabelProvider(itemProvider, labelDecorator);
+  }
+
+  /**
+   * @since 3.0
+   */
+  protected ILabelDecorator createLabelDecorator()
+  {
+    return PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator();
   }
 
   protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()

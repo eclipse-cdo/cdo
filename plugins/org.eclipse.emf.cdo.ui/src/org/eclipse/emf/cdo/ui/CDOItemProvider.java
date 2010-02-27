@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.ui;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
@@ -133,7 +134,17 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   {
     if (obj instanceof CDOSession)
     {
-      return SharedIcons.getImage(SharedIcons.OBJ_SESSION);
+      CDOSession session = (CDOSession)obj;
+      State state = session.getRepositoryInfo().getState();
+      switch (state)
+      {
+      case ONLINE:
+        return SharedIcons.getImage(SharedIcons.OBJ_SESSION);
+      case SYNCING:
+        return SharedIcons.getImage(SharedIcons.OBJ_SESSION_SYNCING);
+      case OFFLINE:
+        return SharedIcons.getImage(SharedIcons.OBJ_SESSION_OFFLINE);
+      }
     }
 
     if (obj instanceof CDOView)

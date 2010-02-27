@@ -103,25 +103,22 @@
            %_UI_CDOLabelDecorator_description
         </description>
      </decorator>
+     <!--
      <decorator
            icon="icons/full/ovr16/error.gif"
            id="org.eclipse.emf.cdo.ui.CDOSessionLabelDecorator"
            label="CDOSession Offline Label Decorator"
            lightweight="true"
-           location="TOP_LEFT"
+           location="BOTTOM_LEFT"
            state="true">
         <enablement>
            <and>
-              <objectClass
-                    name="org.eclipse.emf.cdo.session.CDOSession">
-              </objectClass>
-              <objectState
-                    name="org.eclipse.emf.cdo.session.repositoryState"
-                    value="OFFLINE">
-              </objectState>
+              <objectClass name="org.eclipse.emf.cdo.session.CDOSession"/>
+  						<test property="org.eclipse.emf.cdo.session.repositoryState" value="OFFLINE"/>
            </and>
         </enablement>
      </decorator>
+     -->
   </extension>
 
   <extension

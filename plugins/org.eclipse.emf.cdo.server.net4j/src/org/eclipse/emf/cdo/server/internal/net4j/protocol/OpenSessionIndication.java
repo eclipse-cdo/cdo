@@ -116,6 +116,7 @@ public class OpenSessionIndication extends RepositoryTimeIndication
 
       out.writeString(repository.getUUID());
       out.writeEnum(repository.getType());
+      out.writeEnum(repository.getState());
       out.writeLong(repository.getCreationTime());
       out.writeLong(repository.getLastCommitTimeStamp());
       out.writeBoolean(repository.isSupportingAudits());

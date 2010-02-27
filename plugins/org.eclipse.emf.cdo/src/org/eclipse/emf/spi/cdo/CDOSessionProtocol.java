@@ -188,6 +188,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private CDOCommonRepository.Type repositoryType;
 
+    private CDOCommonRepository.State repositoryState;
+
     private long repositoryCreationTime;
 
     private long lastUpdateTime;
@@ -204,12 +206,13 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
      * @since 3.0
      */
     public OpenSessionResult(int sessionID, String repositoryUUID, CDOCommonRepository.Type repositoryType,
-        long repositoryCreationTime, long lastUpdateTime, boolean repositorySupportingAudits,
-        boolean repositorySupportingBranches)
+        CDOCommonRepository.State repositoryState, long repositoryCreationTime, long lastUpdateTime,
+        boolean repositorySupportingAudits, boolean repositorySupportingBranches)
     {
       this.sessionID = sessionID;
       this.repositoryUUID = repositoryUUID;
       this.repositoryType = repositoryType;
+      this.repositoryState = repositoryState;
       this.repositoryCreationTime = repositoryCreationTime;
       this.lastUpdateTime = lastUpdateTime;
       this.repositorySupportingAudits = repositorySupportingAudits;
@@ -232,6 +235,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public CDOCommonRepository.Type getRepositoryType()
     {
       return repositoryType;
+    }
+
+    /**
+     * @since 3.0
+     */
+    public CDOCommonRepository.State getRepositoryState()
+    {
+      return repositoryState;
     }
 
     public long getRepositoryCreationTime()

@@ -187,6 +187,11 @@ public class Repository extends Container<Object> implements InternalRepository
     return Type.MASTER;
   }
 
+  public State getState()
+  {
+    return isActive() ? State.ONLINE : State.OFFLINE;
+  }
+
   public synchronized Map<String, String> getProperties()
   {
     if (properties == null)

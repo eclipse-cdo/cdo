@@ -127,6 +127,11 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
       return repository.getType();
     }
 
+    public State getState()
+    {
+      return repository.getState();
+    }
+
     public long getCreationTime()
     {
       return repository.getCreationTime();

@@ -113,6 +113,12 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
       TRACER.format("Read repositoryType: {0}", repositoryType); //$NON-NLS-1$
     }
 
+    CDOCommonRepository.State repositoryState = in.readEnum(CDOCommonRepository.State.class);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Read repositoryState: {0}", repositoryState); //$NON-NLS-1$
+    }
+
     long repositoryCreationTime = in.readLong();
     if (TRACER.isEnabled())
     {
@@ -137,8 +143,8 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
       TRACER.format("Read repositorySupportingBranches: {0}", repositorySupportingBranches); //$NON-NLS-1$
     }
 
-    result = new OpenSessionResult(sessionID, repositoryUUID, repositoryType, repositoryCreationTime, lastUpdateTime,
-        repositorySupportingAudits, repositorySupportingBranches);
+    result = new OpenSessionResult(sessionID, repositoryUUID, repositoryType, repositoryState, repositoryCreationTime,
+        lastUpdateTime, repositorySupportingAudits, repositorySupportingBranches);
 
     CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);
     for (int i = 0; i < packageUnits.length; i++)

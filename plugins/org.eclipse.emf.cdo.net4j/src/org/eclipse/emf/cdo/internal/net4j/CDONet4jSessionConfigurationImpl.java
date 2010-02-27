@@ -272,6 +272,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     private Type type;
 
+    private State state;
+
     private long creationTime;
 
     private RepositoryTimeResult timeResult;
@@ -285,6 +287,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       this.name = name;
       uuid = result.getRepositoryUUID();
       type = result.getRepositoryType();
+      state = result.getRepositoryState();
       creationTime = result.getRepositoryCreationTime();
       timeResult = result.getRepositoryTimeResult();
       supportingAudits = result.isRepositorySupportingAudits();
@@ -307,6 +310,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     public Type getType()
     {
       return type;
+    }
+
+    public State getState()
+    {
+      return state;
     }
 
     public long getCreationTime()

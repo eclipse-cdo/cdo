@@ -32,6 +32,11 @@ public interface CDOCommonRepository extends CDOTimeProvider
   public Type getType();
 
   /**
+   * Returns the state of this repository.
+   */
+  public State getState();
+
+  /**
    * Returns the creation time of this repository.
    */
   public long getCreationTime();
@@ -52,5 +57,13 @@ public interface CDOCommonRepository extends CDOTimeProvider
   public enum Type
   {
     MASTER, BACKUP, CLONE
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static enum State
+  {
+    OFFLINE, SYNCING, ONLINE
   }
 }

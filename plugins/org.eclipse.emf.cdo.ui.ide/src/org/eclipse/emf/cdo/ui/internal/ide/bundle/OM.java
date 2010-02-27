@@ -36,8 +36,6 @@ public abstract class OM
 
   public static final String BRANCH_ICON = "icons/full/obj16/branch.png"; //$NON-NLS-1$
 
-  public static final String BRANCH_FOLDER_ICON = "icons/full/obj16/branches.gif"; //$NON-NLS-1$
-
   public static final OMBundle BUNDLE = OMPlatform.INSTANCE.bundle(BUNDLE_ID, OM.class);
 
   public static final OMLogger LOG = BUNDLE.logger();

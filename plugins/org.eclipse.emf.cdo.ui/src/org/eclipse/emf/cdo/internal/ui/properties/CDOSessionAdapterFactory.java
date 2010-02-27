@@ -20,11 +20,11 @@ import org.eclipse.ui.views.properties.IPropertySourceProvider;
  * @author Eike Stepper
  */
 @SuppressWarnings("rawtypes")
-public class SessionAdapterFactory implements IAdapterFactory
+public class CDOSessionAdapterFactory implements IAdapterFactory
 {
   public static final Class[] CLASSES = { IPropertySourceProvider.class };
 
-  public SessionAdapterFactory()
+  public CDOSessionAdapterFactory()
   {
   }
 

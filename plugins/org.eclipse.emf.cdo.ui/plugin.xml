@@ -118,7 +118,7 @@
         point="org.eclipse.core.runtime.adapters">
      <factory
            adaptableType="org.eclipse.emf.cdo.session.CDOSession"
-           class="org.eclipse.emf.cdo.internal.ui.properties.SessionAdapterFactory">
+           class="org.eclipse.emf.cdo.internal.ui.properties.CDOSessionAdapterFactory">
         <adapter
               type="org.eclipse.ui.views.properties.IPropertySourceProvider">
         </adapter>

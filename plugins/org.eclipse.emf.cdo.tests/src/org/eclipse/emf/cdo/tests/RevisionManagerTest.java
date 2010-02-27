@@ -43,7 +43,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class RevisionManagerTest extends AbstractCDOTest
 {
-  private static final CDOID ID = CDOIDUtil.createLong(1);
+  private static final CDOID ID = CDOIDUtil.createLong(2);
 
   private static final EClass CLASS = EcorePackage.Literals.EANNOTATION;
 

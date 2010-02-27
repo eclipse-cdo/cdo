@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -32,6 +34,7 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
@@ -53,6 +56,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
@@ -101,7 +105,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private String uuid;
 
-  private State state = State.OFFLINE;
+  private State state = State.ONLINE;
 
   private Map<String, String> properties;
 
@@ -993,18 +997,19 @@ public class Repository extends Container<Object> implements InternalRepository
     LifecycleUtil.activate(queryHandlerProvider);
     LifecycleUtil.activate(lockManager);
 
+    lastCommitTimeStamp = Math.max(store.getCreationTime(), store.getLastCommitTime());
+    branchManager.initMainBranch(lastCommitTimeStamp);
+    LifecycleUtil.activate(branchManager);
+
     if (store.isFirstTime())
     {
       initSystemPackages();
+      initRootResource();
     }
     else
     {
       readPackageUnits();
     }
-
-    lastCommitTimeStamp = Math.max(store.getCreationTime(), store.getLastCommitTime());
-    branchManager.initMainBranch(lastCommitTimeStamp);
-    LifecycleUtil.activate(branchManager);
   }
 
   @Override
@@ -1056,6 +1061,45 @@ public class Repository extends Container<Object> implements InternalRepository
     packageUnit.setTimeStamp(store.getCreationTime());
     packageUnit.setState(CDOPackageUnit.State.LOADED);
     return packageUnit;
+  }
+
+  protected void initRootResource()
+  {
+    CDOBranchPoint head = branchManager.getMainBranch().getHead();
+    CDOIDTemp id = CDOIDUtil.createTempObject(1);
+
+    InternalCDORevision rootResource = new CDORevisionImpl(EresourcePackage.Literals.CDO_RESOURCE);
+    rootResource.setBranchPoint(head);
+    rootResource.setContainerID(CDOID.NULL);
+    rootResource.setContainingFeatureID(0);
+    rootResource.setID(id);
+    rootResource.setResourceID(id);
+
+    InternalSession session = getSessionManager().openSession(null);
+    InternalTransaction transaction = session.openTransaction(1, head);
+    InternalCommitContext commitContext = transaction.createCommitContext();
+    commitContext.setNewObjects(new InternalCDORevision[] { rootResource });
+    commitContext.setNewPackageUnits(new InternalCDOPackageUnit[0]);
+    commitContext.setDirtyObjectDeltas(new InternalCDORevisionDelta[0]);
+    commitContext.setDetachedObjects(new CDOID[0]);
+    commitContext.preWrite();
+    boolean success = true;
+
+    try
+    {
+      commitContext.write(new Monitor());
+      commitContext.commit(new Monitor());
+    }
+    catch (RuntimeException ex)
+    {
+      success = false;
+      throw ex;
+    }
+    finally
+    {
+      commitContext.postCommit(success);
+      session.close();
+    }
   }
 
   protected void readPackageUnits()

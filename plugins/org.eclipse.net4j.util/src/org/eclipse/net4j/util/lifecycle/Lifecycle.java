@@ -223,6 +223,16 @@ public class Lifecycle extends Notifier implements ILifecycle
     if (successful)
     {
       lifecycleState = LifecycleState.ACTIVE;
+
+      try
+      {
+        doAfterActivate();
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+
       unlock();
       IListener[] listeners = getListeners();
       if (listeners != null)
@@ -247,6 +257,13 @@ public class Lifecycle extends Notifier implements ILifecycle
   }
 
   protected void doActivate() throws Exception
+  {
+  }
+
+  /**
+   * @since 3.0
+   */
+  protected void doAfterActivate() throws Exception
   {
   }
 

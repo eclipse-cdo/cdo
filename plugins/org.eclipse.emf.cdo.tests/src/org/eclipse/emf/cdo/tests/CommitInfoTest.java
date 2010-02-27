@@ -129,8 +129,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getTimeStamp(), infos.get(0).getTimeStamp());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
   }
 
   public void testServerBranch() throws Exception
@@ -149,8 +149,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
   public void testServerSubBranch() throws Exception
@@ -202,8 +202,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getUserID(), infos.get(0).getUserID());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
   }
 
   public void testServerComment() throws Exception
@@ -225,8 +225,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getComment(), infos.get(0).getComment());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getComment(), infos.get(1).getComment());
   }
 
   public void testServerTimestampWithBranch() throws Exception
@@ -246,8 +246,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getTimeStamp(), infos.get(0).getTimeStamp());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
   }
 
   public void testServerBranchWithBranch() throws Exception
@@ -267,8 +267,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
   public void testServerSubBranchWithBranch() throws Exception
@@ -322,8 +322,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getUserID(), infos.get(0).getUserID());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
   }
 
   public void testServerCommentWithBranch() throws Exception
@@ -346,8 +346,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getComment(), infos.get(0).getComment());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getComment(), infos.get(1).getComment());
   }
 
   public void testServerTimestampWithWrongBranch() throws Exception
@@ -488,8 +488,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getTimeStamp(), infos.get(0).getTimeStamp());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
   }
 
   public void testClientBranch() throws Exception
@@ -506,8 +506,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
   public void testClientSubBranch() throws Exception
@@ -555,8 +555,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getUserID(), infos.get(0).getUserID());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
   }
 
   public void testClientComment() throws Exception
@@ -576,8 +576,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getComment(), infos.get(0).getComment());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getComment(), infos.get(1).getComment());
   }
 
   public void testClientTimestampWithBranch() throws Exception
@@ -594,8 +594,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getTimeStamp(), infos.get(0).getTimeStamp());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
   }
 
   public void testClientBranchWithBranch() throws Exception
@@ -612,8 +612,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
   public void testClientSubBranchWithBranch() throws Exception
@@ -661,8 +661,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getUserID(), infos.get(0).getUserID());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
   }
 
   public void testClientCommentWithBranch() throws Exception
@@ -682,8 +682,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getComment(), infos.get(0).getComment());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getComment(), infos.get(1).getComment());
   }
 
   public void testClientTimestampWithWrongBranch() throws Exception

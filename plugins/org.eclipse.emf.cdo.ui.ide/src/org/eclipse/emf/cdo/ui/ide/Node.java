@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.ide.CommonNavigatorUtils.MessageType;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
 import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
@@ -234,16 +233,6 @@ public abstract class Node extends PlatformObject
     public CDOResourceNode[] getChildren()
     {
       CDOView view = getRepositoryProject().getView();
-
-      // FIXME: Remove this block when bug #280102 is fixed
-      {
-        // Initializes root resource in case it does not exist
-        CDOTransaction transaction = view.getSession().openTransaction();
-        transaction.getRootResource();
-        transaction.commit();
-        transaction.close();
-      }
-
       List<CDOResourceNode> children = new ArrayList<CDOResourceNode>();
       for (EObject resourceNode : view.getRootResource().getContents())
       {

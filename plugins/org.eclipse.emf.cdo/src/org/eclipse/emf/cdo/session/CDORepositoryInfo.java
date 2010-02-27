@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.session;
 
-import org.eclipse.emf.cdo.common.CDOTimeProvider;
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 
 /**
  * Describes a model repository a {@link CDOSession session} is connected to.
@@ -19,44 +19,12 @@ import org.eclipse.emf.cdo.common.CDOTimeProvider;
  * @see CDOSession#getRepositoryInfo()
  * @since 3.0
  */
-public interface CDORepositoryInfo extends CDOTimeProvider
+public interface CDORepositoryInfo extends CDOCommonRepository
 {
   /**
-   * Returns the name of this repository.
-   */
-  public String getName();
-
-  /**
-   * Returns the UUID of this repository.
-   */
-  public String getUUID();
-
-  /**
-   * Returns the creation time of this repository.
-   */
-  public long getCreationTime();
-
-  /**
-   * Returns the approximate current time of this repository.
-   * <p>
-   * Same as calling <code>getCurrentTime(false)</code>.
-   * 
-   * @see #getTimeStamp(boolean)
-   */
-  public long getTimeStamp();
-
-  /**
    * Returns the approximate current time of this repository by optionally refreshing the approximation from the server.
+   * 
+   * @see CDOCommonRepository#getTimeStamp()
    */
   public long getTimeStamp(boolean forceRefresh);
-
-  /**
-   * Returns <code>true</code> if this repository supports auditing, <code>false</code> otherwise.
-   */
-  public boolean isSupportingAudits();
-
-  /**
-   * Returns <code>true</code> if this repository supports branching, <code>false</code> otherwise.
-   */
-  public boolean isSupportingBranches();
 }

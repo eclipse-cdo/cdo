@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.common.CDOTimeProvider;
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -28,24 +28,13 @@ import java.util.Map;
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IRepository extends IContainer<Object>, IQueryHandlerProvider, CDOTimeProvider
+public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider, IContainer<Object>
 {
-  public String getName();
-
   public IStore getStore();
 
   public Map<String, String> getProperties();
 
-  public String getUUID();
-
   public boolean isSupportingRevisionDeltas();
-
-  public boolean isSupportingAudits();
-
-  /**
-   * @since 3.0
-   */
-  public boolean isSupportingBranches();
 
   public boolean isVerifyingRevisions();
 
@@ -72,13 +61,6 @@ public interface IRepository extends IContainer<Object>, IQueryHandlerProvider, 
    * @since 2.0
    */
   public IQueryHandlerProvider getQueryHandlerProvider();
-
-  /**
-   * Returns the repository creation time.
-   * 
-   * @since 2.0
-   */
-  public long getCreationTime();
 
   /**
    * Returns the time stamp of the last commit operation.

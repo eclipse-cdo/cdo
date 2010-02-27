@@ -34,10 +34,6 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
 
   public Map<String, String> getProperties();
 
-  public boolean isSupportingRevisionDeltas();
-
-  public boolean isVerifyingRevisions();
-
   /**
    * Returns the EMF {@link EPackage.Registry package registry} that is used by this repository.
    * 

@@ -287,7 +287,7 @@ public class TransactionCommitContext implements InternalCommitContext
       monitor.worked();
 
       InternalRepository repository = transaction.getRepository();
-      computeDirtyObjects(!repository.isSupportingRevisionDeltas(), monitor.fork());
+      computeDirtyObjects(monitor.fork());
 
       monitor.worked();
 
@@ -544,15 +544,15 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private void computeDirtyObjects(boolean failOnNull, OMMonitor monitor)
+  private void computeDirtyObjects(OMMonitor monitor)
   {
     try
     {
       monitor.begin(dirtyObjectDeltas.length);
       for (int i = 0; i < dirtyObjectDeltas.length; i++)
       {
-        dirtyObjects[i] = computeDirtyObject(dirtyObjectDeltas[i], failOnNull);
-        if (dirtyObjects[i] == null && failOnNull)
+        dirtyObjects[i] = computeDirtyObject(dirtyObjectDeltas[i]);
+        if (dirtyObjects[i] == null)
         {
           throw new IllegalStateException("Can not retrieve origin revision for " + dirtyObjectDeltas[i]); //$NON-NLS-1$
         }
@@ -566,7 +566,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private InternalCDORevision computeDirtyObject(InternalCDORevisionDelta delta, boolean loadOnDemand)
+  private InternalCDORevision computeDirtyObject(InternalCDORevisionDelta delta)
   {
     CDOID id = delta.getID();
 
@@ -585,15 +585,12 @@ public class TransactionCommitContext implements InternalCommitContext
           + oldRevision);
     }
 
-    if (loadOnDemand)
+    // Make sure all chunks are loaded
+    for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(oldRevision.getEClass()))
     {
-      // Make sure all chunks are loaded
-      for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(oldRevision.getEClass()))
+      if (feature.isMany())
       {
-        if (feature.isMany())
-        {
-          repository.ensureChunk(oldRevision, feature, 0, oldRevision.getList(feature).size());
-        }
+        repository.ensureChunk(oldRevision, feature, 0, oldRevision.getList(feature).size());
       }
     }
 

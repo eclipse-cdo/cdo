@@ -102,8 +102,6 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private Map<String, String> properties;
 
-  private boolean supportingRevisionDeltas;
-
   private boolean supportingAudits;
 
   private boolean supportingBranches;
@@ -197,11 +195,6 @@ public class Repository extends Container<Object> implements InternalRepository
   public synchronized void setProperties(Map<String, String> properties)
   {
     this.properties = properties;
-  }
-
-  public boolean isSupportingRevisionDeltas()
-  {
-    return supportingRevisionDeltas;
   }
 
   public boolean isSupportingAudits()
@@ -964,8 +957,6 @@ public class Repository extends Container<Object> implements InternalRepository
         supportingBranches = store.getRevisionParallelism() == IStore.RevisionParallelism.BRANCHING;
       }
     }
-
-    supportingRevisionDeltas = store.getSupportedChangeFormats().contains(IStore.ChangeFormat.DELTA);
 
     {
       String value = getProperties().get(Props.VERIFYING_REVISIONS);

@@ -180,16 +180,6 @@ public abstract class DelegatingRepository implements InternalRepository
     return getDelegate().isSupportingBranches();
   }
 
-  public boolean isSupportingRevisionDeltas()
-  {
-    return getDelegate().isSupportingRevisionDeltas();
-  }
-
-  public boolean isVerifyingRevisions()
-  {
-    return getDelegate().isVerifyingRevisions();
-  }
-
   public EPackage[] loadPackages(CDOPackageUnit packageUnit)
   {
     return getDelegate().loadPackages(packageUnit);

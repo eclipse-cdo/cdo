@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -129,7 +130,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     String userID = context.getUserID();
     String commitComment = context.getCommitComment();
 
-    boolean deltas = store.getRepository().isSupportingRevisionDeltas();
+    boolean deltas = store.getSupportedChangeFormats().contains(IStore.ChangeFormat.DELTA);
 
     InternalCDOPackageUnit[] newPackageUnits = context.getNewPackageUnits();
     InternalCDORevision[] newObjects = context.getNewObjects();

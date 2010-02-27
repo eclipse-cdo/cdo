@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.session;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 
 /**
@@ -25,10 +26,22 @@ public interface CDOSessionConfiguration
   public boolean isPassiveUpdateEnabled();
 
   /**
-   * @see CDOSession.Options#isPassiveUpdateEnabled()
+   * @see CDOSession.Options#setPassiveUpdateEnabled(boolean)
    * @since 3.0
    */
   public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled);
+
+  /**
+   * @see CDOSession.Options#getPassiveUpdateMode()
+   * @since 3.0
+   */
+  public PassiveUpdateMode getPassiveUpdateMode();
+
+  /**
+   * @see CDOSession.Options#setPassiveUpdateMode(PassiveUpdateMode)
+   * @since 3.0
+   */
+  public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode);
 
   /**
    * @see CDOSession#getExceptionHandler()

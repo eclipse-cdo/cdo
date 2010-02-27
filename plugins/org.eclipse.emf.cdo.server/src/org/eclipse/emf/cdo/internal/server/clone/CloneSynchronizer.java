@@ -191,8 +191,8 @@ public class CloneSynchronizer extends QueueRunner
 
         try
         {
+          masterConfiguration.setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
           master = (InternalCDOSession)masterConfiguration.openSession();
-          master.options().setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
 
           // Ensure that incoming revisions are not cached!
           InternalCDORevisionCache cache = master.getRevisionManager().getCache();

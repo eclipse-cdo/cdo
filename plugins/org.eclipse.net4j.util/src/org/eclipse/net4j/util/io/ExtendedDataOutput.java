@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -24,6 +24,11 @@ public interface ExtendedDataOutput extends DataOutput
   public void writeObject(Object object) throws IOException;
 
   public void writeString(String str) throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  public void writeEnum(Enum<?> literal) throws IOException;
 
   /**
    * @author Eike Stepper
@@ -121,6 +126,14 @@ public interface ExtendedDataOutput extends DataOutput
     public void writeString(String str) throws IOException
     {
       delegate.writeString(str);
+    }
+
+    /**
+     * @since 3.0
+     */
+    public void writeEnum(Enum<?> literal) throws IOException
+    {
+      delegate.writeEnum(literal);
     }
 
     public void writeUTF(String str) throws IOException

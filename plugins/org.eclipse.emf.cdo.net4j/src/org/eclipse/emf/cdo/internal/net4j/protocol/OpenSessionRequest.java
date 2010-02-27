@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -39,13 +40,17 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
 
   private boolean passiveUpdateEnabled;
 
+  private PassiveUpdateMode passiveUpdateMode;
+
   private OpenSessionResult result;
 
-  public OpenSessionRequest(CDOClientProtocol protocol, String repositoryName, boolean passiveUpdateEnabled)
+  public OpenSessionRequest(CDOClientProtocol protocol, String repositoryName, boolean passiveUpdateEnabled,
+      PassiveUpdateMode passiveUpdateMode)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_OPEN_SESSION);
     this.repositoryName = repositoryName;
     this.passiveUpdateEnabled = passiveUpdateEnabled;
+    this.passiveUpdateMode = passiveUpdateMode;
   }
 
   @Override
@@ -65,6 +70,13 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
     }
 
     out.writeBoolean(passiveUpdateEnabled);
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Writing passiveUpdateMode: {0}", passiveUpdateMode); //$NON-NLS-1$
+    }
+
+    out.writeEnum(passiveUpdateMode);
   }
 
   @Override

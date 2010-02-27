@@ -190,7 +190,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       protocol.setFailOverStrategy(failOverStrategy);
     }
 
-    OpenSessionResult result = protocol.openSession(repositoryName, isPassiveUpdateEnabled());
+    OpenSessionResult result = protocol.openSession(repositoryName, isPassiveUpdateEnabled(), getPassiveUpdateMode());
     session.setSessionID(result.getSessionID());
     session.setLastUpdateTime(result.getLastUpdateTime());
     session.setRepositoryInfo(new RepositoryInfo(repositoryName, result));

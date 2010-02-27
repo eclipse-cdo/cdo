@@ -80,10 +80,11 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return packageURICompressor;
   }
 
-  public OpenSessionResult openSession(String repositoryName, boolean passiveUpdateEnabled)
+  public OpenSessionResult openSession(String repositoryName, boolean passiveUpdateEnabled,
+      PassiveUpdateMode passiveUpdateMode)
   {
     open();
-    return send(new OpenSessionRequest(this, repositoryName, passiveUpdateEnabled));
+    return send(new OpenSessionRequest(this, repositoryName, passiveUpdateEnabled, passiveUpdateMode));
   }
 
   public void disablePassiveUpdate()

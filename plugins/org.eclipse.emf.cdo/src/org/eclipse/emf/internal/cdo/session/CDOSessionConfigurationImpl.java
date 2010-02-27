@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.internal.cdo.session;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -35,6 +36,8 @@ public abstract class CDOSessionConfigurationImpl implements InternalCDOSessionC
 {
   private boolean passiveUpdateEnabled = true;
 
+  private PassiveUpdateMode passiveUpdateMode = PassiveUpdateMode.INVALIDATIONS;
+
   private CDOAuthenticator authenticator = new AuthenticatorImpl();
 
   private CDOSession.ExceptionHandler exceptionHandler;
@@ -56,6 +59,17 @@ public abstract class CDOSessionConfigurationImpl implements InternalCDOSessionC
   {
     checkNotOpen();
     this.passiveUpdateEnabled = passiveUpdateEnabled;
+  }
+
+  public PassiveUpdateMode getPassiveUpdateMode()
+  {
+    return passiveUpdateMode;
+  }
+
+  public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
+  {
+    checkNotOpen();
+    this.passiveUpdateMode = passiveUpdateMode;
   }
 
   public CDOAuthenticator getAuthenticator()

@@ -99,6 +99,27 @@ public final class ExtendedIOUtil
     out.writeBoolean(false);
   }
 
+  /**
+   * @since 3.0
+   */
+  public static void writeEnum(DataOutput out, Enum<?> literal) throws IOException
+  {
+    int ordinal = literal.ordinal();
+    int size = literal.getDeclaringClass().getEnumConstants().length;
+    if (size <= Byte.MAX_VALUE)
+    {
+      out.writeByte(ordinal);
+    }
+    else if (size <= Short.MAX_VALUE)
+    {
+      out.writeShort(ordinal);
+    }
+    else
+    {
+      out.writeInt(ordinal);
+    }
+  }
+
   public static byte[] readByteArray(DataInput in) throws IOException
   {
     int length = in.readInt();
@@ -200,6 +221,30 @@ public final class ExtendedIOUtil
     } while (more);
 
     return builder.toString();
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static <T extends Enum<?>> T readEnum(DataInput in, Class<T> type) throws IOException
+  {
+    T[] literals = type.getEnumConstants();
+    int size = literals.length;
+    int ordinal;
+    if (size <= Byte.MAX_VALUE)
+    {
+      ordinal = in.readByte();
+    }
+    else if (size <= Short.MAX_VALUE)
+    {
+      ordinal = in.readShort();
+    }
+    else
+    {
+      ordinal = in.readInt();
+    }
+
+    return literals[ordinal];
   }
 
   /**

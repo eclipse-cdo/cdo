@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -36,6 +37,8 @@ public class OpenSessionIndication extends RepositoryTimeIndication
   private String repositoryName;
 
   private boolean passiveUpdateEnabled;
+
+  private PassiveUpdateMode passiveUpdateMode;
 
   private InternalRepository repository;
 
@@ -73,6 +76,12 @@ public class OpenSessionIndication extends RepositoryTimeIndication
     {
       TRACER.format("Read passiveUpdateEnabled: {0}", passiveUpdateEnabled); //$NON-NLS-1$
     }
+
+    passiveUpdateMode = in.readEnum(PassiveUpdateMode.class);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Read passiveUpdateMode: {0}", passiveUpdateMode); //$NON-NLS-1$
+    }
   }
 
   @Override
@@ -91,6 +100,7 @@ public class OpenSessionIndication extends RepositoryTimeIndication
       InternalSessionManager sessionManager = repository.getSessionManager();
       session = sessionManager.openSession(protocol);
       session.setPassiveUpdateEnabled(passiveUpdateEnabled);
+      session.setPassiveUpdateMode(passiveUpdateMode);
 
       protocol.setInfraStructure(session);
       if (TRACER.isEnabled())

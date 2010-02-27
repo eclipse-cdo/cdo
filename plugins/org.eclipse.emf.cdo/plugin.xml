@@ -32,4 +32,16 @@
       </parser>
    </extension>
    
+  <extension 
+  			point="org.eclipse.core.expressions.propertyTesters">
+    <propertyTester
+      id="org.eclipse.emf.cdo.SessionTester"
+      type="org.eclipse.emf.cdo.session.CDOSession"
+      namespace="org.eclipse.emf.cdo.session"
+      properties="sessionID,userID,passiveUpdateEnabled,passiveUpdateMode,supportingAudits,supportingBranches,repositoryName,repositoryUUID,repositoryType,repositoryState,repositoryCreationTime"
+      class="org.eclipse.emf.internal.cdo.session.SessionPropertyTester">
+    </propertyTester>
+  </extension>
+
+   
 </plugin>

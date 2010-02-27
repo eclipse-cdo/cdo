@@ -114,5 +114,25 @@
            name="%perspective.name">
      </perspective>
   </extension>
+  <extension
+        point="org.eclipse.core.runtime.adapters">
+     <factory
+           adaptableType="org.eclipse.emf.cdo.session.CDOSession"
+           class="org.eclipse.emf.cdo.internal.ui.adapters.SessionAdapterFactory">
+        <adapter
+              type="org.eclipse.ui.views.properties.IPropertySourceProvider">
+        </adapter>
+     </factory>
+  </extension>
+  <extension
+        point="org.eclipse.core.runtime.adapters">
+     <factory
+           adaptableType="org.eclipse.emf.cdo.session.CDOSession"
+           class="org.eclipse.emf.cdo.internal.ui.adapters.SessionAdapterFactory">
+        <adapter
+              type="org.eclipse.emf.cdo.ui.Adapter1">
+        </adapter>
+     </factory>
+  </extension>
 
 </plugin>

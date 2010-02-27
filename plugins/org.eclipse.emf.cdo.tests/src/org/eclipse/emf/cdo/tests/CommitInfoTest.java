@@ -527,8 +527,8 @@ public class CommitInfoTest extends AbstractCDOTest
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
+    assertEquals(2, infos.size()); // Initial root resource commit + 1
+    assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
   public void testClientUser() throws Exception

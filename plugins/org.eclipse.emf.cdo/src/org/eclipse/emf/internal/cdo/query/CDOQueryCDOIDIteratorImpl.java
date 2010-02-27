@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.internal.cdo.query;
 
-import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;

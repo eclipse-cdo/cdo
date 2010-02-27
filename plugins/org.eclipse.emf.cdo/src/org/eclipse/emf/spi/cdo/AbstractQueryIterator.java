@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.spi.cdo;
 
-import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.spi.common.AbstractQueryResult;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -28,6 +28,9 @@ public abstract class AbstractQueryIterator<T> extends AbstractQueryResult<T>
 
   private ConcurrentValue<Boolean> queryIDSet = new ConcurrentValue<Boolean>(false);
 
+  /**
+   * @since 3.0
+   */
   public AbstractQueryIterator(CDOView view, CDOQueryInfo queryInfo)
   {
     super(view, queryInfo, UNDEFINED_QUERY_ID);

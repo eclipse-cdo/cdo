@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.common;
 
+import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
+
 /**
  * @author Eike Stepper
  * @since 3.0

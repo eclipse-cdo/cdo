@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.internal.cdo.analyzer;
 
-import org.eclipse.emf.cdo.common.CDOFetchRule;
+import org.eclipse.emf.cdo.common.util.CDOFetchRule;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 

@@ -1041,7 +1041,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         IListener[] listeners = getListeners();
         if (listeners != null)
         {
-          fireEvent(new PassiveUpdateEventImpl(), listeners);
+          fireEvent(new PassiveUpdateEventImpl(!passiveUpdateEnabled, passiveUpdateEnabled, passiveUpdateMode,
+              passiveUpdateMode), listeners);
         }
       }
     }
@@ -1053,16 +1054,18 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
     {
-      checkArg(passiveUpdateMode, "passiveUpdateMode");
+      checkArg(passiveUpdateMode, "passiveUpdateMode"); //$NON-NLS-1$
       if (this.passiveUpdateMode != passiveUpdateMode)
       {
+        PassiveUpdateMode oldMode = this.passiveUpdateMode;
         this.passiveUpdateMode = passiveUpdateMode;
         getSessionProtocol().setPassiveUpdateMode(passiveUpdateMode);
 
         IListener[] listeners = getListeners();
         if (listeners != null)
         {
-          fireEvent(new PassiveUpdateEventImpl(), listeners);
+          fireEvent(new PassiveUpdateEventImpl(passiveUpdateEnabled, passiveUpdateEnabled, oldMode, passiveUpdateMode),
+              listeners);
         }
       }
     }
@@ -1111,9 +1114,42 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     {
       private static final long serialVersionUID = 1L;
 
-      public PassiveUpdateEventImpl()
+      private boolean oldEnabled;
+
+      private boolean newEnabled;
+
+      private PassiveUpdateMode oldMode;
+
+      private PassiveUpdateMode newMode;
+
+      public PassiveUpdateEventImpl(boolean oldEnabled, boolean newEnabled, PassiveUpdateMode oldMode,
+          PassiveUpdateMode newMode)
       {
         super(OptionsImpl.this);
+        this.oldEnabled = oldEnabled;
+        this.newEnabled = newEnabled;
+        this.oldMode = oldMode;
+        this.newMode = newMode;
+      }
+
+      public boolean getOldEnabled()
+      {
+        return oldEnabled;
+      }
+
+      public boolean getNewEnabled()
+      {
+        return newEnabled;
+      }
+
+      public PassiveUpdateMode getOldMode()
+      {
+        return oldMode;
+      }
+
+      public PassiveUpdateMode getNewMode()
+      {
+        return newMode;
       }
     }
 

@@ -11,8 +11,8 @@
  */
 package org.eclipse.emf.cdo.view;
 
-import org.eclipse.emf.cdo.common.CDOFetchRule;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.util.CDOFetchRule;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 
 import org.eclipse.emf.internal.cdo.analyzer.NOOPFetchRuleManager;

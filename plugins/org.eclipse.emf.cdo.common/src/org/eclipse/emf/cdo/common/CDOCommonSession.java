@@ -99,6 +99,13 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
      */
     public interface PassiveUpdateEvent extends IOptionsEvent
     {
+      public boolean getOldEnabled();
+
+      public boolean getNewEnabled();
+
+      public PassiveUpdateMode getOldMode();
+
+      public PassiveUpdateMode getNewMode();
     }
   }
 }

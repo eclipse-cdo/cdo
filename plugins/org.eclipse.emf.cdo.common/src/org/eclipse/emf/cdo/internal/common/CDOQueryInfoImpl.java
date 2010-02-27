@@ -11,9 +11,9 @@
  */
 package org.eclipse.emf.cdo.internal.common;
 
-import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 
 import java.io.IOException;
 import java.util.Collections;

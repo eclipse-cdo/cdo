@@ -12,8 +12,8 @@
 package org.eclipse.emf.cdo.spi.common;
 
 import org.eclipse.emf.cdo.common.CDOCommonView;
-import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.BlockingCloseableIterator;
+import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 
 /**

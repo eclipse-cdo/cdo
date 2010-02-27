@@ -9,7 +9,7 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.cdo.common;
+package org.eclipse.emf.cdo.common.util;
 
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * @author Simon McDuff
- * @since 2.0
+ * @since 3.0
  */
 public final class CDOFetchRule
 {

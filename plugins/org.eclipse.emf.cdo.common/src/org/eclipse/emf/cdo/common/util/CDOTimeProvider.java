@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.common;
+package org.eclipse.emf.cdo.common.util;
 
 /**
  * @author Eike Stepper

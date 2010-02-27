@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
-import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 
@@ -34,6 +34,9 @@ public class ContainerQueryHandlerProvider implements IQueryHandlerProvider
     return container;
   }
 
+  /**
+   * @since 3.0
+   */
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
     return (IQueryHandler)container.getElement(QueryHandlerFactory.PRODUCT_GROUP, info.getQueryLanguage(), null);

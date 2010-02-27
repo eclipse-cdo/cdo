@@ -10,10 +10,10 @@
  */
 package org.eclipse.emf.cdo.spi.common.branch;
 
-import org.eclipse.emf.cdo.common.CDOTimeProvider;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 

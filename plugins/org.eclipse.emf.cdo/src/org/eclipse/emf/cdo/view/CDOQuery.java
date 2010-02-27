@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.cdo.view;
 
-import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
 

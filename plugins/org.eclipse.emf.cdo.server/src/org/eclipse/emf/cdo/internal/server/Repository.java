@@ -109,8 +109,6 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private boolean supportingBranches;
 
-  private boolean verifyingRevisions;
-
   private InternalCDOPackageRegistry packageRegistry;
 
   private InternalCDOBranchManager branchManager;
@@ -230,11 +228,6 @@ public class Repository extends Container<Object> implements InternalRepository
   public boolean isSupportingBranches()
   {
     return supportingBranches;
-  }
-
-  public boolean isVerifyingRevisions()
-  {
-    return verifyingRevisions;
   }
 
   public EPackage[] loadPackages(CDOPackageUnit packageUnit)
@@ -981,11 +974,6 @@ public class Repository extends Container<Object> implements InternalRepository
       {
         supportingBranches = store.getRevisionParallelism() == IStore.RevisionParallelism.BRANCHING;
       }
-    }
-
-    {
-      String value = getProperties().get(Props.VERIFYING_REVISIONS);
-      verifyingRevisions = value == null ? false : Boolean.valueOf(value);
     }
 
     revisionManager.setSupportingBranches(supportingBranches);

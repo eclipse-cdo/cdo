@@ -181,11 +181,6 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
     /**
      * @since 2.0
      */
-    public static final String VERIFYING_REVISIONS = "verifyingRevisions"; //$NON-NLS-1$
-
-    /**
-     * @since 2.0
-     */
     public static final String CURRENT_LRU_CAPACITY = "currentLRUCapacity"; //$NON-NLS-1$
 
     /**

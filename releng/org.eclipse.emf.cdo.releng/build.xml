@@ -91,7 +91,7 @@
 			<eclipse.launch app="buckminster">
 				<args>
 					<jvmarg value="-Dbugfix.288796=true" />
-					<jvmarg value="-Xmx2048m" />
+					<jvmarg value="-Xmx1024m" />
 					<arg value="-data" />
 					<arg value="@{workspace}" />
 					<arg value="--loglevel" />
@@ -235,19 +235,21 @@
 				<arg value="-l" />
 				<arg value="org.eclipse.emf.cdo.tests/CDO AllTests.launch" />
 				<arg value="-o" />
-				<arg value="${result}/testReport.xml.tmp" />
+				<arg value="${result}/testReport.xml" />
 				<arg value="--terseXML" />
+				<arg value="--flatXML" />
 				<arg value="--xml" />
 				<arg value="${result}/coverageReport.xml" />
 			</cmdargs>
 		</buckminster>
 
-		<!-- convert the xml to a format which can be read by junit report -->
+		<!-- convert the xml to a format which can be read by junit report
 		<xslt in="${result}/testReport.xml.tmp" out="${result}/testReport.xml" style="convert-test-results.xsl">
 			<param name="testName" expression="CDO Tests" />
 			<param name="testPackage" expression="org.eclipse.emf.cdo.tests" />
 		</xslt>
 		<delete file="${result}/testReport.xml.tmp" failonerror="false" quiet="true" />
+		-->
 	</target>
 
 	<target name="promote.sites" depends="provision">

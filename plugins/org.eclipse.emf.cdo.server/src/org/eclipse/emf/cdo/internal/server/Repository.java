@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
@@ -99,6 +100,8 @@ public class Repository extends Container<Object> implements InternalRepository
   private InternalStore store;
 
   private String uuid;
+
+  private State state;
 
   private Map<String, String> properties;
 
@@ -189,7 +192,17 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public State getState()
   {
-    return isActive() ? State.ONLINE : State.OFFLINE;
+    return state;
+  }
+
+  public void setState(State state)
+  {
+    if (this.state != state)
+    {
+      State oldState = this.state;
+      this.state = state;
+      fireEvent(new RepositoryStateChangedEvent(this, oldState, state));
+    }
   }
 
   public synchronized Map<String, String> getProperties()

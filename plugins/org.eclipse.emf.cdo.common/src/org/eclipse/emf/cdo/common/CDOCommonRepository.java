@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.common;
 
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 
+import org.eclipse.net4j.util.event.IEvent;
+
 /**
  * @author Eike Stepper
  * @since 3.0
@@ -67,5 +69,15 @@ public interface CDOCommonRepository extends CDOTimeProvider
   public static enum State
   {
     OFFLINE, SYNCING, ONLINE
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface StateChangedEvent extends IEvent
+  {
+    public State getOldState();
+
+    public State getNewState();
   }
 }

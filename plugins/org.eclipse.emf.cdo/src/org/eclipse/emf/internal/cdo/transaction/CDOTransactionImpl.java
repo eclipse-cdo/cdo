@@ -649,7 +649,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           progressMonitor = new NullProgressMonitor();
         }
 
-        return getTransactionStrategy().commit(this, progressMonitor);
+        CDOTransactionStrategy transactionStrategy = getTransactionStrategy();
+        return transactionStrategy.commit(this, progressMonitor);
       }
       catch (TransactionException ex)
       {

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.server.offline;
+package org.eclipse.emf.cdo.internal.server.clone;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -107,7 +107,7 @@ public class CloneRepository extends Repository.Default
   @Override
   public InternalCommitContext createCommitContext(InternalTransaction transaction)
   {
-    return new ClientCommitContext(transaction);
+    return new CommitContext(transaction);
   }
 
   @Override
@@ -136,134 +136,13 @@ public class CloneRepository extends Repository.Default
   }
 
   /**
-   * TODO Optimize createCommitInfo()
-   * 
    * @author Eike Stepper
    */
-  private static final class ReplicatorCommitContext extends TransactionCommitContext
-  {
-    private final CDOCommitInfo commitInfo;
-
-    public ReplicatorCommitContext(InternalTransaction transaction, CDOCommitInfo commitInfo)
-    {
-      super(transaction);
-      this.commitInfo = commitInfo;
-      setCommitComment(commitInfo.getComment());
-
-      InternalCDOPackageUnit[] newPackageUnits = getNewPackageUnits(commitInfo);
-      setNewPackageUnits(newPackageUnits);
-
-      InternalCDORevision[] newObjects = getNewObjects(commitInfo);
-      setNewObjects(newObjects);
-
-      InternalCDORevisionDelta[] dirtyObjectDeltas = getDirtyObjectDeltas(commitInfo);
-      setDirtyObjectDeltas(dirtyObjectDeltas);
-
-      CDOID[] detachedObjects = getDetachedObjects(commitInfo);
-      setDetachedObjects(detachedObjects);
-    }
-
-    @Override
-    public String getUserID()
-    {
-      return commitInfo.getUserID();
-    }
-
-    @Override
-    protected long createTimeStamp()
-    {
-      return commitInfo.getTimeStamp();
-    }
-
-    @Override
-    protected void adjustMetaRanges()
-    {
-      // Do nothing
-    }
-
-    @Override
-    protected void adjustForCommit()
-    {
-      // Do nothing
-    }
-
-    @Override
-    public void applyIDMappings(OMMonitor monitor)
-    {
-      monitor.done();
-    }
-
-    @Override
-    protected void lockObjects() throws InterruptedException
-    {
-      // Do nothing
-    }
-
-    private static InternalCDOPackageUnit[] getNewPackageUnits(CDOCommitInfo commitInfo)
-    {
-      List<CDOPackageUnit> list = commitInfo.getNewPackageUnits();
-      InternalCDOPackageUnit[] result = new InternalCDOPackageUnit[list.size()];
-
-      int i = 0;
-      for (CDOPackageUnit packageUnit : list)
-      {
-        result[i++] = (InternalCDOPackageUnit)packageUnit;
-      }
-
-      return result;
-    }
-
-    private static InternalCDORevision[] getNewObjects(CDOCommitInfo commitInfo)
-    {
-      List<CDOIDAndVersion> list = commitInfo.getNewObjects();
-      InternalCDORevision[] result = new InternalCDORevision[list.size()];
-
-      int i = 0;
-      for (CDOIDAndVersion revision : list)
-      {
-        result[i++] = (InternalCDORevision)revision;
-      }
-
-      return result;
-    }
-
-    private static InternalCDORevisionDelta[] getDirtyObjectDeltas(CDOCommitInfo commitInfo)
-    {
-      List<CDORevisionKey> list = commitInfo.getChangedObjects();
-      InternalCDORevisionDelta[] result = new InternalCDORevisionDelta[list.size()];
-
-      int i = 0;
-      for (CDORevisionKey delta : list)
-      {
-        result[i++] = (InternalCDORevisionDelta)delta;
-      }
-
-      return result;
-    }
-
-    private static CDOID[] getDetachedObjects(CDOCommitInfo commitInfo)
-    {
-      List<CDOIDAndVersion> list = commitInfo.getDetachedObjects();
-      CDOID[] result = new CDOID[list.size()];
-
-      int i = 0;
-      for (CDOIDAndVersion key : list)
-      {
-        result[i++] = key.getID();
-      }
-
-      return result;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class ClientCommitContext extends TransactionCommitContext
+  private final class CommitContext extends TransactionCommitContext
   {
     private InternalCDOSession master = (InternalCDOSession)synchronizer.getMaster();
 
-    public ClientCommitContext(InternalTransaction transaction)
+    public CommitContext(InternalTransaction transaction)
     {
       super(transaction);
     }
@@ -318,7 +197,7 @@ public class CloneRepository extends Repository.Default
     {
       public List<CDOPackageUnit> getNewPackageUnits()
       {
-        final InternalCDOPackageUnit[] newPackageUnits = ClientCommitContext.this.getNewPackageUnits();
+        final InternalCDOPackageUnit[] newPackageUnits = CommitContext.this.getNewPackageUnits();
         return new IndexedList<CDOPackageUnit>()
         {
           @Override
@@ -337,7 +216,7 @@ public class CloneRepository extends Repository.Default
 
       public List<CDOIDAndVersion> getNewObjects()
       {
-        final InternalCDORevision[] newObjects = ClientCommitContext.this.getNewObjects();
+        final InternalCDORevision[] newObjects = CommitContext.this.getNewObjects();
         return new IndexedList<CDOIDAndVersion>()
         {
           @Override
@@ -375,7 +254,7 @@ public class CloneRepository extends Repository.Default
 
       public List<CDOIDAndVersion> getDetachedObjects()
       {
-        final CDOID[] detachedObjects = ClientCommitContext.this.getDetachedObjects();
+        final CDOID[] detachedObjects = CommitContext.this.getDetachedObjects();
         return new IndexedList<CDOIDAndVersion>()
         {
           @Override

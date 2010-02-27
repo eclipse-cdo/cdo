@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.tests.config.impl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
-import org.eclipse.emf.cdo.internal.server.offline.CloneSynchronizer;
+import org.eclipse.emf.cdo.internal.server.clone.CloneSynchronizer;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerUtil;

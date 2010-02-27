@@ -13,9 +13,9 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.internal.server.clone.CloneRepository;
+import org.eclipse.emf.cdo.internal.server.clone.CloneSynchronizer;
 import org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionConfiguration;
-import org.eclipse.emf.cdo.internal.server.offline.CloneRepository;
-import org.eclipse.emf.cdo.internal.server.offline.CloneSynchronizer;
 import org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 

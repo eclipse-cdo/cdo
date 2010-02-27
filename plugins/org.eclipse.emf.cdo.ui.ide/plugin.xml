@@ -88,11 +88,11 @@
             id="org.eclipse.emf.cdo.ui.ide.ResourcesNodeContributions"
             objectClass="org.eclipse.emf.cdo.ui.ide.Node$ResourcesNode">
          <action
-               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceActionDelegate"
-               icon="icons/full/elcl16/NewCDOResource.gif"
-               id="org.eclipse.emf.cdo.ui.ide.resourceNodeCreateResourceAction"
-               label="%action.label.0"
-               tooltip="%action.tooltip">
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.ImportResourceActionDelegate"
+               icon="icons/full/elcl16/import_wiz.gif"
+               id="org.eclipse.emf.cdo.ui.ide.resourceNodeImportResource"
+               label="%action.label.8"
+               tooltip="%action.tooltip.7">
          </action>
          <action
                class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceFolderActionDelegate"
@@ -102,11 +102,11 @@
                tooltip="%action.tooltip.0">
          </action>
          <action
-               class="org.eclipse.emf.cdo.ui.internal.ide.actions.ImportResourceActionDelegate"
-               icon="icons/full/elcl16/import_wiz.gif"
-               id="org.eclipse.emf.cdo.ui.ide.resourceNodeImportResource"
-               label="%action.label.8"
-               tooltip="%action.tooltip.7">
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceActionDelegate"
+               icon="icons/full/elcl16/NewCDOResource.gif"
+               id="org.eclipse.emf.cdo.ui.ide.resourceNodeCreateResourceAction"
+               label="%action.label.0"
+               tooltip="%action.tooltip">
          </action>
       </objectContribution>
       <objectContribution
@@ -126,11 +126,11 @@
             id="org.eclipse.emf.cdo.ui.ide.CDOResourceFolderContributions"
             objectClass="org.eclipse.emf.cdo.eresource.CDOResourceFolder">
          <action
-               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceActionDelegate"
-               icon="icons/full/elcl16/NewCDOResource.gif"
-               id="org.eclipse.emf.cdo.ui.ide.createResourceAction"
-               label="%action.label.3"
-               tooltip="%action.tooltip.2">
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.ImportResourceActionDelegate"
+               icon="icons/full/elcl16/import_wiz.gif"
+               id="org.eclipse.emf.cdo.ui.ide.importResource"
+               label="%action.label.9"
+               tooltip="%action.tooltip.8">
          </action>
          <action
                class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceFolderActionDelegate"
@@ -140,11 +140,11 @@
                tooltip="%action.tooltip.3">
          </action>
          <action
-               class="org.eclipse.emf.cdo.ui.internal.ide.actions.ImportResourceActionDelegate"
-               icon="icons/full/elcl16/import_wiz.gif"
-               id="org.eclipse.emf.cdo.ui.ide.importResource"
-               label="%action.label.9"
-               tooltip="%action.tooltip.8">
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceActionDelegate"
+               icon="icons/full/elcl16/NewCDOResource.gif"
+               id="org.eclipse.emf.cdo.ui.ide.createResourceAction"
+               label="%action.label.3"
+               tooltip="%action.tooltip.2">
          </action>
       </objectContribution>
       <objectContribution

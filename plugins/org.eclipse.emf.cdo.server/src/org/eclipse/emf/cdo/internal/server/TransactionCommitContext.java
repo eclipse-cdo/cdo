@@ -82,19 +82,19 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private String commitComment;
 
-  private InternalCDOPackageUnit[] newPackageUnits;
+  private InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[0];
 
-  private InternalCDORevision[] newObjects;
+  private InternalCDORevision[] newObjects = new InternalCDORevision[0];
+
+  private InternalCDORevisionDelta[] dirtyObjectDeltas = new InternalCDORevisionDelta[0];
+
+  private CDOID[] detachedObjects = new CDOID[0];
 
   private InternalCDORevision[] dirtyObjects;
 
-  private CDOID[] detachedObjects;
-
-  private List<Object> lockedObjects = new ArrayList<Object>();
-
   private List<InternalCDORevision> detachedRevisions = new ArrayList<InternalCDORevision>();
 
-  private InternalCDORevisionDelta[] dirtyObjectDeltas;
+  private List<Object> lockedObjects = new ArrayList<Object>();
 
   private List<CDOIDMetaRange> metaIDRanges = new ArrayList<CDOIDMetaRange>();
 

@@ -56,7 +56,6 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
@@ -1080,9 +1079,6 @@ public class Repository extends Container<Object> implements InternalRepository
 
     InternalCommitContext commitContext = transaction.createCommitContext();
     commitContext.setNewObjects(new InternalCDORevision[] { rootResource });
-    commitContext.setNewPackageUnits(new InternalCDOPackageUnit[0]);
-    commitContext.setDirtyObjectDeltas(new InternalCDORevisionDelta[0]);
-    commitContext.setDetachedObjects(new CDOID[0]);
     commitContext.preWrite();
     boolean success = false;
 

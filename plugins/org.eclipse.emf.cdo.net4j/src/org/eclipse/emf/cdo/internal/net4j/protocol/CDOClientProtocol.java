@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
@@ -26,7 +27,7 @@ import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
-import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
+import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
@@ -120,6 +121,11 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   public SubBranchInfo[] loadSubBranches(int branchID)
   {
     return send(new LoadSubBranchesRequest(this, branchID));
+  }
+
+  public int loadBranches(int startID, int endID, CDOBranchHandler handler)
+  {
+    return send(new LoadBranchesRequest(this, startID, endID, handler));
   }
 
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
@@ -291,9 +297,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new UnsubscribeRemoteSessionsRequest(this));
   }
 
-  public void cloneRepository(CDOCloningContext context)
+  public void syncRepository(CDOReplicationContext context)
   {
-    send(new CloneRepositoryRequest(this, context));
+    send(new SyncRepositoryRequest(this, context));
   }
 
   @Override

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.internal.db.AbstractQueryStatement;
@@ -735,6 +736,12 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
 
       @Override
       protected CDOBranchManager getBranchManager()
+      {
+        return null;
+      }
+
+      @Override
+      protected CDOCommitInfoManager getCommitInfoManager()
       {
         return null;
       }

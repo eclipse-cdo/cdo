@@ -126,7 +126,7 @@ public class CDOBranchImpl implements InternalCDOBranch
       for (int i = 0; i < infos.length; i++)
       {
         SubBranchInfo info = infos[i];
-        branches[i] = branchManager.getBranch(info.getID(), info.getName(), info.getBaseTimeStamp(), this);
+        branches[i] = branchManager.getBranch(info.getID(), info.getName(), this, info.getBaseTimeStamp());
       }
     }
 

@@ -175,6 +175,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_LOAD_SUB_BRANCHES:
       return new LoadSubBranchesIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_LOAD_BRANCHES:
+      return new LoadBranchesIndication(this);
+
     case CDOProtocolConstants.SIGNAL_LOAD_REVISIONS:
       return new LoadRevisionsIndication(this);
 
@@ -244,8 +247,8 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_LOAD_COMMIT_INFOS:
       return new LoadCommitInfosIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_CLONE_REPOSITORY:
-      return new CloneRepositoryIndication(this);
+    case CDOProtocolConstants.SIGNAL_SYNC_REPOSITORY:
+      return new SyncRepositoryIndication(this);
 
     default:
       return super.createSignalReactor(signalID);

@@ -14,6 +14,7 @@
 package org.eclipse.emf.cdo.internal.server.mem;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -116,6 +117,28 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     }
 
     return result.toArray(new SubBranchInfo[result.size()]);
+  }
+
+  public synchronized int loadBranches(int startID, int endID, CDOBranchHandler handler)
+  {
+    int count = 0;
+    InternalCDOBranchManager branchManager = getRepository().getBranchManager();
+    for (Entry<Integer, BranchInfo> entry : branchInfos.entrySet())
+    {
+      int id = entry.getKey();
+      if (startID <= id && (id <= endID || endID == 0))
+      {
+        BranchInfo branchInfo = entry.getValue();
+        String name = branchInfo.getName();
+        InternalCDOBranch baseBranch = branchManager.getBranch(branchInfo.getBaseBranchID());
+        long baseTimeStamp = branchInfo.getBaseTimeStamp();
+        InternalCDOBranch branch = branchManager.getBranch(id, name, baseBranch, baseTimeStamp);
+        handler.handleBranch(branch);
+        ++count;
+      }
+    }
+
+    return count;
   }
 
   public synchronized void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)

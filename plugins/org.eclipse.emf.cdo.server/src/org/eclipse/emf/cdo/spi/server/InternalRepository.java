@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.InternalStore;
-import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
+import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -87,5 +87,5 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
   public void notifyWriteAccessHandlers(ITransaction transaction, IStoreAccessor.CommitContext commitContext,
       OMMonitor monitor);
 
-  public void clone(CDOCloningContext context);
+  public void sync(CDOReplicationContext context);
 }

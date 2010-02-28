@@ -35,41 +35,5 @@ public class CommitNotificationRequest extends CDOServerRequest
   protected void requesting(CDODataOutput out) throws IOException
   {
     out.writeCDOCommitInfo(commitInfo);
-
-    // if (TRACER.isEnabled())
-    // {
-    //      TRACER.format("Writing branchPoint: {0}", branchPoint); //$NON-NLS-1$
-    // }
-    //
-    // out.writeCDOBranchPoint(branchPoint);
-    // if (TRACER.isEnabled())
-    // {
-    //      TRACER.format("Writing {0} dirty IDs", dirtyIDs.size()); //$NON-NLS-1$
-    // }
-    //
-    // out.writeCDOPackageUnits(packageUnits);
-    //
-    // out.writeInt(dirtyIDs == null ? 0 : dirtyIDs.size());
-    // for (CDOIDAndVersion dirtyID : dirtyIDs)
-    // {
-    // if (TRACER.isEnabled())
-    // {
-    //        TRACER.format("Writing dirty ID: {0}", dirtyID); //$NON-NLS-1$
-    // }
-    //
-    // out.writeCDOIDAndVersion(dirtyID);
-    // }
-    //
-    // out.writeInt(deltas == null ? 0 : deltas.size());
-    // for (CDORevisionDelta delta : deltas)
-    // {
-    // out.writeCDORevisionDelta(delta);
-    // }
-    //
-    // out.writeInt(detachedObjects == null ? 0 : detachedObjects.size());
-    // for (CDOID id : detachedObjects)
-    // {
-    // out.writeCDOID(id);
-    // }
   }
 }

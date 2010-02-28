@@ -225,7 +225,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);
   }
 
-  public CDOCommitInfo readCDOCommitInfo(CDOCommitInfoManager commitInfoManager) throws IOException
+  public CDOCommitInfo readCDOCommitInfo() throws IOException
   {
     CDOBranch branch = readCDOBranch();
     long timeStamp = readLong();
@@ -233,8 +233,8 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     String comment = readString();
     CDOCommitData commitData = readCDOCommitData();
 
-    return ((InternalCDOCommitInfoManager)commitInfoManager).createCommitInfo(branch, timeStamp, userID, comment,
-        commitData);
+    InternalCDOCommitInfoManager commitInfoManager = (InternalCDOCommitInfoManager)getCommitInfoManager();
+    return commitInfoManager.createCommitInfo(branch, timeStamp, userID, comment, commitData);
   }
 
   public CDOID readCDOID() throws IOException
@@ -502,6 +502,8 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   protected abstract CDOPackageRegistry getPackageRegistry();
 
   protected abstract CDOBranchManager getBranchManager();
+
+  protected abstract CDOCommitInfoManager getCommitInfoManager();
 
   protected abstract CDORevisionFactory getRevisionFactory();
 

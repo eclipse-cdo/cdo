@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
@@ -90,7 +89,7 @@ public interface CDODataInput extends ExtendedDataInput
   /**
    * @since 3.0
    */
-  public CDOCommitInfo readCDOCommitInfo(CDOCommitInfoManager commitInfoManager) throws IOException;
+  public CDOCommitInfo readCDOCommitInfo() throws IOException;
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 

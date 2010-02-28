@@ -13,6 +13,7 @@
 package org.eclipse.emf.cdo.internal.server.mem;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
@@ -167,6 +168,11 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
   public SubBranchInfo[] loadSubBranches(int branchID)
   {
     return getStore().loadSubBranches(branchID);
+  }
+
+  public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
+  {
+    return getStore().loadBranches(startID, endID, branchHandler);
   }
 
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)

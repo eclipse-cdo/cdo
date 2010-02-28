@@ -18,9 +18,9 @@ public interface CDOBranch extends Comparable<CDOBranch>
 {
   public static final int MAIN_BRANCH_ID = 0;
 
-  public static final String MAIN_BRANCH_NAME = "MAIN";
+  public static final String MAIN_BRANCH_NAME = "MAIN"; //$NON-NLS-1$
 
-  public static final String PATH_SEPARATOR = "/";
+  public static final String PATH_SEPARATOR = "/"; //$NON-NLS-1$
 
   public boolean isMainBranch();
 

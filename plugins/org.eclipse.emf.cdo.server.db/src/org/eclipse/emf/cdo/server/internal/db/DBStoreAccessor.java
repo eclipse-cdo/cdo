@@ -14,6 +14,7 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
@@ -674,6 +675,12 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       DBUtil.close(resultSet);
       statementCache.releasePreparedStatement(pstmt);
     }
+  }
+
+  public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
+  {
+    // TODO: implement DBStoreAccessor.loadBranches(startID, endID, branchHandler)
+    throw new UnsupportedOperationException();
   }
 
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)

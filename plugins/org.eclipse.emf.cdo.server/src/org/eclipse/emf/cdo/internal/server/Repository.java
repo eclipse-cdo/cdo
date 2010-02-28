@@ -16,6 +16,7 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
@@ -45,7 +46,7 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.InternalStore;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
-import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
+import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
@@ -204,7 +205,11 @@ public class Repository extends Container<Object> implements InternalRepository
       State oldState = this.state;
       this.state = state;
       fireEvent(new RepositoryStateChangedEvent(this, oldState, state));
-      sessionManager.sendRepositoryStateNotification(oldState, state);
+
+      if (sessionManager != null)
+      {
+        sessionManager.sendRepositoryStateNotification(oldState, state);
+      }
     }
   }
 
@@ -258,6 +263,12 @@ public class Repository extends Container<Object> implements InternalRepository
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     return accessor.loadSubBranches(branchID);
+  }
+
+  public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
+  {
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    return accessor.loadBranches(startID, endID, branchHandler);
   }
 
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
@@ -906,16 +917,13 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  public void clone(CDOCloningContext context)
+  public void sync(CDOReplicationContext context)
   {
-    long endTime = context.getEndTime();
-    long startTime = context.getStartTime();
-    InternalCDOPackageRegistry packageRegistry = getPackageRegistry(false);
-    for (InternalCDOPackageUnit packageUnit : packageRegistry.getPackageUnits(startTime, endTime))
-    {
-      context.addPackageUnit(packageUnit.getID());
-    }
+    int startID = context.getLastReplicatedBranchID() + 1;
+    branchManager.getBranches(startID, 0, context);
 
+    long startTime = context.getLastReplicatedCommitTime() + 1L;
+    commitInfoManager.getCommitInfos(startTime, CDOBranchPoint.UNSPECIFIED_DATE, context);
   }
 
   @Override

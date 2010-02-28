@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.common.branch;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent;
+import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
@@ -108,19 +109,19 @@ public class CDOBranchManagerImpl extends Lifecycle implements InternalCDOBranch
     return branch;
   }
 
-  public InternalCDOBranch getBranch(int id, String name, long baseTimeStamp, InternalCDOBranch base)
+  public InternalCDOBranch getBranch(int id, String name, InternalCDOBranch baseBranch, long baseTimeStamp)
   {
     synchronized (branches)
     {
       InternalCDOBranch branch = branches.get(id);
       if (branch == null)
       {
-        branch = new CDOBranchImpl(id, name, CDOBranchUtil.createBranchPoint(base, baseTimeStamp));
+        branch = new CDOBranchImpl(id, name, baseBranch.getPoint(baseTimeStamp));
         putBranch(branch);
       }
       else if (branch.isProxy())
       {
-        branch.setBranchInfo(name, base, baseTimeStamp);
+        branch.setBranchInfo(name, baseBranch, baseTimeStamp);
       }
 
       return branch;
@@ -150,6 +151,12 @@ public class CDOBranchManagerImpl extends Lifecycle implements InternalCDOBranch
     return null;
   }
 
+  public int getBranches(int startID, int endID, CDOBranchHandler handler)
+  {
+    checkActive();
+    return branchLoader.loadBranches(startID, endID, handler);
+  }
+
   public InternalCDOBranch createBranch(String name, InternalCDOBranch baseBranch, long baseTimeStamp)
   {
     checkActive();
@@ -160,6 +167,11 @@ public class CDOBranchManagerImpl extends Lifecycle implements InternalCDOBranch
     }
 
     int branchID = branchLoader.createBranch(new BranchInfo(name, baseBranch.getID(), baseTimeStamp));
+    return createBranch(branchID, name, baseBranch, baseTimeStamp);
+  }
+
+  public InternalCDOBranch createBranch(int branchID, String name, InternalCDOBranch baseBranch, long baseTimeStamp)
+  {
     CDOBranchPoint base = CDOBranchUtil.createBranchPoint(baseBranch, baseTimeStamp);
     InternalCDOBranch branch = new CDOBranchImpl(branchID, name, base);
     synchronized (branches)

@@ -23,6 +23,9 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
+import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -45,11 +48,15 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class CloneRepository extends Repository.Default
+public class CloneRepository extends Repository.Default implements CDOReplicationContext
 {
   private CloneSynchronizer synchronizer;
 
   private InternalSession replicatorSession;
+
+  private int lastReplicatedBranchID;
+
+  private long lastReplicatedCommitTime;
 
   private int lastTransactionID;
 
@@ -83,7 +90,31 @@ public class CloneRepository extends Repository.Default
     return list.toArray();
   }
 
-  public void replicate(CDOCommitInfo commitInfo)
+  public int getLastReplicatedBranchID()
+  {
+    return lastReplicatedBranchID;
+  }
+
+  public long getLastReplicatedCommitTime()
+  {
+    return lastReplicatedCommitTime;
+  }
+
+  public void handleBranch(CDOBranch branch)
+  {
+    int branchID = branch.getID();
+    String name = branch.getName();
+
+    CDOBranchPoint base = branch.getBase();
+    InternalCDOBranch baseBranch = (InternalCDOBranch)base.getBranch();
+    long baseTimeStamp = base.getTimeStamp();
+
+    InternalCDOBranchManager branchManager = getBranchManager();
+    branchManager.createBranch(branchID, name, baseBranch, baseTimeStamp);
+    lastReplicatedBranchID = branchID;
+  }
+
+  public void handleCommitInfo(CDOCommitInfo commitInfo)
   {
     CDOBranchPoint head = commitInfo.getBranch().getHead();
     InternalTransaction transaction = replicatorSession.openTransaction(++lastTransactionID, head);
@@ -98,6 +129,7 @@ public class CloneRepository extends Repository.Default
 
       long timeStamp = commitInfo.getTimeStamp();
       setLastCommitTimeStamp(timeStamp);
+      lastReplicatedCommitTime = timeStamp;
       success = true;
     }
     finally
@@ -136,6 +168,12 @@ public class CloneRepository extends Repository.Default
   {
     synchronizer.deactivate();
     super.doDeactivate();
+  }
+
+  @Override
+  protected void initRootResource()
+  {
+    // Do nothing
   }
 
   /**

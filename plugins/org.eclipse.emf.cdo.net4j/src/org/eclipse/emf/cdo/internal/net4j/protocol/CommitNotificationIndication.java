@@ -33,64 +33,7 @@ public class CommitNotificationIndication extends CDOClientIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     InternalCDOSession session = getSession();
-    CDOCommitInfo commitInfo = in.readCDOCommitInfo(session.getCommitInfoManager());
+    CDOCommitInfo commitInfo = in.readCDOCommitInfo();
     session.handleCommitNotification(commitInfo);
-
-    // CDOBranchPoint branchPoint = in.readCDOBranchPoint();
-    // if (TRACER.isEnabled())
-    // {
-    //      TRACER.format("Read branchpoint: {0}", branchPoint); //$NON-NLS-1$
-    // }
-    //
-    // CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);
-    // InternalCDOPackageRegistry packageRegistry = getSession().getPackageRegistry();
-    // for (int i = 0; i < packageUnits.length; i++)
-    // {
-    // packageRegistry.putPackageUnit((InternalCDOPackageUnit)packageUnits[i]);
-    // }
-    //
-    // int size = in.readInt();
-    // if (TRACER.isEnabled())
-    // {
-    //      TRACER.format("Reading {0} dirty IDs", size); //$NON-NLS-1$
-    // }
-    //
-    // InternalCDOSession session = getSession();
-    // Set<CDOIDAndVersion> dirtyOIDandVersions = new HashSet<CDOIDAndVersion>();
-    // for (int i = 0; i < size; i++)
-    // {
-    // CDOIDAndVersion dirtyOIDandVersion = in.readCDOIDAndVersion();
-    // if (TRACER.isEnabled())
-    // {
-    //        TRACER.format("Read dirty ID: {0}", dirtyOIDandVersion); //$NON-NLS-1$
-    // }
-    //
-    // dirtyOIDandVersions.add(dirtyOIDandVersion);
-    // }
-    //
-    // size = in.readInt();
-    // if (TRACER.isEnabled())
-    // {
-    //      TRACER.format("Reading {0} Deltas", size); //$NON-NLS-1$
-    // }
-    //
-    // List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>();
-    // for (int i = 0; i < size; i++)
-    // {
-    // CDORevisionDelta revisionDelta = in.readCDORevisionDelta();
-    // deltas.add(revisionDelta);
-    // }
-    //
-    // size = in.readInt();
-    // if (TRACER.isEnabled())
-    // {
-    //      TRACER.format("Reading {0} Detach Objects", size); //$NON-NLS-1$
-    // }
-    //
-    // List<CDOID> detachedObjects = new ArrayList<CDOID>();
-    // for (int i = 0; i < size; i++)
-    // {
-    // detachedObjects.add(in.readCDOID());
-    // }
   }
 }

@@ -349,7 +349,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       CloneSynchronizer synchronizer = new CloneSynchronizer();
       synchronizer.setMasterConfiguration(config);
       synchronizer.setRetryInterval(1);
-      synchronizer.setSyncedTimeStamp(CloneSynchronizer.NEVER_SYNCHRONIZED);
 
       IStore store = createStore(name);
       return (InternalRepository)CDOServerUtil.createCloneRepository(name, store, props, synchronizer);

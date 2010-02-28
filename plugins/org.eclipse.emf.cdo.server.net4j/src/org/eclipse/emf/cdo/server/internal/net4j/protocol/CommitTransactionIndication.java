@@ -14,6 +14,7 @@
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -129,6 +130,12 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       protected CDOBranchManager getBranchManager()
       {
         return CommitTransactionIndication.this.getRepository().getBranchManager();
+      }
+
+      @Override
+      protected CDOCommitInfoManager getCommitInfoManager()
+      {
+        return CommitTransactionIndication.this.getRepository().getCommitInfoManager();
       }
 
       @Override

@@ -8,21 +8,18 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.common.branch;
+package org.eclipse.emf.cdo.spi.common;
 
-import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public interface CDOBranchManager extends INotifier
+public interface CDOReplicationContext extends CDOBranchHandler, CDOCommitInfoHandler
 {
-  public CDOBranch getMainBranch();
+  public int getLastReplicatedBranchID();
 
-  public CDOBranch getBranch(int branchID);
-
-  public CDOBranch getBranch(String path);
-
-  public int getBranches(int startID, int endID, CDOBranchHandler handler);
+  public long getLastReplicatedCommitTime();
 }

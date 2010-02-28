@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -1329,6 +1330,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         protected CDOBranchManager getBranchManager()
         {
           return getSession().getBranchManager();
+        }
+
+        @Override
+        protected CDOCommitInfoManager getCommitInfoManager()
+        {
+          return getSession().getCommitInfoManager();
         }
 
         @Override

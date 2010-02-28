@@ -13,30 +13,28 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 
 import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public class CloneRepositoryRequest extends CDOClientRequest<Boolean>
+public class SyncRepositoryRequest extends CDOClientRequest<Boolean>
 {
-  private CDOCloningContext context;
+  private CDOReplicationContext context;
 
-  public CloneRepositoryRequest(CDOClientProtocol protocol, CDOCloningContext context)
+  public SyncRepositoryRequest(CDOClientProtocol protocol, CDOReplicationContext context)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_CLONE_REPOSITORY);
+    super(protocol, CDOProtocolConstants.SIGNAL_SYNC_REPOSITORY);
     this.context = context;
   }
 
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeLong(context.getStartTime());
-    out.writeLong(context.getEndTime());
-    out.writeInt(context.getBranchID());
+    out.writeInt(context.getLastReplicatedBranchID());
+    out.writeLong(context.getLastReplicatedCommitTime());
   }
 
   @Override
@@ -47,23 +45,19 @@ public class CloneRepositoryRequest extends CDOClientRequest<Boolean>
       byte opcode = in.readByte();
       switch (opcode)
       {
-      case CDOProtocolConstants.CLONING_FINISHED:
+      case CDOProtocolConstants.SYNC_FINISHED:
         return true;
 
-      case CDOProtocolConstants.CLONING_PACKAGE:
-        context.addPackageUnit(in.readCDOPackageURI());
+      case CDOProtocolConstants.SYNC_BRANCH:
+        context.handleBranch(in.readCDOBranch());
         break;
 
-      case CDOProtocolConstants.CLONING_BRANCH:
-        context.addBranch(in.readInt());
-        break;
-
-      case CDOProtocolConstants.CLONING_REVISION:
-        context.addRevision((InternalCDORevision)in.readCDORevision());
+      case CDOProtocolConstants.SYNC_COMMIT:
+        context.handleCommitInfo(in.readCDOCommitInfo());
         break;
 
       default:
-        throw new IOException("Invalid cloning opcode: " + opcode);
+        throw new IOException("Invalid sync opcode: " + opcode);
       }
     }
   }

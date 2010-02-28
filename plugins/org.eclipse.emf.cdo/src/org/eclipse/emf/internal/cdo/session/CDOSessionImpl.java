@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
@@ -41,7 +42,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
-import org.eclipse.emf.cdo.spi.common.CDOCloningContext;
+import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -810,11 +811,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     fireInvalidationEvent(sender, commitInfo);
     setLastUpdateTime(commitInfo.getTimeStamp());
-  }
-
-  public void cloneRepository(CDOCloningContext context)
-  {
-    getSessionProtocol().cloneRepository(context);
   }
 
   public Object getInvalidationLock()
@@ -1622,6 +1618,22 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
+    public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.loadBranches(startID, endID, branchHandler);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
     public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
     {
       int attempt = 0;
@@ -1857,14 +1869,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public void cloneRepository(CDOCloningContext context)
+    public void syncRepository(CDOReplicationContext context)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          delegate.cloneRepository(context);
+          delegate.syncRepository(context);
           return;
         }
         catch (Exception ex)

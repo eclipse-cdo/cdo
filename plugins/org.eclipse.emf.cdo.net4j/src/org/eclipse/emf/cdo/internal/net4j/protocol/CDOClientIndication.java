@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
@@ -76,6 +77,12 @@ public abstract class CDOClientIndication extends Indication
       protected CDOBranchManager getBranchManager()
       {
         return getSession().getBranchManager();
+      }
+
+      @Override
+      protected CDOCommitInfoManager getCommitInfoManager()
+      {
+        return getSession().getCommitInfoManager();
       }
 
       @Override

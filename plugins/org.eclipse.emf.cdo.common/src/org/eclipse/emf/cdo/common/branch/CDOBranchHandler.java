@@ -10,19 +10,11 @@
  */
 package org.eclipse.emf.cdo.common.branch;
 
-import org.eclipse.net4j.util.event.INotifier;
-
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public interface CDOBranchManager extends INotifier
+public interface CDOBranchHandler
 {
-  public CDOBranch getMainBranch();
-
-  public CDOBranch getBranch(int branchID);
-
-  public CDOBranch getBranch(String path);
-
-  public int getBranches(int startID, int endID, CDOBranchHandler handler);
+  public void handleBranch(CDOBranch branch);
 }

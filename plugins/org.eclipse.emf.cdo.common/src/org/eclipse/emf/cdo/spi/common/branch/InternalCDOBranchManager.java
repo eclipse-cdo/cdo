@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.common.branch;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
@@ -39,11 +40,13 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
 
   public InternalCDOBranch getBranch(int branchID);
 
-  public InternalCDOBranch getBranch(int id, String name, long baseTimeStamp, InternalCDOBranch base);
+  public InternalCDOBranch getBranch(int id, String name, InternalCDOBranch baseBranch, long baseTimeStamp);
 
   public InternalCDOBranch getBranch(String path);
 
   public InternalCDOBranch createBranch(String name, InternalCDOBranch baseBranch, long baseTimeStamp);
+
+  public InternalCDOBranch createBranch(int branchID, String name, InternalCDOBranch baseBranch, long baseTimeStamp);
 
   public void handleBranchCreated(InternalCDOBranch branch);
 
@@ -58,6 +61,8 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
     public BranchInfo loadBranch(int branchID);
 
     public SubBranchInfo[] loadSubBranches(int branchID);
+
+    public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler);
 
     /**
      * @author Eike Stepper

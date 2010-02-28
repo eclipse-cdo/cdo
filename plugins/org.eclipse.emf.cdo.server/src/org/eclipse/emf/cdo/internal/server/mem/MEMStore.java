@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -33,6 +34,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
@@ -55,7 +57,7 @@ import java.util.Map.Entry;
 /**
  * @author Simon McDuff
  */
-public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
+public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, CommitInfoLoader
 {
   public static final String TYPE = "mem"; //$NON-NLS-1$
 
@@ -164,6 +166,12 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
 
       info.handle(manager, handler);
     }
+  }
+
+  public synchronized CDOCommitData loadCommitData(long timeStamp)
+  {
+    // TODO: implement MEMStore.loadCommitData(timeStamp)
+    throw new UnsupportedOperationException();
   }
 
   /**

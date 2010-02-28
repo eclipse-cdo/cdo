@@ -135,8 +135,7 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
 
   public CDOCommitData loadCommitData(long timeStamp)
   {
-    // TODO: implement CDOClientProtocol.loadCommitData(timeStamp, dataType)
-    throw new UnsupportedOperationException();
+    return send(new LoadCommitDataRequest(this, timeStamp));
   }
 
   public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,

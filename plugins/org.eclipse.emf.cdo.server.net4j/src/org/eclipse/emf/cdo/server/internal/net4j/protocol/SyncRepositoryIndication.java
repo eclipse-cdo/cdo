@@ -24,7 +24,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class SyncRepositoryIndication extends CDOServerIndication
+public class SyncRepositoryIndication extends CDOReadIndication
 {
   private int lastReplicatedBranchID;
 

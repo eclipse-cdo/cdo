@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 
 import org.eclipse.net4j.util.WrappedException;
 
@@ -50,7 +51,8 @@ public class LoadCommitInfosIndication extends CDOReadIndication
   {
     try
     {
-      getRepository().getCommitInfoManager().getCommitInfos(branch, startTime, endTime, new CDOCommitInfoHandler()
+      InternalCDOCommitInfoManager manager = getRepository().getCommitInfoManager();
+      manager.getCommitInfos(branch, startTime, endTime, new CDOCommitInfoHandler()
       {
         public void handleCommitInfo(CDOCommitInfo commitInfo)
         {

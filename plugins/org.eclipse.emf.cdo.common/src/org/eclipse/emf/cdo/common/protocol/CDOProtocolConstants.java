@@ -167,7 +167,12 @@ public interface CDOProtocolConstants
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_SYNC_REPOSITORY = 39;
+  public static final short SIGNAL_LOAD_COMMIT_DATA = 39;
+
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_SYNC_REPOSITORY = 40;
 
   // //////////////////////////////////////////////////////////////////////
   // Session Management

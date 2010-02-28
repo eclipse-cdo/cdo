@@ -182,8 +182,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
 
   public CDOCommitData loadCommitData(long timeStamp)
   {
-    // TODO: implement MEMStoreAccessor.loadCommitData(timeStamp, dataType)
-    throw new UnsupportedOperationException();
+    return getStore().loadCommitData(timeStamp);
   }
 
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,

@@ -64,21 +64,33 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
 
   public synchronized List<CDOPackageUnit> getNewPackageUnits()
   {
-    return commitData == null ? null : commitData.getNewPackageUnits();
+    loadCommitDataIfNeeded();
+    return commitData.getNewPackageUnits();
   }
 
   public synchronized List<CDOIDAndVersion> getNewObjects()
   {
-    return commitData == null ? null : commitData.getNewObjects();
+    loadCommitDataIfNeeded();
+    return commitData.getNewObjects();
   }
 
   public synchronized List<CDORevisionKey> getChangedObjects()
   {
-    return commitData == null ? null : commitData.getChangedObjects();
+    loadCommitDataIfNeeded();
+    return commitData.getChangedObjects();
   }
 
   public synchronized List<CDOIDAndVersion> getDetachedObjects()
   {
-    return commitData == null ? null : commitData.getDetachedObjects();
+    loadCommitDataIfNeeded();
+    return commitData.getDetachedObjects();
+  }
+
+  private void loadCommitDataIfNeeded()
+  {
+    if (commitData == null)
+    {
+      commitData = commitInfoManager.getCommitInfoLoader().loadCommitData(getTimeStamp());
+    }
   }
 }

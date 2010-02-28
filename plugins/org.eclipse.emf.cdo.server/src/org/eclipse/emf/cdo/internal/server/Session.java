@@ -333,16 +333,27 @@ public class Session extends Container<IView> implements InternalSession
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
       throws Exception
   {
-    protocol.sendRepositoryStateNotification(oldState, newState);
+    if (protocol != null)
+    {
+      protocol.sendRepositoryStateNotification(oldState, newState);
+    }
   }
 
   public void sendBranchNotification(InternalCDOBranch branch) throws Exception
   {
-    protocol.sendBranchNotification(branch);
+    if (protocol != null)
+    {
+      protocol.sendBranchNotification(branch);
+    }
   }
 
   public void sendCommitNotification(final CDOCommitInfo commitInfo) throws Exception
   {
+    if (protocol == null)
+    {
+      return;
+    }
+
     if (!isPassiveUpdateEnabled())
     {
       return;
@@ -435,12 +446,18 @@ public class Session extends Container<IView> implements InternalSession
 
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception
   {
-    protocol.sendRemoteSessionNotification(sender, opcode);
+    if (protocol != null)
+    {
+      protocol.sendRemoteSessionNotification(sender, opcode);
+    }
   }
 
   public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message) throws Exception
   {
-    protocol.sendRemoteMessageNotification(sender, message);
+    if (protocol != null)
+    {
+      protocol.sendRemoteMessageNotification(sender, message);
+    }
   }
 
   @Override

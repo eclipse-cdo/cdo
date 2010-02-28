@@ -1077,6 +1077,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
     InternalSession session = getSessionManager().openSession(null);
     InternalTransaction transaction = session.openTransaction(1, head);
+
     InternalCommitContext commitContext = transaction.createCommitContext();
     commitContext.setNewObjects(new InternalCDORevision[] { rootResource });
     commitContext.setNewPackageUnits(new InternalCDOPackageUnit[0]);

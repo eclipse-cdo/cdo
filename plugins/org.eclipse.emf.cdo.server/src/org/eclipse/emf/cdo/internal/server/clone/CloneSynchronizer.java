@@ -145,9 +145,12 @@ public class CloneSynchronizer extends QueueRunner
                 + cache.getClass().getName());
           }
 
-          CDOID rootResourceID = master.getRepositoryInfo().getRootResourceID();
-          clone.setRootResourceID(rootResourceID);
-          clone.setState(CloneRepository.State.OFFLINE);
+          if (clone.getState() == CloneRepository.State.INITIAL)
+          {
+            CDOID rootResourceID = master.getRepositoryInfo().getRootResourceID();
+            clone.setRootResourceID(rootResourceID);
+            clone.setState(CloneRepository.State.OFFLINE);
+          }
 
           sync();
         }

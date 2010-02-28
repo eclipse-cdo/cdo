@@ -222,7 +222,15 @@ public class CloneSynchronizer extends QueueRunner
         if (e.getKind() == ILifecycleEvent.Kind.DEACTIVATED)
         {
           OM.LOG.info("Disconnected from master.");
-          clone.setState(CloneRepository.State.OFFLINE);
+          if (clone.getRootResourceID() == null)
+          {
+            clone.setState(CloneRepository.State.INITIAL);
+          }
+          else
+          {
+            clone.setState(CloneRepository.State.OFFLINE);
+          }
+
           master.removeListener(masterListener);
           master = null;
           connect();

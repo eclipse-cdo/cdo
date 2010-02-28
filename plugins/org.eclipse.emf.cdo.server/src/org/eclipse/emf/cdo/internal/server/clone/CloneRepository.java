@@ -117,7 +117,9 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
 
   public void handleCommitInfo(CDOCommitInfo commitInfo)
   {
+    long timeStamp = commitInfo.getTimeStamp();
     CDOBranchPoint head = commitInfo.getBranch().getHead();
+
     InternalTransaction transaction = replicatorSession.openTransaction(++lastTransactionID, head);
     ReplicatorCommitContext commitContext = new ReplicatorCommitContext(transaction, commitInfo);
     commitContext.preWrite();
@@ -128,7 +130,6 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
       commitContext.write(new Monitor());
       commitContext.commit(new Monitor());
 
-      long timeStamp = commitInfo.getTimeStamp();
       setLastCommitTimeStamp(timeStamp);
       lastReplicatedCommitTime = timeStamp;
       success = true;

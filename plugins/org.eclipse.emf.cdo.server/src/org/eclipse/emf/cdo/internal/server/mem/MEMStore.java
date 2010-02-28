@@ -218,7 +218,9 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Co
               }
               else
               {
-                newObjects.add(revision);
+                InternalCDORevision newRevision = revision.copy();
+                newRevision.setRevised(CDOBranchPoint.UNSPECIFIED_DATE);
+                newObjects.add(newRevision);
               }
             }
           }
@@ -690,7 +692,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Co
     CDOID resourceID = accessor.readResourceID(revisionFolder, revisionName, revision);
     if (!CDOIDUtil.isNull(resourceID))
     {
-      throw new IllegalStateException("Duplicate resource: name=" + revisionName + ", folderID=" + revisionFolder); //$NON-NLS-1$ //$NON-NLS-2$ 
+      throw new IllegalStateException("Duplicate resource: name=" + revisionName + ", folderID=" + revisionFolder); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 

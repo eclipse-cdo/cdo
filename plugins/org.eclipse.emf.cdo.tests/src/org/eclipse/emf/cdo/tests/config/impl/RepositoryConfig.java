@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
+import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
@@ -36,6 +37,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.IUserManager;
 
@@ -311,8 +313,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     @Override
     public void tearDown() throws Exception
     {
-      stopMasterTransport();
       super.tearDown();
+      stopMasterTransport();
     }
 
     @Override
@@ -326,7 +328,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       Map<String, String> props = getRepositoryProperties();
 
-      String masterName = name + "_master";
+      final String masterName = name + "_master";
       IStore masterStore = createStore(masterName);
       InternalRepository master = (InternalRepository)CDOServerUtil.createRepository(masterName, masterStore, props);
 
@@ -335,19 +337,26 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
       startMasterTransport();
 
-      IManagedContainer container = getCurrentTest().getServerContainer();
-      IConnector connector = (IConnector)container.getElement("org.eclipse.net4j.connectors", "jvm", "master");
+      CDOSessionConfigurationFactory masterFactory = new CDOSessionConfigurationFactory()
+      {
+        public org.eclipse.emf.cdo.session.CDOSessionConfiguration createSessionConfiguration()
+        {
+          IManagedContainer container = getCurrentTest().getServerContainer();
+          IConnector connector = (IConnector)container.getElement("org.eclipse.net4j.connectors", "jvm", "master");
 
-      InternalCDORevisionManager revisionManager = new CDORevisionManagerImpl();
-      revisionManager.setCache(new NOOPRevisionCache());
+          InternalCDORevisionManager revisionManager = new CDORevisionManagerImpl();
+          revisionManager.setCache(new NOOPRevisionCache());
 
-      CDOSessionConfiguration config = CDONet4jUtil.createSessionConfiguration();
-      config.setConnector(connector);
-      config.setRepositoryName(masterName);
-      config.setRevisionManager(revisionManager);
+          CDOSessionConfiguration config = CDONet4jUtil.createSessionConfiguration();
+          config.setConnector(connector);
+          config.setRepositoryName(masterName);
+          config.setRevisionManager(revisionManager);
+          return config;
+        }
+      };
 
       CloneSynchronizer synchronizer = new CloneSynchronizer();
-      synchronizer.setMasterConfiguration(config);
+      synchronizer.setMasterFactory(masterFactory);
       synchronizer.setRetryInterval(1);
 
       IStore store = createStore(name);
@@ -358,6 +367,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       if (masterAcceptor == null)
       {
+        IOUtil.OUT().println();
+        IOUtil.OUT().println("startMasterTransport()");
+        IOUtil.OUT().println();
         IManagedContainer container = getCurrentTest().getServerContainer();
         masterAcceptor = (IAcceptor)container.getElement("org.eclipse.net4j.acceptors", "jvm", "master");
       }
@@ -367,6 +379,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       if (masterAcceptor != null)
       {
+        IOUtil.OUT().println();
+        IOUtil.OUT().println("stopMasterTransport()");
+        IOUtil.OUT().println();
         masterAcceptor.close();
         masterAcceptor = null;
       }

@@ -204,4 +204,51 @@ public class OfflineTest extends AbstractCDOTest
     IEvent[] events = listener.getEvents();
     assertEquals(1, events.length);
   }
+
+  public void testSync() throws Exception
+  {
+    InternalRepository clone = getRepository();
+    while (clone.getState() != CDOCommonRepository.State.ONLINE)
+    {
+      System.out.println("Waiting for ONLINE <-- " + clone.getState());
+      sleep(1000);
+    }
+
+    getRepositoryConfig().stopMasterTransport();
+
+    CDOSession masterSession = openSession(clone.getName() + "_master");
+    CDOTransaction masterTransaction = masterSession.openTransaction();
+    CDOResource masterResource = masterTransaction.createResource("/master/resource");
+
+    masterResource.getContents().add(getModel1Factory().createCompany());
+    masterTransaction.commit();
+
+    masterResource.getContents().add(getModel1Factory().createCompany());
+    masterTransaction.commit();
+
+    masterTransaction.close();
+    TestListener listener = new TestListener();
+    masterSession.addListener(listener);
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("Test");
+
+    getRepositoryConfig().startMasterTransport();
+
+    while (clone.getState() != CDOCommonRepository.State.ONLINE)
+    {
+      System.out.println("Waiting for ONLINE <-- " + clone.getState());
+      sleep(1000);
+    }
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+
+    resource.getContents().add(company);
+    transaction.commit();
+
+    IEvent[] events = listener.getEvents();
+    assertEquals(1, events.length);
+  }
 }

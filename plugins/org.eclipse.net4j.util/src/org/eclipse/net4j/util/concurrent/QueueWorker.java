@@ -44,7 +44,10 @@ public abstract class QueueWorker<E> extends Worker
    */
   public void clearQueue()
   {
-    queue.clear();
+    if (queue != null)
+    {
+      queue.clear();
+    }
   }
 
   public boolean addWork(E element)

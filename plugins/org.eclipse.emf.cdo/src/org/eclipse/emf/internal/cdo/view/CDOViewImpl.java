@@ -255,7 +255,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   /**
    * @since 2.0
    */
-  public synchronized CDOResourceImpl getRootResource()
+  public CDOResourceImpl getRootResource()
   {
     checkActive();
     return rootResource;
@@ -1728,7 +1728,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   @Override
   protected void doAfterActivate() throws Exception
   {
-    rootResource = (CDOResourceImpl)getObject(session.getRepositoryInfo().getRootResourceID());
+    CDOID rootResourceID = session.getRepositoryInfo().getRootResourceID();
+    rootResource = (CDOResourceImpl)getObject(rootResourceID);
     rootResource.setRoot(true);
     getResourceSet().getResources().add(rootResource);
   }

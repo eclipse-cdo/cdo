@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -12,8 +12,6 @@ package org.eclipse.net4j.internal.jvm;
 
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.ChannelException;
-import org.eclipse.net4j.connector.ConnectorException;
-import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.internal.jvm.bundle.OM;
 import org.eclipse.net4j.internal.jvm.messages.Messages;
 import org.eclipse.net4j.jvm.IJVMConnector;
@@ -67,18 +65,6 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
   public String getURL()
   {
     return "jvm://" + name; //$NON-NLS-1$
-  }
-
-  @Override
-  public void setState(ConnectorState newState) throws ConnectorException
-  {
-    super.setState(newState);
-  }
-
-  @Override
-  public boolean waitForConnection(long timeout) throws ConnectorException
-  {
-    return super.waitForConnection(timeout);
   }
 
   public void multiplexChannel(InternalChannel localChannel)

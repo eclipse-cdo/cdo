@@ -231,6 +231,8 @@ public class Lifecycle extends Notifier implements ILifecycle
       catch (Exception ex)
       {
         OM.LOG.error(ex);
+        deactivate();
+        return;
       }
 
       unlock();

@@ -1097,8 +1097,15 @@ public class Repository extends Container<Object> implements InternalRepository
 
     InternalSession session = getSessionManager().openSession(null);
     InternalTransaction transaction = session.openTransaction(1, head);
+    InternalCommitContext commitContext = new TransactionCommitContext(transaction)
+    {
+      @Override
+      protected long createTimeStamp()
+      {
+        return store.getCreationTime();
+      }
+    };
 
-    InternalCommitContext commitContext = transaction.createCommitContext();
     commitContext.setNewObjects(new InternalCDORevision[] { rootResource });
     commitContext.preWrite();
     boolean success = false;

@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
@@ -45,7 +46,9 @@ public class CloneSynchronizer extends QueueRunner
 
   private int retryInterval = DEFAULT_RETRY_INTERVAL;
 
-  private CDOSessionConfiguration masterConfiguration;
+  private Object connectLock = new Object();
+
+  private CDOSessionConfigurationFactory masterFactory;
 
   private InternalCDOSession master;
 
@@ -76,15 +79,15 @@ public class CloneSynchronizer extends QueueRunner
     this.retryInterval = retryInterval;
   }
 
-  public CDOSessionConfiguration getMasterConfiguration()
+  public CDOSessionConfigurationFactory getMasterFactory()
   {
-    return masterConfiguration;
+    return masterFactory;
   }
 
-  public void setMasterConfiguration(CDOSessionConfiguration masterConfiguration)
+  public void setMasterFactory(CDOSessionConfigurationFactory masterFactory)
   {
-    checkInactive();
-    this.masterConfiguration = masterConfiguration;
+    checkArg(masterFactory, "masterFactory"); //$NON-NLS-1$
+    this.masterFactory = masterFactory;
   }
 
   public CDOSession getMaster()
@@ -93,17 +96,23 @@ public class CloneSynchronizer extends QueueRunner
   }
 
   @Override
+  protected String getThreadName()
+  {
+    return "CloneSynchronizer"; //$NON-NLS-1$
+  }
+
+  @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(masterConfiguration, "masterConfiguration"); //$NON-NLS-1$
+    checkState(masterFactory, "masterFactory"); //$NON-NLS-1$
     checkState(clone, "clone"); //$NON-NLS-1$
   }
 
   @Override
-  protected void doActivate() throws Exception
+  protected void doAfterActivate() throws Exception
   {
-    super.doActivate();
+    super.doAfterActivate();
     connect();
   }
 
@@ -113,6 +122,7 @@ public class CloneSynchronizer extends QueueRunner
     if (master != null)
     {
       master.removeListener(masterListener);
+      master.getBranchManager().removeListener(masterListener);
       master.close();
       master = null;
     }
@@ -122,59 +132,96 @@ public class CloneSynchronizer extends QueueRunner
 
   private void connect()
   {
-    addWork(new Runnable()
+    synchronized (connectLock)
     {
-      public void run()
+      if (!isActive())
       {
-        checkActive();
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Connecting to master ({0})...", CDOCommonUtil.formatTimeStamp()); //$NON-NLS-1$
-        }
-
-        try
-        {
-          masterConfiguration.setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
-          master = (InternalCDOSession)masterConfiguration.openSession();
-
-          // Ensure that incoming revisions are not cached!
-          InternalCDORevisionCache cache = master.getRevisionManager().getCache();
-          if (!(cache instanceof NOOPRevisionCache))
-          {
-            throw new IllegalStateException("Master session does not use a NOOPRevisionCache: "
-                + cache.getClass().getName());
-          }
-
-          if (clone.getState() == CloneRepository.State.INITIAL)
-          {
-            CDOID rootResourceID = master.getRepositoryInfo().getRootResourceID();
-            clone.setRootResourceID(rootResourceID);
-            clone.setState(CloneRepository.State.OFFLINE);
-          }
-
-          sync();
-        }
-        catch (Exception ex)
-        {
-          if (isActive())
-          {
-            OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...", ex);
-            ConcurrencyUtil.sleep(1000L * retryInterval); // TODO Respect deactivation
-            connect();
-          }
-          else
-          {
-            clearQueue();
-          }
-
-          return;
-        }
-
-        OM.LOG.info("Connected to master.");
-        master.addListener(masterListener);
-        sync();
+        return;
       }
-    });
+
+      if (clone.getState() == CloneRepository.State.SYNCING)
+      {
+        return;
+      }
+
+      if (clone.getState() == CloneRepository.State.ONLINE)
+      {
+        return;
+      }
+
+      addWork(new Runnable()
+      {
+        public void run()
+        {
+          synchronized (connectLock)
+          {
+            checkActive();
+            if (TRACER.isEnabled())
+            {
+              TRACER.format("Connecting to master ({0})...", CDOCommonUtil.formatTimeStamp()); //$NON-NLS-1$
+            }
+            try
+            {
+              CDOSessionConfiguration masterConfiguration = masterFactory.createSessionConfiguration();
+              masterConfiguration.setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
+
+              master = (InternalCDOSession)masterConfiguration.openSession();
+
+              // Ensure that incoming revisions are not cached!
+              InternalCDORevisionCache cache = master.getRevisionManager().getCache();
+              if (!(cache instanceof NOOPRevisionCache))
+              {
+                throw new IllegalStateException("Master session does not use a NOOPRevisionCache: "
+                    + cache.getClass().getName());
+              }
+
+              if (clone.getState() == CloneRepository.State.INITIAL)
+              {
+                CDOID rootResourceID = master.getRepositoryInfo().getRootResourceID();
+                clone.setRootResourceID(rootResourceID);
+                clone.setState(CloneRepository.State.OFFLINE);
+              }
+            }
+            catch (Exception ex)
+            {
+              if (isActive())
+              {
+                OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...");
+                reconnect();
+              }
+
+              return;
+            }
+            OM.LOG.info("Connected to master.");
+            master.addListener(masterListener);
+            master.getBranchManager().addListener(masterListener);
+            sync();
+          }
+        }
+      });
+    }
+  }
+
+  private void reconnect()
+  {
+    clearQueue();
+    long end = System.currentTimeMillis() + 1000L * retryInterval;
+
+    for (;;)
+    {
+      long now = System.currentTimeMillis();
+      if (now >= end || !isActive())
+      {
+        break;
+      }
+
+      ConcurrencyUtil.sleep(Math.min(100L, end - now));
+    }
+
+    if (isActive())
+    {
+      connect();
+    }
   }
 
   private void sync()
@@ -203,6 +250,11 @@ public class CloneSynchronizer extends QueueRunner
   {
     public void notifyEvent(IEvent event)
     {
+      if (!isActive())
+      {
+        return;
+      }
+
       if (event instanceof CDOBranchCreatedEvent)
       {
         CDOBranchCreatedEvent e = (CDOBranchCreatedEvent)event;
@@ -219,7 +271,7 @@ public class CloneSynchronizer extends QueueRunner
       else if (event instanceof ILifecycleEvent)
       {
         ILifecycleEvent e = (ILifecycleEvent)event;
-        if (e.getKind() == ILifecycleEvent.Kind.DEACTIVATED)
+        if (e.getKind() == ILifecycleEvent.Kind.DEACTIVATED && e.getSource() == master)
         {
           OM.LOG.info("Disconnected from master.");
           if (clone.getRootResourceID() == null)
@@ -231,9 +283,11 @@ public class CloneSynchronizer extends QueueRunner
             clone.setState(CloneRepository.State.OFFLINE);
           }
 
+          master.getBranchManager().removeListener(masterListener);
           master.removeListener(masterListener);
           master = null;
-          connect();
+
+          reconnect();
         }
       }
     }

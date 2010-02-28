@@ -38,6 +38,7 @@ import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
@@ -214,8 +215,8 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
       String comment = getCommitComment();
       CDOCommitData commitData = new CommitData();
 
-      CommitTransactionResult result = master.getSessionProtocol().commitDelegation(branch, userID, comment,
-          commitData, monitor);
+      CDOSessionProtocol sessionProtocol = master.getSessionProtocol();
+      CommitTransactionResult result = sessionProtocol.commitDelegation(branch, userID, comment, commitData, monitor);
 
       String rollbackMessage = result.getRollbackMessage();
       if (rollbackMessage != null)

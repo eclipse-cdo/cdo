@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -55,8 +56,8 @@ public class OfflineTest extends AbstractCDOTest
     Company company = getModel1Factory().createCompany();
     company.setName("Test");
 
-    // Root resource + folder + resource + company
-    int expectedRevisions = 1 + 1 + 1 + 1;
+    // 2 * Root resource + folder + resource + company
+    int expectedRevisions = 2 + 1 + 1 + 1;
 
     resource.getContents().add(company);
     long timeStamp = transaction.commit().getTimeStamp();
@@ -125,7 +126,7 @@ public class OfflineTest extends AbstractCDOTest
     resource.getContents().add(company);
     long timeStamp = transaction.commit().getTimeStamp();
     assertEquals(true, cloneSession.waitForUpdate(timeStamp, DEFAULT_TIMEOUT));
-    checkEvent(listener, 1, 4, 0, 0);
+    checkEvent(listener, 1, 3, 1, 0);
 
     for (int i = 0; i < 10; i++)
     {
@@ -188,6 +189,12 @@ public class OfflineTest extends AbstractCDOTest
     company.setName("Test");
 
     CDOSession session = openSession();
+    while (session.getRepositoryInfo().getState() != CDOCommonRepository.State.ONLINE)
+    {
+      System.out.println("Waiting for ONLINE...");
+      sleep(100);
+    }
+
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 

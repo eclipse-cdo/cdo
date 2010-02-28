@@ -21,9 +21,13 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelConstants;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -35,8 +39,11 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.spi.server.LongIDStore;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
@@ -170,8 +177,73 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Co
 
   public synchronized CDOCommitData loadCommitData(long timeStamp)
   {
-    // TODO: implement MEMStore.loadCommitData(timeStamp)
-    throw new UnsupportedOperationException();
+    List<CDOPackageUnit> newPackageUnits = new ArrayList<CDOPackageUnit>();
+    List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>();
+    List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
+    List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>();
+
+    InternalCDOPackageRegistry packageRegistry = getRepository().getPackageRegistry();
+    InternalCDOPackageUnit[] packageUnits = packageRegistry.getPackageUnits(timeStamp, timeStamp);
+    for (InternalCDOPackageUnit packageUnit : packageUnits)
+    {
+      newPackageUnits.add(packageUnit);
+    }
+
+    for (List<InternalCDORevision> list : revisions.values())
+    {
+      for (InternalCDORevision revision : list)
+      {
+        if (revision.getTimeStamp() == timeStamp)
+        {
+          if (revision instanceof DetachedCDORevision)
+          {
+            detachedObjects.add(revision);
+          }
+          else
+          {
+            int version = revision.getVersion();
+            if (version > CDOBranchVersion.FIRST_VERSION)
+            {
+              InternalCDORevision oldRevision = getRevisionByVersion(list, version - 1);
+              InternalCDORevisionDelta delta = revision.compare(oldRevision);
+              changedObjects.add(delta);
+            }
+            else
+            {
+              InternalCDORevision oldRevision = getRevisionFromBase(revision.getID(), revision.getBranch());
+              if (oldRevision != null)
+              {
+                InternalCDORevisionDelta delta = revision.compare(oldRevision);
+                changedObjects.add(delta);
+              }
+              else
+              {
+                newObjects.add(revision);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);
+  }
+
+  private InternalCDORevision getRevisionFromBase(CDOID id, CDOBranch branch)
+  {
+    if (branch.isMainBranch())
+    {
+      return null;
+    }
+
+    CDOBranchPoint base = branch.getBase();
+    InternalCDORevision revision = getRevision(id, base);
+    if (revision == null)
+    {
+      revision = getRevisionFromBase(id, base.getBranch());
+    }
+
+    return revision;
   }
 
   /**
@@ -618,7 +690,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Co
     CDOID resourceID = accessor.readResourceID(revisionFolder, revisionName, revision);
     if (!CDOIDUtil.isNull(resourceID))
     {
-      throw new IllegalStateException("Duplicate resource: " + revisionName + " (folderID=" + revisionFolder + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      throw new IllegalStateException("Duplicate resource: name=" + revisionName + ", folderID=" + revisionFolder); //$NON-NLS-1$ //$NON-NLS-2$ 
     }
   }
 

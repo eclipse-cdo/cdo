@@ -80,7 +80,7 @@ public class Bugzilla_248915_Test extends AbstractCDOTest
     Supplier savedSupplier = (Supplier)supplierResource2.getContents().get(0);
 
     /* Confirm the presence of supplierResource2 in transaction2's resourceSet */
-    assertEquals(1, transaction2.getResourceSet().getResources().size());
+    assertEquals(2, transaction2.getResourceSet().getResources().size());
 
     for (PurchaseOrder po : savedSupplier.getPurchaseOrders())
     {
@@ -92,7 +92,7 @@ public class Bugzilla_248915_Test extends AbstractCDOTest
      * I believe that only supplierResource2 is in transaction2's resourceSet still despite finding the Purchase Order
      * and its resource.
      */
-    assertEquals(2, transaction2.getResourceSet().getResources().size());
+    assertEquals(3, transaction2.getResourceSet().getResources().size());
 
     transaction2.close();
     session2.close();

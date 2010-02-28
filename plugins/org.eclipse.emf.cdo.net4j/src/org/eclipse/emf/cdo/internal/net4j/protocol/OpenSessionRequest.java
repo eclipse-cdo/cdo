@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -131,6 +132,12 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
       TRACER.format("Read lastUpdateTime: {0}", CDOCommonUtil.formatTimeStamp(lastUpdateTime)); //$NON-NLS-1$
     }
 
+    CDOID rootResourceID = in.readCDOID();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Read rootResourceID: {0}", rootResourceID); //$NON-NLS-1$
+    }
+
     boolean repositorySupportingAudits = in.readBoolean();
     if (TRACER.isEnabled())
     {
@@ -144,7 +151,7 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
     }
 
     result = new OpenSessionResult(sessionID, repositoryUUID, repositoryType, repositoryState, repositoryCreationTime,
-        lastUpdateTime, repositorySupportingAudits, repositorySupportingBranches);
+        lastUpdateTime, rootResourceID, repositorySupportingAudits, repositorySupportingBranches);
 
     CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);
     for (int i = 0; i < packageUnits.length; i++)

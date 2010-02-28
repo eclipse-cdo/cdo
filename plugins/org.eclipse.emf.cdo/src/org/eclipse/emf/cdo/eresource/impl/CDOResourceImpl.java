@@ -184,7 +184,10 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     return root;
   }
 
-  void setRoot(boolean root)
+  /**
+   * @since 3.0
+   */
+  public void setRoot(boolean root)
   {
     this.root = root;
   }

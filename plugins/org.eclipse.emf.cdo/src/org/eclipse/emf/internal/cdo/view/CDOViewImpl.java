@@ -258,20 +258,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   public synchronized CDOResourceImpl getRootResource()
   {
     checkActive();
-    if (rootResource == null)
-    {
-      rootResource = createRootResource();
-    }
-
     return rootResource;
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected CDOResourceImpl createRootResource()
-  {
-    return (CDOResourceImpl)getResource(CDOResourceNode.ROOT_PATH);
   }
 
   /**
@@ -338,7 +325,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     boolean[] existanceFlags = sessionProtocol.changeView(viewID, branchPoint, invalidObjects);
 
     this.branchPoint = branchPoint;
-    rootResource = null;
 
     int i = 0;
     for (InternalCDOObject invalidObject : invalidObjects)
@@ -839,6 +825,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       return null;
     }
 
+    if (rootResource != null && rootResource.cdoID().equals(id))
+    {
+      return rootResource;
+    }
+
     // Since getObject could trigger a read (ONLY when we load a resource) we NEED to make sure the state lock is
     // active.
     // Always use in the following order
@@ -982,7 +973,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     EClass eClass = revision.getEClass();
     InternalCDOObject object;
-    if (CDOModelUtil.isResource(eClass))
+    if (CDOModelUtil.isResource(eClass) && !id.equals(session.getRepositoryInfo().getRootResourceID()))
     {
       object = (InternalCDOObject)newResourceInstance(revision);
       // object is PROXY
@@ -1732,6 +1723,14 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   {
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
     sessionProtocol.openView(viewID, this, isReadOnly());
+  }
+
+  @Override
+  protected void doAfterActivate() throws Exception
+  {
+    rootResource = (CDOResourceImpl)getObject(session.getRepositoryInfo().getRootResourceID());
+    rootResource.setRoot(true);
+    getResourceSet().getResources().add(rootResource);
   }
 
   /**

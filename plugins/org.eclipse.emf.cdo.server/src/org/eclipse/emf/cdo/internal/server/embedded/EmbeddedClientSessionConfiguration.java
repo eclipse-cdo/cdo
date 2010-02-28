@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.server.embedded;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
@@ -145,6 +146,11 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
     public long getTimeStamp(boolean forceRefresh)
     {
       return System.currentTimeMillis();
+    }
+
+    public CDOID getRootResourceID()
+    {
+      return repository.getRootResourceID();
     }
 
     public boolean isSupportingAudits()

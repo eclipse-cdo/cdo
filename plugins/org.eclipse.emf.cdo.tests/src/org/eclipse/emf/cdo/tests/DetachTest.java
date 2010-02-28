@@ -356,7 +356,7 @@ public class DetachTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return rSet2.getResources().size() == 0;
+        return rSet2.getResources().size() == 1;
       }
     }.assertNoTimeOut();
 

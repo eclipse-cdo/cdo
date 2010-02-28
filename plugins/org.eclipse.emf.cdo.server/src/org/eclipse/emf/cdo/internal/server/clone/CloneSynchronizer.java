@@ -144,6 +144,7 @@ public class CloneSynchronizer extends QueueRunner
                 + cache.getClass().getName());
           }
 
+          clone.setRootResourceID(master.getRepositoryInfo().getRootResourceID());
           sync();
         }
         catch (Exception ex)

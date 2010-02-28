@@ -38,7 +38,7 @@ public class ConflictResolverTest extends AbstractCDOTest
 
     CDOTransaction transaction2 = session.openTransaction();
     transaction2.options().addConflictResolver(new MergeLocalChangesPerFeature());
-    Address address2 = (Address)transaction2.getOrCreateResource("/res1").getContents().get(0);
+    final Address address2 = (Address)transaction2.getOrCreateResource("/res1").getContents().get(0);
 
     address2.setCity("OTTAWA");
 
@@ -46,10 +46,15 @@ public class ConflictResolverTest extends AbstractCDOTest
 
     transaction.commit();
 
-    // Resolver should be triggered. Should we always used a timer ?
-    Thread.sleep(1000);
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return !CDOUtil.getCDOObject(address2).cdoConflict();
+      }
+    }.assertNoTimeOut();
 
-    assertFalse(CDOUtil.getCDOObject(address2).cdoConflict());
     assertFalse(transaction2.hasConflict());
 
     assertEquals("NAME1", address2.getName());
@@ -73,7 +78,7 @@ public class ConflictResolverTest extends AbstractCDOTest
 
     CDOTransaction transaction2 = session.openTransaction();
     transaction2.options().addConflictResolver(new MergeLocalChangesPerFeature());
-    Address address2 = (Address)transaction2.getOrCreateResource("/res1").getContents().get(0);
+    final Address address2 = (Address)transaction2.getOrCreateResource("/res1").getContents().get(0);
 
     address2.setCity("OTTAWA");
 
@@ -81,9 +86,15 @@ public class ConflictResolverTest extends AbstractCDOTest
 
     transaction.commit();
 
-    // Resolver should be triggered. Should we always used a timer ?
-    Thread.sleep(1000);
-    assertTrue(CDOUtil.getCDOObject(address2).cdoConflict());
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return CDOUtil.getCDOObject(address2).cdoConflict();
+      }
+    }.assertNoTimeOut();
+
     assertTrue(transaction2.hasConflict());
     assertEquals("OTTAWA", address2.getCity());
   }

@@ -13,7 +13,6 @@
 package org.eclipse.emf.cdo.eresource.impl;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
-import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -33,9 +32,7 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
 
   public Resource createResource(URI uri)
   {
-    String path = CDOURIUtil.extractResourcePath(uri);
     CDOResourceImpl resource = new CDOResourceImpl(uri);
-    resource.setRoot(CDOURIUtil.SEGMENT_SEPARATOR.equals(path));
     resource.setExisting(isGetResource());
     return resource;
   }

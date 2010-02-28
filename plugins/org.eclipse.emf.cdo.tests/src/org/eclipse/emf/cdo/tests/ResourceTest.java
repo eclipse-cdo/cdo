@@ -109,7 +109,7 @@ public class ResourceTest extends AbstractCDOTest
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOTransaction transaction = session.openTransaction(resourceSet);
     CDOResource rootResource = (CDOResource)resourceSet.getEObject(rootResourceURI, true);
-    assertProxy(rootResource);
+    assertClean(rootResource, transaction);
     assertSame(rootResource, transaction.getRootResource());
 
     CDOResource resource = (CDOResource)resourceSet.getEObject(resourceURI, true);
@@ -138,8 +138,8 @@ public class ResourceTest extends AbstractCDOTest
     transaction.getRootResource().getContents().contains(resource);
     transaction.commit();
 
-    CDOObject cdoResource = CDOUtil.getCDOObject(resource);
-    CDOObject cdoRootResource = CDOUtil.getCDOObject(transaction.getRootResource());
+    CDOObject cdoResource = resource;
+    CDOObject cdoRootResource = transaction.getRootResource();
     assertClean(cdoResource, transaction);
     assertClean(cdoRootResource, transaction);
     assertEquals(CDOID.NULL, cdoResource.cdoRevision().data().getContainerID());
@@ -257,7 +257,7 @@ public class ResourceTest extends AbstractCDOTest
           CDOURIUtil.createResourceURI(transaction, "/test1"), true);
       assertNotNull(resource);
       assertEquals(transaction.getResourceSet(), resource.getResourceSet());
-      assertEquals(1, transaction.getResourceSet().getResources().size());
+      assertEquals(2, transaction.getResourceSet().getResources().size());
       assertEquals(CDOState.PROXY, resource.cdoState());
       assertEquals(transaction, resource.cdoView());
       assertNull(resource.cdoRevision());

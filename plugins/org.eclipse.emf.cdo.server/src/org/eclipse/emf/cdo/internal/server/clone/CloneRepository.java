@@ -62,7 +62,6 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
 
   public CloneRepository()
   {
-    setState(State.OFFLINE);
   }
 
   @Override
@@ -173,7 +172,20 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
   @Override
   protected void initRootResource()
   {
-    // Do nothing
+    setState(State.INITIAL);
+  }
+
+  @Override
+  protected void loadRootResource()
+  {
+    setState(State.OFFLINE);
+  }
+
+  @Override
+  public void setRootResourceID(CDOID rootResourceID)
+  {
+    super.setRootResourceID(rootResourceID);
+    setState(State.OFFLINE);
   }
 
   /**

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.common;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 
 import org.eclipse.net4j.util.event.IEvent;
@@ -45,6 +46,8 @@ public interface CDOCommonRepository extends CDOTimeProvider
    */
   public long getCreationTime();
 
+  public CDOID getRootResourceID();
+
   /**
    * Returns <code>true</code> if this repository supports auditing, <code>false</code> otherwise.
    */
@@ -68,7 +71,7 @@ public interface CDOCommonRepository extends CDOTimeProvider
    */
   public static enum State
   {
-    OFFLINE, SYNCING, ONLINE
+    INITIAL, OFFLINE, SYNCING, ONLINE
   }
 
   /**

@@ -35,7 +35,7 @@ public class Bugzilla_279565_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    ResourceSet resourceSet = tx.getResourceSet();
+    final ResourceSet resourceSet = tx.getResourceSet();
     resourceSet.eAdapters().add(new AdapterImpl()
     {
       @Override
@@ -55,15 +55,21 @@ public class Bugzilla_279565_Test extends AbstractCDOTest
     }
 
     tx.close();
-    sleep(1000);
 
-    // Expect only the root resource
-    assertEquals(1, resourceSet.getResources().size());
+    new PollingTimeOuter()
+    {
+
+      @Override
+      protected boolean successful()
+      {
+        return resourceSet.getResources().isEmpty();
+      }
+    };
   }
 
   public void testBugzilla_279565_OwnResourceSet() throws Exception
   {
-    ResourceSet resourceSet = new ResourceSetImpl();
+    final ResourceSet resourceSet = new ResourceSetImpl();
     resourceSet.eAdapters().add(new AdapterImpl()
     {
       @Override
@@ -78,15 +84,21 @@ public class Bugzilla_279565_Test extends AbstractCDOTest
     tx.getOrCreateResource("/test");
     tx.close();
 
-    sleep(1000);
-    assertEquals(0, resourceSet.getResources().size());
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return resourceSet.getResources().isEmpty();
+      }
+    }.assertNoTimeOut();
   }
 
   public void testBugzilla_279565_TXListener() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    ResourceSet resourceSet = tx.getResourceSet();
+    final ResourceSet resourceSet = tx.getResourceSet();
     tx.addListener(new IListener()
     {
       public void notifyEvent(IEvent event)
@@ -98,15 +110,21 @@ public class Bugzilla_279565_Test extends AbstractCDOTest
     tx.getOrCreateResource("/test");
     tx.close();
 
-    sleep(1000);
-    assertEquals(0, resourceSet.getResources().size());
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return resourceSet.getResources().isEmpty();
+      }
+    }.assertNoTimeOut();
   }
 
   public void testBugzilla_279565_AddedFromRemote() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    ResourceSet resourceSet = tx.getResourceSet();
+    final ResourceSet resourceSet = tx.getResourceSet();
     resourceSet.eAdapters().add(new AdapterImpl()
     {
       @Override
@@ -121,8 +139,15 @@ public class Bugzilla_279565_Test extends AbstractCDOTest
     tx2.getOrCreateResource("/test");
     session2.close();
 
-    sleep(1000);
-    assertEquals(0, resourceSet.getResources().size());
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return resourceSet.getResources().size() == 1;
+      }
+    };
+
     tx.close();
   }
 }

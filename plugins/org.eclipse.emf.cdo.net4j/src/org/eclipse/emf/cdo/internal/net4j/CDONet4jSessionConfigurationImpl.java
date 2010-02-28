@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.net4j;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -278,6 +279,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     private RepositoryTimeResult timeResult;
 
+    private CDOID rootResourceID;
+
     private boolean supportingAudits;
 
     private boolean supportingBranches;
@@ -290,6 +293,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       state = result.getRepositoryState();
       creationTime = result.getRepositoryCreationTime();
       timeResult = result.getRepositoryTimeResult();
+      rootResourceID = result.getRootResourceID();
       supportingAudits = result.isRepositorySupportingAudits();
       supportingBranches = result.isRepositorySupportingBranches();
     }
@@ -340,6 +344,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       }
 
       return timeResult.getAproximateRepositoryTime();
+    }
+
+    public CDOID getRootResourceID()
+    {
+      return rootResourceID;
     }
 
     public boolean isSupportingAudits()

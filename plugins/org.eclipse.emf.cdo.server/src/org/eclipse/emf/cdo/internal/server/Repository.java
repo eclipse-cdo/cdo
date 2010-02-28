@@ -144,6 +144,8 @@ public class Repository extends Container<Object> implements InternalRepository
   @ExcludeFromDump
   private transient Object createBranchLock = new Object();
 
+  private CDOID rootResourceID;
+
   public Repository()
   {
   }
@@ -236,6 +238,16 @@ public class Repository extends Container<Object> implements InternalRepository
   public boolean isSupportingBranches()
   {
     return supportingBranches;
+  }
+
+  public CDOID getRootResourceID()
+  {
+    return rootResourceID;
+  }
+
+  public void setRootResourceID(CDOID rootResourceID)
+  {
+    this.rootResourceID = rootResourceID;
   }
 
   public EPackage[] loadPackages(CDOPackageUnit packageUnit)
@@ -1016,6 +1028,7 @@ public class Repository extends Container<Object> implements InternalRepository
     else
     {
       readPackageUnits();
+      loadRootResource();
     }
   }
 
@@ -1073,14 +1086,14 @@ public class Repository extends Container<Object> implements InternalRepository
   protected void initRootResource()
   {
     CDOBranchPoint head = branchManager.getMainBranch().getHead();
-    CDOIDTemp id = CDOIDUtil.createTempObject(1);
+    CDOIDTemp tempID = CDOIDUtil.createTempObject(1);
 
     InternalCDORevision rootResource = new CDORevisionImpl(EresourcePackage.Literals.CDO_RESOURCE);
     rootResource.setBranchPoint(head);
     rootResource.setContainerID(CDOID.NULL);
     rootResource.setContainingFeatureID(0);
-    rootResource.setID(id);
-    rootResource.setResourceID(id);
+    rootResource.setID(tempID);
+    rootResource.setResourceID(tempID);
 
     InternalSession session = getSessionManager().openSession(null);
     InternalTransaction transaction = session.openTransaction(1, head);
@@ -1095,11 +1108,30 @@ public class Repository extends Container<Object> implements InternalRepository
       commitContext.write(new Monitor());
       commitContext.commit(new Monitor());
       success = true;
+
+      rootResourceID = commitContext.getIDMappings().get(tempID);
     }
     finally
     {
       commitContext.postCommit(success);
       session.close();
+    }
+  }
+
+  protected void loadRootResource()
+  {
+    IStoreAccessor reader = store.getReader(null);
+    StoreThreadLocal.setAccessor(reader);
+
+    try
+    {
+      CDOBranchPoint head = branchManager.getMainBranch().getHead();
+      rootResourceID = reader.readResourceID(CDOID.NULL, null, head);
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(reader); // Don't let the null-context accessor go to the pool!
+      StoreThreadLocal.release();
     }
   }
 

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.server.clone;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.cache.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
@@ -144,7 +145,10 @@ public class CloneSynchronizer extends QueueRunner
                 + cache.getClass().getName());
           }
 
-          clone.setRootResourceID(master.getRepositoryInfo().getRootResourceID());
+          CDOID rootResourceID = master.getRepositoryInfo().getRootResourceID();
+          clone.setRootResourceID(rootResourceID);
+          clone.setState(CloneRepository.State.OFFLINE);
+
           sync();
         }
         catch (Exception ex)

@@ -192,7 +192,7 @@ public class OfflineTest extends AbstractCDOTest
     while (session.getRepositoryInfo().getState() != CDOCommonRepository.State.ONLINE)
     {
       System.out.println("Waiting for ONLINE...");
-      sleep(100);
+      sleep(1000);
     }
 
     CDOTransaction transaction = session.openTransaction();

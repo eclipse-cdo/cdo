@@ -138,10 +138,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Co
       if (startID <= id && (id <= endID || endID == 0))
       {
         BranchInfo branchInfo = entry.getValue();
-        String name = branchInfo.getName();
-        InternalCDOBranch baseBranch = branchManager.getBranch(branchInfo.getBaseBranchID());
-        long baseTimeStamp = branchInfo.getBaseTimeStamp();
-        InternalCDOBranch branch = branchManager.getBranch(id, name, baseBranch, baseTimeStamp);
+        InternalCDOBranch branch = branchManager.getBranch(id, branchInfo);
         handler.handleBranch(branch);
         ++count;
       }

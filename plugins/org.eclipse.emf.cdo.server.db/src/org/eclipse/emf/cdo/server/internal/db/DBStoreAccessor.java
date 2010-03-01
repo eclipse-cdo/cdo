@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingBranchingSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -676,10 +677,45 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
   }
 
-  public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
+  public int loadBranches(int startID, int endID, CDOBranchHandler handler)
   {
-    // TODO: implement DBStoreAccessor.loadBranches(startID, endID, branchHandler)
-    throw new UnsupportedOperationException();
+    int count = 0;
+    PreparedStatement pstmt = null;
+    ResultSet resultSet = null;
+
+    InternalRepository repository = getSession().getManager().getRepository();
+    InternalCDOBranchManager branchManager = repository.getBranchManager();
+
+    try
+    {
+      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_LOAD_BRANCHES, ReuseProbability.HIGH);
+      pstmt.setInt(1, startID);
+      pstmt.setInt(2, endID > 0 ? endID : Integer.MAX_VALUE);
+
+      resultSet = pstmt.executeQuery();
+      while (resultSet.next())
+      {
+        int branchID = resultSet.getInt(1);
+        String name = resultSet.getString(2);
+        int baseBranchID = resultSet.getInt(3);
+        long baseTimeStamp = resultSet.getLong(4);
+
+        InternalCDOBranch branch = branchManager.getBranch(branchID, new BranchInfo(name, baseBranchID, baseTimeStamp));
+        handler.handleBranch(branch);
+        ++count;
+      }
+
+      return count;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+      statementCache.releasePreparedStatement(pstmt);
+    }
   }
 
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
@@ -41,6 +42,8 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
   public InternalCDOBranch getBranch(int branchID);
 
   public InternalCDOBranch getBranch(int id, String name, InternalCDOBranch baseBranch, long baseTimeStamp);
+
+  public InternalCDOBranch getBranch(int id, BranchInfo branchInfo);
 
   public InternalCDOBranch getBranch(String path);
 

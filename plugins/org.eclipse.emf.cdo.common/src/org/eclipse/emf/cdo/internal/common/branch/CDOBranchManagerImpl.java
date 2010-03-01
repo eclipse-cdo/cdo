@@ -128,6 +128,14 @@ public class CDOBranchManagerImpl extends Lifecycle implements InternalCDOBranch
     }
   }
 
+  public InternalCDOBranch getBranch(int id, BranchInfo branchInfo)
+  {
+    String name = branchInfo.getName();
+    InternalCDOBranch baseBranch = getBranch(branchInfo.getBaseBranchID());
+    long baseTimeStamp = branchInfo.getBaseTimeStamp();
+    return getBranch(id, name, baseBranch, baseTimeStamp);
+  }
+
   public InternalCDOBranch getBranch(String path)
   {
     int sep = path.indexOf(CDOBranch.PATH_SEPARATOR);

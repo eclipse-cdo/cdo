@@ -237,9 +237,8 @@
 				<arg value="-o" />
 				<arg value="${result}/testReport.xml" />
 				<arg value="--terseXML" />
-				<arg value="--flatXML" />
 				<arg value="--xml" />
-				<arg value="${result}/coverageReport.xml" />
+				<arg value="${result}/coverageReport.orig.xml" />
 			</cmdargs>
 		</buckminster>
 

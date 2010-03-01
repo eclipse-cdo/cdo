@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -30,6 +31,8 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -120,6 +123,25 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
       TRACER.format("Read repositoryState: {0}", repositoryState); //$NON-NLS-1$
     }
 
+    String storeType = in.readString();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Read storeType: {0}", storeType); //$NON-NLS-1$
+    }
+
+    Set<CDOID.ObjectType> objectIDTypes = new HashSet<ObjectType>();
+    int types = in.readInt();
+    for (int i = 0; i < types; i++)
+    {
+      CDOID.ObjectType objectIDType = in.readEnum(CDOID.ObjectType.class);
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Read objectIDType: {0}", objectIDType); //$NON-NLS-1$
+      }
+
+      objectIDTypes.add(objectIDType);
+    }
+
     long repositoryCreationTime = in.readLong();
     if (TRACER.isEnabled())
     {
@@ -150,8 +172,9 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
       TRACER.format("Read repositorySupportingBranches: {0}", repositorySupportingBranches); //$NON-NLS-1$
     }
 
-    result = new OpenSessionResult(sessionID, repositoryUUID, repositoryType, repositoryState, repositoryCreationTime,
-        lastUpdateTime, rootResourceID, repositorySupportingAudits, repositorySupportingBranches);
+    result = new OpenSessionResult(sessionID, repositoryUUID, repositoryType, repositoryState, storeType,
+        objectIDTypes, repositoryCreationTime, lastUpdateTime, rootResourceID, repositorySupportingAudits,
+        repositorySupportingBranches);
 
     CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);
     for (int i = 0; i < packageUnits.length; i++)

@@ -48,9 +48,9 @@ public class CDOIDObjectStringWithClassifierImpl extends CDOIDObjectStringImpl i
   }
 
   @Override
-  public SubType getSubType()
+  public CDOID.ObjectType getSubType()
   {
-    return SubType.STRING_WITH_CLASSIFIER;
+    return CDOID.ObjectType.STRING_WITH_CLASSIFIER;
   }
 
   @Override

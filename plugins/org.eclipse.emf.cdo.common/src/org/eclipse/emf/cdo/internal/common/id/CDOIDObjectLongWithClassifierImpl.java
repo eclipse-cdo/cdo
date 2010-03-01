@@ -54,9 +54,9 @@ public class CDOIDObjectLongWithClassifierImpl extends CDOIDObjectLongImpl imple
   }
 
   @Override
-  public SubType getSubType()
+  public CDOID.ObjectType getSubType()
   {
-    return SubType.LONG_WITH_CLASSIFIER;
+    return CDOID.ObjectType.LONG_WITH_CLASSIFIER;
   }
 
   @Override

@@ -18,13 +18,5 @@ import org.eclipse.emf.cdo.common.id.CDOIDObject;
  */
 public interface InternalCDOIDObject extends CDOIDObject
 {
-  public SubType getSubType();
-
-  /**
-   * @author Eike Stepper
-   */
-  public enum SubType
-  {
-    LONG, STRING, LONG_WITH_CLASSIFIER, STRING_WITH_CLASSIFIER
-  }
+  public ObjectType getSubType();
 }

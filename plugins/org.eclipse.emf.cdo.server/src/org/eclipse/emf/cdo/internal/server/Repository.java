@@ -91,6 +91,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -238,6 +239,16 @@ public class Repository extends Container<Object> implements InternalRepository
   public boolean isSupportingBranches()
   {
     return supportingBranches;
+  }
+
+  public String getStoreType()
+  {
+    return store.getType();
+  }
+
+  public Set<CDOID.ObjectType> getObjectIDTypes()
+  {
+    return store.getObjectIDTypes();
   }
 
   public CDOID getRootResourceID()

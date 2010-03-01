@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
 import java.util.Set;
@@ -28,6 +30,11 @@ public interface IStore
    * @since 2.0
    */
   public String getType();
+
+  /**
+   * @since 3.0
+   */
+  public Set<CDOID.ObjectType> getObjectIDTypes();
 
   /**
    * @since 2.0

@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
@@ -147,7 +148,13 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
   protected EClass getObjectType(CDOID id)
   {
-    EClass result = getStore().getRepository().getRevisionManager().getObjectType(id);
+    IRepository repository = getStore().getRepository();
+    if (repository.getRootResourceID().equals(id))
+    {
+      return EresourcePackage.Literals.CDO_RESOURCE;
+    }
+
+    EClass result = repository.getRevisionManager().getObjectType(id);
     if (result == null)
     {
       CDOClassifierRef type = readObjectType(id);
@@ -156,7 +163,6 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
         return null;
       }
 
-      IRepository repository = getStore().getRepository();
       CDOPackageRegistry packageRegistry = repository.getPackageRegistry();
       result = (EClass)type.resolve(packageRegistry);
     }

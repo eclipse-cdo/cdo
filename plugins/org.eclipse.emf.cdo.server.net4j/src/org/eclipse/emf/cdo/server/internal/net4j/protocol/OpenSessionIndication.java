@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -26,6 +27,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -117,6 +119,16 @@ public class OpenSessionIndication extends RepositoryTimeIndication
       out.writeString(repository.getUUID());
       out.writeEnum(repository.getType());
       out.writeEnum(repository.getState());
+      out.writeString(repository.getStoreType());
+
+      Set<CDOID.ObjectType> objectIDTypes = repository.getObjectIDTypes();
+      int types = objectIDTypes.size();
+      out.writeInt(types);
+      for (CDOID.ObjectType objectIDType : objectIDTypes)
+      {
+        out.writeEnum(objectIDType);
+      }
+
       out.writeLong(repository.getCreationTime());
       out.writeLong(repository.getLastCommitTimeStamp());
       out.writeCDOID(repository.getRootResourceID());

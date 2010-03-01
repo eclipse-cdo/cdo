@@ -12,6 +12,8 @@
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
@@ -38,10 +40,13 @@ import org.hibernate.mapping.PersistentClass;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -50,6 +55,9 @@ import java.util.Properties;
 public class HibernateStore extends Store implements IHibernateStore
 {
   public static final String TYPE = "hibernate"; //$NON-NLS-1$
+
+  public static final Set<ObjectType> OBJECT_ID_TYPES = new HashSet<ObjectType>(Arrays.asList(
+      CDOID.ObjectType.STRING_WITH_CLASSIFIER, CDOID.ObjectType.LONG_WITH_CLASSIFIER));
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateStore.class);
 
@@ -86,6 +94,25 @@ public class HibernateStore extends Store implements IHibernateStore
 
   // is initialized on get
   private CDOBranchPoint branchPoint;
+
+  public HibernateStore(IHibernateMappingProvider mappingProvider)
+  {
+    this(mappingProvider, null);
+  }
+
+  public HibernateStore(IHibernateMappingProvider mappingProvider, Properties properties)
+  {
+    super(TYPE, OBJECT_ID_TYPES, set(ChangeFormat.REVISION), set(RevisionTemporality.NONE),
+        set(RevisionParallelism.NONE));
+    this.mappingProvider = mappingProvider;
+    packageHandler = new HibernatePackageHandler(this);
+    this.properties = properties;
+
+    if (TRACER.isEnabled() && mappingProvider != null)
+    {
+      TRACER.trace("HibernateStore with mappingProvider " + mappingProvider.getClass().getName()); //$NON-NLS-1$
+    }
+  }
 
   public CDOBranchPoint getBranchPoint()
   {
@@ -189,24 +216,6 @@ public class HibernateStore extends Store implements IHibernateStore
     }
 
     return eClass;
-  }
-
-  public HibernateStore(IHibernateMappingProvider mappingProvider)
-  {
-    this(mappingProvider, null);
-  }
-
-  public HibernateStore(IHibernateMappingProvider mappingProvider, Properties properties)
-  {
-    super(TYPE, set(ChangeFormat.REVISION), set(RevisionTemporality.NONE), set(RevisionParallelism.NONE));
-    this.mappingProvider = mappingProvider;
-    packageHandler = new HibernatePackageHandler(this);
-    this.properties = properties;
-
-    if (TRACER.isEnabled() && mappingProvider != null)
-    {
-      TRACER.trace("HibernateStore with mappingProvider " + mappingProvider.getClass().getName()); //$NON-NLS-1$
-    }
   }
 
   public Configuration getHibernateConfiguration()

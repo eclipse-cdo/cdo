@@ -179,6 +179,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   /**
    * @author Eike Stepper
+   * @since 3.0
    */
   public final class OpenSessionResult
   {
@@ -189,6 +190,10 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     private CDOCommonRepository.Type repositoryType;
 
     private CDOCommonRepository.State repositoryState;
+
+    private String storeType;
+
+    private Set<CDOID.ObjectType> objectIDTypes;
 
     private long repositoryCreationTime;
 
@@ -208,13 +213,16 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
      * @since 3.0
      */
     public OpenSessionResult(int sessionID, String repositoryUUID, CDOCommonRepository.Type repositoryType,
-        CDOCommonRepository.State repositoryState, long repositoryCreationTime, long lastUpdateTime,
-        CDOID rootResourceID, boolean repositorySupportingAudits, boolean repositorySupportingBranches)
+        CDOCommonRepository.State repositoryState, String storeType, Set<CDOID.ObjectType> objectIDTypes,
+        long repositoryCreationTime, long lastUpdateTime, CDOID rootResourceID, boolean repositorySupportingAudits,
+        boolean repositorySupportingBranches)
     {
       this.sessionID = sessionID;
       this.repositoryUUID = repositoryUUID;
       this.repositoryType = repositoryType;
       this.repositoryState = repositoryState;
+      this.storeType = storeType;
+      this.objectIDTypes = objectIDTypes;
       this.repositoryCreationTime = repositoryCreationTime;
       this.lastUpdateTime = lastUpdateTime;
       this.rootResourceID = rootResourceID;
@@ -246,6 +254,22 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public CDOCommonRepository.State getRepositoryState()
     {
       return repositoryState;
+    }
+
+    /**
+     * @since 3.0
+     */
+    public String getStoreType()
+    {
+      return storeType;
+    }
+
+    /**
+     * @since 3.0
+     */
+    public Set<CDOID.ObjectType> getObjectIDTypes()
+    {
+      return objectIDTypes;
     }
 
     /**

@@ -63,7 +63,6 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaIm
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
-import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -308,7 +307,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
       try
       {
-        subType = InternalCDOIDObject.SubType.values()[subTypeOrdinal].toString();
+        subType = CDOID.ObjectType.values()[subTypeOrdinal].toString();
       }
       catch (RuntimeException ex)
       {
@@ -318,7 +317,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       TRACER.format("Reading CDOIDObject of sub type {0} ({1})", subTypeOrdinal, subType); //$NON-NLS-1$
     }
 
-    InternalCDOIDObject.SubType subType = InternalCDOIDObject.SubType.values()[subTypeOrdinal];
+    CDOID.ObjectType subType = CDOID.ObjectType.values()[subTypeOrdinal];
     AbstractCDOID id = CDOIDUtil.createCDOIDObject(subType);
     id.read(this);
     return id;

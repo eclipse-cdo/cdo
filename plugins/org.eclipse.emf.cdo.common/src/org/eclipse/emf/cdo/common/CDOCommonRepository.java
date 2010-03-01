@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 
 import org.eclipse.net4j.util.event.IEvent;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  * @since 3.0
@@ -46,6 +48,19 @@ public interface CDOCommonRepository extends CDOTimeProvider
    */
   public long getCreationTime();
 
+  /**
+   * Returns the type of the store of this repository.
+   */
+  public String getStoreType();
+
+  /**
+   * Returns the type of CDOIDs created by the store of this repository.
+   */
+  public Set<CDOID.ObjectType> getObjectIDTypes();
+
+  /**
+   * Returns the ID of the root resource of this repository.
+   */
   public CDOID getRootResourceID();
 
   /**

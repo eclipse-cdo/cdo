@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.server.embedded;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
@@ -24,6 +25,8 @@ import org.eclipse.emf.internal.cdo.session.CDOSessionConfigurationImpl;
 import org.eclipse.net4j.util.CheckUtil;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
+
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -161,6 +164,16 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
     public boolean isSupportingBranches()
     {
       return repository.isSupportingBranches();
+    }
+
+    public String getStoreType()
+    {
+      return repository.getStoreType();
+    }
+
+    public Set<ObjectType> getObjectIDTypes()
+    {
+      return repository.getObjectIDTypes();
     }
   }
 }

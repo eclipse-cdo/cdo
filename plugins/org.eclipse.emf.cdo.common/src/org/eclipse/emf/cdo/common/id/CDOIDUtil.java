@@ -222,7 +222,7 @@ public final class CDOIDUtil
     {
       try
       {
-        String type = InternalCDOIDObject.SubType.values()[ordinal].toString();
+        String type = CDOID.ObjectType.values()[ordinal].toString();
         TRACER.format("Reading CDOID Object of subType {0} ({1})", ordinal, type); //$NON-NLS-1$
       }
       catch (RuntimeException ex)
@@ -231,7 +231,7 @@ public final class CDOIDUtil
       }
     }
 
-    InternalCDOIDObject.SubType subType = InternalCDOIDObject.SubType.values()[ordinal];
+    CDOID.ObjectType subType = CDOID.ObjectType.values()[ordinal];
     AbstractCDOID id = createCDOIDObject(subType);
     // note position 2 in the uriFragment is a /
     // see the write method
@@ -241,14 +241,14 @@ public final class CDOIDUtil
   }
 
   /**
-   * Creates the correct implementation class for the passed {@link InternalCDOIDObject.SubType}.
+   * Creates the correct implementation class for the passed {@link CDOID.ObjectType}.
    * 
    * @param subType
    *          the subType for which to create an empty CDOID instance
    * @return the instance of CDOIDObject which represents the subtype.
    * @since 3.0
    */
-  public static AbstractCDOID createCDOIDObject(InternalCDOIDObject.SubType subType)
+  public static AbstractCDOID createCDOIDObject(CDOID.ObjectType subType)
   {
     if (subType == null)
     {

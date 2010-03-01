@@ -207,7 +207,7 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
 
     if (id instanceof InternalCDOIDObject)
     {
-      InternalCDOIDObject.SubType subType = ((InternalCDOIDObject)id).getSubType();
+      CDOID.ObjectType subType = ((InternalCDOIDObject)id).getSubType();
       int ordinal = subType.ordinal();
       if (TRACER.isEnabled())
       {

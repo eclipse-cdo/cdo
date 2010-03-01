@@ -12,9 +12,11 @@ package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -23,6 +25,11 @@ import java.util.Set;
  */
 public abstract class LongIDStore extends Store
 {
+  /**
+   * @since 3.0
+   */
+  public static final Set<ObjectType> OBJECT_ID_TYPES = Collections.singleton(CDOID.ObjectType.LONG);
+
   @ExcludeFromDump
   private transient long lastObjectID;
 
@@ -32,7 +39,7 @@ public abstract class LongIDStore extends Store
   public LongIDStore(String type, Set<ChangeFormat> supportedChangeFormats,
       Set<RevisionTemporality> supportedRevisionTemporalities, Set<RevisionParallelism> supportedRevisionParallelisms)
   {
-    super(type, supportedChangeFormats, supportedRevisionTemporalities, supportedRevisionParallelisms);
+    super(type, OBJECT_ID_TYPES, supportedChangeFormats, supportedRevisionTemporalities, supportedRevisionParallelisms);
   }
 
   public long getLastObjectID()

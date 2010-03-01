@@ -43,6 +43,8 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
@@ -275,6 +277,10 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     private State state;
 
+    private String storeType;
+
+    private Set<CDOID.ObjectType> objectIDTypes;
+
     private long creationTime;
 
     private RepositoryTimeResult timeResult;
@@ -291,6 +297,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       uuid = result.getRepositoryUUID();
       type = result.getRepositoryType();
       state = result.getRepositoryState();
+      storeType = result.getStoreType();
+      objectIDTypes = result.getObjectIDTypes();
       creationTime = result.getRepositoryCreationTime();
       timeResult = result.getRepositoryTimeResult();
       rootResourceID = result.getRootResourceID();
@@ -324,6 +332,16 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     public void setState(State state)
     {
       this.state = state;
+    }
+
+    public String getStoreType()
+    {
+      return storeType;
+    }
+
+    public Set<CDOID.ObjectType> getObjectIDTypes()
+    {
+      return objectIDTypes;
     }
 
     public long getCreationTime()

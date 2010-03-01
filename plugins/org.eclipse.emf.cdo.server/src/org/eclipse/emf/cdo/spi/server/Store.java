@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -61,6 +62,9 @@ public abstract class Store extends Lifecycle implements InternalStore
   private final transient String type;
 
   @ExcludeFromDump
+  private final transient Set<ObjectType> objectIDTypes;
+
+  @ExcludeFromDump
   private final transient Set<ChangeFormat> supportedChangeFormats;
 
   @ExcludeFromDump
@@ -93,6 +97,9 @@ public abstract class Store extends Lifecycle implements InternalStore
   @ExcludeFromDump
   private transient Object lastCommitTimeLock = new Object();
 
+  /**
+   * @since 3.0
+   */
   @ExcludeFromDump
   private transient ProgressDistributor indicatingCommitDistributor = new ProgressDistributor.Geometric()
   {
@@ -109,11 +116,15 @@ public abstract class Store extends Lifecycle implements InternalStore
     }
   };
 
-  public Store(String type, Set<ChangeFormat> supportedChangeFormats,
+  /**
+   * @since 3.0
+   */
+  public Store(String type, Set<CDOID.ObjectType> objectIDTypes, Set<ChangeFormat> supportedChangeFormats,
       Set<RevisionTemporality> supportedRevisionTemporalities, Set<RevisionParallelism> supportedRevisionParallelisms)
   {
     checkArg(!StringUtil.isEmpty(type), "Empty type"); //$NON-NLS-1$
     this.type = type;
+    this.objectIDTypes = objectIDTypes;
 
     checkArg(supportedChangeFormats != null && !supportedChangeFormats.isEmpty(), "Empty supportedChangeFormats"); //$NON-NLS-1$
     this.supportedChangeFormats = supportedChangeFormats;
@@ -127,7 +138,7 @@ public abstract class Store extends Lifecycle implements InternalStore
     this.supportedRevisionParallelisms = supportedRevisionParallelisms;
   }
 
-  public String getType()
+  public final String getType()
   {
     return type;
   }
@@ -135,14 +146,9 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 3.0
    */
-  public InternalRepository getRepository()
+  public Set<CDOID.ObjectType> getObjectIDTypes()
   {
-    return repository;
-  }
-
-  public void setRepository(IRepository repository)
-  {
-    this.repository = (InternalRepository)repository;
+    return objectIDTypes;
   }
 
   public Set<ChangeFormat> getSupportedChangeFormats()
@@ -155,7 +161,7 @@ public abstract class Store extends Lifecycle implements InternalStore
     return supportedRevisionTemporalities;
   }
 
-  public Set<RevisionParallelism> getSupportedRevisionParallelisms()
+  public final Set<RevisionParallelism> getSupportedRevisionParallelisms()
   {
     return supportedRevisionParallelisms;
   }
@@ -184,6 +190,19 @@ public abstract class Store extends Lifecycle implements InternalStore
     checkState(supportedRevisionParallelisms.contains(revisionParallelism), "Revision parallelism not supported: " //$NON-NLS-1$
         + revisionParallelism);
     this.revisionParallelism = revisionParallelism;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public InternalRepository getRepository()
+  {
+    return repository;
+  }
+
+  public void setRepository(IRepository repository)
+  {
+    this.repository = (InternalRepository)repository;
   }
 
   /**

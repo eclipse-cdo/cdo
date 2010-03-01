@@ -73,4 +73,13 @@ public interface CDOID extends Serializable, Comparable<CDOID>
     META, //
     TEMP_META
   }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.0
+   */
+  public enum ObjectType
+  {
+    LONG, STRING, LONG_WITH_CLASSIFIER, STRING_WITH_CLASSIFIER
+  }
 }

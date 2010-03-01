@@ -69,9 +69,9 @@ public class CDOIDObjectLongImpl extends AbstractCDOIDLong implements InternalCD
   /**
    * @since 3.0
    */
-  public SubType getSubType()
+  public CDOID.ObjectType getSubType()
   {
-    return SubType.LONG;
+    return CDOID.ObjectType.LONG;
   }
 
   @Override

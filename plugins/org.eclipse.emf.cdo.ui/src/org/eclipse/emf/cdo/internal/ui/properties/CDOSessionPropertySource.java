@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.ui.properties;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import java.util.Date;
@@ -46,6 +47,10 @@ public class CDOSessionPropertySource extends CDOPropertySource<CDOSession>
 
   private static final String SUPPORTING_BRANCHES = "supportingBranches"; //$NON-NLS-1$
 
+  private static final String STORE_TYPE = "storeType"; //$NON-NLS-1$
+
+  private static final String OBJECT_ID_TYPES = "objectIDTypes"; //$NON-NLS-1$
+
   public CDOSessionPropertySource(CDOSession object)
   {
     super(object);
@@ -67,6 +72,10 @@ public class CDOSessionPropertySource extends CDOPropertySource<CDOSession>
         "Whether the repository of this session is supporting auditing.");
     addPropertyDescriptor(CATEGORY_REPOSITORY, SUPPORTING_BRANCHES, "Supporting Branches",
         "Whether the repository of this session is supporting branching.");
+    addPropertyDescriptor(CATEGORY_REPOSITORY, STORE_TYPE, "Store Type",
+        "The type of the store that backs the repository of this session.");
+    addPropertyDescriptor(CATEGORY_REPOSITORY, OBJECT_ID_TYPES, "Object ID Types",
+        "The types of object IDs created by the store that backs the repository of this session.");
   }
 
   public Object getPropertyValue(Object id)
@@ -125,6 +134,27 @@ public class CDOSessionPropertySource extends CDOPropertySource<CDOSession>
     if (SUPPORTING_BRANCHES.equals(id))
     {
       return session.getRepositoryInfo().isSupportingBranches();
+    }
+
+    if (STORE_TYPE.equals(id))
+    {
+      return session.getRepositoryInfo().getStoreType();
+    }
+
+    if (OBJECT_ID_TYPES.equals(id))
+    {
+      StringBuilder builder = new StringBuilder();
+      for (CDOID.ObjectType objectIDType : session.getRepositoryInfo().getObjectIDTypes())
+      {
+        if (builder.length() != 0)
+        {
+          builder.append(", "); //$NON-NLS-1$
+        }
+
+        builder.append(objectIDType);
+      }
+
+      return builder.toString();
     }
 
     return null;

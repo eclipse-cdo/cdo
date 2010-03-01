@@ -67,9 +67,9 @@ public class CDOIDObjectStringImpl extends AbstractCDOIDString implements Intern
     return false;
   }
 
-  public SubType getSubType()
+  public CDOID.ObjectType getSubType()
   {
-    return SubType.STRING;
+    return CDOID.ObjectType.STRING;
   }
 
   @Override

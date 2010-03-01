@@ -777,7 +777,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(sql, ReuseProbability.LOW);
+      pstmt = statementCache.getPreparedStatement(sql, ReuseProbability.MEDIUM);
 
       resultSet = pstmt.executeQuery();
       while (resultSet.next())

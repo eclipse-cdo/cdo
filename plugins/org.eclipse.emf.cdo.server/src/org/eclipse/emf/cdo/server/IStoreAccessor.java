@@ -109,6 +109,15 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
       CDORevisionCacheAdder cache);
 
   /**
+   * Passes all revisions of the store to the {@link CDORevisionHandler handler} if <b>all</b> of the following
+   * conditions are met:
+   * <ul>
+   * <li>The <code>eClass</code> parameter is <code>null</code> or equal to <code>revision.getEClass()</code>.
+   * <li>The <code>branch</code> parameter is <code>null</code> or equal to <code>revision.getBranch()</code>.
+   * <li>The <code>timeStamp</code> parameter is {@link CDOBranchPoint#INVALID_DATE} or
+   * <code>revision.isValid(timeStamp)</code> is <code>true</code>.
+   * </ul>
+   * 
    * @since 3.0
    */
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler);

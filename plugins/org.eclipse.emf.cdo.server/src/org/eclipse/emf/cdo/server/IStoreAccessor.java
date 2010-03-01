@@ -110,11 +110,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   /**
    * @since 2.0
    */
-  public InternalCDORevision verifyRevision(InternalCDORevision revision);
-
-  /**
-   * @since 2.0
-   */
   public void queryResources(QueryResourcesContext context);
 
   /**

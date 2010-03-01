@@ -15,13 +15,14 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
-import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
@@ -373,9 +374,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     throw new UnsupportedOperationException();
   }
 
-  public CDOCommitData loadCommitData(long timeStamp)
+  @Override
+  protected void loadCommitData(long timeStamp, List<CDOIDAndVersion> newObjects, List<CDORevisionKey> changedObjects,
+      List<CDOIDAndVersion> detachedObjects)
   {
-    // TODO: implement HibernateStoreAccessor.loadCommitData(timeStamp, dataType)
+    // TODO: implement HibernateStoreAccessor.loadCommitData(timeStamp, newObjects, changedObjects, detachedObjects)
     throw new UnsupportedOperationException();
   }
 

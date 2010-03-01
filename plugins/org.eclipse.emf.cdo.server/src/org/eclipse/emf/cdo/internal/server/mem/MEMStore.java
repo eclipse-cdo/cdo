@@ -17,17 +17,14 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
-import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelConstants;
-import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
-import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -38,9 +35,6 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
-import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -64,7 +58,7 @@ import java.util.Map.Entry;
 /**
  * @author Simon McDuff
  */
-public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, CommitInfoLoader
+public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
 {
   public static final String TYPE = "mem"; //$NON-NLS-1$
 
@@ -172,20 +166,9 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Co
     }
   }
 
-  public synchronized CDOCommitData loadCommitData(long timeStamp)
+  protected synchronized void loadCommitData(long timeStamp, List<CDOIDAndVersion> newObjects,
+      List<CDORevisionKey> changedObjects, List<CDOIDAndVersion> detachedObjects)
   {
-    List<CDOPackageUnit> newPackageUnits = new ArrayList<CDOPackageUnit>();
-    List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>();
-    List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
-    List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>();
-
-    InternalCDOPackageRegistry packageRegistry = getRepository().getPackageRegistry();
-    InternalCDOPackageUnit[] packageUnits = packageRegistry.getPackageUnits(timeStamp, timeStamp);
-    for (InternalCDOPackageUnit packageUnit : packageUnits)
-    {
-      newPackageUnits.add(packageUnit);
-    }
-
     for (List<InternalCDORevision> list : revisions.values())
     {
       for (InternalCDORevision revision : list)
@@ -224,8 +207,6 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Co
         }
       }
     }
-
-    return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);
   }
 
   private InternalCDORevision getRevisionFromBase(CDOID id, CDOBranch branch)

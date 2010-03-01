@@ -14,14 +14,20 @@ package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -109,10 +115,33 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     return context.getResourceID();
   }
 
-  public InternalCDORevision verifyRevision(InternalCDORevision revision)
+  /**
+   * @since 3.0
+   */
+  public final CDOCommitData loadCommitData(long timeStamp)
   {
-    return revision;
+    List<CDOPackageUnit> newPackageUnits = new ArrayList<CDOPackageUnit>();
+    List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>();
+    List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
+    List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>();
+
+    InternalCDOPackageRegistry packageRegistry = getStore().getRepository().getPackageRegistry();
+    InternalCDOPackageUnit[] packageUnits = packageRegistry.getPackageUnits(timeStamp, timeStamp);
+    for (InternalCDOPackageUnit packageUnit : packageUnits)
+    {
+      newPackageUnits.add(packageUnit);
+    }
+
+    loadCommitData(timeStamp, newObjects, changedObjects, detachedObjects);
+    return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);
+
   }
+
+  /**
+   * @since 3.0
+   */
+  protected abstract void loadCommitData(long timeStamp, List<CDOIDAndVersion> newObjects,
+      List<CDORevisionKey> changedObjects, List<CDOIDAndVersion> detachedObjects);
 
   /**
    * @since 3.0

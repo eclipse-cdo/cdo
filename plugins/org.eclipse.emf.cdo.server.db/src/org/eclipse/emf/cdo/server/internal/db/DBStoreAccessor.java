@@ -51,6 +51,8 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 
 import org.eclipse.net4j.db.DBException;
@@ -771,7 +773,9 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     PreparedStatement pstmt = null;
     ResultSet resultSet = null;
 
-    InternalRepository repository = getSession().getManager().getRepository();
+    InternalSession session = getSession();
+    InternalSessionManager manager = session.getManager();
+    InternalRepository repository = manager.getRepository();
     InternalCDOBranchManager branchManager = repository.getBranchManager();
     InternalCDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
 
@@ -807,8 +811,22 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
   }
 
+  /**
+   * Passes all revisions of the store to the {@link CDORevisionHandler handler} if <b>all</b> of the following
+   * conditions are met:
+   * <ul>
+   * <li>The <code>eClass</code> parameter is <code>null</code> or equal to <code>revision.getEClass()</code>.
+   * <li>The <code>branch</code> parameter is <code>null</code> or equal to <code>revision.getBranch()</code>.
+   * <li>The <code>timeStamp</code> parameter is {@link CDOBranchPoint#INVALID_DATE} or
+   * <code>revision.isValid(timeStamp)</code> is <code>true</code>.
+   * </ul>
+   * 
+   * @since 3.0
+   */
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
   {
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    mappingStrategy.handleRevisions(this, eClass, branch, timeStamp, handler);
   }
 
   /**

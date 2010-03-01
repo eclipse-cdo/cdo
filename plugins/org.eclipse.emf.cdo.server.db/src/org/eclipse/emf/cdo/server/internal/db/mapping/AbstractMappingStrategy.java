@@ -200,6 +200,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
           currentStatement = mapping.createObjectIdStatement(getAccessor());
 
           ResultSet rset = null;
+
           try
           {
             rset = currentStatement.executeQuery();

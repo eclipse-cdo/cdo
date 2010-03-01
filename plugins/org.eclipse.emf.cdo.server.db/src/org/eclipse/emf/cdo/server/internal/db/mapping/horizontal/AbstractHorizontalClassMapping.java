@@ -13,15 +13,23 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IExternalReferenceManager;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
+import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
+import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -74,6 +82,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
   private Map<EStructuralFeature, String> unsettableFields;
 
+  private String sqlSelectForHandle;
+
   public AbstractHorizontalClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
     this.mappingStrategy = mappingStrategy;
@@ -81,6 +91,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
     initTable();
     initFeatures();
+    initSQLStrings();
   }
 
   private void initTable()
@@ -131,6 +142,18 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       valueMappings = createValueMappings(features);
       listMappings = createListMappings(features);
     }
+  }
+
+  private void initSQLStrings()
+  {
+    // ----------- Select all revisions (for handleRevision) ---
+    StringBuilder builder = new StringBuilder("SELECT "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(getTable().getName());
+    sqlSelectForHandle = builder.toString();
   }
 
   private List<ITypeMapping> createValueMappings(EStructuralFeature[] features)
@@ -394,6 +417,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
   public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, OMMonitor monitor)
   {
     Async async = null;
+
     try
     {
       monitor.begin(10);
@@ -442,6 +466,55 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     {
       async.stop();
       monitor.done();
+    }
+  }
+
+  public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
+  {
+    // branch parameter is ignored, because either it is null or main branch.
+    // this does not make any difference for non-branching store.
+    // see #handleRevisions() implementation in HorizontalBranchingClassMapping
+    // for branch handling.
+
+    // TODO: test for timeStamp == INVALID_TIME and encode revision.isValid() as WHERE instead of fetching all revisions
+    // in order to increase performance
+
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
+    IRepository repository = accessor.getStore().getRepository();
+    CDORevisionManager revisionManager = repository.getRevisionManager();
+    CDOBranchManager branchManager = repository.getBranchManager();
+
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
+
+    try
+    {
+      stmt = statementCache.getPreparedStatement(sqlSelectForHandle, ReuseProbability.LOW);
+      rs = stmt.executeQuery();
+
+      while (rs.next())
+      {
+        long id = rs.getLong(1);
+        int version = rs.getInt(2);
+
+        InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(CDOIDUtil
+            .createLong(id), branchManager.getMainBranch().getVersion(version), CDORevision.UNCHUNKED, true);
+
+        // TODO see above - maybe check this already with the WHERE-part
+        if (timeStamp == CDOBranchPoint.INVALID_DATE || revision.isValid(timeStamp))
+        {
+          handler.handleRevision(revision);
+        }
+      }
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      DBUtil.close(rs);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 

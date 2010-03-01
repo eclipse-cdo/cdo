@@ -14,13 +14,18 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingBranchingSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
@@ -31,6 +36,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
@@ -42,6 +48,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -67,11 +74,13 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
   private String sqlReviseAttributes;
 
+  private String sqlSelectForHandle;
+
   public HorizontalBranchingClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
     super(mappingStrategy, eClass);
 
-    initSqlStrings();
+    initSQLStrings();
   }
 
   @Override
@@ -80,7 +89,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     return table.addField(CDODBSchema.ATTRIBUTES_BRANCH, DBType.INTEGER, true);
   }
 
-  private void initSqlStrings()
+  private void initSQLStrings()
   {
     Map<EStructuralFeature, String> unsettableFields = getUnsettableFields();
 
@@ -110,7 +119,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     {
       for (String fieldName : unsettableFields.values())
       {
-        builder.append(", ");
+        builder.append(", "); //$NON-NLS-1$
         builder.append(fieldName);
       }
     }
@@ -119,24 +128,24 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append(getTable().getName());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append("= ? AND ");
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
-    builder.append("= ? AND ("); //$NON-NLS-1$
+    builder.append("=? AND ("); //$NON-NLS-1$
     String sqlSelectAttributesPrefix = builder.toString();
 
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append(" = 0 )"); //$NON-NLS-1$
+    builder.append("=0 )"); //$NON-NLS-1$
 
     sqlSelectCurrentAttributes = builder.toString();
 
     builder = new StringBuilder(sqlSelectAttributesPrefix);
 
     builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-    builder.append(" <= ? AND ( "); //$NON-NLS-1$
+    builder.append("<=? AND ( "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append(" = 0 OR "); //$NON-NLS-1$
+    builder.append("=0 OR "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append(" >= ?))"); //$NON-NLS-1$
+    builder.append(">=?))"); //$NON-NLS-1$
 
     sqlSelectAttributesByTime = builder.toString();
 
@@ -181,7 +190,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     {
       for (String fieldName : unsettableFields.values())
       {
-        builder.append(", ");
+        builder.append(", "); //$NON-NLS-1$
         builder.append(fieldName);
       }
     }
@@ -209,11 +218,11 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append(getTable().getName());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append(" = ? WHERE "); //$NON-NLS-1$
+    builder.append("=? WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
     builder.append(" = 0"); //$NON-NLS-1$
     sqlReviseAttributes = builder.toString();
@@ -227,6 +236,17 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
     builder.append(" = 0"); //$NON-NLS-1$
     sqlSelectAllObjectIds = builder.toString();
+
+    // ----------- Select all revisions (for handleRevision) ---
+    builder = new StringBuilder("SELECT "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(getTable().getName());
+    sqlSelectForHandle = builder.toString();
   }
 
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
@@ -627,6 +647,65 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     {
       async.stop();
       monitor.done();
+    }
+  }
+
+  @Override
+  public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
+  {
+    StringBuilder builder = new StringBuilder(sqlSelectForHandle);
+    if (branch != null)
+    {
+      // TODO: Prepare this string literal
+      builder.append("WHERE "); //$NON-NLS-1$
+      builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+      builder.append("=? "); //$NON-NLS-1$
+    }
+
+    // TODO: test for timeStamp == INVALID_TIME and encode revision.isValid() as WHERE instead of fetching all revisions
+    // in order to increase performance
+
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
+    IRepository repository = accessor.getStore().getRepository();
+    CDORevisionManager revisionManager = repository.getRevisionManager();
+    CDOBranchManager branchManager = repository.getBranchManager();
+
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
+
+    try
+    {
+      stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.LOW);
+      if (branch != null)
+      {
+        stmt.setInt(1, branch.getID());
+      }
+
+      rs = stmt.executeQuery();
+      while (rs.next())
+      {
+        long id = rs.getLong(1);
+        int version = rs.getInt(2);
+        int branchId = rs.getInt(3);
+
+        InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(CDOIDUtil
+            .createLong(id), branchManager.getBranch(branchId).getVersion(version), CDORevision.UNCHUNKED, true);
+
+        // TODO see above - maybe check this already with the WHERE-part
+        if (timeStamp == CDOBranchPoint.INVALID_DATE || revision.isValid(timeStamp))
+        {
+          handler.handleRevision(revision);
+        }
+      }
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      DBUtil.close(rs);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 }

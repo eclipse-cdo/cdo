@@ -45,8 +45,18 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * TODO:
+ * <ul>
+ * <li>Persist lastReplicatedBranchID and lastReplicatedCommitTime.
+ * <li>Persist lastTempBranchID.
+ * <li>Provide custom branching strategies.
+ * <li>Consider non-auditing masters.
+ * <li>Test out-of-order commits.
+ * </ul>
+ * 
  * @author Eike Stepper
  */
 public class CloneRepository extends Repository.Default implements CDOReplicationContext
@@ -60,6 +70,8 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
   private long lastReplicatedCommitTime;
 
   private int lastTransactionID;
+
+  private AtomicInteger lastTempBranchID = new AtomicInteger();
 
   public CloneRepository()
   {
@@ -103,6 +115,11 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
 
   public void handleBranch(CDOBranch branch)
   {
+    if (branch.isTemporary())
+    {
+      return;
+    }
+
     int branchID = branch.getID();
     String name = branch.getName();
 
@@ -117,8 +134,14 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
 
   public void handleCommitInfo(CDOCommitInfo commitInfo)
   {
+    CDOBranch branch = commitInfo.getBranch();
+    if (branch.isTemporary())
+    {
+      return;
+    }
+
     long timeStamp = commitInfo.getTimeStamp();
-    CDOBranchPoint head = commitInfo.getBranch().getHead();
+    CDOBranchPoint head = branch.getHead();
 
     InternalTransaction transaction = replicatorSession.openTransaction(++lastTransactionID, head);
     ReplicatorCommitContext commitContext = new ReplicatorCommitContext(transaction, commitInfo);
@@ -144,6 +167,20 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
   @Override
   public InternalCommitContext createCommitContext(InternalTransaction transaction)
   {
+    CDOBranch branch = transaction.getBranch();
+    if (branch.isTemporary())
+    {
+      return new TransactionCommitContext(transaction);
+    }
+
+    if (getState() != State.ONLINE)
+    {
+      final long timeStamp = createCommitTimeStamp();
+      CDOBranch offlineBranch = createOfflineBranch(branch, timeStamp - 1L);
+      transaction.setBranchPoint(offlineBranch.getHead());
+      return new BranchingCommitContext(transaction, timeStamp);
+    }
+
     return new WriteThroughCommitContext(transaction);
   }
 
@@ -178,6 +215,102 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
     setState(State.INITIAL);
   }
 
+  protected CDOBranch createOfflineBranch(CDOBranch baseBranch, long baseTimeStamp)
+  {
+    int branchID = lastTempBranchID.decrementAndGet();
+    InternalCDOBranchManager branchManager = getBranchManager();
+    return branchManager.createBranch(branchID, "Offline" + branchID, (InternalCDOBranch)baseBranch, baseTimeStamp); //$NON-NLS-1$
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class CommitContextData implements CDOCommitData
+  {
+    private InternalCommitContext commitContext;
+
+    public CommitContextData(InternalCommitContext commitContext)
+    {
+      this.commitContext = commitContext;
+    }
+
+    public List<CDOPackageUnit> getNewPackageUnits()
+    {
+      final InternalCDOPackageUnit[] newPackageUnits = commitContext.getNewPackageUnits();
+      return new IndexedList<CDOPackageUnit>()
+      {
+        @Override
+        public CDOPackageUnit get(int index)
+        {
+          return newPackageUnits[index];
+        }
+
+        @Override
+        public int size()
+        {
+          return newPackageUnits.length;
+        }
+      };
+    }
+
+    public List<CDOIDAndVersion> getNewObjects()
+    {
+      final InternalCDORevision[] newObjects = commitContext.getNewObjects();
+      return new IndexedList<CDOIDAndVersion>()
+      {
+        @Override
+        public CDOIDAndVersion get(int index)
+        {
+          return newObjects[index];
+        }
+
+        @Override
+        public int size()
+        {
+          return newObjects.length;
+        }
+      };
+    }
+
+    public List<CDORevisionKey> getChangedObjects()
+    {
+      final InternalCDORevisionDelta[] changedObjects = commitContext.getDirtyObjectDeltas();
+      return new IndexedList<CDORevisionKey>()
+      {
+        @Override
+        public CDORevisionKey get(int index)
+        {
+          return changedObjects[index];
+        }
+
+        @Override
+        public int size()
+        {
+          return changedObjects.length;
+        }
+      };
+    }
+
+    public List<CDOIDAndVersion> getDetachedObjects()
+    {
+      final CDOID[] detachedObjects = commitContext.getDetachedObjects();
+      return new IndexedList<CDOIDAndVersion>()
+      {
+        @Override
+        public CDOIDAndVersion get(int index)
+        {
+          return CDOIDUtil.createIDAndVersion(detachedObjects[index], CDOBranchVersion.UNSPECIFIED_VERSION);
+        }
+
+        @Override
+        public int size()
+        {
+          return detachedObjects.length;
+        }
+      };
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -200,10 +333,9 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
       CDOBranch branch = getTransaction().getBranch();
       String userID = getUserID();
       String comment = getCommitComment();
-      CDOCommitData commitData = new CommitData();
+      CDOCommitData commitData = new CommitContextData(this);
 
-      InternalCDOSession master = (InternalCDOSession)synchronizer.getMaster();
-      CDOSessionProtocol sessionProtocol = master.getSessionProtocol();
+      CDOSessionProtocol sessionProtocol = ((InternalCDOSession)synchronizer.getMaster()).getSessionProtocol();
       CommitTransactionResult result = sessionProtocol.commitDelegation(branch, userID, comment, commitData, monitor);
 
       String rollbackMessage = result.getRollbackMessage();
@@ -215,15 +347,23 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
       long timeStamp = result.getTimeStamp();
       setTimeStamp(timeStamp);
 
-      for (CDOPackageUnit newPackageUnit : commitData.getNewPackageUnits())
+      addMetaIDRanges(commitData.getNewPackageUnits());
+      addIDMappings(result.getIDMappings());
+    }
+
+    private void addMetaIDRanges(List<CDOPackageUnit> newPackageUnits)
+    {
+      for (CDOPackageUnit newPackageUnit : newPackageUnits)
       {
         for (CDOPackageInfo packageInfo : newPackageUnit.getPackageInfos())
         {
           addMetaIDRange(packageInfo.getMetaIDRange());
         }
       }
+    }
 
-      Map<CDOID, CDOID> idMappings = result.getIDMappings();
+    private void addIDMappings(Map<CDOID, CDOID> idMappings)
+    {
       for (Map.Entry<CDOID, CDOID> idMapping : idMappings.entrySet())
       {
         CDOID oldID = idMapping.getKey();
@@ -231,87 +371,31 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
         addIDMapping(oldID, newID);
       }
     }
+  }
 
-    /**
-     * @author Eike Stepper
-     */
-    private final class CommitData implements CDOCommitData
+  /**
+   * @author Eike Stepper
+   */
+  private final class BranchingCommitContext extends TransactionCommitContext
+  {
+    private long timeStamp;
+
+    private BranchingCommitContext(InternalTransaction transaction, long timeStamp)
     {
-      public List<CDOPackageUnit> getNewPackageUnits()
-      {
-        final InternalCDOPackageUnit[] newPackageUnits = WriteThroughCommitContext.this.getNewPackageUnits();
-        return new IndexedList<CDOPackageUnit>()
-        {
-          @Override
-          public CDOPackageUnit get(int index)
-          {
-            return newPackageUnits[index];
-          }
+      super(transaction);
+      this.timeStamp = timeStamp;
+    }
 
-          @Override
-          public int size()
-          {
-            return newPackageUnits.length;
-          }
-        };
-      }
+    @Override
+    protected void lockObjects() throws InterruptedException
+    {
+      // Do nothing
+    }
 
-      public List<CDOIDAndVersion> getNewObjects()
-      {
-        final InternalCDORevision[] newObjects = WriteThroughCommitContext.this.getNewObjects();
-        return new IndexedList<CDOIDAndVersion>()
-        {
-          @Override
-          public CDOIDAndVersion get(int index)
-          {
-            return newObjects[index];
-          }
-
-          @Override
-          public int size()
-          {
-            return newObjects.length;
-          }
-        };
-      }
-
-      public List<CDORevisionKey> getChangedObjects()
-      {
-        final InternalCDORevisionDelta[] changedObjects = getDirtyObjectDeltas();
-        return new IndexedList<CDORevisionKey>()
-        {
-          @Override
-          public CDORevisionKey get(int index)
-          {
-            return changedObjects[index];
-          }
-
-          @Override
-          public int size()
-          {
-            return changedObjects.length;
-          }
-        };
-      }
-
-      public List<CDOIDAndVersion> getDetachedObjects()
-      {
-        final CDOID[] detachedObjects = WriteThroughCommitContext.this.getDetachedObjects();
-        return new IndexedList<CDOIDAndVersion>()
-        {
-          @Override
-          public CDOIDAndVersion get(int index)
-          {
-            return CDOIDUtil.createIDAndVersion(detachedObjects[index], CDOBranchVersion.UNSPECIFIED_VERSION);
-          }
-
-          @Override
-          public int size()
-          {
-            return detachedObjects.length;
-          }
-        };
-      }
+    @Override
+    protected long createTimeStamp()
+    {
+      return timeStamp;
     }
   }
 }

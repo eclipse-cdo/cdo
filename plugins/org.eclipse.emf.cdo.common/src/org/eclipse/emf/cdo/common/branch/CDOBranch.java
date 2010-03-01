@@ -24,6 +24,8 @@ public interface CDOBranch extends Comparable<CDOBranch>
 
   public boolean isMainBranch();
 
+  public boolean isTemporary();
+
   public int getID();
 
   public String getName();

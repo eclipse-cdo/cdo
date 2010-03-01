@@ -74,6 +74,8 @@ public class TransactionCommitContext implements InternalCommitContext
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION, TransactionCommitContext.class);
 
+  private InternalTransaction transaction;
+
   private TransactionPackageRegistry packageRegistry;
 
   private IStoreAccessor accessor;
@@ -103,8 +105,6 @@ public class TransactionCommitContext implements InternalCommitContext
   private CDOReferenceAdjuster idMapper = new CDOIDMapper(idMappings);
 
   private String rollbackMessage;
-
-  private InternalTransaction transaction;
 
   private boolean autoReleaseLocksEnabled;
 

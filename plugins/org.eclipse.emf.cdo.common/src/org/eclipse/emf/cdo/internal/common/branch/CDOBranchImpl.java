@@ -57,6 +57,11 @@ public class CDOBranchImpl implements InternalCDOBranch
     return false;
   }
 
+  public boolean isTemporary()
+  {
+    return id < 0;
+  }
+
   public InternalCDOBranchManager getBranchManager()
   {
     if (isProxy())

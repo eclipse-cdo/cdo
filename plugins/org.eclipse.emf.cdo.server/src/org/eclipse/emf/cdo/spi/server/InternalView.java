@@ -26,6 +26,8 @@ public interface InternalView extends IView
 
   public InternalRepository getRepository();
 
+  public void setBranchPoint(CDOBranchPoint branchPoint);
+
   public boolean[] changeTarget(CDOBranchPoint branchPoint, List<CDOID> invalidObjects);
 
   public void subscribe(CDOID id);

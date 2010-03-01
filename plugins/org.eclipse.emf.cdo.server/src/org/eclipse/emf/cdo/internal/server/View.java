@@ -88,7 +88,6 @@ public class View implements InternalView
 
   public boolean[] changeTarget(CDOBranchPoint branchPoint, List<CDOID> invalidObjects)
   {
-    checkOpen();
     setBranchPoint(branchPoint);
     List<CDORevision> revisions = repository.getRevisionManager().getRevisions(invalidObjects, branchPoint, 0,
         CDORevision.DEPTH_NONE, false);
@@ -101,8 +100,9 @@ public class View implements InternalView
     return existanceFlags;
   }
 
-  private void setBranchPoint(CDOBranchPoint branchPoint)
+  public void setBranchPoint(CDOBranchPoint branchPoint)
   {
+    checkOpen();
     long timeStamp = branchPoint.getTimeStamp();
     branchPoint = CDOBranchUtil.createBranchPoint(branchPoint.getBranch(), timeStamp);
     validateTimeStamp(timeStamp);

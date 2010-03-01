@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -116,7 +118,8 @@ public class CommitInfoTest extends AbstractCDOTest
   public void testServerTimestamp() throws Exception
   {
     CDOSession session = openSession();
-    StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
+    InternalSession serverSession = getRepository().getSessionManager().getSession(session.getSessionID());
+    StoreThreadLocal.setSession(serverSession);
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);

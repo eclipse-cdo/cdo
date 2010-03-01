@@ -15,9 +15,11 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
@@ -161,6 +163,23 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   }
 
   // -- object id related methods ----------------------------------------
+
+  public void handleRevisions(IDBStoreAccessor accessor, EClass eClass, CDOBranch branch, long timeStamp,
+      CDORevisionHandler handler)
+  {
+    if (eClass == null)
+    {
+      for (IClassMapping mapping : getClassMappings().values())
+      {
+        mapping.handleRevisions(accessor, branch, timeStamp, handler);
+      }
+    }
+    else
+    {
+      IClassMapping classMapping = getClassMapping(eClass);
+      classMapping.handleRevisions(accessor, branch, timeStamp, handler);
+    }
+  }
 
   public CloseableIterator<CDOID> readObjectIDs(IDBStoreAccessor dbStoreAccessor)
   {

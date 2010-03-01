@@ -248,6 +248,7 @@ public class Session extends Container<IView> implements InternalSession
     }
 
     InternalView view = new View(this, viewID, branchPoint);
+    view.activate();
     addView(view);
     return view;
   }
@@ -264,6 +265,7 @@ public class Session extends Container<IView> implements InternalSession
     }
 
     InternalTransaction transaction = new Transaction(this, viewID, branchPoint);
+    transaction.activate();
     addView(transaction);
     return transaction;
   }

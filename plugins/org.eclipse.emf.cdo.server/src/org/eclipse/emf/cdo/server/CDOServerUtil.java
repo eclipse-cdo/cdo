@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.internal.server.clone.CloneRepository;
 import org.eclipse.emf.cdo.internal.server.clone.CloneSynchronizer;
 import org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionConfiguration;
 import org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
 import org.eclipse.net4j.util.ObjectUtil;

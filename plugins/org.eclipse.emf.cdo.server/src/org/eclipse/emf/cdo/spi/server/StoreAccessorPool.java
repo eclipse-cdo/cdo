@@ -74,8 +74,10 @@ public class StoreAccessorPool
   /**
    * Returns a {@link StoreAccessor store accessor} from this pool if one is available, or <code>null</code> otherwise.
    * If a store accessor is available it is removed from this pool and its unpassivate method is called.
+   * 
+   * @since 3.0
    */
-  public StoreAccessor removeStoreAccessor()
+  public StoreAccessor removeStoreAccessor(Object context)
   {
     StoreAccessor accessor = accessors.poll();
     if (accessor != null)
@@ -83,6 +85,7 @@ public class StoreAccessorPool
       try
       {
         accessor.doUnpassivate();
+        accessor.setContext(context);
       }
       catch (Exception ex)
       {

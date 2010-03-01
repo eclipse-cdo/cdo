@@ -204,6 +204,8 @@ public class SessionManager extends Container<ISession> implements InternalSessi
 
     String userID = authenticateUser(sessionProtocol);
     InternalSession session = createSession(id, userID, sessionProtocol);
+    LifecycleUtil.activate(session);
+
     synchronized (sessions)
     {
       sessions.put(id, session);

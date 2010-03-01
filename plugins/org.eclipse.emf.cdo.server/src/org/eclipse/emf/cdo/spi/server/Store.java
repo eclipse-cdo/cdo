@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.server.InternalStore;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -286,7 +285,7 @@ public abstract class Store extends Lifecycle implements InternalStore
     StoreAccessorPool pool = getReaderPool(session, false);
     if (pool != null)
     {
-      reader = pool.removeStoreAccessor();
+      reader = pool.removeStoreAccessor(session);
     }
 
     if (reader == null && session != null)
@@ -297,7 +296,7 @@ public abstract class Store extends Lifecycle implements InternalStore
         pool = getWriterPool((IView)view, false);
         if (pool != null)
         {
-          reader = pool.removeStoreAccessor();
+          reader = pool.removeStoreAccessor(view);
           if (reader != null)
           {
             break;
@@ -321,7 +320,7 @@ public abstract class Store extends Lifecycle implements InternalStore
     StoreAccessorPool pool = getWriterPool(transaction, false);
     if (pool != null)
     {
-      writer = pool.removeStoreAccessor();
+      writer = pool.removeStoreAccessor(transaction);
     }
 
     if (writer == null)

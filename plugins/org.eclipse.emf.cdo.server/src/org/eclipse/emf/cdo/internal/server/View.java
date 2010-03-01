@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
+
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.List;
@@ -28,7 +30,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class View implements InternalView
+public class View extends Lifecycle implements InternalView
 {
   private InternalSession session;
 
@@ -175,10 +177,18 @@ public class View implements InternalView
    */
   public void close()
   {
+    deactivate();
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
     if (!isClosed())
     {
       session.viewClosed(this);
     }
+
+    super.doDeactivate();
   }
 
   /**
@@ -188,6 +198,7 @@ public class View implements InternalView
   {
     clearChangeSubscription();
     changeSubscriptionIDs = null;
+    session = null;
     repository = null;
   }
 

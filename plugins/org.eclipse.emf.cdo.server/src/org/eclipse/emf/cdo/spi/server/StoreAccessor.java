@@ -29,7 +29,6 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.server.InternalStore;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
@@ -108,6 +107,11 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     }
 
     return null;
+  }
+
+  void setContext(Object context)
+  {
+    this.context = context;
   }
 
   /**
@@ -287,28 +291,28 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   public static class CommitDataRevisionHandler implements CDORevisionHandler
   {
     private IStoreAccessor storeAccessor;
-  
+
     private long timeStamp;
-  
+
     private InternalCDORevisionManager revisionManager;
-  
+
     private List<CDOPackageUnit> newPackageUnits = new ArrayList<CDOPackageUnit>();
-  
+
     private List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>();
-  
+
     private List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
-  
+
     private List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>();
-  
+
     public CommitDataRevisionHandler(IStoreAccessor storeAccessor, long timeStamp)
     {
       this.storeAccessor = storeAccessor;
       this.timeStamp = timeStamp;
-  
+
       InternalStore store = (InternalStore)storeAccessor.getStore();
       InternalRepository repository = store.getRepository();
       revisionManager = repository.getRevisionManager();
-  
+
       InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
       InternalCDOPackageUnit[] packageUnits = packageRegistry.getPackageUnits(timeStamp, timeStamp);
       for (InternalCDOPackageUnit packageUnit : packageUnits)
@@ -316,13 +320,13 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
         newPackageUnits.add(packageUnit);
       }
     }
-  
+
     public CDOCommitData getCommitData()
     {
       storeAccessor.handleRevisions(null, null, timeStamp, this);
       return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);
     }
-  
+
     public void handleRevision(CDORevision rev)
     {
       if (rev instanceof DetachedCDORevision)
@@ -360,14 +364,14 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
         }
       }
     }
-  
+
     private InternalCDORevision getRevisionFromBase(CDOID id, CDOBranch branch)
     {
       if (branch.isMainBranch())
       {
         return null;
       }
-  
+
       CDOBranchPoint base = branch.getBase();
       InternalCDORevision revision = revisionManager.getRevision(id, base, CDORevision.UNCHUNKED,
           CDORevision.DEPTH_NONE, true);
@@ -375,7 +379,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
       {
         revision = getRevisionFromBase(id, base.getBranch());
       }
-  
+
       return revision;
     }
   }

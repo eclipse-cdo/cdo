@@ -14,13 +14,15 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.IView;
 
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+
 import java.util.List;
 
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public interface InternalView extends IView
+public interface InternalView extends IView, ILifecycle
 {
   public InternalSession getSession();
 

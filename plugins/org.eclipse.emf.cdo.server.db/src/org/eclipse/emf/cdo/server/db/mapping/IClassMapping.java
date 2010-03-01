@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -131,4 +132,19 @@ public interface IClassMapping
    */
   public PreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,
       boolean exactMatch, CDOBranchPoint branchPoint);
+
+  /**
+   * Passes all revisions of the store to the {@link CDORevisionHandler handler} if <b>all</b> of the following
+   * conditions are met:
+   * <ul>
+   * <li>The <code>branch</code> parameter is <code>null</code> or equal to <code>revision.getBranch()</code>.
+   * <li>The <code>timeStamp</code> parameter is {@link CDOBranchPoint#INVALID_DATE} or
+   * <code>revision.isValid(timeStamp)</code> is <code>true</code>.
+   * </ul>
+   * 
+   * @see IMappingStrategy#handleRevisions(IDBStoreAccessor, org.eclipse.emf.ecore.EClass, CDOBranch, long,
+   *      CDORevisionHandler)
+   * @since 3.0
+   */
+  public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, CDORevisionHandler handler);
 }

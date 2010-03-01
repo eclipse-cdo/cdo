@@ -41,18 +41,17 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public class AllTestsDBH2Branching extends DBConfigs
+public class AllTestsDBH2Offline extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBH2Branching()
-        .getTestSuite("CDO Tests (DBStoreRepositoryConfig H2 Horizontal - non-audit mode)");
+    return new AllTestsDBH2Offline().getTestSuite("CDO Tests (DBStoreRepositoryConfig H2 Horizontal - non-audit mode)");
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, H2Branching.ReusableFolder.INSTANCE, JVM, NATIVE);
+    addScenario(parent, COMBINED, H2Offline.ReusableFolder.INSTANCE, JVM, NATIVE);
   }
 
   @Override
@@ -68,15 +67,15 @@ public class AllTestsDBH2Branching extends DBConfigs
   /**
    * @author Eike Stepper
    */
-  public static class H2Branching extends DBStoreRepositoryConfig
+  public static class H2Offline extends DBStoreRepositoryConfig
   {
     private static final long serialVersionUID = 1L;
 
-    public static final H2Branching INSTANCE = new H2Branching("DBStore: H2 (branching)");
+    public static final H2Offline INSTANCE = new H2Offline("DBStore: H2 (offline)");
 
     protected transient File dbFolder;
 
-    public H2Branching(String name)
+    public H2Offline(String name)
     {
       super(name);
     }
@@ -128,7 +127,7 @@ public class AllTestsDBH2Branching extends DBConfigs
     /**
      * @author Eike Stepper
      */
-    public static class ReusableFolder extends H2Branching
+    public static class ReusableFolder extends H2Offline
     {
       private static final long serialVersionUID = 1L;
 

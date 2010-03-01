@@ -11,7 +11,9 @@
 package org.eclipse.emf.cdo.internal.server.clone;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.cache.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
@@ -113,7 +115,7 @@ public class CloneSynchronizer extends QueueRunner
   protected void doAfterActivate() throws Exception
   {
     super.doAfterActivate();
-    connect();
+    scheduleConnect();
   }
 
   @Override
@@ -130,76 +132,23 @@ public class CloneSynchronizer extends QueueRunner
     super.doDeactivate();
   }
 
-  private void connect()
+  private void disconnect()
   {
-    synchronized (connectLock)
+    OM.LOG.info("Disconnected from master.");
+    if (clone.getRootResourceID() == null)
     {
-      if (!isActive())
-      {
-        return;
-      }
-
-      if (clone.getState() == CloneRepository.State.SYNCING)
-      {
-        return;
-      }
-
-      if (clone.getState() == CloneRepository.State.ONLINE)
-      {
-        return;
-      }
-
-      addWork(new Runnable()
-      {
-        public void run()
-        {
-          synchronized (connectLock)
-          {
-            checkActive();
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("Connecting to master ({0})...", CDOCommonUtil.formatTimeStamp()); //$NON-NLS-1$
-            }
-            try
-            {
-              CDOSessionConfiguration masterConfiguration = masterFactory.createSessionConfiguration();
-              masterConfiguration.setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
-
-              master = (InternalCDOSession)masterConfiguration.openSession();
-
-              // Ensure that incoming revisions are not cached!
-              InternalCDORevisionCache cache = master.getRevisionManager().getCache();
-              if (!(cache instanceof NOOPRevisionCache))
-              {
-                throw new IllegalStateException("Master session does not use a NOOPRevisionCache: "
-                    + cache.getClass().getName());
-              }
-
-              if (clone.getState() == CloneRepository.State.INITIAL)
-              {
-                CDOID rootResourceID = master.getRepositoryInfo().getRootResourceID();
-                clone.setRootResourceID(rootResourceID);
-                clone.setState(CloneRepository.State.OFFLINE);
-              }
-            }
-            catch (Exception ex)
-            {
-              if (isActive())
-              {
-                OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...");
-                reconnect();
-              }
-
-              return;
-            }
-            OM.LOG.info("Connected to master.");
-            master.addListener(masterListener);
-            master.getBranchManager().addListener(masterListener);
-            sync();
-          }
-        }
-      });
+      clone.setState(CloneRepository.State.INITIAL);
     }
+    else
+    {
+      clone.setState(CloneRepository.State.OFFLINE);
+    }
+  
+    master.getBranchManager().removeListener(masterListener);
+    master.removeListener(masterListener);
+    master = null;
+  
+    reconnect();
   }
 
   private void reconnect()
@@ -220,27 +169,36 @@ public class CloneSynchronizer extends QueueRunner
 
     if (isActive())
     {
-      connect();
+      scheduleConnect();
     }
   }
 
-  private void sync()
+  private void scheduleConnect()
   {
-    addWork(new Runnable()
+    synchronized (connectLock)
     {
-      public void run()
+      if (!isActive())
       {
-        checkActive();
-        OM.LOG.info("Synchronizing with master...");
-        clone.setState(CloneRepository.State.SYNCING);
-
-        CDOSessionProtocol sessionProtocol = master.getSessionProtocol();
-        sessionProtocol.syncRepository(clone);
-
-        clone.setState(CloneRepository.State.ONLINE);
-        OM.LOG.info("Synchronized with master.");
+        return;
       }
-    });
+
+      if (clone.getState() == CloneRepository.State.SYNCING)
+      {
+        return;
+      }
+
+      if (clone.getState() == CloneRepository.State.ONLINE)
+      {
+        return;
+      }
+
+      addWork(new ConnectRunnable());
+    }
+  }
+
+  private void scheduleSync()
+  {
+    addWork(new SynRunnable());
   }
 
   /**
@@ -258,14 +216,15 @@ public class CloneSynchronizer extends QueueRunner
       if (event instanceof CDOBranchCreatedEvent)
       {
         CDOBranchCreatedEvent e = (CDOBranchCreatedEvent)event;
-        clone.handleBranch(e.getBranch());
+        addWork(new BranchRunnable(e.getBranch()));
       }
       else if (event instanceof CDOSessionInvalidationEvent)
       {
         CDOSessionInvalidationEvent e = (CDOSessionInvalidationEvent)event;
         if (e.isRemote())
         {
-          clone.handleCommitInfo(e);
+          final CDOCommitInfo commitInfo = e;
+          addWork(new CommitRunnable(commitInfo));
         }
       }
       else if (event instanceof ILifecycleEvent)
@@ -273,23 +232,121 @@ public class CloneSynchronizer extends QueueRunner
         ILifecycleEvent e = (ILifecycleEvent)event;
         if (e.getKind() == ILifecycleEvent.Kind.DEACTIVATED && e.getSource() == master)
         {
-          OM.LOG.info("Disconnected from master.");
-          if (clone.getRootResourceID() == null)
-          {
-            clone.setState(CloneRepository.State.INITIAL);
-          }
-          else
-          {
-            clone.setState(CloneRepository.State.OFFLINE);
-          }
-
-          master.getBranchManager().removeListener(masterListener);
-          master.removeListener(masterListener);
-          master = null;
-
-          reconnect();
+          disconnect();
         }
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ConnectRunnable implements Runnable
+  {
+    public void run()
+    {
+      synchronized (connectLock)
+      {
+        checkActive();
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("Connecting to master ({0})...", CDOCommonUtil.formatTimeStamp()); //$NON-NLS-1$
+        }
+
+        try
+        {
+          CDOSessionConfiguration masterConfiguration = masterFactory.createSessionConfiguration();
+          masterConfiguration.setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
+
+          master = (InternalCDOSession)masterConfiguration.openSession();
+
+          // Ensure that incoming revisions are not cached!
+          InternalCDORevisionCache cache = master.getRevisionManager().getCache();
+          if (!(cache instanceof NOOPRevisionCache))
+          {
+            throw new IllegalStateException("Master session does not use a NOOPRevisionCache: "
+                + cache.getClass().getName());
+          }
+
+          if (clone.getState() == CloneRepository.State.INITIAL)
+          {
+            CDOID rootResourceID = master.getRepositoryInfo().getRootResourceID();
+            clone.setRootResourceID(rootResourceID);
+            clone.setState(CloneRepository.State.OFFLINE);
+          }
+        }
+        catch (Exception ex)
+        {
+          if (isActive())
+          {
+            OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...");
+            reconnect();
+          }
+
+          return;
+        }
+
+        OM.LOG.info("Connected to master.");
+        master.addListener(masterListener);
+        master.getBranchManager().addListener(masterListener);
+
+        scheduleSync();
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class SynRunnable implements Runnable
+  {
+    public void run()
+    {
+      checkActive();
+      OM.LOG.info("Synchronizing with master...");
+      clone.setState(CloneRepository.State.SYNCING);
+
+      CDOSessionProtocol sessionProtocol = master.getSessionProtocol();
+      sessionProtocol.syncRepository(clone);
+
+      clone.setState(CloneRepository.State.ONLINE);
+      OM.LOG.info("Synchronized with master.");
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class BranchRunnable implements Runnable
+  {
+    private CDOBranch branch;
+
+    private BranchRunnable(CDOBranch branch)
+    {
+      this.branch = branch;
+    }
+
+    public void run()
+    {
+      clone.handleBranch(branch);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class CommitRunnable implements Runnable
+  {
+    private CDOCommitInfo commitInfo;
+
+    private CommitRunnable(CDOCommitInfo commitInfo)
+    {
+      this.commitInfo = commitInfo;
+    }
+
+    public void run()
+    {
+      clone.handleCommitInfo(commitInfo);
     }
   }
 }

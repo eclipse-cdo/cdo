@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.cache.InternalCDORevisionCache;
-import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -143,11 +142,11 @@ public class CloneSynchronizer extends QueueRunner
     {
       clone.setState(CloneRepository.State.OFFLINE);
     }
-  
+
     master.getBranchManager().removeListener(masterListener);
     master.removeListener(masterListener);
     master = null;
-  
+
     reconnect();
   }
 
@@ -250,7 +249,7 @@ public class CloneSynchronizer extends QueueRunner
         checkActive();
         if (TRACER.isEnabled())
         {
-          TRACER.format("Connecting to master ({0})...", CDOCommonUtil.formatTimeStamp()); //$NON-NLS-1$
+          TRACER.trace("Connecting to master..."); //$NON-NLS-1$
         }
 
         try
@@ -260,20 +259,8 @@ public class CloneSynchronizer extends QueueRunner
 
           master = (InternalCDOSession)masterConfiguration.openSession();
 
-          // Ensure that incoming revisions are not cached!
-          InternalCDORevisionCache cache = master.getRevisionManager().getCache();
-          if (!(cache instanceof NOOPRevisionCache))
-          {
-            throw new IllegalStateException("Master session does not use a NOOPRevisionCache: "
-                + cache.getClass().getName());
-          }
-
-          if (clone.getState() == CloneRepository.State.INITIAL)
-          {
-            CDOID rootResourceID = master.getRepositoryInfo().getRootResourceID();
-            clone.setRootResourceID(rootResourceID);
-            clone.setState(CloneRepository.State.OFFLINE);
-          }
+          ensureNOOPRevisionCache();
+          setRootResourceID();
         }
         catch (Exception ex)
         {
@@ -293,6 +280,27 @@ public class CloneSynchronizer extends QueueRunner
         scheduleSync();
       }
     }
+
+    private void setRootResourceID()
+    {
+      if (clone.getState() == CloneRepository.State.INITIAL)
+      {
+        CDOID rootResourceID = master.getRepositoryInfo().getRootResourceID();
+        clone.setRootResourceID(rootResourceID);
+        clone.setState(CloneRepository.State.OFFLINE);
+      }
+    }
+
+    private void ensureNOOPRevisionCache()
+    {
+      // Ensure that incoming revisions are not cached!
+      InternalCDORevisionCache cache = master.getRevisionManager().getCache();
+      if (!(cache instanceof NOOPRevisionCache))
+      {
+        throw new IllegalStateException("Master session does not use a NOOPRevisionCache: "
+            + cache.getClass().getName());
+      }
+    }
   }
 
   /**
@@ -303,7 +311,11 @@ public class CloneSynchronizer extends QueueRunner
     public void run()
     {
       checkActive();
-      OM.LOG.info("Synchronizing with master...");
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Synchronizing with master..."); //$NON-NLS-1$
+      }
+
       clone.setState(CloneRepository.State.SYNCING);
 
       CDOSessionProtocol sessionProtocol = master.getSessionProtocol();

@@ -189,7 +189,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
       return;
     }
 
-    if (timeStamp != CDOBranchPoint.INVALID_DATE && !revision.isValid(timeStamp))
+    if (timeStamp != CDOBranchPoint.INVALID_DATE && revision.getTimeStamp() != timeStamp)
     {
       return;
     }

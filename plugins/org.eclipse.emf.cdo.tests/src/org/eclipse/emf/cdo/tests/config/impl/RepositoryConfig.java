@@ -229,6 +229,14 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
 
     @Override
+    protected void initRepositoryProperties(Map<String, String> props)
+    {
+      super.initRepositoryProperties(props);
+      props.put(Props.SUPPORTING_AUDITS, "true");
+      props.put(Props.SUPPORTING_BRANCHES, "true");
+    }
+
+    @Override
     protected InternalRepository createRepository(String name)
     {
       Map<String, String> props = getRepositoryProperties();

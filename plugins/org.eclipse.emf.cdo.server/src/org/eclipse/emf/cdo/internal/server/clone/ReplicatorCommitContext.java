@@ -6,6 +6,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -30,7 +31,7 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
     this.commitInfo = commitInfo;
     setCommitComment(commitInfo.getComment());
 
-    InternalCDOPackageUnit[] newPackageUnits = getNewPackageUnits(commitInfo);
+    InternalCDOPackageUnit[] newPackageUnits = getNewPackageUnits(commitInfo, getPackageRegistry());
     setNewPackageUnits(newPackageUnits);
 
     InternalCDORevision[] newObjects = getNewObjects(commitInfo);
@@ -79,7 +80,8 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
     // Do nothing
   }
 
-  private static InternalCDOPackageUnit[] getNewPackageUnits(CDOCommitInfo commitInfo)
+  private static InternalCDOPackageUnit[] getNewPackageUnits(CDOCommitInfo commitInfo,
+      InternalCDOPackageRegistry packageRegistry)
   {
     List<CDOPackageUnit> list = commitInfo.getNewPackageUnits();
     InternalCDOPackageUnit[] result = new InternalCDOPackageUnit[list.size()];
@@ -87,7 +89,9 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
     int i = 0;
     for (CDOPackageUnit packageUnit : list)
     {
-      result[i++] = (InternalCDOPackageUnit)packageUnit;
+      result[i] = (InternalCDOPackageUnit)packageUnit;
+      packageRegistry.putPackageUnit(result[i]);
+      ++i;
     }
 
     return result;

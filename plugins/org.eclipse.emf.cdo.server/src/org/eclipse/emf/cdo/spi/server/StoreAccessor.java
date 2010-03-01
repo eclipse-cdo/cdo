@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
@@ -317,7 +318,10 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
       InternalCDOPackageUnit[] packageUnits = packageRegistry.getPackageUnits(timeStamp, timeStamp);
       for (InternalCDOPackageUnit packageUnit : packageUnits)
       {
-        newPackageUnits.add(packageUnit);
+        if (!packageUnit.isSystem())
+        {
+          newPackageUnits.add(packageUnit);
+        }
       }
     }
 
@@ -329,6 +333,12 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
 
     public void handleRevision(CDORevision rev)
     {
+      if (rev.getTimeStamp() != timeStamp)
+      {
+        throw new IllegalArgumentException("Invalid revision time stamp: "
+            + CDOCommonUtil.formatTimeStamp(rev.getTimeStamp()));
+      }
+
       if (rev instanceof DetachedCDORevision)
       {
         detachedObjects.add(rev);

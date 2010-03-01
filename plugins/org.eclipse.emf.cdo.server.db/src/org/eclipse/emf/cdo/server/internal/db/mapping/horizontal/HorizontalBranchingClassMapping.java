@@ -692,7 +692,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
             .createLong(id), branchManager.getBranch(branchId).getVersion(version), CDORevision.UNCHUNKED, true);
 
         // TODO see above - maybe check this already with the WHERE-part
-        if (timeStamp == CDOBranchPoint.INVALID_DATE || revision.isValid(timeStamp))
+        if (timeStamp == CDOBranchPoint.INVALID_DATE || revision.getTimeStamp() == timeStamp)
         {
           handler.handleRevision(revision);
         }

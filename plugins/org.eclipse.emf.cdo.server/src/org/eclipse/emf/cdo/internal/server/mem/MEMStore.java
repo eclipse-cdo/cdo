@@ -181,16 +181,18 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
           }
           else
           {
+            CDOID id = revision.getID();
+            CDOBranch branch = revision.getBranch();
             int version = revision.getVersion();
             if (version > CDOBranchVersion.FIRST_VERSION)
             {
-              InternalCDORevision oldRevision = getRevisionByVersion(list, version - 1);
+              InternalCDORevision oldRevision = getRevisionByVersion(id, branch.getVersion(version - 1));
               InternalCDORevisionDelta delta = revision.compare(oldRevision);
               changedObjects.add(delta);
             }
             else
             {
-              InternalCDORevision oldRevision = getRevisionFromBase(revision.getID(), revision.getBranch());
+              InternalCDORevision oldRevision = getRevisionFromBase(id, branch);
               if (oldRevision != null)
               {
                 InternalCDORevisionDelta delta = revision.compare(oldRevision);

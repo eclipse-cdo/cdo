@@ -1414,7 +1414,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       {
         try
         {
-          delegate.closeView(viewID);
+          if (delegate != null)
+          {
+            delegate.closeView(viewID);
+          }
+
           return;
         }
         catch (Exception ex)

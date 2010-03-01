@@ -641,8 +641,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           progressMonitor = new NullProgressMonitor();
         }
 
+        CDOBranch oldBranch = getBranch();
         CDOTransactionStrategy transactionStrategy = getTransactionStrategy();
-        return transactionStrategy.commit(this, progressMonitor);
+        CDOCommitInfo result = transactionStrategy.commit(this, progressMonitor);
+        if (result != null)
+        {
+          CDOBranch newBranch = result.getBranch();
+          if (newBranch != oldBranch)
+          {
+            setBranch(newBranch);
+          }
+        }
+
+        return result;
       }
       catch (TransactionException ex)
       {

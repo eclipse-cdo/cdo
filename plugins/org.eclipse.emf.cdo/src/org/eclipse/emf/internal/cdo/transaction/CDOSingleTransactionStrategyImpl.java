@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.transaction;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -21,8 +22,10 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
@@ -57,13 +60,17 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
     commitContext.preCommit();
 
     CDOCommitData commitData = commitContext.getCommitData();
+    InternalCDOSession session = transaction.getSession();
     CommitTransactionResult result = null;
 
     if (transaction.isDirty())
     {
+      int viewID = transaction.getViewID();
+      boolean releaseLocks = transaction.options().isAutoReleaseLocksEnabled();
       OMMonitor monitor = new EclipseMonitor(progressMonitor);
-      result = transaction.getSession().getSessionProtocol().commitTransaction(transaction.getViewID(), comment,
-          transaction.options().isAutoReleaseLocksEnabled(), transaction, commitData, monitor);
+
+      CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+      result = sessionProtocol.commitTransaction(viewID, comment, releaseLocks, transaction, commitData, monitor);
 
       String rollbackMessage = result.getRollbackMessage();
       if (rollbackMessage != null)
@@ -85,9 +92,12 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
       return null;
     }
 
-    InternalCDOCommitInfoManager commitInfoManager = transaction.getSession().getCommitInfoManager();
-    return commitInfoManager.createCommitInfo(transaction.getBranch(), result.getTimeStamp(), transaction.getSession()
-        .getUserID(), comment, commitData);
+    CDOBranch branch = transaction.getBranch();
+    long timeStamp = result.getTimeStamp();
+    String userID = session.getUserID();
+
+    InternalCDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
+    return commitInfoManager.createCommitInfo(branch, timeStamp, userID, comment, commitData);
   }
 
   public void rollback(InternalCDOTransaction transaction, InternalCDOUserSavepoint savepoint)

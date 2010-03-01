@@ -52,7 +52,7 @@ public class CommitXATransactionPhase1Request extends CommitXATransactionRequest
       return result;
     }
 
-    result = confirmingTransactionResult(in);
+    result = confirmingResult(in);
     confirmingMappingNewObjects(in, result);
     return result;
   }

@@ -12,9 +12,11 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.common.branch.CDOBranchImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -40,7 +42,9 @@ import java.lang.reflect.Method;
  */
 public class StateMachineTest extends AbstractCDOTest
 {
-  private static final long TIMESTAMP = 12345678L;
+  private static final long TIMESTAMP = 12345678;
+
+  private static final CDOBranch BRANCH = new CDOBranchImpl.Main(null, 0L);
 
   // ///////////////////////////////////////////////////
 
@@ -157,7 +161,7 @@ public class StateMachineTest extends AbstractCDOTest
     assertTransient(supplier);
     try
     {
-      commit(supplier, new CommitTransactionResult(null, 12345678L));
+      commit(supplier, new CommitTransactionResult(null, BRANCH.getPoint(TIMESTAMP)));
       fail("IllegalStateException expected");
     }
     catch (IllegalStateException expected)
@@ -298,7 +302,7 @@ public class StateMachineTest extends AbstractCDOTest
 
     try
     {
-      commit(supplier, new CommitTransactionResult(null, TIMESTAMP));
+      commit(supplier, new CommitTransactionResult(null, BRANCH.getPoint(TIMESTAMP)));
       fail("IllegalStateException expected");
     }
     catch (IllegalStateException expected)

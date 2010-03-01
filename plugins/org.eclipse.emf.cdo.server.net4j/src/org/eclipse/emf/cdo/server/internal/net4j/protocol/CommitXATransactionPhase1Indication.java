@@ -64,7 +64,7 @@ public class CommitXATransactionPhase1Indication extends CommitTransactionIndica
     boolean success = respondingException(out, exceptionMessage);
     if (success)
     {
-      respondingTimestamp(out);
+      respondingResult(out);
       respondingMappingNewObjects(out);
     }
   }

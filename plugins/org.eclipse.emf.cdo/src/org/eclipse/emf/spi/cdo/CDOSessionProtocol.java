@@ -464,13 +464,13 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * @author Eike Stepper
    * @since 3.0
    */
-  public final class CommitTransactionResult
+  public final class CommitTransactionResult implements CDOBranchPoint
   {
     private CDOIDProvider idProvider;
 
     private String rollbackMessage;
 
-    private long timeStamp;
+    private CDOBranchPoint branchPoint;
 
     private Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
 
@@ -488,10 +488,10 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 3.0
      */
-    public CommitTransactionResult(CDOIDProvider idProvider, long timeStamp)
+    public CommitTransactionResult(CDOIDProvider idProvider, CDOBranchPoint branchPoint)
     {
       this.idProvider = idProvider;
-      this.timeStamp = timeStamp;
+      this.branchPoint = branchPoint;
     }
 
     public CDOReferenceAdjuster getReferenceAdjuster()
@@ -514,9 +514,25 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       return rollbackMessage;
     }
 
+    /**
+     * @since 3.0
+     */
+    public CDOBranch getBranch()
+    {
+      return branchPoint.getBranch();
+    }
+
     public long getTimeStamp()
     {
-      return timeStamp;
+      return branchPoint.getTimeStamp();
+    }
+
+    /**
+     * @since 3.0
+     */
+    public int compareTo(CDOBranchPoint o)
+    {
+      return branchPoint.compareTo(o);
     }
 
     public Map<CDOID, CDOID> getIDMappings()

@@ -15,6 +15,7 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -248,7 +249,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
       return result;
     }
 
-    result = confirmingTransactionResult(in);
+    result = confirmingResult(in);
     confirmingMappingNewPackages(in, result);
     confirmingMappingNewObjects(in, result);
     return result;
@@ -267,10 +268,10 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
     return null;
   }
 
-  protected CommitTransactionResult confirmingTransactionResult(CDODataInput in) throws IOException
+  protected CommitTransactionResult confirmingResult(CDODataInput in) throws IOException
   {
-    long timeStamp = in.readLong();
-    return new CommitTransactionResult(idProvider, timeStamp);
+    CDOBranchPoint branchPoint = in.readCDOBranchPoint();
+    return new CommitTransactionResult(idProvider, branchPoint);
   }
 
   protected void confirmingMappingNewPackages(CDODataInput in, CommitTransactionResult result) throws IOException

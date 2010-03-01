@@ -304,7 +304,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       success = respondingException(out, commitContext.getRollbackMessage());
       if (success)
       {
-        respondingTimestamp(out);
+        respondingResult(out);
         respondingMappingNewPackages(out);
         respondingMappingNewObjects(out);
       }
@@ -327,9 +327,9 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     return success;
   }
 
-  protected void respondingTimestamp(CDODataOutput out) throws Exception
+  protected void respondingResult(CDODataOutput out) throws Exception
   {
-    out.writeLong(commitContext.getBranchPoint().getTimeStamp());
+    out.writeCDOBranchPoint(commitContext.getBranchPoint());
   }
 
   protected void respondingMappingNewPackages(CDODataOutput out) throws Exception

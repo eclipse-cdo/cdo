@@ -235,8 +235,7 @@ public class CloneSynchronizer extends QueueRunner
         CDOSessionInvalidationEvent e = (CDOSessionInvalidationEvent)event;
         if (e.isRemote())
         {
-          CDOCommitInfo commitInfo = e;
-          addWork(new CommitRunnable(commitInfo));
+          addWork(new CommitRunnable(e));
         }
       }
       else if (event instanceof ILifecycleEvent)

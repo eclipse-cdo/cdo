@@ -144,7 +144,7 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
   @Override
   public InternalCommitContext createCommitContext(InternalTransaction transaction)
   {
-    return new CommitContext(transaction);
+    return new WriteThroughCommitContext(transaction);
   }
 
   @Override
@@ -181,11 +181,11 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
   /**
    * @author Eike Stepper
    */
-  private final class CommitContext extends TransactionCommitContext
+  private final class WriteThroughCommitContext extends TransactionCommitContext
   {
     private InternalCDOSession master = (InternalCDOSession)synchronizer.getMaster();
 
-    public CommitContext(InternalTransaction transaction)
+    public WriteThroughCommitContext(InternalTransaction transaction)
     {
       super(transaction);
     }
@@ -240,7 +240,7 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
     {
       public List<CDOPackageUnit> getNewPackageUnits()
       {
-        final InternalCDOPackageUnit[] newPackageUnits = CommitContext.this.getNewPackageUnits();
+        final InternalCDOPackageUnit[] newPackageUnits = WriteThroughCommitContext.this.getNewPackageUnits();
         return new IndexedList<CDOPackageUnit>()
         {
           @Override
@@ -259,7 +259,7 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
 
       public List<CDOIDAndVersion> getNewObjects()
       {
-        final InternalCDORevision[] newObjects = CommitContext.this.getNewObjects();
+        final InternalCDORevision[] newObjects = WriteThroughCommitContext.this.getNewObjects();
         return new IndexedList<CDOIDAndVersion>()
         {
           @Override
@@ -297,7 +297,7 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
 
       public List<CDOIDAndVersion> getDetachedObjects()
       {
-        final CDOID[] detachedObjects = CommitContext.this.getDetachedObjects();
+        final CDOID[] detachedObjects = WriteThroughCommitContext.this.getDetachedObjects();
         return new IndexedList<CDOIDAndVersion>()
         {
           @Override

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
@@ -20,6 +21,8 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
  */
 public interface InternalStore extends IStore, ILifecycle
 {
+  public InternalRepository getRepository();
+
   public void setRepository(IRepository repository);
 
   public void setRevisionTemporality(RevisionTemporality revisionTemporality);

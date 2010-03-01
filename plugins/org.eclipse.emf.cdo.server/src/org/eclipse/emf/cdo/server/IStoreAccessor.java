@@ -10,10 +10,12 @@
  */
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
@@ -27,6 +29,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -44,7 +47,20 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    */
   public IStore getStore();
 
-  public void release();
+  /**
+   * Returns the session this accessor is associated with.
+   * 
+   * @since 3.0
+   */
+  public InternalSession getSession();
+
+  /**
+   * Returns the transaction this accessor is associated with if {@link #isReader()} returns <code>false</code>,
+   * <code>null</code> otherwise.
+   * 
+   * @since 2.0
+   */
+  public ITransaction getTransaction();
 
   /**
    * Returns <code>true</code> if this accessor has been configured for read-only access to the back-end,
@@ -53,13 +69,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * @since 2.0
    */
   public boolean isReader();
-
-  /**
-   * Returns the session this accessor is associated with.
-   * 
-   * @since 3.0
-   */
-  public InternalSession getSession();
 
   /**
    * @since 2.0
@@ -100,6 +109,11 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
       CDORevisionCacheAdder cache);
 
   /**
+   * @since 3.0
+   */
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler);
+
+  /**
    * Returns the <code>CDOID</code> of the resource node with the given folderID and name if a resource with this
    * folderID and name exists in the store, <code>null</code> otherwise.
    * 
@@ -111,14 +125,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * @since 2.0
    */
   public void queryResources(QueryResourcesContext context);
-
-  /**
-   * Returns the transaction this accessor is associated with if {@link #isReader()} returns <code>false</code>,
-   * <code>null</code> otherwise.
-   * 
-   * @since 2.0
-   */
-  public ITransaction getTransaction();
 
   /**
    * @since 2.0
@@ -165,6 +171,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * @since 2.0
    */
   public void rollback();
+
+  public void release();
 
   /**
    * Represents the state of a single, logical commit operation which is driven through multiple calls to several

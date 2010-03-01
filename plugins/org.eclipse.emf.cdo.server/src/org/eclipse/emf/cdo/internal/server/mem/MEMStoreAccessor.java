@@ -18,8 +18,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryContext;
@@ -181,13 +180,6 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     getStore().loadCommitInfos(branch, startTime, endTime, handler);
   }
 
-  @Override
-  protected void loadCommitData(long timeStamp, List<CDOIDAndVersion> newObjects, List<CDORevisionKey> changedObjects,
-      List<CDOIDAndVersion> detachedObjects)
-  {
-    getStore().loadCommitData(timeStamp, newObjects, changedObjects, detachedObjects);
-  }
-
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
       CDORevisionCacheAdder cache)
   {
@@ -198,6 +190,11 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
       CDORevisionCacheAdder cache)
   {
     return getStore().getRevisionByVersion(id, branchVersion);
+  }
+
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
+  {
+    getStore().handleRevisions(eClass, branch, timeStamp, handler);
   }
 
   /**

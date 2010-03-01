@@ -20,11 +20,10 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -37,7 +36,6 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoad
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.spi.server.LongIDStore;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
@@ -45,6 +43,7 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
@@ -166,66 +165,36 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     }
   }
 
-  protected synchronized void loadCommitData(long timeStamp, List<CDOIDAndVersion> newObjects,
-      List<CDORevisionKey> changedObjects, List<CDOIDAndVersion> detachedObjects)
+  public synchronized void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
   {
     for (List<InternalCDORevision> list : revisions.values())
     {
       for (InternalCDORevision revision : list)
       {
-        if (revision.getTimeStamp() == timeStamp)
-        {
-          if (revision instanceof DetachedCDORevision)
-          {
-            detachedObjects.add(revision);
-          }
-          else
-          {
-            CDOID id = revision.getID();
-            CDOBranch branch = revision.getBranch();
-            int version = revision.getVersion();
-            if (version > CDOBranchVersion.FIRST_VERSION)
-            {
-              InternalCDORevision oldRevision = getRevisionByVersion(id, branch.getVersion(version - 1));
-              InternalCDORevisionDelta delta = revision.compare(oldRevision);
-              changedObjects.add(delta);
-            }
-            else
-            {
-              InternalCDORevision oldRevision = getRevisionFromBase(id, branch);
-              if (oldRevision != null)
-              {
-                InternalCDORevisionDelta delta = revision.compare(oldRevision);
-                changedObjects.add(delta);
-              }
-              else
-              {
-                InternalCDORevision newRevision = revision.copy();
-                newRevision.setRevised(CDOBranchPoint.UNSPECIFIED_DATE);
-                newObjects.add(newRevision);
-              }
-            }
-          }
-        }
+        handleRevision(revision, eClass, branch, timeStamp, handler);
       }
     }
   }
 
-  private InternalCDORevision getRevisionFromBase(CDOID id, CDOBranch branch)
+  private void handleRevision(InternalCDORevision revision, EClass eClass, CDOBranch branch, long timeStamp,
+      CDORevisionHandler handler)
   {
-    if (branch.isMainBranch())
+    if (eClass != null && revision.getEClass() != eClass)
     {
-      return null;
+      return;
     }
 
-    CDOBranchPoint base = branch.getBase();
-    InternalCDORevision revision = getRevision(id, base);
-    if (revision == null)
+    if (branch != null && revision.getBranch() != branch)
     {
-      revision = getRevisionFromBase(id, base.getBranch());
+      return;
     }
 
-    return revision;
+    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE && !revision.isValid(timeStamp))
+    {
+      return;
+    }
+
+    handler.handleRevision(revision);
   }
 
   /**

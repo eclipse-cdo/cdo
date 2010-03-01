@@ -14,12 +14,14 @@ package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -27,10 +29,13 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.InternalStore;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -118,30 +123,11 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   /**
    * @since 3.0
    */
-  public final CDOCommitData loadCommitData(long timeStamp)
+  public CDOCommitData loadCommitData(long timeStamp)
   {
-    List<CDOPackageUnit> newPackageUnits = new ArrayList<CDOPackageUnit>();
-    List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>();
-    List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
-    List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>();
-
-    InternalCDOPackageRegistry packageRegistry = getStore().getRepository().getPackageRegistry();
-    InternalCDOPackageUnit[] packageUnits = packageRegistry.getPackageUnits(timeStamp, timeStamp);
-    for (InternalCDOPackageUnit packageUnit : packageUnits)
-    {
-      newPackageUnits.add(packageUnit);
-    }
-
-    loadCommitData(timeStamp, newObjects, changedObjects, detachedObjects);
-    return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);
-
+    CommitDataRevisionHandler handler = new CommitDataRevisionHandler(this, timeStamp);
+    return handler.getCommitData();
   }
-
-  /**
-   * @since 3.0
-   */
-  protected abstract void loadCommitData(long timeStamp, List<CDOIDAndVersion> newObjects,
-      List<CDORevisionKey> changedObjects, List<CDOIDAndVersion> detachedObjects);
 
   /**
    * @since 3.0
@@ -293,4 +279,104 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   protected abstract void doPassivate() throws Exception;
 
   protected abstract void doUnpassivate() throws Exception;
+
+  /**
+   * @author Eike Stepper
+   * @since 3.0
+   */
+  public static class CommitDataRevisionHandler implements CDORevisionHandler
+  {
+    private IStoreAccessor storeAccessor;
+  
+    private long timeStamp;
+  
+    private InternalCDORevisionManager revisionManager;
+  
+    private List<CDOPackageUnit> newPackageUnits = new ArrayList<CDOPackageUnit>();
+  
+    private List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>();
+  
+    private List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
+  
+    private List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>();
+  
+    public CommitDataRevisionHandler(IStoreAccessor storeAccessor, long timeStamp)
+    {
+      this.storeAccessor = storeAccessor;
+      this.timeStamp = timeStamp;
+  
+      InternalStore store = (InternalStore)storeAccessor.getStore();
+      InternalRepository repository = store.getRepository();
+      revisionManager = repository.getRevisionManager();
+  
+      InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
+      InternalCDOPackageUnit[] packageUnits = packageRegistry.getPackageUnits(timeStamp, timeStamp);
+      for (InternalCDOPackageUnit packageUnit : packageUnits)
+      {
+        newPackageUnits.add(packageUnit);
+      }
+    }
+  
+    public CDOCommitData getCommitData()
+    {
+      storeAccessor.handleRevisions(null, null, timeStamp, this);
+      return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);
+    }
+  
+    public void handleRevision(CDORevision rev)
+    {
+      if (rev instanceof DetachedCDORevision)
+      {
+        detachedObjects.add(rev);
+      }
+      else
+      {
+        InternalCDORevision revision = (InternalCDORevision)rev;
+        CDOID id = revision.getID();
+        CDOBranch branch = revision.getBranch();
+        int version = revision.getVersion();
+        if (version > CDOBranchVersion.FIRST_VERSION)
+        {
+          CDOBranchVersion oldVersion = branch.getVersion(version - 1);
+          InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, oldVersion, CDORevision.UNCHUNKED,
+              true);
+          InternalCDORevisionDelta delta = revision.compare(oldRevision);
+          changedObjects.add(delta);
+        }
+        else
+        {
+          InternalCDORevision oldRevision = getRevisionFromBase(id, branch);
+          if (oldRevision != null)
+          {
+            InternalCDORevisionDelta delta = revision.compare(oldRevision);
+            changedObjects.add(delta);
+          }
+          else
+          {
+            InternalCDORevision newRevision = revision.copy();
+            newRevision.setRevised(CDOBranchPoint.UNSPECIFIED_DATE);
+            newObjects.add(newRevision);
+          }
+        }
+      }
+    }
+  
+    private InternalCDORevision getRevisionFromBase(CDOID id, CDOBranch branch)
+    {
+      if (branch.isMainBranch())
+      {
+        return null;
+      }
+  
+      CDOBranchPoint base = branch.getBase();
+      InternalCDORevision revision = revisionManager.getRevision(id, base, CDORevision.UNCHUNKED,
+          CDORevision.DEPTH_NONE, true);
+      if (revision == null)
+      {
+        revision = getRevisionFromBase(id, base.getBranch());
+      }
+  
+      return revision;
+    }
+  }
 }

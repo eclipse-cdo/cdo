@@ -11,11 +11,12 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.tests.BranchingTest;
-import org.eclipse.emf.cdo.tests.BranchingTestSameSession;
+import org.eclipse.emf.cdo.tests.OfflineTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -45,7 +46,7 @@ public class AllTestsDBH2Offline extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBH2Offline().getTestSuite("CDO Tests (DBStoreRepositoryConfig H2 Horizontal - non-audit mode)");
+    return new AllTestsDBH2Offline().getTestSuite("CDO Tests (DBStoreRepositoryConfig H2 Horizontal - offline mode)");
   }
 
   @Override
@@ -57,21 +58,19 @@ public class AllTestsDBH2Offline extends DBConfigs
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
-    // add branching tests for this testsuite
-    testClasses.add(BranchingTest.class);
-    testClasses.add(BranchingTestSameSession.class);
+    // super.initTestClasses(testClasses);
 
-    super.initTestClasses(testClasses);
+    testClasses.add(OfflineTest.class);
   }
 
   /**
    * @author Eike Stepper
    */
-  public static class H2Offline extends DBStoreRepositoryConfig
+  public static class H2Offline extends OfflineConfig
   {
-    private static final long serialVersionUID = 1L;
-
     public static final H2Offline INSTANCE = new H2Offline("DBStore: H2 (offline)");
+
+    private static final long serialVersionUID = 1L;
 
     protected transient File dbFolder;
 
@@ -89,18 +88,24 @@ public class AllTestsDBH2Offline extends DBConfigs
     }
 
     @Override
+    public IStore createStore(String repoName)
+    {
+      IMappingStrategy mappingStrategy = createMappingStrategy();
+      IDBAdapter dbAdapter = createDBAdapter();
+      DataSource dataSource = createDataSource(repoName);
+      return CDODBUtil.createStore(mappingStrategy, dbAdapter, DBUtil.createConnectionProvider(dataSource));
+    }
+
     protected IMappingStrategy createMappingStrategy()
     {
       return CDODBUtil.createHorizontalMappingStrategy(true, true);
     }
 
-    @Override
     protected IDBAdapter createDBAdapter()
     {
       return new H2Adapter();
     }
 
-    @Override
     protected DataSource createDataSource(String repoName)
     {
       if (dbFolder == null)

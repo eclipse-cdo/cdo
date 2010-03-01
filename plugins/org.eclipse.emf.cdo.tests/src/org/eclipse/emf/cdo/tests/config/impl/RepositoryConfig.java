@@ -203,6 +203,99 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   /**
    * @author Eike Stepper
    */
+  public static abstract class OfflineConfig extends RepositoryConfig
+  {
+    private static final long serialVersionUID = 1L;
+
+    private transient IAcceptor masterAcceptor;
+
+    public OfflineConfig(String name)
+    {
+      super(name);
+    }
+
+    @Override
+    public void setUp() throws Exception
+    {
+      JVMUtil.prepareContainer(getCurrentTest().getServerContainer());
+      super.setUp();
+    }
+
+    @Override
+    public void tearDown() throws Exception
+    {
+      super.tearDown();
+      stopMasterTransport();
+    }
+
+    @Override
+    protected InternalRepository createRepository(String name)
+    {
+      Map<String, String> props = getRepositoryProperties();
+
+      final String masterName = name + "_master";
+      IStore masterStore = createStore(masterName);
+      InternalRepository master = (InternalRepository)CDOServerUtil.createRepository(masterName, masterStore, props);
+
+      repositories.put(masterName, master);
+      LifecycleUtil.activate(master);
+
+      startMasterTransport();
+
+      CDOSessionConfigurationFactory masterFactory = new CDOSessionConfigurationFactory()
+      {
+        public org.eclipse.emf.cdo.session.CDOSessionConfiguration createSessionConfiguration()
+        {
+          IManagedContainer container = getCurrentTest().getServerContainer();
+          IConnector connector = (IConnector)container.getElement("org.eclipse.net4j.connectors", "jvm", "master");
+
+          InternalCDORevisionManager revisionManager = new CDORevisionManagerImpl();
+          revisionManager.setCache(new NOOPRevisionCache());
+
+          CDOSessionConfiguration config = CDONet4jUtil.createSessionConfiguration();
+          config.setConnector(connector);
+          config.setRepositoryName(masterName);
+          config.setRevisionManager(revisionManager);
+          return config;
+        }
+      };
+
+      CloneSynchronizer synchronizer = new CloneSynchronizer();
+      synchronizer.setMasterFactory(masterFactory);
+      synchronizer.setRetryInterval(1);
+
+      IStore store = createStore(name);
+      return (InternalRepository)CDOServerUtil.createCloneRepository(name, store, props, synchronizer);
+    }
+
+    public void startMasterTransport()
+    {
+      if (masterAcceptor == null)
+      {
+        IOUtil.OUT().println();
+        IOUtil.OUT().println("startMasterTransport()");
+        IOUtil.OUT().println();
+        IManagedContainer container = getCurrentTest().getServerContainer();
+        masterAcceptor = (IAcceptor)container.getElement("org.eclipse.net4j.acceptors", "jvm", "master");
+      }
+    }
+
+    public void stopMasterTransport()
+    {
+      if (masterAcceptor != null)
+      {
+        IOUtil.OUT().println();
+        IOUtil.OUT().println("stopMasterTransport()");
+        IOUtil.OUT().println();
+        masterAcceptor.close();
+        masterAcceptor = null;
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public static class MEM extends RepositoryConfig
   {
     public static final MEM INSTANCE = new MEM();
@@ -290,13 +383,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   /**
    * @author Eike Stepper
    */
-  public static class MEMOffline extends RepositoryConfig
+  public static class MEMOffline extends OfflineConfig
   {
     public static final MEMOffline INSTANCE = new MEMOffline();
 
     private static final long serialVersionUID = 1L;
-
-    private transient IAcceptor masterAcceptor;
 
     public MEMOffline()
     {
@@ -304,87 +395,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
 
     @Override
-    public void setUp() throws Exception
-    {
-      JVMUtil.prepareContainer(getCurrentTest().getServerContainer());
-      super.setUp();
-    }
-
-    @Override
-    public void tearDown() throws Exception
-    {
-      super.tearDown();
-      stopMasterTransport();
-    }
-
-    @Override
     protected IStore createStore(String repoName)
     {
       return MEMStoreUtil.createMEMStore();
-    }
-
-    @Override
-    protected InternalRepository createRepository(String name)
-    {
-      Map<String, String> props = getRepositoryProperties();
-
-      final String masterName = name + "_master";
-      IStore masterStore = createStore(masterName);
-      InternalRepository master = (InternalRepository)CDOServerUtil.createRepository(masterName, masterStore, props);
-
-      repositories.put(masterName, master);
-      LifecycleUtil.activate(master);
-
-      startMasterTransport();
-
-      CDOSessionConfigurationFactory masterFactory = new CDOSessionConfigurationFactory()
-      {
-        public org.eclipse.emf.cdo.session.CDOSessionConfiguration createSessionConfiguration()
-        {
-          IManagedContainer container = getCurrentTest().getServerContainer();
-          IConnector connector = (IConnector)container.getElement("org.eclipse.net4j.connectors", "jvm", "master");
-
-          InternalCDORevisionManager revisionManager = new CDORevisionManagerImpl();
-          revisionManager.setCache(new NOOPRevisionCache());
-
-          CDOSessionConfiguration config = CDONet4jUtil.createSessionConfiguration();
-          config.setConnector(connector);
-          config.setRepositoryName(masterName);
-          config.setRevisionManager(revisionManager);
-          return config;
-        }
-      };
-
-      CloneSynchronizer synchronizer = new CloneSynchronizer();
-      synchronizer.setMasterFactory(masterFactory);
-      synchronizer.setRetryInterval(1);
-
-      IStore store = createStore(name);
-      return (InternalRepository)CDOServerUtil.createCloneRepository(name, store, props, synchronizer);
-    }
-
-    public void startMasterTransport()
-    {
-      if (masterAcceptor == null)
-      {
-        IOUtil.OUT().println();
-        IOUtil.OUT().println("startMasterTransport()");
-        IOUtil.OUT().println();
-        IManagedContainer container = getCurrentTest().getServerContainer();
-        masterAcceptor = (IAcceptor)container.getElement("org.eclipse.net4j.acceptors", "jvm", "master");
-      }
-    }
-
-    public void stopMasterTransport()
-    {
-      if (masterAcceptor != null)
-      {
-        IOUtil.OUT().println();
-        IOUtil.OUT().println("stopMasterTransport()");
-        IOUtil.OUT().println();
-        masterAcceptor.close();
-        masterAcceptor = null;
-      }
     }
   }
 }

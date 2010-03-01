@@ -20,7 +20,8 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
-import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.MEMOffline;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -34,17 +35,16 @@ import java.util.Map;
  */
 public class OfflineTest extends AbstractCDOTest
 {
-  @Override
-  protected void doSetUp() throws Exception
+  public OfflineConfig getOfflineConfig()
   {
-    skipUnlessConfig(MEM_OFFLINE);
-    super.doSetUp();
+    return (OfflineConfig)getRepositoryConfig();
   }
 
   @Override
-  public MEMOffline getRepositoryConfig()
+  public boolean isValid()
   {
-    return (MEMOffline)super.getRepositoryConfig();
+    IRepositoryConfig repositoryConfig = getRepositoryConfig();
+    return repositoryConfig instanceof OfflineConfig;
   }
 
   public void testMasterCommits_ArrivalInClone() throws Exception
@@ -214,7 +214,7 @@ public class OfflineTest extends AbstractCDOTest
       sleep(100);
     }
 
-    getRepositoryConfig().stopMasterTransport();
+    getOfflineConfig().stopMasterTransport();
 
     CDOSession masterSession = openSession(clone.getName() + "_master");
     CDOTransaction masterTransaction = masterSession.openTransaction();
@@ -233,7 +233,7 @@ public class OfflineTest extends AbstractCDOTest
     Company company = getModel1Factory().createCompany();
     company.setName("Test");
 
-    getRepositoryConfig().startMasterTransport();
+    getOfflineConfig().startMasterTransport();
 
     while (clone.getState() != CDOCommonRepository.State.ONLINE)
     {

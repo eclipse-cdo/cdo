@@ -562,6 +562,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
     monitor.begin(2);
+
     try
     {
       getStore().getMetaDataManager().writePackageUnits(getConnection(), packageUnits, monitor.fork());

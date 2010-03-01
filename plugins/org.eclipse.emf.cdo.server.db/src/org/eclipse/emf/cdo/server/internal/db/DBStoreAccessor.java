@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
@@ -565,8 +566,14 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
     try
     {
-      getStore().getMetaDataManager().writePackageUnits(getConnection(), packageUnits, monitor.fork());
-      getStore().getMappingStrategy().createMapping(getConnection(), packageUnits, monitor.fork());
+      DBStore store = getStore();
+      Connection connection = getConnection();
+
+      IMetaDataManager metaDataManager = store.getMetaDataManager();
+      metaDataManager.writePackageUnits(connection, packageUnits, monitor.fork());
+
+      IMappingStrategy mappingStrategy = store.getMappingStrategy();
+      mappingStrategy.createMapping(connection, packageUnits, monitor.fork());
     }
     finally
     {
@@ -576,11 +583,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
   public int createBranch(BranchInfo branchInfo)
   {
-    if (!getStore().getMappingStrategy().hasBranchingSupport())
-    {
-      throw new UnsupportedOperationException("Mapping strategy does not support branching."); //$NON-NLS-1$
-    }
-
+    checkBranchingSupport();
     int id = getStore().getNextBranchID();
     PreparedStatement pstmt = null;
 
@@ -607,11 +610,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
   public BranchInfo loadBranch(int branchID)
   {
-    if (!getStore().getMappingStrategy().hasBranchingSupport())
-    {
-      throw new UnsupportedOperationException("Mapping strategy does not support branching."); //$NON-NLS-1$
-    }
-
+    checkBranchingSupport();
     PreparedStatement pstmt = null;
     ResultSet resultSet = null;
 
@@ -644,11 +643,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
   public SubBranchInfo[] loadSubBranches(int baseID)
   {
-    if (!getStore().getMappingStrategy().hasBranchingSupport())
-    {
-      throw new UnsupportedOperationException("Mapping strategy does not support revision deltas."); //$NON-NLS-1$
-    }
-
+    checkBranchingSupport();
     PreparedStatement pstmt = null;
     ResultSet resultSet = null;
 
@@ -677,6 +672,14 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     {
       DBUtil.close(resultSet);
       statementCache.releasePreparedStatement(pstmt);
+    }
+  }
+
+  private void checkBranchingSupport()
+  {
+    if (!getStore().getMappingStrategy().hasBranchingSupport())
+    {
+      throw new UnsupportedOperationException("Mapping strategy does not support branching."); //$NON-NLS-1$
     }
   }
 

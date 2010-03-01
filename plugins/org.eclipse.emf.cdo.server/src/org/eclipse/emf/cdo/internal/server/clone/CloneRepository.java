@@ -183,8 +183,6 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
    */
   private final class WriteThroughCommitContext extends TransactionCommitContext
   {
-    private InternalCDOSession master = (InternalCDOSession)synchronizer.getMaster();
-
     public WriteThroughCommitContext(InternalTransaction transaction)
     {
       super(transaction);
@@ -204,6 +202,7 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
       String comment = getCommitComment();
       CDOCommitData commitData = new CommitData();
 
+      InternalCDOSession master = (InternalCDOSession)synchronizer.getMaster();
       CDOSessionProtocol sessionProtocol = master.getSessionProtocol();
       CommitTransactionResult result = sessionProtocol.commitDelegation(branch, userID, comment, commitData, monitor);
 

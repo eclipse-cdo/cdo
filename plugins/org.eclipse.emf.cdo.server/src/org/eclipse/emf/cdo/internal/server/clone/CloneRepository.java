@@ -380,7 +380,7 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
   {
     private long timeStamp;
 
-    private BranchingCommitContext(InternalTransaction transaction, long timeStamp)
+    public BranchingCommitContext(InternalTransaction transaction, long timeStamp)
     {
       super(transaction);
       this.timeStamp = timeStamp;

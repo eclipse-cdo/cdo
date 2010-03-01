@@ -50,13 +50,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * TODO:
  * <ul>
- * <li>Make CDOIDs mutable.
+ * <li>Implement DBStoreAccessor.loadCommitData().
  * <li>Persist lastReplicatedBranchID and lastReplicatedCommitTime.
  * <li>Persist lastTempBranchID.
  * <li>Provide custom branching strategies.
  * <li>Consider non-auditing masters.
  * <li>Test out-of-order commits.
  * <li>Implement merging.
+ * <li>Make CDOIDs of new objects temporary when merging out of temp branch.
  * </ul>
  * 
  * @author Eike Stepper

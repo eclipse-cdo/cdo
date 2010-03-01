@@ -205,13 +205,13 @@ public class OfflineTest extends AbstractCDOTest
     assertEquals(1, events.length);
   }
 
-  public void testSync() throws Exception
+  public void testDisconnectAndSync() throws Exception
   {
     InternalRepository clone = getRepository();
     while (clone.getState() != CDOCommonRepository.State.ONLINE)
     {
       System.out.println("Waiting for ONLINE <-- " + clone.getState());
-      sleep(1000);
+      sleep(100);
     }
 
     getRepositoryConfig().stopMasterTransport();
@@ -238,7 +238,7 @@ public class OfflineTest extends AbstractCDOTest
     while (clone.getState() != CDOCommonRepository.State.ONLINE)
     {
       System.out.println("Waiting for ONLINE <-- " + clone.getState());
-      sleep(1000);
+      sleep(100);
     }
 
     CDOSession session = openSession();

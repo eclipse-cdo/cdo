@@ -55,6 +55,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * <li>Provide custom branching strategies.
  * <li>Consider non-auditing masters.
  * <li>Test out-of-order commits.
+ * <li>Implement merging.
  * </ul>
  * 
  * @author Eike Stepper

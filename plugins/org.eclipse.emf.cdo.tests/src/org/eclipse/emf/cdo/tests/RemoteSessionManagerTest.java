@@ -169,9 +169,18 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
     session1.close();
   }
 
+  public void testUnsubscribeByListen100() throws Exception
+  {
+    for (int i = 0; i < 100; i++)
+    {
+      testUnsubscribeByListen();
+    }
+  }
+
   public void testUnsubscribeByListen() throws Exception
   {
-    final AsyncResult<Integer> result1 = new AsyncResult<Integer>();
+    final AsyncResult<Integer> subscribed = new AsyncResult<Integer>();
+    final AsyncResult<Integer> unsubscribed = new AsyncResult<Integer>();
 
     CDOSession session1 = openSession();
     session1.getRemoteSessionManager().addListener(new IListener()
@@ -181,9 +190,13 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
         if (event instanceof CDORemoteSessionEvent.SubscriptionChanged)
         {
           CDORemoteSessionEvent.SubscriptionChanged e = (CDORemoteSessionEvent.SubscriptionChanged)event;
-          if (!e.isSubscribed())
+          if (e.isSubscribed())
           {
-            result1.setValue(e.getRemoteSession().getSessionID());
+            subscribed.setValue(e.getRemoteSession().getSessionID());
+          }
+          else
+          {
+            unsubscribed.setValue(e.getRemoteSession().getSessionID());
           }
         }
       }
@@ -194,13 +207,16 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
     {
       public void notifyEvent(IEvent event)
       {
+        // Do nothing
       }
     };
 
     session2.getRemoteSessionManager().addListener(listener);
-    session2.getRemoteSessionManager().removeListener(listener);
+    assertEquals(session2.getSessionID(), (int)subscribed.getValue());
 
-    assertEquals(session2.getSessionID(), (int)result1.getValue());
+    session2.getRemoteSessionManager().removeListener(listener);
+    assertEquals(session2.getSessionID(), (int)unsubscribed.getValue());
+
     session2.close();
     session1.close();
   }

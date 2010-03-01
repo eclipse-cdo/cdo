@@ -50,6 +50,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * TODO:
  * <ul>
+ * <li>Make CDOIDs mutable.
  * <li>Persist lastReplicatedBranchID and lastReplicatedCommitTime.
  * <li>Persist lastTempBranchID.
  * <li>Provide custom branching strategies.

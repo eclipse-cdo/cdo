@@ -324,13 +324,6 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     return null;
   }
 
-  /**
-   * @since 2.0
-   */
-  public void refreshRevisions()
-  {
-  }
-
   @Override
   protected void doActivate() throws Exception
   {

@@ -113,13 +113,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   public InternalCDORevision verifyRevision(InternalCDORevision revision);
 
   /**
-   * TODO Clarify the meaning of {@link #refreshRevisions()}
-   * 
-   * @since 2.0
-   */
-  public void refreshRevisions();
-
-  /**
    * @since 2.0
    */
   public void queryResources(QueryResourcesContext context);

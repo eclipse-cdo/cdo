@@ -27,7 +27,6 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
@@ -389,17 +388,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   {
     return readRevision(id, CDOBranchUtil.createBranchPoint(branchVersion.getBranch(), System.currentTimeMillis()),
         listChunk, cache);
-  }
-
-  /**
-   * TODO Clarify the meaning of {@link IStoreAccessor#refreshRevisions()} Does nothing in the Hibernate Store
-   * implementation.
-   * 
-   * @since 2.0
-   */
-  public void refreshRevisions()
-  {
-    // Do nothing
   }
 
   /**

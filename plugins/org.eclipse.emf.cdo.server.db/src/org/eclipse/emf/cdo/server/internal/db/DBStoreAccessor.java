@@ -253,8 +253,6 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   }
 
   /**
-   * TODO: implement as query when query implementation is done?
-   * 
    * @since 2.0
    */
   public void queryResources(QueryResourcesContext context)
@@ -276,11 +274,6 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   public CloseableIterator<Object> createQueryIterator(CDOQueryInfo queryInfo)
   {
     throw new UnsupportedOperationException();
-  }
-
-  public void refreshRevisions()
-  {
-    // TODO is this empty on purpose or should it be implemented (how?)
   }
 
   @Override

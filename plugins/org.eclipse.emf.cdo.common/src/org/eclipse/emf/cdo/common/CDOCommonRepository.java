@@ -71,7 +71,12 @@ public interface CDOCommonRepository extends CDOTimeProvider
    */
   public static enum State
   {
-    INITIAL, OFFLINE, SYNCING, ONLINE
+    INITIAL, OFFLINE, SYNCING, ONLINE;
+
+    public boolean isConnected()
+    {
+      return this == SYNCING || this == ONLINE;
+    }
   }
 
   /**

@@ -33,6 +33,9 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.PriorityBlockingQueue;
+
 /**
  * @author Eike Stepper
  * @since 3.0
@@ -42,6 +45,14 @@ public class CloneSynchronizer extends QueueRunner
   public static final int DEFAULT_RETRY_INTERVAL = 3;
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, CloneSynchronizer.class);
+
+  private static final Integer CONNECT_PRIORITY = 0;
+
+  private static final Integer SYNC_PRIORITY = 1;
+
+  private static final Integer BRANCH_PRIORITY = 2;
+
+  private static final Integer COMMIT_PRIORITY = 3;
 
   private CloneRepository clone;
 
@@ -100,6 +111,12 @@ public class CloneSynchronizer extends QueueRunner
   protected String getThreadName()
   {
     return "CloneSynchronizer"; //$NON-NLS-1$
+  }
+
+  @Override
+  protected BlockingQueue<Runnable> createQueue()
+  {
+    return new PriorityBlockingQueue<Runnable>();
   }
 
   @Override
@@ -176,28 +193,24 @@ public class CloneSynchronizer extends QueueRunner
   {
     synchronized (connectLock)
     {
-      if (!isActive())
+      if (clone.getState().isConnected())
       {
         return;
       }
 
-      if (clone.getState() == CloneRepository.State.SYNCING)
+      if (isActive())
       {
-        return;
+        addWork(new ConnectRunnable());
       }
-
-      if (clone.getState() == CloneRepository.State.ONLINE)
-      {
-        return;
-      }
-
-      addWork(new ConnectRunnable());
     }
   }
 
   private void scheduleSync()
   {
-    addWork(new SynRunnable());
+    if (isActive())
+    {
+      addWork(new SynRunnable());
+    }
   }
 
   /**
@@ -240,8 +253,25 @@ public class CloneSynchronizer extends QueueRunner
   /**
    * @author Eike Stepper
    */
-  private final class ConnectRunnable implements Runnable
+  private static abstract class QueueRunnable implements Runnable, Comparable<QueueRunnable>
   {
+    public int compareTo(QueueRunnable o)
+    {
+      return getPriority().compareTo(o.getPriority());
+    }
+
+    protected abstract Integer getPriority();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ConnectRunnable extends QueueRunnable
+  {
+    public ConnectRunnable()
+    {
+    }
+
     public void run()
     {
       synchronized (connectLock)
@@ -281,6 +311,12 @@ public class CloneSynchronizer extends QueueRunner
       }
     }
 
+    @Override
+    protected Integer getPriority()
+    {
+      return CONNECT_PRIORITY;
+    }
+
     private void setRootResourceID()
     {
       if (clone.getState() == CloneRepository.State.INITIAL)
@@ -306,8 +342,12 @@ public class CloneSynchronizer extends QueueRunner
   /**
    * @author Eike Stepper
    */
-  private final class SynRunnable implements Runnable
+  private final class SynRunnable extends QueueRunnable
   {
+    public SynRunnable()
+    {
+    }
+
     public void run()
     {
       checkActive();
@@ -324,16 +364,22 @@ public class CloneSynchronizer extends QueueRunner
       clone.setState(CloneRepository.State.ONLINE);
       OM.LOG.info("Synchronized with master.");
     }
+
+    @Override
+    protected Integer getPriority()
+    {
+      return SYNC_PRIORITY;
+    }
   }
 
   /**
    * @author Eike Stepper
    */
-  private final class BranchRunnable implements Runnable
+  private final class BranchRunnable extends QueueRunnable
   {
     private CDOBranch branch;
 
-    private BranchRunnable(CDOBranch branch)
+    public BranchRunnable(CDOBranch branch)
     {
       this.branch = branch;
     }
@@ -342,16 +388,34 @@ public class CloneSynchronizer extends QueueRunner
     {
       clone.handleBranch(branch);
     }
+
+    @Override
+    public int compareTo(QueueRunnable o)
+    {
+      int result = super.compareTo(o);
+      if (result == 0)
+      {
+        result = branch.compareTo(((BranchRunnable)o).branch);
+      }
+
+      return result;
+    }
+
+    @Override
+    protected Integer getPriority()
+    {
+      return BRANCH_PRIORITY;
+    }
   }
 
   /**
    * @author Eike Stepper
    */
-  private final class CommitRunnable implements Runnable
+  private final class CommitRunnable extends QueueRunnable
   {
     private CDOCommitInfo commitInfo;
 
-    private CommitRunnable(CDOCommitInfo commitInfo)
+    public CommitRunnable(CDOCommitInfo commitInfo)
     {
       this.commitInfo = commitInfo;
     }
@@ -359,6 +423,26 @@ public class CloneSynchronizer extends QueueRunner
     public void run()
     {
       clone.handleCommitInfo(commitInfo);
+    }
+
+    @Override
+    public int compareTo(QueueRunnable o)
+    {
+      int result = super.compareTo(o);
+      if (result == 0)
+      {
+        Long timeStamp = commitInfo.getTimeStamp();
+        Long timeStamp2 = ((CommitRunnable)o).commitInfo.getTimeStamp();
+        result = timeStamp < timeStamp2 ? -1 : timeStamp == timeStamp2 ? 0 : 1;
+      }
+
+      return result;
+    }
+
+    @Override
+    protected Integer getPriority()
+    {
+      return COMMIT_PRIORITY;
     }
   }
 }

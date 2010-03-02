@@ -277,24 +277,11 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   }
 
   @Override
-  public void write(InternalCommitContext context, OMMonitor monitor)
-  {
-    try
-    {
-      super.write(context, monitor);
-    }
-    finally
-    {
-      newObjects.clear();
-    }
-  }
-
-  @Override
   protected void applyIDMappings(InternalCommitContext context, OMMonitor monitor)
   {
     super.applyIDMappings(context, monitor);
 
-    // Remember CDOIDs of new objects
+    // Remember CDOIDs of new objects. They are cleared after writeRevisions()
     for (InternalCDORevision revision : context.getNewObjects())
     {
       CDOID id = revision.getID();
@@ -373,6 +360,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
     finally
     {
+      newObjects.clear();
       monitor.done();
     }
   }

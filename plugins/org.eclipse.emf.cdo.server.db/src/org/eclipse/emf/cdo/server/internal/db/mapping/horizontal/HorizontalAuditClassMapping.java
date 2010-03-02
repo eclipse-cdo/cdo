@@ -36,7 +36,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
@@ -528,7 +527,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
       newRevision = originalRevision.copy();
 
       newRevision.setVersion(oldVersion + 1);
-      newRevision.setBranchPoint(CDOBranchUtil.createBranchPoint(delta.getBranch(), created));
+      newRevision.setBranchPoint(delta.getBranch().getPoint(created));
 
       // process revision delta tree
       delta.accept(this);

@@ -60,7 +60,6 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDORemoveFeatureDeltaI
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaImpl;
-import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -171,14 +170,14 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   {
     CDOBranch branch = readCDOBranch();
     long timeStamp = readLong();
-    return CDOBranchUtil.createBranchPoint(branch, timeStamp);
+    return branch.getPoint(timeStamp);
   }
 
   public CDOBranchVersion readCDOBranchVersion() throws IOException
   {
     CDOBranch branch = readCDOBranch();
     int version = readInt();
-    return CDOBranchUtil.createBranchVersion(branch, version);
+    return branch.getVersion(version);
   }
 
   public CDOCommitData readCDOCommitData() throws IOException

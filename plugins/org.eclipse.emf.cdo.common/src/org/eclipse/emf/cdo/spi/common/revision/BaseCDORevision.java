@@ -301,7 +301,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
    */
   public void setBranchPoint(CDOBranchPoint branchPoint)
   {
-    branchPoint = CDOBranchUtil.createBranchPoint(branchPoint);
+    branchPoint = CDOBranchUtil.copy(branchPoint);
     if (TRACER.isEnabled())
     {
       TRACER.format("Setting branchPoint {0}: {1}", this, branchPoint);

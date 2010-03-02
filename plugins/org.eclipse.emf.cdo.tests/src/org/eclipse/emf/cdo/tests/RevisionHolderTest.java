@@ -260,7 +260,7 @@ public class RevisionHolderTest extends AbstractCDOTest
     public TestRevision(long id, int version, long created, long revised)
     {
       this.id = CDOIDUtil.createLong(id);
-      branchPoint = CDOBranchUtil.createBranchPoint(new CDOBranchImpl(CDOBranch.MAIN_BRANCH_ID, null), created);
+      branchPoint = new CDOBranchImpl(CDOBranch.MAIN_BRANCH_ID, null).getPoint(created);
       this.version = version;
       this.revised = revised;
     }
@@ -308,7 +308,7 @@ public class RevisionHolderTest extends AbstractCDOTest
     @Override
     public void setBranchPoint(CDOBranchPoint branchPoint)
     {
-      this.branchPoint = CDOBranchUtil.createBranchPoint(branchPoint);
+      this.branchPoint = CDOBranchUtil.copy(branchPoint);
     }
 
     @Override

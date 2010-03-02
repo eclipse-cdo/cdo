@@ -400,7 +400,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
         if (target instanceof InternalCDORevision)
         {
           revision = new PointerCDORevision(pointer.getID(), pointer.getBranch(), pointer.getRevised(), //
-              CDOBranchUtil.createBranchVersion(target));
+              CDOBranchUtil.copy(target));
         }
       }
 
@@ -410,7 +410,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
         int oldVersion = revision.getVersion() - 1;
         if (oldVersion >= CDORevision.UNSPECIFIED_VERSION)
         {
-          CDOBranchVersion old = CDOBranchUtil.createBranchVersion(revision.getBranch(), oldVersion);
+          CDOBranchVersion old = revision.getBranch().getVersion(oldVersion);
           InternalCDORevision oldRevision = getCachedRevisionByVersion(revision.getID(), old);
           if (oldRevision != null)
           {

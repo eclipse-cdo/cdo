@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.internal.common.branch;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
-import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
@@ -45,7 +44,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     this.id = id;
     this.name = name;
     baseOrBranchManager = base;
-    head = CDOBranchUtil.createBranchPoint(this, CDOBranchPoint.UNSPECIFIED_DATE);
+    head = getPoint(CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
   public CDOBranchImpl(int id, InternalCDOBranchManager branchManager)
@@ -104,12 +103,12 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
   public CDOBranchPoint getPoint(long timeStamp)
   {
-    return CDOBranchUtil.createBranchPoint(this, timeStamp);
+    return new CDOBranchPointImpl(this, timeStamp);
   }
 
   public CDOBranchVersion getVersion(int version)
   {
-    return CDOBranchUtil.createBranchVersion(this, version);
+    return new CDOBranchVersionImpl(this, version);
   }
 
   public InternalCDOBranch createBranch(String name, long timeStamp)
@@ -189,7 +188,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   public void setBranchInfo(String name, InternalCDOBranch baseBranch, long baseTimeStamp)
   {
     this.name = name;
-    baseOrBranchManager = CDOBranchUtil.createBranchPoint(baseBranch, baseTimeStamp);
+    baseOrBranchManager = baseBranch.getPoint(baseTimeStamp);
   }
 
   public void addChild(InternalCDOBranch branch)
@@ -261,7 +260,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
       CDOBranch baseBranch = branchManager.getBranch(branchInfo.getBaseBranchID());
       name = branchInfo.getName();
-      baseOrBranchManager = CDOBranchUtil.createBranchPoint(baseBranch, branchInfo.getBaseTimeStamp());
+      baseOrBranchManager = baseBranch.getPoint(branchInfo.getBaseTimeStamp());
     }
   }
 
@@ -274,7 +273,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
     public Main(InternalCDOBranchManager branchManager, long timeStamp)
     {
-      super(MAIN_BRANCH_ID, MAIN_BRANCH_NAME, CDOBranchUtil.createBranchPoint(null, timeStamp));
+      super(MAIN_BRANCH_ID, MAIN_BRANCH_NAME, new CDOBranchPointImpl(null, timeStamp));
       this.branchManager = branchManager;
     }
 

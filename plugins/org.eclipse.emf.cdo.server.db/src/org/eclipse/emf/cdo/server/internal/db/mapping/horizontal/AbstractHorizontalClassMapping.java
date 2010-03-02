@@ -36,7 +36,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
@@ -248,7 +247,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
       long timeStamp = resultSet.getLong(CDODBSchema.ATTRIBUTES_CREATED);
 
-      CDOBranchPoint branchPoint = CDOBranchUtil.createBranchPoint(revision.getBranch(), timeStamp);
+      CDOBranchPoint branchPoint = revision.getBranch().getPoint(timeStamp);
 
       revision.setBranchPoint(branchPoint);
       revision.setRevised(resultSet.getLong(CDODBSchema.ATTRIBUTES_REVISED));

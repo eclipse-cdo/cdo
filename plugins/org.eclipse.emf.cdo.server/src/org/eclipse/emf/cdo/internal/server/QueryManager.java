@@ -198,7 +198,7 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
 
       // Remember the branchPoint because it can change
       InternalView view = getView();
-      branchPoint = CDOBranchUtil.createBranchPoint(view);
+      branchPoint = CDOBranchUtil.copy(view);
     }
 
     public InternalQueryResult getQueryResult()

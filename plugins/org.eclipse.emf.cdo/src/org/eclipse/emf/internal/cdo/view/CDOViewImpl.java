@@ -175,7 +175,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
    */
   public CDOViewImpl(CDOBranch branch, long timeStamp)
   {
-    branchPoint = CDOBranchUtil.createBranchPoint(branch, timeStamp);
+    branchPoint = branch.getPoint(timeStamp);
     options = createOptions();
   }
 
@@ -295,7 +295,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   public boolean setBranchPoint(CDOBranch branch, long timeStamp)
   {
     checkActive();
-    return setBranchPoint(CDOBranchUtil.createBranchPoint(branch, timeStamp));
+    return setBranchPoint(branch.getPoint(timeStamp));
   }
 
   protected boolean setBranchPoint(CDOBranchPoint branchPoint)
@@ -2215,7 +2215,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     public ViewTargetChangedEvent(CDOBranchPoint branchPoint)
     {
-      this.branchPoint = CDOBranchUtil.createBranchPoint(branchPoint);
+      this.branchPoint = CDOBranchUtil.copy(branchPoint);
     }
 
     @Override

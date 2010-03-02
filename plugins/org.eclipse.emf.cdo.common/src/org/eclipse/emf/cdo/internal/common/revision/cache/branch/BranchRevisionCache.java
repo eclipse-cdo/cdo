@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.cache.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.revision.cache.EvictionEventImpl;
-import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.CheckUtil;
@@ -210,7 +209,7 @@ public class BranchRevisionCache extends ReferenceQueueWorker<InternalCDORevisio
     CDOBranch branch = key.getBranch();
     int version = key.getVersion();
 
-    InternalCDORevision revision = removeRevision(id, CDOBranchUtil.createBranchVersion(branch, version));
+    InternalCDORevision revision = removeRevision(id, branch.getVersion(version));
     if (revision == null)
     {
       // Use revision in eviction event

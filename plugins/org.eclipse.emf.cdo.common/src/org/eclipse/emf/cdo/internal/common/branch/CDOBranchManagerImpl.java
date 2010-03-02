@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
-import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
@@ -180,7 +179,7 @@ public class CDOBranchManagerImpl extends Lifecycle implements InternalCDOBranch
 
   public InternalCDOBranch createBranch(int branchID, String name, InternalCDOBranch baseBranch, long baseTimeStamp)
   {
-    CDOBranchPoint base = CDOBranchUtil.createBranchPoint(baseBranch, baseTimeStamp);
+    CDOBranchPoint base = baseBranch.getPoint(baseTimeStamp);
     InternalCDOBranch branch = new CDOBranchImpl(branchID, name, base);
     synchronized (branches)
     {

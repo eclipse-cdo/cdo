@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
-import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -387,8 +386,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
       CDORevisionCacheAdder cache)
   {
-    return readRevision(id, CDOBranchUtil.createBranchPoint(branchVersion.getBranch(), System.currentTimeMillis()),
-        listChunk, cache);
+    return readRevision(id, branchVersion.getBranch().getPoint(System.currentTimeMillis()), listChunk, cache);
   }
 
   /**

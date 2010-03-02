@@ -10,11 +10,13 @@
  */
 package org.eclipse.emf.cdo.common.branch;
 
+import org.eclipse.net4j.util.container.IContainer;
+
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public interface CDOBranch extends Comparable<CDOBranch>
+public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>
 {
   public static final int MAIN_BRANCH_ID = 0;
 

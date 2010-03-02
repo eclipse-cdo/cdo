@@ -19,12 +19,14 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.SubBranchInfo;
 
+import org.eclipse.net4j.util.container.Container;
+
 import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
  */
-public class CDOBranchImpl implements InternalCDOBranch
+public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBranch
 {
   public static final int ILLEGAL_BRANCH_ID = Integer.MIN_VALUE;
 
@@ -118,6 +120,11 @@ public class CDOBranchImpl implements InternalCDOBranch
   public InternalCDOBranch createBranch(String name)
   {
     return getBranchManager().createBranch(name, this, CDOBranchPoint.UNSPECIFIED_DATE);
+  }
+
+  public CDOBranch[] getElements()
+  {
+    return getBranches();
   }
 
   public synchronized InternalCDOBranch[] getBranches()

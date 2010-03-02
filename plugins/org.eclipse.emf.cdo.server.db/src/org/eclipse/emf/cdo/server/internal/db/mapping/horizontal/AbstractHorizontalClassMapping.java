@@ -426,7 +426,6 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       CDOID id = revision.getID();
       if (revision.getVersion() == CDORevision.FIRST_VERSION)
       {
-        // XXX Assumption no longer valid with branches!
         mappingStrategy.putObjectType(accessor, id, eClass);
       }
       else

@@ -451,9 +451,10 @@ public class TransactionCommitContext implements InternalCommitContext
       newPackageUnit.setTimeStamp(timeStamp);
     }
 
+    CDOBranch branch = transaction.getBranch();
     for (InternalCDORevision newObject : newObjects)
     {
-      newObject.adjustForCommit(transaction.getBranch(), timeStamp);
+      newObject.adjustForCommit(branch, timeStamp);
     }
   }
 

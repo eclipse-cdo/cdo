@@ -168,7 +168,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
       }
 
       addIDMappings(context, monitor.fork());
-      context.applyIDMappings(monitor.fork());
+      applyIDMappings(context, monitor);
 
       if (detachedObjects.length != 0)
       {
@@ -252,6 +252,14 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
    * @since 3.0
    */
   protected abstract void addIDMappings(InternalCommitContext commitContext, OMMonitor monitor);
+
+  /**
+   * @since 3.0
+   */
+  protected void applyIDMappings(InternalCommitContext context, OMMonitor monitor)
+  {
+    context.applyIDMappings(monitor.fork());
+  }
 
   /**
    * @since 3.0

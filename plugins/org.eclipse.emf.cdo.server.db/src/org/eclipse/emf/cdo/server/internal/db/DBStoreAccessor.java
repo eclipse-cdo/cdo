@@ -147,7 +147,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       TRACER.format("Selecting object type: {0}", id); //$NON-NLS-1$
     }
 
-    return getStore().getMappingStrategy().readObjectType(this, id);
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    return mappingStrategy.readObjectType(this, id);
   }
 
   protected EClass getObjectType(CDOID id)
@@ -159,19 +160,19 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
 
     EClass result = repository.getRevisionManager().getObjectType(id);
-    if (result == null)
+    if (result != null)
     {
-      CDOClassifierRef type = readObjectType(id);
-      if (type == null)
-      {
-        return null;
-      }
-
-      CDOPackageRegistry packageRegistry = repository.getPackageRegistry();
-      result = (EClass)type.resolve(packageRegistry);
+      return result;
     }
 
-    return result;
+    CDOClassifierRef type = readObjectType(id);
+    if (type != null)
+    {
+      CDOPackageRegistry packageRegistry = repository.getPackageRegistry();
+      return (EClass)type.resolve(packageRegistry);
+    }
+
+    throw new IllegalStateException("No type found for " + id);
   }
 
   public boolean isNewObject(CDOID id)
@@ -275,22 +276,30 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     return null;
   }
 
-  public CloseableIterator<Object> createQueryIterator(CDOQueryInfo queryInfo)
-  {
-    throw new UnsupportedOperationException();
-  }
-
   @Override
   public void write(InternalCommitContext context, OMMonitor monitor)
   {
-    // remember CDOIDs of new objects
-    newObjects.clear();
+    try
+    {
+      super.write(context, monitor);
+    }
+    finally
+    {
+      newObjects.clear();
+    }
+  }
+
+  @Override
+  protected void applyIDMappings(InternalCommitContext context, OMMonitor monitor)
+  {
+    super.applyIDMappings(context, monitor);
+
+    // Remember CDOIDs of new objects
     for (InternalCDORevision revision : context.getNewObjects())
     {
-      newObjects.add(revision.getID());
+      CDOID id = revision.getID();
+      newObjects.add(id);
     }
-
-    super.write(context, monitor);
   }
 
   @Override

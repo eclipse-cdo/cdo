@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others. 
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.IObjectTypeCache;
+import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
@@ -80,11 +81,12 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
 
   public final CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlSelect, ReuseProbability.MAX);
+      stmt = statementCache.getPreparedStatement(sqlSelect, ReuseProbability.MAX);
       stmt.setLong(1, CDOIDUtil.getLong(id));
       DBUtil.trace(stmt.toString());
       ResultSet resultSet = stmt.executeQuery();
@@ -105,7 +107,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -209,8 +211,8 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
 
     sqlSelect = "SELECT " + typeField.getName() + " FROM " + table.getName() + " WHERE " + idField.getName() + " = ?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     sqlInsert = "INSERT INTO " + table.getName() + "(" //$NON-NLS-1$ //$NON-NLS-2$
-        + idField.getName() + "," + typeField.getName() //$NON-NLS-1$  
-        + ") VALUES (?,?)"; //$NON-NLS-1$ 
+        + idField.getName() + "," + typeField.getName() //$NON-NLS-1$
+        + ") VALUES (?,?)"; //$NON-NLS-1$
     sqlDelete = "DELETE FROM " + table.getName() + " WHERE " + idField.getName() + " = ?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 

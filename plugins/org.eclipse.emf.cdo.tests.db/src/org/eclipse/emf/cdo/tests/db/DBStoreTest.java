@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -18,7 +19,16 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.GregorianCalendar;
 
@@ -105,6 +115,128 @@ public class DBStoreTest extends AbstractCDOTest
     assertEquals(1, resource.getContents().size());
     o = (PurchaseOrder)resource.getContents().get(0);
     assertEquals(new GregorianCalendar(2008, 11, 24, 12, 34, 56).getTime(), o.getDate());
+  }
+
+  public void testStoreCustom()
+  {
+    EPackage pkg = EMFUtil.createEPackage("customTest", "ct", "http://tests.cdo.emf.eclipse.org/customTest");
+
+    EDataType dt = EcoreFactory.eINSTANCE.createEDataType();
+    dt.setName("custom");
+    dt.setInstanceClass(Custom.class);
+    pkg.getEClassifiers().add(dt);
+
+    EClass clz = EMFUtil.createEClass(pkg, "customClass", false, false);
+    EAttribute att = EMFUtil.createEAttribute(clz, "customAtt", dt);
+
+    Custom cust1 = new Custom(2, 5);
+    Custom cust1ref = new Custom(2, 5);
+    Custom cust2 = new Custom(5, 2);
+    Custom cust2ref = new Custom(5, 2);
+
+    assertEquals(cust1ref, cust1);
+    assertEquals(cust2ref, cust2);
+
+    CDOUtil.prepareDynamicEPackage(pkg);
+
+    {
+      EObject obj1 = EcoreUtil.create(clz);
+      EObject obj2 = EcoreUtil.create(clz);
+
+      obj1.eSet(att, cust1);
+      obj2.eSet(att, cust2);
+
+      CDOSession session = openSession();
+      session.getPackageRegistry().putEPackage(pkg);
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/test");
+      resource.getContents().add(obj1);
+      resource.getContents().add(obj2);
+      transaction.commit();
+      transaction.close();
+      session.close();
+    }
+
+    clearCache(getRepository().getRevisionManager());
+
+    {
+      CDOSession session = openSession();
+      session.getPackageRegistry().putEPackage(pkg);
+      CDOView view = session.openView();
+      CDOResource resource = view.getResource("/test");
+
+      assertEquals(2, resource.getContents().size());
+
+      EObject obj1 = resource.getContents().get(0);
+      EObject obj2 = resource.getContents().get(1);
+
+      assertEquals(cust1ref, obj1.eGet(att));
+      assertEquals(cust2ref, obj2.eGet(att));
+
+      view.close();
+      session.close();
+    }
+
+  }
+
+  public static class Custom
+  {
+    private int first;
+
+    private int second;
+
+    public Custom(String emfString)
+    {
+      int sep = emfString.indexOf('!');
+      first = Integer.parseInt(emfString.substring(0, sep));
+      second = Integer.parseInt(emfString.substring(sep + 1));
+    }
+
+    public Custom(int first, int second)
+    {
+      this.first = first;
+      this.second = second;
+    }
+
+    public int getFirst()
+    {
+      return first;
+    }
+
+    public int getSecond()
+    {
+      return second;
+    }
+
+    @Override
+    public boolean equals(Object other)
+    {
+      if (other instanceof Custom)
+      {
+        return first == ((Custom)other).first && second == ((Custom)other).second;
+      }
+
+      return false;
+    }
+
+    @Override
+    public int hashCode()
+    {
+      return (first + 3 * second) % 65536;
+    }
+
+    // -------------------------------------------
+    // - EMF String serialization
+    @Override
+    public String toString()
+    {
+      return Integer.valueOf(first) + "!" + Integer.valueOf(second);
+    }
+
+    public static Custom valueOf(String s)
+    {
+      return new Custom(s);
+    }
   }
 
   private void storeRetrieve(String s)

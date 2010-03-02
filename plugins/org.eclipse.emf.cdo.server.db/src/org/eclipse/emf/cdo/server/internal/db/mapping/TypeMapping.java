@@ -34,9 +34,7 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnumLiteral;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.math.BigDecimal;
@@ -50,7 +48,7 @@ import java.util.Date;
 /**
  * This is a default implementation for the {@link ITypeMapping} interface which provides default behavor for all common
  * types.
- *
+ * 
  * @author Eike Stepper
  */
 public abstract class TypeMapping implements ITypeMapping
@@ -67,7 +65,7 @@ public abstract class TypeMapping implements ITypeMapping
 
   /**
    * Create a new type mapping
-   *
+   * 
    * @param mappingStrategy
    *          the associated mapping strategy.
    * @param feature
@@ -221,7 +219,7 @@ public abstract class TypeMapping implements ITypeMapping
   /**
    * Returns the SQL type of this TypeMapping. The default implementation considers the type map hold by the meta-data
    * manager (@see {@link MetaDataManager#getDBType(org.eclipse.emf.ecore.EClassifier)} Subclasses may override.
-   *
+   * 
    * @return The sql type of this TypeMapping.
    */
   protected int getSqlType()
@@ -603,22 +601,9 @@ public abstract class TypeMapping implements ITypeMapping
    */
   public static class TMCustom extends TypeMapping
   {
-    private EDataType dataType;
-
-    private EFactory factory;
-
     public TMCustom(IMappingStrategy mappingStrategy, EStructuralFeature feature, DBType type)
     {
       super(mappingStrategy, feature, type);
-      dataType = (EDataType)getFeature().getEType();
-      factory = dataType.getEPackage().getEFactoryInstance();
-    }
-
-    @Override
-    protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
-    {
-      String svalue = factory.convertToString(dataType, value);
-      stmt.setString(index, svalue);
     }
 
     @Override
@@ -630,7 +615,7 @@ public abstract class TypeMapping implements ITypeMapping
         return getFeature().isUnsettable() ? CDORevisionData.NIL : null;
       }
 
-      return factory.createFromString(dataType, val);
+      return val;
     }
   }
 }

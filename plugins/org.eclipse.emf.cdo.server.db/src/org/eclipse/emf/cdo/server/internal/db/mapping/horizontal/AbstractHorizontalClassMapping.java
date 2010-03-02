@@ -474,9 +474,6 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     // see #handleRevisions() implementation in HorizontalBranchingClassMapping
     // for branch handling.
 
-    // TODO: test for timeStamp == INVALID_TIME and encode revision.isValid() as WHERE instead of fetching all revisions
-    // in order to increase performance
-
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     IRepository repository = accessor.getStore().getRepository();
     CDORevisionManager revisionManager = repository.getRevisionManager();
@@ -485,11 +482,27 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     PreparedStatement stmt = null;
     ResultSet rs = null;
 
+    // TODO: test for timeStamp == INVALID_TIME and encode revision.isValid() as WHERE instead of fetching all revisions
+    // in order to increase performance
+
+    StringBuilder builder = new StringBuilder(sqlSelectForHandle);
+
+    if (timeStamp != CDOBranchPoint.INVALID_DATE)
+    {
+      builder.append(" WHERE "); //$NON-NLS-1$
+      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+      builder.append("=? "); //$NON-NLS-1$      
+    }
+
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlSelectForHandle, ReuseProbability.LOW);
-      rs = stmt.executeQuery();
+      stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.LOW);
+      if (timeStamp != CDOBranchPoint.INVALID_DATE)
+      {
+        stmt.setLong(1, timeStamp);
+      }
 
+      rs = stmt.executeQuery();
       while (rs.next())
       {
         long id = rs.getLong(1);
@@ -498,11 +511,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
         InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(CDOIDUtil
             .createLong(id), branchManager.getMainBranch().getVersion(version), CDORevision.UNCHUNKED, true);
 
-        // TODO see above - maybe check this already with the WHERE-part
-        if (timeStamp == CDOBranchPoint.INVALID_DATE || revision.getTimeStamp() == timeStamp)
-        {
-          handler.handleRevision(revision);
-        }
+        handler.handleRevision(revision);
       }
     }
     catch (SQLException e)

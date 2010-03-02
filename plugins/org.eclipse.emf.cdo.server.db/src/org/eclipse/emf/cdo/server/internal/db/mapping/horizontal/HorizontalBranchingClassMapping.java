@@ -654,16 +654,25 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
   {
     StringBuilder builder = new StringBuilder(sqlSelectForHandle);
+    boolean whereAppend = false;
+
     if (branch != null)
     {
       // TODO: Prepare this string literal
-      builder.append("WHERE "); //$NON-NLS-1$
+      builder.append(" WHERE "); //$NON-NLS-1$       
       builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
       builder.append("=? "); //$NON-NLS-1$
+
+      whereAppend = true;
     }
 
-    // TODO: test for timeStamp == INVALID_TIME and encode revision.isValid() as WHERE instead of fetching all revisions
-    // in order to increase performance
+    if (timeStamp != CDOBranchPoint.INVALID_DATE)
+    {
+      // TODO: Prepare this string literal
+      builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
+      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+      builder.append("=? "); //$NON-NLS-1$
+    }
 
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     IRepository repository = accessor.getStore().getRepository();
@@ -676,9 +685,16 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     try
     {
       stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.LOW);
+
+      int col = 1;
       if (branch != null)
       {
-        stmt.setInt(1, branch.getID());
+        stmt.setInt(col++, branch.getID());
+      }
+
+      if (timeStamp != CDOBranchPoint.INVALID_DATE)
+      {
+        stmt.setLong(col, timeStamp);
       }
 
       rs = stmt.executeQuery();
@@ -691,11 +707,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(CDOIDUtil
             .createLong(id), branchManager.getBranch(branchId).getVersion(version), CDORevision.UNCHUNKED, true);
 
-        // TODO see above - maybe check this already with the WHERE-part
-        if (timeStamp == CDOBranchPoint.INVALID_DATE || revision.getTimeStamp() == timeStamp)
-        {
-          handler.handleRevision(revision);
-        }
+        handler.handleRevision(revision);
       }
     }
     catch (SQLException e)

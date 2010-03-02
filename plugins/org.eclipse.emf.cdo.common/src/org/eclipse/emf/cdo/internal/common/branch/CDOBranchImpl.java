@@ -192,19 +192,24 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     baseOrBranchManager = CDOBranchUtil.createBranchPoint(baseBranch, baseTimeStamp);
   }
 
-  public synchronized void addChild(InternalCDOBranch branch)
+  public void addChild(InternalCDOBranch branch)
   {
-    if (branches == null)
+    synchronized (this)
     {
-      branches = new InternalCDOBranch[] { branch };
+      if (branches == null)
+      {
+        branches = new InternalCDOBranch[] { branch };
+      }
+      else
+      {
+        InternalCDOBranch[] newBranches = new InternalCDOBranch[branches.length + 1];
+        System.arraycopy(branches, 0, newBranches, 0, branches.length);
+        newBranches[branches.length] = branch;
+        branches = newBranches;
+      }
     }
-    else
-    {
-      InternalCDOBranch[] newBranches = new InternalCDOBranch[branches.length + 1];
-      System.arraycopy(branches, 0, newBranches, 0, branches.length);
-      newBranches[branches.length] = branch;
-      branches = newBranches;
-    }
+
+    fireElementAddedEvent(branch);
   }
 
   public int compareTo(CDOBranch o)

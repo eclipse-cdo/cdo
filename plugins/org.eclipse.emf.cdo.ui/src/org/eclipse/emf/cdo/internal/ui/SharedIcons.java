@@ -72,6 +72,8 @@ public class SharedIcons
 
   public static final String WIZBAN_PROTOCOL_PROBLEM = WIZBAN + "ProtocolProblem"; //$NON-NLS-1$
 
+  public static final String WIZBAN_TARGET_SELECTION = WIZBAN + "BranchBanner"; //$NON-NLS-1$
+
   public static Image getImage(String key)
   {
     key = mangleKey(key);

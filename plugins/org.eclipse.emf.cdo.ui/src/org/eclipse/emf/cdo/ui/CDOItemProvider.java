@@ -15,16 +15,21 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
+import org.eclipse.emf.cdo.internal.ui.actions.ChangeViewTargetAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseSessionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CommitTransactionAction;
-import org.eclipse.emf.cdo.internal.ui.actions.CreateResourceAction;
+import org.eclipse.emf.cdo.internal.ui.actions.CreateResourceNodeAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ExportResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ImportResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.LoadResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ManagePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenAuditAction;
+import org.eclipse.emf.cdo.internal.ui.actions.OpenResourceEditorAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenViewEditorAction;
@@ -35,10 +40,14 @@ import org.eclipse.emf.cdo.internal.ui.actions.ReloadViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RollbackTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
@@ -83,8 +92,12 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   {
     if (element instanceof CDOView)
     {
-      // CDOView view = (CDOView)element;
-      return NO_ELEMENTS;
+      return ((CDOView)element).getRootResource().getContents().toArray();
+    }
+
+    if (element instanceof CDOResourceFolder)
+    {
+      return ((CDOResourceFolder)element).getNodes().toArray();
     }
 
     return super.getChildren(element);
@@ -95,8 +108,12 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   {
     if (element instanceof CDOView)
     {
-      // CDOView view = (CDOView)element;
-      return false;
+      return ((CDOView)element).getRootResource().getContents().size() > 0;
+    }
+
+    if (element instanceof CDOResourceFolder)
+    {
+      return ((CDOResourceFolder)element).getNodes().size() > 0;
     }
 
     return super.hasChildren(element);
@@ -105,10 +122,17 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   @Override
   public Object getParent(Object element)
   {
-    // if (element instanceof CDOViewHistoryEntry)
-    // {
-    // return ((CDOViewHistoryEntry)element).getView();
-    // }
+    if (element instanceof CDOResourceNode)
+    {
+      CDOResourceNode node = (CDOResourceNode)element;
+      CDOResourceNode parent = (CDOResourceNode)node.eContainer();
+      if (parent.isRoot())
+      {
+        return parent.cdoView();
+      }
+
+      return parent;
+    }
 
     return super.getParent(element);
   }
@@ -116,6 +140,11 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   @Override
   public String getText(Object obj)
   {
+    if (obj instanceof CDOResourceNode)
+    {
+      return ((CDOResourceNode)obj).getName();
+    }
+
     if (obj instanceof CDOSession)
     {
       return getSessionLabel((CDOSession)obj);
@@ -201,7 +230,30 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       {
         fillView(manager, (CDOView)object);
       }
+      else if (object instanceof CDOResource)
+      {
+        fillResource(manager, (CDOResource)object);
+      }
+      else if (object instanceof CDOResourceFolder)
+      {
+        fillResourceFolder(manager, (CDOResourceFolder)object);
+      }
     }
+  }
+
+  /**
+   * @since 3.0
+   */
+  protected void fillResourceFolder(IMenuManager manager, CDOResourceFolder folder)
+  {
+  }
+
+  /**
+   * @since 3.0
+   */
+  protected void fillResource(IMenuManager manager, CDOResource resource)
+  {
+    manager.add(new OpenResourceEditorAction(page, resource));
   }
 
   /**
@@ -282,10 +334,16 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     manager.add(new OpenViewEditorAction(page, view));
     manager.add(new LoadResourceAction(page, view));
     manager.add(new ExportResourceAction(page, view));
+    manager.add(new ChangeViewTargetAction(page, view));
     manager.add(new Separator());
     if (!view.isReadOnly())
     {
-      manager.add(new CreateResourceAction(page, view));
+      {
+        CDOResource rootResource = view.getRootResource();
+        manager.add(new CreateResourceNodeAction(page, view, rootResource, false));
+        manager.add(new CreateResourceNodeAction(page, view, rootResource, true));
+      }
+
       manager.add(new ImportResourceAction(page, view));
       manager.add(new CommitTransactionAction(page, view));
       manager.add(new RollbackTransactionAction(page, view));
@@ -301,19 +359,33 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   protected void elementAdded(Object element, Object parent)
   {
     super.elementAdded(element, parent);
-    if (element instanceof CDOView)
-    {
-      // CDOView view = (CDOView)element;
-    }
-  }
 
-  @Override
-  protected void elementRemoved(Object element, Object parent)
-  {
-    super.elementRemoved(element, parent);
+    if (element instanceof CDOSession)
+    {
+      ((CDOSession)element).addListener(new IListener()
+      {
+        public void notifyEvent(IEvent event)
+        {
+          if (event instanceof CDOSessionInvalidationEvent)
+          {
+            refreshViewer(true);
+          }
+        }
+      });
+    }
+
     if (element instanceof CDOView)
     {
-      // CDOView view = (CDOView)element;
+      ((CDOView)element).addListener(new IListener()
+      {
+        public void notifyEvent(IEvent event)
+        {
+          if (event instanceof CDOViewTargetChangedEvent)
+          {
+            refreshViewer(true);
+          }
+        }
+      });
     }
   }
 

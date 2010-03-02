@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -29,8 +28,7 @@ public final class OpenResourceEditorAction extends ResourceNodeAction
 
   private static final String TOOL_TIP = Messages.getString("OpenResourceEditorAction.1"); //$NON-NLS-1$
 
-  public OpenResourceEditorAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
-      CDOResourceNode resourceNode)
+  public OpenResourceEditorAction(IWorkbenchPage page, CDOResourceNode resourceNode)
   {
     super(page, TITLE, TOOL_TIP, null, resourceNode);
   }

@@ -46,19 +46,7 @@ public class CDOBranchPointImpl implements CDOBranchPoint
     int result = branch.compareTo(o.getBranch());
     if (result == 0)
     {
-      long timeStamp1 = timeStamp;
-      if (timeStamp1 == UNSPECIFIED_DATE)
-      {
-        timeStamp1 = Long.MAX_VALUE;
-      }
-
-      long timeStamp2 = o.getTimeStamp();
-      if (timeStamp2 == UNSPECIFIED_DATE)
-      {
-        timeStamp2 = Long.MAX_VALUE;
-      }
-
-      result = timeStamp1 < timeStamp2 ? -1 : timeStamp1 == timeStamp2 ? 0 : 1;
+      result = CDOCommonUtil.compareTimeStamps(timeStamp, o.getTimeStamp());
     }
 
     return result;

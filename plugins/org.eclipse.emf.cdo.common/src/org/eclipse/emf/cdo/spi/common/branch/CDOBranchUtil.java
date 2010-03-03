@@ -13,7 +13,11 @@ package org.eclipse.emf.cdo.spi.common.branch;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchManagerImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -42,29 +46,54 @@ public final class CDOBranchUtil
 
   public static CDOBranchPoint getAncestor(CDOBranchPoint point1, CDOBranchPoint point2)
   {
-    CDOBranch branch1 = point1.getBranch();
-    CDOBranch branch2 = point2.getBranch();
-    if (branch1 == branch2)
+    if (point1.getBranch() == null)
     {
-      if (point1.compareTo(point2) < 0)
-      {
-        return point1;
-      }
+      // Must be the main branch base
+      return point1;
+    }
 
+    if (point2.getBranch() == null)
+    {
+      // Must be the main branch base
       return point2;
     }
 
-    CDOBranchPoint[] basePath1 = branch1.getBasePath();
-    for (int i = basePath1.length - 1; i >= 0; --i)
+    CDOBranchPoint[] path1 = getPath(point1);
+    CDOBranchPoint[] path2 = getPath(point2);
+    for (CDOBranchPoint pathPoint1 : path1)
     {
-      CDOBranchPoint pathPoint1 = basePath1[i];
-      CDOBranchPoint ancestor = getAncestor(point2, pathPoint1);
-      if (ancestor != null)
+      for (CDOBranchPoint pathPoint2 : path2)
       {
-        return ancestor;
+        if (pathPoint1.getBranch() == pathPoint2.getBranch())
+        {
+          if (CDOCommonUtil.compareTimeStamps(pathPoint1.getTimeStamp(), pathPoint2.getTimeStamp()) < 0)
+          {
+            return pathPoint1;
+          }
+
+          return pathPoint2;
+        }
       }
     }
 
+    // Can not happen because any two branches meet on the main branch
     return null;
+  }
+
+  public static CDOBranchPoint[] getPath(CDOBranchPoint point)
+  {
+    List<CDOBranchPoint> result = new ArrayList<CDOBranchPoint>();
+    getPath(point, result);
+    return result.toArray(new CDOBranchPoint[result.size()]);
+  }
+
+  private static void getPath(CDOBranchPoint point, List<CDOBranchPoint> result)
+  {
+    CDOBranch branch = point.getBranch();
+    if (branch != null)
+    {
+      result.add(point);
+      getPath(branch.getBase(), result);
+    }
   }
 }

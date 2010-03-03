@@ -245,12 +245,6 @@ public class BranchingTest extends AbstractCDOTest
     branchManager = session.getBranchManager();
     mainBranch = branchManager.getMainBranch();
 
-    System.out.println("BASE OF mainBranch: " + mainBranch.getBase());
-    System.out.println("BASE OF testing1:   " + testing1.getBase());
-    System.out.println("BASE OF subsub1:    " + subsub1.getBase());
-    System.out.println("BASE OF testing2:   " + testing2.getBase());
-    System.out.println("BASE OF subsub2:    " + subsub2.getBase());
-
     assertAncestor(mainBranch.getBase(), mainBranch.getBase(), mainBranch.getHead());
     assertAncestor(mainBranch.getBase(), mainBranch.getBase(), testing1.getHead());
     assertAncestor(mainBranch.getBase(), mainBranch.getBase(), subsub1.getHead());

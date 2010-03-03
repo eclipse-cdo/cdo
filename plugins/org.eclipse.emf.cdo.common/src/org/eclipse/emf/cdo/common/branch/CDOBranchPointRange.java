@@ -8,16 +8,16 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.common.changeset;
+package org.eclipse.emf.cdo.common.branch;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public interface CDOChangeSet extends CDOBranchPointRange, CDOChangeSetData
+public interface CDOBranchPointRange
 {
-  public CDOBranchPoint getAncestorPoint();
+  public CDOBranchPoint getStartPoint();
+
+  public CDOBranchPoint getEndPoint();
 }

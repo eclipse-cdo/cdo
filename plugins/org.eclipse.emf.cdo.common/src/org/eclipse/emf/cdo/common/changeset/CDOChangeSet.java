@@ -8,18 +8,17 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.common.commit;
+package org.eclipse.emf.cdo.common.changeset;
 
-import org.eclipse.emf.cdo.common.changeset.CDOChangeSetData;
-import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
-
-import java.util.List;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public interface CDOCommitData extends CDOChangeSetData
+public interface CDOChangeSet extends CDOChangeSetData
 {
-  public List<CDOPackageUnit> getNewPackageUnits();
+  public CDOBranchPoint getSource();
+
+  public CDOBranchPoint getTarget();
 }

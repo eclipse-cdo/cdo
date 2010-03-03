@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -225,6 +226,53 @@ public class BranchingTest extends AbstractCDOTest
     assertEquals(subsub.getBasePath(), new CDOBranchPoint[] { mainBranch.getBase(), testing1.getBase(),
         subsub.getBase() });
     session.close();
+  }
+
+  public void testAncestor() throws Exception
+  {
+    CDOSession session = openSession1();
+    CDOBranchManager branchManager = session.getBranchManager();
+    CDOBranch mainBranch = branchManager.getMainBranch();
+
+    CDOBranch testing1 = mainBranch.createBranch("testing1");
+    CDOBranch subsub1 = testing1.createBranch("subsub1");
+
+    CDOBranch testing2 = mainBranch.createBranch("testing2");
+    CDOBranch subsub2 = testing2.createBranch("subsub2");
+
+    closeSession1();
+    session = openSession2();
+    branchManager = session.getBranchManager();
+    mainBranch = branchManager.getMainBranch();
+
+    System.out.println("BASE OF mainBranch: " + mainBranch.getBase());
+    System.out.println("BASE OF testing1:   " + testing1.getBase());
+    System.out.println("BASE OF subsub1:    " + subsub1.getBase());
+    System.out.println("BASE OF testing2:   " + testing2.getBase());
+    System.out.println("BASE OF subsub2:    " + subsub2.getBase());
+
+    assertAncestor(mainBranch.getBase(), mainBranch.getBase(), mainBranch.getHead());
+    assertAncestor(mainBranch.getBase(), mainBranch.getBase(), testing1.getHead());
+    assertAncestor(mainBranch.getBase(), mainBranch.getBase(), subsub1.getHead());
+    assertAncestor(mainBranch.getBase(), mainBranch.getBase(), testing2.getHead());
+    assertAncestor(mainBranch.getBase(), mainBranch.getBase(), subsub2.getHead());
+
+    assertAncestor(testing1.getBase(), testing1.getBase(), testing1.getHead());
+    assertAncestor(subsub1.getBase(), subsub1.getBase(), subsub1.getHead());
+    assertAncestor(testing2.getBase(), testing2.getBase(), testing2.getHead());
+    assertAncestor(subsub2.getBase(), subsub2.getBase(), subsub2.getHead());
+
+    assertAncestor(testing1.getBase(), subsub1.getHead(), subsub2.getHead());
+    assertAncestor(subsub2.getBase(), testing2.getHead(), subsub2.getHead());
+    assertAncestor(subsub1.getBase(), testing1.getHead(), subsub1.getHead());
+
+    session.close();
+  }
+
+  private void assertAncestor(CDOBranchPoint expected, CDOBranchPoint point1, CDOBranchPoint point2)
+  {
+    assertEquals(expected, CDOBranchUtil.getAncestor(point1, point2));
+    assertEquals(expected, CDOBranchUtil.getAncestor(point2, point1));
   }
 
   public void testCommit() throws Exception

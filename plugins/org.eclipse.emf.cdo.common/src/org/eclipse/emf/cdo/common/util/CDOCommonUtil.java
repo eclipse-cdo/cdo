@@ -24,6 +24,21 @@ public final class CDOCommonUtil
   {
   }
 
+  public static int compareTimeStamps(long t1, long t2)
+  {
+    if (t1 == CDORevision.UNSPECIFIED_DATE)
+    {
+      t1 = Long.MAX_VALUE;
+    }
+
+    if (t2 == CDORevision.UNSPECIFIED_DATE)
+    {
+      t2 = Long.MAX_VALUE;
+    }
+
+    return t1 < t2 ? -1 : t1 == t2 ? 0 : 1;
+  }
+
   public static String formatTimeStamp()
   {
     return formatTimeStamp(System.currentTimeMillis());

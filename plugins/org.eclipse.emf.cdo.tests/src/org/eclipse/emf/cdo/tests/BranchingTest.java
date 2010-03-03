@@ -269,6 +269,37 @@ public class BranchingTest extends AbstractCDOTest
     assertEquals(expected, CDOBranchUtil.getAncestor(point2, point1));
   }
 
+  public void testContainment() throws Exception
+  {
+    CDOSession session = openSession1();
+    CDOBranchManager branchManager = session.getBranchManager();
+    CDOBranch mainBranch = branchManager.getMainBranch();
+
+    CDOBranch testing1 = mainBranch.createBranch("testing1");
+    CDOBranch subsub1 = testing1.createBranch("subsub1");
+
+    CDOBranch testing2 = mainBranch.createBranch("testing2");
+    CDOBranch subsub2 = testing2.createBranch("subsub2");
+
+    closeSession1();
+    session = openSession2();
+    branchManager = session.getBranchManager();
+    mainBranch = branchManager.getMainBranch();
+
+    assertEquals(true, CDOBranchUtil.isContainedBy(mainBranch.getBase(), mainBranch.getHead()));
+    assertEquals(true, CDOBranchUtil.isContainedBy(mainBranch.getBase(), testing1.getHead()));
+    assertEquals(true, CDOBranchUtil.isContainedBy(mainBranch.getBase(), subsub1.getHead()));
+    assertEquals(true, CDOBranchUtil.isContainedBy(mainBranch.getBase(), testing2.getHead()));
+    assertEquals(true, CDOBranchUtil.isContainedBy(mainBranch.getBase(), subsub2.getHead()));
+
+    assertEquals(true, CDOBranchUtil.isContainedBy(testing1.getBase(), testing1.getHead()));
+    assertEquals(true, CDOBranchUtil.isContainedBy(subsub1.getBase(), subsub1.getHead()));
+    assertEquals(true, CDOBranchUtil.isContainedBy(testing2.getBase(), testing2.getHead()));
+    assertEquals(true, CDOBranchUtil.isContainedBy(subsub2.getBase(), subsub2.getHead()));
+
+    session.close();
+  }
+
   public void testCommit() throws Exception
   {
     CDOSession session = openSession1();

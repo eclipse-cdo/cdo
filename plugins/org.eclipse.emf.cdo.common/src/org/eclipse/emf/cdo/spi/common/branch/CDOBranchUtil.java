@@ -44,6 +44,17 @@ public final class CDOBranchUtil
     return source.getBranch().getVersion(source.getVersion());
   }
 
+  public static boolean isContainedBy(CDOBranchPoint contained, CDOBranchPoint container)
+  {
+    CDOBranch containerBranch = container.getBranch();
+    if (containerBranch == contained.getBranch())
+    {
+      return CDOCommonUtil.compareTimeStamps(contained.getTimeStamp(), container.getTimeStamp()) <= 0;
+    }
+
+    return isContainedBy(contained, containerBranch.getBase());
+  }
+
   public static CDOBranchPoint getAncestor(CDOBranchPoint point1, CDOBranchPoint point2)
   {
     if (point1.getBranch() == null)

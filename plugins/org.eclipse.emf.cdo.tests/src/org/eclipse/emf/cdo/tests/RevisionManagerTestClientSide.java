@@ -29,4 +29,10 @@ public class RevisionManagerTestClientSide extends RevisionManagerTest
     BranchingTest.dump("ServerCache", repository.getRevisionManager().getCache().getAllRevisions());
     super.dumpCache(branchPoint);
   }
+
+  @Override
+  public void testBranch0_Normal() throws Exception
+  {
+    super.testBranch0_Normal();
+  }
 }

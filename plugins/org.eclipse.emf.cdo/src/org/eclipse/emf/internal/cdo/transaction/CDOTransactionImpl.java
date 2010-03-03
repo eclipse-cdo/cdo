@@ -51,6 +51,7 @@ import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
@@ -294,15 +295,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public void merge(CDOBranchPoint source)
   {
-    CDOBranch target = getBranch();
-    // CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(source.getBranch(), target);
-    // if (ancestor == null)
-    // {
-    // // Can not happen because the base of the main branch is an ancestor of any two branch points
-    // throw new IllegalArgumentException("No common ancestor with " + source);
-    // }
-    //
-    // CDOChangeSet changeSet = getChangeSet();
+    if (CDOBranchUtil.isContainedBy(source, this))
+    {
+      throw new IllegalArgumentException("Source is already contained in " + this);
+    }
 
     CDOSessionProtocol sessionProtocol = getSession().getSessionProtocol();
 

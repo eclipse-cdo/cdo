@@ -54,7 +54,7 @@ public class CDOIDAndBranchImpl implements CDOIDAndBranch
     if (obj instanceof CDOIDAndBranch)
     {
       CDOIDAndBranch that = (CDOIDAndBranch)obj;
-      return ObjectUtil.equals(id, that.getID()) && branch == that.getBranch();
+      return ObjectUtil.equals(branch, that.getBranch()) && ObjectUtil.equals(id, that.getID());
     }
 
     return false;

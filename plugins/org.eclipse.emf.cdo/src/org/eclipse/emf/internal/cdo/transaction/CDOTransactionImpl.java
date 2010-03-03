@@ -660,7 +660,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         if (result != null)
         {
           CDOBranch newBranch = result.getBranch();
-          if (newBranch != oldBranch)
+          if (!ObjectUtil.equals(newBranch, oldBranch))
           {
             setBranch(newBranch);
           }

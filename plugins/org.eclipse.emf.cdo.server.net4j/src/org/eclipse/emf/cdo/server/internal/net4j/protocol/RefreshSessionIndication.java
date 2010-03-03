@@ -26,6 +26,8 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
+import org.eclipse.net4j.util.ObjectUtil;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -163,6 +165,6 @@ public class RefreshSessionIndication extends CDOReadIndication
 
   private static boolean hasChanged(CDORevisionKey oldKey, CDORevisionKey newKey)
   {
-    return oldKey.getBranch() != newKey.getBranch() || oldKey.getVersion() != newKey.getVersion();
+    return !ObjectUtil.equals(oldKey.getBranch(), newKey.getBranch()) || oldKey.getVersion() != newKey.getVersion();
   }
 }

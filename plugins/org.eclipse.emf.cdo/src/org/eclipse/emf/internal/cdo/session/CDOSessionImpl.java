@@ -59,6 +59,7 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.Pair;
@@ -744,7 +745,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       else
       {
         // ... otherwise try to revise old revision if it is in the same branch
-        if (key.getBranch() == newBranch)
+        if (ObjectUtil.equals(key.getBranch(), newBranch))
         {
           revisionManager.reviseVersion(id, key, timeStamp);
         }
@@ -802,7 +803,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     for (InternalCDOView view : getViews())
     {
-      if (view != sender && view.getBranch() == commitInfo.getBranch())
+      if (view != sender && ObjectUtil.equals(view.getBranch(), commitInfo.getBranch()))
       {
         QueueRunner runner = getInvalidationRunner();
         runner.addWork(new InvalidationRunnable(view, commitInfo, oldRevisions));

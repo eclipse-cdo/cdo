@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 
+import org.eclipse.net4j.util.ObjectUtil;
+
 import java.text.MessageFormat;
 
 /**
@@ -69,7 +71,7 @@ public class CDOBranchPointImpl implements CDOBranchPoint
     if (obj instanceof CDOBranchPoint)
     {
       CDOBranchPoint that = (CDOBranchPoint)obj;
-      return branch == that.getBranch() && timeStamp == that.getTimeStamp();
+      return ObjectUtil.equals(branch, that.getBranch()) && timeStamp == that.getTimeStamp();
     }
 
     return false;

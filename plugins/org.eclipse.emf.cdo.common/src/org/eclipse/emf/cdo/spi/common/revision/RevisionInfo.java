@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.ObjectUtil;
 
 import java.io.IOException;
 import java.util.List;
@@ -290,7 +291,7 @@ public abstract class RevisionInfo
 
     public boolean isDirect()
     {
-      return availableBranchVersion.getBranch() == getRequestedBranchPoint().getBranch();
+      return ObjectUtil.equals(availableBranchVersion.getBranch(), getRequestedBranchPoint().getBranch());
     }
 
     @Override
@@ -310,7 +311,7 @@ public abstract class RevisionInfo
     protected void writeRevision(CDODataOutput out, int referenceChunk) throws IOException
     {
       InternalCDORevision result = getResult();
-      if (result != null && result.getBranch() == availableBranchVersion.getBranch())
+      if (result != null && ObjectUtil.equals(result.getBranch(), availableBranchVersion.getBranch()))
       {
         // Use available
         out.writeBoolean(true);

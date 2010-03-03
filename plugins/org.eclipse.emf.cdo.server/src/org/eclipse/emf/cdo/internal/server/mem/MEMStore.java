@@ -156,7 +156,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
         continue;
       }
 
-      if (branch != null && info.getBranch() != branch)
+      if (branch != null && !ObjectUtil.equals(info.getBranch(), branch))
       {
         continue;
       }
@@ -184,7 +184,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
       return;
     }
 
-    if (branch != null && revision.getBranch() != branch)
+    if (branch != null && !ObjectUtil.equals(revision.getBranch(), branch))
     {
       return;
     }
@@ -387,7 +387,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     for (Entry<Object, List<InternalCDORevision>> entry : revisions.entrySet())
     {
       CDOBranch branch = getBranch(entry.getKey());
-      if (branch != context.getBranch())
+      if (!ObjectUtil.equals(branch, context.getBranch()))
       {
         continue;
       }
@@ -695,7 +695,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
       if (obj instanceof ListKey)
       {
         ListKey that = (ListKey)obj;
-        return ObjectUtil.equals(id, that.getID()) && branch == that.getBranch();
+        return ObjectUtil.equals(id, that.getID()) && ObjectUtil.equals(branch, that.getBranch());
       }
 
       return false;

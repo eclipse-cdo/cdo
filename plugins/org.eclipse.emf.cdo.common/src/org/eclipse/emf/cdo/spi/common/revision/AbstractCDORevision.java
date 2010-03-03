@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 
+import org.eclipse.net4j.util.ObjectUtil;
+
 import org.eclipse.emf.ecore.EClass;
 
 /**
@@ -81,7 +83,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
    */
   public void adjustForCommit(CDOBranch branch, long timeStamp)
   {
-    if (branch == getBranch())
+    if (ObjectUtil.equals(branch, getBranch()))
     {
       // Same branch, increase version
       setVersion(getVersion() + 1);

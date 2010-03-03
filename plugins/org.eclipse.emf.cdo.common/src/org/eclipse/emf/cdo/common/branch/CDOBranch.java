@@ -32,6 +32,8 @@ public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>
 
   public String getName();
 
+  public CDOBranchPoint[] getBasePath();
+
   public CDOBranchPoint getBase();
 
   public CDOBranchPoint getHead();

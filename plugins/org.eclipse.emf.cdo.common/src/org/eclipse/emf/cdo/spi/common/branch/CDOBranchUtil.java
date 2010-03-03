@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.common.branch;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchManagerImpl;
@@ -37,5 +38,31 @@ public final class CDOBranchUtil
   public static CDOBranchVersion copy(CDOBranchVersion source)
   {
     return source.getBranch().getVersion(source.getVersion());
+  }
+
+  public static CDOBranchPoint getAncestor(CDOBranch branch1, CDOBranch branch2)
+  {
+    if (branch1 == branch2)
+    {
+      return branch1.getBase();
+    }
+  
+    for (CDOBranchPoint branchPoint : branch1.getBasePath())
+    {
+      if (branchPoint.getBranch() == branch2)
+      {
+        return branchPoint;
+      }
+    }
+  
+    for (CDOBranchPoint branchPoint : branch2.getBasePath())
+    {
+      if (branchPoint.getBranch() == branch1)
+      {
+        return branchPoint;
+      }
+    }
+  
+    return null;
   }
 }

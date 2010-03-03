@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
-import org.eclipse.emf.cdo.common.revision.cache.InternalCDORevisionCache;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 

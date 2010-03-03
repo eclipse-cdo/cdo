@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoad
 import org.eclipse.net4j.util.container.Container;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -88,6 +90,25 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   public boolean isProxy()
   {
     return name == null;
+  }
+
+  public CDOBranchPoint[] getBasePath()
+  {
+    List<CDOBranchPoint> path = new ArrayList<CDOBranchPoint>();
+    computeBasePath(this, path);
+    return path.toArray(new CDOBranchPoint[path.size()]);
+  }
+
+  private void computeBasePath(CDOBranch branch, List<CDOBranchPoint> path)
+  {
+    CDOBranchPoint base = branch.getBase();
+    CDOBranch parent = base.getBranch();
+    if (parent != null)
+    {
+      computeBasePath(parent, path);
+    }
+
+    path.add(base);
   }
 
   public CDOBranchPoint getBase()

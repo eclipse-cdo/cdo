@@ -11,10 +11,10 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
-import org.eclipse.emf.cdo.common.revision.cache.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.cache.two.TwoLevelRevisionCache;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Supplier;

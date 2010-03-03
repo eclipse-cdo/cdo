@@ -12,6 +12,10 @@
         <cs:dependency name="org.eclipse.emf.source" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.emf.teneo" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.emf.teneo.source" componentType="eclipse.feature"/>
+        <!--
+        <cs:dependency name="org.eclipse.emf.compare" componentType="eclipse.feature"/>
+        <cs:dependency name="org.eclipse.emf.compare.source" componentType="eclipse.feature"/>
+        -->
         <cs:dependency name="com.mysql.jdbc" componentType="eclipse.feature"/>
         <cs:dependency name="org.apache.derby" componentType="eclipse.feature"/>
         <cs:dependency name="org.h2.jdbc" componentType="eclipse.feature"/>

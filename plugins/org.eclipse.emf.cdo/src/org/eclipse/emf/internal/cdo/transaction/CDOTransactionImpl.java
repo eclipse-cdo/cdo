@@ -51,6 +51,7 @@ import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
@@ -96,6 +97,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EContentsEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EContentsEList.FeatureIterator;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
@@ -289,6 +291,18 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     Set<CDOObject> conflicts = getConflicts();
     handleConflicts(conflicts, resolvers);
+  }
+
+  public void merge(CDOBranchPoint source)
+  {
+    CDOBranch target = getBranch();
+    CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(source.getBranch(), target);
+    if (ancestor == null)
+    {
+      throw new IllegalArgumentException("No common ancestor with " + source);
+    }
+
+    CDOSessionProtocol sessionProtocol = getSession().getSessionProtocol();
   }
 
   public void handleConflicts(Set<CDOObject> conflicts)

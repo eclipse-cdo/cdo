@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.common.revision.cache.branch.BranchRevisionC
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.cache.mem.MEMRevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.cache.two.TwoLevelRevisionCache;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 
 /**
  * @author Eike Stepper

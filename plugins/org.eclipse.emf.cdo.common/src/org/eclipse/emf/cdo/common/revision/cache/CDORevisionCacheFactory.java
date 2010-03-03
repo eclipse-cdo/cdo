@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.common.revision.cache;
 
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 
 /**
  * @author Eike Stepper

@@ -17,6 +17,7 @@
 package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -58,6 +59,11 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
   public Set<CDOObject> getConflicts();
 
   public void resolveConflicts(CDOConflictResolver... resolver);
+
+  /**
+   * @since 3.0
+   */
+  public void merge(CDOBranchPoint source);
 
   /**
    * @see ResourceSet#createResource(URI)

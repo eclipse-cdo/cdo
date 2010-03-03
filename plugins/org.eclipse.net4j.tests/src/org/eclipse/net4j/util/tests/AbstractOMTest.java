@@ -26,6 +26,7 @@ import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -34,6 +35,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
 import junit.framework.Assert;
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
 
@@ -196,6 +198,15 @@ public abstract class AbstractOMTest extends TestCase
 
   protected void doTearDown() throws Exception
   {
+  }
+
+  public static void assertEquals(Object[] expected, Object[] actual)
+  {
+    if (!Arrays.deepEquals(expected, actual))
+    {
+      throw new AssertionFailedError("expected:" + Arrays.deepToString(expected) + " but was:"
+          + Arrays.deepToString(actual));
+    }
   }
 
   public static void assertEquals(Object expected, Object actual)

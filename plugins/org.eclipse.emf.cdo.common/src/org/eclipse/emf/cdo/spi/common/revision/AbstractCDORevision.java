@@ -81,7 +81,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
    */
   public void adjustForCommit(CDOBranch branch, long timeStamp)
   {
-    if (branch.equals(getBranch()))
+    if (branch == getBranch())
     {
       // Same branch, increase version
       setVersion(getVersion() + 1);

@@ -40,29 +40,31 @@ public final class CDOBranchUtil
     return source.getBranch().getVersion(source.getVersion());
   }
 
-  public static CDOBranchPoint getAncestor(CDOBranch branch1, CDOBranch branch2)
+  public static CDOBranchPoint getAncestor(CDOBranchPoint point1, CDOBranchPoint point2)
   {
+    CDOBranch branch1 = point1.getBranch();
+    CDOBranch branch2 = point2.getBranch();
     if (branch1 == branch2)
     {
-      return branch1.getBase();
-    }
-  
-    for (CDOBranchPoint branchPoint : branch1.getBasePath())
-    {
-      if (branchPoint.getBranch() == branch2)
+      if (point1.compareTo(point2) < 0)
       {
-        return branchPoint;
+        return point1;
+      }
+
+      return point2;
+    }
+
+    CDOBranchPoint[] basePath1 = branch1.getBasePath();
+    for (int i = basePath1.length - 1; i >= 0; --i)
+    {
+      CDOBranchPoint pathPoint1 = basePath1[i];
+      CDOBranchPoint ancestor = getAncestor(point2, pathPoint1);
+      if (ancestor != null)
+      {
+        return ancestor;
       }
     }
-  
-    for (CDOBranchPoint branchPoint : branch2.getBasePath())
-    {
-      if (branchPoint.getBranch() == branch1)
-      {
-        return branchPoint;
-      }
-    }
-  
+
     return null;
   }
 }

@@ -206,6 +206,27 @@ public class BranchingTest extends AbstractCDOTest
     session.close();
   }
 
+  public void testBasePath() throws Exception
+  {
+    CDOSession session = openSession1();
+    CDOBranchManager branchManager = session.getBranchManager();
+    CDOBranch mainBranch = branchManager.getMainBranch();
+    CDOBranch testing1 = mainBranch.createBranch("testing1");
+    CDOBranch testing2 = mainBranch.createBranch("testing2");
+    CDOBranch subsub = testing1.createBranch("subsub");
+    closeSession1();
+
+    session = openSession2();
+    branchManager = session.getBranchManager();
+    mainBranch = branchManager.getMainBranch();
+    assertEquals(mainBranch.getBasePath(), new CDOBranchPoint[] { mainBranch.getBase() });
+    assertEquals(testing1.getBasePath(), new CDOBranchPoint[] { mainBranch.getBase(), testing1.getBase() });
+    assertEquals(testing2.getBasePath(), new CDOBranchPoint[] { mainBranch.getBase(), testing2.getBase() });
+    assertEquals(subsub.getBasePath(), new CDOBranchPoint[] { mainBranch.getBase(), testing1.getBase(),
+        subsub.getBase() });
+    session.close();
+  }
+
   public void testCommit() throws Exception
   {
     CDOSession session = openSession1();

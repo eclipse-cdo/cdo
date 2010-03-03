@@ -695,7 +695,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
       if (obj instanceof ListKey)
       {
         ListKey that = (ListKey)obj;
-        return id.equals(that.getID()) && branch.equals(that.getBranch());
+        return ObjectUtil.equals(id, that.getID()) && branch == that.getBranch();
       }
 
       return false;

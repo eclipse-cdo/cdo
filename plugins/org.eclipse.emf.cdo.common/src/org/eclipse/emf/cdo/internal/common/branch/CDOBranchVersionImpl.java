@@ -57,7 +57,7 @@ public class CDOBranchVersionImpl implements CDOBranchVersion
     if (obj instanceof CDOBranchVersion)
     {
       CDOBranchVersion that = (CDOBranchVersion)obj;
-      return branch.equals(that.getBranch()) && version == that.getVersion();
+      return branch == that.getBranch() && version == that.getVersion();
     }
 
     return false;

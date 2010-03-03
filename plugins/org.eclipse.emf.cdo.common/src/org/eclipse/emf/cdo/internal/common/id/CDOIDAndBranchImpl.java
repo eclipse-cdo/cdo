@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
 
+import org.eclipse.net4j.util.ObjectUtil;
+
 import java.text.MessageFormat;
 
 /**
@@ -52,7 +54,7 @@ public class CDOIDAndBranchImpl implements CDOIDAndBranch
     if (obj instanceof CDOIDAndBranch)
     {
       CDOIDAndBranch that = (CDOIDAndBranch)obj;
-      return id.equals(that.getID()) && branch.equals(that.getBranch());
+      return ObjectUtil.equals(id, that.getID()) && branch == that.getBranch();
     }
 
     return false;

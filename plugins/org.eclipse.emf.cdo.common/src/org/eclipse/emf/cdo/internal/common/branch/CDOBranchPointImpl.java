@@ -46,8 +46,19 @@ public class CDOBranchPointImpl implements CDOBranchPoint
     int result = branch.compareTo(o.getBranch());
     if (result == 0)
     {
+      long timeStamp1 = timeStamp;
+      if (timeStamp1 == UNSPECIFIED_DATE)
+      {
+        timeStamp1 = Long.MAX_VALUE;
+      }
+
       long timeStamp2 = o.getTimeStamp();
-      result = timeStamp < timeStamp2 ? -1 : timeStamp == timeStamp2 ? 0 : 1;
+      if (timeStamp2 == UNSPECIFIED_DATE)
+      {
+        timeStamp2 = Long.MAX_VALUE;
+      }
+
+      result = timeStamp1 < timeStamp2 ? -1 : timeStamp1 == timeStamp2 ? 0 : 1;
     }
 
     return result;
@@ -70,7 +81,7 @@ public class CDOBranchPointImpl implements CDOBranchPoint
     if (obj instanceof CDOBranchPoint)
     {
       CDOBranchPoint that = (CDOBranchPoint)obj;
-      return branch.equals(that.getBranch()) && timeStamp == that.getTimeStamp();
+      return branch == that.getBranch() && timeStamp == that.getTimeStamp();
     }
 
     return false;

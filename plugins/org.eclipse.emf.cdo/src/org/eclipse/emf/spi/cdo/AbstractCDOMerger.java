@@ -80,6 +80,7 @@ public abstract class AbstractCDOMerger implements CDOMerger
       }
     }
 
+    // TODO changedInTargetAndDetachedInSource
     return result;
   }
 

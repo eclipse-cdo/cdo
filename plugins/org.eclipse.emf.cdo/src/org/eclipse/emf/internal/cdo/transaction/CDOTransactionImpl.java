@@ -298,7 +298,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     handleConflicts(conflicts, resolvers);
   }
 
-  public void merge(CDOBranchPoint source, CDOMerger merger)
+  public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)
   {
     if (CDOBranchUtil.isContainedBy(source, this))
     {
@@ -314,7 +314,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     CDOChangeSet targetChanges = new CDOChangeSetImpl(targetRange, changeSetData[0]);
     CDOChangeSet sourceChanges = new CDOChangeSetImpl(sourceRange, changeSetData[1]);
-    merger.merge(this, targetChanges, sourceChanges);
+    CDOChangeSetData result = merger.merge(targetChanges, sourceChanges);
+    applyChangeSetData(result);
+    return result;
+  }
+
+  private void applyChangeSetData(CDOChangeSetData result)
+  {
+    // TODO: implement CDOTransactionImpl.applyChangeSetData(result)
+    throw new UnsupportedOperationException();
   }
 
   public void handleConflicts(Set<CDOObject> conflicts)

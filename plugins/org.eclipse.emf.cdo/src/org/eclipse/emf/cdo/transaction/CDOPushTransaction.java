@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.transaction;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -477,9 +478,9 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     delegate.resolveConflicts(resolver);
   }
 
-  public void merge(CDOBranchPoint source, CDOMerger merger)
+  public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)
   {
-    delegate.merge(source, merger);
+    return delegate.merge(source, merger);
   }
 
   public CDOSavepoint setSavepoint()

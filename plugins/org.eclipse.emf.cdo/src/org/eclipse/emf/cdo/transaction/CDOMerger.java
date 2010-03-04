@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 
 /**
  * @author Eike Stepper
@@ -18,5 +19,5 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
  */
 public interface CDOMerger
 {
-  public void merge(CDOTransaction transaction, CDOChangeSet source, CDOChangeSet target);
+  public CDOChangeSetData merge(CDOChangeSet source, CDOChangeSet target);
 }

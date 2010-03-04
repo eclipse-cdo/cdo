@@ -60,16 +60,19 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     version = revision.getVersion();
   }
 
-  public CDORevisionDeltaImpl(CDORevisionDelta revisionDelta)
+  public CDORevisionDeltaImpl(CDORevisionDelta revisionDelta, boolean copyFeatureDeltas)
   {
     eClass = revisionDelta.getEClass();
     id = revisionDelta.getID();
     branch = revisionDelta.getBranch();
     version = revisionDelta.getVersion();
 
-    for (CDOFeatureDelta delta : revisionDelta.getFeatureDeltas())
+    if (copyFeatureDeltas)
     {
-      addFeatureDelta(((InternalCDOFeatureDelta)delta).copy());
+      for (CDOFeatureDelta delta : revisionDelta.getFeatureDeltas())
+      {
+        addFeatureDelta(((InternalCDOFeatureDelta)delta).copy());
+      }
     }
   }
 
@@ -155,6 +158,11 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     this.version = version;
   }
 
+  public Map<EStructuralFeature, CDOFeatureDelta> getFeatureDeltaMap()
+  {
+    return featureDeltas;
+  }
+
   public List<CDOFeatureDelta> getFeatureDeltas()
   {
     return new ArrayList<CDOFeatureDelta>(featureDeltas.values());
@@ -187,7 +195,6 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
   private void addSingleFeatureDelta(CDOFeatureDelta delta)
   {
     EStructuralFeature feature = delta.getFeature();
-
     if (feature.isMany())
     {
       CDOListFeatureDeltaImpl lookupDelta = (CDOListFeatureDeltaImpl)featureDeltas.get(feature);

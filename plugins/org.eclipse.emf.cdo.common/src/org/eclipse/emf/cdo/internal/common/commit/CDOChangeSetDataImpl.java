@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +34,11 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
     this.newObjects = newObjects;
     this.changedObjects = changedObjects;
     this.detachedObjects = detachedObjects;
+  }
+
+  public CDOChangeSetDataImpl()
+  {
+    this(new ArrayList<CDOIDAndVersion>(), new ArrayList<CDORevisionKey>(), new ArrayList<CDOIDAndVersion>());
   }
 
   public List<CDOIDAndVersion> getNewObjects()

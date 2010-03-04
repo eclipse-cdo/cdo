@@ -15,6 +15,10 @@ import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
+
+import java.util.Map;
+
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
@@ -22,6 +26,11 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
  */
 public interface InternalCDORevisionDelta extends CDORevisionDelta
 {
+  /**
+   * @since 3.0
+   */
+  public Map<EStructuralFeature, CDOFeatureDelta> getFeatureDeltaMap();
+
   public void addFeatureDelta(CDOFeatureDelta delta);
 
   public void adjustReferences(CDOReferenceAdjuster idMappings);

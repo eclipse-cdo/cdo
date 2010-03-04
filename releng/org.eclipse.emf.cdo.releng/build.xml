@@ -25,7 +25,7 @@
 	</condition>
 
 	<condition property="site.signing" value="${env.SITE_SIGNING}" else="false">
-		<isset property="SITE_SIGNING" />
+		<isset property="env.SITE_SIGNING" />
 	</condition>
 
 	<condition property="clean.tools" value="true">

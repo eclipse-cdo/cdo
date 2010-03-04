@@ -173,6 +173,7 @@
 
 	<target name="init.build.properties">
 		<!-- Echo relevant properties to a temporary file so that Buckminster can read them -->
+		<echo message="Properties file is: ${properties.tmp}" />
 		<tempfile destdir="${java.io.tmpdir}"
 		          prefix="build-"
 		          suffix=".properties"

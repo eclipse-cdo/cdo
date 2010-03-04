@@ -250,6 +250,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_SYNC_REPOSITORY:
       return new SyncRepositoryIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_LOAD_CHANGE_SETS:
+      return new LoadChangeSetsIndication(this);
+
     default:
       return super.createSignalReactor(signalID);
     }

@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.common.commit;
 
-import org.eclipse.emf.cdo.common.changeset.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 
 import java.util.List;

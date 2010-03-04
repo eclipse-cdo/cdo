@@ -4,16 +4,16 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.spi.common.model;
 
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.io.CDODataInput;
-import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 
 import org.eclipse.emf.common.notify.Adapter;
 
@@ -35,7 +35,13 @@ public interface InternalCDOPackageInfo extends CDOPackageInfo, Adapter.Internal
 
   public void setMetaIDRange(CDOIDMetaRange metaIDRange);
 
+  /**
+   * @since 3.0
+   */
   public void write(CDODataOutput out) throws IOException;
 
+  /**
+   * @since 3.0
+   */
   public void read(CDODataInput in) throws IOException;
 }

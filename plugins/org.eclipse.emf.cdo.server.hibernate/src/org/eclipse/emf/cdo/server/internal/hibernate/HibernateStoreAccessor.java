@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
+import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -58,6 +59,7 @@ import org.hibernate.SessionFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Implements the runtime behavior of accessing the hibernate store using queries and doing write and commit. The
@@ -370,6 +372,12 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
     // TODO: implement HibernateStoreAccessor.loadCommitInfos(branch, startTime, endTime, handler)
+    throw new UnsupportedOperationException();
+  }
+
+  public Set<CDOID> readChangeSet(CDOChangeSetSegment... segments)
+  {
+    // TODO: implement HibernateStoreAccessor.readChangeSet(segments)
     throw new UnsupportedOperationException();
   }
 

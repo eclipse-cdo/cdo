@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -33,6 +34,7 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
+import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -49,9 +51,11 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 
 /**
@@ -162,6 +166,50 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
       }
 
       info.handle(manager, handler);
+    }
+  }
+
+  public synchronized Set<CDOID> readChangeSet(CDOChangeSetSegment[] segments)
+  {
+    Set<CDOID> ids = new HashSet<CDOID>();
+    for (CDOChangeSetSegment segment : segments)
+    {
+      for (List<InternalCDORevision> list : revisions.values())
+      {
+        readChangeSet(segment, list, ids);
+      }
+    }
+
+    return ids;
+  }
+
+  private void readChangeSet(CDOChangeSetSegment segment, List<InternalCDORevision> list, Set<CDOID> ids)
+  {
+    long startTime = segment.getStartTime();
+    long endTime = segment.getEndTime();
+    boolean listCheckDone = false;
+    for (InternalCDORevision revision : list)
+    {
+      CDOID id = revision.getID();
+      if (!listCheckDone)
+      {
+        if (ids.contains(id))
+        {
+          return;
+        }
+
+        if (!ObjectUtil.equals(revision.getBranch(), segment.getBranch()))
+        {
+          return;
+        }
+
+        listCheckDone = true;
+      }
+
+      if (CDOCommonUtil.isValidTimeStamp(revision.getTimeStamp(), startTime, endTime))
+      {
+        ids.add(id);
+      }
     }
   }
 

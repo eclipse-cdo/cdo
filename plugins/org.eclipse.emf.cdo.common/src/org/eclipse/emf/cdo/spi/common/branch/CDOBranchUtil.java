@@ -12,9 +12,11 @@ package org.eclipse.emf.cdo.spi.common.branch;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchManagerImpl;
+import org.eclipse.emf.cdo.internal.common.branch.CDOBranchPointRangeImpl;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
@@ -34,6 +36,11 @@ public final class CDOBranchUtil
   public static InternalCDOBranchManager createBranchManager()
   {
     return new CDOBranchManagerImpl();
+  }
+
+  public static CDOBranchPointRange createRange(CDOBranchPoint startPoint, CDOBranchPoint endPoint)
+  {
+    return new CDOBranchPointRangeImpl(startPoint, endPoint);
   }
 
   public static CDOBranchPoint copy(CDOBranchPoint source)

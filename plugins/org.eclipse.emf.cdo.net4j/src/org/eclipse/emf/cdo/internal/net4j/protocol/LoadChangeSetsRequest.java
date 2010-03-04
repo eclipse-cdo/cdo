@@ -10,7 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -20,33 +22,36 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class OpenViewRequest extends CDOClientRequest<Boolean>
+public class LoadChangeSetsRequest extends CDOClientRequest<CDOChangeSetData[]>
 {
-  private int viewID;
+  private CDOBranchPointRange[] ranges;
 
-  private CDOBranchPoint branchPoint;
-
-  private boolean readOnly;
-
-  public OpenViewRequest(CDOClientProtocol protocol, int viewID, CDOBranchPoint branchPoint, boolean readOnly)
+  public LoadChangeSetsRequest(CDOClientProtocol protocol, CDOBranchPointRange... ranges)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_OPEN_VIEW);
-    this.viewID = viewID;
-    this.branchPoint = branchPoint;
-    this.readOnly = readOnly;
+    super(protocol, CDOProtocolConstants.SIGNAL_LOAD_CHANGE_SETS);
+    this.ranges = ranges;
   }
 
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeBoolean(readOnly);
-    out.writeInt(viewID);
-    out.writeCDOBranchPoint(branchPoint);
+    out.writeInt(ranges.length);
+    for (CDOBranchPointRange range : ranges)
+    {
+      out.writeCDOBranchPoint(range.getStartPoint());
+      out.writeCDOBranchPoint(range.getEndPoint());
+    }
   }
 
   @Override
-  protected Boolean confirming(CDODataInput in) throws IOException
+  protected CDOChangeSetData[] confirming(CDODataInput in) throws IOException
   {
-    return in.readBoolean();
+    CDOChangeSetData[] result = new CDOChangeSet[ranges.length];
+    for (int i = 0; i < result.length; i++)
+    {
+      result[i] = in.readCDOChangeSetData();
+    }
+
+    return result;
   }
 }

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.common.util;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import java.text.MessageFormat;
@@ -22,6 +23,11 @@ public final class CDOCommonUtil
 {
   private CDOCommonUtil()
   {
+  }
+
+  public static boolean isValidTimeStamp(long timeStamp, long startTime, long endTime)
+  {
+    return (endTime == CDOBranchPoint.UNSPECIFIED_DATE || endTime >= timeStamp) && timeStamp >= startTime;
   }
 
   public static int compareTimeStamps(long t1, long t2)

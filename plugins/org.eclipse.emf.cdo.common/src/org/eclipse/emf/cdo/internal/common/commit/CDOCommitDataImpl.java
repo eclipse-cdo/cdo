@@ -20,42 +20,19 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CDOCommitDataImpl implements CDOCommitData
+public class CDOCommitDataImpl extends CDOChangeSetDataImpl implements CDOCommitData
 {
   private List<CDOPackageUnit> newPackageUnits;
-
-  private List<CDOIDAndVersion> newObjects;
-
-  private List<CDORevisionKey> changedObjects;
-
-  private List<CDOIDAndVersion> detachedObjects;
 
   public CDOCommitDataImpl(List<CDOPackageUnit> newPackageUnits, List<CDOIDAndVersion> newObjects,
       List<CDORevisionKey> changedObjects, List<CDOIDAndVersion> detachedObjects)
   {
+    super(newObjects, changedObjects, detachedObjects);
     this.newPackageUnits = newPackageUnits;
-    this.newObjects = newObjects;
-    this.changedObjects = changedObjects;
-    this.detachedObjects = detachedObjects;
   }
 
   public List<CDOPackageUnit> getNewPackageUnits()
   {
     return newPackageUnits;
-  }
-
-  public List<CDOIDAndVersion> getNewObjects()
-  {
-    return newObjects;
-  }
-
-  public List<CDORevisionKey> getChangedObjects()
-  {
-    return changedObjects;
-  }
-
-  public List<CDOIDAndVersion> getDetachedObjects()
-  {
-    return detachedObjects;
   }
 }

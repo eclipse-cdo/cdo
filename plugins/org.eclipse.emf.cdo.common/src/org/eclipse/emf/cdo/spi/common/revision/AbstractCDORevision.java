@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
@@ -74,8 +75,9 @@ public abstract class AbstractCDORevision implements InternalCDORevision
 
   public boolean isValid(long timeStamp)
   {
-    long revised = getRevised();
-    return (revised == UNSPECIFIED_DATE || revised >= timeStamp) && timeStamp >= getTimeStamp();
+    long startTime = getTimeStamp();
+    long endTime = getRevised();
+    return CDOCommonUtil.isValidTimeStamp(timeStamp, startTime, endTime);
   }
 
   /**

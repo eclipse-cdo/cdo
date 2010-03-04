@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.common.model;
 
-import org.eclipse.emf.cdo.common.io.CDODataInput;
-import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 
 import org.eclipse.emf.ecore.EClassifier;
@@ -113,12 +113,12 @@ public interface CDOType
   public Object adjustReferences(CDOReferenceAdjuster adjuster, Object value);
 
   /**
-   * @since 2.0
+   * @since 3.0
    */
   public Object readValue(CDODataInput in) throws IOException;
 
   /**
-   * @since 2.0
+   * @since 3.0
    */
   public void writeValue(CDODataOutput out, Object value) throws IOException;
 

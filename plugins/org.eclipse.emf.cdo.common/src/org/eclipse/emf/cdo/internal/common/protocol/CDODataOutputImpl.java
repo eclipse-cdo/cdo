@@ -8,11 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.common.io;
+package org.eclipse.emf.cdo.internal.common.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -20,13 +21,13 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
-import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -140,16 +141,9 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     writeInt(branchVersion.getVersion());
   }
 
-  public void writeCDOCommitData(CDOCommitData commitData) throws IOException
+  public void writeCDOChangeSetData(CDOChangeSetData changeSetData) throws IOException
   {
-    Collection<CDOPackageUnit> newPackageUnits = commitData.getNewPackageUnits();
-    writeInt(newPackageUnits.size());
-    for (CDOPackageUnit data : newPackageUnits)
-    {
-      writeCDOPackageUnit(data, false);
-    }
-
-    Collection<CDOIDAndVersion> newObjects = commitData.getNewObjects();
+    Collection<CDOIDAndVersion> newObjects = changeSetData.getNewObjects();
     writeInt(newObjects.size());
     for (CDOIDAndVersion data : newObjects)
     {
@@ -165,7 +159,7 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
       }
     }
 
-    Collection<CDORevisionKey> changedObjects = commitData.getChangedObjects();
+    Collection<CDORevisionKey> changedObjects = changeSetData.getChangedObjects();
     writeInt(changedObjects.size());
     for (CDORevisionKey data : changedObjects)
     {
@@ -181,12 +175,24 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
       }
     }
 
-    Collection<CDOIDAndVersion> detachedObjects = commitData.getDetachedObjects();
+    Collection<CDOIDAndVersion> detachedObjects = changeSetData.getDetachedObjects();
     writeInt(detachedObjects.size());
     for (CDOIDAndVersion data : detachedObjects)
     {
       writeCDOIDAndVersion(data);
     }
+  }
+
+  public void writeCDOCommitData(CDOCommitData commitData) throws IOException
+  {
+    Collection<CDOPackageUnit> newPackageUnits = commitData.getNewPackageUnits();
+    writeInt(newPackageUnits.size());
+    for (CDOPackageUnit data : newPackageUnits)
+    {
+      writeCDOPackageUnit(data, false);
+    }
+
+    writeCDOChangeSetData(commitData);
   }
 
   public void writeCDOCommitInfo(CDOCommitInfo commitInfo) throws IOException

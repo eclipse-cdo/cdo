@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
@@ -92,6 +94,11 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
    * @since 2.0
    */
   public void removeHandler(Handler handler);
+
+  /**
+   * @since 3.0
+   */
+  public CDOChangeSetData getChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint);
 
   /**
    * A marker interface to indicate valid arguments to {@link IRepository#addHandler(Handler)} and

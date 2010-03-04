@@ -15,7 +15,9 @@ import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -299,6 +301,11 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   public void syncRepository(CDOReplicationContext context)
   {
     send(new SyncRepositoryRequest(this, context));
+  }
+
+  public CDOChangeSetData[] loadChangeSets(CDOBranchPointRange... ranges)
+  {
+    return send(new LoadChangeSetsRequest(this, ranges));
   }
 
   @Override

@@ -9,12 +9,13 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - bug 213402
  */
-package org.eclipse.emf.cdo.internal.common.io;
+package org.eclipse.emf.cdo.internal.common.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
@@ -24,13 +25,13 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
-import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -40,6 +41,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
+import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndBranchImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
@@ -180,12 +182,42 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return branch.getVersion(version);
   }
 
+  public CDOChangeSetData readCDOChangeSetData() throws IOException
+  {
+    int size1 = readInt();
+    List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>(size1);
+    for (int i = 0; i < size1; i++)
+    {
+      boolean revision = readBoolean();
+      CDOIDAndVersion data = revision ? readCDORevision() : readCDOIDAndVersion();
+      newObjects.add(data);
+    }
+
+    int size2 = readInt();
+    List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>(size2);
+    for (int i = 0; i < size2; i++)
+    {
+      boolean delta = readBoolean();
+      CDORevisionKey data = delta ? readCDORevisionDelta() : readCDORevisionKey();
+      changedObjects.add(data);
+    }
+
+    int size3 = readInt();
+    List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>(size3);
+    for (int i = 0; i < size3; i++)
+    {
+      CDOIDAndVersion data = readCDOIDAndVersion();
+      detachedObjects.add(data);
+    }
+
+    return new CDOChangeSetDataImpl(newObjects, changedObjects, detachedObjects);
+  }
+
   public CDOCommitData readCDOCommitData() throws IOException
   {
     InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)getPackageRegistry();
-    int size;
 
-    size = readInt();
+    int size = readInt();
     List<CDOPackageUnit> newPackageUnits = new ArrayList<CDOPackageUnit>(size);
     for (int i = 0; i < size; i++)
     {
@@ -194,33 +226,9 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       packageRegistry.putPackageUnit((InternalCDOPackageUnit)data);
     }
 
-    size = readInt();
-    List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>(size);
-    for (int i = 0; i < size; i++)
-    {
-      boolean revision = readBoolean();
-      CDOIDAndVersion data = revision ? readCDORevision() : readCDOIDAndVersion();
-      newObjects.add(data);
-    }
-
-    size = readInt();
-    List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>(size);
-    for (int i = 0; i < size; i++)
-    {
-      boolean delta = readBoolean();
-      CDORevisionKey data = delta ? readCDORevisionDelta() : readCDORevisionKey();
-      changedObjects.add(data);
-    }
-
-    size = readInt();
-    List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>(size);
-    for (int i = 0; i < size; i++)
-    {
-      CDOIDAndVersion data = readCDOIDAndVersion();
-      detachedObjects.add(data);
-    }
-
-    return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);
+    CDOChangeSetData data = readCDOChangeSetData();
+    return new CDOCommitDataImpl(newPackageUnits, data.getNewObjects(), data.getChangedObjects(), data
+        .getDetachedObjects());
   }
 
   public CDOCommitInfo readCDOCommitInfo() throws IOException

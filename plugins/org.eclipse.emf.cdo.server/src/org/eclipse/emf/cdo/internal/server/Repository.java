@@ -19,9 +19,11 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -30,10 +32,12 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
@@ -48,6 +52,7 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -56,6 +61,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
@@ -947,6 +953,44 @@ public class Repository extends Container<Object> implements InternalRepository
 
     long startTime = context.getLastReplicatedCommitTime() + 1L;
     commitInfoManager.getCommitInfos(startTime, CDOBranchPoint.UNSPECIFIED_DATE, context);
+  }
+
+  public CDOChangeSetData getChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint)
+  {
+    CDOChangeSetSegment[] segments = CDOChangeSetSegment.createFrom(startPoint, endPoint);
+
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    Set<CDOID> ids = accessor.readChangeSet(segments);
+
+    List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>();
+    List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
+    List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>();
+    for (CDOID id : ids)
+    {
+      InternalCDORevision startRevision = getRevision(id, startPoint);
+      InternalCDORevision endRevision = getRevision(id, endPoint);
+
+      if (startRevision == null)
+      {
+        newObjects.add(endRevision);
+      }
+      else if (endRevision == null)
+      {
+        detachedObjects.add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
+      }
+      else
+      {
+        InternalCDORevisionDelta delta = endRevision.compare(startRevision);
+        changedObjects.add(delta);
+      }
+    }
+
+    return new CDOChangeSetDataImpl(newObjects, changedObjects, detachedObjects);
+  }
+
+  private InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint)
+  {
+    return revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
   }
 
   @Override

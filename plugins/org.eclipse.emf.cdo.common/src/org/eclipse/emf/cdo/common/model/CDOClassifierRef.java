@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.common.model;
 
-import org.eclipse.emf.cdo.common.io.CDODataInput;
-import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -49,6 +49,9 @@ public final class CDOClassifierRef
     this.classifierName = classifierName.intern();
   }
 
+  /**
+   * @since 3.0
+   */
   public CDOClassifierRef(CDODataInput in) throws IOException
   {
     String uri = in.readCDOPackageURI();
@@ -67,6 +70,9 @@ public final class CDOClassifierRef
     classifierName = uri.substring(hash + 1);
   }
 
+  /**
+   * @since 3.0
+   */
   public void write(CDODataOutput out) throws IOException
   {
     out.writeCDOPackageURI(packageURI + URI_SEPARATOR + classifierName);

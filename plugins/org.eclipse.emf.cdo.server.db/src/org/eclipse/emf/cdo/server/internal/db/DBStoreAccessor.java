@@ -45,6 +45,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
@@ -810,6 +811,12 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       DBUtil.close(resultSet);
       statementCache.releasePreparedStatement(pstmt);
     }
+  }
+
+  public Set<CDOID> readChangeSet(CDOChangeSetSegment... segments)
+  {
+    // TODO: implement DBStoreAccessor.readChangeSet(segments)
+    throw new UnsupportedOperationException();
   }
 
   /**

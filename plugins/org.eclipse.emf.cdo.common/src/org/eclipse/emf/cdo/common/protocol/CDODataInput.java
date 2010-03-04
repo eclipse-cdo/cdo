@@ -9,11 +9,12 @@
  *    Eike Stepper - initial API and implementation
  * 		Simon McDuff - maintenance
  */
-package org.eclipse.emf.cdo.common.io;
+package org.eclipse.emf.cdo.common.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -42,7 +43,7 @@ import java.io.IOException;
 
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @since 3.0
  */
 public interface CDODataInput extends ExtendedDataInput
 {
@@ -66,29 +67,16 @@ public interface CDODataInput extends ExtendedDataInput
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  /**
-   * @since 3.0
-   */
   public CDOBranch readCDOBranch() throws IOException;
 
-  /**
-   * @since 3.0
-   */
   public CDOBranchPoint readCDOBranchPoint() throws IOException;
 
-  /**
-   * @since 3.0
-   */
   public CDOBranchVersion readCDOBranchVersion() throws IOException;
 
-  /**
-   * @since 3.0
-   */
+  public CDOChangeSetData readCDOChangeSetData() throws IOException;
+
   public CDOCommitData readCDOCommitData() throws IOException;
 
-  /**
-   * @since 3.0
-   */
   public CDOCommitInfo readCDOCommitInfo() throws IOException;
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -97,18 +85,12 @@ public interface CDODataInput extends ExtendedDataInput
 
   public CDOIDAndVersion readCDOIDAndVersion() throws IOException;
 
-  /**
-   * @since 3.0
-   */
   public CDOIDAndBranch readCDOIDAndBranch() throws IOException;
 
   public CDOIDMetaRange readCDOIDMetaRange() throws IOException;
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  /**
-   * @since 3.0
-   */
   public CDORevisionKey readCDORevisionKey() throws IOException;
 
   public CDORevision readCDORevision() throws IOException;
@@ -133,8 +115,5 @@ public interface CDODataInput extends ExtendedDataInput
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  /**
-   * @since 3.0
-   */
   public LockType readCDOLockType() throws IOException;
 }

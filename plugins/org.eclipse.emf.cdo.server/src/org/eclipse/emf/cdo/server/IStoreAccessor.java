@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
+import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -36,6 +37,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -121,6 +123,11 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * @since 3.0
    */
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler);
+
+  /**
+   * @since 3.0
+   */
+  public Set<CDOID> readChangeSet(CDOChangeSetSegment... segments);
 
   /**
    * Returns the <code>CDOID</code> of the resource node with the given folderID and name if a resource with this

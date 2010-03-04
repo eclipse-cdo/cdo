@@ -10,9 +10,9 @@
  */
 package org.eclipse.emf.cdo.spi.common.model;
 
-import org.eclipse.emf.cdo.common.io.CDODataInput;
-import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 
 import org.eclipse.emf.ecore.EPackage;
 
@@ -44,8 +44,14 @@ public interface InternalCDOPackageUnit extends CDOPackageUnit
 
   public void load();
 
+  /**
+   * @since 3.0
+   */
   public void write(CDODataOutput out, boolean withPackages) throws IOException;
 
+  /**
+   * @since 3.0
+   */
   public void read(CDODataInput in, InternalCDOPackageRegistry packageRegistry) throws IOException;
 
   public void init(EPackage ePackage);

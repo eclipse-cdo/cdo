@@ -9,11 +9,12 @@
  *    Eike Stepper - initial API and implementation
  * 		Simon McDuff - maintenance
  */
-package org.eclipse.emf.cdo.common.io;
+package org.eclipse.emf.cdo.common.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -43,13 +44,10 @@ import java.io.IOException;
 
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @since 3.0
  */
 public interface CDODataOutput extends ExtendedDataOutput
 {
-  /**
-   * @since 3.0
-   */
   public CDOPackageRegistry getPackageRegistry();
 
   public CDOIDProvider getIDProvider();
@@ -74,29 +72,16 @@ public interface CDODataOutput extends ExtendedDataOutput
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  /**
-   * @since 3.0
-   */
   public void writeCDOBranch(CDOBranch branch) throws IOException;
 
-  /**
-   * @since 3.0
-   */
   public void writeCDOBranchPoint(CDOBranchPoint branchPoint) throws IOException;
 
-  /**
-   * @since 3.0
-   */
   public void writeCDOBranchVersion(CDOBranchVersion branchVersion) throws IOException;
 
-  /**
-   * @since 3.0
-   */
+  public void writeCDOChangeSetData(CDOChangeSetData changeSetData) throws IOException;
+
   public void writeCDOCommitData(CDOCommitData commitData) throws IOException;
 
-  /**
-   * @since 3.0
-   */
   public void writeCDOCommitInfo(CDOCommitInfo commitInfo) throws IOException;
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,18 +90,12 @@ public interface CDODataOutput extends ExtendedDataOutput
 
   public void writeCDOIDAndVersion(CDOIDAndVersion idAndVersion) throws IOException;
 
-  /**
-   * @since 3.0
-   */
   public void writeCDOIDAndBranch(CDOIDAndBranch idAndBranch) throws IOException;
 
   public void writeCDOIDMetaRange(CDOIDMetaRange metaRange) throws IOException;
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  /**
-   * @since 3.0
-   */
   public void writeCDORevisionKey(CDORevisionKey revisionKey) throws IOException;
 
   public void writeCDORevision(CDORevision revision, int referenceChunk) throws IOException;
@@ -142,8 +121,5 @@ public interface CDODataOutput extends ExtendedDataOutput
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  /**
-   * @since 3.0
-   */
   public void writeCDOLockType(LockType lockType) throws IOException;
 }

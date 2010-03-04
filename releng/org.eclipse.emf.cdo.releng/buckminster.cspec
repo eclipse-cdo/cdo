@@ -2,6 +2,7 @@
 <cs:cspec xmlns:cs="http://www.eclipse.org/buckminster/CSpec-1.0" name="org.eclipse.emf.cdo.releng" componentType="buckminster" version="3.0.0.qualifier">
     <cs:dependencies>
         <cs:dependency name="org.eclipse.emf.cdo.site" componentType="eclipse.feature"/>
+        <cs:dependency name="org.eclipse.emf.cdo.epp" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.emf.cdo.formatchecker" componentType="osgi.bundle"/>
         <cs:dependency name="org.eclipse.emf.cdo.server.product" componentType="eclipse.feature"/>
         <cs:dependency name="org.gastro" componentType="eclipse.feature"/>
@@ -12,10 +13,8 @@
         <cs:dependency name="org.eclipse.emf.source" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.emf.teneo" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.emf.teneo.source" componentType="eclipse.feature"/>
-        <!--
         <cs:dependency name="org.eclipse.emf.compare" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.emf.compare.source" componentType="eclipse.feature"/>
-        -->
         <cs:dependency name="com.mysql.jdbc" componentType="eclipse.feature"/>
         <cs:dependency name="org.apache.derby" componentType="eclipse.feature"/>
         <cs:dependency name="org.h2.jdbc" componentType="eclipse.feature"/>

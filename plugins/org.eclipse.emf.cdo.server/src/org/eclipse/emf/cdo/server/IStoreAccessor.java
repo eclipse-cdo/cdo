@@ -125,6 +125,9 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler);
 
   /**
+   * Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.
+   * DetachedCDORevisions must also be considered!
+   * 
    * @since 3.0
    */
   public Set<CDOID> readChangeSet(CDOChangeSetSegment... segments);

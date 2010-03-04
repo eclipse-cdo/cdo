@@ -476,8 +476,9 @@ public class PackageRegistryTest extends AbstractCDOTest
 
   public void testReuseCommittedPackage() throws Exception
   {
-    CDOSession session1 = openSession();
-    CDOSession session2 = openSession();
+    final long timeStamp;
+    final CDOSession session1 = openSession();
+    final CDOSession session2 = openSession();
 
     try
     {
@@ -488,8 +489,17 @@ public class PackageRegistryTest extends AbstractCDOTest
         Company company = getModel1Factory().createCompany();
         company.setName("Company1");
         res.getContents().add(company);
-        transaction.commit();
+        timeStamp = transaction.commit().getTimeStamp();
       }
+
+      new PollingTimeOuter()
+      {
+        @Override
+        protected boolean successful()
+        {
+          return session2.getLastUpdateTime() >= timeStamp;
+        }
+      }.assertNoTimeOut();
 
       {
         CDOTransaction transaction = session2.openTransaction();

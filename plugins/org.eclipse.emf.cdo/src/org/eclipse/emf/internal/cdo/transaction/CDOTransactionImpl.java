@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -50,6 +51,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
+import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
@@ -60,6 +62,7 @@ import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
+import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
@@ -295,7 +298,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     handleConflicts(conflicts, resolvers);
   }
 
-  public void merge(CDOBranchPoint source)
+  public void merge(CDOBranchPoint source, CDOMerger merger)
   {
     if (CDOBranchUtil.isContainedBy(source, this))
     {
@@ -303,11 +306,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(this, source);
-    CDOBranchPointRange sourceRange = CDOBranchUtil.createRange(ancestor, source);
     CDOBranchPointRange targetRange = CDOBranchUtil.createRange(ancestor, this);
+    CDOBranchPointRange sourceRange = CDOBranchUtil.createRange(ancestor, source);
 
     CDOSessionProtocol sessionProtocol = getSession().getSessionProtocol();
-    CDOChangeSetData[] changeSets = sessionProtocol.loadChangeSets(sourceRange, targetRange);
+    CDOChangeSetData[] changeSetData = sessionProtocol.loadChangeSets(targetRange, sourceRange);
+
+    CDOChangeSet targetChanges = new CDOChangeSetImpl(targetRange, changeSetData[0]);
+    CDOChangeSet sourceChanges = new CDOChangeSetImpl(sourceRange, changeSetData[1]);
+    merger.merge(this, targetChanges, sourceChanges);
   }
 
   public void handleConflicts(Set<CDOObject> conflicts)

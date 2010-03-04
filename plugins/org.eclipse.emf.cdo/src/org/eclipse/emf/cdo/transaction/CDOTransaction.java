@@ -63,7 +63,7 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
   /**
    * @since 3.0
    */
-  public void merge(CDOBranchPoint source);
+  public void merge(CDOBranchPoint source, CDOMerger merger);
 
   /**
    * @see ResourceSet#createResource(URI)

@@ -8,16 +8,24 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.transaction;
+package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.transaction.CDOMerger;
 
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public interface CDOMerger
+public class AbstractCDOMerger implements CDOMerger
 {
-  public CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source);
+  public AbstractCDOMerger()
+  {
+  }
+
+  public CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source)
+  {
+    return null;
+  }
 }

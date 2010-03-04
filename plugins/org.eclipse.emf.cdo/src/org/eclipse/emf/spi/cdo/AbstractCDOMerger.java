@@ -50,8 +50,8 @@ public abstract class AbstractCDOMerger implements CDOMerger
     for (Entry<CDOID, Object> entry : targetMap.entrySet())
     {
       CDOID id = entry.getKey();
-      Object sourceData = entry.getValue();
-      Object targetData = sourceMap.get(id);
+      Object targetData = entry.getValue();
+      Object sourceData = sourceMap.get(id);
 
       if (sourceData == null)
       {
@@ -80,7 +80,20 @@ public abstract class AbstractCDOMerger implements CDOMerger
       }
     }
 
-    // TODO changedInTargetAndDetachedInSource
+    for (Entry<CDOID, Object> entry : sourceMap.entrySet())
+    {
+      CDOID id = entry.getKey();
+      Object sourceData = entry.getValue();
+      Object targetData = targetMap.get(id);
+
+      if (targetData instanceof CDORevisionDelta && sourceData instanceof CDOID)
+      {
+        // Changed in target and detached in source
+        Object data = changedInTargetAndDetachedInSource((CDORevisionDelta)targetData);
+        take(data, result);
+      }
+    }
+
     return result;
   }
 

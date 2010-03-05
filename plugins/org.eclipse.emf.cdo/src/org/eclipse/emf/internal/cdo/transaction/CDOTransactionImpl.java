@@ -132,6 +132,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -301,7 +302,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     handleConflicts(conflicts, resolvers);
   }
 
-  public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)
+  public void merge(CDOBranchPoint source, CDOMerger merger)
   {
     if (isDirty())
     {
@@ -339,7 +340,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     CDOChangeSet sourceChanges = createChangeSet(ids, ancestor, source);
 
     CDOChangeSetData result = merger.merge(targetChanges, sourceChanges);
-    return applyChangeSetData(result);
+    applyChangeSetData(ancestor, result);
   }
 
   private CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint,
@@ -365,10 +366,57 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return new CDOChangeSetImpl(startPoint, endPoint, data);
   }
 
-  private CDOChangeSetData applyChangeSetData(CDOChangeSetData result)
+  private void applyChangeSetData(CDOBranchPoint ancestor, CDOChangeSetData ancestorGoalData)
   {
-    // TODO: implement CDOTransactionImpl.applyChangeSetData(result)
-    throw new UnsupportedOperationException();
+    for (CDOIDAndVersion key : ancestorGoalData.getNewObjects())
+    {
+      InternalCDORevision revision = (InternalCDORevision)key;
+      InternalCDOObject object = newInstance(revision.getEClass());
+      object.cdoInternalSetView(this);
+      object.cdoInternalSetRevision(revision);
+      object.cdoInternalSetID(revision.getID());
+      object.cdoInternalSetState(CDOState.NEW);
+      object.cdoInternalPostLoad();
+
+      registerObject(object);
+      registerNew(object);
+    }
+
+    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
+    Map<CDOID, CDOObject> dirtyObjects = lastSavepoint.getDirtyObjects();
+    ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas();
+    for (CDORevisionKey key : ancestorGoalData.getChangedObjects())
+    {
+      InternalCDORevisionDelta ancestorGoalDelta = (InternalCDORevisionDelta)key;
+      CDOID id = ancestorGoalDelta.getID();
+
+      InternalCDORevision ancestorRevision = revisionManager.getRevision(id, ancestor, CDORevision.UNCHUNKED,
+          CDORevision.DEPTH_NONE, true);
+
+      InternalCDORevision goalRevision = ancestorRevision.copy();
+      goalRevision.adjustForCommit(getBranch(), getTimeStamp());
+      ancestorGoalDelta.apply(goalRevision);
+
+      InternalCDOObject object = getObject(id);
+      InternalCDORevision targetRevision = object.cdoRevision();
+      if (targetRevision == null)
+      {
+        targetRevision = getRevision(id, true);
+      }
+
+      CDORevisionDelta targetGoalDelta = goalRevision.compare(ancestorRevision);
+      revisionDeltas.put(id, targetGoalDelta);
+
+      object.cdoInternalSetState(CDOState.DIRTY);
+      dirtyObjects.put(id, object);
+    }
+
+    for (CDOIDAndVersion key : ancestorGoalData.getDetachedObjects())
+    {
+      CDOID id = (CDOID)key;
+      InternalCDOObject object = getObject(id);
+      CDOStateMachine.INSTANCE.detach(object);
+    }
   }
 
   public void handleConflicts(Set<CDOObject> conflicts)
@@ -890,8 +938,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    // We need to register back new objects that are not removed anymore
-    // there.
+    // We need to register back new objects that are not removed anymore there.
     for (Entry<CDOID, CDOObject> entryNewObject : newObjMaps.entrySet())
     {
       InternalCDOObject object = (InternalCDOObject)entryNewObject.getValue();

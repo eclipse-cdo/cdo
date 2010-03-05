@@ -70,18 +70,24 @@ public final class CDORevisionDeltaUtil
       CDORevision endRevision = revisionManager.getRevision(id, endPoint, CDORevision.UNCHUNKED,
           CDORevision.DEPTH_NONE, true);
 
-      if (startRevision == null)
+      if (startRevision == null && endRevision != null)
       {
         newObjects.add(endRevision);
       }
-      else if (endRevision == null)
+      else if (endRevision == null && startRevision != null)
       {
         detachedObjects.add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
       }
-      else
+      else if (startRevision != null && endRevision != null)
       {
-        CDORevisionDelta delta = endRevision.compare(startRevision);
-        changedObjects.add(delta);
+        if (!startRevision.equals(endRevision))
+        {
+          CDORevisionDelta delta = endRevision.compare(startRevision);
+          if (!delta.isEmpty())
+          {
+            changedObjects.add(delta);
+          }
+        }
       }
     }
 

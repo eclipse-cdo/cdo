@@ -158,6 +158,11 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     this.version = version;
   }
 
+  public boolean isEmpty()
+  {
+    return featureDeltas.isEmpty();
+  }
+
   public Map<EStructuralFeature, CDOFeatureDelta> getFeatureDeltaMap()
   {
     return featureDeltas;

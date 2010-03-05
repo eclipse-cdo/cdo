@@ -101,6 +101,29 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   }
 
   @Override
+  public int hashCode()
+  {
+    return getID().hashCode() ^ getBranch().hashCode() ^ getVersion();
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (obj == this)
+    {
+      return true;
+    }
+
+    if (obj instanceof CDORevision)
+    {
+      CDORevision that = (CDORevision)obj;
+      return getID().equals(that.getID()) && getBranch().equals(that.getBranch()) && getVersion() == that.getVersion();
+    }
+
+    return false;
+  }
+
+  @Override
   public String toString()
   {
     EClass eClass = getEClass();

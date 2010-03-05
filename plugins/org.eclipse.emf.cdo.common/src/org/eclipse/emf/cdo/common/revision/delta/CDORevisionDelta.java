@@ -29,6 +29,11 @@ public interface CDORevisionDelta extends CDORevisionKey
    */
   public EClass getEClass();
 
+  /**
+   * @since 3.0
+   */
+  public boolean isEmpty();
+
   public List<CDOFeatureDelta> getFeatureDeltas();
 
   public void apply(CDORevision revision);

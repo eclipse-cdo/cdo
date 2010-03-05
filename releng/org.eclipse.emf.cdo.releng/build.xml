@@ -1,10 +1,6 @@
 <?xml version="1.0"?>
 <project name="CDO">
 
-	<tstamp>
-		<format property="buildTimeStamp" pattern="yyyyMMddHHmm" />
-	</tstamp>
-
 	<condition property="properties.file" value="build.properties" else="local.properties">
 		<isset property="server.build" />
 	</condition>
@@ -29,7 +25,7 @@
 	</condition>
 
 	<condition property="site.signing" value="${env.SITE_SIGNING}" else="false">
-		<isset property="SITE_SIGNING" />
+		<isset property="env.SITE_SIGNING" />
 	</condition>
 
 	<condition property="clean.tools" value="true">
@@ -95,6 +91,7 @@
 			<eclipse.launch app="buckminster">
 				<args>
 					<jvmarg value="-Dbugfix.288796=true" />
+					<jvmarg value="-Xmx1024m" />
 					<arg value="-data" />
 					<arg value="@{workspace}" />
 					<arg value="--loglevel" />
@@ -181,6 +178,7 @@
 		          suffix=".properties"
 		          deleteonexit="true"
 		          property="properties.tmp" />
+		<echo message="Properties file is: ${properties.tmp}" />
 		<echoproperties destfile="${properties.tmp}">
 			<!-- We don't want these. basedir in particular will cause problems if passed explicitly -->
 			<propertyset negate="true">
@@ -238,18 +236,13 @@
 				<arg value="-l" />
 				<arg value="org.eclipse.emf.cdo.tests/CDO AllTests.launch" />
 				<arg value="-o" />
-				<arg value="${result}/testReport.xml.tmp" />
+				<arg value="${result}/testReport.xml" />
+				<arg value="--terseXML" />
+				<arg value="--flatXML" />
 				<arg value="--xml" />
 				<arg value="${result}/coverageReport.xml" />
 			</cmdargs>
 		</buckminster>
-
-		<!-- convert the xml to a format which can be read by junit report -->
-		<xslt in="${result}/testReport.xml.tmp" out="${result}/testReport.xml" style="convert-test-results.xsl">
-			<param name="testName" expression="CDO Tests" />
-			<param name="testPackage" expression="org.eclipse.emf.cdo.tests" />
-		</xslt>
-		<delete file="${result}/testReport.xml.tmp" failonerror="false" quiet="true" />
 	</target>
 
 	<target name="promote.sites" depends="provision">

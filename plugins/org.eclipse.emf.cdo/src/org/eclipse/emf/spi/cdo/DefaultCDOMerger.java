@@ -35,9 +35,9 @@ import java.util.Map.Entry;
  * @author Eike Stepper
  * @since 3.0
  */
-public abstract class AbstractCDOMerger implements CDOMerger
+public class DefaultCDOMerger implements CDOMerger
 {
-  public AbstractCDOMerger()
+  public DefaultCDOMerger()
   {
   }
 
@@ -97,11 +97,23 @@ public abstract class AbstractCDOMerger implements CDOMerger
     return result;
   }
 
-  protected abstract Object changedInSourceAndTarget(CDORevisionDelta targetDelta, CDORevisionDelta sourceDelta);
+  protected Object changedInSourceAndTarget(CDORevisionDelta targetDelta, CDORevisionDelta sourceDelta)
+      throws UnsupportedOperationException
+  {
+    throw new UnsupportedOperationException();
+  }
 
-  protected abstract Object changedInSourceAndDetachedInTarget(CDORevisionDelta sourceDelta);
+  protected Object changedInSourceAndDetachedInTarget(CDORevisionDelta sourceDelta)
+      throws UnsupportedOperationException
+  {
+    throw new UnsupportedOperationException();
+  }
 
-  protected abstract Object changedInTargetAndDetachedInSource(CDORevisionDelta targetDelta);
+  protected Object changedInTargetAndDetachedInSource(CDORevisionDelta targetDelta)
+      throws UnsupportedOperationException
+  {
+    throw new UnsupportedOperationException();
+  }
 
   private Map<CDOID, Object> createMap(CDOChangeSetData changeSetData)
   {
@@ -147,7 +159,7 @@ public abstract class AbstractCDOMerger implements CDOMerger
   /**
    * @author Eike Stepper
    */
-  public static abstract class PerFeature extends AbstractCDOMerger
+  public static class PerFeature extends DefaultCDOMerger
   {
     public PerFeature()
     {
@@ -194,7 +206,10 @@ public abstract class AbstractCDOMerger implements CDOMerger
       return result;
     }
 
-    protected abstract CDOFeatureDelta changedInSourceAndTarget(CDOFeatureDelta targetFeatureDelta,
-        CDOFeatureDelta sourceFeatureDelta);
+    protected CDOFeatureDelta changedInSourceAndTarget(CDOFeatureDelta targetFeatureDelta,
+        CDOFeatureDelta sourceFeatureDelta) throws UnsupportedOperationException
+    {
+      throw new UnsupportedOperationException();
+    }
   }
 }

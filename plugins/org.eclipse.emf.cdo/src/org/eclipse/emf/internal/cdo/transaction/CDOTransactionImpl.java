@@ -300,6 +300,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)
   {
+    if (isDirty())
+    {
+      throw new IllegalStateException("Merging into dirty transactions not yet supported");
+    }
+
     if (CDOBranchUtil.isContainedBy(source, this))
     {
       throw new IllegalArgumentException("Source is already contained in " + this);

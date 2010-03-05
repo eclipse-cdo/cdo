@@ -22,6 +22,8 @@ import java.util.List;
  */
 public interface CDOChangeSetData
 {
+  public boolean isEmpty();
+
   public List<CDOIDAndVersion> getNewObjects();
 
   /**

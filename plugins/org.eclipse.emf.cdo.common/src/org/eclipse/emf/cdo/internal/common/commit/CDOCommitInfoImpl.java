@@ -62,6 +62,11 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
     return comment;
   }
 
+  public boolean isEmpty()
+  {
+    return false;
+  }
+
   public synchronized List<CDOPackageUnit> getNewPackageUnits()
   {
     loadCommitDataIfNeeded();

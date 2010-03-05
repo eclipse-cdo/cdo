@@ -51,6 +51,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
+import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
@@ -302,7 +303,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     handleConflicts(conflicts, resolvers);
   }
 
-  public void merge(CDOBranchPoint source, CDOMerger merger)
+  public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)
   {
     if (isDirty())
     {
@@ -340,7 +341,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     CDOChangeSet sourceChanges = createChangeSet(ids, ancestor, source);
 
     CDOChangeSetData result = merger.merge(targetChanges, sourceChanges);
-    applyChangeSetData(ancestor, result);
+    return applyChangeSetData(ancestor, result);
   }
 
   private CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint,
@@ -366,8 +367,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return new CDOChangeSetImpl(startPoint, endPoint, data);
   }
 
-  private void applyChangeSetData(CDOBranchPoint ancestor, CDOChangeSetData ancestorGoalData)
+  private CDOChangeSetData applyChangeSetData(CDOBranchPoint ancestor, CDOChangeSetData ancestorGoalData)
   {
+    CDOChangeSetData result = new CDOChangeSetDataImpl();
+
     for (CDOIDAndVersion key : ancestorGoalData.getNewObjects())
     {
       InternalCDORevision revision = (InternalCDORevision)key;
@@ -383,6 +386,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
         registerObject(object);
         registerNew(object);
+        result.getNewObjects().add(revision);
       }
     }
 
@@ -415,6 +419,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
         object.cdoInternalSetState(CDOState.DIRTY);
         dirtyObjects.put(id, object);
+        result.getChangedObjects().add(targetGoalDelta);
       }
     }
 
@@ -423,7 +428,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDOID id = (CDOID)key;
       InternalCDOObject object = getObject(id);
       CDOStateMachine.INSTANCE.detach(object);
+      result.getDetachedObjects().add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
     }
+
+    return result;
   }
 
   public void handleConflicts(Set<CDOObject> conflicts)

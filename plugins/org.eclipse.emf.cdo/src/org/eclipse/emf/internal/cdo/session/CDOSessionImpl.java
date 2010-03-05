@@ -1281,6 +1281,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       return commitInfo.getComment();
     }
 
+    public boolean isEmpty()
+    {
+      return false;
+    }
+
     public List<CDOPackageUnit> getNewPackageUnits()
     {
       return commitInfo.getNewPackageUnits();
@@ -1911,9 +1916,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo ancestorInfo,
-        CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
-        CDORevisionHandler handler)
+    public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo ancestorInfo, CDORevisionAvailabilityInfo targetInfo,
+        CDORevisionAvailabilityInfo sourceInfo, CDORevisionHandler handler)
     {
       int attempt = 0;
       for (;;)

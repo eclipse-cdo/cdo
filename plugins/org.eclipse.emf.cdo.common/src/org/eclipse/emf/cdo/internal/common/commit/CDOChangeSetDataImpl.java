@@ -41,6 +41,26 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
     this(new ArrayList<CDOIDAndVersion>(), new ArrayList<CDORevisionKey>(), new ArrayList<CDOIDAndVersion>());
   }
 
+  public boolean isEmpty()
+  {
+    if (newObjects != null && !newObjects.isEmpty())
+    {
+      return false;
+    }
+
+    if (changedObjects != null && !changedObjects.isEmpty())
+    {
+      return false;
+    }
+
+    if (detachedObjects != null && !detachedObjects.isEmpty())
+    {
+      return false;
+    }
+
+    return true;
+  }
+
   public List<CDOIDAndVersion> getNewObjects()
   {
     return newObjects;

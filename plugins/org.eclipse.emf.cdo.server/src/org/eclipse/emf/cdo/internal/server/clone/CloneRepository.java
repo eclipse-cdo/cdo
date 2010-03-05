@@ -236,6 +236,11 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
       this.commitContext = commitContext;
     }
 
+    public boolean isEmpty()
+    {
+      return false;
+    }
+
     public List<CDOPackageUnit> getNewPackageUnits()
     {
       final InternalCDOPackageUnit[] newPackageUnits = commitContext.getNewPackageUnits();

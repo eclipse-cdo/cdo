@@ -374,6 +374,11 @@ public class Session extends Container<IView> implements InternalSession
         return commitInfo;
       }
 
+      public boolean isEmpty()
+      {
+        return getDelegate().isEmpty();
+      }
+
       @Override
       public List<CDOIDAndVersion> getNewObjects()
       {

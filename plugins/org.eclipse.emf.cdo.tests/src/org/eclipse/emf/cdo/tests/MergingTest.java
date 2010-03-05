@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -72,10 +73,30 @@ public class MergingTest extends AbstractCDOTest
     long time3 = transaction.commit().getTimeStamp();
     CDOBranch source3 = mainBranch.createBranch("source3", time3);
 
-    sleep(10);
+    CDOChangeSetData result = transaction.merge(source1.getHead(), merger);
+    assertEquals(true, result.isEmpty());
+    assertEquals(false, transaction.isDirty());
 
-    CDOTransaction t1 = session.openTransaction(mainBranch);
-    t1.merge(source1.getHead(), merger);
+    result = transaction.merge(source2.getHead(), merger);
+    assertEquals(true, result.isEmpty());
+    assertEquals(false, transaction.isDirty());
+
+    result = transaction.merge(source3.getHead(), merger);
+    assertEquals(true, result.isEmpty());
+    assertEquals(false, transaction.isDirty());
+
+    sleep(10);
+    CDOTransaction tx1 = session.openTransaction(source1);
+    CDOResource res1 = tx1.getResource("/res");
+    res1.getContents().add(getModel1Factory().createCompany());
+    res1.getContents().add(getModel1Factory().createCompany());
+    res1.getContents().add(getModel1Factory().createCompany());
+    tx1.commit();
+    tx1.close();
+
+    result = transaction.merge(source1.getHead(), merger);
+    assertEquals(true, result.isEmpty());
+    assertEquals(false, transaction.isDirty());
 
     session.close();
   }

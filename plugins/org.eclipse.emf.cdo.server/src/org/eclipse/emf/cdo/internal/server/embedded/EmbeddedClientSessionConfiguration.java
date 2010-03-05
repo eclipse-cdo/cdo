@@ -39,6 +39,7 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
 
   public EmbeddedClientSessionConfiguration()
   {
+    throw new UnsupportedOperationException("Embedded sessions are not yet supported");
   }
 
   public InternalRepository getRepository()

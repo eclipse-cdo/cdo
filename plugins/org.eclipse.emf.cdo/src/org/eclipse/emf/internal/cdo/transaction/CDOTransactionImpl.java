@@ -375,7 +375,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       object.cdoInternalSetView(this);
       object.cdoInternalSetRevision(revision);
       object.cdoInternalSetID(revision.getID());
-      object.cdoInternalSetState(CDOState.NEW);
+      object.cdoInternalSetState(CDOState.NEW); // TODO This will probably reuire changes in the commit mechanism!
       object.cdoInternalPostLoad();
 
       registerObject(object);

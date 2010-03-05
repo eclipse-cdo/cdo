@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
@@ -46,6 +47,7 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -1901,6 +1903,24 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         try
         {
           return delegate.loadChangeSets(ranges);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo ancestorInfo,
+        CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
+        CDORevisionHandler handler)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.loadMergeData(ancestorInfo, targetInfo, sourceInfo, handler);
         }
         catch (Exception ex)
         {

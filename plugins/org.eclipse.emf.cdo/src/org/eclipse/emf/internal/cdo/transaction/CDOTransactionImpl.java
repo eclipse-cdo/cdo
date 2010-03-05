@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
@@ -40,6 +39,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -56,11 +56,14 @@ import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
@@ -310,21 +313,59 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       throw new IllegalArgumentException("Source is already contained in " + this);
     }
 
+    // Keep a pointer to this list until the merge is done!!!
+    final List<CDORevision> strongReferences = new ArrayList<CDORevision>();
+
     CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(this, source);
-    CDOBranchPointRange targetRange = CDOBranchUtil.createRange(ancestor, this);
-    CDOBranchPointRange sourceRange = CDOBranchUtil.createRange(ancestor, source);
+    CDORevisionAvailabilityInfo ancestorInfo = createRevisionAvailabilityInfo(ancestor, strongReferences);
+    CDORevisionAvailabilityInfo targetInfo = createRevisionAvailabilityInfo(this, strongReferences);
+    CDORevisionAvailabilityInfo sourceInfo = createRevisionAvailabilityInfo(source, strongReferences);
+
+    CDORevisionHandler handler = new CDORevisionHandler()
+    {
+      InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
+
+      public void handleRevision(CDORevision revision)
+      {
+        strongReferences.add(revision);
+        revisionManager.addRevision(revision);
+      }
+    };
 
     CDOSessionProtocol sessionProtocol = getSession().getSessionProtocol();
-    CDOChangeSetData[] changeSetData = sessionProtocol.loadChangeSets(targetRange, sourceRange);
+    Set<CDOID> ids = sessionProtocol.loadMergeData(ancestorInfo, targetInfo, sourceInfo, handler);
 
-    CDOChangeSet targetChanges = new CDOChangeSetImpl(targetRange, changeSetData[0]);
-    CDOChangeSet sourceChanges = new CDOChangeSetImpl(sourceRange, changeSetData[1]);
+    CDOChangeSet targetChanges = createChangeSet(ids, ancestor, this);
+    CDOChangeSet sourceChanges = createChangeSet(ids, ancestor, source);
+
     CDOChangeSetData result = merger.merge(targetChanges, sourceChanges);
-    applyChangeSetData(result);
-    return result;
+    return applyChangeSetData(result);
   }
 
-  private void applyChangeSetData(CDOChangeSetData result)
+  private CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint,
+      List<CDORevision> strongReferences)
+  {
+    CDORevisionAvailabilityInfo info = new CDORevisionAvailabilityInfo(branchPoint);
+
+    InternalCDORevisionCache cache = getSession().getRevisionManager().getCache();
+    List<CDORevision> revisions = cache.getRevisions(branchPoint);
+    for (CDORevision revision : revisions)
+    {
+      strongReferences.add(revision);
+      info.getAvailableRevisions().add(revision.getID());
+    }
+
+    return info;
+  }
+
+  private CDOChangeSet createChangeSet(Set<CDOID> ids, CDOBranchPoint startPoint, CDOBranchPoint endPoint)
+  {
+    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
+    CDOChangeSetData data = CDORevisionDeltaUtil.createChangeSetData(startPoint, endPoint, ids, revisionManager);
+    return new CDOChangeSetImpl(startPoint, endPoint, data);
+  }
+
+  private CDOChangeSetData applyChangeSetData(CDOChangeSetData result)
   {
     // TODO: implement CDOTransactionImpl.applyChangeSetData(result)
     throw new UnsupportedOperationException();

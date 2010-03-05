@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -32,12 +31,12 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
-import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
@@ -54,6 +53,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
+import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -61,7 +61,6 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
@@ -95,6 +94,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -962,30 +962,44 @@ public class Repository extends Container<Object> implements InternalRepository
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     Set<CDOID> ids = accessor.readChangeSet(segments);
 
-    List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>();
-    List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
-    List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>();
+    return CDORevisionDeltaUtil.createChangeSetData(startPoint, endPoint, ids, revisionManager);
+  }
+
+  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo ancestorInfo, CDORevisionAvailabilityInfo targetInfo,
+      CDORevisionAvailabilityInfo sourceInfo, CDORevisionHandler handler)
+  {
+    CDOBranchPoint ancestor = ancestorInfo.getBranchPoint();
+    CDOBranchPoint target = targetInfo.getBranchPoint();
+    CDOBranchPoint source = sourceInfo.getBranchPoint();
+
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    Set<CDOID> ids = accessor.readChangeSet(CDOChangeSetSegment.createFrom(ancestor, target));
+    ids.addAll(accessor.readChangeSet(CDOChangeSetSegment.createFrom(ancestor, source)));
+
+    Set<CDORevision> handledRevisions = new HashSet<CDORevision>();
+    loadMergeData(ids, ancestorInfo, handledRevisions, handler);
+    loadMergeData(ids, targetInfo, handledRevisions, handler);
+    loadMergeData(ids, sourceInfo, handledRevisions, handler);
+
+    return ids;
+  }
+
+  private void loadMergeData(Set<CDOID> ids, CDORevisionAvailabilityInfo info, Set<CDORevision> handledRevisions,
+      CDORevisionHandler handler)
+  {
+    CDOBranchPoint branchPoint = info.getBranchPoint();
+    Set<CDOID> availableRevisions = info.getAvailableRevisions();
     for (CDOID id : ids)
     {
-      InternalCDORevision startRevision = getRevision(id, startPoint);
-      InternalCDORevision endRevision = getRevision(id, endPoint);
-
-      if (startRevision == null)
+      if (!availableRevisions.contains(id))
       {
-        newObjects.add(endRevision);
-      }
-      else if (endRevision == null)
-      {
-        detachedObjects.add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
-      }
-      else
-      {
-        InternalCDORevisionDelta delta = endRevision.compare(startRevision);
-        changedObjects.add(delta);
+        InternalCDORevision revision = getRevision(id, branchPoint);
+        if (handledRevisions.add(revision))
+        {
+          handler.handleRevision(revision);
+        }
       }
     }
-
-    return new CDOChangeSetDataImpl(newObjects, changedObjects, detachedObjects);
   }
 
   private InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint)

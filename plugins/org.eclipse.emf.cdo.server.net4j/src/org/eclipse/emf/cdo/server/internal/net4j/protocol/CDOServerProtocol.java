@@ -253,6 +253,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_LOAD_CHANGE_SETS:
       return new LoadChangeSetsIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_LOAD_MERGE_DATA:
+      return new LoadMergeDataIndication(this);
+
     default:
       return super.createSignalReactor(signalID);
     }

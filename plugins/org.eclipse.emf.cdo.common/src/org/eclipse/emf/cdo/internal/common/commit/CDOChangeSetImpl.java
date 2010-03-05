@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.internal.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -21,26 +20,34 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
  */
 public class CDOChangeSetImpl extends CDOChangeSetDataImpl implements CDOChangeSet
 {
-  private CDOBranchPointRange range;
+  private CDOBranchPoint startPoint;
 
-  public CDOChangeSetImpl(CDOBranchPointRange range, CDOChangeSetData data)
+  private CDOBranchPoint endPoint;
+
+  public CDOChangeSetImpl(CDOBranchPoint startPoint, CDOBranchPoint endPoint, CDOChangeSetData data)
   {
     super(data.getNewObjects(), data.getChangedObjects(), data.getDetachedObjects());
-    this.range = range;
+    this.startPoint = startPoint;
+    this.endPoint = endPoint;
+  }
+
+  public CDOChangeSetImpl(CDOBranchPoint startPoint, CDOBranchPoint endPoint)
+  {
+    this(startPoint, endPoint, new CDOChangeSetDataImpl());
   }
 
   public CDOBranchPoint getStartPoint()
   {
-    return range.getStartPoint();
+    return startPoint;
   }
 
   public CDOBranchPoint getEndPoint()
   {
-    return range.getEndPoint();
+    return endPoint;
   }
 
   public CDOBranchPoint getAncestorPoint()
   {
-    return CDOBranchUtil.getAncestor(getStartPoint(), getEndPoint());
+    return CDOBranchUtil.getAncestor(startPoint, endPoint);
   }
 }

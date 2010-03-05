@@ -179,6 +179,11 @@ public interface CDOProtocolConstants
    */
   public static final short SIGNAL_LOAD_CHANGE_SETS = 41;
 
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_LOAD_MERGE_DATA = 42;
+
   // //////////////////////////////////////////////////////////////////////
   // Session Management
 

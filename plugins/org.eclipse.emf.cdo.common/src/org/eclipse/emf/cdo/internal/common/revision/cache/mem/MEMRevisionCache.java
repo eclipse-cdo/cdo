@@ -199,6 +199,11 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
     throw new UnsupportedOperationException();
   }
 
+  public List<CDORevision> getRevisions(CDOBranchPoint branchPoint)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   @Override
   @SuppressWarnings("unchecked")
   protected void work(Reference<? extends InternalCDORevision> reference)

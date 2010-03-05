@@ -10,7 +10,11 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -18,6 +22,7 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
+import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -32,6 +37,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -87,4 +93,10 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
       OMMonitor monitor);
 
   public void sync(CDOReplicationContext context);
+
+  public CDOChangeSetData getChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint);
+
+  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo ancestorInfo,
+      CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
+      CDORevisionHandler handler);
 }

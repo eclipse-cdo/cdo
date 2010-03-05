@@ -24,12 +24,14 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
+import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
@@ -306,6 +308,12 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   public CDOChangeSetData[] loadChangeSets(CDOBranchPointRange... ranges)
   {
     return send(new LoadChangeSetsRequest(this, ranges));
+  }
+
+  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo ancestorInfo, CDORevisionAvailabilityInfo targetInfo,
+      CDORevisionAvailabilityInfo sourceInfo, CDORevisionHandler handler)
+  {
+    return send(new LoadMergeDataRequest(this, ancestorInfo, targetInfo, sourceInfo, handler));
   }
 
   @Override

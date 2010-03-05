@@ -257,6 +257,11 @@ public class LRURevisionCache extends Lifecycle implements InternalCDORevisionCa
     throw new UnsupportedOperationException();
   }
 
+  public List<CDORevision> getRevisions(CDOBranchPoint branchPoint)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   private InternalCDORevision getRevision(RevisionHolder holder, long timeStamp)
   {
     while (holder != null)

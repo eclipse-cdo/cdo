@@ -170,6 +170,11 @@ public class TwoLevelRevisionCache extends Lifecycle implements InternalCDORevis
     throw new UnsupportedOperationException();
   }
 
+  public List<CDORevision> getRevisions(CDOBranchPoint branchPoint)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public void notifyEvent(IEvent event)
   {
     if (event instanceof EvictionEvent)

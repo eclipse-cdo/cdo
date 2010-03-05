@@ -645,6 +645,11 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
     throw new UnsupportedOperationException();
   }
 
+  public List<CDORevision> getRevisions(CDOBranchPoint branchPoint)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   @Override
   protected void doBeforeActivate() throws Exception
   {

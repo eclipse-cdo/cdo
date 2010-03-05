@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.spi.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -36,4 +37,6 @@ public interface InternalCDORevisionCache extends CDORevisionCache, ILifecycle
   public void clear();
 
   public Map<CDOBranch, List<CDORevision>> getAllRevisions();
+
+  public List<CDORevision> getRevisions(CDOBranchPoint branchPoint);
 }

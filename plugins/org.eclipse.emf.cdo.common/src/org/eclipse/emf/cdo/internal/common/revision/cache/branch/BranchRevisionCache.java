@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ref.KeyedReference;
@@ -193,6 +194,26 @@ public class BranchRevisionCache extends ReferenceQueueWorker<InternalCDORevisio
     for (RevisionList list : revisionLists.values())
     {
       list.getAllRevisions(result);
+    }
+
+    return result;
+  }
+
+  public List<CDORevision> getRevisions(CDOBranchPoint branchPoint)
+  {
+    List<CDORevision> result = new ArrayList<CDORevision>();
+    CDOBranch branch = branchPoint.getBranch();
+    for (Map.Entry<CDOIDAndBranch, RevisionList> entry : revisionLists.entrySet())
+    {
+      if (ObjectUtil.equals(entry.getKey().getBranch(), branch))
+      {
+        RevisionList list = entry.getValue();
+        InternalCDORevision revision = list.getRevision(branchPoint.getTimeStamp());
+        if (revision != null)
+        {
+          result.add(revision);
+        }
+      }
     }
 
     return result;

@@ -369,15 +369,18 @@ public class Repository extends Container<Object> implements InternalRepository
       InternalCDORevision revision = accessor.readRevision(id, branchPoint, referenceChunk, revisionManager);
       if (revision == null)
       {
-        // Case "Pointer"
+        // Case "Pointer"?
         InternalCDORevision target = loadRevisionTarget(id, branchPoint, referenceChunk, accessor);
+        if (target != null)
+        {
+          CDOBranch branch = branchPoint.getBranch();
+          long revised = loadRevisionRevised(id, branch);
+          PointerCDORevision pointer = new PointerCDORevision(id, branch, revised, target);
 
-        CDOBranch branch = branchPoint.getBranch();
-        long revised = loadRevisionRevised(id, branch);
-        PointerCDORevision pointer = new PointerCDORevision(id, branch, revised, target);
+          info.setSynthetic(pointer);
+        }
 
         info.setResult(target);
-        info.setSynthetic(pointer);
       }
       else if (revision instanceof DetachedCDORevision)
       {

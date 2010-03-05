@@ -69,6 +69,7 @@ public class CDOChangeSetSegment
       CDOBranchPoint base = endBranch.getBase();
       result.addFirst(new CDOChangeSetSegment(endBranch, base.getTimeStamp(), endPoint.getTimeStamp()));
       endPoint = base;
+      endBranch = base.getBranch();
     }
 
     result.addFirst(new CDOChangeSetSegment(startBranch, startPoint.getTimeStamp(), endPoint.getTimeStamp()));

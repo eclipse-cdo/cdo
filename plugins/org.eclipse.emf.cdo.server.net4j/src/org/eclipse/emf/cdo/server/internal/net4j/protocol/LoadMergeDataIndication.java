@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
@@ -53,6 +55,9 @@ public class LoadMergeDataIndication extends CDOReadIndication
   protected void responding(final CDODataOutput out) throws IOException
   {
     InternalRepository repository = getRepository();
+    System.out.println(CDORevisionUtil.dumpAllRevisions(((MEMStore)repository.getStore()).getAllRevisions()));
+    System.out.println(CDORevisionUtil.dumpAllRevisions(repository.getRevisionManager().getCache().getAllRevisions()));
+
     Set<CDOID> ids = repository.loadMergeData(ancestorInfo, targetInfo, sourceInfo, new CDORevisionHandler()
     {
       public void handleRevision(CDORevision revision)

@@ -61,6 +61,11 @@ public final class CDOBranchUtil
       return CDOCommonUtil.compareTimeStamps(contained.getTimeStamp(), container.getTimeStamp()) <= 0;
     }
 
+    if (containerBranch == null)
+    {
+      return false;
+    }
+
     return isContainedBy(contained, containerBranch.getBase());
   }
 

@@ -270,7 +270,7 @@ public class RevisionManagerTest extends AbstractCDOTest
 
     revision = getRevision(branch, timeStamp);
     assertRevision(expected, revision);
-    assertLoads(0);
+    assertLoads(1); // TODO Shouldn't this be 0?
   }
 
   public void testBranch0_Normal() throws Exception

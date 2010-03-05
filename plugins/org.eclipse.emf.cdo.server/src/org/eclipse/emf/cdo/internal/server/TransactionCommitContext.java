@@ -47,6 +47,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
@@ -580,7 +581,8 @@ public class TransactionCommitContext implements InternalCommitContext
       throw new IllegalStateException("Origin revision not found for " + delta);
     }
 
-    if (oldRevision.isHistorical())
+    CDOBranch branch = transaction.getBranch();
+    if (ObjectUtil.equals(oldRevision.getBranch(), branch) && oldRevision.isHistorical())
     {
       throw new ConcurrentModificationException("Attempt by " + transaction + " to modify historical revision: "
           + oldRevision);
@@ -596,7 +598,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
 
     InternalCDORevision newRevision = oldRevision.copy();
-    newRevision.adjustForCommit(transaction.getBranch(), timeStamp);
+    newRevision.adjustForCommit(branch, timeStamp);
 
     delta.apply(newRevision);
     return newRevision;

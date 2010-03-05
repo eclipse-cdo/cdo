@@ -371,15 +371,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     for (CDOIDAndVersion key : ancestorGoalData.getNewObjects())
     {
       InternalCDORevision revision = (InternalCDORevision)key;
-      InternalCDOObject object = newInstance(revision.getEClass());
-      object.cdoInternalSetView(this);
-      object.cdoInternalSetRevision(revision);
-      object.cdoInternalSetID(revision.getID());
-      object.cdoInternalSetState(CDOState.NEW); // TODO This will probably reuire changes in the commit mechanism!
-      object.cdoInternalPostLoad();
+      CDOID id = revision.getID();
+      if (getObject(id) == null)
+      {
+        InternalCDOObject object = newInstance(revision.getEClass());
+        object.cdoInternalSetView(this);
+        object.cdoInternalSetRevision(revision);
+        object.cdoInternalSetID(id);
+        object.cdoInternalSetState(CDOState.NEW); // TODO This will probably reuire changes in the commit mechanism!
+        object.cdoInternalPostLoad();
 
-      registerObject(object);
-      registerNew(object);
+        registerObject(object);
+        registerNew(object);
+      }
     }
 
     InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
@@ -404,11 +408,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         targetRevision = getRevision(id, true);
       }
 
-      CDORevisionDelta targetGoalDelta = goalRevision.compare(ancestorRevision);
-      revisionDeltas.put(id, targetGoalDelta);
+      CDORevisionDelta targetGoalDelta = goalRevision.compare(targetRevision);
+      if (!targetGoalDelta.isEmpty())
+      {
+        revisionDeltas.put(id, targetGoalDelta);
 
-      object.cdoInternalSetState(CDOState.DIRTY);
-      dirtyObjects.put(id, object);
+        object.cdoInternalSetState(CDOState.DIRTY);
+        dirtyObjects.put(id, object);
+      }
     }
 
     for (CDOIDAndVersion key : ancestorGoalData.getDetachedObjects())

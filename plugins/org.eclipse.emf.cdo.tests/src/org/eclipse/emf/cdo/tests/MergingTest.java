@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -97,6 +99,20 @@ public class MergingTest extends AbstractCDOTest
     assertEquals(1, result.getChangedObjects().size());
     assertEquals(0, result.getDetachedObjects().size());
     assertEquals(true, transaction.isDirty());
+
+    CDOCommitInfo commitInfo1 = transaction.commit();
+    assertEquals(3, commitInfo1.getNewObjects().size());
+    assertEquals(1, commitInfo1.getChangedObjects().size());
+    assertEquals(0, commitInfo1.getDetachedObjects().size());
+    assertEquals(false, transaction.isDirty());
+
+    assertEquals(mainBranch, ((CDORevision)commitInfo1.getNewObjects().get(0)).getBranch());
+    assertEquals(mainBranch, ((CDORevision)commitInfo1.getNewObjects().get(1)).getBranch());
+    assertEquals(mainBranch, ((CDORevision)commitInfo1.getNewObjects().get(2)).getBranch());
+
+    assertEquals(1, ((CDORevision)commitInfo1.getNewObjects().get(0)).getVersion());
+    assertEquals(1, ((CDORevision)commitInfo1.getNewObjects().get(1)).getVersion());
+    assertEquals(1, ((CDORevision)commitInfo1.getNewObjects().get(2)).getVersion());
 
     session.close();
   }

@@ -26,6 +26,14 @@ public class MoveableArrayList<E> extends ArrayList<E> implements MoveableList<E
     super(initialCapacity);
   }
 
+  /**
+   * @since 3.0
+   */
+  public void move(int newPosition, Object object)
+  {
+    move(newPosition, indexOf(object));
+  }
+
   public E move(int targetIndex, int sourceIndex)
   {
     int size = size();

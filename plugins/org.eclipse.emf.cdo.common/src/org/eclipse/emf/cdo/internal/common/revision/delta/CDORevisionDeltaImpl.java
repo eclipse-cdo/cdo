@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
@@ -26,16 +27,25 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.change.ListChange;
+import org.eclipse.emf.ecore.change.util.ListDifferenceAnalyzer;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 /**
@@ -242,59 +252,68 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
 
   private void compare(CDORevision originRevision, CDORevision dirtyRevision)
   {
+    CDORevisionData originData = originRevision.data();
+    CDORevisionData dirtyData = dirtyRevision.data();
+
     EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(eClass);
     for (int i = 0; i < features.length; i++)
     {
-      EStructuralFeature feature = features[i];
+      final EStructuralFeature feature = features[i];
       if (feature.isMany())
       {
-        int originSize = originRevision.data().size(feature);
-        int dirtySize = dirtyRevision.data().size(feature);
-        if (dirtySize == 0 && originSize > 0)
+        if (originData.size(feature) > 0 && dirtyData.size(feature) == 0)
         {
           addFeatureDelta(new CDOClearFeatureDeltaImpl(feature));
         }
         else
         {
-          int originIndex = 0;
-          int dirtyIndex = 0;
-          if (originSize == dirtySize)
+          CDOListFeatureDelta listFeatureDelta = new CDOListFeatureDeltaImpl(feature);
+          final List<CDOFeatureDelta> changes = listFeatureDelta.getListChanges();
+
+          ListDifferenceAnalyzer analyzer = new ListDifferenceAnalyzer()
           {
-            for (; originIndex < originSize && dirtyIndex < dirtySize; dirtyIndex++, originIndex++)
+            @Override
+            protected void createAddListChange(EList<Object> oldList, EList<ListChange> listChanges, Object newObject,
+                int index)
             {
-              Object originValue = originRevision.data().get(feature, originIndex);
-              Object dirtyValue = dirtyRevision.data().get(feature, dirtyIndex);
-
-              if (!compare(originValue, dirtyValue))
-              {
-                dirtyIndex = 0;
-                break;
-              }
+              CDOFeatureDelta delta = new CDOAddFeatureDeltaImpl(feature, index, newObject);
+              changes.add(delta);
+              oldList.add(index, newObject);
             }
-          }
 
-          if (originIndex != originSize || dirtyIndex != dirtySize)
+            @Override
+            protected void createRemoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object newObject,
+                int index)
+            {
+              CDOFeatureDelta delta = new CDORemoveFeatureDeltaImpl(feature, index);
+              changes.add(delta);
+              oldList.remove(index);
+            }
+
+            @Override
+            protected void createMoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object newObject,
+                int index, int toIndex)
+            {
+              CDOFeatureDelta delta = new CDOMoveFeatureDeltaImpl(feature, toIndex, index);
+              changes.add(delta);
+              oldList.move(toIndex, index);
+            }
+          };
+
+          CDOList originList = ((InternalCDORevision)originRevision).getList(feature);
+          CDOList dirtyList = ((InternalCDORevision)dirtyRevision).getList(feature);
+
+          analyzer.analyzeLists(originList, dirtyList, new NOOPList());
+          if (!changes.isEmpty())
           {
-            // Not identical
-            // Be very stupid and do the simplest thing.
-            // Clear and add all value;
-            if (originSize > 0)
-            {
-              addFeatureDelta(new CDOClearFeatureDeltaImpl(feature));
-            }
-
-            for (int k = 0; k < dirtySize; k++)
-            {
-              Object dirtyValue = dirtyRevision.data().get(feature, k);
-              addFeatureDelta(new CDOAddFeatureDeltaImpl(feature, k, dirtyValue));
-            }
+            featureDeltas.put(feature, listFeatureDelta);
           }
         }
       }
       else
       {
-        Object originValue = originRevision.data().get(feature, 0);
-        Object dirtyValue = dirtyRevision.data().get(feature, 0);
+        Object originValue = originData.get(feature, 0);
+        Object dirtyValue = dirtyData.get(feature, 0);
         if (!compare(originValue, dirtyValue))
         {
           if (dirtyValue == null)
@@ -320,5 +339,139 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
   {
     return MessageFormat.format("CDORevisionDelta[{0}@{1}:{2}v{3} --> {4}]", eClass.getName(), id, branch.getID(),
         version, featureDeltas.values());
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class NOOPList implements EList<ListChange>
+  {
+    private static final EList<ListChange> LIST = ECollections.emptyEList();
+
+    public NOOPList()
+    {
+    }
+
+    public int size()
+    {
+      return 0;
+    }
+
+    public boolean isEmpty()
+    {
+      return true;
+    }
+
+    public boolean contains(Object o)
+    {
+      return false;
+    }
+
+    public Iterator<ListChange> iterator()
+    {
+      return LIST.iterator();
+    }
+
+    public Object[] toArray()
+    {
+      return LIST.toArray();
+    }
+
+    public <T> T[] toArray(T[] a)
+    {
+      return LIST.toArray(a);
+    }
+
+    public boolean add(ListChange o)
+    {
+      return false;
+    }
+
+    public boolean remove(Object o)
+    {
+      return false;
+    }
+
+    public boolean containsAll(Collection<?> c)
+    {
+      return false;
+    }
+
+    public boolean addAll(Collection<? extends ListChange> c)
+    {
+      return false;
+    }
+
+    public boolean addAll(int index, Collection<? extends ListChange> c)
+    {
+      return false;
+    }
+
+    public boolean removeAll(Collection<?> c)
+    {
+      return false;
+    }
+
+    public boolean retainAll(Collection<?> c)
+    {
+      return false;
+    }
+
+    public void clear()
+    {
+    }
+
+    public ListChange get(int index)
+    {
+      return LIST.get(index);
+    }
+
+    public ListChange set(int index, ListChange element)
+    {
+      return null;
+    }
+
+    public void add(int index, ListChange element)
+    {
+    }
+
+    public ListChange remove(int index)
+    {
+      return null;
+    }
+
+    public int indexOf(Object o)
+    {
+      return LIST.indexOf(o);
+    }
+
+    public int lastIndexOf(Object o)
+    {
+      return LIST.lastIndexOf(o);
+    }
+
+    public ListIterator<ListChange> listIterator()
+    {
+      return LIST.listIterator();
+    }
+
+    public ListIterator<ListChange> listIterator(int index)
+    {
+      return LIST.listIterator(index);
+    }
+
+    public List<ListChange> subList(int fromIndex, int toIndex)
+    {
+      return LIST.subList(fromIndex, toIndex);
+    }
+
+    public void move(int newPosition, ListChange object)
+    {
+    }
+
+    public ListChange move(int newPosition, int oldPosition)
+    {
+      return null;
+    }
   }
 }

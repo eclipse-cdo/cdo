@@ -75,6 +75,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOViewResourcesEvent;
 
 import org.eclipse.emf.internal.cdo.CDOObjectMerger;
@@ -372,7 +373,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return new CDOChangeSetImpl(startPoint, endPoint, data);
   }
 
-  private CDOChangeSetData applyChangeSetData(CDOBranchPoint ancestor, CDOChangeSetData ancestorGoalData)
+  public CDOChangeSetData applyChangeSetData(CDOBranchPoint ancestor, CDOChangeSetData ancestorGoalData)
   {
     CDOChangeSetData result = new CDOChangeSetDataImpl();
 
@@ -380,7 +381,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       InternalCDORevision revision = (InternalCDORevision)key;
       CDOID id = revision.getID();
-      if (getObject(id) == null)
+      if (!isObjectExisting(id))
       {
         InternalCDOObject object = newInstance(revision.getEClass());
         object.cdoInternalSetView(this);
@@ -392,6 +393,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         registerObject(object);
         registerNew(object);
         result.getNewObjects().add(revision);
+        dirty = true;
       }
     }
 
@@ -425,6 +427,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         object.cdoInternalSetState(CDOState.DIRTY);
         dirtyObjects.put(id, object);
         result.getChangedObjects().add(targetGoalDelta);
+        dirty = true;
       }
     }
 
@@ -434,9 +437,22 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       InternalCDOObject object = getObject(id);
       CDOStateMachine.INSTANCE.detach(object);
       result.getDetachedObjects().add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
+      dirty = true;
     }
 
     return result;
+  }
+
+  private boolean isObjectExisting(CDOID id)
+  {
+    try
+    {
+      return getObject(id) != null;
+    }
+    catch (ObjectNotFoundException ex)
+    {
+      return false;
+    }
   }
 
   public void handleConflicts(Set<CDOObject> conflicts)

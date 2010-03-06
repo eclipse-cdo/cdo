@@ -37,8 +37,10 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 
 /**
@@ -47,9 +49,9 @@ import java.util.Map.Entry;
  */
 public class DefaultCDOMerger implements CDOMerger
 {
-  private CDOChangeSetData result = new CDOChangeSetDataImpl();
+  private CDOChangeSetData result;
 
-  private Map<CDOID, Conflict> conflicts = new HashMap<CDOID, Conflict>();
+  private Map<CDOID, Conflict> conflicts;
 
   public DefaultCDOMerger()
   {
@@ -65,75 +67,40 @@ public class DefaultCDOMerger implements CDOMerger
     return conflicts;
   }
 
-  public CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source) throws ConflictException
+  public synchronized CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source) throws ConflictException
   {
+    if (result != null || conflicts != null)
+    {
+      throw new IllegalStateException("Merger can not be reused: " + this);
+    }
+
+    result = new CDOChangeSetDataImpl();
+    conflicts = new HashMap<CDOID, Conflict>();
+
     Map<CDOID, Object> targetMap = createMap(target);
     Map<CDOID, Object> sourceMap = createMap(source);
 
+    Set<CDOID> taken = new HashSet<CDOID>();
     for (Entry<CDOID, Object> entry : targetMap.entrySet())
     {
       CDOID id = entry.getKey();
       Object targetData = entry.getValue();
       Object sourceData = sourceMap.get(id);
 
-      Object data = null;
-      if (sourceData == null)
+      if (merge(targetData, sourceData))
       {
-        if (targetData instanceof CDORevision)
-        {
-          data = addedInTarget((CDORevision)targetData);
-        }
-        else if (targetData instanceof CDORevisionDelta)
-        {
-          data = changedInTarget((CDORevisionDelta)targetData);
-        }
-        else if (targetData instanceof CDOID)
-        {
-          data = detachedInTarget((CDOID)targetData);
-        }
+        taken.add(id);
       }
-      else if (targetData == null)
-      {
-        if (sourceData instanceof CDORevision)
-        {
-          data = addedInSource((CDORevision)sourceData);
-        }
-        else if (sourceData instanceof CDORevisionDelta)
-        {
-          data = changedInSource((CDORevisionDelta)sourceData);
-        }
-        else if (sourceData instanceof CDOID)
-        {
-          data = detachedInSource((CDOID)sourceData);
-        }
-      }
-      else if (sourceData instanceof CDOID && targetData instanceof CDOID)
-      {
-        data = detachedInSourceAndTarget((CDOID)sourceData);
-      }
-      else if (sourceData instanceof CDORevisionDelta && targetData instanceof CDORevisionDelta)
-      {
-        data = changedInSourceAndTarget((CDORevisionDelta)sourceData, (CDORevisionDelta)targetData);
-      }
-      else if (sourceData instanceof CDORevisionDelta && targetData instanceof CDOID)
-      {
-        data = changedInSourceAndDetachedInTarget((CDORevisionDelta)sourceData);
-      }
-
-      take(data);
     }
 
     for (Entry<CDOID, Object> entry : sourceMap.entrySet())
     {
       CDOID id = entry.getKey();
-      Object sourceData = entry.getValue();
-      Object targetData = targetMap.get(id);
-
-      if (targetData instanceof CDORevisionDelta && sourceData instanceof CDOID)
+      if (taken.add(id))
       {
-        // Changed in target and detached in source
-        Object data = changedInTargetAndDetachedInSource((CDORevisionDelta)targetData);
-        take(data);
+        Object sourceData = entry.getValue();
+        Object targetData = targetMap.get(id);
+        merge(targetData, sourceData);
       }
     }
 
@@ -143,6 +110,59 @@ public class DefaultCDOMerger implements CDOMerger
     }
 
     return result;
+  }
+
+  protected boolean merge(Object targetData, Object sourceData)
+  {
+    Object data = null;
+    if (sourceData == null)
+    {
+      if (targetData instanceof CDORevision)
+      {
+        data = addedInTarget((CDORevision)targetData);
+      }
+      else if (targetData instanceof CDORevisionDelta)
+      {
+        data = changedInTarget((CDORevisionDelta)targetData);
+      }
+      else if (targetData instanceof CDOID)
+      {
+        data = detachedInTarget((CDOID)targetData);
+      }
+    }
+    else if (targetData == null)
+    {
+      if (sourceData instanceof CDORevision)
+      {
+        data = addedInSource((CDORevision)sourceData);
+      }
+      else if (sourceData instanceof CDORevisionDelta)
+      {
+        data = changedInSource((CDORevisionDelta)sourceData);
+      }
+      else if (sourceData instanceof CDOID)
+      {
+        data = detachedInSource((CDOID)sourceData);
+      }
+    }
+    else if (sourceData instanceof CDOID && targetData instanceof CDOID)
+    {
+      data = detachedInSourceAndTarget((CDOID)sourceData);
+    }
+    else if (sourceData instanceof CDORevisionDelta && targetData instanceof CDORevisionDelta)
+    {
+      data = changedInSourceAndTarget((CDORevisionDelta)targetData, (CDORevisionDelta)sourceData);
+    }
+    else if (sourceData instanceof CDORevisionDelta && targetData instanceof CDOID)
+    {
+      data = changedInSourceAndDetachedInTarget((CDORevisionDelta)sourceData);
+    }
+    else if (targetData instanceof CDORevisionDelta && sourceData instanceof CDOID)
+    {
+      data = changedInTargetAndDetachedInSource((CDORevisionDelta)targetData);
+    }
+
+    return take(data);
   }
 
   protected Object addedInTarget(CDORevision revision)
@@ -216,21 +236,20 @@ public class DefaultCDOMerger implements CDOMerger
     return map;
   }
 
-  private void take(Object data)
+  private boolean take(Object data)
   {
     if (data instanceof Pair<?, ?>)
     {
       Pair<?, ?> pair = (Pair<?, ?>)data;
-      takeNoPair(pair.getElement1());
-      takeNoPair(pair.getElement2());
+      boolean taken = takeNoPair(pair.getElement1());
+      taken |= takeNoPair(pair.getElement2());
+      return taken;
     }
-    else
-    {
-      takeNoPair(data);
-    }
+
+    return takeNoPair(data);
   }
 
-  private void takeNoPair(Object data)
+  private boolean takeNoPair(Object data)
   {
     if (data instanceof CDORevision)
     {
@@ -254,6 +273,12 @@ public class DefaultCDOMerger implements CDOMerger
       throw new IllegalArgumentException("Must be a CDORevision, a CDORevisionDelta, a CDOID, a Conflict or null: "
           + data);
     }
+    else
+    {
+      return false;
+    }
+
+    return true;
   }
 
   /**

@@ -13,11 +13,13 @@ package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.net4j.util.collection.MoveableList;
 
+import org.eclipse.emf.common.util.EList;
+
 /**
  * @author Simon McDuff
  * @since 2.0
  */
-public interface CDOList extends MoveableList<Object>
+public interface CDOList extends MoveableList<Object>, EList<Object>
 {
   /**
    * Returns the element at position index of this list and optionally resolves proxies (see CDOElementProxy).

@@ -43,7 +43,7 @@ public class MergingTest extends AbstractCDOTest
 
   public void testCreateBranch() throws Exception
   {
-    CDOMerger merger = new DefaultCDOMerger.PerFeature();
+    CDOMerger merger = new DefaultCDOMerger.PerFeature.ManyValued();
 
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();

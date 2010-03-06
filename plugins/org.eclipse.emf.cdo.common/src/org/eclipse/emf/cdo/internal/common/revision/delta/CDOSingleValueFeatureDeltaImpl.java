@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.WithIndex;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -31,7 +32,7 @@ import java.text.MessageFormat;
 /**
  * @author Simon McDuff
  */
-public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
+public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl implements WithIndex
 {
   private int index;
 
@@ -100,6 +101,22 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   protected void setValue(Object value)
   {
     newValue = value;
+  }
+
+  public void adjustAfterAddition(int index)
+  {
+    if (index <= this.index)
+    {
+      ++this.index;
+    }
+  }
+
+  public void adjustAfterRemoval(int index)
+  {
+    if (index <= this.index)
+    {
+      --this.index;
+    }
   }
 
   @Override

@@ -15,9 +15,12 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.ListIndexAffecting;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.WithIndex;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -28,7 +31,8 @@ import java.text.MessageFormat;
 /**
  * @author Simon McDuff
  */
-public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOMoveFeatureDelta, IListIndexAffecting
+public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOMoveFeatureDelta, ListIndexAffecting,
+    WithIndex
 {
   private int oldPosition;
 
@@ -71,12 +75,17 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     return Type.MOVE;
   }
 
+  public CDOFeatureDelta copy()
+  {
+    return new CDOMoveFeatureDeltaImpl(getFeature(), newPosition, oldPosition);
+  }
+
   public void apply(CDORevision revision)
   {
     ((InternalCDORevision)revision).getList(getFeature()).move(newPosition, oldPosition);
   }
 
-  public void affectIndices(IListTargetAdding[] source, int[] indices)
+  public void affectIndices(ListTargetAdding[] source, int[] indices)
   {
     if (oldPosition < newPosition)
     {
@@ -111,6 +120,32 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
   public void accept(CDOFeatureDeltaVisitor visitor)
   {
     visitor.visit(this);
+  }
+
+  public void adjustAfterAddition(int index)
+  {
+    if (index <= oldPosition)
+    {
+      ++oldPosition;
+    }
+
+    if (index <= newPosition)
+    {
+      ++newPosition;
+    }
+  }
+
+  public void adjustAfterRemoval(int index)
+  {
+    if (index <= oldPosition)
+    {
+      --oldPosition;
+    }
+
+    if (index <= newPosition)
+    {
+      --newPosition;
+    }
   }
 
   @Override

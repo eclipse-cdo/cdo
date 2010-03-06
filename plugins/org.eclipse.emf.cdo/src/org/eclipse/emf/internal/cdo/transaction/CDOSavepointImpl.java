@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
-import org.eclipse.emf.cdo.internal.common.revision.delta.InternalCDOFeatureDelta;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 
 import org.eclipse.net4j.util.collection.MultiMap;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;

@@ -15,9 +15,12 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.ListIndexAffecting;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.WithIndex;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -29,7 +32,7 @@ import java.text.MessageFormat;
  * @author Simon McDuff
  */
 public class CDORemoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDORemoveFeatureDelta,
-    IListIndexAffecting
+    ListIndexAffecting, WithIndex
 {
   private int index;
 
@@ -62,6 +65,11 @@ public class CDORemoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CD
     return Type.REMOVE;
   }
 
+  public CDOFeatureDelta copy()
+  {
+    return new CDORemoveFeatureDeltaImpl(getFeature(), index);
+  }
+
   public void apply(CDORevision revision)
   {
     ((InternalCDORevision)revision).getList(getFeature()).remove(index);
@@ -72,7 +80,7 @@ public class CDORemoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CD
     visitor.visit(this);
   }
 
-  public void affectIndices(IListTargetAdding sources[], int[] indices)
+  public void affectIndices(ListTargetAdding sources[], int[] indices)
   {
     int index = getIndex();
     for (int i = 1; i <= indices[0]; i++)
@@ -91,6 +99,22 @@ public class CDORemoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CD
           --i;
         }
       }
+    }
+  }
+
+  public void adjustAfterAddition(int index)
+  {
+    if (index <= this.index)
+    {
+      ++this.index;
+    }
+  }
+
+  public void adjustAfterRemoval(int index)
+  {
+    if (index <= this.index)
+    {
+      --this.index;
     }
   }
 

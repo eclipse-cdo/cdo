@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 
 import org.eclipse.net4j.util.collection.Pair;
 
@@ -42,7 +43,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
 
   private transient int[] cacheIndices;
 
-  private transient IListTargetAdding[] cacheSources;
+  private transient ListTargetAdding[] cacheSources;
 
   private transient List<CDOFeatureDelta> notProcessedFeatureDelta;
 
@@ -61,7 +62,6 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     }
   }
 
-  @Override
   public CDOListFeatureDelta copy()
   {
     CDOListFeatureDeltaImpl list = new CDOListFeatureDeltaImpl(getFeature());
@@ -99,10 +99,10 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
    * 
    * @return never <code>null</code>.
    */
-  public Pair<IListTargetAdding[], int[]> reconstructAddedIndices()
+  public Pair<ListTargetAdding[], int[]> reconstructAddedIndices()
   {
     reconstructAddedIndicesWithNoCopy();
-    return new Pair<IListTargetAdding[], int[]>(copyOf(cacheSources, cacheSources.length, cacheSources.getClass()),
+    return new Pair<ListTargetAdding[], int[]>(copyOf(cacheSources, cacheSources.length, cacheSources.getClass()),
         copyOf(cacheIndices, cacheIndices.length));
   }
 
@@ -124,12 +124,12 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
 
       if (cacheSources == null)
       {
-        cacheSources = new IListTargetAdding[1 + featureDeltas.size()];
+        cacheSources = new ListTargetAdding[1 + featureDeltas.size()];
       }
       else if (cacheSources.length <= 1 + featureDeltas.size())
       {
         int newCapacity = Math.max(10, cacheSources.length * 3 / 2 + 1);
-        IListTargetAdding[] newElements = new IListTargetAdding[newCapacity];
+        ListTargetAdding[] newElements = new ListTargetAdding[newCapacity];
         System.arraycopy(cacheSources, 0, newElements, 0, cacheSources.length);
         cacheSources = newElements;
       }
@@ -139,16 +139,16 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
 
       for (CDOFeatureDelta featureDelta : featureDeltasToBeProcess)
       {
-        if (featureDelta instanceof IListIndexAffecting)
+        if (featureDelta instanceof ListIndexAffecting)
         {
-          IListIndexAffecting affecting = (IListIndexAffecting)featureDelta;
+          ListIndexAffecting affecting = (ListIndexAffecting)featureDelta;
           affecting.affectIndices(cacheSources, cacheIndices);
         }
 
-        if (featureDelta instanceof IListTargetAdding)
+        if (featureDelta instanceof ListTargetAdding)
         {
-          cacheIndices[++cacheIndices[0]] = ((IListTargetAdding)featureDelta).getIndex();
-          cacheSources[cacheIndices[0]] = (IListTargetAdding)featureDelta;
+          cacheIndices[++cacheIndices[0]] = ((ListTargetAdding)featureDelta).getIndex();
+          cacheSources[cacheIndices[0]] = (ListTargetAdding)featureDelta;
         }
       }
 

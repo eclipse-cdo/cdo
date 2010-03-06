@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -58,6 +59,11 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   public Type getType()
   {
     return Type.CONTAINER;
+  }
+
+  public CDOFeatureDelta copy()
+  {
+    return new CDOContainerFeatureDeltaImpl(newResourceID, newContainerID, newContainerFeatureID);
   }
 
   public CDOID getResourceID()

@@ -53,6 +53,10 @@ public class DefaultCDOMerger implements CDOMerger
 
   private Map<CDOID, Conflict> conflicts;
 
+  private Map<CDOID, Object> targetMap;
+
+  private Map<CDOID, Object> sourceMap;
+
   public DefaultCDOMerger()
   {
   }
@@ -67,6 +71,16 @@ public class DefaultCDOMerger implements CDOMerger
     return conflicts;
   }
 
+  public Map<CDOID, Object> getTargetMap()
+  {
+    return targetMap;
+  }
+
+  public Map<CDOID, Object> getSourceMap()
+  {
+    return sourceMap;
+  }
+
   public synchronized CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source) throws ConflictException
   {
     if (result != null || conflicts != null)
@@ -77,8 +91,8 @@ public class DefaultCDOMerger implements CDOMerger
     result = new CDOChangeSetDataImpl();
     conflicts = new HashMap<CDOID, Conflict>();
 
-    Map<CDOID, Object> targetMap = createMap(target);
-    Map<CDOID, Object> sourceMap = createMap(source);
+    targetMap = createMap(target);
+    sourceMap = createMap(source);
 
     Set<CDOID> taken = new HashSet<CDOID>();
     for (Entry<CDOID, Object> entry : targetMap.entrySet())
@@ -153,6 +167,10 @@ public class DefaultCDOMerger implements CDOMerger
     {
       data = changedInSourceAndTarget((CDORevisionDelta)targetData, (CDORevisionDelta)sourceData);
     }
+    else if (sourceData instanceof CDORevision && targetData instanceof CDORevision)
+    {
+      data = addedInSourceAndTarget((CDORevision)targetData, (CDORevision)sourceData);
+    }
     else if (sourceData instanceof CDORevisionDelta && targetData instanceof CDOID)
     {
       data = changedInSourceAndDetachedInTarget((CDORevisionDelta)sourceData);
@@ -170,6 +188,16 @@ public class DefaultCDOMerger implements CDOMerger
     return revision;
   }
 
+  protected Object addedInSource(CDORevision revision)
+  {
+    return revision;
+  }
+
+  protected Object addedInSourceAndTarget(CDORevision targetRevision, CDORevision sourceRevision)
+  {
+    return null;
+  }
+
   protected Object changedInTarget(CDORevisionDelta delta)
   {
     return delta;
@@ -178,11 +206,6 @@ public class DefaultCDOMerger implements CDOMerger
   protected Object detachedInTarget(CDOID id)
   {
     return id;
-  }
-
-  protected Object addedInSource(CDORevision revision)
-  {
-    return revision;
   }
 
   protected Object changedInSource(CDORevisionDelta delta)
@@ -512,8 +535,13 @@ public class DefaultCDOMerger implements CDOMerger
                 .copy();
 
             CDOListFeatureDelta result = createResult(feature);
-            handleListDelta(result.getListChanges(), targetListDelta.getListChanges(), sourceListDelta.getListChanges());
-            handleListDelta(result.getListChanges(), sourceListDelta.getListChanges(), null);
+            List<CDOFeatureDelta> resultChanges = result.getListChanges();
+
+            List<CDOFeatureDelta> targetChanges = targetListDelta.getListChanges();
+            List<CDOFeatureDelta> sourceChanges = sourceListDelta.getListChanges();
+
+            handleListDelta(resultChanges, targetChanges, sourceChanges);
+            handleListDelta(resultChanges, sourceChanges, null);
             return result;
           }
         }
@@ -553,6 +581,14 @@ public class DefaultCDOMerger implements CDOMerger
       protected void handleListDeltaAdd(List<CDOFeatureDelta> resultList, CDOAddFeatureDelta addDelta,
           List<CDOFeatureDelta> listToAdjust)
       {
+        Object value = addDelta.getValue();
+        if (getTargetMap().get(value) instanceof CDORevision && getSourceMap().get(value) instanceof CDORevision)
+        {
+          // Remove ADD deltas for objects that have been added to source and target.
+          // This can happen if a source is re-merged to target.
+          return;
+        }
+
         resultList.add(addDelta);
         if (listToAdjust != null)
         {

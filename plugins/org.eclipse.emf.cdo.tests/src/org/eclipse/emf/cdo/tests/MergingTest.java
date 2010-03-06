@@ -39,7 +39,7 @@ public class MergingTest extends AbstractCDOTest
     return testProperties;
   }
 
-  public void testCreateBranch() throws Exception
+  public void testInitial() throws Exception
   {
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
@@ -89,30 +89,56 @@ public class MergingTest extends AbstractCDOTest
     EList<EObject> contents1 = res1.getContents();
     contents1.add(getModel1Factory().createCompany());
     contents1.add(getModel1Factory().createCompany());
-    contents1.add(getModel1Factory().createCompany());
     tx1.commit();
     tx1.close();
 
     result = transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     assertEquals(false, result.isEmpty());
-    assertEquals(3, result.getNewObjects().size());
+    assertEquals(2, result.getNewObjects().size());
     assertEquals(1, result.getChangedObjects().size());
     assertEquals(0, result.getDetachedObjects().size());
     assertEquals(true, transaction.isDirty());
 
     CDOCommitInfo commitInfo1 = transaction.commit();
-    assertEquals(3, commitInfo1.getNewObjects().size());
+    assertEquals(2, commitInfo1.getNewObjects().size());
     assertEquals(1, commitInfo1.getChangedObjects().size());
     assertEquals(0, commitInfo1.getDetachedObjects().size());
     assertEquals(false, transaction.isDirty());
-
     assertEquals(mainBranch, ((CDORevision)commitInfo1.getNewObjects().get(0)).getBranch());
     assertEquals(mainBranch, ((CDORevision)commitInfo1.getNewObjects().get(1)).getBranch());
-    assertEquals(mainBranch, ((CDORevision)commitInfo1.getNewObjects().get(2)).getBranch());
-
     assertEquals(1, ((CDORevision)commitInfo1.getNewObjects().get(0)).getVersion());
     assertEquals(1, ((CDORevision)commitInfo1.getNewObjects().get(1)).getVersion());
-    assertEquals(1, ((CDORevision)commitInfo1.getNewObjects().get(2)).getVersion());
+
+    result = transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(true, result.isEmpty());
+    assertEquals(false, transaction.isDirty());
+
+    sleep(10);
+    CDOTransaction tx2 = session.openTransaction(source2);
+    CDOResource res2 = tx2.getResource("/res");
+    EList<EObject> contents2 = res2.getContents();
+    contents2.add(getModel1Factory().createCompany());
+    tx2.commit();
+    tx2.close();
+
+    result = transaction.merge(source2.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(false, result.isEmpty());
+    assertEquals(1, result.getNewObjects().size());
+    assertEquals(1, result.getChangedObjects().size());
+    assertEquals(0, result.getDetachedObjects().size());
+    assertEquals(true, transaction.isDirty());
+
+    CDOCommitInfo commitInfo2 = transaction.commit();
+    assertEquals(1, commitInfo2.getNewObjects().size());
+    assertEquals(1, commitInfo2.getChangedObjects().size());
+    assertEquals(0, commitInfo2.getDetachedObjects().size());
+    assertEquals(false, transaction.isDirty());
+    assertEquals(mainBranch, ((CDORevision)commitInfo2.getNewObjects().get(0)).getBranch());
+    assertEquals(1, ((CDORevision)commitInfo2.getNewObjects().get(0)).getVersion());
+
+    result = transaction.merge(source2.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(true, result.isEmpty());
+    assertEquals(false, transaction.isDirty());
 
     session.close();
   }

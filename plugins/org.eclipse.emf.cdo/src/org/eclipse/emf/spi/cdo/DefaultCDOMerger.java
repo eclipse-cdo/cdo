@@ -464,7 +464,11 @@ public class DefaultCDOMerger implements CDOMerger
 
         if (sourceFeatureDelta == null)
         {
-          result.addFeatureDelta(targetFeatureDelta);
+          CDOFeatureDelta featureDelta = changedInTarget(targetFeatureDelta);
+          if (featureDelta != null)
+          {
+            result.addFeatureDelta(featureDelta);
+          }
         }
         else
         {
@@ -494,7 +498,11 @@ public class DefaultCDOMerger implements CDOMerger
 
         if (targetFeatureDelta == null)
         {
-          result.addFeatureDelta(sourceFeatureDelta);
+          CDOFeatureDelta featureDelta = changedInSource(sourceFeatureDelta);
+          if (featureDelta != null)
+          {
+            result.addFeatureDelta(featureDelta);
+          }
         }
       }
 
@@ -509,6 +517,22 @@ public class DefaultCDOMerger implements CDOMerger
       }
 
       return result;
+    }
+
+    /**
+     * @return the result feature delta, or <code>null</code> to ignore the change.
+     */
+    protected CDOFeatureDelta changedInTarget(CDOFeatureDelta featureDelta)
+    {
+      return featureDelta;
+    }
+
+    /**
+     * @return the result feature delta, or <code>null</code> to ignore the change.
+     */
+    protected CDOFeatureDelta changedInSource(CDOFeatureDelta featureDelta)
+    {
+      return featureDelta;
     }
 
     /**

@@ -39,7 +39,6 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
-import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -61,10 +60,12 @@ import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
@@ -307,8 +308,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)
   {
     InternalCDOSession session = getSession();
-    final InternalCDORevisionManager revisionManager = session.getRevisionManager();
-
     synchronized (session.getInvalidationLock())
     {
       if (isDirty())
@@ -328,28 +327,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         throw new IllegalArgumentException("Source is already contained in " + target);
       }
 
-      // Keep a pointer to this list until the merge is done!!!
-      final List<CDORevision> strongReferences = new ArrayList<CDORevision>();
       CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(target, source);
 
-      CDORevisionAvailabilityInfo ancestorInfo = createRevisionAvailabilityInfo(ancestor, strongReferences);
-      CDORevisionAvailabilityInfo targetInfo = createRevisionAvailabilityInfo(target, strongReferences);
-      CDORevisionAvailabilityInfo sourceInfo = createRevisionAvailabilityInfo(source, strongReferences);
-
-      CDORevisionHandler handler = new CDORevisionHandler()
-      {
-        public void handleRevision(CDORevision revision)
-        {
-          strongReferences.add(revision);
-          revisionManager.addRevision(revision);
-        }
-      };
+      CDORevisionAvailabilityInfo ancestorInfo = createRevisionAvailabilityInfo(ancestor);
+      CDORevisionAvailabilityInfo targetInfo = createRevisionAvailabilityInfo(target);
+      CDORevisionAvailabilityInfo sourceInfo = createRevisionAvailabilityInfo(source);
 
       CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-      Set<CDOID> ids = sessionProtocol.loadMergeData(ancestorInfo, targetInfo, sourceInfo, handler);
+      Set<CDOID> ids = sessionProtocol.loadMergeData(ancestorInfo, targetInfo, sourceInfo);
 
-      CDOChangeSet targetChanges = createChangeSet(ids, ancestor, target);
-      CDOChangeSet sourceChanges = createChangeSet(ids, ancestor, source);
+      CDOChangeSet targetChanges = createChangeSet(ids, ancestorInfo, targetInfo);
+      CDOChangeSet sourceChanges = createChangeSet(ids, ancestorInfo, sourceInfo);
       CDOChangeSetData result = merger.merge(targetChanges, sourceChanges);
 
       if (result == null)
@@ -357,43 +345,56 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         return null;
       }
 
-      return applyChangeSetData(ancestor, result);
+      return applyChangeSetData(ancestorInfo, targetInfo, result);
     }
   }
 
-  private CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint,
-      List<CDORevision> strongReferences)
+  private CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint)
   {
     CDORevisionAvailabilityInfo info = new CDORevisionAvailabilityInfo(branchPoint);
 
-    InternalCDORevisionCache cache = getSession().getRevisionManager().getCache();
+    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
+    InternalCDORevisionCache cache = revisionManager.getCache();
+
     List<CDORevision> revisions = cache.getRevisions(branchPoint);
     for (CDORevision revision : revisions)
     {
-      strongReferences.add(revision);
-      info.getAvailableRevisions().add(revision.getID());
+      while (revision instanceof PointerCDORevision)
+      {
+        PointerCDORevision pointer = (PointerCDORevision)revision;
+        CDOBranchVersion target = pointer.getTarget();
+        revision = cache.getRevisionByVersion(pointer.getID(), target);
+      }
+
+      if (revision instanceof DetachedCDORevision)
+      {
+        revision = null;
+      }
+
+      if (revision != null)
+      {
+        info.addRevision(revision);
+      }
     }
 
     return info;
   }
 
-  private CDOChangeSet createChangeSet(Set<CDOID> ids, CDOBranchPoint startPoint, CDOBranchPoint endPoint)
+  private CDOChangeSet createChangeSet(Set<CDOID> ids, CDORevisionAvailabilityInfo startInfo,
+      CDORevisionAvailabilityInfo endInfo)
   {
-    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
-    CDOChangeSetData data = CDORevisionDeltaUtil.createChangeSetData(startPoint, endPoint, ids, revisionManager);
-    return new CDOChangeSetImpl(startPoint, endPoint, data);
+    CDOChangeSetData data = CDORevisionDeltaUtil.createChangeSetData(ids, startInfo, endInfo);
+    return new CDOChangeSetImpl(startInfo.getBranchPoint(), endInfo.getBranchPoint(), data);
   }
 
-  public CDOChangeSetData applyChangeSetData(CDOBranchPoint ancestor, CDOChangeSetData ancestorGoalData)
+  public CDOChangeSetData applyChangeSetData(CDORevisionAvailabilityInfo ancestorInfo,
+      CDORevisionAvailabilityInfo targetInfo, CDOChangeSetData ancestorGoalData)
   {
     CDOChangeSetData result = new CDOChangeSetDataImpl();
-    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
 
     for (CDOIDAndVersion key : ancestorGoalData.getNewObjects())
     {
       InternalCDORevision revision = (InternalCDORevision)key;
-      // revision.adjustForCommit(getBranch(), CDOBranchPoint.UNSPECIFIED_DATE);
-
       CDOID id = revision.getID();
       if (!isObjectExisting(id))
       {
@@ -419,15 +420,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       InternalCDORevisionDelta ancestorGoalDelta = (InternalCDORevisionDelta)key;
       CDOID id = ancestorGoalDelta.getID();
-
-      InternalCDORevision ancestorRevision = revisionManager.getRevision(id, ancestor, CDORevision.UNCHUNKED,
-          CDORevision.DEPTH_NONE, true);
+      InternalCDORevision ancestorRevision = (InternalCDORevision)ancestorInfo.getRevision(id);
 
       InternalCDOObject object = getObject(id);
       InternalCDORevision targetRevision = object.cdoRevision();
       if (targetRevision == null)
       {
-        targetRevision = getRevision(id, true);
+        targetRevision = (InternalCDORevision)targetInfo.getRevision(id);
         object.cdoInternalSetRevision(targetRevision);
       }
 

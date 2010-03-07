@@ -16,13 +16,15 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
-import org.eclipse.net4j.util.WrappedException;
-
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -49,34 +51,6 @@ public class LoadMergeDataIndication extends CDOReadIndication
     sourceInfo = readRevisionAvailabilityInfo(in);
   }
 
-  @Override
-  protected void responding(final CDODataOutput out) throws IOException
-  {
-    InternalRepository repository = getRepository();
-    Set<CDOID> ids = repository.loadMergeData(ancestorInfo, targetInfo, sourceInfo, new CDORevisionHandler()
-    {
-      public void handleRevision(CDORevision revision)
-      {
-        try
-        {
-          out.writeBoolean(true);
-          out.writeCDORevision(revision, CDORevision.UNCHUNKED);
-        }
-        catch (IOException ex)
-        {
-          throw WrappedException.wrap(ex);
-        }
-      }
-    });
-
-    out.writeBoolean(false);
-    out.writeInt(ids.size());
-    for (CDOID id : ids)
-    {
-      out.writeCDOID(id);
-    }
-  }
-
   private CDORevisionAvailabilityInfo readRevisionAvailabilityInfo(CDODataInput in) throws IOException
   {
     CDOBranchPoint branchPoint = in.readCDOBranchPoint();
@@ -85,9 +59,57 @@ public class LoadMergeDataIndication extends CDOReadIndication
     for (int i = 0; i < size; i++)
     {
       CDOID id = in.readCDOID();
-      info.getAvailableRevisions().add(id);
+      info.getAvailableRevisions().put(id, null);
     }
 
     return info;
+  }
+
+  @Override
+  protected void responding(final CDODataOutput out) throws IOException
+  {
+    InternalRepository repository = getRepository();
+    Set<CDOID> ids = repository.getMergeData(ancestorInfo, targetInfo, sourceInfo);
+
+    out.writeInt(ids.size());
+    for (CDOID id : ids)
+    {
+      out.writeCDOID(id);
+    }
+
+    Set<CDORevisionKey> writtenRevisions = new HashSet<CDORevisionKey>();
+    writeRevisionAvailabilityInfo(out, ancestorInfo, writtenRevisions);
+    writeRevisionAvailabilityInfo(out, targetInfo, writtenRevisions);
+    writeRevisionAvailabilityInfo(out, sourceInfo, writtenRevisions);
+  }
+
+  private void writeRevisionAvailabilityInfo(final CDODataOutput out, CDORevisionAvailabilityInfo info,
+      Set<CDORevisionKey> writtenRevisions) throws IOException
+  {
+    Collection<CDORevisionKey> revisions = info.getAvailableRevisions().values();
+    for (Iterator<CDORevisionKey> it = revisions.iterator(); it.hasNext();)
+    {
+      CDORevisionKey key = it.next();
+      if (key == null)
+      {
+        it.remove();
+      }
+    }
+
+    out.writeInt(revisions.size());
+    for (CDORevisionKey revision : revisions)
+    {
+      CDORevisionKey key = CDORevisionUtil.createRevisionKey(revision);
+      if (writtenRevisions.add(key))
+      {
+        out.writeBoolean(true);
+        out.writeCDORevision((CDORevision)revision, CDORevision.UNCHUNKED);
+      }
+      else
+      {
+        out.writeBoolean(false);
+        out.writeCDORevisionKey(key);
+      }
+    }
   }
 }

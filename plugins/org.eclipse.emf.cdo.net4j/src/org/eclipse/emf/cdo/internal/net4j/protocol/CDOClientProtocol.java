@@ -24,7 +24,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -311,9 +310,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   }
 
   public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo ancestorInfo, CDORevisionAvailabilityInfo targetInfo,
-      CDORevisionAvailabilityInfo sourceInfo, CDORevisionHandler handler)
+      CDORevisionAvailabilityInfo sourceInfo)
   {
-    return send(new LoadMergeDataRequest(this, ancestorInfo, targetInfo, sourceInfo, handler));
+    return send(new LoadMergeDataRequest(this, ancestorInfo, targetInfo, sourceInfo));
   }
 
   @Override

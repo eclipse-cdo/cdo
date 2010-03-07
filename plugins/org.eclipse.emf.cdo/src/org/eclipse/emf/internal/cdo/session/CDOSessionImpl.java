@@ -34,7 +34,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
@@ -1917,14 +1916,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo ancestorInfo, CDORevisionAvailabilityInfo targetInfo,
-        CDORevisionAvailabilityInfo sourceInfo, CDORevisionHandler handler)
+        CDORevisionAvailabilityInfo sourceInfo)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          return delegate.loadMergeData(ancestorInfo, targetInfo, sourceInfo, handler);
+          return delegate.loadMergeData(ancestorInfo, targetInfo, sourceInfo);
         }
         catch (Exception ex)
         {

@@ -2,19 +2,22 @@ package org.eclipse.emf.cdo.spi.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public final class CDORevisionAvailabilityInfo
+public final class CDORevisionAvailabilityInfo implements CDORevisionProvider
 {
   private CDOBranchPoint branchPoint;
 
-  private Set<CDOID> availableRevisions = new HashSet<CDOID>();
+  private Map<CDOID, CDORevisionKey> availableRevisions = new HashMap<CDOID, CDORevisionKey>();
 
   public CDORevisionAvailabilityInfo(CDOBranchPoint branchPoint)
   {
@@ -26,8 +29,28 @@ public final class CDORevisionAvailabilityInfo
     return branchPoint;
   }
 
-  public Set<CDOID> getAvailableRevisions()
+  public Map<CDOID, CDORevisionKey> getAvailableRevisions()
   {
     return availableRevisions;
+  }
+
+  public void addRevision(CDORevisionKey key)
+  {
+    availableRevisions.put(key.getID(), key);
+  }
+
+  public void removeRevision(CDOID id)
+  {
+    availableRevisions.remove(id);
+  }
+
+  public boolean containsRevision(CDOID id)
+  {
+    return availableRevisions.containsKey(id);
+  }
+
+  public CDORevision getRevision(CDOID id)
+  {
+    return (CDORevision)availableRevisions.get(id);
   }
 }

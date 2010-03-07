@@ -15,11 +15,13 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -33,16 +35,13 @@ public class LoadMergeDataRequest extends CDOClientRequest<Set<CDOID>>
 
   private CDORevisionAvailabilityInfo sourceInfo;
 
-  private CDORevisionHandler handler;
-
   public LoadMergeDataRequest(CDOClientProtocol protocol, CDORevisionAvailabilityInfo ancestorInfo,
-      CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionHandler handler)
+      CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_LOAD_MERGE_DATA);
     this.ancestorInfo = ancestorInfo;
     this.targetInfo = targetInfo;
     this.sourceInfo = sourceInfo;
-    this.handler = handler;
   }
 
   @Override
@@ -53,15 +52,20 @@ public class LoadMergeDataRequest extends CDOClientRequest<Set<CDOID>>
     writeRevisionAvailabilityInfo(out, sourceInfo);
   }
 
+  private void writeRevisionAvailabilityInfo(CDODataOutput out, CDORevisionAvailabilityInfo info) throws IOException
+  {
+    out.writeCDOBranchPoint(info.getBranchPoint());
+    Set<CDOID> availableRevisions = info.getAvailableRevisions().keySet();
+    out.writeInt(availableRevisions.size());
+    for (CDOID id : availableRevisions)
+    {
+      out.writeCDOID(id);
+    }
+  }
+
   @Override
   protected Set<CDOID> confirming(CDODataInput in) throws IOException
   {
-    while (in.readBoolean())
-    {
-      CDORevision revision = in.readCDORevision();
-      handler.handleRevision(revision);
-    }
-
     Set<CDOID> result = new HashSet<CDOID>();
     int size = in.readInt();
     for (int i = 0; i < size; i++)
@@ -70,17 +74,58 @@ public class LoadMergeDataRequest extends CDOClientRequest<Set<CDOID>>
       result.add(id);
     }
 
+    readRevisionAvailabilityInfo(in, ancestorInfo, result);
+    readRevisionAvailabilityInfo(in, targetInfo, result);
+    readRevisionAvailabilityInfo(in, sourceInfo, result);
     return result;
   }
 
-  private void writeRevisionAvailabilityInfo(CDODataOutput out, CDORevisionAvailabilityInfo info) throws IOException
+  private void readRevisionAvailabilityInfo(CDODataInput in, CDORevisionAvailabilityInfo info, Set<CDOID> result)
+      throws IOException
   {
-    out.writeCDOBranchPoint(info.getBranchPoint());
-    Set<CDOID> availableRevisions = info.getAvailableRevisions();
-    out.writeInt(availableRevisions.size());
-    for (CDOID id : availableRevisions)
+    int size = in.readInt();
+    for (int i = 0; i < size; i++)
     {
-      out.writeCDOID(id);
+      CDORevision revision;
+      if (in.readBoolean())
+      {
+        revision = in.readCDORevision();
+      }
+      else
+      {
+        CDORevisionKey key = in.readCDORevisionKey();
+        revision = getRevision(key, ancestorInfo);
+        if (revision == null)
+        {
+          revision = getRevision(key, targetInfo);
+        }
+      }
+
+      info.addRevision(revision);
     }
+
+    Set<Map.Entry<CDOID, CDORevisionKey>> entrySet = info.getAvailableRevisions().entrySet();
+    for (Iterator<Map.Entry<CDOID, CDORevisionKey>> it = entrySet.iterator(); it.hasNext();)
+    {
+      Map.Entry<CDOID, CDORevisionKey> entry = it.next();
+      if (!result.contains(entry.getKey()))
+      {
+        it.remove();
+      }
+    }
+  }
+
+  private CDORevision getRevision(CDORevisionKey key, CDORevisionAvailabilityInfo info)
+  {
+    CDORevisionKey revision = info.getRevision(key.getID());
+    if (revision instanceof CDORevision)
+    {
+      if (key.equals(revision))
+      {
+        return (CDORevision)revision;
+      }
+    }
+
+    return null;
   }
 }

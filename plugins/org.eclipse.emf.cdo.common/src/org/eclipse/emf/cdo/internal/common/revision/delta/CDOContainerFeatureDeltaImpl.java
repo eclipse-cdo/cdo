@@ -23,6 +23,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.net4j.util.ObjectUtil;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl;
 
@@ -107,6 +109,27 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   public void accept(CDOFeatureDeltaVisitor visitor)
   {
     visitor.visit(this);
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return super.hashCode() ^ ObjectUtil.hashCode(newResourceID) ^ ObjectUtil.hashCode(newContainerID)
+        ^ newContainerFeatureID;
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (!super.equals(obj))
+    {
+      return false;
+    }
+
+    CDOContainerFeatureDelta that = (CDOContainerFeatureDelta)obj;
+    return ObjectUtil.equals(newResourceID, that.getResourceID())
+        && ObjectUtil.equals(newContainerID, that.getContainerID())
+        && newContainerFeatureID == that.getContainerFeatureID();
   }
 
   @Override

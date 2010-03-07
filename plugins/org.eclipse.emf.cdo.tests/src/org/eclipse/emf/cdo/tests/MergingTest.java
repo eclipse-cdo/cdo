@@ -50,26 +50,26 @@ public class MergingTest extends AbstractCDOTest
 
     CDOResource resource = transaction.createResource("/res");
     EList<EObject> contents = resource.getContents();
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
     long time1 = transaction.commit().getTimeStamp();
     CDOBranch source1 = mainBranch.createBranch("source1", time1);
 
     sleep(10);
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
     long time2 = transaction.commit().getTimeStamp();
     CDOBranch source2 = mainBranch.createBranch("source2", time2);
 
     sleep(10);
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
     long time3 = transaction.commit().getTimeStamp();
     CDOBranch source3 = mainBranch.createBranch("source3", time3);
 
@@ -96,33 +96,33 @@ public class MergingTest extends AbstractCDOTest
 
     CDOResource resource = transaction.createResource("/res");
     EList<EObject> contents = resource.getContents();
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
     long time1 = transaction.commit().getTimeStamp();
     CDOBranch source1 = mainBranch.createBranch("source1", time1);
 
     sleep(10);
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
     transaction.commit();
 
     sleep(10);
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
     transaction.commit();
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source1);
     CDOResource res1 = tx1.getResource("/res");
     EList<EObject> contents1 = res1.getContents();
-    contents1.add(getModel1Factory().createCompany());
-    contents1.add(getModel1Factory().createCompany());
+    addCompany(contents1);
+    addCompany(contents1);
     tx1.commit();
     tx1.close();
 
@@ -146,6 +146,7 @@ public class MergingTest extends AbstractCDOTest
     session.close();
   }
 
+  @SuppressWarnings("unused")
   public void testRemergeAfterAdditionsInSource() throws Exception
   {
     CDOSession session = openSession();
@@ -154,33 +155,33 @@ public class MergingTest extends AbstractCDOTest
 
     CDOResource resource = transaction.createResource("/res");
     EList<EObject> contents = resource.getContents();
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    Company company0 = addCompany(contents);
+    Company company1 = addCompany(contents);
+    Company company2 = addCompany(contents);
+    Company company3 = addCompany(contents);
+    Company company4 = addCompany(contents);
     long time1 = transaction.commit().getTimeStamp();
     CDOBranch source1 = mainBranch.createBranch("source1", time1);
 
     sleep(10);
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    Company company5 = addCompany(contents);
+    Company company6 = addCompany(contents);
+    Company company7 = addCompany(contents);
+    Company company8 = addCompany(contents);
     transaction.commit();
 
     sleep(10);
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    Company company9 = addCompany(contents);
+    Company company10 = addCompany(contents);
+    Company company11 = addCompany(contents);
     transaction.commit();
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source1);
     CDOResource res1 = tx1.getResource("/res");
     EList<EObject> contents1 = res1.getContents();
-    contents1.add(getModel1Factory().createCompany());
-    contents1.add(getModel1Factory().createCompany());
+    addCompany(contents1);
+    addCompany(contents1);
     tx1.commit();
     tx1.close();
 
@@ -202,34 +203,34 @@ public class MergingTest extends AbstractCDOTest
 
     CDOResource resource = transaction.createResource("/res");
     EList<EObject> contents = resource.getContents();
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
     long time1 = transaction.commit().getTimeStamp();
     CDOBranch source1 = mainBranch.createBranch("source1", time1);
 
     sleep(10);
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
     long time2 = transaction.commit().getTimeStamp();
     CDOBranch source2 = mainBranch.createBranch("source2", time2);
 
     sleep(10);
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
     transaction.commit();
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source1);
     CDOResource res1 = tx1.getResource("/res");
     EList<EObject> contents1 = res1.getContents();
-    contents1.add(getModel1Factory().createCompany());
-    contents1.add(getModel1Factory().createCompany());
+    addCompany(contents1);
+    addCompany(contents1);
     tx1.commit();
     tx1.close();
 
@@ -240,7 +241,7 @@ public class MergingTest extends AbstractCDOTest
     CDOTransaction tx2 = session.openTransaction(source2);
     CDOResource res2 = tx2.getResource("/res");
     EList<EObject> contents2 = res2.getContents();
-    contents2.add(getModel1Factory().createCompany());
+    addCompany(contents2);
     tx2.commit();
     tx2.close();
 
@@ -274,34 +275,34 @@ public class MergingTest extends AbstractCDOTest
 
     CDOResource resource = transaction.createResource("/res");
     EList<EObject> contents = resource.getContents();
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
     long time1 = transaction.commit().getTimeStamp();
     CDOBranch source1 = mainBranch.createBranch("source1", time1);
 
     sleep(10);
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
     long time2 = transaction.commit().getTimeStamp();
     CDOBranch source2 = mainBranch.createBranch("source2", time2);
 
     sleep(10);
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
     transaction.commit();
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source1);
     CDOResource res1 = tx1.getResource("/res");
     EList<EObject> contents1 = res1.getContents();
-    contents1.add(getModel1Factory().createCompany());
-    contents1.add(getModel1Factory().createCompany());
+    addCompany(contents1);
+    addCompany(contents1);
     tx1.commit();
     tx1.close();
 
@@ -312,7 +313,7 @@ public class MergingTest extends AbstractCDOTest
     CDOTransaction tx2 = session.openTransaction(source2);
     CDOResource res2 = tx2.getResource("/res");
     EList<EObject> contents2 = res2.getContents();
-    contents2.add(getModel1Factory().createCompany());
+    addCompany(contents2);
     tx2.commit();
     tx2.close();
 
@@ -334,11 +335,11 @@ public class MergingTest extends AbstractCDOTest
 
     CDOResource resource = transaction.createResource("/res");
     EList<EObject> contents = resource.getContents();
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
     long time = transaction.commit().getTimeStamp();
     CDOBranch source = mainBranch.createBranch("source", time);
 
@@ -368,6 +369,7 @@ public class MergingTest extends AbstractCDOTest
     session.close();
   }
 
+  @SuppressWarnings("unused")
   public void testRemergeAfterChangesInSource() throws Exception
   {
     CDOSession session = openSession();
@@ -376,11 +378,11 @@ public class MergingTest extends AbstractCDOTest
 
     CDOResource resource = transaction.createResource("/res");
     EList<EObject> contents = resource.getContents();
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
-    contents.add(getModel1Factory().createCompany());
+    Company company0 = addCompany(contents);
+    Company company1 = addCompany(contents);
+    Company company2 = addCompany(contents);
+    Company company3 = addCompany(contents);
+    Company company4 = addCompany(contents);
     long time = transaction.commit().getTimeStamp();
     CDOBranch source = mainBranch.createBranch("source", time);
 
@@ -399,6 +401,7 @@ public class MergingTest extends AbstractCDOTest
 
     transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     transaction.commit();
+    assertEquals(5, contents.size());
 
     System.out.println(CDORevisionUtil.dumpAllRevisions(((IMEMStore)getRepository().getStore()).getAllRevisions()));
 
@@ -413,5 +416,12 @@ public class MergingTest extends AbstractCDOTest
     assertEquals(false, transaction.isDirty());
 
     session.close();
+  }
+
+  private Company addCompany(EList<EObject> contents)
+  {
+    Company company = getModel1Factory().createCompany();
+    contents.add(company);
+    return company;
   }
 }

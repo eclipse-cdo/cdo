@@ -445,8 +445,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         revisionDeltas.put(id, targetGoalDelta);
         result.getChangedObjects().add(targetGoalDelta);
 
-        int xxx = 0; // object.cdoInternalSetRevision(goalRevision);
-
+        object.cdoInternalSetRevision(goalRevision);
         object.cdoInternalSetState(CDOState.DIRTY);
         dirtyObjects.put(id, object);
         dirty = true;

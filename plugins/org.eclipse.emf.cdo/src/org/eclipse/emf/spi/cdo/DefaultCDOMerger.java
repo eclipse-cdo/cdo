@@ -549,6 +549,35 @@ public class DefaultCDOMerger implements CDOMerger
     protected CDOFeatureDelta changedInSourceAndTarget(CDOFeatureDelta targetFeatureDelta,
         CDOFeatureDelta sourceFeatureDelta)
     {
+      EStructuralFeature feature = targetFeatureDelta.getFeature();
+      if (feature.isMany())
+      {
+        return changedInSourceAndTargetManyValued(feature, targetFeatureDelta, sourceFeatureDelta);
+      }
+
+      return changedInSourceAndTargetSingleValued(feature, targetFeatureDelta, sourceFeatureDelta);
+    }
+
+    /**
+     * @return the result feature delta, or <code>null</code> to indicate an unresolved conflict.
+     */
+    protected CDOFeatureDelta changedInSourceAndTargetManyValued(EStructuralFeature feature,
+        CDOFeatureDelta targetFeatureDelta, CDOFeatureDelta sourceFeatureDelta)
+    {
+      return null;
+    }
+
+    /**
+     * @return the result feature delta, or <code>null</code> to indicate an unresolved conflict.
+     */
+    protected CDOFeatureDelta changedInSourceAndTargetSingleValued(EStructuralFeature feature,
+        CDOFeatureDelta targetFeatureDelta, CDOFeatureDelta sourceFeatureDelta)
+    {
+      if (targetFeatureDelta.equals(sourceFeatureDelta))
+      {
+        return targetFeatureDelta;
+      }
+
       return null;
     }
 
@@ -562,31 +591,27 @@ public class DefaultCDOMerger implements CDOMerger
       }
 
       @Override
-      protected CDOFeatureDelta changedInSourceAndTarget(CDOFeatureDelta targetFeatureDelta,
-          CDOFeatureDelta sourceFeatureDelta)
+      protected CDOFeatureDelta changedInSourceAndTargetManyValued(EStructuralFeature feature,
+          CDOFeatureDelta targetFeatureDelta, CDOFeatureDelta sourceFeatureDelta)
       {
-        EStructuralFeature feature = targetFeatureDelta.getFeature();
-        if (feature.isMany())
+        if (targetFeatureDelta instanceof CDOListFeatureDelta && sourceFeatureDelta instanceof CDOListFeatureDelta)
         {
-          if (targetFeatureDelta instanceof CDOListFeatureDelta && sourceFeatureDelta instanceof CDOListFeatureDelta)
-          {
-            CDOListFeatureDelta targetListDelta = (CDOListFeatureDelta)targetFeatureDelta;
-            CDOListFeatureDelta sourceListDelta = (CDOListFeatureDelta)((InternalCDOFeatureDelta)sourceFeatureDelta)
-                .copy();
+          CDOListFeatureDelta targetListDelta = (CDOListFeatureDelta)targetFeatureDelta;
+          CDOListFeatureDelta sourceListDelta = (CDOListFeatureDelta)((InternalCDOFeatureDelta)sourceFeatureDelta)
+              .copy();
 
-            CDOListFeatureDelta result = createResult(feature);
-            List<CDOFeatureDelta> resultChanges = result.getListChanges();
+          CDOListFeatureDelta result = createResult(feature);
+          List<CDOFeatureDelta> resultChanges = result.getListChanges();
 
-            List<CDOFeatureDelta> targetChanges = targetListDelta.getListChanges();
-            List<CDOFeatureDelta> sourceChanges = sourceListDelta.getListChanges();
+          List<CDOFeatureDelta> targetChanges = targetListDelta.getListChanges();
+          List<CDOFeatureDelta> sourceChanges = sourceListDelta.getListChanges();
 
-            handleListDelta(resultChanges, targetChanges, sourceChanges);
-            handleListDelta(resultChanges, sourceChanges, null);
-            return result;
-          }
+          handleListDelta(resultChanges, targetChanges, sourceChanges);
+          handleListDelta(resultChanges, sourceChanges, null);
+          return result;
         }
 
-        return null;
+        return super.changedInSourceAndTargetManyValued(feature, targetFeatureDelta, sourceFeatureDelta);
       }
 
       protected CDOListFeatureDelta createResult(EStructuralFeature feature)
@@ -621,12 +646,15 @@ public class DefaultCDOMerger implements CDOMerger
       protected void handleListDeltaAdd(List<CDOFeatureDelta> resultList, CDOAddFeatureDelta addDelta,
           List<CDOFeatureDelta> listToAdjust)
       {
-        Object value = addDelta.getValue();
-        if (getTargetMap().get(value) instanceof CDORevision && getSourceMap().get(value) instanceof CDORevision)
+        if (listToAdjust == null)
         {
-          // Remove ADD deltas for objects that have been added to source and target.
-          // This can for example happen if a source is re-merged to target.
-          return;
+          Object value = addDelta.getValue();
+          if (getTargetMap().get(value) instanceof CDORevision && getSourceMap().get(value) instanceof CDORevision)
+          {
+            // Remove ADD deltas for objects that have been added to source and target.
+            // This can for example happen if a source is re-merged to target.
+            return;
+          }
         }
 
         resultList.add(addDelta);

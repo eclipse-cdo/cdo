@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.WithIndex;
 
+import org.eclipse.net4j.util.ObjectUtil;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
@@ -121,6 +123,11 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
     this.value = value;
   }
 
+  public void clear()
+  {
+    setValue(CDOID.NULL);
+  }
+
   public void adjustAfterAddition(int index)
   {
     if (index <= this.index)
@@ -146,9 +153,22 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
     }
   }
 
-  public void clear()
+  @Override
+  public int hashCode()
   {
-    setValue(CDOID.NULL);
+    return super.hashCode() ^ index ^ ObjectUtil.hashCode(value);
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (!super.equals(obj))
+    {
+      return false;
+    }
+
+    CDOSingleValueFeatureDeltaImpl that = (CDOSingleValueFeatureDeltaImpl)obj;
+    return index == that.getIndex() && ObjectUtil.equals(value, that.getValue());
   }
 
   @Override

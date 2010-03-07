@@ -155,6 +155,24 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
   }
 
   @Override
+  public int hashCode()
+  {
+    return super.hashCode() ^ oldPosition ^ newPosition;
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (!super.equals(obj))
+    {
+      return false;
+    }
+
+    CDOMoveFeatureDelta that = (CDOMoveFeatureDelta)obj;
+    return oldPosition == that.getOldPosition() && newPosition == that.getNewPosition();
+  }
+
+  @Override
   protected String toStringAdditional()
   {
     return MessageFormat.format("from={0}, to={1}", oldPosition, newPosition);

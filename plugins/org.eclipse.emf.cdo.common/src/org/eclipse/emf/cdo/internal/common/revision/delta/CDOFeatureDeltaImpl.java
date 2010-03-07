@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 
 import org.eclipse.net4j.util.CheckUtil;
@@ -55,6 +56,29 @@ public abstract class CDOFeatureDeltaImpl implements InternalCDOFeatureDelta
   public EStructuralFeature getFeature()
   {
     return feature;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return feature.hashCode() ^ getType().hashCode() << 16;
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (obj == this)
+    {
+      return true;
+    }
+
+    if (obj instanceof CDOFeatureDelta)
+    {
+      CDOFeatureDelta that = (CDOFeatureDelta)obj;
+      return feature.equals(that.getFeature()) && getType().equals(that.getType());
+    }
+
+    return false;
   }
 
   @Override

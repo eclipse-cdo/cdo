@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.emf.ecore.EClass;
@@ -216,9 +217,27 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   }
 
   @Override
+  public int hashCode()
+  {
+    return super.hashCode() ^ ObjectUtil.hashCode(featureDeltas);
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (!super.equals(obj))
+    {
+      return false;
+    }
+
+    CDOListFeatureDelta that = (CDOListFeatureDelta)obj;
+    return ObjectUtil.equals(featureDeltas, that.getListChanges());
+  }
+
+  @Override
   protected String toStringAdditional()
   {
-    return "list=" + featureDeltas;
+    return "list=" + featureDeltas; //$NON-NLS-1$
   }
 
   /**

@@ -648,6 +648,8 @@ public class DefaultCDOMerger implements CDOMerger
       {
         if (listToAdjust == null)
         {
+          // listToAdjust is only null for the sourceFeatureDeltas.
+          // In this case ignore a potential duplicate ADD delta.
           Object value = addDelta.getValue();
           if (getTargetMap().get(value) instanceof CDORevision && getSourceMap().get(value) instanceof CDORevision)
           {

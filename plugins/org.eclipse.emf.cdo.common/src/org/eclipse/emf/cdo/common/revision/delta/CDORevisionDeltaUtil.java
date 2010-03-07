@@ -89,10 +89,6 @@ public final class CDORevisionDeltaUtil
           }
         }
       }
-      else
-      {
-        throw new IllegalStateException("Neither start nor end revison available for " + id);
-      }
     }
 
     return new CDOChangeSetDataImpl(newObjects, changedObjects, detachedObjects);

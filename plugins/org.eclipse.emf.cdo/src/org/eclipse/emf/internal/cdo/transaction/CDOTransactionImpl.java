@@ -423,11 +423,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       InternalCDORevision ancestorRevision = (InternalCDORevision)ancestorInfo.getRevision(id);
 
       InternalCDOObject object = getObject(id);
+      boolean revisionChanged = false;
+
       InternalCDORevision targetRevision = object.cdoRevision();
       if (targetRevision == null)
       {
         targetRevision = (InternalCDORevision)targetInfo.getRevision(id);
         object.cdoInternalSetRevision(targetRevision);
+        revisionChanged = true;
       }
 
       oldRevisions.put(id, targetRevision);
@@ -444,10 +447,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         revisionDeltas.put(id, targetGoalDelta);
         result.getChangedObjects().add(targetGoalDelta);
 
-        object.cdoInternalSetRevision(goalRevision);
         object.cdoInternalSetState(CDOState.DIRTY);
+        object.cdoInternalSetRevision(goalRevision);
+        revisionChanged = true;
+
         dirtyObjects.put(id, object);
         dirty = true;
+      }
+
+      if (revisionChanged)
+      {
+        object.cdoInternalPostLoad();
       }
     }
 

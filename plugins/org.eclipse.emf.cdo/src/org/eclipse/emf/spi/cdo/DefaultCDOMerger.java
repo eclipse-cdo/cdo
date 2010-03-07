@@ -203,6 +203,14 @@ public class DefaultCDOMerger implements CDOMerger
 
   protected Object addedInSourceAndTarget(CDORevision targetRevision, CDORevision sourceRevision)
   {
+    // CDORevisionDelta delta = targetRevision.compare(sourceRevision);
+    // if (!delta.isEmpty())
+    // {
+    // targetRevision = targetRevision.copy();
+    // delta.apply(targetRevision);
+    // }
+    //
+    // return targetRevision;
     return null;
   }
 
@@ -617,7 +625,7 @@ public class DefaultCDOMerger implements CDOMerger
         if (getTargetMap().get(value) instanceof CDORevision && getSourceMap().get(value) instanceof CDORevision)
         {
           // Remove ADD deltas for objects that have been added to source and target.
-          // This can happen if a source is re-merged to target.
+          // This can for example happen if a source is re-merged to target.
           return;
         }
 

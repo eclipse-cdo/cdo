@@ -14,9 +14,12 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.common.util.EList;
@@ -45,7 +48,6 @@ public class MergingTest extends AbstractCDOTest
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
 
-    sleep(10);
     CDOResource resource = transaction.createResource("/res");
     EList<EObject> contents = resource.getContents();
     contents.add(getModel1Factory().createCompany());
@@ -92,7 +94,6 @@ public class MergingTest extends AbstractCDOTest
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
 
-    sleep(10);
     CDOResource resource = transaction.createResource("/res");
     EList<EObject> contents = resource.getContents();
     contents.add(getModel1Factory().createCompany());
@@ -145,13 +146,12 @@ public class MergingTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testRemergeAfterCommit() throws Exception
+  public void testRemergeAfterAdditionsInSource() throws Exception
   {
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
 
-    sleep(10);
     CDOResource resource = transaction.createResource("/res");
     EList<EObject> contents = resource.getContents();
     contents.add(getModel1Factory().createCompany());
@@ -200,7 +200,6 @@ public class MergingTest extends AbstractCDOTest
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
 
-    sleep(10);
     CDOResource resource = transaction.createResource("/res");
     EList<EObject> contents = resource.getContents();
     contents.add(getModel1Factory().createCompany());
@@ -273,7 +272,6 @@ public class MergingTest extends AbstractCDOTest
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
 
-    sleep(10);
     CDOResource resource = transaction.createResource("/res");
     EList<EObject> contents = resource.getContents();
     contents.add(getModel1Factory().createCompany());
@@ -322,6 +320,95 @@ public class MergingTest extends AbstractCDOTest
     transaction.commit();
 
     CDOChangeSetData result = transaction.merge(source2.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(true, result.isEmpty());
+    assertEquals(false, transaction.isDirty());
+
+    session.close();
+  }
+
+  public void testFromBranchWithChangesInSource() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+
+    CDOResource resource = transaction.createResource("/res");
+    EList<EObject> contents = resource.getContents();
+    contents.add(getModel1Factory().createCompany());
+    contents.add(getModel1Factory().createCompany());
+    contents.add(getModel1Factory().createCompany());
+    contents.add(getModel1Factory().createCompany());
+    contents.add(getModel1Factory().createCompany());
+    long time = transaction.commit().getTimeStamp();
+    CDOBranch source = mainBranch.createBranch("source", time);
+
+    sleep(10);
+    CDOTransaction tx1 = session.openTransaction(source);
+    CDOResource res1 = tx1.getResource("/res");
+    EList<EObject> contents1 = res1.getContents();
+    ((Company)contents1.get(0)).setName("Company0");
+    ((Company)contents1.get(1)).setName("Company1");
+    ((Company)contents1.get(2)).setName("Company2");
+    tx1.commit();
+    tx1.close();
+
+    CDOChangeSetData result = transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(false, result.isEmpty());
+    assertEquals(0, result.getNewObjects().size());
+    assertEquals(3, result.getChangedObjects().size());
+    assertEquals(0, result.getDetachedObjects().size());
+    assertEquals(true, transaction.isDirty());
+
+    CDOCommitInfo commitInfo1 = transaction.commit();
+    assertEquals(0, commitInfo1.getNewObjects().size());
+    assertEquals(3, commitInfo1.getChangedObjects().size());
+    assertEquals(0, commitInfo1.getDetachedObjects().size());
+    assertEquals(false, transaction.isDirty());
+
+    session.close();
+  }
+
+  public void testRemergeAfterChangesInSource() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+
+    CDOResource resource = transaction.createResource("/res");
+    EList<EObject> contents = resource.getContents();
+    contents.add(getModel1Factory().createCompany());
+    contents.add(getModel1Factory().createCompany());
+    contents.add(getModel1Factory().createCompany());
+    contents.add(getModel1Factory().createCompany());
+    contents.add(getModel1Factory().createCompany());
+    long time = transaction.commit().getTimeStamp();
+    CDOBranch source = mainBranch.createBranch("source", time);
+
+    sleep(10);
+    CDOTransaction tx1 = session.openTransaction(source);
+    CDOResource res1 = tx1.getResource("/res");
+    EList<EObject> contents1 = res1.getContents();
+    ((Company)contents1.get(0)).setName("Company0");
+    ((Company)contents1.get(1)).setName("Company1");
+    ((Company)contents1.get(2)).setName("Company2");
+    tx1.commit();
+    tx1.close();
+
+    long updateTime1 = session.getLastUpdateTime();
+    System.out.println(CDORevisionUtil.dumpAllRevisions(((IMEMStore)getRepository().getStore()).getAllRevisions()));
+
+    transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    transaction.commit();
+
+    System.out.println(CDORevisionUtil.dumpAllRevisions(((IMEMStore)getRepository().getStore()).getAllRevisions()));
+
+    long updateTime2 = session.getLastUpdateTime();
+    assertEquals(false, updateTime1 == updateTime2);
+    assertEquals("Company0", ((Company)contents.get(0)).getName());
+    assertEquals("Company1", ((Company)contents.get(1)).getName());
+    assertEquals("Company2", ((Company)contents.get(2)).getName());
+
+    CDOChangeSetData result = transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     assertEquals(true, result.isEmpty());
     assertEquals(false, transaction.isDirty());
 

@@ -323,9 +323,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         source = source.getBranch().getPoint(now);
       }
 
-      if (CDOBranchUtil.isContainedBy(source, this))
+      if (CDOBranchUtil.isContainedBy(source, target))
       {
-        throw new IllegalArgumentException("Source is already contained in " + this);
+        throw new IllegalArgumentException("Source is already contained in " + target);
       }
 
       // Keep a pointer to this list until the merge is done!!!
@@ -387,10 +387,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public CDOChangeSetData applyChangeSetData(CDOBranchPoint ancestor, CDOChangeSetData ancestorGoalData)
   {
     CDOChangeSetData result = new CDOChangeSetDataImpl();
+    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
 
     for (CDOIDAndVersion key : ancestorGoalData.getNewObjects())
     {
       InternalCDORevision revision = (InternalCDORevision)key;
+      // revision.adjustForCommit(getBranch(), CDOBranchPoint.UNSPECIFIED_DATE);
+
       CDOID id = revision.getID();
       if (!isObjectExisting(id))
       {
@@ -398,7 +401,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         object.cdoInternalSetView(this);
         object.cdoInternalSetRevision(revision);
         object.cdoInternalSetID(id);
-        object.cdoInternalSetState(CDOState.NEW); // TODO This will probably reuire changes in the commit mechanism!
+        object.cdoInternalSetState(CDOState.NEW);
         object.cdoInternalPostLoad();
 
         registerObject(object);
@@ -408,9 +411,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
     Map<CDOID, CDOObject> dirtyObjects = lastSavepoint.getDirtyObjects();
     ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas();
+    Map<CDOID, InternalCDORevision> oldRevisions = new HashMap<CDOID, InternalCDORevision>();
+
     for (CDORevisionKey key : ancestorGoalData.getChangedObjects())
     {
       InternalCDORevisionDelta ancestorGoalDelta = (InternalCDORevisionDelta)key;
@@ -419,36 +423,52 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       InternalCDORevision ancestorRevision = revisionManager.getRevision(id, ancestor, CDORevision.UNCHUNKED,
           CDORevision.DEPTH_NONE, true);
 
-      InternalCDORevision goalRevision = ancestorRevision.copy();
-      // goalRevision.adjustForCommit(getBranch(), getTimeStamp());
-      ancestorGoalDelta.apply(goalRevision);
-
       InternalCDOObject object = getObject(id);
       InternalCDORevision targetRevision = object.cdoRevision();
       if (targetRevision == null)
       {
         targetRevision = getRevision(id, true);
+        object.cdoInternalSetRevision(targetRevision);
       }
+
+      oldRevisions.put(id, targetRevision);
+
+      InternalCDORevision goalRevision = ancestorRevision.copy();
+      goalRevision.setBranchPoint(this);
+      goalRevision.setVersion(targetRevision.getVersion());
+      goalRevision.setRevised(CDOBranchPoint.UNSPECIFIED_DATE);
+      ancestorGoalDelta.apply(goalRevision);
 
       CDORevisionDelta targetGoalDelta = goalRevision.compare(targetRevision);
       if (!targetGoalDelta.isEmpty())
       {
         revisionDeltas.put(id, targetGoalDelta);
+        result.getChangedObjects().add(targetGoalDelta);
+
+        int xxx = 0; // object.cdoInternalSetRevision(goalRevision);
 
         object.cdoInternalSetState(CDOState.DIRTY);
         dirtyObjects.put(id, object);
-        result.getChangedObjects().add(targetGoalDelta);
         dirty = true;
       }
     }
 
+    Set<CDOObject> detachedObjects = new HashSet<CDOObject>();
     for (CDOIDAndVersion key : ancestorGoalData.getDetachedObjects())
     {
-      CDOID id = (CDOID)key;
+      CDOID id = key.getID();
+      result.getDetachedObjects().add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
+
       InternalCDOObject object = getObject(id);
       CDOStateMachine.INSTANCE.detach(object);
-      result.getDetachedObjects().add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
+      detachedObjects.add(object);
       dirty = true;
+    }
+
+    List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>(revisionDeltas.values());
+    if (!deltas.isEmpty() || !detachedObjects.isEmpty())
+    {
+      sendDeltaNotifications(deltas, detachedObjects, oldRevisions);
     }
 
     return result;

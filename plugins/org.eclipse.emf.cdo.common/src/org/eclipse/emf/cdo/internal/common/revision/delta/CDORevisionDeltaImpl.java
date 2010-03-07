@@ -30,7 +30,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -273,25 +272,26 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
           ListDifferenceAnalyzer analyzer = new ListDifferenceAnalyzer()
           {
             @Override
-            protected void createAddListChange(EList<Object> oldList, EList<ListChange> listChanges, Object newObject,
+            protected void createAddListChange(EList<Object> oldList, EList<ListChange> listChanges, Object value,
                 int index)
             {
-              CDOFeatureDelta delta = new CDOAddFeatureDeltaImpl(feature, index, newObject);
+              CDOFeatureDelta delta = new CDOAddFeatureDeltaImpl(feature, index, value);
               changes.add(delta);
-              oldList.add(index, newObject);
+              oldList.add(index, value);
             }
 
             @Override
-            protected void createRemoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object newObject,
+            protected void createRemoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object value,
                 int index)
             {
-              CDOFeatureDelta delta = new CDORemoveFeatureDeltaImpl(feature, index);
+              CDORemoveFeatureDeltaImpl delta = new CDORemoveFeatureDeltaImpl(feature, index);
+              delta.setValue(value);
               changes.add(delta);
               oldList.remove(index);
             }
 
             @Override
-            protected void createMoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object newObject,
+            protected void createMoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object value,
                 int index, int toIndex)
             {
               CDOFeatureDelta delta = new CDOMoveFeatureDeltaImpl(feature, toIndex, index);

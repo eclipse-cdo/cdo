@@ -13,51 +13,43 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
-import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.ListIndexAffecting;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.WithIndex;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 
 /**
  * @author Simon McDuff
  */
-public class CDORemoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDORemoveFeatureDelta,
-    ListIndexAffecting, WithIndex
+public class CDORemoveFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl implements CDORemoveFeatureDelta,
+    ListIndexAffecting
 {
-  private int index;
-
   public CDORemoveFeatureDeltaImpl(EStructuralFeature feature, int index)
   {
-    super(feature);
-    this.index = index;
+    super(feature, index, UNKNOWN_VALUE);
   }
 
   public CDORemoveFeatureDeltaImpl(CDODataInput in, EClass eClass) throws IOException
   {
     super(in, eClass);
-    index = in.readInt();
   }
 
   @Override
-  public void write(CDODataOutput out, EClass eClass) throws IOException
+  protected void writeValue(CDODataOutput out, EClass eClass) throws IOException
   {
-    super.write(out, eClass);
-    out.writeInt(index);
   }
 
-  public int getIndex()
+  @Override
+  protected Object readValue(CDODataInput in, EClass eClass) throws IOException
   {
-    return index;
+    return UNKNOWN_VALUE;
   }
 
   public Type getType()
@@ -67,12 +59,12 @@ public class CDORemoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CD
 
   public CDOFeatureDelta copy()
   {
-    return new CDORemoveFeatureDeltaImpl(getFeature(), index);
+    return new CDORemoveFeatureDeltaImpl(getFeature(), getIndex());
   }
 
   public void apply(CDORevision revision)
   {
-    ((InternalCDORevision)revision).getList(getFeature()).remove(index);
+    ((InternalCDORevision)revision).getList(getFeature()).remove(getIndex());
   }
 
   public void accept(CDOFeatureDeltaVisitor visitor)
@@ -100,33 +92,5 @@ public class CDORemoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CD
         }
       }
     }
-  }
-
-  public void adjustAfterAddition(int index)
-  {
-    if (index <= this.index)
-    {
-      ++this.index;
-    }
-  }
-
-  public void adjustAfterRemoval(int index)
-  {
-    if (index <= this.index)
-    {
-      --this.index;
-    }
-  }
-
-  @Override
-  public void adjustReferences(CDOReferenceAdjuster idMappings)
-  {
-    // do Nothing
-  }
-
-  @Override
-  protected String toStringAdditional()
-  {
-    return MessageFormat.format("index={0}", index);
   }
 }

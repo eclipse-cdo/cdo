@@ -36,31 +36,20 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
 {
   private int index;
 
-  private Object newValue;
+  private Object value;
 
   public CDOSingleValueFeatureDeltaImpl(EStructuralFeature feature, int index, Object value)
   {
     super(feature);
     this.index = index;
-    newValue = value;
+    this.value = value;
   }
 
   public CDOSingleValueFeatureDeltaImpl(CDODataInput in, EClass eClass) throws IOException
   {
     super(in, eClass);
     index = in.readInt();
-    EStructuralFeature feature = getFeature();
-    if (FeatureMapUtil.isFeatureMap(feature))
-    {
-      int featureID = in.readInt();
-      feature = eClass.getEStructuralFeature(featureID);
-      Object innerValue = in.readCDOFeatureValue(feature);
-      newValue = CDORevisionUtil.createFeatureMapEntry(feature, innerValue);
-    }
-    else
-    {
-      newValue = in.readCDOFeatureValue(feature);
-    }
+    value = readValue(in, eClass);
   }
 
   @Override
@@ -68,7 +57,17 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   {
     super.write(out, eClass);
     out.writeInt(index);
-    Object valueToWrite = newValue;
+    writeValue(out, eClass);
+  }
+
+  protected void writeValue(CDODataOutput out, EClass eClass) throws IOException
+  {
+    Object valueToWrite = value;
+    if (valueToWrite == UNKNOWN_VALUE)
+    {
+      throw new IOException("Value is unknown");
+    }
+
     EStructuralFeature feature = getFeature();
     if (FeatureMapUtil.isFeatureMap(feature))
     {
@@ -82,10 +81,24 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
 
     if (valueToWrite != null && feature instanceof EReference)
     {
-      valueToWrite = out.getIDProvider().provideCDOID(newValue);
+      valueToWrite = out.getIDProvider().provideCDOID(value);
     }
 
     out.writeCDOFeatureValue(feature, valueToWrite);
+  }
+
+  protected Object readValue(CDODataInput in, EClass eClass) throws IOException
+  {
+    EStructuralFeature feature = getFeature();
+    if (FeatureMapUtil.isFeatureMap(feature))
+    {
+      int featureID = in.readInt();
+      feature = eClass.getEStructuralFeature(featureID);
+      Object innerValue = in.readCDOFeatureValue(feature);
+      return CDORevisionUtil.createFeatureMapEntry(feature, innerValue);
+    }
+
+    return in.readCDOFeatureValue(feature);
   }
 
   public int getIndex()
@@ -93,14 +106,19 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
     return index;
   }
 
-  public Object getValue()
+  public void setIndex(int index)
   {
-    return newValue;
+    this.index = index;
   }
 
-  protected void setValue(Object value)
+  public Object getValue()
   {
-    newValue = value;
+    return value;
+  }
+
+  public void setValue(Object value)
+  {
+    this.value = value;
   }
 
   public void adjustAfterAddition(int index)
@@ -122,7 +140,10 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   @Override
   public void adjustReferences(CDOReferenceAdjuster referenceAdjuster)
   {
-    newValue = referenceAdjuster.adjustReference(newValue);
+    if (value != UNKNOWN_VALUE)
+    {
+      value = referenceAdjuster.adjustReference(value);
+    }
   }
 
   public void clear()
@@ -135,9 +156,9 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   {
     if (index == Notification.NO_INDEX)
     {
-      return MessageFormat.format("value={0}", newValue);
+      return MessageFormat.format("value={0}", value); //$NON-NLS-1$
     }
 
-    return MessageFormat.format("value={0}, index={1}", newValue, index);
+    return MessageFormat.format("value={0}, index={1}", value, index); //$NON-NLS-1$
   }
 }

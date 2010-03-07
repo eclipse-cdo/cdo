@@ -81,6 +81,14 @@ public class DefaultCDOMerger implements CDOMerger
     return sourceMap;
   }
 
+  public void reset()
+  {
+    result = null;
+    conflicts = null;
+    targetMap = null;
+    sourceMap = null;
+  }
+
   public synchronized CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source) throws ConflictException
   {
     if (result != null || conflicts != null)

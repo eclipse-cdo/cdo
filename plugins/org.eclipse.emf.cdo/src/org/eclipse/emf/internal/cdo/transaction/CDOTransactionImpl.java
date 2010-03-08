@@ -396,7 +396,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       InternalCDORevision revision = (InternalCDORevision)key;
       CDOID id = revision.getID();
-      if (!isObjectExisting(id))
+      if (getObjectIfExists(id) == null)
       {
         InternalCDOObject object = newInstance(revision.getEClass());
         object.cdoInternalSetView(this);
@@ -465,12 +465,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     for (CDOIDAndVersion key : ancestorGoalData.getDetachedObjects())
     {
       CDOID id = key.getID();
-      result.getDetachedObjects().add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
-
-      InternalCDOObject object = getObject(id);
-      CDOStateMachine.INSTANCE.detach(object);
-      detachedObjects.add(object);
-      dirty = true;
+      InternalCDOObject object = getObjectIfExists(id);
+      if (object != null)
+      {
+        result.getDetachedObjects().add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
+        CDOStateMachine.INSTANCE.detach(object);
+        detachedObjects.add(object);
+        dirty = true;
+      }
     }
 
     List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>(revisionDeltas.values());
@@ -482,15 +484,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return result;
   }
 
-  private boolean isObjectExisting(CDOID id)
+  private InternalCDOObject getObjectIfExists(CDOID id)
   {
     try
     {
-      return getObject(id) != null;
+      return getObject(id);
     }
     catch (ObjectNotFoundException ex)
     {
-      return false;
+      return null;
     }
   }
 

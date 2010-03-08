@@ -59,7 +59,9 @@ public class CDORemoveFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl im
 
   public CDOFeatureDelta copy()
   {
-    return new CDORemoveFeatureDeltaImpl(getFeature(), getIndex());
+    CDORemoveFeatureDeltaImpl delta = new CDORemoveFeatureDeltaImpl(getFeature(), getIndex());
+    delta.setValue(getValue());
+    return delta;
   }
 
   public void apply(CDORevision revision)

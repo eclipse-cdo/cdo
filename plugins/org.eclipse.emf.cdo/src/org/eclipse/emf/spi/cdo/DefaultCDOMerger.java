@@ -203,14 +203,6 @@ public class DefaultCDOMerger implements CDOMerger
 
   protected Object addedInSourceAndTarget(CDORevision targetRevision, CDORevision sourceRevision)
   {
-    // CDORevisionDelta delta = targetRevision.compare(sourceRevision);
-    // if (!delta.isEmpty())
-    // {
-    // targetRevision = targetRevision.copy();
-    // delta.apply(targetRevision);
-    // }
-    //
-    // return targetRevision;
     return null;
   }
 
@@ -677,6 +669,19 @@ public class DefaultCDOMerger implements CDOMerger
       protected void handleListDeltaRemove(List<CDOFeatureDelta> resultList, CDORemoveFeatureDelta removeDelta,
           List<CDOFeatureDelta> listToAdjust)
       {
+        if (listToAdjust == null)
+        {
+          // listToAdjust is only null for the sourceFeatureDeltas.
+          // In this case ignore a potential duplicate REMOVE delta.
+          Object value = removeDelta.getValue();
+          if (!getTargetMap().containsKey(value) && !getSourceMap().containsKey(value))
+          {
+            // Remove REMOVE deltas for objects that have been removed from source and target.
+            // This can for example happen if a source is re-merged to target.
+            return;
+          }
+        }
+
         resultList.add(removeDelta);
         if (listToAdjust != null)
         {

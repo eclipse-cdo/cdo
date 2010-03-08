@@ -203,7 +203,7 @@ public class DefaultCDOMerger implements CDOMerger
 
   protected Object addedInSourceAndTarget(CDORevision targetRevision, CDORevision sourceRevision)
   {
-    return null;
+    return targetRevision;
   }
 
   protected Object changedInTarget(CDORevisionDelta delta)
@@ -618,11 +618,25 @@ public class DefaultCDOMerger implements CDOMerger
         {
           if (deltaToHandle instanceof CDOAddFeatureDelta)
           {
-            handleListDeltaAdd(resultList, (CDOAddFeatureDelta)deltaToHandle, listToAdjust);
+            if (!handleListDeltaAdd(resultList, (CDOAddFeatureDelta)deltaToHandle, listToAdjust))
+            {
+              if (listToAdjust == null)
+              {
+                // If the ADD delta was not taken into the result the remaining deltas must be adjusted
+                adjustAfterRemoval(listToHandle, 0);
+              }
+            }
           }
           else if (deltaToHandle instanceof CDORemoveFeatureDelta)
           {
-            handleListDeltaRemove(resultList, (CDORemoveFeatureDelta)deltaToHandle, listToAdjust);
+            if (!handleListDeltaRemove(resultList, (CDORemoveFeatureDelta)deltaToHandle, listToAdjust))
+            {
+              if (listToAdjust == null)
+              {
+                // If the REMOVE delta was not taken into the result the remaining deltas must be adjusted
+                adjustAfterAddition(listToHandle, 0);
+              }
+            }
           }
           else if (deltaToHandle instanceof CDOMoveFeatureDelta)
           {
@@ -635,9 +649,10 @@ public class DefaultCDOMerger implements CDOMerger
         }
       }
 
-      protected void handleListDeltaAdd(List<CDOFeatureDelta> resultList, CDOAddFeatureDelta addDelta,
+      protected boolean handleListDeltaAdd(List<CDOFeatureDelta> resultList, CDOAddFeatureDelta addDelta,
           List<CDOFeatureDelta> listToAdjust)
       {
+        int index = addDelta.getIndex();
         if (listToAdjust == null)
         {
           // listToAdjust is only null for the sourceFeatureDeltas.
@@ -647,28 +662,23 @@ public class DefaultCDOMerger implements CDOMerger
           {
             // Remove ADD deltas for objects that have been added to source and target.
             // This can for example happen if a source is re-merged to target.
-            return;
+            return false;
           }
         }
 
-        resultList.add(addDelta);
+        resultList.add(addDelta.copy());
         if (listToAdjust != null)
         {
-          int index = addDelta.getIndex();
-          for (CDOFeatureDelta deltaToAdjust : listToAdjust)
-          {
-            if (deltaToAdjust instanceof InternalCDOFeatureDelta.WithIndex)
-            {
-              InternalCDOFeatureDelta.WithIndex withIndex = (InternalCDOFeatureDelta.WithIndex)deltaToAdjust;
-              withIndex.adjustAfterAddition(index);
-            }
-          }
+          adjustAfterAddition(listToAdjust, index);
         }
+
+        return true;
       }
 
-      protected void handleListDeltaRemove(List<CDOFeatureDelta> resultList, CDORemoveFeatureDelta removeDelta,
+      protected boolean handleListDeltaRemove(List<CDOFeatureDelta> resultList, CDORemoveFeatureDelta removeDelta,
           List<CDOFeatureDelta> listToAdjust)
       {
+        int index = removeDelta.getIndex();
         if (listToAdjust == null)
         {
           // listToAdjust is only null for the sourceFeatureDeltas.
@@ -678,41 +688,66 @@ public class DefaultCDOMerger implements CDOMerger
           {
             // Remove REMOVE deltas for objects that have been removed from source and target.
             // This can for example happen if a source is re-merged to target.
-            return;
+            return false;
           }
         }
 
-        resultList.add(removeDelta);
+        resultList.add(removeDelta.copy());
         if (listToAdjust != null)
         {
-          int index = removeDelta.getIndex();
-          for (CDOFeatureDelta deltaToAdjust : listToAdjust)
-          {
-            if (deltaToAdjust instanceof InternalCDOFeatureDelta.WithIndex)
-            {
-              InternalCDOFeatureDelta.WithIndex withIndex = (InternalCDOFeatureDelta.WithIndex)deltaToAdjust;
-              withIndex.adjustAfterRemoval(index);
-            }
-          }
+          adjustAfterRemoval(listToAdjust, index);
         }
+
+        return true;
       }
 
-      protected void handleListDeltaMove(List<CDOFeatureDelta> resultList, CDOMoveFeatureDelta moveDelta,
+      protected boolean handleListDeltaMove(List<CDOFeatureDelta> resultList, CDOMoveFeatureDelta moveDelta,
           List<CDOFeatureDelta> listToAdjust)
       {
-        resultList.add(moveDelta);
+        resultList.add(moveDelta.copy());
         if (listToAdjust != null)
         {
           int oldPosition = moveDelta.getOldPosition();
           int newPosition = moveDelta.getNewPosition();
-          for (CDOFeatureDelta deltaToAdjust : listToAdjust)
+          adjustAfterMove(listToAdjust, oldPosition, newPosition);
+        }
+
+        return true;
+      }
+
+      public static void adjustAfterAddition(List<CDOFeatureDelta> list, int index)
+      {
+        for (CDOFeatureDelta delta : list)
+        {
+          if (delta instanceof InternalCDOFeatureDelta.WithIndex)
           {
-            if (deltaToAdjust instanceof InternalCDOFeatureDelta.WithIndex)
-            {
-              InternalCDOFeatureDelta.WithIndex withIndex = (InternalCDOFeatureDelta.WithIndex)deltaToAdjust;
-              withIndex.adjustAfterRemoval(oldPosition);
-              withIndex.adjustAfterAddition(newPosition);
-            }
+            InternalCDOFeatureDelta.WithIndex withIndex = (InternalCDOFeatureDelta.WithIndex)delta;
+            withIndex.adjustAfterAddition(index);
+          }
+        }
+      }
+
+      public static void adjustAfterRemoval(List<CDOFeatureDelta> list, int index)
+      {
+        for (CDOFeatureDelta delta : list)
+        {
+          if (delta instanceof InternalCDOFeatureDelta.WithIndex)
+          {
+            InternalCDOFeatureDelta.WithIndex withIndex = (InternalCDOFeatureDelta.WithIndex)delta;
+            withIndex.adjustAfterRemoval(index);
+          }
+        }
+      }
+
+      public static void adjustAfterMove(List<CDOFeatureDelta> list, int oldPosition, int newPosition)
+      {
+        for (CDOFeatureDelta delta : list)
+        {
+          if (delta instanceof InternalCDOFeatureDelta.WithIndex)
+          {
+            InternalCDOFeatureDelta.WithIndex withIndex = (InternalCDOFeatureDelta.WithIndex)delta;
+            withIndex.adjustAfterRemoval(oldPosition);
+            withIndex.adjustAfterAddition(newPosition);
           }
         }
       }

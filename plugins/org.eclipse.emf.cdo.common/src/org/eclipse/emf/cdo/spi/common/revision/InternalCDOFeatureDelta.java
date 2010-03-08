@@ -20,13 +20,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 public interface InternalCDOFeatureDelta extends CDOFeatureDelta
 {
   /**
-   * Create a copy only for objects that keep references of objects
-   * 
-   * @since 2.0
-   */
-  public CDOFeatureDelta copy();
-
-  /**
    * @author Eike Stepper
    */
   public interface WithIndex

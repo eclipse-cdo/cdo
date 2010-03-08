@@ -45,6 +45,11 @@ public interface CDOFeatureDelta
   public void accept(CDOFeatureDeltaVisitor visitor);
 
   /**
+   * @since 3.0
+   */
+  public CDOFeatureDelta copy();
+
+  /**
    * @author Simon McDuff
    */
   public enum Type

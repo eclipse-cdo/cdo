@@ -71,31 +71,8 @@ public class DefaultCDOMerger implements CDOMerger
     return conflicts;
   }
 
-  public Map<CDOID, Object> getTargetMap()
-  {
-    return targetMap;
-  }
-
-  public Map<CDOID, Object> getSourceMap()
-  {
-    return sourceMap;
-  }
-
-  public void reset()
-  {
-    result = null;
-    conflicts = null;
-    targetMap = null;
-    sourceMap = null;
-  }
-
   public synchronized CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source) throws ConflictException
   {
-    if (result != null || conflicts != null)
-    {
-      throw new IllegalStateException("Merger can not be reused: " + this);
-    }
-
     result = new CDOChangeSetDataImpl();
     conflicts = new HashMap<CDOID, Conflict>();
 
@@ -244,6 +221,16 @@ public class DefaultCDOMerger implements CDOMerger
   protected Object changedInTargetAndDetachedInSource(CDORevisionDelta targetDelta)
   {
     return new ChangedInTargetAndDetachedInSourceConflict(targetDelta);
+  }
+
+  protected Map<CDOID, Object> getTargetMap()
+  {
+    return targetMap;
+  }
+
+  protected Map<CDOID, Object> getSourceMap()
+  {
+    return sourceMap;
   }
 
   private Map<CDOID, Object> createMap(CDOChangeSetData changeSetData)

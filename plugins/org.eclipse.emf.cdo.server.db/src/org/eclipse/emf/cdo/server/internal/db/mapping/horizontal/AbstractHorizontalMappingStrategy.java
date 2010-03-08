@@ -80,7 +80,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     return result;
   }
 
-  public void queryResources(IDBStoreAccessor dbStoreAccessor, QueryResourcesContext context)
+  public void queryResources(IDBStoreAccessor accessor, QueryResourcesContext context)
   {
     // only support timestamp in audit mode
     if (context.getTimeStamp() != CDORevision.UNSPECIFIED_DATE && !hasAuditSupport())
@@ -91,13 +91,12 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     EresourcePackage resourcesPackage = EresourcePackage.eINSTANCE;
 
     // first query folders
-    boolean shallContinue = queryResources(dbStoreAccessor, getClassMapping(resourcesPackage.getCDOResourceFolder()),
-        context);
+    boolean shallContinue = queryResources(accessor, getClassMapping(resourcesPackage.getCDOResourceFolder()), context);
 
     // not enough results? -> query resources
     if (shallContinue)
     {
-      queryResources(dbStoreAccessor, getClassMapping(resourcesPackage.getCDOResource()), context);
+      queryResources(accessor, getClassMapping(resourcesPackage.getCDOResource()), context);
     }
   }
 

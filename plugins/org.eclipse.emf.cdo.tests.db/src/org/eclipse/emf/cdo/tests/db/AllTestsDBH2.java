@@ -39,7 +39,7 @@ public class AllTestsDBH2 extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBH2().getTestSuite("CDO Tests (DBStoreRepositoryConfig H2 Horizontal)");
+    return new AllTestsDBH2().getTestSuite("CDO Tests (DBStore H2 Horizontal)");
   }
 
   @Override

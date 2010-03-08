@@ -815,8 +815,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
   public Set<CDOID> readChangeSet(CDOChangeSetSegment... segments)
   {
-    // TODO: implement DBStoreAccessor.readChangeSet(segments)
-    throw new UnsupportedOperationException();
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    return mappingStrategy.readChangeSet(this, segments);
   }
 
   /**

@@ -46,8 +46,7 @@ public class AllTestsDBH2NonAudit extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBH2NonAudit()
-        .getTestSuite("CDO Tests (DBStoreRepositoryConfig H2 Horizontal - non-audit mode)");
+    return new AllTestsDBH2NonAudit().getTestSuite("CDO Tests (DBStore H2 Horizontal - non-audit mode)");
   }
 
   @Override
@@ -133,7 +132,7 @@ public class AllTestsDBH2NonAudit extends DBConfigs
     {
       private static final long serialVersionUID = 1L;
 
-      public static final ReusableFolder INSTANCE = new ReusableFolder("DBStore: H2 (Reusable Folder)");
+      public static final ReusableFolder INSTANCE = new ReusableFolder("DBStore: H2 (non-audit)");
 
       private static File reusableFolder;
 

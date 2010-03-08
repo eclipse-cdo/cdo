@@ -42,7 +42,7 @@ public class AllTestsDBHsqldb extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBHsqldb().getTestSuite("CDO Tests (DBStoreRepositoryConfig Hsql Horizontal)");
+    return new AllTestsDBHsqldb().getTestSuite("CDO Tests (DBStore Hsql Horizontal)");
   }
 
   @Override

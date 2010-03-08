@@ -46,7 +46,7 @@ public class AllTestsDBH2Offline extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBH2Offline().getTestSuite("CDO Tests (DBStoreRepositoryConfig H2 Horizontal - offline mode)");
+    return new AllTestsDBH2Offline().getTestSuite("CDO Tests (DBStore H2 Horizontal - offline mode)");
   }
 
   @Override
@@ -136,7 +136,7 @@ public class AllTestsDBH2Offline extends DBConfigs
     {
       private static final long serialVersionUID = 1L;
 
-      public static final ReusableFolder INSTANCE = new ReusableFolder("DBStore: H2 (Reusable Folder)");
+      public static final ReusableFolder INSTANCE = new ReusableFolder("DBStore: H2 (offline)");
 
       private static File reusableFolder;
 

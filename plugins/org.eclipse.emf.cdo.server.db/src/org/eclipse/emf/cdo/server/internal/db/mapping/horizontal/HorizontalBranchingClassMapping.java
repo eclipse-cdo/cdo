@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
@@ -50,7 +51,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -75,6 +78,8 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   private String sqlReviseAttributes;
 
   private String sqlSelectForHandle;
+
+  private String sqlSelectForChangeSet;
 
   public HorizontalBranchingClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
@@ -247,6 +252,14 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable().getName());
     sqlSelectForHandle = builder.toString();
+
+    // ----------- Select all revisions (for handleRevision) ---
+    builder = new StringBuilder("SELECT DISTINCT "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(getTable().getName());
+    builder.append(" WHERE "); //$NON-NLS-1$
+    sqlSelectForChangeSet = builder.toString();
   }
 
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
@@ -659,7 +672,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     if (branch != null)
     {
       // TODO: Prepare this string literal
-      builder.append(" WHERE "); //$NON-NLS-1$       
+      builder.append(" WHERE "); //$NON-NLS-1$
       builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
       builder.append("=? "); //$NON-NLS-1$
 
@@ -720,4 +733,73 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       statementCache.releasePreparedStatement(stmt);
     }
   }
+
+  @Override
+  public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, CDOChangeSetSegment[] segments)
+  {
+    StringBuilder builder = new StringBuilder(sqlSelectForChangeSet);
+    boolean isFirst = true;
+
+    for (int i = 0; i < segments.length; i++)
+    {
+      if (isFirst)
+      {
+        isFirst = false;
+      }
+      else
+      {
+        builder.append(" OR "); //$NON-NLS-1$
+      }
+
+      builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+      builder.append("=? AND "); //$NON-NLS-1$
+
+      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+      builder.append(">=?"); //$NON-NLS-1$
+      builder.append(" AND ("); //$NON-NLS-1$
+      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append("<=? OR "); //$NON-NLS-1$
+      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append("="); //$NON-NLS-1$
+      builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
+      builder.append(")"); //$NON-NLS-1$
+    }
+
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
+
+    Set<CDOID> result = new HashSet<CDOID>();
+
+    try
+    {
+      stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.LOW);
+      int col = 1;
+      for (CDOChangeSetSegment segment : segments)
+      {
+        stmt.setInt(col++, segment.getBranch().getID());
+        stmt.setLong(col++, segment.getStartTime());
+        stmt.setLong(col++, segment.getEndTime());
+      }
+
+      rs = stmt.executeQuery();
+      while (rs.next())
+      {
+        long id = rs.getLong(1);
+        result.add(CDOIDUtil.createLong(id));
+      }
+
+      return result;
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      DBUtil.close(rs);
+      statementCache.releasePreparedStatement(stmt);
+    }
+  }
+
 }

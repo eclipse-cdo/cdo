@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBAnnotation;
 import org.eclipse.emf.cdo.server.internal.db.ObjectIDIterator;
+import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
@@ -181,12 +182,23 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     }
   }
 
-  public CloseableIterator<CDOID> readObjectIDs(IDBStoreAccessor dbStoreAccessor)
+  public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, CDOChangeSetSegment[] segments)
+  {
+    Set<CDOID> result = new HashSet<CDOID>();
+    for (IClassMapping mapping : getClassMappings().values())
+    {
+      result.addAll(mapping.readChangeSet(accessor, segments));
+    }
+
+    return result;
+  }
+
+  public CloseableIterator<CDOID> readObjectIDs(IDBStoreAccessor accessor)
   {
     Collection<EClass> classes = getClassesWithObjectInfo();
     final Iterator<EClass> classIt = classes.iterator();
 
-    return new ObjectIDIterator(this, dbStoreAccessor)
+    return new ObjectIDIterator(this, accessor)
     {
       private PreparedStatement currentStatement;
 

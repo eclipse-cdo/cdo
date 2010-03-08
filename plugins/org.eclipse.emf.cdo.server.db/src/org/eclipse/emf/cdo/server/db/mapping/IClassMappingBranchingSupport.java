@@ -32,7 +32,7 @@ public interface IClassMappingBranchingSupport extends IClassMappingAuditSupport
    * Removes an object from the database. In the case of auditing support the object is just marked as revised, else it
    * it permanently deleted.
    * 
-   * @param dbStoreAccessor
+   * @param accessor
    *          the accessor to use.
    * @param id
    *          the ID of the object to remove.
@@ -43,7 +43,7 @@ public interface IClassMappingBranchingSupport extends IClassMappingAuditSupport
    * @param monitor
    *          the monitor to indicate progress.
    */
-  public void detachObject(IDBStoreAccessor dbStoreAccessor, CDOID id, long revised, CDOBranch branch, OMMonitor monitor);
+  public void detachObject(IDBStoreAccessor accessor, CDOID id, long revised, CDOBranch branch, OMMonitor monitor);
 
   /**
    * Write a special placeholder revision which is used to indicate that a revision is detached in a branch.

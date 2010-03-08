@@ -39,7 +39,7 @@ public class AllTestsDBDerby extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBDerby().getTestSuite("CDO Tests (DBStoreRepositoryConfig Derby Horizontal)");
+    return new AllTestsDBDerby().getTestSuite("CDO Tests (DBStore Derby Horizontal)");
   }
 
   @Override
@@ -120,7 +120,7 @@ public class AllTestsDBDerby extends DBConfigs
     {
       private static final long serialVersionUID = 1L;
 
-      public static final ReusableFolder INSTANCE = new ReusableFolder("DBStore: Derby (Reusable Folder)");
+      public static final ReusableFolder INSTANCE = new ReusableFolder("DBStore: Derby");
 
       private static HashMap<String, File> dbFolders = new HashMap<String, File>();
 

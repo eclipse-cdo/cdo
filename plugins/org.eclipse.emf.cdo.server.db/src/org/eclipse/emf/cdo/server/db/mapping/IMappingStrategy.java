@@ -16,10 +16,12 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
+import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.db.IDBAdapter;
@@ -32,6 +34,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.sql.Connection;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The mapping strategy acts as a connection between the DBStore and the database management (and OR-mapping) classes.
@@ -194,32 +197,32 @@ public interface IMappingStrategy
   /**
    * Execute a resource query.
    * 
-   * @param dbStoreAccessor
+   * @param accessor
    *          the accessor to use.
    * @param context
    *          the context from which the query parameters are read and to which the result is written.
    */
-  public void queryResources(IDBStoreAccessor dbStoreAccessor, QueryResourcesContext context);
+  public void queryResources(IDBStoreAccessor accessor, QueryResourcesContext context);
 
   /**
    * Read the type (i.e. class) of the object referred to by a given ID.
    * 
-   * @param dbStoreAccessor
+   * @param accessor
    *          the accessor to use to look up the type.
    * @param id
    *          the ID of the object for which the type is to be determined.
    * @return the type of the object.
    */
-  public CDOClassifierRef readObjectType(IDBStoreAccessor dbStoreAccessor, CDOID id);
+  public CDOClassifierRef readObjectType(IDBStoreAccessor accessor, CDOID id);
 
   /**
    * Get an iterator over all instances of objects in the store.
    * 
-   * @param dbStoreAccessor
+   * @param accessor
    *          the accessor to use.
    * @return the iterator.
    */
-  public CloseableIterator<CDOID> readObjectIDs(IDBStoreAccessor dbStoreAccessor);
+  public CloseableIterator<CDOID> readObjectIDs(IDBStoreAccessor accessor);
 
   /**
    * Return the maximum object id used in the store. This is used by the DBStore if a previous crash is discovered
@@ -257,4 +260,13 @@ public interface IMappingStrategy
    */
   public void handleRevisions(IDBStoreAccessor accessor, EClass eClass, CDOBranch branch, long timeStamp,
       CDORevisionHandler handler);
+
+  /**
+   * Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.
+   * DetachedCDORevisions must also be considered!
+   * 
+   * @see IStoreAccessor#readChangeSet(CDOChangeSetSegment...)
+   * @since 3.0
+   */
+  public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, CDOChangeSetSegment[] segments);
 }

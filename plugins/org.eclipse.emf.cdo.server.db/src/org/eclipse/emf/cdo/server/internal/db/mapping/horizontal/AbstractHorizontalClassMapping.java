@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
@@ -57,9 +58,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -82,6 +85,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
   private Map<EStructuralFeature, String> unsettableFields;
 
   private String sqlSelectForHandle;
+
+  private String sqlSelectForChangeSet;
 
   public AbstractHorizontalClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
@@ -153,6 +158,14 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable().getName());
     sqlSelectForHandle = builder.toString();
+
+    // ----------- Select all revisions (for handleRevision) ---
+    builder = new StringBuilder("SELECT DISTINCT "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(getTable().getName());
+    builder.append(" WHERE "); //$NON-NLS-1$
+    sqlSelectForChangeSet = builder.toString();
   }
 
   private List<ITypeMapping> createValueMappings(EStructuralFeature[] features)
@@ -491,7 +504,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     {
       builder.append(" WHERE "); //$NON-NLS-1$
       builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-      builder.append("=? "); //$NON-NLS-1$      
+      builder.append("=? "); //$NON-NLS-1$
     }
 
     try
@@ -513,6 +526,69 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
         handler.handleRevision(revision);
       }
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      DBUtil.close(rs);
+      statementCache.releasePreparedStatement(stmt);
+    }
+  }
+
+  public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, CDOChangeSetSegment[] segments)
+  {
+    StringBuilder builder = new StringBuilder(sqlSelectForChangeSet);
+    boolean isFirst = true;
+
+    for (int i = 0; i < segments.length; i++)
+    {
+      if (isFirst)
+      {
+        isFirst = false;
+      }
+      else
+      {
+        builder.append(" OR "); //$NON-NLS-1$
+      }
+
+      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+      builder.append(">=?"); //$NON-NLS-1$
+      builder.append(" AND ("); //$NON-NLS-1$
+      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append("<=? OR "); //$NON-NLS-1$
+      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append("="); //$NON-NLS-1$
+      builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
+      builder.append(")"); //$NON-NLS-1$
+    }
+
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
+
+    Set<CDOID> result = new HashSet<CDOID>();
+
+    try
+    {
+      stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.LOW);
+      int col = 1;
+      for (CDOChangeSetSegment segment : segments)
+      {
+        stmt.setLong(col++, segment.getStartTime());
+        stmt.setLong(col++, segment.getEndTime());
+      }
+
+      rs = stmt.executeQuery();
+      while (rs.next())
+      {
+        long id = rs.getLong(1);
+        result.add(CDOIDUtil.createLong(id));
+      }
+
+      return result;
     }
     catch (SQLException e)
     {

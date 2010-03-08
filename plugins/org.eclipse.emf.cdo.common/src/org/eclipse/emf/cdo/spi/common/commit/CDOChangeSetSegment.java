@@ -52,6 +52,11 @@ public class CDOChangeSetSegment
     return endTime;
   }
 
+  public boolean isOpenEnded()
+  {
+    return endTime == CDOBranchPoint.UNSPECIFIED_DATE;
+  }
+
   @Override
   public String toString()
   {

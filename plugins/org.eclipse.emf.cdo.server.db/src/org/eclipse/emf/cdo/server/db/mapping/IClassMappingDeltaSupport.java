@@ -29,7 +29,7 @@ public interface IClassMappingDeltaSupport
   /**
    * Write a revision delta.
    * 
-   * @param dbStoreAccessor
+   * @param accessor
    *          the accessor to use.
    * @param delta
    *          the delta to write.
@@ -38,6 +38,6 @@ public interface IClassMappingDeltaSupport
    * @param monitor
    *          the monitor to report progress.
    */
-  public void writeRevisionDelta(IDBStoreAccessor dbStoreAccessor, InternalCDORevisionDelta delta, long created,
+  public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created,
       OMMonitor monitor);
 }

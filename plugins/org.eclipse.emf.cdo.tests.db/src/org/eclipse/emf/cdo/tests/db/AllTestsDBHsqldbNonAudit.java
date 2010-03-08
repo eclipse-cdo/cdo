@@ -34,7 +34,7 @@ public class AllTestsDBHsqldbNonAudit extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBHsqldbNonAudit().getTestSuite("CDO Tests (DBStoreRepositoryConfig Hsql Horizontal Non-audit)");
+    return new AllTestsDBHsqldbNonAudit().getTestSuite("CDO Tests (DBStore Hsql Horizontal Non-audit)");
   }
 
   @Override

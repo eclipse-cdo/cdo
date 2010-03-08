@@ -51,7 +51,7 @@ public class AllTestsDBPsql extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBPsql().getTestSuite("CDO Tests (DBStoreRepositoryConfig PSQL Horizontal)");
+    return new AllTestsDBPsql().getTestSuite("CDO Tests (DBStore PSQL Horizontal)");
   }
 
   @Override

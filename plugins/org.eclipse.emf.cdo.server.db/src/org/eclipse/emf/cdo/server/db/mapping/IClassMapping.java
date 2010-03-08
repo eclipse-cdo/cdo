@@ -16,7 +16,9 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.ddl.IDBTable;
@@ -27,6 +29,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.sql.PreparedStatement;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Basic interface for class mappings.
@@ -60,7 +63,7 @@ public interface IClassMapping
    * Note that non-audit stores only support {@link CDOBranchPoint#UNSPECIFIED_DATE} and non-branching stores only
    * support the main branch.
    * 
-   * @param dbStoreAccessor
+   * @param accessor
    *          the accessor to use.
    * @param revision
    *          the revision object into which the data should be read. The revision has to be have its ID set to the
@@ -71,25 +74,25 @@ public interface IClassMapping
    * @return <code>true</code>, if the revision has been found and read correctly. <code>false</code> if the revision
    *         could not be found. In this case, the content of <code>revision</code> is undefined.
    */
-  public boolean readRevision(IDBStoreAccessor dbStoreAccessor, InternalCDORevision revision, int listChunk);
+  public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk);
 
   /**
    * Write the revision data to the database.
    * 
-   * @param dbStoreAccessor
+   * @param accessor
    *          the accessor to use.
    * @param revision
    *          the revision to write.
    * @param monitor
    *          the monitor to indicate progress.
    */
-  public void writeRevision(IDBStoreAccessor dbStoreAccessor, InternalCDORevision revision, OMMonitor monitor);
+  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, OMMonitor monitor);
 
   /**
    * Removes an object from the database. In the case of auditing support the object is just marked as revised, else it
    * it permanently deleted.
    * 
-   * @param dbStoreAccessor
+   * @param accessor
    *          the accessor to use.
    * @param id
    *          the ID of the object to remove.
@@ -98,7 +101,7 @@ public interface IClassMapping
    * @param monitor
    *          the monitor to indicate progress.
    */
-  public void detachObject(IDBStoreAccessor dbStoreAccessor, CDOID id, long timeStamp, OMMonitor monitor);
+  public void detachObject(IDBStoreAccessor accessor, CDOID id, long timeStamp, OMMonitor monitor);
 
   /**
    * Create a prepared statement which returns all IDs of instances of the corresponding class.
@@ -147,4 +150,13 @@ public interface IClassMapping
    * @since 3.0
    */
   public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, CDORevisionHandler handler);
+
+  /**
+   * Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.
+   * DetachedCDORevisions must also be considered!
+   * 
+   * @see IStoreAccessor#readChangeSet(CDOChangeSetSegment...)
+   * @since 3.0
+   */
+  public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, CDOChangeSetSegment[] segments);
 }

@@ -588,9 +588,8 @@ public class DefaultCDOMerger implements CDOMerger
       {
         if (targetFeatureDelta instanceof CDOListFeatureDelta && sourceFeatureDelta instanceof CDOListFeatureDelta)
         {
-          CDOListFeatureDelta targetListDelta = (CDOListFeatureDelta)targetFeatureDelta;
-          CDOListFeatureDelta sourceListDelta = (CDOListFeatureDelta)((InternalCDOFeatureDelta)sourceFeatureDelta)
-              .copy();
+          CDOListFeatureDelta targetListDelta = (CDOListFeatureDelta)targetFeatureDelta.copy();
+          CDOListFeatureDelta sourceListDelta = (CDOListFeatureDelta)sourceFeatureDelta.copy();
 
           CDOListFeatureDelta result = createResult(feature);
           List<CDOFeatureDelta> resultChanges = result.getListChanges();
@@ -649,6 +648,11 @@ public class DefaultCDOMerger implements CDOMerger
         }
       }
 
+      /**
+       * Decides whether an ADD delta is to be taken (added to the result list) and returns <code>true</code> if it was
+       * taken, <code>false</code> otherwise. Note that the passed ADD delta has to be copied prior to adding it to the
+       * result list!
+       */
       protected boolean handleListDeltaAdd(List<CDOFeatureDelta> resultList, CDOAddFeatureDelta addDelta,
           List<CDOFeatureDelta> listToAdjust)
       {
@@ -675,6 +679,11 @@ public class DefaultCDOMerger implements CDOMerger
         return true;
       }
 
+      /**
+       * Decides whether a REMOVE delta is to be taken (added to the result list) and returns <code>true</code> if it
+       * was taken, <code>false</code> otherwise. Note that the passed REMOVE delta has to be copied prior to adding it
+       * to the result list!
+       */
       protected boolean handleListDeltaRemove(List<CDOFeatureDelta> resultList, CDORemoveFeatureDelta removeDelta,
           List<CDOFeatureDelta> listToAdjust)
       {
@@ -701,6 +710,11 @@ public class DefaultCDOMerger implements CDOMerger
         return true;
       }
 
+      /**
+       * Decides whether a MOVE delta is to be taken (added to the result list) and returns <code>true</code> if it was
+       * taken, <code>false</code> otherwise. Note that the passed MOVE delta has to be copied prior to adding it to the
+       * result list!
+       */
       protected boolean handleListDeltaMove(List<CDOFeatureDelta> resultList, CDOMoveFeatureDelta moveDelta,
           List<CDOFeatureDelta> listToAdjust)
       {

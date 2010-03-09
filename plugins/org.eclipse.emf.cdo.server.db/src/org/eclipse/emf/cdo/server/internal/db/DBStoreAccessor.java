@@ -198,9 +198,10 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
     if (mapping.readRevision(this, revision, listChunk))
     {
-      if (revision.getVersion() == -1)
+      int version = revision.getVersion();
+      if (version < 0)
       {
-        return new DetachedCDORevision(eClass, id, branchPoint.getBranch(), 1, branchPoint.getTimeStamp());
+        return new DetachedCDORevision(eClass, id, revision.getBranch(), version, revision.getTimeStamp());
       }
 
       return revision;

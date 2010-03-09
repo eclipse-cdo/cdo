@@ -16,6 +16,7 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -517,7 +518,6 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   public void detachFirstVersion(IDBStoreAccessor accessor, CDORevision rev, long revised, OMMonitor monitor)
   {
     PreparedStatement stmt = null;
-
     InternalCDORevision revision = (InternalCDORevision)rev;
 
     try
@@ -527,7 +527,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       int col = 1;
 
       stmt.setLong(col++, CDOIDUtil.getLong(revision.getID()));
-      stmt.setInt(col++, -1); // cdo_version
+      stmt.setInt(col++, -CDOBranchVersion.FIRST_VERSION); // cdo_version
       stmt.setInt(col++, revision.getBranch().getID());
       stmt.setLong(col++, accessor.getStore().getMetaDataManager().getMetaID(revision.getEClass()));
       stmt.setLong(col++, revised); // cdo_created

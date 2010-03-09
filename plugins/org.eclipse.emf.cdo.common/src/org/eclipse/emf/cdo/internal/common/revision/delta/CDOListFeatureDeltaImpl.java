@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,10 +69,10 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     CDOListFeatureDeltaImpl result = new CDOListFeatureDeltaImpl(getFeature());
 
     Map<CDOFeatureDelta, CDOFeatureDelta> map = null;
-    // if (cachedSources != null || unprocessedFeatureDeltas != null)
-    // {
-    // map = new HashMap<CDOFeatureDelta, CDOFeatureDelta>();
-    // }
+    if (cachedSources != null || unprocessedFeatureDeltas != null)
+    {
+      map = new HashMap<CDOFeatureDelta, CDOFeatureDelta>();
+    }
 
     for (CDOFeatureDelta delta : featureDeltas)
     {
@@ -83,47 +84,39 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
       }
     }
 
-    // if (cachedIndices != null)
-    // {
-    // result.cachedIndices = copyOf(cachedIndices, cachedIndices.length);
-    // }
-    //
-    // if (cachedSources != null)
-    // {
-    // int length = cachedSources.length;
-    // result.cachedSources = new ListTargetAdding[length];
-    // for (int i = 0; i < length; i++)
-    // {
-    // ListTargetAdding oldElement = cachedSources[i];
-    // CDOFeatureDelta newElement = map.get(oldElement);
-    // if (newElement instanceof ListTargetAdding)
-    // {
-    // result.cachedSources[i] = (ListTargetAdding)newElement;
-    // }
-    // else
-    // {
-    // throw new IllegalStateException("Element not mapped: " + oldElement + ", new=" + newElement);
-    // }
-    // }
-    // }
-    //
-    // if (unprocessedFeatureDeltas != null)
-    // {
-    // int size = unprocessedFeatureDeltas.size();
-    // result.unprocessedFeatureDeltas = new ArrayList<CDOFeatureDelta>(size);
-    // for (CDOFeatureDelta oldDelta : unprocessedFeatureDeltas)
-    // {
-    // CDOFeatureDelta newDelta = map.get(oldDelta);
-    // if (newDelta != null)
-    // {
-    // result.unprocessedFeatureDeltas.add(newDelta);
-    // }
-    // else
-    // {
-    // throw new IllegalStateException("Delta not mapped: " + oldDelta);
-    // }
-    // }
-    // }
+    if (cachedIndices != null)
+    {
+      result.cachedIndices = copyOf(cachedIndices, cachedIndices.length);
+    }
+
+    if (cachedSources != null)
+    {
+      int length = cachedSources.length;
+      result.cachedSources = new ListTargetAdding[length];
+      for (int i = 0; i < length; i++)
+      {
+        ListTargetAdding oldElement = cachedSources[i];
+        CDOFeatureDelta newElement = map.get(oldElement);
+        if (newElement instanceof ListTargetAdding)
+        {
+          result.cachedSources[i] = (ListTargetAdding)newElement;
+        }
+      }
+    }
+
+    if (unprocessedFeatureDeltas != null)
+    {
+      int size = unprocessedFeatureDeltas.size();
+      result.unprocessedFeatureDeltas = new ArrayList<CDOFeatureDelta>(size);
+      for (CDOFeatureDelta oldDelta : unprocessedFeatureDeltas)
+      {
+        CDOFeatureDelta newDelta = map.get(oldDelta);
+        if (newDelta != null)
+        {
+          result.unprocessedFeatureDeltas.add(newDelta);
+        }
+      }
+    }
 
     return result;
   }
@@ -156,7 +149,6 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
    */
   public Pair<ListTargetAdding[], int[]> reconstructAddedIndices()
   {
-    int xxx; // The whole cache mechanism doesn't seem to be used anymore
     reconstructAddedIndicesWithNoCopy();
     return new Pair<ListTargetAdding[], int[]>(copyOf(cachedSources, cachedSources.length, cachedSources.getClass()),
         copyOf(cachedIndices, cachedIndices.length));

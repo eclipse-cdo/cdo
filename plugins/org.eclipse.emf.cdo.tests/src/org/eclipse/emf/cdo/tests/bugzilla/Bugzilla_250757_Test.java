@@ -19,9 +19,6 @@ import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
-import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.transaction.TransactionException;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -45,15 +42,7 @@ public class Bugzilla_250757_Test extends AbstractCDOTest
     EObject obj = getModel1Factory().createCompany();
     res.getContents().add(obj);
     res.getContents().remove(obj);
-
-    try
-    {
-      transaction1.commit();
-    }
-    catch (TransactionException e)
-    {
-      fail("Should not have an exception");
-    }
+    transaction1.commit();
   }
 
   public void testAddAndModifyAndRemoveFromPersistedList() throws Exception
@@ -91,15 +80,7 @@ public class Bugzilla_250757_Test extends AbstractCDOTest
     res.getContents().add(obj);
     res.getContents().move(1, 0);
     res.getContents().remove(obj);
-
-    try
-    {
-      transaction1.commit();
-    }
-    catch (TransactionException e)
-    {
-      fail("Should not have an exception");
-    }
+    transaction1.commit();
   }
 
   public void testAddAndMoveAndRemoveFromPersistedListWithSavePoint() throws Exception
@@ -118,16 +99,7 @@ public class Bugzilla_250757_Test extends AbstractCDOTest
 
     res.getContents().move(1, 0);
     res.getContents().remove(obj);
-
-    try
-    {
-      transaction1.commit();
-    }
-    catch (TransactionException ex)
-    {
-      IOUtil.print(ex);
-      fail("Should not have an exception");
-    }
+    transaction1.commit();
   }
 
   public void testAddAndMoveAndRemoveFromPersistedListWithManySavePoint() throws Exception
@@ -150,15 +122,6 @@ public class Bugzilla_250757_Test extends AbstractCDOTest
 
     res.getContents().remove(obj);
     transaction1.setSavepoint();
-
-    try
-    {
-      transaction1.commit();
-    }
-    catch (TransactionException ex)
-    {
-      IOUtil.print(ex);
-      fail("Should not have an exception");
-    }
+    transaction1.commit();
   }
 }

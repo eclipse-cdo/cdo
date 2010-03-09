@@ -336,8 +336,8 @@ public class Repository extends Container<Object> implements InternalRepository
         {
           CDOBranchVersion targetBranchVersion = pointerInfo.getTargetBranchVersion();
           InternalCDORevision target = loadRevisionByVersion(id, targetBranchVersion, referenceChunk);
-          PointerCDORevision pointer = new PointerCDORevision(id, pointerInfo.getAvailableBranchVersion().getBranch(),
-              CDORevision.UNSPECIFIED_DATE, target);
+          PointerCDORevision pointer = new PointerCDORevision(target.getEClass(), id, pointerInfo
+              .getAvailableBranchVersion().getBranch(), CDORevision.UNSPECIFIED_DATE, target);
 
           info.setResult(target);
           info.setSynthetic(pointer);
@@ -373,7 +373,7 @@ public class Repository extends Container<Object> implements InternalRepository
         {
           CDOBranch branch = branchPoint.getBranch();
           long revised = loadRevisionRevised(id, branch);
-          PointerCDORevision pointer = new PointerCDORevision(id, branch, revised, target);
+          PointerCDORevision pointer = new PointerCDORevision(target.getEClass(), id, branch, revised, target);
 
           info.setSynthetic(pointer);
         }

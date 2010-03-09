@@ -15,13 +15,18 @@ package org.eclipse.emf.cdo.spi.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.internal.common.messages.Messages;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
+
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -29,6 +34,32 @@ import org.eclipse.emf.ecore.EClass;
  */
 public abstract class AbstractCDORevision implements InternalCDORevision
 {
+  private CDOClassInfo classInfo;
+
+  /**
+   * @since 3.0
+   */
+  protected AbstractCDORevision(EClass eClass)
+  {
+    if (eClass != null)
+    {
+      if (eClass.isAbstract())
+      {
+        throw new IllegalArgumentException(MessageFormat.format(Messages.getString("AbstractCDORevision.0"), eClass)); //$NON-NLS-1$
+      }
+
+      classInfo = CDOModelUtil.getClassInfo(eClass);
+    }
+  }
+
+  /**
+   * @since 3.0
+   */
+  public CDOClassInfo getClassInfo()
+  {
+    return classInfo;
+  }
+
   public EClass getEClass()
   {
     CDOClassInfo classInfo = getClassInfo();
@@ -136,5 +167,29 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     }
 
     return name + "@" + getID() + ":" + branch.getID() + "v" + getVersion();
+  }
+
+  /**
+   * @since 3.0
+   */
+  protected void setClassInfo(CDOClassInfo classInfo)
+  {
+    this.classInfo = classInfo;
+  }
+
+  /**
+   * @since 3.0
+   */
+  protected EStructuralFeature[] getAllPersistentFeatures()
+  {
+    return classInfo.getAllPersistentFeatures();
+  }
+
+  /**
+   * @since 3.0
+   */
+  protected int getFeatureIndex(EStructuralFeature feature)
+  {
+    return classInfo.getFeatureIndex(feature);
   }
 }

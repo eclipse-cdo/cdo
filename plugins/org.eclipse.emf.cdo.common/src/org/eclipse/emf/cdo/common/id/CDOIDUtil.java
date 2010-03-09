@@ -66,36 +66,49 @@ public final class CDOIDUtil
     {
       return AbstractCDOIDLong.NULL_VALUE;
     }
-
+  
     switch (id.getType())
     {
     case NULL:
       return AbstractCDOIDLong.NULL_VALUE;
-
+  
     case OBJECT:
       if (id instanceof AbstractCDOIDLong)
       {
         return ((AbstractCDOIDLong)id).getLongValue();
       }
-
+  
       throw new IllegalArgumentException(MessageFormat.format(
           Messages.getString("CDOIDUtil.0"), id.getClass().getName())); //$NON-NLS-1$
-
+  
     case META:
       return ((CDOIDMeta)id).getLongValue();
-
+  
     case TEMP_META:
     case TEMP_OBJECT:
       throw new IllegalArgumentException(Messages.getString("CDOIDUtil.1")); //$NON-NLS-1$
-
+  
     case EXTERNAL_OBJECT:
     case EXTERNAL_TEMP_OBJECT:
       throw new IllegalArgumentException(Messages.getString("CDOIDUtil.2")); //$NON-NLS-1$
-
+  
     default:
       throw new IllegalArgumentException(MessageFormat.format(
           Messages.getString("CDOIDUtil.3"), id.getClass().getName())); //$NON-NLS-1$
     }
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static CDOClassifierRef getClassifierRef(CDOID id)
+  {
+    if (id instanceof CDOClassifierRef.Provider)
+    {
+      return ((CDOClassifierRef.Provider)id).getClassifierRef();
+    }
+
+    return null;
   }
 
   public static CDOIDTemp createTempMeta(int value)

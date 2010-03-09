@@ -54,7 +54,7 @@ public class CDORevisionInstantiator implements Instantiator
     HibernateStore store = storeAccessor.getStore();
     final CDOID cdoID = HibernateUtil.getInstance().createCDOID(classifierRef, id);
     final InternalCDORevision revision = store.createRevision(eClass, cdoID);
-    revision.setBranchPoint(storeAccessor.getStore().getBranchPoint());
+    revision.setBranchPoint(storeAccessor.getStore().getMainBranchHead());
     return revision;
   }
 

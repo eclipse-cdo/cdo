@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 
+import org.eclipse.emf.ecore.EClass;
+
 import java.text.MessageFormat;
 
 /**
@@ -31,9 +33,9 @@ public class PointerCDORevision extends SyntheticCDORevision
 
   private CDOBranchVersion target;
 
-  public PointerCDORevision(CDOID id, CDOBranch branch, long revised, CDOBranchVersion target)
+  public PointerCDORevision(EClass eClass, CDOID id, CDOBranch branch, long revised, CDOBranchVersion target)
   {
-    super(id, branch);
+    super(eClass, id, branch);
     this.revised = revised;
     this.target = target;
   }

@@ -20,6 +20,9 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -199,6 +202,7 @@ public abstract class RevisionInfo
     {
       PointerCDORevision pointer = (PointerCDORevision)revision;
       out.writeByte(POINTER_RESULT);
+      out.writeCDOClassifierRef(pointer.getEClass());
       out.writeLong(pointer.getRevised());
 
       CDOBranchVersion target = pointer.getTarget();
@@ -215,6 +219,7 @@ public abstract class RevisionInfo
     {
       DetachedCDORevision detached = (DetachedCDORevision)revision;
       out.writeByte(DETACHED_RESULT);
+      out.writeCDOClassifierRef(detached.getEClass());
       out.writeLong(detached.getTimeStamp());
       out.writeInt(detached.getVersion());
     }
@@ -235,16 +240,18 @@ public abstract class RevisionInfo
 
     case POINTER_RESULT:
     {
+      EClassifier classifier = in.readCDOClassifierRefAndResolve();
       long revised = in.readLong();
       InternalCDORevision target = doReadResult(in);
-      return new PointerCDORevision(id, requestedBranchPoint.getBranch(), revised, target);
+      return new PointerCDORevision((EClass)classifier, id, requestedBranchPoint.getBranch(), revised, target);
     }
 
     case DETACHED_RESULT:
     {
+      EClassifier classifier = in.readCDOClassifierRefAndResolve();
       long timeStamp = in.readLong();
       int version = in.readInt();
-      return new DetachedCDORevision(id, requestedBranchPoint.getBranch(), version, timeStamp);
+      return new DetachedCDORevision((EClass)classifier, id, requestedBranchPoint.getBranch(), version, timeStamp);
     }
 
     case NORMAL_RESULT:

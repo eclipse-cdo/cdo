@@ -338,10 +338,17 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     final InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(id);
     if (revision == null)
     {
-      return new DetachedCDORevision(id, branchPoint.getBranch(), 0, 0);
+      final CDOClassifierRef classifierRef = CDOIDUtil.getClassifierRef(id);
+      if (classifierRef == null)
+      {
+        throw new IllegalArgumentException("This CDOID type of " + id + " is not supported by this store."); //$NON-NLS-1$ //$NON-NLS-2$
+      }
+
+      final EClass eClass = HibernateUtil.getInstance().getEClass(classifierRef);
+      return new DetachedCDORevision(eClass, id, branchPoint.getBranch(), 0, 0);
     }
 
-    revision.setBranchPoint(getStore().getBranchPoint());
+    revision.setBranchPoint(getStore().getMainBranchHead());
     return revision;
   }
 

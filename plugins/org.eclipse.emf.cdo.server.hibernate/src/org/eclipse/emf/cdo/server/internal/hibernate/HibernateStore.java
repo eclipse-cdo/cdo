@@ -93,7 +93,7 @@ public class HibernateStore extends Store implements IHibernateStore
   private Properties properties;
 
   // is initialized on get
-  private CDOBranchPoint branchPoint;
+  private CDOBranchPoint mainBranchHead;
 
   public HibernateStore(IHibernateMappingProvider mappingProvider)
   {
@@ -114,19 +114,14 @@ public class HibernateStore extends Store implements IHibernateStore
     }
   }
 
-  public CDOBranchPoint getBranchPoint()
+  public CDOBranchPoint getMainBranchHead()
   {
-    if (branchPoint == null)
+    if (mainBranchHead == null)
     {
-      branchPoint = getRepository().getBranchManager().getMainBranch().getHead();
+      mainBranchHead = getRepository().getBranchManager().getMainBranch().getHead();
     }
 
-    return branchPoint;
-  }
-
-  public void setBranchPoint(CDOBranchPoint branchPoint)
-  {
-    this.branchPoint = branchPoint;
+    return mainBranchHead;
   }
 
   public String getIdentifierPropertyName(String entityName)

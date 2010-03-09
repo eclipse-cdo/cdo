@@ -30,7 +30,9 @@ import org.eclipse.emf.spi.cdo.CDOElementProxy;
 
 /**
  * @author Simon McDuff
+ * @deprecated Doesn't seem to be used anymore.
  */
+@Deprecated
 public class RevisionAdjuster extends CDOFeatureDeltaVisitorImpl
 {
   private CDOReferenceAdjuster referenceAdjuster;

@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import org.eclipse.emf.ecore.resource.Resource;
 
 /**
@@ -30,34 +32,32 @@ public class Bugzilla_261218_Test extends AbstractCDOTest
   public void testBugzilla_261218_Containment() throws Exception
   {
     msg("Opening session");
-    final CDOSession session = openSession();
-    String LOCATION = "res1";
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    Resource resource = transaction.getOrCreateResource(LOCATION);
+    Resource resource = transaction.getOrCreateResource("res1");
 
     Category folder = getModel1Factory().createCategory();
     resource.getContents().add(folder);
 
+    IOUtil.OUT().println("Adding...");
     for (int i = 0; i < 10000; ++i)
     {
       Category file = getModel1Factory().createCategory();
       folder.getCategories().add(file);
     }
 
+    IOUtil.OUT().println("Committing...");
     transaction.commit();
-    @SuppressWarnings("unused")
-    long start = System.currentTimeMillis();
+
+    IOUtil.OUT().println("Removing...");
     for (int i = 9999; i >= 0; --i)
     {
-      // EcoreUtil.remove(folder.getCategories().get(i));
       folder.getCategories().remove(i);
     }
 
     // =>90 seconds
+    IOUtil.OUT().println("Committing...");
     transaction.commit();
-
-    // TODO: SIMON BETTER ASSERTION. Is it needed at all?
-    // assertTrue(System.currentTimeMillis() - start < 10000);
   }
 
   @Override

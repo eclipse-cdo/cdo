@@ -581,13 +581,13 @@ public class HibernateUtil
    */
   public String getEntityName(CDOID cdoID)
   {
-    if (cdoID instanceof CDOClassifierRef.Provider)
+    final CDOClassifierRef classifierRef = CDOIDUtil.getClassifierRef(cdoID);
+    if (classifierRef == null)
     {
-      CDOClassifierRef classifierRef = ((CDOClassifierRef.Provider)cdoID).getClassifierRef();
-      final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentStoreAccessor();
-      return accessor.getStore().getEntityName(classifierRef);
+      throw new IllegalArgumentException("This CDOID type of " + cdoID + " is not supported by this store."); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    throw new IllegalArgumentException("This CDOID type " + cdoID + " is not supported by this store."); //$NON-NLS-1$ //$NON-NLS-2$
+    final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentStoreAccessor();
+    return accessor.getStore().getEntityName(classifierRef);
   }
 }

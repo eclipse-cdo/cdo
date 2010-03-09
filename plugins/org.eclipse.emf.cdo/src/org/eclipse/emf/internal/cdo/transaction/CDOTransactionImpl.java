@@ -336,6 +336,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
       Set<CDOID> ids = sessionProtocol.loadMergeData(ancestorInfo, targetInfo, sourceInfo);
 
+      cacheRevisions(ancestorInfo);
+      cacheRevisions(targetInfo);
+      cacheRevisions(sourceInfo);
+
       CDOChangeSet targetChanges = createChangeSet(ids, ancestorInfo, targetInfo);
       CDOChangeSet sourceChanges = createChangeSet(ids, ancestorInfo, sourceInfo);
       CDOChangeSetData result = merger.merge(targetChanges, sourceChanges);
@@ -378,6 +382,31 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     return info;
+  }
+
+  private void cacheRevisions(CDORevisionAvailabilityInfo info)
+  {
+    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
+    CDOBranch branch = info.getBranchPoint().getBranch();
+    for (CDORevisionKey key : info.getAvailableRevisions().values())
+    {
+      CDORevision revision = (CDORevision)key;
+      revisionManager.addRevision(revision);
+
+      if (!ObjectUtil.equals(revision.getBranch(), branch))
+      {
+        CDOID id = revision.getID();
+        CDORevision firstRevision = revisionManager.getCache().getRevisionByVersion(id,
+            branch.getVersion(CDOBranchVersion.FIRST_VERSION));
+        if (firstRevision != null)
+        {
+          long revised = firstRevision.getTimeStamp() - 1L;
+          CDOBranchVersion target = CDOBranchUtil.copyBranchVersion(revision);
+          PointerCDORevision pointer = new PointerCDORevision(revision.getEClass(), id, branch, revised, target);
+          revisionManager.addRevision(pointer);
+        }
+      }
+    }
   }
 
   private CDOChangeSet createChangeSet(Set<CDOID> ids, CDORevisionAvailabilityInfo startInfo,

@@ -1,0 +1,123 @@
+/**
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
+package org.eclipse.emf.cdo.tests;
+
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.internal.common.branch.CDOBranchImpl;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.StubCDORevision;
+import org.eclipse.emf.cdo.tests.model1.Model1Package;
+
+import org.eclipse.emf.ecore.EClass;
+
+/**
+ * @author Eike Stepper
+ */
+public final class TestRevision extends StubCDORevision
+{
+  private CDOID id;
+
+  private CDOBranchPoint branchPoint;
+
+  private int version;
+
+  private long revised;
+
+  public TestRevision(long id, int version, long created, long revised)
+  {
+    super(Model1Package.Literals.COMPANY);
+    this.id = CDOIDUtil.createLong(id);
+    branchPoint = new CDOBranchImpl(CDOBranch.MAIN_BRANCH_ID, null).getPoint(created);
+    this.version = version;
+    this.revised = revised;
+  }
+
+  public TestRevision(long id, int version, long created)
+  {
+    this(id, version, created, CDORevision.UNSPECIFIED_DATE);
+  }
+
+  public TestRevision(long id)
+  {
+    this(id, 0, CDORevision.UNSPECIFIED_DATE);
+  }
+
+  @Override
+  public EClass getEClass()
+  {
+    return null;
+  }
+
+  @Override
+  public CDOID getID()
+  {
+    return id;
+  }
+
+  @Override
+  public void setID(CDOID id)
+  {
+    this.id = id;
+  }
+
+  @Override
+  public CDOBranch getBranch()
+  {
+    return branchPoint.getBranch();
+  }
+
+  @Override
+  public long getTimeStamp()
+  {
+    return branchPoint.getTimeStamp();
+  }
+
+  @Override
+  public void setBranchPoint(CDOBranchPoint branchPoint)
+  {
+    this.branchPoint = CDOBranchUtil.copyBranchPoint(branchPoint);
+  }
+
+  @Override
+  public int getVersion()
+  {
+    return version;
+  }
+
+  @Override
+  public void setVersion(int version)
+  {
+    this.version = version;
+  }
+
+  @Override
+  public long getRevised()
+  {
+    return revised;
+  }
+
+  @Override
+  public void setRevised(long revised)
+  {
+    this.revised = revised;
+  }
+
+  @Override
+  public InternalCDORevision copy()
+  {
+    return new TestRevision(CDOIDUtil.getLong(id), version, branchPoint.getTimeStamp(), revised);
+  }
+}

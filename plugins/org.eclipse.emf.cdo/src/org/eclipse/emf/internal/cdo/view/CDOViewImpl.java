@@ -2215,7 +2215,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     public ViewTargetChangedEvent(CDOBranchPoint branchPoint)
     {
-      this.branchPoint = CDOBranchUtil.copy(branchPoint);
+      this.branchPoint = CDOBranchUtil.copyBranchPoint(branchPoint);
     }
 
     @Override

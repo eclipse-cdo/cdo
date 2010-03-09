@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
-import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
@@ -22,6 +21,7 @@ import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
@@ -32,16 +32,12 @@ import java.io.IOException;
  */
 public class StubCDORevision extends AbstractCDORevision
 {
-  public StubCDORevision()
+  public StubCDORevision(EClass eClass)
   {
+    super(eClass);
   }
 
   public int compareTo(CDOBranchPoint o)
-  {
-    throw new UnsupportedOperationException(getExceptionMessage());
-  }
-
-  public CDOClassInfo getClassInfo()
   {
     throw new UnsupportedOperationException(getExceptionMessage());
   }

@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.RevisionHolderTest.TestRevision;
+import org.eclipse.emf.cdo.tests.TestRevision;
 
 /**
  * Exception Holder RevisionHolder[AAA@OID297v1] does not belong to this list

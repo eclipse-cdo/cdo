@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -147,7 +148,12 @@ public class ContainerInfoConverter
     if (containerFeatureStr.startsWith(CONTAINER_PREFIX))
     {
       // part of the container eClass
-      final CDOClassifierRef classifierRef = ((CDOClassifierRef.Provider)containerID).getClassifierRef();
+      final CDOClassifierRef classifierRef = CDOIDUtil.getClassifierRef(containerID);
+      if (classifierRef == null)
+      {
+        throw new IllegalArgumentException("This CDOID type of " + containerID + " is not supported by this store."); //$NON-NLS-1$ //$NON-NLS-2$
+      }
+
       final EClass containerEClass = HibernateUtil.getInstance().getEClass(classifierRef);
 
       // substring 1 because the string starts with a minus

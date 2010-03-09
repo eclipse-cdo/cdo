@@ -73,6 +73,8 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
 
   private List<CommitInfo> commitInfos = new ArrayList<CommitInfo>();
 
+  private Map<CDOID, EClass> objectTypes = new HashMap<CDOID, EClass>();
+
   private int listLimit;
 
   @ExcludeFromDump
@@ -419,7 +421,8 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
       version = getHighestVersion(list) + 1;
     }
 
-    DetachedCDORevision detached = new DetachedCDORevision(id, branch, version, timeStamp);
+    EClass eClass = getObjectType(id);
+    DetachedCDORevision detached = new DetachedCDORevision(eClass, id, branch, version, timeStamp);
     addRevision(list, detached);
     return detached;
   }
@@ -512,7 +515,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     return true;
   }
 
-  public Map<CDOBranch, List<CDORevision>> getAllRevisions()
+  public synchronized Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
     Map<CDOBranch, List<CDORevision>> result = new HashMap<CDOBranch, List<CDORevision>>();
     InternalCDOBranchManager branchManager = getRepository().getBranchManager();
@@ -535,6 +538,11 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     }
 
     return result;
+  }
+
+  public synchronized EClass getObjectType(CDOID id)
+  {
+    return objectTypes.get(id);
   }
 
   /**
@@ -671,6 +679,12 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     if (listLimit != UNLIMITED)
     {
       enforceListLimit(list);
+    }
+
+    CDOID id = revision.getID();
+    if (!objectTypes.containsKey(id))
+    {
+      objectTypes.put(id, revision.getEClass());
     }
   }
 

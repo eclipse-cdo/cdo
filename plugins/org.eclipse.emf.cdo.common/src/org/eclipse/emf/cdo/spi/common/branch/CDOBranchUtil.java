@@ -43,12 +43,12 @@ public final class CDOBranchUtil
     return new CDOBranchPointRangeImpl(startPoint, endPoint);
   }
 
-  public static CDOBranchPoint copy(CDOBranchPoint source)
+  public static CDOBranchPoint copyBranchPoint(CDOBranchPoint source)
   {
     return source.getBranch().getPoint(source.getTimeStamp());
   }
 
-  public static CDOBranchVersion copy(CDOBranchVersion source)
+  public static CDOBranchVersion copyBranchVersion(CDOBranchVersion source)
   {
     return source.getBranch().getVersion(source.getVersion());
   }

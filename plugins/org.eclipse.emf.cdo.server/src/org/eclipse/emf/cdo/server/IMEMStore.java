@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.eclipse.emf.ecore.EClass;
+
 import java.util.List;
 import java.util.Map;
 
@@ -50,4 +52,9 @@ public interface IMEMStore extends IStore
    * @since 3.0
    */
   public Map<CDOBranch, List<CDORevision>> getAllRevisions();
+
+  /**
+   * @since 3.0
+   */
+  public EClass getObjectType(CDOID id);
 }

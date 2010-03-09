@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.spi.common.revision;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 
+import org.eclipse.emf.ecore.EClass;
+
 import java.text.MessageFormat;
 
 /**
@@ -25,9 +27,9 @@ public class DetachedCDORevision extends SyntheticCDORevision
 
   private long timeStamp;
 
-  public DetachedCDORevision(CDOID id, CDOBranch branch, int version, long timeStamp)
+  public DetachedCDORevision(EClass eClass, CDOID id, CDOBranch branch, int version, long timeStamp)
   {
-    super(id, branch);
+    super(eClass, id, branch);
     this.version = version;
     this.timeStamp = timeStamp;
   }

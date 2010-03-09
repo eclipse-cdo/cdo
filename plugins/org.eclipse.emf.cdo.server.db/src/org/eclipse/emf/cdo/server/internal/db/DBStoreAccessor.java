@@ -200,7 +200,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     {
       if (revision.getVersion() == -1)
       {
-        return new DetachedCDORevision(id, branchPoint.getBranch(), 1, branchPoint.getTimeStamp());
+        return new DetachedCDORevision(eClass, id, branchPoint.getBranch(), 1, branchPoint.getTimeStamp());
       }
 
       return revision;

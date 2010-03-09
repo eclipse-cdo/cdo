@@ -10,22 +10,14 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.internal.common.branch.CDOBranchImpl;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.DLRevisionHolder;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionHolder;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionList;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.RevisionHolder;
-import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.StubCDORevision;
 
-import org.eclipse.emf.ecore.EClass;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -241,104 +233,6 @@ public class RevisionHolderTest extends AbstractCDOTest
     for (int i = 0; i < expected.size(); i++)
     {
       assertEquals(expected.get(i), list.get(i));
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class TestRevision extends StubCDORevision
-  {
-    private CDOID id;
-
-    private CDOBranchPoint branchPoint;
-
-    private int version;
-
-    private long revised;
-
-    public TestRevision(long id, int version, long created, long revised)
-    {
-      this.id = CDOIDUtil.createLong(id);
-      branchPoint = new CDOBranchImpl(CDOBranch.MAIN_BRANCH_ID, null).getPoint(created);
-      this.version = version;
-      this.revised = revised;
-    }
-
-    public TestRevision(long id, int version, long created)
-    {
-      this(id, version, created, CDORevision.UNSPECIFIED_DATE);
-    }
-
-    public TestRevision(long id)
-    {
-      this(id, 0, CDORevision.UNSPECIFIED_DATE);
-    }
-
-    @Override
-    public EClass getEClass()
-    {
-      return null;
-    }
-
-    @Override
-    public CDOID getID()
-    {
-      return id;
-    }
-
-    @Override
-    public void setID(CDOID id)
-    {
-      this.id = id;
-    }
-
-    @Override
-    public CDOBranch getBranch()
-    {
-      return branchPoint.getBranch();
-    }
-
-    @Override
-    public long getTimeStamp()
-    {
-      return branchPoint.getTimeStamp();
-    }
-
-    @Override
-    public void setBranchPoint(CDOBranchPoint branchPoint)
-    {
-      this.branchPoint = CDOBranchUtil.copy(branchPoint);
-    }
-
-    @Override
-    public int getVersion()
-    {
-      return version;
-    }
-
-    @Override
-    public void setVersion(int version)
-    {
-      this.version = version;
-    }
-
-    @Override
-    public long getRevised()
-    {
-      return revised;
-    }
-
-    @Override
-    public void setRevised(long revised)
-    {
-      this.revised = revised;
-    }
-
-    @Override
-    public InternalCDORevision copy()
-    {
-      return new TestRevision(CDOIDUtil.getLong(id), version, branchPoint.getTimeStamp(), revised);
     }
   }
 }

@@ -71,8 +71,6 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private static final byte SET_NOT_NULL = 2;
 
-  private CDOClassInfo classInfo;
-
   private CDOID id;
 
   private CDOBranchPoint branchPoint;
@@ -92,30 +90,25 @@ public abstract class BaseCDORevision extends AbstractCDORevision
    */
   public BaseCDORevision(EClass eClass)
   {
+    super(eClass);
     if (eClass != null)
     {
-      if (eClass.isAbstract())
-      {
-        throw new IllegalArgumentException(MessageFormat.format(Messages.getString("AbstractCDORevision.0"), eClass)); //$NON-NLS-1$
-      }
-
-      classInfo = CDOModelUtil.getClassInfo(eClass);
       version = UNSPECIFIED_VERSION;
       revised = UNSPECIFIED_DATE;
       resourceID = CDOID.NULL;
       containerID = CDOID.NULL;
       containingFeatureID = 0;
-      initValues(classInfo.getAllPersistentFeatures());
+      initValues(getAllPersistentFeatures());
     }
   }
 
   protected BaseCDORevision(BaseCDORevision source)
   {
-    classInfo = source.classInfo;
+    super(source.getEClass());
     id = source.id;
     branchPoint = source.branchPoint;
     version = source.version;
-    revised = source.revised; // == UNSPECIFIED_DATE
+    revised = source.revised;
     resourceID = source.resourceID;
     containerID = source.containerID;
     containingFeatureID = source.containingFeatureID;
@@ -128,7 +121,8 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   {
     READING.start(this);
     EClassifier classifier = in.readCDOClassifierRefAndResolve();
-    classInfo = CDOModelUtil.getClassInfo((EClass)classifier);
+    CDOClassInfo classInfo = CDOModelUtil.getClassInfo((EClass)classifier);
+    setClassInfo(classInfo);
 
     id = in.readCDOID();
     branchPoint = in.readCDOBranchPoint();
@@ -194,7 +188,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       containerID = idProvider.provideCDOID(containerID);
     }
 
-    EStructuralFeature[] features = classInfo.getAllPersistentFeatures();
+    EStructuralFeature[] features = getAllPersistentFeatures();
     for (int i = 0; i < features.length; i++)
     {
       EStructuralFeature feature = features[i];
@@ -240,14 +234,6 @@ public abstract class BaseCDORevision extends AbstractCDORevision
         }
       }
     }
-  }
-
-  /**
-   * @since 3.0
-   */
-  public CDOClassInfo getClassInfo()
-  {
-    return classInfo;
   }
 
   public CDOID getID()
@@ -301,7 +287,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
    */
   public void setBranchPoint(CDOBranchPoint branchPoint)
   {
-    branchPoint = CDOBranchUtil.copy(branchPoint);
+    branchPoint = CDOBranchUtil.copyBranchPoint(branchPoint);
     if (TRACER.isEnabled())
     {
       TRACER.format("Setting branchPoint {0}: {1}", this, branchPoint);
@@ -513,7 +499,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     resourceID = (CDOID)revisionAdjuster.adjustReference(resourceID);
     containerID = revisionAdjuster.adjustReference(containerID);
 
-    EStructuralFeature[] features = classInfo.getAllPersistentFeatures();
+    EStructuralFeature[] features = getAllPersistentFeatures();
     for (int i = 0; i < features.length; i++)
     {
       EStructuralFeature feature = features[i];
@@ -538,13 +524,13 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public Object getValue(EStructuralFeature feature)
   {
-    int featureIndex = classInfo.getFeatureIndex(feature);
+    int featureIndex = getFeatureIndex(feature);
     return getValue(featureIndex);
   }
 
   public Object setValue(EStructuralFeature feature, Object value)
   {
-    int featureIndex = classInfo.getFeatureIndex(feature);
+    int featureIndex = getFeatureIndex(feature);
 
     try
     {
@@ -555,7 +541,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     catch (ArrayIndexOutOfBoundsException ex)
     {
       throw new IllegalArgumentException(MessageFormat.format(Messages.getString("AbstractCDORevision.20"), feature,
-          classInfo), ex);
+          getClassInfo()), ex);
     }
   }
 
@@ -566,7 +552,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public CDOList getList(EStructuralFeature feature, int size)
   {
-    int featureIndex = classInfo.getFeatureIndex(feature);
+    int featureIndex = getFeatureIndex(feature);
     CDOList list = (CDOList)getValue(featureIndex);
     if (list == null && size != -1)
     {
@@ -579,7 +565,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public void setList(EStructuralFeature feature, InternalCDOList list)
   {
-    int featureIndex = classInfo.getFeatureIndex(feature);
+    int featureIndex = getFeatureIndex(feature);
     setValue(featureIndex, list);
   }
 
@@ -597,7 +583,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   private void writeValues(CDODataOutput out, int referenceChunk) throws IOException
   {
     EClass owner = getEClass();
-    EStructuralFeature[] features = classInfo.getAllPersistentFeatures();
+    EStructuralFeature[] features = getAllPersistentFeatures();
     for (int i = 0; i < features.length; i++)
     {
       EStructuralFeature feature = features[i];
@@ -645,7 +631,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   private void readValues(CDODataInput in) throws IOException
   {
     EClass owner = getEClass();
-    EStructuralFeature[] features = classInfo.getAllPersistentFeatures();
+    EStructuralFeature[] features = getAllPersistentFeatures();
     initValues(features);
     for (int i = 0; i < features.length; i++)
     {

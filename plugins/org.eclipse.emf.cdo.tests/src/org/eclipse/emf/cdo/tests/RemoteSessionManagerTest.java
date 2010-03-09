@@ -103,7 +103,7 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
     session1.close();
   }
 
-  public void _testSubscribeByListen() throws Exception
+  public void testSubscribeByListen() throws Exception
   {
     final AsyncResult<Integer> result1 = new AsyncResult<Integer>();
 
@@ -169,15 +169,15 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
     session1.close();
   }
 
-  public void _testUnsubscribeByListen100() throws Exception
+  public void testUnsubscribeByListen100() throws Exception
   {
     for (int i = 0; i < 100; i++)
     {
-      _testUnsubscribeByListen();
+      testUnsubscribeByListen();
     }
   }
 
-  public void _testUnsubscribeByListen() throws Exception
+  public void testUnsubscribeByListen() throws Exception
   {
     final AsyncResult<Integer> subscribed = new AsyncResult<Integer>();
     final AsyncResult<Integer> unsubscribed = new AsyncResult<Integer>();

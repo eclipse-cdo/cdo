@@ -118,7 +118,7 @@ public class TimeoutMonitor extends Monitor
 
   protected void handleTimeout(long untouched)
   {
-    cancel(new TimeoutRuntimeException("Timeout after " + untouched + " millis")); //$NON-NLS-1$ //$NON-NLS-2$
+    cancel(new TimeoutRuntimeException("Timeout after " + untouched + " millis"));
   }
 
   private void cancelTimeouter()

@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 
+import org.eclipse.emf.ecore.EClass;
+
 /**
  * A synthetic revision that represents the initial period of an object in a {@link CDOBranch branch} when the object is
  * still associated with a revision from one of the baseline branches. It always has {@link #getVersion() version}
@@ -41,8 +43,9 @@ public abstract class SyntheticCDORevision extends StubCDORevision
 
   private CDOBranch branch;
 
-  public SyntheticCDORevision(CDOID id, CDOBranch branch)
+  public SyntheticCDORevision(EClass eClass, CDOID id, CDOBranch branch)
   {
+    super(eClass);
     this.id = id;
     this.branch = branch;
   }

@@ -28,16 +28,13 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -198,99 +195,6 @@ public final class CDODBUtil
     }
 
     return result;
-  }
-
-  /**
-   * For debugging purposes ONLY!
-   * 
-   * @deprecated Should only be used when debugging.
-   * @since 2.0
-   */
-  @Deprecated
-  public static void sqlDump(Connection conn, String sql)
-  {
-    ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDODBUtil.class);
-    ResultSet rs = null;
-    try
-    {
-      TRACER.format("Dumping output of {0}", sql); //$NON-NLS-1$
-      rs = conn.createStatement().executeQuery(sql);
-      int numCol = rs.getMetaData().getColumnCount();
-
-      StringBuilder row = new StringBuilder();
-      for (int c = 1; c <= numCol; c++)
-      {
-        row.append(String.format("%10s | ", rs.getMetaData().getColumnLabel(c))); //$NON-NLS-1$
-      }
-
-      TRACER.trace(row.toString());
-
-      row = new StringBuilder();
-      for (int c = 1; c <= numCol; c++)
-      {
-        row.append("-----------+--"); //$NON-NLS-1$
-      }
-
-      TRACER.trace(row.toString());
-
-      while (rs.next())
-      {
-        row = new StringBuilder();
-        for (int c = 1; c <= numCol; c++)
-        {
-          row.append(String.format("%10s | ", rs.getString(c))); //$NON-NLS-1$
-        }
-
-        TRACER.trace(row.toString());
-      }
-
-      row = new StringBuilder();
-      for (int c = 1; c <= numCol; c++)
-      {
-        row.append("-----------+-"); //$NON-NLS-1$
-      }
-
-      TRACER.trace(row.toString());
-    }
-    catch (SQLException ex)
-    {
-      // NOP
-    }
-    finally
-    {
-      if (rs != null)
-      {
-        try
-        {
-          rs.close();
-        }
-        catch (SQLException ex)
-        {
-          // NOP
-        }
-      }
-    }
-  }
-
-  /**
-   * For debugging purposes ONLY!
-   * 
-   * @deprecated Should only be used when debugging.
-   * @since 2.0
-   */
-  @Deprecated
-  public static void sqlDump(IDBConnectionProvider connectionProvider, String sql)
-  {
-    Connection connection = connectionProvider.getConnection();
-
-    try
-    {
-      sqlDump(connection, sql);
-    }
-    finally
-    {
-      DBUtil.close(connection);
-    }
   }
 
   /**

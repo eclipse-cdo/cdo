@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -42,6 +42,89 @@ public final class DBUtil
 
   private DBUtil()
   {
+  }
+
+  /**
+   * For debugging purposes ONLY!
+   * 
+   * @deprecated Should only be used when debugging.
+   * @since 3.0
+   */
+  @Deprecated
+  public static void sqlDump(Connection conn, String sql)
+  {
+    ResultSet rs = null;
+
+    try
+    {
+      TRACER.format("Dumping output of {0}", sql); //$NON-NLS-1$
+      rs = conn.createStatement().executeQuery(sql);
+      int numCol = rs.getMetaData().getColumnCount();
+
+      StringBuilder row = new StringBuilder();
+      for (int c = 1; c <= numCol; c++)
+      {
+        row.append(String.format("%10s | ", rs.getMetaData().getColumnLabel(c))); //$NON-NLS-1$
+      }
+
+      TRACER.trace(row.toString());
+
+      row = new StringBuilder();
+      for (int c = 1; c <= numCol; c++)
+      {
+        row.append("-----------+--"); //$NON-NLS-1$
+      }
+
+      TRACER.trace(row.toString());
+
+      while (rs.next())
+      {
+        row = new StringBuilder();
+        for (int c = 1; c <= numCol; c++)
+        {
+          row.append(String.format("%10s | ", rs.getString(c))); //$NON-NLS-1$
+        }
+
+        TRACER.trace(row.toString());
+      }
+
+      row = new StringBuilder();
+      for (int c = 1; c <= numCol; c++)
+      {
+        row.append("-----------+-"); //$NON-NLS-1$
+      }
+
+      TRACER.trace(row.toString());
+    }
+    catch (SQLException ex)
+    {
+      // Do nothing
+    }
+    finally
+    {
+      close(rs);
+    }
+  }
+
+  /**
+   * For debugging purposes ONLY!
+   * 
+   * @deprecated Should only be used when debugging.
+   * @since 3.0
+   */
+  @Deprecated
+  public static void sqlDump(IDBConnectionProvider connectionProvider, String sql)
+  {
+    Connection connection = connectionProvider.getConnection();
+
+    try
+    {
+      sqlDump(connection, sql);
+    }
+    finally
+    {
+      close(connection);
+    }
   }
 
   public static IDBSchema createSchema(String name)

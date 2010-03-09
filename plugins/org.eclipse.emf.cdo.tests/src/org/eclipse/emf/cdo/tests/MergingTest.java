@@ -15,9 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -475,13 +473,10 @@ public class MergingTest extends AbstractCDOTest
     tx1.close();
 
     long updateTime1 = session.getLastUpdateTime();
-    System.out.println(CDORevisionUtil.dumpAllRevisions(((IMEMStore)getRepository().getStore()).getAllRevisions()));
 
     transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     transaction.commit();
     assertEquals(5, contents.size());
-
-    System.out.println(CDORevisionUtil.dumpAllRevisions(((IMEMStore)getRepository().getStore()).getAllRevisions()));
 
     long updateTime2 = session.getLastUpdateTime();
     assertEquals(false, updateTime1 == updateTime2);

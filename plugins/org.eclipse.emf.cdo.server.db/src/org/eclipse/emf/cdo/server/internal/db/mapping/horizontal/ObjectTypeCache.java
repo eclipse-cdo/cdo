@@ -49,6 +49,8 @@ import java.sql.Statement;
  */
 public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
 {
+  private static final String SQL_STATE_UNIQUE_KEY_VIOLATION = "23001";
+
   private IMappingStrategy mappingStrategy;
 
   private IDBTable table;
@@ -130,7 +132,11 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     }
     catch (SQLException ex)
     {
-      throw new DBException(ex);
+      // Unique key violation can occur in rare cases (merging new objects from other branches)
+      if (!SQL_STATE_UNIQUE_KEY_VIOLATION.equals(ex.getSQLState()))
+      {
+        throw new DBException(ex);
+      }
     }
     finally
     {

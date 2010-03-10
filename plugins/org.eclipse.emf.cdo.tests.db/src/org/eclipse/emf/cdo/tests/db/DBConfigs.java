@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.BranchingTestSameSession;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 import org.eclipse.emf.cdo.tests.FeatureMapTest;
+import org.eclipse.emf.cdo.tests.MergingTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259869_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
@@ -36,6 +37,7 @@ public abstract class DBConfigs extends AllTestsAllConfigs
     // Subclasses should add Banching tests if supported
     testClasses.remove(BranchingTest.class);
     testClasses.remove(BranchingTestSameSession.class);
+    testClasses.remove(MergingTest.class);
 
     testClasses.add(DBStoreTest.class);
     testClasses.add(SQLQueryTest.class);

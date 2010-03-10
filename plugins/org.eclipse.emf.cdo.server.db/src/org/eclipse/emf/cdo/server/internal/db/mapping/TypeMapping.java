@@ -34,6 +34,8 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.common.util.Enumerator;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -96,7 +98,7 @@ public abstract class TypeMapping implements ITypeMapping
 
   public void setDefaultValue(PreparedStatement stmt, int index) throws SQLException
   {
-    setValue(stmt, index, feature.getDefaultValue());
+    setValue(stmt, index, getDefaultValue());
   }
 
   public final void setValue(PreparedStatement stmt, int index, Object value) throws SQLException
@@ -112,7 +114,7 @@ public abstract class TypeMapping implements ITypeMapping
     }
     else if (value == null)
     {
-      if (feature.isMany() || feature.getDefaultValue() == null)
+      if (feature.isMany() || getDefaultValue() == null)
       {
         if (TRACER.isEnabled())
         {
@@ -181,7 +183,7 @@ public abstract class TypeMapping implements ITypeMapping
       }
       else
       {
-        if (feature.getDefaultValue() == null)
+        if (getDefaultValue() == null)
         {
           if (TRACER.isEnabled())
           {
@@ -204,6 +206,11 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     return value;
+  }
+
+  protected Object getDefaultValue()
+  {
+    return feature.getDefaultValue();
   }
 
   protected final Object getRevisionValue(InternalCDORevision revision)
@@ -276,16 +283,19 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     @Override
-    public void setDefaultValue(PreparedStatement stmt, int index) throws SQLException
+    protected Object getDefaultValue()
     {
-      EEnumLiteral defaultValue = (EEnumLiteral)getFeature().getDefaultValue();
-      setValue(stmt, index, defaultValue.getValue());
-    }
+      EEnum eenum = (EEnum)getFeature().getEType();
 
-    @Override
-    protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
-    {
-      super.doSetValue(stmt, index, value);
+      String defaultValueLiteral = getFeature().getDefaultValueLiteral();
+      if (defaultValueLiteral != null)
+      {
+        EEnumLiteral literal = eenum.getEEnumLiteralByLiteral(defaultValueLiteral);
+        return literal.getValue();
+      }
+
+      Enumerator enumerator = (Enumerator)eenum.getDefaultValue();
+      return enumerator.getValue();
     }
   }
 

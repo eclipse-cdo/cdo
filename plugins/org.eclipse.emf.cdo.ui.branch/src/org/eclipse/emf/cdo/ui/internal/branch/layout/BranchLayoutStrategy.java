@@ -34,7 +34,7 @@ import java.util.List;
  * 
  * @author Andre Dietisheim
  */
-class BranchLayoutStrategy
+public class BranchLayoutStrategy
 {
   /** The strategy that sprouts sub branches to the right */
   private final SubBranchSproutingStrategy SPROUT_RIGHT = new SubBranchSproutingStrategy()
@@ -111,37 +111,22 @@ class BranchLayoutStrategy
     }
   };
 
-  /** The current sprouting strategy applied to sub branches in this branch. */
   private SubBranchSproutingStrategy currentSproutingStrategy = SPROUT_RIGHT;
 
-  /** The deque of all sibling nodes within this branch. does not contain the nodes of the sub-branches */
   protected Deque<AbstractBranchPointNode> nodeDeque = new Deque<AbstractBranchPointNode>();
 
-  /** The deque of all sub-branches that sprout to the left. */
   private Deque<Branch> leftSproutingBranches = new Deque<Branch>();
 
-  /** The deque of all sub-branches that sprout to the right. */
   private Deque<Branch> rightSproutingBranches = new Deque<Branch>();
 
-  /** The rectangular area used by this branch (and its sub-branches). */
   private ExtendedDisplayIndependentRectangle bounds;
 
-  /** The rectangular area used by the sibling nodes on this branch. */
   private ExtendedDisplayIndependentRectangle siblingBounds;
 
-  /**
-   * A layout strategy that handles the layout of this branch
-   */
   protected BranchLayoutStrategy()
   {
   }
 
-  /**
-   * Layout the given node as root node for the current branch.
-   * 
-   * @param node
-   *          the node
-   */
   public void setRootNode(AbstractBranchPointNode node)
   {
     nodeDeque.add(node);
@@ -150,12 +135,6 @@ class BranchLayoutStrategy
     initBranchBounds(node);
   }
 
-  /**
-   * Inits the bounds of this branch.
-   * 
-   * @param node
-   *          the node
-   */
   protected void initBranchBounds(AbstractBranchPointNode node)
   {
     InternalNode rootInternalNode = BranchTreeUtils.getInternalNode(node);
@@ -166,11 +145,8 @@ class BranchLayoutStrategy
 
   /**
    * Layout the given node as sibling node of the root (and its siblings) node.
-   * 
-   * @param node
-   *          the node
    */
-  void addNode(AbstractBranchPointNode node)
+  public void addNode(AbstractBranchPointNode node)
   {
     AbstractBranchPointNode previousNode = nodeDeque.peekLast();
     nodeDeque.add(node);
@@ -181,9 +157,6 @@ class BranchLayoutStrategy
 
   /**
    * Sets the bounds of the given node. The node is centered horizontally to the given previous node.
-   * 
-   * @param node
-   *          the node
    */
   protected void setRootNodeLocation(AbstractBranchPointNode node)
   {
@@ -196,11 +169,6 @@ class BranchLayoutStrategy
 
   /**
    * Sets the location of the given node. The node is centered horizontally to the given previous (sibling) node.
-   * 
-   * @param node
-   *          the node
-   * @param previousNode
-   *          the previous node
    */
   protected void setSiblingNodeLocation(AbstractBranchPointNode node, AbstractBranchPointNode previousNode)
   {
@@ -211,9 +179,6 @@ class BranchLayoutStrategy
   /**
    * Sets the bounds of the current branch for the given additional node. The bounds are expanded if the size of the
    * node requires it.
-   * 
-   * @param node
-   *          the internal node
    */
   protected void setBranchBounds(AbstractBranchPointNode node)
   {
@@ -243,7 +208,7 @@ class BranchLayoutStrategy
    *          the sub branch to add
    * @return the branch that precedes the given branch
    */
-  void addBranch(Branch subBranch, BranchPointNode branchPointNode)
+  public void addBranch(Branch subBranch, BranchPointNode branchPointNode)
   {
     if (subBranch != null)
     {
@@ -256,21 +221,17 @@ class BranchLayoutStrategy
   /**
    * Gets all nodes within this branch.
    * 
-   * @return the nodes
    * @see AbstractBranchPointNode
    */
-  Collection<AbstractBranchPointNode> getNodes()
+  public Collection<AbstractBranchPointNode> getNodes()
   {
     return nodeDeque;
   }
 
   /**
    * Translates this branch by the given dimension.
-   * 
-   * @param dimension
-   *          the dimension to be translated by
    */
-  void translate(DisplayIndependentDimension dimension)
+  public void translate(DisplayIndependentDimension dimension)
   {
     translateSiblingNodes(dimension);
     translateSubBranches(dimension);
@@ -305,9 +266,6 @@ class BranchLayoutStrategy
 
   /**
    * Translates all the sibling nodes of this branch by the given horizontal and vertical offset.
-   * 
-   * @param dimension
-   *          the dimension
    */
   private void translateSiblingNodes(DisplayIndependentDimension dimension)
   {
@@ -320,8 +278,6 @@ class BranchLayoutStrategy
   /**
    * Returns whether the bounds of the given branch intersects the bounds of this branch.
    * 
-   * @param branch
-   *          the branch
    * @return true, if the given branch intersects this branch
    */
   boolean collidesWith(Branch branch)
@@ -331,8 +287,6 @@ class BranchLayoutStrategy
 
   /**
    * Gets the bounds.
-   * 
-   * @return the bounds
    */
   ExtendedDisplayIndependentRectangle getBounds()
   {

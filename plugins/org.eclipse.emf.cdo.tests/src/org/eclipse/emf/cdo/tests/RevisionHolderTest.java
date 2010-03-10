@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionHolder;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionList;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.RevisionHolder;
 
-
 import java.util.LinkedList;
 import java.util.List;
 

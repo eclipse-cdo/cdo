@@ -16,8 +16,8 @@ import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -62,8 +62,8 @@ public class RepositoryTest extends AbstractCDOTest
 
     getRepository().addHandler(new IRepository.WriteAccessHandler()
     {
-      public void handleTransactionBeforeCommitting(ITransaction transaction,
-          IStoreAccessor.CommitContext commitContext, OMMonitor monitor) throws RuntimeException
+      public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
+          OMMonitor monitor) throws RuntimeException
       {
         // Use the package registry of the commit context to catch new packages!
         EPackage model1Package = commitContext.getPackageRegistry().getEPackage(getModel1Package().getNsURI());
@@ -81,6 +81,11 @@ public class RepositoryTest extends AbstractCDOTest
             }
           }
         }
+      }
+
+      public void handleTransactionAfterCommitting(ITransaction transaction, CommitContext commitContext,
+          OMMonitor monitor)
+      {
       }
     });
 

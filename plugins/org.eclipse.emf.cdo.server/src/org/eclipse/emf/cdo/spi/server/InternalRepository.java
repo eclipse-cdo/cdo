@@ -89,7 +89,7 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
       List<CDORevision> additionalRevisions);
 
   public void notifyWriteAccessHandlers(ITransaction transaction, IStoreAccessor.CommitContext commitContext,
-      OMMonitor monitor);
+      boolean beforeCommit, OMMonitor monitor);
 
   public void sync(CDOReplicationContext context);
 

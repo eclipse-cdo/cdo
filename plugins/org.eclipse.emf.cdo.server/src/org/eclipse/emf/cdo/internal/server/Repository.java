@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
+import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IStore;
@@ -914,11 +915,8 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  /**
-   * @since 2.0
-   */
   public void notifyWriteAccessHandlers(ITransaction transaction, IStoreAccessor.CommitContext commitContext,
-      OMMonitor monitor)
+      boolean beforeCommit, OMMonitor monitor)
   {
     WriteAccessHandler[] handlers;
     synchronized (writeAccessHandlers)
@@ -937,8 +935,29 @@ public class Repository extends Container<Object> implements InternalRepository
       monitor.begin(handlers.length);
       for (WriteAccessHandler handler : handlers)
       {
-        // Do *not* protect against unchecked exceptions from handlers!
-        handler.handleTransactionBeforeCommitting(transaction, commitContext, monitor.fork());
+        try
+        {
+          if (beforeCommit)
+          {
+            handler.handleTransactionBeforeCommitting(transaction, commitContext, monitor.fork());
+          }
+          else
+          {
+            handler.handleTransactionAfterCommitting(transaction, commitContext, monitor.fork());
+          }
+        }
+        catch (RuntimeException ex)
+        {
+          if (!beforeCommit)
+          {
+            OM.LOG.error(ex);
+          }
+          else
+          {
+            // Do *not* protect against unchecked exceptions from handlers on before case!
+            throw ex;
+          }
+        }
       }
     }
     finally

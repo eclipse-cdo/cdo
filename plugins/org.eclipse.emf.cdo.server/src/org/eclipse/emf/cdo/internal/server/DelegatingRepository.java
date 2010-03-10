@@ -227,9 +227,10 @@ public abstract class DelegatingRepository implements InternalRepository
     getDelegate().notifyReadAccessHandlers(session, revisions, additionalRevisions);
   }
 
-  public void notifyWriteAccessHandlers(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
+  public void notifyWriteAccessHandlers(ITransaction transaction, CommitContext commitContext, boolean beforeCommit,
+      OMMonitor monitor)
   {
-    getDelegate().notifyWriteAccessHandlers(transaction, commitContext, monitor);
+    getDelegate().notifyWriteAccessHandlers(transaction, commitContext, beforeCommit, monitor);
   }
 
   public void removeHandler(Handler handler)

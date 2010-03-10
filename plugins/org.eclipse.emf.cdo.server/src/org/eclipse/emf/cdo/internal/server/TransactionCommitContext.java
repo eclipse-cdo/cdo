@@ -292,7 +292,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
       monitor.worked();
 
-      repository.notifyWriteAccessHandlers(transaction, this, monitor.fork());
+      repository.notifyWriteAccessHandlers(transaction, this, true, monitor.fork());
       detachObjects(monitor.fork());
 
       accessor.write(this, monitor.fork(100));
@@ -660,7 +660,7 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     try
     {
-      monitor.begin(6);
+      monitor.begin(7);
       addNewPackageUnits(monitor.fork());
       addRevisions(newObjects, monitor.fork());
       addRevisions(dirtyObjects, monitor.fork());
@@ -674,6 +674,9 @@ public class TransactionCommitContext implements InternalCommitContext
       }
 
       monitor.worked();
+      InternalRepository repository = transaction.getRepository();
+      repository.notifyWriteAccessHandlers(transaction, this, false, monitor.fork());
+
     }
     finally
     {

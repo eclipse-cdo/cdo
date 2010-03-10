@@ -118,9 +118,9 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
     }
   }
 
-  private Branch buildBranch(AbstractBranchPointNode branchRootNode)
+  private BranchView buildBranch(AbstractBranchPointNode branchRootNode)
   {
-    return new Branch(branchRootNode);
+    return new BranchView(branchRootNode);
   }
 
   protected void postLayoutAlgorithm(InternalNode[] entitiesToLayout, InternalRelationship[] relationshipsToConsider)

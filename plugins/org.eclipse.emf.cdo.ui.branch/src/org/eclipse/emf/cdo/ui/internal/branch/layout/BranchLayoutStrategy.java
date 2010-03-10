@@ -22,7 +22,6 @@ import org.eclipse.zest.layouts.dataStructures.InternalNode;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -36,23 +35,23 @@ import java.util.List;
  */
 public class BranchLayoutStrategy
 {
-  /** The strategy that sprouts sub branches to the right */
   private final SubBranchSproutingStrategy SPROUT_RIGHT = new SubBranchSproutingStrategy()
   {
     @Override
-    protected void addSubBranchReference(Branch branch)
+    protected void addSubBranchReference(BranchView branch)
     {
       rightSproutingBranches.addFirst(branch);
     }
 
     @Override
-    protected Branch getLatestSubBranch()
+    protected BranchView getLatestSubBranch()
     {
       return rightSproutingBranches.peekFirst();
     }
 
     @Override
-    protected DisplayIndependentDimension getTranslationToBranchPoint(Branch subBranch, BranchPointNode branchPointNode)
+    protected DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
+        BranchPointNode branchPointNode)
     {
       InternalNode branchPointInternalNode = BranchTreeUtils.getInternalNode(branchPointNode);
       return new DisplayIndependentDimension( //
@@ -65,7 +64,7 @@ public class BranchLayoutStrategy
     }
 
     @Override
-    protected DisplayIndependentDimension getTranslationToLatterBranch(Branch subBranch, Branch latterBranch)
+    protected DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch, BranchView latterBranch)
     {
       ExtendedDisplayIndependentRectangle latterBranchBounds = latterBranch.getLayoutStrategy().getBounds();
       return new DisplayIndependentDimension(//
@@ -73,23 +72,23 @@ public class BranchLayoutStrategy
     }
   };
 
-  /** The strategy that sprouts sub branches to the left */
   private final SubBranchSproutingStrategy SPROUT_LEFT = new SubBranchSproutingStrategy()
   {
     @Override
-    protected void addSubBranchReference(Branch branch)
+    protected void addSubBranchReference(BranchView branch)
     {
       leftSproutingBranches.addFirst(branch);
     }
 
     @Override
-    protected Branch getLatestSubBranch()
+    protected BranchView getLatestSubBranch()
     {
       return leftSproutingBranches.peekFirst();
     }
 
     @Override
-    protected DisplayIndependentDimension getTranslationToBranchPoint(Branch subBranch, BranchPointNode branchPointNode)
+    protected DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
+        BranchPointNode branchPointNode)
     {
       InternalNode branchPointInternalNode = BranchTreeUtils.getInternalNode(branchPointNode);
       DisplayIndependentRectangle subBranchBounds = subBranch.getLayoutStrategy().getBounds();
@@ -103,7 +102,7 @@ public class BranchLayoutStrategy
     }
 
     @Override
-    protected DisplayIndependentDimension getTranslationToLatterBranch(Branch subBranch, Branch latterBranch)
+    protected DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch, BranchView latterBranch)
     {
       DisplayIndependentRectangle latterBranchBounds = latterBranch.getLayoutStrategy().getBounds();
       return new DisplayIndependentDimension( //
@@ -113,15 +112,15 @@ public class BranchLayoutStrategy
 
   private SubBranchSproutingStrategy currentSproutingStrategy = SPROUT_RIGHT;
 
-  protected Deque<AbstractBranchPointNode> nodeDeque = new Deque<AbstractBranchPointNode>();
-
-  private Deque<Branch> leftSproutingBranches = new Deque<Branch>();
-
-  private Deque<Branch> rightSproutingBranches = new Deque<Branch>();
-
-  private ExtendedDisplayIndependentRectangle bounds;
-
-  private ExtendedDisplayIndependentRectangle siblingBounds;
+  // protected Deque<AbstractBranchPointNode> nodeDeque = new Deque<AbstractBranchPointNode>();
+  //
+  // private Deque<BranchView> leftSproutingBranches = new Deque<BranchView>();
+  //
+  // private Deque<BranchView> rightSproutingBranches = new Deque<BranchView>();
+  //
+  // private ExtendedDisplayIndependentRectangle bounds;
+  //
+  // private ExtendedDisplayIndependentRectangle siblingBounds;
 
   protected BranchLayoutStrategy()
   {
@@ -208,7 +207,7 @@ public class BranchLayoutStrategy
    *          the sub branch to add
    * @return the branch that precedes the given branch
    */
-  public void addBranch(Branch subBranch, BranchPointNode branchPointNode)
+  public void layoutBranch(BranchView subBranch, BranchPointNode branchPointNode)
   {
     if (subBranch != null)
     {
@@ -246,7 +245,7 @@ public class BranchLayoutStrategy
    */
   private void translateSubBranches(DisplayIndependentDimension dimension)
   {
-    for (Branch branch : getSubBranches())
+    for (BranchView branch : getSubBranches())
     {
       branch.getLayoutStrategy().translate(dimension);
     }
@@ -257,9 +256,9 @@ public class BranchLayoutStrategy
    * 
    * @return the sub branches
    */
-  Collection<Branch> getSubBranches()
+  Collection<BranchView> getSubBranches()
   {
-    List<Branch> branchList = new ArrayList<Branch>(leftSproutingBranches);
+    List<BranchView> branchList = new ArrayList<BranchView>(leftSproutingBranches);
     branchList.addAll(rightSproutingBranches);
     return branchList;
   }
@@ -280,7 +279,7 @@ public class BranchLayoutStrategy
    * 
    * @return true, if the given branch intersects this branch
    */
-  boolean collidesWith(Branch branch)
+  boolean collidesWith(BranchView branch)
   {
     return bounds.bottomEndsBefore(branch.getLayoutStrategy().bounds);
   }
@@ -304,14 +303,14 @@ public class BranchLayoutStrategy
      * @param branch
      *          the branch
      */
-    protected abstract void addSubBranchReference(Branch branch);
+    protected abstract void addSubBranchReference(BranchView branch);
 
     /**
      * Gets the latest sub branch.
      * 
      * @return the latest sub branch
      */
-    protected abstract Branch getLatestSubBranch();
+    protected abstract BranchView getLatestSubBranch();
 
     /**
      * Sets the location of the given sub branch in the current branch. Branches are created and located with their root
@@ -324,12 +323,12 @@ public class BranchLayoutStrategy
      * @param branchPointNode
      *          the branch point node the given sub branch is attached to
      */
-    void setSubBranchLocation(Branch subBranch, BranchPointNode branchPointNode)
+    void setSubBranchLocation(BranchView subBranch, BranchPointNode branchPointNode)
     {
       // translate branch off the branchPointNode (to the right or to the left)
       DisplayIndependentDimension translation = getTranslationToBranchPoint(subBranch, branchPointNode);
       ExtendedDisplayIndependentRectangle subBranchBounds = subBranch.getLayoutStrategy().getBounds();
-      Branch latterBranch = currentSproutingStrategy.getLatestSubBranch();
+      BranchView latterBranch = currentSproutingStrategy.getLatestSubBranch();
       if (latterBranch != null && !subBranchBounds.bottomEndsBefore(latterBranch.getLayoutStrategy().getBounds()))
       {
         // collides vertically with latter sub-branch -> additionally translate off latter branch (to the right or to
@@ -349,7 +348,7 @@ public class BranchLayoutStrategy
      *          the sub branch
      * @return the branch point translation
      */
-    protected abstract DisplayIndependentDimension getTranslationToBranchPoint(Branch subBranch,
+    protected abstract DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
         BranchPointNode branchPointNode);
 
     /**
@@ -362,7 +361,8 @@ public class BranchLayoutStrategy
      *          the latter branch
      * @return the latter branch translation
      */
-    protected abstract DisplayIndependentDimension getTranslationToLatterBranch(Branch subBranch, Branch latterBranch);
+    protected abstract DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch,
+        BranchView latterBranch);
 
     /**
      * Switches the current sprouting strategy to the next strategy to apply after the current one .
@@ -389,32 +389,6 @@ public class BranchLayoutStrategy
     protected double getBranchPadding()
     {
       return 60;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class Deque<E> extends LinkedList<E>
-  {
-    public E peekFirst()
-    {
-      if (isEmpty())
-      {
-        return null;
-      }
-
-      return getFirst();
-    }
-
-    public E peekLast()
-    {
-      if (isEmpty())
-      {
-        return null;
-      }
-
-      return getLast();
     }
   }
 }

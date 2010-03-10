@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.ui.internal.branch.geometry.ExtendedDisplayIndependentRectangle;
 import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNode;
 
@@ -25,14 +27,27 @@ import java.util.Collection;
  * @author Andre Dietisheim
  * @see BranchLayoutStrategy
  */
-public class Branch
+public class BranchView
 {
+  private CDOBranch branch;
+
   private AbstractBranchPointNode baselineNode;
 
   private BranchLayoutStrategy layoutStrategy = new BranchLayoutStrategy();
 
-  public Branch(AbstractBranchPointNode baselineNode)
+  protected Deque<AbstractBranchPointNode> nodes = new Deque<AbstractBranchPointNode>();
+
+  private Deque<BranchView> leftSproutingBranchViews = new Deque<BranchView>();
+
+  private Deque<BranchView> rightSproutingBranchViews = new Deque<BranchView>();
+
+  private ExtendedDisplayIndependentRectangle bounds;
+
+  private ExtendedDisplayIndependentRectangle siblingBounds;
+
+  public BranchView(CDOBranch branch, AbstractBranchPointNode baselineNode)
   {
+    this.branch = branch;
     this.baselineNode = baselineNode;
     layoutStrategy.setRootNode(baselineNode);
     addNode(baselineNode.getNextSibling());
@@ -41,8 +56,13 @@ public class Branch
     {
       // add a branch to this node
       BranchPointNode branchpointNode = (BranchPointNode)baselineNode;
-      addBranch(branchpointNode.getNextChild(), branchpointNode);
+      addBranchView(branchpointNode.getNextChild(), branchpointNode);
     }
+  }
+
+  public CDOBranch getBranch()
+  {
+    return branch;
   }
 
   public AbstractBranchPointNode getBaselineNode()
@@ -52,7 +72,17 @@ public class Branch
 
   public Collection<AbstractBranchPointNode> getNodes()
   {
-    return layoutStrategy.nodeDeque;
+    return nodes;
+  }
+
+  public Deque<BranchView> getLeftSproutingBranchViews()
+  {
+    return leftSproutingBranchViews;
+  }
+
+  public Deque<BranchView> getRightSproutingBranchViews()
+  {
+    return rightSproutingBranchViews;
   }
 
   public BranchLayoutStrategy getLayoutStrategy()
@@ -67,7 +97,7 @@ public class Branch
    * The strategy is to add all sibling nodes in the order of their time stamp and to add the branches in the reverse
    * (in terms of time stamp) order
    * 
-   * @see #addBranch(AbstractBranchPointNode, BranchPointNode)
+   * @see #addBranchView(AbstractBranchPointNode, BranchPointNode)
    */
   private void addNode(AbstractBranchPointNode node)
   {
@@ -81,7 +111,7 @@ public class Branch
       {
         // add a branch to this node
         BranchPointNode branchpointNode = (BranchPointNode)node;
-        addBranch(branchpointNode.getNextChild(), branchpointNode);
+        addBranchView(branchpointNode.getNextChild(), branchpointNode);
       }
     }
   }
@@ -89,18 +119,12 @@ public class Branch
   /**
    * Adds a sub-branch to the given branch point node with the given root node.
    */
-  private void addBranch(AbstractBranchPointNode rootNode, BranchPointNode branchPointNode)
+  private void addBranchView(CDOBranch branch, AbstractBranchPointNode rootNode, BranchPointNode branchPointNode)
   {
     if (rootNode != null)
     {
-      Branch subBranch = new Branch(rootNode);
-      // System.err.println("-----------------------------");
-      // System.err.println("branch point node: " + branchPointNode.getTimeStamp());
-      // System.err.println("subbranch: " + subBranch.getRootNode().getTimeStamp());
-      // System.err.println("subbranch.x = " + subBranch.getLayoutStrategy().getBounds().x);
-      // System.err.println("subbranch.width = " + subBranch.getLayoutStrategy().getBounds().width);
-      // System.err.println("-----------------------------");
-      layoutStrategy.addBranch(subBranch, branchPointNode);
+      BranchView subBranch = new BranchView(branch, rootNode);
+      layoutStrategy.layoutBranch(subBranch, branchPointNode);
     }
   }
 }

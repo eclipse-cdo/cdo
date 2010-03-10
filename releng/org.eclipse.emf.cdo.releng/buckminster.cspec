@@ -12,6 +12,8 @@
         <cs:dependency name="org.eclipse.emf.source" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.emf.teneo" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.emf.teneo.source" componentType="eclipse.feature"/>
+        <cs:dependency name="org.eclipse.zest" componentType="eclipse.feature"/>
+        <cs:dependency name="org.eclipse.zest.source" componentType="eclipse.feature"/>
         <!--
         <cs:dependency name="org.eclipse.emf.compare" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.emf.compare.source" componentType="eclipse.feature"/>

@@ -23,6 +23,7 @@
   <rm:locator pattern="^org\.eclipse\.net4j\.jms\.tests.*" searchPathRef="net4j.tests"/>
   <rm:locator pattern="^org\.eclipse\.net4j.*" searchPathRef="net4j.featuresAndPlugins"/>
 
+  <rm:locator searchPathRef="gef" failOnError="false"/>
   <rm:locator searchPathRef="modeling" failOnError="false"/>
   <rm:locator searchPathRef="target.platform"/>
 
@@ -197,4 +198,13 @@
       </rm:uri>
     </rm:provider>
   </rm:searchPath>
+
+  <rm:searchPath name="gef">
+    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false" resolutionFilter="(build.type=N)">
+      <rm:uri format="{0}/tools/gef/updates/milestones/">
+        <bc:propertyRef key="eclipse.downloads"/>
+      </rm:uri>
+    </rm:provider>
+  </rm:searchPath>
+
 </rm:rmap>

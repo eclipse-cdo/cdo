@@ -16,7 +16,7 @@ import org.eclipse.zest.core.widgets.GraphConnection;
 import org.eclipse.zest.core.widgets.GraphNode;
 
 /**
- * A connection to a {@link BranchTreeNode} in the same branch.
+ * A connection to a {@link AbstractBranchPointNode} in the same branch.
  */
 public class SameBranchConnection extends GraphConnection
 {

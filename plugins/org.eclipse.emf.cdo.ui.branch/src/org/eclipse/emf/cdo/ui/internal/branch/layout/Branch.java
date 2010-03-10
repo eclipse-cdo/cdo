@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
 import org.eclipse.emf.cdo.ui.internal.branch.model.BranchPointNode;
-import org.eclipse.emf.cdo.ui.internal.branch.model.BranchTreeNode;
+import org.eclipse.emf.cdo.ui.internal.branch.model.AbstractBranchPointNode;
 
 import java.util.Collection;
 
@@ -28,7 +28,7 @@ import java.util.Collection;
 public class Branch
 {
   /** The root node of this branch. */
-  private BranchTreeNode rootNode;
+  private AbstractBranchPointNode rootNode;
 
   /** The layout strategy in this branch. */
   private BranchLayoutStrategy layoutStrategy;
@@ -45,7 +45,7 @@ public class Branch
    * @param timeStampPixelUnit
    *          the time stamp pixel unit
    */
-  public Branch(BranchTreeNode branchRootNode)
+  public Branch(AbstractBranchPointNode branchRootNode)
   {
     this.layoutStrategy = new BranchLayoutStrategy();
     setRootNode(branchRootNode);
@@ -56,9 +56,9 @@ public class Branch
    * 
    * @param branchRootNode
    *          the new root node of this branch
-   * @see #addBranch(BranchTreeNode, BranchPointNode)
+   * @see #addBranch(AbstractBranchPointNode, BranchPointNode)
    */
-  private void setRootNode(BranchTreeNode branchRootNode)
+  private void setRootNode(AbstractBranchPointNode branchRootNode)
   {
     rootNode = branchRootNode;
     layoutStrategy.setRootNode(branchRootNode);
@@ -82,9 +82,9 @@ public class Branch
    * 
    * @param node
    *          the node to add to this branch
-   * @see #addBranch(BranchTreeNode, BranchPointNode)
+   * @see #addBranch(AbstractBranchPointNode, BranchPointNode)
    */
-  private void addNode(BranchTreeNode node)
+  private void addNode(AbstractBranchPointNode node)
   {
     if (node != null)
     {
@@ -109,7 +109,7 @@ public class Branch
    * @param branchPointNode
    *          the branch point node on this (the current) branch
    */
-  private void addBranch(BranchTreeNode rootNode, BranchPointNode branchPointNode)
+  private void addBranch(AbstractBranchPointNode rootNode, BranchPointNode branchPointNode)
   {
     if (rootNode != null)
     {
@@ -129,7 +129,7 @@ public class Branch
    * 
    * @return the root node
    */
-  public BranchTreeNode getRootNode()
+  public AbstractBranchPointNode getRootNode()
   {
     return rootNode;
   }
@@ -139,7 +139,7 @@ public class Branch
    * 
    * @return the nodes
    */
-  public Collection<BranchTreeNode> getNodes()
+  public Collection<AbstractBranchPointNode> getNodes()
   {
     return layoutStrategy.nodeDeque;
   }

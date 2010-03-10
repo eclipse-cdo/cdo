@@ -4,23 +4,26 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  */
 package org.eclipse.emf.cdo.ui.internal.branch.model;
 
-import org.eclipse.emf.cdo.ui.internal.branch.figure.BranchRootFigure;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.zest.core.widgets.IContainer;
 
 /**
  * The single root node of a branch tree.
+ * 
+ * @author Andre Dietisheim
  */
-public class RootNode extends BranchTreeNode
+public class RootNode extends AbstractBranchPointNode
 {
-  public RootNode(IContainer graphModel, int style, BranchRootFigure figure)
+  public RootNode(IContainer graphModel, int style, IFigure figure, CDOBranchPoint branchPoint)
   {
-    super(graphModel, style, figure);
+    super(graphModel, style, figure, branchPoint);
   }
 }

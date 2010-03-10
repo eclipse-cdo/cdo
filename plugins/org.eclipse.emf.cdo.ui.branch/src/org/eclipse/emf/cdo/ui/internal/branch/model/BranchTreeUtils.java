@@ -27,15 +27,15 @@ public class BranchTreeUtils
    *          the internal node
    * @return the branch graph node
    * @see InternalNode
-   * @see BranchTreeNode
+   * @see AbstractBranchPointNode
    */
-  public static BranchTreeNode getBranchTreeNode(InternalNode internalNode)
+  public static AbstractBranchPointNode getBranchTreeNode(InternalNode internalNode)
   {
-    BranchTreeNode branchGraphNode = null;
+    AbstractBranchPointNode branchGraphNode = null;
     Object graphData = internalNode.getLayoutEntity().getGraphData();
-    if (graphData != null && graphData instanceof BranchTreeNode)
+    if (graphData != null && graphData instanceof AbstractBranchPointNode)
     {
-      branchGraphNode = (BranchTreeNode)graphData;
+      branchGraphNode = (AbstractBranchPointNode)graphData;
     }
     return branchGraphNode;
   }
@@ -46,10 +46,10 @@ public class BranchTreeUtils
    * @param branchGraphNode
    *          the branch graph node
    * @return the internal node
-   * @see BranchTreeNode
+   * @see AbstractBranchPointNode
    * @see InternalNode
    */
-  public static InternalNode getInternalNode(BranchTreeNode branchGraphNode)
+  public static InternalNode getInternalNode(AbstractBranchPointNode branchGraphNode)
   {
     InternalNode internalNode = null;
     Object layoutInformation = branchGraphNode.getLayoutEntity().getLayoutInformation();
@@ -69,7 +69,7 @@ public class BranchTreeUtils
    *          the source node
    * @return the centered x
    */
-  public static double getCenteredX(BranchTreeNode targetNode, BranchTreeNode sourceNode)
+  public static double getCenteredX(AbstractBranchPointNode targetNode, AbstractBranchPointNode sourceNode)
   {
     InternalNode sourceInternalNode = getInternalNode(sourceNode);
     return sourceInternalNode.getInternalX()
@@ -83,9 +83,9 @@ public class BranchTreeUtils
    *          the branch tree nodes whose internal node shall be set in (internal) size
    * @see InternalNode
    * @see InternalNode#setInternalSize(double, double)
-   * @see BranchTreeNode#getSize()
+   * @see AbstractBranchPointNode#getSize()
    */
-  public static void setInternalSize(BranchTreeNode node)
+  public static void setInternalSize(AbstractBranchPointNode node)
   {
     InternalNode internalNode = getInternalNode(node);
     internalNode.setInternalSize(node.getSize().preciseWidth(), node.getSize().preciseHeight());
@@ -105,7 +105,7 @@ public class BranchTreeUtils
    * @see InternalNode#getInternalY()
    * @see InternalNode#setInternalLocation(double, double)
    */
-  public static void translateInternalLocation(BranchTreeNode node, double deltaX, double deltaY)
+  public static void translateInternalLocation(AbstractBranchPointNode node, double deltaX, double deltaY)
   {
     InternalNode internalNode = getInternalNode(node);
     internalNode.setInternalLocation(internalNode.getInternalX() + deltaX, internalNode.getInternalY() + deltaY);
@@ -121,7 +121,7 @@ public class BranchTreeUtils
    * @param y
    *          the y
    */
-  public static void setInternalLocation(BranchTreeNode node, double x, double y)
+  public static void setInternalLocation(AbstractBranchPointNode node, double x, double y)
   {
     InternalNode internalNode = getInternalNode(node);
     internalNode.setInternalLocation(x, y);
@@ -138,7 +138,7 @@ public class BranchTreeUtils
    * @param y
    *          the y coordinate to apply
    */
-  public static void centerHorizontally(BranchTreeNode nodeToBeCentered, BranchTreeNode sourceNode, double y)
+  public static void centerHorizontally(AbstractBranchPointNode nodeToBeCentered, AbstractBranchPointNode sourceNode, double y)
   {
     double x = getCenteredX(nodeToBeCentered, sourceNode);
     InternalNode internalNode = getInternalNode(nodeToBeCentered);

@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
-import org.eclipse.emf.cdo.ui.internal.branch.model.BranchTreeNode;
+import org.eclipse.emf.cdo.ui.internal.branch.model.AbstractBranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.model.BranchTreeUtils;
 import org.eclipse.emf.cdo.ui.internal.branch.model.RootNode;
 
@@ -34,7 +34,7 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
 
   private RootNode rootNode;
 
-  private BranchTreeNode latestNode;
+  private AbstractBranchPointNode latestNode;
 
   private DisplayIndependentRectangle layoutBounds = null;
 
@@ -88,20 +88,20 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
    * @param entitiesToLayout
    *          the entities to layout
    * @see RootNode
-   * @see BranchTreeNode
+   * @see AbstractBranchPointNode
    */
   private void initRootAndLatestNode(InternalNode[] entitiesToLayout)
   {
     for (InternalNode internalNode : entitiesToLayout)
     {
-      BranchTreeNode node = BranchTreeUtils.getBranchTreeNode(internalNode);
+      AbstractBranchPointNode node = BranchTreeUtils.getBranchTreeNode(internalNode);
       if (node != null)
       {
         if (node instanceof RootNode)
         {
           rootNode = (RootNode)node.getLatter(rootNode);
         }
-        latestNode = (BranchTreeNode)node.getLatter(latestNode);
+        latestNode = (AbstractBranchPointNode)node.getLatter(latestNode);
       }
     }
   }
@@ -118,7 +118,7 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
     }
   }
 
-  private Branch buildBranch(BranchTreeNode branchRootNode)
+  private Branch buildBranch(AbstractBranchPointNode branchRootNode)
   {
     return new Branch(branchRootNode);
   }

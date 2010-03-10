@@ -4,49 +4,55 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  */
 package org.eclipse.emf.cdo.ui.internal.branch.model;
 
-import org.eclipse.emf.cdo.ui.internal.branch.figure.BranchPointFigure;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+
+import org.eclipse.draw2d.IFigure;
+import org.eclipse.zest.core.widgets.GraphNode;
+import org.eclipse.zest.core.widgets.IContainer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.runtime.Assert;
-import org.eclipse.zest.core.widgets.GraphNode;
-import org.eclipse.zest.core.widgets.IContainer;
-
-public class BranchPointNode extends BranchTreeNode
+/**
+ * @author Andre Dietisheim
+ */
+public class BranchPointNode extends AbstractBranchPointNode
 {
-
-  public BranchPointNode(IContainer graphModel, int style, BranchPointFigure figure, long timeStamp)
+  public BranchPointNode(IContainer graphModel, int style, IFigure figure, CDOBranchPoint branchPoint)
   {
-    super(graphModel, style, figure, timeStamp);
+    super(graphModel, style, figure, branchPoint);
   }
 
-  public BranchTreeNode getNextChild() {
+  public AbstractBranchPointNode getNextChild()
+  {
     List<NewBranchConnection> connectionList = getNewBranchSourceConnections();
-    if (connectionList.size() >= 1) {
+    if (connectionList.size() >= 1)
+    {
       NewBranchConnection connection = connectionList.get(0);
       GraphNode node = connection.getDestination();
-      Assert.isTrue(node instanceof BranchTreeNode);
-      return (BranchTreeNode)node;
-    } else {
-      return null;
+      return (AbstractBranchPointNode)node;
     }
+
+    return null;
   }
-  
-  
-  public List<NewBranchConnection> getNewBranchSourceConnections() {
-    ArrayList<NewBranchConnection> connectionList = new ArrayList<NewBranchConnection>();
-    for (Object targetConnection : getSourceConnections()) {
-      if (targetConnection instanceof NewBranchConnection) {
+
+  public List<NewBranchConnection> getNewBranchSourceConnections()
+  {
+    List<NewBranchConnection> connectionList = new ArrayList<NewBranchConnection>();
+    for (Object targetConnection : getSourceConnections())
+    {
+      if (targetConnection instanceof NewBranchConnection)
+      {
         connectionList.add((NewBranchConnection)targetConnection);
       }
     }
+
     return connectionList;
   }
 }

@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.ui.internal.branch.layout;
 import org.eclipse.emf.cdo.ui.internal.branch.geometry.ExtendedDisplayIndependentRectangle;
 import org.eclipse.emf.cdo.ui.internal.branch.geometry.GeometryUtils;
 import org.eclipse.emf.cdo.ui.internal.branch.model.BranchPointNode;
-import org.eclipse.emf.cdo.ui.internal.branch.model.BranchTreeNode;
+import org.eclipse.emf.cdo.ui.internal.branch.model.AbstractBranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.model.BranchTreeUtils;
 
 import org.eclipse.zest.layouts.dataStructures.DisplayIndependentDimension;
@@ -115,7 +115,7 @@ class BranchLayoutStrategy
   private SubBranchSproutingStrategy currentSproutingStrategy = SPROUT_RIGHT;
 
   /** The deque of all sibling nodes within this branch. does not contain the nodes of the sub-branches */
-  protected Deque<BranchTreeNode> nodeDeque = new Deque<BranchTreeNode>();
+  protected Deque<AbstractBranchPointNode> nodeDeque = new Deque<AbstractBranchPointNode>();
 
   /** The deque of all sub-branches that sprout to the left. */
   private Deque<Branch> leftSproutingBranches = new Deque<Branch>();
@@ -142,7 +142,7 @@ class BranchLayoutStrategy
    * @param node
    *          the node
    */
-  void setRootNode(BranchTreeNode node)
+  void setRootNode(AbstractBranchPointNode node)
   {
     nodeDeque.add(node);
     BranchTreeUtils.setInternalSize(node);
@@ -156,7 +156,7 @@ class BranchLayoutStrategy
    * @param node
    *          the node
    */
-  protected void initBranchBounds(BranchTreeNode node)
+  protected void initBranchBounds(AbstractBranchPointNode node)
   {
     InternalNode rootInternalNode = BranchTreeUtils.getInternalNode(node);
     bounds = new ExtendedDisplayIndependentRectangle(rootInternalNode.getInternalX(), rootInternalNode.getInternalY(),
@@ -170,9 +170,9 @@ class BranchLayoutStrategy
    * @param node
    *          the node
    */
-  void addNode(BranchTreeNode node)
+  void addNode(AbstractBranchPointNode node)
   {
-    BranchTreeNode previousNode = nodeDeque.peekLast();
+    AbstractBranchPointNode previousNode = nodeDeque.peekLast();
     nodeDeque.add(node);
     BranchTreeUtils.setInternalSize(node);
     setSiblingNodeLocation(node, previousNode);
@@ -185,7 +185,7 @@ class BranchLayoutStrategy
    * @param node
    *          the node
    */
-  protected void setRootNodeLocation(BranchTreeNode node)
+  protected void setRootNodeLocation(AbstractBranchPointNode node)
   {
     BranchTreeUtils.setInternalSize(node);
 
@@ -202,7 +202,7 @@ class BranchLayoutStrategy
    * @param previousNode
    *          the previous node
    */
-  protected void setSiblingNodeLocation(BranchTreeNode node, BranchTreeNode previousNode)
+  protected void setSiblingNodeLocation(AbstractBranchPointNode node, AbstractBranchPointNode previousNode)
   {
     double y = node.getTimeStamp();
     BranchTreeUtils.centerHorizontally(node, previousNode, y);
@@ -215,7 +215,7 @@ class BranchLayoutStrategy
    * @param node
    *          the internal node
    */
-  protected void setBranchBounds(BranchTreeNode node)
+  protected void setBranchBounds(AbstractBranchPointNode node)
   {
     InternalNode internalNode = BranchTreeUtils.getInternalNode(node);
 
@@ -257,9 +257,9 @@ class BranchLayoutStrategy
    * Gets all nodes within this branch.
    * 
    * @return the nodes
-   * @see BranchTreeNode
+   * @see AbstractBranchPointNode
    */
-  Collection<BranchTreeNode> getNodes()
+  Collection<AbstractBranchPointNode> getNodes()
   {
     return nodeDeque;
   }
@@ -311,7 +311,7 @@ class BranchLayoutStrategy
    */
   private void translateSiblingNodes(DisplayIndependentDimension dimension)
   {
-    for (BranchTreeNode node : getNodes())
+    for (AbstractBranchPointNode node : getNodes())
     {
       BranchTreeUtils.translateInternalLocation(node, dimension.width, dimension.height);
     }

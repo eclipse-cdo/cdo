@@ -254,10 +254,8 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     CDORevisionData originData = originRevision.data();
     CDORevisionData dirtyData = dirtyRevision.data();
 
-    EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(eClass);
-    for (int i = 0; i < features.length; i++)
+    for (final EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(eClass))
     {
-      final EStructuralFeature feature = features[i];
       if (feature.isMany())
       {
         if (originData.size(feature) > 0 && dirtyData.size(feature) == 0)

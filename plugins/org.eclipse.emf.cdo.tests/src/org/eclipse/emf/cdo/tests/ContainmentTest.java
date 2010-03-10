@@ -636,4 +636,29 @@ public class ContainmentTest extends AbstractCDOTest
     CDOUtil.prepareDynamicEPackage(schoolPackage);
     return schoolPackage;
   }
+
+  public void testRemovedContainment() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getOrCreateResource("res1");
+
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+
+    Category category = getModel1Factory().createCategory();
+    company.getCategories().add(category);
+
+    Supplier supplier = getModel1Factory().createSupplier();
+    supplier.setName("supplier" + System.currentTimeMillis());
+    resource.getContents().add(supplier);
+    company.getSuppliers().add(supplier);
+
+    // transaction.commit();
+
+    resource.getContents().addAll(resource.getContents().get(0).eContents());
+    resource.getContents().remove(0);
+
+    transaction.commit();
+  }
 }

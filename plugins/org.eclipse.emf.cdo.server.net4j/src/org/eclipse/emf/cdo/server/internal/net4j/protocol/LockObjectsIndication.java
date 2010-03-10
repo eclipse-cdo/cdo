@@ -85,4 +85,10 @@ public class LockObjectsIndication extends RefreshSessionIndication
     getRepository().getLockManager().unlock(lockType, view, objectsToBeLocked);
     throw new IllegalArgumentException("Object has been detached: " + key); //$NON-NLS-1$
   }
+
+  @Override
+  protected void respondingDone()
+  {
+    // Do nothing
+  }
 }

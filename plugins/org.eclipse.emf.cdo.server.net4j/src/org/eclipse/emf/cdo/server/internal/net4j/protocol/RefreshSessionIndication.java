@@ -100,6 +100,11 @@ public class RefreshSessionIndication extends CDOReadIndication
     writePackageUnits(out, lastCommitTimeStamp);
     writeRevisions(out);
 
+    respondingDone();
+  }
+
+  protected void respondingDone()
+  {
     InternalSession session = getSession();
     session.setPassiveUpdateEnabled(enablePassiveUpdates);
   }

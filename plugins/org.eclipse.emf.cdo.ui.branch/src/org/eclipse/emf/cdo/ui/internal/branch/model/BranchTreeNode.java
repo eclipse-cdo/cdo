@@ -8,9 +8,8 @@
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  */
-package org.eclipse.emf.cdo.ui.internal.branch.node;
+package org.eclipse.emf.cdo.ui.internal.branch.model;
 
-import org.eclipse.emf.cdo.ui.internal.branch.connection.SameBranchConnection;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.zest.core.widgets.CGraphNode;

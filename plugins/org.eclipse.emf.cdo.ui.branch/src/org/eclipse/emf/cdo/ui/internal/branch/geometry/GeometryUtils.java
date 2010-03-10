@@ -1,4 +1,4 @@
-package org.eclipse.emf.cdo.ui.internal.branch.util;
+package org.eclipse.emf.cdo.ui.internal.branch.geometry;
 
 import org.eclipse.zest.layouts.dataStructures.DisplayIndependentDimension;
 

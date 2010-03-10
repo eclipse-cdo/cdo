@@ -8,7 +8,7 @@
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  */
-package org.eclipse.emf.cdo.ui.internal.branch.node;
+package org.eclipse.emf.cdo.ui.internal.branch.figure;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Ellipse;

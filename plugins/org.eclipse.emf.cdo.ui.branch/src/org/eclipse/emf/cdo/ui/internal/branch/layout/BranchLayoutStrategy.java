@@ -11,10 +11,10 @@
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
 import org.eclipse.emf.cdo.ui.internal.branch.geometry.ExtendedDisplayIndependentRectangle;
-import org.eclipse.emf.cdo.ui.internal.branch.node.BranchPointNode;
-import org.eclipse.emf.cdo.ui.internal.branch.node.BranchTreeNode;
-import org.eclipse.emf.cdo.ui.internal.branch.util.BranchTreeUtils;
-import org.eclipse.emf.cdo.ui.internal.branch.util.GeometryUtils;
+import org.eclipse.emf.cdo.ui.internal.branch.geometry.GeometryUtils;
+import org.eclipse.emf.cdo.ui.internal.branch.model.BranchPointNode;
+import org.eclipse.emf.cdo.ui.internal.branch.model.BranchTreeNode;
+import org.eclipse.emf.cdo.ui.internal.branch.model.BranchTreeUtils;
 
 import org.eclipse.zest.layouts.dataStructures.DisplayIndependentDimension;
 import org.eclipse.zest.layouts.dataStructures.DisplayIndependentRectangle;

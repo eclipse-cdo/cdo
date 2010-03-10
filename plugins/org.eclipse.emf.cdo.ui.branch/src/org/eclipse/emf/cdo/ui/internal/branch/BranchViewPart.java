@@ -10,13 +10,13 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch;
 
-import org.eclipse.emf.cdo.ui.internal.branch.connection.NewBranchConnection;
-import org.eclipse.emf.cdo.ui.internal.branch.connection.SameBranchConnection;
+import org.eclipse.emf.cdo.ui.internal.branch.figure.BranchPointFigure;
+import org.eclipse.emf.cdo.ui.internal.branch.figure.BranchRootFigure;
 import org.eclipse.emf.cdo.ui.internal.branch.layout.BranchTreeLayoutAlgorithm;
-import org.eclipse.emf.cdo.ui.internal.branch.node.BranchPointFigure;
-import org.eclipse.emf.cdo.ui.internal.branch.node.BranchPointNode;
-import org.eclipse.emf.cdo.ui.internal.branch.node.BranchRootFigure;
-import org.eclipse.emf.cdo.ui.internal.branch.node.RootNode;
+import org.eclipse.emf.cdo.ui.internal.branch.model.BranchPointNode;
+import org.eclipse.emf.cdo.ui.internal.branch.model.NewBranchConnection;
+import org.eclipse.emf.cdo.ui.internal.branch.model.RootNode;
+import org.eclipse.emf.cdo.ui.internal.branch.model.SameBranchConnection;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;

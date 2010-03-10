@@ -15,8 +15,7 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.cdo.ui.internal.branch;version="3.0.0";x-internal:=true,
  org.eclipse.emf.cdo.ui.internal.branch.bundle;version="3.0.0";x-internal:=true,
- org.eclipse.emf.cdo.ui.internal.branch.connection;version="3.0.0";x-internal:=true,
+ org.eclipse.emf.cdo.ui.internal.branch.figure;version="3.0.0";x-internal:=true,
  org.eclipse.emf.cdo.ui.internal.branch.geometry;version="3.0.0";x-internal:=true,
  org.eclipse.emf.cdo.ui.internal.branch.layout;version="3.0.0";x-internal:=true,
- org.eclipse.emf.cdo.ui.internal.branch.node;version="3.0.0";x-internal:=true,
- org.eclipse.emf.cdo.ui.internal.branch.util;version="3.0.0";x-internal:=true
+ org.eclipse.emf.cdo.ui.internal.branch.model;version="3.0.0";x-internal:=true

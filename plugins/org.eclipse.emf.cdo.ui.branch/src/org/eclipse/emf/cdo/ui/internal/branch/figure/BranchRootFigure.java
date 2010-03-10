@@ -8,17 +8,15 @@
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  */
-package org.eclipse.emf.cdo.ui.internal.branch.node;
+package org.eclipse.emf.cdo.ui.internal.branch.figure;
 
-import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.draw2d.Figure;
 
-public class BranchPointFigure extends CommitInfoFigure
+public class BranchRootFigure extends Figure
 {
-  public BranchPointFigure(String text)
+  public BranchRootFigure()
   {
-    super(text);
-    setBackgroundColor(ColorConstants.red);
-    setForegroundColor(ColorConstants.red);
-    setSize(30, 30);
+    setSize(0, 0);
+    setVisible(false);
   }
 }

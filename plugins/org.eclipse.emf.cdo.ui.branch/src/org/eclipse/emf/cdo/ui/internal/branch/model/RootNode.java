@@ -8,15 +8,19 @@
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  */
-package org.eclipse.emf.cdo.ui.internal.branch.node;
+package org.eclipse.emf.cdo.ui.internal.branch.model;
 
-import org.eclipse.draw2d.Figure;
+import org.eclipse.emf.cdo.ui.internal.branch.figure.BranchRootFigure;
 
-public class BranchRootFigure extends Figure
+import org.eclipse.zest.core.widgets.IContainer;
+
+/**
+ * The single root node of a branch tree.
+ */
+public class RootNode extends BranchTreeNode
 {
-  public BranchRootFigure()
+  public RootNode(IContainer graphModel, int style, BranchRootFigure figure)
   {
-    setSize(0, 0);
-    setVisible(false);
+    super(graphModel, style, figure);
   }
 }

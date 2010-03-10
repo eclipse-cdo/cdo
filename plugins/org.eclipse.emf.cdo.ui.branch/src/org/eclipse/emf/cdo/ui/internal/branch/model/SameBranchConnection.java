@@ -8,18 +8,19 @@
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  */
-package org.eclipse.emf.cdo.ui.internal.branch.connection;
+package org.eclipse.emf.cdo.ui.internal.branch.model;
 
-/**
- * A connection to a {@link BranchTreeNode} in a new (sub-)branch.
- */
+
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphConnection;
 import org.eclipse.zest.core.widgets.GraphNode;
 
-public class NewBranchConnection extends GraphConnection
+/**
+ * A connection to a {@link BranchTreeNode} in the same branch.
+ */
+public class SameBranchConnection extends GraphConnection
 {
-  public NewBranchConnection(Graph graphModel, int style, GraphNode source, GraphNode destination)
+  public SameBranchConnection(Graph graphModel, int style, GraphNode source, GraphNode destination)
   {
     super(graphModel, style, source, destination);
   }

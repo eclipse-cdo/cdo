@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
-import org.eclipse.emf.cdo.ui.internal.branch.node.BranchPointNode;
-import org.eclipse.emf.cdo.ui.internal.branch.node.BranchTreeNode;
+import org.eclipse.emf.cdo.ui.internal.branch.model.BranchPointNode;
+import org.eclipse.emf.cdo.ui.internal.branch.model.BranchTreeNode;
 
 import java.util.Collection;
 

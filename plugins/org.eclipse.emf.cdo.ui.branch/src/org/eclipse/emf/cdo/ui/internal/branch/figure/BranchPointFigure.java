@@ -8,17 +8,17 @@
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  */
-package org.eclipse.emf.cdo.ui.internal.branch.node;
+package org.eclipse.emf.cdo.ui.internal.branch.figure;
 
-import org.eclipse.zest.core.widgets.IContainer;
+import org.eclipse.draw2d.ColorConstants;
 
-/**
- * The single root node of a branch tree.
- */
-public class RootNode extends BranchTreeNode
+public class BranchPointFigure extends CommitInfoFigure
 {
-  public RootNode(IContainer graphModel, int style, BranchRootFigure figure)
+  public BranchPointFigure(String text)
   {
-    super(graphModel, style, figure);
+    super(text);
+    setBackgroundColor(ColorConstants.red);
+    setForegroundColor(ColorConstants.red);
+    setSize(30, 30);
   }
 }

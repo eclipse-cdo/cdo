@@ -8,9 +8,8 @@
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  */
-package org.eclipse.emf.cdo.ui.internal.branch.util;
+package org.eclipse.emf.cdo.ui.internal.branch.model;
 
-import org.eclipse.emf.cdo.ui.internal.branch.node.BranchTreeNode;
 
 import org.eclipse.zest.layouts.dataStructures.InternalNode;
 

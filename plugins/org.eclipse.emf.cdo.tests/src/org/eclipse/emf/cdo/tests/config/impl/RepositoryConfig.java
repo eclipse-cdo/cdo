@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
-import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.internal.server.clone.CloneSynchronizer;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
@@ -164,7 +163,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     IUserManager userManager = getTestUserManager();
     if (userManager != null)
     {
-      InternalSessionManager sessionManager = new SessionManager();
+      InternalSessionManager sessionManager = (InternalSessionManager)CDOServerUtil.createSessionManager();
       sessionManager.setUserManager(userManager);
       repository.setSessionManager(sessionManager);
     }

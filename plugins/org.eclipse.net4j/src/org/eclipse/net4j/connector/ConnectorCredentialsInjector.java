@@ -23,10 +23,11 @@ import org.eclipse.net4j.util.security.SecurityUtil;
  * 
  * <pre>
  * IManagedContainer container = IPluginContainer.INSTANCE;
- * String connectorDescription = &quot;localhost:2036&quot;;
  * 
+ * String connectorDescription = &quot;localhost:2036&quot;;
  * String userID = &quot;name&quot;;
  * String password = &quot;secret&quot;;
+ * 
  * IPasswordCredentialsProvider credentialsProvider = new PasswordCredentialsProvider(userID, password);
  * 
  * container.addPostProcessor(new ConnectorCredentialsInjector(connectorDescription, credentialsProvider));

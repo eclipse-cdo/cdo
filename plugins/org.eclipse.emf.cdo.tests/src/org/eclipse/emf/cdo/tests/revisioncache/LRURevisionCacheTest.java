@@ -24,6 +24,7 @@ public class LRURevisionCacheTest extends AbstractCDORevisionCacheTest
 
   public static final int DEFAULT_CAPACITY_REVISED = 1000;
 
+  @SuppressWarnings("deprecation")
   @Override
   protected InternalCDORevisionCache createRevisionCache(CDOSession session) throws Exception
   {

@@ -34,7 +34,10 @@ public final class CDORevisionCacheUtil
   /**
    * Creates and returns a new fixed size cache with two separate LRU (least-recently used) eviction policies for both
    * current revision and revised revisions.
+   * 
+   * @deprecated Use createBranchRevisionCache() instead.
    */
+  @Deprecated
   public static CDORevisionCache createLRUCache(int capacityCurrent, int capacityRevised)
   {
     LRURevisionCache cache = new LRURevisionCache();
@@ -45,7 +48,10 @@ public final class CDORevisionCacheUtil
 
   /**
    * Creates and returns a new memory sensitive cache.
+   * 
+   * @deprecated Use createBranchRevisionCache() instead.
    */
+  @Deprecated
   public static CDORevisionCache createMEMCache()
   {
     return new MEMRevisionCache();

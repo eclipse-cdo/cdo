@@ -27,6 +27,7 @@ public class MEMRevisionCacheTest extends AbstractCDORevisionCacheTest
     // MemRevisionCache does always return null when removing revisions
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   protected InternalCDORevisionCache createRevisionCache(CDOSession session) throws Exception
   {

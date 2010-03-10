@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
-import org.eclipse.emf.cdo.ui.internal.branch.model.AbstractBranchPointNode;
-import org.eclipse.emf.cdo.ui.internal.branch.model.BranchPointNode;
+import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
+import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNode;
 
 import java.util.Collection;
 
@@ -29,20 +29,18 @@ public class Branch
 {
   private AbstractBranchPointNode baselineNode;
 
-  private BranchLayoutStrategy layoutStrategy;
+  private BranchLayoutStrategy layoutStrategy = new BranchLayoutStrategy();
 
-  public Branch(AbstractBranchPointNode branchRootNode)
+  public Branch(AbstractBranchPointNode baselineNode)
   {
-    layoutStrategy = new BranchLayoutStrategy();
-    baselineNode = branchRootNode;
-    layoutStrategy.setRootNode(branchRootNode);
+    this.baselineNode = baselineNode;
+    layoutStrategy.setRootNode(baselineNode);
+    addNode(baselineNode.getNextSibling());
 
-    addNode(branchRootNode.getNextSibling());
-
-    if (branchRootNode instanceof BranchPointNode)
+    if (baselineNode instanceof BranchPointNode)
     {
       // add a branch to this node
-      BranchPointNode branchpointNode = (BranchPointNode)branchRootNode;
+      BranchPointNode branchpointNode = (BranchPointNode)baselineNode;
       addBranch(branchpointNode.getNextChild(), branchpointNode);
     }
   }

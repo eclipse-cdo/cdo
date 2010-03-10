@@ -8,7 +8,7 @@
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  */
-package org.eclipse.emf.cdo.ui.internal.branch.model;
+package org.eclipse.emf.cdo.ui.internal.branch.item;
 
 /**
  * A connection to a {@link BranchTreeNode} in a new (sub-)branch.

@@ -10,9 +10,9 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
-import org.eclipse.emf.cdo.ui.internal.branch.model.AbstractBranchPointNode;
-import org.eclipse.emf.cdo.ui.internal.branch.model.BranchTreeUtils;
-import org.eclipse.emf.cdo.ui.internal.branch.model.RootNode;
+import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
+import org.eclipse.emf.cdo.ui.internal.branch.item.BranchTreeUtils;
+import org.eclipse.emf.cdo.ui.internal.branch.item.RootNode;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.zest.layouts.LayoutStyles;

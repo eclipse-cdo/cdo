@@ -12,9 +12,9 @@ package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
 import org.eclipse.emf.cdo.ui.internal.branch.geometry.ExtendedDisplayIndependentRectangle;
 import org.eclipse.emf.cdo.ui.internal.branch.geometry.GeometryUtils;
-import org.eclipse.emf.cdo.ui.internal.branch.model.BranchPointNode;
-import org.eclipse.emf.cdo.ui.internal.branch.model.AbstractBranchPointNode;
-import org.eclipse.emf.cdo.ui.internal.branch.model.BranchTreeUtils;
+import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
+import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNode;
+import org.eclipse.emf.cdo.ui.internal.branch.item.BranchTreeUtils;
 
 import org.eclipse.zest.layouts.dataStructures.DisplayIndependentDimension;
 import org.eclipse.zest.layouts.dataStructures.DisplayIndependentRectangle;
@@ -142,7 +142,7 @@ class BranchLayoutStrategy
    * @param node
    *          the node
    */
-  void setRootNode(AbstractBranchPointNode node)
+  public void setRootNode(AbstractBranchPointNode node)
   {
     nodeDeque.add(node);
     BranchTreeUtils.setInternalSize(node);

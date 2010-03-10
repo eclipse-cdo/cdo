@@ -924,7 +924,18 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
 
     public void visit(CDOUnsetFeatureDelta delta)
     {
-      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+      if (delta.getFeature().isUnsettable())
+      {
+        throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+      }
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Delta Unsetting"); //$NON-NLS-1$
+      }
+
+      clearList(accessor, id, oldVersion, newVersion);
+      lastIndex = -1;
     }
 
     public void visit(CDOListFeatureDelta delta)

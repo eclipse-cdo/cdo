@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -212,20 +213,20 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     EStructuralFeature feature = delta.getFeature();
     if (feature.isMany())
     {
-      CDOListFeatureDeltaImpl lookupDelta = (CDOListFeatureDeltaImpl)featureDeltas.get(feature);
-      if (lookupDelta == null)
+      CDOListFeatureDeltaImpl listDelta = (CDOListFeatureDeltaImpl)featureDeltas.get(feature);
+      if (listDelta == null)
       {
-        lookupDelta = new CDOListFeatureDeltaImpl(feature);
-        featureDeltas.put(lookupDelta.getFeature(), lookupDelta);
+        listDelta = new CDOListFeatureDeltaImpl(feature);
+        featureDeltas.put(listDelta.getFeature(), listDelta);
       }
 
       // Remove all previous changes
-      if (delta instanceof CDOClearFeatureDelta)
+      if (delta instanceof CDOClearFeatureDelta || delta instanceof CDOUnsetFeatureDelta)
       {
-        lookupDelta.getListChanges().clear();
+        listDelta.getListChanges().clear();
       }
 
-      lookupDelta.add(delta);
+      listDelta.add(delta);
     }
     else
     {

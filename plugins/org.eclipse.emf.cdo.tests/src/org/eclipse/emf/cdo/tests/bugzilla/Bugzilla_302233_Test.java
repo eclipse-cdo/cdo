@@ -7,16 +7,19 @@
  *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
+ *    Eike Stepper - maintenance
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
@@ -28,44 +31,82 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  */
 public class Bugzilla_302233_Test extends AbstractCDOTest
 {
-  public void testBugzilla_302233() throws Exception
+  public void testUnset() throws Exception
   {
+    Order order = getModel1Factory().createOrder();
+    EStructuralFeature feature = getModel1Package().getOrder_OrderDetails();
+    assertEquals(false, order.eIsSet(feature));
+
+    order.eUnset(feature);
+
+    for (int i = 0; i < 10; i++)
     {
-      Order order = getModel1Factory().createOrder();
-      EStructuralFeature feature = getModel1Package().getOrder_OrderDetails();
-
-      assertEquals(false, order.eIsSet(feature));
-
-      order.eUnset(feature);
-
-      for (int i = 0; i < 10; i++)
-      {
-        OrderDetail orderDetail = getModel1Factory().createOrderDetail();
-        order.getOrderDetails().add(orderDetail);
-      }
-
-      order.eUnset(feature);
-
-      CDOSession session = openSession();
-      session.getPackageRegistry().putEPackage(getModel1Package());
-
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
-      resource.getContents().add(order);
-
-      for (int i = 0; i < 10; i++)
-      {
-        OrderDetail orderDetail = getModel1Factory().createOrderDetail();
-        order.getOrderDetails().add(orderDetail);
-      }
-
-      transaction.commit();
-
-      order.eUnset(feature);
-
-      assertEquals(false, order.eIsSet(getModel1Package().getOrder_OrderDetails()));
-
-      session.close();
+      OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+      order.getOrderDetails().add(orderDetail);
     }
+
+    order.eUnset(feature);
+
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(getModel1Package());
+
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+    resource.getContents().add(order);
+
+    for (int i = 0; i < 10; i++)
+    {
+      OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+      order.getOrderDetails().add(orderDetail);
+    }
+
+    transaction.commit();
+
+    order.eUnset(feature);
+    assertEquals(false, order.eIsSet(getModel1Package().getOrder_OrderDetails()));
+
+    session.close();
+  }
+
+  public void testUnset2() throws Exception
+  {
+    EReference feature = getModel1Package().getCompany_Categories();
+    Company company = getModel1Factory().createCompany();
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+    resource.getContents().add(company);
+    transaction.commit();
+
+    company.getCategories().add(getModel1Factory().createCategory());
+    company.getCategories().add(getModel1Factory().createCategory());
+    company.getCategories().add(getModel1Factory().createCategory());
+    company.getCategories().add(getModel1Factory().createCategory());
+
+    company.eUnset(feature);
+    assertEquals(false, company.eIsSet(feature));
+
+    transaction.commit();
+    session.close();
+  }
+
+  public void testRemove() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+    resource.getContents().add(getModel1Factory().createCompany());
+    resource.getContents().add(getModel1Factory().createCompany());
+    resource.getContents().add(getModel1Factory().createCompany());
+    resource.getContents().add(getModel1Factory().createCompany());
+
+    resource.getContents().remove(3);
+    resource.getContents().remove(2);
+    resource.getContents().remove(1);
+    resource.getContents().remove(0);
+
+    transaction.commit();
+    session.close();
   }
 }

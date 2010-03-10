@@ -540,7 +540,12 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
 
       public void visit(CDOUnsetFeatureDelta delta)
       {
-        throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+        if (delta.getFeature().isUnsettable())
+        {
+          throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+        }
+
+        clearList(accessor, id);
       }
 
       public void visit(CDOListFeatureDelta delta)

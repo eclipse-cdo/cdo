@@ -753,8 +753,21 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     public void visit(CDOUnsetFeatureDelta delta)
     {
-      // never called
-      Assert.isTrue(false);
+      if (delta.getFeature().isUnsettable())
+      {
+        Assert.isTrue(false);
+      }
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("  - unset list");
+      }
+
+      // set the clear-flag
+      clearFirst = true;
+
+      // and also clear all manipulation items
+      manipulations.clear();
     }
 
     public void visit(CDOListFeatureDelta delta)

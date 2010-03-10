@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.common.commit;
 
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
@@ -24,6 +25,11 @@ public interface CDOChangeSetData
 {
   public boolean isEmpty();
 
+  /**
+   * Returns a collection of keys denoting which revisions have been added in the context of a commit operation.
+   * Depending on various conditions like change subscriptions particular elements can also be full {@link CDORevision
+   * revisions}.
+   */
   public List<CDOIDAndVersion> getNewObjects();
 
   /**

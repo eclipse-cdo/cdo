@@ -10,11 +10,11 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchTreeUtils;
 import org.eclipse.emf.cdo.ui.internal.branch.item.RootNode;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.AbstractLayoutAlgorithm;
 import org.eclipse.zest.layouts.dataStructures.DisplayIndependentRectangle;
@@ -54,21 +54,25 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
     this(LayoutStyles.NONE);
   }
 
+  @Override
   public void setLayoutArea(double x, double y, double width, double height)
   {
     throw new RuntimeException();
   }
 
+  @Override
   protected int getCurrentLayoutStep()
   {
     return 0;
   }
 
+  @Override
   protected int getTotalNumberOfLayoutSteps()
   {
     return LAYOUT_STEPS;
   }
 
+  @Override
   protected void preLayoutAlgorithm(InternalNode[] entitiesToLayout, InternalRelationship[] relationshipsToConsider,
       double x, double y, double width, double height)
   {
@@ -77,8 +81,6 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
     if (entitiesToLayout.length > 0)
     {
       initRootAndLatestNode(entitiesToLayout);
-      Assert.isTrue(rootNode != null, "root node was not found");
-      Assert.isTrue(latestNode != null, "latest node was not found");
     }
   }
 
@@ -101,15 +103,15 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
         {
           rootNode = (RootNode)node.getLatter(rootNode);
         }
-        latestNode = (AbstractBranchPointNode)node.getLatter(latestNode);
+        latestNode = node.getLatter(latestNode);
       }
     }
   }
 
+  @Override
   protected void applyLayoutInternal(InternalNode[] entitiesToLayout, InternalRelationship[] relationshipsToConsider,
       double boundsX, double boundsY, double boundsWidth, double boundsHeight)
   {
-
     if (entitiesToLayout.length > 0)
     {
       buildBranch(rootNode);
@@ -120,15 +122,18 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
 
   private BranchView buildBranch(AbstractBranchPointNode branchRootNode)
   {
-    return new BranchView(branchRootNode);
+    CDOBranch branch = branchRootNode.getBranch();
+    return new BranchView(branch, branchRootNode, new BranchLayoutStrategy());
   }
 
+  @Override
   protected void postLayoutAlgorithm(InternalNode[] entitiesToLayout, InternalRelationship[] relationshipsToConsider)
   {
     updateLayoutLocations(entitiesToLayout);
     fireProgressEvent(LAYOUT_STEPS, LAYOUT_STEPS);
   }
 
+  @Override
   protected boolean isValidConfiguration(boolean asynchronous, boolean continueous)
   {
     if (asynchronous && continueous)

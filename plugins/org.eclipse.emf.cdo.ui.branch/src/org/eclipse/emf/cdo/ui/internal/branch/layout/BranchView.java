@@ -15,11 +15,13 @@ import org.eclipse.emf.cdo.ui.internal.branch.geometry.ExtendedDisplayIndependen
 import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNode;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
- * A Branch is a structure that holds the root node of a branch. Its main purpose is to climb through the branch tree
- * and call the layout strategy on all nodes in an appropriate manner.
+ * A Branch is a structure that holds the baseline node of a branch. Its main purpose is to climb through the branch
+ * tree and call the layout strategy on all nodes in an appropriate manner.
  * <p>
  * The strategy is to first lay out all (sibling) nodes in the order of their time stamp. Sub-branches are skipped. In a
  * second step all branches are positioned while beginning with the latest one (in terms of time stamp).
@@ -33,8 +35,6 @@ public class BranchView
 
   private AbstractBranchPointNode baselineNode;
 
-  private BranchLayoutStrategy layoutStrategy = new BranchLayoutStrategy();
-
   protected Deque<AbstractBranchPointNode> nodes = new Deque<AbstractBranchPointNode>();
 
   private Deque<BranchView> leftSproutingBranchViews = new Deque<BranchView>();
@@ -43,20 +43,22 @@ public class BranchView
 
   private ExtendedDisplayIndependentRectangle bounds;
 
-  private ExtendedDisplayIndependentRectangle siblingBounds;
+  private BranchLayoutStrategy layoutStrategy;
 
-  public BranchView(CDOBranch branch, AbstractBranchPointNode baselineNode)
+  public BranchView(CDOBranch branch, AbstractBranchPointNode baselineNode, BranchLayoutStrategy layoutStrategy)
   {
     this.branch = branch;
     this.baselineNode = baselineNode;
-    layoutStrategy.setRootNode(baselineNode);
+    this.layoutStrategy = layoutStrategy;
+    nodes.add(baselineNode);
+    layoutStrategy.layoutBaselineNode(this, baselineNode);
     addNode(baselineNode.getNextSibling());
 
     if (baselineNode instanceof BranchPointNode)
     {
       // add a branch to this node
       BranchPointNode branchpointNode = (BranchPointNode)baselineNode;
-      addBranchView(branchpointNode.getNextChild(), branchpointNode);
+      addBranchView(branch, branchpointNode.getNextChild(), branchpointNode);
     }
   }
 
@@ -103,7 +105,8 @@ public class BranchView
   {
     if (node != null)
     {
-      layoutStrategy.addNode(node);
+      AbstractBranchPointNode previousNode = nodes.peekLast();
+      layoutStrategy.layoutNode(this, node, previousNode);
       // recursively navigate to sibling
       addNode(node.getNextSibling());
 
@@ -111,20 +114,71 @@ public class BranchView
       {
         // add a branch to this node
         BranchPointNode branchpointNode = (BranchPointNode)node;
-        addBranchView(branchpointNode.getNextChild(), branchpointNode);
+        addBranchView(branch, branchpointNode.getNextChild(), branchpointNode);
       }
     }
   }
 
   /**
-   * Adds a sub-branch to the given branch point node with the given root node.
+   * Adds a sub-branch to the given branch point node with the given baseline node.
    */
-  private void addBranchView(CDOBranch branch, AbstractBranchPointNode rootNode, BranchPointNode branchPointNode)
+  private void addBranchView(CDOBranch branch, AbstractBranchPointNode baselineNode, BranchPointNode branchPointNode)
   {
-    if (rootNode != null)
+    if (baselineNode != null)
     {
-      BranchView subBranch = new BranchView(branch, rootNode);
-      layoutStrategy.layoutBranch(subBranch, branchPointNode);
+      BranchView subBranch = new BranchView(branch, baselineNode, layoutStrategy);
+      layoutStrategy.layoutBranch(this, subBranch, branchPointNode);
     }
   }
+
+  /**
+   * Returns the bounds of this branch view. The bounds returned contain all sub-branches (and their nodes)
+   * 
+   * @return the bounds
+   * @see #getNudeBranchBounds()
+   */
+  public ExtendedDisplayIndependentRectangle getBounds()
+  {
+    return bounds;
+  }
+
+  /**
+   * Sets the bounds of this branch view. The bounds must contain this branch and all its sub branch views (and all
+   * their nodes)
+   * 
+   * @param bounds
+   *          the new bounds
+   */
+  public void setBounds(ExtendedDisplayIndependentRectangle bounds)
+  {
+    this.bounds = bounds;
+  }
+
+  public void addLeftSproutingBranch(BranchView branchView)
+  {
+    leftSproutingBranchViews.addFirst(branchView);
+  }
+
+  public void addRightSproutingBranch(BranchView branchView)
+  {
+    rightSproutingBranchViews.addFirst(branchView);
+  }
+
+  public BranchView getLatestRightSubBranchView()
+  {
+    return rightSproutingBranchViews.peekFirst();
+  }
+
+  public BranchView getLatestLeftSubBranchView()
+  {
+    return leftSproutingBranchViews.peekFirst();
+  }
+
+  public Collection<BranchView> getSubBranches()
+  {
+    List<BranchView> branchList = new ArrayList<BranchView>(leftSproutingBranchViews);
+    branchList.addAll(rightSproutingBranchViews);
+    return branchList;
+  }
+
 }

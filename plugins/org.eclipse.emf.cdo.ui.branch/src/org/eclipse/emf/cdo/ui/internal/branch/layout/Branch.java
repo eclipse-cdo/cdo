@@ -4,14 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  */
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
-import org.eclipse.emf.cdo.ui.internal.branch.model.BranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.model.AbstractBranchPointNode;
+import org.eclipse.emf.cdo.ui.internal.branch.model.BranchPointNode;
 
 import java.util.Collection;
 
@@ -27,40 +27,14 @@ import java.util.Collection;
  */
 public class Branch
 {
-  /** The root node of this branch. */
-  private AbstractBranchPointNode rootNode;
+  private AbstractBranchPointNode baselineNode;
 
-  /** The layout strategy in this branch. */
   private BranchLayoutStrategy layoutStrategy;
 
-  /**
-   * Instantiates a new branch with the given root node.
-   * 
-   * @param branchRootNode
-   *          the branch root node
-   * @param branchPointNode
-   *          the branch point node
-   * @param container
-   *          the container
-   * @param timeStampPixelUnit
-   *          the time stamp pixel unit
-   */
   public Branch(AbstractBranchPointNode branchRootNode)
   {
-    this.layoutStrategy = new BranchLayoutStrategy();
-    setRootNode(branchRootNode);
-  }
-
-  /**
-   * Sets the root node of this branch and add all (sibling) nodes on this branch.
-   * 
-   * @param branchRootNode
-   *          the new root node of this branch
-   * @see #addBranch(AbstractBranchPointNode, BranchPointNode)
-   */
-  private void setRootNode(AbstractBranchPointNode branchRootNode)
-  {
-    rootNode = branchRootNode;
+    layoutStrategy = new BranchLayoutStrategy();
+    baselineNode = branchRootNode;
     layoutStrategy.setRootNode(branchRootNode);
 
     addNode(branchRootNode.getNextSibling());
@@ -73,6 +47,21 @@ public class Branch
     }
   }
 
+  public AbstractBranchPointNode getBaselineNode()
+  {
+    return baselineNode;
+  }
+
+  public Collection<AbstractBranchPointNode> getNodes()
+  {
+    return layoutStrategy.nodeDeque;
+  }
+
+  public BranchLayoutStrategy getLayoutStrategy()
+  {
+    return layoutStrategy;
+  }
+
   /**
    * Adds the given node to this branch. Climbs recursively up to all (sibling) nodes on the same branch. When it gets
    * back from recursion it builds and attaches branches to those nodes.
@@ -80,8 +69,6 @@ public class Branch
    * The strategy is to add all sibling nodes in the order of their time stamp and to add the branches in the reverse
    * (in terms of time stamp) order
    * 
-   * @param node
-   *          the node to add to this branch
    * @see #addBranch(AbstractBranchPointNode, BranchPointNode)
    */
   private void addNode(AbstractBranchPointNode node)
@@ -103,54 +90,19 @@ public class Branch
 
   /**
    * Adds a sub-branch to the given branch point node with the given root node.
-   * 
-   * @param rootNode
-   *          the root node of the new branch 
-   * @param branchPointNode
-   *          the branch point node on this (the current) branch
    */
   private void addBranch(AbstractBranchPointNode rootNode, BranchPointNode branchPointNode)
   {
     if (rootNode != null)
     {
       Branch subBranch = new Branch(rootNode);
-//      System.err.println("-----------------------------");
-//      System.err.println("branch point node: " + branchPointNode.getTimeStamp());
-//      System.err.println("subbranch: " + subBranch.getRootNode().getTimeStamp());
-//      System.err.println("subbranch.x = " + subBranch.getLayoutStrategy().getBounds().x);
-//      System.err.println("subbranch.width = " + subBranch.getLayoutStrategy().getBounds().width);
-//      System.err.println("-----------------------------");
+      // System.err.println("-----------------------------");
+      // System.err.println("branch point node: " + branchPointNode.getTimeStamp());
+      // System.err.println("subbranch: " + subBranch.getRootNode().getTimeStamp());
+      // System.err.println("subbranch.x = " + subBranch.getLayoutStrategy().getBounds().x);
+      // System.err.println("subbranch.width = " + subBranch.getLayoutStrategy().getBounds().width);
+      // System.err.println("-----------------------------");
       layoutStrategy.addBranch(subBranch, branchPointNode);
     }
-  }
-
-  /**
-   * Returns the root node of this branch.
-   * 
-   * @return the root node
-   */
-  public AbstractBranchPointNode getRootNode()
-  {
-    return rootNode;
-  }
-
-  /**
-   * Returns all nodes of this branch.
-   * 
-   * @return the nodes
-   */
-  public Collection<AbstractBranchPointNode> getNodes()
-  {
-    return layoutStrategy.nodeDeque;
-  }
-
-  /**
-   * Returns the layout strategy used in this branch.
-   * 
-   * @return the layout strategy
-   */
-  public BranchLayoutStrategy getLayoutStrategy()
-  {
-    return layoutStrategy;
   }
 }

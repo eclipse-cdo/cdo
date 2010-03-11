@@ -210,8 +210,10 @@ public class OfflineTest extends AbstractCDOTest
     IEvent[] events = listener.getEvents();
     assertEquals(1, events.length);
 
-    // checkRevision(company, clone.getRevisionManager().getCache().getAllRevisions());
+    // Check if revision arrived in clone cache
+    checkRevision(company, clone.getRevisionManager().getCache().getAllRevisions());
 
+    // Check if revision arrived in clone store
     InternalStore store = clone.getStore();
     if (store instanceof IMEMStore)
     {

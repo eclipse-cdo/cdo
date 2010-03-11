@@ -29,22 +29,10 @@ import org.eclipse.zest.layouts.dataStructures.InternalNode;
  * 
  * @author Andre Dietisheim
  */
-public class BranchLayoutStrategy
+public class BranchViewLayoutStrategy
 {
   private final SubBranchSproutingStrategy sproutRight = new SubBranchSproutingStrategy()
   {
-    @Override
-    protected void addSubBranchReference(BranchView branchView, BranchView subBranchView)
-    {
-      branchView.addRightSproutingBranch(subBranchView);
-    }
-
-    @Override
-    protected BranchView getLatestSubBranch(BranchView branchView)
-    {
-      return branchView.getLatestRightSubBranchView();
-    }
-
     @Override
     protected DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
         BranchPointNode branchPointNode)
@@ -71,18 +59,6 @@ public class BranchLayoutStrategy
   private final SubBranchSproutingStrategy sproutLeft = new SubBranchSproutingStrategy()
   {
     @Override
-    protected void addSubBranchReference(BranchView branchView, BranchView subBranchView)
-    {
-      branchView.addLeftSproutingBranch(subBranchView);
-    }
-
-    @Override
-    protected BranchView getLatestSubBranch(BranchView branchView)
-    {
-      return branchView.getLatestLeftSubBranchView();
-    }
-
-    @Override
     protected DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
         BranchPointNode branchPointNode)
     {
@@ -108,7 +84,7 @@ public class BranchLayoutStrategy
 
   private SubBranchSproutingStrategy currentSproutingStrategy = sproutRight;
 
-  protected BranchLayoutStrategy()
+  protected BranchViewLayoutStrategy()
   {
   }
 
@@ -219,7 +195,7 @@ public class BranchLayoutStrategy
    */
   private void translateSubBranches(BranchView branchView, DisplayIndependentDimension dimension)
   {
-    for (BranchView branch : branchView.getSubBranches())
+    for (BranchView branch : branchView.getSubBranchViews())
     {
       branch.getLayoutStrategy().translate(branchView, dimension);
     }
@@ -242,25 +218,6 @@ public class BranchLayoutStrategy
   protected abstract class SubBranchSproutingStrategy
   {
     /**
-     * Adds the given sub branch view reference to the given branch view.
-     * 
-     * @param branchView
-     *          the branch view to add the sub branch to
-     * @param subBranchView
-     *          the sub branch view to add
-     */
-    protected abstract void addSubBranchReference(BranchView branchView, BranchView subBranchView);
-
-    /**
-     * Gets the latest sub branch of the given sub branch view.
-     * 
-     * @param branchView
-     *          the branch view to retrieve the latest sub branch from
-     * @return the latest sub branch
-     */
-    protected abstract BranchView getLatestSubBranch(BranchView branchView);
-
-    /**
      * Sets the location of the given sub branch in the current branch. Branches are created and located with their
      * baseline node at x == 0, y == 0. The bounds of the sub branch (and its sub sub-branches) are from negative
      * x-coordinates up to positive x-coordinates. The purpose of this method is to translate the whole sub branch to
@@ -276,7 +233,7 @@ public class BranchLayoutStrategy
     {
       // translate branch off the branchPointNode (to the right or to the left)
       DisplayIndependentDimension translation = getTranslationToBranchPoint(subBranchView, branchPointNode);
-      BranchView latterBranch = currentSproutingStrategy.getLatestSubBranch(branchView);
+      BranchView latterBranch = branchView.getSecondToLastSubBranchView();
       if (latterBranch != null && !subBranchView.getBounds().bottomEndsBefore(latterBranch.getBounds()))
       {
         // collides vertically with latter sub-branch -> additionally translate off latter branch (to the right or to
@@ -284,7 +241,7 @@ public class BranchLayoutStrategy
         translation = GeometryUtils.union(translation, getTranslationToLatterBranch(subBranchView, latterBranch));
       }
       translate(subBranchView, translation);
-      addSubBranchReference(branchView, subBranchView);
+      branchView.addSubBranchView(subBranchView);
     }
 
     /**
@@ -314,8 +271,6 @@ public class BranchLayoutStrategy
 
     /**
      * Switches the current sprouting strategy to the next strategy to apply after the current one .
-     * 
-     * @return the sub branch sprouting strategy
      */
     protected void switchSproutingStrategy()
     {

@@ -123,7 +123,7 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
   private BranchView buildBranch(AbstractBranchPointNode branchRootNode)
   {
     CDOBranch branch = branchRootNode.getBranch();
-    return new BranchView(branch, branchRootNode, new BranchLayoutStrategy());
+    return new BranchView(branch, branchRootNode, new BranchViewLayoutStrategy());
   }
 
   @Override

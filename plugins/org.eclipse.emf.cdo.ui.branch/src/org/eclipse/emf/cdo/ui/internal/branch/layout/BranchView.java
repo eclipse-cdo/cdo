@@ -15,9 +15,7 @@ import org.eclipse.emf.cdo.ui.internal.branch.geometry.ExtendedDisplayIndependen
 import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNode;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * A Branch is a structure that holds the baseline node of a branch. Its main purpose is to climb through the branch
@@ -27,7 +25,7 @@ import java.util.List;
  * second step all branches are positioned while beginning with the latest one (in terms of time stamp).
  * 
  * @author Andre Dietisheim
- * @see BranchLayoutStrategy
+ * @see BranchViewLayoutStrategy
  */
 public class BranchView
 {
@@ -37,15 +35,13 @@ public class BranchView
 
   protected Deque<AbstractBranchPointNode> nodes = new Deque<AbstractBranchPointNode>();
 
-  private Deque<BranchView> leftSproutingBranchViews = new Deque<BranchView>();
-
-  private Deque<BranchView> rightSproutingBranchViews = new Deque<BranchView>();
+  private Deque<BranchView> subBranchViews = new Deque<BranchView>();
 
   private ExtendedDisplayIndependentRectangle bounds;
 
-  private BranchLayoutStrategy layoutStrategy;
+  private BranchViewLayoutStrategy layoutStrategy;
 
-  public BranchView(CDOBranch branch, AbstractBranchPointNode baselineNode, BranchLayoutStrategy layoutStrategy)
+  public BranchView(CDOBranch branch, AbstractBranchPointNode baselineNode, BranchViewLayoutStrategy layoutStrategy)
   {
     this.branch = branch;
     this.baselineNode = baselineNode;
@@ -77,17 +73,7 @@ public class BranchView
     return nodes;
   }
 
-  public Deque<BranchView> getLeftSproutingBranchViews()
-  {
-    return leftSproutingBranchViews;
-  }
-
-  public Deque<BranchView> getRightSproutingBranchViews()
-  {
-    return rightSproutingBranchViews;
-  }
-
-  public BranchLayoutStrategy getLayoutStrategy()
+  public BranchViewLayoutStrategy getLayoutStrategy()
   {
     return layoutStrategy;
   }
@@ -135,7 +121,6 @@ public class BranchView
    * Returns the bounds of this branch view. The bounds returned contain all sub-branches (and their nodes)
    * 
    * @return the bounds
-   * @see #getNudeBranchBounds()
    */
   public ExtendedDisplayIndependentRectangle getBounds()
   {
@@ -154,31 +139,39 @@ public class BranchView
     this.bounds = bounds;
   }
 
-  public void addLeftSproutingBranch(BranchView branchView)
+  /**
+   * Adds the given sub branch view to this branch view.
+   * 
+   * @param subBranchView
+   *          the sub branch view to add
+   */
+  public void addSubBranchView(BranchView subBranchView)
   {
-    leftSproutingBranchViews.addFirst(branchView);
+    subBranchViews.add(subBranchView);
   }
 
-  public void addRightSproutingBranch(BranchView branchView)
+  /**
+   * Returns not the last, but the one before the last sub branch view. If none is present, <tt>null<tt> is returned.
+   * 
+   * @return the second to last sub branch view or <tt>null<tt>
+   */
+  public BranchView getSecondToLastSubBranchView()
   {
-    rightSproutingBranchViews.addFirst(branchView);
+    if (subBranchViews.isEmpty() || subBranchViews.size() < 2)
+    {
+      return null;
+    }
+
+    return subBranchViews.get(subBranchViews.size() - 1);
   }
 
-  public BranchView getLatestRightSubBranchView()
+  /**
+   * Returns all sub branch views present in this branch view.
+   * 
+   * @return all sub branch views in this branch view
+   */
+  public Collection<BranchView> getSubBranchViews()
   {
-    return rightSproutingBranchViews.peekFirst();
+    return subBranchViews;
   }
-
-  public BranchView getLatestLeftSubBranchView()
-  {
-    return leftSproutingBranchViews.peekFirst();
-  }
-
-  public Collection<BranchView> getSubBranches()
-  {
-    List<BranchView> branchList = new ArrayList<BranchView>(leftSproutingBranchViews);
-    branchList.addAll(rightSproutingBranchViews);
-    return branchList;
-  }
-
 }

@@ -29,9 +29,9 @@ import java.util.List;
  */
 public class BranchPointNode extends AbstractBranchPointNode
 {
-  public BranchPointNode(IContainer graphModel, int style, IFigure figure, CDOBranchPoint branchPoint)
+  public BranchPointNode(CDOBranchPoint branchPoint, IContainer graphModel, int style, IFigure figure)
   {
-    super(graphModel, style, figure, branchPoint);
+    super(branchPoint, graphModel, style, figure);
   }
 
   public AbstractBranchPointNode getNextChild()

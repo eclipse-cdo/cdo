@@ -32,7 +32,7 @@ public abstract class AbstractBranchPointNode extends CGraphNode implements CDOB
 {
   private CDOBranchPoint branchPoint;
 
-  public AbstractBranchPointNode(IContainer graphModel, int style, IFigure figure, CDOBranchPoint branchPoint)
+  public AbstractBranchPointNode(CDOBranchPoint branchPoint, IContainer graphModel, int style, IFigure figure)
   {
     super(graphModel, style, figure);
     this.branchPoint = branchPoint;

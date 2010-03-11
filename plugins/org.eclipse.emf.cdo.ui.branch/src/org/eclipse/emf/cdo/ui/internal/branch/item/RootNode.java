@@ -22,8 +22,8 @@ import org.eclipse.zest.core.widgets.IContainer;
  */
 public class RootNode extends AbstractBranchPointNode
 {
-  public RootNode(IContainer graphModel, int style, IFigure figure, CDOBranchPoint branchPoint)
+  public RootNode(CDOBranchPoint branchPoint, IContainer graphModel, int style, IFigure figure)
   {
-    super(graphModel, style, figure, branchPoint);
+    super(branchPoint, graphModel, style, figure);
   }
 }

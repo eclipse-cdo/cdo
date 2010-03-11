@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchTreeUtils;
 import org.eclipse.emf.cdo.ui.internal.branch.item.RootNode;
@@ -55,7 +54,6 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
   @Override
   public void setLayoutArea(double x, double y, double width, double height)
   {
-    throw new RuntimeException();
   }
 
   @Override
@@ -119,8 +117,7 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
 
   private BranchView buildBranch(AbstractBranchPointNode branchRootNode)
   {
-    CDOBranch branch = branchRootNode.getBranch();
-    return new BranchView(branch, branchRootNode, new BranchViewLayoutStrategy());
+    return new BranchView(branchRootNode, VerticallyDistributingLayoutStrategy.SPROUT_RIGHT);
   }
 
   @Override

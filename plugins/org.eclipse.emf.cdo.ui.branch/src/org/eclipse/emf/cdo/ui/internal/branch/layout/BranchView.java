@@ -26,7 +26,7 @@ import java.util.Collection;
  * second step all branches are positioned while beginning with the latest one (in terms of time stamp).
  * 
  * @author Andre Dietisheim
- * @see BranchViewLayoutStrategy
+ * @see VerticallyDistributingLayoutStrategy
  */
 public class BranchView
 {
@@ -40,14 +40,14 @@ public class BranchView
 
   private DisplayIndependentRectangle bounds;
 
-  private BranchViewLayoutStrategy layoutStrategy;
+  private VerticallyDistributingLayoutStrategy layoutStrategy;
 
-  public BranchView(CDOBranch branch, AbstractBranchPointNode baselineNode, BranchViewLayoutStrategy layoutStrategy)
+  public BranchView(AbstractBranchPointNode baselineNode, VerticallyDistributingLayoutStrategy layoutStrategy)
   {
-    this.branch = branch;
+    branch = baselineNode.getBranch();
     this.baselineNode = baselineNode;
     this.layoutStrategy = layoutStrategy;
-    nodes.add(baselineNode);
+    nodes.addLast(baselineNode);
     layoutStrategy.layoutBaselineNode(this, baselineNode);
     addNode(baselineNode.getNextSibling());
 
@@ -74,7 +74,7 @@ public class BranchView
     return nodes;
   }
 
-  public BranchViewLayoutStrategy getLayoutStrategy()
+  public VerticallyDistributingLayoutStrategy getLayoutStrategy()
   {
     return layoutStrategy;
   }
@@ -93,6 +93,7 @@ public class BranchView
     if (node != null)
     {
       AbstractBranchPointNode previousNode = nodes.peekLast();
+      nodes.addLast(node);
       layoutStrategy.layoutNode(this, node, previousNode);
       // recursively navigate to sibling
       addNode(node.getNextSibling());
@@ -113,8 +114,8 @@ public class BranchView
   {
     if (baselineNode != null)
     {
-      BranchView subBranch = new BranchView(branch, baselineNode, layoutStrategy);
-      layoutStrategy.layoutBranch(this, subBranch, branchPointNode);
+      BranchView subBranch = new BranchView(baselineNode, getLayoutStrategy());
+      layoutStrategy.layoutSubBranchView(this, subBranch, branchPointNode);
     }
   }
 

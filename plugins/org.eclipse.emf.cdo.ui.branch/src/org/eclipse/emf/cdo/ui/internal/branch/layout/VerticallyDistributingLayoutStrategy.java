@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
 import org.eclipse.emf.cdo.ui.internal.branch.geometry.GeometryUtils;
-import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchTreeUtils;
 
@@ -28,9 +27,9 @@ import org.eclipse.zest.layouts.dataStructures.InternalNode;
  * 
  * @author Andre Dietisheim
  */
-public class BranchViewLayoutStrategy
+public abstract class VerticallyDistributingLayoutStrategy extends AbstractBranchViewLayoutStrategy
 {
-  private final SubBranchSproutingStrategy sproutRight = new SubBranchSproutingStrategy()
+  public static final SubBranchSproutingStrategy SPROUT_RIGHT = new SubBranchSproutingStrategy()
   {
     @Override
     protected DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
@@ -53,9 +52,15 @@ public class BranchViewLayoutStrategy
       return new DisplayIndependentDimension(//
           latterBranchBounds.x + latterBranchBounds.width, 0);
     }
+
+    @Override
+    protected void switchSproutingStrategy()
+    {
+      currentSproutingStrategy = SPROUT_LEFT;
+    }
   };
 
-  private final SubBranchSproutingStrategy sproutLeft = new SubBranchSproutingStrategy()
+  public static final SubBranchSproutingStrategy SPROUT_LEFT = new SubBranchSproutingStrategy()
   {
     @Override
     protected DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
@@ -79,142 +84,28 @@ public class BranchViewLayoutStrategy
       return new DisplayIndependentDimension( //
           latterBranchBounds.x - getBranchPadding(), 0);
     }
+
+    @Override
+    protected void switchSproutingStrategy()
+    {
+      currentSproutingStrategy = SPROUT_RIGHT;
+    }
   };
 
-  private SubBranchSproutingStrategy currentSproutingStrategy = sproutRight;
+  private static SubBranchSproutingStrategy currentSproutingStrategy = null;
 
-  protected BranchViewLayoutStrategy()
+  @Override
+  protected void doSetBranchViewLocation(BranchView branchView, BranchView subBranchView,
+      BranchPointNode branchPointNode)
   {
-  }
-
-  public void layoutBaselineNode(BranchView branchView, AbstractBranchPointNode node)
-  {
-    BranchTreeUtils.setInternalSize(node);
-    setBaselineNodeLocation(node);
-    initBranchBounds(branchView, node);
-  }
-
-  protected void initBranchBounds(BranchView branchView, AbstractBranchPointNode node)
-  {
-    InternalNode baselineInternalNode = BranchTreeUtils.getInternalNode(node);
-    DisplayIndependentRectangle bounds = new DisplayIndependentRectangle(baselineInternalNode.getInternalX(),
-        baselineInternalNode.getInternalY(), baselineInternalNode.getInternalWidth(), baselineInternalNode
-            .getInternalHeight());
-    branchView.setBounds(bounds);
-  }
-
-  /**
-   * Layout the given node as sibling node to the baseline node (and its siblings).
-   * 
-   * @param branchView
-   *          the branch view to layout the node to
-   * @param node
-   *          the node to layout
-   */
-  public void layoutNode(BranchView branchView, AbstractBranchPointNode node, AbstractBranchPointNode previousNode)
-  {
-    BranchTreeUtils.setInternalSize(node);
-    setSiblingNodeLocation(node, previousNode);
-    setBranchBounds(branchView, node);
-  }
-
-  /**
-   * Sets the bounds of the given node. The node is centered horizontally to the given previous node.
-   */
-  protected void setBaselineNodeLocation(AbstractBranchPointNode node)
-  {
-    BranchTreeUtils.setInternalSize(node);
-
-    double y = node.getTimeStamp();
-    double x = 0;
-    BranchTreeUtils.setInternalLocation(node, x, y);
-  }
-
-  /**
-   * Sets the location of the given node. The node is centered horizontally to the given previous (sibling) node.
-   */
-  protected void setSiblingNodeLocation(AbstractBranchPointNode node, AbstractBranchPointNode previousNode)
-  {
-    double y = node.getTimeStamp();
-    BranchTreeUtils.centerHorizontally(node, previousNode, y);
-  }
-
-  /**
-   * Sets the bounds of the current branch for the given additional node. The bounds are expanded if the size of the
-   * node requires it.
-   */
-  protected void setBranchBounds(BranchView branchView, AbstractBranchPointNode node)
-  {
-    InternalNode internalNode = BranchTreeUtils.getInternalNode(node);
-
-    GeometryUtils.union(branchView.getBounds(), //
-        internalNode.getInternalX() //
-        , internalNode.getInternalY() //
-        , internalNode.getInternalWidth() //
-        , internalNode.getInternalHeight());
-  }
-
-  /**
-   * Adds the given sub branch to this branch. This strategy distributes the sub-branches equally to the left and to the
-   * right of this branch. It starts by putting the last sub branch to the right of the current branch and puts the
-   * previous one to the left etc. .
-   * 
-   * @param branchPointNode
-   *          the node on the current branch view that the sub-branch view shall be attached to
-   * @param subBranchView
-   *          the sub branch view to add
-   * @param branchView
-   *          the branch view
-   */
-  public void layoutBranch(BranchView branchView, BranchView subBranchView, BranchPointNode branchPointNode)
-  {
-    if (subBranchView != null)
-    {
-      currentSproutingStrategy.setSubBranchLocation(branchView, subBranchView, branchPointNode);
-      GeometryUtils.union(branchView.getBounds(), subBranchView.getBounds());
-      currentSproutingStrategy.switchSproutingStrategy();
-    }
-  }
-
-  /**
-   * Translates this branch by the given dimension.
-   */
-  public void translate(BranchView branchView, DisplayIndependentDimension dimension)
-  {
-    translateSiblingNodes(branchView, dimension);
-    translateSubBranches(branchView, dimension);
-    GeometryUtils.translateRectangle(dimension.width, dimension.height, branchView.getBounds());
-  }
-
-  /**
-   * Translates all sub branches of the given branch.
-   * 
-   * @param dimension
-   *          the dimension to translate this branch by
-   */
-  private void translateSubBranches(BranchView branchView, DisplayIndependentDimension dimension)
-  {
-    for (BranchView branch : branchView.getSubBranchViews())
-    {
-      branch.getLayoutStrategy().translate(branchView, dimension);
-    }
-  }
-
-  /**
-   * Translates all the sibling nodes of this branch by the given horizontal and vertical offset.
-   */
-  private void translateSiblingNodes(BranchView branchView, DisplayIndependentDimension dimension)
-  {
-    for (AbstractBranchPointNode node : branchView.getNodes())
-    {
-      BranchTreeUtils.translateInternalLocation(node, dimension.width, dimension.height);
-    }
+    currentSproutingStrategy.setSubBranchLocation(branchView, subBranchView, branchPointNode);
+    currentSproutingStrategy.switchSproutingStrategy();
   }
 
   /**
    * A layout strategy that handles the layout of sub branches in this branch
    */
-  protected abstract class SubBranchSproutingStrategy
+  protected static abstract class SubBranchSproutingStrategy extends VerticallyDistributingLayoutStrategy
   {
     /**
      * Sets the location of the given sub branch in the current branch. Branches are created and located with their
@@ -271,17 +162,7 @@ public class BranchViewLayoutStrategy
     /**
      * Switches the current sprouting strategy to the next strategy to apply after the current one .
      */
-    protected void switchSproutingStrategy()
-    {
-      if (currentSproutingStrategy == sproutRight)
-      {
-        currentSproutingStrategy = sproutLeft;
-      }
-      else
-      {
-        currentSproutingStrategy = sproutRight;
-      }
-    }
+    protected abstract void switchSproutingStrategy();
 
     /**
      * Returns the branch padding that shall be applied betweend branches.

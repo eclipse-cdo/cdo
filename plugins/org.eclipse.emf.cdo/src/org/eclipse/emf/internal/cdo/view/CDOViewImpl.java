@@ -2238,7 +2238,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   {
     private boolean invalidationNotificationEnabled;
 
-    private CDORevisionPrefetchingPolicy revisionPrefetchingPolicy;
+    private CDORevisionPrefetchingPolicy revisionPrefetchingPolicy = CDOUtil
+        .createRevisionPrefetchingPolicy(CDOView.Options.NO_REVISION_PREFETCHING);
 
     private CDOStaleReferencePolicy staleReferencePolicy = CDOStaleReferencePolicy.EXCEPTION;
 
@@ -2249,9 +2250,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     public OptionsImpl()
     {
       setCacheReferenceType(null);
-      invalidationNotificationEnabled = OM.PREF_ENABLE_INVALIDATION_NOTIFICATION.getValue();
-      revisionPrefetchingPolicy = CDOUtil.createRevisionPrefetchingPolicy(OM.PREF_REVISION_LOADING_CHUNK_SIZE
-          .getValue());
     }
 
     public CDOViewImpl getContainer()

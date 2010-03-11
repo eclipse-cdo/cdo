@@ -53,7 +53,8 @@ public final class CDOEditorUtil
    * 
    * @param page
    *          The page in which the editor will be open
-   * @parem view the CDOView that will be used to access the resource
+   * @param view
+   *          the CDOView that will be used to access the resource
    * @param resourcePath
    *          absolute path to the resource in the repository
    */

@@ -212,7 +212,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
         try
         {
           start.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
-          for (int i = 0; i < 500 && exception[0] == null; i++)
+          for (int i = 0; i < 5000 && exception[0] == null; i++)
           {
             CDOLock writeLock = CDOUtil.getCDOObject(orderDetail).cdoWriteLock();
             writeLock.lock();

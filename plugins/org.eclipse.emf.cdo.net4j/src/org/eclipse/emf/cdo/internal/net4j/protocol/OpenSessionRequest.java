@@ -21,16 +21,13 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
-import org.eclipse.emf.cdo.internal.net4j.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
-import org.eclipse.emf.cdo.util.ServerException;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -88,18 +85,6 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
   protected OpenSessionResult confirming(CDODataInput in) throws IOException
   {
     int sessionID = in.readInt();
-    if (sessionID == CDOProtocolConstants.ERROR_REPOSITORY_NOT_FOUND)
-    {
-      String msg = MessageFormat.format(Messages.getString("OpenSessionRequest.0"), repositoryName); //$NON-NLS-1$
-      throw new ServerException(msg);
-    }
-
-    if (sessionID == CDOProtocolConstants.ERROR_NO_SESSION)
-    {
-      String msg = MessageFormat.format(Messages.getString("OpenSessionRequest.3"), repositoryName); //$NON-NLS-1$
-      throw new ServerException(msg);
-    }
-
     if (TRACER.isEnabled())
     {
       TRACER.format("Read sessionID: {0}", sessionID); //$NON-NLS-1$

@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.spi.server;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.server.ISessionManager;
-import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 
@@ -40,7 +39,7 @@ public interface InternalSessionManager extends ISessionManager
   /**
    * @return Never <code>null</code>
    */
-  public InternalSession openSession(ISessionProtocol sessionProtocol) throws SessionCreationException;
+  public InternalSession openSession(ISessionProtocol sessionProtocol);
 
   public void sessionClosed(InternalSession session);
 

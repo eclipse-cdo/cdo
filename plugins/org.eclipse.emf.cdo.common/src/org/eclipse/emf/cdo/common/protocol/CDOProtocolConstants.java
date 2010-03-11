@@ -185,13 +185,6 @@ public interface CDOProtocolConstants
   public static final short SIGNAL_LOAD_MERGE_DATA = 42;
 
   // //////////////////////////////////////////////////////////////////////
-  // Session Management
-
-  public static final int ERROR_REPOSITORY_NOT_FOUND = -1;
-
-  public static final int ERROR_NO_SESSION = -2;
-
-  // //////////////////////////////////////////////////////////////////////
   // Session Refresh
   /**
    * @since 3.0

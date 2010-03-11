@@ -27,7 +27,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.common.commit.DelegatingCommitInfo;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -97,22 +96,14 @@ public class Session extends Container<IView> implements InternalSession
    * @since 2.0
    */
   public Session(InternalSessionManager manager, ISessionProtocol protocol, int sessionID, String userID)
-      throws SessionCreationException
   {
     this.manager = manager;
     this.protocol = protocol;
     this.sessionID = sessionID;
     this.userID = userID;
-    EventUtil.addListener(protocol, protocolListener);
 
-    try
-    {
-      activate();
-    }
-    catch (Exception ex)
-    {
-      throw new SessionCreationException(ex);
-    }
+    EventUtil.addListener(protocol, protocolListener);
+    activate();
   }
 
   /**

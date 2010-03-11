@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.RepositoryNotFoundException;
-import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -89,74 +88,52 @@ public class OpenSessionIndication extends RepositoryTimeIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    try
+    CDOServerProtocol protocol = getProtocol();
+    IRepositoryProvider repositoryProvider = protocol.getRepositoryProvider();
+    repository = (InternalRepository)repositoryProvider.getRepository(repositoryName);
+    if (repository == null)
     {
-      CDOServerProtocol protocol = getProtocol();
-      IRepositoryProvider repositoryProvider = protocol.getRepositoryProvider();
-      repository = (InternalRepository)repositoryProvider.getRepository(repositoryName);
-      if (repository == null)
-      {
-        throw new RepositoryNotFoundException(repositoryName);
-      }
-
-      InternalSessionManager sessionManager = repository.getSessionManager();
-      session = sessionManager.openSession(protocol);
-      session.setPassiveUpdateEnabled(passiveUpdateEnabled);
-      session.setPassiveUpdateMode(passiveUpdateMode);
-
-      protocol.setInfraStructure(session);
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Writing sessionID: {0}", session.getSessionID()); //$NON-NLS-1$
-      }
-
-      out.writeInt(session.getSessionID());
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Writing repositoryUUID: {0}", repository.getUUID()); //$NON-NLS-1$
-      }
-
-      out.writeString(repository.getUUID());
-      out.writeEnum(repository.getType());
-      out.writeEnum(repository.getState());
-      out.writeString(repository.getStoreType());
-
-      Set<CDOID.ObjectType> objectIDTypes = repository.getObjectIDTypes();
-      int types = objectIDTypes.size();
-      out.writeInt(types);
-      for (CDOID.ObjectType objectIDType : objectIDTypes)
-      {
-        out.writeEnum(objectIDType);
-      }
-
-      out.writeLong(repository.getCreationTime());
-      out.writeLong(repository.getLastCommitTimeStamp());
-      out.writeCDOID(repository.getRootResourceID());
-      out.writeBoolean(repository.isSupportingAudits());
-      out.writeBoolean(repository.isSupportingBranches());
-
-      CDOPackageUnit[] packageUnits = repository.getPackageRegistry().getPackageUnits();
-      out.writeCDOPackageUnits(packageUnits);
+      throw new RepositoryNotFoundException(repositoryName);
     }
-    catch (RepositoryNotFoundException ex)
+
+    InternalSessionManager sessionManager = repository.getSessionManager();
+    session = sessionManager.openSession(protocol);
+    session.setPassiveUpdateEnabled(passiveUpdateEnabled);
+    session.setPassiveUpdateMode(passiveUpdateMode);
+
+    protocol.setInfraStructure(session);
+    if (TRACER.isEnabled())
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("CDORepositoryInfo {0} not found", repositoryName); //$NON-NLS-1$
-      }
-
-      out.writeInt(CDOProtocolConstants.ERROR_REPOSITORY_NOT_FOUND);
+      TRACER.format("Writing sessionID: {0}", session.getSessionID()); //$NON-NLS-1$
     }
-    catch (SessionCreationException ex)
+
+    out.writeInt(session.getSessionID());
+    if (TRACER.isEnabled())
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Failed to open session for repository {0}", repositoryName); //$NON-NLS-1$
-      }
-
-      out.writeInt(CDOProtocolConstants.ERROR_NO_SESSION);
-      return;
+      TRACER.format("Writing repositoryUUID: {0}", repository.getUUID()); //$NON-NLS-1$
     }
+
+    out.writeString(repository.getUUID());
+    out.writeEnum(repository.getType());
+    out.writeEnum(repository.getState());
+    out.writeString(repository.getStoreType());
+
+    Set<CDOID.ObjectType> objectIDTypes = repository.getObjectIDTypes();
+    int types = objectIDTypes.size();
+    out.writeInt(types);
+    for (CDOID.ObjectType objectIDType : objectIDTypes)
+    {
+      out.writeEnum(objectIDType);
+    }
+
+    out.writeLong(repository.getCreationTime());
+    out.writeLong(repository.getLastCommitTimeStamp());
+    out.writeCDOID(repository.getRootResourceID());
+    out.writeBoolean(repository.isSupportingAudits());
+    out.writeBoolean(repository.isSupportingBranches());
+
+    CDOPackageUnit[] packageUnits = repository.getPackageRegistry().getPackageUnits();
+    out.writeCDOPackageUnits(packageUnits);
 
     super.responding(out);
   }

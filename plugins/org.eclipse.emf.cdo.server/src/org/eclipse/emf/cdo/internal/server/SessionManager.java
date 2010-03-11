@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
@@ -194,7 +193,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   /**
    * @since 2.0
    */
-  public InternalSession openSession(ISessionProtocol sessionProtocol) throws SessionCreationException
+  public InternalSession openSession(ISessionProtocol sessionProtocol)
   {
     int id = ++lastSessionID;
     if (TRACER.isEnabled())

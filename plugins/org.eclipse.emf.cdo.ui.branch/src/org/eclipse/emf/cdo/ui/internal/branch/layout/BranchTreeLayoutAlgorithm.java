@@ -34,8 +34,6 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
 
   private RootNode rootNode;
 
-  private AbstractBranchPointNode latestNode;
-
   private DisplayIndependentRectangle layoutBounds = null;
 
   /**
@@ -80,19 +78,19 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
 
     if (entitiesToLayout.length > 0)
     {
-      initRootAndLatestNode(entitiesToLayout);
+      initRootNode(entitiesToLayout);
     }
   }
 
   /**
-   * Searches the given entities and stores the root node and the node with the latest time stamp
+   * Searches the given entities and stores the root node
    * 
    * @param entitiesToLayout
    *          the entities to layout
    * @see RootNode
    * @see AbstractBranchPointNode
    */
-  private void initRootAndLatestNode(InternalNode[] entitiesToLayout)
+  private void initRootNode(InternalNode[] entitiesToLayout)
   {
     for (InternalNode internalNode : entitiesToLayout)
     {
@@ -103,7 +101,6 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
         {
           rootNode = (RootNode)node.getLatter(rootNode);
         }
-        latestNode = node.getLatter(latestNode);
       }
     }
   }

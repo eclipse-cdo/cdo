@@ -175,6 +175,8 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
    */
   public void testBugzilla_273565_Lock() throws Exception
   {
+    disableConsole();
+
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     orderDetail.setPrice(2);
 
@@ -214,9 +216,11 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
           {
             CDOLock writeLock = CDOUtil.getCDOObject(orderDetail).cdoWriteLock();
             writeLock.lock();
+            System.out.println("\nGot lock:   " + price + " --> " + CDOUtil.getCDOObject(orderDetail).cdoRevision());
             sleep(1L);
 
             orderDetail.setPrice(price);
+            System.out.println("Committing: " + price);
             transaction.commit();
             sleep(1L);
           }
@@ -233,10 +237,10 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
       }
     }
 
-    Modifier threadA = new Modifier(3);
+    Modifier threadA = new Modifier(1);
     threadA.start();
 
-    Modifier threadB = new Modifier(1);
+    Modifier threadB = new Modifier(2);
     threadB.start();
 
     start.countDown();

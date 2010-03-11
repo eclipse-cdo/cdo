@@ -10,13 +10,15 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.item;
 
-
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphConnection;
 import org.eclipse.zest.core.widgets.GraphNode;
 
 /**
- * A connection to a {@link AbstractBranchPointNode} in the same branch.
+ * Connects a BranchPointNode to another one in the same branch.
+ * 
+ * @author Andre Dietisheim
+ * @see NewBranchConnection
  */
 public class SameBranchConnection extends GraphConnection
 {

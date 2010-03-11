@@ -12,6 +12,12 @@ package org.eclipse.emf.cdo.ui.internal.branch.figure;
 
 import org.eclipse.draw2d.ColorConstants;
 
+/**
+ * The Figure used to visualize a BranchPoint
+ * 
+ * @author Andre Dietisheim
+ * @see BranchPointNode.
+ */
 public class BranchPointFigure extends CommitInfoFigure
 {
   public BranchPointFigure(String text)

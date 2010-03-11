@@ -11,7 +11,10 @@
 package org.eclipse.emf.cdo.ui.internal.branch.item;
 
 /**
- * A connection to a {@link BranchTreeNode} in a new (sub-)branch.
+ * Connects a BranchPoint node to another one. The second node have to be in another (sub-)branch, though.
+ * 
+ * @author Andre Dietisheim
+ * @see SameBranchConnection
  */
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphConnection;

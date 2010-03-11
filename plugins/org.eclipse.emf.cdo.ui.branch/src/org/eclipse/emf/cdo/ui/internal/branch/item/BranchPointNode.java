@@ -20,7 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A node that holds a branch point. It may be connected to a further (single) BranchPointNode by a NewBranchConnection
+ * to a node in a sub-branch. It may also be connected to a node in the same branch by a SameBranchConnection.
+ * 
  * @author Andre Dietisheim
+ * @see SameBranchConnection
+ * @see NewBranchConnection
  */
 public class BranchPointNode extends AbstractBranchPointNode
 {

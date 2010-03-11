@@ -10,8 +10,16 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.figure;
 
+import org.eclipse.emf.cdo.ui.internal.branch.item.RootNode;
+
 import org.eclipse.draw2d.Figure;
 
+/**
+ * The Figure used to visualise the (single) root node of a BranchTree.
+ * 
+ * @author Andre Dietisheim
+ * @see RootNode
+ */
 public class BranchRootFigure extends Figure
 {
   public BranchRootFigure()

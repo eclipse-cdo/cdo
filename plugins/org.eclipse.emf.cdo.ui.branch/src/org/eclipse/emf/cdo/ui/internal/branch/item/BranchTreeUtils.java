@@ -10,11 +10,10 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.item;
 
-
 import org.eclipse.zest.layouts.dataStructures.InternalNode;
 
 /**
- * Various utility methods used by the branch graph
+ * Various utility methods that help to deal with the manipulations needed to build a BranchTree.
  * 
  * @author Andre Dietisheim
  */
@@ -73,7 +72,7 @@ public class BranchTreeUtils
   {
     InternalNode sourceInternalNode = getInternalNode(sourceNode);
     return sourceInternalNode.getInternalX()
-        + ((sourceInternalNode.getInternalWidth() - getInternalNode(targetNode).getInternalWidth()) / 2);
+        + (sourceInternalNode.getInternalWidth() - getInternalNode(targetNode).getInternalWidth()) / 2;
   }
 
   /**
@@ -138,7 +137,8 @@ public class BranchTreeUtils
    * @param y
    *          the y coordinate to apply
    */
-  public static void centerHorizontally(AbstractBranchPointNode nodeToBeCentered, AbstractBranchPointNode sourceNode, double y)
+  public static void centerHorizontally(AbstractBranchPointNode nodeToBeCentered, AbstractBranchPointNode sourceNode,
+      double y)
   {
     double x = getCenteredX(nodeToBeCentered, sourceNode);
     InternalNode internalNode = getInternalNode(nodeToBeCentered);

@@ -13,6 +13,9 @@ package org.eclipse.emf.cdo.ui.internal.branch.geometry;
 import org.eclipse.zest.layouts.dataStructures.DisplayIndependentDimension;
 import org.eclipse.zest.layouts.dataStructures.DisplayIndependentRectangle;
 
+/**
+ * Holds various utiliy method that help to deal with gemoetry classes in zest .
+ */
 public class GeometryUtils
 {
   /**

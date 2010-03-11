@@ -15,10 +15,21 @@ import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.Label;
 import org.eclipse.swt.SWT;
 
+/**
+ * The Figure used to visualize a commit info node in the branch tree.
+ * 
+ * @author Andre Dietisheim
+ */
 public class CommitInfoFigure extends Ellipse
 {
   // private Label label;
 
+  /**
+   * Instantiates a new commit info figure.
+   * 
+   * @param text
+   *          the text
+   */
   public CommitInfoFigure(String text)
   {
     setAntialias(SWT.ON);
@@ -34,4 +45,3 @@ public class CommitInfoFigure extends Ellipse
     setToolTip(new Label(text));
   }
 }
-

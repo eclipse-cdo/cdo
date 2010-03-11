@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: NotUnsettableImpl.java,v 1.1 2010-02-26 09:06:21 mfluegge Exp $
+ * $Id: NotUnsettableImpl.java,v 1.2 2010-03-11 20:35:00 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model2.impl;
 
@@ -318,10 +318,8 @@ public class NotUnsettableImpl extends EObjectImpl implements NotUnsettable
     boolean oldNotUnsettableBoolean = notUnsettableBoolean;
     notUnsettableBoolean = newNotUnsettableBoolean;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE__NOT_UNSETTABLE_BOOLEAN,
           oldNotUnsettableBoolean, notUnsettableBoolean));
-    }
   }
 
   /**
@@ -344,10 +342,8 @@ public class NotUnsettableImpl extends EObjectImpl implements NotUnsettable
     byte oldNotUnsettableByte = notUnsettableByte;
     notUnsettableByte = newNotUnsettableByte;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE__NOT_UNSETTABLE_BYTE,
           oldNotUnsettableByte, notUnsettableByte));
-    }
   }
 
   /**
@@ -370,10 +366,8 @@ public class NotUnsettableImpl extends EObjectImpl implements NotUnsettable
     char oldNotUnsettableChar = notUnsettableChar;
     notUnsettableChar = newNotUnsettableChar;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE__NOT_UNSETTABLE_CHAR,
           oldNotUnsettableChar, notUnsettableChar));
-    }
   }
 
   /**
@@ -396,10 +390,8 @@ public class NotUnsettableImpl extends EObjectImpl implements NotUnsettable
     Date oldNotUnsettableDate = notUnsettableDate;
     notUnsettableDate = newNotUnsettableDate;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE__NOT_UNSETTABLE_DATE,
           oldNotUnsettableDate, notUnsettableDate));
-    }
   }
 
   /**
@@ -422,10 +414,8 @@ public class NotUnsettableImpl extends EObjectImpl implements NotUnsettable
     double oldNotUnsettableDouble = notUnsettableDouble;
     notUnsettableDouble = newNotUnsettableDouble;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE__NOT_UNSETTABLE_DOUBLE,
           oldNotUnsettableDouble, notUnsettableDouble));
-    }
   }
 
   /**
@@ -448,10 +438,8 @@ public class NotUnsettableImpl extends EObjectImpl implements NotUnsettable
     float oldNotUnsettableFloat = notUnsettableFloat;
     notUnsettableFloat = newNotUnsettableFloat;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE__NOT_UNSETTABLE_FLOAT,
           oldNotUnsettableFloat, notUnsettableFloat));
-    }
   }
 
   /**
@@ -474,10 +462,8 @@ public class NotUnsettableImpl extends EObjectImpl implements NotUnsettable
     int oldNotUnsettableInt = notUnsettableInt;
     notUnsettableInt = newNotUnsettableInt;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE__NOT_UNSETTABLE_INT,
           oldNotUnsettableInt, notUnsettableInt));
-    }
   }
 
   /**
@@ -500,10 +486,8 @@ public class NotUnsettableImpl extends EObjectImpl implements NotUnsettable
     long oldNotUnsettableLong = notUnsettableLong;
     notUnsettableLong = newNotUnsettableLong;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE__NOT_UNSETTABLE_LONG,
           oldNotUnsettableLong, notUnsettableLong));
-    }
   }
 
   /**
@@ -526,10 +510,8 @@ public class NotUnsettableImpl extends EObjectImpl implements NotUnsettable
     short oldNotUnsettableShort = notUnsettableShort;
     notUnsettableShort = newNotUnsettableShort;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE__NOT_UNSETTABLE_SHORT,
           oldNotUnsettableShort, notUnsettableShort));
-    }
   }
 
   /**
@@ -552,10 +534,8 @@ public class NotUnsettableImpl extends EObjectImpl implements NotUnsettable
     String oldNotUnsettableString = notUnsettableString;
     notUnsettableString = newNotUnsettableString;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE__NOT_UNSETTABLE_STRING,
           oldNotUnsettableString, notUnsettableString));
-    }
   }
 
   /**
@@ -578,10 +558,8 @@ public class NotUnsettableImpl extends EObjectImpl implements NotUnsettable
     VAT oldNotUnsettableVAT = notUnsettableVAT;
     notUnsettableVAT = newNotUnsettableVAT == null ? NOT_UNSETTABLE_VAT_EDEFAULT : newNotUnsettableVAT;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE__NOT_UNSETTABLE_VAT,
           oldNotUnsettableVAT, notUnsettableVAT));
-    }
   }
 
   /**
@@ -761,9 +739,7 @@ public class NotUnsettableImpl extends EObjectImpl implements NotUnsettable
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (notUnsettableBoolean: ");

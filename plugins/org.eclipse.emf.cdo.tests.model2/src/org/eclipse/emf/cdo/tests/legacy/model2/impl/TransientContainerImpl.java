@@ -119,10 +119,8 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
     String oldAttrBefore = attrBefore;
     attrBefore = newAttrBefore;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.TRANSIENT_CONTAINER__ATTR_BEFORE,
           oldAttrBefore, attrBefore));
-    }
   }
 
   /**
@@ -133,9 +131,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
   public PersistentContainment getParent()
   {
     if (eContainerFeatureID() != Model2Package.TRANSIENT_CONTAINER__PARENT)
-    {
       return null;
-    }
     return (PersistentContainment)eContainer();
   }
 
@@ -157,34 +153,24 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
    */
   public void setParent(PersistentContainment newParent)
   {
-    if (newParent != eInternalContainer() || eContainerFeatureID() != Model2Package.TRANSIENT_CONTAINER__PARENT
-        && newParent != null)
+    if (newParent != eInternalContainer()
+        || (eContainerFeatureID() != Model2Package.TRANSIENT_CONTAINER__PARENT && newParent != null))
     {
       if (EcoreUtil.isAncestor(this, newParent))
-      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       if (newParent != null)
-      {
         msgs = ((InternalEObject)newParent).eInverseAdd(this, Model2Package.PERSISTENT_CONTAINMENT__CHILDREN,
             PersistentContainment.class, msgs);
-      }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.TRANSIENT_CONTAINER__PARENT, newParent,
           newParent));
-    }
   }
 
   /**
@@ -207,10 +193,8 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
     String oldAttrAfter = attrAfter;
     attrAfter = newAttrAfter;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.TRANSIENT_CONTAINER__ATTR_AFTER,
           oldAttrAfter, attrAfter));
-    }
   }
 
   /**
@@ -225,9 +209,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
     {
     case Model2Package.TRANSIENT_CONTAINER__PARENT:
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       return basicSetParent((PersistentContainment)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -361,9 +343,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (attrBefore: ");

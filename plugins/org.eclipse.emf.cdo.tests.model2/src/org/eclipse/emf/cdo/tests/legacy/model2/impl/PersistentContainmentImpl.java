@@ -134,10 +134,8 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
     String oldAttrBefore = attrBefore;
     attrBefore = newAttrBefore;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.PERSISTENT_CONTAINMENT__ATTR_BEFORE,
           oldAttrBefore, attrBefore));
-    }
   }
 
   /**
@@ -175,10 +173,8 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
     String oldAttrAfter = attrAfter;
     attrAfter = newAttrAfter;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.PERSISTENT_CONTAINMENT__ATTR_AFTER,
           oldAttrAfter, attrAfter));
-    }
   }
 
   /**
@@ -311,9 +307,7 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (attrBefore: ");

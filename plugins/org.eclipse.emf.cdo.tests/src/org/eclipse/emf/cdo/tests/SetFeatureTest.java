@@ -20,14 +20,30 @@ import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.sql.Date;
 
 /**
- * @author Martin Flügge
+ * @author Martin Fluegge
  */
 public class SetFeatureTest extends AbstractCDOTest
 {
+  // TODO clarify the problems with the default
+  public void testUnsettableDateNoDefault_SetDefault() throws Exception
+  {
+    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableDate(),
+        getModel2Package().getUnsettable1_UnsettableDate().getDefaultValue());
+  }
+
+  // TODO clarify the problems with the default
+  public void testUnsettableStringNoDefault_SetDefault() throws Exception
+  {
+    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableString(),
+        getModel2Package().getUnsettable1_UnsettableString().getDefaultValue());
+  }
+
   public void testNotUnsettableBooleanNoDefault() throws Exception
   {
     testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableBoolean(),
@@ -371,13 +387,6 @@ public class SetFeatureTest extends AbstractCDOTest
     testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableDate(), new Date(0));
   }
 
-  // TODO clarify the problems with the default
-  public void testUnsettableDateNoDefault_SetDefault() throws Exception
-  {
-    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableDate(),
-        getModel2Package().getUnsettable1_UnsettableDate().getDefaultValue());
-  }
-
   public void testUnsettableDoubleNoDefault() throws Exception
   {
     testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableDouble(), 15.03d);
@@ -460,13 +469,6 @@ public class SetFeatureTest extends AbstractCDOTest
   {
     testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableString(), new String(
         "Martin"));
-  }
-
-  // TODO clarify the problems with the default
-  public void testUnsettableStringNoDefault_SetDefault() throws Exception
-  {
-    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableString(),
-        getModel2Package().getUnsettable1_UnsettableString().getDefaultValue());
   }
 
   public void testUnsettableVATNoDefault() throws Exception
@@ -708,9 +710,12 @@ public class SetFeatureTest extends AbstractCDOTest
         assertEquals(true, object.eIsSet(feature));
       }
 
-      session.close();
+      assertEquals(((InternalCDOTransaction)transaction).getStore().isSet((InternalEObject)object, feature), object
+          .eIsSet(feature));
 
+      session.close();
       session = openSession();
+
       transaction = session.openTransaction();
       resource = transaction.getResource("/test1", true);
 
@@ -728,14 +733,18 @@ public class SetFeatureTest extends AbstractCDOTest
 
       assertEquals(false, object.eIsSet(feature));
       assertEquals(true, ObjectUtil.equals(object.eGet(feature), feature.getDefaultValue()));
+      assertEquals(((InternalCDOTransaction)transaction).getStore().isSet((InternalEObject)object, feature), object
+          .eIsSet(feature));
 
       transaction.commit();
 
       assertEquals(false, object.eIsSet(feature));
+      assertEquals(((InternalCDOTransaction)transaction).getStore().isSet((InternalEObject)object, feature), object
+          .eIsSet(feature));
 
       session.close();
-
       session = openSession();
+
       transaction = session.openTransaction();
       CDOView view = session.openView();
       resource = view.getResource("/test1");

@@ -733,6 +733,416 @@ public interface Model2Package extends EPackage
   int NOT_UNSETTABLE_WITH_DEFAULT_FEATURE_COUNT = 11;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl <em>Map Holder</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getMapHolder()
+   * @generated
+   */
+  int MAP_HOLDER = 9;
+
+  /**
+   * The feature id for the '<em><b>Integer To String Map</b></em>' map. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int MAP_HOLDER__INTEGER_TO_STRING_MAP = 0;
+
+  /**
+   * The feature id for the '<em><b>String To String Map</b></em>' map. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int MAP_HOLDER__STRING_TO_STRING_MAP = 1;
+
+  /**
+   * The feature id for the '<em><b>String To VAT Map</b></em>' map. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int MAP_HOLDER__STRING_TO_VAT_MAP = 2;
+
+  /**
+   * The feature id for the '<em><b>String To Address Containment Map</b></em>' map. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int MAP_HOLDER__STRING_TO_ADDRESS_CONTAINMENT_MAP = 3;
+
+  /**
+   * The feature id for the '<em><b>String To Address Reference Map</b></em>' map. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int MAP_HOLDER__STRING_TO_ADDRESS_REFERENCE_MAP = 4;
+
+  /**
+   * The feature id for the '<em><b>EObject To EObject Map</b></em>' map. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int MAP_HOLDER__EOBJECT_TO_EOBJECT_MAP = 5;
+
+  /**
+   * The feature id for the '<em><b>EObject To EObject Key Contained Map</b></em>' map. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int MAP_HOLDER__EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP = 6;
+
+  /**
+   * The feature id for the '<em><b>EObject To EObject Both Contained Map</b></em>' map. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int MAP_HOLDER__EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP = 7;
+
+  /**
+   * The feature id for the '<em><b>EObject To EObject Value Contained Map</b></em>' map. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int MAP_HOLDER__EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP = 8;
+
+  /**
+   * The number of structural features of the '<em>Map Holder</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int MAP_HOLDER_FEATURE_COUNT = 9;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.StringToStringMapImpl
+   * <em>String To String Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.StringToStringMapImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getStringToStringMap()
+   * @generated
+   */
+  int STRING_TO_STRING_MAP = 10;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int STRING_TO_STRING_MAP__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int STRING_TO_STRING_MAP__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>String To String Map</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int STRING_TO_STRING_MAP_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.IntegerToStringMapImpl
+   * <em>Integer To String Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.IntegerToStringMapImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getIntegerToStringMap()
+   * @generated
+   */
+  int INTEGER_TO_STRING_MAP = 11;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int INTEGER_TO_STRING_MAP__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int INTEGER_TO_STRING_MAP__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>Integer To String Map</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int INTEGER_TO_STRING_MAP_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.StringToVATMapImpl
+   * <em>String To VAT Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.StringToVATMapImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getStringToVATMap()
+   * @generated
+   */
+  int STRING_TO_VAT_MAP = 12;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int STRING_TO_VAT_MAP__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int STRING_TO_VAT_MAP__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>String To VAT Map</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int STRING_TO_VAT_MAP_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.StringToAddressContainmentMapImpl
+   * <em>String To Address Containment Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.StringToAddressContainmentMapImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getStringToAddressContainmentMap()
+   * @generated
+   */
+  int STRING_TO_ADDRESS_CONTAINMENT_MAP = 13;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int STRING_TO_ADDRESS_CONTAINMENT_MAP__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>String To Address Containment Map</em>' class. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int STRING_TO_ADDRESS_CONTAINMENT_MAP_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.StringToAddressReferenceMapImpl
+   * <em>String To Address Reference Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.StringToAddressReferenceMapImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getStringToAddressReferenceMap()
+   * @generated
+   */
+  int STRING_TO_ADDRESS_REFERENCE_MAP = 14;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int STRING_TO_ADDRESS_REFERENCE_MAP__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int STRING_TO_ADDRESS_REFERENCE_MAP__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>String To Address Reference Map</em>' class. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int STRING_TO_ADDRESS_REFERENCE_MAP_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.EObjectToEObjectMapImpl
+   * <em>EObject To EObject Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.EObjectToEObjectMapImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getEObjectToEObjectMap()
+   * @generated
+   */
+  int EOBJECT_TO_EOBJECT_MAP = 15;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EOBJECT_TO_EOBJECT_MAP__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EOBJECT_TO_EOBJECT_MAP__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>EObject To EObject Map</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EOBJECT_TO_EOBJECT_MAP_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.EObjectToEObjectKeyContainedMapImpl
+   * <em>EObject To EObject Key Contained Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.EObjectToEObjectKeyContainedMapImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getEObjectToEObjectKeyContainedMap()
+   * @generated
+   */
+  int EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP = 16;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>EObject To EObject Key Contained Map</em>' class. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.EObjectToEObjectBothContainedMapImpl
+   * <em>EObject To EObject Both Contained Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.EObjectToEObjectBothContainedMapImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getEObjectToEObjectBothContainedMap()
+   * @generated
+   */
+  int EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP = 17;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>EObject To EObject Both Contained Map</em>' class. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.EObjectToEObjectValueContainedMapImpl
+   * <em>EObject To EObject Value Contained Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.EObjectToEObjectValueContainedMapImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getEObjectToEObjectValueContainedMap()
+   * @generated
+   */
+  int EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP = 18;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>EObject To EObject Value Contained Map</em>' class. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP_FEATURE_COUNT = 2;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder
    * <em>Special Purchase Order</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -1480,6 +1890,419 @@ public interface Model2Package extends EPackage
   EAttribute getNotUnsettableWithDefault_NotUnsettableVAT();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.MapHolder <em>Map Holder</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Map Holder</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.MapHolder
+   * @generated
+   */
+  EClass getMapHolder();
+
+  /**
+   * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getIntegerToStringMap
+   * <em>Integer To String Map</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the map '<em>Integer To String Map</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.MapHolder#getIntegerToStringMap()
+   * @see #getMapHolder()
+   * @generated
+   */
+  EReference getMapHolder_IntegerToStringMap();
+
+  /**
+   * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToStringMap
+   * <em>String To String Map</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the map '<em>String To String Map</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToStringMap()
+   * @see #getMapHolder()
+   * @generated
+   */
+  EReference getMapHolder_StringToStringMap();
+
+  /**
+   * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToVATMap
+   * <em>String To VAT Map</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the map '<em>String To VAT Map</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToVATMap()
+   * @see #getMapHolder()
+   * @generated
+   */
+  EReference getMapHolder_StringToVATMap();
+
+  /**
+   * Returns the meta object for the map '
+   * {@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToAddressContainmentMap
+   * <em>String To Address Containment Map</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the map '<em>String To Address Containment Map</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToAddressContainmentMap()
+   * @see #getMapHolder()
+   * @generated
+   */
+  EReference getMapHolder_StringToAddressContainmentMap();
+
+  /**
+   * Returns the meta object for the map '
+   * {@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToAddressReferenceMap
+   * <em>String To Address Reference Map</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the map '<em>String To Address Reference Map</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToAddressReferenceMap()
+   * @see #getMapHolder()
+   * @generated
+   */
+  EReference getMapHolder_StringToAddressReferenceMap();
+
+  /**
+   * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectMap
+   * <em>EObject To EObject Map</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the map '<em>EObject To EObject Map</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectMap()
+   * @see #getMapHolder()
+   * @generated
+   */
+  EReference getMapHolder_EObjectToEObjectMap();
+
+  /**
+   * Returns the meta object for the map '
+   * {@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectKeyContainedMap
+   * <em>EObject To EObject Key Contained Map</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the map '<em>EObject To EObject Key Contained Map</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectKeyContainedMap()
+   * @see #getMapHolder()
+   * @generated
+   */
+  EReference getMapHolder_EObjectToEObjectKeyContainedMap();
+
+  /**
+   * Returns the meta object for the map '
+   * {@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectBothContainedMap
+   * <em>EObject To EObject Both Contained Map</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the map '<em>EObject To EObject Both Contained Map</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectBothContainedMap()
+   * @see #getMapHolder()
+   * @generated
+   */
+  EReference getMapHolder_EObjectToEObjectBothContainedMap();
+
+  /**
+   * Returns the meta object for the map '
+   * {@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectValueContainedMap
+   * <em>EObject To EObject Value Contained Map</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the map '<em>EObject To EObject Value Contained Map</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectValueContainedMap()
+   * @see #getMapHolder()
+   * @generated
+   */
+  EReference getMapHolder_EObjectToEObjectValueContainedMap();
+
+  /**
+   * Returns the meta object for class '{@link java.util.Map.Entry <em>String To String Map</em>}'. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>String To String Map</em>'.
+   * @see java.util.Map.Entry
+   * @model keyDataType="org.eclipse.emf.ecore.EString" valueDataType="org.eclipse.emf.ecore.EString"
+   * @generated
+   */
+  EClass getStringToStringMap();
+
+  /**
+   * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Key</em>'.
+   * @see java.util.Map.Entry
+   * @see #getStringToStringMap()
+   * @generated
+   */
+  EAttribute getStringToStringMap_Key();
+
+  /**
+   * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see java.util.Map.Entry
+   * @see #getStringToStringMap()
+   * @generated
+   */
+  EAttribute getStringToStringMap_Value();
+
+  /**
+   * Returns the meta object for class '{@link java.util.Map.Entry <em>Integer To String Map</em>}'. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Integer To String Map</em>'.
+   * @see java.util.Map.Entry
+   * @model keyDataType="org.eclipse.emf.ecore.EIntegerObject" valueDataType="org.eclipse.emf.ecore.EString"
+   * @generated
+   */
+  EClass getIntegerToStringMap();
+
+  /**
+   * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Key</em>'.
+   * @see java.util.Map.Entry
+   * @see #getIntegerToStringMap()
+   * @generated
+   */
+  EAttribute getIntegerToStringMap_Key();
+
+  /**
+   * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see java.util.Map.Entry
+   * @see #getIntegerToStringMap()
+   * @generated
+   */
+  EAttribute getIntegerToStringMap_Value();
+
+  /**
+   * Returns the meta object for class '{@link java.util.Map.Entry <em>String To VAT Map</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>String To VAT Map</em>'.
+   * @see java.util.Map.Entry
+   * @model keyDataType="org.eclipse.emf.ecore.EString" valueDataType="org.eclipse.emf.cdo.tests.model1.VAT"
+   * @generated
+   */
+  EClass getStringToVATMap();
+
+  /**
+   * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Key</em>'.
+   * @see java.util.Map.Entry
+   * @see #getStringToVATMap()
+   * @generated
+   */
+  EAttribute getStringToVATMap_Key();
+
+  /**
+   * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see java.util.Map.Entry
+   * @see #getStringToVATMap()
+   * @generated
+   */
+  EAttribute getStringToVATMap_Value();
+
+  /**
+   * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Address Containment Map</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>String To Address Containment Map</em>'.
+   * @see java.util.Map.Entry
+   * @model keyDataType="org.eclipse.emf.ecore.EString" valueType="org.eclipse.emf.cdo.tests.model1.Address"
+   *        valueContainment="true"
+   * @generated
+   */
+  EClass getStringToAddressContainmentMap();
+
+  /**
+   * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Key</em>'.
+   * @see java.util.Map.Entry
+   * @see #getStringToAddressContainmentMap()
+   * @generated
+   */
+  EAttribute getStringToAddressContainmentMap_Key();
+
+  /**
+   * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Value</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see java.util.Map.Entry
+   * @see #getStringToAddressContainmentMap()
+   * @generated
+   */
+  EReference getStringToAddressContainmentMap_Value();
+
+  /**
+   * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Address Reference Map</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>String To Address Reference Map</em>'.
+   * @see java.util.Map.Entry
+   * @model keyDataType="org.eclipse.emf.ecore.EString" valueType="org.eclipse.emf.cdo.tests.model1.Address"
+   * @generated
+   */
+  EClass getStringToAddressReferenceMap();
+
+  /**
+   * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Key</em>'.
+   * @see java.util.Map.Entry
+   * @see #getStringToAddressReferenceMap()
+   * @generated
+   */
+  EAttribute getStringToAddressReferenceMap_Key();
+
+  /**
+   * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference '<em>Value</em>'.
+   * @see java.util.Map.Entry
+   * @see #getStringToAddressReferenceMap()
+   * @generated
+   */
+  EReference getStringToAddressReferenceMap_Value();
+
+  /**
+   * Returns the meta object for class '{@link java.util.Map.Entry <em>EObject To EObject Map</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>EObject To EObject Map</em>'.
+   * @see java.util.Map.Entry
+   * @model keyType="org.eclipse.emf.ecore.EObject" valueType="org.eclipse.emf.ecore.EObject"
+   * @generated
+   */
+  EClass getEObjectToEObjectMap();
+
+  /**
+   * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the reference '<em>Key</em>'.
+   * @see java.util.Map.Entry
+   * @see #getEObjectToEObjectMap()
+   * @generated
+   */
+  EReference getEObjectToEObjectMap_Key();
+
+  /**
+   * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference '<em>Value</em>'.
+   * @see java.util.Map.Entry
+   * @see #getEObjectToEObjectMap()
+   * @generated
+   */
+  EReference getEObjectToEObjectMap_Value();
+
+  /**
+   * Returns the meta object for class '{@link java.util.Map.Entry <em>EObject To EObject Key Contained Map</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>EObject To EObject Key Contained Map</em>'.
+   * @see java.util.Map.Entry
+   * @model keyType="org.eclipse.emf.ecore.EObject" keyContainment="true" valueType="org.eclipse.emf.ecore.EObject"
+   * @generated
+   */
+  EClass getEObjectToEObjectKeyContainedMap();
+
+  /**
+   * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Key</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference '<em>Key</em>'.
+   * @see java.util.Map.Entry
+   * @see #getEObjectToEObjectKeyContainedMap()
+   * @generated
+   */
+  EReference getEObjectToEObjectKeyContainedMap_Key();
+
+  /**
+   * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference '<em>Value</em>'.
+   * @see java.util.Map.Entry
+   * @see #getEObjectToEObjectKeyContainedMap()
+   * @generated
+   */
+  EReference getEObjectToEObjectKeyContainedMap_Value();
+
+  /**
+   * Returns the meta object for class '{@link java.util.Map.Entry <em>EObject To EObject Both Contained Map</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>EObject To EObject Both Contained Map</em>'.
+   * @see java.util.Map.Entry
+   * @model keyType="org.eclipse.emf.ecore.EObject" keyContainment="true" valueType="org.eclipse.emf.ecore.EObject"
+   *        valueContainment="true"
+   * @generated
+   */
+  EClass getEObjectToEObjectBothContainedMap();
+
+  /**
+   * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Key</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference '<em>Key</em>'.
+   * @see java.util.Map.Entry
+   * @see #getEObjectToEObjectBothContainedMap()
+   * @generated
+   */
+  EReference getEObjectToEObjectBothContainedMap_Key();
+
+  /**
+   * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Value</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see java.util.Map.Entry
+   * @see #getEObjectToEObjectBothContainedMap()
+   * @generated
+   */
+  EReference getEObjectToEObjectBothContainedMap_Value();
+
+  /**
+   * Returns the meta object for class '{@link java.util.Map.Entry <em>EObject To EObject Value Contained Map</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>EObject To EObject Value Contained Map</em>'.
+   * @see java.util.Map.Entry
+   * @model keyType="org.eclipse.emf.ecore.EObject" valueType="org.eclipse.emf.ecore.EObject" valueContainment="true"
+   * @generated
+   */
+  EClass getEObjectToEObjectValueContainedMap();
+
+  /**
+   * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the reference '<em>Key</em>'.
+   * @see java.util.Map.Entry
+   * @see #getEObjectToEObjectValueContainedMap()
+   * @generated
+   */
+  EReference getEObjectToEObjectValueContainedMap_Key();
+
+  /**
+   * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Value</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see java.util.Map.Entry
+   * @see #getEObjectToEObjectValueContainedMap()
+   * @generated
+   */
+  EReference getEObjectToEObjectValueContainedMap_Value();
+
+  /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the factory that creates the instances of the model.
@@ -2049,6 +2872,328 @@ public interface Model2Package extends EPackage
      */
     EAttribute NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_VAT = eINSTANCE
         .getNotUnsettableWithDefault_NotUnsettableVAT();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl <em>Map Holder</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getMapHolder()
+     * @generated
+     */
+    EClass MAP_HOLDER = eINSTANCE.getMapHolder();
+
+    /**
+     * The meta object literal for the '<em><b>Integer To String Map</b></em>' map feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference MAP_HOLDER__INTEGER_TO_STRING_MAP = eINSTANCE.getMapHolder_IntegerToStringMap();
+
+    /**
+     * The meta object literal for the '<em><b>String To String Map</b></em>' map feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference MAP_HOLDER__STRING_TO_STRING_MAP = eINSTANCE.getMapHolder_StringToStringMap();
+
+    /**
+     * The meta object literal for the '<em><b>String To VAT Map</b></em>' map feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference MAP_HOLDER__STRING_TO_VAT_MAP = eINSTANCE.getMapHolder_StringToVATMap();
+
+    /**
+     * The meta object literal for the '<em><b>String To Address Containment Map</b></em>' map feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference MAP_HOLDER__STRING_TO_ADDRESS_CONTAINMENT_MAP = eINSTANCE.getMapHolder_StringToAddressContainmentMap();
+
+    /**
+     * The meta object literal for the '<em><b>String To Address Reference Map</b></em>' map feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference MAP_HOLDER__STRING_TO_ADDRESS_REFERENCE_MAP = eINSTANCE.getMapHolder_StringToAddressReferenceMap();
+
+    /**
+     * The meta object literal for the '<em><b>EObject To EObject Map</b></em>' map feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference MAP_HOLDER__EOBJECT_TO_EOBJECT_MAP = eINSTANCE.getMapHolder_EObjectToEObjectMap();
+
+    /**
+     * The meta object literal for the '<em><b>EObject To EObject Key Contained Map</b></em>' map feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference MAP_HOLDER__EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP = eINSTANCE
+        .getMapHolder_EObjectToEObjectKeyContainedMap();
+
+    /**
+     * The meta object literal for the '<em><b>EObject To EObject Both Contained Map</b></em>' map feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference MAP_HOLDER__EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP = eINSTANCE
+        .getMapHolder_EObjectToEObjectBothContainedMap();
+
+    /**
+     * The meta object literal for the '<em><b>EObject To EObject Value Contained Map</b></em>' map feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference MAP_HOLDER__EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP = eINSTANCE
+        .getMapHolder_EObjectToEObjectValueContainedMap();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model2.impl.StringToStringMapImpl
+     * <em>String To String Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.StringToStringMapImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getStringToStringMap()
+     * @generated
+     */
+    EClass STRING_TO_STRING_MAP = eINSTANCE.getStringToStringMap();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute STRING_TO_STRING_MAP__KEY = eINSTANCE.getStringToStringMap_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute STRING_TO_STRING_MAP__VALUE = eINSTANCE.getStringToStringMap_Value();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model2.impl.IntegerToStringMapImpl
+     * <em>Integer To String Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.IntegerToStringMapImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getIntegerToStringMap()
+     * @generated
+     */
+    EClass INTEGER_TO_STRING_MAP = eINSTANCE.getIntegerToStringMap();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute INTEGER_TO_STRING_MAP__KEY = eINSTANCE.getIntegerToStringMap_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute INTEGER_TO_STRING_MAP__VALUE = eINSTANCE.getIntegerToStringMap_Value();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model2.impl.StringToVATMapImpl
+     * <em>String To VAT Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.StringToVATMapImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getStringToVATMap()
+     * @generated
+     */
+    EClass STRING_TO_VAT_MAP = eINSTANCE.getStringToVATMap();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute STRING_TO_VAT_MAP__KEY = eINSTANCE.getStringToVATMap_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute STRING_TO_VAT_MAP__VALUE = eINSTANCE.getStringToVATMap_Value();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model2.impl.StringToAddressContainmentMapImpl
+     * <em>String To Address Containment Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.StringToAddressContainmentMapImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getStringToAddressContainmentMap()
+     * @generated
+     */
+    EClass STRING_TO_ADDRESS_CONTAINMENT_MAP = eINSTANCE.getStringToAddressContainmentMap();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute STRING_TO_ADDRESS_CONTAINMENT_MAP__KEY = eINSTANCE.getStringToAddressContainmentMap_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE = eINSTANCE.getStringToAddressContainmentMap_Value();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model2.impl.StringToAddressReferenceMapImpl
+     * <em>String To Address Reference Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.StringToAddressReferenceMapImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getStringToAddressReferenceMap()
+     * @generated
+     */
+    EClass STRING_TO_ADDRESS_REFERENCE_MAP = eINSTANCE.getStringToAddressReferenceMap();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute STRING_TO_ADDRESS_REFERENCE_MAP__KEY = eINSTANCE.getStringToAddressReferenceMap_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference STRING_TO_ADDRESS_REFERENCE_MAP__VALUE = eINSTANCE.getStringToAddressReferenceMap_Value();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model2.impl.EObjectToEObjectMapImpl
+     * <em>EObject To EObject Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.EObjectToEObjectMapImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getEObjectToEObjectMap()
+     * @generated
+     */
+    EClass EOBJECT_TO_EOBJECT_MAP = eINSTANCE.getEObjectToEObjectMap();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference EOBJECT_TO_EOBJECT_MAP__KEY = eINSTANCE.getEObjectToEObjectMap_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference EOBJECT_TO_EOBJECT_MAP__VALUE = eINSTANCE.getEObjectToEObjectMap_Value();
+
+    /**
+     * The meta object literal for the '
+     * {@link org.eclipse.emf.cdo.tests.model2.impl.EObjectToEObjectKeyContainedMapImpl
+     * <em>EObject To EObject Key Contained Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.EObjectToEObjectKeyContainedMapImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getEObjectToEObjectKeyContainedMap()
+     * @generated
+     */
+    EClass EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP = eINSTANCE.getEObjectToEObjectKeyContainedMap();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' containment reference feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY = eINSTANCE.getEObjectToEObjectKeyContainedMap_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__VALUE = eINSTANCE.getEObjectToEObjectKeyContainedMap_Value();
+
+    /**
+     * The meta object literal for the '
+     * {@link org.eclipse.emf.cdo.tests.model2.impl.EObjectToEObjectBothContainedMapImpl
+     * <em>EObject To EObject Both Contained Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.EObjectToEObjectBothContainedMapImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getEObjectToEObjectBothContainedMap()
+     * @generated
+     */
+    EClass EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP = eINSTANCE.getEObjectToEObjectBothContainedMap();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' containment reference feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY = eINSTANCE.getEObjectToEObjectBothContainedMap_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE = eINSTANCE.getEObjectToEObjectBothContainedMap_Value();
+
+    /**
+     * The meta object literal for the '
+     * {@link org.eclipse.emf.cdo.tests.model2.impl.EObjectToEObjectValueContainedMapImpl
+     * <em>EObject To EObject Value Contained Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.EObjectToEObjectValueContainedMapImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getEObjectToEObjectValueContainedMap()
+     * @generated
+     */
+    EClass EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP = eINSTANCE.getEObjectToEObjectValueContainedMap();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__KEY = eINSTANCE.getEObjectToEObjectValueContainedMap_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__VALUE = eINSTANCE.getEObjectToEObjectValueContainedMap_Value();
 
   }
 

@@ -10,8 +10,11 @@
  */
 package org.eclipse.emf.cdo.tests.model2.util;
 
+import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.cdo.tests.model1.VAT;
+import org.eclipse.emf.cdo.tests.model2.MapHolder;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettable;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault;
@@ -27,6 +30,8 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
@@ -138,6 +143,66 @@ public class Model2AdapterFactory extends AdapterFactoryImpl
     public Adapter caseNotUnsettableWithDefault(NotUnsettableWithDefault object)
     {
       return createNotUnsettableWithDefaultAdapter();
+    }
+
+    @Override
+    public Adapter caseMapHolder(MapHolder object)
+    {
+      return createMapHolderAdapter();
+    }
+
+    @Override
+    public Adapter caseStringToStringMap(Map.Entry<String, String> object)
+    {
+      return createStringToStringMapAdapter();
+    }
+
+    @Override
+    public Adapter caseIntegerToStringMap(Map.Entry<Integer, String> object)
+    {
+      return createIntegerToStringMapAdapter();
+    }
+
+    @Override
+    public Adapter caseStringToVATMap(Map.Entry<String, VAT> object)
+    {
+      return createStringToVATMapAdapter();
+    }
+
+    @Override
+    public Adapter caseStringToAddressContainmentMap(Map.Entry<String, Address> object)
+    {
+      return createStringToAddressContainmentMapAdapter();
+    }
+
+    @Override
+    public Adapter caseStringToAddressReferenceMap(Map.Entry<String, Address> object)
+    {
+      return createStringToAddressReferenceMapAdapter();
+    }
+
+    @Override
+    public Adapter caseEObjectToEObjectMap(Map.Entry<EObject, EObject> object)
+    {
+      return createEObjectToEObjectMapAdapter();
+    }
+
+    @Override
+    public Adapter caseEObjectToEObjectKeyContainedMap(Map.Entry<EObject, EObject> object)
+    {
+      return createEObjectToEObjectKeyContainedMapAdapter();
+    }
+
+    @Override
+    public Adapter caseEObjectToEObjectBothContainedMap(Map.Entry<EObject, EObject> object)
+    {
+      return createEObjectToEObjectBothContainedMapAdapter();
+    }
+
+    @Override
+    public Adapter caseEObjectToEObjectValueContainedMap(Map.Entry<EObject, EObject> object)
+    {
+      return createEObjectToEObjectValueContainedMapAdapter();
     }
 
     @Override
@@ -300,6 +365,150 @@ public class Model2AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createNotUnsettableWithDefaultAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model2.MapHolder
+   * <em>Map Holder</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model2.MapHolder
+   * @generated
+   */
+  public Adapter createMapHolderAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To String Map</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see java.util.Map.Entry
+   * @generated
+   */
+  public Adapter createStringToStringMapAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Integer To String Map</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see java.util.Map.Entry
+   * @generated
+   */
+  public Adapter createIntegerToStringMapAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To VAT Map</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see java.util.Map.Entry
+   * @generated
+   */
+  public Adapter createStringToVATMapAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link java.util.Map.Entry
+   * <em>String To Address Containment Map</em>}'. <!-- begin-user-doc --> This default implementation returns null so
+   * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see java.util.Map.Entry
+   * @generated
+   */
+  public Adapter createStringToAddressContainmentMapAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Address Reference Map</em>}
+   * '. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
+   * to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see java.util.Map.Entry
+   * @generated
+   */
+  public Adapter createStringToAddressReferenceMapAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>EObject To EObject Map</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see java.util.Map.Entry
+   * @generated
+   */
+  public Adapter createEObjectToEObjectMapAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link java.util.Map.Entry
+   * <em>EObject To EObject Key Contained Map</em>}'. <!-- begin-user-doc --> This default implementation returns null
+   * so that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see java.util.Map.Entry
+   * @generated
+   */
+  public Adapter createEObjectToEObjectKeyContainedMapAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link java.util.Map.Entry
+   * <em>EObject To EObject Both Contained Map</em>}'. <!-- begin-user-doc --> This default implementation returns null
+   * so that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see java.util.Map.Entry
+   * @generated
+   */
+  public Adapter createEObjectToEObjectBothContainedMapAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link java.util.Map.Entry
+   * <em>EObject To EObject Value Contained Map</em>}'. <!-- begin-user-doc --> This default implementation returns null
+   * so that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see java.util.Map.Entry
+   * @generated
+   */
+  public Adapter createEObjectToEObjectValueContainedMapAdapter()
   {
     return null;
   }

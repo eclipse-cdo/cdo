@@ -215,9 +215,9 @@ public class XATransactionTest extends AbstractCDOTest
       try
       {
         transactionA1.commit();
-        fail("We should have an exception");
+        fail("TransactionException expected");
       }
-      catch (TransactionException exp)
+      catch (TransactionException expected)
       {
       }
 

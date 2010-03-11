@@ -116,4 +116,70 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="notUnsettableVAT" eType="ecore:EEnum ../../org.eclipse.emf.cdo.tests.model1/model/model1.ecore#//VAT"
         defaultValueLiteral="vat15"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MapHolder">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="integerToStringMap" upperBound="-1"
+        eType="#//IntegerToStringMap" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stringToStringMap" upperBound="-1"
+        eType="#//StringToStringMap" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stringToVATMap" upperBound="-1"
+        eType="#//StringToVATMap" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stringToAddressContainmentMap"
+        upperBound="-1" eType="#//StringToAddressContainmentMap" containment="true"
+        resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stringToAddressReferenceMap"
+        upperBound="-1" eType="#//StringToAddressReferenceMap" containment="true"
+        resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eObjectToEObjectMap" upperBound="-1"
+        eType="#//EObjectToEObjectMap" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eObjectToEObjectKeyContainedMap"
+        upperBound="-1" eType="#//EObjectToEObjectKeyContainedMap" containment="true"
+        resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eObjectToEObjectBothContainedMap"
+        upperBound="-1" eType="#//EObjectToEObjectBothContainedMap" containment="true"
+        resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eObjectToEObjectValueContainedMap"
+        upperBound="-1" eType="#//EObjectToEObjectValueContainedMap" containment="true"
+        resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringToStringMap" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IntegerToStringMap" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringToVATMap" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EEnum ../../org.eclipse.emf.cdo.tests.model1/model/model1.ecore#//VAT"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringToAddressContainmentMap" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass ../../org.eclipse.emf.cdo.tests.model1/model/model1.ecore#//Address"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringToAddressReferenceMap" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass ../../org.eclipse.emf.cdo.tests.model1/model/model1.ecore#//Address"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EObjectToEObjectMap" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EObjectToEObjectKeyContainedMap" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EObjectToEObjectBothContainedMap" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EObjectToEObjectValueContainedMap" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        containment="true"/>
+  </eClassifiers>
 </ecore:EPackage>

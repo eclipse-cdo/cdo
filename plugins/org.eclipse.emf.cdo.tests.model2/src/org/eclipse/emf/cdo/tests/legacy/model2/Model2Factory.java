@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.legacy.model2;
 
+import org.eclipse.emf.cdo.tests.model2.MapHolder;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettable;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault;
 import org.eclipse.emf.cdo.tests.model2.PersistentContainment;
@@ -107,6 +108,14 @@ public interface Model2Factory extends org.eclipse.emf.cdo.tests.model2.Model2Fa
    * @generated
    */
   NotUnsettableWithDefault createNotUnsettableWithDefault();
+
+  /**
+   * Returns a new object of class '<em>Map Holder</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Map Holder</em>'.
+   * @generated
+   */
+  MapHolder createMapHolder();
 
   /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->

@@ -10,8 +10,11 @@
  */
 package org.eclipse.emf.cdo.tests.model2.util;
 
+import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.cdo.tests.model1.VAT;
+import org.eclipse.emf.cdo.tests.model2.MapHolder;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettable;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault;
@@ -27,6 +30,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
@@ -107,17 +111,11 @@ public class Model2Switch<T>
       SpecialPurchaseOrder specialPurchaseOrder = (SpecialPurchaseOrder)theEObject;
       T result = caseSpecialPurchaseOrder(specialPurchaseOrder);
       if (result == null)
-      {
         result = casePurchaseOrder(specialPurchaseOrder);
-      }
       if (result == null)
-      {
         result = caseOrder(specialPurchaseOrder);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model2Package.TASK_CONTAINER:
@@ -125,9 +123,7 @@ public class Model2Switch<T>
       TaskContainer taskContainer = (TaskContainer)theEObject;
       T result = caseTaskContainer(taskContainer);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model2Package.TASK:
@@ -135,9 +131,7 @@ public class Model2Switch<T>
       Task task = (Task)theEObject;
       T result = caseTask(task);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model2Package.UNSETTABLE1:
@@ -145,9 +139,7 @@ public class Model2Switch<T>
       Unsettable1 unsettable1 = (Unsettable1)theEObject;
       T result = caseUnsettable1(unsettable1);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model2Package.UNSETTABLE2_WITH_DEFAULT:
@@ -155,9 +147,7 @@ public class Model2Switch<T>
       Unsettable2WithDefault unsettable2WithDefault = (Unsettable2WithDefault)theEObject;
       T result = caseUnsettable2WithDefault(unsettable2WithDefault);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model2Package.PERSISTENT_CONTAINMENT:
@@ -165,9 +155,7 @@ public class Model2Switch<T>
       PersistentContainment persistentContainment = (PersistentContainment)theEObject;
       T result = casePersistentContainment(persistentContainment);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model2Package.TRANSIENT_CONTAINER:
@@ -175,9 +163,7 @@ public class Model2Switch<T>
       TransientContainer transientContainer = (TransientContainer)theEObject;
       T result = caseTransientContainer(transientContainer);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model2Package.NOT_UNSETTABLE:
@@ -185,9 +171,7 @@ public class Model2Switch<T>
       NotUnsettable notUnsettable = (NotUnsettable)theEObject;
       T result = caseNotUnsettable(notUnsettable);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT:
@@ -195,9 +179,96 @@ public class Model2Switch<T>
       NotUnsettableWithDefault notUnsettableWithDefault = (NotUnsettableWithDefault)theEObject;
       T result = caseNotUnsettableWithDefault(notUnsettableWithDefault);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
+      return result;
+    }
+    case Model2Package.MAP_HOLDER:
+    {
+      MapHolder mapHolder = (MapHolder)theEObject;
+      T result = caseMapHolder(mapHolder);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model2Package.STRING_TO_STRING_MAP:
+    {
+      @SuppressWarnings("unchecked")
+      Map.Entry<String, String> stringToStringMap = (Map.Entry<String, String>)theEObject;
+      T result = caseStringToStringMap(stringToStringMap);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model2Package.INTEGER_TO_STRING_MAP:
+    {
+      @SuppressWarnings("unchecked")
+      Map.Entry<Integer, String> integerToStringMap = (Map.Entry<Integer, String>)theEObject;
+      T result = caseIntegerToStringMap(integerToStringMap);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model2Package.STRING_TO_VAT_MAP:
+    {
+      @SuppressWarnings("unchecked")
+      Map.Entry<String, VAT> stringToVATMap = (Map.Entry<String, VAT>)theEObject;
+      T result = caseStringToVATMap(stringToVATMap);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP:
+    {
+      @SuppressWarnings("unchecked")
+      Map.Entry<String, Address> stringToAddressContainmentMap = (Map.Entry<String, Address>)theEObject;
+      T result = caseStringToAddressContainmentMap(stringToAddressContainmentMap);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP:
+    {
+      @SuppressWarnings("unchecked")
+      Map.Entry<String, Address> stringToAddressReferenceMap = (Map.Entry<String, Address>)theEObject;
+      T result = caseStringToAddressReferenceMap(stringToAddressReferenceMap);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model2Package.EOBJECT_TO_EOBJECT_MAP:
+    {
+      @SuppressWarnings("unchecked")
+      Map.Entry<EObject, EObject> eObjectToEObjectMap = (Map.Entry<EObject, EObject>)theEObject;
+      T result = caseEObjectToEObjectMap(eObjectToEObjectMap);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP:
+    {
+      @SuppressWarnings("unchecked")
+      Map.Entry<EObject, EObject> eObjectToEObjectKeyContainedMap = (Map.Entry<EObject, EObject>)theEObject;
+      T result = caseEObjectToEObjectKeyContainedMap(eObjectToEObjectKeyContainedMap);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP:
+    {
+      @SuppressWarnings("unchecked")
+      Map.Entry<EObject, EObject> eObjectToEObjectBothContainedMap = (Map.Entry<EObject, EObject>)theEObject;
+      T result = caseEObjectToEObjectBothContainedMap(eObjectToEObjectBothContainedMap);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP:
+    {
+      @SuppressWarnings("unchecked")
+      Map.Entry<EObject, EObject> eObjectToEObjectValueContainedMap = (Map.Entry<EObject, EObject>)theEObject;
+      T result = caseEObjectToEObjectValueContainedMap(eObjectToEObjectValueContainedMap);
+      if (result == null)
+        result = defaultCase(theEObject);
       return result;
     }
     default:
@@ -340,6 +411,164 @@ public class Model2Switch<T>
    * @generated
    */
   public T caseNotUnsettableWithDefault(NotUnsettableWithDefault object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Map Holder</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Map Holder</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMapHolder(MapHolder object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>String To String Map</em>'. <!--
+   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
+   * end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>String To String Map</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStringToStringMap(Map.Entry<String, String> object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Integer To String Map</em>'. <!--
+   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
+   * end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Integer To String Map</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseIntegerToStringMap(Map.Entry<Integer, String> object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>String To VAT Map</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>String To VAT Map</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStringToVATMap(Map.Entry<String, VAT> object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>String To Address Containment Map</em>'. <!--
+   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
+   * end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>String To Address Containment Map</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStringToAddressContainmentMap(Map.Entry<String, Address> object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>String To Address Reference Map</em>'. <!--
+   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
+   * end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>String To Address Reference Map</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStringToAddressReferenceMap(Map.Entry<String, Address> object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>EObject To EObject Map</em>'. <!--
+   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
+   * end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>EObject To EObject Map</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEObjectToEObjectMap(Map.Entry<EObject, EObject> object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>EObject To EObject Key Contained Map</em>'.
+   * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>EObject To EObject Key Contained Map</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEObjectToEObjectKeyContainedMap(Map.Entry<EObject, EObject> object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>EObject To EObject Both Contained Map</em>'.
+   * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>EObject To EObject Both Contained Map</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEObjectToEObjectBothContainedMap(Map.Entry<EObject, EObject> object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>EObject To EObject Value Contained Map</em>'.
+   * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>EObject To EObject Value Contained Map</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEObjectToEObjectValueContainedMap(Map.Entry<EObject, EObject> object)
   {
     return null;
   }

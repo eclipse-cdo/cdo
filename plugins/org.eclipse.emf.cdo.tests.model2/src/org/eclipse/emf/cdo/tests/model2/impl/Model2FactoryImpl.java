@@ -10,6 +10,9 @@
  */
 package org.eclipse.emf.cdo.tests.model2.impl;
 
+import org.eclipse.emf.cdo.tests.model1.Address;
+import org.eclipse.emf.cdo.tests.model1.VAT;
+import org.eclipse.emf.cdo.tests.model2.MapHolder;
 import org.eclipse.emf.cdo.tests.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettable;
@@ -27,6 +30,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
@@ -96,6 +101,26 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
       return createNotUnsettable();
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT:
       return createNotUnsettableWithDefault();
+    case Model2Package.MAP_HOLDER:
+      return createMapHolder();
+    case Model2Package.STRING_TO_STRING_MAP:
+      return (EObject)createStringToStringMap();
+    case Model2Package.INTEGER_TO_STRING_MAP:
+      return (EObject)createIntegerToStringMap();
+    case Model2Package.STRING_TO_VAT_MAP:
+      return (EObject)createStringToVATMap();
+    case Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP:
+      return (EObject)createStringToAddressContainmentMap();
+    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP:
+      return (EObject)createStringToAddressReferenceMap();
+    case Model2Package.EOBJECT_TO_EOBJECT_MAP:
+      return (EObject)createEObjectToEObjectMap();
+    case Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP:
+      return (EObject)createEObjectToEObjectKeyContainedMap();
+    case Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP:
+      return (EObject)createEObjectToEObjectBothContainedMap();
+    case Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP:
+      return (EObject)createEObjectToEObjectValueContainedMap();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -198,6 +223,116 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
   {
     NotUnsettableWithDefaultImpl notUnsettableWithDefault = new NotUnsettableWithDefaultImpl();
     return notUnsettableWithDefault;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public MapHolder createMapHolder()
+  {
+    MapHolderImpl mapHolder = new MapHolderImpl();
+    return mapHolder;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Map.Entry<String, String> createStringToStringMap()
+  {
+    StringToStringMapImpl stringToStringMap = new StringToStringMapImpl();
+    return stringToStringMap;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Map.Entry<Integer, String> createIntegerToStringMap()
+  {
+    IntegerToStringMapImpl integerToStringMap = new IntegerToStringMapImpl();
+    return integerToStringMap;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Map.Entry<String, VAT> createStringToVATMap()
+  {
+    StringToVATMapImpl stringToVATMap = new StringToVATMapImpl();
+    return stringToVATMap;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Map.Entry<String, Address> createStringToAddressContainmentMap()
+  {
+    StringToAddressContainmentMapImpl stringToAddressContainmentMap = new StringToAddressContainmentMapImpl();
+    return stringToAddressContainmentMap;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Map.Entry<String, Address> createStringToAddressReferenceMap()
+  {
+    StringToAddressReferenceMapImpl stringToAddressReferenceMap = new StringToAddressReferenceMapImpl();
+    return stringToAddressReferenceMap;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Map.Entry<EObject, EObject> createEObjectToEObjectMap()
+  {
+    EObjectToEObjectMapImpl eObjectToEObjectMap = new EObjectToEObjectMapImpl();
+    return eObjectToEObjectMap;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Map.Entry<EObject, EObject> createEObjectToEObjectKeyContainedMap()
+  {
+    EObjectToEObjectKeyContainedMapImpl eObjectToEObjectKeyContainedMap = new EObjectToEObjectKeyContainedMapImpl();
+    return eObjectToEObjectKeyContainedMap;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Map.Entry<EObject, EObject> createEObjectToEObjectBothContainedMap()
+  {
+    EObjectToEObjectBothContainedMapImpl eObjectToEObjectBothContainedMap = new EObjectToEObjectBothContainedMapImpl();
+    return eObjectToEObjectBothContainedMap;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Map.Entry<EObject, EObject> createEObjectToEObjectValueContainedMap()
+  {
+    EObjectToEObjectValueContainedMapImpl eObjectToEObjectValueContainedMap = new EObjectToEObjectValueContainedMapImpl();
+    return eObjectToEObjectValueContainedMap;
   }
 
   /**

@@ -141,6 +141,7 @@ public class UnsetTest extends AbstractCDOTest
   public void testUnsetNonDefaultValue() throws Exception
   {
     Unsettable1 unsettable = getModel2Factory().createUnsettable1();
+    // unsettable.setUnsettableBoolean(true);
     Unsettable1 result = commitAndLoad(unsettable);
     assertEquals(false, result.isSetUnsettableBoolean());
     assertEquals(false, result.isSetUnsettableByte());

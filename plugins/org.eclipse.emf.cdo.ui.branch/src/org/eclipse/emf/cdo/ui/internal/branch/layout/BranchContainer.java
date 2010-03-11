@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
-import org.eclipse.emf.cdo.ui.internal.branch.geometry.ExtendedDisplayIndependentRectangle;
+import org.eclipse.emf.cdo.ui.internal.branch.geometry.GeometryUtils;
 
 import org.eclipse.zest.layouts.dataStructures.DisplayIndependentRectangle;
 import org.eclipse.zest.layouts.dataStructures.InternalNode;
@@ -25,21 +25,21 @@ public class BranchContainer
 {
 
   /** The bounds of this container. */
-  private ExtendedDisplayIndependentRectangle bounds = new ExtendedDisplayIndependentRectangle();
+  private DisplayIndependentRectangle bounds = new DisplayIndependentRectangle();
 
   /** The node list. */
   private List<InternalNode> nodeList = new ArrayList<InternalNode>();
 
   /**
-   * Instantiates a new branch tree container with a new instance of a {@link ExtendedDisplayIndependentRectangle}.
+   * Instantiates a new branch tree container with a new instance of a {@link DisplayIndependentRectangle}.
    */
   public BranchContainer()
   {
-    this(new ExtendedDisplayIndependentRectangle());
+    this(new DisplayIndependentRectangle());
   }
 
   /**
-   * Instantiates a new branch tree container with the given instance of a {@link ExtendedDisplayIndependentRectangle}.
+   * Instantiates a new branch tree container with the given instance of a {@link DisplayIndependentRectangle}.
    * 
    * @param bounds
    *          the bounds
@@ -61,6 +61,7 @@ public class BranchContainer
   public void union(InternalNode node)
   {
     nodeList.add(node);
-    bounds.union(node.getInternalX(), node.getInternalY(), node.getInternalWidth(), node.getInternalHeight());
+    GeometryUtils.union(bounds, node.getInternalX(), node.getInternalY(), node.getInternalWidth(), node
+        .getInternalHeight());
   }
 }

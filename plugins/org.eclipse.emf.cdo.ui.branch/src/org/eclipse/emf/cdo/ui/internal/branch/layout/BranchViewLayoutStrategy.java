@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
-import org.eclipse.emf.cdo.ui.internal.branch.geometry.ExtendedDisplayIndependentRectangle;
 import org.eclipse.emf.cdo.ui.internal.branch.geometry.GeometryUtils;
 import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNode;
@@ -50,7 +49,7 @@ public class BranchViewLayoutStrategy
     @Override
     protected DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch, BranchView latterBranch)
     {
-      ExtendedDisplayIndependentRectangle latterBranchBounds = latterBranch.getBounds();
+      DisplayIndependentRectangle latterBranchBounds = latterBranch.getBounds();
       return new DisplayIndependentDimension(//
           latterBranchBounds.x + latterBranchBounds.width, 0);
     }
@@ -98,9 +97,9 @@ public class BranchViewLayoutStrategy
   protected void initBranchBounds(BranchView branchView, AbstractBranchPointNode node)
   {
     InternalNode baselineInternalNode = BranchTreeUtils.getInternalNode(node);
-    ExtendedDisplayIndependentRectangle bounds = new ExtendedDisplayIndependentRectangle(baselineInternalNode
-        .getInternalX(), baselineInternalNode.getInternalY(), baselineInternalNode.getInternalWidth(),
-        baselineInternalNode.getInternalHeight());
+    DisplayIndependentRectangle bounds = new DisplayIndependentRectangle(baselineInternalNode.getInternalX(),
+        baselineInternalNode.getInternalY(), baselineInternalNode.getInternalWidth(), baselineInternalNode
+            .getInternalHeight());
     branchView.setBounds(bounds);
   }
 
@@ -148,7 +147,7 @@ public class BranchViewLayoutStrategy
   {
     InternalNode internalNode = BranchTreeUtils.getInternalNode(node);
 
-    branchView.getBounds().union( //
+    GeometryUtils.union(branchView.getBounds(), //
         internalNode.getInternalX() //
         , internalNode.getInternalY() //
         , internalNode.getInternalWidth() //
@@ -172,7 +171,7 @@ public class BranchViewLayoutStrategy
     if (subBranchView != null)
     {
       currentSproutingStrategy.setSubBranchLocation(branchView, subBranchView, branchPointNode);
-      branchView.getBounds().union(subBranchView.getBounds());
+      GeometryUtils.union(branchView.getBounds(), subBranchView.getBounds());
       currentSproutingStrategy.switchSproutingStrategy();
     }
   }
@@ -184,7 +183,7 @@ public class BranchViewLayoutStrategy
   {
     translateSiblingNodes(branchView, dimension);
     translateSubBranches(branchView, dimension);
-    branchView.getBounds().translate(dimension.width, dimension.height);
+    GeometryUtils.translateRectangle(dimension.width, dimension.height, branchView.getBounds());
   }
 
   /**
@@ -234,7 +233,7 @@ public class BranchViewLayoutStrategy
       // translate branch off the branchPointNode (to the right or to the left)
       DisplayIndependentDimension translation = getTranslationToBranchPoint(subBranchView, branchPointNode);
       BranchView latterBranch = branchView.getSecondToLastSubBranchView();
-      if (latterBranch != null && !subBranchView.getBounds().bottomEndsBefore(latterBranch.getBounds()))
+      if (latterBranch != null && !GeometryUtils.bottomEndsBefore(subBranchView.getBounds(), latterBranch.getBounds()))
       {
         // collides vertically with latter sub-branch -> additionally translate off latter branch (to the right or to
         // the left)

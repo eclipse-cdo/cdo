@@ -22,7 +22,7 @@ import org.eclipse.zest.layouts.dataStructures.InternalNode;
 import org.eclipse.zest.layouts.dataStructures.InternalRelationship;
 
 /**
- * A layout algorythm that builds a tree of branch nodes. Nodes on the same branch are centered horizontally below each
+ * A layout algorithm that builds a tree of branch nodes. Nodes on the same branch are centered horizontally below each
  * other. Nodes on a new branch are shifted to the left/right - they sprout to the left/right. The description above
  * applies to a vertical layout of the branch tree. A horizontal strategy is not implemented yet.
  * 

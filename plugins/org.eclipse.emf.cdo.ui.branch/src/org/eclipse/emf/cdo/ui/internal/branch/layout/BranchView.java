@@ -11,9 +11,10 @@
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.ui.internal.branch.geometry.ExtendedDisplayIndependentRectangle;
 import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNode;
+
+import org.eclipse.zest.layouts.dataStructures.DisplayIndependentRectangle;
 
 import java.util.Collection;
 
@@ -37,7 +38,7 @@ public class BranchView
 
   private Deque<BranchView> subBranchViews = new Deque<BranchView>();
 
-  private ExtendedDisplayIndependentRectangle bounds;
+  private DisplayIndependentRectangle bounds;
 
   private BranchViewLayoutStrategy layoutStrategy;
 
@@ -122,7 +123,7 @@ public class BranchView
    * 
    * @return the bounds
    */
-  public ExtendedDisplayIndependentRectangle getBounds()
+  public DisplayIndependentRectangle getBounds()
   {
     return bounds;
   }
@@ -134,7 +135,7 @@ public class BranchView
    * @param bounds
    *          the new bounds
    */
-  public void setBounds(ExtendedDisplayIndependentRectangle bounds)
+  public void setBounds(DisplayIndependentRectangle bounds)
   {
     this.bounds = bounds;
   }

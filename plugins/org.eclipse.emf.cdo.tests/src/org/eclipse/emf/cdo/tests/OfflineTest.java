@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
+import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -24,8 +25,11 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.event.IEvent;
+
+import org.eclipse.emf.ecore.EObject;
 
 import java.util.List;
 import java.util.Map;
@@ -181,8 +185,10 @@ public class OfflineTest extends AbstractCDOTest
 
   public void testClientCommits() throws Exception
   {
+    InternalRepository clone = getRepository();
+
     TestListener listener = new TestListener();
-    CDOSession masterSession = openSession(getRepository().getName() + "_master");
+    CDOSession masterSession = openSession(clone.getName() + "_master");
     masterSession.addListener(listener);
 
     Company company = getModel1Factory().createCompany();
@@ -203,6 +209,29 @@ public class OfflineTest extends AbstractCDOTest
 
     IEvent[] events = listener.getEvents();
     assertEquals(1, events.length);
+
+    // checkRevision(company, clone.getRevisionManager().getCache().getAllRevisions());
+
+    InternalStore store = clone.getStore();
+    if (store instanceof IMEMStore)
+    {
+      checkRevision(company, ((IMEMStore)store).getAllRevisions());
+    }
+  }
+
+  private void checkRevision(EObject object, Map<CDOBranch, List<CDORevision>> allRevisions)
+  {
+    CDORevision revision = CDOUtil.getCDOObject(object).cdoRevision();
+    List<CDORevision> revisions = allRevisions.get(revision.getBranch());
+    for (CDORevision rev : revisions)
+    {
+      if (revision.equals(rev))
+      {
+        return;
+      }
+    }
+
+    fail("Revision missing: " + revision);
   }
 
   public void testDisconnectAndSync() throws Exception

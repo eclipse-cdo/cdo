@@ -67,6 +67,8 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
 
   private long creationTime;
 
+  private Map<String, String> properties = new HashMap<String, String>();
+
   private Map<Integer, BranchInfo> branchInfos = new HashMap<Integer, BranchInfo>();
 
   private Map<Object, List<InternalCDORevision>> revisions = new HashMap<Object, List<InternalCDORevision>>();
@@ -97,6 +99,26 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
   public MEMStore()
   {
     this(UNLIMITED);
+  }
+
+  public synchronized Map<String, String> getPropertyValues(Set<String> names)
+  {
+    Map<String, String> result = new HashMap<String, String>();
+    for (String name : names)
+    {
+      String value = properties.get(name);
+      if (value != null)
+      {
+        result.put(name, value);
+      }
+    }
+
+    return result;
+  }
+
+  public synchronized void setPropertyValues(Map<String, String> properties)
+  {
+    this.properties.putAll(properties);
   }
 
   public synchronized int createBranch(BranchInfo branchInfo)

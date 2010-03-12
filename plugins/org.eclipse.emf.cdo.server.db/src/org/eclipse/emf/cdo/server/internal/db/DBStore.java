@@ -41,9 +41,14 @@ import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import javax.sql.DataSource;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -164,6 +169,89 @@ public class DBStore extends LongIDStore implements IDBStore
   public IDBSchema getDBSchema()
   {
     return dbSchema;
+  }
+
+  public Map<String, String> getPropertyValues(Set<String> names)
+  {
+    Connection connection = null;
+    PreparedStatement selectStmt = null;
+
+    try
+    {
+      connection = getConnection();
+      selectStmt = connection.prepareStatement(CDODBSchema.SQL_SELECT_PROPERTIES);
+
+      Map<String, String> result = new HashMap<String, String>();
+      for (String name : names)
+      {
+        selectStmt.setString(1, name);
+        ResultSet resultSet = null;
+
+        try
+        {
+          resultSet = selectStmt.executeQuery();
+          if (resultSet.next())
+          {
+            String value = resultSet.getString(1);
+            result.put(name, value);
+          }
+        }
+        finally
+        {
+          DBUtil.close(resultSet);
+        }
+      }
+
+      return result;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(selectStmt);
+      DBUtil.close(connection);
+    }
+  }
+
+  public void setPropertyValues(Map<String, String> properties)
+  {
+    Connection connection = null;
+    PreparedStatement deleteStmt = null;
+    PreparedStatement insertStmt = null;
+
+    try
+    {
+      connection = getConnection();
+      deleteStmt = connection.prepareStatement(CDODBSchema.SQL_DELETE_PROPERTIES);
+      insertStmt = connection.prepareStatement(CDODBSchema.SQL_INSERT_PROPERTIES);
+
+      for (Entry<String, String> entry : properties.entrySet())
+      {
+        String name = entry.getKey();
+        String value = entry.getValue();
+
+        deleteStmt.setString(1, name);
+        deleteStmt.executeUpdate();
+
+        insertStmt.setString(1, name);
+        insertStmt.setString(2, value);
+        deleteStmt.executeUpdate();
+      }
+
+      connection.commit();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(insertStmt);
+      DBUtil.close(deleteStmt);
+      DBUtil.close(connection);
+    }
   }
 
   @Override

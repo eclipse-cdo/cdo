@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -31,11 +32,53 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Eike Stepper
  */
 public class RepositoryTest extends AbstractCDOTest
 {
+  public void testInsertProperties() throws Exception
+  {
+    Map<String, String> expected = new HashMap<String, String>();
+    expected.put("BOOLEAN", "true");
+    expected.put("INTEGER", "1234567");
+    expected.put("LONG", "12345671234567");
+    expected.put("DOUBLE", "1234567.1234567");
+    expected.put("STRING", "Arbitrary text");
+
+    InternalStore store = getRepository().getStore();
+    store.setPropertyValues(expected);
+
+    Map<String, String> actual = store.getPropertyValues(expected.keySet());
+    assertEquals(expected, actual);
+  }
+
+  public void testUpdateProperties() throws Exception
+  {
+    Map<String, String> expected = new HashMap<String, String>();
+    expected.put("BOOLEAN", "true");
+    expected.put("INTEGER", "1234567");
+    expected.put("LONG", "12345671234567");
+    expected.put("DOUBLE", "1234567.1234567");
+    expected.put("STRING", "Arbitrary text");
+
+    InternalStore store = getRepository().getStore();
+    store.setPropertyValues(expected);
+
+    expected.put("BOOLEAN", "false");
+    expected.put("INTEGER", "555555");
+    expected.put("LONG", "5555555555555555");
+    expected.put("DOUBLE", "555555.555555");
+    expected.put("STRING", "Different text");
+    store.setPropertyValues(expected);
+
+    Map<String, String> actual = store.getPropertyValues(expected.keySet());
+    assertEquals(expected, actual);
+  }
+
   public void testSessionClosed() throws Exception
   {
     CDOSession session = openSession();

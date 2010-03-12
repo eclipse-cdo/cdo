@@ -57,6 +57,28 @@ public class CDODBSchema extends DBSchema
   REPOSITORY.addField("last_committime", DBType.BIGINT); //$NON-NLS-1$
 
   /**
+   * DBTable cdo_properties
+   */
+  public static final IDBTable PROPERTIES = INSTANCE.addTable("cdo_properties"); //$NON-NLS-1$
+
+  public static final IDBField PROPERTIES_NAME = //
+  PROPERTIES.addField("name", DBType.VARCHAR, 255); //$NON-NLS-1$
+
+  public static final IDBField PROPERTIES_VALUE = //
+  PROPERTIES.addField("value", DBType.LONGVARCHAR); //$NON-NLS-1$
+
+  public static final IDBIndex INDEX_PROPERTIES_PK = //
+  PROPERTIES.addIndex(IDBIndex.Type.PRIMARY_KEY, PROPERTIES_NAME);
+
+  public static final String SQL_DELETE_PROPERTIES = "DELETE FROM " + PROPERTIES + " WHERE " + PROPERTIES_NAME + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+  public static final String SQL_INSERT_PROPERTIES = "INSERT INTO " + PROPERTIES + " (" + PROPERTIES_NAME + ", " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      + PROPERTIES_VALUE + ") VALUES (?, ?)"; //$NON-NLS-1$
+
+  public static final String SQL_SELECT_PROPERTIES = "SELECT " + PROPERTIES_VALUE + " FROM " + PROPERTIES + " WHERE " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      + PROPERTIES_NAME + "=?"; //$NON-NLS-1$
+
+  /**
    * DBTable cdo_package_units
    */
   public static final IDBTable PACKAGE_UNITS = INSTANCE.addTable("cdo_package_units"); //$NON-NLS-1$

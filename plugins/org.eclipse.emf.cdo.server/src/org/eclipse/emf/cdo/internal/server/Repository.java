@@ -107,9 +107,9 @@ public class Repository extends Container<Object> implements InternalRepository
 {
   private String name;
 
-  private InternalStore store;
-
   private String uuid;
+
+  private InternalStore store;
 
   private State state = State.ONLINE;
 
@@ -166,17 +166,6 @@ public class Repository extends Container<Object> implements InternalRepository
     this.name = name;
   }
 
-  public InternalStore getStore()
-  {
-    return store;
-  }
-
-  public void setStore(InternalStore store)
-  {
-    this.store = store;
-    store.setRepository(this);
-  }
-
   public String getUUID()
   {
     if (uuid == null)
@@ -193,6 +182,17 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     return uuid;
+  }
+
+  public InternalStore getStore()
+  {
+    return store;
+  }
+
+  public void setStore(InternalStore store)
+  {
+    this.store = store;
+    store.setRepository(this);
   }
 
   public Type getType()

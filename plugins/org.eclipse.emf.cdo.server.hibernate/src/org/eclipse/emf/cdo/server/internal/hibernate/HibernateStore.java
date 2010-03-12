@@ -273,6 +273,18 @@ public class HibernateStore extends Store implements IHibernateStore
     return new HibernateStoreAccessor(this, transaction);
   }
 
+  public Map<String, String> getPropertyValues(Set<String> names)
+  {
+    // TODO: implement HibernateStore.getPropertyValues(names)
+    throw new UnsupportedOperationException();
+  }
+
+  public void setPropertyValues(Map<String, String> properties)
+  {
+    // TODO: implement HibernateStore.setPropertyValues(properties)
+    throw new UnsupportedOperationException();
+  }
+
   public synchronized int getNextPackageID()
   {
     return packageHandler.getNextPackageID();

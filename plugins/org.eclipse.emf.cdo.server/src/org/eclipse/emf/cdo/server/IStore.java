@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -81,6 +82,16 @@ public interface IStore
    * @since 3.0
    */
   public long getLastCommitTime();
+
+  /**
+   * @since 3.0
+   */
+  public Map<String, String> getPropertyValues(Set<String> names);
+
+  /**
+   * @since 3.0
+   */
+  public void setPropertyValues(Map<String, String> properties);
 
   /**
    * Returns a reader that can be used to read from this store in the context of the given session.

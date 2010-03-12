@@ -62,7 +62,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalNonAuditClassMapping.class);
 
-  private String sqlSelectAllObjectIds;
+  private String sqlSelectAllObjectIDs;
 
   private String sqlSelectCurrentAttributes;
 
@@ -72,7 +72,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
   private String sqlUpdateAffix;
 
-  private String sqlUpdatePrexix;
+  private String sqlUpdatePrefix;
 
   private String sqlUpdateContainerPart;
 
@@ -202,7 +202,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    sqlSelectAllObjectIds = builder.toString();
+    sqlSelectAllObjectIDs = builder.toString();
 
     // ----------- Update attributes --------------------
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
@@ -212,7 +212,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     builder.append(" =? ,"); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CREATED);
     builder.append(" =? "); //$NON-NLS-1$
-    sqlUpdatePrexix = builder.toString();
+    sqlUpdatePrefix = builder.toString();
 
     builder = new StringBuilder(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_RESOURCE);
@@ -285,14 +285,14 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
   }
 
-  public PreparedStatement createObjectIdStatement(IDBStoreAccessor accessor)
+  public PreparedStatement createObjectIDStatement(IDBStoreAccessor accessor)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Created ObjectID Statement : {0}", sqlSelectAllObjectIds); //$NON-NLS-1$
+      TRACER.format("Created ObjectID Statement : {0}", sqlSelectAllObjectIDs); //$NON-NLS-1$
     }
 
-    return accessor.getStatementCache().getPreparedStatement(sqlSelectAllObjectIds, ReuseProbability.HIGH);
+    return accessor.getStatementCache().getPreparedStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
   }
 
   public PreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,
@@ -647,7 +647,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
   private String buildUpdateStatement(List<Pair<ITypeMapping, Object>> attributeChanges, boolean withContainment)
   {
-    StringBuilder builder = new StringBuilder(sqlUpdatePrexix);
+    StringBuilder builder = new StringBuilder(sqlUpdatePrefix);
     if (withContainment)
     {
       builder.append(sqlUpdateContainerPart);

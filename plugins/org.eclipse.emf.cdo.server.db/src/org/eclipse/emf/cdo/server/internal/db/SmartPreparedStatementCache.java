@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.util.ImplementationError;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -74,9 +75,9 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
   {
     try
     {
-      PreparedStatement stmt = getConnection().prepareStatement(sql);
-      CachedPreparedStatement result = new CachedPreparedStatement(sql, reuseProbability, stmt);
-      return result;
+      Connection connection = getConnection();
+      PreparedStatement stmt = connection.prepareStatement(sql);
+      return new CachedPreparedStatement(sql, reuseProbability, stmt);
     }
     catch (SQLException ex)
     {

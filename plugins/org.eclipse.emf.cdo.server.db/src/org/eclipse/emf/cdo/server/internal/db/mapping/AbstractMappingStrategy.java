@@ -209,7 +209,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
         {
           EClass eClass = classIt.next();
           IClassMapping mapping = getClassMapping(eClass);
-          currentStatement = mapping.createObjectIdStatement(getAccessor());
+          currentStatement = mapping.createObjectIDStatement(getAccessor());
 
           ResultSet rset = null;
 

@@ -65,7 +65,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
 
   private String sqlSelectCurrentAttributes;
 
-  private String sqlSelectAllObjectIds;
+  private String sqlSelectAllObjectIDs;
 
   private String sqlSelectAttributesByTime;
 
@@ -230,7 +230,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
     builder.append(" = 0"); //$NON-NLS-1$
-    sqlSelectAllObjectIds = builder.toString();
+    sqlSelectAllObjectIDs = builder.toString();
   }
 
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
@@ -385,14 +385,14 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     }
   }
 
-  public PreparedStatement createObjectIdStatement(IDBStoreAccessor accessor)
+  public PreparedStatement createObjectIDStatement(IDBStoreAccessor accessor)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Created ObjectID Statement : {0}", sqlSelectAllObjectIds); //$NON-NLS-1$
+      TRACER.format("Created ObjectID Statement : {0}", sqlSelectAllObjectIDs); //$NON-NLS-1$
     }
 
-    return accessor.getStatementCache().getPreparedStatement(sqlSelectAllObjectIds, ReuseProbability.HIGH);
+    return accessor.getStatementCache().getPreparedStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
   }
 
   @Override

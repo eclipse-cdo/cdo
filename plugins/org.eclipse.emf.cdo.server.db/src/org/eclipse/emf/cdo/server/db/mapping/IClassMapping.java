@@ -109,8 +109,9 @@ public interface IClassMapping
    * @param accessor
    *          the accessor to use to create the statement
    * @return the prepared statement ready to be executed using <code>result.executeQuery()</code>.
+   * @since 3.0
    */
-  public PreparedStatement createObjectIdStatement(IDBStoreAccessor accessor);
+  public PreparedStatement createObjectIDStatement(IDBStoreAccessor accessor);
 
   /**
    * Create a prepared statement which returns all IDs of instances of the corresponding class.

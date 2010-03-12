@@ -186,22 +186,23 @@ public class OfflineTest extends AbstractCDOTest
   public void testClientCommits() throws Exception
   {
     InternalRepository clone = getRepository();
+    InternalRepository master = getRepository(clone.getName() + "_master");
 
     TestListener listener = new TestListener();
-    CDOSession masterSession = openSession(clone.getName() + "_master");
+    CDOSession masterSession = openSession(master.getName());
     masterSession.addListener(listener);
 
     Company company = getModel1Factory().createCompany();
     company.setName("Test");
 
-    CDOSession session = openSession();
-    while (session.getRepositoryInfo().getState() != CDOCommonRepository.State.ONLINE)
+    CDOSession cloneSession = openSession();
+    while (cloneSession.getRepositoryInfo().getState() != CDOCommonRepository.State.ONLINE)
     {
       System.out.println("Waiting for ONLINE...");
       sleep(1000);
     }
 
-    CDOTransaction transaction = session.openTransaction();
+    CDOTransaction transaction = cloneSession.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
     resource.getContents().add(company);
@@ -210,14 +211,20 @@ public class OfflineTest extends AbstractCDOTest
     IEvent[] events = listener.getEvents();
     assertEquals(1, events.length);
 
-    // Check if revision arrived in clone cache
-    checkRevision(company, clone.getRevisionManager().getCache().getAllRevisions());
+    checkRevision(company, master);
+    checkRevision(company, clone);
+  }
 
-    // Check if revision arrived in clone store
-    InternalStore store = clone.getStore();
+  private void checkRevision(EObject object, InternalRepository repository)
+  {
+    // Check if revision arrived in cache
+    checkRevision(object, repository.getRevisionManager().getCache().getAllRevisions());
+
+    // Check if revision arrived in store
+    InternalStore store = repository.getStore();
     if (store instanceof IMEMStore)
     {
-      checkRevision(company, ((IMEMStore)store).getAllRevisions());
+      checkRevision(object, ((IMEMStore)store).getAllRevisions());
     }
   }
 

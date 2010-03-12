@@ -196,11 +196,7 @@ public class OfflineTest extends AbstractCDOTest
     company.setName("Test");
 
     CDOSession cloneSession = openSession();
-    while (cloneSession.getRepositoryInfo().getState() != CDOCommonRepository.State.ONLINE)
-    {
-      System.out.println("Waiting for ONLINE...");
-      sleep(1000);
-    }
+    waitForOnline(cloneSession.getRepositoryInfo());
 
     CDOTransaction transaction = cloneSession.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
@@ -246,11 +242,7 @@ public class OfflineTest extends AbstractCDOTest
   public void testDisconnectAndSync() throws Exception
   {
     InternalRepository clone = getRepository();
-    while (clone.getState() != CDOCommonRepository.State.ONLINE)
-    {
-      System.out.println("Waiting for ONLINE <-- " + clone.getState());
-      sleep(100);
-    }
+    waitForOnline(clone);
 
     getOfflineConfig().stopMasterTransport();
 
@@ -272,12 +264,7 @@ public class OfflineTest extends AbstractCDOTest
     company.setName("Test");
 
     getOfflineConfig().startMasterTransport();
-
-    while (clone.getState() != CDOCommonRepository.State.ONLINE)
-    {
-      System.out.println("Waiting for ONLINE <-- " + clone.getState());
-      sleep(100);
-    }
+    waitForOnline(clone);
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
@@ -288,5 +275,14 @@ public class OfflineTest extends AbstractCDOTest
 
     IEvent[] events = listener.getEvents();
     assertEquals(1, events.length);
+  }
+
+  private void waitForOnline(CDOCommonRepository repository)
+  {
+    while (repository.getState() != CDOCommonRepository.State.ONLINE)
+    {
+      System.out.println("Waiting for ONLINE...");
+      sleep(100);
+    }
   }
 }

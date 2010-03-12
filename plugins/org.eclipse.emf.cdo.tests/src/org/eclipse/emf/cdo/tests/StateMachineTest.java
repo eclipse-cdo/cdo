@@ -640,15 +640,6 @@ public class StateMachineTest extends AbstractCDOTest
     }
   }
 
-  private static void testReload(EObject object) throws Exception
-  {
-    CDOObject cdoObject = CDOUtil.getCDOObject(object);
-    if (cdoObject != null)
-    {
-      invokeMethod(cdoObject, "testReload");
-    }
-  }
-
   private static void invokeMethod(CDOObject object, String methodName) throws Exception
   {
     Method method = null;

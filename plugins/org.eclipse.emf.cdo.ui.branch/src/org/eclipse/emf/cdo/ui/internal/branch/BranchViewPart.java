@@ -51,7 +51,7 @@ public class BranchViewPart extends ViewPart
 {
   public static final String VIEW_ID = "org.eclipse.emf.cdo.ui.branch"; //$NON-NLS-1$
 
-  private static final String RES_NAME = "/res1";
+  // private static final String RES_NAME = "/res1";
 
   private IManagedContainer container;
 

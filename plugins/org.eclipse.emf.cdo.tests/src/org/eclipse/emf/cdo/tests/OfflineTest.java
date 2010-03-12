@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -275,6 +276,25 @@ public class OfflineTest extends AbstractCDOTest
 
     IEvent[] events = listener.getEvents();
     assertEquals(1, events.length);
+  }
+
+  public void testDisconnectAndCommit() throws Exception
+  {
+    InternalRepository clone = getRepository();
+    waitForOnline(clone);
+
+    getOfflineConfig().stopMasterTransport();
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("Test");
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+
+    resource.getContents().add(company);
+    CDOCommitInfo commitInfo = transaction.commit();
+    System.out.println(commitInfo);
   }
 
   private void waitForOnline(CDOCommonRepository repository)

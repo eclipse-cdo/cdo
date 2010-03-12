@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.collection.IndexedList;
@@ -43,8 +44,12 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -62,6 +67,14 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class CloneRepository extends Repository.Default implements CDOReplicationContext
 {
+  private static final String PROP_LAST_REPLICATED_BRANCH_ID = "org.eclipse.emf.cdo.server.clone.lastReplicatedBranchID"; //$NON-NLS-1$
+
+  private static final String PROP_LAST_REPLICATED_COMMIT_TIME = "org.eclipse.emf.cdo.server.clone.lastReplicatedCommitTime"; //$NON-NLS-1$
+
+  private static final String PROP_LAST_TEMP_BRANCH_ID = "org.eclipse.emf.cdo.server.clone.lastTempBranchID"; //$NON-NLS-1$
+
+  private static final String PROP_GRACEFULLY_SHUT_DOWN = "org.eclipse.emf.cdo.server.clone.gracefullyShutDown"; //$NON-NLS-1$
+
   private CloneSynchronizer synchronizer;
 
   private InternalSession replicatorSession;
@@ -211,6 +224,31 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
   protected void doActivate() throws Exception
   {
     super.doActivate();
+
+    InternalStore store = getStore();
+    if (!store.isFirstTime())
+    {
+      Map<String, String> map = store.getPropertyValues(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
+      if (!map.containsKey(PROP_GRACEFULLY_SHUT_DOWN))
+      {
+        throw new IllegalStateException("Clone store was not gracefully shut down");
+      }
+
+      Set<String> names = new HashSet<String>();
+      names.add(PROP_LAST_REPLICATED_BRANCH_ID);
+      names.add(PROP_LAST_REPLICATED_COMMIT_TIME);
+      names.add(PROP_LAST_TEMP_BRANCH_ID);
+
+      map = store.getPropertyValues(names);
+      lastReplicatedBranchID = Integer.valueOf(map.get(PROP_LAST_REPLICATED_BRANCH_ID));
+      lastReplicatedCommitTime = Long.valueOf(map.get(PROP_LAST_REPLICATED_COMMIT_TIME));
+      lastTempBranchID.set(Integer.valueOf(map.get(PROP_LAST_TEMP_BRANCH_ID)));
+    }
+    else
+    {
+      store.removePropertyValues(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
+    }
+
     replicatorSession = getSessionManager().openSession(null);
     replicatorSession.options().setPassiveUpdateEnabled(false);
 
@@ -222,6 +260,17 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
   protected void doDeactivate() throws Exception
   {
     synchronizer.deactivate();
+
+    Map<String, String> map = new HashMap<String, String>();
+    map.put(PROP_LAST_REPLICATED_BRANCH_ID, Integer.toString(lastReplicatedBranchID));
+    map.put(PROP_LAST_REPLICATED_COMMIT_TIME, Long.toString(lastReplicatedCommitTime));
+    map.put(PROP_LAST_TEMP_BRANCH_ID, Integer.toString(lastTempBranchID.get()));
+    map.put(PROP_LAST_TEMP_BRANCH_ID, Integer.toString(lastTempBranchID.get()));
+    map.put(PROP_GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
+
+    InternalStore store = getStore();
+    store.setPropertyValues(map);
+
     super.doDeactivate();
   }
 

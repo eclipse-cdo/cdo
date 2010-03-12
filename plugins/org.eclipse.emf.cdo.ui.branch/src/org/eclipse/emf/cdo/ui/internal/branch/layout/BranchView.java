@@ -26,7 +26,7 @@ import java.util.Collection;
  * second step all branches are positioned while beginning with the latest one (in terms of time stamp).
  * 
  * @author Andre Dietisheim
- * @see VerticallyDistributingLayoutStrategy
+ * @see VerticallyDistributedSubBranches
  */
 public class BranchView
 {
@@ -40,9 +40,9 @@ public class BranchView
 
   private DisplayIndependentRectangle bounds;
 
-  private VerticallyDistributingLayoutStrategy layoutStrategy;
+  private BranchViewLayoutStrategy layoutStrategy;
 
-  public BranchView(AbstractBranchPointNode baselineNode, VerticallyDistributingLayoutStrategy layoutStrategy)
+  public BranchView(AbstractBranchPointNode baselineNode, BranchViewLayoutStrategy layoutStrategy)
   {
     branch = baselineNode.getBranch();
     this.baselineNode = baselineNode;
@@ -55,7 +55,7 @@ public class BranchView
     {
       // add a branch to this node
       BranchPointNode branchpointNode = (BranchPointNode)baselineNode;
-      addBranchView(branch, branchpointNode.getNextChild(), branchpointNode);
+      addBranchView(branchpointNode.getNextChild(), branchpointNode);
     }
   }
 
@@ -74,7 +74,7 @@ public class BranchView
     return nodes;
   }
 
-  public VerticallyDistributingLayoutStrategy getLayoutStrategy()
+  public BranchViewLayoutStrategy getLayoutStrategy()
   {
     return layoutStrategy;
   }
@@ -102,7 +102,7 @@ public class BranchView
       {
         // add a branch to this node
         BranchPointNode branchpointNode = (BranchPointNode)node;
-        addBranchView(branch, branchpointNode.getNextChild(), branchpointNode);
+        addBranchView(branchpointNode.getNextChild(), branchpointNode);
       }
     }
   }
@@ -110,7 +110,7 @@ public class BranchView
   /**
    * Adds a sub-branch to the given branch point node with the given baseline node.
    */
-  private void addBranchView(CDOBranch branch, AbstractBranchPointNode baselineNode, BranchPointNode branchPointNode)
+  private void addBranchView(AbstractBranchPointNode baselineNode, BranchPointNode branchPointNode)
   {
     if (baselineNode != null)
     {

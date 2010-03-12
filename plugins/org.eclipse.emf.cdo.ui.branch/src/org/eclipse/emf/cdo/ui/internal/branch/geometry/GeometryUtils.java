@@ -107,6 +107,6 @@ public class GeometryUtils
   public static DisplayIndependentRectangle union(DisplayIndependentRectangle thisRectangle,
       DisplayIndependentRectangle thatRectangle)
   {
-    return union(thisRectangle, thatRectangle);
+    return union(thisRectangle, thatRectangle.x, thatRectangle.y, thatRectangle.width, thatRectangle.height);
   }
 }

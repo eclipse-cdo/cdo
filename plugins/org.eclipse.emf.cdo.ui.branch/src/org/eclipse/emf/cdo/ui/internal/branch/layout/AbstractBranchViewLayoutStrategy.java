@@ -28,7 +28,7 @@ import org.eclipse.zest.layouts.dataStructures.InternalNode;
  * 
  * @author Andre Dietisheim
  */
-public abstract class AbstractBranchViewLayoutStrategy
+public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayoutStrategy
 {
   protected AbstractBranchViewLayoutStrategy()
   {
@@ -70,9 +70,8 @@ public abstract class AbstractBranchViewLayoutStrategy
    */
   protected void setBaselineNodeLocation(AbstractBranchPointNode node)
   {
-    long baseTimeStamp = node.getBranch().getBase().getTimeStamp();
-    double y = node.getTimeStamp() - baseTimeStamp;
-    double x = 0;
+    double y = node.getTimeStamp();
+    double x = 0 * 100;
     BranchTreeUtils.setInternalLocation(node, x, y);
   }
 
@@ -81,8 +80,7 @@ public abstract class AbstractBranchViewLayoutStrategy
    */
   protected void setSiblingNodeLocation(AbstractBranchPointNode node, AbstractBranchPointNode previousNode)
   {
-    long baseTimeStamp = node.getBranch().getBase().getTimeStamp();
-    double y = node.getTimeStamp() - baseTimeStamp;
+    double y = node.getTimeStamp();
     BranchTreeUtils.centerHorizontally(node, previousNode, y);
   }
 
@@ -117,12 +115,12 @@ public abstract class AbstractBranchViewLayoutStrategy
   {
     if (subBranchView != null)
     {
-      doSetBranchViewLocation(branchView, subBranchView, branchPointNode);
+      setBranchViewLocation(branchView, subBranchView, branchPointNode);
       GeometryUtils.union(branchView.getBounds(), subBranchView.getBounds());
     }
   }
 
-  protected abstract void doSetBranchViewLocation(BranchView branchView, BranchView subBranchView,
+  protected abstract void setBranchViewLocation(BranchView branchView, BranchView subBranchView,
       BranchPointNode branchPointNode);
 
   /**

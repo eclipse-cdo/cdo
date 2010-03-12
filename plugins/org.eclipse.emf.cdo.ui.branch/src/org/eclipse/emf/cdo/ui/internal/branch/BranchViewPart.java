@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.internal.branch.figure.BranchPointFigure;
 import org.eclipse.emf.cdo.ui.internal.branch.figure.BranchRootFigure;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNode;
+import org.eclipse.emf.cdo.ui.internal.branch.item.NewBranchConnection;
 import org.eclipse.emf.cdo.ui.internal.branch.item.RootNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.SameBranchConnection;
 import org.eclipse.emf.cdo.ui.internal.branch.layout.BranchTreeLayoutAlgorithm;
@@ -50,8 +51,6 @@ import org.eclipse.zest.layouts.LayoutStyles;
 public class BranchViewPart extends ViewPart
 {
   public static final String VIEW_ID = "org.eclipse.emf.cdo.ui.branch"; //$NON-NLS-1$
-
-  // private static final String RES_NAME = "/res1";
 
   private IManagedContainer container;
 
@@ -228,15 +227,25 @@ public class BranchViewPart extends ViewPart
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     RootNode rootNode = new RootNode(mainBranch.getBase(), graph, SWT.NONE, new BranchRootFigure());
 
-    CDOBranch subBranch = mainBranch.createBranch(mainBranch.getID() + "-1", mainBranch.getBase().getTimeStamp() + 100);
-    BranchPointNode branchNode1 = new BranchPointNode(subBranch.getBase(), graph, SWT.NONE, new BranchPointFigure(
+    CDOBranch subBranch1 = mainBranch.createBranch("1");
+    BranchPointNode branchNode1 = new BranchPointNode(subBranch1.getBase(), graph, SWT.NONE, new BranchPointFigure(
         "branch point 1"));
     new SameBranchConnection(graph, SWT.NONE, rootNode, branchNode1);
 
-    subBranch = mainBranch.createBranch(mainBranch.getID() + "-2", mainBranch.getBase().getTimeStamp() + 301);
-    BranchPointNode branchNode2 = new BranchPointNode(subBranch.getBase(), graph, SWT.NONE, new BranchPointFigure(
+    CDOBranch subBranch2 = mainBranch.createBranch("2", subBranch1.getBase().getTimeStamp() + 30000000);
+    BranchPointNode branchNode2 = new BranchPointNode(subBranch2.getBase(), graph, SWT.NONE, new BranchPointFigure(
         "branch point 2"));
     new SameBranchConnection(graph, SWT.NONE, branchNode1, branchNode2);
+
+    CDOBranch subBranch3 = mainBranch.createBranch("3", subBranch2.getBase().getTimeStamp() + 30000000);
+    BranchPointNode branchNode3 = new BranchPointNode(subBranch3.getBase(), graph, SWT.NONE, new BranchPointFigure(
+        "branch point 3"));
+    new SameBranchConnection(graph, SWT.NONE, branchNode2, branchNode3);
+
+    CDOBranch subBranch1_1 = subBranch1.createBranch("1-1");
+    BranchPointNode branchNode1_1 = new BranchPointNode(subBranch1_1.getBase(), graph, SWT.NONE, new BranchPointFigure(
+        "branch point 1-1"));
+    new NewBranchConnection(graph, SWT.NONE, branchNode1, branchNode1_1);
   }
 
   private void init()

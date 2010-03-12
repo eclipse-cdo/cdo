@@ -50,11 +50,11 @@ public class BranchPointNode extends AbstractBranchPointNode
   public List<NewBranchConnection> getNewBranchSourceConnections()
   {
     List<NewBranchConnection> connectionList = new ArrayList<NewBranchConnection>();
-    for (Object targetConnection : getSourceConnections())
+    for (Object sourceConnection : getSourceConnections())
     {
-      if (targetConnection instanceof NewBranchConnection)
+      if (sourceConnection instanceof NewBranchConnection)
       {
-        connectionList.add((NewBranchConnection)targetConnection);
+        connectionList.add((NewBranchConnection)sourceConnection);
       }
     }
 

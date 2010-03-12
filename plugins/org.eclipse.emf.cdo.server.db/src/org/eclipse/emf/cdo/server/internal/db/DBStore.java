@@ -254,6 +254,35 @@ public class DBStore extends LongIDStore implements IDBStore
     }
   }
 
+  public void removePropertyValues(Set<String> names)
+  {
+    Connection connection = null;
+    PreparedStatement deleteStmt = null;
+
+    try
+    {
+      connection = getConnection();
+      deleteStmt = connection.prepareStatement(CDODBSchema.SQL_DELETE_PROPERTIES);
+
+      for (String name : names)
+      {
+        deleteStmt.setString(1, name);
+        deleteStmt.executeUpdate();
+      }
+
+      connection.commit();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(deleteStmt);
+      DBUtil.close(connection);
+    }
+  }
+
   @Override
   public DBStoreAccessor getReader(ISession session)
   {

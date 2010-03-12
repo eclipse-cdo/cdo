@@ -56,8 +56,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * TODO:
  * <ul>
  * <li>Make CDOIDs of new objects temporary when merging out of temp branch.
- * <li>Persist lastReplicatedBranchID and lastReplicatedCommitTime.
- * <li>Persist lastTempBranchID.
  * <li>Provide custom branching strategies.
  * <li>Consider non-auditing masters.
  * <li>Test out-of-order commits.

@@ -285,6 +285,12 @@ public class HibernateStore extends Store implements IHibernateStore
     throw new UnsupportedOperationException();
   }
 
+  public void removePropertyValues(Set<String> names)
+  {
+    // TODO: implement HibernateStore.removePropertyValues(names)
+    throw new UnsupportedOperationException();
+  }
+
   public synchronized int getNextPackageID()
   {
     return packageHandler.getNextPackageID();

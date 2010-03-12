@@ -121,6 +121,14 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     this.properties.putAll(properties);
   }
 
+  public synchronized void removePropertyValues(Set<String> names)
+  {
+    for (String name : names)
+    {
+      properties.remove(name);
+    }
+  }
+
   public synchronized int createBranch(BranchInfo branchInfo)
   {
     int id = branchInfos.size() + 1;

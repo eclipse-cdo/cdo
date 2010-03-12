@@ -94,6 +94,11 @@ public interface IStore
   public void setPropertyValues(Map<String, String> properties);
 
   /**
+   * @since 3.0
+   */
+  public void removePropertyValues(Set<String> names);
+
+  /**
    * Returns a reader that can be used to read from this store in the context of the given session.
    * 
    * @param session

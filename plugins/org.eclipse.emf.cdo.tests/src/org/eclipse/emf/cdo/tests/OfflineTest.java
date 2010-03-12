@@ -211,24 +211,24 @@ public class OfflineTest extends AbstractCDOTest
     IEvent[] events = listener.getEvents();
     assertEquals(1, events.length);
 
-    checkRevision(company, master);
-    checkRevision(company, clone);
+    checkRevision(company, master, "master");
+    checkRevision(company, clone, "clone");
   }
 
-  private void checkRevision(EObject object, InternalRepository repository)
+  private void checkRevision(EObject object, InternalRepository repository, String location)
   {
     // Check if revision arrived in cache
-    checkRevision(object, repository.getRevisionManager().getCache().getAllRevisions());
+    checkRevision(object, repository.getRevisionManager().getCache().getAllRevisions(), location + " cache");
 
     // Check if revision arrived in store
     InternalStore store = repository.getStore();
     if (store instanceof IMEMStore)
     {
-      checkRevision(object, ((IMEMStore)store).getAllRevisions());
+      checkRevision(object, ((IMEMStore)store).getAllRevisions(), location + " store");
     }
   }
 
-  private void checkRevision(EObject object, Map<CDOBranch, List<CDORevision>> allRevisions)
+  private void checkRevision(EObject object, Map<CDOBranch, List<CDORevision>> allRevisions, String location)
   {
     CDORevision revision = CDOUtil.getCDOObject(object).cdoRevision();
     List<CDORevision> revisions = allRevisions.get(revision.getBranch());
@@ -240,7 +240,7 @@ public class OfflineTest extends AbstractCDOTest
       }
     }
 
-    fail("Revision missing: " + revision);
+    fail("Revision missing from " + location + ": " + revision);
   }
 
   public void testDisconnectAndSync() throws Exception

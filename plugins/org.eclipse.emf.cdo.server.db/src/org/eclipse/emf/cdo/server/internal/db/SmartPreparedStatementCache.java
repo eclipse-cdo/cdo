@@ -37,7 +37,6 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
   public PreparedStatement getPreparedStatement(String sql, ReuseProbability reuseProbability)
   {
     CachedPreparedStatement cachedStatement = cache.remove(sql);
-
     if (cachedStatement == null)
     {
       cachedStatement = createCachedPreparedStatement(sql, reuseProbability);
@@ -73,10 +72,9 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
 
   private CachedPreparedStatement createCachedPreparedStatement(String sql, ReuseProbability reuseProbability)
   {
-    PreparedStatement stmt;
     try
     {
-      stmt = getConnection().prepareStatement(sql);
+      PreparedStatement stmt = getConnection().prepareStatement(sql);
       CachedPreparedStatement result = new CachedPreparedStatement(sql, reuseProbability, stmt);
       return result;
     }
@@ -86,6 +84,9 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
     }
   }
 
+  /**
+   * @author Stefan Winkler
+   */
   private static final class Cache
   {
     private CacheList lists[];
@@ -161,6 +162,9 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
       return result;
     }
 
+    /**
+     * @author Stefan Winkler
+     */
     private class CacheList
     {
       private CachedPreparedStatement first;
@@ -226,6 +230,9 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
     }
   }
 
+  /**
+   * @author Stefan Winkler
+   */
   private static final class CachedPreparedStatement
   {
     private long timeStamp;

@@ -11,15 +11,21 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDNullImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
 import org.eclipse.emf.cdo.spi.common.id.CDOIDLongImpl;
+import org.eclipse.emf.cdo.tests.model1.Supplier;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 /**
  * @author Stefan Winkler
@@ -89,5 +95,27 @@ public class CDOIDTest extends AbstractCDOTest
     {
       fail("Expected IllegalArgumentException!");
     }
+  }
+
+  public void testURIFragment() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+
+    Supplier supplier = getModel1Factory().createSupplier();
+    supplier.setName("Stepper");
+
+    resource.getContents().add(supplier);
+    transaction.commit();
+
+    StringBuilder builder = new StringBuilder();
+    CDOIDUtil.write(builder, CDOUtil.getCDOObject(supplier).cdoID());
+
+    String uriFragment = builder.toString();
+    System.out.println(uriFragment);
+
+    CDOID id = CDOIDUtil.read(uriFragment, (CDOIDObjectFactory)session);
+    System.out.println(id);
   }
 }

@@ -172,17 +172,32 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
     CDOBranch branch = transaction.getBranch();
     if (branch.isTemporary())
     {
-      return new TransactionCommitContext(transaction);
+      return createTransactionCommitContext(transaction);
     }
 
     if (getState() != State.ONLINE)
     {
-      final long timeStamp = createCommitTimeStamp();
-      CDOBranch offlineBranch = createOfflineBranch(branch, timeStamp - 1L);
-      transaction.setBranchPoint(offlineBranch.getHead());
-      return new BranchingCommitContext(transaction, timeStamp);
+      return createBranchingCommitContext(transaction, branch);
     }
 
+    return createWriteThroughCommitContext(transaction);
+  }
+
+  protected InternalCommitContext createTransactionCommitContext(InternalTransaction transaction)
+  {
+    return new TransactionCommitContext(transaction);
+  }
+
+  protected InternalCommitContext createBranchingCommitContext(InternalTransaction transaction, CDOBranch branch)
+  {
+    long timeStamp = createCommitTimeStamp();
+    CDOBranch offlineBranch = createOfflineBranch(branch, timeStamp - 1L);
+    transaction.setBranchPoint(offlineBranch.getHead());
+    return new BranchingCommitContext(transaction, timeStamp);
+  }
+
+  protected InternalCommitContext createWriteThroughCommitContext(InternalTransaction transaction)
+  {
     return new WriteThroughCommitContext(transaction);
   }
 
@@ -337,25 +352,57 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
     @Override
     public void commit(OMMonitor monitor)
     {
-      CDOBranch branch = getTransaction().getBranch();
+      InternalTransaction transaction = getTransaction();
+
+      // Prepare commit to the master
+      CDOBranch branch = transaction.getBranch();
       String userID = getUserID();
       String comment = getCommitComment();
       CDOCommitData commitData = new CommitContextData(this);
 
+      // Delegate commit to the master
       CDOSessionProtocol sessionProtocol = ((InternalCDOSession)synchronizer.getMaster()).getSessionProtocol();
       CommitTransactionResult result = sessionProtocol.commitDelegation(branch, userID, comment, commitData, monitor);
 
+      // Stop if commit to master failed
       String rollbackMessage = result.getRollbackMessage();
       if (rollbackMessage != null)
       {
         throw new TransactionException(rollbackMessage);
       }
 
-      long timeStamp = result.getTimeStamp();
-      setTimeStamp(timeStamp);
-
+      // Prepare data needed for commit result and commit notifications
+      setTimeStamp(result.getTimeStamp());
       addMetaIDRanges(commitData.getNewPackageUnits());
       addIDMappings(result.getIDMappings());
+      applyIDMappings(new Monitor());
+
+      // Commit to the clone
+      super.preWrite();
+      super.write(new Monitor());
+      super.commit(new Monitor());
+
+      // Remember commit time in the clone
+      setLastCommitTimeStamp(result.getTimeStamp());
+    }
+
+    @Override
+    protected long createTimeStamp()
+    {
+      // Already set after commit to the master
+      return getTimeStamp();
+    }
+
+    @Override
+    protected void lockObjects() throws InterruptedException
+    {
+      // Do nothing
+    }
+
+    @Override
+    protected void adjustMetaRanges()
+    {
+      // Do nothing
     }
 
     private void addMetaIDRanges(List<CDOPackageUnit> newPackageUnits)

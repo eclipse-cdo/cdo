@@ -93,7 +93,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private CDOID[] detachedObjects = new CDOID[0];
 
-  private InternalCDORevision[] dirtyObjects;
+  private InternalCDORevision[] dirtyObjects = new InternalCDORevision[0];
 
   private List<InternalCDORevision> detachedRevisions = new ArrayList<InternalCDORevision>();
 

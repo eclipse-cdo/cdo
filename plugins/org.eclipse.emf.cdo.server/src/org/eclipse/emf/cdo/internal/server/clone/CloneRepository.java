@@ -185,7 +185,7 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
 
   protected InternalCommitContext createTransactionCommitContext(InternalTransaction transaction)
   {
-    return new TransactionCommitContext(transaction);
+    return super.createCommitContext(transaction);
   }
 
   protected InternalCommitContext createBranchingCommitContext(InternalTransaction transaction, CDOBranch branch)

@@ -237,7 +237,7 @@ public class DBStore extends LongIDStore implements IDBStore
 
         insertStmt.setString(1, name);
         insertStmt.setString(2, value);
-        deleteStmt.executeUpdate();
+        insertStmt.executeUpdate();
       }
 
       connection.commit();

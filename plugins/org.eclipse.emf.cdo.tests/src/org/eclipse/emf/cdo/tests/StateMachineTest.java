@@ -145,15 +145,6 @@ public class StateMachineTest extends AbstractCDOTest
     }
   }
 
-  public void test_TRANSIENT_with_RELOAD() throws Exception
-  {
-    Supplier supplier = getModel1Factory().createSupplier();
-    supplier.setName("Stepper");
-    assertTransient(supplier);
-    testReload(supplier);
-    assertTransient(supplier);
-  }
-
   public void test_TRANSIENT_with_COMMIT() throws Exception
   {
     Supplier supplier = getModel1Factory().createSupplier();
@@ -269,23 +260,6 @@ public class StateMachineTest extends AbstractCDOTest
     try
     {
       invalidate(supplier);
-      fail("IllegalStateException expected");
-    }
-    catch (IllegalStateException expected)
-    {
-      assertFailure(expected);
-    }
-  }
-
-  public void test_PREPARED_with_RELOAD() throws Exception
-  {
-    Supplier supplier = getModel1Factory().createSupplier();
-    supplier.setName("Stepper");
-    setState(supplier, CDOState.PREPARED);
-
-    try
-    {
-      testReload(CDOUtil.getCDOObject(supplier));
       fail("IllegalStateException expected");
     }
     catch (IllegalStateException expected)
@@ -432,10 +406,6 @@ public class StateMachineTest extends AbstractCDOTest
   }
 
   public void test_NEW_with_INVALIDATE() throws Exception
-  {
-  }
-
-  public void test_NEW_with_RELOAD() throws Exception
   {
   }
 

@@ -324,8 +324,7 @@ public class OfflineTest extends AbstractCDOTest
     waitForOnline(clone);
 
     transaction.setBranch(session.getBranchManager().getMainBranch());
-    CDOChangeSetData result = transaction.merge(commitInfo, new DefaultCDOMerger.PerFeature.ManyValued());
-
+    transaction.merge(commitInfo, new DefaultCDOMerger.PerFeature.ManyValued());
     transaction.commit();
   }
 

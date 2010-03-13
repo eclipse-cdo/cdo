@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -32,6 +33,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.net4j.util.event.IEvent;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 
 import java.util.List;
 import java.util.Map;
@@ -293,8 +295,6 @@ public class OfflineTest extends AbstractCDOTest
     company.setName("Test");
 
     CDOSession session = openSession();
-    ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().setCommitTimeout(100000);
-    ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().setProgressInterval(600);
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
@@ -304,7 +304,7 @@ public class OfflineTest extends AbstractCDOTest
     assertEquals(true, transaction.getBranch().isLocal());
   }
 
-  public void _testDisconnectAndCommitAndMerge() throws Exception
+  public void testDisconnectAndCommitAndMerge() throws Exception
   {
     CloneRepository clone = (CloneRepository)getRepository();
     clone.getSynchronizer().setRetryInterval(600);
@@ -317,14 +317,19 @@ public class OfflineTest extends AbstractCDOTest
     company.setName("Test");
 
     CDOSession session = openSession();
-    ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().setCommitTimeout(100000);
-    ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().setProgressInterval(600);
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
     resource.getContents().add(company);
     CDOCommitInfo commitInfo = transaction.commit();
-    System.out.println(commitInfo);
+
+    getOfflineConfig().startMasterTransport();
+    waitForOnline(clone);
+
+    transaction.setBranch(session.getBranchManager().getMainBranch());
+    CDOChangeSetData result = transaction.merge(commitInfo, new DefaultCDOMerger.PerFeature.ManyValued());
+
+    transaction.commit();
   }
 
   private void waitForOnline(CDOCommonRepository repository)

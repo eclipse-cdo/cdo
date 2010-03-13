@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 
 import java.util.Collections;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author Eike Stepper
@@ -31,10 +32,7 @@ public abstract class LongIDStore extends Store
   public static final Set<ObjectType> OBJECT_ID_TYPES = Collections.singleton(CDOID.ObjectType.LONG);
 
   @ExcludeFromDump
-  private transient long lastObjectID;
-
-  @ExcludeFromDump
-  private transient Object lastObjectIDLock = new Object();
+  private transient AtomicLong lastObjectID = new AtomicLong();
 
   public LongIDStore(String type, Set<ChangeFormat> supportedChangeFormats,
       Set<RevisionTemporality> supportedRevisionTemporalities, Set<RevisionParallelism> supportedRevisionParallelisms)
@@ -44,25 +42,16 @@ public abstract class LongIDStore extends Store
 
   public long getLastObjectID()
   {
-    synchronized (lastObjectIDLock)
-    {
-      return lastObjectID;
-    }
+    return lastObjectID.get();
   }
 
   public void setLastObjectID(long lastObjectID)
   {
-    synchronized (lastObjectIDLock)
-    {
-      this.lastObjectID = lastObjectID;
-    }
+    this.lastObjectID.set(lastObjectID);
   }
 
   public CDOID getNextCDOID()
   {
-    synchronized (lastObjectIDLock)
-    {
-      return CDOIDUtil.createLong(++lastObjectID);
-    }
+    return CDOIDUtil.createLong(lastObjectID.incrementAndGet());
   }
 }

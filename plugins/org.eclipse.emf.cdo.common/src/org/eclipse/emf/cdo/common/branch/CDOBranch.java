@@ -26,7 +26,7 @@ public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>
 
   public boolean isMainBranch();
 
-  public boolean isTemporary();
+  public boolean isLocal();
 
   public int getID();
 

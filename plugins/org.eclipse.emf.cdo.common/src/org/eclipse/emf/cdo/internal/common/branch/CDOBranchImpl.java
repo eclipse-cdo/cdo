@@ -60,7 +60,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     return false;
   }
 
-  public boolean isTemporary()
+  public boolean isLocal()
   {
     return id < 0;
   }

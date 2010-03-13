@@ -127,7 +127,7 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
 
   public void handleBranch(CDOBranch branch)
   {
-    if (branch.isTemporary())
+    if (branch.isLocal())
     {
       return;
     }
@@ -147,7 +147,7 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
   public void handleCommitInfo(CDOCommitInfo commitInfo)
   {
     CDOBranch branch = commitInfo.getBranch();
-    if (branch.isTemporary())
+    if (branch.isLocal())
     {
       return;
     }
@@ -180,7 +180,7 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
   public InternalCommitContext createCommitContext(InternalTransaction transaction)
   {
     CDOBranch branch = transaction.getBranch();
-    if (branch.isTemporary())
+    if (branch.isLocal())
     {
       return createTransactionCommitContext(transaction);
     }

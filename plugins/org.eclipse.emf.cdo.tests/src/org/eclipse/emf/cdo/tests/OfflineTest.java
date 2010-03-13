@@ -303,6 +303,32 @@ public class OfflineTest extends AbstractCDOTest
     assertEquals(true, transaction.getBranch().isLocal());
   }
 
+  public void testDisconnectAndCommitAndMergeWithoutNewPackages() throws Exception
+  {
+    CloneRepository clone = (CloneRepository)getRepository();
+    waitForOnline(clone);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+    resource.getContents().add(getModel1Factory().createCompany());
+    transaction.commit();
+
+    getOfflineConfig().stopMasterTransport();
+    waitForOffline(clone);
+
+    resource.getContents().add(getModel1Factory().createCompany());
+    CDOCommitInfo commitInfo = transaction.commit();
+
+    getOfflineConfig().startMasterTransport();
+    waitForOnline(clone);
+
+    transaction.setBranch(session.getBranchManager().getMainBranch());
+    CDOChangeSetData result = transaction.merge(commitInfo, new DefaultCDOMerger.PerFeature.ManyValued());
+
+    transaction.commit();
+  }
+
   public void testDisconnectAndCommitAndMerge() throws Exception
   {
     CloneRepository clone = (CloneRepository)getRepository();

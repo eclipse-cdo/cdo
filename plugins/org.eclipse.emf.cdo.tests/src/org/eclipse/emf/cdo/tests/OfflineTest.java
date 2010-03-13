@@ -285,7 +285,6 @@ public class OfflineTest extends AbstractCDOTest
   public void testDisconnectAndCommit() throws Exception
   {
     CloneRepository clone = (CloneRepository)getRepository();
-    clone.getSynchronizer().setRetryInterval(600);
     waitForOnline(clone);
 
     getOfflineConfig().stopMasterTransport();
@@ -307,7 +306,6 @@ public class OfflineTest extends AbstractCDOTest
   public void testDisconnectAndCommitAndMerge() throws Exception
   {
     CloneRepository clone = (CloneRepository)getRepository();
-    clone.getSynchronizer().setRetryInterval(600);
     waitForOnline(clone);
 
     getOfflineConfig().stopMasterTransport();

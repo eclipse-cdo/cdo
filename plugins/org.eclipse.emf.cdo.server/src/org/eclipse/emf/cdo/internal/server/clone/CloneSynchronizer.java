@@ -170,19 +170,6 @@ public class CloneSynchronizer extends QueueRunner
   private void reconnect()
   {
     clearQueue();
-    long end = System.currentTimeMillis() + 1000L * retryInterval;
-
-    for (;;)
-    {
-      long now = System.currentTimeMillis();
-      if (now >= end || !isActive())
-      {
-        break;
-      }
-
-      ConcurrencyUtil.sleep(Math.min(100L, end - now));
-    }
-
     if (isActive())
     {
       scheduleConnect();
@@ -296,6 +283,19 @@ public class CloneSynchronizer extends QueueRunner
           if (isActive())
           {
             OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...");
+            long end = System.currentTimeMillis() + 1000L * retryInterval;
+
+            for (;;)
+            {
+              long now = System.currentTimeMillis();
+              if (now >= end || !isActive())
+              {
+                break;
+              }
+
+              ConcurrencyUtil.sleep(Math.min(100L, end - now));
+            }
+
             reconnect();
           }
 

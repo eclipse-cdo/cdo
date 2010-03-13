@@ -100,10 +100,8 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
     {
       return RIGHT;
     }
-    else
-    {
-      return LEFT;
-    }
+
+    return LEFT;
   }
 
   /**

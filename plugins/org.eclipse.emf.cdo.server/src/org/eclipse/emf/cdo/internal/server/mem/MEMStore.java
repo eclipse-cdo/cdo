@@ -684,6 +684,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     InternalCDORevision rev = getRevisionByVersion(list, version);
     if (rev != null)
     {
+      rev = getRevisionByVersion(list, version);
       throw new IllegalStateException("Concurrent modification of " + rev.getEClass().getName() + "@" + rev.getID());
     }
 

@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.server.clone.CloneRepository;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -280,8 +281,10 @@ public class OfflineTest extends AbstractCDOTest
 
   public void testDisconnectAndCommit() throws Exception
   {
-    InternalRepository clone = getRepository();
+    CloneRepository clone = (CloneRepository)getRepository();
+    clone.getSynchronizer().setRetryInterval(600);
     waitForOnline(clone);
+    System.out.println(CDORevisionUtil.dumpAllRevisions(((IMEMStore)clone.getStore()).getAllRevisions()));
 
     getOfflineConfig().stopMasterTransport();
 
@@ -289,6 +292,8 @@ public class OfflineTest extends AbstractCDOTest
     company.setName("Test");
 
     CDOSession session = openSession();
+    ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().setCommitTimeout(100000);
+    ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().setProgressInterval(600);
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 

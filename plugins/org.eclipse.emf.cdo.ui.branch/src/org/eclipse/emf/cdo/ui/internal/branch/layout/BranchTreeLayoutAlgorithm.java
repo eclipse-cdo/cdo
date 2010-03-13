@@ -397,18 +397,17 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
       return new DisplayIndependentRectangle(realBounds.x + borderWidth / 2.0, realBounds.y + borderWidth / 2.0,
           realBounds.width - borderWidth, realBounds.height - borderWidth);
     }
-    else
-    { // retain layout aspect ratio
-      double heightAdjustment = realBounds.height / layoutBounds.height;
-      double widthAdjustment = realBounds.width / layoutBounds.width;
-      double ratio = Math.min(heightAdjustment, widthAdjustment);
-      double adjustedHeight = layoutBounds.height * ratio;
-      double adjustedWidth = layoutBounds.width * ratio;
-      double adjustedX = realBounds.x + (realBounds.width - adjustedWidth) / 2.0;
-      double adjustedY = realBounds.y + (realBounds.height - adjustedHeight) / 2.0;
-      double borderWidth = Math.min(adjustedWidth, adjustedHeight) / 10.0; // use 10% for the border - 5% on each side
-      return new DisplayIndependentRectangle(adjustedX + borderWidth / 2.0, adjustedY + borderWidth / 2.0,
-          adjustedWidth - borderWidth, adjustedHeight - borderWidth);
-    }
+
+    // retain layout aspect ratio
+    double heightAdjustment = realBounds.height / layoutBounds.height;
+    double widthAdjustment = realBounds.width / layoutBounds.width;
+    double ratio = Math.min(heightAdjustment, widthAdjustment);
+    double adjustedHeight = layoutBounds.height * ratio;
+    double adjustedWidth = layoutBounds.width * ratio;
+    double adjustedX = realBounds.x + (realBounds.width - adjustedWidth) / 2.0;
+    double adjustedY = realBounds.y + (realBounds.height - adjustedHeight) / 2.0;
+    double borderWidth = Math.min(adjustedWidth, adjustedHeight) / 10.0; // use 10% for the border - 5% on each side
+    return new DisplayIndependentRectangle(adjustedX + borderWidth / 2.0, adjustedY + borderWidth / 2.0, adjustedWidth
+        - borderWidth, adjustedHeight - borderWidth);
   }
 }

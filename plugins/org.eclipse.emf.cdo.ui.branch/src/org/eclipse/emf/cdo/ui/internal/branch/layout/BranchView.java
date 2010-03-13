@@ -148,8 +148,6 @@ public class BranchView
   /**
    * Translates the given branch view by the given dimension.
    * 
-   * @param branchView
-   *          the branch view to translate
    * @param dimension
    *          the dimension the x- and y-offset
    */

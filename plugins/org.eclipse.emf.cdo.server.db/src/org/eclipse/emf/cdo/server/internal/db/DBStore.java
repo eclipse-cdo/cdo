@@ -403,13 +403,14 @@ public class DBStore extends LongIDStore implements IDBStore
     firstTime = true;
 
     DBUtil.insertRow(connection, dbAdapter, CDODBSchema.REPOSITORY, creationTime, 1, creationTime, 0, CRASHED_OID,
-        CRASHED_OID, CRASHED_BRANCHID, CDORevision.UNSPECIFIED_DATE);
+        CRASHED_OID, CRASHED_OID, CRASHED_BRANCHID, CDORevision.UNSPECIFIED_DATE);
     OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.8"), creationTime)); //$NON-NLS-1$
   }
 
   protected void reStart(Connection connection)
   {
     creationTime = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_CREATED);
+    long nextLocalObjectID = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_NEXT_LOCAL_CDOID);
     long lastObjectID = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_LAST_CDOID);
     long lastMetaID = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_LAST_METAID);
     int lastBranchID = DBUtil.selectMaximumInt(connection, CDODBSchema.REPOSITORY_LAST_BRANCHID);
@@ -419,15 +420,17 @@ public class DBStore extends LongIDStore implements IDBStore
     {
       OM.LOG.info(Messages.getString("DBStore.9")); //$NON-NLS-1$
       long[] result = mappingStrategy.repairAfterCrash(dbAdapter, connection);
-      lastObjectID = result[0];
-      lastCommitTime = result[1];
+      nextLocalObjectID = result[0];
+      lastObjectID = result[1];
+      lastCommitTime = result[2];
       lastMetaID = DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGE_INFOS_META_UB);
       lastBranchID = DBUtil.selectMaximumInt(connection, CDODBSchema.BRANCHES_ID);
       OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.10"), lastObjectID, lastMetaID)); //$NON-NLS-1$
     }
 
-    setLastMetaID(lastMetaID);
+    setNextLocalObjectID(nextLocalObjectID);
     setLastObjectID(lastObjectID);
+    setLastMetaID(lastMetaID);
     setLastBranchID(lastBranchID);
     setLastCommitTime(lastCommitTime);
 
@@ -481,6 +484,10 @@ public class DBStore extends LongIDStore implements IDBStore
       builder.append(CDODBSchema.REPOSITORY_STOPPED);
       builder.append("="); //$NON-NLS-1$
       builder.append(getRepository().getTimeStamp());
+      builder.append(", "); //$NON-NLS-1$
+      builder.append(CDODBSchema.REPOSITORY_NEXT_LOCAL_CDOID);
+      builder.append("="); //$NON-NLS-1$
+      builder.append(getNextLocalObjectID());
       builder.append(", "); //$NON-NLS-1$
       builder.append(CDODBSchema.REPOSITORY_LAST_CDOID);
       builder.append("="); //$NON-NLS-1$

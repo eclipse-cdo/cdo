@@ -44,6 +44,9 @@ public class CDODBSchema extends DBSchema
   public static final IDBField REPOSITORY_STOPPED = //
   REPOSITORY.addField("stopped", DBType.BIGINT); //$NON-NLS-1$
 
+  public static final IDBField REPOSITORY_NEXT_LOCAL_CDOID = //
+  REPOSITORY.addField("next_local_cdoid", DBType.BIGINT); //$NON-NLS-1$
+
   public static final IDBField REPOSITORY_LAST_CDOID = //
   REPOSITORY.addField("last_cdoid", DBType.BIGINT); //$NON-NLS-1$
 

@@ -73,10 +73,11 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
   public long[] repairAfterCrash(IDBAdapter dbAdapter, Connection connection)
   {
+    long minLocalID = getMinLocalID(connection);
     long maxID = objectTypeCache.getMaxID(connection);
     long maxTime = getMaxTime(connection);
 
-    long[] result = { maxID, maxTime };
+    long[] result = { minLocalID, maxID, maxTime };
     return result;
   }
 
@@ -186,6 +187,26 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       DBUtil.close(rset);
       accessor.getStatementCache().releasePreparedStatement(stmt);
     }
+  }
+
+  private long getMinLocalID(Connection connection)
+  {
+    long min = Long.MAX_VALUE;
+    if (getStore().getRepository().isSupportingBranches())
+    {
+      for (IClassMapping classMapping : getClassMappings().values())
+      {
+        IDBTable table = classMapping.getDBTables().get(0);
+        IDBField field = table.getField(CDODBSchema.ATTRIBUTES_ID);
+        long id = DBUtil.selectMinimumLong(connection, field, "0>" + CDODBSchema.ATTRIBUTES_BRANCH); //$NON-NLS-1$
+        if (id < min)
+        {
+          min = id;
+        }
+      }
+    }
+
+    return min;
   }
 
   private long getMaxTime(Connection connection)

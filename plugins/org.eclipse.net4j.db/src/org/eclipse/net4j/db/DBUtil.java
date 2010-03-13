@@ -285,9 +285,12 @@ public final class DBUtil
     }
   }
 
-  public static int selectMaximumInt(Connection connection, IDBField field) throws DBException
+  /**
+   * @since 3.0
+   */
+  public static int selectMinimumInt(Connection connection, IDBField field, String... where) throws DBException
   {
-    Number number = getMaximumNumber(connection, field);
+    Number number = getFunctionResult(connection, field, "MIN", where); //$NON-NLS-1$
     if (number instanceof Integer)
     {
       return (Integer)number;
@@ -300,9 +303,12 @@ public final class DBUtil
     throw new DBException("Not an integer number: " + number); //$NON-NLS-1$
   }
 
-  public static long selectMaximumLong(Connection connection, IDBField field) throws DBException
+  /**
+   * @since 3.0
+   */
+  public static long selectMinimumLong(Connection connection, IDBField field, String... where) throws DBException
   {
-    Number number = getMaximumNumber(connection, field);
+    Number number = getFunctionResult(connection, field, "MIN", where); //$NON-NLS-1$
     if (number instanceof Long)
     {
       return (Long)number;
@@ -315,13 +321,68 @@ public final class DBUtil
     throw new DBException("Not a long number: " + number); //$NON-NLS-1$
   }
 
-  private static Number getMaximumNumber(Connection connection, IDBField field) throws DBException
+  /**
+   * @since 3.0
+   */
+  public static int selectMaximumInt(Connection connection, IDBField field, String... where) throws DBException
+  {
+    Number number = getFunctionResult(connection, field, "MAX", where); //$NON-NLS-1$
+    if (number instanceof Integer)
+    {
+      return (Integer)number;
+    }
+    else if (number == null)
+    {
+      return 0;
+    }
+
+    throw new DBException("Not an integer number: " + number); //$NON-NLS-1$
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static long selectMaximumLong(Connection connection, IDBField field, String... where) throws DBException
+  {
+    Number number = getFunctionResult(connection, field, "MAX", where); //$NON-NLS-1$
+    if (number instanceof Long)
+    {
+      return (Long)number;
+    }
+    else if (number == null)
+    {
+      return 0L;
+    }
+
+    throw new DBException("Not a long number: " + number); //$NON-NLS-1$
+  }
+
+  private static Number getFunctionResult(Connection connection, IDBField field, String function, String... where)
+      throws DBException
   {
     StringBuilder builder = new StringBuilder();
-    builder.append("SELECT MAX("); //$NON-NLS-1$
+    builder.append("SELECT "); //$NON-NLS-1$
+    builder.append(function);
+    builder.append("("); //$NON-NLS-1$
     builder.append(field);
     builder.append(") FROM "); //$NON-NLS-1$
     builder.append(field.getTable());
+
+    for (int i = 0; i < where.length; i++)
+    {
+      if (i == 0)
+      {
+        builder.append(" WHERE "); //$NON-NLS-1$
+      }
+      else
+      {
+        builder.append(" AND "); //$NON-NLS-1$
+      }
+
+      builder.append("("); //$NON-NLS-1$
+      builder.append(where[i]);
+      builder.append(")"); //$NON-NLS-1$
+    }
 
     String sql = builder.toString();
     trace(sql);

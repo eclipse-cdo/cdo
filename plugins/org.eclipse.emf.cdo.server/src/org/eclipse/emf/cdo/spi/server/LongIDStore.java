@@ -34,6 +34,9 @@ public abstract class LongIDStore extends Store
   @ExcludeFromDump
   private transient AtomicLong lastObjectID = new AtomicLong();
 
+  @ExcludeFromDump
+  private transient AtomicLong nextLocalObjectID = new AtomicLong(Long.MAX_VALUE);
+
   public LongIDStore(String type, Set<ChangeFormat> supportedChangeFormats,
       Set<RevisionTemporality> supportedRevisionTemporalities, Set<RevisionParallelism> supportedRevisionParallelisms)
   {
@@ -50,8 +53,32 @@ public abstract class LongIDStore extends Store
     this.lastObjectID.set(lastObjectID);
   }
 
-  public CDOID getNextCDOID()
+  /**
+   * @since 3.0
+   */
+  public long getNextLocalObjectID()
   {
+    return nextLocalObjectID.get();
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void setNextLocalObjectID(long nextLocalObjectID)
+  {
+    this.nextLocalObjectID.set(nextLocalObjectID);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public CDOID getNextCDOID(boolean local)
+  {
+    if (local)
+    {
+      return CDOIDUtil.createLong(nextLocalObjectID.getAndDecrement());
+    }
+
     return CDOIDUtil.createLong(lastObjectID.incrementAndGet());
   }
 }

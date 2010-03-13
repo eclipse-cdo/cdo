@@ -317,9 +317,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       long now = session.getLastUpdateTime();
       CDOBranchPoint target = getBranch().getPoint(now);
+
+      CDOBranch sourceBranch = source.getBranch();
       if (source.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
       {
-        source = source.getBranch().getPoint(now);
+        source = sourceBranch.getPoint(now);
       }
 
       if (CDOBranchUtil.isContainedBy(source, target))
@@ -347,6 +349,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       if (result == null)
       {
         return null;
+      }
+
+      if (sourceBranch.isLocal())
+      {
       }
 
       return applyChangeSetData(ancestorInfo, targetInfo, result);

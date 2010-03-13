@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongWithClassifierImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectStringImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectStringWithClassifierImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectUUIDImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
@@ -66,32 +67,32 @@ public final class CDOIDUtil
     {
       return AbstractCDOIDLong.NULL_VALUE;
     }
-  
+
     switch (id.getType())
     {
     case NULL:
       return AbstractCDOIDLong.NULL_VALUE;
-  
+
     case OBJECT:
       if (id instanceof AbstractCDOIDLong)
       {
         return ((AbstractCDOIDLong)id).getLongValue();
       }
-  
+
       throw new IllegalArgumentException(MessageFormat.format(
           Messages.getString("CDOIDUtil.0"), id.getClass().getName())); //$NON-NLS-1$
-  
+
     case META:
       return ((CDOIDMeta)id).getLongValue();
-  
+
     case TEMP_META:
     case TEMP_OBJECT:
       throw new IllegalArgumentException(Messages.getString("CDOIDUtil.1")); //$NON-NLS-1$
-  
+
     case EXTERNAL_OBJECT:
     case EXTERNAL_TEMP_OBJECT:
       throw new IllegalArgumentException(Messages.getString("CDOIDUtil.2")); //$NON-NLS-1$
-  
+
     default:
       throw new IllegalArgumentException(MessageFormat.format(
           Messages.getString("CDOIDUtil.3"), id.getClass().getName())); //$NON-NLS-1$
@@ -163,94 +164,35 @@ public final class CDOIDUtil
     return new CDOIDExternalImpl(uri);
   }
 
-  /**
-   * Format of the URI fragment.
-   * <p>
-   * Non-legacy: <code>&lt;ID TYPE>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
-   * <p>
-   * Legacy: <code>&lt;ID TYPE>/&lt;PACKAGE URI>/&lt;CLASSIFIER ID>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
-   * 
-   * @since 3.0
-   */
-  public static CDOID read(String uriFragment)
+  public static CDOIDMeta createMeta(long value)
   {
-    // An OBJECT subtype has a negative value
-    if (uriFragment.startsWith("-"))
-    {
-      return createCDOIDObject(uriFragment);
-    }
-
-    byte ordinal = Byte.valueOf(uriFragment.substring(0, 1));
-    if (TRACER.isEnabled())
-    {
-      try
-      {
-        String type = Type.values()[ordinal].toString();
-        TRACER.format("Reading CDOID of type {0} ({1})", ordinal, type); //$NON-NLS-1$
-      }
-      catch (RuntimeException ex)
-      {
-        TRACER.trace(ex);
-      }
-    }
-
-    Type type = Type.values()[ordinal];
-    String fragment = uriFragment.substring(2);
-    switch (type)
-    {
-    case NULL:
-      return CDOID.NULL;
-
-    case TEMP_OBJECT:
-      return new CDOIDTempObjectImpl(Integer.valueOf(fragment));
-
-    case TEMP_META:
-      return new CDOIDTempMetaImpl(Integer.valueOf(fragment));
-
-    case META:
-      return new CDOIDMetaImpl(Long.valueOf(fragment));
-
-    case EXTERNAL_OBJECT:
-      return new CDOIDExternalImpl(fragment);
-
-    case EXTERNAL_TEMP_OBJECT:
-      return new CDOIDTempObjectExternalImpl(fragment);
-
-    case OBJECT:
-    {
-      // Normally this case should not occur (is an OBJECT subtype).
-      throw new ImplementationError();
-    }
-
-    default:
-      throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOIDUtil.5"), uriFragment)); //$NON-NLS-1$
-    }
+    return new CDOIDMetaImpl(value);
   }
 
-  private static CDOID createCDOIDObject(String uriFragment)
+  public static CDOIDMetaRange createMetaRange(CDOID lowerBound, int count)
   {
-    byte negOrdinal = Byte.valueOf(uriFragment.substring(0, 2));
-    int ordinal = -1 * negOrdinal - 1;
-    if (TRACER.isEnabled())
-    {
-      try
-      {
-        String type = CDOID.ObjectType.values()[ordinal].toString();
-        TRACER.format("Reading CDOID Object of subType {0} ({1})", ordinal, type); //$NON-NLS-1$
-      }
-      catch (RuntimeException ex)
-      {
-        TRACER.trace(ex);
-      }
-    }
+    return new CDOIDMetaRangeImpl(lowerBound, count);
+  }
 
-    CDOID.ObjectType subType = CDOID.ObjectType.values()[ordinal];
-    AbstractCDOID id = createCDOIDObject(subType);
-    // note position 2 in the uriFragment is a /
-    // see the write method
-    String fragment = uriFragment.substring(3);
-    id.read(fragment);
-    return id;
+  public static CDOIDAndVersion createIDAndVersion(CDOID id, int version)
+  {
+    return new CDOIDAndVersionImpl(id, version);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static CDOIDAndVersion createIDAndVersion(CDOIDAndVersion source)
+  {
+    return createIDAndVersion(source.getID(), source.getVersion());
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static CDOIDAndBranch createIDAndBranch(CDOID id, CDOBranch branch)
+  {
+    return new CDOIDAndBranchImpl(id, branch);
   }
 
   /**
@@ -285,6 +227,10 @@ public final class CDOIDUtil
 
     case STRING_WITH_CLASSIFIER:
       id = new CDOIDObjectStringWithClassifierImpl();
+      break;
+
+    case UUID:
+      id = new CDOIDObjectUUIDImpl();
       break;
 
     default:
@@ -350,35 +296,94 @@ public final class CDOIDUtil
     builder.append("/" + id.toURIFragment()); //$NON-NLS-1$
   }
 
-  public static CDOIDMeta createMeta(long value)
-  {
-    return new CDOIDMetaImpl(value);
-  }
-
-  public static CDOIDMetaRange createMetaRange(CDOID lowerBound, int count)
-  {
-    return new CDOIDMetaRangeImpl(lowerBound, count);
-  }
-
-  public static CDOIDAndVersion createIDAndVersion(CDOID id, int version)
-  {
-    return new CDOIDAndVersionImpl(id, version);
-  }
-
   /**
+   * Format of the URI fragment.
+   * <p>
+   * Non-legacy: <code>&lt;ID TYPE>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
+   * <p>
+   * Legacy: <code>&lt;ID TYPE>/&lt;PACKAGE URI>/&lt;CLASSIFIER ID>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
+   * 
    * @since 3.0
    */
-  public static CDOIDAndVersion createIDAndVersion(CDOIDAndVersion source)
+  public static CDOID read(String uriFragment)
   {
-    return createIDAndVersion(source.getID(), source.getVersion());
+    // An OBJECT subtype has a negative value
+    if (uriFragment.startsWith("-"))
+    {
+      return readCDOIDObject(uriFragment);
+    }
+
+    byte ordinal = Byte.valueOf(uriFragment.substring(0, 1));
+    if (TRACER.isEnabled())
+    {
+      try
+      {
+        String type = Type.values()[ordinal].toString();
+        TRACER.format("Reading CDOID of type {0} ({1})", ordinal, type); //$NON-NLS-1$
+      }
+      catch (RuntimeException ex)
+      {
+        TRACER.trace(ex);
+      }
+    }
+
+    Type type = Type.values()[ordinal];
+    String fragment = uriFragment.substring(2);
+    switch (type)
+    {
+    case NULL:
+      return CDOID.NULL;
+
+    case TEMP_OBJECT:
+      return new CDOIDTempObjectImpl(Integer.valueOf(fragment));
+
+    case TEMP_META:
+      return new CDOIDTempMetaImpl(Integer.valueOf(fragment));
+
+    case META:
+      return new CDOIDMetaImpl(Long.valueOf(fragment));
+
+    case EXTERNAL_OBJECT:
+      return new CDOIDExternalImpl(fragment);
+
+    case EXTERNAL_TEMP_OBJECT:
+      return new CDOIDTempObjectExternalImpl(fragment);
+
+    case OBJECT:
+    {
+      // Normally this case should not occur (is an OBJECT subtype).
+      throw new ImplementationError();
+    }
+
+    default:
+      throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOIDUtil.5"), uriFragment)); //$NON-NLS-1$
+    }
   }
 
-  /**
-   * @since 3.0
-   */
-  public static CDOIDAndBranch createIDAndBranch(CDOID id, CDOBranch branch)
+  private static CDOID readCDOIDObject(String uriFragment)
   {
-    return new CDOIDAndBranchImpl(id, branch);
+    byte negOrdinal = Byte.valueOf(uriFragment.substring(0, 2));
+    int ordinal = -1 * negOrdinal - 1;
+    if (TRACER.isEnabled())
+    {
+      try
+      {
+        String type = CDOID.ObjectType.values()[ordinal].toString();
+        TRACER.format("Reading CDOID Object of subType {0} ({1})", ordinal, type); //$NON-NLS-1$
+      }
+      catch (RuntimeException ex)
+      {
+        TRACER.trace(ex);
+      }
+    }
+
+    CDOID.ObjectType subType = CDOID.ObjectType.values()[ordinal];
+    AbstractCDOID id = createCDOIDObject(subType);
+    // note position 2 in the uriFragment is a /
+    // see the write method
+    String fragment = uriFragment.substring(3);
+    id.read(fragment);
+    return id;
   }
 
   /**

@@ -80,6 +80,6 @@ public interface CDOID extends Serializable, Comparable<CDOID>
    */
   public enum ObjectType
   {
-    LONG, STRING, LONG_WITH_CLASSIFIER, STRING_WITH_CLASSIFIER
+    LONG, STRING, LONG_WITH_CLASSIFIER, STRING_WITH_CLASSIFIER, UUID
   }
 }

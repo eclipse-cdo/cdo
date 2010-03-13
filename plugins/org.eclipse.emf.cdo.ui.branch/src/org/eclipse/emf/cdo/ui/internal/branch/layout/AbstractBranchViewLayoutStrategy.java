@@ -70,8 +70,7 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
   protected void setBaselineNodeLocation(AbstractBranchPointNode node)
   {
     double y = node.getTimeStamp();
-    double x = 0;
-    BranchTreeUtils.setInternalLocation(node, x, y);
+    BranchTreeUtils.centerHorizontally(node, y);
   }
 
   /**

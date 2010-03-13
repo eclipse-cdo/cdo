@@ -109,4 +109,18 @@ public class GeometryUtils
   {
     return union(thisRectangle, thatRectangle.x, thatRectangle.y, thatRectangle.width, thatRectangle.height);
   }
+
+  /**
+   * Gets the translation necessar to translate the source coordinate to the target coordinate.
+   * 
+   * @param sourceCoordinate
+   *          the source x
+   * @param targetCoordinate
+   *          the target x
+   * @return the translation
+   */
+  public static double getTranslation(double sourceCoordinate, double targetCoordinate)
+  {
+    return targetCoordinate - sourceCoordinate;
+  }
 }

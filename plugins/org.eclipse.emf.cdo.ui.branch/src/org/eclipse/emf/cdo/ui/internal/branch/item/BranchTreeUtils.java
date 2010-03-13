@@ -60,7 +60,9 @@ public class BranchTreeUtils
   }
 
   /**
-   * Centers the x coordinate of the given target node compared to the given source node
+   * Centers the x coordinate of the given target node compared to the given source node. If source node is
+   * <tt>null</tt>, the target node is translated to the right by the half of its own width (centered on its own
+   * location)
    * 
    * @param targetNode
    *          the target node
@@ -68,11 +70,29 @@ public class BranchTreeUtils
    *          the source node
    * @return the centered x
    */
-  public static double getCenteredX(AbstractBranchPointNode targetNode, AbstractBranchPointNode sourceNode)
+  private static double getCenteredX(InternalNode targetInternalNode, InternalNode sourceInternalNode)
   {
-    InternalNode sourceInternalNode = getInternalNode(sourceNode);
-    return sourceInternalNode.getInternalX()
-        + (sourceInternalNode.getInternalWidth() - getInternalNode(targetNode).getInternalWidth()) / 2;
+    if (sourceInternalNode == null)
+    {
+      return targetInternalNode.getInternalX() - targetInternalNode.getInternalWidth() / 2;
+    }
+    else
+    {
+      return sourceInternalNode.getInternalX()
+          + (sourceInternalNode.getInternalWidth() - targetInternalNode.getInternalWidth()) / 2;
+    }
+  }
+
+  /**
+   * Centers the x coordinate of the given target node.
+   * 
+   * @param sourceNode
+   *          the source node
+   * @return the centered x
+   */
+  private static double getCenteredX(InternalNode sourceInternalNode)
+  {
+    return getCenteredX(sourceInternalNode, null);
   }
 
   /**
@@ -132,16 +152,33 @@ public class BranchTreeUtils
    * 
    * @param nodeToBeCentered
    *          the node to be centered
-   * @param sourceNode
+   * @param sourcePositionNode
    *          the source node
    * @param y
    *          the y coordinate to apply
    */
-  public static void centerHorizontally(AbstractBranchPointNode nodeToBeCentered, AbstractBranchPointNode sourceNode,
-      double y)
+  public static void centerHorizontally(AbstractBranchPointNode nodeToBeCentered,
+      AbstractBranchPointNode sourcePositionNode, double y)
   {
-    double x = getCenteredX(nodeToBeCentered, sourceNode);
+
     InternalNode internalNode = getInternalNode(nodeToBeCentered);
+    double x = getCenteredX(internalNode, getInternalNode(sourcePositionNode));
+    internalNode.setInternalLocation(x, y);
+  }
+
+  /**
+   * Centers the internal node (which displays the given branch tree node) horizontally. It gets shifted to the right by
+   * the half of its own width.
+   * 
+   * @param nodeToBeCentered
+   *          the node to be centered
+   * @param y
+   *          the y coordinate to apply
+   */
+  public static void centerHorizontally(AbstractBranchPointNode nodeToBeCentered, double y)
+  {
+    InternalNode internalNode = getInternalNode(nodeToBeCentered);
+    double x = getCenteredX(internalNode);
     internalNode.setInternalLocation(x, y);
   }
 }

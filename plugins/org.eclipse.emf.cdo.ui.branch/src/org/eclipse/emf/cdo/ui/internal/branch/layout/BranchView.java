@@ -104,8 +104,8 @@ public class BranchView
       if (node instanceof BranchPointNode)
       {
         // add a branch to this node
-        BranchPointNode branchpointNode = (BranchPointNode)node;
-        addBranchView(branchpointNode.getNextOnNewBranch(), branchpointNode);
+        BranchPointNode branchPointNode = (BranchPointNode)node;
+        addBranchView(branchPointNode.getNextOnNewBranch(), branchPointNode);
       }
     }
   }

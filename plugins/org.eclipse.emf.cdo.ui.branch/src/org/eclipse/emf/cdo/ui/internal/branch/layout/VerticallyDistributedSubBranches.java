@@ -32,16 +32,13 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
   private static final VerticallyDistributedSubBranches RIGHT = new VerticallyDistributedSubBranches()
   {
     @Override
-    protected DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
+    protected DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranchView,
         BranchPointNode branchPointNode)
     {
       InternalNode branchPointInternalNode = BranchTreeUtils.getInternalNode(branchPointNode);
       return new DisplayIndependentDimension( //
-          // translate branch completely to visible area
-          Math.abs(subBranch.getBounds().x)
-          // add branch point position and its width
-              + branchPointInternalNode.getInternalX() + branchPointInternalNode.getInternalWidth() //
-              // add padding
+          GeometryUtils.getTranslation(subBranchView.getBounds().x, branchPointInternalNode.getInternalX()) //
+              + branchPointInternalNode.getInternalWidth() //
               + getBranchPadding(), 0);
     }
 
@@ -50,7 +47,7 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
     {
       DisplayIndependentRectangle latterBranchBounds = latterBranch.getBounds();
       return new DisplayIndependentDimension(//
-          latterBranchBounds.x + latterBranchBounds.width, 0);
+          latterBranchBounds.x + latterBranchBounds.width + getBranchPadding(), 0);
     }
   };
 
@@ -62,13 +59,10 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
     {
       InternalNode branchPointInternalNode = BranchTreeUtils.getInternalNode(branchPointNode);
       DisplayIndependentRectangle subBranchBounds = subBranch.getBounds();
-      return new DisplayIndependentDimension(-( //
-          // translate completely to invisible area
-          subBranchBounds.width + subBranchBounds.x
-          // add branch point position
-              + branchPointInternalNode.getInternalX()
-          // add branch padding
-          + getBranchPadding()), 0);
+      return new DisplayIndependentDimension( //
+          GeometryUtils.getTranslation(subBranchBounds.x, branchPointInternalNode.getInternalX()) //
+              - subBranchBounds.width //
+              - getBranchPadding(), 0);
     }
 
     @Override
@@ -100,7 +94,7 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
     {
       return RIGHT;
     }
-
+    
     return LEFT;
   }
 
@@ -117,7 +111,7 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
    * @param branchView
    *          the branch view
    */
-  public void setSubBranchLocation(BranchView subBranchView, BranchView branchView, BranchPointNode branchPointNode)
+  public void setSubBranchLocation(BranchView branchView, BranchView subBranchView, BranchPointNode branchPointNode)
   {
     // translate branch off the branchPointNode (to the right or to the left)
     DisplayIndependentDimension translation = getTranslationToBranchPoint(subBranchView, branchPointNode);
@@ -161,7 +155,7 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
   }
 
   /**
-   * Returns the branch padding that shall be applied betweend branches.
+   * Returns the horizontal padding between branch views.
    * 
    * @return the branch padding
    */

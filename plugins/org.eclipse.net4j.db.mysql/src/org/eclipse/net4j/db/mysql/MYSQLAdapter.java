@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -21,7 +21,6 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import javax.sql.DataSource;
 
 import java.sql.SQLException;
-import java.util.StringTokenizer;
 
 /**
  * @author Eike Stepper
@@ -139,60 +138,5 @@ public class MYSQLAdapter extends DBAdapter
     default:
       return super.isTypeIndexable(type);
     }
-  }
-
-  @Override
-  public void appendValue(StringBuilder builder, IDBField field, Object value)
-  {
-    Object newValue = value;
-
-    if (value instanceof String)
-    {
-      // MySQL does Java-Style backslash-escaping
-      String str = (String)value;
-      StringTokenizer st = new StringTokenizer(str, "\\\'", true); // split on backslash or single quote //$NON-NLS-1$
-      StringBuilder newValueBuilder = new StringBuilder();
-
-      while (st.hasMoreTokens())
-      {
-        String current = st.nextToken();
-        if (current.length() == 0)
-        {
-          continue;
-        }
-
-        if (current.length() > 1) // >1 -> can not be token -> normal string
-        {
-          newValueBuilder.append(current);
-        }
-        else
-        { // length == 1
-          newValueBuilder.append(processEscape(current.charAt(0)));
-        }
-      }
-
-      newValue = newValueBuilder.toString();
-    }
-    else if (value instanceof Character)
-    {
-      newValue = processEscape((Character)value);
-    }
-
-    super.appendValue(builder, field, newValue);
-  }
-
-  private Object processEscape(char c)
-  {
-    if (c == '\\') // one backslash -->
-    {
-      return "\\\\"; // results in two backslashes //$NON-NLS-1$
-    }
-
-    if (c == '\'') // one single quote -->
-    {
-      return "\\'"; // results in backslash+single quote //$NON-NLS-1$
-    }
-
-    return c; // no escape character --> return as is
   }
 }

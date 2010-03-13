@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -13,8 +13,6 @@ package org.eclipse.net4j.db.derby;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.spi.db.DBAdapter;
-
-import java.util.StringTokenizer;
 
 /**
  * @author Eike Stepper
@@ -70,61 +68,8 @@ public abstract class DerbyAdapter extends DBAdapter
     return super.getTypeName(field);
   }
 
-  @Override
-  public void appendValue(StringBuilder builder, IDBField field, Object value)
-  {
-    Object newValue = value;
-    if (value instanceof Boolean)
-    {
-      newValue = (Boolean)value ? 1 : 0;
-    }
-    else if (value instanceof String)
-    {
-      // Derby just adds one additional single quote for a single quote
-      String str = (String)value;
-      StringTokenizer tokenizer = new StringTokenizer(str, "\'", true); // split on single quote //$NON-NLS-1$
-      StringBuilder newValueBuilder = new StringBuilder();
-
-      while (tokenizer.hasMoreTokens())
-      {
-        String current = tokenizer.nextToken();
-        if (current.length() == 0)
-        {
-          continue;
-        }
-
-        if (current.length() > 1) // >1 -> can not be token -> normal string
-        {
-          newValueBuilder.append(current);
-        }
-        else
-        { // length == 1
-          newValueBuilder.append(processEscape(current.charAt(0)));
-        }
-      }
-
-      newValue = newValueBuilder.toString();
-    }
-    else if (value instanceof Character)
-    {
-      newValue = processEscape((Character)value);
-    }
-
-    super.appendValue(builder, field, newValue);
-  }
-
   public String[] getReservedWords()
   {
     return RESERVED_WORDS;
-  }
-
-  private Object processEscape(char c)
-  {
-    if (c == '\'') // one single quote -->
-    {
-      return "\'\'"; // results two single quotes //$NON-NLS-1$
-    }
-
-    return c; // no escape character --> return as is
   }
 }

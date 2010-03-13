@@ -858,7 +858,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
         }
 
         stmt = connection.createStatement();
-        stmt.executeQuery("SELECT 1 FROM " + CDODBSchema.REPOSITORY); //$NON-NLS-1$
+        stmt.executeQuery("SELECT 1 FROM " + CDODBSchema.PROPERTIES); //$NON-NLS-1$
       }
       catch (SQLException ex)
       {

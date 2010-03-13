@@ -28,38 +28,6 @@ public class CDODBSchema extends DBSchema
   public static final CDODBSchema INSTANCE = new CDODBSchema();
 
   /**
-   * DBTable cdo_repository
-   */
-  public static final IDBTable REPOSITORY = INSTANCE.addTable("cdo_repository"); //$NON-NLS-1$
-
-  public static final IDBField REPOSITORY_CREATED = //
-  REPOSITORY.addField("created", DBType.BIGINT); //$NON-NLS-1$
-
-  public static final IDBField REPOSITORY_STARTS = //
-  REPOSITORY.addField("starts", DBType.BIGINT); //$NON-NLS-1$
-
-  public static final IDBField REPOSITORY_STARTED = //
-  REPOSITORY.addField("started", DBType.BIGINT); //$NON-NLS-1$
-
-  public static final IDBField REPOSITORY_STOPPED = //
-  REPOSITORY.addField("stopped", DBType.BIGINT); //$NON-NLS-1$
-
-  public static final IDBField REPOSITORY_NEXT_LOCAL_CDOID = //
-  REPOSITORY.addField("next_local_cdoid", DBType.BIGINT); //$NON-NLS-1$
-
-  public static final IDBField REPOSITORY_LAST_CDOID = //
-  REPOSITORY.addField("last_cdoid", DBType.BIGINT); //$NON-NLS-1$
-
-  public static final IDBField REPOSITORY_LAST_METAID = //
-  REPOSITORY.addField("last_metaid", DBType.BIGINT); //$NON-NLS-1$
-
-  public static final IDBField REPOSITORY_LAST_BRANCHID = //
-  REPOSITORY.addField("last_branchid", DBType.INTEGER); //$NON-NLS-1$
-
-  public static final IDBField REPOSITORY_LAST_COMMITTIME = //
-  REPOSITORY.addField("last_committime", DBType.BIGINT); //$NON-NLS-1$
-
-  /**
    * DBTable cdo_properties
    */
   public static final IDBTable PROPERTIES = INSTANCE.addTable("cdo_properties"); //$NON-NLS-1$

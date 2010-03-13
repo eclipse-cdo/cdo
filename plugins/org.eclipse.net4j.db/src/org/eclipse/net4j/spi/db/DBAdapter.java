@@ -220,11 +220,6 @@ public abstract class DBAdapter implements IDBAdapter
     return 128;
   }
 
-  public void appendValue(StringBuilder builder, IDBField field, Object value)
-  {
-    field.appendValue(builder, value);
-  }
-
   public boolean isTypeIndexable(DBType type)
   {
     switch (type)

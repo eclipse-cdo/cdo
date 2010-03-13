@@ -442,41 +442,6 @@ public final class DBUtil
     }
   }
 
-  public static void insertRow(Connection connection, IDBAdapter dbAdapter, IDBTable table, Object... args)
-      throws DBException
-  {
-    IDBField[] fields = table.getFields();
-    if (fields.length != args.length)
-    {
-      throw new IllegalArgumentException("Wrong number of args for " + table + ": " + Arrays.asList(args) + " --> " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-          + Arrays.asList(table.getFields()));
-    }
-
-    StringBuilder builder = new StringBuilder();
-    builder.append("INSERT INTO "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append(" VALUES ("); //$NON-NLS-1$
-
-    for (int i = 0; i < fields.length; i++)
-    {
-      if (i > 0)
-      {
-        builder.append(", "); //$NON-NLS-1$
-      }
-
-      dbAdapter.appendValue(builder, fields[i], args[i]);
-    }
-
-    builder.append(")"); //$NON-NLS-1$
-    String sql = builder.toString();
-
-    int count = update(connection, sql);
-    if (count == 0)
-    {
-      throw new DBException("No row inserted into table " + table); //$NON-NLS-1$
-    }
-  }
-
   public static int select(Connection connection, IDBRowHandler rowHandler, String where, IDBField... fields)
       throws DBException
   {

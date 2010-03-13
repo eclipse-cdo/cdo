@@ -18,8 +18,6 @@
         <cs:dependency name="org.eclipse.emf.compare" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.emf.compare.source" componentType="eclipse.feature"/>
         -->
-        <cs:dependency name="org.apache.derby" componentType="osgi.bundle"/>
-        <cs:dependency name="org.h2" componentType="osgi.bundle"/>
         <cs:dependency name="com.mysql.jdbc" componentType="eclipse.feature"/>
         <cs:dependency name="org.hsqldb" componentType="eclipse.feature"/>
         <cs:dependency name="org.postgresql.jdbc3" componentType="eclipse.feature"/>

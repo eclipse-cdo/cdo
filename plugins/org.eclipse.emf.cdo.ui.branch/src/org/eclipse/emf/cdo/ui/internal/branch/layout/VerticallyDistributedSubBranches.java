@@ -90,7 +90,7 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
   }
 
   /**
-   * Returns the current sub branch strategy.
+   * Returns the strategy that layouts the next branch view. Starts with right, second call returns left, etc.
    * 
    * @return the current sub branch strategy
    */
@@ -130,8 +130,7 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
       // the left)
       translation = GeometryUtils.union(translation, getTranslationToLatterBranch(subBranchView, latterBranch));
     }
-    translate(subBranchView, translation);
-    branchView.addSubBranchView(subBranchView);
+    subBranchView.translate(translation);
   }
 
   /**

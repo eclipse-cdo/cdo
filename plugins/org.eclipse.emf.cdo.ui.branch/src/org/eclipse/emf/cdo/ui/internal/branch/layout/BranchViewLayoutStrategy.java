@@ -13,8 +13,6 @@ package org.eclipse.emf.cdo.ui.internal.branch.layout;
 import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNode;
 
-import org.eclipse.zest.layouts.dataStructures.DisplayIndependentDimension;
-
 /**
  * @author Eike Stepper
  */
@@ -48,10 +46,4 @@ public interface BranchViewLayoutStrategy
    */
   public abstract void layoutSubBranchView(BranchView branchView, BranchView subBranchView,
       BranchPointNode branchPointNode);
-
-  /**
-   * Translates this branch by the given dimension.
-   */
-  public abstract void translate(BranchView branchView, DisplayIndependentDimension dimension);
-
 }

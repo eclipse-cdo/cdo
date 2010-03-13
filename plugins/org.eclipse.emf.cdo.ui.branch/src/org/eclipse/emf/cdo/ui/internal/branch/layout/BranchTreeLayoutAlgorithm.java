@@ -114,7 +114,7 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
 
     if (entitiesToLayout.length > 0)
     {
-      BranchView branchView = buildBranch(rootNode);
+      buildBranch(rootNode);
       fireProgressEvent(1, LAYOUT_STEPS);
       defaultFitWithinBounds(entitiesToLayout, layoutBounds);
     }

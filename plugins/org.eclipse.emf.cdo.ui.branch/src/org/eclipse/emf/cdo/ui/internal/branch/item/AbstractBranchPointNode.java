@@ -53,7 +53,7 @@ public abstract class AbstractBranchPointNode extends CGraphNode implements CDOB
     return branchPoint.compareTo(o);
   }
 
-  public AbstractBranchPointNode getNextSibling()
+  public AbstractBranchPointNode getNextOnSameBranch()
   {
     for (SameBranchConnection connection : getSameBranchSourceConnections())
     {

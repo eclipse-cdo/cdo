@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchTreeUtils;
 
-import org.eclipse.zest.layouts.dataStructures.DisplayIndependentDimension;
 import org.eclipse.zest.layouts.dataStructures.DisplayIndependentRectangle;
 import org.eclipse.zest.layouts.dataStructures.InternalNode;
 
@@ -61,7 +60,7 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
   public void layoutNode(BranchView branchView, AbstractBranchPointNode node, AbstractBranchPointNode previousNode)
   {
     BranchTreeUtils.setInternalSize(node);
-    setSiblingNodeLocation(node, previousNode);
+    setSameBranchNodeLocation(node, previousNode);
     setBranchBounds(branchView, node);
   }
 
@@ -71,14 +70,14 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
   protected void setBaselineNodeLocation(AbstractBranchPointNode node)
   {
     double y = node.getTimeStamp();
-    double x = 0 * 100;
+    double x = 0;
     BranchTreeUtils.setInternalLocation(node, x, y);
   }
 
   /**
    * Sets the location of the given node. The node is centered horizontally to the given previous (sibling) node.
    */
-  protected void setSiblingNodeLocation(AbstractBranchPointNode node, AbstractBranchPointNode previousNode)
+  protected void setSameBranchNodeLocation(AbstractBranchPointNode node, AbstractBranchPointNode previousNode)
   {
     double y = node.getTimeStamp();
     BranchTreeUtils.centerHorizontally(node, previousNode, y);
@@ -122,39 +121,4 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
 
   protected abstract void setBranchViewLocation(BranchView branchView, BranchView subBranchView,
       BranchPointNode branchPointNode);
-
-  /**
-   * Translates this branch by the given dimension.
-   */
-  public void translate(BranchView branchView, DisplayIndependentDimension dimension)
-  {
-    translateSiblingNodes(branchView, dimension);
-    translateSubBranches(branchView, dimension);
-    GeometryUtils.translateRectangle(dimension.width, dimension.height, branchView.getBounds());
-  }
-
-  /**
-   * Translates all sub branches of the given branch.
-   * 
-   * @param dimension
-   *          the dimension to translate this branch by
-   */
-  private void translateSubBranches(BranchView branchView, DisplayIndependentDimension dimension)
-  {
-    for (BranchView branch : branchView.getSubBranchViews())
-    {
-      branch.getLayoutStrategy().translate(branchView, dimension);
-    }
-  }
-
-  /**
-   * Translates all the sibling nodes of this branch by the given horizontal and vertical offset.
-   */
-  private void translateSiblingNodes(BranchView branchView, DisplayIndependentDimension dimension)
-  {
-    for (AbstractBranchPointNode node : branchView.getNodes())
-    {
-      BranchTreeUtils.translateInternalLocation(node, dimension.width, dimension.height);
-    }
-  }
 }

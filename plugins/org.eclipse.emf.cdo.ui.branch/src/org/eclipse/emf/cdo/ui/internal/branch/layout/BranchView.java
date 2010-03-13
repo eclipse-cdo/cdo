@@ -11,9 +11,12 @@
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.ui.internal.branch.geometry.GeometryUtils;
 import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNode;
+import org.eclipse.emf.cdo.ui.internal.branch.item.BranchTreeUtils;
 
+import org.eclipse.zest.layouts.dataStructures.DisplayIndependentDimension;
 import org.eclipse.zest.layouts.dataStructures.DisplayIndependentRectangle;
 
 import java.util.Collection;
@@ -49,13 +52,13 @@ public class BranchView
     this.layoutStrategy = layoutStrategy;
     nodes.addLast(baselineNode);
     layoutStrategy.layoutBaselineNode(this, baselineNode);
-    addNode(baselineNode.getNextSibling());
+    addNode(baselineNode.getNextOnSameBranch());
 
     if (baselineNode instanceof BranchPointNode)
     {
       // add a branch to this node
       BranchPointNode branchpointNode = (BranchPointNode)baselineNode;
-      addBranchView(branchpointNode.getNextChild(), branchpointNode);
+      addBranchView(branchpointNode.getNextOnNewBranch(), branchpointNode);
     }
   }
 
@@ -96,13 +99,13 @@ public class BranchView
       nodes.addLast(node);
       layoutStrategy.layoutNode(this, node, previousNode);
       // recursively navigate to sibling
-      addNode(node.getNextSibling());
+      addNode(node.getNextOnSameBranch());
 
       if (node instanceof BranchPointNode)
       {
         // add a branch to this node
         BranchPointNode branchpointNode = (BranchPointNode)node;
-        addBranchView(branchpointNode.getNextChild(), branchpointNode);
+        addBranchView(branchpointNode.getNextOnNewBranch(), branchpointNode);
       }
     }
   }
@@ -114,8 +117,9 @@ public class BranchView
   {
     if (baselineNode != null)
     {
-      BranchView subBranch = new BranchView(baselineNode, getLayoutStrategy());
-      layoutStrategy.layoutSubBranchView(this, subBranch, branchPointNode);
+      BranchView subBranchView = new BranchView(baselineNode, getLayoutStrategy());
+      layoutStrategy.layoutSubBranchView(this, subBranchView, branchPointNode);
+      subBranchViews.add(subBranchView);
     }
   }
 
@@ -142,14 +146,43 @@ public class BranchView
   }
 
   /**
-   * Adds the given sub branch view to this branch view.
+   * Translates the given branch view by the given dimension.
    * 
-   * @param subBranchView
-   *          the sub branch view to add
+   * @param branchView
+   *          the branch view to translate
+   * @param dimension
+   *          the dimension the x- and y-offset
    */
-  public void addSubBranchView(BranchView subBranchView)
+  public void translate(DisplayIndependentDimension dimension)
   {
-    subBranchViews.add(subBranchView);
+    translateNodesOnSameBranch(dimension);
+    translateSubBranches(dimension);
+    GeometryUtils.translateRectangle(dimension.width, dimension.height, getBounds());
+  }
+
+  /**
+   * Translates all sub branches of the given branch.
+   * 
+   * @param dimension
+   *          the dimension to translate this branch by
+   */
+  private void translateSubBranches(DisplayIndependentDimension dimension)
+  {
+    for (BranchView branch : getSubBranchViews())
+    {
+      branch.translate(dimension);
+    }
+  }
+
+  /**
+   * Translates all the sibling nodes in this branch view. Applies the given horizontal and vertical offset.
+   */
+  private void translateNodesOnSameBranch(DisplayIndependentDimension dimension)
+  {
+    for (AbstractBranchPointNode node : getNodes())
+    {
+      BranchTreeUtils.translateInternalLocation(node, dimension.width, dimension.height);
+    }
   }
 
   /**

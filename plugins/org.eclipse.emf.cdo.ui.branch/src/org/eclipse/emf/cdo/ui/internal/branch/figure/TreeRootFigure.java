@@ -20,11 +20,11 @@ import org.eclipse.draw2d.Figure;
  * @author Andre Dietisheim
  * @see RootNode
  */
-public class BranchRootFigure extends Figure
+public class TreeRootFigure extends Figure
 {
-  public BranchRootFigure()
+  public TreeRootFigure()
   {
-    setSize(0, 0);
+    setSize(2, 2);
     setVisible(false);
   }
 }

@@ -34,7 +34,7 @@ public class BranchPointNode extends AbstractBranchPointNode
     super(branchPoint, graphModel, style, figure);
   }
 
-  public AbstractBranchPointNode getNextChild()
+  public AbstractBranchPointNode getNextOnNewBranch()
   {
     List<NewBranchConnection> connectionList = getNewBranchSourceConnections();
     if (connectionList.size() >= 1)

@@ -881,19 +881,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           progressMonitor = new NullProgressMonitor();
         }
 
-        CDOBranch oldBranch = getBranch();
         CDOTransactionStrategy transactionStrategy = getTransactionStrategy();
-        CDOCommitInfo result = transactionStrategy.commit(this, progressMonitor);
-        if (result != null)
-        {
-          CDOBranch newBranch = result.getBranch();
-          if (!ObjectUtil.equals(newBranch, oldBranch))
-          {
-            setBranch(newBranch);
-          }
-        }
-
-        return result;
+        return transactionStrategy.commit(this, progressMonitor);
       }
       catch (TransactionException ex)
       {
@@ -1950,6 +1939,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         try
         {
+          long timeStamp = result.getTimeStamp();
+          CDOBranch branch = result.getBranch();
+          boolean branchChanged = !ObjectUtil.equals(branch, getBranch());
+          if (branchChanged)
+          {
+            basicSetBranchPoint(branch.getHead());
+          }
+
           for (CDOPackageUnit newPackageUnit : getNewPackageUnits())
           {
             ((InternalCDOPackageUnit)newPackageUnit).setState(CDOPackageUnit.State.LOADED);
@@ -1968,7 +1965,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             removeObject(id);
           }
 
-          long timeStamp = result.getTimeStamp();
           CDOCommitInfo commitInfo = makeCommitInfo(timeStamp);
 
           InternalCDOSession session = getSession();
@@ -1992,6 +1988,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           IListener[] listeners = getListeners();
           if (listeners != null)
           {
+            if (branchChanged)
+            {
+              fireViewTargetChangedEvent(listeners);
+            }
+
             fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings), listeners);
           }
         }

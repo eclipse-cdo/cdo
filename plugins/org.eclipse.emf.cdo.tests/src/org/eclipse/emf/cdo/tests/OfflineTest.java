@@ -247,6 +247,7 @@ public class OfflineTest extends AbstractCDOTest
     waitForOnline(clone);
 
     getOfflineConfig().stopMasterTransport();
+    waitForOffline(clone);
 
     CDOSession masterSession = openSession(clone.getName() + "_master");
     CDOTransaction masterTransaction = masterSession.openTransaction();
@@ -284,9 +285,33 @@ public class OfflineTest extends AbstractCDOTest
     CloneRepository clone = (CloneRepository)getRepository();
     clone.getSynchronizer().setRetryInterval(600);
     waitForOnline(clone);
-    System.out.println(CDORevisionUtil.dumpAllRevisions(((IMEMStore)clone.getStore()).getAllRevisions()));
 
     getOfflineConfig().stopMasterTransport();
+    waitForOffline(clone);
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("Test");
+
+    CDOSession session = openSession();
+    ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().setCommitTimeout(100000);
+    ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().setProgressInterval(600);
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+
+    resource.getContents().add(company);
+    CDOCommitInfo commitInfo = transaction.commit();
+    assertEquals(true, commitInfo.getBranch().isLocal());
+    assertEquals(true, transaction.getBranch().isLocal());
+  }
+
+  public void _testDisconnectAndCommitAndMerge() throws Exception
+  {
+    CloneRepository clone = (CloneRepository)getRepository();
+    clone.getSynchronizer().setRetryInterval(600);
+    waitForOnline(clone);
+
+    getOfflineConfig().stopMasterTransport();
+    waitForOffline(clone);
 
     Company company = getModel1Factory().createCompany();
     company.setName("Test");
@@ -307,6 +332,15 @@ public class OfflineTest extends AbstractCDOTest
     while (repository.getState() != CDOCommonRepository.State.ONLINE)
     {
       System.out.println("Waiting for ONLINE...");
+      sleep(100);
+    }
+  }
+
+  private void waitForOffline(CDOCommonRepository repository)
+  {
+    while (repository.getState() == CDOCommonRepository.State.ONLINE)
+    {
+      System.out.println("Waiting for OFFLINE...");
       sleep(100);
     }
   }

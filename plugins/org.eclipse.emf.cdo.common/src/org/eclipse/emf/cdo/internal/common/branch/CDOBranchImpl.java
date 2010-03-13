@@ -37,7 +37,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
   private Object baseOrBranchManager;
 
-  private CDOBranchPoint head;
+  private CDOBranchPoint head = getPoint(CDOBranchPoint.UNSPECIFIED_DATE);
 
   private InternalCDOBranch[] branches;
 
@@ -46,7 +46,6 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     this.id = id;
     this.name = name;
     baseOrBranchManager = base;
-    head = getPoint(CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
   public CDOBranchImpl(int id, InternalCDOBranchManager branchManager)

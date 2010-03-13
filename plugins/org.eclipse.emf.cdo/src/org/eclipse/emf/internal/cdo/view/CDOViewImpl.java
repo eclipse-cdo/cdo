@@ -324,7 +324,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     CDOSessionProtocol sessionProtocol = getSession().getSessionProtocol();
     boolean[] existanceFlags = sessionProtocol.changeView(viewID, branchPoint, invalidObjects);
 
-    this.branchPoint = branchPoint;
+    basicSetBranchPoint(branchPoint);
 
     int i = 0;
     for (InternalCDOObject invalidObject : invalidObjects)
@@ -342,8 +342,23 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       }
     }
 
-    fireEvent(new ViewTargetChangedEvent(branchPoint));
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      fireViewTargetChangedEvent(listeners);
+    }
+
     return true;
+  }
+
+  protected void basicSetBranchPoint(CDOBranchPoint branchPoint)
+  {
+    this.branchPoint = branchPoint;
+  }
+
+  protected void fireViewTargetChangedEvent(IListener[] listeners)
+  {
+    fireEvent(new ViewTargetChangedEvent(branchPoint), listeners);
   }
 
   private List<InternalCDOObject> getInvalidObjects(long timeStamp)

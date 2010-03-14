@@ -303,7 +303,7 @@ public class OfflineTest extends AbstractCDOTest
     assertEquals(true, transaction.getBranch().isLocal());
   }
 
-  public void testDisconnectAndCommitAndMergeWithoutNewPackages() throws Exception
+  public void testDisconnectAndCommitAndMerge() throws Exception
   {
     CloneRepository clone = (CloneRepository)getRepository();
     waitForOnline(clone);
@@ -328,7 +328,7 @@ public class OfflineTest extends AbstractCDOTest
     transaction.commit();
   }
 
-  public void testDisconnectAndCommitAndMerge() throws Exception
+  public void testDisconnectAndCommitAndMergeWithNewPackages() throws Exception
   {
     CloneRepository clone = (CloneRepository)getRepository();
     waitForOnline(clone);

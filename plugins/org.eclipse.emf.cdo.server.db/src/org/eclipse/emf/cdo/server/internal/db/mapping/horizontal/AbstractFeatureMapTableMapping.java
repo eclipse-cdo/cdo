@@ -188,12 +188,12 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
       if (i + 1 < fields.length)
       {
         // more to come
-        builder.append("= ? AND ");
+        builder.append("=? AND ");
       }
       else
       {
         // last one
-        builder.append("= ? ");
+        builder.append("=? ");
       }
     }
 
@@ -215,12 +215,12 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
       if (i + 1 < fields.length)
       {
         // more to come
-        builder.append("= ? AND ");
+        builder.append("=? AND ");
       }
       else
       {
         // last one
-        builder.append("= ? ");
+        builder.append("=? ");
       }
     }
 

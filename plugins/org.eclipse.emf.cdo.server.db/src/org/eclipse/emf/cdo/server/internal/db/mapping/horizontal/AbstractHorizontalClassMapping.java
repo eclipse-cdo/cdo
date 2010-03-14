@@ -16,6 +16,7 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
@@ -35,6 +36,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
+import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -306,28 +308,6 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     }
   }
 
-  public final void detachObject(IDBStoreAccessor accessor, CDOID id, long timeStamp, OMMonitor monitor)
-  {
-    Async async = null;
-    try
-    {
-      monitor.begin(getListMappings().size() + 1);
-      async = monitor.forkAsync();
-      reviseObject(accessor, id, timeStamp);
-      async.stop();
-      async = monitor.forkAsync(getListMappings().size());
-      for (IListMapping mapping : getListMappings())
-      {
-        mapping.objectRevised(accessor, id, timeStamp);
-      }
-    }
-    finally
-    {
-      async.stop();
-      monitor.done();
-    }
-  }
-
   protected final IMetaDataManager getMetaDataManager()
   {
     return getMappingStrategy().getStore().getMetaDataManager();
@@ -443,10 +423,10 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       else
       {
         long revised = revision.getTimeStamp() - 1;
-        reviseObject(accessor, id, revised);
+        reviseOldRevision(accessor, id, revision.getBranch(), revised);
         for (IListMapping mapping : getListMappings())
         {
-          mapping.objectRevised(accessor, id, revised);
+          mapping.objectDetached(accessor, id, revised);
         }
       }
 
@@ -500,7 +480,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
     StringBuilder builder = new StringBuilder(sqlSelectForHandle);
 
-    if (timeStamp != CDOBranchPoint.INVALID_DATE)
+    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
     {
       builder.append(" WHERE "); //$NON-NLS-1$
       builder.append(CDODBSchema.ATTRIBUTES_CREATED);
@@ -510,7 +490,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     try
     {
       stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.LOW);
-      if (timeStamp != CDOBranchPoint.INVALID_DATE)
+      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
       {
         stmt.setLong(1, timeStamp);
       }
@@ -561,7 +541,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       builder.append("<=? OR "); //$NON-NLS-1$
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
       builder.append("="); //$NON-NLS-1$
-      builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
+      builder.append(DBStore.UNSPECIFIED_DATE);
       builder.append(")"); //$NON-NLS-1$
     }
 
@@ -601,7 +581,44 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     }
   }
 
-  protected abstract void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision);
+  public void detachObject(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp,
+      OMMonitor monitor)
+  {
+    Async async = null;
+    monitor.begin(1 + listMappings.size());
 
-  protected abstract void reviseObject(IDBStoreAccessor accessor, CDOID id, long revised);
+    try
+    {
+      if (version >= CDOBranchVersion.FIRST_VERSION)
+      {
+        reviseOldRevision(accessor, id, branch, timeStamp - 1);
+      }
+
+      detachAttributes(accessor, id, version + 1, branch, timeStamp, monitor.fork());
+
+      // notify list mappings so they can clean up
+      for (IListMapping mapping : getListMappings())
+      {
+        async = monitor.forkAsync();
+        mapping.objectDetached(accessor, id, timeStamp);
+        async.stop();
+      }
+    }
+    finally
+    {
+      if (async != null)
+      {
+        async.stop();
+      }
+
+      monitor.done();
+    }
+  }
+
+  protected abstract void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch,
+      long timeStamp, OMMonitor fork);
+
+  protected abstract void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long timeStamp);
+
+  protected abstract void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision);
 }

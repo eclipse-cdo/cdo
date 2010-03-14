@@ -49,6 +49,18 @@ public class AllTestsDBDerby extends DBConfigs
     // addScenario(parent, COMBINED, AllTestsDBDerby.Derby.INSTANCE, TCP, NATIVE);
   }
 
+  @Override
+  protected boolean hasAuditSupport()
+  {
+    return true;
+  }
+
+  @Override
+  protected boolean hasBranchingSupport()
+  {
+    return false;
+  }
+
   /**
    * @author Eike Stepper
    */

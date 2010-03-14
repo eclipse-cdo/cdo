@@ -70,7 +70,7 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
   {
     String uri = id.getURI();
     long result = lookupByID(accessor, uri);
-    if (result < 0)
+    if (result < DBStore.NULL)
     {
       // mapping found
       return result;

@@ -59,7 +59,7 @@ public class BranchingListTableMapping extends AbstractListTableMapping
     stmt.setInt(3, revision.getVersion());
   }
 
-  public void objectRevised(IDBStoreAccessor accessor, CDOID id, long revised)
+  public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
   {
     // the audit list mapping does not care about revised references -> NOP
   }

@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
+import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -52,7 +53,6 @@ import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -218,10 +218,10 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
             rset = currentStatement.executeQuery();
             return rset;
           }
-          catch (SQLException ex)
+          catch (Exception ex)
           {
             DBUtil.close(rset); // only on error
-            getAccessor().getStatementCache().releasePreparedStatement(currentStatement);
+            releaseCurrentStatement();
             throw new DBException(ex);
           }
         }
@@ -233,7 +233,13 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       protected void closeCurrentResultSet()
       {
         super.closeCurrentResultSet();
-        getAccessor().getStatementCache().releasePreparedStatement(currentStatement);
+        releaseCurrentStatement();
+      }
+
+      private void releaseCurrentStatement()
+      {
+        IPreparedStatementCache statementCache = getAccessor().getStatementCache();
+        statementCache.releasePreparedStatement(currentStatement);
         currentStatement = null;
       }
     };

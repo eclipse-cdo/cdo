@@ -95,6 +95,7 @@ public interface IListMapping
    *          the ID of the object which has been revised.
    * @param revised
    *          the timestamp at which the object was revised.
+   * @since 3.0
    */
-  public void objectRevised(IDBStoreAccessor accessor, CDOID id, long revised);
+  public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised);
 }

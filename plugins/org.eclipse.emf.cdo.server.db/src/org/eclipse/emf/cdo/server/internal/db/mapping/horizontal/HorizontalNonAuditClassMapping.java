@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -29,11 +30,13 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
+import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -67,8 +70,6 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   private String sqlSelectCurrentAttributes;
 
   private String sqlInsertAttributes;
-
-  private String sqlDelete;
 
   private String sqlUpdateAffix;
 
@@ -122,7 +123,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     {
       for (String fieldName : unsettableFields.values())
       {
-        builder.append(", ");
+        builder.append(", "); //$NON-NLS-1$
         builder.append(fieldName);
       }
     }
@@ -131,7 +132,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     builder.append(getTable().getName());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append("= ?"); //$NON-NLS-1$
+    builder.append("=?"); //$NON-NLS-1$
 
     sqlSelectCurrentAttributes = builder.toString();
 
@@ -167,7 +168,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     {
       for (String fieldName : unsettableFields.values())
       {
-        builder.append(", ");
+        builder.append(", "); //$NON-NLS-1$
         builder.append(fieldName);
       }
     }
@@ -190,13 +191,6 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     builder.append(")"); //$NON-NLS-1$
     sqlInsertAttributes = builder.toString();
 
-    builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append(" = ? "); //$NON-NLS-1$
-    sqlDelete = builder.toString();
-
     // ----------- Select all unrevised Object IDs ------
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
@@ -209,34 +203,35 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     builder.append(getTable().getName());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
-    builder.append(" =? ,"); //$NON-NLS-1$
+    builder.append("=? ,"); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-    builder.append(" =? "); //$NON-NLS-1$
+    builder.append("=? "); //$NON-NLS-1$
     sqlUpdatePrefix = builder.toString();
 
     builder = new StringBuilder(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_RESOURCE);
-    builder.append(" =? ,"); //$NON-NLS-1$
+    builder.append("=? ,"); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
-    builder.append(" =? ,"); //$NON-NLS-1$
+    builder.append("=? ,"); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_FEATURE);
-    builder.append(" =? "); //$NON-NLS-1$
+    builder.append("=? "); //$NON-NLS-1$
     sqlUpdateContainerPart = builder.toString();
 
     builder = new StringBuilder(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append(" = ? "); //$NON-NLS-1$
+    builder.append("=? "); //$NON-NLS-1$
     sqlUpdateAffix = builder.toString();
   }
 
   @Override
   protected void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlInsertAttributes, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sqlInsertAttributes, ReuseProbability.HIGH);
 
       int col = 1;
 
@@ -281,7 +276,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -292,7 +287,8 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       TRACER.format("Created ObjectID Statement : {0}", sqlSelectAllObjectIDs); //$NON-NLS-1$
     }
 
-    return accessor.getStatementCache().getPreparedStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
+    return statementCache.getPreparedStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
   }
 
   public PreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,
@@ -318,8 +314,10 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable().getName());
     builder.append(" WHERE "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(">0 AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
-    builder.append("= ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(nameValueMapping.getField().getName());
     if (name == null)
     {
@@ -327,15 +325,17 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
     else
     {
-      builder.append(exactMatch ? " = ? " : " LIKE ? "); //$NON-NLS-1$ //$NON-NLS-2$
+      builder.append(exactMatch ? "=? " : " LIKE ? "); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement pstmt = null;
+
     try
     {
       int idx = 1;
 
-      pstmt = accessor.getStatementCache().getPreparedStatement(builder.toString(), ReuseProbability.MEDIUM);
+      pstmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.MEDIUM);
       pstmt.setLong(idx++, CDOIDUtil.getLong(folderId));
 
       if (name != null)
@@ -353,7 +353,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
     catch (SQLException ex)
     {
-      accessor.getStatementCache().releasePreparedStatement(pstmt); // only release on error
+      statementCache.releasePreparedStatement(pstmt); // only release on error
       throw new DBException(ex);
     }
   }
@@ -361,15 +361,17 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     long timeStamp = revision.getTimeStamp();
-    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+    if (timeStamp != DBStore.UNSPECIFIED_DATE)
     {
       throw new UnsupportedOperationException("Mapping strategy does not support audits."); //$NON-NLS-1$
     }
 
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement pstmt = null;
+
     try
     {
-      pstmt = accessor.getStatementCache().getPreparedStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
+      pstmt = statementCache.getPreparedStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
       pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
 
       // Read singleval-attribute table always (even without modeled attributes!)
@@ -389,19 +391,24 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(pstmt);
     }
   }
 
   @Override
-  protected void reviseObject(IDBStoreAccessor accessor, CDOID id, long revised)
+  protected void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp,
+      OMMonitor mon)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlDelete, ReuseProbability.HIGH);
-      stmt.setLong(1, CDOIDUtil.getLong(id));
+      stmt = statementCache.getPreparedStatement(sqlUpdatePrefix + sqlUpdateAffix, ReuseProbability.HIGH);
+      stmt.setInt(1, -version);
+      stmt.setLong(2, timeStamp);
+      stmt.setLong(3, CDOIDUtil.getLong(id));
+
       CDODBUtil.sqlUpdate(stmt, true);
     }
     catch (SQLException e)
@@ -410,7 +417,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -551,12 +558,12 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   public void updateAttributes(IDBStoreAccessor accessor, CDOID id, int newVersion, long created, CDOID newContainerId,
       int newContainingFeatureId, CDOID newResourceId, List<Pair<ITypeMapping, Object>> attributeChanges)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(buildUpdateStatement(attributeChanges, true),
-          ReuseProbability.MEDIUM);
+      stmt = statementCache.getPreparedStatement(buildUpdateStatement(attributeChanges, true), ReuseProbability.MEDIUM);
 
       int col = 1;
 
@@ -578,7 +585,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -617,12 +624,13 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   public void updateAttributes(IDBStoreAccessor accessor, CDOID id, int newVersion, long created,
       List<Pair<ITypeMapping, Object>> attributeChanges)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(buildUpdateStatement(attributeChanges, false),
-          ReuseProbability.MEDIUM);
+      stmt = statementCache
+          .getPreparedStatement(buildUpdateStatement(attributeChanges, false), ReuseProbability.MEDIUM);
 
       int col = 1;
 
@@ -641,7 +649,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -670,5 +678,11 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     builder.append(sqlUpdateAffix);
     return builder.toString();
+  }
+
+  @Override
+  protected void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long timeStamp)
+  {
+    // do nothing
   }
 }

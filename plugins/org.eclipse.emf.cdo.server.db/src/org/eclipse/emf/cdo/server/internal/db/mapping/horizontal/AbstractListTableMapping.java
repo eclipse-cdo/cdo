@@ -136,12 +136,12 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
       if (i + 1 < fields.length)
       {
         // more to come
-        builder.append("= ? AND "); //$NON-NLS-1$
+        builder.append("=? AND "); //$NON-NLS-1$
       }
       else
       {
         // last one
-        builder.append("= ? "); //$NON-NLS-1$
+        builder.append("=? "); //$NON-NLS-1$
       }
     }
 
@@ -151,7 +151,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
 
     // ----------------- count list size --------------------------
 
-    builder = new StringBuilder("SELECT max("); //$NON-NLS-1$
+    builder = new StringBuilder("SELECT MAX("); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
     builder.append(") FROM "); //$NON-NLS-1$
     builder.append(tableName);
@@ -163,12 +163,12 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
       if (i + 1 < fields.length)
       {
         // more to come
-        builder.append("= ? AND "); //$NON-NLS-1$
+        builder.append("=? AND "); //$NON-NLS-1$
       }
       else
       {
         // last one
-        builder.append("= ? "); //$NON-NLS-1$
+        builder.append("=? "); //$NON-NLS-1$
       }
     }
 

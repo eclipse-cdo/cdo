@@ -61,6 +61,18 @@ public class AllTestsDBPsql extends DBConfigs
   }
 
   @Override
+  protected boolean hasAuditSupport()
+  {
+    return true;
+  }
+
+  @Override
+  protected boolean hasBranchingSupport()
+  {
+    return false;
+  }
+
+  @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
     super.initTestClasses(testClasses);

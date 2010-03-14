@@ -12,13 +12,17 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
 import org.eclipse.emf.cdo.tests.AttributeTest;
+import org.eclipse.emf.cdo.tests.AuditTest;
+import org.eclipse.emf.cdo.tests.AuditTestSameSession;
 import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.BranchingTestSameSession;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 import org.eclipse.emf.cdo.tests.FeatureMapTest;
 import org.eclipse.emf.cdo.tests.MergingTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259869_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_303807_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import java.util.List;
@@ -35,9 +39,21 @@ public abstract class DBConfigs extends AllTestsAllConfigs
 
     // remove BranchingTests because most mappings do not support it
     // Subclasses should add Banching tests if supported
-    testClasses.remove(BranchingTest.class);
-    testClasses.remove(BranchingTestSameSession.class);
-    testClasses.remove(MergingTest.class);
+    if (!hasBranchingSupport())
+    {
+      testClasses.remove(BranchingTest.class);
+      testClasses.remove(BranchingTestSameSession.class);
+      testClasses.remove(MergingTest.class);
+      testClasses.remove(Bugzilla_303807_Test.class);
+    }
+
+    if (!hasAuditSupport())
+    {
+      // non-audit mode - remove audit tests
+      testClasses.remove(AuditTest.class);
+      testClasses.remove(AuditTestSameSession.class);
+      testClasses.remove(Bugzilla_252214_Test.class);
+    }
 
     testClasses.add(DBStoreTest.class);
     testClasses.add(SQLQueryTest.class);
@@ -68,4 +84,8 @@ public abstract class DBConfigs extends AllTestsAllConfigs
     testClasses.remove(Bugzilla_259869_Test.class);
     testClasses.add(DISABLE_Bugzilla_259869_Test.class);
   }
+
+  protected abstract boolean hasBranchingSupport();
+
+  protected abstract boolean hasAuditSupport();
 }

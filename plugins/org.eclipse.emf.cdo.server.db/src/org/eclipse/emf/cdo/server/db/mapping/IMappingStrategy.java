@@ -186,8 +186,6 @@ public interface IMappingStrategy
 
   /**
    * Query if this mapping supports branches. <br>
-   * If this method returns <code>true</code>, it is guaranteed that all class mappings returned by
-   * {@link #getClassMapping(EClass)} implement {@link IClassMappingBranchingSupport}.
    * 
    * @return <code>true</code> if branches are supported, <code>false</code> else.
    * @since 3.0
@@ -252,8 +250,8 @@ public interface IMappingStrategy
    * <ul>
    * <li>The <code>eClass</code> parameter is <code>null</code> or equal to <code>revision.getEClass()</code>.
    * <li>The <code>branch</code> parameter is <code>null</code> or equal to <code>revision.getBranch()</code>.
-   * <li>The <code>timeStamp</code> parameter is {@link CDOBranchPoint#INVALID_DATE} or
-   * <code>revision.isValid(timeStamp)</code> is <code>true</code>.
+   * <li>The <code>timeStamp</code> parameter is {@link CDOBranchPoint#UNSPECIFIED_DATE} or equal to
+   * <code>revision.getTimeStamp()</code>.
    * </ul>
    * 
    * @since 3.0

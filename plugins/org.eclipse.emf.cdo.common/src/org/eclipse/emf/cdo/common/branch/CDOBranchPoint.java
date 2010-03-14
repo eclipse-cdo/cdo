@@ -16,8 +16,6 @@ package org.eclipse.emf.cdo.common.branch;
  */
 public interface CDOBranchPoint extends Comparable<CDOBranchPoint>
 {
-  public static final long INVALID_DATE = -1;
-
   public static final long UNSPECIFIED_DATE = 0;
 
   public CDOBranch getBranch();

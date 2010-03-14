@@ -56,7 +56,7 @@ public class AuditFeatureMapTableMapping extends AbstractFeatureMapTableMapping
     stmt.setInt(2, revision.getVersion());
   }
 
-  public void objectRevised(IDBStoreAccessor accessor, CDOID id, long revised)
+  public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
   {
     // the audit list mapping does not care about revised references -> NOP
   }

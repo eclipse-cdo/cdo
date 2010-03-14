@@ -13,9 +13,6 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.tests.AuditTest;
-import org.eclipse.emf.cdo.tests.AuditTestSameSession;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_261218_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.db.verifier.DBStoreVerifier;
@@ -48,13 +45,20 @@ public class AllTestsDBHsqldbNonAudit extends DBConfigs
   {
     super.initTestClasses(testClasses);
 
-    // non-audit mode - remove audit tests
-    testClasses.remove(AuditTest.class);
-    testClasses.remove(AuditTestSameSession.class);
-    testClasses.remove(Bugzilla_252214_Test.class);
-
     // this takes ages - so for now, we disable it
     testClasses.remove(Bugzilla_261218_Test.class);
+  }
+
+  @Override
+  protected boolean hasAuditSupport()
+  {
+    return false;
+  }
+
+  @Override
+  protected boolean hasBranchingSupport()
+  {
+    return false;
   }
 
   public static class HsqldbNonAudit extends AllTestsDBHsqldb.Hsqldb

@@ -28,10 +28,11 @@ import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
-import org.eclipse.emf.cdo.server.db.mapping.IClassMappingBranchingSupport;
+import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
+import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -62,7 +63,7 @@ import java.util.Set;
  * @since 3.0
  */
 public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapping implements
-    IClassMappingBranchingSupport
+    IClassMappingAuditSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalBranchingClassMapping.class);
 
@@ -147,7 +148,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder = new StringBuilder(sqlSelectAttributesPrefix);
 
     builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-    builder.append("<=? AND ( "); //$NON-NLS-1$
+    builder.append("<=? AND ("); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
     builder.append("=0 OR "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
@@ -158,7 +159,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder = new StringBuilder(sqlSelectAttributesPrefix);
 
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
-    builder.append(" = ?)"); //$NON-NLS-1$
+    builder.append("=?)"); //$NON-NLS-1$
 
     sqlSelectAttributesByVersion = builder.toString();
 
@@ -230,7 +231,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append(" = 0"); //$NON-NLS-1$
+    builder.append("=0"); //$NON-NLS-1$
     sqlReviseAttributes = builder.toString();
 
     // ----------- Select all unrevised Object IDs ------
@@ -240,7 +241,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append(getTable().getName());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append(" = 0"); //$NON-NLS-1$
+    builder.append("=0"); //$NON-NLS-1$
     sqlSelectAllObjectIDs = builder.toString();
 
     // ----------- Select all revisions (for handleRevision) ---
@@ -265,6 +266,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement pstmt = null;
 
     long timeStamp = revision.getTimeStamp();
@@ -272,9 +274,9 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
     try
     {
-      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+      if (timeStamp != DBStore.UNSPECIFIED_DATE)
       {
-        pstmt = accessor.getStatementCache().getPreparedStatement(sqlSelectAttributesByTime, ReuseProbability.MEDIUM);
+        pstmt = statementCache.getPreparedStatement(sqlSelectAttributesByTime, ReuseProbability.MEDIUM);
         pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
         pstmt.setLong(2, branchId);
         pstmt.setLong(3, timeStamp);
@@ -282,7 +284,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       }
       else
       {
-        pstmt = accessor.getStatementCache().getPreparedStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
+        pstmt = statementCache.getPreparedStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
         pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
         pstmt.setLong(2, branchId);
       }
@@ -304,16 +306,18 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(pstmt);
     }
   }
 
   public boolean readRevisionByVersion(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement pstmt = null;
+
     try
     {
-      pstmt = accessor.getStatementCache().getPreparedStatement(sqlSelectAttributesByVersion, ReuseProbability.HIGH);
+      pstmt = statementCache.getPreparedStatement(sqlSelectAttributesByVersion, ReuseProbability.HIGH);
       pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
       pstmt.setInt(2, revision.getBranch().getID());
       pstmt.setInt(3, revision.getVersion());
@@ -335,7 +339,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(pstmt);
     }
   }
 
@@ -359,10 +363,12 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable().getName());
     builder.append(" WHERE "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(">0 AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
-    builder.append("= ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
-    builder.append("= ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(nameValueMapping.getField().getName());
     if (name == null)
     {
@@ -370,32 +376,34 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     else
     {
-      builder.append(exactMatch ? " = ? " : " LIKE ? "); //$NON-NLS-1$ //$NON-NLS-2$
+      builder.append(exactMatch ? " =? " : " LIKE ? "); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    builder.append(" AND ( "); //$NON-NLS-1$
+    builder.append(" AND ("); //$NON-NLS-1$
 
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-      builder.append(" = 0 )"); //$NON-NLS-1$
+      builder.append("=0 )"); //$NON-NLS-1$
     }
     else
     {
       builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-      builder.append(" <= ? AND ( "); //$NON-NLS-1$
+      builder.append("<=? AND ("); //$NON-NLS-1$
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-      builder.append(" = 0 OR "); //$NON-NLS-1$
+      builder.append("=0 OR "); //$NON-NLS-1$
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-      builder.append(" >= ?))"); //$NON-NLS-1$
+      builder.append(">=?))"); //$NON-NLS-1$
     }
 
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement pstmt = null;
+
     try
     {
       int idx = 1;
 
-      pstmt = accessor.getStatementCache().getPreparedStatement(builder.toString(), ReuseProbability.MEDIUM);
+      pstmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.MEDIUM);
       pstmt.setInt(idx++, branchId);
       pstmt.setLong(idx++, CDOIDUtil.getLong(folderId));
 
@@ -420,7 +428,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     catch (SQLException ex)
     {
-      accessor.getStatementCache().releasePreparedStatement(pstmt); // only release on error
+      statementCache.releasePreparedStatement(pstmt); // only release on error
       throw new DBException(ex);
     }
   }
@@ -432,17 +440,19 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       TRACER.format("Created ObjectID Statement : {0}", sqlSelectAllObjectIDs); //$NON-NLS-1$
     }
 
-    return accessor.getStatementCache().getPreparedStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
+    return statementCache.getPreparedStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
   }
 
   @Override
   protected final void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlInsertAttributes, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sqlInsertAttributes, ReuseProbability.HIGH);
 
       int col = 1;
 
@@ -471,7 +481,6 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
             // also set value column to default value
             mapping.setDefaultValue(stmt, col++);
-
             continue;
           }
 
@@ -489,57 +498,31 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
-  public final void detachObject(IDBStoreAccessor accessor, CDOID id, long revised, CDOBranch branch, OMMonitor monitor)
+  @Override
+  protected void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp,
+      OMMonitor mon)
   {
-    Async async = null;
-    try
-    {
-      monitor.begin(getListMappings().size() + 1);
-      async = monitor.forkAsync();
-      reviseObject(accessor, id, branch.getID(), revised);
-      async.stop();
-      async = monitor.forkAsync(getListMappings().size());
-      for (IListMapping mapping : getListMappings())
-      {
-        mapping.objectRevised(accessor, id, revised);
-      }
-    }
-    finally
-    {
-      async.stop();
-      monitor.done();
-    }
-  }
-
-  public void detachFirstVersion(IDBStoreAccessor accessor, CDORevision rev, long revised, OMMonitor monitor)
-  {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
-    InternalCDORevision revision = (InternalCDORevision)rev;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlInsertAttributes, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sqlInsertAttributes, ReuseProbability.HIGH);
 
       int col = 1;
-
-      stmt.setLong(col++, CDOIDUtil.getLong(revision.getID()));
-      stmt.setInt(col++, -CDOBranchVersion.FIRST_VERSION); // cdo_version
-      stmt.setInt(col++, revision.getBranch().getID());
-      stmt.setLong(col++, accessor.getStore().getMetaDataManager().getMetaID(revision.getEClass()));
-      stmt.setLong(col++, revised); // cdo_created
-      stmt.setLong(col++, 0); // cdo_revised
-      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, revision
-          .getResourceID()));
-      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, (CDOID)revision
-          .getContainerID()));
-      stmt.setInt(col++, revision.getContainingFeatureID());
-
-      // XXX Eike: what to do with attributes?
-      // the following is currently a copy of writeValues ...
+      stmt.setLong(col++, CDOIDUtil.getLong(id));
+      stmt.setInt(col++, -version); // cdo_version
+      stmt.setInt(col++, branch.getID());
+      stmt.setLong(col++, accessor.getStore().getMetaDataManager().getMetaID(getEClass()));
+      stmt.setLong(col++, timeStamp); // cdo_created
+      stmt.setLong(col++, DBStore.UNSPECIFIED_DATE); // cdo_revised
+      stmt.setLong(col++, DBStore.NULL); // resource
+      stmt.setLong(col++, DBStore.NULL); // container
+      stmt.setInt(col++, 0); // containing feature ID
 
       int isSetCol = col + getValueMappings().size();
 
@@ -548,20 +531,10 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         EStructuralFeature feature = mapping.getFeature();
         if (feature.isUnsettable())
         {
-          if (revision.getValue(feature) == null)
-          {
-            stmt.setBoolean(isSetCol++, false);
-
-            // also set value column to default value
-            mapping.setDefaultValue(stmt, col++);
-
-            continue;
-          }
-
-          stmt.setBoolean(isSetCol++, true);
+          stmt.setBoolean(isSetCol++, false);
         }
 
-        mapping.setValueFromRevision(stmt, col++, revision);
+        mapping.setDefaultValue(stmt, col++);
       }
 
       CDODBUtil.sqlUpdate(stmt, true);
@@ -572,21 +545,23 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
-  protected void reviseObject(IDBStoreAccessor accessor, CDOID id, int branchId, long revised)
+  @Override
+  protected void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long revised)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlReviseAttributes, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sqlReviseAttributes, ReuseProbability.HIGH);
 
       stmt.setLong(1, revised);
       stmt.setLong(2, CDOIDUtil.getLong(id));
-      stmt.setInt(3, branchId);
+      stmt.setInt(3, branch.getID());
 
       CDODBUtil.sqlUpdate(stmt, true);
     }
@@ -596,14 +571,8 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
-  }
-
-  @Override
-  protected void reviseObject(IDBStoreAccessor accessor, CDOID id, long revised)
-  {
-    reviseObject(accessor, id, CDOBranch.MAIN_BRANCH_ID, revised);
   }
 
   @Override
@@ -622,14 +591,14 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         // put new objects into objectTypeCache
         ((HorizontalBranchingMappingStrategy)getMappingStrategy()).putObjectType(accessor, id, getEClass());
       }
-      else if (revision.getVersion() > 1)
+      else if (revision.getVersion() > CDOBranchVersion.FIRST_VERSION)
       {
         // if revision is not the first one, revise the old revision
         long revised = revision.getTimeStamp() - 1;
-        reviseObject(accessor, id, revision.getBranch().getID(), revised);
+        reviseOldRevision(accessor, id, revision.getBranch(), revised);
         for (IListMapping mapping : getListMappings())
         {
-          mapping.objectRevised(accessor, id, revised);
+          mapping.objectDetached(accessor, id, revised);
         }
       }
 
@@ -679,7 +648,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       whereAppend = true;
     }
 
-    if (timeStamp != CDOBranchPoint.INVALID_DATE)
+    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
     {
       // TODO: Prepare this string literal
       builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
@@ -687,11 +656,11 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       builder.append("=? "); //$NON-NLS-1$
     }
 
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
     IRepository repository = accessor.getStore().getRepository();
     CDORevisionManager revisionManager = repository.getRevisionManager();
     CDOBranchManager branchManager = repository.getBranchManager();
 
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
     ResultSet rs = null;
 
@@ -705,7 +674,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         stmt.setInt(col++, branch.getID());
       }
 
-      if (timeStamp != CDOBranchPoint.INVALID_DATE)
+      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
       {
         stmt.setLong(col, timeStamp);
       }
@@ -761,7 +730,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       builder.append("<=? OR "); //$NON-NLS-1$
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
       builder.append("="); //$NON-NLS-1$
-      builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
+      builder.append(DBStore.UNSPECIFIED_DATE);
       builder.append(")"); //$NON-NLS-1$
     }
 
@@ -801,5 +770,4 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       statementCache.releasePreparedStatement(stmt);
     }
   }
-
 }

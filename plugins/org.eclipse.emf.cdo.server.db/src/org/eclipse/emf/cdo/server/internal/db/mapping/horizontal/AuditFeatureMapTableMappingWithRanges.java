@@ -204,10 +204,10 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
 
     // ---------------- SELECT to read chunks ----------------------------
     StringBuilder builder = new StringBuilder();
-    builder.append("SELECT ");
+    builder.append("SELECT "); //$NON-NLS-1$
 
     builder.append(CDODBSchema.FEATUREMAP_TAG);
-    builder.append(", ");
+    builder.append(", "); //$NON-NLS-1$
 
     Iterator<String> iter = columnNames.iterator();
     while (iter.hasNext())
@@ -215,52 +215,52 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       builder.append(iter.next());
       if (iter.hasNext())
       {
-        builder.append(", ");
+        builder.append(", "); //$NON-NLS-1$
       }
     }
 
-    builder.append(" FROM ");
+    builder.append(" FROM "); //$NON-NLS-1$
     builder.append(tableName);
-    builder.append(" WHERE ");
+    builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_ADDED);
-    builder.append(" <= ? AND ( "); //$NON-NLS-1$
+    builder.append("<=? AND ("); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
     builder.append(" IS NULL OR "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
-    builder.append(" > ? )"); //$NON-NLS-1$
+    builder.append(">? )"); //$NON-NLS-1$
     sqlSelectChunksPrefix = builder.toString();
 
     sqlOrderByIndex = " ORDER BY " + CDODBSchema.FEATUREMAP_IDX; //$NON-NLS-1$
 
     // ----------------- count list size --------------------------
 
-    builder = new StringBuilder("SELECT count(1) FROM ");
+    builder = new StringBuilder("SELECT count(1) FROM "); //$NON-NLS-1$
     builder.append(tableName);
-    builder.append(" WHERE ");
+    builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_ADDED);
-    builder.append(" <= ? AND ( "); //$NON-NLS-1$
+    builder.append("<=? AND ("); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
     builder.append(" IS NULL OR "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
-    builder.append(" > ? )"); //$NON-NLS-1$
+    builder.append(">? )"); //$NON-NLS-1$
     sqlGetListLastIndex = builder.toString();
 
     // ----------------- INSERT - prefix -----------------
-    builder = new StringBuilder("INSERT INTO ");
+    builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
     builder.append(tableName);
-    builder.append("(");
+    builder.append("("); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(",");
+    builder.append(","); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
-    builder.append(",");
+    builder.append(","); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
-    builder.append(",");
+    builder.append(","); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(",");
+    builder.append(","); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_VALUE);
 
     for (int i = 0; i < columnNames.size(); i++)
@@ -275,10 +275,10 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder.append(") VALUES (?, ?, ?, ?, ?, "); //$NON-NLS-1$
     for (int i = 0; i < columnNames.size(); i++)
     {
-      builder.append("?, ");
+      builder.append("?, "); //$NON-NLS-1$
     }
 
-    builder.append("?, ?)");
+    builder.append("?, ?)"); //$NON-NLS-1$
     sqlInsert = builder.toString();
 
     // ----------------- remove current entry -----------------
@@ -286,12 +286,12 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder.append(tableName);
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
-    builder.append(" = ? "); //$NON-NLS-1$
+    builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_IDX);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlRemoveEntry = builder.toString();
@@ -301,11 +301,11 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder.append(tableName);
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_IDX);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_ADDED);
-    builder.append(" = ?"); //$NON-NLS-1$
+    builder.append("=?"); //$NON-NLS-1$
     sqlDeleteEntry = builder.toString();
 
     // ----------------- update index -----------------
@@ -313,19 +313,19 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder.append(tableName);
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_IDX);
-    builder.append(" = ? WHERE "); //$NON-NLS-1$
+    builder.append("=? WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_ADDED);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_IDX);
-    builder.append(" = ?"); //$NON-NLS-1$
+    builder.append("=?"); //$NON-NLS-1$
     sqlUpdateIndex = builder.toString();
 
     // ----------------- get current value -----------------
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_TAG);
-    builder.append(", ");
+    builder.append(", "); //$NON-NLS-1$
 
     iter = columnNames.iterator();
     while (iter.hasNext())
@@ -333,7 +333,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       builder.append(iter.next());
       if (iter.hasNext())
       {
-        builder.append(", ");
+        builder.append(", "); //$NON-NLS-1$
       }
     }
 
@@ -341,9 +341,9 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder.append(tableName);
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_IDX);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlGetValue = builder.toString();
@@ -353,10 +353,10 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder.append(tableName);
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
-    builder.append(" = ? "); //$NON-NLS-1$
+    builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlClearList = builder.toString();
@@ -366,9 +366,9 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder.append(tableName);
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_ADDED);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlDeleteList = builder.toString();
@@ -419,7 +419,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading list values for feature {0}.{1} of {2}v{3}", getContainingClass().getName(), getFeature()
+      TRACER.format("Reading list values for feature {0}.{1} of {2}v{3}", getContainingClass().getName(), getFeature() //$NON-NLS-1$
           .getName(), revision.getID(), revision.getVersion());
     }
 
@@ -450,7 +450,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
 
         if (TRACER.isEnabled())
         {
-          TRACER.format("Read value for index {0} from result set: {1}", list.size(), value);
+          TRACER.format("Read value for index {0} from result set: {1}", list.size(), value); //$NON-NLS-1$
         }
 
         list.add(CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(tag), value));
@@ -460,7 +460,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Adding UNINITIALIZED for index {0} ", list.size());
+          TRACER.format("Adding UNINITIALIZED for index {0} ", list.size()); //$NON-NLS-1$
         }
 
         list.add(InternalCDOList.UNINITIALIZED);
@@ -478,7 +478,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading list values done for feature {0}.{1} of {2}v{3}", getContainingClass().getName(),
+      TRACER.format("Reading list values done for feature {0}.{1} of {2}v{3}", getContainingClass().getName(), //$NON-NLS-1$
           getFeature().getName(), revision.getID(), revision.getVersion());
     }
   }
@@ -488,7 +488,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     EStructuralFeature modelFeature = getFeatureByTag(tag);
 
     TypeMapping typeMapping = (TypeMapping)getMappingStrategy().createValueMapping(modelFeature);
-    String column = CDODBSchema.FEATUREMAP_VALUE + "_" + typeMapping.getDBType();
+    String column = CDODBSchema.FEATUREMAP_VALUE + "_" + typeMapping.getDBType(); //$NON-NLS-1$
 
     tagMap.put(tag, column);
     typeMapping.setDBField(table, column);
@@ -521,13 +521,13 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       resultSet = pstmt.executeQuery();
       if (!resultSet.next())
       {
-        throw new DBException("count expects exactly one result.");
+        throw new DBException("Count expects exactly one result");
       }
 
       int result = resultSet.getInt(1) - 1;
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Read list last index = " + result);
+        TRACER.trace("Read list last index = " + result); //$NON-NLS-1$
       }
 
       return result;
@@ -547,7 +547,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading list chunk values for feature {0}.{1} of {2}v{3}", getContainingClass().getName(),
+      TRACER.format("Reading list chunk values for feature {0}.{1} of {2}v{3}", getContainingClass().getName(), //$NON-NLS-1$
           getFeature().getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
     }
 
@@ -591,14 +591,14 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
 
           if (TRACER.isEnabled())
           {
-            TRACER.format("Current chunk no. {0} is [start = {1}, size = {2}]", chunkIndex - 1, chunk.getStartIndex(),
+            TRACER.format("Current chunk no. {0} is [start = {1}, size = {2}]", chunkIndex - 1, chunk.getStartIndex(), //$NON-NLS-1$
                 chunkSize);
           }
         }
 
         if (TRACER.isEnabled())
         {
-          TRACER.format("Read value for chunk index {0} from result set: {1}", indexInChunk, value);
+          TRACER.format("Read value for chunk index {0} from result set: {1}", indexInChunk, value); //$NON-NLS-1$
         }
 
         chunk.add(indexInChunk++, CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(tag), value));
@@ -606,7 +606,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
         {
           if (TRACER.isEnabled())
           {
-            TRACER.format("Chunk finished.");
+            TRACER.format("Chunk finished."); //$NON-NLS-1$
           }
 
           chunk = null;
@@ -616,7 +616,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("Reading list chunk values done for feature {0}.{1} of {2}v{3}", getContainingClass().getName(),
+        TRACER.format("Reading list chunk values done for feature {0}.{1} of {2}v{3}", getContainingClass().getName(), //$NON-NLS-1$
             getTagByFeature(getFeature()), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
       }
     }
@@ -643,7 +643,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing done");
+      TRACER.format("Writing done"); //$NON-NLS-1$
     }
   }
 
@@ -765,11 +765,11 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     }
   }
 
-  public void objectRevised(IDBStoreAccessor accessor, CDOID id, long revised)
+  public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("objectRevised {0} {1}", id, revised);
+      TRACER.format("objectRevised {0}: {1}", id, revised); //$NON-NLS-1$
     }
 
     CDOBranch main = getMappingStrategy().getStore().getRepository().getBranchManager().getMainBranch();
@@ -793,7 +793,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("ListTableMapping.processDelta for revision {0} - previous list size: {1}", originalRevision,
+      TRACER.format("ListTableMapping.processDelta for revision {0} - previous list size: {1}", originalRevision, //$NON-NLS-1$
           oldListSize);
     }
 
@@ -802,7 +802,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("processing deltas ...");
+      TRACER.format("processing deltas ..."); //$NON-NLS-1$
     }
 
     for (CDOFeatureDelta listDelta : delta.getListChanges())

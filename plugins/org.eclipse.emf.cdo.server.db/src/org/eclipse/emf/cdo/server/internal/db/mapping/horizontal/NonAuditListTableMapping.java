@@ -98,13 +98,13 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append(getTable().getName());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(" = ? "); //$NON-NLS-1$
+    builder.append("=? "); //$NON-NLS-1$
 
     sqlClear = builder.toString();
 
     builder.append(" AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" = ? "); //$NON-NLS-1$
+    builder.append("=? "); //$NON-NLS-1$
 
     sqlDeleteItem = builder.toString();
 
@@ -114,12 +114,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append(getTable().getName());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_VALUE);
-    builder.append(" = ? "); //$NON-NLS-1$
+    builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" = ? "); //$NON-NLS-1$
+    builder.append("=? "); //$NON-NLS-1$
     sqlUpdateValue = builder.toString();
 
     // ----------- insert one item --------------------
@@ -141,12 +141,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append(getTable().getName());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" = ? "); //$NON-NLS-1$
+    builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" = ? "); //$NON-NLS-1$
+    builder.append("=? "); //$NON-NLS-1$
     sqlUpdateIndex = builder.toString();
   }
 
@@ -162,7 +162,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     stmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
   }
 
-  public void objectRevised(IDBStoreAccessor accessor, CDOID id, long revised)
+  public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
   {
     clearList(accessor, id);
   }
@@ -209,7 +209,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("ListTableMapping.processDelta for revision {0} - previous list size: {1}", originalRevision,
+      TRACER.format("ListTableMapping.processDelta for revision {0} - previous list size: {1}", originalRevision, //$NON-NLS-1$
           oldListSize);
     }
 
@@ -233,7 +233,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("procssing deltas ...");
+      TRACER.format("procssing deltas ..."); //$NON-NLS-1$
     }
 
     for (CDOFeatureDelta listDelta : delta.getListChanges())
@@ -274,14 +274,14 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing to database:");
+      TRACER.format("Writing to database:"); //$NON-NLS-1$
     }
 
     if (clearFirst)
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format(" - clear list");
+        TRACER.format(" - clear list"); //$NON-NLS-1$
       }
 
       clearList(accessor, id);
@@ -309,7 +309,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
           if (TRACER.isEnabled())
           {
-            TRACER.format(" - delete at {0} ", element.sourceIndex);
+            TRACER.format(" - delete at {0} ", element.sourceIndex); //$NON-NLS-1$
           }
         }
 
@@ -333,7 +333,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
           if (TRACER.isEnabled())
           {
-            TRACER.format(" - move {0} -> {1} ", element.sourceIndex, element.tempIndex);
+            TRACER.format(" - move {0} -> {1} ", element.sourceIndex, element.tempIndex); //$NON-NLS-1$
           }
         }
       }
@@ -364,7 +364,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           moveCounter++;
           if (TRACER.isEnabled())
           {
-            TRACER.format(" - move {0} -> {1} ", element.sourceIndex, element.destinationIndex);
+            TRACER.format(" - move {0} -> {1} ", element.sourceIndex, element.destinationIndex); //$NON-NLS-1$
           }
         }
       }
@@ -389,7 +389,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           moveCounter++;
           if (TRACER.isEnabled())
           {
-            TRACER.format(" - move {0} -> {1} ", element.sourceIndex, element.destinationIndex);
+            TRACER.format(" - move {0} -> {1} ", element.sourceIndex, element.destinationIndex); //$NON-NLS-1$
           }
         }
       }
@@ -410,7 +410,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
           if (TRACER.isEnabled())
           {
-            TRACER.format(" - move {0} -> {1} ", element.tempIndex, element.destinationIndex);
+            TRACER.format(" - move {0} -> {1} ", element.tempIndex, element.destinationIndex); //$NON-NLS-1$
           }
         }
 
@@ -432,7 +432,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
           if (TRACER.isEnabled())
           {
-            TRACER.format(" - set value at {0} to {1} ", element.destinationIndex, element.value);
+            TRACER.format(" - set value at {0} to {1} ", element.destinationIndex, element.value); //$NON-NLS-1$
           }
         }
 
@@ -454,7 +454,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
           if (TRACER.isEnabled())
           {
-            TRACER.format(" - insert value at {0} : value {1} ", element.destinationIndex, element.value);
+            TRACER.format(" - insert value at {0} : value {1} ", element.destinationIndex, element.value); //$NON-NLS-1$
           }
         }
       }
@@ -464,7 +464,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Performing {0} delete operations.", deleteCounter);
+          TRACER.format("Performing {0} delete operations.", deleteCounter); //$NON-NLS-1$
         }
 
         int[] result = deleteStmt.executeBatch();
@@ -479,7 +479,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Performing {0} move operations.", moveCounter);
+          TRACER.format("Performing {0} move operations.", moveCounter); //$NON-NLS-1$
         }
 
         int[] result = moveStmt.executeBatch();
@@ -494,7 +494,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Performing {0} insert operations.", insertCounter);
+          TRACER.format("Performing {0} insert operations.", insertCounter); //$NON-NLS-1$
         }
 
         int[] result = insertStmt.executeBatch();
@@ -509,7 +509,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Performing {0} set operations.", setValueCounter);
+          TRACER.format("Performing {0} set operations.", setValueCounter); //$NON-NLS-1$
         }
 
         int[] result = setValueStmt.executeBatch();
@@ -652,7 +652,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("  - insert at {0} value {1}", delta.getIndex(), delta.getValue());
+        TRACER.format("  - insert at {0} value {1}", delta.getIndex(), delta.getValue()); //$NON-NLS-1$
       }
 
       // make room for the new item
@@ -666,7 +666,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("  - remove at {0}", delta.getIndex());
+        TRACER.format("  - remove at {0}", delta.getIndex()); //$NON-NLS-1$
       }
 
       ManipulationElement e = findElement(delta.getIndex());
@@ -680,7 +680,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("  - set at {0} value {1}", delta.getIndex(), delta.getValue());
+        TRACER.format("  - set at {0} value {1}", delta.getIndex(), delta.getValue()); //$NON-NLS-1$
       }
 
       ManipulationElement e = findElement(delta.getIndex());
@@ -701,7 +701,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("  - clear list");
+        TRACER.format("  - clear list"); //$NON-NLS-1$
       }
 
       // set the clear-flag
@@ -718,7 +718,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("  - move {0} -> {1}", fromIdx, toIdx);
+        TRACER.format("  - move {0} -> {1}", fromIdx, toIdx); //$NON-NLS-1$
       }
 
       // ignore the trivial case
@@ -760,7 +760,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("  - unset list");
+        TRACER.format("  - unset list"); //$NON-NLS-1$
       }
 
       // set the clear-flag

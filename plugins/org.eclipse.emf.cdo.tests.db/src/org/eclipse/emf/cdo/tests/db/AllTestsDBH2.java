@@ -49,6 +49,18 @@ public class AllTestsDBH2 extends DBConfigs
     addScenario(parent, COMBINED, AllTestsDBH2.H2.ReusableFolder.RANGE_INSTANCE, JVM, NATIVE);
   }
 
+  @Override
+  protected boolean hasAuditSupport()
+  {
+    return true;
+  }
+
+  @Override
+  protected boolean hasBranchingSupport()
+  {
+    return false;
+  }
+
   /**
    * @author Eike Stepper
    */

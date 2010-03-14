@@ -160,13 +160,13 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     builder.append(tableName);
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
-    builder.append(" <= ? AND ( "); //$NON-NLS-1$
+    builder.append("<=? AND ("); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL OR "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
-    builder.append(" > ? )"); //$NON-NLS-1$
+    builder.append(">? )"); //$NON-NLS-1$
     sqlSelectChunksPrefix = builder.toString();
 
     sqlOrderByIndex = " ORDER BY " + CDODBSchema.LIST_IDX; //$NON-NLS-1$
@@ -176,27 +176,27 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     builder.append(tableName);
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
-    builder.append(" <= ? AND ( "); //$NON-NLS-1$
+    builder.append("<=? AND ("); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL OR "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
-    builder.append(" > ? )"); //$NON-NLS-1$
+    builder.append(">? )"); //$NON-NLS-1$
     sqlGetListLastIndex = builder.toString();
 
     // ----------------- insert entry -----------------
     builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
     builder.append(tableName);
-    builder.append("(");
+    builder.append("("); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(",");
+    builder.append(","); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
-    builder.append(",");
+    builder.append(","); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
-    builder.append(",");
+    builder.append(","); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(",");
+    builder.append(","); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_VALUE);
     builder.append(") VALUES (?, ?, NULL, ?, ?)"); //$NON-NLS-1$
     sqlInsertEntry = builder.toString();
@@ -206,12 +206,12 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     builder.append(getTable().getName());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
-    builder.append(" = ? "); //$NON-NLS-1$
+    builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlRemoveEntry = builder.toString();
@@ -221,11 +221,11 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     builder.append(getTable().getName());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
-    builder.append(" = ?"); //$NON-NLS-1$
+    builder.append("=?"); //$NON-NLS-1$
     sqlDeleteEntry = builder.toString();
 
     // ----------------- update index -----------------
@@ -233,13 +233,13 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     builder.append(getTable().getName());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" = ? WHERE "); //$NON-NLS-1$
+    builder.append("=? WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" = ?"); //$NON-NLS-1$
+    builder.append("=?"); //$NON-NLS-1$
     sqlUpdateIndex = builder.toString();
 
     // ----------------- get current value -----------------
@@ -249,9 +249,9 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     builder.append(getTable().getName());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlGetValue = builder.toString();
@@ -261,10 +261,10 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     builder.append(getTable().getName());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
-    builder.append(" = ? "); //$NON-NLS-1$
+    builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlClearList = builder.toString();
@@ -274,9 +274,9 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     builder.append(getTable().getName());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
-    builder.append(" = ? AND "); //$NON-NLS-1$
+    builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlDeleteList = builder.toString();
@@ -399,7 +399,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
       resultSet = pstmt.executeQuery();
       if (!resultSet.next())
       {
-        throw new DBException("count expects exactly one result.");
+        throw new DBException("Count expects exactly one result");
       }
 
       int result = resultSet.getInt(1) - 1;
@@ -521,7 +521,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing done");
+      TRACER.format("Writing done"); //$NON-NLS-1$
     }
   }
 
@@ -588,11 +588,11 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     }
   }
 
-  public void objectRevised(IDBStoreAccessor accessor, CDOID id, long revised)
+  public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("objectRevised {0} {1}", id, revised);
+      TRACER.format("objectRevised {0}: {1}", id, revised); //$NON-NLS-1$
     }
 
     CDOBranch main = getMappingStrategy().getStore().getRepository().getBranchManager().getMainBranch();
@@ -616,7 +616,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("ListTableMapping.processDelta for revision {0} - previous list size: {1}", originalRevision,
+      TRACER.format("ListTableMapping.processDelta for revision {0} - previous list size: {1}", originalRevision, //$NON-NLS-1$
           oldListSize);
     }
 
@@ -625,7 +625,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("processing deltas ...");
+      TRACER.format("processing deltas ..."); //$NON-NLS-1$
     }
 
     for (CDOFeatureDelta listDelta : delta.getListChanges())
@@ -1055,7 +1055,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
       ResultSet resultSet = pstmt.executeQuery();
       if (!resultSet.next())
       {
-        throw new DBException("getValue expects exactly one result.");
+        throw new DBException("getValue() expects exactly one result");
       }
 
       result = typeMapping.readValue(resultSet);

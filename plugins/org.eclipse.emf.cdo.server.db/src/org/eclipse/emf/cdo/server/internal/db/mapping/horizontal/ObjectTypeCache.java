@@ -215,11 +215,11 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
       LifecycleUtil.deactivate(writer); // Don't let the null-context accessor go to the pool!
     }
 
-    sqlSelect = "SELECT " + typeField.getName() + " FROM " + table.getName() + " WHERE " + idField.getName() + " = ?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+    sqlSelect = "SELECT " + typeField.getName() + " FROM " + table.getName() + " WHERE " + idField.getName() + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     sqlInsert = "INSERT INTO " + table.getName() + "(" //$NON-NLS-1$ //$NON-NLS-2$
         + idField.getName() + "," + typeField.getName() //$NON-NLS-1$
         + ") VALUES (?,?)"; //$NON-NLS-1$
-    sqlDelete = "DELETE FROM " + table.getName() + " WHERE " + idField.getName() + " = ?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    sqlDelete = "DELETE FROM " + table.getName() + " WHERE " + idField.getName() + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
   @Override

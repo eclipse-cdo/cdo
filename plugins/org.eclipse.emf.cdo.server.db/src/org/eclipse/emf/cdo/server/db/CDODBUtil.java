@@ -154,7 +154,7 @@ public final class CDODBUtil
    */
   public static CDOID convertLongToCDOID(IExternalReferenceManager manager, IDBStoreAccessor accessor, long id)
   {
-    if (id < 0)
+    if (id < DBStore.NULL)
     {
       return manager.unmapExternalReference(accessor, id);
     }

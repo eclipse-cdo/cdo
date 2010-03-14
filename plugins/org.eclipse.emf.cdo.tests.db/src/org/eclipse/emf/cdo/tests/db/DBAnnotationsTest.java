@@ -29,8 +29,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 
-import junit.framework.Assert;
-
 /**
  * Test different DB annotations.
  * 
@@ -43,9 +41,10 @@ public class DBAnnotationsTest extends AbstractCDOTest
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addLengthAnnotation(model1, "8");
-    CDOSession session = openSession();
 
-    disableConsole();
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(model1);
+
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
 
@@ -72,9 +71,10 @@ public class DBAnnotationsTest extends AbstractCDOTest
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addLengthAnnotation(model1, "8");
-    CDOSession session = openSession();
 
-    disableConsole();
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(model1);
+
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
 
@@ -106,9 +106,9 @@ public class DBAnnotationsTest extends AbstractCDOTest
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addLengthAnnotation(model1, "8");
-    CDOSession session = openSession();
 
-    disableConsole();
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(model1);
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -132,7 +132,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
         DatabaseMetaData metaData = getStatement().getConnection().getMetaData();
         ResultSet rset = metaData.getColumns(null, null, "PRODUCT1", "NAME");
         rset.next();
-        Assert.assertEquals("8", rset.getString(7));
+        assertEquals("8", rset.getString(7));
       }
     }.verify();
   }
@@ -149,9 +149,9 @@ public class DBAnnotationsTest extends AbstractCDOTest
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addTypeAnnotation(model1, "CLOB");
-    CDOSession session = openSession();
 
-    disableConsole();
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(model1);
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -175,7 +175,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
         DatabaseMetaData metaData = getStatement().getConnection().getMetaData();
         ResultSet rset = metaData.getColumns(null, null, "CATEGORY", "NAME");
         rset.next();
-        Assert.assertEquals("CLOB", rset.getString(6));
+        assertEquals("CLOB", rset.getString(6));
       }
     }.verify();
   }
@@ -188,9 +188,9 @@ public class DBAnnotationsTest extends AbstractCDOTest
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addTableNameAnnotation(model1, "Subject");
-    CDOSession session = openSession();
 
-    disableConsole();
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(model1);
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -214,7 +214,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
         DatabaseMetaData metaData = getStatement().getConnection().getMetaData();
         ResultSet rset = metaData.getTables(null, null, "SUBJECT", null);
         rset.next();
-        Assert.assertEquals("SUBJECT", rset.getString(3));
+        assertEquals("SUBJECT", rset.getString(3));
       }
     }.verify();
   }
@@ -227,9 +227,9 @@ public class DBAnnotationsTest extends AbstractCDOTest
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addColumnNameAnnotation(model1, "TOPIC");
-    CDOSession session = openSession();
 
-    disableConsole();
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(model1);
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -253,7 +253,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
         DatabaseMetaData metaData = getStatement().getConnection().getMetaData();
         ResultSet rset = metaData.getColumns(null, null, "CATEGORY", "TOPIC");
         rset.next();
-        Assert.assertEquals("TOPIC", rset.getString(4));
+        assertEquals("TOPIC", rset.getString(4));
       }
     }.verify();
   }
@@ -270,9 +270,9 @@ public class DBAnnotationsTest extends AbstractCDOTest
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addColumnNameAndTypeAnnoation(model1, "TOPIC", "CLOB");
-    CDOSession session = openSession();
 
-    disableConsole();
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(model1);
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -296,8 +296,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
         DatabaseMetaData metaData = getStatement().getConnection().getMetaData();
         ResultSet rset = metaData.getColumns(null, null, "CATEGORY", "TOPIC");
         rset.next();
-        Assert.assertEquals("TOPIC", rset.getString(4));
-        Assert.assertEquals("CLOB", rset.getString(6));
+        assertEquals("TOPIC", rset.getString(4));
+        assertEquals("CLOB", rset.getString(6));
       }
     }.verify();
   }
@@ -307,9 +307,9 @@ public class DBAnnotationsTest extends AbstractCDOTest
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addTableMappingAnnotation(model1, "OrderDetail", "Company");
-    CDOSession session = openSession();
 
-    disableConsole();
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(model1);
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -355,9 +355,9 @@ public class DBAnnotationsTest extends AbstractCDOTest
           }
         }
 
-        Assert.assertFalse(orderDetailTableCreated);
-        Assert.assertFalse(companyTableCreated);
-        Assert.assertTrue(categoryTableCreated);
+        assertEquals(false, orderDetailTableCreated);
+        assertEquals(false, companyTableCreated);
+        assertEquals(true, categoryTableCreated);
       }
     }.verify();
   }

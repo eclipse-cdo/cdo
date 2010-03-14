@@ -56,6 +56,18 @@ public class AllTestsDBH2Branching extends DBConfigs
   }
 
   @Override
+  protected boolean hasAuditSupport()
+  {
+    return true;
+  }
+
+  @Override
+  protected boolean hasBranchingSupport()
+  {
+    return true;
+  }
+
+  @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
     // add branching tests for this testsuite
@@ -164,6 +176,7 @@ public class AllTestsDBH2Branching extends DBConfigs
 
         Connection conn = null;
         Statement stmt = null;
+
         try
         {
           conn = defaultDataSource.getConnection();
@@ -183,7 +196,6 @@ public class AllTestsDBH2Branching extends DBConfigs
 
         JdbcDataSource dataSource = new JdbcDataSource();
         dataSource.setURL("jdbc:h2:" + dbFolder.getAbsolutePath() + "/h2test;SCHEMA=" + repoName);
-
         return dataSource;
       }
 

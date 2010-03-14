@@ -46,6 +46,18 @@ public class AllTestsDBMysql extends DBConfigs
     addScenario(parent, COMBINED, AllTestsDBMysql.Mysql.INSTANCE, JVM, NATIVE);
   }
 
+  @Override
+  protected boolean hasAuditSupport()
+  {
+    return true;
+  }
+
+  @Override
+  protected boolean hasBranchingSupport()
+  {
+    return false;
+  }
+
   /**
    * @author Simon McDuff
    */

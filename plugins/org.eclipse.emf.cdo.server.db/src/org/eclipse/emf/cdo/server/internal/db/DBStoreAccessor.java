@@ -39,7 +39,6 @@ import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
-import org.eclipse.emf.cdo.server.db.mapping.IClassMappingBranchingSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
@@ -51,6 +50,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -59,6 +59,7 @@ import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -199,9 +200,9 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     if (mapping.readRevision(this, revision, listChunk))
     {
       int version = revision.getVersion();
-      if (version < 0)
+      if (version < CDOBranchVersion.FIRST_VERSION - 1)
       {
-        return new DetachedCDORevision(eClass, id, revision.getBranch(), version, revision.getTimeStamp());
+        return new DetachedCDORevision(eClass, id, revision.getBranch(), -version, revision.getTimeStamp());
       }
 
       return revision;
@@ -214,11 +215,13 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
       CDORevisionCacheAdder cache)
   {
-    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-
+    DBStore store = getStore();
     EClass eClass = getObjectType(id);
-    InternalCDORevision revision = getStore().createRevision(eClass, id);
+
+    IMappingStrategy mappingStrategy = store.getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
+
+    InternalCDORevision revision = store.createRevision(eClass, id);
     revision.setVersion(branchVersion.getVersion());
     revision.setBranchPoint(branchVersion.getBranch().getHead());
 
@@ -379,82 +382,44 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     mapping.writeRevision(this, revision, monitor);
   }
 
+  /*
+   * XXX Eike: change API from CDOID[] to CDOIDAndVersion[]
+   */
   @Override
   protected void detachObjects(CDOID[] detachedObjects, CDOBranch branch, long timeStamp, OMMonitor monitor)
   {
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    monitor.begin(detachedObjects.length);
+
     try
     {
-      if (branch.getID() != CDOBranch.MAIN_BRANCH_ID)
+      InternalCDORevisionManager revisionManager = getStore().getRepository().getRevisionManager();
+      for (CDOID id : detachedObjects)
       {
-        if (getStore().getMappingStrategy().hasBranchingSupport())
+        // TODO when CDOIDAndVersion is available:
+        // CDOID id = idAndVersion.getID(); //
+        // int version = idAndVersion.getVersion(); //
+
+        // but for now:
+
+        InternalCDORevision revision = revisionManager.getRevision(id, branch.getHead(), CDORevision.UNCHUNKED,
+            CDORevision.DEPTH_NONE, true);
+        int version = ObjectUtil.equals(branch, revision.getBranch()) ? revision.getVersion()
+            : CDOBranchVersion.FIRST_VERSION;
+
+        if (TRACER.isEnabled())
         {
-          monitor.begin(detachedObjects.length);
-          for (CDOID id : detachedObjects)
-          {
-            detachObject(id, timeStamp, branch, monitor.fork());
-          }
+          TRACER.format("Detaching object: {0}", id); //$NON-NLS-1$
         }
-      }
-      else
-      {
-        monitor.begin(detachedObjects.length);
-        for (CDOID id : detachedObjects)
-        {
-          detachObject(id, timeStamp, monitor.fork());
-        }
+
+        EClass eClass = getObjectType(id);
+        IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
+        mapping.detachObject(this, id, version, branch, timeStamp, monitor.fork());
       }
     }
     finally
     {
       monitor.done();
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected void detachObject(CDOID id, long timeStamp, OMMonitor monitor)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Detaching object: {0}", id); //$NON-NLS-1$
-    }
-
-    EClass eClass = getObjectType(id);
-    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
-
-    mapping.detachObject(this, id, timeStamp, monitor);
-  }
-
-  /**
-   * Detach Object in branching mode
-   * 
-   * @since 3.0
-   */
-  protected void detachObject(CDOID id, long revised, CDOBranch branch, OMMonitor monitor)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Detaching object: {0} in branch {1}", id, branch); //$NON-NLS-1$
-    }
-
-    InternalCDORevision oldRevision = getStore().getRepository().getRevisionManager().getRevision(id,
-        branch.getPoint(revised), 0, CDORevision.DEPTH_NONE, true);
-    EClass eClass = oldRevision.getEClass();
-
-    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    IClassMappingBranchingSupport mapping = (IClassMappingBranchingSupport)mappingStrategy.getClassMapping(eClass);
-
-    if (oldRevision.getVersion() == 1)
-    {
-      // version 1 in branch gets deleted -> write placebo revision.
-      mapping.detachFirstVersion(this, oldRevision, revised, monitor);
-    }
-    else
-    {
-      // default detach behavior
-      mapping.detachObject(this, id, revised, branch, monitor);
     }
   }
 
@@ -595,6 +560,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       pstmt.setLong(4, branchInfo.getBaseTimeStamp());
 
       CDODBUtil.sqlUpdate(pstmt, true);
+      getConnection().commit();
       return id;
     }
     catch (SQLException ex)
@@ -751,7 +717,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       where = true;
     }
 
-    if (startTime != CDOBranchPoint.UNSPECIFIED_DATE)
+    if (startTime != DBStore.UNSPECIFIED_DATE)
     {
       builder.append(where ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
       builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
@@ -760,7 +726,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       where = true;
     }
 
-    if (endTime != CDOBranchPoint.UNSPECIFIED_DATE)
+    if (endTime != DBStore.UNSPECIFIED_DATE)
     {
       builder.append(where ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
       builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
@@ -826,8 +792,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
    * <ul>
    * <li>The <code>eClass</code> parameter is <code>null</code> or equal to <code>revision.getEClass()</code>.
    * <li>The <code>branch</code> parameter is <code>null</code> or equal to <code>revision.getBranch()</code>.
-   * <li>The <code>timeStamp</code> parameter is {@link CDOBranchPoint#INVALID_DATE} or
-   * <code>revision.isValid(timeStamp)</code> is <code>true</code>.
+   * <li>The <code>timeStamp</code> parameter is {@link CDOBranchPoint#UNSPECIFIED_DATE} or equal to
+   * <code>revision.getTimeStamp()</code>.
    * </ul>
    * 
    * @since 3.0

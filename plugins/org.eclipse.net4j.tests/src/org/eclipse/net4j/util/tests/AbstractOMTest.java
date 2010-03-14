@@ -424,7 +424,7 @@ public abstract class AbstractOMTest extends TestCase
 
     public void assertNoTimeOut(long timeoutMillis) throws InterruptedException
     {
-      assertEquals(false, timedOut(timeoutMillis));
+      assertEquals("Timeout after " + timeoutMillis + " millis", false, timedOut(timeoutMillis));
     }
 
     public void assertNoTimeOut() throws InterruptedException

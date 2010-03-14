@@ -89,19 +89,22 @@ public interface IClassMapping
   public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, OMMonitor monitor);
 
   /**
-   * Removes an object from the database. In the case of auditing support the object is just marked as revised, else it
-   * it permanently deleted.
+   * Detaches (deletes) a CDO object leaving a "ghost" revision behind.
    * 
    * @param accessor
    *          the accessor to use.
    * @param id
-   *          the ID of the object to remove.
+   *          the id to revise
+   * @param version
+   *          the last valid version plus one (needed as marker)
    * @param timeStamp
-   *          the timeStamp when this object became detached.
+   *          the timestamp of detach
    * @param monitor
    *          the monitor to indicate progress.
+   * @since 3.0
    */
-  public void detachObject(IDBStoreAccessor accessor, CDOID id, long timeStamp, OMMonitor monitor);
+  public void detachObject(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp,
+      OMMonitor monitor);
 
   /**
    * Create a prepared statement which returns all IDs of instances of the corresponding class.
@@ -142,8 +145,8 @@ public interface IClassMapping
    * conditions are met:
    * <ul>
    * <li>The <code>branch</code> parameter is <code>null</code> or equal to <code>revision.getBranch()</code>.
-   * <li>The <code>timeStamp</code> parameter is {@link CDOBranchPoint#INVALID_DATE} or
-   * <code>revision.isValid(timeStamp)</code> is <code>true</code>.
+   * <li>The <code>timeStamp</code> parameter is {@link CDOBranchPoint#UNSPECIFIED_DATE} or equal to
+   * <code>revision.getTimeStamp()</code>.
    * </ul>
    * 
    * @see IMappingStrategy#handleRevisions(IDBStoreAccessor, org.eclipse.emf.ecore.EClass, CDOBranch, long,

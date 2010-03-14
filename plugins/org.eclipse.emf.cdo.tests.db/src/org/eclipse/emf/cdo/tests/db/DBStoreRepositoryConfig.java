@@ -27,6 +27,8 @@ public abstract class DBStoreRepositoryConfig extends RepositoryConfig
 {
   private static final long serialVersionUID = 1L;
 
+  private transient DBBrowser dbBrowser;
+
   public DBStoreRepositoryConfig(String name)
   {
     super(name);
@@ -39,6 +41,21 @@ public abstract class DBStoreRepositoryConfig extends RepositoryConfig
     IDBAdapter dbAdapter = createDBAdapter();
     DataSource dataSource = createDataSource(repoName);
     return CDODBUtil.createStore(mappingStrategy, dbAdapter, DBUtil.createConnectionProvider(dataSource));
+  }
+
+  @Override
+  public void setUp() throws Exception
+  {
+    super.setUp();
+    dbBrowser = new DBBrowser(repositories);
+    dbBrowser.activate();
+  }
+
+  @Override
+  public void tearDown() throws Exception
+  {
+    dbBrowser.deactivate();
+    super.tearDown();
   }
 
   protected abstract IMappingStrategy createMappingStrategy();

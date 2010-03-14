@@ -56,6 +56,18 @@ public class AllTestsDBH2NonAudit extends DBConfigs
   }
 
   @Override
+  protected boolean hasAuditSupport()
+  {
+    return false;
+  }
+
+  @Override
+  protected boolean hasBranchingSupport()
+  {
+    return false;
+  }
+
+  @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
     super.initTestClasses(testClasses);
@@ -163,6 +175,7 @@ public class AllTestsDBH2NonAudit extends DBConfigs
 
         Connection conn = null;
         Statement stmt = null;
+
         try
         {
           conn = defaultDataSource.getConnection();
@@ -182,7 +195,6 @@ public class AllTestsDBH2NonAudit extends DBConfigs
 
         JdbcDataSource dataSource = new JdbcDataSource();
         dataSource.setURL("jdbc:h2:" + dbFolder.getAbsolutePath() + "/h2test;SCHEMA=" + repoName);
-
         return dataSource;
       }
 

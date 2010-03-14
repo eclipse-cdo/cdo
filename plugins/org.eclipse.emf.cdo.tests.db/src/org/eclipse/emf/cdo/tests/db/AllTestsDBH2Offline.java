@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.tests.OfflineTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
-import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -50,6 +49,18 @@ public class AllTestsDBH2Offline extends DBConfigs
   }
 
   @Override
+  protected boolean hasAuditSupport()
+  {
+    return true;
+  }
+
+  @Override
+  protected boolean hasBranchingSupport()
+  {
+    return true;
+  }
+
+  @Override
   protected void initConfigSuites(TestSuite parent)
   {
     addScenario(parent, COMBINED, H2Offline.ReusableFolder.INSTANCE, JVM, NATIVE);
@@ -66,7 +77,7 @@ public class AllTestsDBH2Offline extends DBConfigs
   /**
    * @author Eike Stepper
    */
-  public static class H2Offline extends OfflineConfig
+  public static class H2Offline extends DBOfflineConfig
   {
     public static final H2Offline INSTANCE = new H2Offline("DBStore: H2 (offline)");
 
@@ -167,6 +178,7 @@ public class AllTestsDBH2Offline extends DBConfigs
 
         Connection conn = null;
         Statement stmt = null;
+
         try
         {
           conn = defaultDataSource.getConnection();
@@ -186,7 +198,6 @@ public class AllTestsDBH2Offline extends DBConfigs
 
         JdbcDataSource dataSource = new JdbcDataSource();
         dataSource.setURL("jdbc:h2:" + dbFolder.getAbsolutePath() + "/h2test;SCHEMA=" + repoName);
-
         return dataSource;
       }
 

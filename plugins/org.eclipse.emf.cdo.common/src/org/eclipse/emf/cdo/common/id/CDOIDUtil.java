@@ -293,7 +293,8 @@ public final class CDOIDUtil
       }
     }
 
-    builder.append("/" + id.toURIFragment()); //$NON-NLS-1$
+    builder.append("/"); //$NON-NLS-1$
+    builder.append(id.toURIFragment());
   }
 
   /**

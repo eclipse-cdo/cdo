@@ -14,6 +14,15 @@
 <plugin>
 
    <extension-point id="mappingStrategies" name="%extension-point.name" schema="schema/mappingStrategies.exsd"/>
+   
+   <extension
+         point="org.eclipse.net4j.util.factories">
+      <factory
+            class="org.eclipse.emf.cdo.server.db.CDODBBrowser$ContainerBased$Factory"
+            productGroup="org.eclipse.emf.cdo.server.db.browsers"
+            type="default">
+      </factory>
+   </extension>
 
    <extension
          point="org.eclipse.emf.cdo.server.storeFactories">

@@ -8,15 +8,20 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.db;
+package org.eclipse.emf.cdo.server.db;
 
-import org.eclipse.emf.cdo.server.db.IDBStore;
+import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.Worker;
+import org.eclipse.net4j.util.container.ContainerEventAdapter;
+import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -40,8 +45,10 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
-public class DBBrowser extends Worker
+@SuppressWarnings("nls")
+public class CDODBBrowser extends Worker
 {
   private static final String REQUEST_PREFIX = "GET ";
 
@@ -62,10 +69,15 @@ public class DBBrowser extends Worker
 
   private Map<String, InternalRepository> repositories;
 
-  public DBBrowser(Map<String, InternalRepository> repositories)
+  public CDODBBrowser(Map<String, InternalRepository> repositories)
   {
     this.repositories = repositories;
     setDaemon(true);
+  }
+
+  public Map<String, InternalRepository> getRepositories()
+  {
+    return repositories;
   }
 
   public int getPort()
@@ -405,16 +417,113 @@ public class DBBrowser extends Worker
     super.doDeactivate();
   }
 
-  public static void main(String[] args)
+  /**
+   * @author Eike Stepper
+   */
+  public static class ContainerBased extends CDODBBrowser
   {
-    Map<String, InternalRepository> repos = new HashMap<String, InternalRepository>();
-    repos.put("repo1", null);
-    repos.put("repo1_master", null);
-    repos.put("clone", null);
-    repos.put("clone2", null);
+    private IContainer<?> container;
 
-    DBBrowser browser = new DBBrowser(repos);
-    browser.activate();
-    ConcurrencyUtil.sleep(1000000);
+    private IListener containerListener = new ContainerEventAdapter<Object>()
+    {
+      @Override
+      protected void onAdded(IContainer<Object> container, Object element)
+      {
+        addElement(element);
+      }
+
+      @Override
+      protected void onRemoved(IContainer<Object> container, Object element)
+      {
+        removeElement(element);
+      }
+    };
+
+    public ContainerBased(IContainer<?> container)
+    {
+      super(new HashMap<String, InternalRepository>());
+      this.container = container;
+    }
+
+    public ContainerBased()
+    {
+      this(IPluginContainer.INSTANCE);
+    }
+
+    public IContainer<?> getContainer()
+    {
+      return container;
+    }
+
+    @Override
+    protected void doActivate() throws Exception
+    {
+      super.doActivate();
+      for (Object element : container.getElements())
+      {
+        addElement(element);
+      }
+
+      container.addListener(containerListener);
+    }
+
+    @Override
+    protected void doDeactivate() throws Exception
+    {
+      container.removeListener(containerListener);
+      super.doDeactivate();
+    }
+
+    private void addElement(Object element)
+    {
+      if (element instanceof InternalRepository)
+      {
+        InternalRepository repository = (InternalRepository)element;
+        getRepositories().put(repository.getName(), repository);
+      }
+    }
+
+    private void removeElement(Object element)
+    {
+      if (element instanceof InternalRepository)
+      {
+        InternalRepository repository = (InternalRepository)element;
+        getRepositories().remove(repository.getName());
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class Factory extends org.eclipse.net4j.util.factory.Factory
+    {
+      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.db.browsers";
+
+      public static final String TYPE = "default";
+
+      public Factory()
+      {
+        super(PRODUCT_GROUP, TYPE);
+      }
+
+      public CDODBBrowser.ContainerBased create(String description) throws ProductCreationException
+      {
+        CDODBBrowser.ContainerBased browser = new CDODBBrowser.ContainerBased();
+
+        try
+        {
+          if (!StringUtil.isEmpty(description))
+          {
+            browser.setPort(Integer.valueOf(description));
+          }
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.warn(ex);
+        }
+
+        return browser;
+      }
+    }
   }
 }

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.db.CDODBBrowser;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
@@ -27,7 +28,7 @@ public abstract class DBStoreRepositoryConfig extends RepositoryConfig
 {
   private static final long serialVersionUID = 1L;
 
-  private transient DBBrowser dbBrowser;
+  private transient CDODBBrowser dbBrowser;
 
   public DBStoreRepositoryConfig(String name)
   {
@@ -47,7 +48,7 @@ public abstract class DBStoreRepositoryConfig extends RepositoryConfig
   public void setUp() throws Exception
   {
     super.setUp();
-    dbBrowser = new DBBrowser(repositories);
+    dbBrowser = new CDODBBrowser(repositories);
     dbBrowser.activate();
   }
 

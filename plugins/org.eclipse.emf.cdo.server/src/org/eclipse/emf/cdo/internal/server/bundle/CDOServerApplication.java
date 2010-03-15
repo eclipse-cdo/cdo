@@ -35,6 +35,8 @@ public class CDOServerApplication extends OSGiApplication
 {
   public static final String ID = OM.BUNDLE_ID + ".app"; //$NON-NLS-1$
 
+  public static final String PROP_BROWSER_PORT = OM.BUNDLE_ID + ".browser.port"; //$NON-NLS-1$
+
   private IRepository[] repositories;
 
   private List<IAppExtension> extensions = new ArrayList<IAppExtension>();
@@ -57,6 +59,12 @@ public class CDOServerApplication extends OSGiApplication
       if (repositories == null || repositories.length == 0)
       {
         OM.LOG.warn(Messages.getString("CDOServerApplication.3") + configFile.getAbsolutePath()); //$NON-NLS-1$
+      }
+
+      String port = System.getProperty(PROP_BROWSER_PORT);
+      if (port != null)
+      {
+        IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.server.db.browsers", "default", port); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
       startExtensions(configFile);

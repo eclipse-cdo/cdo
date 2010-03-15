@@ -63,9 +63,9 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
     try
     {
       view.getResourceSet().getResource(CDOURIUtil.createResourceURI(view, resourcePath), true);
-      fail("Cannot modify view");
+      fail("Exception expected");
     }
-    catch (Exception ex)
+    catch (Exception expected)
     {
     }
 
@@ -74,9 +74,9 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
     try
     {
       transaction2.getResourceSet().getResource(CDOURIUtil.createResourceURI(view, resourcePath), true);
-      fail("Should fail to create resource");
+      fail("RuntimeException expected");
     }
-    catch (RuntimeException exception)
+    catch (RuntimeException expected)
     {
     }
   }
@@ -112,9 +112,9 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
     try
     {
       transaction1.getResourceSet().getResource(CDOURIUtil.createResourceURI(transaction1, resourcePath), true);
-      fail("Should fail to create resource");
+      fail("RuntimeException expected");
     }
-    catch (RuntimeException exception)
+    catch (RuntimeException expected)
     {
     }
   }

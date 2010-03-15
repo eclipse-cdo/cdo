@@ -207,9 +207,9 @@ public class LockingManagerTest extends AbstractCDOTest
     try
     {
       cdoCompany2.cdoReadLock().lock();
-      fail("Should have fail");
+      fail("IllegalArgumentException expected");
     }
-    catch (IllegalArgumentException ex)
+    catch (IllegalArgumentException expected)
     {
     }
 

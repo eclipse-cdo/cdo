@@ -1746,6 +1746,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     CDOID rootResourceID = session.getRepositoryInfo().getRootResourceID();
     rootResource = (CDOResourceImpl)getObject(rootResourceID);
     rootResource.setRoot(true);
+    registerObject(rootResource);
     getResourceSet().getResources().add(rootResource);
   }
 

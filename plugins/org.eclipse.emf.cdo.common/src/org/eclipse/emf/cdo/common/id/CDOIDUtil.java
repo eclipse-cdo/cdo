@@ -309,7 +309,7 @@ public final class CDOIDUtil
   public static CDOID read(String uriFragment)
   {
     // An OBJECT subtype has a negative value
-    if (uriFragment.startsWith("-"))
+    if (uriFragment.startsWith("-")) //$NON-NLS-1$
     {
       return readCDOIDObject(uriFragment);
     }

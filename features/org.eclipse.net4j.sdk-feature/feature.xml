@@ -50,25 +50,24 @@
          id="org.eclipse.net4j.defs"
          version="0.0.0"/>
 
-		<plugin id="org.eclipse.net4j.db.derby.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.db.h2.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <includes
+         id="org.eclipse.net4j.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.db.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.ui.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.defs.source"
+         version="0.0.0"/>
+
 		<plugin id="org.eclipse.net4j.db.hsqldb.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.db.mysql.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.db.postgresql.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.db.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.defs.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.http.common.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.http.server.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.http.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.jvm.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.tcp.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.ui.defs.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.ui.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.util.defs.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.util.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.eclipse.net4j.util.ui.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.apache.derby.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.h2.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
 </feature>

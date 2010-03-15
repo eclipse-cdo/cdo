@@ -54,15 +54,12 @@
          id="org.eclipse.net4j.db.derby"
          version="0.0.0"/>
 
-   <plugin
-         id="org.eclipse.emf.cdo.migrator"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+   <includes
+         id="org.eclipse.net4j.db.h2"
+         version="0.0.0"/>
 
    <plugin
-         id="org.apache.derby"
+         id="org.eclipse.emf.cdo.migrator"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -182,6 +182,15 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       return getViewImage(view);
     }
 
+    if (obj instanceof CDOResourceFolder)
+    {
+      return SharedIcons.getImage(SharedIcons.OBJ_CDORESOURCEFOLDER);
+    }
+    if (obj instanceof CDOResource)
+    {
+      return SharedIcons.getImage(SharedIcons.OBJ_CDORESOURCE);
+    }
+
     return super.getImage(obj);
   }
 

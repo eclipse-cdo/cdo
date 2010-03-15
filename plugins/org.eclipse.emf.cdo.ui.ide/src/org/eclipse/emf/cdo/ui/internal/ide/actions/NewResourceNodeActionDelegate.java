@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.ui.internal.ide.actions;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.internal.ui.actions.CDOResourceNodeNameInputValidator;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 
@@ -37,7 +38,7 @@ public abstract class NewResourceNodeActionDelegate extends TransactionalBackgro
   protected CDOObject preRun(CDOObject object)
   {
     InputDialog dialog = new InputDialog(getTargetPart().getSite().getShell(), getText(), Messages
-        .getString("NewResourceNodeAction_0"), null, null); //$NON-NLS-1$
+        .getString("NewResourceNodeAction_0"), null, new CDOResourceNodeNameInputValidator((CDOResourceNode)object)); //$NON-NLS-1$
     if (dialog.open() == Dialog.OK)
     {
       setNewResourceNode(createNewResourceNode());

@@ -166,6 +166,11 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
   public InternalCDOBranch getBranch(String path)
   {
+    while (path.startsWith(PATH_SEPARATOR))
+    {
+      path = path.substring(1);
+    }
+
     while (path.endsWith(PATH_SEPARATOR))
     {
       path = path.substring(0, path.length() - PATH_SEPARATOR.length());
@@ -179,6 +184,10 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
     String name = path.substring(0, sep);
     InternalCDOBranch child = getChild(name);
+    if (child == null)
+    {
+      return null;
+    }
 
     // Recurse
     String rest = path.substring(sep + 1);

@@ -54,7 +54,7 @@ public class CreateResourceNodeAction extends ViewAction
   {
     InputDialog dialog = new InputDialog(getShell(), createFolder ? TITLE_FOLDER : TITLE_RESOURCE,
         createFolder ? "Enter folder name" : Messages.getString("CreateResourceAction.2"), "res" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            + (ViewAction.lastResourceNumber + 1), new CDOResourceNodeNameInputValidator(selectedNode));
+            + (ViewAction.lastResourceNumber + 1), new ResourceNodeNameInputValidator(selectedNode));
 
     if (dialog.open() == InputDialog.OK)
     {

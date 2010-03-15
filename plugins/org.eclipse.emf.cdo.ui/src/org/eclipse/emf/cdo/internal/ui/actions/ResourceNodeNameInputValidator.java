@@ -23,13 +23,13 @@ import org.eclipse.jface.dialogs.IInputValidator;
 /**
  * @author Victor Roldan Betancort
  */
-public class CDOResourceNodeNameInputValidator implements IInputValidator
+public class ResourceNodeNameInputValidator implements IInputValidator
 {
   private CDOResourceNode node;
 
   private boolean isFolder;
 
-  public CDOResourceNodeNameInputValidator(CDOResourceNode node)
+  public ResourceNodeNameInputValidator(CDOResourceNode node)
   {
     this.node = node;
     isFolder = node instanceof CDOResourceFolder;

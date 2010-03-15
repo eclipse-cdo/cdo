@@ -274,10 +274,10 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   {
     if (isProxy())
     {
-      return MessageFormat.format("Branch[id={0}, PROXY]", id);
+      return MessageFormat.format("Branch[id={0}, PROXY]", id); //$NON-NLS-1$
     }
 
-    return MessageFormat.format("Branch[id={0}, name={1}]", id, name);
+    return MessageFormat.format("Branch[id={0}, name={1}]", id, name); //$NON-NLS-1$
   }
 
   private synchronized void loadIfNeeded()

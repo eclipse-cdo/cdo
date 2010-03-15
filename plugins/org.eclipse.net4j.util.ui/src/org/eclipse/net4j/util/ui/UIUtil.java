@@ -254,6 +254,27 @@ public final class UIUtil
     return new GridData(SWT.FILL, SWT.FILL, true, true);
   }
 
+  /**
+   * @since 3.0
+   */
+  public static GridData createEmptyGridData()
+  {
+    GridData data = new GridData();
+    data.heightHint = 0;
+    data.widthHint = 0;
+    data.horizontalSpan = 0;
+    data.horizontalAlignment = 0;
+    data.horizontalIndent = 0;
+    data.verticalAlignment = 0;
+    data.verticalIndent = 0;
+    data.verticalSpan = 0;
+    data.minimumHeight = 0;
+    data.minimumWidth = 0;
+    data.grabExcessHorizontalSpace = false;
+    data.grabExcessVerticalSpace = false;
+    return data;
+  }
+
   public static GridData createGridData(boolean grabHorizontal, boolean grabVertical)
   {
     return new GridData(SWT.FILL, SWT.FILL, grabHorizontal, grabVertical);

@@ -6,11 +6,11 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - initial API and implementation 
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.internal.ui.dialogs.BranchSelectionDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -20,7 +20,7 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
- * @author Eike Stepper
+ * @author Victor Roldan Betancort
  */
 public class ChangeViewTargetAction extends ViewAction
 {
@@ -28,11 +28,11 @@ public class ChangeViewTargetAction extends ViewAction
 
   private static final String TITLE = Messages.getString("ChangeViewTargetAction_0"); //$NON-NLS-1$
 
-  private CDOBranch targerBranch;
+  private CDOBranchPoint targetBranchPoint;
 
   public ChangeViewTargetAction(IWorkbenchPage page, CDOView view)
   {
-    super(page, TITLE + INTERACTIVE, "Change the target CDOBranch of a CDOView", null, view);
+    super(page, TITLE + INTERACTIVE, Messages.getString("ChangeViewTargetAction.0"), null, view); //$NON-NLS-1$
     setId(ID);
   }
 
@@ -42,8 +42,8 @@ public class ChangeViewTargetAction extends ViewAction
     BranchSelectionDialog dialog = new BranchSelectionDialog(getPage(), getView());
     if (dialog.open() == Dialog.OK)
     {
-      targerBranch = dialog.getTargetBranch();
-      if (targerBranch == null)
+      targetBranchPoint = dialog.getTargetBranchPoint();
+      if (targetBranchPoint == null)
       {
         cancel();
       }
@@ -60,6 +60,6 @@ public class ChangeViewTargetAction extends ViewAction
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
     CDOView view = getView();
-    view.setBranch(targerBranch);
+    view.setBranchPoint(targetBranchPoint.getBranch(), targetBranchPoint.getTimeStamp());
   }
 }

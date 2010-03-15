@@ -76,11 +76,11 @@ public class OpenAuditDialog extends TitleAreaDialog
     composite.setLayout(new GridLayout(3, false));
 
     setTitle(TITLE);
-    setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PACKAGE_MANAGER));
+    setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_TIME_SELECTION));
 
     new Label(composite, SWT.NONE).setText(Messages.getString("OpenAuditDialog.1")); //$NON-NLS-1$
-    dateControl = new DateTime(composite, SWT.DATE);
-    timeControl = new DateTime(composite, SWT.TIME);
+    dateControl = new DateTime(composite, SWT.DATE | SWT.BORDER);
+    timeControl = new DateTime(composite, SWT.TIME | SWT.BORDER);
 
     return composite;
   }

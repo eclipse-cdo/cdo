@@ -70,6 +70,11 @@ public class CreateBranchActionDelegate extends LongRunningActionDelegate
         return "Branch name cannot be empty";
       }
 
+      if (newText.contains(CDOBranch.PATH_SEPARATOR))
+      {
+        return "Branch name cannot contain path separators";
+      }
+
       BranchNode branchNode = UIUtil.getElement(getSelection(), BranchNode.class);
       CDOBranch branch = branchNode.getBranch();
       if (branch.getBranch(newText) != null)

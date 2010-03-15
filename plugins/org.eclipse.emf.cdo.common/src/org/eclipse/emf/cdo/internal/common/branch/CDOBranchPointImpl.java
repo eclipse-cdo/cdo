@@ -80,6 +80,6 @@ public class CDOBranchPointImpl implements CDOBranchPoint
   @Override
   public String toString()
   {
-    return MessageFormat.format("BranchPoint[{0}, {1}]", branch, CDOCommonUtil.formatTimeStamp(timeStamp));
+    return MessageFormat.format("BranchPoint[{0}, {1}]", branch, CDOCommonUtil.formatTimeStamp(timeStamp)); //$NON-NLS-1$
   }
 }

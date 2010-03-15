@@ -34,6 +34,7 @@ import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
@@ -98,6 +99,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -130,10 +132,16 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IActionBars;
@@ -165,6 +173,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -639,7 +648,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     if (updateProblemIndication)
     {
-      BasicDiagnostic diagnostic = new BasicDiagnostic(Diagnostic.OK, "org.eclipse.emf.cdo.ui", 0, null,
+      BasicDiagnostic diagnostic = new BasicDiagnostic(Diagnostic.OK, "org.eclipse.emf.cdo.ui", 0, null, //$NON-NLS-1$
           new Object[] { editingDomain.getResourceSet() });
       for (Diagnostic childDiagnostic : resourceToDiagnosticMap.values())
       {
@@ -701,8 +710,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected boolean handleDirtyConflict()
   {
-    return MessageDialog.openQuestion(getSite().getShell(), getString("_UI_FileConflict_label"),
-        getString("_WARN_FileConflict"));
+    return MessageDialog.openQuestion(getSite().getShell(), getString("_UI_FileConflict_label"), //$NON-NLS-1$
+        getString("_WARN_FileConflict")); //$NON-NLS-1$
   }
 
   /**
@@ -964,8 +973,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected void createContextMenuFor(StructuredViewer viewer)
   {
-    MenuManager contextMenu = new MenuManager("#PopUp");
-    contextMenu.add(new Separator("additions"));
+    MenuManager contextMenu = new MenuManager("#PopUp"); //$NON-NLS-1$
+    contextMenu.add(new Separator("additions")); //$NON-NLS-1$
     contextMenu.setRemoveAllWhenShown(true);
     contextMenu.addMenuListener(this);
     Menu menu = contextMenu.createContextMenu(viewer.getControl());
@@ -1098,16 +1107,16 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty())
     {
-      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0, getString(
-          "_UI_CreateModelError_message", resource.getURI()), new Object[] { exception == null ? (Object)resource
+      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0, getString( //$NON-NLS-1$
+          "_UI_CreateModelError_message", resource.getURI()), new Object[] { exception == null ? (Object)resource //$NON-NLS-1$
           : exception });
       basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
       return basicDiagnostic;
     }
     else if (exception != null)
     {
-      return new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0, getString(
-          "_UI_CreateModelError_message", resource.getURI()), new Object[] { exception });
+      return new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0, getString( //$NON-NLS-1$
+          "_UI_CreateModelError_message", resource.getURI()), new Object[] { exception }); //$NON-NLS-1$
     }
     else
     {
@@ -1146,7 +1155,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       createContextMenuFor(selectionViewer);
       int pageIndex = addPage(tree);
-      setPageText(pageIndex, getString("_UI_SelectionPage_label"));
+      setPageText(pageIndex, getString("_UI_SelectionPage_label")); //$NON-NLS-1$
 
       getSite().getShell().getDisplay().asyncExec(new Runnable()
       {
@@ -1199,7 +1208,24 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       // Create a page for the selection tree view.
       //
-      Tree tree = new Tree(getContainer(), SWT.MULTI);
+
+      getContainer().setLayoutData(UIUtil.createGridData());
+      getContainer().setLayout(UIUtil.createGridLayout(1));
+      Composite composite = UIUtil.createGridComposite(getContainer(), 1);
+      composite.setLayoutData(UIUtil.createGridData());
+      composite.setLayout(UIUtil.createGridLayout(1));
+      Tree tree = new Tree(composite, SWT.MULTI | SWT.BORDER);
+      tree.setLayoutData(UIUtil.createGridData());
+
+      boolean sliderAllowed = !(view instanceof CDOTransaction)
+          && view.getSession().getRepositoryInfo().isSupportingAudits()
+          && view.getSession().getRepositoryInfo().isSupportingBranches();
+
+      if (sliderAllowed)
+      {
+        createTimeSlider(composite);
+      }
+
       selectionViewer = new TreeViewer(tree);
       setCurrentViewer(selectionViewer);
 
@@ -1207,13 +1233,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       selectionViewer.setLabelProvider(createLabelProvider());
 
       selectionViewer.setInput(viewerInput);
-      // selectionViewer.setSelection(new StructuredSelection(viewerInput),
-      // true);
+      // selectionViewer.setSelection(new StructuredSelection(viewerInput), true);
 
       new AdapterFactoryTreeEditor(selectionViewer.getTree(), adapterFactory);
 
       createContextMenuFor(selectionViewer);
-      int pageIndex = addPage(tree);
+      int pageIndex = addPage(composite);
       setPageText(pageIndex, getString("_UI_SelectionPage_label")); //$NON-NLS-1$
 
       setActivePage(0);
@@ -1308,6 +1333,80 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         // do nothing
       }
     });
+  }
+
+  /**
+   * @ADDED
+   */
+  private void createTimeSlider(final Composite composite)
+  {
+    final Group group = new Group(composite, SWT.NONE);
+    group.setLayoutData(UIUtil.createEmptyGridData());
+    group.setLayout(UIUtil.createGridLayout(1));
+    group.setText(Messages.getString("CDOEditor.0")); //$NON-NLS-1$
+    group.setVisible(false);
+
+    final Composite groupComposite = UIUtil.createGridComposite(group, 1);
+    Scale scale = new Scale(groupComposite, SWT.HORIZONTAL);
+    scale.setLayoutData(new GridData(SWT.FILL, 50, true, false));
+    groupComposite.setLayoutData(new GridData(SWT.FILL, 50, true, false));
+    groupComposite.setLayout(UIUtil.createGridLayout(1));
+
+    final Label dateLabel = new Label(groupComposite, SWT.None);
+
+    scale.setMinimum(Integer.MIN_VALUE);
+    scale.setMaximum(Integer.MAX_VALUE);
+    final long startTimeStamp = view.getSession().getRepositoryInfo().getCreationTime();
+    dateLabel.setText(new Date(startTimeStamp).toString());
+    final long endTimeStamp = view.getSession().getLastUpdateTime();
+    final long absoluteTimeWindowLength = endTimeStamp - startTimeStamp;
+    final long scaleFactor = (long)2 * Integer.MAX_VALUE;
+    final double stepSize = (double)absoluteTimeWindowLength / (double)scaleFactor;
+
+    scale.addSelectionListener(new SelectionListener()
+    {
+
+      public void widgetSelected(SelectionEvent e)
+      {
+        Scale scale = (Scale)e.widget;
+        int value = scale.getSelection();
+        long absolute = value < 0 ? (long)Math.abs(value) : (long)Math.abs(value) + (long)Integer.MAX_VALUE;
+        double mapToLong = stepSize * absolute;
+        long timeStamp = startTimeStamp + Math.round(mapToLong);
+        dateLabel.setText(new Date(timeStamp).toString());
+        view.setTimeStamp(timeStamp);
+        selectionViewer.refresh();
+      }
+
+      public void widgetDefaultSelected(SelectionEvent e)
+      {
+      }
+    });
+
+    IAction action = new Action()
+    {
+      @Override
+      public void run()
+      {
+        if (group.isVisible())
+        {
+          group.setLayoutData(UIUtil.createEmptyGridData());
+          composite.layout();
+        }
+        else
+        {
+          group.setLayoutData(new GridData(SWT.FILL, 50, true, false));
+          composite.layout();
+        }
+        group.setVisible(!group.isVisible());
+        super.run();
+      }
+    };
+    action.setEnabled(true);
+    getActionBars().getToolBarManager().add(action);
+    action.setChecked(false);
+    action.setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.ETOOL_SLIDER_ICON));
+    action.setToolTipText(Messages.getString("CDOEditor.1")); //$NON-NLS-1$
   }
 
   /**
@@ -1951,25 +2050,25 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         {
         case 0:
         {
-          statusLineManager.setMessage(getString("_UI_NoObjectSelected"));
+          statusLineManager.setMessage(getString("_UI_NoObjectSelected")); //$NON-NLS-1$
           break;
         }
         case 1:
         {
           String text = new AdapterFactoryItemDelegator(adapterFactory).getText(collection.iterator().next());
-          statusLineManager.setMessage(getString("_UI_SingleObjectSelected", text));
+          statusLineManager.setMessage(getString("_UI_SingleObjectSelected", text)); //$NON-NLS-1$
           break;
         }
         default:
         {
-          statusLineManager.setMessage(getString("_UI_MultiObjectSelected", Integer.toString(collection.size())));
+          statusLineManager.setMessage(getString("_UI_MultiObjectSelected", Integer.toString(collection.size()))); //$NON-NLS-1$
           break;
         }
         }
       }
       else
       {
-        statusLineManager.setMessage("");
+        statusLineManager.setMessage(""); //$NON-NLS-1$
       }
     }
   }

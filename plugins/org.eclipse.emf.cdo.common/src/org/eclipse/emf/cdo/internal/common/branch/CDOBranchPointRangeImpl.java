@@ -43,6 +43,6 @@ public class CDOBranchPointRangeImpl implements CDOBranchPointRange
   @Override
   public String toString()
   {
-    return MessageFormat.format("Range[{0}, {1}]", startPoint, endPoint);
+    return MessageFormat.format("Range[{0}, {1}]", startPoint, endPoint); //$NON-NLS-1$
   }
 }

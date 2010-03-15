@@ -68,6 +68,6 @@ public class CDOBranchVersionImpl implements CDOBranchVersion
   @Override
   public String toString()
   {
-    return MessageFormat.format("BranchVersion[{0}, v{1}]", branch, version);
+    return MessageFormat.format("BranchVersion[{0}, v{1}]", branch, version); //$NON-NLS-1$
   }
 }

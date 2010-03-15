@@ -214,9 +214,9 @@ public class CDOBranchManagerImpl extends Lifecycle implements InternalCDOBranch
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkNull(branchLoader, "branchLoader");
-    checkNull(timeProvider, "timeProvider");
-    checkNull(mainBranch, "mainBranch");
+    checkNull(branchLoader, "branchLoader"); //$NON-NLS-1$
+    checkNull(timeProvider, "timeProvider"); //$NON-NLS-1$
+    checkNull(mainBranch, "mainBranch"); //$NON-NLS-1$
   }
 
   /**

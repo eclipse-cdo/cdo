@@ -54,9 +54,9 @@ public class SharedIcons
 
   public static final String OBJ_EPACKAGE = OBJ + "EPackage"; //$NON-NLS-1$
 
-  public static final String OBJ_CDORESOURCE = OBJ + "CDOResource"; //$NON-NLS-1$
+  public static final String OBJ_RESOURCE = OBJ + "CDOResource"; //$NON-NLS-1$
 
-  public static final String OBJ_CDORESOURCEFOLDER = OBJ + "CDOResourceFolder"; //$NON-NLS-1$
+  public static final String OBJ_RESOURCE_FOLDER = OBJ + "CDOResourceFolder"; //$NON-NLS-1$
 
   public static final String OBJ_EPACKAGE_CONVERTED = OBJ + "EPackageConverted"; //$NON-NLS-1$
 

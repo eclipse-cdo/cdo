@@ -166,7 +166,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL OR "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
-    builder.append(">? )"); //$NON-NLS-1$
+    builder.append(">?)"); //$NON-NLS-1$
     sqlSelectChunksPrefix = builder.toString();
 
     sqlOrderByIndex = " ORDER BY " + CDODBSchema.LIST_IDX; //$NON-NLS-1$
@@ -182,7 +182,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL OR "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
-    builder.append(">? )"); //$NON-NLS-1$
+    builder.append(">?)"); //$NON-NLS-1$
     sqlGetListLastIndex = builder.toString();
 
     // ----------------- insert entry -----------------

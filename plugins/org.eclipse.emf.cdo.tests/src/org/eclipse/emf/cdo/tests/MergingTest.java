@@ -513,7 +513,11 @@ public class MergingTest extends AbstractCDOTest
     EList<EObject> contents1 = res1.getContents();
     ((Company)contents1.get(0)).setName("Company0");
     contents1.remove(1);
+
+    // dumpAllRevisions(getRepository().getStore());
     tx1.commit();
+    dumpAllRevisions(getRepository().getStore());
+
     tx1.close();
 
     CDOChangeSetData result = transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());

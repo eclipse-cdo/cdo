@@ -141,7 +141,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     String sqlSelectAttributesPrefix = builder.toString();
 
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append("=0 )"); //$NON-NLS-1$
+    builder.append("=0)"); //$NON-NLS-1$
 
     sqlSelectCurrentAttributes = builder.toString();
 
@@ -158,8 +158,9 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
     builder = new StringBuilder(sqlSelectAttributesPrefix);
 
+    builder.append("ABS("); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
-    builder.append("=?)"); //$NON-NLS-1$
+    builder.append(")=?)"); //$NON-NLS-1$
 
     sqlSelectAttributesByVersion = builder.toString();
 
@@ -270,7 +271,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     PreparedStatement pstmt = null;
 
     long timeStamp = revision.getTimeStamp();
-    int branchId = revision.getBranch().getID();
+    int branchID = revision.getBranch().getID();
 
     try
     {
@@ -278,7 +279,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       {
         pstmt = statementCache.getPreparedStatement(sqlSelectAttributesByTime, ReuseProbability.MEDIUM);
         pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
-        pstmt.setLong(2, branchId);
+        pstmt.setLong(2, branchID);
         pstmt.setLong(3, timeStamp);
         pstmt.setLong(4, timeStamp);
       }
@@ -286,7 +287,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       {
         pstmt = statementCache.getPreparedStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
         pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
-        pstmt.setLong(2, branchId);
+        pstmt.setLong(2, branchID);
       }
 
       // Read singleval-attribute table always (even without modeled attributes!)
@@ -354,7 +355,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       throw new ImplementationError(nameFeature + " not found in ClassMapping " + this); //$NON-NLS-1$
     }
 
-    int branchId = branchPoint.getBranch().getID();
+    int branchID = branchPoint.getBranch().getID();
     long timeStamp = branchPoint.getTimeStamp();
 
     StringBuilder builder = new StringBuilder();
@@ -384,7 +385,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-      builder.append("=0 )"); //$NON-NLS-1$
+      builder.append("=0)"); //$NON-NLS-1$
     }
     else
     {
@@ -404,7 +405,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       int idx = 1;
 
       pstmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.MEDIUM);
-      pstmt.setInt(idx++, branchId);
+      pstmt.setInt(idx++, branchID);
       pstmt.setLong(idx++, CDOIDUtil.getLong(folderId));
 
       if (name != null)
@@ -563,7 +564,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       stmt.setLong(2, CDOIDUtil.getLong(id));
       stmt.setInt(3, branch.getID());
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      CDODBUtil.sqlUpdate(stmt, false); // No row affected if old revision from other branch!
     }
     catch (SQLException e)
     {
@@ -684,10 +685,11 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       {
         long id = rs.getLong(1);
         int version = rs.getInt(2);
-        int branchId = rs.getInt(3);
+        int branchID = rs.getInt(3);
 
+        CDOBranchVersion branchVersion = branchManager.getBranch(branchID).getVersion(Math.abs(version));
         InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(CDOIDUtil
-            .createLong(id), branchManager.getBranch(branchId).getVersion(version), CDORevision.UNCHUNKED, true);
+            .createLong(id), branchVersion, CDORevision.UNCHUNKED, true);
 
         handler.handleRevision(revision);
       }

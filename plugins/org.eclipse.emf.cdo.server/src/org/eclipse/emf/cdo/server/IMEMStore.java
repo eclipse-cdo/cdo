@@ -10,16 +10,13 @@
  */
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.EClass;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * A simple in-memory store.
@@ -27,7 +24,7 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface IMEMStore extends IStore
+public interface IMEMStore extends IStore, CDOAllRevisionsProvider
 {
   public static final int UNLIMITED = -1;
 
@@ -47,11 +44,6 @@ public interface IMEMStore extends IStore
    * activation} of this store.
    */
   public void setListLimit(int listLimit);
-
-  /**
-   * @since 3.0
-   */
-  public Map<CDOBranch, List<CDORevision>> getAllRevisions();
 
   /**
    * @since 3.0

@@ -14,10 +14,17 @@
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IExternalReferenceManager;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -44,9 +51,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -54,7 +63,7 @@ import java.util.Map.Entry;
 /**
  * @author Eike Stepper
  */
-public class DBStore extends LongIDStore implements IDBStore
+public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsProvider
 {
   public static final String TYPE = "db"; //$NON-NLS-1$
 
@@ -354,6 +363,38 @@ public class DBStore extends LongIDStore implements IDBStore
     }
 
     return connection;
+  }
+
+  public Map<CDOBranch, List<CDORevision>> getAllRevisions()
+  {
+    final Map<CDOBranch, List<CDORevision>> result = new HashMap<CDOBranch, List<CDORevision>>();
+    IDBStoreAccessor accessor = getReader(null);
+    StoreThreadLocal.setAccessor(accessor);
+
+    try
+    {
+      accessor.handleRevisions(null, null, CDOBranchPoint.UNSPECIFIED_DATE, new CDORevisionHandler()
+      {
+        public void handleRevision(CDORevision revision)
+        {
+          CDOBranch branch = revision.getBranch();
+          List<CDORevision> list = result.get(branch);
+          if (list == null)
+          {
+            list = new ArrayList<CDORevision>();
+            result.put(branch, list);
+          }
+
+          list.add(revision);
+        }
+      });
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
+
+    return result;
   }
 
   public long getCreationTime()

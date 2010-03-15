@@ -136,7 +136,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     String sqlSelectAttributesPrefix = builder.toString();
 
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append("=0 )"); //$NON-NLS-1$
+    builder.append("=0)"); //$NON-NLS-1$
 
     sqlSelectCurrentAttributes = builder.toString();
 
@@ -347,7 +347,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-      builder.append("=0 )"); //$NON-NLS-1$
+      builder.append("=0)"); //$NON-NLS-1$
     }
     else
     {

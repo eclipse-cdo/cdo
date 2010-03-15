@@ -229,7 +229,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
     builder.append(" IS NULL OR "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
-    builder.append(">? )"); //$NON-NLS-1$
+    builder.append(">?)"); //$NON-NLS-1$
     sqlSelectChunksPrefix = builder.toString();
 
     sqlOrderByIndex = " ORDER BY " + CDODBSchema.FEATUREMAP_IDX; //$NON-NLS-1$
@@ -246,7 +246,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
     builder.append(" IS NULL OR "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
-    builder.append(">? )"); //$NON-NLS-1$
+    builder.append(">?)"); //$NON-NLS-1$
     sqlGetListLastIndex = builder.toString();
 
     // ----------------- INSERT - prefix -----------------

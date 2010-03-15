@@ -50,12 +50,7 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 3.0
    */
-  protected static final long CRASHED_OID = -1L;
-
-  /**
-   * @since 3.0
-   */
-  protected static final int CRASHED_BRANCHID = 0;
+  public static final long UNSPECIFIED_DATE = CDOBranchPoint.UNSPECIFIED_DATE;
 
   @ExcludeFromDump
   private final transient String type;

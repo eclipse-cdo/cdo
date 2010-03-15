@@ -1014,7 +1014,7 @@ public class Repository extends Container<Object> implements InternalRepository
       }
       else
       {
-        InternalCDORevision revision = getRevision(id, branchPoint);
+        InternalCDORevision revision = getRevisionFromBranch(id, branchPoint);
         if (revision != null)
         {
           info.addRevision(revision);
@@ -1027,9 +1027,16 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  private InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint)
+  private InternalCDORevision getRevisionFromBranch(CDOID id, CDOBranchPoint branchPoint)
   {
-    return revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+    InternalCDORevision revision = revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED,
+        CDORevision.DEPTH_NONE, true);
+    // if (revision == null || !ObjectUtil.equals(revision.getBranch(), branchPoint.getBranch()))
+    // {
+    // return null;
+    // }
+
+    return revision;
   }
 
   @Override
@@ -1197,6 +1204,18 @@ public class Repository extends Container<Object> implements InternalRepository
       protected long createTimeStamp()
       {
         return store.getCreationTime();
+      }
+
+      @Override
+      public String getUserID()
+      {
+        return "<first start>"; //$NON-NLS-1$
+      }
+
+      @Override
+      public String getCommitComment()
+      {
+        return "<initialize root resource>"; //$NON-NLS-1$
       }
     };
 

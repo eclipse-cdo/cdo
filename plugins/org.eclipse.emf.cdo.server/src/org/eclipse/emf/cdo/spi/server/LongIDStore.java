@@ -31,6 +31,11 @@ public abstract class LongIDStore extends Store
    */
   public static final Set<ObjectType> OBJECT_ID_TYPES = Collections.singleton(CDOID.ObjectType.LONG);
 
+  /**
+   * @since 3.0
+   */
+  public static final long NULL = CDOIDUtil.getLong(CDOID.NULL);
+
   @ExcludeFromDump
   private transient AtomicLong lastObjectID = new AtomicLong();
 

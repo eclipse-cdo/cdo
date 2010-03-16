@@ -1541,7 +1541,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           //
           contentOutlineViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
           contentOutlineViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-          contentOutlineViewer.setInput(editingDomain.getResourceSet());
+          contentOutlineViewer.setInput(viewerInput);
 
           // Make sure our popups work.
           //
@@ -2455,11 +2455,11 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * Returns whether the outline view should be presented to the user. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   protected boolean showOutlineView()
   {
-    return false;
+    return true;
   }
 
   /**

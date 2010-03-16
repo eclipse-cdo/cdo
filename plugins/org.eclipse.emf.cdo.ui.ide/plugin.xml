@@ -108,6 +108,11 @@
                label="%action.label.0"
                tooltip="%action.tooltip">
          </action>
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.ChangeViewTargetActionDelegate"
+               id="org.eclipse.emf.cdo.ui.ide.changeViewTarget"
+               label="%action.label.14">
+         </action>
       </objectContribution>
       <objectContribution
             adaptable="true"
@@ -119,6 +124,12 @@
                id="org.eclipse.emf.cdo.ui.ide.removeResourceNodeAction"
                label="%action.label.2"
                tooltip="%action.tooltip.1">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.RenameResourceNodeActionDelegate"
+               id="org.eclipse.emf.cdo.ui.ide.renameResourceNodeAction"
+               label="%action.label.13"
+               tooltip="%action.tooltip.11">
          </action>
       </objectContribution>
       <objectContribution
@@ -189,18 +200,18 @@
             id="org.eclipse.emf.cdo.ui.ide.BranchesNodeActions"
             objectClass="org.eclipse.emf.cdo.ui.ide.Node$BranchNode">
          <action
-               class="org.eclipse.emf.cdo.ui.internal.ide.actions.CreateBranchActionDelegate"
-               icon="icons/full/obj16/fork.png"
-               id="org.eclipse.emf.cdo.ui.ide.createNewBranchAction"
-               label="%action.label.11"
-               tooltip="%action.tooltip.9">
-         </action>
-         <action
                class="org.eclipse.emf.cdo.ui.internal.ide.actions.SwitchToBranchActionDelegate"
                icon="icons/full/obj16/switch.png"
                id="org.eclipse.emf.cdo.ui.ide.switchToBranchAction"
                label="%action.label.12"
                tooltip="%action.tooltip.10">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.CreateBranchActionDelegate"
+               icon="icons/full/obj16/fork.png"
+               id="org.eclipse.emf.cdo.ui.ide.createNewBranchAction"
+               label="%action.label.11"
+               tooltip="%action.tooltip.9">
          </action>
       </objectContribution>
    </extension>

@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
+import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -35,17 +36,21 @@ public class CreateResourceNodeAction extends ViewAction
 
   private static final String TOOL_TIP_FOLDER = Messages.getString("CreateResourceNodeAction.1"); //$NON-NLS-1$
 
-  private String resourceNodeName;
+  private CDOItemProvider itemProvider;
 
   private CDOResourceNode selectedNode;
 
   private boolean createFolder;
 
-  public CreateResourceNodeAction(IWorkbenchPage page, CDOView view, CDOResourceNode node, boolean createFolder)
+  private String resourceNodeName;
+
+  public CreateResourceNodeAction(CDOItemProvider itemProvider, IWorkbenchPage page, CDOView view,
+      CDOResourceNode node, boolean createFolder)
   {
     super(page, createFolder ? TITLE_FOLDER + INTERACTIVE : TITLE_RESOURCE + INTERACTIVE,
         createFolder ? TOOL_TIP_FOLDER : TOOL_TIP_RESOURCE, null, view);
     selectedNode = node;
+    this.itemProvider = itemProvider;
     this.createFolder = createFolder;
   }
 
@@ -74,23 +79,28 @@ public class CreateResourceNodeAction extends ViewAction
     if (createFolder)
     {
       node = EresourceFactory.eINSTANCE.createCDOResourceFolder();
+      node.setName(resourceNodeName);
+      if (selectedNode instanceof CDOResourceFolder)
+      {
+        ((CDOResourceFolder)selectedNode).getNodes().add(node);
+      }
+      else
+      {
+        ((CDOResource)selectedNode).getContents().add(node);
+      }
     }
     else
     {
-      node = EresourceFactory.eINSTANCE.createCDOResource();
+      if (selectedNode instanceof CDOResourceFolder)
+      {
+        getTransaction().createResource(selectedNode.getPath() + "/" + resourceNodeName); //$NON-NLS-1$
+      }
+      else
+      {
+        getTransaction().createResource(resourceNodeName);
+      }
     }
 
-    node.setName(resourceNodeName);
-
-    if (selectedNode instanceof CDOResourceFolder)
-    {
-      ((CDOResourceFolder)selectedNode).getNodes().add(node);
-    }
-    else
-    {
-      ((CDOResource)selectedNode).getContents().add(node);
-    }
-
-    getTransaction().commit();
+    itemProvider.refreshViewer(true);
   }
 }

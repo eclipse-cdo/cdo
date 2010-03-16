@@ -350,8 +350,8 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     {
       {
         CDOResource rootResource = view.getRootResource();
-        manager.add(new CreateResourceNodeAction(page, view, rootResource, false));
-        manager.add(new CreateResourceNodeAction(page, view, rootResource, true));
+        manager.add(new CreateResourceNodeAction(this, page, view, rootResource, false));
+        manager.add(new CreateResourceNodeAction(this, page, view, rootResource, true));
       }
 
       manager.add(new ImportResourceAction(page, view));

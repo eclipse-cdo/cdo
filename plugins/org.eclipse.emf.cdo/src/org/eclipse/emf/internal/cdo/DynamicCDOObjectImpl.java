@@ -7,10 +7,13 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Martin Fluegge - EMap support
  */
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Eike Stepper
@@ -21,7 +24,7 @@ public class DynamicCDOObjectImpl extends CDOObjectImpl
 
   public DynamicCDOObjectImpl(EClass eClass)
   {
-    this.eClass = eClass;
+    eSetClass(eClass);
   }
 
   @Override
@@ -40,5 +43,75 @@ public class DynamicCDOObjectImpl extends CDOObjectImpl
   protected EClass eDynamicClass()
   {
     return eClass;
+  }
+
+  /**
+   * @author Martin Fluegge
+   * @since 3.0
+   */
+  public static final class BasicEMapEntry<K, V> extends DynamicCDOObjectImpl implements BasicEMap.Entry<K, V>
+  {
+    protected int hash = -1;
+
+    protected EStructuralFeature keyFeature;
+
+    protected EStructuralFeature valueFeature;
+
+    /**
+     * Creates a dynamic EObject.
+     */
+    public BasicEMapEntry(EClass eClass)
+    {
+      super(eClass);
+    }
+
+    @SuppressWarnings("unchecked")
+    public K getKey()
+    {
+      return (K)eGet(keyFeature);
+    }
+
+    public void setKey(Object key)
+    {
+      eSet(keyFeature, key);
+    }
+
+    public int getHash()
+    {
+      if (hash == -1)
+      {
+        Object theKey = getKey();
+        hash = theKey == null ? 0 : theKey.hashCode();
+      }
+
+      return hash;
+    }
+
+    public void setHash(int hash)
+    {
+      this.hash = hash;
+    }
+
+    @SuppressWarnings("unchecked")
+    public V getValue()
+    {
+      return (V)eGet(valueFeature);
+    }
+
+    public V setValue(V value)
+    {
+      @SuppressWarnings("unchecked")
+      V result = (V)eGet(valueFeature);
+      eSet(valueFeature, value);
+      return result;
+    }
+
+    @Override
+    public void eSetClass(EClass eClass)
+    {
+      super.eSetClass(eClass);
+      keyFeature = eClass.getEStructuralFeature("key");
+      valueFeature = eClass.getEStructuralFeature("value");
+    }
   }
 }

@@ -17,56 +17,45 @@ import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.VAT;
-import org.eclipse.emf.cdo.tests.model2.MapHolder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EReferenceImpl;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
+ * Note that if you receive errors in the test class or if you worked on anything related to maps, it is highly
+ * recommended to comment in the methods <i>testDynamicMaps()</i> and <i>getEDataType(EStructuralFeature feature, String
+ * type)</i> below and re-run the test. Or run MapDynamicTest as local JUnit test run. If you do not need the test to be
+ * integrated into our test framework the second approach is recommended because it gives you a detailed overview over
+ * the passing/failing tests.
+ * 
  * @author Martin Fluegge
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings( { "unchecked", "rawtypes" })
 public class MapTest extends AbstractCDOTest
 {
-  // TODO clarify the problems with the default
-  public void testStringStringMap_old() throws Exception
-  {
-    {
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+  protected static EClass mapContainerEClass;
 
-      MapHolder mapHolder = getModel2Factory().createMapHolder();
+  protected static Map<EDataType, List> dummyData = new HashMap<EDataType, List>();
 
-      mapHolder.getStringToStringMap().put("Martin", "Fluegge");
-
-      resource.getContents().add(mapHolder);
-
-      transaction.commit();
-    }
-
-    {
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
-
-      MapHolder mapHolder = (MapHolder)resource.getContents().get(0);
-
-      assertEquals(true, mapHolder.getStringToStringMap().keySet().contains("Martin"));
-      assertEquals(true, mapHolder.getStringToStringMap().values().contains("Fluegge"));
-
-      transaction.close();
-    }
-  }
+  protected static int count;
 
   public void testIntegerStringMap() throws Exception
   {
@@ -76,7 +65,7 @@ public class MapTest extends AbstractCDOTest
     objects.put(3, "3");
     objects.put(4, "4");
 
-    testMap(getModel2Package().getMapHolder_IntegerToStringMap(), objects);
+    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_IntegerToStringMap(), objects, null);
   }
 
   public void testStringStringMap() throws Exception
@@ -92,7 +81,7 @@ public class MapTest extends AbstractCDOTest
     objects.put("Caspar", "De Groot");
     objects.put("Martin", "Taal");
 
-    testMap(getModel2Package().getMapHolder_StringToStringMap(), objects);
+    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_StringToStringMap(), objects, null);
   }
 
   public void testStringVATMap() throws Exception
@@ -102,7 +91,7 @@ public class MapTest extends AbstractCDOTest
     objects.put("VAT7", VAT.VAT7);
     objects.put("VAT15", VAT.VAT15);
 
-    testMap(getModel2Package().getMapHolder_StringToVATMap(), objects);
+    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_StringToVATMap(), objects, null);
   }
 
   public void testStringToAddressContainmentMap() throws Exception
@@ -113,7 +102,8 @@ public class MapTest extends AbstractCDOTest
     objects.put("address2", getModel1Factory().createAddress());
     objects.put("address3", getModel1Factory().createAddress());
 
-    testMap(getModel2Package().getMapHolder_StringToAddressContainmentMap(), objects);
+    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_StringToAddressContainmentMap(),
+        objects, null);
   }
 
   public void testStringToAddressReferenceMap() throws Exception
@@ -124,7 +114,8 @@ public class MapTest extends AbstractCDOTest
     objects.put("address2", getModel1Factory().createAddress());
     objects.put("address3", getModel1Factory().createAddress());
 
-    testMap(getModel2Package().getMapHolder_StringToAddressReferenceMap(), objects);
+    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_StringToAddressReferenceMap(),
+        objects, null);
   }
 
   public void testEObjectToEObjectMap() throws Exception
@@ -135,7 +126,7 @@ public class MapTest extends AbstractCDOTest
     objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
     objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
 
-    testMap(getModel2Package().getMapHolder_EObjectToEObjectMap(), objects);
+    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_EObjectToEObjectMap(), objects, null);
   }
 
   public void testEObjectToEObjectKeyContainedMap() throws Exception
@@ -146,7 +137,8 @@ public class MapTest extends AbstractCDOTest
     objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
     objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
 
-    testMap(getModel2Package().getMapHolder_EObjectToEObjectKeyContainedMap(), objects);
+    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_EObjectToEObjectKeyContainedMap(),
+        objects, null);
   }
 
   public void testEObjectToEObjectValueContainedMap() throws Exception
@@ -157,7 +149,8 @@ public class MapTest extends AbstractCDOTest
     objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
     objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
 
-    testMap(getModel2Package().getMapHolder_EObjectToEObjectValueContainedMap(), objects);
+    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_EObjectToEObjectValueContainedMap(),
+        objects, null);
   }
 
   public void testEObjectToEObjectBothContainedMap() throws Exception
@@ -168,15 +161,62 @@ public class MapTest extends AbstractCDOTest
     objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
     objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
 
-    testMap(getModel2Package().getMapHolder_EObjectToEObjectBothContainedMap(), objects);
+    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_EObjectToEObjectBothContainedMap(),
+        objects, null);
   }
 
-  private void testMap(EReference feature, Map objects) throws Exception
+  /**
+   * Insert the following two methods if you want to run the dynamically generated maps on the CDO test platform. This
+   * test is commented out by default because it takes quite a long time.
+   */
+  // public void testDynamicMaps() throws Exception
+  // {
+  // EPackage dynamicMapEPackge = createPackage();
+  // EFactory dynamicMapEFactoryInstance = dynamicMapEPackge.getEFactoryInstance();
+  //
+  // for (EStructuralFeature mapFeature : mapContainerEClass.getEAllStructuralFeatures())
+  // {
+  // EObject mapContainer = dynamicMapEFactoryInstance.create(mapContainerEClass);
+  // System.out.println(mapFeature);
+  // if (mapFeature.getName().endsWith("Map"))
+  // {
+  // Map objects = new HashMap();
+  // List key = dummyData.get(getEDataType(mapFeature, "key"));
+  // List value = dummyData.get(getEDataType(mapFeature, "value"));
+  // System.out.println("Testing " + mapFeature.getName() + "key: " + key + " / value: " + value);
+  // for (int i = 0; i < 3; i++)
+  // {
+  // objects.put(key.get(i), value.get(i));
+  // }
+  //
+  // // do the actual test
+  // testMap(mapContainer, (EReference)mapFeature, objects, dynamicMapEPackge);
+  // }
+  // }
+  // }
+
+  // private EDataType getEDataType(EStructuralFeature feature, String type) throws Exception
+  // {
+  // EClass eType = (EClass)feature.getEType();
+  // for (EStructuralFeature f : eType.getEAllStructuralFeatures())
+  // {
+  // if (f.getName().equals(type))
+  // {
+  // return (EDataType)f.getEType();
+  // }
+  // }
+  //
+  // throw new Exception("Could not find " + type + " for " + feature);
+  // }
+
+  private void testMap(EObject container, EReference feature, Map objects, EPackage epackage) throws Exception
   {
     boolean keyIsReference = false;
     boolean valueIsReference = false;
     boolean keyNotContained = false;
     boolean valueNotContained = false;
+
+    String resourceName = "/test1" + count++;
 
     EClass eType = (EClass)feature.getEType();
     for (EStructuralFeature f : eType.getEAllStructuralFeatures())
@@ -207,12 +247,15 @@ public class MapTest extends AbstractCDOTest
 
     {
       CDOSession session = openSession();
+      if (epackage != null)
+      {
+        session.getPackageRegistry().putEPackage(epackage);
+      }
+
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(resourceName);
 
-      MapHolder mapHolder = getModel2Factory().createMapHolder();
-
-      EMap map = (EMap)mapHolder.eGet(feature);
+      EMap map = (EMap)container.eGet(feature);
 
       for (Object key : objects.keySet())
       {
@@ -221,19 +264,26 @@ public class MapTest extends AbstractCDOTest
 
       compareSimple(objects, map);
 
-      resource.getContents().add(mapHolder);
-      if (keyNotContained) // avoid dangling references if needed
+      resource.getContents().add(container);
+      if (keyNotContained && keyIsReference) // avoid dangling references if needed
       {
         for (Object key : map.keySet())
         {
-          resource.getContents().add((EObject)key);
+          if (key instanceof EObject)
+          {
+            resource.getContents().add((EObject)key);
+          }
         }
       }
-      if (valueNotContained) // avoid dangling references if needed
+
+      if (valueNotContained && valueIsReference) // avoid dangling references if needed
       {
         for (Object value : map.values())
         {
-          resource.getContents().add((EObject)value);
+          if (value instanceof EObject)
+          {
+            resource.getContents().add((EObject)value);
+          }
         }
       }
 
@@ -245,10 +295,20 @@ public class MapTest extends AbstractCDOTest
 
     {
       CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      if (epackage != null)
+      {
+        session.getPackageRegistry().putEPackage(epackage);
+      }
 
-      MapHolder mapHolder = (MapHolder)resource.getContents().get(0);
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getResource(resourceName);
+
+      EObject mapHolder = resource.getContents().get(0);
+
+      for (EStructuralFeature e : mapHolder.eClass().getEAllStructuralFeatures())
+      {
+        System.out.println(e);
+      }
 
       EMap map = (EMap)mapHolder.eGet(feature);
 
@@ -267,9 +327,14 @@ public class MapTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      if (epackage != null)
+      {
+        session.getPackageRegistry().putEPackage(epackage);
+      }
 
-      MapHolder mapHolder = (MapHolder)resource.getContents().get(0);
+      CDOResource resource = transaction.getResource(resourceName);
+
+      EObject mapHolder = resource.getContents().get(0);
 
       EMap map = (EMap)mapHolder.eGet(feature);
 
@@ -285,10 +350,15 @@ public class MapTest extends AbstractCDOTest
 
     {
       CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      if (epackage != null)
+      {
+        session.getPackageRegistry().putEPackage(epackage);
+      }
 
-      MapHolder mapHolder = (MapHolder)resource.getContents().get(0);
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getResource(resourceName);
+
+      EObject mapHolder = resource.getContents().get(0);
 
       EMap map = (EMap)mapHolder.eGet(feature);
       assertEquals(map.size(), 0);
@@ -315,7 +385,6 @@ public class MapTest extends AbstractCDOTest
   {
     for (Object key : map.keySet())
     {
-
       if (!keyIsReference)
       {
         assertEquals(true, objects.keySet().contains(key));
@@ -333,11 +402,13 @@ public class MapTest extends AbstractCDOTest
             foundObjectWithSameID = true;
           }
         }
+
         if (!foundObjectWithSameID)
         {
           fail("key reference with CDOID could not be found");
         }
       }
+
       if (!valueIsReference)
       {
         assertEquals(true, objects.keySet().contains(key));
@@ -355,11 +426,284 @@ public class MapTest extends AbstractCDOTest
             foundObjectWithSameID = true;
           }
         }
+
         if (!foundObjectWithSameID)
         {
           fail("value reference with CDOID could not be found");
         }
       }
     }
+  }
+
+  public static EPackage createPackage()
+  {
+
+    EcoreFactory theCoreFactory = EcoreFactory.eINSTANCE;
+    EcorePackage theCorePackage = EcorePackage.eINSTANCE;
+
+    mapContainerEClass = theCoreFactory.createEClass();
+    mapContainerEClass.setName("MapContainer");
+
+    EPackage dynamicMapEPackage = theCoreFactory.createEPackage();
+    dynamicMapEPackage.setName("DynamicMapPackage");
+    dynamicMapEPackage.setNsPrefix("dynamicmap");
+    dynamicMapEPackage.setNsURI("http:///org.mftech.examples.emf.dynamic.map");
+
+    dynamicMapEPackage.getEClassifiers().add(mapContainerEClass);
+
+    // ++++++++++++++ create dynamic
+    // TODO provide Reference mapping
+    Map<EDataType, Boolean> dataTypes = new HashMap<EDataType, Boolean>();
+    dataTypes.put(theCorePackage.getEBigDecimal(), true);
+    dataTypes.put(theCorePackage.getEBigInteger(), true);
+    dataTypes.put(theCorePackage.getEBoolean(), true);
+    dataTypes.put(theCorePackage.getEBooleanObject(), true);
+    dataTypes.put(theCorePackage.getEByte(), true);
+    // dataTypes.put(theCorePackage.getEByteArray(), true);
+    dataTypes.put(theCorePackage.getEByteObject(), true);
+    dataTypes.put(theCorePackage.getEChar(), true);
+    dataTypes.put(theCorePackage.getECharacterObject(), true);
+    dataTypes.put(theCorePackage.getEDate(), true);
+    // // dataTypes.put(theCorePackage.getEDiagnosticChain(), true);
+    dataTypes.put(theCorePackage.getEDouble(), true);
+    dataTypes.put(theCorePackage.getEDoubleObject(), true);
+    dataTypes.put(theCorePackage.getEFloat(), true);
+    dataTypes.put(theCorePackage.getEFloatObject(), true);
+    dataTypes.put(theCorePackage.getEInt(), true);
+    dataTypes.put(theCorePackage.getEIntegerObject(), true);
+    dataTypes.put(theCorePackage.getEJavaObject(), true);
+    dataTypes.put(theCorePackage.getEJavaClass(), true);
+    dataTypes.put(theCorePackage.getELong(), true);
+    dataTypes.put(theCorePackage.getELongObject(), true);
+    // dataTypes.put(theCorePackage.getEMap(), true);
+    dataTypes.put(theCorePackage.getEShort(), true);
+    dataTypes.put(theCorePackage.getEShortObject(), true);
+    dataTypes.put(theCorePackage.getEString(), true);
+
+    System.out.println("Start");
+
+    int i = 0;
+    for (EDataType keyDataType : dataTypes.keySet())
+    {
+      String keyName = keyDataType.getName();
+      for (EDataType valueDataType : dataTypes.keySet())
+      {
+
+        String valueName = valueDataType.getName();
+        String mapName = keyName + "To" + valueName + "Map";
+
+        EClass mapEClass = theCoreFactory.createEClass();
+        mapEClass.setName(mapName);
+        mapEClass.setInstanceTypeName("java.util.Map$Entry");
+
+        EStructuralFeature key;
+        if (dataTypes.get(keyDataType))
+        {
+          key = theCoreFactory.createEAttribute();
+        }
+        else
+        {
+          key = theCoreFactory.createEReference();
+        }
+
+        key.setName("key");
+        key.setEType(keyDataType);
+
+        // EStructuralFeature value = theCoreFactory.createEAttribute();
+        EStructuralFeature value;
+        if (dataTypes.get(valueDataType))
+        {
+          value = theCoreFactory.createEAttribute();
+        }
+        else
+        {
+          value = theCoreFactory.createEReference();
+        }
+
+        value.setName("value");
+        value.setEType(valueDataType);
+
+        mapEClass.getEStructuralFeatures().add(key);
+        mapEClass.getEStructuralFeatures().add(value);
+
+        EReference containerMapFeature = theCoreFactory.createEReference();
+
+        containerMapFeature.setName(mapName);
+        containerMapFeature.setEType(mapEClass);
+        containerMapFeature.setResolveProxies(false);
+        containerMapFeature.setUpperBound(EStructuralFeature.UNBOUNDED_MULTIPLICITY);
+        containerMapFeature.setContainment(true);
+
+        dynamicMapEPackage.getEClassifiers().add(mapEClass);
+        mapContainerEClass.getEStructuralFeatures().add(containerMapFeature);
+
+        System.out.println("Created " + mapName);
+        i++;
+      }
+    }
+
+    System.out.println("Created " + i + " maps.");
+
+    initDummyData(theCorePackage);
+    CDOUtil.prepareDynamicEPackage(dynamicMapEPackage);
+    return dynamicMapEPackage;
+
+  }
+
+  public static void initDummyData(EcorePackage theCorePackage)
+  {
+    List data = new ArrayList();
+    data.add("A");
+    data.add("B");
+    data.add("C");
+    dummyData.put(theCorePackage.getEString(), data);
+
+    data = new ArrayList();
+    data.add(new BigInteger("11111111111111"));
+    data.add(new BigInteger("22222222222222"));
+    data.add(new BigInteger("333333333333333"));
+    dummyData.put(theCorePackage.getEBigInteger(), data);
+
+    data = new ArrayList();
+    data.add(new BigDecimal("44444444444444"));
+    data.add(new BigDecimal("55555555555555"));
+    data.add(new BigDecimal("66666666666666"));
+    dummyData.put(theCorePackage.getEBigDecimal(), data);
+
+    data = new ArrayList();
+    data.add(true);
+    data.add(false);
+    data.add(true);
+    dummyData.put(theCorePackage.getEBoolean(), data);
+
+    data = new ArrayList();
+    data.add(new Boolean(true));
+    data.add(new Boolean("false"));
+    data.add(new Boolean(true));
+    dummyData.put(theCorePackage.getEBooleanObject(), data);
+
+    data = new ArrayList();
+    data.add((byte)1);
+    data.add((byte)2);
+    data.add((byte)3);
+    dummyData.put(theCorePackage.getEByte(), data);
+
+    // TODO create additional dummy Data
+    // dummyData.put(theCorePackage.getEByteArray(), data);
+
+    data = new ArrayList();
+    data.add(new Byte((byte)1));
+    data.add(new Byte("2"));
+    data.add(new Byte((byte)3));
+    dummyData.put(theCorePackage.getEByteObject(), data);
+
+    data = new ArrayList();
+    data.add('a');
+    data.add((char)99);
+    data.add('c');
+    dummyData.put(theCorePackage.getEChar(), data);
+
+    data = new ArrayList();
+    data.add(new Character('a'));
+    data.add(new Character((char)99));
+    data.add(new Character('c'));
+    dummyData.put(theCorePackage.getECharacterObject(), data);
+
+    data = new ArrayList();
+    data.add(new Date());
+    data.add(new Date());
+    data.add(new Date());
+    dummyData.put(theCorePackage.getEDate(), data);
+
+    // TODO create additional dummy Data
+    // dummyData.put(theCorePackage.getEDiagnosticChain(), data);
+
+    data = new ArrayList();
+    data.add(111.111D);
+    data.add(222.222D);
+    data.add(333.333D);
+    dummyData.put(theCorePackage.getEDouble(), data);
+
+    data = new ArrayList();
+    data.add(new Double(444.444));
+    data.add(new Double("555.555"));
+    data.add(new Double(666.666));
+    dummyData.put(theCorePackage.getEDoubleObject(), data);
+
+    data = new ArrayList();
+    data.add(111.0001f);
+    data.add(222.0002f);
+    data.add(333.0003f);
+    dummyData.put(theCorePackage.getEFloat(), data);
+
+    data = new ArrayList();
+    data.add(new Float(444.0004f));
+    data.add(new Float(555.0005d));
+    data.add(new Float("666.0006"));
+    dummyData.put(theCorePackage.getEFloatObject(), data);
+
+    data = new ArrayList();
+    data.add(11);
+    data.add(22);
+    data.add(33);
+    dummyData.put(theCorePackage.getEInt(), data);
+
+    data = new ArrayList();
+    data.add(new Integer(44));
+    data.add(new Integer("55"));
+    data.add(new Integer(66));
+    dummyData.put(theCorePackage.getEIntegerObject(), data);
+
+    data = new ArrayList();
+    data.add(new Long(1));
+    data.add(new Date());
+    data.add(new Integer(2));
+    dummyData.put(theCorePackage.getEJavaObject(), data);
+
+    data = new ArrayList();
+    data.add(Object.class);
+    data.add(Date.class);
+    data.add(Long.class);
+    dummyData.put(theCorePackage.getEJavaClass(), data);
+
+    data = new ArrayList();
+    data.add(10101010101L);
+    data.add(20202020202L);
+    data.add(30303030303L);
+    dummyData.put(theCorePackage.getELong(), data);
+
+    data = new ArrayList();
+    data.add(new Long(40404040404L));
+    data.add(new Long("5050505050505"));
+    data.add(new Long(6060606060606L));
+    dummyData.put(theCorePackage.getELongObject(), data);
+
+    data = new ArrayList();
+
+    Map map = new HashMap();
+    map.put(1, 2);
+    map.put(3, 4);
+    data.add(map);
+    map = new HashMap();
+    map.put("A", "B");
+    map.put("C", "D");
+    data.add(map);
+    map = new HashMap();
+    map.put('a', 'b');
+    map.put('c', 'd');
+    data.add(map);
+    dummyData.put(theCorePackage.getEMap(), data);
+
+    data = new ArrayList();
+    data.add((short)111);
+    data.add((short)222);
+    data.add((short)333);
+    dummyData.put(theCorePackage.getEShort(), data);
+
+    data = new ArrayList();
+    data.add(new Short((short)111));
+    data.add(new Short((short)222));
+    data.add(new Short((short)333));
+    dummyData.put(theCorePackage.getEShortObject(), data);
   }
 }

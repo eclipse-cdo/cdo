@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -31,6 +31,11 @@ public class CDOFactoryImpl extends EFactoryImpl implements CDOFactory
   @Override
   protected EObject basicCreate(EClass eClass)
   {
+    if (eClass.getInstanceClassName() == "java.util.Map$Entry") //$NON-NLS-1$
+    {
+      return new DynamicCDOObjectImpl.BasicEMapEntry<String, String>(eClass);
+    }
+
     return new DynamicCDOObjectImpl(eClass);
   }
 

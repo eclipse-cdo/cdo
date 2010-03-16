@@ -13,16 +13,21 @@ package org.eclipse.emf.cdo.ui.ide;
 
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
 
+import org.eclipse.net4j.util.ui.UIUtil;
+
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.PartInitException;
 
 /**
  * @author Victor Roldan Betancort
  */
 public class CommonNavigatorUtils
 {
+  private static final String ERROR_LOG_ID = "org.eclipse.pde.runtime.LogView";
+
   public static Object createMessageProvider(final String message, final MessageType type)
   {
     return new IAdaptable()
@@ -57,7 +62,23 @@ public class CommonNavigatorUtils
             }
           };
         }
-
+        if (adapter.equals(Runnable.class))
+        {
+          return new Runnable()
+          {
+            public void run()
+            {
+              try
+              {
+                UIUtil.getActiveWorkbenchPage().showView(ERROR_LOG_ID);
+              }
+              catch (PartInitException ex)
+              {
+                OM.LOG.error(ex);
+              }
+            }
+          };
+        }
         return null;
       }
 

@@ -53,6 +53,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -496,6 +497,14 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
         catch (PartInitException ex)
         {
           OM.LOG.error(ex);
+        }
+      }
+      if (selection instanceof IAdaptable)
+      {
+        Runnable runnable = (Runnable)((IAdaptable)selection).getAdapter(Runnable.class);
+        if (runnable != null)
+        {
+          UIUtil.getDisplay().asyncExec(runnable);
         }
       }
     }

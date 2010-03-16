@@ -519,6 +519,11 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.setBranchPoint(branch, timeStamp);
   }
 
+  public boolean setBranchPoint(CDOBranchPoint branchPoint)
+  {
+    return delegate.setBranchPoint(branchPoint);
+  }
+
   public boolean setBranch(CDOBranch branch)
   {
     return delegate.setBranch(branch);

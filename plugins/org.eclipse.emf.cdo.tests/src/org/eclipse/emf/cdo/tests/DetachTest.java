@@ -65,8 +65,8 @@ public class DetachTest extends AbstractCDOTest
   public void testCleanObjectDeletion() throws Exception
   {
     CDOSession session = openSession();
-    ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().setCommitTimeout(1000);
-    ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().setProgressInterval(100);
+    // ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().setCommitTimeout(1000);
+    // ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().setProgressInterval(100);
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
@@ -358,7 +358,7 @@ public class DetachTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return rSet2.getResources().size() == 1;
+        return rSet2.getResources().isEmpty();
       }
     }.assertNoTimeOut();
 

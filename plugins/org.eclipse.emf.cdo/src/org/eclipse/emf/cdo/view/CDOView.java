@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -115,6 +116,14 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
    * @since 3.0
    */
   public boolean setBranchPoint(CDOBranch branch, long timeStamp);
+
+  /**
+   * Same as calling {@link #setBranchPoint(CDOBranch, long) setBranchPoint(branchPoint.getBranch(),
+   * branchPoint.getTimeStamp())}.
+   * 
+   * @since 3.0
+   */
+  public boolean setBranchPoint(CDOBranchPoint branchPoint);
 
   /**
    * Same as calling {@link #setBranchPoint(CDOBranch, long) setBranchPoint(branch, getTimeStamp())}.

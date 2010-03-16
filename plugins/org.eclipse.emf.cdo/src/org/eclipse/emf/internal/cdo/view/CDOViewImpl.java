@@ -258,7 +258,26 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   public CDOResourceImpl getRootResource()
   {
     checkActive();
+    if (rootResource == null)
+    {
+      CDOID rootResourceID = session.getRepositoryInfo().getRootResourceID();
+      rootResource = (CDOResourceImpl)getObject(rootResourceID);
+      rootResource.setRoot(true);
+      registerObject(rootResource);
+      getResourceSet().getResources().add(rootResource);
+    }
+
     return rootResource;
+  }
+
+  private void clearRootResource()
+  {
+    if (rootResource != null)
+    {
+      getResourceSet().getResources().remove(rootResource);
+      deregisterObject(rootResource);
+      rootResource = null;
+    }
   }
 
   /**
@@ -298,7 +317,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     return setBranchPoint(branch.getPoint(timeStamp));
   }
 
-  protected boolean setBranchPoint(CDOBranchPoint branchPoint)
+  public boolean setBranchPoint(CDOBranchPoint branchPoint)
   {
     long timeStamp = branchPoint.getTimeStamp();
     long creationTimeStamp = getSession().getRepositoryInfo().getCreationTime();
@@ -342,6 +361,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       }
     }
 
+    clearRootResource();
+
     IListener[] listeners = getListeners();
     if (listeners != null)
     {
@@ -353,7 +374,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
   protected void basicSetBranchPoint(CDOBranchPoint branchPoint)
   {
-    this.branchPoint = branchPoint;
+    this.branchPoint = CDOBranchUtil.copyBranchPoint(branchPoint);
   }
 
   protected void fireViewTargetChangedEvent(IListener[] listeners)
@@ -1214,12 +1235,19 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   {
     URI uri = resource.getURI();
     String path = CDOURIUtil.extractResourcePath(uri);
+    boolean isRoot = "/".equals(path); //$NON-NLS-1$
 
     try
     {
-      CDOID id = getResourceNodeID(path);
+      CDOID id = isRoot ? session.getRepositoryInfo().getRootResourceID() : getResourceNodeID(path);
       resource.cdoInternalSetID(id);
       registerObject(resource);
+      if (isRoot)
+      {
+        resource.setRoot(true);
+        rootResource = resource;
+      }
+
     }
     catch (Exception ex)
     {
@@ -1738,16 +1766,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   {
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
     sessionProtocol.openView(viewID, this, isReadOnly());
-  }
-
-  @Override
-  protected void doAfterActivate() throws Exception
-  {
-    CDOID rootResourceID = session.getRepositoryInfo().getRootResourceID();
-    rootResource = (CDOResourceImpl)getObject(rootResourceID);
-    rootResource.setRoot(true);
-    registerObject(rootResource);
-    getResourceSet().getResources().add(rootResource);
   }
 
   /**

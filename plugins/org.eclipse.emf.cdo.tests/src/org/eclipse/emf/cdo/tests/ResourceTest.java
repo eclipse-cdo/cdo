@@ -109,7 +109,7 @@ public class ResourceTest extends AbstractCDOTest
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOTransaction transaction = session.openTransaction(resourceSet);
     CDOResource rootResource = (CDOResource)resourceSet.getEObject(rootResourceURI, true);
-    assertClean(rootResource, transaction);
+    assertProxy(rootResource);
     assertSame(rootResource, transaction.getRootResource());
 
     CDOResource resource = (CDOResource)resourceSet.getEObject(resourceURI, true);
@@ -257,7 +257,7 @@ public class ResourceTest extends AbstractCDOTest
           CDOURIUtil.createResourceURI(transaction, "/test1"), true);
       assertNotNull(resource);
       assertEquals(transaction.getResourceSet(), resource.getResourceSet());
-      assertEquals(2, transaction.getResourceSet().getResources().size());
+      assertEquals(1, transaction.getResourceSet().getResources().size());
       assertEquals(CDOState.PROXY, resource.cdoState());
       assertEquals(transaction, resource.cdoView());
       assertNull(resource.cdoRevision());

@@ -79,7 +79,7 @@ public class Bugzilla_265114_Test extends AbstractCDOTest
 
       CDOObject cdoResource = CDOUtil.getCDOObject((CDOResource)resource1);
       assertEquals(rset, cdoResource.cdoView().getResourceSet());
-      assertEquals(2, adapter.getListOfContent().size());
+      assertEquals(1, adapter.getListOfContent().size());
     }
     finally
     {

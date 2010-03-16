@@ -212,7 +212,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
-  protected boolean setBranchPoint(CDOBranchPoint branchPoint)
+  public boolean setBranchPoint(CDOBranchPoint branchPoint)
   {
     if (branchPoint.getTimeStamp() != UNSPECIFIED_DATE)
     {

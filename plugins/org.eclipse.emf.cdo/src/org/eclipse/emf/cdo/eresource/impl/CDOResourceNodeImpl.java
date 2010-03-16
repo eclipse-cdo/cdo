@@ -104,9 +104,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
    */
   public void setFolder(CDOResourceFolder newFolder)
   {
-    String oldPath = getPath();
     basicSetFolder(newFolder, true);
-    adjustContainedResources(oldPath);
   }
 
   /**
@@ -158,9 +156,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
    */
   public void setName(String newName)
   {
-    String oldPath = getPath();
     basicSetName(newName, true);
-    adjustContainedResources(oldPath);
   }
 
   /**
@@ -238,7 +234,6 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
       basicSetFolder(newFolder, false);
       basicSetName(newName, false);
-      adjustContainedResources(oldPath);
     }
   }
 
@@ -248,33 +243,6 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   public URI getURI()
   {
     return CDOURIUtil.createResourceURI(cdoView(), getPath());
-  }
-
-  /**
-   * @ADDED
-   */
-  private void adjustContainedResources(String oldPath)
-  {
-    // TODO Still needed?
-    // ResourceSet resourceSet = cdoView().getViewSet().getResourceSet();
-    // EList<Resource> resources = resourceSet.getResources();
-    // for (Resource resource : resources.toArray(new Resource[resources.size()]))
-    // {
-    // if (resource instanceof CDOResource)
-    // {
-    // CDOResource cdoResource = (CDOResource)resource;
-    // String path = cdoResource.getPath();
-    // // if (ObjectUtil.equals(path, oldPath))
-    // // {
-    // // // Don't handle *this* node
-    // // continue;
-    // // }
-    //
-    // if (path.startsWith(oldPath))
-    // {
-    // }
-    // }
-    // }
   }
 
   /**

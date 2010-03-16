@@ -468,7 +468,7 @@ public class InitialTest extends AbstractCDOTest
       assertNotNull(resource);
       assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + "/test1"), resource.getURI());
       assertEquals(transaction.getResourceSet(), resource.getResourceSet());
-      assertEquals(2, transaction.getResourceSet().getResources().size());
+      assertEquals(1, transaction.getResourceSet().getResources().size());
       assertEquals(CDOState.CLEAN, resource.cdoState());
       assertEquals(transaction, resource.cdoView());
       assertNotNull(resource.cdoRevision());
@@ -484,7 +484,7 @@ public class InitialTest extends AbstractCDOTest
       assertNotNull(resource);
       assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + "/test1"), resource.getURI());
       assertEquals(transaction.getResourceSet(), resource.getResourceSet());
-      assertEquals(2, transaction.getResourceSet().getResources().size());
+      assertEquals(1, transaction.getResourceSet().getResources().size());
       assertEquals(CDOState.CLEAN, resource.cdoState());
       assertEquals(transaction, resource.cdoView());
       assertNotNull(resource.cdoRevision());

@@ -18,6 +18,7 @@ import org.eclipse.zest.layouts.dataStructures.DisplayIndependentRectangle;
  */
 public class GeometryUtils
 {
+
   /**
    * Unifies both given dimensions.
    * 
@@ -25,15 +26,12 @@ public class GeometryUtils
    *          the this dimension
    * @param thatDimension
    *          the that dimension
-   * @return the display independent dimension
    */
-  public static DisplayIndependentDimension union(DisplayIndependentDimension thisDimension,
-      DisplayIndependentDimension thatDimension)
+  public static void union(DisplayIndependentDimension thisDimension, DisplayIndependentDimension thatDimension)
   {
     DisplayIndependentDimension union = new DisplayIndependentDimension(thisDimension);
     union.width += thatDimension.width;
     union.height += thatDimension.height;
-    return union;
   }
 
   /**
@@ -50,6 +48,37 @@ public class GeometryUtils
   {
     rectangle.x += xOffset;
     rectangle.y += yOffset;
+  }
+
+  /**
+   * Returns the dimension needed to translate the given rectangle to the given location .
+   * 
+   * @param rectangleToTranslate
+   *          the rectangle to translate
+   * @param x
+   *          the x coordinate to translate the rectangle to
+   * @param y
+   *          the y coordinate to translate the rectangle to
+   * @return the translation
+   */
+  public static DisplayIndependentDimension getTranslation(DisplayIndependentRectangle rectangleToTranslate, double x,
+      double y)
+  {
+    return new DisplayIndependentDimension(x - rectangleToTranslate.x, y - rectangleToTranslate.y);
+  }
+
+  /**
+   * Gets the translation necessary to move the source coordinate to the target coordinate.
+   * 
+   * @param sourceCoordinate
+   *          the source x
+   * @param targetCoordinate
+   *          the target x
+   * @return the translation
+   */
+  public static double getTranslation(double sourceCoordinate, double targetCoordinate)
+  {
+    return targetCoordinate - sourceCoordinate;
   }
 
   /**
@@ -81,28 +110,29 @@ public class GeometryUtils
    *          the width (starting at the x coordinate) to expand the rectangle to
    * @param height
    *          the height (starting at the y coordinate) to expand the rectangle to
-   * @return <code>this</code> for convenience
+   * @return
    */
   public static DisplayIndependentRectangle union(DisplayIndependentRectangle rectangle, double x, double y,
       double width, double height)
   {
+    DisplayIndependentRectangle bounds = new DisplayIndependentRectangle();
     double right = Math.max(rectangle.x + rectangle.width, x + width);
     double bottom = Math.max(rectangle.y + rectangle.height, y + height);
-    rectangle.x = Math.min(rectangle.x, x);
-    rectangle.y = Math.min(rectangle.y, y);
-    rectangle.width = right - rectangle.x;
-    rectangle.height = bottom - rectangle.y;
-    return rectangle;
+    bounds.x = Math.min(rectangle.x, x);
+    bounds.y = Math.min(rectangle.y, y);
+    bounds.width = right - rectangle.x;
+    bounds.height = bottom - rectangle.y;
+    return bounds;
   }
 
   /**
-   * Expands the given first rectangle to the minimum size which can hold both this Rectangle and the second rectangle
+   * Expands the given first rectangle to the minimum size which can hold both this Rectangle and the second rectangle.
    * 
    * @param thisRectangle
    *          the rectangle to expand
    * @param thatRectangle
    *          the rectangle to include in the first one
-   * @return the display independent rectangle
+   * @return the new bounds
    */
   public static DisplayIndependentRectangle union(DisplayIndependentRectangle thisRectangle,
       DisplayIndependentRectangle thatRectangle)
@@ -111,16 +141,59 @@ public class GeometryUtils
   }
 
   /**
-   * Gets the translation necessar to translate the source coordinate to the target coordinate.
+   * Scales the given rectangle by the given factors.
    * 
-   * @param sourceCoordinate
-   *          the source x
-   * @param targetCoordinate
-   *          the target x
-   * @return the translation
+   * @param width
+   *          the width
+   * @param height
+   *          the height
+   * @param bounds
+   *          the bounds
    */
-  public static double getTranslation(double sourceCoordinate, double targetCoordinate)
+  public static void scaleRectangle(double width, double height, DisplayIndependentRectangle bounds)
   {
-    return targetCoordinate - sourceCoordinate;
+    bounds.width *= width;
+    bounds.height *= height;
+  }
+
+  /**
+   * Subtracts the given height and width from the given rectangle.
+   * 
+   * @param dimension
+   *          the dimension
+   * @param rectangle
+   *          the rectangle
+   */
+  public static DisplayIndependentRectangle substract(DisplayIndependentDimension dimension,
+      DisplayIndependentRectangle rectangle)
+  {
+    DisplayIndependentRectangle newRectangle = new DisplayIndependentRectangle();
+    newRectangle.x = dimension.width;
+    newRectangle.y = dimension.height;
+    newRectangle.width = rectangle.width - dimension.width;
+    newRectangle.height = rectangle.height - dimension.height;
+    return newRectangle;
+  }
+
+  /**
+   * Centers the given rectangle on the bounds of the given other rectangle.
+   * 
+   * @param rectangleToCenter
+   *          the rectangle to center
+   * @param rectangle
+   *          the rectangle
+   */
+  public static void center(DisplayIndependentRectangle rectangleToCenter, DisplayIndependentRectangle rectangle)
+  {
+    if (rectangle == null)
+    {
+      rectangleToCenter.x -= rectangleToCenter.width / 2;
+      rectangleToCenter.y -= rectangleToCenter.height / 2;
+    }
+    else
+    {
+      rectangleToCenter.x = rectangle.x + (rectangleToCenter.width - rectangle.width) / 2;
+      rectangleToCenter.y = rectangle.y + (rectangleToCenter.height - rectangle.height) / 2;
+    }
   }
 }

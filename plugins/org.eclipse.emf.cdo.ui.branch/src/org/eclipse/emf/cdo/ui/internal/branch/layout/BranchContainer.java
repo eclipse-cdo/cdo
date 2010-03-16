@@ -61,7 +61,7 @@ public class BranchContainer
   public void union(InternalNode node)
   {
     nodeList.add(node);
-    GeometryUtils.union(bounds, node.getInternalX(), node.getInternalY(), node.getInternalWidth(), node
+    bounds = GeometryUtils.union(bounds, node.getInternalX(), node.getInternalY(), node.getInternalWidth(), node
         .getInternalHeight());
   }
 }

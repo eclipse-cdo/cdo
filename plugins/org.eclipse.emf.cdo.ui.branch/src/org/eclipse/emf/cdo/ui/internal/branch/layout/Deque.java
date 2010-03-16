@@ -9,6 +9,7 @@ public final class Deque<E> extends LinkedList<E>
 {
   private static final long serialVersionUID = 1L;
 
+  @Override
   public E peekFirst()
   {
     if (isEmpty())
@@ -19,6 +20,7 @@ public final class Deque<E> extends LinkedList<E>
     return getFirst();
   }
 
+  @Override
   public E peekLast()
   {
     if (isEmpty())

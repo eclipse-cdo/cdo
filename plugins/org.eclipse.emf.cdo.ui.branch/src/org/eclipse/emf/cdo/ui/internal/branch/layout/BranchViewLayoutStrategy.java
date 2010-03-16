@@ -13,6 +13,9 @@ package org.eclipse.emf.cdo.ui.internal.branch.layout;
 import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNode;
 
+import org.eclipse.zest.layouts.dataStructures.DisplayIndependentDimension;
+import org.eclipse.zest.layouts.dataStructures.DisplayIndependentRectangle;
+
 /**
  * @author Eike Stepper
  */
@@ -46,4 +49,36 @@ public interface BranchViewLayoutStrategy
    */
   public abstract void layoutSubBranchView(BranchView branchView, BranchView subBranchView,
       BranchPointNode branchPointNode);
+
+  /**
+   * Translates the given branch view by the given dimension.
+   * 
+   * @param offsets
+   *          the dimension the x- and y-offset
+   * @param branchView
+   *          the branch view to translate
+   */
+  public void translateBy(BranchView branchView, DisplayIndependentDimension offsets);
+
+  /**
+   * Scales the given branch view by the given factor on the x- and on the y-axis and translates it to the given x and y
+   * coordinates.
+   * 
+   * @param branchView
+   *          the branch view
+   * @param targetBounds
+   *          the target bounds
+   */
+  public void scale(BranchView branchView, DisplayIndependentRectangle targetBounds);
+
+  /**
+   * Scales the given branch view by the given factor on the x- and on the y-axis.
+   * 
+   * @param branchView
+   *          the branch view to scale
+   * @param scaling
+   *          the scaling
+   */
+  public void scale(BranchView branchView, DisplayIndependentDimension scaling);
+
 }

@@ -176,9 +176,8 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
     DisplayIndependentRectangle bounds = branchView.getBounds();
     DisplayIndependentDimension scaling = new DisplayIndependentDimension(bounds.width / targetBounds.width,
         bounds.height / targetBounds.height);
-    branchView.getLayoutStrategy().scale(branchView, scaling);
-    branchView.getLayoutStrategy().translateBy(branchView,
-        GeometryUtils.getTranslation(branchView.getBounds(), targetBounds.x, targetBounds.y));
+    scale(branchView, scaling);
+    translateBy(branchView, GeometryUtils.getTranslation(branchView.getBounds(), targetBounds.x, targetBounds.y));
   }
 
   protected void scaleSameBranchNodes(BranchView branchView, DisplayIndependentDimension scaling)

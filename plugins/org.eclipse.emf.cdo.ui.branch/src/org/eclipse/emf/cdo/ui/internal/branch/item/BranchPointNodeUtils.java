@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.item;
 
+import org.eclipse.zest.layouts.dataStructures.DisplayIndependentRectangle;
 import org.eclipse.zest.layouts.dataStructures.InternalNode;
 
 /**
@@ -17,7 +18,7 @@ import org.eclipse.zest.layouts.dataStructures.InternalNode;
  * 
  * @author Andre Dietisheim
  */
-public class BranchTreeUtils
+public class BranchPointNodeUtils
 {
   /**
    * returns a BranchGraphNode for a given internal Node
@@ -28,7 +29,7 @@ public class BranchTreeUtils
    * @see InternalNode
    * @see AbstractBranchPointNode
    */
-  public static AbstractBranchPointNode getBranchTreeNode(InternalNode internalNode)
+  public static AbstractBranchPointNode getBranchPointNode(InternalNode internalNode)
   {
     AbstractBranchPointNode branchGraphNode = null;
     Object graphData = internalNode.getLayoutEntity().getGraphData();
@@ -42,16 +43,16 @@ public class BranchTreeUtils
   /**
    * Returns an internal node for a given branch graph node.
    * 
-   * @param branchGraphNode
+   * @param branchPointNode
    *          the branch graph node
    * @return the internal node
    * @see AbstractBranchPointNode
    * @see InternalNode
    */
-  public static InternalNode getInternalNode(AbstractBranchPointNode branchGraphNode)
+  public static InternalNode getInternalNode(AbstractBranchPointNode branchPointNode)
   {
     InternalNode internalNode = null;
-    Object layoutInformation = branchGraphNode.getLayoutEntity().getLayoutInformation();
+    Object layoutInformation = branchPointNode.getLayoutEntity().getLayoutInformation();
     if (layoutInformation instanceof InternalNode)
     {
       internalNode = (InternalNode)layoutInformation;
@@ -60,35 +61,47 @@ public class BranchTreeUtils
   }
 
   /**
-   * Centers the x coordinate of the given target node compared to the given source node. If source node is
-   * <tt>null</tt>, the target node is translated to the right by the half of its own width (centered on its own
-   * location)
+   * Returns the center of the given node on the x-axis.
    * 
-   * @param targetNode
-   *          the target node
-   * @param sourceNode
-   *          the source node
+   * @param node
+   *          the node to get the x-center from
+   * @return the center of the given node on the x-axis
+   */
+  public static double getCenterX(AbstractBranchPointNode node)
+  {
+    InternalNode internalNode = getInternalNode(node);
+    return internalNode.getInternalX() + internalNode.getInternalWidth() / 2;
+  }
+
+  /**
+   * Centers the x coordinate of the given target node compared to the given source node and returns the result. If
+   * source node is <tt>null</tt>, the target node is translated to the right by the half of its own width (centered on
+   * its own location).
+   * 
+   * @param nodeToCenter
+   *          the node to center
+   * @param nodeToCenterOn
+   *          the node to center on
    * @return the centered x
    */
-  private static double getCenteredX(InternalNode targetInternalNode, InternalNode sourceInternalNode)
+  public static double getCenteredX(InternalNode nodeToCenter, InternalNode nodeToCenterOn)
   {
-    if (sourceInternalNode == null)
+    if (nodeToCenterOn == null)
     {
-      return targetInternalNode.getInternalX() - targetInternalNode.getInternalWidth() / 2;
+      return nodeToCenter.getInternalX() - nodeToCenter.getInternalWidth() / 2;
     }
 
-    return sourceInternalNode.getInternalX()
-        + (sourceInternalNode.getInternalWidth() - targetInternalNode.getInternalWidth()) / 2;
+    return nodeToCenterOn.getInternalX() + (nodeToCenterOn.getInternalWidth() - nodeToCenter.getInternalWidth()) / 2;
   }
 
   /**
    * Centers the x coordinate of the given target node.
    * 
-   * @param sourceNode
-   *          the source node
+   * @param sourceInternalNode
+   *          the internal node to center on the x-axis
    * @return the centered x
    */
-  private static double getCenteredX(InternalNode sourceInternalNode)
+  public static double getCenteredX(InternalNode sourceInternalNode)
   {
     return getCenteredX(sourceInternalNode, null);
   }
@@ -178,5 +191,23 @@ public class BranchTreeUtils
     InternalNode internalNode = getInternalNode(nodeToBeCentered);
     double x = getCenteredX(internalNode);
     internalNode.setInternalLocation(x, y);
+  }
+
+  /**
+   * Returns the bounds of the given node.
+   * 
+   * @param node
+   *          the node to get the bounds of
+   * @return the bounds of the given node
+   */
+  public static DisplayIndependentRectangle getBounds(AbstractBranchPointNode node)
+  {
+    return getBounds(getInternalNode(node));
+  }
+
+  private static DisplayIndependentRectangle getBounds(InternalNode node)
+  {
+    return new DisplayIndependentRectangle(node.getInternalX(), node.getInternalY(), node.getInternalWidth(), node
+        .getInternalHeight());
   }
 }

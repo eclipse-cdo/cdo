@@ -124,6 +124,7 @@ public class BranchViewPart extends ViewPart
     CDOBranch subBranch1_1 = subBranch1.createBranch("1-1", subBranch1.getBase().getTimeStamp() + 30000000);
     CDOBranch subBranch2 = mainBranch.createBranch("2", subBranch1.getBase().getTimeStamp() + 30000000);
     CDOBranch subBranch2_1 = subBranch1.createBranch("2-1", subBranch2.getBase().getTimeStamp() + 30000000);
+    CDOBranch subBranch2_2 = subBranch1.createBranch("2-2", subBranch2_1.getBase().getTimeStamp() + 30000000);
     CDOBranch subBranch3 = mainBranch.createBranch("3", subBranch2.getBase().getTimeStamp() + 30000000);
 
     RootNode rootNode = new RootNode(mainBranch.getBase(), graph, SWT.NONE, new TreeRootFigure());
@@ -135,6 +136,8 @@ public class BranchViewPart extends ViewPart
         "branch point 2"));
     BranchPointNode branchNode2_1 = new BranchPointNode(subBranch2_1.getBase(), graph, SWT.NONE, new BranchPointFigure(
         "branch point 2-1"));
+    BranchPointNode branchNode2_2 = new BranchPointNode(subBranch2_2.getBase(), graph, SWT.NONE, new BranchPointFigure(
+        "branch point 2-2"));
     BranchPointNode branchNode3 = new BranchPointNode(subBranch3.getBase(), graph, SWT.NONE, new BranchPointFigure(
         "branch point 3"));
 
@@ -143,6 +146,7 @@ public class BranchViewPart extends ViewPart
     new SameBranchConnection(graph, SWT.NONE, branchNode1, branchNode2);
     new SameBranchConnection(graph, SWT.NONE, branchNode2, branchNode3);
     new NewBranchConnection(graph, SWT.NONE, branchNode2, branchNode2_1);
+    new SameBranchConnection(graph, SWT.NONE, branchNode2_1, branchNode2_2);
 
   }
 

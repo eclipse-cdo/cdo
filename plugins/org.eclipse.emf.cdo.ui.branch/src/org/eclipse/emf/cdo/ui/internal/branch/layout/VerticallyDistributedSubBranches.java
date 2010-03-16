@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
 import org.eclipse.emf.cdo.ui.internal.branch.geometry.GeometryUtils;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNode;
-import org.eclipse.emf.cdo.ui.internal.branch.item.BranchTreeUtils;
+import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNodeUtils;
 
 import org.eclipse.zest.layouts.dataStructures.DisplayIndependentDimension;
 import org.eclipse.zest.layouts.dataStructures.DisplayIndependentRectangle;
@@ -35,7 +35,7 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
     protected DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranchView,
         BranchPointNode branchPointNode)
     {
-      InternalNode branchPointInternalNode = BranchTreeUtils.getInternalNode(branchPointNode);
+      InternalNode branchPointInternalNode = BranchPointNodeUtils.getInternalNode(branchPointNode);
       return new DisplayIndependentDimension( //
           GeometryUtils.getTranslation(subBranchView.getBounds().x, branchPointInternalNode.getInternalX()) //
               + branchPointInternalNode.getInternalWidth() //
@@ -57,7 +57,7 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
     protected DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
         BranchPointNode branchPointNode)
     {
-      InternalNode branchPointInternalNode = BranchTreeUtils.getInternalNode(branchPointNode);
+      InternalNode branchPointInternalNode = BranchPointNodeUtils.getInternalNode(branchPointNode);
       DisplayIndependentRectangle subBranchBounds = subBranch.getBounds();
       return new DisplayIndependentDimension( //
           GeometryUtils.getTranslation(subBranchBounds.x, branchPointInternalNode.getInternalX()) //
@@ -94,7 +94,7 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
     {
       return RIGHT;
     }
-    
+
     return LEFT;
   }
 
@@ -120,9 +120,9 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
     {
       // collides vertically with latter sub-branch -> additionally translate off latter branch (to the right or to
       // the left)
-      translation = GeometryUtils.union(translation, getTranslationToLatterBranch(subBranchView, latterBranch));
+      GeometryUtils.union(translation, getTranslationToLatterBranch(subBranchView, latterBranch));
     }
-    subBranchView.translate(translation);
+    translateBy(subBranchView, translation);
   }
 
   /**

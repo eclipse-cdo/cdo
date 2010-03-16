@@ -13,8 +13,9 @@ package org.eclipse.emf.cdo.ui.internal.branch.layout;
 import org.eclipse.emf.cdo.ui.internal.branch.geometry.GeometryUtils;
 import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNode;
-import org.eclipse.emf.cdo.ui.internal.branch.item.BranchTreeUtils;
+import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNodeUtils;
 
+import org.eclipse.zest.layouts.dataStructures.DisplayIndependentDimension;
 import org.eclipse.zest.layouts.dataStructures.DisplayIndependentRectangle;
 import org.eclipse.zest.layouts.dataStructures.InternalNode;
 
@@ -35,14 +36,14 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
 
   public void layoutBaselineNode(BranchView branchView, AbstractBranchPointNode node)
   {
-    BranchTreeUtils.setInternalSize(node);
+    BranchPointNodeUtils.setInternalSize(node);
     setBaselineNodeLocation(node);
     initBranchBounds(branchView, node);
   }
 
   protected void initBranchBounds(BranchView branchView, AbstractBranchPointNode node)
   {
-    InternalNode baselineInternalNode = BranchTreeUtils.getInternalNode(node);
+    InternalNode baselineInternalNode = BranchPointNodeUtils.getInternalNode(node);
     DisplayIndependentRectangle bounds = new DisplayIndependentRectangle(baselineInternalNode.getInternalX(),
         baselineInternalNode.getInternalY(), baselineInternalNode.getInternalWidth(), baselineInternalNode
             .getInternalHeight());
@@ -59,7 +60,7 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
    */
   public void layoutNode(BranchView branchView, AbstractBranchPointNode node, AbstractBranchPointNode previousNode)
   {
-    BranchTreeUtils.setInternalSize(node);
+    BranchPointNodeUtils.setInternalSize(node);
     setSameBranchNodeLocation(node, previousNode);
     setBranchBounds(branchView, node);
   }
@@ -70,7 +71,7 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
   protected void setBaselineNodeLocation(AbstractBranchPointNode node)
   {
     double y = node.getTimeStamp();
-    BranchTreeUtils.centerHorizontally(node, y);
+    BranchPointNodeUtils.centerHorizontally(node, y);
   }
 
   /**
@@ -79,22 +80,28 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
   protected void setSameBranchNodeLocation(AbstractBranchPointNode node, AbstractBranchPointNode previousNode)
   {
     double y = node.getTimeStamp();
-    BranchTreeUtils.centerHorizontally(node, previousNode, y);
+    BranchPointNodeUtils.centerHorizontally(node, previousNode, y);
   }
 
   /**
    * Sets the bounds of the current branch for the given additional node. The bounds are expanded if the size of the
    * node requires it.
+   * 
+   * @param branchView
+   *          the branch view to set the bounds
+   * @param node
+   *          the node that was added and shall be included in the given branch view
    */
   protected void setBranchBounds(BranchView branchView, AbstractBranchPointNode node)
   {
-    InternalNode internalNode = BranchTreeUtils.getInternalNode(node);
+    InternalNode internalNode = BranchPointNodeUtils.getInternalNode(node);
 
-    GeometryUtils.union(branchView.getBounds(), //
+    DisplayIndependentRectangle bounds = GeometryUtils.union(branchView.getBounds(), //
         internalNode.getInternalX() //
         , internalNode.getInternalY() //
         , internalNode.getInternalWidth() //
         , internalNode.getInternalHeight());
+    branchView.setBounds(bounds);
   }
 
   /**
@@ -114,10 +121,92 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
     if (subBranchView != null)
     {
       setBranchViewLocation(branchView, subBranchView, branchPointNode);
-      GeometryUtils.union(branchView.getBounds(), subBranchView.getBounds());
+      branchView.setBounds(GeometryUtils.union(branchView.getBounds(), subBranchView.getBounds()));
     }
   }
 
   protected abstract void setBranchViewLocation(BranchView branchView, BranchView subBranchView,
       BranchPointNode branchPointNode);
+
+  public void translateBy(BranchView branchView, DisplayIndependentDimension offsets)
+  {
+    translateBranchNodesBy(branchView, offsets);
+    translateSubBranchesBy(branchView, offsets);
+    GeometryUtils.translateRectangle(offsets.width, offsets.height, branchView.getBounds());
+  }
+
+  /**
+   * Translates all sub branches of the given branch.
+   * 
+   * @param dimension
+   *          the dimension to translate this branch by
+   */
+  protected void translateSubBranchesBy(BranchView branchView, DisplayIndependentDimension dimension)
+  {
+    for (BranchView subBranch : branchView.getSubBranchViews())
+    {
+      translateBy(subBranch, dimension);
+    }
+  }
+
+  /**
+   * Translates all the sibling nodes in this branch view. Applies the given horizontal and vertical offset.
+   * 
+   * @param branchView
+   *          the branch view to translate the nodes of
+   * @param dimension
+   *          the dimension to translate by
+   */
+  protected void translateBranchNodesBy(BranchView branchView, DisplayIndependentDimension dimension)
+  {
+    for (AbstractBranchPointNode node : branchView.getNodes())
+    {
+      BranchPointNodeUtils.translateInternalLocation(node, dimension.width, dimension.height);
+    }
+  }
+
+  public void scale(BranchView branchView, DisplayIndependentDimension scaling)
+  {
+    scaleSameBranchNodes(branchView, scaling);
+    scaleSubBranches(branchView, scaling);
+  }
+
+  public void scale(BranchView branchView, DisplayIndependentRectangle targetBounds)
+  {
+    DisplayIndependentRectangle bounds = branchView.getBounds();
+    DisplayIndependentDimension scaling = new DisplayIndependentDimension(bounds.width / targetBounds.width,
+        bounds.height / targetBounds.height);
+    branchView.getLayoutStrategy().scale(branchView, scaling);
+    branchView.getLayoutStrategy().translateBy(branchView,
+        GeometryUtils.getTranslation(branchView.getBounds(), targetBounds.x, targetBounds.y));
+  }
+
+  protected void scaleSameBranchNodes(BranchView branchView, DisplayIndependentDimension scaling)
+  {
+    double centerX = BranchPointNodeUtils.getCenterX(branchView.getBaselineNode());
+    branchView.resetBounds();
+    for (AbstractBranchPointNode node : branchView.getNodes())
+    {
+      InternalNode internalNode = BranchPointNodeUtils.getInternalNode(node);
+      double newX = centerX / scaling.width - internalNode.getInternalWidth() / 2;
+      double newY = internalNode.getInternalY() / scaling.height;
+      internalNode.setInternalLocation(newX, newY);
+      if (!branchView.areBoundsSet())
+      {
+        initBranchBounds(branchView, node);
+      }
+      else
+      {
+        setBranchBounds(branchView, node);
+      }
+    }
+  }
+
+  protected void scaleSubBranches(BranchView branchView, DisplayIndependentDimension targetDimension)
+  {
+    for (BranchView subBranch : branchView.getSubBranchViews())
+    {
+      scale(subBranch, targetDimension);
+    }
+  }
 }

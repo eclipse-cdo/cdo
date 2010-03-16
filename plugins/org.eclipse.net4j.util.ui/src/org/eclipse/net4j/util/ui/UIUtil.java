@@ -254,6 +254,11 @@ public final class UIUtil
     return new GridData(SWT.FILL, SWT.FILL, true, true);
   }
 
+  public static GridData createGridData(boolean grabHorizontal, boolean grabVertical)
+  {
+    return new GridData(SWT.FILL, SWT.FILL, grabHorizontal, grabVertical);
+  }
+
   /**
    * @since 3.0
    */
@@ -273,11 +278,6 @@ public final class UIUtil
     data.grabExcessHorizontalSpace = false;
     data.grabExcessVerticalSpace = false;
     return data;
-  }
-
-  public static GridData createGridData(boolean grabHorizontal, boolean grabVertical)
-  {
-    return new GridData(SWT.FILL, SWT.FILL, grabHorizontal, grabVertical);
   }
 
   public static void addDecorationMargin(Control control)

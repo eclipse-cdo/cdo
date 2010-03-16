@@ -1217,7 +1217,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       Tree tree = new Tree(composite, SWT.MULTI | SWT.BORDER);
       tree.setLayoutData(UIUtil.createGridData());
 
-      boolean sliderAllowed = !(view instanceof CDOTransaction)
+      boolean sliderAllowed = false && !(view instanceof CDOTransaction)
           && view.getSession().getRepositoryInfo().isSupportingAudits()
           && view.getSession().getRepositoryInfo().isSupportingBranches();
 

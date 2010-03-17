@@ -53,10 +53,10 @@ public interface BranchViewLayoutStrategy
   /**
    * Translates the given branch view by the given dimension.
    * 
-   * @param offsets
-   *          the dimension the x- and y-offset
    * @param branchView
    *          the branch view to translate
+   * @param offsets
+   *          the offset on the x- and the y-axis
    */
   public void translateBy(BranchView branchView, DisplayIndependentDimension offsets);
 
@@ -67,7 +67,7 @@ public interface BranchViewLayoutStrategy
    * @param branchView
    *          the branch view
    * @param targetBounds
-   *          the target bounds
+   *          the target bounds to fit the scaled branch view to
    */
   public void scale(BranchView branchView, DisplayIndependentRectangle targetBounds);
 
@@ -77,7 +77,7 @@ public interface BranchViewLayoutStrategy
    * @param branchView
    *          the branch view to scale
    * @param scaling
-   *          the scaling
+   *          the scaling factor (x- and y-axis)
    */
   public void scale(BranchView branchView, DisplayIndependentDimension scaling);
 

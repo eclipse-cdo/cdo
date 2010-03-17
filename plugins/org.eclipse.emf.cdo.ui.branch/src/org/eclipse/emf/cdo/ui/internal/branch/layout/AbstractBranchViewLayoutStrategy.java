@@ -120,12 +120,24 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
   {
     if (subBranchView != null)
     {
-      setBranchViewLocation(branchView, subBranchView, branchPointNode);
+      setSubBranchViewLocation(branchView, subBranchView, branchPointNode);
       branchView.setBounds(GeometryUtils.union(branchView.getBounds(), subBranchView.getBounds()));
     }
   }
 
-  protected abstract void setBranchViewLocation(BranchView branchView, BranchView subBranchView,
+  /**
+   * Sets the new given sub branch view to the new location.
+   * <p>
+   * Subclasses have to provide an algorithm that calculates and sets this location.
+   * 
+   * @param branchView
+   *          the branch view
+   * @param subBranchView
+   *          the sub branch view
+   * @param branchPointNode
+   *          the branch point node
+   */
+  protected abstract void setSubBranchViewLocation(BranchView branchView, BranchView subBranchView,
       BranchPointNode branchPointNode);
 
   public void translateBy(BranchView branchView, DisplayIndependentDimension offsets)
@@ -180,6 +192,14 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
     translateBy(branchView, GeometryUtils.getTranslation(branchView.getBounds(), targetBounds.x, targetBounds.y));
   }
 
+  /**
+   * Scales the positions of the nodes on the same branch view and sets the new bounds of the whole branch view.
+   * 
+   * @param branchView
+   *          the branch view to scale the nodes of
+   * @param scaling
+   *          the scaling factor (x- and y-axis)
+   */
   protected void scaleSameBranchNodes(BranchView branchView, DisplayIndependentDimension scaling)
   {
     double centerX = BranchPointNodeUtils.getCenterX(branchView.getBaselineNode());
@@ -201,11 +221,20 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
     }
   }
 
-  protected void scaleSubBranches(BranchView branchView, DisplayIndependentDimension targetDimension)
+  /**
+   * Scales the sub branches of the given branch view.
+   * 
+   * @param branchView
+   *          the branch view to scale the sub branches of
+   * @param scaling
+   *          the scaling factor (x- and y-axis)
+   */
+  protected void scaleSubBranches(BranchView branchView, DisplayIndependentDimension scaling)
   {
     for (BranchView subBranch : branchView.getSubBranchViews())
     {
-      scale(subBranch, targetDimension);
+      scale(subBranch, scaling);
+      branchView.setBounds(GeometryUtils.union(branchView.getBounds(), subBranch.getBounds()));
     }
   }
 }

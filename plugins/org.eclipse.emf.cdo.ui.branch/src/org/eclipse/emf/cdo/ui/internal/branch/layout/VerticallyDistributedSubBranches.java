@@ -77,7 +77,7 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
   protected VerticallyDistributedSubBranches currentSubBranchStrategy = null;
 
   @Override
-  protected void setBranchViewLocation(BranchView branchView, BranchView subBranchView, BranchPointNode branchPointNode)
+  protected void setSubBranchViewLocation(BranchView branchView, BranchView subBranchView, BranchPointNode branchPointNode)
   {
     currentSubBranchStrategy = getSubBranchStrategy(currentSubBranchStrategy);
     currentSubBranchStrategy.setSubBranchLocation(branchView, subBranchView, branchPointNode);

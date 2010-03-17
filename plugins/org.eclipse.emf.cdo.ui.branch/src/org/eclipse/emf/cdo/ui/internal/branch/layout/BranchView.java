@@ -19,11 +19,12 @@ import org.eclipse.zest.layouts.dataStructures.DisplayIndependentRectangle;
 import java.util.Collection;
 
 /**
- * A Branch is a structure that holds the baseline node of a branch. Its main purpose is to climb through the branch
- * tree and call the layout strategy on all nodes in an appropriate manner.
+ * A branch view is a logical structure that holds all nodes and sub branches. Its main purpose is to climb through the
+ * branch tree and call the layout strategy on all nodes in an appropriate manner.
  * <p>
- * The strategy is to first lay out all (sibling) nodes in the order of their time stamp. Sub-branches are skipped. In a
- * second step all branches are positioned while beginning with the latest one (in terms of time stamp).
+ * The strategy applied is to first lay out all (sibling) nodes in the order of their time stamp. Sub-branches are
+ * skipped. In a second step all branches are positioned within the branch. The strategy starts with the latest one (in
+ * terms of time stamp).
  * 
  * @author Andre Dietisheim
  * @see VerticallyDistributedSubBranches

@@ -1,15 +1,15 @@
-- Install IDE:
-	Platform 3.6
-	Buckminster 3.6
-		core
-		cvs
-		pde
+- Install Eclipse 3.6 from http://download.eclipse.org/eclipse/downloads (archive)
+- Add to the installation from http://download.eclipse.org/releases/helios (p2)
+		+ EMF 2.6 SDK
+		+ Buckminster 3.6 Core
+		+ Buckminster 3.6 CVS Support
+		+ Buckminster 3.6 PDE Support
 
-- Create empty project _target
+- Create empty project "_target"
 
-- Create empty target platform (TP),
-	add directory location $workspace_loc\_target,
-	activate TP
+- Create empty target platform,
+	Add directory location $workspace_loc\_target,
+	Activate target platform
 
 - Bootstrap the releng component: http://dev.eclipse.org/viewcvs/index.cgi/org.eclipse.emf/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/psf/pserver/_bootstrap.psf?root=Modeling_Project&view=co
 	Commiters use: http://dev.eclipse.org/viewcvs/index.cgi/org.eclipse.emf/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/psf/extssh/_bootstrap.psf?root=Modeling_Project&view=co

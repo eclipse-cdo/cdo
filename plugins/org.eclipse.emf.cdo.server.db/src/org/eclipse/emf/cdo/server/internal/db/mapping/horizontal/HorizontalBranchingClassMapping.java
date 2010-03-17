@@ -32,7 +32,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
-import org.eclipse.emf.cdo.server.internal.db.DBRevisionHandler;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -637,8 +636,6 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
   {
-    handler = new DBRevisionHandler(handler);
-
     StringBuilder builder = new StringBuilder(sqlSelectForHandle);
     boolean whereAppend = false;
 

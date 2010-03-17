@@ -798,10 +798,22 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
    * 
    * @since 3.0
    */
-  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, final CDORevisionHandler handler)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    mappingStrategy.handleRevisions(this, eClass, branch, timeStamp, new DBRevisionHandler(handler));
+    mappingStrategy.handleRevisions(this, eClass, branch, timeStamp, new CDORevisionHandler()
+    {
+      public void handleRevision(CDORevision revision)
+      {
+        if (revision.getVersion() < CDOBranchVersion.FIRST_VERSION - 1)
+        {
+          revision = new DetachedCDORevision(revision.getEClass(), revision.getID(), revision.getBranch(), -revision
+              .getVersion(), revision.getTimeStamp());
+        }
+
+        handler.handleRevision(revision);
+      }
+    });
   }
 
   /**

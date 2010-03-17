@@ -36,7 +36,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
-import org.eclipse.emf.cdo.server.internal.db.DBRevisionHandler;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -467,7 +466,6 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     // this does not make any difference for non-branching store.
     // see #handleRevisions() implementation in HorizontalBranchingClassMapping
     // for branch handling.
-    handler = new DBRevisionHandler(handler);
 
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     IRepository repository = accessor.getStore().getRepository();

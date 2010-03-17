@@ -51,7 +51,7 @@
 	<property name="targetPlatformPath" location="${result}/tp" />
 
 	<property name="buckminster.output.root" location="${result}/output" />
-	<property name="buckminster.output.temp" location="${result}/temp" />
+	<property name="buckminster.temp.root" location="${result}/temp" />
 
 	<!-- This macro executes the default application of an eclipse installation
 			 that resides in the folder ${buildtools}/@app -->
@@ -271,8 +271,8 @@
 	</target>
 
 	<target name="clean.output">
-		<delete dir="${buckminster.output.temp}" failonerror="true" quiet="true" />
 		<delete dir="${buckminster.output.root}" failonerror="true" quiet="true" />
+		<delete dir="${buckminster.temp.root}" failonerror="true" quiet="true" />
 	</target>
 
 	<target name="clean.all" depends="clean.tools,clean.workspace,clean.tp,clean.output" />

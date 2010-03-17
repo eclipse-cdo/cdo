@@ -10,8 +10,8 @@
         <cs:dependency name="org.eclipse.platform.source" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.emf" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.emf.source" componentType="eclipse.feature"/>
-        <cs:dependency name="org.eclipse.emf.teneo" componentType="eclipse.feature"/>
-        <cs:dependency name="org.eclipse.emf.teneo.source" componentType="eclipse.feature"/>
+        <cs:dependency name="org.eclipse.emf.teneo.hibernate" componentType="eclipse.feature"/>
+        <cs:dependency name="org.eclipse.emf.teneo.hibernate.source" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.zest" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.zest.source" componentType="eclipse.feature"/>
         <!--

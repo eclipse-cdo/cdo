@@ -2,13 +2,14 @@
 <rm:rmap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bc="http://www.eclipse.org/buckminster/Common-1.0"
 	xmlns:psf="http://www.eclipse.org/buckminster/PSFProvider-1.0"
 	xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0">
+
 	<rm:property key="build.type" mutable="true" value="N"/>
 
 	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.releng" searchPathRef="cdo.releng"/>
 	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.formatchecker" searchPathRef="cdo.releng"/>
 
-	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.doc.*" searchPathRef="cdo.doc"/>
 	<rm:locator pattern="^org\.gastro.*" searchPathRef="cdo.examples.gastro"/>
+	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.doc.*" searchPathRef="cdo.doc"/>
 	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.tests\.hibernate.*" searchPathRef="cdo.hibernate"/>
 	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.server\.hibernate.*" searchPathRef="cdo.hibernate"/>
 	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.examples.*" searchPathRef="cdo.examples"/>
@@ -26,9 +27,15 @@
 	<rm:locator pattern="^org\.eclipse\.net4j.*" searchPathRef="net4j.featuresAndPlugins"/>
 
 	<rm:locator searchPathRef="orbit" failOnError="false"/> <!-- MUST COME BEFORE MODELING! -->
-	<rm:locator searchPathRef="gef" failOnError="false"/>
-	<rm:locator searchPathRef="modeling" failOnError="false"/>
-	<rm:locator searchPathRef="target.platform"/>
+	<rm:locator searchPathRef="net4j.plus" failOnError="false"/>
+
+	<!--
+	<rm:locator searchPathRef="gef.milestones" failOnError="false"/>
+	<rm:locator searchPathRef="modeling.milestones" failOnError="false"/>
+	-->
+
+	<rm:locator searchPathRef="helios.staging" failOnError="false"/>
+	<rm:locator searchPathRef="helios.milestones"/>
 
 	<rm:searchPath name="cdo.releng">
 		<rm:provider componentTypes="buckminster,osgi.bundle" readerType="cvs">
@@ -192,7 +199,14 @@
 		</rm:provider>
 	</rm:searchPath>
 
-	<rm:searchPath name="gef">
+	<rm:searchPath name="net4j.plus">
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
+			resolutionFilter="">
+			<rm:uri format="http://net4j.sourceforge.net/update"/>
+		</rm:provider>
+	</rm:searchPath>
+
+	<rm:searchPath name="gef.milestones">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(build.type=N)">
 			<rm:uri format="{0}/tools/gef/updates/milestones/">
@@ -201,7 +215,13 @@
 		</rm:provider>
 	</rm:searchPath>
 
-	<rm:searchPath name="modeling">
+	<rm:searchPath name="modeling.milestones">
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
+			resolutionFilter="(build.type=N)">
+			<rm:uri format="{0}/modeling/emf/teneo/updates/1.2.0/milestones">
+				<bc:propertyRef key="eclipse.downloads"/>
+			</rm:uri>
+		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(build.type=N)">
 			<rm:uri format="{0}/modeling/emf/updates/milestones">
@@ -210,16 +230,21 @@
 		</rm:provider>
 	</rm:searchPath>
 
-	<rm:searchPath name="target.platform">
+	<rm:searchPath name="helios.staging">
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
+			resolutionFilter="(build.type=N)">
+			<rm:uri format="{0}/releases/staging">
+				<bc:propertyRef key="eclipse.downloads"/>
+			</rm:uri>
+		</rm:provider>
+	</rm:searchPath>
+
+	<rm:searchPath name="helios.milestones">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(build.type=N)">
 			<rm:uri format="{0}/eclipse/updates/3.6milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
-		</rm:provider>
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="">
-			<rm:uri format="http://net4j.sourceforge.net/update"/>
 		</rm:provider>
 	</rm:searchPath>
 

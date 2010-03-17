@@ -28,3 +28,4 @@ PROMOTE:
 - Test installation from http://download.eclipse.org/modeling/emf/cdo/updates/integration-
 - Contribute to Helios by updating the feature versions in /org.eclipse.helios.build/emf-cdo.build
 - Kick Helios aggregation: https://build.eclipse.org/hudson/view/Repository Aggregation/job/helios.runBuckyBuild
+- Test installation from http://download.eclipse.org/releases/staging

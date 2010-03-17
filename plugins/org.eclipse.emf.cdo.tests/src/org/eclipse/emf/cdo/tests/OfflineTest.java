@@ -16,10 +16,12 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.server.clone.CloneRepository;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.server.IMEMStore;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -243,33 +245,35 @@ public class OfflineTest extends AbstractCDOTest
     fail("Revision missing from " + location + ": " + revision);
   }
 
-  public void testDisconnectAndSync() throws Exception
+  public void testDisconnectAndSyncAddition() throws Exception
   {
+    TestListener listener = new TestListener();
     InternalRepository clone = getRepository();
     waitForOnline(clone);
 
-    getOfflineConfig().stopMasterTransport();
-    waitForOffline(clone);
+    {
+      getOfflineConfig().stopMasterTransport();
+      waitForOffline(clone);
 
-    CDOSession masterSession = openSession(clone.getName() + "_master");
-    CDOTransaction masterTransaction = masterSession.openTransaction();
-    CDOResource masterResource = masterTransaction.createResource("/master/resource");
+      CDOSession masterSession = openSession(clone.getName() + "_master");
+      CDOTransaction masterTransaction = masterSession.openTransaction();
+      CDOResource masterResource = masterTransaction.createResource("/master/resource");
 
-    masterResource.getContents().add(getModel1Factory().createCompany());
-    masterTransaction.commit();
+      masterResource.getContents().add(getModel1Factory().createCompany());
+      masterTransaction.commit();
 
-    masterResource.getContents().add(getModel1Factory().createCompany());
-    masterTransaction.commit();
+      masterResource.getContents().add(getModel1Factory().createCompany());
+      masterTransaction.commit();
 
-    masterTransaction.close();
-    TestListener listener = new TestListener();
-    masterSession.addListener(listener);
+      masterTransaction.close();
+      masterSession.addListener(listener);
+
+      getOfflineConfig().startMasterTransport();
+      waitForOnline(clone);
+    }
 
     Company company = getModel1Factory().createCompany();
     company.setName("Test");
-
-    getOfflineConfig().startMasterTransport();
-    waitForOnline(clone);
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
@@ -280,6 +284,71 @@ public class OfflineTest extends AbstractCDOTest
 
     IEvent[] events = listener.getEvents();
     assertEquals(1, events.length);
+  }
+
+  public void testDisconnectAndSyncChange() throws Exception
+  {
+    InternalRepository clone = getRepository();
+    waitForOnline(clone);
+
+    {
+      getOfflineConfig().stopMasterTransport();
+      waitForOffline(clone);
+
+      CDOSession masterSession = openSession(clone.getName() + "_master");
+      CDOTransaction masterTransaction = masterSession.openTransaction();
+      CDOResource masterResource = masterTransaction.createResource("/master/resource");
+
+      Company comp = getModel1Factory().createCompany();
+      masterResource.getContents().add(comp);
+      masterTransaction.commit();
+
+      comp.setName("MODIFICATION");
+      masterTransaction.commit();
+      masterTransaction.close();
+
+      getOfflineConfig().startMasterTransport();
+      waitForOnline(clone);
+    }
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource("/master/resource");
+
+    Company company = (Company)resource.getContents().get(0);
+    assertEquals("MODIFICATION", company.getName());
+  }
+
+  public void testDisconnectAndSyncRemoval() throws Exception
+  {
+    InternalRepository clone = getRepository();
+    waitForOnline(clone);
+
+    {
+      getOfflineConfig().stopMasterTransport();
+      waitForOffline(clone);
+
+      CDOSession masterSession = openSession(clone.getName() + "_master");
+      CDOTransaction masterTransaction = masterSession.openTransaction();
+      CDOResource masterResource = masterTransaction.createResource("/master/resource");
+
+      Company comp = getModel1Factory().createCompany();
+      masterResource.getContents().add(comp);
+      masterTransaction.commit();
+
+      masterResource.getContents().remove(comp);
+      masterTransaction.commit();
+      masterTransaction.close();
+
+      getOfflineConfig().startMasterTransport();
+      waitForOnline(clone);
+    }
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource("/master/resource");
+
+    assertEquals(0, resource.getContents().size());
   }
 
   public void testDisconnectAndCommit() throws Exception
@@ -355,7 +424,7 @@ public class OfflineTest extends AbstractCDOTest
     transaction.commit();
   }
 
-  private void waitForOnline(CDOCommonRepository repository)
+  protected static void waitForOnline(CDOCommonRepository repository)
   {
     while (repository.getState() != CDOCommonRepository.State.ONLINE)
     {
@@ -364,12 +433,38 @@ public class OfflineTest extends AbstractCDOTest
     }
   }
 
-  private void waitForOffline(CDOCommonRepository repository)
+  protected static void waitForOffline(CDOCommonRepository repository)
   {
     while (repository.getState() == CDOCommonRepository.State.ONLINE)
     {
       System.out.println("Waiting for OFFLINE...");
       sleep(100);
     }
+  }
+
+  protected static CDOCommitInfo commitAndWaitForArrival(CDOTransaction transaction, CDOSession receiver)
+  {
+    CDOCommitInfo commitInfo = transaction.commit();
+    long timeStamp = commitInfo.getTimeStamp();
+    while (receiver.getLastUpdateTime() < timeStamp)
+    {
+      System.out.println("Waiting for arrival of commit " + CDOCommonUtil.formatTimeStamp(timeStamp));
+      sleep(100);
+    }
+
+    return commitInfo;
+  }
+
+  protected static CDOCommitInfo commitAndWaitForArrival(CDOTransaction transaction, IRepository receiver)
+  {
+    CDOCommitInfo commitInfo = transaction.commit();
+    long timeStamp = commitInfo.getTimeStamp();
+    while (receiver.getLastCommitTimeStamp() < timeStamp)
+    {
+      System.out.println("Waiting for arrival of commit " + CDOCommonUtil.formatTimeStamp(timeStamp));
+      sleep(100);
+    }
+
+    return commitInfo;
   }
 }

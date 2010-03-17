@@ -417,6 +417,9 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
 
     checkState(getRevisionTemporality() == RevisionTemporality.AUDITING == mappingStrategy.hasAuditSupport(), Messages
         .getString("DBStore.7")); //$NON-NLS-1$
+
+    checkState(getRevisionParallelism() == RevisionParallelism.BRANCHING == mappingStrategy.hasBranchingSupport(),
+        Messages.getString("DBStore.11")); //$NON-NLS-1$
   }
 
   @Override

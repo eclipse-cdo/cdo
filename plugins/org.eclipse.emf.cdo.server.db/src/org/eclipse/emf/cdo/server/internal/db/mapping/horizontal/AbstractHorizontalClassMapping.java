@@ -501,10 +501,13 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
         long id = rs.getLong(1);
         int version = rs.getInt(2);
 
-        InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(CDOIDUtil
-            .createLong(id), branchManager.getMainBranch().getVersion(version), CDORevision.UNCHUNKED, true);
+        if (version >= CDOBranchVersion.FIRST_VERSION)
+        {
+          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(CDOIDUtil
+              .createLong(id), branchManager.getMainBranch().getVersion(version), CDORevision.UNCHUNKED, true);
 
-        handler.handleRevision(revision);
+          handler.handleRevision(revision);
+        }
       }
     }
     catch (SQLException e)

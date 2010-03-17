@@ -687,11 +687,14 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         int version = rs.getInt(2);
         int branchID = rs.getInt(3);
 
-        CDOBranchVersion branchVersion = branchManager.getBranch(branchID).getVersion(Math.abs(version));
-        InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(CDOIDUtil
-            .createLong(id), branchVersion, CDORevision.UNCHUNKED, true);
+        if (version >= CDOBranchVersion.FIRST_VERSION)
+        {
+          CDOBranchVersion branchVersion = branchManager.getBranch(branchID).getVersion(Math.abs(version));
+          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(CDOIDUtil
+              .createLong(id), branchVersion, CDORevision.UNCHUNKED, true);
 
-        handler.handleRevision(revision);
+          handler.handleRevision(revision);
+        }
       }
     }
     catch (SQLException e)

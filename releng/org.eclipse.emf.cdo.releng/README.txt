@@ -23,9 +23,11 @@ BUILD p2 repository:
   DO NOT FORGET to point to the properties file, e.g. /org.eclipse.emf.cdo.releng/local.properties !!!!
 
 PROMOTE:
-- Edit category.xml in the site project (--> http://lenettoyeur-on-eclipse.blogspot.com/2009/11/nesting-categories.html )
 - Copy update site to /home/data/httpd/download.eclipse.org/modeling/emf/cdo/updates/integration-
 - Test installation from http://download.eclipse.org/modeling/emf/cdo/updates/integration-
 - Contribute to Helios by updating the feature versions in /org.eclipse.helios.build/emf-cdo.build
 - Kick Helios aggregation: https://build.eclipse.org/hudson/view/Repository Aggregation/job/helios.runBuckyBuild
 - Test installation from http://download.eclipse.org/releases/staging
+
+Structure of site feature:
+- Edit category.xml in the site project (--> http://lenettoyeur-on-eclipse.blogspot.com/2009/11/nesting-categories.html )

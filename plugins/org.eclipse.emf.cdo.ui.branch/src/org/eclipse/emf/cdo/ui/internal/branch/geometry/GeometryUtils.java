@@ -110,7 +110,6 @@ public class GeometryUtils
    *          the width (starting at the x coordinate) to expand the rectangle to
    * @param height
    *          the height (starting at the y coordinate) to expand the rectangle to
-   * @return
    */
   public static DisplayIndependentRectangle union(DisplayIndependentRectangle rectangle, double x, double y,
       double width, double height)

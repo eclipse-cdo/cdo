@@ -1217,14 +1217,14 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       Tree tree = new Tree(composite, SWT.MULTI | SWT.BORDER);
       tree.setLayoutData(UIUtil.createGridData());
 
-      boolean sliderAllowed = false && !(view instanceof CDOTransaction)
-          && view.getSession().getRepositoryInfo().isSupportingAudits()
-          && view.getSession().getRepositoryInfo().isSupportingBranches();
-
-      if (sliderAllowed)
-      {
-        createTimeSlider(composite);
-      }
+      // boolean sliderAllowed = !(view instanceof CDOTransaction)
+      // && view.getSession().getRepositoryInfo().isSupportingAudits()
+      // && view.getSession().getRepositoryInfo().isSupportingBranches();
+      //
+      // if (sliderAllowed)
+      // {
+      // createTimeSlider(composite);
+      // }
 
       selectionViewer = new TreeViewer(tree);
       setCurrentViewer(selectionViewer);
@@ -1338,7 +1338,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  private void createTimeSlider(final Composite composite)
+  protected void createTimeSlider(final Composite composite)
   {
     final Group group = new Group(composite, SWT.NONE);
     group.setLayoutData(UIUtil.createEmptyGridData());
@@ -1365,7 +1365,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     scale.addSelectionListener(new SelectionListener()
     {
-
       public void widgetSelected(SelectionEvent e)
       {
         Scale scale = (Scale)e.widget;
@@ -1398,10 +1397,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           group.setLayoutData(new GridData(SWT.FILL, 50, true, false));
           composite.layout();
         }
+
         group.setVisible(!group.isVisible());
         super.run();
       }
     };
+
     action.setEnabled(true);
     getActionBars().getToolBarManager().add(action);
     action.setChecked(false);

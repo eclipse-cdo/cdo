@@ -1,0 +1,96 @@
+/**
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Ibrahim Sallam - initial API and implementation
+ */
+
+package org.eclipse.emf.cdo.server.internal.objectivity;
+
+import org.eclipse.emf.cdo.internal.server.Session;
+import org.eclipse.emf.cdo.server.internal.objectivity.db.FdManager;
+import org.eclipse.emf.cdo.server.objectivity.IObjectivityStoreConfig;
+
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
+
+import org.w3c.dom.Element;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class ObjectivityStoreConfig extends Lifecycle implements IObjectivityStoreConfig
+{
+
+  FdManager fdManager = new FdManager();
+
+  public ObjectivityStoreConfig()
+  {
+    // fdManager.deleteFD();
+    fdManager.configure();
+  }
+
+  public ObjectivityStoreConfig(Element storeConfig)
+  {
+    // TODO - implement me!!!
+    // for now we'll just call the default configuration...
+    fdManager.configure();
+  }
+
+  public ObjectivityStoreConfig(String name)
+  {
+    // create an FD with that name.
+    fdManager.configure(name);
+  }
+
+  public void doActivate()
+  {
+    System.out.println("ObjectivityStoreConfig.doActivate()");
+    fdManager.deleteFD();
+    fdManager.configure();
+  }
+
+  public void doDeactivate()
+  {
+    System.out.println("ObjectivityStoreConfig.doDeactivate()");
+    fdManager.deleteFD();
+  }
+
+  public String getFdName()
+  {
+    return fdManager.getFd();
+  }
+
+  public void resetFD()
+  {
+    System.out.println("ObjectivityStoreConfig.resetFD() - Start.");
+    // ObjyConnection.INSTANCE.disconnect();
+    // fdManager.resetFD();
+    Session session = new Session();
+    session.begin();
+    Iterator itr = session.getFD().containedDBs();
+    ooDBObj dbObj = null;
+    List<ooDBObj> dbList = new ArrayList<ooDBObj>();
+    while (itr.hasNext())
+    {
+      dbObj = (ooDBObj)itr.next();
+      dbList.add(dbObj);
+    }
+    itr.close();
+    // session.commit();
+    // session.begin();
+    for (ooDBObj db : dbList)
+    {
+      System.out.println("restFD() - deleting DB(" + db.getOid().getStoreString() + "):" + db.getName());
+      db.delete();
+    }
+    session.commit();
+    session.terminate();
+    System.out.println("ObjectivityStoreConfig.resetFD() - END.");
+  }
+
+}

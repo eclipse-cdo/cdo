@@ -1,0 +1,171 @@
+/**
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Simon McDuff - initial API and implementation
+ *    Ibrahim Sallam - code refactoring for CDO 3.0
+ */
+package org.eclipse.emf.cdo.server.internal.objectivity.mapper;
+
+import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
+import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooArrayListString;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
+
+/**
+ * @author Ibrahim Sallam
+ */
+public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMapper
+{
+  public static StringManyTypeMapper INSTANCE = new StringManyTypeMapper();
+
+  public boolean createSchema(Proposed_Class proposedClass, EStructuralFeature feature)
+  {
+    try
+    {
+
+      ooArrayListString.buildSchema();
+
+      proposedClass.add_ref_attribute(com.objy.as.app.d_Module.LAST, // Access kind
+          d_Access_Kind.d_PUBLIC, // Access kind
+          getAttributeName(feature), // Attribute name
+          1, // # elements in fixed-size array
+          ooArrayListString.ClassName, false); // Default value // Default value
+
+    }
+    catch (ObjyRuntimeException ex)
+    {
+      ex.printStackTrace();
+    }
+    return false;
+  }
+
+  public boolean validate(d_Attribute ooAttribute, EStructuralFeature feature)
+  {
+    // TODO Need to implement this.
+    // throw new UnsupportedOperationException("Implement me!!");
+    System.out.println(">>>OBJYIMPL: StringManyTypeMapper.validate() - not implemented.");
+    return true;
+  }
+
+  protected String stringFromObject(EStructuralFeature feature, Object objectValue)
+  {
+    if (objectValue instanceof String)
+      return (String)objectValue;
+    else
+      return null;
+  }
+
+  protected Object objectFromString(EStructuralFeature feature, String stringValue)
+  {
+    return stringValue;
+  }
+
+  protected ooArrayListString getList(ObjyObject objyObject, EStructuralFeature feature)
+  {
+    Class_Position position = getAttributePosition(objyObject, feature);
+    ooArrayListString list = (ooArrayListString)objyObject.getFeatureList(position);
+    if (list == null)
+    {
+      list = new ooArrayListString(objyObject.get_class_obj(position));
+      objyObject.setFeatureList(position, list);
+    }
+    return list;
+  }
+
+  public void add(ObjyObject objyObject, EStructuralFeature feature, int index, Object value)
+  {
+    assert (value instanceof String);
+    getList(objyObject, feature).add(stringFromObject(feature, value));
+  }
+
+  public void addAll(ObjyObject objyObject, EStructuralFeature feature, int index, Object[] values)
+  {
+    // CDOList list = (CDOList) value;
+    String[] strings = new String[values.length];
+    for (int i = 0; i < values.length; i++)
+    {
+      strings[i] = stringFromObject(feature, values[i]);
+    }
+    getList(objyObject, feature).addAll(index, strings);
+  }
+
+  public void clear(ObjyObject objyObject, EStructuralFeature feature)
+  {
+    getList(objyObject, feature).clear();
+  }
+
+  public Object[] getAll(ObjyObject objyObject, EStructuralFeature feature, int index, int chunkSize)
+  {
+    int size = size(objyObject, feature);
+
+    if (chunkSize != -1)
+    {
+      size = Math.min(size, chunkSize);
+    }
+
+    String[] strings = getList(objyObject, feature).getAll(index, chunkSize);
+
+    Object[] objects = new Object[strings.length];
+
+    for (int i = 0; i < strings.length; i++)
+      objects[i] = objectFromString(feature, strings[i]);
+
+    return strings;
+  }
+
+  public Object getValue(ObjyObject objyObject, EStructuralFeature feature, int index)
+  {
+    return objectFromString(feature, getList(objyObject, feature).get(index));
+  }
+
+  public Object remove(ObjyObject objyObject, EStructuralFeature feature, int index)
+  {
+    Object oldValue = objectFromString(feature, getList(objyObject, feature).get(index));
+    getList(objyObject, feature).remove(index);
+    return oldValue;
+  }
+
+  public void setAll(ObjyObject objyObject, EStructuralFeature feature, int index, Object[] newValues)
+  {
+    addAll(objyObject, feature, 0, newValues);
+  }
+
+  public void setValue(ObjyObject objyObject, EStructuralFeature feature, int index, Object newValue)
+  {
+    assert (newValue instanceof String);
+
+    getList(objyObject, feature).set((long)index, stringFromObject(feature, newValue));
+  }
+
+  public int size(ObjyObject objyObject, EStructuralFeature feature)
+  {
+    return (int)getList(objyObject, feature).size();
+  }
+
+  public void delete(ObjyObject objyObject, EStructuralFeature feature)
+  {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Implement me!!");
+  }
+
+  public void initialize(Class_Object classObject, EStructuralFeature feature)
+  {
+    Class_Position position = classObject.type_of().position_in_class(getAttributeName(feature));
+    Class_Object newClassObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(
+        ooArrayListString.ClassName).getASClass(), classObject.objectID(), false);
+    classObject.set_ooId(position, newClassObject.objectID());
+    ooArrayListString.initObject(newClassObject);
+  }
+
+  public void modifySchema(Proposed_Class proposedooClass, EStructuralFeature feature)
+  {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Implement me!!");
+  }
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.cdo.server.storeFactories">
+      <storeFactory
+            class="org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStoreFactory"
+            storeType="objectivity">
+      </storeFactory>
+   </extension>
+
+</plugin>

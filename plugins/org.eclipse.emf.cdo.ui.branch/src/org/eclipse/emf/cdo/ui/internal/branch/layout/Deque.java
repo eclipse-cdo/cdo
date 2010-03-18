@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.ui.internal.branch.layout;
 import java.util.LinkedList;
 
 /**
- * A double ended list, that returns <tt>null</tt> if no element is present. Mimics the jdk 1.6 Deque
+ * A double ended list, that returns <tt>null</tt> if no element is present. Mimics the jdk 1.6 Deque.
  * 
  * @author Eike Stepper
  */

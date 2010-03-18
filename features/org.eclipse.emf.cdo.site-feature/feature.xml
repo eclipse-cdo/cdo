@@ -29,9 +29,7 @@
    </license>
 
    <url>
-      <update label="%emfUpdateSiteName" url="http://download.eclipse.org/modeling/emf/updates/"/>
-      <discovery label="%emfUpdateSiteName" url="http://download.eclipse.org/modeling/emf/updates/"/>
-      <discovery label="%emftUpdateSiteName" url="http://download.eclipse.org/modeling/emft/updates/"/>
+      <update label="%updateSiteName" url="http://download.eclipse.org/modeling/emf/cdo/updates/3.0/"/>
    </url>
 
    <includes

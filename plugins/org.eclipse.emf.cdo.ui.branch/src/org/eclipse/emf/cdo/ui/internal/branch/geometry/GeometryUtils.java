@@ -35,7 +35,7 @@ public class GeometryUtils
   }
 
   /**
-   * Moves the given Rectangle horizontally by dx and vertically by dy, then returns this Rectangle for convenience.
+   * Moves the given Rectangle horizontally by dx and vertically by dy and returns a new translated rectangle instance.
    * 
    * @param xOffset
    *          the offset on the x axis to move the rectangle
@@ -43,11 +43,15 @@ public class GeometryUtils
    *          the offset on the y axis to move the rectangle
    * @param rectangle
    *          the rectangle to translate
+   * @return a new translated rectangle instance
    */
-  public static void translateRectangle(double xOffset, double yOffset, DisplayIndependentRectangle rectangle)
+  public static DisplayIndependentRectangle translateRectangle(double xOffset, double yOffset,
+      DisplayIndependentRectangle rectangle)
   {
-    rectangle.x += xOffset;
-    rectangle.y += yOffset;
+    DisplayIndependentRectangle newRectangle = new DisplayIndependentRectangle(rectangle);
+    newRectangle.x += xOffset;
+    newRectangle.y += yOffset;
+    return newRectangle;
   }
 
   /**
@@ -119,8 +123,8 @@ public class GeometryUtils
     double bottom = Math.max(rectangle.y + rectangle.height, y + height);
     bounds.x = Math.min(rectangle.x, x);
     bounds.y = Math.min(rectangle.y, y);
-    bounds.width = right - rectangle.x;
-    bounds.height = bottom - rectangle.y;
+    bounds.width = right - bounds.x;
+    bounds.height = bottom - bounds.y;
     return bounds;
   }
 

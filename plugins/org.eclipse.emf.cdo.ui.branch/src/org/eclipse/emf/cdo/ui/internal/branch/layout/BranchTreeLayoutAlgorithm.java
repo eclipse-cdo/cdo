@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.ui.internal.branch.geometry.GeometryUtils;
 import org.eclipse.emf.cdo.ui.internal.branch.item.AbstractBranchPointNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNodeUtils;
@@ -40,7 +41,9 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
   private DisplayIndependentDimension borders = new DisplayIndependentDimension(60, 60);
 
   /**
-   * Constructs a new TreeLayoutAlgorithm object.
+   * A layout algorithm that displays trees of cdo branches.
+   * 
+   * @see CDOBranch
    */
   public BranchTreeLayoutAlgorithm(int styles)
   {

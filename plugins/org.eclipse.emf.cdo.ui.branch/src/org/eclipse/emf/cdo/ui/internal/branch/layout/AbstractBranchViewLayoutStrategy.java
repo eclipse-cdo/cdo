@@ -143,8 +143,8 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
   public void translateBy(BranchView branchView, DisplayIndependentDimension offsets)
   {
     translateBranchNodesBy(branchView, offsets);
+    branchView.setBounds(GeometryUtils.translateRectangle(offsets.width, offsets.height, branchView.getBounds()));
     translateSubBranchesBy(branchView, offsets);
-    GeometryUtils.translateRectangle(offsets.width, offsets.height, branchView.getBounds());
   }
 
   /**
@@ -158,6 +158,7 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
     for (BranchView subBranch : branchView.getSubBranchViews())
     {
       translateBy(subBranch, dimension);
+      branchView.setBounds(GeometryUtils.union(branchView.getBounds(), subBranch.getBounds()));
     }
   }
 
@@ -177,19 +178,19 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
     }
   }
 
+  public void scale(BranchView branchView, DisplayIndependentRectangle targetBounds)
+  {
+    DisplayIndependentRectangle branchViewBounds = branchView.getBounds();
+    DisplayIndependentDimension scaling = new DisplayIndependentDimension(branchViewBounds.width / targetBounds.width,
+        branchViewBounds.height / targetBounds.height);
+    scale(branchView, scaling);
+    translateBy(branchView, GeometryUtils.getTranslation(branchView.getBounds(), targetBounds.x, targetBounds.y));
+  }
+
   public void scale(BranchView branchView, DisplayIndependentDimension scaling)
   {
     scaleSameBranchNodes(branchView, scaling);
     scaleSubBranches(branchView, scaling);
-  }
-
-  public void scale(BranchView branchView, DisplayIndependentRectangle targetBounds)
-  {
-    DisplayIndependentRectangle bounds = branchView.getBounds();
-    DisplayIndependentDimension scaling = new DisplayIndependentDimension(bounds.width / targetBounds.width,
-        bounds.height / targetBounds.height);
-    scale(branchView, scaling);
-    translateBy(branchView, GeometryUtils.getTranslation(branchView.getBounds(), targetBounds.x, targetBounds.y));
   }
 
   /**

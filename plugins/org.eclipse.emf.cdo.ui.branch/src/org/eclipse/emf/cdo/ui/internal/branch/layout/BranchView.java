@@ -27,7 +27,7 @@ import java.util.Collection;
  * terms of time stamp).
  * 
  * @author Andre Dietisheim
- * @see VerticallyDistributedSubBranches
+ * @see HorizontallyAlternatingSubBranches
  */
 public class BranchView
 {

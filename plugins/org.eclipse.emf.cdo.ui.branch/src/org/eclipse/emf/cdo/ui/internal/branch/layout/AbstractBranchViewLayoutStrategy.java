@@ -181,8 +181,8 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
   public void scale(BranchView branchView, DisplayIndependentRectangle targetBounds)
   {
     DisplayIndependentRectangle branchViewBounds = branchView.getBounds();
-    DisplayIndependentDimension scaling = new DisplayIndependentDimension(branchViewBounds.width / targetBounds.width,
-        branchViewBounds.height / targetBounds.height);
+    DisplayIndependentDimension scaling = new DisplayIndependentDimension(targetBounds.width / branchViewBounds.width,
+        targetBounds.height / branchViewBounds.height);
     scale(branchView, scaling);
     translateBy(branchView, GeometryUtils.getTranslation(branchView.getBounds(), targetBounds.x, targetBounds.y));
   }
@@ -208,8 +208,8 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
     for (AbstractBranchPointNode node : branchView.getNodes())
     {
       InternalNode internalNode = BranchPointNodeUtils.getInternalNode(node);
-      double newX = centerX / scaling.width - internalNode.getInternalWidth() / 2;
-      double newY = internalNode.getInternalY() / scaling.height;
+      double newX = centerX * scaling.width - internalNode.getInternalWidth() / 2;
+      double newY = internalNode.getInternalY() * scaling.height;
       internalNode.setInternalLocation(newX, newY);
       if (!branchView.areBoundsSet())
       {
@@ -237,5 +237,15 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
       scale(subBranch, scaling);
       branchView.setBounds(GeometryUtils.union(branchView.getBounds(), subBranch.getBounds()));
     }
+  }
+
+  /**
+   * Returns the horizontal padding between branch views.
+   * 
+   * @return the branch padding
+   */
+  protected double getBranchPadding()
+  {
+    return 60;
   }
 }

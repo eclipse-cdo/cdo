@@ -27,9 +27,9 @@ import org.eclipse.zest.layouts.dataStructures.InternalNode;
  * 
  * @author Andre Dietisheim
  */
-public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutStrategy
+public abstract class AbstractVerticalLayoutStrategy extends AbstractBranchViewLayoutStrategy
 {
-  private static final VerticallyDistributedSubBranches RIGHT = new VerticallyDistributedSubBranches()
+  public static final HorizontallyAlternatingSubBranches RIGHT = new HorizontallyAlternatingSubBranches()
   {
     @Override
     protected DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranchView,
@@ -51,7 +51,7 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
     }
   };
 
-  private static final VerticallyDistributedSubBranches LEFT = new VerticallyDistributedSubBranches()
+  protected static final HorizontallyAlternatingSubBranches LEFT = new HorizontallyAlternatingSubBranches()
   {
     @Override
     protected DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
@@ -73,30 +73,6 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
           latterBranchBounds.x - getBranchPadding(), 0);
     }
   };
-
-  protected VerticallyDistributedSubBranches currentSubBranchStrategy = null;
-
-  @Override
-  protected void setSubBranchViewLocation(BranchView branchView, BranchView subBranchView, BranchPointNode branchPointNode)
-  {
-    currentSubBranchStrategy = getSubBranchStrategy(currentSubBranchStrategy);
-    currentSubBranchStrategy.setSubBranchLocation(branchView, subBranchView, branchPointNode);
-  }
-
-  /**
-   * Returns the strategy that layouts the next branch view. Starts with right, second call returns left, etc.
-   * 
-   * @return the current sub branch strategy
-   */
-  private VerticallyDistributedSubBranches getSubBranchStrategy(VerticallyDistributedSubBranches currentStrategy)
-  {
-    if (currentStrategy == null || currentStrategy == LEFT)
-    {
-      return RIGHT;
-    }
-
-    return LEFT;
-  }
 
   /**
    * Sets the location of the given sub branch in the current branch. Branches are created and located with their
@@ -134,11 +110,8 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
    *          the sub branch
    * @return the branch point translation
    */
-  protected DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
-      BranchPointNode branchPointNode)
-  {
-    return currentSubBranchStrategy.getTranslationToBranchPoint(subBranch, branchPointNode);
-  }
+  protected abstract DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
+      BranchPointNode branchPointNode);
 
   /**
    * Returns the offset that's needed to translate the given branch so that it does not collide with the latter branch.
@@ -149,18 +122,6 @@ public class VerticallyDistributedSubBranches extends AbstractBranchViewLayoutSt
    *          the latter branch
    * @return the latter branch translation
    */
-  protected DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch, BranchView latterBranch)
-  {
-    return currentSubBranchStrategy.getTranslationToLatterBranch(subBranch, latterBranch);
-  }
-
-  /**
-   * Returns the horizontal padding between branch views.
-   * 
-   * @return the branch padding
-   */
-  protected double getBranchPadding()
-  {
-    return 60;
-  }
+  protected abstract DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch,
+      BranchView latterBranch);
 }

@@ -131,7 +131,8 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
 
   private BranchView buildBranch(AbstractBranchPointNode branchRootNode)
   {
-    return new BranchView(branchRootNode, new VerticallyDistributedSubBranches());
+    // return new BranchView(branchRootNode, new VerticallyDistributedSubBranches());
+    return new BranchView(branchRootNode, new RightHandSubBranches());
   }
 
   @Override

@@ -167,7 +167,7 @@ public class GeometryUtils
    * @param rectangle
    *          the rectangle
    */
-  public static DisplayIndependentRectangle substractBorder(DisplayIndependentDimension dimension,
+  public static DisplayIndependentRectangle substractBorders(DisplayIndependentDimension dimension,
       DisplayIndependentRectangle rectangle)
   {
     DisplayIndependentRectangle newRectangle = new DisplayIndependentRectangle();

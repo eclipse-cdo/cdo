@@ -160,19 +160,19 @@ public class GeometryUtils
   }
 
   /**
-   * Subtracts the given height and width from the given rectangle.
+   * Subtracts the given height and width from the given rectangle and move its origin by the half of the given values.
    * 
    * @param dimension
    *          the dimension
    * @param rectangle
    *          the rectangle
    */
-  public static DisplayIndependentRectangle substract(DisplayIndependentDimension dimension,
+  public static DisplayIndependentRectangle substractBorder(DisplayIndependentDimension dimension,
       DisplayIndependentRectangle rectangle)
   {
     DisplayIndependentRectangle newRectangle = new DisplayIndependentRectangle();
-    newRectangle.x = dimension.width;
-    newRectangle.y = dimension.height;
+    newRectangle.x = rectangle.x + dimension.width / 2;
+    newRectangle.y = rectangle.y + dimension.height / 2;
     newRectangle.width = rectangle.width - dimension.width;
     newRectangle.height = rectangle.height - dimension.height;
     return newRectangle;

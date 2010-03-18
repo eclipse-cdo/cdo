@@ -125,7 +125,7 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
 
   private void fitWithinBounds(BranchView branchView)
   {
-    DisplayIndependentRectangle boundsWithBorder = GeometryUtils.substract(borders, layoutBounds);
+    DisplayIndependentRectangle boundsWithBorder = GeometryUtils.substractBorder(borders, layoutBounds);
     branchView.getLayoutStrategy().scale(branchView, boundsWithBorder);
   }
 

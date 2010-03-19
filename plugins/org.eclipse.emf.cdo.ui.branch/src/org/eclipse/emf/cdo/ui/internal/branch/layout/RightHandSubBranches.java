@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
-
 /**
  * A strategy that layouts a branch. A branch centers its (sibling) nodes below each other while using their time stamp
  * to set the y coordinate. Sub-Branches are displaced to the right or to the left (left and right sub branches are
@@ -23,7 +22,8 @@ package org.eclipse.emf.cdo.ui.internal.branch.layout;
 public class RightHandSubBranches extends AbstractVerticalLayoutStrategy
 {
   @Override
-  protected SubBranchViewTranslation getSubBranchTranslationStrategy(SubBranchViewTranslation currentTranslationStrategy)
+  protected SubBranchViewTranslation getSubBranchTranslationStrategy(BranchView branchView,
+      SubBranchViewTranslation currentTranslationStrategy)
   {
     return RIGHT;
   }

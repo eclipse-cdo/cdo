@@ -19,11 +19,9 @@ import org.eclipse.zest.layouts.dataStructures.DisplayIndependentRectangle;
 import org.eclipse.zest.layouts.dataStructures.InternalNode;
 
 /**
- * A strategy that layouts a branch. A branch centers its (sibling) nodes below each other while using their time stamp
- * to set the y coordinate. Sub-Branches are displaced to the right or to the left (left and right sub branches are
- * distributed equally).
+ * A base strategy that layouts a branch view vertically. It centers its (sibling) nodes below each other while using
+ * their time stamp to set the y coordinate.
  * <p>
- * The current implementation may only layout vertically.
  * 
  * @author Andre Dietisheim
  */
@@ -88,6 +86,8 @@ public abstract class AbstractVerticalLayoutStrategy extends AbstractBranchViewL
      *          the branch point node
      * @param subBranch
      *          the sub branch
+     * @param branchPadding
+     *          the padding between branches
      * @return the branch point translation
      */
     public DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
@@ -99,8 +99,10 @@ public abstract class AbstractVerticalLayoutStrategy extends AbstractBranchViewL
      * 
      * @param subBranch
      *          the sub branch
-     * @param latterBranch
-     *          the latter branch
+     * @param latterBranchView
+     *          the latter branch view
+     * @param branchPadding
+     *          the padding between branches
      * @return the latter branch translation
      */
     public DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch, BranchView latterBranchView,
@@ -120,12 +122,13 @@ public abstract class AbstractVerticalLayoutStrategy extends AbstractBranchViewL
    * @param branchView
    *          the branch view
    */
+  @Override
   public void setSubBranchViewLocation(BranchView branchView, BranchView subBranchView, BranchPointNode branchPointNode)
   {
-    currentTranslationStrategy = getSubBranchTranslationStrategy(currentTranslationStrategy);
+    currentTranslationStrategy = getSubBranchTranslationStrategy(branchView, currentTranslationStrategy);
     // translate branch off the branchPointNode (to the right or to the left)
-    DisplayIndependentDimension translation = currentTranslationStrategy.getTranslationToBranchPoint(
-        subBranchView, branchPointNode, getBranchPadding());
+    DisplayIndependentDimension translation = currentTranslationStrategy.getTranslationToBranchPoint(subBranchView,
+        branchPointNode, getBranchPadding());
     BranchView latterBranch = branchView.getSecondToLastSubBranchView();
     if (latterBranch != null && !GeometryUtils.bottomEndsBefore(subBranchView.getBounds(), latterBranch.getBounds()))
     {
@@ -140,11 +143,14 @@ public abstract class AbstractVerticalLayoutStrategy extends AbstractBranchViewL
   /**
    * Returns the strategy that translates the next branch view. It's called for each sub branch view.
    * 
-   * @param subBranchViewTranslation
-   *          the current translation strategy for sub branch views
+   * @param branchView
+   *          the branch view to layout
+   * @param currentTranslationStrategy
+   *          the current translation strategy
    * @return the current sub branch strategy
    * @see #LEFT
    * @see #RIGHT
    */
-  protected abstract SubBranchViewTranslation getSubBranchTranslationStrategy(SubBranchViewTranslation subBranchViewTranslation);
+  protected abstract SubBranchViewTranslation getSubBranchTranslationStrategy(BranchView branchView,
+      SubBranchViewTranslation currentTranslationStrategy);
 }

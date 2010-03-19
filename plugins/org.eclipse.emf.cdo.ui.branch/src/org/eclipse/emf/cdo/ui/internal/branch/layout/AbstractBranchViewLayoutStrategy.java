@@ -20,11 +20,7 @@ import org.eclipse.zest.layouts.dataStructures.DisplayIndependentRectangle;
 import org.eclipse.zest.layouts.dataStructures.InternalNode;
 
 /**
- * A strategy that layouts a branch. A branch centers its (sibling) nodes below each other while using their time stamp
- * to set the y coordinate. Sub-Branches are displaced to the right or to the left (left and right sub branches are
- * distributed equally).
- * <p>
- * The current implementation may only layout vertically.
+ * A base strategy that layouts a branch view.
  * 
  * @author Andre Dietisheim
  */

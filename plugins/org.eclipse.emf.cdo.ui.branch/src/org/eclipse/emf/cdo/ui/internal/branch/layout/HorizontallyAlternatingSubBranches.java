@@ -11,11 +11,8 @@
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
 /**
- * A strategy that layouts a branch. A branch centers its (sibling) nodes below each other while using their time stamp
- * to set the y coordinate. Sub-Branches are displaced to the right or to the left (left and right sub branches are
- * distributed equally).
- * <p>
- * The current implementation may only layout vertically.
+ * A strategy that layouts a branch vertically and displaces sub branch view to the right or to the left. Left and right
+ * sub branches alternate equally, they're distributed equally.
  * 
  * @author Andre Dietisheim
  */
@@ -24,14 +21,20 @@ public class HorizontallyAlternatingSubBranches extends AbstractVerticalLayoutSt
   /**
    * Returns the strategy that layouts the next branch view. Starts with right, second call returns left, etc.
    * 
+   * @param branchView
+   *          the branch view
+   * @param currentTranslationStrategy
+   *          the current translation strategy
    * @return the current sub branch strategy
    * @see #LEFT
    * @see #RIGHT
    */
   @Override
-  protected SubBranchViewTranslation getSubBranchTranslationStrategy(SubBranchViewTranslation currentTranslationStrategy)
+  protected SubBranchViewTranslation getSubBranchTranslationStrategy(BranchView branchView,
+      SubBranchViewTranslation currentTranslationStrategy)
   {
-    if (currentTranslationStrategy == null || currentTranslationStrategy == LEFT)
+    boolean isPairSubBranch = branchView.getSubBranchViews().size() % 2 == 0;
+    if (isPairSubBranch)
     {
       return RIGHT;
     }

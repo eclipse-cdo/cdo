@@ -29,50 +29,83 @@ import org.eclipse.zest.layouts.dataStructures.InternalNode;
  */
 public abstract class AbstractVerticalLayoutStrategy extends AbstractBranchViewLayoutStrategy
 {
-  public static final HorizontallyAlternatingSubBranches RIGHT = new HorizontallyAlternatingSubBranches()
+  /**
+   * The strategy that's currently applied to layout sub branches @see
+   * {@link #getSubBranchTranslationStrategy(AbstractVerticalLayoutStrategy)}
+   */
+  protected SubBranchViewTranslation currentTranslationStrategy = null;
+
+  protected static final SubBranchViewTranslation RIGHT = new SubBranchViewTranslation()
   {
-    @Override
-    protected DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranchView,
-        BranchPointNode branchPointNode)
+    public DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranchView,
+        BranchPointNode branchPointNode, double branchPadding)
     {
       InternalNode branchPointInternalNode = BranchPointNodeUtils.getInternalNode(branchPointNode);
       return new DisplayIndependentDimension( //
           GeometryUtils.getTranslation(subBranchView.getBounds().x, branchPointInternalNode.getInternalX()) //
               + branchPointInternalNode.getInternalWidth() //
-              + getBranchPadding(), 0);
+              + branchPadding, 0);
     }
 
-    @Override
-    protected DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch, BranchView latterBranch)
+    public DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch, BranchView latterBranch,
+        double branchPadding)
     {
       DisplayIndependentRectangle latterBranchBounds = latterBranch.getBounds();
       return new DisplayIndependentDimension(//
-          latterBranchBounds.x + latterBranchBounds.width + getBranchPadding(), 0);
+          latterBranchBounds.x + latterBranchBounds.width + branchPadding, 0);
     }
   };
 
-  protected static final HorizontallyAlternatingSubBranches LEFT = new HorizontallyAlternatingSubBranches()
+  protected static final SubBranchViewTranslation LEFT = new SubBranchViewTranslation()
   {
-    @Override
-    protected DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
-        BranchPointNode branchPointNode)
+    public DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
+        BranchPointNode branchPointNode, double branchPadding)
     {
       InternalNode branchPointInternalNode = BranchPointNodeUtils.getInternalNode(branchPointNode);
       DisplayIndependentRectangle subBranchBounds = subBranch.getBounds();
       return new DisplayIndependentDimension( //
           GeometryUtils.getTranslation(subBranchBounds.x, branchPointInternalNode.getInternalX()) //
               - subBranchBounds.width //
-              - getBranchPadding(), 0);
+              - branchPadding, 0);
     }
 
-    @Override
-    protected DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch, BranchView latterBranchView)
+    public DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch, BranchView latterBranchView,
+        double branchPadding)
     {
       DisplayIndependentRectangle latterBranchBounds = latterBranchView.getBounds();
       return new DisplayIndependentDimension( //
-          latterBranchBounds.x - getBranchPadding(), 0);
+          latterBranchBounds.x - branchPadding, 0);
     }
   };
+
+  protected static interface SubBranchViewTranslation
+  {
+
+    /**
+     * Returns the offset that's needed to translate the given branch so that it does not collide with the branch point.
+     * 
+     * @param branchPointNode
+     *          the branch point node
+     * @param subBranch
+     *          the sub branch
+     * @return the branch point translation
+     */
+    public DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
+        BranchPointNode branchPointNode, double branchPadding);
+
+    /**
+     * Returns the offset that's needed to translate the given branch so that it does not collide with the latter
+     * branch.
+     * 
+     * @param subBranch
+     *          the sub branch
+     * @param latterBranch
+     *          the latter branch
+     * @return the latter branch translation
+     */
+    public DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch, BranchView latterBranchView,
+        double branchPadding);
+  }
 
   /**
    * Sets the location of the given sub branch in the current branch. Branches are created and located with their
@@ -87,41 +120,31 @@ public abstract class AbstractVerticalLayoutStrategy extends AbstractBranchViewL
    * @param branchView
    *          the branch view
    */
-  public void setSubBranchLocation(BranchView branchView, BranchView subBranchView, BranchPointNode branchPointNode)
+  public void setSubBranchViewLocation(BranchView branchView, BranchView subBranchView, BranchPointNode branchPointNode)
   {
+    currentTranslationStrategy = getSubBranchTranslationStrategy(currentTranslationStrategy);
     // translate branch off the branchPointNode (to the right or to the left)
-    DisplayIndependentDimension translation = getTranslationToBranchPoint(subBranchView, branchPointNode);
+    DisplayIndependentDimension translation = currentTranslationStrategy.getTranslationToBranchPoint(
+        subBranchView, branchPointNode, getBranchPadding());
     BranchView latterBranch = branchView.getSecondToLastSubBranchView();
     if (latterBranch != null && !GeometryUtils.bottomEndsBefore(subBranchView.getBounds(), latterBranch.getBounds()))
     {
       // collides vertically with latter sub-branch -> additionally translate off latter branch (to the right or to
       // the left)
-      GeometryUtils.union(translation, getTranslationToLatterBranch(subBranchView, latterBranch));
+      GeometryUtils.union(translation, currentTranslationStrategy.getTranslationToLatterBranch(subBranchView,
+          latterBranch, getBranchPadding()));
     }
     translateBy(subBranchView, translation);
   }
 
   /**
-   * Returns the offset that's needed to translate the given branch so that it does not collide with the branch point.
+   * Returns the strategy that translates the next branch view. It's called for each sub branch view.
    * 
-   * @param branchPointNode
-   *          the branch point node
-   * @param subBranch
-   *          the sub branch
-   * @return the branch point translation
+   * @param subBranchViewTranslation
+   *          the current translation strategy for sub branch views
+   * @return the current sub branch strategy
+   * @see #LEFT
+   * @see #RIGHT
    */
-  protected abstract DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
-      BranchPointNode branchPointNode);
-
-  /**
-   * Returns the offset that's needed to translate the given branch so that it does not collide with the latter branch.
-   * 
-   * @param subBranch
-   *          the sub branch
-   * @param latterBranch
-   *          the latter branch
-   * @return the latter branch translation
-   */
-  protected abstract DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch,
-      BranchView latterBranch);
+  protected abstract SubBranchViewTranslation getSubBranchTranslationStrategy(SubBranchViewTranslation subBranchViewTranslation);
 }

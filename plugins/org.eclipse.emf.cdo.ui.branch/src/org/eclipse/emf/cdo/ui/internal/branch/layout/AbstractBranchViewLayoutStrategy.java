@@ -43,11 +43,7 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
 
   protected void initBranchBounds(BranchView branchView, AbstractBranchPointNode node)
   {
-    InternalNode baselineInternalNode = BranchPointNodeUtils.getInternalNode(node);
-    DisplayIndependentRectangle bounds = new DisplayIndependentRectangle(baselineInternalNode.getInternalX(),
-        baselineInternalNode.getInternalY(), baselineInternalNode.getInternalWidth(), baselineInternalNode
-            .getInternalHeight());
-    branchView.setBounds(bounds);
+    branchView.setBounds(BranchPointNodeUtils.getBounds(node));
   }
 
   /**
@@ -94,13 +90,8 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
    */
   protected void setBranchBounds(BranchView branchView, AbstractBranchPointNode node)
   {
-    InternalNode internalNode = BranchPointNodeUtils.getInternalNode(node);
-
     DisplayIndependentRectangle bounds = GeometryUtils.union(branchView.getBounds(), //
-        internalNode.getInternalX() //
-        , internalNode.getInternalY() //
-        , internalNode.getInternalWidth() //
-        , internalNode.getInternalHeight());
+        BranchPointNodeUtils.getBounds(node));
     branchView.setBounds(bounds);
   }
 
@@ -205,10 +196,11 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
   {
     double centerX = BranchPointNodeUtils.getCenterX(branchView.getBaselineNode());
     branchView.resetBounds();
+    double scaledCenterX = centerX * scaling.width;
     for (AbstractBranchPointNode node : branchView.getNodes())
     {
       InternalNode internalNode = BranchPointNodeUtils.getInternalNode(node);
-      double newX = centerX * scaling.width - internalNode.getInternalWidth() / 2;
+      double newX = scaledCenterX - internalNode.getInternalWidth() / 2;
       double newY = internalNode.getInternalY() * scaling.height;
       internalNode.setInternalLocation(newX, newY);
       if (!branchView.areBoundsSet())

@@ -10,9 +10,6 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
-import org.eclipse.emf.cdo.ui.internal.branch.item.BranchPointNode;
-
-import org.eclipse.zest.layouts.dataStructures.DisplayIndependentDimension;
 
 /**
  * A strategy that layouts a branch. A branch centers its (sibling) nodes below each other while using their time stamp
@@ -25,34 +22,9 @@ import org.eclipse.zest.layouts.dataStructures.DisplayIndependentDimension;
  */
 public class RightHandSubBranches extends AbstractVerticalLayoutStrategy
 {
-  /**
-   * Sets the location to the right of the current branch. Delegates for this to appropriate strategy
-   * 
-   * @param subBranchView
-   *          the sub branch to layout in the current branch
-   * @param branchPointNode
-   *          the branch point node the given sub branch is attached to
-   * @param branchView
-   *          the branch view
-   * @see #RIGHT
-   */
   @Override
-  protected void setSubBranchViewLocation(BranchView branchView, BranchView subBranchView,
-      BranchPointNode branchPointNode)
+  protected SubBranchViewTranslation getSubBranchTranslationStrategy(SubBranchViewTranslation currentTranslationStrategy)
   {
-    RIGHT.setSubBranchLocation(branchView, subBranchView, branchPointNode);
-  }
-
-  @Override
-  protected DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
-      BranchPointNode branchPointNode)
-  {
-    return RIGHT.getTranslationToBranchPoint(subBranch, branchPointNode);
-  }
-
-  @Override
-  protected DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch, BranchView latterBranch)
-  {
-    return RIGHT.getTranslationToLatterBranch(subBranch, latterBranch);
+    return RIGHT;
   }
 }

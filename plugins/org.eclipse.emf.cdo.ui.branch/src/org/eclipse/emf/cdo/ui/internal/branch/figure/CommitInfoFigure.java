@@ -38,7 +38,8 @@ public class CommitInfoFigure extends Ellipse
     setBackgroundColor(ColorConstants.yellow);
     setForegroundColor(ColorConstants.yellow);
     setOpaque(true);
-    setSize(30, 30);
+    // figures have to have impair widths (in order to have connections attached to the center)
+    setSize(31, 31);
     // setAlpha(100);
     setLineWidth(6);
     setFill(false);

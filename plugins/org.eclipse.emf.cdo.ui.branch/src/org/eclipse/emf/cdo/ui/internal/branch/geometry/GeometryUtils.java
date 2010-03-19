@@ -35,7 +35,8 @@ public class GeometryUtils
   }
 
   /**
-   * Moves the given Rectangle horizontally by dx and vertically by dy and returns a new translated rectangle instance.
+   * Moves the given Rectangle horizontally by xOffset and vertically by yOffset and returns a new translated rectangle
+   * instance.
    * 
    * @param xOffset
    *          the offset on the x axis to move the rectangle
@@ -52,6 +53,22 @@ public class GeometryUtils
     newRectangle.x += xOffset;
     newRectangle.y += yOffset;
     return newRectangle;
+  }
+
+  /**
+   * Moves the given Rectangle horizontally and vertically by the the offsets indicated in the translation and returns a
+   * new translated rectangle instance.
+   * 
+   * @param rectangle
+   *          the rectangle to translate
+   * @param translation
+   *          the translation with the offsets on the x- and y-axis
+   * @return a new translated rectangle instance
+   */
+  public static DisplayIndependentRectangle translateRectangle(DisplayIndependentDimension translation,
+      DisplayIndependentRectangle rectangle)
+  {
+    return translateRectangle(translation.width, translation.height, rectangle);
   }
 
   /**

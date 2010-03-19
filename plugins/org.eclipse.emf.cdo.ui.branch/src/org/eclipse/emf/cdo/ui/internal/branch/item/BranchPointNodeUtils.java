@@ -20,8 +20,9 @@ import org.eclipse.zest.layouts.dataStructures.InternalNode;
  */
 public class BranchPointNodeUtils
 {
+
   /**
-   * returns a BranchGraphNode for a given internal Node
+   * returns a BranchGraphNode for a given internal Node.
    * 
    * @param internalNode
    *          the internal node
@@ -122,7 +123,7 @@ public class BranchPointNodeUtils
   }
 
   /**
-   * Translates the internal location of the internal node that displays the given branch tree node
+   * Translates the internal location of the internal node that displays the given branch tree node.
    * 
    * @param node
    *          the node whose internal node shall be translated
@@ -205,6 +206,13 @@ public class BranchPointNodeUtils
     return getBounds(getInternalNode(node));
   }
 
+  /**
+   * Returns the bounds of the given internal node.
+   * 
+   * @param node
+   *          the node to retrieve the bounds of
+   * @return the bounds
+   */
   private static DisplayIndependentRectangle getBounds(InternalNode node)
   {
     return new DisplayIndependentRectangle(node.getInternalX(), node.getInternalY(), node.getInternalWidth(), node

@@ -40,22 +40,25 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
 
   private DisplayIndependentDimension borders = new DisplayIndependentDimension(60, 60);
 
+  private BranchViewLayoutStrategy branchViewLayoutStrategy;
+
   /**
    * A layout algorithm that displays trees of cdo branches.
    * 
    * @see CDOBranch
    */
-  public BranchTreeLayoutAlgorithm(int styles)
+  public BranchTreeLayoutAlgorithm(int styles, BranchViewLayoutStrategy branchViewLayoutStrategy)
   {
     super(styles);
+    this.branchViewLayoutStrategy = branchViewLayoutStrategy;
   }
 
   /**
    * Tree layout algorithm Constructor with NO Style
    */
-  public BranchTreeLayoutAlgorithm()
+  public BranchTreeLayoutAlgorithm(BranchViewLayoutStrategy branchViewLayoutStrategy)
   {
-    this(LayoutStyles.NONE);
+    this(LayoutStyles.NONE, branchViewLayoutStrategy);
   }
 
   @Override
@@ -116,7 +119,7 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
 
     if (entitiesToLayout.length > 0)
     {
-      BranchView branchView = buildBranch(rootNode);
+      BranchView branchView = buildBranch(rootNode, branchViewLayoutStrategy);
       fireProgressEvent(1, LAYOUT_STEPS);
       // defaultFitWithinBounds(entitiesToLayout, layoutBounds);
       fitWithinBounds(branchView);
@@ -129,10 +132,11 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
     branchView.getLayoutStrategy().scale(branchView, boundsWithBorder);
   }
 
-  private BranchView buildBranch(AbstractBranchPointNode branchRootNode)
+  private BranchView buildBranch(AbstractBranchPointNode branchRootNode,
+      BranchViewLayoutStrategy branchViewLayoutStrategy)
   {
-    // return new BranchView(branchRootNode, new VerticallyDistributedSubBranches());
-    return new BranchView(branchRootNode, new RightHandSubBranches());
+    return new BranchView(branchRootNode, branchViewLayoutStrategy);
+    // return new BranchView(branchRootNode, new RightHandSubBranches());
   }
 
   @Override

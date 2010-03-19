@@ -92,9 +92,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit);
 
   /**
-   * Reads a revision from the back-end that was valid at the given timeStamp. This method will only be called by the
-   * framework if {@link IRepository#isSupportingAudits()} is <code>true</code>. Returns <code>null</code> if the id is
-   * invalid.
+   * Reads a revision from the back-end that was valid at the given timeStamp in the given branch.
    * 
    * @since 3.0
    */
@@ -102,8 +100,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
       CDORevisionCacheAdder cache);
 
   /**
-   * Reads a revision with the given version from the back-end. This method will only be called by the framework if
-   * {@link IRepository#isSupportingAudits()} is <code>true</code>. Returns <code>null</code> if the id is invalid.
+   * Reads a revision with the given version in the given branch from the back-end.
    * 
    * @since 3.0
    */

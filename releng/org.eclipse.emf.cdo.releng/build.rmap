@@ -34,7 +34,7 @@
 	<rm:locator searchPathRef="modeling.milestones" failOnError="false"/>
 	-->
 
-	<rm:locator searchPathRef="helios.staging" failOnError="false"/>
+	<!--rm:locator searchPathRef="helios.staging" failOnError="false"/-->
 	<rm:locator searchPathRef="helios.milestones"/>
 
 	<rm:searchPath name="cdo.releng">

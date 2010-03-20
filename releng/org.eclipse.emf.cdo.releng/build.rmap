@@ -28,14 +28,11 @@
 
 	<rm:locator searchPathRef="orbit" failOnError="false"/> <!-- MUST COME BEFORE MODELING! -->
 	<rm:locator searchPathRef="net4j.plus" failOnError="false"/>
-
-	<!--
 	<rm:locator searchPathRef="gef.milestones" failOnError="false"/>
 	<rm:locator searchPathRef="modeling.milestones" failOnError="false"/>
-	-->
 
 	<!--rm:locator searchPathRef="helios.staging" failOnError="false"/-->
-	<rm:locator searchPathRef="helios.releases"/>
+	<rm:locator searchPathRef="platform.milestones"/>
 
 	<rm:searchPath name="cdo.releng">
 		<rm:provider componentTypes="buckminster,osgi.bundle" readerType="cvs">
@@ -239,10 +236,10 @@
 		</rm:provider>
 	</rm:searchPath>
 
-	<rm:searchPath name="helios.releases">
+	<rm:searchPath name="platform.milestones">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(build.type=N)">
-			<rm:uri format="{0}/releases/helios">
+			<rm:uri format="{0}/eclipse/updates/3.6milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>

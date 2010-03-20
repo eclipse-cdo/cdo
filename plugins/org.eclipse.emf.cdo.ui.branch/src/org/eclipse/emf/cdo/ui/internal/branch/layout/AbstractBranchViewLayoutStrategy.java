@@ -234,6 +234,6 @@ public abstract class AbstractBranchViewLayoutStrategy implements BranchViewLayo
    */
   protected double getBranchPadding()
   {
-    return 60;
+    return 30;
   }
 }

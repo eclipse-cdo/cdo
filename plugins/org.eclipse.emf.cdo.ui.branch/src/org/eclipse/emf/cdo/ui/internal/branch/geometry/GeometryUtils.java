@@ -20,18 +20,17 @@ public class GeometryUtils
 {
 
   /**
-   * Unifies both given dimensions.
+   * Adds the width and height of the given second (source) dimension to the given first (target) dimension .
    * 
-   * @param thisDimension
+   * @param targetDimension
    *          the this dimension
-   * @param thatDimension
+   * @param sourceDimension
    *          the that dimension
    */
-  public static void union(DisplayIndependentDimension thisDimension, DisplayIndependentDimension thatDimension)
+  public static void union(DisplayIndependentDimension targetDimension, DisplayIndependentDimension sourceDimension)
   {
-    DisplayIndependentDimension union = new DisplayIndependentDimension(thisDimension);
-    union.width += thatDimension.width;
-    union.height += thatDimension.height;
+    targetDimension.width += sourceDimension.width;
+    targetDimension.height += sourceDimension.height;
   }
 
   /**

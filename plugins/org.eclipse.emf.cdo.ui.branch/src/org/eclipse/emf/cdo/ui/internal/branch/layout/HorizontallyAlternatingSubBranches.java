@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
+import org.eclipse.emf.cdo.ui.internal.branch.geometry.GeometryUtils;
+
 /**
  * A strategy that layouts a branch vertically and displaces sub branch view to the right or to the left. Left and right
  * sub branches alternate equally, they're distributed equally.
@@ -40,5 +42,17 @@ public class HorizontallyAlternatingSubBranches extends AbstractVerticalLayoutSt
     }
 
     return LEFT;
+  }
+
+  @Override
+  public BranchView getLaterOverlapingBranch(BranchView branchView, BranchView subBranchView)
+  {
+    BranchView overlapingBranch = branchView.getSecondToLastSubBranchView();
+    if (overlapingBranch != null
+        && GeometryUtils.bottomEndsBefore(subBranchView.getBounds(), overlapingBranch.getBounds()))
+    {
+      return null;
+    }
+    return overlapingBranch;
   }
 }

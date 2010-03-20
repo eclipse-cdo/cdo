@@ -45,12 +45,14 @@ public abstract class AbstractVerticalLayoutStrategy extends AbstractBranchViewL
               + branchPadding, 0);
     }
 
-    public DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch, BranchView latterBranch,
+    public DisplayIndependentDimension getTranslationToLaterBranch(BranchView subBranchView, BranchView laterBranch,
         double branchPadding)
     {
-      DisplayIndependentRectangle latterBranchBounds = latterBranch.getBounds();
+      DisplayIndependentRectangle laterBranchBounds = laterBranch.getBounds();
       return new DisplayIndependentDimension(//
-          latterBranchBounds.x + latterBranchBounds.width + branchPadding, 0);
+          GeometryUtils.getTranslation(subBranchView.getBounds().x, laterBranchBounds.x) //
+              + laterBranchBounds.width //
+              + branchPadding, 0);
     }
   };
 
@@ -67,12 +69,12 @@ public abstract class AbstractVerticalLayoutStrategy extends AbstractBranchViewL
               - branchPadding, 0);
     }
 
-    public DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch, BranchView latterBranchView,
-        double branchPadding)
+    public DisplayIndependentDimension getTranslationToLaterBranch(BranchView subBranchView,
+        BranchView laterBranchView, double branchPadding)
     {
-      DisplayIndependentRectangle latterBranchBounds = latterBranchView.getBounds();
       return new DisplayIndependentDimension( //
-          latterBranchBounds.x - branchPadding, 0);
+          GeometryUtils.getTranslation(subBranchView.getBounds().x, laterBranchView.getBounds().x) //
+              - branchPadding, 0);
     }
   };
 
@@ -105,37 +107,43 @@ public abstract class AbstractVerticalLayoutStrategy extends AbstractBranchViewL
      *          the padding between branches
      * @return the latter branch translation
      */
-    public DisplayIndependentDimension getTranslationToLatterBranch(BranchView subBranch, BranchView latterBranchView,
+    public DisplayIndependentDimension getTranslationToLaterBranch(BranchView subBranch, BranchView latterBranchView,
         double branchPadding);
   }
 
   /**
-   * Sets the location of the given sub branch in the current branch. Branches are created and located with their
-   * baseline node at x == 0, y == 0. The bounds of the sub branch (and its sub sub-branches) are from negative
+   * Sets the location of the given sub branch in the current branch. Branches are created and located with the center
+   * of the baseline node at x == 0, y == 0. The bounds of the sub branch (and its sub sub-branches) are from negative
    * x-coordinates up to positive x-coordinates. The purpose of this method is to translate the whole sub branch to the
-   * correct location to the right or to the left of its branch point.
+   * correct location to the right or to the left of its branch point. A first translation has to occur so that the
+   * branch view does not collide with its branch point. A second translation has to occur so that it does not overlap
+   * with latter branches.
    * 
    * @param subBranchView
-   *          the sub branch to layout in the current branch
+   *          the sub branch view to layout in the current branch
    * @param branchPointNode
-   *          the branch point node the given sub branch is attached to
+   *          the branch point node the sub branch is attached to
    * @param branchView
-   *          the branch view
+   *          the branch view the sub branch shall be attached to
    */
   @Override
   public void setSubBranchViewLocation(BranchView branchView, BranchView subBranchView, BranchPointNode branchPointNode)
   {
     currentTranslationStrategy = getSubBranchTranslationStrategy(branchView, currentTranslationStrategy);
-    // translate branch off the branchPointNode (to the right or to the left)
-    DisplayIndependentDimension translation = currentTranslationStrategy.getTranslationToBranchPoint(subBranchView,
-        branchPointNode, getBranchPadding());
-    BranchView latterBranch = branchView.getSecondToLastSubBranchView();
-    if (latterBranch != null && !GeometryUtils.bottomEndsBefore(subBranchView.getBounds(), latterBranch.getBounds()))
+    BranchView laterBranch = getLaterOverlapingBranch(branchView, subBranchView);
+    DisplayIndependentDimension translation = new DisplayIndependentDimension(0, 0);
+    if (laterBranch != null)
     {
-      // collides vertically with latter sub-branch -> additionally translate off latter branch (to the right or to
+      // overlaps with later sub-branch -> translate from later branch (to the right or to
       // the left)
-      GeometryUtils.union(translation, currentTranslationStrategy.getTranslationToLatterBranch(subBranchView,
-          latterBranch, getBranchPadding()));
+      translation = currentTranslationStrategy.getTranslationToLaterBranch(subBranchView, laterBranch,
+          getBranchPadding());
+    }
+    else
+    {
+      // translate branch away from branchPointNode (to the right or to the left)
+      translation = currentTranslationStrategy.getTranslationToBranchPoint(subBranchView, branchPointNode,
+          getBranchPadding());
     }
     translateBy(subBranchView, translation);
   }
@@ -153,4 +161,16 @@ public abstract class AbstractVerticalLayoutStrategy extends AbstractBranchViewL
    */
   protected abstract SubBranchViewTranslation getSubBranchTranslationStrategy(BranchView branchView,
       SubBranchViewTranslation currentTranslationStrategy);
+
+  /**
+   * Gets the later sub branch view, that possibly overlaps with the given sub branch view. Returns <tt>null</tt> if
+   * there's none that overlaps.
+   * 
+   * @param subBranchView
+   *          the sub branch view that shall be checked for collisions
+   * @param branchView
+   *          the branch view the sub branch view is attached to
+   * @return the colliding later branch or <tt>null</tt> if there's none
+   */
+  public abstract BranchView getLaterOverlapingBranch(BranchView branchView, BranchView subBranchView);
 }

@@ -145,8 +145,19 @@ public class BranchView
 
   /**
    * Returns not the last, but the one before the last sub branch view. If none is present, <tt>null<tt> is returned.
+   * <p>
+   * The sub branch views are collected bottom up (from the latest one to the earliest one in terms of time stamp).
+   * This method return the sub branch view that was layouted in the second but last step. Layout strategies need
+   * to check overlapping. Layout strategies that put sub branch views to one side of the main branch only (left/right
+   * or top/bottom) a sub branch overlaps the sub branch that's next in terms of time stamp. Distributing layout strategies
+   * need to check the one that was layouted 2 steps ago.
    * 
    * @return the second to last sub branch view or <tt>null<tt>
+   * @see #getSubBranchViews()
+   * @see #getLastSubBranchView()
+   * @see AbstractVerticalLayoutStrategy#setSubBranchViewLocation
+   * @see HorizontallyAlternatingSubBranches#getLaterOverlapingBranch(BranchView, BranchView)
+   * @see RightHandSubBranches#getLaterOverlapingBranch(BranchView, BranchView)
    */
   public BranchView getSecondToLastSubBranchView()
   {
@@ -159,11 +170,32 @@ public class BranchView
   }
 
   /**
-   * Returns all sub branch views present in this branch view.
+   * Returns not the last sub branch view. If none is present, <tt>null<tt> is returned.
+   * <p>
+   * The sub branch views are collected bottom up (from the latest one to the earliest one in terms of time stamp).
+   * This method return the sub branch view that was layouted in the second but last step. Layout strategies need
+   * to check overlapping. Layout strategies that put sub branch views to one side of the main branch only (left/right
+   * or top/bottom) a sub branch overlaps the sub branch that's next in terms of time stamp. Distributing layout strategies
+   * need to check the one that was layouted 2 steps ago.
+   * 
+   * @return the second to last sub branch view or <tt>null<tt>
+   * @see #getSubBranchViews()
+   * @see #getLastSubBranchView()
+   * @see AbstractVerticalLayoutStrategy#LEFT
+   * @see AbstractVerticalLayoutStrategy#RIGHT
+   */
+  public BranchView getLastSubBranchView()
+  {
+    return subBranchViews.peekLast();
+  }
+
+  /**
+   * Returns all sub branch views present in this branch view. The sub branch views are collected bottom up (from the
+   * latest one to the earliest one in terms of time stamp).
    * 
    * @return all sub branch views in this branch view
    */
-  public Collection<BranchView> getSubBranchViews()
+  public Deque<BranchView> getSubBranchViews()
   {
     return subBranchViews;
   }

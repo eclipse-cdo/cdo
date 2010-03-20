@@ -101,7 +101,7 @@ public abstract class AbstractBranchPointNode extends CGraphNode implements CDOB
     return connectionList;
   }
 
-  public AbstractBranchPointNode getLatter(AbstractBranchPointNode node)
+  public AbstractBranchPointNode getLater(AbstractBranchPointNode node)
   {
     if (node != null && node.getTimeStamp() > getTimeStamp())
     {

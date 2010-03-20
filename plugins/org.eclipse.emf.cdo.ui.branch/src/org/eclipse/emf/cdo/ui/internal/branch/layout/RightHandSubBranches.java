@@ -10,12 +10,12 @@
  */
 package org.eclipse.emf.cdo.ui.internal.branch.layout;
 
+import org.eclipse.emf.cdo.ui.internal.branch.geometry.GeometryUtils;
+
 /**
  * A strategy that layouts a branch. A branch centers its (sibling) nodes below each other while using their time stamp
  * to set the y coordinate. Sub-Branches are displaced to the right or to the left (left and right sub branches are
  * distributed equally).
- * <p>
- * The current implementation may only layout vertically.
  * 
  * @author Andre Dietisheim
  */
@@ -26,5 +26,17 @@ public class RightHandSubBranches extends AbstractVerticalLayoutStrategy
       SubBranchViewTranslation currentTranslationStrategy)
   {
     return RIGHT;
+  }
+
+  @Override
+  public BranchView getLaterOverlapingBranch(BranchView branchView, BranchView subBranchView)
+  {
+    BranchView overlapingBranch = branchView.getLastSubBranchView();
+    if (overlapingBranch != null
+        && GeometryUtils.bottomEndsBefore(subBranchView.getBounds(), overlapingBranch.getBounds()))
+    {
+      return null;
+    }
+    return overlapingBranch;
   }
 }

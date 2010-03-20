@@ -106,7 +106,7 @@ public class BranchTreeLayoutAlgorithm extends AbstractLayoutAlgorithm
       {
         if (node instanceof RootNode)
         {
-          rootNode = (RootNode)node.getLatter(rootNode);
+          rootNode = (RootNode)node.getLater(rootNode);
         }
       }
     }

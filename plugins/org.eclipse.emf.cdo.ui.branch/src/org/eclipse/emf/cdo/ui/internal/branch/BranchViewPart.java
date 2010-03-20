@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.ui.internal.branch.item.NewBranchConnection;
 import org.eclipse.emf.cdo.ui.internal.branch.item.RootNode;
 import org.eclipse.emf.cdo.ui.internal.branch.item.SameBranchConnection;
 import org.eclipse.emf.cdo.ui.internal.branch.layout.BranchTreeLayoutAlgorithm;
-import org.eclipse.emf.cdo.ui.internal.branch.layout.HorizontallyAlternatingSubBranches;
+import org.eclipse.emf.cdo.ui.internal.branch.layout.RightHandSubBranches;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
@@ -68,7 +68,7 @@ public class BranchViewPart extends ViewPart
     createTestTree(graph);
 
     LayoutAlgorithm layout = new BranchTreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING,
-        new HorizontallyAlternatingSubBranches());
+        new RightHandSubBranches());
     graph.setLayoutAlgorithm(layout, true);
   }
 

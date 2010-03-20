@@ -24,7 +24,6 @@ public class BranchPointFigure extends CommitInfoFigure
     super(text);
     setBackgroundColor(ColorConstants.red);
     setForegroundColor(ColorConstants.red);
-    // figures have to have impair widths (in order to have connections attached to the center)
-    setSize(31, 31);
+    setSize(30, 30);
   }
 }

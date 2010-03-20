@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.ui.internal.branch;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.examples.company.CompanyPackage;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.internal.branch.figure.BranchPointFigure;
@@ -128,7 +127,7 @@ public class BranchViewPart extends ViewPart
     CDOBranch subBranch1_1 = subBranch1.createBranch("1-1", subBranch1.getBase().getTimeStamp() + 30000000);
     CDOBranch subBranch1_2 = subBranch1.createBranch("1-2", subBranch1_1.getBase().getTimeStamp() + 30000000);
     CDOBranch subBranch1_2_1 = subBranch1.createBranch("1-2_1", subBranch1_2.getBase().getTimeStamp() + 30000000);
-    // CDOBranch subBranch1_2_2 = subBranch1.createBranch("1-2_2", subBranch1_2_1.getBase().getTimeStamp() + 30000000);
+    CDOBranch subBranch1_2_2 = subBranch1.createBranch("1-2_2", subBranch1_2_1.getBase().getTimeStamp() + 30000000);
     CDOBranch subBranch2 = mainBranch.createBranch("2", subBranch1.getBase().getTimeStamp() + 30000000);
     CDOBranch subBranch2_1 = subBranch1.createBranch("2-1", subBranch2.getBase().getTimeStamp() + 30000000);
     CDOBranch subBranch2_2 = subBranch1.createBranch("2-2", subBranch2_1.getBase().getTimeStamp() + 30000000);
@@ -143,8 +142,8 @@ public class BranchViewPart extends ViewPart
         "branch point 1-2"));
     BranchPointNode branchNode1_2_1 = new BranchPointNode(subBranch1_2_1.getBase(), graph, SWT.NONE,
         new BranchPointFigure("branch point 1-2-1"));
-    // BranchPointNode branchNode1_2_2 = new BranchPointNode(subBranch1_2_2.getBase(), graph, SWT.NONE,
-    // new BranchPointFigure("branch point 1-2-2"));
+    BranchPointNode branchNode1_2_2 = new BranchPointNode(subBranch1_2_2.getBase(), graph, SWT.NONE,
+        new BranchPointFigure("branch point 1-2-2"));
     BranchPointNode branchNode2 = new BranchPointNode(subBranch2.getBase(), graph, SWT.NONE, new BranchPointFigure(
         "branch point 2"));
     BranchPointNode branchNode2_1 = new BranchPointNode(subBranch2_1.getBase(), graph, SWT.NONE, new BranchPointFigure(
@@ -158,7 +157,7 @@ public class BranchViewPart extends ViewPart
     new NewBranchConnection(graph, SWT.NONE, branchNode1, branchNode1_1);
     new SameBranchConnection(graph, SWT.NONE, branchNode1_1, branchNode1_2);
     new NewBranchConnection(graph, SWT.NONE, branchNode1_2, branchNode1_2_1);
-    // new SameBranchConnection(graph, SWT.NONE, branchNode1_2_1, branchNode1_2_2);
+    new SameBranchConnection(graph, SWT.NONE, branchNode1_2_1, branchNode1_2_2);
     new SameBranchConnection(graph, SWT.NONE, branchNode1, branchNode2);
     new SameBranchConnection(graph, SWT.NONE, branchNode2, branchNode3);
     new NewBranchConnection(graph, SWT.NONE, branchNode2, branchNode2_1);
@@ -186,7 +185,7 @@ public class BranchViewPart extends ViewPart
     configuration.setRepositoryName("repo1"); //$NON-NLS-1$
 
     session = configuration.openSession();
-    session.getPackageRegistry().putEPackage(CompanyPackage.eINSTANCE);
+    // session.getPackageRegistry().putEPackage(CompanyPackage.eINSTANCE);
   }
 
   private void cleanupCDO()

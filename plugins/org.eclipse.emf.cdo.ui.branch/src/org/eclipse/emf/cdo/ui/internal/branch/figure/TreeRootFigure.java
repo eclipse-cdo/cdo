@@ -24,7 +24,6 @@ public class TreeRootFigure extends RectangleFigure
 {
   public TreeRootFigure()
   {
-    // figures have to have impair widths (in order to have connections attached to the center)
     setSize(30, 30);
     setVisible(false);
   }

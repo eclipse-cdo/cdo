@@ -69,6 +69,8 @@ public class BranchViewPart extends ViewPart
 
     LayoutAlgorithm layout = new BranchTreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING,
         new RightHandSubBranches());
+    // LayoutAlgorithm layout = new BranchTreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING,
+    // new HorizontallyAlternatingSubBranches());
     graph.setLayoutAlgorithm(layout, true);
   }
 

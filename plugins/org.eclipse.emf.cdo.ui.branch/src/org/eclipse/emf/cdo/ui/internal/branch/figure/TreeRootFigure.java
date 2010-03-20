@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.ui.internal.branch.figure;
 
 import org.eclipse.emf.cdo.ui.internal.branch.item.RootNode;
 
-import org.eclipse.draw2d.Figure;
+import org.eclipse.draw2d.RectangleFigure;
 
 /**
  * The Figure used to visualize the (single) root node of a BranchTree.
@@ -20,12 +20,12 @@ import org.eclipse.draw2d.Figure;
  * @author Andre Dietisheim
  * @see RootNode
  */
-public class TreeRootFigure extends Figure
+public class TreeRootFigure extends RectangleFigure
 {
   public TreeRootFigure()
   {
     // figures have to have impair widths (in order to have connections attached to the center)
-    setSize(3, 3);
+    setSize(30, 30);
     setVisible(false);
   }
 }

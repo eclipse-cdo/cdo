@@ -80,44 +80,43 @@ public abstract class AbstractVerticalLayoutStrategy extends AbstractBranchViewL
 
   protected static interface SubBranchViewTranslation
   {
-
     /**
-     * Returns the offset that's needed to translate the given branch so that it does not collide with the branch point.
+     * Returns the offset that's needed to translate the given branch view so that it does not overlap with the branch
+     * point.
      * 
      * @param branchPointNode
      *          the branch point node
-     * @param subBranch
-     *          the sub branch
+     * @param subBranchView
+     *          the sub branch view to translate
      * @param branchPadding
      *          the padding between branches
-     * @return the branch point translation
+     * @return the translation that avoids the overlapping
      */
-    public DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranch,
+    public DisplayIndependentDimension getTranslationToBranchPoint(BranchView subBranchView,
         BranchPointNode branchPointNode, double branchPadding);
 
     /**
-     * Returns the offset that's needed to translate the given branch so that it does not collide with the latter
-     * branch.
+     * Returns the offset that's needed to translate the given branch view so that it does not overlap with the given
+     * later branch view.
      * 
-     * @param subBranch
-     *          the sub branch
+     * @param subBranchView
+     *          the sub branch view to translate
      * @param latterBranchView
-     *          the latter branch view
+     *          the later branch view that the sub branch overlaps
      * @param branchPadding
      *          the padding between branches
-     * @return the latter branch translation
+     * @return the translation that avoids the overlapping
      */
-    public DisplayIndependentDimension getTranslationToLaterBranch(BranchView subBranch, BranchView latterBranchView,
-        double branchPadding);
+    public DisplayIndependentDimension getTranslationToLaterBranch(BranchView subBranchView,
+        BranchView latterBranchView, double branchPadding);
   }
 
   /**
    * Sets the location of the given sub branch in the current branch. Branches are created and located with the center
-   * of the baseline node at x == 0, y == 0. The bounds of the sub branch (and its sub sub-branches) are from negative
-   * x-coordinates up to positive x-coordinates. The purpose of this method is to translate the whole sub branch to the
-   * correct location to the right or to the left of its branch point. A first translation has to occur so that the
-   * branch view does not collide with its branch point. A second translation has to occur so that it does not overlap
-   * with latter branches.
+   * of the baseline node at x == 0, y == 0. The bounds of the sub branch (and its sub sub-branches) reach from negative
+   * x-coordinates up to positive x-coordinates. The purpose of this method is to translate the whole sub branch to a
+   * location where it does not overlap the branch point. This method either applies a translation off the branch point
+   * or a translation off the later branch, it would overlap.
    * 
    * @param subBranchView
    *          the sub branch view to layout in the current branch

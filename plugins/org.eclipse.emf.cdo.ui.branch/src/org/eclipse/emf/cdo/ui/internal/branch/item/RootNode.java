@@ -16,7 +16,7 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.zest.core.widgets.IContainer;
 
 /**
- * The single root node of a branch tree.
+ * The unique root node of a branch tree.
  * 
  * @author Andre Dietisheim
  */

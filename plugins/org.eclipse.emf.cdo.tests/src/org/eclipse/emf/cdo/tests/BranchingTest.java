@@ -10,11 +10,13 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -27,6 +29,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.DanglingReferenceException;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -660,6 +663,40 @@ public class BranchingTest extends AbstractCDOTest
     }
 
     session.close();
+  }
+
+  public void testSwitchViewTarget()
+  {
+    CDOSession session = openSession1();
+    CDOBranchManager branchManager = session.getBranchManager();
+
+    // Commit to main branch
+    CDOBranch mainBranch = branchManager.getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+    assertEquals(mainBranch, transaction.getBranch());
+    assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
+
+    Product1 product = getModel1Factory().createProduct1();
+    product.setName("CDO");
+
+    CDOResource resource = transaction.createResource("/res");
+    resource.getContents().add(product);
+
+    CDOCommitInfo commitInfo = transaction.commit();
+    assertEquals(mainBranch, commitInfo.getBranch());
+    long commitTime1 = commitInfo.getTimeStamp();
+    transaction.close();
+
+    CDOBranch subBranch = mainBranch.createBranch("subBranch", commitTime1);
+
+    CDOID id = CDOUtil.getCDOObject(product).cdoID();
+    CDOView view = session.openView();
+    product = (Product1)view.getObject(id);
+
+    view.setBranch(subBranch);
+
+    assertEquals(false, CDOUtil.getCDOObject(product).cdoState().equals(CDOState.INVALID));
+    assertNotNull(product.getName());
   }
 
   private void check(CDOSession session, CDOBranch branch, long timeStamp, String name)

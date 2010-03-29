@@ -91,7 +91,7 @@ public class View extends Lifecycle implements InternalView
   {
     setBranchPoint(branchPoint);
     List<CDORevision> revisions = repository.getRevisionManager().getRevisions(invalidObjects, branchPoint, 0,
-        CDORevision.DEPTH_NONE, false);
+        CDORevision.DEPTH_NONE, true);
     boolean[] existanceFlags = new boolean[revisions.size()];
     for (int i = 0; i < existanceFlags.length; i++)
     {

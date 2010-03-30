@@ -172,7 +172,7 @@ public interface CDOProtocolConstants
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_SYNC_REPOSITORY = 40;
+  public static final short SIGNAL_REPLICATE_REPOSITORY = 40;
 
   /**
    * @since 3.0
@@ -244,15 +244,15 @@ public interface CDOProtocolConstants
   /**
    * @since 3.0
    */
-  public static final byte SYNC_FINISHED = 0;
+  public static final byte REPLICATE_FINISHED = 0;
 
   /**
    * @since 3.0
    */
-  public static final byte SYNC_BRANCH = 1;
+  public static final byte REPLICATE_BRANCH = 1;
 
   /**
    * @since 3.0
    */
-  public static final byte SYNC_COMMIT = 2;
+  public static final byte REPLICATE_COMMIT = 2;
 }

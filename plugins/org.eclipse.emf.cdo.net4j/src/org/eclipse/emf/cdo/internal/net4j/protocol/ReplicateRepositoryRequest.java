@@ -20,13 +20,13 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class SyncRepositoryRequest extends CDOClientRequest<Boolean>
+public class ReplicateRepositoryRequest extends CDOClientRequest<Boolean>
 {
   private CDOReplicationContext context;
 
-  public SyncRepositoryRequest(CDOClientProtocol protocol, CDOReplicationContext context)
+  public ReplicateRepositoryRequest(CDOClientProtocol protocol, CDOReplicationContext context)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_SYNC_REPOSITORY);
+    super(protocol, CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY);
     this.context = context;
   }
 
@@ -45,19 +45,19 @@ public class SyncRepositoryRequest extends CDOClientRequest<Boolean>
       byte opcode = in.readByte();
       switch (opcode)
       {
-      case CDOProtocolConstants.SYNC_FINISHED:
+      case CDOProtocolConstants.REPLICATE_FINISHED:
         return true;
 
-      case CDOProtocolConstants.SYNC_BRANCH:
+      case CDOProtocolConstants.REPLICATE_BRANCH:
         context.handleBranch(in.readCDOBranch());
         break;
 
-      case CDOProtocolConstants.SYNC_COMMIT:
+      case CDOProtocolConstants.REPLICATE_COMMIT:
         context.handleCommitInfo(in.readCDOCommitInfo());
         break;
 
       default:
-        throw new IOException("Invalid sync opcode: " + opcode);
+        throw new IOException("Invalid replicate opcode: " + opcode);
       }
     }
   }

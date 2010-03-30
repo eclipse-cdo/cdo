@@ -45,9 +45,9 @@ import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
+import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
-import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
@@ -75,8 +75,8 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
-import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.Container;
@@ -966,7 +966,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  public void sync(CDOReplicationContext context)
+  public void replicate(CDOReplicationContext context)
   {
     int startID = context.getLastReplicatedBranchID() + 1;
     branchManager.getBranches(startID, 0, context);
@@ -1209,7 +1209,7 @@ public class Repository extends Container<Object> implements InternalRepository
       @Override
       public String getUserID()
       {
-        return "<first start>"; //$NON-NLS-1$
+        return SYSTEM_USER_ID;
       }
 
       @Override

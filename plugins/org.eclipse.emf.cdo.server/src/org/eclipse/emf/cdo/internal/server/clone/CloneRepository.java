@@ -40,8 +40,8 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -78,9 +78,9 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
 
   private InternalSession replicatorSession;
 
-  private int lastReplicatedBranchID;
+  private int lastReplicatedBranchID = CDOBranch.MAIN_BRANCH_ID;
 
-  private long lastReplicatedCommitTime;
+  private long lastReplicatedCommitTime = CDOBranchPoint.UNSPECIFIED_DATE;
 
   private int lastTransactionID;
 

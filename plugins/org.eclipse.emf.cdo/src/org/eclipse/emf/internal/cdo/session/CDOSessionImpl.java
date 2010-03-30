@@ -1882,14 +1882,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public void syncRepository(CDOReplicationContext context)
+    public void replicateRepository(CDOReplicationContext context)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          delegate.syncRepository(context);
+          delegate.replicateRepository(context);
           return;
         }
         catch (Exception ex)

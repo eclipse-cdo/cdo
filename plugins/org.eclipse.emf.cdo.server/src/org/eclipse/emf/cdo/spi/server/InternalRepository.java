@@ -91,7 +91,7 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
   public void notifyWriteAccessHandlers(ITransaction transaction, IStoreAccessor.CommitContext commitContext,
       boolean beforeCommit, OMMonitor monitor);
 
-  public void sync(CDOReplicationContext context);
+  public void replicate(CDOReplicationContext context);
 
   public CDOChangeSetData getChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint);
 

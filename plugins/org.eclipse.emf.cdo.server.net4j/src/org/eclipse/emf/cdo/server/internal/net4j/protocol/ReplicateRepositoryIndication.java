@@ -24,15 +24,15 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class SyncRepositoryIndication extends CDOReadIndication
+public class ReplicateRepositoryIndication extends CDOReadIndication
 {
   private int lastReplicatedBranchID;
 
   private long lastReplicatedCommitTime;
 
-  public SyncRepositoryIndication(CDOServerProtocol protocol)
+  public ReplicateRepositoryIndication(CDOServerProtocol protocol)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_SYNC_REPOSITORY);
+    super(protocol, CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY);
   }
 
   @Override
@@ -45,7 +45,7 @@ public class SyncRepositoryIndication extends CDOReadIndication
   @Override
   protected void responding(final CDODataOutput out) throws IOException
   {
-    getRepository().sync(new CDOReplicationContext()
+    getRepository().replicate(new CDOReplicationContext()
     {
       public int getLastReplicatedBranchID()
       {
@@ -61,7 +61,7 @@ public class SyncRepositoryIndication extends CDOReadIndication
       {
         try
         {
-          out.writeByte(CDOProtocolConstants.SYNC_BRANCH);
+          out.writeByte(CDOProtocolConstants.REPLICATE_BRANCH);
           out.writeCDOBranch(branch);
         }
         catch (IOException ex)
@@ -74,7 +74,7 @@ public class SyncRepositoryIndication extends CDOReadIndication
       {
         try
         {
-          out.writeByte(CDOProtocolConstants.SYNC_COMMIT);
+          out.writeByte(CDOProtocolConstants.REPLICATE_COMMIT);
           out.writeCDOCommitInfo(commitInfo);
         }
         catch (IOException ex)
@@ -84,6 +84,6 @@ public class SyncRepositoryIndication extends CDOReadIndication
       }
     });
 
-    out.writeByte(CDOProtocolConstants.SYNC_FINISHED);
+    out.writeByte(CDOProtocolConstants.REPLICATE_FINISHED);
   }
 }

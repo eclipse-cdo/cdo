@@ -30,6 +30,11 @@ import java.util.Map;
  */
 public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider, IContainer<Object>
 {
+  /**
+   * @since 3.0
+   */
+  public static final String SYSTEM_USER_ID = "CDO_SYSTEM"; //$NON-NLS-1$
+
   public IStore getStore();
 
   public Map<String, String> getProperties();

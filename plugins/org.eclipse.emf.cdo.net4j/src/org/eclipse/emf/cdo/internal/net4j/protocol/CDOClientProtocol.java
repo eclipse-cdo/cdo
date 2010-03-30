@@ -299,9 +299,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new UnsubscribeRemoteSessionsRequest(this));
   }
 
-  public void syncRepository(CDOReplicationContext context)
+  public void replicateRepository(CDOReplicationContext context)
   {
-    send(new SyncRepositoryRequest(this, context));
+    send(new ReplicateRepositoryRequest(this, context));
   }
 
   public CDOChangeSetData[] loadChangeSets(CDOBranchPointRange... ranges)

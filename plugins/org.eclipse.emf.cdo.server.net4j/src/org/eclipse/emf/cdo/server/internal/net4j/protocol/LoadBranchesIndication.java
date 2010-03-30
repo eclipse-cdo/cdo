@@ -52,7 +52,7 @@ public class LoadBranchesIndication extends CDOReadIndication
       {
         try
         {
-          out.writeByte(CDOProtocolConstants.SYNC_BRANCH);
+          out.writeByte(CDOProtocolConstants.REPLICATE_BRANCH);
           out.writeCDOBranch(branch);
         }
         catch (IOException ex)
@@ -62,6 +62,6 @@ public class LoadBranchesIndication extends CDOReadIndication
       }
     });
 
-    out.writeByte(CDOProtocolConstants.SYNC_FINISHED);
+    out.writeByte(CDOProtocolConstants.REPLICATE_FINISHED);
   }
 }

@@ -178,7 +178,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   /**
    * @since 3.0
    */
-  public void syncRepository(CDOReplicationContext context);
+  public void replicateRepository(CDOReplicationContext context);
 
   /**
    * @since 3.0

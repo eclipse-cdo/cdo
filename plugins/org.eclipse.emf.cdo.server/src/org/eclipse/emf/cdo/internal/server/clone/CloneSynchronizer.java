@@ -192,11 +192,11 @@ public class CloneSynchronizer extends QueueRunner
     }
   }
 
-  private void scheduleSync()
+  private void scheduleReplicate()
   {
     if (isActive())
     {
-      addWork(new SynRunnable());
+      addWork(new ReplicateRunnable());
     }
   }
 
@@ -306,7 +306,7 @@ public class CloneSynchronizer extends QueueRunner
         master.addListener(masterListener);
         master.getBranchManager().addListener(masterListener);
 
-        scheduleSync();
+        scheduleReplicate();
       }
     }
 
@@ -341,9 +341,9 @@ public class CloneSynchronizer extends QueueRunner
   /**
    * @author Eike Stepper
    */
-  private final class SynRunnable extends QueueRunnable
+  private final class ReplicateRunnable extends QueueRunnable
   {
-    public SynRunnable()
+    public ReplicateRunnable()
     {
     }
 
@@ -358,7 +358,7 @@ public class CloneSynchronizer extends QueueRunner
       clone.setState(CloneRepository.State.SYNCING);
 
       CDOSessionProtocol sessionProtocol = master.getSessionProtocol();
-      sessionProtocol.syncRepository(clone);
+      sessionProtocol.replicateRepository(clone);
 
       clone.setState(CloneRepository.State.ONLINE);
       OM.LOG.info("Synchronized with master.");

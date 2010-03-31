@@ -35,6 +35,7 @@ public class ReplicateRepositoryRequest extends CDOClientRequest<Boolean>
   {
     out.writeInt(context.getLastReplicatedBranchID());
     out.writeLong(context.getLastReplicatedCommitTime());
+    out.writeBoolean(context.isSqueezeCommitInfos());
   }
 
   @Override

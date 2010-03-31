@@ -126,6 +126,11 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
     return lastReplicatedCommitTime;
   }
 
+  public boolean isSqueezeCommitInfos()
+  {
+    return synchronizer.isSqueezeCommitInfos();
+  }
+
   public void handleBranch(CDOBranch branch)
   {
     if (branch.isLocal())

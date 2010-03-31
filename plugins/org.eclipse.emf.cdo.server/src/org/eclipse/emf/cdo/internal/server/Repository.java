@@ -972,7 +972,20 @@ public class Repository extends Container<Object> implements InternalRepository
     branchManager.getBranches(startID, 0, context);
 
     long startTime = context.getLastReplicatedCommitTime() + 1L;
-    commitInfoManager.getCommitInfos(startTime, CDOBranchPoint.UNSPECIFIED_DATE, context);
+    if (context.isSqueezeCommitInfos())
+    {
+      replicateSqueezed(startTime, context);
+    }
+    else
+    {
+      commitInfoManager.getCommitInfos(startTime, CDOBranchPoint.UNSPECIFIED_DATE, context);
+    }
+  }
+
+  private void replicateSqueezed(long startTime, CDOCommitInfoHandler handler)
+  {
+    // TODO: implement Repository.replicateSqueezed(startTime, handler)
+    throw new UnsupportedOperationException();
   }
 
   public CDOChangeSetData getChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint)

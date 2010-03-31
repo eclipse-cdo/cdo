@@ -66,6 +66,8 @@ public class CloneSynchronizer extends QueueRunner
 
   private MasterListener masterListener = new MasterListener();
 
+  private boolean squeezeCommitInfos;
+
   public CloneSynchronizer()
   {
   }
@@ -105,6 +107,16 @@ public class CloneSynchronizer extends QueueRunner
   public CDOSession getMaster()
   {
     return master;
+  }
+
+  public boolean isSqueezeCommitInfos()
+  {
+    return squeezeCommitInfos;
+  }
+
+  public void setSqueezeCommitInfos(boolean squeezeCommitInfos)
+  {
+    this.squeezeCommitInfos = squeezeCommitInfos;
   }
 
   @Override

@@ -22,4 +22,6 @@ public interface CDOReplicationContext extends CDOBranchHandler, CDOCommitInfoHa
   public int getLastReplicatedBranchID();
 
   public long getLastReplicatedCommitTime();
+
+  public boolean isSqueezeCommitInfos();
 }

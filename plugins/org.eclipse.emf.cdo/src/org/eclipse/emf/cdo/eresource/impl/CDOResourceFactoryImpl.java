@@ -39,8 +39,10 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
 
   /**
    * TODO Add TCs to ensure that Ecore internally doesn't change the way the stack is used!!!
+   * 
+   * @since 3.0
    */
-  private boolean isGetResource()
+  protected boolean isGetResource()
   {
     boolean inResourceSet = false;
     StackTraceElement[] elements = Thread.currentThread().getStackTrace();

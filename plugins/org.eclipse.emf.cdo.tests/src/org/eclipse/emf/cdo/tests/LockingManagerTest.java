@@ -586,7 +586,7 @@ public class LockingManagerTest extends AbstractCDOTest
 
     cdoCompany1.cdoWriteLock().lock();
     assertEquals(true, cdoCompany1.cdoWriteLock().isLocked());
-    Company companyFrom2 = (Company)transaction2.getObject(cdoCompany2.cdoID());
+    Company companyFrom2 = (Company)CDOUtil.getEObject(transaction2.getObject(cdoCompany2.cdoID()));
     companyFrom2.setCity("sss");
     transaction2.commit();
     assertEquals(true, cdoCompany1.cdoWriteLock().isLocked());

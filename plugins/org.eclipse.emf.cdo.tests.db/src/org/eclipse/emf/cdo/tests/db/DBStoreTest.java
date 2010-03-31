@@ -136,8 +136,10 @@ public class DBStoreTest extends AbstractCDOTest
 
     assertEquals(cust1ref, cust1);
     assertEquals(cust2ref, cust2);
-
-    CDOUtil.prepareDynamicEPackage(pkg);
+    if (!isConfig(LEGACY))
+    {
+      CDOUtil.prepareDynamicEPackage(pkg);
+    }
 
     {
       EObject obj1 = EcoreUtil.create(clz);

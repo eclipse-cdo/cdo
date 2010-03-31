@@ -13,6 +13,7 @@ package org.eclipse.emf.internal.cdo.query;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.EList;
@@ -51,7 +52,7 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
         return null;
       }
 
-      return (T)getView().getObject((CDOID)object, true);
+      return (T)CDOUtil.getEObject(getView().getObject((CDOID)object, true));
     }
 
     // Support a query return value of Object[]

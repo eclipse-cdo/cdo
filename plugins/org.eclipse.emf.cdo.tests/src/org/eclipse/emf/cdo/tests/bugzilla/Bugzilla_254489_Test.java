@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * CDOTransaction.postCommit not adjusting the Transaction/View reference
  * <p>
@@ -69,7 +71,7 @@ public class Bugzilla_254489_Test extends AbstractCDOTest
       }
     }.assertNoTimeOut();
 
-    Category category2 = (Category)companyA2Adapter.getNotifications()[0].getNewValue();
+    Category category2 = (Category)CDOUtil.getEObject((EObject)companyA2Adapter.getNotifications()[0].getNewValue());
     assertNotSame(category2, category1A);
     assertSame(transaction2, CDOUtil.getCDOObject(category2).cdoView());
   }

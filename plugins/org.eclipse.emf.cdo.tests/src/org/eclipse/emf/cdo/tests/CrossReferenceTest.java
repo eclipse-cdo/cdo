@@ -319,7 +319,7 @@ public class CrossReferenceTest extends AbstractCDOTest
 
     company.getCustomers().remove(customer);
     company.getCustomers().add(customer);
-
+    assertEquals(1, company.getCustomers().size());
     transaction.commit();
   }
 

@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -299,7 +300,11 @@ public class PackageRegistryTest extends AbstractCDOTest
       c.setName("DClass");
 
       p.getEClassifiers().add(c);
-      CDOUtil.prepareDynamicEPackage(p);
+      if (!isConfig(LEGACY))
+      {
+        CDOUtil.prepareDynamicEPackage(p);
+      }
+
       EPackage.Registry.INSTANCE.put(nsURI, p);
 
       CDOSession session = openSession();
@@ -337,6 +342,11 @@ public class PackageRegistryTest extends AbstractCDOTest
       EPackage.Registry.INSTANCE.put(nsURI, p);
 
       CDOSession session = openSession();
+
+      // The default case is that legacy is disabled. For our test bed it is always enabled.
+      // To test the default case we must switch of legacy here.
+      CDOUtil.setLegacyModeDefault(false);
+
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
@@ -347,9 +357,9 @@ public class PackageRegistryTest extends AbstractCDOTest
       transaction.commit();
       session.close();
 
-      fail("Expected: IllegalArgumentException: Use CDOFactory to create dynamic object");
+      fail("LegacyModeNotEnabledException expected");
     }
-    catch (IllegalArgumentException success)
+    catch (LegacyModeNotEnabledException expected)
     {
       // SUCCESS
     }

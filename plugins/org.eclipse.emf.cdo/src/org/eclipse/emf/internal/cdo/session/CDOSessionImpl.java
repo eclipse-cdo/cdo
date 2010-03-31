@@ -63,13 +63,13 @@ import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.QueueRunner;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
-import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
@@ -91,6 +91,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -98,7 +99,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import java.text.MessageFormat;
@@ -109,8 +109,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -956,26 +956,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     getConfiguration().deactivateSession(this);
     super.doDeactivate();
   }
-
-  // private Map<CDOID, CDOIDAndVersion> getAllCDOIDAndVersion()
-  // {
-  // Map<CDOID, CDOIDAndVersion> uniqueObjects = new HashMap<CDOID, CDOIDAndVersion>();
-  // for (InternalCDOView view : getViews())
-  // {
-  // view.getCDOIDAndVersion(uniqueObjects, Arrays.asList(view.getObjectsArray()));
-  // }
-  //
-  // // Need to add Revision from revisionManager since we do not have all objects in view.
-  // for (CDORevision revision : getRevisionManager().getCache().getCurrentRevisions())
-  // {
-  // if (!uniqueObjects.containsKey(revision.getID()))
-  // {
-  // uniqueObjects.put(revision.getID(), CDOIDUtil.createIDAndVersion(revision.getID(), revision.getVersion()));
-  // }
-  // }
-  //
-  // return uniqueObjects;
-  // }
 
   public static boolean isInvalidationRunnerActive()
   {

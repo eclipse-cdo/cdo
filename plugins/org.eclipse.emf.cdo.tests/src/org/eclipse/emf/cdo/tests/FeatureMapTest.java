@@ -111,8 +111,10 @@ public class FeatureMapTest extends AbstractCDOTest
     ExtendedMetaData.INSTANCE.setGroup(bool, fMap);
     ExtendedMetaData.INSTANCE.setGroup(ref1, fMap);
     ExtendedMetaData.INSTANCE.setGroup(ref2, fMap);
-
-    CDOUtil.prepareDynamicEPackage(pkg);
+    if (!isConfig(LEGACY))
+    {
+      CDOUtil.prepareDynamicEPackage(pkg);
+    }
 
     dummyObj = pkg.getEFactoryInstance().create(dummy);
     dummyObj.eSet(name, "DummyName");

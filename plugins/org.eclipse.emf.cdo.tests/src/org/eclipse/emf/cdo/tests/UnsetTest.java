@@ -414,8 +414,10 @@ public class UnsetTest extends AbstractCDOTest
         .getEIntegerObject());
     objectElement.setUnsettable(true);
     objectElement.setDefaultValue(42);
-
-    CDOUtil.prepareDynamicEPackage(pkg);
+    if (!isConfig(LEGACY))
+    {
+      CDOUtil.prepareDynamicEPackage(pkg);
+    }
 
     {
       EObject test1 = EcoreUtil.create(cls);

@@ -169,21 +169,21 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   public Point createPointFromString(EDataType eDataType, String initialValue)
   {
-    return (Point)super.createFromString(eDataType, initialValue);
+    return Point.parse(initialValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   public String convertPointToString(EDataType eDataType, Object instanceValue)
   {
-    return super.convertToString(eDataType, instanceValue);
+    return ((Point)instanceValue).toString();
   }
 
   /**

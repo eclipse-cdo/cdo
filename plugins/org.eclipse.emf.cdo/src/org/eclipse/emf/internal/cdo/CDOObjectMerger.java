@@ -42,5 +42,6 @@ public class CDOObjectMerger extends CDORevisionMerger
     }
 
     merge(revision, delta);
+    object.cdoInternalPostLoad();
   }
 }

@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Martin Fluegge - bug 247226: Transparently support legacy models
  */
 package org.eclipse.emf.internal.cdo;
 
@@ -109,6 +110,14 @@ public class CDOMetaWrapper extends CDOObjectWrapper
   public void cdoInternalPostInvalidate()
   {
     throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void cdoInternalPostRollback()
+  {
+    // Do nothing
   }
 
   public void cdoInternalPreCommit()

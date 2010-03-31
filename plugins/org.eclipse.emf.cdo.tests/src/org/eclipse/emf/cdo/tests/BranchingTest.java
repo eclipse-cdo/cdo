@@ -691,7 +691,7 @@ public class BranchingTest extends AbstractCDOTest
 
     CDOID id = CDOUtil.getCDOObject(product).cdoID();
     CDOView view = session.openView();
-    product = (Product1)view.getObject(id);
+    product = (Product1)CDOUtil.getEObject(view.getObject(id));
 
     view.setBranch(subBranch);
 

@@ -30,7 +30,6 @@ import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -1268,7 +1267,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         @Override
         protected void objectInvalidated(InternalCDOObject cdoObject)
         {
-          if (cdoObject instanceof CDOLegacyWrapper)
+          if (CDOUtil.isLegacyObject(cdoObject))
           {
             CDOStateMachine.INSTANCE.read(cdoObject);
           }

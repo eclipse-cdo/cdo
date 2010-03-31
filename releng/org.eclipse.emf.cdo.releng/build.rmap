@@ -28,10 +28,13 @@
 
 	<rm:locator searchPathRef="orbit" failOnError="false"/> <!-- MUST COME BEFORE MODELING! -->
 	<rm:locator searchPathRef="net4j.plus" failOnError="false"/>
+
+	<!--
 	<rm:locator searchPathRef="gef.milestones" failOnError="false"/>
 	<rm:locator searchPathRef="modeling.milestones" failOnError="false"/>
+	<rm:locator searchPathRef="helios.staging" failOnError="false"/>
+	-->
 
-	<!--rm:locator searchPathRef="helios.staging" failOnError="false"/-->
 	<rm:locator searchPathRef="platform.milestones"/>
 
 	<rm:searchPath name="cdo.releng">

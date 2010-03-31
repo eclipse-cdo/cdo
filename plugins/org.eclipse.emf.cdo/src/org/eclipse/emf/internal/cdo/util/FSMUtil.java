@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
+import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -36,7 +37,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -139,6 +139,11 @@ public final class FSMUtil
 
     if (object instanceof InternalEObject)
     {
+      if (!view.isLegacyModeEnabled())
+      {
+        throw new LegacyModeNotEnabledException();
+      }
+
       return adaptLegacy((InternalEObject)object);
     }
 
@@ -175,17 +180,11 @@ public final class FSMUtil
    */
   public static InternalCDOObject adaptLegacy(InternalEObject object)
   {
-    if (object.getClass() == DynamicEObjectImpl.class)
-    {
-      throw new IllegalArgumentException(Messages.getString("FSMUtil.4") + object); //$NON-NLS-1$
-    }
-
     EList<Adapter> adapters = object.eAdapters();
     CDOLegacyAdapter adapter = getLegacyAdapter(adapters);
     if (adapter == null)
     {
-      adapter = new CDOLegacyAdapter();
-      adapters.add(adapter);
+      adapter = new CDOLegacyAdapter(object);
     }
 
     return adapter;

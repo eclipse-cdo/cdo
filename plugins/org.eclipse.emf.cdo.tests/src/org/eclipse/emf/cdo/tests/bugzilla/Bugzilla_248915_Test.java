@@ -79,8 +79,15 @@ public class Bugzilla_248915_Test extends AbstractCDOTest
     CDOResource supplierResource2 = transaction2.getResource("/supplierResource");
     Supplier savedSupplier = (Supplier)supplierResource2.getContents().get(0);
 
-    /* Confirm the presence of supplierResource2 in transaction2's resourceSet */
-    assertEquals(1, transaction2.getResourceSet().getResources().size());
+    if (!isConfig(LEGACY))
+    {
+      /* Confirm the presence of supplierResource2 in transaction2's resourceSet */
+      assertEquals(1, transaction2.getResourceSet().getResources().size());
+    }
+    else
+    {// legacy mode loads the whole tree. So there will be 3 resources
+      assertEquals(2, transaction2.getResourceSet().getResources().size());
+    }
 
     for (PurchaseOrder po : savedSupplier.getPurchaseOrders())
     {

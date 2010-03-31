@@ -30,14 +30,12 @@ import java.sql.Date;
  */
 public class SetFeatureTest extends AbstractCDOTest
 {
-  // TODO clarify the problems with the default
   public void testUnsettableDateNoDefault_SetDefault() throws Exception
   {
     testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableDate(),
         getModel2Package().getUnsettable1_UnsettableDate().getDefaultValue());
   }
 
-  // TODO clarify the problems with the default
   public void testUnsettableStringNoDefault_SetDefault() throws Exception
   {
     testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableString(),
@@ -316,14 +314,12 @@ public class SetFeatureTest extends AbstractCDOTest
         .getNotUnsettableWithDefault_NotUnsettableDouble().getDefaultValue());
   }
 
-  // TODO clarify the problems with the default
   public void testNotUnsettableWithDefaultVAT() throws Exception
   {
     testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
         .getNotUnsettableWithDefault_NotUnsettableVAT(), VAT.VAT7);
   }
 
-  // TODO clarify the problems with the default
   public void testNotUnsettableWithDefaultVAT_SetDefault() throws Exception
   {
     testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
@@ -646,14 +642,12 @@ public class SetFeatureTest extends AbstractCDOTest
         .getDefaultValue());
   }
 
-  // TODO clarify the problems with the default
   public void testUnsettableWithDefaultVAT() throws Exception
   {
     testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
         .getUnsettable2WithDefault_UnsettableVAT(), VAT.VAT7);
   }
 
-  // TODO clarify the problems with the default
   public void testUnsettableWithDefaultVAT_SetDefault() throws Exception
   {
     testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
@@ -714,6 +708,9 @@ public class SetFeatureTest extends AbstractCDOTest
           .eIsSet(feature));
 
       session.close();
+
+      // ---------- open new session --------------
+
       session = openSession();
 
       transaction = session.openTransaction();
@@ -743,6 +740,9 @@ public class SetFeatureTest extends AbstractCDOTest
           .eIsSet(feature));
 
       session.close();
+
+      // ---------- open new session --------------
+
       session = openSession();
 
       transaction = session.openTransaction();

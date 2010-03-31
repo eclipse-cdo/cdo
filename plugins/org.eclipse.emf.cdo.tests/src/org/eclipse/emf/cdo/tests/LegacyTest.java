@@ -4,131 +4,53 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Martin Fluegge - recreation of the test case
  */
 package org.eclipse.emf.cdo.tests;
+
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 
 /**
  * @author Eike Stepper
  */
 public class LegacyTest extends AbstractCDOTest
 {
-  // TODO LEGACY
-  // public void testCommit() throws Exception
-  // {
-  // Hook hook = createHook("Mr. Hook");
-  //
-  // CDOSession session = openLegacySession();
-  // CDOTransaction transaction = session.openTransaction();
-  // CDOResource resource = transaction.createResource("/test1");
-  // resource.getContents().add(hook);
-  // transaction.commit();
-  //
-  // CDOObject cdoHook = CDONet4jUtil.getCDOObject(hook);
-  // assertEquals(false, CDOLegacyWrapper.isLegacyProxy(cdoHook));
-  // assertEquals(CDOState.CLEAN, cdoHook.cdoState());
-  // assertEquals(CDOState.CLEAN, resource.cdoState());
-  // session.close();
-  // }
-  //
-  // public void testLoad() throws Exception
-  // {
-  // {
-  // CDOSession session = openLegacySession();
-  // CDOTransaction transaction = session.openTransaction();
-  // CDOResource resource = transaction.createResource("/test1");
-  // resource.getContents().add(createHook("Mr. Hook"));
-  // transaction.commit();
-  // session.close();
-  // }
-  //
-  // CDOSession session = openLegacySession();
-  // CDOTransaction transaction = session.openTransaction();
-  // CDOResource resource = transaction.getResource("/test1");
-  // EList<EObject> contents = resource.getContents();
-  //
-  // Hook hook = (Hook)contents.get(0);
-  // CDOObject cdoHook = CDONet4jUtil.getCDOObject(hook);
-  // assertEquals(false, CDOLegacyWrapper.isLegacyProxy(cdoHook));
-  // assertEquals(CDOState.CLEAN, cdoHook.cdoState());
-  // assertEquals(CDOState.CLEAN, resource.cdoState());
-  //
-  // String name = hook.getName();
-  // assertEquals("Mr. Hook", name);
-  // assertEquals(CDOState.CLEAN, cdoHook.cdoState());
-  // session.close();
-  // }
-  //
-  // public void testReferences() throws Exception
-  // {
-  // {
-  // Hook hook = createHook("Mr. Hook");
-  // EList<Hook> children = hook.getChildren();
-  // children.add(createHook("Hook 1"));
-  // children.add(createHook("Hook 2"));
-  // children.add(createHook("Hook 3"));
-  //
-  // CDOSession session = openLegacySession();
-  // CDOTransaction transaction = session.openTransaction();
-  // CDOResource resource = transaction.createResource("/test1");
-  // resource.getContents().add(hook);
-  // transaction.commit();
-  //
-  // CDOObject cdoHook = CDONet4jUtil.getCDOObject(hook);
-  // assertEquals(false, CDOLegacyWrapper.isLegacyProxy(cdoHook));
-  // assertEquals(CDOState.CLEAN, cdoHook.cdoState());
-  // assertEquals(CDOState.CLEAN, resource.cdoState());
-  // session.close();
-  // }
-  //
-  // CDOSession session = openLegacySession();
-  // CDOTransaction transaction = session.openTransaction();
-  // CDOResource resource = transaction.getResource("/test1");
-  // EList<EObject> contents = resource.getContents();
-  //
-  // Hook hook = (Hook)contents.get(0);
-  // assertNotProxy(hook);
-  //
-  // CDOObject cdoHook = CDONet4jUtil.getCDOObject(hook);
-  // assertEquals(false, CDOLegacyWrapper.isLegacyProxy(cdoHook));
-  // assertEquals(CDOState.CLEAN, cdoHook.cdoState());
-  //
-  // EList<Hook> children = hook.getChildren();
-  // assertEquals(CDOState.CLEAN, cdoHook.cdoState());
-  // assertEquals(CDOState.CLEAN, resource.cdoState());
-  //
-  // // TODO Should the proxyURI be null for CLEAN?
-  // // Hook h = children.get(0);
-  // // URI proxyURI = ((InternalEObject)h).eProxyURI();
-  // // assertEquals(null,proxyURI);
-  //
-  // int size = children.size();
-  // assertEquals(3, size);
-  // assertEquals(CDOState.CLEAN, cdoHook.cdoState());
-  //
-  // Hook h0 = children.get(0);
-  // assertNotProxy(h0);
-  // assertEquals("Hook 1", h0.getName());
-  // assertEquals(CDOState.CLEAN, CDONet4jUtil.getCDOObject(h0).cdoState());
-  //
-  // Hook h1 = children.get(1);
-  // assertNotProxy(h1);
-  // assertEquals("Hook 2", h1.getName());
-  // assertEquals(CDOState.CLEAN, CDONet4jUtil.getCDOObject(h1).cdoState());
-  //
-  // Hook h2 = children.get(2);
-  // assertNotProxy(h2);
-  // assertEquals("Hook 3", h2.getName());
-  // assertEquals(CDOState.CLEAN, CDONet4jUtil.getCDOObject(h2).cdoState());
-  // session.close();
-  // }
-  //
-  // private Hook createHook(String name)
-  // {
-  // Hook hook = LegacyFactory.eINSTANCE.createHook();
-  // hook.setName(name);
-  // return hook;
-  // }
+  public void testLegacyModeEnabled() throws Exception
+  {
+    Customer customer = getModel1Factory().createCustomer();
+    customer.setName("Martin Fluegge");
+    customer.setStreet("ABC Street 7");
+    customer.setCity("Berlin");
+
+    CDOSession session = openSession();
+    CDOUtil.setLegacyModeDefault(false);
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+
+    try
+    {
+      resource.getContents().add(customer);
+      transaction.commit();
+
+      if (isConfig(LEGACY))
+      {
+        fail("LegacyModeNotEnabledException expected");
+      }
+    }
+    catch (LegacyModeNotEnabledException ex)
+    {
+      if (!isConfig(LEGACY))
+      {
+        fail("Native mode should not throw an exception here (" + ex.getMessage() + ")");
+      }
+    }
+  }
 }

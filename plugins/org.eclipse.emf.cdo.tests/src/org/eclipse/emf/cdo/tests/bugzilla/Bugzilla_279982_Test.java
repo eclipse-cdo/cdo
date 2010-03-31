@@ -33,7 +33,8 @@ import org.eclipse.emf.ecore.EObject;
 public class Bugzilla_279982_Test extends AbstractCDOTest
 {
   public void testBugzilla_279982_Single() throws Exception
-  {
+  {// as log as there is no getter interception, stale reference cannot be detected for legacy
+    skipConfig(LEGACY);
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource res = tx.getOrCreateResource("/resource1");
@@ -98,7 +99,8 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
   }
 
   public void testBugzilla_279982_Multi() throws Exception
-  {
+  {// as log as there is no getter interception, stale reference cannot be detected for legacy
+    skipConfig(LEGACY);
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource res = tx.getOrCreateResource("/resource1");
@@ -147,7 +149,8 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
   }
 
   public void testBugzilla_279982_Multi_RevisionPrefetchingPolicy() throws Exception
-  {
+  {// as log as there is no getter interception, stale reference cannot be detected for legacy
+    skipConfig(LEGACY);
     CDOSession session = openSession();
     {
       CDOTransaction tx = session.openTransaction();

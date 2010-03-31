@@ -11,7 +11,9 @@
  */
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -30,6 +32,14 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
   public CDOLegacyAdapter()
   {
     super(null);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public CDOLegacyAdapter(InternalEObject object)
+  {
+    super(object);
   }
 
   public void setTarget(Notifier newTarget)
@@ -57,15 +67,18 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
   public void notifyChanged(Notification msg)
   {
-    EStructuralFeature feature = (EStructuralFeature)msg.getFeature();
+    if (msg instanceof CDONotification)
+    {
+      return;
+    }
 
-    if (view == null || feature == null)
+    EStructuralFeature feature = (EStructuralFeature)msg.getFeature();
+    if (view == null || feature == null || !(view instanceof CDOTransaction))
     {
       return;
     }
 
     CDOStore store = view.getStore();
-
     if (EMFUtil.isPersistent(feature))
     {
       switch (msg.getEventType())
@@ -108,17 +121,19 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
       case Notification.REMOVE_MANY:
       {
-        int pos = msg.getPosition();
         @SuppressWarnings("unchecked")
         List<Object> list = (List<Object>)msg.getOldValue();
-        for (int i = 0; i < list.size(); i++)
+        for (int i = list.size() - 1; i >= 0; --i)
         {
-          store.remove(instance, feature, pos);
+          store.remove(instance, feature, i);
         }
 
         break;
       }
       }
+
+      // Align Container for bidirectional references because this is not set in the store. See Bugzilla_246622_Test
+      instanceToRevisionContainment();
     }
   }
 }

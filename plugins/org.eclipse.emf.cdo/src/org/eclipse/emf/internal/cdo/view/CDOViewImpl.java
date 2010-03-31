@@ -72,8 +72,8 @@ import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.collection.FastList;
 import org.eclipse.net4j.util.collection.HashBag;
@@ -100,12 +100,12 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -115,8 +115,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -126,6 +126,8 @@ import java.util.concurrent.locks.ReentrantLock;
 public class CDOViewImpl extends Lifecycle implements InternalCDOView
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
+
+  private final boolean legacyModeEnabled;
 
   private int viewID;
 
@@ -176,6 +178,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   public CDOViewImpl(CDOBranch branch, long timeStamp)
   {
     branchPoint = branch.getPoint(timeStamp);
+    legacyModeEnabled = CDOUtil.isLegacyModeDefault();
     options = createOptions();
   }
 
@@ -203,6 +206,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   public boolean isReadOnly()
   {
     return true;
+  }
+
+  public boolean isLegacyModeEnabled()
+  {
+    return legacyModeEnabled;
   }
 
   public ResourceSet getResourceSet()
@@ -1270,7 +1278,14 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     if (old != null)
     {
-      throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOViewImpl.20"), object)); //$NON-NLS-1$
+      if (CDOUtil.isLegacyObject(object))
+      {
+        OM.LOG.warn("Legacy object has been registered multiple times: " + object);
+      }
+      else
+      {
+        throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOViewImpl.20"), object)); //$NON-NLS-1$
+      }
     }
   }
 

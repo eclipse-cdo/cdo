@@ -901,8 +901,9 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * @ADDED
+   * @since 3.0
    */
-  void setExisting(boolean existing)
+  protected void setExisting(boolean existing)
   {
     this.existing = existing;
   }

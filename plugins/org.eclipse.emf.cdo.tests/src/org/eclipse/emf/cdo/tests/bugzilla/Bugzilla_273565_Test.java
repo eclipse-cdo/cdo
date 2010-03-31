@@ -66,7 +66,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
       {
         CDOSession session = openSession();
         CDOTransaction transaction = session.openTransaction();
-        OrderDetail orderDetail = (OrderDetail)transaction.getObject(id);
+        OrderDetail orderDetail = (OrderDetail)CDOUtil.getEObject(transaction.getObject(id));
 
         try
         {
@@ -272,7 +272,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    OrderDetail orderDetail2 = transaction2.getObject(orderDetail);
+    OrderDetail orderDetail2 = (OrderDetail)CDOUtil.getEObject(transaction2.getObject(orderDetail));
 
     CDOUtil.getCDOObject(orderDetail).cdoWriteLock().lock();
     orderDetail.setPrice(2);

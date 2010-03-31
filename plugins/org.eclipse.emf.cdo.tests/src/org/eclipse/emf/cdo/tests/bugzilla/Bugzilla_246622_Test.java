@@ -46,7 +46,7 @@ public class Bugzilla_246622_Test extends AbstractCDOTest
     EStructuralFeature order_OrderDetailFeature = getModel1Package().getOrder_OrderDetails();
     assertEquals(orderDetail, CDOUtil.getCDOObject(order).cdoRevision().data().get(order_OrderDetailFeature, 0));
 
-    assertEquals(order, CDOUtil.getCDOObject(orderDetail).cdoRevision().data().getContainerID());
+    assertEquals(CDOUtil.getCDOObject(order), CDOUtil.getCDOObject(orderDetail).cdoRevision().data().getContainerID());
 
     Order order2 = getModel1Factory().createOrder();
     OrderDetail orderDetail2 = getModel1Factory().createOrderDetail();

@@ -129,6 +129,7 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
     merger.merge(revision, revisionDelta);
     ((InternalCDOObject)object).cdoInternalSetRevision(revision);
     ((InternalCDOObject)object).cdoInternalSetState(CDOState.DIRTY);
+    ((InternalCDOObject)object).cdoInternalPostLoad();
   }
 
   /**
@@ -239,7 +240,7 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
 
       public List<CDORevisionDelta> getRevisionDeltas(CDOObject notifier)
       {
-        List<CDORevisionDelta> list = deltas.get(notifier);
+        List<CDORevisionDelta> list = deltas.get(CDOUtil.getEObject(notifier));
         if (list == null)
         {
           return Collections.emptyList();

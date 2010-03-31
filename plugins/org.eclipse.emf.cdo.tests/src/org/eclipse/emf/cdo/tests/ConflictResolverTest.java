@@ -60,6 +60,9 @@ public class ConflictResolverTest extends AbstractCDOTest
 
   public void testMergeLocalChangesPerFeature_BasicException() throws Exception
   {
+    // Does not work in legacy as long as there is not getter interception
+    skipConfig(LEGACY);
+
     msg("Opening session");
     CDOSession session = openSession();
 

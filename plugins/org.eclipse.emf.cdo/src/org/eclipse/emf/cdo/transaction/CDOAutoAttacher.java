@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
@@ -60,7 +61,8 @@ public class CDOAutoAttacher extends CDODefaultTransactionHandler
     }
 
     // Persist the graph as well.
-    handle(object, object);
+    EObject obj = CDOUtil.getEObject(object);
+    handle(obj, obj);
   }
 
   @Override
@@ -100,7 +102,7 @@ public class CDOAutoAttacher extends CDODefaultTransactionHandler
       }
       else
       {
-        persist(referrer, element);
+        persist(referrer, CDOUtil.getCDOObject(element));
       }
     }
   }

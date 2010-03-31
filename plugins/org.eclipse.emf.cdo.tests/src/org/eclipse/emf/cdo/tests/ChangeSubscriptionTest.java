@@ -611,7 +611,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       }
     }.assertNoTimeOut();
 
-    assertInstanceOf(Category.class, oldValue[0]);
+    assertInstanceOf(Category.class, CDOUtil.getEObject((EObject)oldValue[0]));
   }
 
   public void testRemoveManyContained() throws Exception
@@ -740,7 +740,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       }
     }.assertNoTimeOut();
 
-    assertInstanceOf(OrderDetail.class, oldValue[0]);
+    assertInstanceOf(OrderDetail.class, CDOUtil.getEObject((EObject)oldValue[0]));
   }
 
   public void testRemoveManyXRef() throws Exception

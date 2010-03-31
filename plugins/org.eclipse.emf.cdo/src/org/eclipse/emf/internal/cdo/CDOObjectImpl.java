@@ -29,8 +29,8 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -384,6 +384,14 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         revisionToInstanceFeature(this, revision, eFeature);
       }
     }
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void cdoInternalPostRollback()
+  {
+    // Do nothing
   }
 
   public void cdoInternalPreCommit()

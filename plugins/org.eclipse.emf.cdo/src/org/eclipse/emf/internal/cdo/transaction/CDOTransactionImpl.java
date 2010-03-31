@@ -76,10 +76,12 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOViewResourcesEvent;
 
 import org.eclipse.emf.internal.cdo.CDOObjectMerger;
+import org.eclipse.emf.internal.cdo.CDOObjectWrapper;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
@@ -103,19 +105,19 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EContentsEList;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EContentsEList.FeatureIterator;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -132,9 +134,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.WeakHashMap;
-import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
@@ -883,6 +885,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
         CDOTransactionStrategy transactionStrategy = getTransactionStrategy();
         return transactionStrategy.commit(this, progressMonitor);
+      }
+      catch (LegacyModeNotEnabledException ex)
+      {
+        throw ex;
       }
       catch (TransactionException ex)
       {
@@ -2030,8 +2036,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       if (!objects.isEmpty())
       {
+        boolean noLegacy = !isLegacyModeEnabled();
         for (CDOObject object : objects.values())
         {
+          if (noLegacy && object instanceof CDOObjectWrapper)
+          {
+            throw new LegacyModeNotEnabledException();
+          }
+
           ((InternalCDOObject)object).cdoInternalPreCommit();
         }
       }

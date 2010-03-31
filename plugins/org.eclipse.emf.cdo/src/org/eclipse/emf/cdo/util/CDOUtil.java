@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
+import org.eclipse.emf.internal.cdo.CDOObjectWrapper;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.session.CDOCollectionLoadingPolicyImpl;
@@ -60,6 +61,8 @@ import java.util.Iterator;
  */
 public final class CDOUtil
 {
+  private static final ThreadLocal<Boolean> legacyModeDefault = new InheritableThreadLocal<Boolean>();
+
   private CDOUtil()
   {
   }
@@ -399,5 +402,29 @@ public final class CDOUtil
   public static boolean isInvalidationRunnerActive()
   {
     return CDOSessionImpl.isInvalidationRunnerActive();
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static boolean isLegacyObject(EObject object)
+  {
+    return object instanceof CDOObjectWrapper;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static boolean isLegacyModeDefault()
+  {
+    return legacyModeDefault.get();
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static void setLegacyModeDefault(boolean on)
+  {
+    legacyModeDefault.set(on);
   }
 }

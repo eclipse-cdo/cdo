@@ -18,11 +18,15 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
+import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -31,13 +35,17 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
 
 /**
  * @author Eike Stepper
@@ -94,11 +102,6 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
 
   public void cdoInternalSetID(CDOID id)
   {
-    if (id != null && id.isNull())
-    {
-      throw new IllegalArgumentException("id is null"); //$NON-NLS-1$
-    }
-
     if (TRACER.isEnabled())
     {
       TRACER.format("Setting ID: {0} for {1}", id, instance); //$NON-NLS-1$
@@ -148,8 +151,31 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
 
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
   {
-    // TODO Implement method CDOWrapperImpl.cdoInternalDynamicFeature()
-    throw new UnsupportedOperationException("Not yet implemented"); //$NON-NLS-1$
+    return eDynamicFeature(dynamicFeatureID);
+  }
+
+  /**
+   * @since 3.0
+   */
+  protected EStructuralFeature eDynamicFeature(int dynamicFeatureID)
+  {
+    return eClass().getEStructuralFeature(dynamicFeatureID + eStaticFeatureCount());
+  }
+
+  /**
+   * @since 3.0
+   */
+  protected int eStaticFeatureCount()
+  {
+    return eStaticClass().getFeatureCount();
+  }
+
+  /**
+   * @since 3.0
+   */
+  protected final EClass eStaticClass()
+  {
+    return EcorePackage.eINSTANCE.getEObject();
   }
 
   /**
@@ -157,7 +183,13 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
    */
   public CDOLock cdoReadLock()
   {
-    throw new UnsupportedOperationException();
+    if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
+    {
+      return NOOPLockImpl.INSTANCE;
+    }
+
+    // Should we cache the locks ?
+    return new Lock(LockType.READ);
   }
 
   /**
@@ -165,7 +197,13 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
    */
   public CDOLock cdoWriteLock()
   {
-    throw new UnsupportedOperationException();
+    if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
+    {
+      return NOOPLockImpl.INSTANCE;
+    }
+
+    // Should we cache the locks ?
+    return new Lock(LockType.WRITE);
   }
 
   public EList<Adapter> eAdapters()
@@ -320,6 +358,12 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
 
   public boolean eIsSet(EStructuralFeature feature)
   {
+    if (instance.eIsSet(feature) != view.getStore().isSet(this, feature))
+    {
+      // TODO Clarify whether this is always true
+      throw new IllegalStateException("Store isSet should never differ from instance");
+    }
+
     return instance.eIsSet(feature);
   }
 
@@ -416,5 +460,132 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
   public String eURIFragmentSegment(EStructuralFeature feature, EObject object)
   {
     return instance.eURIFragmentSegment(feature, object);
+  }
+
+  /**
+   * @author Martin Flügge
+   * @since 3.0
+   */
+  protected class AdapterListListener implements
+      org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EObservableAdapterList.Listener
+  {
+    public void added(Notifier notifier, Adapter adapter)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Added : {0} to {1} ", adapter, CDOObjectWrapper.this); //$NON-NLS-1$
+      }
+
+      if (!FSMUtil.isTransient(CDOObjectWrapper.this))
+      {
+        cdoView().handleAddAdapter(CDOObjectWrapper.this, adapter);
+      }
+    }
+
+    public void removed(Notifier notifier, Adapter adapter)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Removed : {0} from {1} ", adapter, CDOObjectWrapper.this); //$NON-NLS-1$
+      }
+
+      if (!FSMUtil.isTransient(CDOObjectWrapper.this))
+      {
+        cdoView().handleRemoveAdapter(CDOObjectWrapper.this, adapter);
+      }
+    }
+  }
+
+  /**
+   * @author Martin Fluegge
+   * @since 3.0
+   */
+  private final class Lock implements CDOLock
+  {
+    private LockType type;
+
+    public Lock(LockType type)
+    {
+      this.type = type;
+    }
+
+    public LockType getType()
+    {
+      return type;
+    }
+
+    public boolean isLocked()
+    {
+      return cdoView().isObjectLocked(CDOObjectWrapper.this, type, false);
+    }
+
+    /**
+     * @see org.eclipse.emf.cdo.CDOLock#isLockedByOthers()
+     */
+    public boolean isLockedByOthers()
+    {
+      return cdoView().isObjectLocked(CDOObjectWrapper.this, type, true);
+    }
+
+    public void lock()
+    {
+      try
+      {
+        cdoView().lockObjects(Collections.singletonList(CDOObjectWrapper.this), type, CDOLock.WAIT);
+      }
+      catch (InterruptedException ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+    }
+
+    public void lockInterruptibly() throws InterruptedException
+    {
+      lock();
+    }
+
+    public Condition newCondition()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean tryLock()
+    {
+      try
+      {
+        cdoView().lockObjects(Collections.singletonList(CDOObjectWrapper.this), type, CDOLock.NO_WAIT);
+        return true;
+      }
+      catch (TimeoutRuntimeException ex)
+      {
+        return false;
+      }
+      catch (InterruptedException ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+    }
+
+    /**
+     * @throws InterruptedException
+     *           if timeout is reached.
+     */
+    public boolean tryLock(long time, TimeUnit unit) throws InterruptedException
+    {
+      try
+      {
+        cdoView().lockObjects(Collections.singletonList(CDOObjectWrapper.this), type, unit.toMillis(time));
+        return true;
+      }
+      catch (TimeoutRuntimeException ex)
+      {
+        return false;
+      }
+    }
+
+    public void unlock()
+    {
+      cdoView().unlockObjects(Collections.singletonList(CDOObjectWrapper.this), type);
+    }
   }
 }

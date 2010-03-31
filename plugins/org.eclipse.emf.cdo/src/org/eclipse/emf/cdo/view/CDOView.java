@@ -176,6 +176,11 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
   public ReentrantLock getLock();
 
   /**
+   * @since 3.0
+   */
+  public boolean isLegacyModeEnabled();
+
+  /**
    * Returns always <code>false</code>.
    * <p>
    * This method has a special implementation in {@link CDOTransaction} as well.

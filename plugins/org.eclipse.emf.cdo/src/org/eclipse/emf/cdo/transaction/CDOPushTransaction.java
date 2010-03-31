@@ -306,6 +306,11 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.createResource(path);
   }
 
+  public boolean isLegacyModeEnabled()
+  {
+    return delegate.isLegacyModeEnabled();
+  }
+
   public Set<CDOObject> getConflicts()
   {
     return delegate.getConflicts();

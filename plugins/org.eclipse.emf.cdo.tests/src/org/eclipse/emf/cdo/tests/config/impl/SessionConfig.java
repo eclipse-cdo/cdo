@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
@@ -147,6 +148,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   protected void configureSession(CDOSession session)
   {
+    CDOUtil.setLegacyModeDefault(true);
   }
 
   private void removeDynamicPackagesFromGlobalRegistry()
@@ -241,6 +243,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     @Override
     protected void configureSession(CDOSession session)
     {
+      super.configureSession(session);
       ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().getProtocol().setTimeout(-1);
     }
 

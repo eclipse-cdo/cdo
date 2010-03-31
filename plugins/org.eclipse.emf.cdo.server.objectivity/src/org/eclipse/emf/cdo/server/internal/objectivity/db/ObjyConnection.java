@@ -10,13 +10,18 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
-import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStore;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import java.sql.Connection;
+import com.objy.db.DatabaseNotFoundException;
+import com.objy.db.DatabaseOpenException;
+import com.objy.db.ObjyRuntimeException;
+import com.objy.db.app.Connection;
+import com.objy.db.app.Session;
+import com.objy.db.app.oo;
+
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
@@ -93,6 +98,8 @@ public class ObjyConnection
           );
           System.out.println("OBJY: creating new Connection");
           connection = Connection.open(fdName, oo.openReadWrite);
+          connection.useContextClassLoader(true);
+
         }
         else
         {
@@ -168,7 +175,9 @@ public class ObjyConnection
   public void disconnect()
   {
     if (!isConnected)
+    {
       return;
+    }
     // synchronized(syncObject)
     {
       // it's important to do the lock() call, otherwise during the test-suite
@@ -181,7 +190,7 @@ public class ObjyConnection
       lock.lock();
       if (TRACER_DEBUG.isEnabled())
       {
-        TRACER_DEBUG.trace("ObjyConnection.disconnect() -- Start. " + this.toString());
+        TRACER_DEBUG.trace("ObjyConnection.disconnect() -- Start. " + toString());
       }
 
       // terminate the session and cleanup the Pool.

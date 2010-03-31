@@ -10,10 +10,16 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
-import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import com.objy.as.app.Class_Object;
+import com.objy.db.app.Session;
+import com.objy.db.app.ooContObj;
+import com.objy.db.app.ooDBObj;
+import com.objy.db.app.ooId;
+import com.objy.db.app.ooObj;
 
 /**
  * @author Ibrahim Sallam
@@ -53,7 +59,7 @@ public class ObjyScope
 
   private void init()
   {
-    this.getContainerObj();
+    getContainerObj();
   }
 
   /**

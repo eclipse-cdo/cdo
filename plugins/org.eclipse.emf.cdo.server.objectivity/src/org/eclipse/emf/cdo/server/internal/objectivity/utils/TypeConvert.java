@@ -14,6 +14,10 @@ package org.eclipse.emf.cdo.server.internal.objectivity.utils;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 
+import com.objy.as.app.Class_Object;
+import com.objy.db.app.ooId;
+import com.objy.db.app.ooObj;
+
 /**
  * Originally EOOUtil TBD: verify if we really need this class...
  * 
@@ -30,10 +34,14 @@ public class TypeConvert
     }
     if (target instanceof CDOID)
     {
-      if (((CDOID)target) == CDOID.NULL)
+      if ((CDOID)target == CDOID.NULL)
+      {
         return null;
+      }
       else
+      {
         return OBJYCDOIDUtil.getooId((CDOID)target);
+      }
     }
     if (target instanceof ooId)
     {

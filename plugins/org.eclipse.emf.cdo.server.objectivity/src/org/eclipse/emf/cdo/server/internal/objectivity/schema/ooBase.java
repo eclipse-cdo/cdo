@@ -16,6 +16,14 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.Rel_Copy;
+import com.objy.as.app.Rel_Propagation;
+import com.objy.as.app.Rel_Versioning;
+import com.objy.as.app.d_Access_Kind;
+import com.objy.as.app.d_Module;
+import com.objy.as.app.ooBaseType;
+
 /**
  * EMF Classes in Objectivity are enhanced with this base class. This class is use for the revision data as a base for
  * other classes created.

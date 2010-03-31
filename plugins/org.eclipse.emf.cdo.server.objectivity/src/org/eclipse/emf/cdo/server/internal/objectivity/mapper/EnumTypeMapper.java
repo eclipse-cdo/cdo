@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.as.app.Numeric_Value;
+
 /**
  * @author Simon McDuff
  */
@@ -22,6 +24,7 @@ public class EnumTypeMapper extends NumericTypeMapper.TMInteger
 {
   static EnumTypeMapper INSTANCE = new EnumTypeMapper();
 
+  @Override
   public Object getValue(ObjyObject objyObject, EStructuralFeature feature)
   {
     // Integer intValue = (Integer) super.getValue(objyObject, feature);
@@ -38,6 +41,7 @@ public class EnumTypeMapper extends NumericTypeMapper.TMInteger
     return super.getValue(objyObject, feature);
   }
 
+  @Override
   public void setValue(ObjyObject objyObject, EStructuralFeature feature, Object newValue)
   {
     Integer enumLiteral = (Integer)newValue;

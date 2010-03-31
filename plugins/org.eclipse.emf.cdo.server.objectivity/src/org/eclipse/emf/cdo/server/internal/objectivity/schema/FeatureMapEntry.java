@@ -13,6 +13,15 @@ package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
 
+import com.objy.as.app.Class_Object;
+import com.objy.as.app.Numeric_Value;
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.String_Value;
+import com.objy.as.app.d_Access_Kind;
+import com.objy.as.app.d_Module;
+import com.objy.as.app.ooBaseType;
+import com.objy.db.app.ooId;
+
 public class FeatureMapEntry // extends ooObj
 {
   // caching some details.
@@ -72,7 +81,7 @@ public class FeatureMapEntry // extends ooObj
   public FeatureMapEntry(String tagName, ooId oid, long metaId, ooId near)
   {
     this.tagName = tagName;
-    this.object = oid;
+    object = oid;
     this.metaId = metaId;
 
     classObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(MapEntryClassName).getASClass(), near,
@@ -86,9 +95,9 @@ public class FeatureMapEntry // extends ooObj
     {
       newValue = "";
     }
-    stringValue.set((String)newValue);
+    stringValue.set(newValue);
 
-    classObject.nset_ooId(EntryObject, this.object);
+    classObject.nset_ooId(EntryObject, object);
 
   }
 
@@ -97,14 +106,14 @@ public class FeatureMapEntry // extends ooObj
     this.classObject = classObject;
 
     Numeric_Value numericValue = classObject.nget_numeric(MetaId);
-    this.metaId = numericValue.longValue();
+    metaId = numericValue.longValue();
 
     String_Value value = classObject.nget_string(EntryName);
     // for objy10.0 -> this.tagName = (value == null || value.toString() == null || value.toString().isEmpty()) ? null :
     // value.toString();
-    this.tagName = (value == null || value.toString() == null) ? null : value.toString();
+    tagName = value == null || value.toString() == null ? null : value.toString();
 
-    this.object = classObject.nget_ooId(EntryObject);
+    object = classObject.nget_ooId(EntryObject);
   }
 
   public String getTagName()

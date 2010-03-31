@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyScope;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.OoCommitInfoHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.OoPropertyMapHandler;
 
+import com.objy.db.app.ooId;
+
 public class ObjyDb
 {
 

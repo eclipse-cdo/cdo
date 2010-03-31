@@ -22,6 +22,14 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.as.app.Class_Object;
+import com.objy.as.app.Class_Position;
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.d_Access_Kind;
+import com.objy.as.app.d_Module;
+import com.objy.db.ObjyRuntimeException;
+import com.objy.db.app.ooId;
+
 /***
  * OoResouceList is a specialized ooArrayListId, where all elements are of type Resourc(Node|Folder). The class will
  * allow adding, validating and removing resources From the list.
@@ -93,7 +101,7 @@ public class OoResourceList
   {
     classObject = objyObject.ooClassObject();
     this.objySession = objySession;
-    this.objectId = objyObject.ooId();
+    objectId = objyObject.ooId();
   }
 
   // public OoResourceList(ObjySession objySession, Class_Object classObject)
@@ -105,7 +113,9 @@ public class OoResourceList
   private ooArrayListId getList()
   {
     if (list != null)
+    {
       return list;
+    }
 
     try
     {
@@ -159,7 +169,7 @@ public class OoResourceList
       ObjyObject resource = getResource(i);
       CDOID resourceFolderId = (CDOID)resource.getEContainer();
       String resourceName = OoResourceList.getResourceName(resource);
-      if ((resourceFolderId != null) && resourceFolderId.equals(folderId) && (resourceName != null)
+      if (resourceFolderId != null && resourceFolderId.equals(folderId) && resourceName != null
           && resourceName.equals(name))
       {
         throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder: " + folderId); //$NON-NLS-1$

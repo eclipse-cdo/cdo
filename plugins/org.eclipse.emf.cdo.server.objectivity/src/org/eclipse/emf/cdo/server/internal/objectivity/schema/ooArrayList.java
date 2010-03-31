@@ -12,6 +12,11 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 
+import com.objy.as.app.Class_Object;
+import com.objy.as.app.Numeric_Value;
+import com.objy.as.app.VArray_Object;
+import com.objy.db.app.ooId;
+
 /**
  * @author Simon McDuff
  */

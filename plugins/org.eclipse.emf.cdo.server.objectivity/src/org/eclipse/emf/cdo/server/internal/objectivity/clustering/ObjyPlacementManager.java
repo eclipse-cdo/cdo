@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.db.app.ooId;
+
 public interface ObjyPlacementManager
 {
   ooId getNearObject(ObjyObject parent, EStructuralFeature feature, EClass newClassObject);

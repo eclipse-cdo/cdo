@@ -11,6 +11,11 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 
+import com.objy.db.app.OneToMany;
+import com.objy.db.app.Relationship;
+import com.objy.db.app.ToManyRelationship;
+import com.objy.db.app.ooObj;
+
 import java.util.ArrayList;
 import java.util.List;
 

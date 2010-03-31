@@ -33,6 +33,10 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 
+import com.objy.as.app.d_Attribute;
+import com.objy.as.app.d_Class;
+import com.objy.as.app.d_Module;
+
 import java.util.HashMap;
 
 /**
@@ -155,7 +159,9 @@ public class ObjySchema
     ObjyClass objyClass = mapOfObjyClasses.get(className);
 
     if (objyClass != null)
+    {
       return objyClass;
+    }
 
     // create the ObjyClass and hash it.
     synchronized (getTopModule())
@@ -276,7 +282,9 @@ public class ObjySchema
     if (getTopModule().resolve_proposed_class(className) == null)
     {
       if (TRACER_DEBUG.isEnabled())
+      {
         TRACER_DEBUG.trace("Creating new class: " + className);
+      }
 
       // start schema creation.
       // System.out.println("OBJY: starting schema creation for class: " + className);

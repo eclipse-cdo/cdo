@@ -18,6 +18,16 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.as.app.Class_Object;
+import com.objy.as.app.Class_Position;
+import com.objy.as.app.Numeric_Value;
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.VArray_Object;
+import com.objy.as.app.d_Access_Kind;
+import com.objy.as.app.d_Attribute;
+import com.objy.as.app.d_Type;
+import com.objy.as.app.ooBaseType;
+
 /**
  * @author Simon McDuff
  */
@@ -42,7 +52,9 @@ public class ByteArrayTypeMapper extends BasicTypeMapper implements ISingleTypeM
     boolean isNull = objyObject.get_numeric(nullPosition).booleanValue();
 
     if (isNull)
+    {
       return null;
+    }
 
     int size = (int)vArray.size();
     byte byteArray[] = new byte[size];
@@ -60,7 +72,7 @@ public class ByteArrayTypeMapper extends BasicTypeMapper implements ISingleTypeM
     VArray_Object vArray = objyObject.get_varray(position);
 
     Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
-    Numeric_Value isNullValue = ((newValue == null) ? numericTrue : numericFalse);
+    Numeric_Value isNullValue = newValue == null ? numericTrue : numericFalse;
 
     objyObject.set_numeric(nullPosition, isNullValue);
 

@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.as.app.Class_Position;
+
 /**
  * mapping between Objy AS class/type and EMF types.
  * 

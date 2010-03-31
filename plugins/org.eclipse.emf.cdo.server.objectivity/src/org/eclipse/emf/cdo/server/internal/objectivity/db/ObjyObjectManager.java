@@ -25,6 +25,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.as.app.Class_Object;
+import com.objy.db.ObjyRuntimeException;
+import com.objy.db.app.ooId;
+
 import java.util.WeakHashMap;
 
 public class ObjyObjectManager
@@ -41,7 +45,7 @@ public class ObjyObjectManager
 
   public ObjyObjectManager(ObjyPlacementManager placementManager)
   {
-    this.globalPlacementManager = placementManager;
+    globalPlacementManager = placementManager;
   }
 
   /**
@@ -138,7 +142,9 @@ public class ObjyObjectManager
   public ObjyObject getObject(CDOID cdoId)
   {
     if (cdoId == null)
+    {
       return null;
+    }
 
     ooId oid = OBJYCDOIDUtil.getooId(cdoId);
     return getObject(oid);
@@ -154,7 +160,9 @@ public class ObjyObjectManager
   {
     ObjyObject objyObject = null;
     if (oid == null)
+    {
       return objyObject;
+    }
 
     // System.out.println("ObjyObjectManager.getObject_ooId("+oid.getStoreString()+")");
     objyObject = idToObjyObjectMap.get(OBJYCDOIDUtil.getLong(oid));

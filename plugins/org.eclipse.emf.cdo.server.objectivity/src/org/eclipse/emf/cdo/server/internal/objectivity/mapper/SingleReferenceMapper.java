@@ -21,6 +21,13 @@ import org.eclipse.emf.cdo.server.internal.objectivity.utils.TypeConvert;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.as.app.Class_Object;
+import com.objy.as.app.Class_Position;
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.d_Access_Kind;
+import com.objy.as.app.d_Attribute;
+import com.objy.db.app.ooId;
+
 /**
  * @author Simon McDuff
  */

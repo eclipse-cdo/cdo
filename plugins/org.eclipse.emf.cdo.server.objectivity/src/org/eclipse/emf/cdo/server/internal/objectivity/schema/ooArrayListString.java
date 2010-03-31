@@ -18,6 +18,17 @@ import org.eclipse.emf.cdo.server.internal.objectivity.mapper.ITypeMapper;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import com.objy.as.app.Class_Object;
+import com.objy.as.app.Numeric_Value;
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.String_Value;
+import com.objy.as.app.VArray_Object;
+import com.objy.as.app.d_Access_Kind;
+import com.objy.as.app.d_Module;
+import com.objy.as.app.ooBaseType;
+import com.objy.db.app.ooId;
+import com.objy.db.app.ooObj;
+
 /**
  * @author Simon McDuff
  */
@@ -154,8 +165,8 @@ public class ooArrayListString
     {
       newValue = "";
     }
-    value.set((String)newValue);
-    embeddedElement.set_numeric(1, (newValue == null) ? ITypeMapper.numericTrue : ITypeMapper.numericFalse);
+    value.set(newValue);
+    embeddedElement.set_numeric(1, newValue == null ? ITypeMapper.numericTrue : ITypeMapper.numericFalse);
   }
 
   protected String getValue(long index)
@@ -169,7 +180,7 @@ public class ooArrayListString
                                                                                               // using magic numbers!!!
     String_Value value = embeddedElement.nget_string(embeddedAttributeName);
     Numeric_Value isNull = embeddedElement.get_numeric(1);
-    return (isNull == ITypeMapper.numericTrue) ? null : value.toString();
+    return isNull == ITypeMapper.numericTrue ? null : value.toString();
   }
 
   public String[] getAll(int index, int chunkSize)
@@ -199,9 +210,13 @@ public class ooArrayListString
       String_Value value = embeddedElement.nget_string(embeddedAttributeName);
       Numeric_Value isNull = embeddedElement.get_numeric(1);
       if (isNull == ITypeMapper.numericTrue)
+      {
         strings[i] = null;
+      }
       else
+      {
         strings[i] = value.toString();
+      }
     }
     return strings;
   }
@@ -212,7 +227,7 @@ public class ooArrayListString
     for (int i = 0; i < getVArray().size(); i++)
     {
       ooId oid = getVArray().get_ooId(i);
-      (ooObj.create_ooObj(oid)).delete();
+      ooObj.create_ooObj(oid).delete();
     }
     getVArray().resize(0);
     cacheSize = 0;
@@ -226,7 +241,7 @@ public class ooArrayListString
 
   private void shiftRight(int index, int sizeToShift)
   {
-    long size = this.cachedSize();
+    long size = cachedSize();
 
     for (long i = size - 1; i >= index; i--)
     {
@@ -238,7 +253,7 @@ public class ooArrayListString
 
   private void shiftLeft(int index)
   {
-    long size = this.cachedSize();
+    long size = cachedSize();
     for (long i = index; i < size - 1; i++)
     {
       setValue(i, getValue(i + 1));
@@ -255,7 +270,7 @@ public class ooArrayListString
   private void grow(int numToAdd)
   {
     long arraySize = cachedSize();
-    long numChunks = ((numToAdd + (int)arraySize) / FixedElementsSize) + 1;
+    long numChunks = (numToAdd + (int)arraySize) / FixedElementsSize + 1;
     long newChunks = numChunks - arraySize;
     if (newChunks > 0)
     {

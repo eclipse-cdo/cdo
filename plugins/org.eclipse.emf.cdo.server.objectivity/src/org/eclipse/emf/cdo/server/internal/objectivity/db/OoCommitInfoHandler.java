@@ -12,8 +12,12 @@ package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.OoCommitInfo;
+
+import com.objy.db.app.Session;
+import com.objy.db.app.ooId;
+import com.objy.db.app.ooObj;
+import com.objy.db.util.ooTreeSetX;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -68,12 +72,18 @@ public class OoCommitInfoHandler
       long timeStamp = ooCommitInfo.getTimeStamp();
       long branchId = ooCommitInfo.getBranchId();
 
-      if (branch != null && (branch.getID() != branchId))
+      if (branch != null && branch.getID() != branchId)
+      {
         getIt = false;
-      if (getIt && (startTime != CDOBranchPoint.UNSPECIFIED_DATE) && (timeStamp < startTime))
+      }
+      if (getIt && startTime != CDOBranchPoint.UNSPECIFIED_DATE && timeStamp < startTime)
+      {
         getIt = false;
-      if (getIt && (endTime != CDOBranchPoint.UNSPECIFIED_DATE) && (timeStamp > endTime))
+      }
+      if (getIt && endTime != CDOBranchPoint.UNSPECIFIED_DATE && timeStamp > endTime)
+      {
         getIt = false;
+      }
 
       if (getIt)
       {
@@ -90,7 +100,7 @@ public class OoCommitInfoHandler
   protected ooTreeSetX getTreeSet()
   {
     ooTreeSetX treeSet = null;
-    treeSet = (ooTreeSetX)Session.getCurrent().getFD().objectFrom(this.commitInfoSetId);
+    treeSet = (ooTreeSetX)Session.getCurrent().getFD().objectFrom(commitInfoSetId);
     return treeSet;
 
   }

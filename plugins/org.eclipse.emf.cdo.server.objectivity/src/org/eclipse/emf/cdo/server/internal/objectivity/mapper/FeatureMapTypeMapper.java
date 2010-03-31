@@ -18,6 +18,15 @@ import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooFeatureMapArrayL
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.as.app.Class_Object;
+import com.objy.as.app.Class_Position;
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.d_Access_Kind;
+import com.objy.as.app.d_Attribute;
+import com.objy.as.app.d_Class;
+import com.objy.db.app.ooId;
+import com.objy.db.app.ooObj;
+
 /**
  * @author Simon McDuff
  */

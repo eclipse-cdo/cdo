@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyScope;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.db.app.ooId;
+
 public class ObjyPlacementManagerImpl implements ObjyPlacementManager
 {
 

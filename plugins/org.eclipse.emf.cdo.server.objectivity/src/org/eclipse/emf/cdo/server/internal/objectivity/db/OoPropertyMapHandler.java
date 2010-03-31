@@ -10,13 +10,17 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
-import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.OoProperty;
+
+import com.objy.db.app.Session;
+import com.objy.db.app.ooId;
+import com.objy.db.app.ooObj;
+import com.objy.db.util.ooMap;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
+import java.util.Map.Entry;
 
 public class OoPropertyMapHandler
 {
@@ -115,7 +119,7 @@ public class OoPropertyMapHandler
   private ooMap getMap()
   {
     ooMap map = null;
-    map = (ooMap)Session.getCurrent().getFD().objectFrom(this.propertyMapId);
+    map = (ooMap)Session.getCurrent().getFD().objectFrom(propertyMapId);
     return map;
   }
 }

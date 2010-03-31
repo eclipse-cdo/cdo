@@ -28,6 +28,8 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 
+import com.objy.db.app.ooId;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,7 +78,9 @@ public class ObjyPlacementManagerLocal
     // the revision could've been processed in case if it's a container
     // object and we reached it while processing another revision.
     if (isIdProcessed(revision.getID()))
+    {
       return;
+    }
 
     // create the object and add it to mapping.
     ObjyObject objyObject = createObjectAndAddToMapping(revision);
@@ -93,7 +97,7 @@ public class ObjyPlacementManagerLocal
     {
       TRACER_DEBUG.trace("Adding object to mapping from " + revision.getID() + " to " + newID);
     }
-    commitContext.addIDMapping((CDOIDTemp)revision.getID(), newID);
+    commitContext.addIDMapping(revision.getID(), newID);
     // keep a track of this mapping.
     idMapper.put(revision.getID(), newID);
 
@@ -103,7 +107,7 @@ public class ObjyPlacementManagerLocal
   protected boolean isIdProcessed(CDOID id)
   {
     // if the ID in the idMapper, then we did process the revision alreay
-    return (idMapper.get(id) != null);
+    return idMapper.get(id) != null;
   }
 
   protected ObjyObject createObject(InternalCDORevision revision)
@@ -124,7 +128,7 @@ public class ObjyPlacementManagerLocal
       }
       else
       {
-        ObjyScope objyScope = new ObjyScope(this.repositoryName, ObjyDb.RESOURCELIST_CONT_NAME);
+        ObjyScope objyScope = new ObjyScope(repositoryName, ObjyDb.RESOURCELIST_CONT_NAME);
         nearObject = objyScope.getScopeContOid();
       }
     }
@@ -174,7 +178,7 @@ public class ObjyPlacementManagerLocal
     // find the new object which is either a container or a resource.
     Object cdoId = revision.getContainerID();
 
-    if ((cdoId instanceof CDOID) && ((CDOID)cdoId) != CDOID.NULL)
+    if (cdoId instanceof CDOID && (CDOID)cdoId != CDOID.NULL)
     {
       nearObject = getOidFromCDOID((CDOID)cdoId);
     }
@@ -196,7 +200,7 @@ public class ObjyPlacementManagerLocal
 
     if (cdoId instanceof AbstractCDOIDLong)
     {
-      oid = OBJYCDOIDUtil.getooId((AbstractCDOIDLong)cdoId);
+      oid = OBJYCDOIDUtil.getooId(cdoId);
     }
     else if (cdoId instanceof CDOIDTemp)
     {
@@ -211,7 +215,9 @@ public class ObjyPlacementManagerLocal
         // create that object since it wasn't created and mapped yet.
         InternalCDORevision containerRevision = newObjectsMap.get(cdoId);
         if (containerRevision != null)
-          oid = (createObjectAndAddToMapping(containerRevision)).ooId();
+        {
+          oid = createObjectAndAddToMapping(containerRevision).ooId();
+        }
       }
     }
 

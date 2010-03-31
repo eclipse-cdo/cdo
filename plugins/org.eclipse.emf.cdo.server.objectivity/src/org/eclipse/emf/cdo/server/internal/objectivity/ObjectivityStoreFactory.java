@@ -16,34 +16,37 @@ import org.eclipse.emf.cdo.server.IStoreFactory;
 
 import org.w3c.dom.Element;
 
-import java.sql.Connection;
-
 public class ObjectivityStoreFactory implements IStoreFactory
 {
 
+  public ObjectivityStoreFactory()
+  {
+  }
+
   public IStore createStore(Element storeConfig)
   {
+    System.out.println(">>> OSF.createStore()");
     // TODO - we might want to initialize Objy with the
     // FD name here!!!
     ObjectivityStoreConfig objyStoreConfig = new ObjectivityStoreConfig(storeConfig);
 
     // open the connection to Objy...
-    if (Connection.current() == null)
-    {
-      try
-      {
-        // Connection.setUserClassLoader(ObjectivityStoreFactory.class.getClassLoader());
-        Connection.open(objyStoreConfig.getFdName(), oo.openReadWrite);
-      }
-      catch (DatabaseOpenException e)
-      {
-        e.printStackTrace();
-      }
-      catch (DatabaseNotFoundException e)
-      {
-        e.printStackTrace();
-      }
-    }
+    // if (Connection.current() == null)
+    // {
+    // try
+    // {
+    // // Connection.setUserClassLoader(ObjectivityStoreFactory.class.getClassLoader());
+    // Connection.open(objyStoreConfig.getFdName(), oo.openReadWrite);
+    // }
+    // catch (DatabaseOpenException e)
+    // {
+    // e.printStackTrace();
+    // }
+    // catch (DatabaseNotFoundException e)
+    // {
+    // e.printStackTrace();
+    // }
+    // }
 
     ObjectivityStore store = new ObjectivityStore(objyStoreConfig);
     return store;

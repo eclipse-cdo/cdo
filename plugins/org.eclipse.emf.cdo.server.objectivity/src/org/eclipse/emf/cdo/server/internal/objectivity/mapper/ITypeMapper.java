@@ -15,6 +15,11 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.as.app.Class_Object;
+import com.objy.as.app.Numeric_Value;
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.d_Attribute;
+
 /**
  * Maps between Objy types (classes and objects), and EMF types.
  * 

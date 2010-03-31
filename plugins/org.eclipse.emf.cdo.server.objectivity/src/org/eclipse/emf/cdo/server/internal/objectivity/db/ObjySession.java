@@ -10,10 +10,12 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
-import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStore;
 import org.eclipse.emf.cdo.server.internal.objectivity.clustering.ObjyPlacementManager;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.OoResourceList;
+
+import com.objy.db.app.Session;
+import com.objy.db.app.oo;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -87,6 +89,7 @@ public class ObjySession extends Session
     return store.getPlacementManager();
   }
 
+  @Override
   public void terminate()
   {
     // System.out.println("OBJY>>> Terminating session... " + this.toString());

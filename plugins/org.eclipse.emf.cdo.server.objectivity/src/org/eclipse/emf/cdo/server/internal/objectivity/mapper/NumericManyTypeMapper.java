@@ -18,6 +18,18 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.as.app.Class_Object;
+import com.objy.as.app.Class_Position;
+import com.objy.as.app.Numeric_Value;
+import com.objy.as.app.Proposed_Basic_Attribute;
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.Proposed_Property;
+import com.objy.as.app.VArray_Object;
+import com.objy.as.app.d_Access_Kind;
+import com.objy.as.app.d_Attribute;
+import com.objy.as.app.d_Class;
+import com.objy.as.app.ooBaseType;
+
 import java.util.Date;
 
 /**
@@ -107,8 +119,10 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     // TODO - we might need to move this to the .objectivity.schema, since it's
     // independent of the model classes.
 
-    if ((getEmbeddedClass() == null) && !createEmbeddedClass())
+    if (getEmbeddedClass() == null && !createEmbeddedClass())
+    {
       return false;
+    }
 
     // create array of embedded class type.
     proposedClass.add_varray_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
@@ -164,9 +178,9 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
   public void setValue(ObjyObject objyObject, EStructuralFeature feature, int index, Object newValue)
   {
     // System.out.println("OBJY: Set value in VArray at index: "+ index + " - value: " + newValue);
-    boolean isNull = (newValue == null);
+    boolean isNull = newValue == null;
     Numeric_Value numericValue = toNumericValue(newValue);
-    Numeric_Value isNullValue = (isNull ? numericTrue : numericFalse);
+    Numeric_Value isNullValue = isNull ? numericTrue : numericFalse;
 
     Class_Object embedded = getArray(objyObject, feature).get_class_obj(index);
 
@@ -216,7 +230,7 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
   {
     int arraySize = size(objyObject, feature);
     // System.out.println("OBJY: Adding object inside VArray at index: "+ index + " - value: " + value);
-    if (index < (arraySize - 1))
+    if (index < arraySize - 1)
     {
       // throw new UnsupportedOperationException("adding object inside VArray?!!... Implement Me!!!");
       // resize the VArray.
@@ -230,8 +244,10 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
         newEmbedded.set_numeric(nullAttributePosition, oldEmbedded.get_numeric(nullAttributePosition));
       }
     }
-    if ((index != -1) && (index > arraySize))
+    if (index != -1 && index > arraySize)
+    {
       throw new UnsupportedOperationException("adding object beyond VArray size()?!!... Implement Me!!!");
+    }
 
     getArray(objyObject, feature).resize(arraySize + 1);
 
@@ -243,11 +259,15 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
   {
     // System.out.println("OBJY: AddAll objects inside VArray at index: "+ index + " - values: " + values);
     int arraySize = size(objyObject, feature);
-    if (index < (arraySize - 1))
+    if (index < arraySize - 1)
+    {
       throw new UnsupportedOperationException("adding objects inside VArray?!!... Implement Me!!!");
+    }
 
-    if ((index != -1) && (index > arraySize))
+    if (index != -1 && index > arraySize)
+    {
       throw new UnsupportedOperationException("adding objects beyond VArray size()?!!... Implement Me!!!");
+    }
 
     int newSize = arraySize + values.length;
     getArray(objyObject, feature).resize(newSize);
@@ -341,7 +361,9 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     {
       Boolean value = null;
       if (!isNull)
+      {
         value = numericValue.booleanValue();
+      }
       return value;
     }
 
@@ -349,9 +371,13 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(false);
+      }
       else
+      {
         return new Numeric_Value(((Boolean)value).booleanValue());
+      }
     }
   }
 
@@ -371,7 +397,9 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     {
       Byte value = null;
       if (!isNull)
+      {
         value = numericValue.byteValue();
+      }
       return value;
 
     }
@@ -380,9 +408,13 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(0);
+      }
       else
+      {
         return new Numeric_Value(((Byte)value).byteValue());
+      }
     }
   }
 
@@ -402,7 +434,9 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     {
       Character value = null;
       if (!isNull)
+      {
         value = numericValue.charValue();
+      }
       return value;
 
     }
@@ -411,9 +445,13 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(0);
+      }
       else
+      {
         return new Numeric_Value(((Character)value).charValue());
+      }
     }
   }
 
@@ -433,7 +471,9 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     {
       Date value = null;
       if (!isNull)
+      {
         value = new Date(numericValue.longValue());
+      }
       return value;
 
     }
@@ -442,9 +482,13 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(0);
+      }
       else
+      {
         return new Numeric_Value(((Date)value).getTime());
+      }
     }
   }
 
@@ -464,7 +508,9 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     {
       Double value = null;
       if (!isNull)
+      {
         value = numericValue.doubleValue();
+      }
       return value;
 
     }
@@ -473,9 +519,13 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(0.0);
+      }
       else
+      {
         return new Numeric_Value(((Double)value).doubleValue());
+      }
     }
   }
 
@@ -495,7 +545,9 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     {
       Float value = null;
       if (!isNull)
+      {
         value = numericValue.floatValue();
+      }
       return value;
 
     }
@@ -504,9 +556,13 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(0.0);
+      }
       else
+      {
         return new Numeric_Value(((Float)value).floatValue());
+      }
     }
 
   }
@@ -527,7 +583,9 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     {
       Integer value = null;
       if (!isNull)
+      {
         value = numericValue.intValue();
+      }
       return value;
     }
 
@@ -535,9 +593,13 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(0);
+      }
       else
+      {
         return new Numeric_Value(((Integer)value).intValue());
+      }
     }
   }
 
@@ -557,7 +619,9 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     {
       Long value = null;
       if (!isNull)
+      {
         value = numericValue.longValue();
+      }
       return value;
 
     }
@@ -566,9 +630,13 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(0);
+      }
       else
+      {
         return new Numeric_Value(((Long)value).longValue());
+      }
     }
   }
 
@@ -588,7 +656,9 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     {
       Short value = null;
       if (!isNull)
+      {
         value = numericValue.shortValue();
+      }
       return value;
     }
 
@@ -596,9 +666,13 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(0);
+      }
       else
+      {
         return new Numeric_Value(((Short)value).shortValue());
+      }
     }
   }
 

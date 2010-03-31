@@ -25,6 +25,13 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.d_Access_Kind;
+import com.objy.as.app.d_Attribute;
+import com.objy.as.app.d_Class;
+import com.objy.as.app.d_Inheritance;
+import com.objy.as.app.d_Module;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -220,9 +227,13 @@ public class ObjyClassProposed
       String localName = ObjySchema.getObjectivityClassName(classifier, false);
       d_Class localDClass = ObjySchema.getTopModule().resolve_class(localName);
       if (localDClass == null)
+      {
         ObjySchema.createObjyClassSchema(classifier, false);
+      }
       else
+      {
         ObjySchema.evolveObjyClassSchema(classifier, false);
+      }
     }
   }
 }

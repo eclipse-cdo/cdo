@@ -10,6 +10,10 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
+import com.objy.as.app.Class_Position;
+import com.objy.as.app.d_Attribute;
+import com.objy.as.app.d_Class;
+
 import java.util.HashMap;
 
 /**
@@ -31,7 +35,7 @@ public class ObjyClass
   public ObjyClass(d_Class asClass/* , EClass eClass */)
   {
     this.asClass = asClass;
-    this.asClassName = asClass.name();
+    asClassName = asClass.name();
   }
 
   public d_Attribute resolve_attribute(String attribute_name)

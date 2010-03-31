@@ -16,6 +16,12 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.as.app.Class_Position;
+import com.objy.as.app.Numeric_Value;
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.String_Value;
+import com.objy.as.app.d_Attribute;
+
 /**
  * @author Ibrahim Sallam
  */
@@ -23,6 +29,7 @@ public class CustomDataTypeMapper extends StringTypeMapper
 {
   public static CustomDataTypeMapper INSTANCE = new CustomDataTypeMapper();
 
+  @Override
   public Object getValue(ObjyObject objyObject, EStructuralFeature feature)
   {
     Class_Position position = getAttributePosition(objyObject, feature);
@@ -41,6 +48,7 @@ public class CustomDataTypeMapper extends StringTypeMapper
     return value;
   }
 
+  @Override
   public void setValue(ObjyObject objyObject, EStructuralFeature feature, Object newValue)
   {
     Class_Position position = getAttributePosition(objyObject, feature);
@@ -53,12 +61,13 @@ public class CustomDataTypeMapper extends StringTypeMapper
     EFactory factory = dataType.getEPackage().getEFactoryInstance();
     String valueAsString = factory.convertToString(dataType, newValue);
 
-    Numeric_Value isNullValue = ((newValue == null) ? numericTrue : numericFalse);
-    String strValue = (newValue == null) ? null : valueAsString;
-    stringValue.set((String)((strValue == null) ? "" : strValue));
+    Numeric_Value isNullValue = newValue == null ? numericTrue : numericFalse;
+    String strValue = newValue == null ? null : valueAsString;
+    stringValue.set((strValue == null ? "" : strValue));
     objyObject.set_numeric(nullPosition, isNullValue);
   }
 
+  @Override
   public Object remove(ObjyObject objyObject, EStructuralFeature feature)
   {
     throw new UnsupportedOperationException("Implement me!!");

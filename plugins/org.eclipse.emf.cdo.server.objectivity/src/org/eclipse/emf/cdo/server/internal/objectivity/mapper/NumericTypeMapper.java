@@ -18,6 +18,18 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.as.app.Basic_Type;
+import com.objy.as.app.Class_Object;
+import com.objy.as.app.Class_Position;
+import com.objy.as.app.Numeric_Value;
+import com.objy.as.app.Proposed_Basic_Attribute;
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.Proposed_Property;
+import com.objy.as.app.d_Access_Kind;
+import com.objy.as.app.d_Attribute;
+import com.objy.as.app.d_Type;
+import com.objy.as.app.ooBaseType;
+
 import java.util.Date;
 
 /**
@@ -154,8 +166,8 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
 
   public void setValue(ObjyObject objyObject, EStructuralFeature feature, Object newValue)
   {
-    boolean isNull = (newValue == null) || (newValue == CDORevisionData.NIL);
-    Numeric_Value isNullValue = (isNull ? numericTrue : numericFalse);
+    boolean isNull = newValue == null || newValue == CDORevisionData.NIL;
+    Numeric_Value isNullValue = isNull ? numericTrue : numericFalse;
     Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
 
     if (!isNull)
@@ -204,7 +216,9 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     {
       Boolean value = null;
       if (!isNull)
+      {
         value = numericValue.booleanValue();
+      }
       return value;
     }
 
@@ -212,9 +226,13 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(false);
+      }
       else
+      {
         return new Numeric_Value(((Boolean)value).booleanValue());
+      }
     }
   }
 
@@ -234,7 +252,9 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     {
       Byte value = null;
       if (!isNull)
+      {
         value = numericValue.byteValue();
+      }
       return value;
 
     }
@@ -243,9 +263,13 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(0);
+      }
       else
+      {
         return new Numeric_Value(((Byte)value).byteValue());
+      }
     }
   }
 
@@ -265,7 +289,9 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     {
       Character value = null;
       if (!isNull)
+      {
         value = numericValue.charValue();
+      }
       return value;
 
     }
@@ -274,9 +300,13 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(0);
+      }
       else
+      {
         return new Numeric_Value(((Character)value).charValue());
+      }
     }
   }
 
@@ -296,7 +326,9 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     {
       Date value = null;
       if (!isNull)
+      {
         value = new Date(numericValue.longValue());
+      }
       return value;
 
     }
@@ -305,9 +337,13 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(0);
+      }
       else
+      {
         return new Numeric_Value(((Date)value).getTime());
+      }
     }
   }
 
@@ -327,7 +363,9 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     {
       Double value = null;
       if (!isNull)
+      {
         value = numericValue.doubleValue();
+      }
       return value;
 
     }
@@ -336,9 +374,13 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(0.0);
+      }
       else
+      {
         return new Numeric_Value(((Double)value).doubleValue());
+      }
     }
   }
 
@@ -358,7 +400,9 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     {
       Float value = null;
       if (!isNull)
+      {
         value = numericValue.floatValue();
+      }
       return value;
 
     }
@@ -367,9 +411,13 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(0.0);
+      }
       else
+      {
         return new Numeric_Value(((Float)value).floatValue());
+      }
     }
 
   }
@@ -390,7 +438,9 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     {
       Integer value = null;
       if (!isNull)
+      {
         value = numericValue.intValue();
+      }
       return value;
     }
 
@@ -398,9 +448,13 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(0);
+      }
       else
+      {
         return new Numeric_Value(((Integer)value).intValue());
+      }
     }
   }
 
@@ -420,7 +474,9 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     {
       Long value = null;
       if (!isNull)
+      {
         value = numericValue.longValue();
+      }
       return value;
 
     }
@@ -429,9 +485,13 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(0);
+      }
       else
+      {
         return new Numeric_Value(((Long)value).longValue());
+      }
     }
   }
 
@@ -451,7 +511,9 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     {
       Short value = null;
       if (!isNull)
+      {
         value = numericValue.shortValue();
+      }
       return value;
     }
 
@@ -459,9 +521,13 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     protected Numeric_Value toNumericValue(Object value)
     {
       if (value == null)
+      {
         return new Numeric_Value(0);
+      }
       else
+      {
         return new Numeric_Value(((Short)value).shortValue());
+      }
     }
   }
 

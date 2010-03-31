@@ -16,6 +16,13 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import com.objy.as.app.Class_Object;
+import com.objy.as.app.Numeric_Value;
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.d_Access_Kind;
+import com.objy.as.app.d_Module;
+import com.objy.as.app.ooBaseType;
+
 /**
  * @author Simon McDuff
  */

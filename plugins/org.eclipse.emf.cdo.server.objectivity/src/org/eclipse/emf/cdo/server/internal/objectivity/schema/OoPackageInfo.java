@@ -11,6 +11,11 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 
+import com.objy.db.app.ManyToOne;
+import com.objy.db.app.Relationship;
+import com.objy.db.app.ToOneRelationship;
+import com.objy.db.app.ooObj;
+
 public class OoPackageInfo extends ooObj
 {
 
@@ -138,14 +143,14 @@ public class OoPackageInfo extends ooObj
   public String getPackageName()
   {
     fetch();
-    return this.name;
+    return name;
   }
 
   // package unique name is Hash of the URI.
   public String getPackageUniqueName()
   {
     fetch();
-    String uriHash = (new Integer(Math.abs(getPackageURI().hashCode()))).toString();
+    String uriHash = new Integer(Math.abs(getPackageURI().hashCode())).toString();
     return uriHash;
   }
 }

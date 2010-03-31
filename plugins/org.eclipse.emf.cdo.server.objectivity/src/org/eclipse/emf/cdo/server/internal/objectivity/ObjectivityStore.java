@@ -41,6 +41,9 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 
+import com.objy.db.app.Connection;
+import com.objy.db.app.ooId;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -97,7 +100,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
   private void initStore(IObjectivityStoreConfig config)
   {
-    this.storeConfig = config;
+    storeConfig = config;
     // the caller already used the StoreConfig to open the connection
     // to the FD so, get the current here.
     objyConnection = ObjyConnection.INSTANCE;
@@ -108,6 +111,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
     // connection to the FD.
     ObjyConnection.INSTANCE.connect(this, storeConfig.getFdName());
+    Connection.current().setUserClassLoader(this.getClass().getClassLoader());
 
     ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.OoPackageInfo");
     ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.OoPackageUnit");
@@ -141,9 +145,13 @@ public class ObjectivityStore extends Store implements IObjectivityStore
       }
       // get OIDs for the CommitInfoTree and the PropertyMap.
       if (commitInfoListId == null)
+      {
         commitInfoListId = ObjyDb.getCommitInfoList();
+      }
       if (propertyMapId == null)
+      {
         propertyMapId = ObjyDb.getPropertyMap();
+      }
 
       ooCommitInfoHandler = new OoCommitInfoHandler(commitInfoListId);
       ooPropertyMapHandler = new OoPropertyMapHandler(propertyMapId);
@@ -256,6 +264,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     }
   }
 
+  @Override
   protected void doDeactivate() throws Exception
   {
     try
@@ -313,13 +322,15 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
   public ObjyPlacementManager getPlacementManager()
   {
-    return this.placementManager;
+    return placementManager;
   }
 
   public void addPackageMapping(String name1, String name2)
   {
     if (packageMapping.get(name1) == null)
+    {
       packageMapping.put(name1, name2);
+    }
   }
 
   public String getPackageMapping(String key)
@@ -344,7 +355,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
   {
     ObjySession objySession = objyConnection.getReadSessionFromPool("Main");
     objySession.begin();
-    Map<String, String> properties = this.ooPropertyMapHandler.getPropertyValues(names);
+    Map<String, String> properties = ooPropertyMapHandler.getPropertyValues(names);
     objySession.commit();
     return properties;
   }
@@ -353,7 +364,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
   {
     ObjySession objySession = objyConnection.getWriteSessionFromPool("Main");
     objySession.begin();
-    this.ooPropertyMapHandler.setPropertyValues(properties);
+    ooPropertyMapHandler.setPropertyValues(properties);
     objySession.commit();
   }
 
@@ -361,7 +372,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
   {
     ObjySession objySession = objyConnection.getWriteSessionFromPool("Main");
     objySession.begin();
-    this.ooPropertyMapHandler.removePropertyValues(names);
+    ooPropertyMapHandler.removePropertyValues(names);
     objySession.commit();
   }
 

@@ -18,6 +18,16 @@ import org.eclipse.emf.cdo.server.internal.objectivity.utils.TypeConvert;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.as.app.Class_Object;
+import com.objy.as.app.Class_Position;
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.d_Access_Kind;
+import com.objy.as.app.d_Attribute;
+import com.objy.as.app.d_Class;
+import com.objy.db.ObjyRuntimeException;
+import com.objy.db.app.ooId;
+import com.objy.db.app.ooObj;
+
 /**
  * @author Simon McDuff
  */
@@ -88,6 +98,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
       list.set(index, TypeConvert.toOoId(newValue));
     }
     else
+    {
       try
       {
         throw new Exception("Trying to setValue for object while the list is null.");
@@ -97,6 +108,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
+    }
 
   }
 
@@ -129,7 +141,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
   {
     ooArrayListId list = getList(objyObject, feature);
 
-    return (int)((list == null) ? 0 : list.size());
+    return (int)(list == null ? 0 : list.size());
   }
 
   public void add(ObjyObject objyObject, EStructuralFeature feature, int index, Object value)
@@ -137,8 +149,11 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
     ooId obj = TypeConvert.toOoId(value);
     ooArrayListId list = getList(objyObject, feature);
     if (list != null)
+    {
       list.add(index, obj);
+    }
     else
+    {
       try
       {
         throw new Exception("Trying to add objects while the list is null.");
@@ -148,6 +163,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
+    }
   }
 
   public void addAll(ObjyObject objyObject, EStructuralFeature feature, int index, Object[] value)
@@ -158,6 +174,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
       list.addAll(index, value);
     }
     else
+    {
       try
       {
         throw new Exception("Trying to addAll objects while the list is null.");
@@ -167,6 +184,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
+    }
 
   }
 
@@ -206,6 +224,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
       list.clear();
     }
     else
+    {
       try
       {
         throw new Exception("Trying to clear objects while the list is null.");
@@ -215,6 +234,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
+    }
 
   }
 
@@ -247,7 +267,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
 
   public Object[] getAll(ObjyObject objyObject, EStructuralFeature feature, int index, int chunkSize)
   {
-    int size = (int)size(objyObject, feature);
+    int size = size(objyObject, feature);
 
     if (chunkSize != -1)
     {
@@ -263,6 +283,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
       ooIds = list.getAll(index, chunkSize);
     }
     else
+    {
       try
       {
         throw new Exception("Trying to getAll objects while the list is null.");
@@ -272,6 +293,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
+    }
 
     return ooIds;
   }

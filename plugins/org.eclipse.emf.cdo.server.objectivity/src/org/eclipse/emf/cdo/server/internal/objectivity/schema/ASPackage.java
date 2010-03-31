@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 
+import com.objy.db.app.ooObj;
+
 /**
  * @author Simon McDuff
  */

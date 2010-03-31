@@ -11,13 +11,16 @@
 
 package org.eclipse.emf.cdo.server.internal.objectivity;
 
-import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.FdManager;
 import org.eclipse.emf.cdo.server.objectivity.IObjectivityStoreConfig;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
+import com.objy.db.app.Session;
+import com.objy.db.app.ooDBObj;
+
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -38,6 +41,7 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
   {
     // TODO - implement me!!!
     // for now we'll just call the default configuration...
+    getFdProperties(storeConfig);
     fdManager.configure();
   }
 
@@ -47,6 +51,7 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
     fdManager.configure(name);
   }
 
+  @Override
   public void doActivate()
   {
     System.out.println("ObjectivityStoreConfig.doActivate()");
@@ -54,6 +59,7 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
     fdManager.configure();
   }
 
+  @Override
   public void doDeactivate()
   {
     System.out.println("ObjectivityStoreConfig.doDeactivate()");
@@ -80,9 +86,8 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
       dbObj = (ooDBObj)itr.next();
       dbList.add(dbObj);
     }
-    itr.close();
-    // session.commit();
-    // session.begin();
+    // itr.close();
+
     for (ooDBObj db : dbList)
     {
       System.out.println("restFD() - deleting DB(" + db.getOid().getStoreString() + "):" + db.getName());
@@ -93,4 +98,29 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
     System.out.println("ObjectivityStoreConfig.resetFD() - END.");
   }
 
+  private void getFdProperties(Element storeConfig)
+  {
+    NodeList fdConfigs = storeConfig.getElementsByTagName("fdConfig"); //$NON-NLS-1$
+    if (fdConfigs.getLength() != 1)
+    {
+      throw new IllegalStateException("FD configuration is missing"); //$NON-NLS-1$
+    }
+
+    Element fdConfig = (Element)fdConfigs.item(0);
+    String fdName = fdConfig.getAttribute("name"); //$NON-NLS-1$
+    String lockServerHost = fdConfig.getAttribute("lockServerHost"); //$NON-NLS-1$
+    String fdDirPath = fdConfig.getAttribute("fdDirPath"); //$NON-NLS-1$
+    String dbDirPath = fdConfig.getAttribute("dbDirPath"); //$NON-NLS-1$
+    String fdFileHost = fdConfig.getAttribute("fdFileHost"); //$NON-NLS-1$
+    String fdNumber = fdConfig.getAttribute("fdNumber"); //$NON-NLS-1$
+    String pageSize = fdConfig.getAttribute("pageSize"); //$NON-NLS-1$
+
+    fdManager.setFdName(fdName);
+    fdManager.setFdDirPath(fdDirPath);
+    fdManager.setFdNumber(fdNumber);
+    fdManager.setFdFileHost(fdFileHost);
+    fdManager.setLockServerHost(lockServerHost);
+    fdManager.setPageSize(pageSize);
+
+  }
 }

@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooProxy;
 
+import com.objy.db.app.ooId;
+
 /**
  * TODO - this file was taken from the old code without verification for
  *        all its functionality's requirement to the new code.
@@ -60,7 +62,9 @@ public class OBJYCDOIDUtil
     long value = 0;
 
     if (id != null)
+    {
       value = (long)id.getSlot() << 48 | (long)id.getPage() << 32 | (long)id.getOC() << 16 | id.getDB();
+    }
 
     return value;
   }

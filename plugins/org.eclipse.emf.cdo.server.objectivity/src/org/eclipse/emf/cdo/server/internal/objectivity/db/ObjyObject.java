@@ -40,6 +40,17 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMap;
 
+import com.objy.as.app.Class_Object;
+import com.objy.as.app.Class_Position;
+import com.objy.as.app.Numeric_Value;
+import com.objy.as.app.Relationship_Object;
+import com.objy.as.app.String_Value;
+import com.objy.as.app.VArray_Object;
+import com.objy.db.ObjyRuntimeException;
+import com.objy.db.app.Session;
+import com.objy.db.app.ooId;
+import com.objy.db.app.ooObj;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -78,19 +89,19 @@ public class ObjyObject
       TRACER_DEBUG.format("...classObject type: {0} - oid: {1}", classObject.type_of().name(), classObject.objectID()
           .getStoreString());
     }
-    this.baseRel = classObject.nget_relationship(ooBase.Attribute_base);
+    baseRel = classObject.nget_relationship(ooBase.Attribute_base);
     if (!baseRel.exists())
     {
       // we are the base...
-      this.revisionsRel = classObject.nget_relationship(ooBase.Attribute_revisions);
-      this.lastRevisionRel = classObject.nget_relationship(ooBase.Attribute_lastRevision);
+      revisionsRel = classObject.nget_relationship(ooBase.Attribute_revisions);
+      lastRevisionRel = classObject.nget_relationship(ooBase.Attribute_lastRevision);
     }
     else
     {
       baseClassObject = baseRel.get_class_obj();
       // TODO - we might want to delay getting the list of versions unless we need them.
-      this.revisionsRel = baseClassObject.nget_relationship(ooBase.Attribute_revisions);
-      this.lastRevisionRel = baseClassObject.nget_relationship(ooBase.Attribute_lastRevision);
+      revisionsRel = baseClassObject.nget_relationship(ooBase.Attribute_revisions);
+      lastRevisionRel = baseClassObject.nget_relationship(ooBase.Attribute_lastRevision);
     }
     setObjectId(classObject.objectID());
     objyClass = ObjySchema.getObjyClass(classObject.type_of().name());
@@ -144,7 +155,7 @@ public class ObjyObject
       } // for debugging.
     }
 
-    Class_Position position = this.objyClass.resolve_position(ooBase.Attribute_containerId);
+    Class_Position position = objyClass.resolve_position(ooBase.Attribute_containerId);
     SingleReferenceMapper.INSTANCE.setValue(this, position, containerID);
   }
 
@@ -162,7 +173,7 @@ public class ObjyObject
       } // for debugging.
     }
 
-    Class_Position position = this.objyClass.resolve_position(ooBase.Attribute_containerId);
+    Class_Position position = objyClass.resolve_position(ooBase.Attribute_containerId);
     Object value = SingleReferenceMapper.INSTANCE.getValue(this, position);
 
     return value;
@@ -182,7 +193,7 @@ public class ObjyObject
       } // for debugging.
     }
 
-    Class_Position position = this.objyClass.resolve_position(ooBase.Attribute_containerId);
+    Class_Position position = objyClass.resolve_position(ooBase.Attribute_containerId);
     ooId childOid = get_ooId(position);
     return childOid;
   }
@@ -201,7 +212,7 @@ public class ObjyObject
       } // for debugging.
     }
 
-    Class_Position position = this.objyClass.resolve_position(ooBase.Attribute_resourceId);
+    Class_Position position = objyClass.resolve_position(ooBase.Attribute_resourceId);
     SingleReferenceMapper.INSTANCE.setValue(this, position, resourceID);
 
   }
@@ -220,7 +231,7 @@ public class ObjyObject
       } // for debugging.
     }
 
-    Class_Position position = this.objyClass.resolve_position(ooBase.Attribute_resourceId);
+    Class_Position position = objyClass.resolve_position(ooBase.Attribute_resourceId);
     Object value = SingleReferenceMapper.INSTANCE.getValue(this, position);
 
     return value;
@@ -239,7 +250,7 @@ public class ObjyObject
         ex.printStackTrace();
       } // for debugging.
     }
-    Class_Position position = this.objyClass.resolve_position(ooBase.Attribute_resourceId);
+    Class_Position position = objyClass.resolve_position(ooBase.Attribute_resourceId);
     ooId childOid = get_ooId(position);
     return childOid;
   }
@@ -257,7 +268,7 @@ public class ObjyObject
         ex.printStackTrace();
       } // for debugging.
     }
-    Class_Position position = this.objyClass.resolve_position(ooBase.Attribute_containerFeatureId);
+    Class_Position position = objyClass.resolve_position(ooBase.Attribute_containerFeatureId);
     set_numeric(position, new Numeric_Value(contFeature));
   }
 
@@ -430,7 +441,7 @@ public class ObjyObject
 
       if (TRACER_DEBUG.isEnabled())
       {
-        TRACER_DEBUG.trace("=> ObjyObject.update() - oid:" + this.ooId().getStoreString() + " - version:"
+        TRACER_DEBUG.trace("=> ObjyObject.update() - oid:" + ooId().getStoreString() + " - version:"
             + revision.getVersion());
       }
 
@@ -481,7 +492,7 @@ public class ObjyObject
     {
       if (TRACER_DEBUG.isEnabled())
       {
-        TRACER_DEBUG.trace("=> ObjyObject.update() - oid:" + this.ooId().getStoreString() + " - version:"
+        TRACER_DEBUG.trace("=> ObjyObject.update() - oid:" + ooId().getStoreString() + " - version:"
             + revision.getVersion());
       }
 
@@ -505,7 +516,7 @@ public class ObjyObject
         {
           if (TRACER_DEBUG.isEnabled())
           {
-            TRACER_DEBUG.trace("In " + this.ooId().getStoreString() + " - Can't find mapper for feature "
+            TRACER_DEBUG.trace("In " + ooId().getStoreString() + " - Can't find mapper for feature "
                 + feature.getName());
           }
           continue;
@@ -531,7 +542,7 @@ public class ObjyObject
             {
               System.out.println("value is a proxy object - it should be handled by the mapper.");
               // create an ObjyProxy object to hold the the value.
-              ooProxy proxyObject = ooProxy.createObject(this.ooId());
+              ooProxy proxyObject = ooProxy.createObject(ooId());
               proxyObject.setUri(((CDOIDExternal)value).getURI());
               values[i] = proxyObject.ooId();
 
@@ -554,7 +565,7 @@ public class ObjyObject
               {
                 System.out.println("value is a proxy object - it should be handled by the mapper.");
                 // create an ObjyProxy object to hold the the value.
-                ooProxy proxyObject = ooProxy.createObject(this.ooId());
+                ooProxy proxyObject = ooProxy.createObject(ooId());
                 proxyObject.setUri(((CDOIDExternal)entryValue).getURI());
                 oid = proxyObject.ooId();
               }
@@ -567,7 +578,7 @@ public class ObjyObject
                 System.out.println("OBJY: don't know what kind of entryValue is this!!! - " + entryValue);
               }
               // FeatureMapEntry is a presistent class.
-              FeatureMapEntry featureMapEntry = new FeatureMapEntry(entryFeature.getName(), oid, metaId, this.objectId);
+              FeatureMapEntry featureMapEntry = new FeatureMapEntry(entryFeature.getName(), oid, metaId, objectId);
               // this.cluster(featureMapEntry);
               values[i] = featureMapEntry;
             }
@@ -602,7 +613,9 @@ public class ObjyObject
   public ObjyObject getLastRevision()
   {
     if (!lastRevisionRel.exists())
+    {
       return this;
+    }
 
     Class_Object lastRevision = lastRevisionRel.get_class_obj();
     return new ObjyObject(lastRevision);
@@ -616,13 +629,16 @@ public class ObjyObject
       // there is a first time for everything...
       return this;
     }
+    Session.getCurrent().setReturn_Class_Object(true);
     // int numRevisions = (int) revisions.size();
     Iterator<Class_Object> itr = revisionsRel.get_iterator();
     while (itr.hasNext())
     {
       objyRevision = new ObjyObject(itr.next());
       if (objyRevision.getVersion() == version)
+      {
         return objyRevision;
+      }
     }
 
     return null;
@@ -630,10 +646,10 @@ public class ObjyObject
 
   private void addToRevisions(ObjyObject objyRevision)
   {
-    this.revisionsRel.add(objyRevision.objectId);
+    revisionsRel.add(objyRevision.objectId);
     // set it as last rev.
-    this.lastRevisionRel.clear(); // Ouch!! performance issue...
-    this.lastRevisionRel.form(objyRevision.objectId);
+    lastRevisionRel.clear(); // Ouch!! performance issue...
+    lastRevisionRel.form(objyRevision.objectId);
   }
 
   /****
@@ -682,11 +698,10 @@ public class ObjyObject
     {
       if (TRACER_DEBUG.isEnabled())
       {
-        TRACER_DEBUG.trace("=> ObjyObject.fetch() - oid:" + this.ooId().getStoreString() + " version:"
-            + this.getVersion());
+        TRACER_DEBUG.trace("=> ObjyObject.fetch() - oid:" + ooId().getStoreString() + " version:" + getVersion());
       }
       // Put the version of the objects;
-      revision.setVersion(this.getVersion());
+      revision.setVersion(getVersion());
       revision.setContainerID(getEContainer());
       revision.setResourceID((CDOID)getEResource());
       revision.setContainingFeatureID(getEContainingFeature());
@@ -707,7 +722,9 @@ public class ObjyObject
           int featureSize = size(feature);
           int chunkSize = featureSize;
           if (listChunk != CDORevision.UNCHUNKED)
+          {
             chunkSize = Math.min(chunkSize, listChunk);
+          }
 
           Object[] objects = getAll(feature, 0, chunkSize);
           // if (size > 0)
@@ -770,7 +787,7 @@ public class ObjyObject
                     + " - metaId: " + metaId);
                 // get the entry feature using the metaId.
                 EStructuralFeature entryFeature = (EStructuralFeature)storeAccessor.getMetaInstance(metaId);
-                FeatureMap.Entry entry = (FeatureMap.Entry)CDORevisionUtil.createFeatureMapEntry(entryFeature, cdoId);
+                FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, cdoId);
                 // for verifications...
                 entryFeature = entry.getEStructuralFeature();
                 Object entryValue = entry.getValue();
@@ -789,9 +806,9 @@ public class ObjyObject
               }
             }
             // fill the rest if needed.
-            if ((featureSize - chunkSize) > 0)
+            if (featureSize - chunkSize > 0)
             {
-              for (int i = 0; i < (featureSize - chunkSize); i++)
+              for (int i = 0; i < featureSize - chunkSize; i++)
               {
                 list.add(InternalCDOList.UNINITIALIZED);
               }
@@ -849,7 +866,7 @@ public class ObjyObject
       if (TRACER_DEBUG.isEnabled())
       {
         TRACER_DEBUG.trace("=> ObjyObject.fetch() - feature:" + feature.getName() + "from Object: "
-            + this.ooId().getStoreString() + " version:" + this.getVersion());
+            + ooId().getStoreString() + " version:" + getVersion());
       }
       int featureSize = size(feature);
       chunkSize = Math.min(featureSize - startIndex, chunkSize);
@@ -901,7 +918,7 @@ public class ObjyObject
                 + " - metaId: " + metaId);
             // get the entry feature using the metaId.
             EStructuralFeature entryFeature = (EStructuralFeature)storeAccessor.getMetaInstance(metaId);
-            FeatureMap.Entry entry = (FeatureMap.Entry)CDORevisionUtil.createFeatureMapEntry(entryFeature, cdoId);
+            FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, cdoId);
             // for verifications...
             entryFeature = entry.getEStructuralFeature();
             Object entryValue = entry.getValue();
@@ -941,7 +958,7 @@ public class ObjyObject
       } // for debugging.
     }
 
-    Class_Position position = this.objyClass().resolve_position(feature.getName());
+    Class_Position position = objyClass().resolve_position(feature.getName());
 
     IManyTypeMapper mapper = (IManyTypeMapper)ObjyMapper.INSTANCE.getTypeMapper(feature);
 
@@ -950,7 +967,7 @@ public class ObjyObject
     if (TRACER_DEBUG.isEnabled())
     {
       // TODO - verify the message.
-      TRACER_DEBUG.trace("Size of object " + this.ooId().getStoreString() + " - is: " + size + " - feature: "
+      TRACER_DEBUG.trace("Size of object " + ooId().getStoreString() + " - is: " + size + " - feature: "
           + feature.getName());
     }
     return size;
@@ -988,7 +1005,7 @@ public class ObjyObject
     if (TRACER_DEBUG.isEnabled())
     {
       // TODO - verify the message.
-      TRACER_DEBUG.trace("Getting object " + this.objectId.getStoreString() + " <feature ' " + feature.getName() + "':"
+      TRACER_DEBUG.trace("Getting object " + objectId.getStoreString() + " <feature ' " + feature.getName() + "':"
           + feature.getEType() + "> from " + this);
     }
 
@@ -998,9 +1015,13 @@ public class ObjyObject
     ITypeMapper mapper = ObjyMapper.INSTANCE.getTypeMapper(feature);
     Object value = null;
     if (feature.isMany())
+    {
       value = ((IManyTypeMapper)mapper).getValue(this, feature, index);
+    }
     else
+    {
       value = ((ISingleTypeMapper)mapper).getValue(this, feature);
+    }
 
     /**
      * TODO - we might need to convert the object from the mapper to the EMF world. TBD!!
@@ -1035,14 +1056,13 @@ public class ObjyObject
     if (TRACER_DEBUG.isEnabled())
     {
       // TODO - verify the message.
-      TRACER_DEBUG.trace("Get All objects for ID: " + this.ooId().getStoreString() + " <feature ' " + feature/*
-                                                                                                              * .getName(
-                                                                                                              * )
-                                                                                                              */
+      TRACER_DEBUG.trace("Get All objects for ID: " + ooId().getStoreString() + " <feature ' " + feature/*
+                                                                                                         * .getName( )
+                                                                                                         */
           + "':" + feature.getEType() + "> from " + this);
     }
 
-    assert (feature.isMany());
+    assert feature.isMany();
 
     IManyTypeMapper mapper = (IManyTypeMapper)ObjyMapper.INSTANCE.getTypeMapper(feature);
     Object[] values = mapper.getAll(this, feature, startIndex, chunkSize);
@@ -1066,10 +1086,10 @@ public class ObjyObject
 
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.trace("Adding object " + value + " to " + this.ooId().getStoreString());
+      TRACER_DEBUG.trace("Adding object " + value + " to " + ooId().getStoreString());
     }
 
-    assert (feature.isMany());
+    assert feature.isMany();
 
     IManyTypeMapper mapper = (IManyTypeMapper)ObjyMapper.INSTANCE.getTypeMapper(feature);
 
@@ -1101,7 +1121,7 @@ public class ObjyObject
 
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.trace("Clear List for " + this.ooId().getStoreString());
+      TRACER_DEBUG.trace("Clear List for " + ooId().getStoreString());
     }
 
     // Class_Position position = objyClass.resolve_position(feature.getName());
@@ -1147,7 +1167,7 @@ public class ObjyObject
 
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.trace("Remove object from '" + this.ooId().getStoreString() + "' at index " + index);
+      TRACER_DEBUG.trace("Remove object from '" + ooId().getStoreString() + "' at index " + index);
     }
 
     Class_Position position = objyClass.resolve_position(feature.getName());
@@ -1189,7 +1209,7 @@ public class ObjyObject
 
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.trace("Set object '" + this.ooId().getStoreString() + "' feature : " + feature.getName());
+      TRACER_DEBUG.trace("Set object '" + ooId().getStoreString() + "' feature : " + feature.getName());
     }
 
     /*
@@ -1216,7 +1236,9 @@ public class ObjyObject
       ((IManyTypeMapper)mapper).setValue(this, feature, index, value);
     }
     else
+    {
       ((ISingleTypeMapper)mapper).setValue(this, feature, value);
+    }
 
     return value;
   }
@@ -1231,9 +1253,11 @@ public class ObjyObject
 
   protected void checkSession() throws Exception
   {
-    if (!classObject.getPersistor().getSession().isOpen())
-      throw new Exception("Attempt to work on an object without a trx. [Session: "
-          + classObject.getPersistor().getSession() + "]");
+    // if (!classObject.getPersistor().getSession().isOpen())
+    // {
+    // throw new Exception("Attempt to work on an object without a trx. [Session: "
+    // + classObject.getPersistor().getSession() + "]");
+    // }
   }
 
   // public Session getSession()
@@ -1276,8 +1300,10 @@ public class ObjyObject
             ooId oid = (ooId)objects[i];
             // TODO - this code need refactoring....
             ooObj obj = ooObj.create_ooObj(oid);
-            if (obj.isDead()) // object already deleted
+            if (obj.isDead())
+            {
               continue;
+            }
 
             // System.out.println("-->> IS: getting Class_Object from OID: "
             // + childObject.getStoreString());
@@ -1297,7 +1323,7 @@ public class ObjyObject
               ObjyObject childObjyObject = objectManager.getObject(oid);
               ooId containerId = childObjyObject.getEContainerAsOid();
               ooId resourceId = childObjyObject.getEResourceAsOid();
-              if (containerId.equals(this.objectId) || resourceId.equals(this.objectId))
+              if (containerId.equals(objectId) || resourceId.equals(objectId))
               {
                 childObjyObject.setVersion(-1);
               }

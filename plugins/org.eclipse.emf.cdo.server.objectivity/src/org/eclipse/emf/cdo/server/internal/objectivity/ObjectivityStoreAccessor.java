@@ -63,6 +63,9 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import com.objy.db.app.oo;
+import com.objy.db.app.ooId;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -118,7 +121,9 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     /* I believe this is a read session */
     isRead = true;
     if (cdoSession != null)
+    {
       sessionID = cdoSession.getSessionID();
+    }
   }
 
   public ObjectivityStoreAccessor(ObjectivityStore store, ITransaction transaction)
@@ -135,7 +140,9 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     // }
     /* I believe this is a write session */
     if (transaction != null)
+    {
       sessionID = transaction.getSession().getSessionID();
+    }
   }
 
   @Override
@@ -212,12 +219,14 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   private void getObjySession()
   {
     if (objySession != null)
+    {
       return;
+    }
 
     // get a session name.
     String sessionName = "Session_" + sessionID;
 
-    if (isRead && (objySession == null))
+    if (isRead && objySession == null)
     {
       objySession = getStore().getConnection().getReadSessionFromPool(sessionName);
       // System.out.println(">>>>IS:<<<< Getting from Read Pool [name: " + sessionName + " - session:" + objySession +
@@ -243,7 +252,9 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     // System.out.println(">>>>IS:<<<< Returning to pool, session: " + objySession);
     ensureSessionJoin();
     if (objySession.isOpen())
+    {
       objySession.commit();
+    }
     // objySession.returnSessionToPool();
     getStore().getConnection().returnSessionToPool(objySession);
     objySession = null;
@@ -496,9 +507,13 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
         TRACER_DEBUG.trace("Committing ..." + objySession + " nc:" + objySession.nestCount());
       }
       if (objySession.isOpen() == true)
+      {
         objySession.commit();
+      }
       else
+      {
         TRACER_DEBUG.trace("Error: calling objySession.commit() without having an open trx.");
+      }
 
       if (TRACER_DEBUG.isEnabled())
       {
@@ -591,7 +606,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     System.out.println(">>>>IS:<<<< queryResources() for : " + (pathPrefix == null ? "NULL" : pathPrefix)
         + " - exactMatch: " + exactMatch);
     OoResourceList resourceList = objySession.getResourceList();
-    int size = (int)resourceList.size();
+    int size = resourceList.size();
     if (size == 0) // nothing yet.
     {
       CDOID resourceID = OBJYCDOIDUtil.getCDOID(null);
@@ -608,7 +623,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       if (resource != null)
       {
         String resourceName = OoResourceList.getResourceName(resource);
-        if (exactMatch && (pathPrefix != null) && (pathPrefix.equals(resourceName)))
+        if (exactMatch && pathPrefix != null && pathPrefix.equals(resourceName))
         {
           CDOID resourceID = OBJYCDOIDUtil.getCDOID(resource.ooId());
           if (!context.addResource(resourceID))
@@ -619,7 +634,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
             break; // don't continue
           }
         }
-        else if ((pathPrefix == null) && (resourceName == null))
+        else if (pathPrefix == null && resourceName == null)
         {
           CDOID resourceID = OBJYCDOIDUtil.getCDOID(resource.ooId());
           if (!context.addResource(resourceID))
@@ -630,7 +645,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
             break; // don't continue
           }
         }
-        else if (!exactMatch && (resourceName != null))
+        else if (!exactMatch && resourceName != null)
         {
           if (resourceName.startsWith(pathPrefix))
           {
@@ -687,7 +702,9 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     ObjyObject objyObject = getObject(id);
     if (objyObject == null)
+    {
       return null;
+    }
 
     ObjyObject objyRevision = objyObject.getLastRevision();
 
@@ -733,13 +750,19 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     ObjyObject objyObject = getObject(id);
     if (objyObject == null)
+    {
       return null;
+    }
 
     ObjyObject objyRevision = null;
     if (getStore().isRequiredToSupportAudits())
+    {
       objyRevision = objyObject.getRevision(branchVersion.getVersion());
+    }
     else
+    {
       objyRevision = objyObject.getLastRevision();
+    }
 
     if (TRACER_DEBUG.isEnabled())
     {
@@ -759,7 +782,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     boolean ok = objyRevision.fetch(this, revision, listChunk);
 
-    if (ok && (objyRevision.getVersion() != branchVersion.getVersion()))
+    if (ok && objyRevision.getVersion() != branchVersion.getVersion())
     {
       throw new IllegalStateException("Can only retrieve current version " + revision.getVersion() + " for " + //$NON-NLS-1$ //$NON-NLS-2$ 
           id + " - version requested was " + branchVersion + "."); //$NON-NLS-1$ //$NON-NLS-2$
@@ -851,7 +874,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   private void ensureSessionJoin()
   {
     // we better have a session for this store.
-    assert (objySession != null);
+    assert objySession != null;
     objySession.join();
   }
 

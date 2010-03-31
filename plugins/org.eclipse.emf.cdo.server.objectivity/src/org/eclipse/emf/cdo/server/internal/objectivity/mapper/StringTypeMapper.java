@@ -16,6 +16,16 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.as.app.Class_Object;
+import com.objy.as.app.Class_Position;
+import com.objy.as.app.Numeric_Value;
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.String_Value;
+import com.objy.as.app.d_Access_Kind;
+import com.objy.as.app.d_Attribute;
+import com.objy.as.app.ooBaseType;
+import com.objy.db.ObjyRuntimeException;
+
 /**
  * @author Simon McDuff
  */
@@ -23,6 +33,7 @@ public class StringTypeMapper extends BasicTypeMapper implements ISingleTypeMapp
 {
   public static StringTypeMapper INSTANCE = new StringTypeMapper();
 
+  @Override
   protected String getNullAttributeName(EStructuralFeature feature)
   {
     return feature.getName() + "_isNull";
@@ -61,16 +72,18 @@ public class StringTypeMapper extends BasicTypeMapper implements ISingleTypeMapp
     Object value = null;
 
     if (!isNull)
+    {
       value = stringValue.toString();
-    // else if (feature.isUnsettable())
-    // value = CDORevisionData.NIL;
+      // else if (feature.isUnsettable())
+      // value = CDORevisionData.NIL;
+    }
 
     return value;
   }
 
   public void setValue(ObjyObject objyObject, EStructuralFeature feature, Object newValue)
   {
-    boolean isNull = (newValue == null) || (newValue == CDORevisionData.NIL);
+    boolean isNull = newValue == null || newValue == CDORevisionData.NIL;
     Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
 
     if (!isNull)
@@ -80,7 +93,7 @@ public class StringTypeMapper extends BasicTypeMapper implements ISingleTypeMapp
       stringValue.update();
       stringValue.set((String)newValue);
     }
-    Numeric_Value isNullValue = ((newValue == null) ? numericTrue : numericFalse);
+    Numeric_Value isNullValue = newValue == null ? numericTrue : numericFalse;
     objyObject.set_numeric(nullPosition, isNullValue);
   }
 

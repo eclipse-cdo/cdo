@@ -17,6 +17,13 @@ import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooArrayListString;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.as.app.Class_Object;
+import com.objy.as.app.Class_Position;
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.d_Access_Kind;
+import com.objy.as.app.d_Attribute;
+import com.objy.db.ObjyRuntimeException;
+
 /**
  * @author Ibrahim Sallam
  */
@@ -56,9 +63,13 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
   protected String stringFromObject(EStructuralFeature feature, Object objectValue)
   {
     if (objectValue instanceof String)
+    {
       return (String)objectValue;
+    }
     else
+    {
       return null;
+    }
   }
 
   protected Object objectFromString(EStructuralFeature feature, String stringValue)
@@ -80,7 +91,7 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
 
   public void add(ObjyObject objyObject, EStructuralFeature feature, int index, Object value)
   {
-    assert (value instanceof String);
+    assert value instanceof String;
     getList(objyObject, feature).add(stringFromObject(feature, value));
   }
 
@@ -114,7 +125,9 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
     Object[] objects = new Object[strings.length];
 
     for (int i = 0; i < strings.length; i++)
+    {
       objects[i] = objectFromString(feature, strings[i]);
+    }
 
     return strings;
   }
@@ -138,9 +151,9 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
 
   public void setValue(ObjyObject objyObject, EStructuralFeature feature, int index, Object newValue)
   {
-    assert (newValue instanceof String);
+    assert newValue instanceof String;
 
-    getList(objyObject, feature).set((long)index, stringFromObject(feature, newValue));
+    getList(objyObject, feature).set(index, stringFromObject(feature, newValue));
   }
 
   public int size(ObjyObject objyObject, EStructuralFeature feature)

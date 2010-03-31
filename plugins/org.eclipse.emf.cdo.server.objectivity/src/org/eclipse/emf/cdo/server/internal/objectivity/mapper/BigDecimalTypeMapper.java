@@ -16,6 +16,12 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.objy.as.app.Class_Position;
+import com.objy.as.app.Numeric_Value;
+import com.objy.as.app.Proposed_Class;
+import com.objy.as.app.String_Value;
+import com.objy.as.app.d_Attribute;
+
 import java.math.BigDecimal;
 
 /**
@@ -25,6 +31,7 @@ public class BigDecimalTypeMapper extends StringTypeMapper
 {
   public static BigDecimalTypeMapper INSTANCE = new BigDecimalTypeMapper();
 
+  @Override
   public Object getValue(ObjyObject objyObject, EStructuralFeature feature)
   {
     Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
@@ -45,12 +52,13 @@ public class BigDecimalTypeMapper extends StringTypeMapper
     return value;
   }
 
+  @Override
   public void setValue(ObjyObject objyObject, EStructuralFeature feature, Object newValue)
   {
     Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
 
-    boolean isNull = (newValue == null) || (newValue == CDORevisionData.NIL);
-    Numeric_Value isNullValue = (isNull ? numericTrue : numericFalse);
+    boolean isNull = newValue == null || newValue == CDORevisionData.NIL;
+    Numeric_Value isNullValue = isNull ? numericTrue : numericFalse;
 
     if (!isNull)
     {
@@ -58,11 +66,12 @@ public class BigDecimalTypeMapper extends StringTypeMapper
       String_Value stringValue = objyObject.get_string(position);
       stringValue.update();
       String strValue = ((BigDecimal)newValue).toString();
-      stringValue.set((String)((strValue == null) ? "" : strValue));
+      stringValue.set((strValue == null ? "" : strValue));
     }
     objyObject.set_numeric(nullPosition, isNullValue);
   }
 
+  @Override
   public Object remove(ObjyObject objyObject, EStructuralFeature feature)
   {
     throw new UnsupportedOperationException("Implement me!!");

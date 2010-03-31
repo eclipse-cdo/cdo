@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 
+import com.objy.db.app.ooObj;
+
 public class OoCommitInfo extends ooObj
 {
   protected int branchId;

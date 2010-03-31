@@ -11,11 +11,19 @@
 
 package org.eclipse.emf.cdo.server.internal.objectivity.utils;
 
-import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import com.objy.db.FetchCompletedWithErrors;
+import com.objy.db.ObjyRuntimeException;
+import com.objy.db.app.Session;
+import com.objy.db.app.oo;
+import com.objy.db.app.ooContObj;
+import com.objy.db.app.ooObj;
+import com.objy.db.iapp.ActivateInfo;
+import com.objy.db.iapp.FetchErrorInfo;
 
 import java.util.Enumeration;
 import java.util.HashSet;

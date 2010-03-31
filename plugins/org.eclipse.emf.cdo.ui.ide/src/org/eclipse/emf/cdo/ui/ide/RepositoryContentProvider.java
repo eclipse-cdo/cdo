@@ -28,11 +28,11 @@ import org.eclipse.emf.cdo.ui.ide.Node.ResourcesNode;
 import org.eclipse.emf.cdo.ui.ide.Node.SessionsNode;
 import org.eclipse.emf.cdo.ui.internal.ide.actions.RemoveResourceActionDelegate;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
-import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
@@ -45,9 +45,9 @@ import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory.Descriptor.Registry;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory.Descriptor.Registry;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.core.resources.IProject;
@@ -359,7 +359,7 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     @Override
     protected void objectInvalidated(InternalCDOObject cdoObject)
     {
-      if (cdoObject instanceof CDOLegacyWrapper)
+      if (CDOUtil.isLegacyObject(cdoObject))
       {
         CDOStateMachine.INSTANCE.read(cdoObject);
       }

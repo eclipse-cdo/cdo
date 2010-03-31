@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Martin Flügge - enhancements
  */
 package org.eclipse.emf.spi.cdo;
 
@@ -38,6 +39,11 @@ public interface InternalCDOObject extends CDOObject, InternalEObject, InternalC
   public void cdoInternalPostDetach(boolean remote);
 
   public void cdoInternalPostInvalidate();
+
+  /**
+   * @since 3.0
+   */
+  public void cdoInternalPostRollback();
 
   public void cdoInternalPreCommit();
 

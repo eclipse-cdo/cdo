@@ -61,7 +61,14 @@ import java.util.Iterator;
  */
 public final class CDOUtil
 {
-  private static final ThreadLocal<Boolean> legacyModeDefault = new InheritableThreadLocal<Boolean>();
+  private static final ThreadLocal<Boolean> legacyModeDefault = new InheritableThreadLocal<Boolean>()
+  {
+    @Override
+    protected Boolean initialValue()
+    {
+      return false;
+    }
+  };
 
   private CDOUtil()
   {

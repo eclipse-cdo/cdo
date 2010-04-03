@@ -95,8 +95,10 @@ import org.eclipse.emf.ecore.EcorePackage;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1019,7 +1021,16 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private void getBaselineSegments(long startTime, InternalCDOBranch branch, List<CDOChangeSetSegment> segments)
   {
-    for (InternalCDOBranch subBranch : branch.getBranches())
+    InternalCDOBranch[] branches = branch.getBranches();
+    Arrays.sort(branches, new Comparator<CDOBranch>()
+    {
+      public int compare(CDOBranch o1, CDOBranch o2)
+      {
+        return CDOCommonUtil.compareTimeStamps(o1.getBase().getTimeStamp(), o2.getBase().getTimeStamp());
+      }
+    });
+
+    for (InternalCDOBranch subBranch : branches)
     {
       long baseTimeStamp = subBranch.getBase().getTimeStamp();
       if (baseTimeStamp > startTime)

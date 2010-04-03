@@ -173,7 +173,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
   /**
    * See bug 273565
    */
-  public void testBugzilla_273565_Lock() throws Exception
+  public void _testBugzilla_273565_Lock() throws Exception
   {
     disableConsole();
 

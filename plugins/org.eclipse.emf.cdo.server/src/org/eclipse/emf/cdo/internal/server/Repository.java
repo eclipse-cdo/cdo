@@ -711,9 +711,6 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  /**
-   * @since 2.0
-   */
   public long createCommitTimeStamp(CDOBranch branch)
   {
     long now = getTimeStamp();
@@ -734,7 +731,6 @@ public class Repository extends Container<Object> implements InternalRepository
         }
       }
 
-      // TODO Don't remember it here, he commit could fail
       lastCommitTimeStamp = now;
       return now;
     }

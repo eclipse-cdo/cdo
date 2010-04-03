@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -80,7 +81,11 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
 
   public InternalCommitContext createCommitContext(InternalTransaction transaction);
 
-  public long createCommitTimeStamp();
+  /**
+   * Returns a commit time stamp that is guaranteed to be unique in the given branch. If <code>null</code> is passed the
+   * time stamp is expected to e used with a new branch, hence will be unique by definition.
+   */
+  public long createCommitTimeStamp(CDOBranch branch);
 
   public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart,
       int chunkEnd);

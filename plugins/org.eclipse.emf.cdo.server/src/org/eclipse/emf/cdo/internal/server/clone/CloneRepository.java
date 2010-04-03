@@ -206,7 +206,7 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
 
   protected InternalCommitContext createBranchingCommitContext(InternalTransaction transaction, CDOBranch branch)
   {
-    long timeStamp = createCommitTimeStamp();
+    long timeStamp = createCommitTimeStamp(null);
     CDOBranch offlineBranch = createOfflineBranch(branch, timeStamp - 1L);
     transaction.setBranchPoint(offlineBranch.getHead());
     return new BranchingCommitContext(transaction, timeStamp);

@@ -50,8 +50,8 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.IndexedList;
-import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -339,7 +339,7 @@ public class TransactionCommitContext implements InternalCommitContext
   protected long createTimeStamp()
   {
     InternalRepository repository = transaction.getSession().getManager().getRepository();
-    return repository.createCommitTimeStamp();
+    return repository.createCommitTimeStamp(getBranchPoint().getBranch());
   }
 
   protected void setTimeStamp(long timeStamp)

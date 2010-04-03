@@ -714,9 +714,15 @@ public class Repository extends Container<Object> implements InternalRepository
   /**
    * @since 2.0
    */
-  public long createCommitTimeStamp()
+  public long createCommitTimeStamp(CDOBranch branch)
   {
     long now = getTimeStamp();
+    if (branch == null)
+    {
+      // Must be unique in a new branch
+      return now;
+    }
+
     synchronized (lastCommitTimeStampLock)
     {
       if (lastCommitTimeStamp != 0)

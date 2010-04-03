@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
  */
 public interface CDOCommitInfoManager
 {
-  public CDOCommitInfo getCommitInfo(long timeStamp);
+  public CDOCommitInfo getCommitInfo(CDOBranch branch, long timeStamp);
 
   public void getCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler);
 

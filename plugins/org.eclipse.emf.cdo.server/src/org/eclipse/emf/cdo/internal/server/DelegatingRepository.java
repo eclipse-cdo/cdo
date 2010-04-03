@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -19,8 +20,8 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
-import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -64,9 +65,9 @@ public abstract class DelegatingRepository implements InternalRepository
     getDelegate().addListener(listener);
   }
 
-  public long createCommitTimeStamp()
+  public long createCommitTimeStamp(CDOBranch branch)
   {
-    return getDelegate().createCommitTimeStamp();
+    return getDelegate().createCommitTimeStamp(branch);
   }
 
   public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart,

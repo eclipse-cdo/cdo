@@ -55,8 +55,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * @author Simon McDuff
@@ -217,7 +217,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
 
   private void readChangeSet(CDOChangeSetSegment segment, List<InternalCDORevision> list, Set<CDOID> ids)
   {
-    long startTime = segment.getStartTime();
+    long startTime = segment.getTimeStamp();
     long endTime = segment.getEndTime();
     boolean listCheckDone = false;
     for (InternalCDORevision revision : list)

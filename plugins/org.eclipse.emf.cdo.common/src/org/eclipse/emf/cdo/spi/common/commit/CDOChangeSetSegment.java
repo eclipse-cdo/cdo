@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.spi.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.internal.common.branch.CDOBranchPointImpl;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
@@ -22,29 +23,26 @@ import java.util.LinkedList;
  * @author Eike Stepper
  * @since 3.0
  */
-public class CDOChangeSetSegment
+public class CDOChangeSetSegment implements CDOBranchPoint
 {
-  private CDOBranch branch;
-
-  private long startTime;
+  private CDOBranchPoint branchPoint;
 
   private long endTime;
 
-  public CDOChangeSetSegment(CDOBranch branch, long startTime, long endTime)
+  public CDOChangeSetSegment(CDOBranch branch, long timeStamp, long endTime)
   {
-    this.branch = branch;
-    this.startTime = startTime;
+    branchPoint = new CDOBranchPointImpl(branch, timeStamp);
     this.endTime = endTime;
   }
 
   public CDOBranch getBranch()
   {
-    return branch;
+    return branchPoint.getBranch();
   }
 
-  public long getStartTime()
+  public long getTimeStamp()
   {
-    return startTime;
+    return branchPoint.getTimeStamp();
   }
 
   public long getEndTime()
@@ -52,15 +50,25 @@ public class CDOChangeSetSegment
     return endTime;
   }
 
+  public CDOBranchPoint getEndPoint()
+  {
+    return getBranch().getPoint(endTime);
+  }
+
   public boolean isOpenEnded()
   {
     return endTime == CDOBranchPoint.UNSPECIFIED_DATE;
   }
 
+  public int compareTo(CDOBranchPoint o)
+  {
+    return branchPoint.compareTo(o);
+  }
+
   @Override
   public String toString()
   {
-    return MessageFormat.format("Segment[{0}, {1}, {2}]", branch, startTime, endTime); //$NON-NLS-1$
+    return MessageFormat.format("Segment[{0}, {1}, {2}]", getBranch(), getTimeStamp(), endTime); //$NON-NLS-1$
   }
 
   public static CDOChangeSetSegment[] createFrom(CDOBranchPoint startPoint, CDOBranchPoint endPoint)

@@ -752,7 +752,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       for (CDOChangeSetSegment segment : segments)
       {
         stmt.setInt(col++, segment.getBranch().getID());
-        stmt.setLong(col++, segment.getStartTime());
+        stmt.setLong(col++, segment.getTimeStamp());
         stmt.setLong(col++, segment.getEndTime());
       }
 

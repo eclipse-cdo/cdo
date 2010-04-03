@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
@@ -36,6 +37,7 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
@@ -50,6 +52,7 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
@@ -93,6 +96,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -986,8 +990,48 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private void replicateSqueezed(long startTime, CDOCommitInfoHandler handler)
   {
-    // TODO: implement Repository.replicateSqueezed(startTime, handler)
-    throw new UnsupportedOperationException();
+    List<CDOChangeSetSegment> segments = getBaselineSegments(startTime);
+    for (CDOChangeSetSegment segment : segments)
+    {
+      CDOChangeSetData changeSet = getChangeSet(segment, segment.getEndPoint());
+      if (!changeSet.isEmpty())
+      {
+        List<CDOPackageUnit> newPackages = Collections.emptyList();
+        CDOCommitData data = new CDOCommitDataImpl(newPackages, changeSet.getNewObjects(), changeSet
+            .getChangedObjects(), changeSet.getDetachedObjects());
+
+        CDOCommitInfo commitInfo = getCommitInfoManager().createCommitInfo(segment.getBranch(), segment.getTimeStamp(),
+            SYSTEM_USER_ID, "<replicated commit>", data); //$NON-NLS-1$
+
+        handler.handleCommitInfo(commitInfo);
+      }
+    }
+  }
+
+  private List<CDOChangeSetSegment> getBaselineSegments(long startTime)
+  {
+    List<CDOChangeSetSegment> segments = new ArrayList<CDOChangeSetSegment>();
+    InternalCDOBranch branch = getBranchManager().getMainBranch();
+    getBaselineSegments(startTime, branch, segments);
+    Collections.sort(segments);
+    return segments;
+  }
+
+  private void getBaselineSegments(long startTime, InternalCDOBranch branch, List<CDOChangeSetSegment> segments)
+  {
+    for (InternalCDOBranch subBranch : branch.getBranches())
+    {
+      long baseTimeStamp = subBranch.getBase().getTimeStamp();
+      if (baseTimeStamp > startTime)
+      {
+        segments.add(new CDOChangeSetSegment(branch, startTime, baseTimeStamp));
+      }
+
+      getBaselineSegments(baseTimeStamp, subBranch, segments);
+      startTime = baseTimeStamp;
+    }
+
+    segments.add(new CDOChangeSetSegment(branch, startTime, CDOBranchPoint.UNSPECIFIED_DATE));
   }
 
   public CDOChangeSetData getChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint)

@@ -560,7 +560,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       int col = 1;
       for (CDOChangeSetSegment segment : segments)
       {
-        stmt.setLong(col++, segment.getStartTime());
+        stmt.setLong(col++, segment.getTimeStamp());
         stmt.setLong(col++, segment.getEndTime());
       }
 

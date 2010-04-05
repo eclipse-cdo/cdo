@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -34,5 +35,13 @@ public class CDOCommitDataImpl extends CDOChangeSetDataImpl implements CDOCommit
   public List<CDOPackageUnit> getNewPackageUnits()
   {
     return newPackageUnits;
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format(
+        "CommitData[newPackageUnits={0}, newObjects={1}, changedObjects={2}, detachedObjects={3}]", //$NON-NLS-1$
+        newPackageUnits.size(), getNewObjects().size(), getChangedObjects().size(), getDetachedObjects().size());
   }
 }

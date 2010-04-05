@@ -247,6 +247,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_LOAD_COMMIT_INFOS:
       return new LoadCommitInfosIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_LOAD_COMMIT_DATA:
+      return new LoadCommitDataIndication(this);
+
     case CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY:
       return new ReplicateRepositoryIndication(this);
 

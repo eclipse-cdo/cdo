@@ -16,11 +16,13 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchPointImpl;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 
 import org.eclipse.net4j.util.CheckUtil;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -89,6 +91,20 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
   {
     loadCommitDataIfNeeded();
     return commitData.getDetachedObjects();
+  }
+
+  @Override
+  public String toString()
+  {
+    String data = null;
+    if (commitData != null)
+    {
+      data = commitData.toString();
+    }
+
+    String timeStamp = CDOCommonUtil.formatTimeStamp(getTimeStamp());
+    return MessageFormat.format(
+        "CommitInfo[{0}, {1}, {2}, {3}, {4}]", getBranch(), timeStamp, getUserID(), getComment(), data); //$NON-NLS-1$
   }
 
   private void loadCommitDataIfNeeded()

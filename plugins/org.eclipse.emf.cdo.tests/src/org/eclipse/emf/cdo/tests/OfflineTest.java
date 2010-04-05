@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
@@ -37,6 +38,7 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -100,7 +102,7 @@ public class OfflineTest extends AbstractCDOTest
     session.close();
   }
 
-  private void checkClone(final long timeStamp, int expectedRevisions) throws InterruptedException
+  protected void checkClone(final long timeStamp, int expectedRevisions) throws InterruptedException
   {
     final InternalRepository repository = getRepository();
     long lastCommitTimeStamp = repository.getLastCommitTimeStamp();
@@ -166,7 +168,7 @@ public class OfflineTest extends AbstractCDOTest
     masterSession.close();
   }
 
-  private void checkEvent(TestListener listener, int newPackageUnits, int newObjects, int changedObjects,
+  protected void checkEvent(TestListener listener, int newPackageUnits, int newObjects, int changedObjects,
       int detachedObjects)
   {
     IEvent[] events = listener.getEvents();
@@ -217,7 +219,7 @@ public class OfflineTest extends AbstractCDOTest
     checkRevision(company, clone, "clone");
   }
 
-  private void checkRevision(EObject object, InternalRepository repository, String location)
+  protected void checkRevision(EObject object, InternalRepository repository, String location)
   {
     // Check if revision arrived in cache
     checkRevision(object, repository.getRevisionManager().getCache().getAllRevisions(), location + " cache");
@@ -230,7 +232,7 @@ public class OfflineTest extends AbstractCDOTest
     }
   }
 
-  private void checkRevision(EObject object, Map<CDOBranch, List<CDORevision>> allRevisions, String location)
+  protected void checkRevision(EObject object, Map<CDOBranch, List<CDORevision>> allRevisions, String location)
   {
     CDORevision revision = CDOUtil.getCDOObject(object).cdoRevision();
     List<CDORevision> revisions = allRevisions.get(revision.getBranch());
@@ -422,6 +424,62 @@ public class OfflineTest extends AbstractCDOTest
     CDOChangeSetData result = transaction.merge(commitInfo, new DefaultCDOMerger.PerFeature.ManyValued());
 
     transaction.commit();
+  }
+
+  public void testSqueezedCommitInfos_Initial() throws Exception
+  {
+    CloneRepository clone = (CloneRepository)getRepository();
+    waitForOnline(clone);
+
+    getOfflineConfig().stopMasterTransport();
+    waitForOffline(clone);
+
+    CDOSession masterSession = openSession(clone.getName() + "_master");
+    CDOTransaction transaction = masterSession.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+
+    for (int i = 0; i < 10; i++)
+    {
+      Company company = getModel1Factory().createCompany();
+      company.setName("Company" + i);
+      resource.getContents().add(company);
+    }
+
+    long timeStamp = transaction.commit().getTimeStamp();
+    msg(timeStamp);
+
+    for (int k = 0; k < 10; k++)
+    {
+      sleep(100);
+      for (int i = 0; i < 10; i++)
+      {
+        Company company = (Company)resource.getContents().get(i);
+        company.setName("Company" + i + "_" + transaction.getBranch().getID() + "_" + k);
+      }
+
+      timeStamp = transaction.commit().getTimeStamp();
+      msg(timeStamp);
+    }
+
+    masterSession.close();
+    getOfflineConfig().startMasterTransport();
+    waitForOnline(clone);
+
+    final List<CDOCommitInfo> result = new ArrayList<CDOCommitInfo>();
+    CDOSession session = openSession();
+    session.getCommitInfoManager().getCommitInfos(null, new CDOCommitInfoHandler()
+    {
+      public void handleCommitInfo(CDOCommitInfo commitInfo)
+      {
+        result.add(commitInfo);
+        commitInfo.getNewPackageUnits();
+      }
+    });
+
+    for (CDOCommitInfo commitInfo : result)
+    {
+      System.out.println("-----> " + commitInfo);
+    }
   }
 
   protected static void waitForOnline(CDOCommonRepository repository)

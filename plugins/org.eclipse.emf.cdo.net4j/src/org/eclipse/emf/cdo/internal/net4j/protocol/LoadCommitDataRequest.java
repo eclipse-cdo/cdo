@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader;
 
 import java.io.IOException;
 
@@ -40,7 +39,6 @@ public class LoadCommitDataRequest extends CDOClientRequest<CDOCommitData>
   @Override
   protected CDOCommitData confirming(CDODataInput in) throws IOException
   {
-    CommitInfoLoader commitInfoLoader = getSession().getCommitInfoManager().getCommitInfoLoader();
-    return commitInfoLoader.loadCommitData(timeStamp);
+    return in.readCDOCommitData();
   }
 }

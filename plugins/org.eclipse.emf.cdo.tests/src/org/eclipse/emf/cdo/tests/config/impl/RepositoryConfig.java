@@ -19,10 +19,10 @@ import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
-import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
@@ -204,6 +204,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
    */
   public static abstract class OfflineConfig extends RepositoryConfig
   {
+    public static final String PROP_TEST_SQUEEZE_COMMIT_INFOS = "test.squeeze.commit.infos";
+
     private static final long serialVersionUID = 1L;
 
     private transient IAcceptor masterAcceptor;
@@ -270,9 +272,21 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       CloneSynchronizer synchronizer = new CloneSynchronizer();
       synchronizer.setMasterFactory(masterFactory);
       synchronizer.setRetryInterval(1);
+      synchronizer.setSqueezeCommitInfos(getTestSqueezeCommitInfos());
 
       IStore store = createStore(name);
       return (InternalRepository)CDOServerUtil.createCloneRepository(name, store, props, synchronizer);
+    }
+
+    protected boolean getTestSqueezeCommitInfos()
+    {
+      Boolean result = (Boolean)getTestProperty(PROP_TEST_SQUEEZE_COMMIT_INFOS);
+      if (result == null)
+      {
+        result = false;
+      }
+
+      return result;
     }
 
     public void startMasterTransport()

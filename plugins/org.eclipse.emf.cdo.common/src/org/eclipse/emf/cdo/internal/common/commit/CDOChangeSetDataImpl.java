@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,5 +75,13 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
   public List<CDOIDAndVersion> getDetachedObjects()
   {
     return detachedObjects;
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat
+        .format(
+            "ChangeSetData[newObjects={0}, changedObjects={1}, detachedObjects={2}]", newObjects.size(), changedObjects.size(), detachedObjects.size()); //$NON-NLS-1$
   }
 }

@@ -100,6 +100,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -992,18 +993,20 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private void replicateSqueezed(long startTime, CDOCommitInfoHandler handler)
   {
+    Set<CDOPackageUnit> replicatedPackageUnits = new HashSet<CDOPackageUnit>();
     List<CDOChangeSetSegment> segments = getBaselineSegments(startTime);
     for (CDOChangeSetSegment segment : segments)
     {
+      List<CDOPackageUnit> newPackages = getPackageUnitsToReplicate(segment, replicatedPackageUnits);
       CDOChangeSetData changeSet = getChangeSet(segment, segment.getEndPoint());
-      if (!changeSet.isEmpty())
+
+      if (!newPackages.isEmpty() || !changeSet.isEmpty())
       {
-        List<CDOPackageUnit> newPackages = Collections.emptyList();
         CDOCommitData data = new CDOCommitDataImpl(newPackages, changeSet.getNewObjects(), changeSet
             .getChangedObjects(), changeSet.getDetachedObjects());
 
         CDOCommitInfo commitInfo = getCommitInfoManager().createCommitInfo(segment.getBranch(), segment.getTimeStamp(),
-            SYSTEM_USER_ID, "<replicated commit>", data); //$NON-NLS-1$
+            SYSTEM_USER_ID, "<replicate squeezed commits>", data); //$NON-NLS-1$
 
         handler.handleCommitInfo(commitInfo);
       }
@@ -1043,6 +1046,26 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     segments.add(new CDOChangeSetSegment(branch, startTime, CDOBranchPoint.UNSPECIFIED_DATE));
+  }
+
+  private List<CDOPackageUnit> getPackageUnitsToReplicate(CDOChangeSetSegment segment, Set<CDOPackageUnit> replicated)
+  {
+    List<CDOPackageUnit> result = new ArrayList<CDOPackageUnit>();
+    InternalCDOPackageRegistry packageRegistry = getPackageRegistry(false);
+
+    long startTime = segment.getTimeStamp();
+    long endTime = segment.getEndTime();
+
+    InternalCDOPackageUnit[] packageUnits = packageRegistry.getPackageUnits(startTime, endTime);
+    for (InternalCDOPackageUnit packageUnit : packageUnits)
+    {
+      if (!packageUnit.isSystem() && replicated.add(packageUnit))
+      {
+        result.add(packageUnit);
+      }
+    }
+
+    return result;
   }
 
   public CDOChangeSetData getChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint)

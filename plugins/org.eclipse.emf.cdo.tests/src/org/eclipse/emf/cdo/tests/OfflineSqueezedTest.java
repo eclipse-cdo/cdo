@@ -10,20 +10,14 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
-
-import java.util.Map;
-
 /**
  * @author Eike Stepper
  */
 public class OfflineSqueezedTest extends OfflineTest
 {
   @Override
-  public synchronized Map<String, Object> getTestProperties()
+  protected boolean isSqueezedCommitInfos()
   {
-    Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(OfflineConfig.PROP_TEST_SQUEEZE_COMMIT_INFOS, true);
-    return testProperties;
+    return true;
   }
 }

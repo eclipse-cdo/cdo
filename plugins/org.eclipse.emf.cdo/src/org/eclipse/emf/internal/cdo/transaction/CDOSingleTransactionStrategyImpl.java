@@ -86,6 +86,7 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
 
     // Needed even for non-dirty transactions to release locks
     commitContext.postCommit(result);
+    transaction.setCommitComment(null);
 
     if (result == null)
     {

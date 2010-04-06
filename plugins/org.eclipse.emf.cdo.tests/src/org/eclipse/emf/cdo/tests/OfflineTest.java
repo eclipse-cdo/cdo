@@ -59,6 +59,19 @@ public class OfflineTest extends AbstractCDOTest
     return repositoryConfig instanceof OfflineConfig;
   }
 
+  protected boolean isSqueezedCommitInfos()
+  {
+    return false;
+  }
+
+  @Override
+  public synchronized Map<String, Object> getTestProperties()
+  {
+    Map<String, Object> testProperties = super.getTestProperties();
+    testProperties.put(OfflineConfig.PROP_TEST_SQUEEZE_COMMIT_INFOS, isSqueezedCommitInfos());
+    return testProperties;
+  }
+
   public void testMasterCommits_ArrivalInClone() throws Exception
   {
     CDOSession session = openSession(getRepository().getName() + "_master");
@@ -445,6 +458,7 @@ public class OfflineTest extends AbstractCDOTest
       resource.getContents().add(company);
     }
 
+    transaction.setCommitComment("Creation");
     long timeStamp = transaction.commit().getTimeStamp();
     msg(timeStamp);
 
@@ -457,6 +471,7 @@ public class OfflineTest extends AbstractCDOTest
         company.setName("Company" + i + "_" + transaction.getBranch().getID() + "_" + k);
       }
 
+      transaction.setCommitComment("Modification");
       timeStamp = transaction.commit().getTimeStamp();
       msg(timeStamp);
     }
@@ -479,6 +494,15 @@ public class OfflineTest extends AbstractCDOTest
     for (CDOCommitInfo commitInfo : result)
     {
       System.out.println("-----> " + commitInfo);
+    }
+
+    if (isSqueezedCommitInfos())
+    {
+      assertEquals(2, result.size());
+    }
+    else
+    {
+      assertEquals(12, result.size());
     }
   }
 

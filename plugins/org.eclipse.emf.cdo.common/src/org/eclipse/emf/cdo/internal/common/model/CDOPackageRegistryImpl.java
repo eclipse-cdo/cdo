@@ -413,7 +413,10 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
   public InternalCDOPackageUnit[] getPackageUnits(long startTime, long endTime)
   {
     LifecycleUtil.checkActive(this);
-    CheckUtil.checkArg(endTime != CDOBranchPoint.UNSPECIFIED_DATE, "endTime"); //$NON-NLS-1$
+    if (endTime == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      endTime = Long.MAX_VALUE;
+    }
 
     Set<InternalCDOPackageUnit> result = new HashSet<InternalCDOPackageUnit>();
     for (Object value : values())

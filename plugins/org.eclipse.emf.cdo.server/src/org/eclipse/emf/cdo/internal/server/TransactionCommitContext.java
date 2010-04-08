@@ -575,7 +575,7 @@ public class TransactionCommitContext implements InternalCommitContext
     InternalRepository repository = transaction.getRepository();
     InternalCDORevisionManager revisionManager = repository.getRevisionManager();
 
-    InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, delta, CDORevision.UNCHUNKED, true);
+    InternalCDORevision oldRevision = getOldRevision(revisionManager, delta);
     if (oldRevision == null)
     {
       throw new IllegalStateException("Origin revision not found for " + delta);
@@ -602,6 +602,12 @@ public class TransactionCommitContext implements InternalCommitContext
 
     delta.apply(newRevision);
     return newRevision;
+  }
+
+  protected InternalCDORevision getOldRevision(InternalCDORevisionManager revisionManager,
+      InternalCDORevisionDelta delta)
+  {
+    return revisionManager.getRevisionByVersion(delta.getID(), delta, CDORevision.UNCHUNKED, true);
   }
 
   private void applyIDMappings(InternalCDORevision[] revisions, OMMonitor monitor)

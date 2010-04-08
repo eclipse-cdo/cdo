@@ -1,15 +1,18 @@
 package org.eclipse.emf.cdo.internal.server.clone;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -78,6 +81,15 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
   protected void lockObjects() throws InterruptedException
   {
     // Do nothing
+  }
+
+  @Override
+  protected InternalCDORevision getOldRevision(InternalCDORevisionManager revisionManager,
+      InternalCDORevisionDelta delta)
+  {
+    // xxx();
+    CDOBranchPoint branchPoint = getBranchPoint();
+    return revisionManager.getRevision(delta.getID(), branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
   }
 
   private static InternalCDOPackageUnit[] getNewPackageUnits(CDOCommitInfo commitInfo,

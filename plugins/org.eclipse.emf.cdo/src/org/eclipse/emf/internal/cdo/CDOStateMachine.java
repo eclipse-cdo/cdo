@@ -12,7 +12,6 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -700,9 +699,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       object.cdoInternalPostAttach();
 
       // Compute a revision delta and register it with the tx
-      CDOBranchVersion branchVersion = transaction.getBranch().getVersion(revision.getVersion());
-      CDORevision originalRevision = revisionManager.getRevisionByVersion(id, branchVersion, -1, true);
-      CDORevisionDelta revisionDelta = CDORevisionDeltaUtil.create(originalRevision, revision);
+      // CDOBranchVersion branchVersion = transaction.getBranch().getVersion(revision.getVersion());
+      // CDORevision originalRevision = revisionManager.getRevisionByVersion(id, branchVersion, -1, true);
+      CDORevisionDelta revisionDelta = CDORevisionDeltaUtil.create(formerRevision, revision);
       transaction.registerRevisionDelta(revisionDelta);
       transaction.registerDirty(object, null);
       changeState(object, CDOState.DIRTY);

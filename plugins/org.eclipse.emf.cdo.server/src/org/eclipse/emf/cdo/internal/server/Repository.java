@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -32,6 +33,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
@@ -980,20 +982,22 @@ public class Repository extends Container<Object> implements InternalRepository
     int startID = context.getLastReplicatedBranchID() + 1;
     branchManager.getBranches(startID, 0, context);
 
-    long startTime = context.getLastReplicatedCommitTime() + 1L;
+    long startTime = context.getLastReplicatedCommitTime();
     if (context.isSqueezeCommitInfos())
     {
       replicateSqueezed(startTime, context);
     }
     else
     {
-      commitInfoManager.getCommitInfos(startTime, CDOBranchPoint.UNSPECIFIED_DATE, context);
+      commitInfoManager.getCommitInfos(startTime + 1L, CDOBranchPoint.UNSPECIFIED_DATE, context);
     }
   }
 
   private void replicateSqueezed(long startTime, CDOCommitInfoHandler handler)
   {
     Set<CDOPackageUnit> replicatedPackageUnits = new HashSet<CDOPackageUnit>();
+    InternalCDOCommitInfoManager manager = getCommitInfoManager();
+
     List<CDOChangeSetSegment> segments = getBaselineSegments(startTime);
     for (CDOChangeSetSegment segment : segments)
     {
@@ -1002,11 +1006,15 @@ public class Repository extends Container<Object> implements InternalRepository
 
       if (!newPackages.isEmpty() || !changeSet.isEmpty())
       {
-        CDOCommitData data = new CDOCommitDataImpl(newPackages, changeSet.getNewObjects(), changeSet
-            .getChangedObjects(), changeSet.getDetachedObjects());
+        List<CDOIDAndVersion> newObjects = changeSet.getNewObjects();
+        List<CDORevisionKey> changedObjects = changeSet.getChangedObjects();
+        List<CDOIDAndVersion> detachedObjects = changeSet.getDetachedObjects();
+        CDOCommitData data = new CDOCommitDataImpl(newPackages, newObjects, changedObjects, detachedObjects);
 
-        CDOCommitInfo commitInfo = getCommitInfoManager().createCommitInfo(segment.getBranch(), segment.getTimeStamp(),
-            SYSTEM_USER_ID, "<replicate squeezed commits>", data); //$NON-NLS-1$
+        CDOBranch branch = segment.getBranch();
+        long timeStamp = segment.getTimeStamp();
+        String comment = "<replicate squeezed commits>"; //$NON-NLS-1$
+        CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, SYSTEM_USER_ID, comment, data);
 
         handler.handleCommitInfo(commitInfo);
       }
@@ -1024,6 +1032,11 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private void getBaselineSegments(long startTime, InternalCDOBranch branch, List<CDOChangeSetSegment> segments)
   {
+    if (startTime == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      startTime = branch.getBase().getTimeStamp();
+    }
+
     InternalCDOBranch[] branches = branch.getBranches();
     Arrays.sort(branches, new Comparator<CDOBranch>()
     {

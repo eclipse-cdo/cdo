@@ -9,8 +9,8 @@
  *     Martin Fluegge - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.util.exceptions;
+
 /**
- * 
  * @author Martin Fluegge
  */
 public class DawnInvalidIdException extends RuntimeException

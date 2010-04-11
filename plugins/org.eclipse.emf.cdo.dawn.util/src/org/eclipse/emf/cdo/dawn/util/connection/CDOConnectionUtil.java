@@ -24,8 +24,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
@@ -92,13 +90,13 @@ public class CDOConnectionUtil
    */
   public CDOSession openSession()
   {
+    if (!CDOUtil.isLegacyModeDefault())
+    {
+      CDOUtil.setLegacyModeDefault(true);
+    }
     currentSession = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo", protocol
         + "://" + host + "?repositoryName=" + repositoryName);
 
-    if(!((InternalCDOSession)currentSession).isLegacyEnabled())
-    {
-      ((InternalCDOSession)currentSession).setLegacyEnabled(true);
-    }
     return currentSession;
 
   }
@@ -117,7 +115,7 @@ public class CDOConnectionUtil
     {
       throw new DawnInvalidIdException("The identifier '" + id + "' is invalid for openeing a transaction");
     }
-    System.out.println("Openeing transcation for "+id+ " on "+resourceSet);
+    System.out.println("Opening transaction for " + id + " on " + resourceSet);
     id = convert(id);
     CDOTransaction transaction = getCurrentSession().openTransaction(resourceSet);
     getTransactions().put(id, transaction);
@@ -161,7 +159,8 @@ public class CDOConnectionUtil
   //
   // public CDOSession openSession(String repositoryName)
   // {
-  // CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+  // CDOSessionConfiguration configuration =
+  // CDONet4jUtil.createSessionConfiguration();
   //
   // configuration.setConnector(connector);
   // configuration.setRepositoryName(repositoryName);
@@ -173,9 +172,12 @@ public class CDOConnectionUtil
   // public CDOSession openCurrentSession(String repositoryName)
   // {
   // //TODO id for every editor instance
-  // currentSession = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo",
+  // currentSession =
+  // (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions",
+  // "cdo",
   // "tcp://localhost?repositoryName=repo1&id=1");
-  // // CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+  // // CDOSessionConfiguration configuration =
+  // CDONet4jUtil.createSessionConfiguration();
   // //
   // // configuration.setConnector(connector);
   // // configuration.setRepositoryName(repositoryName);
@@ -185,10 +187,11 @@ public class CDOConnectionUtil
   //
   // }
   //
-  // 
   //
   //
-  // public CDOTransaction openTransaction(CDOSession session, ResourceSet resourceSet)
+  //
+  // public CDOTransaction openTransaction(CDOSession session, ResourceSet
+  // resourceSet)
   // {
   // return session.openTransaction(resourceSet);
   // }
@@ -205,7 +208,8 @@ public class CDOConnectionUtil
   // }
   //
   //
-  // private void setCurrentSession(org.eclipse.emf.cdo.net4j.CDOSession currentSession)
+  // private void setCurrentSession(org.eclipse.emf.cdo.net4j.CDOSession
+  // currentSession)
   // {
   // this.currentSession = currentSession;
   // }
@@ -235,10 +239,10 @@ public class CDOConnectionUtil
   public CDOTransaction getOrOpenCurrentTransaction(String id, ResourceSet resourceSet)
   {
     CDOTransaction transaction = getCurrentTransaction(id);
-    
+
     CDOViewSet viewSet = CDOUtil.getViewSet(resourceSet);
-    
-    if(viewSet !=null)
+
+    if (viewSet != null)
     {
       return ((InternalCDOView)viewSet.resolveView("repo1")).toTransaction();
     }

@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Dawn Util
+Bundle-Name: %providerName
 Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.util
-Bundle-Version: 0.2.0
+Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: org.eclipse.emf.cdo.dawn.util.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -20,9 +20,11 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.gmf.runtime.notation.edit,
  org.eclipse.gmf.runtime.notation.providers,
  org.eclipse.gmf.runtime.diagram.ui.resources.editor,
- org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide
+ org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide,
+ org.eclipse.emf.cdo.dawn.logging;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.emf.cdo.dawn.util,
  org.eclipse.emf.cdo.dawn.util.connection
 Import-Package: org.eclipse.emf.transaction
+Bundle-Vendor: %providerName

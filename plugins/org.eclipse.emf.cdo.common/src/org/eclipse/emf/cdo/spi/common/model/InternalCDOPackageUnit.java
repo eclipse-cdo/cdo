@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.io.IOException;
 
@@ -52,7 +53,7 @@ public interface InternalCDOPackageUnit extends CDOPackageUnit
   /**
    * @since 3.0
    */
-  public void read(CDODataInput in, InternalCDOPackageRegistry packageRegistry) throws IOException;
+  public void read(CDODataInput in, ResourceSet resourceSet) throws IOException;
 
   public void init(EPackage ePackage);
 

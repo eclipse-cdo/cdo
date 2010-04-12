@@ -25,6 +25,7 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -226,8 +227,8 @@ public class HibernatePackageHandler extends Lifecycle
         throw new IllegalArgumentException("EPackages with root uri " + nsUri + " not found"); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
-      final EPackage rootEPackage = EMFUtil
-          .createEPackage(nsUri, ePackageBlob, ZIP_PACKAGE_BYTES, getPackageRegistry());
+      ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(getPackageRegistry());
+      final EPackage rootEPackage = EMFUtil.createEPackage(nsUri, ePackageBlob, ZIP_PACKAGE_BYTES, resourceSet, false);
       epacks = EMFUtil.getAllPackages(rootEPackage);
       ePackagesByRootUri.put(nsUri, epacks);
     }

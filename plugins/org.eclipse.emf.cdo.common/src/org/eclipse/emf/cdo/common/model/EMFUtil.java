@@ -42,8 +42,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -242,7 +242,8 @@ public final class EMFUtil
       Resource resource = ePackage.eResource();
       if (resource == null)
       {
-        resource = createEcoreResource(ePackage.getNsURI(), packageRegistry);
+        ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(packageRegistry);
+        resource = resourceSet.createResource(URI.createURI(ePackage.getNsURI()));
         resource.getContents().add(ePackage);
       }
 
@@ -256,12 +257,30 @@ public final class EMFUtil
     }
   }
 
-  public static EPackage createEPackage(String uri, byte[] bytes, boolean zipped, EPackage.Registry packageRegistry)
+  /**
+   * @since 3.0
+   */
+  public static EPackage createEPackage(String uri, byte[] bytes, boolean zipped, ResourceSet resourceSet,
+      boolean lookForResource)
   {
     try
     {
+      Resource resource = null;
+      if (lookForResource)
+      {
+        resource = resourceSet.getResource(URI.createURI(uri), false);
+        if (resource != null)
+        {
+          resource.unload();
+        }
+      }
+
+      if (resource == null)
+      {
+        resource = resourceSet.createResource(URI.createURI(uri));
+      }
+
       ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-      Resource resource = createEcoreResource(uri, packageRegistry);
       resource.load(bais, createResourceOptions(zipped));
 
       EList<EObject> contents = resource.getContents();
@@ -271,18 +290,6 @@ public final class EMFUtil
     {
       throw WrappedException.wrap(ex);
     }
-  }
-
-  private static Resource createEcoreResource(String uri, EPackage.Registry packageRegistry)
-  {
-    ResourceSet resourceSet = new ResourceSetImpl();
-    resourceSet.setPackageRegistry(packageRegistry);
-
-    Resource.Factory resourceFactory = new EcoreResourceFactoryImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory); //$NON-NLS-1$
-    resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("*", resourceFactory); //$NON-NLS-1$
-
-    return resourceSet.createResource(URI.createURI(uri));
   }
 
   private static Map<String, Object> createResourceOptions(boolean zipped)

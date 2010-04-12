@@ -14,12 +14,14 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 
 import java.io.IOException;
@@ -87,6 +89,7 @@ public class RefreshSessionRequest extends CDOClientRequest<RefreshSessionResult
     lastUpdateTime = in.readLong();
     RefreshSessionResult result = new RefreshSessionResult(lastUpdateTime);
 
+    ResourceSet resourceSet = EMFUtil.newEcoreResourceSet();
     for (;;)
     {
       byte type = in.readByte();
@@ -94,7 +97,7 @@ public class RefreshSessionRequest extends CDOClientRequest<RefreshSessionResult
       {
       case CDOProtocolConstants.REFRESH_PACKAGE_UNIT:
       {
-        CDOPackageUnit packageUnit = in.readCDOPackageUnit(null);
+        CDOPackageUnit packageUnit = in.readCDOPackageUnit(resourceSet);
         result.addPackageUnit(packageUnit);
         break;
       }

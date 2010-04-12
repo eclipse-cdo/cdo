@@ -20,11 +20,11 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOID.Type;
 import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.id.CDOID.Type;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
@@ -78,6 +78,8 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.io.IOException;
@@ -97,14 +99,14 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     super(delegate);
   }
 
-  public CDOPackageUnit readCDOPackageUnit(CDOPackageRegistry packageRegistry) throws IOException
+  public CDOPackageUnit readCDOPackageUnit(ResourceSet resourceSet) throws IOException
   {
     InternalCDOPackageUnit packageUnit = (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
-    packageUnit.read(this, (InternalCDOPackageRegistry)packageRegistry);
+    packageUnit.read(this, resourceSet);
     return packageUnit;
   }
 
-  public CDOPackageUnit[] readCDOPackageUnits(CDOPackageRegistry packageRegistry) throws IOException
+  public CDOPackageUnit[] readCDOPackageUnits(ResourceSet resourceSet) throws IOException
   {
     int size = readInt();
     if (TRACER.isEnabled())
@@ -115,7 +117,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     CDOPackageUnit[] packageUnits = new CDOPackageUnit[size];
     for (int i = 0; i < size; i++)
     {
-      packageUnits[i] = readCDOPackageUnit(packageRegistry);
+      packageUnits[i] = readCDOPackageUnit(resourceSet);
     }
 
     return packageUnits;
@@ -216,12 +218,14 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   public CDOCommitData readCDOCommitData() throws IOException
   {
     InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)getPackageRegistry();
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.setPackageRegistry(packageRegistry);
 
     int size = readInt();
     List<CDOPackageUnit> newPackageUnits = new ArrayList<CDOPackageUnit>(size);
     for (int i = 0; i < size; i++)
     {
-      CDOPackageUnit data = readCDOPackageUnit(packageRegistry);
+      CDOPackageUnit data = readCDOPackageUnit(resourceSet);
       newPackageUnits.add(data);
       packageRegistry.putPackageUnit((InternalCDOPackageUnit)data);
     }

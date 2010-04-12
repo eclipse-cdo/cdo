@@ -39,6 +39,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -191,7 +192,8 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   private EPackage createEPackage(InternalCDOPackageUnit packageUnit, byte[] bytes)
   {
-    return EMFUtil.createEPackage(packageUnit.getID(), bytes, ZIP_PACKAGE_BYTES, getPackageRegistry());
+    ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(getPackageRegistry());
+    return EMFUtil.createEPackage(packageUnit.getID(), bytes, ZIP_PACKAGE_BYTES, resourceSet, false);
   }
 
   private byte[] getEPackageBytes(InternalCDOPackageUnit packageUnit)

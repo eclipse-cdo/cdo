@@ -27,6 +27,7 @@ import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.io.IOException;
@@ -275,14 +276,15 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     }
   }
 
-  public void read(CDODataInput in, InternalCDOPackageRegistry packageRegistry) throws IOException
+  public void read(CDODataInput in, ResourceSet resourceSet) throws IOException
   {
     EPackage ePackage = null;
     boolean withPackages = in.readBoolean();
     if (withPackages)
     {
-      CheckUtil.checkArg(packageRegistry, "packageRegistry");
-      ePackage = CDOModelUtil.readPackage(in, packageRegistry);
+      CheckUtil.checkArg(resourceSet, "resourceSet"); //$NON-NLS-1$
+      CheckUtil.checkNull(resourceSet.getPackageRegistry(), "ResourceSet's packageRegistry == null");
+      ePackage = CDOModelUtil.readPackage(in, resourceSet, true);
       setState(State.LOADED);
     }
 

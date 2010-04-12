@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
@@ -383,13 +384,14 @@ public final class CDOModelUtil
   }
 
   /**
-   * @since 2.0
+   * @since 3.0
    */
-  public static EPackage readPackage(ExtendedDataInput in, EPackage.Registry packageRegistry) throws IOException
+  public static EPackage readPackage(ExtendedDataInput in, ResourceSet resourceSet, boolean lookForResource)
+      throws IOException
   {
     String uri = in.readString();
     boolean zipped = in.readBoolean();
     byte[] bytes = in.readByteArray();
-    return EMFUtil.createEPackage(uri, bytes, zipped, packageRegistry);
+    return EMFUtil.createEPackage(uri, bytes, zipped, resourceSet, lookForResource);
   }
 }

@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -49,7 +50,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.io.IOException;
@@ -200,21 +201,16 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       }
 
       InternalCDOPackageRegistry packageRegistry = commitContext.getPackageRegistry();
+      ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(packageRegistry);
       for (int i = 0; i < newPackageUnits.length; i++)
       {
-        newPackageUnits[i] = (InternalCDOPackageUnit)in.readCDOPackageUnit(packageRegistry);
+        newPackageUnits[i] = (InternalCDOPackageUnit)in.readCDOPackageUnit(resourceSet);
         packageRegistry.putPackageUnit(newPackageUnits[i]); // Must happen before readCDORevision!!!
         monitor.worked();
       }
 
       // When all packages are deserialized and registered, resolve them
-      for (InternalCDOPackageUnit packageUnit : newPackageUnits)
-      {
-        for (EPackage ePackage : packageUnit.getEPackages(true))
-        {
-          EcoreUtil.resolveAll(ePackage);
-        }
-      }
+      EcoreUtil.resolveAll(resourceSet);
 
       // New objects
       if (TRACER.isEnabled())

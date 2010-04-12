@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.io.IOException;
 
@@ -54,7 +55,8 @@ public class LoadPackagesRequest extends CDOClientRequest<EPackage[]>
   @Override
   protected EPackage[] confirming(CDODataInput in) throws IOException
   {
-    EPackage ePackage = CDOModelUtil.readPackage(in, packageUnit.getPackageRegistry());
+    ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(packageUnit.getPackageRegistry());
+    EPackage ePackage = CDOModelUtil.readPackage(in, resourceSet, false);
     return EMFUtil.getAllPackages(ePackage);
   }
 }

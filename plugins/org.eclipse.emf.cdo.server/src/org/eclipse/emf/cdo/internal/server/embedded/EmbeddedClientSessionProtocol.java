@@ -103,7 +103,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public int createBranch(BranchInfo branchInfo)
+  public int createBranch(int branchID, BranchInfo branchInfo)
   {
     throw new UnsupportedOperationException();
   }

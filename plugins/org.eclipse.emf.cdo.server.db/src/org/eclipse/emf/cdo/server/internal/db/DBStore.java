@@ -57,8 +57,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -78,6 +78,8 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
   private static final String PROP_LAST_METAID = "org.eclipse.emf.cdo.server.db.lastMetaID"; //$NON-NLS-1$
 
   private static final String PROP_LAST_BRANCHID = "org.eclipse.emf.cdo.server.db.lastBranchID"; //$NON-NLS-1$
+
+  private static final String PROP_LAST_LOCAL_BRANCHID = "org.eclipse.emf.cdo.server.db.lastLocalBranchID"; //$NON-NLS-1$
 
   private static final String PROP_LAST_COMMITTIME = "org.eclipse.emf.cdo.server.db.lastCommitTime"; //$NON-NLS-1$
 
@@ -477,6 +479,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     map.put(PROP_LAST_CDOID, Long.toString(getLastObjectID()));
     map.put(PROP_LAST_METAID, Long.toString(getLastMetaID()));
     map.put(PROP_LAST_BRANCHID, Integer.toString(getLastBranchID()));
+    map.put(PROP_LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
     map.put(PROP_LAST_COMMITTIME, Long.toString(getLastCommitTime()));
     setPropertyValues(map);
 
@@ -513,6 +516,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
       names.add(PROP_LAST_CDOID);
       names.add(PROP_LAST_METAID);
       names.add(PROP_LAST_BRANCHID);
+      names.add(PROP_LAST_LOCAL_BRANCHID);
       names.add(PROP_LAST_COMMITTIME);
       map = getPropertyValues(names);
 
@@ -520,6 +524,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
       setLastObjectID(Long.valueOf(map.get(PROP_LAST_CDOID)));
       setLastMetaID(Long.valueOf(map.get(PROP_LAST_METAID)));
       setLastBranchID(Integer.valueOf(map.get(PROP_LAST_BRANCHID)));
+      setLastLocalBranchID(Integer.valueOf(map.get(PROP_LAST_LOCAL_BRANCHID)));
       setLastCommitTime(Long.valueOf(map.get(PROP_LAST_COMMITTIME)));
     }
     else
@@ -530,7 +535,13 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
       setNextLocalObjectID(result[0]);
       setLastObjectID(result[1]);
       setLastMetaID(DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGE_INFOS_META_UB));
-      setLastBranchID(DBUtil.selectMaximumInt(connection, CDODBSchema.BRANCHES_ID));
+
+      int branchID = DBUtil.selectMaximumInt(connection, CDODBSchema.BRANCHES_ID);
+      setLastBranchID(branchID > 0 ? branchID : 0);
+
+      int localBranchID = DBUtil.selectMinimumInt(connection, CDODBSchema.BRANCHES_ID);
+      setLastLocalBranchID(localBranchID < 0 ? localBranchID : 0);
+
       setLastCommitTime(result[2]);
       OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.10"), getLastObjectID(), getLastMetaID())); //$NON-NLS-1$
     }

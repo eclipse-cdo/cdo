@@ -135,7 +135,10 @@ public class CDODBBrowser extends Worker
     }
     catch (Exception ex)
     {
-      ex.printStackTrace();
+      if (isActive())
+      {
+        ex.printStackTrace();
+      }
     }
     finally
     {

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.SubBranchInfo;
 
@@ -133,12 +134,12 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
   public InternalCDOBranch createBranch(String name, long timeStamp)
   {
-    return getBranchManager().createBranch(name, this, timeStamp);
+    return getBranchManager().createBranch(BranchLoader.NEW_BRANCH, name, this, timeStamp);
   }
 
   public InternalCDOBranch createBranch(String name)
   {
-    return getBranchManager().createBranch(name, this, CDOBranchPoint.UNSPECIFIED_DATE);
+    return createBranch(name, CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
   public CDOBranch[] getElements()

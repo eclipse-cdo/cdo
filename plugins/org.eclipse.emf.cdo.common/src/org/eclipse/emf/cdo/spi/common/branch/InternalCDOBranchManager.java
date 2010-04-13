@@ -47,9 +47,7 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
 
   public InternalCDOBranch getBranch(String path);
 
-  public InternalCDOBranch createBranch(String name, InternalCDOBranch baseBranch, long baseTimeStamp);
-
-  public InternalCDOBranch createBranch(int branchID, String name, InternalCDOBranch baseBranch, long baseTimeStamp);
+  public InternalCDOBranch createBranch(int id, String name, InternalCDOBranch baseBranch, long baseTimeStamp);
 
   public void handleBranchCreated(InternalCDOBranch branch);
 
@@ -59,7 +57,23 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
    */
   public interface BranchLoader
   {
-    public int createBranch(BranchInfo branchInfo);
+    /**
+     * Passed as the branchID in {@link #createBranch(int, BranchInfo)} causes a new non-local branch to be created.
+     */
+    public static final int NEW_BRANCH = Integer.MAX_VALUE;
+
+    /**
+     * Passed as the branchID in {@link #createBranch(int, BranchInfo)} causes a new local branch to be created.
+     */
+    public static final int NEW_LOCAL_BRANCH = Integer.MIN_VALUE;
+
+    /**
+     * Creates a new branch with the given id and branch info. If the id is equal to {@link #NEW_BRANCH} the implementor
+     * of this method will determine a new positive unique branch id.If the id is equal to {@link #NEW_LOCAL_BRANCH} the
+     * implementor of this method will determine a new negative unique branch id, so that the new branch becomes a local
+     * branch. In either case the used branch id is returned to the caller.
+     */
+    public int createBranch(int branchID, BranchInfo branchInfo);
 
     public BranchInfo loadBranch(int branchID);
 

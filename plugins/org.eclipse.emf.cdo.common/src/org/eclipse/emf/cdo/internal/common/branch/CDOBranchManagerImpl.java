@@ -164,21 +164,33 @@ public class CDOBranchManagerImpl extends Lifecycle implements InternalCDOBranch
     return branchLoader.loadBranches(startID, endID, handler);
   }
 
-  public InternalCDOBranch createBranch(String name, InternalCDOBranch baseBranch, long baseTimeStamp)
+  // public InternalCDOBranch createBranch(String name, InternalCDOBranch baseBranch, long baseTimeStamp)
+  // {
+  // return createBranch(name, baseBranch, baseTimeStamp, false);
+  // }
+  //
+  // public InternalCDOBranch createBranch(String name, InternalCDOBranch baseBranch, long baseTimeStamp, boolean local)
+  // {
+  // checkActive();
+  //
+  // if (baseTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
+  // {
+  // baseTimeStamp = timeProvider.getTimeStamp();
+  // }
+  //
+  // int branchID = branchLoader.createBranch(new BranchInfo(name, baseBranch.getID(), baseTimeStamp), local);
+  // return createBranch(branchID, name, baseBranch, baseTimeStamp);
+  // }
+
+  public InternalCDOBranch createBranch(int branchID, String name, InternalCDOBranch baseBranch, long baseTimeStamp)
   {
     checkActive();
-
     if (baseTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
     {
       baseTimeStamp = timeProvider.getTimeStamp();
     }
 
-    int branchID = branchLoader.createBranch(new BranchInfo(name, baseBranch.getID(), baseTimeStamp));
-    return createBranch(branchID, name, baseBranch, baseTimeStamp);
-  }
-
-  public InternalCDOBranch createBranch(int branchID, String name, InternalCDOBranch baseBranch, long baseTimeStamp)
-  {
+    branchID = branchLoader.createBranch(branchID, new BranchInfo(name, baseBranch.getID(), baseTimeStamp));
     CDOBranchPoint base = baseBranch.getPoint(baseTimeStamp);
     InternalCDOBranch branch = new CDOBranchImpl(branchID, name, base);
     synchronized (branches)

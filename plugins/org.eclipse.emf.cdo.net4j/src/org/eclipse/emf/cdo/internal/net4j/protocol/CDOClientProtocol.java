@@ -111,9 +111,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new LoadPackagesRequest(this, (InternalCDOPackageUnit)packageUnit));
   }
 
-  public int createBranch(BranchInfo branchInfo)
+  public int createBranch(int branchID, BranchInfo branchInfo)
   {
-    return send(new CreateBranchRequest(this, branchInfo));
+    return send(new CreateBranchRequest(this, branchID, branchInfo));
   }
 
   public BranchInfo loadBranch(int branchID)

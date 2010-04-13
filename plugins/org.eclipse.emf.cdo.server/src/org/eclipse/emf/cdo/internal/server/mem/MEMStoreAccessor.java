@@ -157,9 +157,9 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     throw new UnsupportedOperationException();
   }
 
-  public int createBranch(BranchInfo branchInfo)
+  public int createBranch(int branchID, BranchInfo branchInfo)
   {
-    return getStore().createBranch(branchInfo);
+    return getStore().createBranch(branchID, branchInfo);
   }
 
   public BranchInfo loadBranch(int branchID)

@@ -71,6 +71,10 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
 
   private Map<Integer, BranchInfo> branchInfos = new HashMap<Integer, BranchInfo>();
 
+  private int lastBranchID;
+
+  private int lastLocalBranchID;
+
   private Map<Object, List<InternalCDORevision>> revisions = new HashMap<Object, List<InternalCDORevision>>();
 
   private List<CommitInfo> commitInfos = new ArrayList<CommitInfo>();
@@ -129,11 +133,19 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     }
   }
 
-  public synchronized int createBranch(BranchInfo branchInfo)
+  public synchronized int createBranch(int branchID, BranchInfo branchInfo)
   {
-    int id = branchInfos.size() + 1;
-    branchInfos.put(id, branchInfo);
-    return id;
+    if (branchID == NEW_BRANCH)
+    {
+      branchID = ++lastBranchID;
+    }
+    else if (branchID == NEW_LOCAL_BRANCH)
+    {
+      branchID = --lastLocalBranchID;
+    }
+
+    branchInfos.put(branchID, branchInfo);
+    return branchID;
   }
 
   public synchronized BranchInfo loadBranch(int branchID)
@@ -589,6 +601,13 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
   protected void doDeactivate() throws Exception
   {
     revisions.clear();
+    branchInfos.clear();
+    commitInfos.clear();
+    objectTypes.clear();
+    properties.clear();
+    resourceNameFeature = null;
+    lastBranchID = 0;
+    lastLocalBranchID = 0;
     super.doDeactivate();
   }
 

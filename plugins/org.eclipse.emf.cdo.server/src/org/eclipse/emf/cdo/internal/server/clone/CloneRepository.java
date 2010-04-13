@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
@@ -69,8 +70,6 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
   private static final String PROP_LAST_REPLICATED_BRANCH_ID = "org.eclipse.emf.cdo.server.clone.lastReplicatedBranchID"; //$NON-NLS-1$
 
   private static final String PROP_LAST_REPLICATED_COMMIT_TIME = "org.eclipse.emf.cdo.server.clone.lastReplicatedCommitTime"; //$NON-NLS-1$
-
-  private static final String PROP_LAST_TEMP_BRANCH_ID = "org.eclipse.emf.cdo.server.clone.lastTempBranchID"; //$NON-NLS-1$
 
   private static final String PROP_GRACEFULLY_SHUT_DOWN = "org.eclipse.emf.cdo.server.clone.gracefullyShutDown"; //$NON-NLS-1$
 
@@ -241,12 +240,10 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
       Set<String> names = new HashSet<String>();
       names.add(PROP_LAST_REPLICATED_BRANCH_ID);
       names.add(PROP_LAST_REPLICATED_COMMIT_TIME);
-      names.add(PROP_LAST_TEMP_BRANCH_ID);
 
       map = store.getPropertyValues(names);
       lastReplicatedBranchID = Integer.valueOf(map.get(PROP_LAST_REPLICATED_BRANCH_ID));
       lastReplicatedCommitTime = Long.valueOf(map.get(PROP_LAST_REPLICATED_COMMIT_TIME));
-      lastTempBranchID.set(Integer.valueOf(map.get(PROP_LAST_TEMP_BRANCH_ID)));
     }
     else
     {
@@ -268,8 +265,6 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
     Map<String, String> map = new HashMap<String, String>();
     map.put(PROP_LAST_REPLICATED_BRANCH_ID, Integer.toString(lastReplicatedBranchID));
     map.put(PROP_LAST_REPLICATED_COMMIT_TIME, Long.toString(lastReplicatedCommitTime));
-    map.put(PROP_LAST_TEMP_BRANCH_ID, Integer.toString(lastTempBranchID.get()));
-    map.put(PROP_LAST_TEMP_BRANCH_ID, Integer.toString(lastTempBranchID.get()));
     map.put(PROP_GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
 
     InternalStore store = getStore();
@@ -286,9 +281,17 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
 
   protected CDOBranch createOfflineBranch(CDOBranch baseBranch, long baseTimeStamp)
   {
-    int branchID = lastTempBranchID.decrementAndGet();
-    InternalCDOBranchManager branchManager = getBranchManager();
-    return branchManager.createBranch(branchID, "Offline" + branchID, (InternalCDOBranch)baseBranch, baseTimeStamp); //$NON-NLS-1$
+    try
+    {
+      StoreThreadLocal.setSession(replicatorSession);
+      InternalCDOBranchManager branchManager = getBranchManager();
+      return branchManager.createBranch(NEW_LOCAL_BRANCH,
+          "Offline-" + baseTimeStamp, (InternalCDOBranch)baseBranch, baseTimeStamp); //$NON-NLS-1$
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   /**

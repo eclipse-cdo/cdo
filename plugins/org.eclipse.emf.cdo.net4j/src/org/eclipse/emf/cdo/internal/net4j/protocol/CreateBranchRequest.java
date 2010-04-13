@@ -22,17 +22,21 @@ import java.io.IOException;
  */
 public class CreateBranchRequest extends CDOClientRequest<Integer>
 {
+  private int branchID;
+
   private BranchInfo branchInfo;
 
-  public CreateBranchRequest(CDOClientProtocol protocol, BranchInfo branchInfo)
+  public CreateBranchRequest(CDOClientProtocol protocol, int branchID, BranchInfo branchInfo)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_CREATE_BRANCH);
+    this.branchID = branchID;
     this.branchInfo = branchInfo;
   }
 
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
+    out.writeInt(branchID);
     branchInfo.write(out);
   }
 

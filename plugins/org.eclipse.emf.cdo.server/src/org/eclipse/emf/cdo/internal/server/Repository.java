@@ -281,12 +281,12 @@ public class Repository extends Container<Object> implements InternalRepository
     return accessor.loadPackageUnit((InternalCDOPackageUnit)packageUnit);
   }
 
-  public int createBranch(BranchInfo branchInfo)
+  public int createBranch(int branchID, BranchInfo branchInfo)
   {
     synchronized (createBranchLock)
     {
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-      return accessor.createBranch(branchInfo);
+      return accessor.createBranch(branchID, branchInfo);
     }
   }
 

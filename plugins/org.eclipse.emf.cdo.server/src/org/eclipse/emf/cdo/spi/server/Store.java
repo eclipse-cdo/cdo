@@ -14,9 +14,9 @@ import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -27,8 +27,8 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
-import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -78,6 +78,12 @@ public abstract class Store extends Lifecycle implements InternalStore
    */
   @ExcludeFromDump
   private transient int lastBranchID;
+
+  /**
+   * Is protected against concurrent thread access through {@link Repository#createBranchLock}.
+   */
+  @ExcludeFromDump
+  private transient int lastLocalBranchID;
 
   @ExcludeFromDump
   private transient long lastMetaID;
@@ -221,6 +227,30 @@ public abstract class Store extends Lifecycle implements InternalStore
   public int getNextBranchID()
   {
     return ++lastBranchID;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public int getLastLocalBranchID()
+  {
+    return lastLocalBranchID;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void setLastLocalBranchID(int lastLocalBranchID)
+  {
+    this.lastLocalBranchID = lastLocalBranchID;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public int getNextLocalBranchID()
+  {
+    return --lastLocalBranchID;
   }
 
   public long getLastMetaID()

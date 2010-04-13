@@ -1563,14 +1563,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public int createBranch(BranchInfo branchInfo)
+    public int createBranch(int branchID, BranchInfo branchInfo)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          return delegate.createBranch(branchInfo);
+          return delegate.createBranch(branchID, branchInfo);
         }
         catch (Exception ex)
         {

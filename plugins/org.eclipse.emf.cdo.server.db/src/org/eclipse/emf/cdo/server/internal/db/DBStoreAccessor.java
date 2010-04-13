@@ -545,23 +545,31 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
   }
 
-  public int createBranch(BranchInfo branchInfo)
+  public int createBranch(int branchID, BranchInfo branchInfo)
   {
     checkBranchingSupport();
-    int id = getStore().getNextBranchID();
+    if (branchID == NEW_BRANCH)
+    {
+      branchID = getStore().getNextBranchID();
+    }
+    else if (branchID == NEW_LOCAL_BRANCH)
+    {
+      branchID = getStore().getNextLocalBranchID();
+    }
+
     PreparedStatement pstmt = null;
 
     try
     {
       pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_CREATE_BRANCH, ReuseProbability.LOW);
-      pstmt.setInt(1, id);
+      pstmt.setInt(1, branchID);
       pstmt.setString(2, branchInfo.getName());
       pstmt.setInt(3, branchInfo.getBaseBranchID());
       pstmt.setLong(4, branchInfo.getBaseTimeStamp());
 
       CDODBUtil.sqlUpdate(pstmt, true);
       getConnection().commit();
-      return id;
+      return branchID;
     }
     catch (SQLException ex)
     {

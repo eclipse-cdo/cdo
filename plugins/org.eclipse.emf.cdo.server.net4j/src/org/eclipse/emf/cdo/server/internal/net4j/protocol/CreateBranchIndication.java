@@ -25,6 +25,8 @@ import java.io.IOException;
  */
 public class CreateBranchIndication extends CDOReadIndication
 {
+  private int branchID;
+
   private BranchInfo branchInfo;
 
   public CreateBranchIndication(CDOServerProtocol protocol)
@@ -35,6 +37,7 @@ public class CreateBranchIndication extends CDOReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
+    branchID = in.readInt();
     branchInfo = new BranchInfo(in);
   }
 
@@ -43,7 +46,7 @@ public class CreateBranchIndication extends CDOReadIndication
   {
     InternalCDOBranchManager branchManager = getRepository().getBranchManager();
     InternalCDOBranch baseBranch = branchManager.getBranch(branchInfo.getBaseBranchID());
-    InternalCDOBranch branch = branchManager.createBranch(branchInfo.getName(), baseBranch, branchInfo
+    InternalCDOBranch branch = branchManager.createBranch(branchID, branchInfo.getName(), baseBranch, branchInfo
         .getBaseTimeStamp());
     out.writeInt(branch.getID());
 

@@ -352,9 +352,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     return revision;
   }
 
-  public int createBranch(BranchInfo branchInfo)
+  public int createBranch(int branchID, BranchInfo branchInfo)
   {
-    // TODO: implement HibernateStoreAccessor.createBranch(branchInfo)
+    // TODO: implement HibernateStoreAccessor.createBranch(branchID, branchInfo)
     throw new UnsupportedOperationException();
   }
 

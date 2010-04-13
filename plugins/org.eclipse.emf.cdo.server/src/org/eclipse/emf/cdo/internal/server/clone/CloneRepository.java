@@ -51,7 +51,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * TODO:
@@ -82,8 +81,6 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
   private long lastReplicatedCommitTime = CDOBranchPoint.UNSPECIFIED_DATE;
 
   private int lastTransactionID;
-
-  private AtomicInteger lastTempBranchID = new AtomicInteger();
 
   public CloneRepository()
   {

@@ -158,7 +158,8 @@ public class CloneRepository extends Repository.Default implements CDOReplicatio
     CDOBranchPoint head = branch.getHead();
 
     InternalTransaction transaction = replicatorSession.openTransaction(++lastTransactionID, head);
-    ReplicatorCommitContext commitContext = new ReplicatorCommitContext(transaction, commitInfo);
+    boolean squeezed = isSqueezeCommitInfos() && lastReplicatedCommitTime != CDOBranchPoint.UNSPECIFIED_DATE;
+    ReplicatorCommitContext commitContext = new ReplicatorCommitContext(transaction, commitInfo, squeezed);
     commitContext.preWrite();
     boolean success = false;
 

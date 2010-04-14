@@ -28,10 +28,25 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
 {
   private final CDOCommitInfo commitInfo;
 
-  public ReplicatorCommitContext(InternalTransaction transaction, CDOCommitInfo commitInfo)
+  private final boolean squeezed;
+
+  private long commitTimeStamp;
+
+  private CDOBranchPoint oldBranchPoint;
+
+  public ReplicatorCommitContext(InternalTransaction transaction, CDOCommitInfo commitInfo, boolean squeezed)
   {
     super(transaction);
     this.commitInfo = commitInfo;
+    this.squeezed = squeezed;
+
+    commitTimeStamp = commitInfo.getTimeStamp();
+    if (commitTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      commitTimeStamp = transaction.getSession().getManager().getRepository().getTimeStamp();
+    }
+
+    oldBranchPoint = transaction.getBranch().getPoint(commitTimeStamp - 1L);
     setCommitComment(commitInfo.getComment());
 
     InternalCDOPackageUnit[] newPackageUnits = getNewPackageUnits(commitInfo, getPackageRegistry());
@@ -56,7 +71,7 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
   @Override
   protected long createTimeStamp()
   {
-    return commitInfo.getTimeStamp();
+    return commitTimeStamp;
   }
 
   @Override
@@ -87,9 +102,13 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
   protected InternalCDORevision getOldRevision(InternalCDORevisionManager revisionManager,
       InternalCDORevisionDelta delta)
   {
-    // xxx();
-    CDOBranchPoint branchPoint = getBranchPoint();
-    return revisionManager.getRevision(delta.getID(), branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+    if (squeezed)
+    {
+      return revisionManager.getRevision(delta.getID(), oldBranchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE,
+          true);
+    }
+
+    return super.getOldRevision(revisionManager, delta);
   }
 
   private static InternalCDOPackageUnit[] getNewPackageUnits(CDOCommitInfo commitInfo,

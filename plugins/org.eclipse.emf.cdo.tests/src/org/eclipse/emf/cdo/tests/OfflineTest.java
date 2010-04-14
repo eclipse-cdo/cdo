@@ -47,6 +47,8 @@ import java.util.Map;
  */
 public class OfflineTest extends AbstractCDOTest
 {
+  protected static final int SLEEP_MILLIS = 1000;
+
   public OfflineConfig getOfflineConfig()
   {
     return (OfflineConfig)getRepositoryConfig();
@@ -464,7 +466,7 @@ public class OfflineTest extends AbstractCDOTest
 
     for (int k = 0; k < 10; k++)
     {
-      sleep(100);
+      sleep(SLEEP_MILLIS);
       for (int i = 0; i < 10; i++)
       {
         Company company = (Company)resource.getContents().get(i);
@@ -511,7 +513,7 @@ public class OfflineTest extends AbstractCDOTest
     while (repository.getState() != CDOCommonRepository.State.ONLINE)
     {
       System.out.println("Waiting for ONLINE...");
-      sleep(100);
+      sleep(SLEEP_MILLIS);
     }
   }
 
@@ -520,7 +522,7 @@ public class OfflineTest extends AbstractCDOTest
     while (repository.getState() == CDOCommonRepository.State.ONLINE)
     {
       System.out.println("Waiting for OFFLINE...");
-      sleep(100);
+      sleep(SLEEP_MILLIS);
     }
   }
 
@@ -531,7 +533,7 @@ public class OfflineTest extends AbstractCDOTest
     while (receiver.getLastUpdateTime() < timeStamp)
     {
       System.out.println("Waiting for arrival of commit " + CDOCommonUtil.formatTimeStamp(timeStamp));
-      sleep(100);
+      sleep(SLEEP_MILLIS);
     }
 
     return commitInfo;
@@ -544,7 +546,7 @@ public class OfflineTest extends AbstractCDOTest
     while (receiver.getLastCommitTimeStamp() < timeStamp)
     {
       System.out.println("Waiting for arrival of commit " + CDOCommonUtil.formatTimeStamp(timeStamp));
-      sleep(100);
+      sleep(SLEEP_MILLIS);
     }
 
     return commitInfo;

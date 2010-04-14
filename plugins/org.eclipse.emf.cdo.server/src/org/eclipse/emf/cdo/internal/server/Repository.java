@@ -983,7 +983,7 @@ public class Repository extends Container<Object> implements InternalRepository
     branchManager.getBranches(startID, 0, context);
 
     long startTime = context.getLastReplicatedCommitTime();
-    if (context.isSqueezeCommitInfos())
+    if (context.isSqueezeCommitInfos() && startTime != CDOBranchPoint.UNSPECIFIED_DATE)
     {
       replicateSqueezed(startTime, context);
     }
@@ -1012,7 +1012,7 @@ public class Repository extends Container<Object> implements InternalRepository
         CDOCommitData data = new CDOCommitDataImpl(newPackages, newObjects, changedObjects, detachedObjects);
 
         CDOBranch branch = segment.getBranch();
-        long timeStamp = segment.getTimeStamp();
+        long timeStamp = segment.getEndTime();
         String comment = "<replicate squeezed commits>"; //$NON-NLS-1$
         CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, SYSTEM_USER_ID, comment, data);
 

@@ -97,6 +97,16 @@ public interface CDOCommonRepository extends CDOTimeProvider
   /**
    * @author Eike Stepper
    */
+  public interface TypeChangedEvent extends IEvent
+  {
+    public Type getOldType();
+
+    public Type getNewType();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public interface StateChangedEvent extends IEvent
   {
     public State getOldState();

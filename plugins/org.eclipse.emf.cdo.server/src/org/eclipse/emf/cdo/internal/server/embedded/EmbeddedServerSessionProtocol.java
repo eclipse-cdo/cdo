@@ -58,6 +58,12 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
     return clientSessionProtocol.handleAuthenticationChallenge(randomToken);
   }
 
+  public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
+  {
+    EmbeddedClientSession clientSession = clientSessionProtocol.getSession();
+    clientSession.handleRepositoryTypeChanged(oldType, newType);
+  }
+
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
   {
     EmbeddedClientSession clientSession = clientSessionProtocol.getSession();

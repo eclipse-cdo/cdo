@@ -19,29 +19,28 @@ import org.eclipse.net4j.util.event.INotifier;
  * @author Eike Stepper
  * @since 3.0
  */
-public class RepositoryStateChangedEvent extends Event implements CDOCommonRepository.StateChangedEvent
+public class RepositoryTypeChangedEvent extends Event implements CDOCommonRepository.TypeChangedEvent
 {
   private static final long serialVersionUID = 1L;
 
-  private CDOCommonRepository.State oldState;
+  private CDOCommonRepository.Type oldType;
 
-  private CDOCommonRepository.State newState;
+  private CDOCommonRepository.Type newType;
 
-  public RepositoryStateChangedEvent(INotifier source, CDOCommonRepository.State oldState,
-      CDOCommonRepository.State newState)
+  public RepositoryTypeChangedEvent(INotifier source, CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
   {
     super(source);
-    this.oldState = oldState;
-    this.newState = newState;
+    this.oldType = oldType;
+    this.newType = newType;
   }
 
-  public CDOCommonRepository.State getOldState()
+  public CDOCommonRepository.Type getOldType()
   {
-    return oldState;
+    return oldType;
   }
 
-  public CDOCommonRepository.State getNewState()
+  public CDOCommonRepository.Type getNewType()
   {
-    return newState;
+    return newType;
   }
 }

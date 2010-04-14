@@ -152,37 +152,42 @@ public interface CDOProtocolConstants
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_REPOSITORY_STATE_NOTIFICATION = 36;
+  public static final short SIGNAL_REPOSITORY_TYPE_NOTIFICATION = 36;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_BRANCH_NOTIFICATION = 37;
+  public static final short SIGNAL_REPOSITORY_STATE_NOTIFICATION = 37;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_COMMIT_INFOS = 38;
+  public static final short SIGNAL_BRANCH_NOTIFICATION = 38;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_COMMIT_DATA = 39;
+  public static final short SIGNAL_LOAD_COMMIT_INFOS = 39;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_REPLICATE_REPOSITORY = 40;
+  public static final short SIGNAL_LOAD_COMMIT_DATA = 40;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_CHANGE_SETS = 41;
+  public static final short SIGNAL_REPLICATE_REPOSITORY = 41;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_MERGE_DATA = 42;
+  public static final short SIGNAL_LOAD_CHANGE_SETS = 42;
+
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_LOAD_MERGE_DATA = 43;
 
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh

@@ -43,6 +43,8 @@ public interface InternalSessionManager extends ISessionManager
 
   public void sessionClosed(InternalSession session);
 
+  public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType);
+
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState);
 
   public void sendBranchNotification(InternalSession sender, InternalCDOBranch branch);

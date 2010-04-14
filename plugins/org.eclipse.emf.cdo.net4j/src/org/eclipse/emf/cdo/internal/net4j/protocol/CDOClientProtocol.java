@@ -326,6 +326,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     case CDOProtocolConstants.SIGNAL_BRANCH_NOTIFICATION:
       return new BranchNotificationIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_REPOSITORY_TYPE_NOTIFICATION:
+      return new RepositoryTypeNotificationIndication(this);
+
     case CDOProtocolConstants.SIGNAL_REPOSITORY_STATE_NOTIFICATION:
       return new RepositoryStateNotificationIndication(this);
 

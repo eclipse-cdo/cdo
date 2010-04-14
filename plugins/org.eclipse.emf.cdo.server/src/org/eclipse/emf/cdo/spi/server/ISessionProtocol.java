@@ -25,6 +25,9 @@ public interface ISessionProtocol extends CDOProtocol
 {
   public CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken) throws Exception;
 
+  public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
+      throws Exception;
+
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
       throws Exception;
 

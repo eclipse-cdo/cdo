@@ -50,6 +50,9 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOCommonSessi
   public void collectContainedRevisions(InternalCDORevision revision, CDOBranchPoint branchPoint, int referenceChunk,
       Set<CDOID> revisions, List<CDORevision> additionalRevisions);
 
+  public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
+      throws Exception;
+
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
       throws Exception;
 

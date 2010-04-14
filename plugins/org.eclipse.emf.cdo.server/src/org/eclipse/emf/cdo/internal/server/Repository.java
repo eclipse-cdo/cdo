@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
+import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
@@ -119,6 +120,8 @@ public class Repository extends Container<Object> implements InternalRepository
   private String uuid;
 
   private InternalStore store;
+
+  private Type type = Type.MASTER;
 
   private State state = State.ONLINE;
 
@@ -206,7 +209,23 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public Type getType()
   {
-    return Type.MASTER;
+    return type;
+  }
+
+  public void setType(Type type)
+  {
+    checkArg(type, "type"); //$NON-NLS-1$
+    if (this.type != type)
+    {
+      Type oldType = this.type;
+      this.type = type;
+      fireEvent(new RepositoryTypeChangedEvent(this, oldType, type));
+
+      if (sessionManager != null)
+      {
+        sessionManager.sendRepositoryTypeNotification(oldType, type);
+      }
+    }
   }
 
   public State getState()

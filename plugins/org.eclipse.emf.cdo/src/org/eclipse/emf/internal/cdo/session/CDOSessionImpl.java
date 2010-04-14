@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
+import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -667,6 +668,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   {
     CDOCollectionLoadingPolicy policy = options().getCollectionLoadingPolicy();
     return policy.resolveProxy(this, revision, feature, accessIndex, serverIndex);
+  }
+
+  public void handleRepositoryTypeChanged(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
+  {
+    fireEvent(new RepositoryTypeChangedEvent(this, oldType, newType));
   }
 
   public void handleRepositoryStateChanged(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)

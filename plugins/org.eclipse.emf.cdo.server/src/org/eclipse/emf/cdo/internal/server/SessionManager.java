@@ -236,6 +236,21 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
+  public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
+  {
+    for (InternalSession session : getSessions())
+    {
+      try
+      {
+        session.sendRepositoryTypeNotification(oldType, newType);
+      }
+      catch (Exception ex)
+      {
+        handleNotificationProblem(session, ex);
+      }
+    }
+  }
+
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
   {
     for (InternalSession session : getSessions())

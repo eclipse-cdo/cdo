@@ -80,6 +80,19 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     return new AuthenticationRequest(this, randomToken).send(negotiationTimeout);
   }
 
+  public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
+      throws Exception
+  {
+    if (LifecycleUtil.isActive(getChannel()))
+    {
+      new RepositoryTypeNotificationRequest(this, oldType, newType).sendAsync();
+    }
+    else
+    {
+      handleInactiveSession();
+    }
+  }
+
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
       throws Exception
   {

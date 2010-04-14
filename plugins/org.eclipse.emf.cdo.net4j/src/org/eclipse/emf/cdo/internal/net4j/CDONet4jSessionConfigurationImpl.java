@@ -39,9 +39,9 @@ import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
 import org.eclipse.net4j.util.CheckUtil;
 
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.util.Set;
 
@@ -322,6 +322,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     public Type getType()
     {
       return type;
+    }
+
+    public void setType(Type type)
+    {
+      this.type = type;
     }
 
     public State getState()

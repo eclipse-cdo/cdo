@@ -323,6 +323,15 @@ public class Session extends Container<IView> implements InternalSession
     return (CDOID)idObject;
   }
 
+  public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
+      throws Exception
+  {
+    if (protocol != null)
+    {
+      protocol.sendRepositoryTypeNotification(oldType, newType);
+    }
+  }
+
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
       throws Exception
   {

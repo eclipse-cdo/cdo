@@ -15,21 +15,8 @@ package org.eclipse.emf.cdo.internal.server.clone;
  */
 public class FailoverParticipant extends SynchronizableRepository
 {
-  private Type type;
-
   public FailoverParticipant()
   {
     setState(State.OFFLINE);
-  }
-
-  @Override
-  public Type getType()
-  {
-    return type;
-  }
-
-  public void setType(Type type)
-  {
-    this.type = type;
   }
 }

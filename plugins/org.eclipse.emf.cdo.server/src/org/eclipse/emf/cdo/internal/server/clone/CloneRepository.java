@@ -21,8 +21,14 @@ public class CloneRepository extends SynchronizableRepository
   }
 
   @Override
-  public Type getType()
+  public final Type getType()
   {
     return Type.CLONE;
+  }
+
+  @Override
+  public final void setType(Type type)
+  {
+    throw new UnsupportedOperationException();
   }
 }

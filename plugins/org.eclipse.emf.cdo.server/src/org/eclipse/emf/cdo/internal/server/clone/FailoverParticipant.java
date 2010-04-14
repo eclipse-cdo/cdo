@@ -13,9 +13,11 @@ package org.eclipse.emf.cdo.internal.server.clone;
 /**
  * @author Eike Stepper
  */
-public class CloneRepository extends SynchronizableRepository
+public class FailoverParticipant extends SynchronizableRepository
 {
-  public CloneRepository()
+  private Type type;
+
+  public FailoverParticipant()
   {
     setState(State.OFFLINE);
   }
@@ -23,6 +25,11 @@ public class CloneRepository extends SynchronizableRepository
   @Override
   public Type getType()
   {
-    return Type.CLONE;
+    return type;
+  }
+
+  public void setType(Type type)
+  {
+    this.type = type;
   }
 }

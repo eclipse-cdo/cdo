@@ -40,11 +40,11 @@ import java.util.concurrent.PriorityBlockingQueue;
  * @author Eike Stepper
  * @since 3.0
  */
-public class CloneSynchronizer extends QueueRunner
+public class RepositorySynchronizer extends QueueRunner
 {
   public static final int DEFAULT_RETRY_INTERVAL = 3;
 
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, CloneSynchronizer.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, RepositorySynchronizer.class);
 
   private static final Integer CONNECT_PRIORITY = 0;
 
@@ -54,33 +54,22 @@ public class CloneSynchronizer extends QueueRunner
 
   private static final Integer COMMIT_PRIORITY = 3;
 
-  private CloneRepository clone;
-
   private int retryInterval = DEFAULT_RETRY_INTERVAL;
 
   private Object connectLock = new Object();
 
-  private CDOSessionConfigurationFactory masterFactory;
+  private SynchronizableRepository localRepository;
 
-  private InternalCDOSession master;
+  private InternalCDOSession remoteSession;
 
-  private MasterListener masterListener = new MasterListener();
+  private RemoteSessionListener remoteSessionListener = new RemoteSessionListener();
+
+  private CDOSessionConfigurationFactory remoteSessionConfigurationFactory;
 
   private boolean squeezeCommitInfos;
 
-  public CloneSynchronizer()
+  public RepositorySynchronizer()
   {
-  }
-
-  public CloneRepository getClone()
-  {
-    return clone;
-  }
-
-  public void setClone(CloneRepository clone)
-  {
-    checkInactive();
-    this.clone = clone;
   }
 
   public int getRetryInterval()
@@ -93,20 +82,31 @@ public class CloneSynchronizer extends QueueRunner
     this.retryInterval = retryInterval;
   }
 
-  public CDOSessionConfigurationFactory getMasterFactory()
+  public SynchronizableRepository getLocalRepository()
   {
-    return masterFactory;
+    return localRepository;
   }
 
-  public void setMasterFactory(CDOSessionConfigurationFactory masterFactory)
+  public void setLocalRepository(SynchronizableRepository localRepository)
   {
-    checkArg(masterFactory, "masterFactory"); //$NON-NLS-1$
-    this.masterFactory = masterFactory;
+    checkInactive();
+    this.localRepository = localRepository;
   }
 
-  public CDOSession getMaster()
+  public CDOSessionConfigurationFactory getRemoteSessionConfigurationFactory()
   {
-    return master;
+    return remoteSessionConfigurationFactory;
+  }
+
+  public void setRemoteSessionConfigurationFactory(CDOSessionConfigurationFactory remoteSessionConfigurationFactory)
+  {
+    checkArg(remoteSessionConfigurationFactory, "remoteSessionConfigurationFactory"); //$NON-NLS-1$
+    this.remoteSessionConfigurationFactory = remoteSessionConfigurationFactory;
+  }
+
+  public CDOSession getRemoteSession()
+  {
+    return remoteSession;
   }
 
   public boolean isSqueezeCommitInfos()
@@ -122,7 +122,7 @@ public class CloneSynchronizer extends QueueRunner
   @Override
   protected String getThreadName()
   {
-    return "CloneSynchronizer"; //$NON-NLS-1$
+    return "RepositorySynchronizer"; //$NON-NLS-1$
   }
 
   @Override
@@ -135,8 +135,8 @@ public class CloneSynchronizer extends QueueRunner
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(masterFactory, "masterFactory"); //$NON-NLS-1$
-    checkState(clone, "clone"); //$NON-NLS-1$
+    checkState(remoteSessionConfigurationFactory, "remoteSessionConfigurationFactory"); //$NON-NLS-1$
+    checkState(localRepository, "localRepository"); //$NON-NLS-1$
   }
 
   @Override
@@ -149,12 +149,12 @@ public class CloneSynchronizer extends QueueRunner
   @Override
   protected void doDeactivate() throws Exception
   {
-    if (master != null)
+    if (remoteSession != null)
     {
-      master.removeListener(masterListener);
-      master.getBranchManager().removeListener(masterListener);
-      master.close();
-      master = null;
+      remoteSession.removeListener(remoteSessionListener);
+      remoteSession.getBranchManager().removeListener(remoteSessionListener);
+      remoteSession.close();
+      remoteSession = null;
     }
 
     super.doDeactivate();
@@ -163,18 +163,18 @@ public class CloneSynchronizer extends QueueRunner
   private void disconnect()
   {
     OM.LOG.info("Disconnected from master.");
-    if (clone.getRootResourceID() == null)
+    if (localRepository.getRootResourceID() == null)
     {
-      clone.setState(CloneRepository.State.INITIAL);
+      localRepository.setState(CloneRepository.State.INITIAL);
     }
     else
     {
-      clone.setState(CloneRepository.State.OFFLINE);
+      localRepository.setState(CloneRepository.State.OFFLINE);
     }
 
-    master.getBranchManager().removeListener(masterListener);
-    master.removeListener(masterListener);
-    master = null;
+    remoteSession.getBranchManager().removeListener(remoteSessionListener);
+    remoteSession.removeListener(remoteSessionListener);
+    remoteSession = null;
 
     reconnect();
   }
@@ -192,7 +192,7 @@ public class CloneSynchronizer extends QueueRunner
   {
     synchronized (connectLock)
     {
-      if (clone.getState().isConnected())
+      if (localRepository.getState().isConnected())
       {
         return;
       }
@@ -215,7 +215,7 @@ public class CloneSynchronizer extends QueueRunner
   /**
    * @author Eike Stepper
    */
-  private final class MasterListener implements IListener
+  private final class RemoteSessionListener implements IListener
   {
     public void notifyEvent(IEvent event)
     {
@@ -240,7 +240,7 @@ public class CloneSynchronizer extends QueueRunner
       else if (event instanceof ILifecycleEvent)
       {
         ILifecycleEvent e = (ILifecycleEvent)event;
-        if (e.getKind() == ILifecycleEvent.Kind.DEACTIVATED && e.getSource() == master)
+        if (e.getKind() == ILifecycleEvent.Kind.DEACTIVATED && e.getSource() == remoteSession)
         {
           disconnect();
         }
@@ -282,10 +282,10 @@ public class CloneSynchronizer extends QueueRunner
 
         try
         {
-          CDOSessionConfiguration masterConfiguration = masterFactory.createSessionConfiguration();
+          CDOSessionConfiguration masterConfiguration = remoteSessionConfigurationFactory.createSessionConfiguration();
           masterConfiguration.setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
 
-          master = (InternalCDOSession)masterConfiguration.openSession();
+          remoteSession = (InternalCDOSession)masterConfiguration.openSession();
 
           ensureNOOPRevisionCache();
           setRootResourceID();
@@ -315,8 +315,8 @@ public class CloneSynchronizer extends QueueRunner
         }
 
         OM.LOG.info("Connected to master.");
-        master.addListener(masterListener);
-        master.getBranchManager().addListener(masterListener);
+        remoteSession.addListener(remoteSessionListener);
+        remoteSession.getBranchManager().addListener(remoteSessionListener);
 
         scheduleReplicate();
       }
@@ -330,18 +330,18 @@ public class CloneSynchronizer extends QueueRunner
 
     private void setRootResourceID()
     {
-      if (clone.getState() == CloneRepository.State.INITIAL)
+      if (localRepository.getState() == CloneRepository.State.INITIAL)
       {
-        CDOID rootResourceID = master.getRepositoryInfo().getRootResourceID();
-        clone.setRootResourceID(rootResourceID);
-        clone.setState(CloneRepository.State.OFFLINE);
+        CDOID rootResourceID = remoteSession.getRepositoryInfo().getRootResourceID();
+        localRepository.setRootResourceID(rootResourceID);
+        localRepository.setState(CloneRepository.State.OFFLINE);
       }
     }
 
     private void ensureNOOPRevisionCache()
     {
       // Ensure that incoming revisions are not cached!
-      InternalCDORevisionCache cache = master.getRevisionManager().getCache();
+      InternalCDORevisionCache cache = remoteSession.getRevisionManager().getCache();
       if (!(cache instanceof NOOPRevisionCache))
       {
         throw new IllegalStateException("Master session does not use a NOOPRevisionCache: "
@@ -367,12 +367,12 @@ public class CloneSynchronizer extends QueueRunner
         TRACER.trace("Synchronizing with master..."); //$NON-NLS-1$
       }
 
-      clone.setState(CloneRepository.State.SYNCING);
+      localRepository.setState(CloneRepository.State.SYNCING);
 
-      CDOSessionProtocol sessionProtocol = master.getSessionProtocol();
-      sessionProtocol.replicateRepository(clone);
+      CDOSessionProtocol sessionProtocol = remoteSession.getSessionProtocol();
+      sessionProtocol.replicateRepository(localRepository);
 
-      clone.setState(CloneRepository.State.ONLINE);
+      localRepository.setState(CloneRepository.State.ONLINE);
       OM.LOG.info("Synchronized with master.");
     }
 
@@ -397,7 +397,7 @@ public class CloneSynchronizer extends QueueRunner
 
     public void run()
     {
-      clone.handleBranch(branch);
+      localRepository.handleBranch(branch);
     }
 
     @Override
@@ -433,7 +433,7 @@ public class CloneSynchronizer extends QueueRunner
 
     public void run()
     {
-      clone.handleCommitInfo(commitInfo);
+      localRepository.handleCommitInfo(commitInfo);
     }
 
     @Override

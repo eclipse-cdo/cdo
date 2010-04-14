@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.clone.CloneRepository;
-import org.eclipse.emf.cdo.internal.server.clone.CloneSynchronizer;
+import org.eclipse.emf.cdo.internal.server.clone.RepositorySynchronizer;
 import org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionConfiguration;
 import org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
@@ -83,7 +83,7 @@ public final class CDOServerUtil
    * @since 3.0
    */
   public static IRepository createCloneRepository(String name, IStore store, Map<String, String> props,
-      CloneSynchronizer synchronizer)
+      RepositorySynchronizer synchronizer)
   {
     CloneRepository repository = new CloneRepository();
     repository.setName(name);

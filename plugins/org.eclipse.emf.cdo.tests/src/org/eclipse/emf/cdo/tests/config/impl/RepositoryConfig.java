@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
-import org.eclipse.emf.cdo.internal.server.clone.CloneSynchronizer;
+import org.eclipse.emf.cdo.internal.server.clone.RepositorySynchronizer;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
@@ -269,8 +269,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
         }
       };
 
-      CloneSynchronizer synchronizer = new CloneSynchronizer();
-      synchronizer.setMasterFactory(masterFactory);
+      RepositorySynchronizer synchronizer = new RepositorySynchronizer();
+      synchronizer.setRemoteSessionConfigurationFactory(masterFactory);
       synchronizer.setRetryInterval(1);
       synchronizer.setSqueezeCommitInfos(getTestSqueezeCommitInfos());
 

@@ -412,7 +412,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       CDOCommitData commitData = new CommitContextData(this);
 
       // Delegate commit to the master
-      CDOSessionProtocol sessionProtocol = (synchronizer.getRemoteSession()).getSessionProtocol();
+      CDOSessionProtocol sessionProtocol = synchronizer.getRemoteSession().getSessionProtocol();
       CommitTransactionResult result = sessionProtocol.commitDelegation(branch, userID, comment, commitData, monitor);
 
       // Stop if commit to master failed
@@ -423,7 +423,8 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       }
 
       // Prepare data needed for commit result and commit notifications
-      setTimeStamp(result.getTimeStamp());
+      long timeStamp = result.getTimeStamp();
+      setTimeStamp(timeStamp);
       addMetaIDRanges(commitData.getNewPackageUnits());
       addIDMappings(result.getIDMappings());
       applyIDMappings(new Monitor());
@@ -434,7 +435,8 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       super.commit(new Monitor());
 
       // Remember commit time in the local repository
-      setLastCommitTimeStamp(result.getTimeStamp());
+      setLastCommitTimeStamp(timeStamp);
+      lastReplicatedCommitTime = timeStamp;
     }
 
     @Override

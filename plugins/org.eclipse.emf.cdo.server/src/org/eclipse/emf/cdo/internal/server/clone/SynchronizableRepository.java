@@ -64,7 +64,7 @@ import java.util.Set;
  * 
  * @author Eike Stepper
  */
-public class SynchronizableRepository extends Repository.Default implements CDOReplicationContext
+public abstract class SynchronizableRepository extends Repository.Default implements CDOReplicationContext
 {
   private static final String PROP_LAST_REPLICATED_BRANCH_ID = "org.eclipse.emf.cdo.server.clone.lastReplicatedBranchID"; //$NON-NLS-1$
 
@@ -84,12 +84,6 @@ public class SynchronizableRepository extends Repository.Default implements CDOR
 
   public SynchronizableRepository()
   {
-  }
-
-  @Override
-  public Type getType()
-  {
-    return Type.CLONE;
   }
 
   public RepositorySynchronizer getSynchronizer()

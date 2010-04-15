@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.server.clone;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent;
@@ -165,11 +166,11 @@ public class RepositorySynchronizer extends QueueRunner
     OM.LOG.info("Disconnected from master.");
     if (localRepository.getRootResourceID() == null)
     {
-      localRepository.setState(CloneRepository.State.INITIAL);
+      localRepository.setState(CDOCommonRepository.State.INITIAL);
     }
     else
     {
-      localRepository.setState(CloneRepository.State.OFFLINE);
+      localRepository.setState(CDOCommonRepository.State.OFFLINE);
     }
 
     remoteSession.getBranchManager().removeListener(remoteSessionListener);
@@ -330,11 +331,11 @@ public class RepositorySynchronizer extends QueueRunner
 
     private void setRootResourceID()
     {
-      if (localRepository.getState() == CloneRepository.State.INITIAL)
+      if (localRepository.getState() == CDOCommonRepository.State.INITIAL)
       {
         CDOID rootResourceID = remoteSession.getRepositoryInfo().getRootResourceID();
         localRepository.setRootResourceID(rootResourceID);
-        localRepository.setState(CloneRepository.State.OFFLINE);
+        localRepository.setState(CDOCommonRepository.State.OFFLINE);
       }
     }
 
@@ -367,12 +368,12 @@ public class RepositorySynchronizer extends QueueRunner
         TRACER.trace("Synchronizing with master..."); //$NON-NLS-1$
       }
 
-      localRepository.setState(CloneRepository.State.SYNCING);
+      localRepository.setState(CDOCommonRepository.State.SYNCING);
 
       CDOSessionProtocol sessionProtocol = remoteSession.getSessionProtocol();
       sessionProtocol.replicateRepository(localRepository);
 
-      localRepository.setState(CloneRepository.State.ONLINE);
+      localRepository.setState(CDOCommonRepository.State.ONLINE);
       OM.LOG.info("Synchronized with master.");
     }
 

@@ -217,14 +217,18 @@ public class Repository extends Container<Object> implements InternalRepository
     checkArg(type, "type"); //$NON-NLS-1$
     if (this.type != type)
     {
-      Type oldType = this.type;
-      this.type = type;
-      fireEvent(new RepositoryTypeChangedEvent(this, oldType, type));
+      changingType(this.type, type);
+    }
+  }
 
-      if (sessionManager != null)
-      {
-        sessionManager.sendRepositoryTypeNotification(oldType, type);
-      }
+  protected void changingType(Type oldType, Type newType)
+  {
+    type = newType;
+    fireEvent(new RepositoryTypeChangedEvent(this, oldType, newType));
+
+    if (sessionManager != null)
+    {
+      sessionManager.sendRepositoryTypeNotification(oldType, newType);
     }
   }
 
@@ -238,14 +242,18 @@ public class Repository extends Container<Object> implements InternalRepository
     checkArg(state, "state"); //$NON-NLS-1$
     if (this.state != state)
     {
-      State oldState = this.state;
-      this.state = state;
-      fireEvent(new RepositoryStateChangedEvent(this, oldState, state));
+      changingState(this.state, state);
+    }
+  }
 
-      if (sessionManager != null)
-      {
-        sessionManager.sendRepositoryStateNotification(oldState, state);
-      }
+  protected void changingState(State oldState, State newState)
+  {
+    this.state = newState;
+    fireEvent(new RepositoryStateChangedEvent(this, oldState, newState));
+
+    if (sessionManager != null)
+    {
+      sessionManager.sendRepositoryStateNotification(oldState, newState);
     }
   }
 

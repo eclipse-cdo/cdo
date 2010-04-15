@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.server.clone.CloneRepository;
+import org.eclipse.emf.cdo.internal.server.clone.OfflineClone;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -370,7 +370,7 @@ public class OfflineTest extends AbstractCDOTest
 
   public void testDisconnectAndCommit() throws Exception
   {
-    CloneRepository clone = (CloneRepository)getRepository();
+    OfflineClone clone = (OfflineClone)getRepository();
     waitForOnline(clone);
 
     getOfflineConfig().stopMasterTransport();
@@ -391,7 +391,7 @@ public class OfflineTest extends AbstractCDOTest
 
   public void testDisconnectAndCommitAndMerge() throws Exception
   {
-    CloneRepository clone = (CloneRepository)getRepository();
+    OfflineClone clone = (OfflineClone)getRepository();
     waitForOnline(clone);
 
     CDOSession session = openSession();
@@ -416,7 +416,7 @@ public class OfflineTest extends AbstractCDOTest
 
   public void testDisconnectAndCommitAndMergeWithNewPackages() throws Exception
   {
-    CloneRepository clone = (CloneRepository)getRepository();
+    OfflineClone clone = (OfflineClone)getRepository();
     waitForOnline(clone);
 
     getOfflineConfig().stopMasterTransport();
@@ -443,7 +443,7 @@ public class OfflineTest extends AbstractCDOTest
 
   public void testSqueezedCommitInfos_Initial() throws Exception
   {
-    CloneRepository clone = (CloneRepository)getRepository();
+    OfflineClone clone = (OfflineClone)getRepository();
     waitForOnline(clone);
 
     getOfflineConfig().stopMasterTransport();

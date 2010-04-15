@@ -13,9 +13,9 @@ package org.eclipse.emf.cdo.internal.server.clone;
 /**
  * @author Eike Stepper
  */
-public class CloneRepository extends SynchronizableRepository
+public class OfflineClone extends SynchronizableRepository
 {
-  public CloneRepository()
+  public OfflineClone()
   {
     setState(State.OFFLINE);
   }

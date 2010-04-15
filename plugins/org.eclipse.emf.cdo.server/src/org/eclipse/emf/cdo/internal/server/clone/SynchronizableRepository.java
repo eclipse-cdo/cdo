@@ -178,7 +178,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     CDOBranch branch = transaction.getBranch();
     if (branch.isLocal())
     {
-      return createTransactionCommitContext(transaction);
+      return createNormalCommitContext(transaction);
     }
 
     if (getState() != State.ONLINE)
@@ -189,7 +189,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     return createWriteThroughCommitContext(transaction);
   }
 
-  protected InternalCommitContext createTransactionCommitContext(InternalTransaction transaction)
+  protected InternalCommitContext createNormalCommitContext(InternalTransaction transaction)
   {
     return super.createCommitContext(transaction);
   }

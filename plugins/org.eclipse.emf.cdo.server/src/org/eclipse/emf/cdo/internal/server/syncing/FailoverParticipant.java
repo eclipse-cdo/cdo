@@ -40,6 +40,11 @@ public class FailoverParticipant extends SynchronizableRepository
   {
     if (newType == MASTER)
     {
+      // Switch off synchronizer
+    }
+    else
+    {
+      // Switch on synchronizer
     }
 
     super.changingType(oldType, newType);

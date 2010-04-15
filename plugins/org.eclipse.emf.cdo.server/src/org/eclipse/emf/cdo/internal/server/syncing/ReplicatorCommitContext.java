@@ -1,4 +1,4 @@
-package org.eclipse.emf.cdo.internal.server.clone;
+package org.eclipse.emf.cdo.internal.server.syncing;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;

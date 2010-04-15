@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.server.clone;
+package org.eclipse.emf.cdo.internal.server.syncing;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -24,15 +24,16 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
-import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
+import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
+import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.collection.IndexedList;
@@ -42,7 +43,6 @@ import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -64,15 +64,15 @@ import java.util.Set;
  * 
  * @author Eike Stepper
  */
-public abstract class SynchronizableRepository extends Repository.Default implements CDOReplicationContext
+public abstract class SynchronizableRepository extends Repository.Default implements InternalSynchronizableRepository
 {
-  private static final String PROP_LAST_REPLICATED_BRANCH_ID = "org.eclipse.emf.cdo.server.clone.lastReplicatedBranchID"; //$NON-NLS-1$
+  private static final String PROP_LAST_REPLICATED_BRANCH_ID = "org.eclipse.emf.cdo.server.lastReplicatedBranchID"; //$NON-NLS-1$
 
-  private static final String PROP_LAST_REPLICATED_COMMIT_TIME = "org.eclipse.emf.cdo.server.clone.lastReplicatedCommitTime"; //$NON-NLS-1$
+  private static final String PROP_LAST_REPLICATED_COMMIT_TIME = "org.eclipse.emf.cdo.server.lastReplicatedCommitTime"; //$NON-NLS-1$
 
-  private static final String PROP_GRACEFULLY_SHUT_DOWN = "org.eclipse.emf.cdo.server.clone.gracefullyShutDown"; //$NON-NLS-1$
+  private static final String PROP_GRACEFULLY_SHUT_DOWN = "org.eclipse.emf.cdo.server.gracefullyShutDown"; //$NON-NLS-1$
 
-  private RepositorySynchronizer synchronizer;
+  private InternalRepositorySynchronizer synchronizer;
 
   private InternalSession replicatorSession;
 
@@ -86,15 +86,20 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   {
   }
 
-  public RepositorySynchronizer getSynchronizer()
+  public InternalRepositorySynchronizer getSynchronizer()
   {
     return synchronizer;
   }
 
-  public void setSynchronizer(RepositorySynchronizer synchronizer)
+  public void setSynchronizer(InternalRepositorySynchronizer synchronizer)
   {
     checkInactive();
     this.synchronizer = synchronizer;
+  }
+
+  public InternalSession getReplicatorSession()
+  {
+    return replicatorSession;
   }
 
   @Override
@@ -225,7 +230,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       Map<String, String> map = store.getPropertyValues(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
       if (!map.containsKey(PROP_GRACEFULLY_SHUT_DOWN))
       {
-        throw new IllegalStateException("Clone store was not gracefully shut down");
+        throw new IllegalStateException("Local repository was not gracefully shut down");
       }
 
       Set<String> names = new HashSet<String>();
@@ -288,7 +293,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   /**
    * @author Eike Stepper
    */
-  private static final class CommitContextData implements CDOCommitData
+  protected static final class CommitContextData implements CDOCommitData
   {
     private InternalCommitContext commitContext;
 
@@ -382,7 +387,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   /**
    * @author Eike Stepper
    */
-  private final class WriteThroughCommitContext extends TransactionCommitContext
+  protected final class WriteThroughCommitContext extends TransactionCommitContext
   {
     public WriteThroughCommitContext(InternalTransaction transaction)
     {
@@ -407,7 +412,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       CDOCommitData commitData = new CommitContextData(this);
 
       // Delegate commit to the master
-      CDOSessionProtocol sessionProtocol = ((InternalCDOSession)synchronizer.getRemoteSession()).getSessionProtocol();
+      CDOSessionProtocol sessionProtocol = (synchronizer.getRemoteSession()).getSessionProtocol();
       CommitTransactionResult result = sessionProtocol.commitDelegation(branch, userID, comment, commitData, monitor);
 
       // Stop if commit to master failed
@@ -423,12 +428,12 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       addIDMappings(result.getIDMappings());
       applyIDMappings(new Monitor());
 
-      // Commit to the clone
+      // Commit to the local repository
       super.preWrite();
       super.write(new Monitor());
       super.commit(new Monitor());
 
-      // Remember commit time in the clone
+      // Remember commit time in the local repository
       setLastCommitTimeStamp(result.getTimeStamp());
     }
 
@@ -476,7 +481,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   /**
    * @author Eike Stepper
    */
-  private final class BranchingCommitContext extends TransactionCommitContext
+  protected final class BranchingCommitContext extends TransactionCommitContext
   {
     private long timeStamp;
 

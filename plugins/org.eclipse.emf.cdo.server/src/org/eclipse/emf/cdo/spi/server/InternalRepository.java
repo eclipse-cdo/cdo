@@ -47,6 +47,10 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
 {
   public void setName(String name);
 
+  public void setType(Type type);
+
+  public void setState(State state);
+
   public InternalStore getStore();
 
   public void setStore(InternalStore store);
@@ -80,6 +84,8 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
   public InternalCommitManager getCommitManager();
 
   public InternalCommitContext createCommitContext(InternalTransaction transaction);
+
+  public void setRootResourceID(CDOID rootResourceID);
 
   /**
    * Returns a commit time stamp that is guaranteed to be unique in the given branch. If <code>null</code> is passed the

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.server.clone;
+package org.eclipse.emf.cdo.internal.server.syncing;
 
 /**
  * @author Eike Stepper

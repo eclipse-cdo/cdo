@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.server.clone;
+package org.eclipse.emf.cdo.internal.server.syncing;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
@@ -18,11 +18,12 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
+import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
+import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.QueueRunner;
@@ -41,7 +42,7 @@ import java.util.concurrent.PriorityBlockingQueue;
  * @author Eike Stepper
  * @since 3.0
  */
-public class RepositorySynchronizer extends QueueRunner
+public class RepositorySynchronizer extends QueueRunner implements InternalRepositorySynchronizer
 {
   public static final int DEFAULT_RETRY_INTERVAL = 3;
 
@@ -59,7 +60,7 @@ public class RepositorySynchronizer extends QueueRunner
 
   private Object connectLock = new Object();
 
-  private SynchronizableRepository localRepository;
+  private InternalSynchronizableRepository localRepository;
 
   private InternalCDOSession remoteSession;
 
@@ -83,12 +84,12 @@ public class RepositorySynchronizer extends QueueRunner
     this.retryInterval = retryInterval;
   }
 
-  public SynchronizableRepository getLocalRepository()
+  public InternalSynchronizableRepository getLocalRepository()
   {
     return localRepository;
   }
 
-  public void setLocalRepository(SynchronizableRepository localRepository)
+  public void setLocalRepository(InternalSynchronizableRepository localRepository)
   {
     checkInactive();
     this.localRepository = localRepository;
@@ -105,7 +106,7 @@ public class RepositorySynchronizer extends QueueRunner
     this.remoteSessionConfigurationFactory = remoteSessionConfigurationFactory;
   }
 
-  public CDOSession getRemoteSession()
+  public InternalCDOSession getRemoteSession()
   {
     return remoteSession;
   }

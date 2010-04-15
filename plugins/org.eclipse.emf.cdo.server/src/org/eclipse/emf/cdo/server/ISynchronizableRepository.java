@@ -8,15 +8,20 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.server.clone;
+package org.eclipse.emf.cdo.server;
+
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
-public class FailoverParticipant extends SynchronizableRepository
+public interface ISynchronizableRepository
 {
-  public FailoverParticipant()
-  {
-    setState(State.OFFLINE);
-  }
+  public IRepositorySynchronizer getSynchronizer();
+
+  public ISession getReplicatorSession();
+
+  public int getLastReplicatedBranchID();
+
+  public long getLastReplicatedCommitTime();
 }

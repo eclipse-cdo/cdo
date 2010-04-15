@@ -10,14 +10,18 @@
  */
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.internal.server.clone.OfflineClone;
-import org.eclipse.emf.cdo.internal.server.clone.RepositorySynchronizer;
 import org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionConfiguration;
+import org.eclipse.emf.cdo.internal.server.syncing.FailoverParticipant;
+import org.eclipse.emf.cdo.internal.server.syncing.OfflineClone;
+import org.eclipse.emf.cdo.internal.server.syncing.RepositorySynchronizer;
 import org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
+import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
@@ -71,26 +75,51 @@ public final class CDOServerUtil
   public static IRepository createRepository(String name, IStore store, Map<String, String> props)
   {
     Repository repository = new Repository.Default();
-    repository.setName(name);
-    repository.setStore((InternalStore)store);
-    repository.setProperties(props);
+    initRepository(repository, name, store, props);
     return repository;
   }
 
   /**
-   * TODO Add SPI for CloneSynchronizer
-   * 
    * @since 3.0
    */
-  public static IRepository createCloneRepository(String name, IStore store, Map<String, String> props,
-      RepositorySynchronizer synchronizer)
+  public static IRepositorySynchronizer createRepositorySynchronizer(
+      CDOSessionConfigurationFactory remoteSessionConfigurationFactory)
+  {
+    RepositorySynchronizer synchronizer = new RepositorySynchronizer();
+    synchronizer.setRemoteSessionConfigurationFactory(remoteSessionConfigurationFactory);
+    return synchronizer;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static ISynchronizableRepository createOfflineClone(String name, IStore store, Map<String, String> props,
+      IRepositorySynchronizer synchronizer)
   {
     OfflineClone repository = new OfflineClone();
+    initRepository(repository, name, store, props);
+    repository.setSynchronizer((InternalRepositorySynchronizer)synchronizer);
+    return repository;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static ISynchronizableRepository createFailoverParticipant(String name, IStore store,
+      Map<String, String> props, IRepositorySynchronizer synchronizer, boolean master)
+  {
+    FailoverParticipant repository = new FailoverParticipant();
+    initRepository(repository, name, store, props);
+    repository.setSynchronizer((InternalRepositorySynchronizer)synchronizer);
+    repository.setType(master ? CDOCommonRepository.Type.MASTER : CDOCommonRepository.Type.BACKUP);
+    return repository;
+  }
+
+  private static void initRepository(Repository repository, String name, IStore store, Map<String, String> props)
+  {
     repository.setName(name);
     repository.setStore((InternalStore)store);
     repository.setProperties(props);
-    repository.setSynchronizer(synchronizer);
-    return repository;
   }
 
   public static void addRepository(IManagedContainer container, IRepository repository)

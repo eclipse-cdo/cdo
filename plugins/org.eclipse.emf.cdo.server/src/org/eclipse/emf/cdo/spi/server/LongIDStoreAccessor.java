@@ -37,6 +37,9 @@ public abstract class LongIDStoreAccessor extends StoreAccessor
     super(store, transaction);
   }
 
+  /**
+   * @since 3.0
+   */
   @Override
   protected void addIDMappings(InternalCommitContext commitContext, OMMonitor monitor)
   {

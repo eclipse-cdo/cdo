@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
-import org.eclipse.emf.cdo.internal.server.clone.RepositorySynchronizer;
+import org.eclipse.emf.cdo.internal.server.syncing.RepositorySynchronizer;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
@@ -275,7 +275,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       synchronizer.setSqueezeCommitInfos(getTestSqueezeCommitInfos());
 
       IStore store = createStore(name);
-      return (InternalRepository)CDOServerUtil.createCloneRepository(name, store, props, synchronizer);
+      return (InternalRepository)CDOServerUtil.createOfflineClone(name, store, props, synchronizer);
     }
 
     protected boolean getTestSqueezeCommitInfos()

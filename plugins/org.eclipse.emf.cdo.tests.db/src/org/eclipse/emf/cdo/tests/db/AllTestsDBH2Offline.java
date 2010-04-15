@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.tests.OfflineSqueezedTest;
 import org.eclipse.emf.cdo.tests.OfflineTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
@@ -73,7 +72,7 @@ public class AllTestsDBH2Offline extends DBConfigs
     // super.initTestClasses(testClasses);
 
     testClasses.add(OfflineTest.class);
-    testClasses.add(OfflineSqueezedTest.class);
+    // testClasses.add(OfflineSqueezedTest.class);
   }
 
   /**

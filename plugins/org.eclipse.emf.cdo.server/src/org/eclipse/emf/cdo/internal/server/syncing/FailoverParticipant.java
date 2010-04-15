@@ -19,6 +19,10 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
  */
 public class FailoverParticipant extends SynchronizableRepository
 {
+  private static final CDOCommonRepository.Type MASTER = CDOCommonRepository.Type.MASTER;
+
+  private static final CDOCommonRepository.Type BACKUP = CDOCommonRepository.Type.BACKUP;
+
   public FailoverParticipant()
   {
     setState(State.OFFLINE);
@@ -27,15 +31,24 @@ public class FailoverParticipant extends SynchronizableRepository
   @Override
   public void setType(Type type)
   {
-    checkArg(type == CDOCommonRepository.Type.MASTER || type == CDOCommonRepository.Type.BACKUP,
-        "Type must be MASTER or BACKUP");
+    checkArg(type == MASTER || type == BACKUP, "Type must be MASTER or BACKUP");
     super.setType(type);
+  }
+
+  @Override
+  protected void changingType(Type oldType, Type newType)
+  {
+    if (newType == MASTER)
+    {
+    }
+
+    super.changingType(oldType, newType);
   }
 
   @Override
   public InternalCommitContext createCommitContext(InternalTransaction transaction)
   {
-    if (getType() == CDOCommonRepository.Type.BACKUP)
+    if (getType() == BACKUP)
     {
       if (transaction.getSession() != getReplicatorSession())
       {

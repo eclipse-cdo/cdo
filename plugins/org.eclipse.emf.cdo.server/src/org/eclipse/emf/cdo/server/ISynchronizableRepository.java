@@ -10,12 +10,11 @@
  */
 package org.eclipse.emf.cdo.server;
 
-
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public interface ISynchronizableRepository
+public interface ISynchronizableRepository extends IRepository
 {
   public IRepositorySynchronizer getSynchronizer();
 

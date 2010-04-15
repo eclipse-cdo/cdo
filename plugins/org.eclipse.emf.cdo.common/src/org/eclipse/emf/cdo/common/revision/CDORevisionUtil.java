@@ -73,9 +73,12 @@ public final class CDORevisionUtil
     return new CDOFeatureMapEntryImpl();
   }
 
-  public static Object remapID(Object value, Map<CDOID, CDOID> idMappings)
+  /**
+   * @since 3.0
+   */
+  public static Object remapID(Object value, Map<CDOID, CDOID> idMappings, boolean allowUnmappedTempIDs)
   {
-    return CDORevisionImpl.remapID(value, idMappings);
+    return CDORevisionImpl.remapID(value, idMappings, allowUnmappedTempIDs);
   }
 
   /**

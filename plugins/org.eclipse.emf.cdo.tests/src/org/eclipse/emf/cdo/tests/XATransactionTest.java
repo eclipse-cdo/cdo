@@ -202,11 +202,11 @@ public class XATransactionTest extends AbstractCDOTest
       sessionB.getPackageRegistry().putEPackage(getModel4Package());
 
       ResourceSet resourceSet = new ResourceSetImpl();
-      CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
-      CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
+      CDOTransaction transactionA = sessionA.openTransaction(resourceSet);
+      CDOTransaction transactionB = sessionB.openTransaction(resourceSet);
 
-      CDOResource resA = transactionA1.createResource("/resA");
-      CDOResource resB = transactionB1.createResource("/resB");
+      CDOResource resA = transactionA.createResource("/resA");
+      CDOResource resB = transactionB.createResource("/resB");
       GenRefSingleNonContained objectFromResA = getModel4Factory().createGenRefSingleNonContained();
       GenRefSingleNonContained objectFromResB = getModel4Factory().createGenRefSingleNonContained();
 
@@ -216,7 +216,7 @@ public class XATransactionTest extends AbstractCDOTest
 
       try
       {
-        transactionA1.commit();
+        transactionA.commit();
         fail("TransactionException expected");
       }
       catch (TransactionException expected)
@@ -226,7 +226,7 @@ public class XATransactionTest extends AbstractCDOTest
       CDOXATransaction transSet = CDOUtil.createXATransaction();
       transSet.add(CDOUtil.getViewSet(resourceSet));
 
-      transactionA1.commit();
+      transactionA.commit();
     }
   }
 

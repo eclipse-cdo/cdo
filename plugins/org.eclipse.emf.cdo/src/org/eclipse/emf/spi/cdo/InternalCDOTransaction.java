@@ -87,8 +87,8 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   /**
    * @since 3.0
    */
-  public CDOChangeSetData applyChangeSetData(CDORevisionAvailabilityInfo ancestorInfo,
-      CDORevisionAvailabilityInfo targetInfo, CDOChangeSetData ancestorGoalData);
+  public CDOChangeSetData applyChangeSetData(CDOChangeSetData changeSetData,
+      CDORevisionAvailabilityInfo ancestorInfo, CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo);
 
   /**
    * @since 3.0

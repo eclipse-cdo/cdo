@@ -10,11 +10,13 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
@@ -409,9 +411,17 @@ public class OfflineTest extends AbstractCDOTest
     getOfflineConfig().startMasterTransport();
     waitForOnline(clone);
 
+    DefaultCDOMerger.PerFeature.ManyValued merger = new DefaultCDOMerger.PerFeature.ManyValued();
+
     transaction.setBranch(session.getBranchManager().getMainBranch());
-    transaction.merge(commitInfo, new DefaultCDOMerger.PerFeature.ManyValued());
-    transaction.commit();
+    transaction.merge(commitInfo, merger);
+
+    assertEquals(1, transaction.getNewObjects().size());
+    CDOObject offlineCompany = transaction.getNewObjects().values().iterator().next();
+    assertEquals(CDOID.Type.TEMP_OBJECT, offlineCompany.cdoID().getType());
+
+    commitInfo = transaction.commit();
+    assertEquals(CDOID.Type.OBJECT, offlineCompany.cdoID().getType());
   }
 
   public void testDisconnectAndCommitAndMergeWithNewPackages() throws Exception

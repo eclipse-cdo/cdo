@@ -357,7 +357,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
       }
 
-      return applyChangeSetData(ancestorInfo, targetInfo, result);
+      return applyChangeSetData(result, ancestorInfo, targetInfo, sourceInfo);
     }
   }
 
@@ -424,12 +424,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return new CDOChangeSetImpl(startInfo.getBranchPoint(), endInfo.getBranchPoint(), data);
   }
 
-  public CDOChangeSetData applyChangeSetData(CDORevisionAvailabilityInfo ancestorInfo,
-      CDORevisionAvailabilityInfo targetInfo, CDOChangeSetData ancestorGoalData)
+  public CDOChangeSetData applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionAvailabilityInfo ancestorInfo,
+      CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo)
   {
     CDOChangeSetData result = new CDOChangeSetDataImpl();
+    if (sourceInfo.getBranchPoint().getBranch().isLocal())
+    {
+      mapLocalIDs(changeSetData);
+    }
 
-    for (CDOIDAndVersion key : ancestorGoalData.getNewObjects())
+    for (CDOIDAndVersion key : changeSetData.getNewObjects())
     {
       InternalCDORevision revision = (InternalCDORevision)key;
       CDOID id = revision.getID();
@@ -453,7 +457,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas();
     Map<CDOID, InternalCDORevision> oldRevisions = new HashMap<CDOID, InternalCDORevision>();
 
-    for (CDORevisionKey key : ancestorGoalData.getChangedObjects())
+    for (CDORevisionKey key : changeSetData.getChangedObjects())
     {
       InternalCDORevisionDelta ancestorGoalDelta = (InternalCDORevisionDelta)key;
       CDOID id = ancestorGoalDelta.getID();
@@ -499,7 +503,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     Set<CDOObject> detachedObjects = new HashSet<CDOObject>();
-    for (CDOIDAndVersion key : ancestorGoalData.getDetachedObjects())
+    for (CDOIDAndVersion key : changeSetData.getDetachedObjects())
     {
       CDOID id = key.getID();
       InternalCDOObject object = getObjectIfExists(id);
@@ -519,6 +523,44 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     return result;
+  }
+
+  private void mapLocalIDs(CDOChangeSetData changeSetData)
+  {
+    // Collect needed ID mappings
+    Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
+    for (CDOIDAndVersion key : changeSetData.getNewObjects())
+    {
+      InternalCDORevision revision = (InternalCDORevision)key;
+      if (revision.getBranch().isLocal())
+      {
+        CDOID oldID = revision.getID();
+        CDOIDTemp newID = getNextTemporaryID();
+        idMappings.put(oldID, newID);
+
+        revision.setID(newID);
+
+      }
+    }
+
+    if (!idMappings.isEmpty())
+    {
+      // Apply collected ID mappings
+      CDOIDMapper idMapper = new CDOIDMapper(idMappings);
+      idMapper.setAllowUnmappedTempIDs(true);
+
+      for (CDOIDAndVersion key : changeSetData.getNewObjects())
+      {
+        InternalCDORevision revision = (InternalCDORevision)key;
+        revision.adjustReferences(idMapper);
+      }
+
+      for (CDORevisionKey key : changeSetData.getChangedObjects())
+      {
+        InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)key;
+        revisionDelta.adjustReferences(idMapper);
+      }
+    }
   }
 
   private InternalCDOObject getObjectIfExists(CDOID id)

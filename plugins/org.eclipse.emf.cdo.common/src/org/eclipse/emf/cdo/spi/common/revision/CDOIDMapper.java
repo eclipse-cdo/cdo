@@ -24,6 +24,8 @@ public class CDOIDMapper implements CDOReferenceAdjuster
 {
   private Map<CDOID, CDOID> idMappings;
 
+  private boolean allowUnmappedTempIDs;
+
   public CDOIDMapper(Map<CDOID, CDOID> idMappings)
   {
     this.idMappings = idMappings;
@@ -34,8 +36,24 @@ public class CDOIDMapper implements CDOReferenceAdjuster
     return idMappings;
   }
 
+  /**
+   * @since 3.0
+   */
+  public boolean isAllowUnmappedTempIDs()
+  {
+    return allowUnmappedTempIDs;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void setAllowUnmappedTempIDs(boolean allowUnmappedTempIDs)
+  {
+    this.allowUnmappedTempIDs = allowUnmappedTempIDs;
+  }
+
   public Object adjustReference(Object value)
   {
-    return CDORevisionUtil.remapID(value, idMappings);
+    return CDORevisionUtil.remapID(value, idMappings, allowUnmappedTempIDs);
   }
 }

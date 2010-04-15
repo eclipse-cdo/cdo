@@ -46,8 +46,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.util.FeatureMap;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.util.FeatureMap.Entry;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -673,25 +673,28 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
   }
 
-  public static Object remapID(Object value, Map<CDOID, CDOID> idMappings)
+  public static Object remapID(Object value, Map<CDOID, CDOID> idMappings, boolean allowUnmappedTempIDs)
   {
-    if (value instanceof CDOIDTemp)
+    if (value instanceof CDOID)
     {
-      CDOIDTemp oldID = (CDOIDTemp)value;
+      CDOID oldID = (CDOID)value;
       if (!oldID.isNull())
       {
         CDOID newID = idMappings.get(oldID);
-        if (newID == null)
+        if (newID != null)
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Adjusting ID: {0} --> {1}", oldID, newID);
+          }
+
+          return newID;
+        }
+
+        if (oldID instanceof CDOIDTemp)
         {
           throw new IllegalStateException(MessageFormat.format(Messages.getString("AbstractCDORevision.2"), oldID));
         }
-
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Adjusting ID: {0} --> {1}", oldID, newID);
-        }
-
-        return newID;
       }
     }
 

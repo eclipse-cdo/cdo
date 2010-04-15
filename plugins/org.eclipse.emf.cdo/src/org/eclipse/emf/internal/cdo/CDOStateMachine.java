@@ -154,7 +154,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.INVALID, CDOEvent.DETACH, InvalidTransition.INSTANCE);
     init(CDOState.INVALID, CDOEvent.READ, InvalidTransition.INSTANCE);
     init(CDOState.INVALID, CDOEvent.WRITE, InvalidTransition.INSTANCE);
-    init(CDOState.INVALID, CDOEvent.INVALIDATE, IGNORE);
+    init(CDOState.INVALID, CDOEvent.INVALIDATE, IGNORE); // TODO Handle changeViewTarget!!!
     init(CDOState.INVALID, CDOEvent.DETACH_REMOTE, IGNORE);
     init(CDOState.INVALID, CDOEvent.COMMIT, InvalidTransition.INSTANCE);
     init(CDOState.INVALID, CDOEvent.ROLLBACK, InvalidTransition.INSTANCE);

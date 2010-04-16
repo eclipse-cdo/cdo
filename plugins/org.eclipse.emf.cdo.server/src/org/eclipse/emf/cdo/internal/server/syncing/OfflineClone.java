@@ -10,6 +10,10 @@
  */
 package org.eclipse.emf.cdo.internal.server.syncing;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
+import org.eclipse.emf.cdo.spi.server.InternalTransaction;
+
 /**
  * @author Eike Stepper
  */
@@ -30,5 +34,22 @@ public class OfflineClone extends SynchronizableRepository
   public final void setType(Type type)
   {
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public InternalCommitContext createCommitContext(InternalTransaction transaction)
+  {
+    CDOBranch branch = transaction.getBranch();
+    if (branch.isLocal())
+    {
+      return createNormalCommitContext(transaction);
+    }
+  
+    if (getState() != ONLINE)
+    {
+      return createBranchingCommitContext(transaction, branch);
+    }
+  
+    return createWriteThroughCommitContext(transaction);
   }
 }

@@ -50,6 +50,19 @@ public class FailoverParticipant extends SynchronizableRepository
     super.changingType(oldType, newType);
   }
 
+  @Override
+  protected void initRootResource()
+  {
+    if (getType() == BACKUP)
+    {
+      super.initRootResource();
+    }
+    else
+    {
+      doInitRootResource();
+    }
+  }
+
   protected void doStartSynchronization()
   {
     super.startSynchronization();
@@ -90,6 +103,6 @@ public class FailoverParticipant extends SynchronizableRepository
       }
     }
 
-    return super.createCommitContext(transaction);
+    return createNormalCommitContext(transaction);
   }
 }

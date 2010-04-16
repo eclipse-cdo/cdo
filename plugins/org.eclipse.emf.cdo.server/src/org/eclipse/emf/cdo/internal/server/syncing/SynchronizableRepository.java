@@ -193,21 +193,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   }
 
   @Override
-  public InternalCommitContext createCommitContext(InternalTransaction transaction)
-  {
-    CDOBranch branch = transaction.getBranch();
-    if (branch.isLocal())
-    {
-      return createNormalCommitContext(transaction);
-    }
-
-    if (getState() != ONLINE)
-    {
-      return createBranchingCommitContext(transaction, branch);
-    }
-
-    return createWriteThroughCommitContext(transaction);
-  }
+  public abstract InternalCommitContext createCommitContext(InternalTransaction transaction);
 
   protected InternalCommitContext createNormalCommitContext(InternalTransaction transaction)
   {
@@ -298,6 +284,11 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     {
       synchronizer.deactivate();
     }
+  }
+
+  protected void doInitRootResource()
+  {
+    super.initRootResource();
   }
 
   @Override

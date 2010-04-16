@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.internal.server.syncing;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
@@ -19,13 +18,9 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
  */
 public class FailoverParticipant extends SynchronizableRepository
 {
-  private static final CDOCommonRepository.Type MASTER = CDOCommonRepository.Type.MASTER;
-
-  private static final CDOCommonRepository.Type BACKUP = CDOCommonRepository.Type.BACKUP;
-
   public FailoverParticipant()
   {
-    setState(State.OFFLINE);
+    setState(OFFLINE);
   }
 
   @Override
@@ -41,10 +36,12 @@ public class FailoverParticipant extends SynchronizableRepository
     if (newType == MASTER)
     {
       // Switch off synchronizer
+      stopSynchronization();
     }
     else
     {
       // Switch on synchronizer
+      startSynchronization();
     }
 
     super.changingType(oldType, newType);

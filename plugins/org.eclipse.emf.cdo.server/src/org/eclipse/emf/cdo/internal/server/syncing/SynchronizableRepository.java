@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.server.syncing;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
@@ -66,6 +67,20 @@ import java.util.Set;
  */
 public abstract class SynchronizableRepository extends Repository.Default implements InternalSynchronizableRepository
 {
+  protected static final CDOCommonRepository.Type MASTER = CDOCommonRepository.Type.MASTER;
+
+  protected static final CDOCommonRepository.Type BACKUP = CDOCommonRepository.Type.BACKUP;
+
+  protected static final CDOCommonRepository.Type CLONE = CDOCommonRepository.Type.CLONE;
+
+  protected static final CDOCommonRepository.State INITIAL = CDOCommonRepository.State.INITIAL;
+
+  protected static final CDOCommonRepository.State OFFLINE = CDOCommonRepository.State.OFFLINE;
+
+  protected static final CDOCommonRepository.State SYNCING = CDOCommonRepository.State.SYNCING;
+
+  protected static final CDOCommonRepository.State ONLINE = CDOCommonRepository.State.ONLINE;
+
   private static final String PROP_LAST_REPLICATED_BRANCH_ID = "org.eclipse.emf.cdo.server.lastReplicatedBranchID"; //$NON-NLS-1$
 
   private static final String PROP_LAST_REPLICATED_COMMIT_TIME = "org.eclipse.emf.cdo.server.lastReplicatedCommitTime"; //$NON-NLS-1$
@@ -186,7 +201,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       return createNormalCommitContext(transaction);
     }
 
-    if (getState() != State.ONLINE)
+    if (getState() != ONLINE)
     {
       return createBranchingCommitContext(transaction, branch);
     }
@@ -246,17 +261,16 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       store.removePropertyValues(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
     }
 
-    replicatorSession = getSessionManager().openSession(null);
-    replicatorSession.options().setPassiveUpdateEnabled(false);
-
-    synchronizer.setLocalRepository(this);
-    synchronizer.activate();
+    if (getType() != MASTER)
+    {
+      startSynchronization();
+    }
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    synchronizer.deactivate();
+    stopSynchronization();
 
     Map<String, String> map = new HashMap<String, String>();
     map.put(PROP_LAST_REPLICATED_BRANCH_ID, Integer.toString(lastReplicatedBranchID));
@@ -269,10 +283,27 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     super.doDeactivate();
   }
 
+  protected void startSynchronization()
+  {
+    replicatorSession = getSessionManager().openSession(null);
+    replicatorSession.options().setPassiveUpdateEnabled(false);
+
+    synchronizer.setLocalRepository(this);
+    synchronizer.activate();
+  }
+
+  protected void stopSynchronization()
+  {
+    if (synchronizer != null)
+    {
+      synchronizer.deactivate();
+    }
+  }
+
   @Override
   protected void initRootResource()
   {
-    setState(State.INITIAL);
+    setState(INITIAL);
   }
 
   protected CDOBranch createOfflineBranch(CDOBranch baseBranch, long baseTimeStamp)

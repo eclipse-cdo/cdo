@@ -17,13 +17,13 @@ public class OfflineClone extends SynchronizableRepository
 {
   public OfflineClone()
   {
-    setState(State.OFFLINE);
+    setState(OFFLINE);
   }
 
   @Override
   public final Type getType()
   {
-    return Type.CLONE;
+    return CLONE;
   }
 
   @Override

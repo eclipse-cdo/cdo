@@ -11,69 +11,39 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.CDOCommonRepository;
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.internal.server.syncing.OfflineClone;
-import org.eclipse.emf.cdo.server.IMEMStore;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
-import org.eclipse.emf.cdo.spi.server.InternalStore;
-import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.event.IEvent;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public class OfflineTest extends AbstractCDOTest
+public class OfflineTest extends AbstractSyncingTest
 {
-  protected static final int SLEEP_MILLIS = 1000;
-
-  public OfflineConfig getOfflineConfig()
-  {
-    return (OfflineConfig)getRepositoryConfig();
-  }
-
   @Override
-  public boolean isValid()
-  {
-    IRepositoryConfig repositoryConfig = getRepositoryConfig();
-    return repositoryConfig instanceof OfflineConfig;
-  }
-
   protected boolean isSqueezedCommitInfos()
   {
     return false;
   }
 
   @Override
-  public synchronized Map<String, Object> getTestProperties()
+  protected boolean isFailover()
   {
-    Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(OfflineConfig.PROP_TEST_SQUEEZE_COMMIT_INFOS, isSqueezedCommitInfos());
-    return testProperties;
+    return false;
   }
 
   public void testMasterCommits_ArrivalInClone() throws Exception
@@ -90,14 +60,14 @@ public class OfflineTest extends AbstractCDOTest
 
     resource.getContents().add(company);
     long timeStamp = transaction.commit().getTimeStamp();
-    checkClone(timeStamp, expectedRevisions);
+    checkRevisions(getRepository(), timeStamp, expectedRevisions);
 
     for (int i = 0; i < 10; i++)
     {
       company.setName("Test" + i);
       timeStamp = transaction.commit().getTimeStamp();
       expectedRevisions += 1; // Changed company
-      checkClone(timeStamp, expectedRevisions);
+      checkRevisions(getRepository(), timeStamp, expectedRevisions);
     }
 
     for (int i = 0; i < 10; i++)
@@ -105,7 +75,7 @@ public class OfflineTest extends AbstractCDOTest
       company.getCategories().add(getModel1Factory().createCategory());
       timeStamp = transaction.commit().getTimeStamp();
       expectedRevisions += 2; // Changed company + new category
-      checkClone(timeStamp, expectedRevisions);
+      checkRevisions(getRepository(), timeStamp, expectedRevisions);
     }
 
     for (int i = 0; i < 10; i++)
@@ -113,30 +83,10 @@ public class OfflineTest extends AbstractCDOTest
       company.getCategories().remove(0);
       timeStamp = transaction.commit().getTimeStamp();
       expectedRevisions += 2; // Changed company + detached category
-      checkClone(timeStamp, expectedRevisions);
+      checkRevisions(getRepository(), timeStamp, expectedRevisions);
     }
 
     session.close();
-  }
-
-  protected void checkClone(final long timeStamp, int expectedRevisions) throws InterruptedException
-  {
-    final InternalRepository repository = getRepository();
-    long lastCommitTimeStamp = repository.getLastCommitTimeStamp();
-    while (lastCommitTimeStamp < timeStamp)
-    {
-      lastCommitTimeStamp = repository.waitForCommit(DEFAULT_TIMEOUT);
-    }
-
-    InternalStore store = repository.getStore();
-    if (store instanceof MEMStore)
-    {
-      Map<CDOBranch, List<CDORevision>> allRevisions = ((MEMStore)store).getAllRevisions();
-      System.out.println("\n\n\n\n\n\n\n\n\n\n" + CDORevisionUtil.dumpAllRevisions(allRevisions));
-
-      List<CDORevision> revisions = allRevisions.get(repository.getBranchManager().getMainBranch());
-      assertEquals(expectedRevisions, revisions.size());
-    }
   }
 
   public void testMasterCommits_NotificationsFromClone() throws Exception
@@ -185,29 +135,6 @@ public class OfflineTest extends AbstractCDOTest
     masterSession.close();
   }
 
-  protected void checkEvent(TestListener listener, int newPackageUnits, int newObjects, int changedObjects,
-      int detachedObjects)
-  {
-    IEvent[] events = listener.getEvents();
-    assertEquals(1, events.length);
-
-    IEvent event = events[0];
-    if (event instanceof CDOSessionInvalidationEvent)
-    {
-      CDOSessionInvalidationEvent e = (CDOSessionInvalidationEvent)event;
-      assertEquals(newPackageUnits, e.getNewPackageUnits().size());
-      assertEquals(newObjects, e.getNewObjects().size());
-      assertEquals(changedObjects, e.getChangedObjects().size());
-      assertEquals(detachedObjects, e.getDetachedObjects().size());
-    }
-    else
-    {
-      fail("Invalid event: " + event);
-    }
-
-    listener.clearEvents();
-  }
-
   public void testClientCommits() throws Exception
   {
     InternalRepository clone = getRepository();
@@ -234,34 +161,6 @@ public class OfflineTest extends AbstractCDOTest
 
     checkRevision(company, master, "master");
     checkRevision(company, clone, "clone");
-  }
-
-  protected void checkRevision(EObject object, InternalRepository repository, String location)
-  {
-    // Check if revision arrived in cache
-    checkRevision(object, repository.getRevisionManager().getCache().getAllRevisions(), location + " cache");
-
-    // Check if revision arrived in store
-    InternalStore store = repository.getStore();
-    if (store instanceof IMEMStore)
-    {
-      checkRevision(object, ((IMEMStore)store).getAllRevisions(), location + " store");
-    }
-  }
-
-  protected void checkRevision(EObject object, Map<CDOBranch, List<CDORevision>> allRevisions, String location)
-  {
-    CDORevision revision = CDOUtil.getCDOObject(object).cdoRevision();
-    List<CDORevision> revisions = allRevisions.get(revision.getBranch());
-    for (CDORevision rev : revisions)
-    {
-      if (revision.equals(rev))
-      {
-        return;
-      }
-    }
-
-    fail("Revision missing from " + location + ": " + revision);
   }
 
   public void testDisconnectAndSyncAddition() throws Exception
@@ -516,49 +415,5 @@ public class OfflineTest extends AbstractCDOTest
     {
       assertEquals(12, result.size());
     }
-  }
-
-  protected static void waitForOnline(CDOCommonRepository repository)
-  {
-    while (repository.getState() != CDOCommonRepository.State.ONLINE)
-    {
-      System.out.println("Waiting for ONLINE...");
-      sleep(SLEEP_MILLIS);
-    }
-  }
-
-  protected static void waitForOffline(CDOCommonRepository repository)
-  {
-    while (repository.getState() == CDOCommonRepository.State.ONLINE)
-    {
-      System.out.println("Waiting for OFFLINE...");
-      sleep(SLEEP_MILLIS);
-    }
-  }
-
-  protected static CDOCommitInfo commitAndWaitForArrival(CDOTransaction transaction, CDOSession receiver)
-  {
-    CDOCommitInfo commitInfo = transaction.commit();
-    long timeStamp = commitInfo.getTimeStamp();
-    while (receiver.getLastUpdateTime() < timeStamp)
-    {
-      System.out.println("Waiting for arrival of commit " + CDOCommonUtil.formatTimeStamp(timeStamp));
-      sleep(SLEEP_MILLIS);
-    }
-
-    return commitInfo;
-  }
-
-  protected static CDOCommitInfo commitAndWaitForArrival(CDOTransaction transaction, IRepository receiver)
-  {
-    CDOCommitInfo commitInfo = transaction.commit();
-    long timeStamp = commitInfo.getTimeStamp();
-    while (receiver.getLastCommitTimeStamp() < timeStamp)
-    {
-      System.out.println("Waiting for arrival of commit " + CDOCommonUtil.formatTimeStamp(timeStamp));
-      sleep(SLEEP_MILLIS);
-    }
-
-    return commitInfo;
   }
 }

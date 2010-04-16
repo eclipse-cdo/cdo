@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 
@@ -206,6 +207,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   {
     public static final String PROP_TEST_SQUEEZE_COMMIT_INFOS = "test.squeeze.commit.infos";
 
+    public static final String PROP_TEST_FAILOVER = "test.backup.tests";
+
     private static final long serialVersionUID = 1L;
 
     private transient IAcceptor masterAcceptor;
@@ -240,30 +243,43 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     @Override
     protected InternalRepository createRepository(String name)
     {
+      boolean failover = getTestFailover();
       Map<String, String> props = getRepositoryProperties();
 
       final String masterName = name + "_master";
       IStore masterStore = createStore(masterName);
-      InternalRepository master = (InternalRepository)CDOServerUtil.createRepository(masterName, masterStore, props);
+
+      InternalRepository master = (InternalRepository)(failover ? CDOServerUtil.createFailoverParticipant(masterName,
+          masterStore, props, createSynchronizer("backup", name), true) : CDOServerUtil.createRepository(masterName,
+          masterStore, props));
 
       repositories.put(masterName, master);
       LifecycleUtil.activate(master);
 
       startMasterTransport();
 
+      InternalRepositorySynchronizer synchronizer = createSynchronizer("master", masterName);
+      IStore store = createStore(name);
+
+      return (InternalRepository)(failover ? CDOServerUtil.createFailoverParticipant(name, store, props, synchronizer,
+          false) : CDOServerUtil.createOfflineClone(name, store, props, synchronizer));
+    }
+
+    protected InternalRepositorySynchronizer createSynchronizer(final String acceptorName, final String repositoryName)
+    {
       CDOSessionConfigurationFactory masterFactory = new CDOSessionConfigurationFactory()
       {
         public org.eclipse.emf.cdo.session.CDOSessionConfiguration createSessionConfiguration()
         {
           IManagedContainer container = getCurrentTest().getServerContainer();
-          IConnector connector = (IConnector)container.getElement("org.eclipse.net4j.connectors", "jvm", "master");
+          IConnector connector = (IConnector)container.getElement("org.eclipse.net4j.connectors", "jvm", acceptorName);
 
           InternalCDORevisionManager revisionManager = new CDORevisionManagerImpl();
           revisionManager.setCache(new NOOPRevisionCache());
 
           CDOSessionConfiguration config = CDONet4jUtil.createSessionConfiguration();
           config.setConnector(connector);
-          config.setRepositoryName(masterName);
+          config.setRepositoryName(repositoryName);
           config.setRevisionManager(revisionManager);
           return config;
         }
@@ -273,14 +289,23 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       synchronizer.setRemoteSessionConfigurationFactory(masterFactory);
       synchronizer.setRetryInterval(1);
       synchronizer.setSqueezeCommitInfos(getTestSqueezeCommitInfos());
-
-      IStore store = createStore(name);
-      return (InternalRepository)CDOServerUtil.createOfflineClone(name, store, props, synchronizer);
+      return synchronizer;
     }
 
     protected boolean getTestSqueezeCommitInfos()
     {
       Boolean result = (Boolean)getTestProperty(PROP_TEST_SQUEEZE_COMMIT_INFOS);
+      if (result == null)
+      {
+        result = false;
+      }
+
+      return result;
+    }
+
+    protected boolean getTestFailover()
+    {
+      Boolean result = (Boolean)getTestProperty(PROP_TEST_FAILOVER);
       if (result == null)
       {
         result = false;

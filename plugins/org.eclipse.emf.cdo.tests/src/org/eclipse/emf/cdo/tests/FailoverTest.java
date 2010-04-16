@@ -25,7 +25,7 @@ import org.eclipse.net4j.util.io.IOUtil;
  */
 public class FailoverTest extends AbstractSyncingTest
 {
-  private transient IAcceptor backupAcceptor;
+  private IAcceptor backupAcceptor;
 
   @Override
   public void tearDown() throws Exception
@@ -56,12 +56,6 @@ public class FailoverTest extends AbstractSyncingTest
       backupAcceptor.close();
       backupAcceptor = null;
     }
-  }
-
-  @Override
-  protected boolean isSqueezedCommitInfos()
-  {
-    return false;
   }
 
   @Override

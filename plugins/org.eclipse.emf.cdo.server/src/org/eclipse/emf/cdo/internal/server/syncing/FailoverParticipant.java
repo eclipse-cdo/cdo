@@ -33,18 +33,49 @@ public class FailoverParticipant extends SynchronizableRepository
   @Override
   protected void changingType(Type oldType, Type newType)
   {
-    if (newType == MASTER)
+    if (isActive())
     {
-      // Switch off synchronizer
-      stopSynchronization();
-    }
-    else
-    {
-      // Switch on synchronizer
-      startSynchronization();
+      if (newType == MASTER)
+      {
+        // Switch off synchronizer
+        doStopSynchronization();
+      }
+      else
+      {
+        // Switch on synchronizer
+        doStartSynchronization();
+      }
     }
 
     super.changingType(oldType, newType);
+  }
+
+  protected void doStartSynchronization()
+  {
+    super.startSynchronization();
+  }
+
+  protected void doStopSynchronization()
+  {
+    super.stopSynchronization();
+  }
+
+  @Override
+  protected void startSynchronization()
+  {
+    if (getType() == BACKUP)
+    {
+      doStartSynchronization();
+    }
+  }
+
+  @Override
+  protected void stopSynchronization()
+  {
+    if (getType() == BACKUP)
+    {
+      doStopSynchronization();
+    }
   }
 
   @Override

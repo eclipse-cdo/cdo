@@ -15,9 +15,9 @@ package org.eclipse.emf.cdo.tests;
  */
 public class OfflineSqueezedTest extends OfflineTest
 {
-  @Override
-  protected boolean isSqueezedCommitInfos()
-  {
-    return true;
-  }
+  // @Override
+  // protected boolean isSqueezedCommitInfos()
+  // {
+  // return true;
+  // }
 }

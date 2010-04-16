@@ -207,7 +207,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   {
     public static final String PROP_TEST_SQUEEZE_COMMIT_INFOS = "test.squeeze.commit.infos";
 
-    public static final String PROP_TEST_FAILOVER = "test.backup.tests";
+    public static final String PROP_TEST_FAILOVER = "test.failover";
 
     private static final long serialVersionUID = 1L;
 

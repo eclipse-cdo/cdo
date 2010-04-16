@@ -35,12 +35,6 @@ import java.util.List;
 public class OfflineTest extends AbstractSyncingTest
 {
   @Override
-  protected boolean isSqueezedCommitInfos()
-  {
-    return false;
-  }
-
-  @Override
   protected boolean isFailover()
   {
     return false;

@@ -295,4 +295,41 @@ public class FailoverTest extends AbstractSyncingTest
 
     session.close();
   }
+
+  public void testSwitchMasterAndCommit() throws Exception
+  {
+    CDOSession session = openSession(getRepository().getName() + "_master");
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("Test");
+
+    resource.getContents().add(company);
+
+    for (int i = 0; i < 10; i++)
+    {
+      company.getCategories().add(getModel1Factory().createCategory());
+      transaction.commit();
+    }
+
+    startBackupTransport();
+    getRepository().setType(CDOCommonRepository.Type.MASTER);
+    getRepository(getRepository().getName() + "_master").setType(CDOCommonRepository.Type.BACKUP);
+
+    session.close();
+    session = openSession();
+    transaction = session.openTransaction();
+
+    resource = transaction.getResource("/my/resource");
+    company = (Company)resource.getContents().get(0);
+
+    for (int i = 0; i < 10; i++)
+    {
+      company.setName("AfterFailover-" + i);
+      transaction.commit();
+    }
+
+    session.close();
+  }
 }

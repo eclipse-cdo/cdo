@@ -306,10 +306,13 @@ public class FailoverTest extends AbstractSyncingTest
     company.setName("Test");
 
     resource.getContents().add(company);
+    transaction.setCommitComment("Company created");
+    transaction.commit();
 
     for (int i = 0; i < 10; i++)
     {
       company.getCategories().add(getModel1Factory().createCategory());
+      transaction.setCommitComment("Category added");
       transaction.commit();
     }
 
@@ -327,6 +330,7 @@ public class FailoverTest extends AbstractSyncingTest
     for (int i = 0; i < 10; i++)
     {
       company.setName("AfterFailover-" + i);
+      transaction.setCommitComment("Name changed after failover");
       transaction.commit();
     }
 

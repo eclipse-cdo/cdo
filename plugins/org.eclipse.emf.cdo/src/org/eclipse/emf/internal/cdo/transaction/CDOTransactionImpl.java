@@ -371,14 +371,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     List<CDORevision> revisions = cache.getRevisions(branchPoint);
     for (CDORevision revision : revisions)
     {
-      while (revision instanceof PointerCDORevision)
+      if (revision instanceof PointerCDORevision)
       {
         PointerCDORevision pointer = (PointerCDORevision)revision;
         CDOBranchVersion target = pointer.getTarget();
-        revision = cache.getRevisionByVersion(pointer.getID(), target);
+        if (target != null)
+        {
+          revision = cache.getRevisionByVersion(pointer.getID(), target);
+        }
       }
-
-      if (revision instanceof DetachedCDORevision)
+      else if (revision instanceof DetachedCDORevision)
       {
         revision = null;
       }

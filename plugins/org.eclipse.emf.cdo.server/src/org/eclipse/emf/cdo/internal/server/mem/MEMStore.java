@@ -389,13 +389,15 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
   public synchronized void addCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment)
   {
     int index = commitInfos.size() - 1;
-    while (index > 0)
+    while (index >= 0)
     {
       CommitInfo info = commitInfos.get(index);
       if (timeStamp > info.getTimeStamp())
       {
         break;
       }
+
+      --index;
     }
 
     CommitInfo commitInfo = new CommitInfo(branch, timeStamp, userID, comment);

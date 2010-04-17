@@ -10,9 +10,11 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -62,6 +64,18 @@ public class FailoverTest extends AbstractSyncingTest
   protected boolean isFailover()
   {
     return true;
+  }
+
+  @Override
+  public InternalSynchronizableRepository getRepository()
+  {
+    return (InternalSynchronizableRepository)super.getRepository();
+  }
+
+  @Override
+  public InternalSynchronizableRepository getRepository(String name)
+  {
+    return (InternalSynchronizableRepository)super.getRepository(name);
   }
 
   public void testMasterCommits_ArrivalInBackup() throws Exception
@@ -182,5 +196,103 @@ public class FailoverTest extends AbstractSyncingTest
     {
       // SUCCESS
     }
+  }
+
+  public void testPauseMasterTransport() throws Exception
+  {
+    CDOSession session = openSession(getRepository().getName() + "_master");
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("Test");
+
+    resource.getContents().add(company);
+    long timeStamp = transaction.commit().getTimeStamp();
+
+    getOfflineConfig().stopMasterTransport();
+    waitForOffline(getRepository());
+
+    for (int i = 0; i < 10; i++)
+    {
+      company.setName("Test" + i);
+      timeStamp = transaction.commit().getTimeStamp();
+    }
+
+    for (int i = 0; i < 10; i++)
+    {
+      company.getCategories().add(getModel1Factory().createCategory());
+      timeStamp = transaction.commit().getTimeStamp();
+    }
+
+    for (int i = 0; i < 10; i++)
+    {
+      company.getCategories().remove(0);
+      timeStamp = transaction.commit().getTimeStamp();
+    }
+
+    getOfflineConfig().startMasterTransport();
+    waitForOnline(getRepository());
+
+    assertEquals(timeStamp, getRepository().getLastReplicatedCommitTime());
+    session.close();
+  }
+
+  public void testSwitchMaster() throws Exception
+  {
+    CDOSession session = openSession(getRepository().getName() + "_master");
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("Test");
+
+    resource.getContents().add(company);
+    transaction.commit();
+
+    for (int i = 0; i < 10; i++)
+    {
+      company.setName("Test" + i);
+      transaction.commit();
+    }
+
+    for (int i = 0; i < 10; i++)
+    {
+      company.getCategories().add(getModel1Factory().createCategory());
+      transaction.commit();
+    }
+
+    for (int i = 0; i < 5; i++)
+    {
+      company.getCategories().remove(0);
+      transaction.commit();
+    }
+
+    startBackupTransport();
+    getRepository().setType(CDOCommonRepository.Type.MASTER);
+    getRepository(getRepository().getName() + "_master").setType(CDOCommonRepository.Type.BACKUP);
+
+    company.setName("Commit should fail");
+
+    try
+    {
+      transaction.commit();
+      fail("Exception expected");
+    }
+    catch (Exception expected)
+    {
+      // SUCCESS
+    }
+
+    session.close();
+    session = openSession();
+    transaction = session.openTransaction();
+    resource = transaction.getResource("/my/resource");
+
+    company = (Company)resource.getContents().get(0);
+    company.setName("Commit should NOT fail");
+    transaction.commit();
+
+    session.close();
   }
 }

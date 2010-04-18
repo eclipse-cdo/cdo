@@ -23,6 +23,8 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpart.EditPartService;
+import org.eclipse.gmf.runtime.notation.Diagram;
+import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -92,7 +94,6 @@ public class DawnDiagramUpdater
     {
       try
       {
-        editPart.refresh();
 
         // EObject modelElement = ((View)(editPart).getModel()).getElement();
         // List editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(modelElement);
@@ -100,19 +101,13 @@ public class DawnDiagramUpdater
         // {
         // CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy)it.next();
         // nextEditPolicy.refresh();
-        //
         // }
+
+        editPart.refresh();
       }
       catch (Exception e)
       {
         e.printStackTrace();
-      }
-      for (Object childEditPart : editPart.getChildren())
-      {
-        if (childEditPart instanceof EditPart)
-        {
-          refeshEditpartInternal((EditPart)childEditPart);
-        }
       }
 
       if (editPart instanceof DiagramEditPart)
@@ -124,6 +119,13 @@ public class DawnDiagramUpdater
             System.out.println("--connection---");
             refeshEditpartInternal((EditPart)childEditPart);
           }
+        }
+      }
+      for (Object childEditPart : editPart.getChildren())
+      {
+        if (childEditPart instanceof EditPart)
+        {
+          refeshEditpartInternal((EditPart)childEditPart);
         }
       }
 
@@ -149,15 +151,12 @@ public class DawnDiagramUpdater
       }
       else
       {
-        findView(element.eContainer());
+        return findView(element.eContainer());
       }
     }
-    return null;
+    // return null;
   }
 
-  /**
-   * TODO: Martin: shouldmove this to a helper class or change with an existing GMF helper
-   */
   public static View findViewForModel(EObject object, DiagramDocumentEditor editor)
   {
 
@@ -274,4 +273,31 @@ public class DawnDiagramUpdater
     return (EditPart)viewer.getEditPartRegistry().get(view);
   }
 
+  /**
+   * In a normal GMF environment the diagram is loaded from a xml resource. In this scenario the XMLHelper sets "null"
+   * to the element of edge. Thus the value is 'set' with a null value. We do not have this in our case because the
+   * element is carefully loaded from the CDO repository. But if the value is not set a getElement() call fills the
+   * element with the eContainer. See <b>org.eclipse.gmf.runtime.notation.impl.ViewImpl.isSetElement()</b>. This happens
+   * when the ConnectionEditPart is activated and the model registered. See
+   * <b>org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionEditPart.registerModel()</b>
+   * <p>
+   * In our scenario the Edges will be wrongly connected to the diagram itself, which makes the CanonicalEditingPolicy
+   * to remove and restore the edge. Long, short story, we must 'to' the elements here to have the element set.
+   * 
+   * @param diagram
+   */
+  public static void initializeElement(Diagram diagram)
+  {
+    for (Object obj : diagram.getEdges())
+    {
+      Edge edge = (Edge)obj;
+      if (!edge.isSetElement())
+      {
+        boolean eDeliver = edge.eDeliver();
+        edge.eSetDeliver(false);
+        edge.setElement(null);
+        edge.eSetDeliver(eDeliver);
+      }
+    }
+  }
 }

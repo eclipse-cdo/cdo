@@ -17,14 +17,18 @@ import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.io.ExtendedDataInput;
+import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import javax.sql.DataSource;
 
+import java.io.IOException;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -271,7 +275,7 @@ public final class DBUtil
       for (String tableName : DBUtil.getAllTableNames(connection, dbName))
       {
         String sql = "DROP TABLE " + tableName; //$NON-NLS-1$
-        DBUtil.trace(sql);
+        trace(sql);
         statement.execute(sql);
       }
     }
@@ -384,8 +388,7 @@ public final class DBUtil
       builder.append(")"); //$NON-NLS-1$
     }
 
-    String sql = builder.toString();
-    trace(sql);
+    String sql = trace(builder.toString());
     Statement statement = null;
     ResultSet resultSet = null;
 
@@ -474,8 +477,7 @@ public final class DBUtil
       builder.append(where);
     }
 
-    String sql = builder.toString();
-    trace(sql);
+    String sql = trace(builder.toString());
     Statement statement = null;
     ResultSet resultSet = null;
 
@@ -563,11 +565,144 @@ public final class DBUtil
     return result[0];
   }
 
-  public static void trace(String sql)
+  /**
+   * @since 3.0
+   */
+  public static void writeTable(ExtendedDataOutput out, Connection connection, IDBTable table, String sqlSuffix)
+      throws DBException, IOException
+  {
+    IDBField[] fields = table.getFields();
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT "); //$NON-NLS-1$
+    for (int i = 0; i < fields.length; i++)
+    {
+      if (i > 0)
+      {
+        builder.append(", "); //$NON-NLS-1$
+      }
+
+      builder.append(fields[i]);
+    }
+
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(table);
+    if (sqlSuffix != null)
+    {
+      builder.append(sqlSuffix);
+    }
+
+    String sql = trace(builder.toString());
+    Statement statement = null;
+    ResultSet resultSet = null;
+
+    try
+    {
+      statement = connection.createStatement();
+
+      try
+      {
+        resultSet = statement.executeQuery(sql);
+        while (resultSet.next())
+        {
+          out.writeBoolean(true);
+          for (int i = 0; i < fields.length; i++)
+          {
+            IDBField field = fields[i];
+            field.getType().writeValue(out, resultSet, i);
+          }
+        }
+
+        out.writeBoolean(false);
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      finally
+      {
+        close(resultSet);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      close(statement);
+    }
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static void readTable(ExtendedDataInput in, Connection connection, IDBTable table) throws IOException
+  {
+    IDBField[] fields = table.getFields();
+
+    StringBuilder builder = new StringBuilder();
+    StringBuilder params = new StringBuilder();
+
+    builder.append("INSERT INTO "); //$NON-NLS-1$
+    builder.append(table);
+    builder.append("("); //$NON-NLS-1$
+
+    for (int i = 0; i < fields.length; i++)
+    {
+      if (i > 0)
+      {
+        builder.append(", "); //$NON-NLS-1$
+        params.append(", "); //$NON-NLS-1$
+      }
+
+      builder.append(fields[i]);
+      params.append("?"); //$NON-NLS-1$
+    }
+
+    builder.append(") VALUES ("); //$NON-NLS-1$
+    builder.append(params.toString());
+    builder.append(")"); //$NON-NLS-1$
+
+    String sql = trace(builder.toString());
+    PreparedStatement statement = null;
+
+    try
+    {
+      statement = connection.prepareStatement(sql);
+      while (in.readBoolean())
+      {
+        for (int i = 0; i < fields.length; i++)
+        {
+          IDBField field = fields[i];
+          field.getType().readValue(in, statement, i);
+        }
+
+        statement.addBatch();
+      }
+
+      statement.executeBatch();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      close(statement);
+    }
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static String trace(String sql)
   {
     if (TRACER.isEnabled())
     {
       TRACER.trace(sql);
     }
+
+    return sql;
   }
 }

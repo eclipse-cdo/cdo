@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
@@ -56,6 +58,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -688,6 +691,16 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   @Override
   protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created,
       OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawExport(CDODataOutput out, long startTime, long endTime) throws IOException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawImport(CDODataInput in) throws IOException
   {
     throw new UnsupportedOperationException();
   }

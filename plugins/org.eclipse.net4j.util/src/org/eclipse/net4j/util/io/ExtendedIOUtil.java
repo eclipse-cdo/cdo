@@ -57,6 +57,28 @@ public final class ExtendedIOUtil
     }
   }
 
+  public static byte[] readByteArray(DataInput in) throws IOException
+  {
+    int length = in.readInt();
+    if (length < 0)
+    {
+      return null;
+    }
+  
+    byte[] b;
+    try
+    {
+      b = new byte[length];
+    }
+    catch (Throwable t)
+    {
+      throw new IOException("Unable to allocate " + length + " bytes"); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+  
+    in.readFully(b);
+    return b;
+  }
+
   public static void writeObject(final DataOutput out, Object object) throws IOException
   {
     ObjectOutput wrapper = null;
@@ -77,69 +99,6 @@ public final class ExtendedIOUtil
     }
 
     wrapper.writeObject(object);
-  }
-
-  public static void writeString(DataOutput out, String str) throws IOException
-  {
-    if (str != null)
-    {
-      int size = str.length();
-      int start = 0;
-      do
-      {
-        out.writeBoolean(true);
-        int chunk = Math.min(size, MAX_UTF_CHARS);
-        int end = start + chunk;
-        out.writeUTF(str.substring(start, end));
-        start = end;
-        size -= chunk;
-      } while (size > 0);
-    }
-
-    out.writeBoolean(false);
-  }
-
-  /**
-   * @since 3.0
-   */
-  public static void writeEnum(DataOutput out, Enum<?> literal) throws IOException
-  {
-    int ordinal = literal.ordinal();
-    int size = literal.getDeclaringClass().getEnumConstants().length;
-    if (size <= Byte.MAX_VALUE)
-    {
-      out.writeByte(ordinal);
-    }
-    else if (size <= Short.MAX_VALUE)
-    {
-      out.writeShort(ordinal);
-    }
-    else
-    {
-      out.writeInt(ordinal);
-    }
-  }
-
-  public static byte[] readByteArray(DataInput in) throws IOException
-  {
-    int length = in.readInt();
-    if (length < 0)
-    {
-      return null;
-    }
-
-    byte[] b;
-    try
-    {
-      b = new byte[length];
-    }
-    catch (Throwable t)
-    {
-      throw new IOException("Unable to allocate " + length + " bytes"); //$NON-NLS-1$ //$NON-NLS-2$
-    }
-
-    in.readFully(b);
-    return b;
   }
 
   public static Object readObject(final DataInput in) throws IOException
@@ -204,6 +163,26 @@ public final class ExtendedIOUtil
     }
   }
 
+  public static void writeString(DataOutput out, String str) throws IOException
+  {
+    if (str != null)
+    {
+      int size = str.length();
+      int start = 0;
+      do
+      {
+        out.writeBoolean(true);
+        int chunk = Math.min(size, MAX_UTF_CHARS);
+        int end = start + chunk;
+        out.writeUTF(str.substring(start, end));
+        start = end;
+        size -= chunk;
+      } while (size > 0);
+    }
+  
+    out.writeBoolean(false);
+  }
+
   public static String readString(DataInput in) throws IOException
   {
     boolean more = in.readBoolean();
@@ -221,6 +200,27 @@ public final class ExtendedIOUtil
     } while (more);
 
     return builder.toString();
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static void writeEnum(DataOutput out, Enum<?> literal) throws IOException
+  {
+    int ordinal = literal.ordinal();
+    int size = literal.getDeclaringClass().getEnumConstants().length;
+    if (size <= Byte.MAX_VALUE)
+    {
+      out.writeByte(ordinal);
+    }
+    else if (size <= Short.MAX_VALUE)
+    {
+      out.writeShort(ordinal);
+    }
+    else
+    {
+      out.writeInt(ordinal);
+    }
   }
 
   /**

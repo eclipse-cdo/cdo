@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
@@ -34,6 +36,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -187,6 +190,16 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * @since 2.0
    */
   public void rollback();
+
+  /**
+   * @since 3.0
+   */
+  public void rawExport(CDODataOutput out, long startTime, long endTime) throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  public void rawImport(CDODataInput in) throws IOException;
 
   public void release();
 

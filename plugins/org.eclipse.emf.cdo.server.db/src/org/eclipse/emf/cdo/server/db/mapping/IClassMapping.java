@@ -25,6 +25,7 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.sql.PreparedStatement;
@@ -40,6 +41,11 @@ import java.util.Set;
  */
 public interface IClassMapping
 {
+  /**
+   * @since 3.0
+   */
+  public EClass getEClass();
+
   /**
    * Returns all DB tables which are used by this class and all its contained features.
    * 
@@ -57,6 +63,11 @@ public interface IClassMapping
    * @return the list mapping corresponding to the feature.
    */
   public IListMapping getListMapping(EStructuralFeature feature);
+
+  /**
+   * @since 3.0
+   */
+  public List<IListMapping> getListMappings();
 
   /**
    * Read a revision. The branch and timestamp to be read are derived from the branchPoint which is set to the Revision.

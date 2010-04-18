@@ -14,6 +14,8 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
@@ -21,6 +23,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IObjectTypeCache;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
@@ -35,6 +38,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -99,6 +103,84 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     {
       queryResources(accessor, getClassMapping(resourcesPackage.getCDOResource()), context);
     }
+  }
+
+  public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, long startTime, long endTime) throws IOException
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append(" WHERE "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append("<=? AND ("); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append("=0 OR "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(">=?))"); //$NON-NLS-1$
+
+    String attrSuffix = builder.toString();
+    Connection connection = accessor.getConnection();
+
+    for (IClassMapping classMapping : getClassMappings().values())
+    {
+      EClass eClass = classMapping.getEClass();
+      out.writeCDOClassifierRef(eClass);
+
+      IDBTable table = classMapping.getDBTables().get(0);
+      DBUtil.writeTable(out, connection, table, attrSuffix);
+
+      for (IListMapping listMapping : classMapping.getListMappings())
+      {
+        rawExportList(out, connection, listMapping, table, attrSuffix);
+      }
+    }
+  }
+
+  protected void rawExportList(CDODataOutput out, Connection connection, IListMapping listMapping, IDBTable attrTable,
+      String attrSuffix) throws IOException
+  {
+    for (IDBTable table : listMapping.getDBTables())
+    {
+      String listSuffix = ", " + table + attrSuffix;
+      String listJoin = getListJoin(attrTable, table);
+      if (listJoin != null)
+      {
+        listSuffix += listSuffix + " AND " + listJoin;
+      }
+
+      DBUtil.writeTable(out, connection, table, listSuffix);
+    }
+  }
+
+  public void rawImport(IDBStoreAccessor accessor, CDODataInput in) throws IOException
+  {
+    Connection connection = accessor.getConnection();
+
+    for (;;)
+    {
+      EClass eClass = (EClass)in.readCDOClassifierRefAndResolve();
+      IClassMapping classMapping = getClassMapping(eClass);
+
+      IDBTable table = classMapping.getDBTables().get(0);
+      DBUtil.readTable(in, connection, table);
+
+      for (IListMapping listMapping : classMapping.getListMappings())
+      {
+        rawImportList(in, connection, listMapping);
+      }
+    }
+  }
+
+  protected void rawImportList(CDODataInput in, Connection connection, IListMapping listMapping)
+      throws IOException
+  {
+    for (IDBTable table : listMapping.getDBTables())
+    {
+      DBUtil.readTable(in, connection, table);
+    }
+  }
+
+  protected String getListJoin(IDBTable attrTable, IDBTable listTable)
+  {
+    return " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_ID + "=" + listTable + "." + CDODBSchema.LIST_REVISION_ID;
   }
 
   @Override

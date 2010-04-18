@@ -323,7 +323,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     return mappingStrategy;
   }
 
-  protected final EClass getEClass()
+  public final EClass getEClass()
   {
     return eClass;
   }

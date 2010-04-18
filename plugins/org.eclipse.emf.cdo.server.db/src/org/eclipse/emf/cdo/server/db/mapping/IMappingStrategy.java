@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
@@ -32,6 +34,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.Map;
 import java.util.Set;
@@ -267,4 +270,15 @@ public interface IMappingStrategy
    * @since 3.0
    */
   public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, CDOChangeSetSegment[] segments);
+
+  /**
+   * @since 3.0
+   */
+  public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, long startTime, long endTime)
+      throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  public void rawImport(IDBStoreAccessor accessor, CDODataInput in) throws IOException;
 }

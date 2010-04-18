@@ -14,6 +14,8 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 
+import org.eclipse.net4j.db.ddl.IDBTable;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -58,5 +60,12 @@ public class HorizontalAuditMappingStrategyWithRanges extends AbstractHorizontal
   public IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature)
   {
     return new AuditFeatureMapTableMappingWithRanges(this, containingClass, feature);
+  }
+
+  @Override
+  protected String getListJoin(IDBTable attrTable, IDBTable listTable)
+  {
+    // TODO: implement HorizontalAuditMappingStrategyWithRanges.getListJoin(attrTable, listTable)
+    throw new UnsupportedOperationException();
   }
 }

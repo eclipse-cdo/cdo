@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
@@ -39,6 +41,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -329,6 +332,18 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     }
 
     return null;
+  }
+
+  public void rawExport(CDODataOutput out, long startTime, long endTime) throws IOException
+  {
+    // TODO: implement MEMStoreAccessor.rawExport(out, startTime, endTime)
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawImport(CDODataInput in) throws IOException
+  {
+    // TODO: implement MEMStoreAccessor.rawImport(in)
+    throw new UnsupportedOperationException();
   }
 
   @Override

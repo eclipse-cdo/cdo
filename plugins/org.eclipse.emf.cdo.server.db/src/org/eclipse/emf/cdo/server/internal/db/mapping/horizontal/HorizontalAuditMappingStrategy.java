@@ -13,6 +13,9 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
+import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
+
+import org.eclipse.net4j.db.ddl.IDBTable;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -58,5 +61,14 @@ public class HorizontalAuditMappingStrategy extends AbstractHorizontalMappingStr
   public IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature)
   {
     return new AuditFeatureMapTableMapping(this, containingClass, feature);
+  }
+
+  @Override
+  protected String getListJoin(IDBTable attrTable, IDBTable listTable)
+  {
+    String join = super.getListJoin(attrTable, listTable);
+    join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_VERSION + "=" + listTable + "."
+        + CDODBSchema.LIST_REVISION_VERSION;
+    return join;
   }
 }

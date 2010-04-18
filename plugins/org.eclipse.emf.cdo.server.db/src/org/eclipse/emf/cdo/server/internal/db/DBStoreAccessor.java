@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
@@ -70,6 +72,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -810,6 +813,18 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     mappingStrategy.handleRevisions(this, eClass, branch, timeStamp, new DBRevisionHandler(handler));
+  }
+
+  public void rawExport(CDODataOutput out, long startTime, long endTime) throws IOException
+  {
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    mappingStrategy.rawExport(this, out, startTime, endTime);
+  }
+
+  public void rawImport(CDODataInput in) throws IOException
+  {
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    mappingStrategy.rawImport(this, in);
   }
 
   /**

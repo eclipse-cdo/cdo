@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyScope;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySession;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.OoCommitInfoHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.OoPropertyMapHandler;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyStoreInfo;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.OoResourceList;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
 import org.eclipse.emf.cdo.server.objectivity.IObjectivityStore;
@@ -84,6 +85,10 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
   private OoPropertyMapHandler ooPropertyMapHandler = null;
 
+  private boolean storeInitialized = false;
+
+  private long creationTime = CDORevision.UNSPECIFIED_DATE;
+
   // private boolean resetData = false;
 
   public ObjectivityStore(IObjectivityStoreConfig config)
@@ -95,12 +100,11 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     super(TYPE, LongIDStore.OBJECT_ID_TYPES, set(ChangeFormat.REVISION, ChangeFormat.DELTA), set(
         RevisionTemporality.NONE, RevisionTemporality.AUDITING), set(RevisionParallelism.NONE,
         RevisionParallelism.BRANCHING));
-    initStore(config);
+    storeConfig = config;
   }
 
-  private void initStore(IObjectivityStoreConfig config)
+  private void initStore()
   {
-    storeConfig = config;
     // the caller already used the StoreConfig to open the connection
     // to the FD so, get the current here.
     objyConnection = ObjyConnection.INSTANCE;
@@ -113,13 +117,14 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     ObjyConnection.INSTANCE.connect(this, storeConfig.getFdName());
     Connection.current().setUserClassLoader(this.getClass().getClassLoader());
 
-    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.OoPackageInfo");
-    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.OoPackageUnit");
-    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ASPackage");
-    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.OoCommitInfo");
-    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.OoProperty");
+    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyStoreInfo"); //$NON-NLS-1$
+    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.OoPackageInfo"); //$NON-NLS-1$
+    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.OoPackageUnit"); //$NON-NLS-1$
+    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ASPackage"); //$NON-NLS-1$
+    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.OoCommitInfo"); //$NON-NLS-1$
+    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.OoProperty"); //$NON-NLS-1$
 
-    ObjySession objySession = objyConnection.getWriteSessionFromPool("Main");
+    ObjySession objySession = objyConnection.getWriteSessionFromPool("Main"); //$NON-NLS-1$
     objySession.setRecoveryAutomatic(true);
     objySession.begin();
 
@@ -130,33 +135,46 @@ public class ObjectivityStore extends Store implements IObjectivityStore
       ooId commitInfoListId = null;
       ooId propertyMapId = null;
 
-      if (!com.objy.db.app.Session.getCurrent().getFD().hasDB(ObjyDb.CONFIGDB_NAME))
+      // check if we initialized the store for the first time.
       {
-        // configDb will be created by the first data structure that need it.
-        createResourceList();
-        commitInfoListId = ObjyDb.createCommitInfoList();
-        propertyMapId = ObjyDb.createPropertyMap();
-
-        // This is used for the package storage...
-        ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
-
-        // flag as first time.
-        firstTime = true;
+        ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.DEFAULT_CONT_NAME);
+        ObjyStoreInfo objyStoreInfo = null;
+        try
+        {
+          objyStoreInfo = (ObjyStoreInfo)objyScope.lookupObjectOid(ObjyDb.OBJYSTOREINFO_NAME);
+        }
+        catch (Exception ex)
+        {
+          // create the ObjyStoreInfo.
+          objyStoreInfo = new ObjyStoreInfo(System.currentTimeMillis(), "...");
+          objyScope.getContainerObj().cluster(objyStoreInfo);
+          // flag as first time.
+          firstTime = true;
+        }
+        creationTime = objyStoreInfo.getCreationTime();
       }
+
+      // This is used for the package storage...
+      ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
+      ObjyObject resourceList = getOrCreateResourceList();
+
       // get OIDs for the CommitInfoTree and the PropertyMap.
       if (commitInfoListId == null)
       {
-        commitInfoListId = ObjyDb.getCommitInfoList();
+        // commit info is per repository.
+        commitInfoListId = ObjyDb.getOrCreateCommitInfoList(getRepository().getName());
       }
       if (propertyMapId == null)
       {
-        propertyMapId = ObjyDb.getPropertyMap();
+        propertyMapId = ObjyDb.getOrCreatePropertyMap();
       }
 
       ooCommitInfoHandler = new OoCommitInfoHandler(commitInfoListId);
       ooPropertyMapHandler = new OoPropertyMapHandler(propertyMapId);
 
       objySession.commit();
+
+      storeInitialized = true;
     }
     catch (RuntimeException ex)
     {
@@ -195,7 +213,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
   public long getCreationTime()
   {
-    return CDORevision.UNSPECIFIED_DATE;
+    return creationTime;
   }
 
   public boolean isFirstTime()
@@ -230,8 +248,13 @@ public class ObjectivityStore extends Store implements IObjectivityStore
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    // TODO - perhaps we need to initialize schema stuff here.
-    // we might want to open the FD here!!!
+
+    // lazy initialization of the store.
+    if (!storeInitialized)
+    {
+      initStore();
+    }
+
     nActivate++;
 
     if (TRACER_DEBUG.isEnabled())
@@ -250,6 +273,9 @@ public class ObjectivityStore extends Store implements IObjectivityStore
         // Create the repo DB.
         ObjyScope objyScope = new ObjyScope(getRepository().getName(), ObjyDb.DEFAULT_CONT_NAME);
         // ...do other initialisation of the repository here.
+        // Note that in the current implementation we don't delete DBs by default, only delete
+        // the containers (see ObjectivityStoreConfig.resetFD()) so any initialization done here
+        // might not be repeated.
       }
 
       objySession.commit();
@@ -283,13 +309,12 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
   }
 
-  private ObjyObject createResourceList()
+  private ObjyObject createResourceList(ObjyScope objyScope)
   {
     if (TRACER_DEBUG.isEnabled())
     {
       TRACER_DEBUG.format("createResourceList()"); //$NON-NLS-1$
     }
-    ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.RESOURCELIST_CONT_NAME);
     // TODO - this need refactoring...
     ObjyObject resourceList = OoResourceList.create(objyScope.getScopeContOid());
     objyScope.nameObj(ObjyDb.RESOURCELIST_NAME, resourceList);
@@ -299,11 +324,11 @@ public class ObjectivityStore extends Store implements IObjectivityStore
   /***
    * This function will return the resourceList after creation.
    */
-  public ObjyObject getResourceList()
+  public ObjyObject getOrCreateResourceList()
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.format("getResourceList()"); //$NON-NLS-1$
+      TRACER_DEBUG.format("getOrCreateResourceList()"); //$NON-NLS-1$
     }
     ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.RESOURCELIST_CONT_NAME);
     ObjyObject objyObject = null;
@@ -314,7 +339,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     catch (Exception ex)
     {
       // we need to create the resource.
-      objyObject = createResourceList();
+      objyObject = createResourceList(objyScope);
     }
 
     return objyObject;

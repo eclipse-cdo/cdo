@@ -330,6 +330,37 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     throw new UnsupportedOperationException("Implement me!!");
   }
 
+  public void move(ObjyObject objyObject, EStructuralFeature feature, int targetIndex, int sourceIndex)
+  {
+    if (targetIndex == sourceIndex)
+    {
+      return;
+    }
+
+    // get the object at sourceIndex.
+    Object value = getValue(objyObject, feature, sourceIndex);
+
+    // long size = (int)getArray(objyObject, feature).size();
+    // TODO - check boundaries...
+
+    if (targetIndex < sourceIndex)
+    {
+      for (int i = targetIndex; i < sourceIndex; i++)
+      {
+        setValue(objyObject, feature, i + 1, getValue(objyObject, feature, i));
+      }
+    }
+    if (targetIndex > sourceIndex)
+    {
+      for (int i = sourceIndex; i < targetIndex; i++)
+      {
+        setValue(objyObject, feature, i, getValue(objyObject, feature, i + 1));
+      }
+    }
+    // set the saved value at target
+    setValue(objyObject, feature, targetIndex, value);
+  }
+
   public void initialize(Class_Object classObject, EStructuralFeature feature)
   {
     // TODO - verify if we need to do any initialization!!!

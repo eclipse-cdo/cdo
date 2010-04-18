@@ -253,7 +253,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
     {
       try
       {
-        throw new Exception("Trying to remove object while the list is null.");
+        throw new Exception("Trying to remove element while the list is null.");
       }
       catch (Exception e)
       {
@@ -306,6 +306,28 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
   public void setAll(ObjyObject objyObject, EStructuralFeature feature, int index, Object[] newValues)
   {
     addAll(objyObject, feature, 0, newValues);
+  }
+
+  public void move(ObjyObject objyObject, EStructuralFeature feature, int targetIndex, int sourceIndex)
+  {
+    ooArrayListId list = getList(objyObject, feature);
+
+    if (list != null)
+    {
+      list.move(targetIndex, sourceIndex);
+    }
+    else
+    {
+      try
+      {
+        throw new Exception("Trying to move element while the list is null.");
+      }
+      catch (Exception e)
+      {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
   }
 
 }

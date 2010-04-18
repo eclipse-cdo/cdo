@@ -373,8 +373,18 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     if (getStore().isRequiredToSupportAudits())
     {
-      newObjyRevision = objyObject.createRevision(objyRevision);
+      // newObjyRevision = objySession.getObjectManager().copyRevision(this, objyRevision);
       objyRevision.setRevisedTime(branch.getPoint(created).getTimeStamp() - 1);
+      InternalCDORevision originalRevision = getStore().getRepository().getRevisionManager().getRevisionByVersion(
+          delta.getID(), delta, 0, true);
+
+      InternalCDORevision newRevision = originalRevision.copy();
+
+      newRevision.setVersion(deltaVersion + 1);
+      newRevision.setBranchPoint(delta.getBranch().getPoint(created));
+      newObjyRevision = objySession.getObjectManager().newObject(newRevision.getEClass(), objyRevision.ooId());
+      newObjyRevision.update(this, newRevision);
+      objyRevision.addToRevisions(newObjyRevision);
     }
     else
     {
@@ -386,7 +396,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     delta.accept(visitor);
 
     newObjyRevision.setCreationTime(branch.getPoint(created).getTimeStamp());
-    newObjyRevision.setVersion(delta.getVersion() + 1); // TODO - verify with Eike if this is true!!!
+    newObjyRevision.setVersion(deltaVersion + 1); // TODO - verify with Eike if this is true!!!
   }
 
   @Override
@@ -425,7 +435,10 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     {
       monitor.done();
     }
-    System.out.println("writeRevisions time: " + (System.currentTimeMillis() - start));
+    if (TRACER_DEBUG.isEnabled())
+    {
+      TRACER_DEBUG.trace("\t writeRevisions time: " + (System.currentTimeMillis() - start));
+    }
 
   }
 
@@ -489,7 +502,33 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     // System.out.println("\t - branch     : " + revision.getBranch().toString());
     // System.out.println("\t - revision   : " + revision.toString());
 
-    objyObject.update(this, revision);
+    ObjyObject newObjyRevision = objyObject;
+
+    if (revision.getVersion() > 1) // we're updating other versions...
+    {
+      ObjyObject oldObjyRevision = objyObject.getRevision(revision.getVersion() - 1);
+
+      if (oldObjyRevision == null)
+      {
+        new IllegalStateException("Revision with version: " + (revision.getVersion() - 1) + " is not in the store."); //$NON-NLS-1$
+      }
+      if (getStore().isRequiredToSupportAudits())
+      {
+        // if we allow versioning, then create a new one here.
+        // objyRevision = objySession.getObjectManager().copyRevision(this, oldObjyRevision);
+
+        InternalCDORevision newRevision = revision.copy();
+
+        newObjyRevision = objySession.getObjectManager().newObject(newRevision.getEClass(), oldObjyRevision.ooId());
+        oldObjyRevision.addToRevisions(newObjyRevision);
+      }
+      else
+      {
+        newObjyRevision = oldObjyRevision;
+      }
+    }
+
+    newObjyRevision.update(this, revision);
 
   }
 
@@ -528,7 +567,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     }
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.trace("\t commit time: {0}" + (System.currentTimeMillis() - start));
+      TRACER_DEBUG.trace("\t commit time: " + (System.currentTimeMillis() - start));
     }
     System.out.println();
 

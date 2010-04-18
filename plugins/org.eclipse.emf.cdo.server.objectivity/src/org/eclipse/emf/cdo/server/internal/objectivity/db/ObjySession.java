@@ -79,7 +79,7 @@ public class ObjySession extends Session
   {
     if (resourceList == null)
     {
-      resourceList = new OoResourceList(this, store.getResourceList());
+      resourceList = new OoResourceList(this, store.getOrCreateResourceList());
     }
     return resourceList;
   }

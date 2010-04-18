@@ -161,4 +161,8 @@ public class FeatureMapTypeMapper extends BasicTypeMapper implements IManyTypeMa
     }
   }
 
+  public void move(ObjyObject objyObject, EStructuralFeature feature, int targetIndex, int sourceIndex)
+  {
+    throw new UnsupportedOperationException("Implement me!!");
+  }
 }

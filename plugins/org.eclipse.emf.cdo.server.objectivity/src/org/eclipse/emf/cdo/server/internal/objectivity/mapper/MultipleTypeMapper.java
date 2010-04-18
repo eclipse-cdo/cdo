@@ -150,4 +150,10 @@ public class MultipleTypeMapper extends BasicTypeMapper implements IManyTypeMapp
   {
     mapperList.get(0).setAll(objyObject, feature, index, newValues);
   }
+
+  public void move(ObjyObject objyObject, EStructuralFeature feature, int targetIndex, int sourceIndex)
+  {
+    mapperList.get(0).move(objyObject, feature, targetIndex, sourceIndex);
+  }
+
 }

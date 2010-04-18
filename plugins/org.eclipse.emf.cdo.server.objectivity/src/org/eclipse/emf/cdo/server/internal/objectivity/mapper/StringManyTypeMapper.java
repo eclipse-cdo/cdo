@@ -181,4 +181,9 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Implement me!!");
   }
+
+  public void move(ObjyObject objyObject, EStructuralFeature feature, int targetIndex, int sourceIndex)
+  {
+    throw new UnsupportedOperationException("Implement me!!");
+  }
 }

@@ -30,7 +30,7 @@ public abstract class ooArrayList<T>
 
   private VArray_Object vArray;
 
-  transient long cacheSize;
+  protected transient long cacheSize;
 
   transient long position;
 
@@ -76,7 +76,7 @@ public abstract class ooArrayList<T>
 
   private void shiftRight(int index, int sizeToShift)
   {
-    long size = this.privateSize();
+    long size = this.cachedSize();
 
     for (long i = size - 1; i >= index; i--)
     {
@@ -84,27 +84,27 @@ public abstract class ooArrayList<T>
     }
 
     cacheSize += sizeToShift;
+    saveSize();
   }
 
   private void shiftLeft(int index)
   {
-    long size = this.privateSize();
+    long size = this.cachedSize();
     for (long i = index; i < size - 1; i++)
     {
       setValue(i, getValue(i + 1));
     }
 
     cacheSize--;
-
     saveSize();
   }
 
   /**
 	 * 
 	 */
-  private void grow(int item)
+  protected void grow(int item)
   {
-    getVArray().resize(getVArray().size() + Math.max(item + 10, 10));
+    getVArray().resize(getVArraySize() + Math.max(item + 10, 10));
   }
 
   /**
@@ -112,13 +112,23 @@ public abstract class ooArrayList<T>
 	 */
   private void prepareToInsert(int numberToAdd)
   {
-    long size = privateSize();
-    getVArray().update();
+    long size = cachedSize();
+    update();
 
-    if (size + numberToAdd > getVArray().size())
+    if (size + numberToAdd > getVArraySize())
     {
       grow(numberToAdd);
     }
+  }
+
+  protected long getVArraySize()
+  {
+    return getVArray().size();
+  }
+
+  protected void update()
+  {
+    getVArray().update();
   }
 
   protected VArray_Object getVArray()
@@ -133,26 +143,19 @@ public abstract class ooArrayList<T>
   public void add(int index, T newValue)
   {
     prepareToInsert(1);
-
     shiftRight(index);
-
     basicSet(index, newValue);
-
-    saveSize();
   }
 
   public void addAll(int index, Object[] newValue)
   {
     prepareToInsert(newValue.length);
-
     shiftRight(index, newValue.length);
 
     for (int i = 0; i < newValue.length; i++)
     {
       basicSet(index + i, (T)newValue[i]);
     }
-
-    saveSize();
   }
 
   public void remove(int index)
@@ -162,32 +165,44 @@ public abstract class ooArrayList<T>
 
   public void add(T newValue)
   {
-    long size = privateSize();
+    long size = cachedSize();
 
     prepareToInsert(1);
-
     setValue(size, newValue);
-
     cacheSize++;
-
     saveSize();
   }
 
   public void set(long index, T newValue)
   {
     basicSet(index, newValue);
+    // cacheSize = -1;
+  }
 
-    cacheSize = -1;
+  public void move(long newPosition, long oldPosition)
+  {
+    if (oldPosition == newPosition)
+    {
+      return;
+    }
+
+    // get the object at oldPosition.
+    T value = getValue(oldPosition);
+    // remove the oldPosition.
+    remove((int)oldPosition);
+    // make a space at the newPosition by shifting elements
+    shiftRight((int)newPosition);
+    set(newPosition, value);
   }
 
   protected void basicSet(long index, T newValue)
   {
-    if (index >= privateSize())
+    if (index >= cachedSize())
     {
       throw new ArrayIndexOutOfBoundsException();
     }
 
-    getVArray().update();
+    update();
 
     setValue(index, newValue);
   }
@@ -206,18 +221,23 @@ public abstract class ooArrayList<T>
 
   protected abstract T getValue(long index);
 
-  private void saveSize()
+  protected void saveSize()
   {
     // System.out.println(">>> classObject: " + classObject.objectID().getStoreString() + " <<<");
     // System.out.println("ooArrayList.saveSize() - value to store in objy is: " + cacheSize);
     classObject.nset_numeric(sizeName, new Numeric_Value(cacheSize));
+    resetCachedSize();
+  }
+
+  protected void resetCachedSize()
+  {
     cacheSize = -1;
   }
 
   /**
    * @return
    */
-  public long privateSize()
+  protected long cachedSize()
   {
     if (cacheSize == -1)
     {
@@ -236,7 +256,8 @@ public abstract class ooArrayList<T>
     // System.out.println(">>> classObject: " + classObject.objectID().getStoreString() + " <<<");
     // Numeric_Value nValue = classObject.nget_numeric(sizeName);
     // System.out.println("ooArrayList.size() - nValue: " + nValue.toString());
-    return classObject.nget_numeric(sizeName).longValue();
+    // return classObject.nget_numeric(sizeName).longValue();
+    return cachedSize();
   }
 
 }

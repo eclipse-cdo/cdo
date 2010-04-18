@@ -35,41 +35,57 @@ public class ObjyDb
 
   static public final String PROPERTYMAP_CONT_NAME = "PropertyCont";
 
+  static public final String OBJYSTOREINFO_NAME = "ObjyStoreInfo";
+
   public static final String DEFAULT_CONT_NAME = "_ooDefaultContObj"; // this is objy default cont name.
 
   /***
    * Unitily functions..
    */
 
-  public static ooId createCommitInfoList()
+  protected static ooId createCommitInfoList(ObjyScope objyScope)
   {
-    ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.COMMITINFOSET_CONT_NAME);
     // TODO - this need refactoring...
     ooId commitInfoListId = OoCommitInfoHandler.create(objyScope.getScopeContOid());
     objyScope.nameObj(ObjyDb.COMMITINFOSET_NAME, commitInfoListId);
     return commitInfoListId;
   }
 
-  public static ooId getCommitInfoList()
+  public static ooId getOrCreateCommitInfoList(String repositoryName)
   {
-    ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.COMMITINFOSET_CONT_NAME);
-    ooId commitInfoListId = objyScope.lookupObjectOid(ObjyDb.COMMITINFOSET_NAME);
+    ObjyScope objyScope = new ObjyScope(repositoryName, ObjyDb.COMMITINFOSET_CONT_NAME);
+    ooId commitInfoListId = null;
+    try
+    {
+      commitInfoListId = objyScope.lookupObjectOid(ObjyDb.COMMITINFOSET_NAME);
+    }
+    catch (Exception ex)
+    {
+      commitInfoListId = createCommitInfoList(objyScope);
+    }
     return commitInfoListId;
   }
 
-  public static ooId createPropertyMap()
+  protected static ooId createPropertyMap(ObjyScope objyScope)
   {
-    ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PROPERTYMAP_CONT_NAME);
     // TODO - this need refactoring...
     ooId propertyMapId = OoPropertyMapHandler.create(objyScope.getScopeContOid());
     objyScope.nameObj(ObjyDb.PROPERTYMAP_NAME, propertyMapId);
     return propertyMapId;
   }
 
-  public static ooId getPropertyMap()
+  public static ooId getOrCreatePropertyMap()
   {
     ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PROPERTYMAP_CONT_NAME);
-    ooId propertyMapId = objyScope.lookupObjectOid(ObjyDb.PROPERTYMAP_NAME);
+    ooId propertyMapId = null;
+    try
+    {
+      propertyMapId = objyScope.lookupObjectOid(ObjyDb.PROPERTYMAP_NAME);
+    }
+    catch (Exception ex)
+    {
+      propertyMapId = createPropertyMap(objyScope);
+    }
     return propertyMapId;
   }
 

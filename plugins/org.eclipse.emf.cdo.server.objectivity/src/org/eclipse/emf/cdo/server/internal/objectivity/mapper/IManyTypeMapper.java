@@ -58,4 +58,7 @@ public interface IManyTypeMapper extends ITypeMapper
 
   // return the size of the collection.
   public int size(ObjyObject objyObject, EStructuralFeature feature);
+
+  // move element in the feature from sourceIndex to targetIndex
+  public void move(ObjyObject objyObject, EStructuralFeature feature, int targetIndex, int sourceIndex);
 }

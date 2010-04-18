@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
-import org.eclipse.emf.cdo.server.IStore.RevisionTemporality;
 import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.IManyTypeMapper;
@@ -406,12 +405,40 @@ public class ObjyObject
     classObject.nset_numeric(ooBase.Attribute_revisedTime, new Numeric_Value(revisedTime));
   }
 
-  protected ObjyObject copy(ObjyObject other)
+  public ObjyObject copy(EClass eClass)
   {
     ObjyObject newObjyObject = null;
-    ooObj obj = ooObj.create_ooObj(other.objectId);
-    ooObj newObj = (ooObj)obj.copy(obj);
-    return new ObjyObject(Class_Object.class_object_from_oid(newObj.getOid()));
+    ooObj obj = ooObj.create_ooObj(objectId);
+    ooObj newObj = (ooObj)obj.copy(obj); // Objy internal copy.
+    // Dependent structures, for example array of refs are not copies, so we
+    // have to iterate and copy (deep copy).
+    newObjyObject = new ObjyObject(Class_Object.class_object_from_oid(newObj.getOid()));
+
+    try
+    {
+      if (TRACER_DEBUG.isEnabled())
+      {
+        TRACER_DEBUG.trace("=> ObjyObject.copy() - oid:" + ooId().getStoreString() + " version:" + getVersion());
+      }
+      for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
+      {
+        if (!(feature instanceof EAttribute || feature instanceof EReference) || feature.isTransient())
+        {
+          continue;
+        }
+
+        if (feature.isMany())
+        {
+          // copy this feature to the new object.
+        }
+      }
+    }
+    catch (com.objy.as.asException ex)
+    {
+      ex.printStackTrace();
+    }
+
+    return newObjyObject;
   }
 
   /**
@@ -450,27 +477,7 @@ public class ObjyObject
       // setEResource(revision.getResourceID());
       // setEContainingFeature(revision.getContainingFeatureID());
 
-      ObjyObject newObjyRevision = this;
-
-      if (revision.getVersion() > 1) // now we're updating other versions...
-      {
-        ObjyObject oldObjyRevision = getRevision(revision.getVersion() - 1);
-
-        if (oldObjyRevision == null)
-        {
-          new IllegalStateException("Revision with version: " + (revision.getVersion() - 1) + " is not in the store."); //$NON-NLS-1$
-        }
-        if (storeAccessor.getStore().getRevisionTemporality() == RevisionTemporality.AUDITING)
-        {
-          // if we allow versioning, then create a new one here.
-          newObjyRevision = createRevision(this);
-        }
-        else
-        {
-          newObjyRevision = oldObjyRevision;
-        }
-      }
-      newObjyRevision.updateData(storeAccessor, revision);
+      updateData(storeAccessor, revision);
     }
     catch (com.objy.as.asException ex)
     {
@@ -492,8 +499,8 @@ public class ObjyObject
     {
       if (TRACER_DEBUG.isEnabled())
       {
-        TRACER_DEBUG.trace("=> ObjyObject.update() - oid:" + ooId().getStoreString() + " - version:"
-            + revision.getVersion());
+        TRACER_DEBUG.trace("=> ObjyObject.updateData() - oid:" + ooId().getStoreString() + //$NON-NLS-1$ 
+            " - version:" + revision.getVersion()); //$NON-NLS-1$
       }
 
       setVersion(revision.getVersion());
@@ -644,7 +651,7 @@ public class ObjyObject
     return null;
   }
 
-  private void addToRevisions(ObjyObject objyRevision)
+  public void addToRevisions(ObjyObject objyRevision)
   {
     revisionsRel.add(objyRevision.objectId);
     // set it as last rev.
@@ -1137,13 +1144,28 @@ public class ObjyObject
    * @param sourceIndex
    * @return
    */
-  public Object move(EStructuralFeature feature, int targetIndex, int sourceIndex)
+  public void move(EStructuralFeature feature, int targetIndex, int sourceIndex)
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.trace("Move - Not implemented yet.");
+      try
+      {
+        checkSession();
+      }
+      catch (Exception ex)
+      {
+        ex.printStackTrace();
+      } // for debugging.
     }
-    return null;
+
+    if (TRACER_DEBUG.isEnabled())
+    {
+      TRACER_DEBUG.trace("Move element from " + sourceIndex + " to " + targetIndex);
+    }
+
+    ITypeMapper mapper = ObjyMapper.INSTANCE.getTypeMapper(feature);
+
+    ((IManyTypeMapper)mapper).move(this, feature, targetIndex, sourceIndex);
   }
 
   /***
@@ -1399,10 +1421,4 @@ public class ObjyObject
     classObject.set_ooId(position, object);
   }
 
-  public ObjyObject createRevision(ObjyObject objyRevision)
-  {
-    ObjyObject newObjyRevision = copy(objyRevision);
-    addToRevisions(newObjyRevision);
-    return newObjyRevision;
-  }
 }

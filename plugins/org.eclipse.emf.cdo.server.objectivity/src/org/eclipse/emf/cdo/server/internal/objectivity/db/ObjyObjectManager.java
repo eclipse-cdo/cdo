@@ -248,6 +248,21 @@ public class ObjyObjectManager
     }
   }
 
+  // we could've used the CDO copy revision technique, but it will be expensive
+  // to create the new copy over the Java/JNI boundaries, doing a low level
+  // copy is faster.
+  public ObjyObject copyRevision(ObjectivityStoreAccessor storeAccessor, ObjyObject objyObject)
+  {
+    if (TRACER_DEBUG.isEnabled())
+    {
+      TRACER_DEBUG.trace("ObjyObjectManager.copyRevision(" + objyObject.ooId().getStoreString() + ")");
+    }
+    EClass eClass = ObjySchema.getEClass(storeAccessor.getStore(), objyObject.objyClass());
+    ObjyObject newObjyRevision = objyObject.copy(eClass);
+    objyObject.addToRevisions(newObjyRevision);
+    return newObjyRevision;
+  }
+
   public ObjyPlacementManager getGlobalPlacementManager()
   {
     return globalPlacementManager;

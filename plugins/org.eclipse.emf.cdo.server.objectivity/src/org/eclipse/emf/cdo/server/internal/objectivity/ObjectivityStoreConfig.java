@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.server.objectivity.IObjectivityStoreConfig;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import com.objy.db.app.Session;
+import com.objy.db.app.ooContObj;
 import com.objy.db.app.ooDBObj;
 
 import org.w3c.dom.Element;
@@ -81,18 +82,33 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
     Iterator itr = session.getFD().containedDBs();
     ooDBObj dbObj = null;
     List<ooDBObj> dbList = new ArrayList<ooDBObj>();
+    List<ooContObj> contList = new ArrayList<ooContObj>();
     while (itr.hasNext())
     {
       dbObj = (ooDBObj)itr.next();
       dbList.add(dbObj);
+      // if (dbObj.getName().equals(ObjyDb.CONFIGDB_NAME))
+      {
+        Iterator contItr = dbObj.contains();
+        while (contItr.hasNext())
+        {
+          contList.add((ooContObj)contItr.next());
+        }
+      }
     }
     // itr.close();
+
+    for (ooContObj cont : contList)
+    {
+      // cont.delete();
+    }
 
     for (ooDBObj db : dbList)
     {
       System.out.println("restFD() - deleting DB(" + db.getOid().getStoreString() + "):" + db.getName());
-      db.delete();
+      // db.delete();
     }
+
     session.commit();
     session.terminate();
     System.out.println("ObjectivityStoreConfig.resetFD() - END.");

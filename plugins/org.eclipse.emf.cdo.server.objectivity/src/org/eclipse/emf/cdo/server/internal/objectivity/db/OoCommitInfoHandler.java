@@ -68,7 +68,8 @@ public class OoCommitInfoHandler
     Iterator<OoCommitInfo> itr = treeSet.iterator();
     while (itr.hasNext())
     {
-      getIt = true;
+      ooCommitInfo = itr.next();
+      getIt = true; // assume it's what we need, then we filter below.
       long timeStamp = ooCommitInfo.getTimeStamp();
       long branchId = ooCommitInfo.getBranchId();
 

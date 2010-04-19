@@ -31,7 +31,9 @@ import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
+import org.eclipse.emf.cdo.spi.common.CDORawReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
+import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -419,6 +421,11 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
   }
 
   public void replicateRepository(CDOReplicationContext context)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CDOReplicationInfo replicateRepositoryRaw(CDORawReplicationContext context)
   {
     throw new UnsupportedOperationException();
   }

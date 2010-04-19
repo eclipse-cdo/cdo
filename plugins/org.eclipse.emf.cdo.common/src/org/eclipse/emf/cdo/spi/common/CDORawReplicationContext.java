@@ -10,14 +10,15 @@
  */
 package org.eclipse.emf.cdo.spi.common;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+
+import java.io.IOException;
 
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public interface CDOReplicationContext extends CDOReplicationInfo, CDOBranchHandler, CDOCommitInfoHandler
+public interface CDORawReplicationContext extends CDOReplicationInfo
 {
-  public boolean isSqueezeCommitInfos();
+  public void replicateRaw(CDODataInput in) throws IOException;
 }

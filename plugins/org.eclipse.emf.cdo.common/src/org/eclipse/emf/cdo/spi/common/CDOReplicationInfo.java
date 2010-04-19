@@ -10,14 +10,14 @@
  */
 package org.eclipse.emf.cdo.spi.common;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public interface CDOReplicationContext extends CDOReplicationInfo, CDOBranchHandler, CDOCommitInfoHandler
+public interface CDOReplicationInfo
 {
-  public boolean isSqueezeCommitInfos();
+  public int getLastReplicatedBranchID();
+
+  public long getLastReplicatedCommitTime();
 }

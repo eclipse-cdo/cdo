@@ -105,16 +105,18 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
   }
 
-  public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, long startTime, long endTime) throws IOException
+  public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, int lastReplicatedBranchID, int lastBranchID,
+      long lastReplicatedCommitTime, long lastCommitTime) throws IOException
   {
     StringBuilder builder = new StringBuilder();
     builder.append(" WHERE "); //$NON-NLS-1$
+    builder.append(lastReplicatedCommitTime);
+    builder.append("<"); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-    builder.append("<=? AND ("); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append("=0 OR "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append(">=?))"); //$NON-NLS-1$
+    builder.append(" AND "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append("<="); //$NON-NLS-1$
+    builder.append(lastCommitTime);
 
     String attrSuffix = builder.toString();
     Connection connection = accessor.getConnection();
@@ -169,8 +171,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
   }
 
-  protected void rawImportList(CDODataInput in, Connection connection, IListMapping listMapping)
-      throws IOException
+  protected void rawImportList(CDODataInput in, Connection connection, IListMapping listMapping) throws IOException
   {
     for (IDBTable table : listMapping.getDBTables())
     {

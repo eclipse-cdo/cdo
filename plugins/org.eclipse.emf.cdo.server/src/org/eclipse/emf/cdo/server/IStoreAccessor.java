@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
+import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader;
@@ -194,7 +195,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   /**
    * @since 3.0
    */
-  public void rawExport(CDODataOutput out, long startTime, long endTime) throws IOException;
+  public CDOReplicationInfo rawExport(CDODataOutput out, int lastReplicatedBranchID, long lastReplicatedCommitTime)
+      throws IOException;
 
   /**
    * @since 3.0

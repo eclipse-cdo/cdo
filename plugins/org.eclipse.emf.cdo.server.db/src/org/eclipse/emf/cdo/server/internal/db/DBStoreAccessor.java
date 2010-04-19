@@ -44,6 +44,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -815,10 +816,28 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     mappingStrategy.handleRevisions(this, eClass, branch, timeStamp, new DBRevisionHandler(handler));
   }
 
-  public void rawExport(CDODataOutput out, long startTime, long endTime) throws IOException
+  public CDOReplicationInfo rawExport(CDODataOutput out, int lastReplicatedBranchID, long lastReplicatedCommitTime)
+      throws IOException
   {
+    final int lastBranchID = getStore().getLastBranchID();
+    final long lastCommitTime = getStore().getLastCommitTime();
+
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    mappingStrategy.rawExport(this, out, startTime, endTime);
+    mappingStrategy
+        .rawExport(this, out, lastReplicatedBranchID, lastBranchID, lastReplicatedCommitTime, lastCommitTime);
+
+    return new CDOReplicationInfo()
+    {
+      public int getLastReplicatedBranchID()
+      {
+        return lastBranchID;
+      }
+
+      public long getLastReplicatedCommitTime()
+      {
+        return lastCommitTime;
+      }
+    };
   }
 
   public void rawImport(CDODataInput in) throws IOException

@@ -274,8 +274,8 @@ public interface IMappingStrategy
   /**
    * @since 3.0
    */
-  public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, long startTime, long endTime)
-      throws IOException;
+  public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, int lastReplicatedBranchID, int lastBranchID,
+      long lastReplicatedCommitTime, long lastCommitTime) throws IOException;
 
   /**
    * @since 3.0

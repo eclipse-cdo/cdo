@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -54,6 +55,7 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
+import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
@@ -96,6 +98,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -248,7 +251,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   protected void changingState(State oldState, State newState)
   {
-    this.state = newState;
+    state = newState;
     fireEvent(new RepositoryStateChangedEvent(this, oldState, newState));
 
     if (sessionManager != null)
@@ -1002,6 +1005,13 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       monitor.done();
     }
+  }
+
+  public CDOReplicationInfo replicateRaw(CDODataOutput out, int lastReplicatedBranchID, long lastReplicatedCommitTime)
+      throws IOException
+  {
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    return accessor.rawExport(out, lastReplicatedBranchID, lastReplicatedCommitTime);
   }
 
   public void replicate(CDOReplicationContext context)

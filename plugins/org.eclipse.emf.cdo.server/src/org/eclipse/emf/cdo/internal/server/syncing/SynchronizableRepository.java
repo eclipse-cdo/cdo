@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
@@ -26,6 +27,7 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.om.monitor.Monitor;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -111,9 +113,12 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     return lastReplicatedBranchID;
   }
 
-  protected void setLastReplicatedBranchID(int lastReplicatedBranchID)
+  public void setLastReplicatedBranchID(int lastReplicatedBranchID)
   {
-    this.lastReplicatedBranchID = lastReplicatedBranchID;
+    if (this.lastReplicatedBranchID < lastReplicatedBranchID)
+    {
+      this.lastReplicatedBranchID = lastReplicatedBranchID;
+    }
   }
 
   public long getLastReplicatedCommitTime()
@@ -121,9 +126,12 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     return lastReplicatedCommitTime;
   }
 
-  protected void setLastReplicatedCommitTime(long lastReplicatedCommitTime)
+  public void setLastReplicatedCommitTime(long lastReplicatedCommitTime)
   {
-    this.lastReplicatedCommitTime = lastReplicatedCommitTime;
+    if (this.lastReplicatedCommitTime < lastReplicatedCommitTime)
+    {
+      this.lastReplicatedCommitTime = lastReplicatedCommitTime;
+    }
   }
 
   public boolean isSqueezeCommitInfos()
@@ -181,6 +189,10 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       commitContext.postCommit(success);
       transaction.close();
     }
+  }
+
+  public void replicateRaw(CDODataInput in) throws IOException
+  {
   }
 
   @Override

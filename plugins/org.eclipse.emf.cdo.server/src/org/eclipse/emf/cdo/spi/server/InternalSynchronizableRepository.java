@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.server.ISynchronizableRepository;
+import org.eclipse.emf.cdo.spi.common.CDORawReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 
 /**
@@ -18,7 +19,7 @@ import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
  * @since 3.0
  */
 public interface InternalSynchronizableRepository extends ISynchronizableRepository, InternalRepository,
-    CDOReplicationContext
+    CDOReplicationContext, CDORawReplicationContext
 {
   public InternalRepositorySynchronizer getSynchronizer();
 
@@ -27,4 +28,8 @@ public interface InternalSynchronizableRepository extends ISynchronizableReposit
   public InternalSession getReplicatorSession();
 
   public boolean isSqueezeCommitInfos();
+
+  public void setLastReplicatedBranchID(int lastReplicatedBranchID);
+
+  public void setLastReplicatedCommitTime(long lastReplicatedCommitTime);
 }

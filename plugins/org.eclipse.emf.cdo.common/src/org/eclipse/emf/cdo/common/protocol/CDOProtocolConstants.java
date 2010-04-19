@@ -182,12 +182,17 @@ public interface CDOProtocolConstants
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_CHANGE_SETS = 42;
+  public static final short SIGNAL_REPLICATE_REPOSITORY_RAW = 42;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_MERGE_DATA = 43;
+  public static final short SIGNAL_LOAD_CHANGE_SETS = 43;
+
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_LOAD_MERGE_DATA = 44;
 
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh

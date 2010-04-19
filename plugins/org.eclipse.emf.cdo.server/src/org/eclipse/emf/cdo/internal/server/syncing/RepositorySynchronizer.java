@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
+import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
@@ -50,7 +51,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
 
   private static final Integer CONNECT_PRIORITY = 0;
 
-  private static final Integer SYNC_PRIORITY = 1;
+  private static final Integer REPLICATE_PRIORITY = 1;
 
   private static final Integer BRANCH_PRIORITY = 2;
 
@@ -67,6 +68,8 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
   private RemoteSessionListener remoteSessionListener = new RemoteSessionListener();
 
   private CDOSessionConfigurationFactory remoteSessionConfigurationFactory;
+
+  private boolean rawReplication;
 
   private boolean squeezeCommitInfos;
 
@@ -111,6 +114,17 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
     return remoteSession;
   }
 
+  protected boolean isRawReplication()
+  {
+    return rawReplication;
+  }
+
+  protected void setRawReplication(boolean rawReplication)
+  {
+    checkInactive();
+    this.rawReplication = rawReplication;
+  }
+
   public boolean isSqueezeCommitInfos()
   {
     return squeezeCommitInfos;
@@ -118,6 +132,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
 
   public void setSqueezeCommitInfos(boolean squeezeCommitInfos)
   {
+    checkInactive();
     this.squeezeCommitInfos = squeezeCommitInfos;
   }
 
@@ -372,7 +387,16 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
       localRepository.setState(CDOCommonRepository.State.SYNCING);
 
       CDOSessionProtocol sessionProtocol = remoteSession.getSessionProtocol();
-      sessionProtocol.replicateRepository(localRepository);
+      if (isRawReplication())
+      {
+        CDOReplicationInfo result = sessionProtocol.replicateRepositoryRaw(localRepository);
+        localRepository.setLastReplicatedBranchID(result.getLastReplicatedBranchID());
+        localRepository.setLastReplicatedCommitTime(result.getLastReplicatedCommitTime());
+      }
+      else
+      {
+        sessionProtocol.replicateRepository(localRepository);
+      }
 
       localRepository.setState(CDOCommonRepository.State.ONLINE);
       OM.LOG.info("Synchronized with master.");
@@ -381,7 +405,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
     @Override
     protected Integer getPriority()
     {
-      return SYNC_PRIORITY;
+      return REPLICATE_PRIORITY;
     }
   }
 

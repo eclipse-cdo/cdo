@@ -1,0 +1,60 @@
+/***************************************************************************
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ **************************************************************************/
+package org.eclipse.emf.cdo.internal.net4j.protocol;
+
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.spi.common.CDORawReplicationContext;
+import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
+
+import java.io.IOException;
+
+/**
+ * @author Eike Stepper
+ */
+public class ReplicateRepositoryRawRequest extends CDOClientRequest<CDOReplicationInfo>
+{
+  private CDORawReplicationContext context;
+
+  public ReplicateRepositoryRawRequest(CDOClientProtocol protocol, CDORawReplicationContext context)
+  {
+    super(protocol, CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY_RAW);
+    this.context = context;
+  }
+
+  @Override
+  protected void requesting(CDODataOutput out) throws IOException
+  {
+    out.writeInt(context.getLastReplicatedBranchID());
+    out.writeLong(context.getLastReplicatedCommitTime());
+  }
+
+  @Override
+  protected CDOReplicationInfo confirming(CDODataInput in) throws IOException
+  {
+    context.replicateRaw(in);
+    final int lastBranchID = in.readInt();
+    final long lastCommitTime = in.readLong();
+    return new CDOReplicationInfo()
+    {
+      public int getLastReplicatedBranchID()
+      {
+        return lastBranchID;
+      }
+
+      public long getLastReplicatedCommitTime()
+      {
+        return lastCommitTime;
+      }
+    };
+  }
+}

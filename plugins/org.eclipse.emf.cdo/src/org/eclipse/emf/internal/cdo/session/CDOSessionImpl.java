@@ -45,7 +45,9 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
+import org.eclipse.emf.cdo.spi.common.CDORawReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
+import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -1877,6 +1879,22 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         {
           delegate.replicateRepository(context);
           return;
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public CDOReplicationInfo replicateRepositoryRaw(CDORawReplicationContext context)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.replicateRepositoryRaw(context);
         }
         catch (Exception ex)
         {

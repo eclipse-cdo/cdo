@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -334,9 +335,10 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     return null;
   }
 
-  public void rawExport(CDODataOutput out, long startTime, long endTime) throws IOException
+  public CDOReplicationInfo rawExport(CDODataOutput out, int lastReplicatedBranchID, long lastReplicatedCommitTime)
+      throws IOException
   {
-    // TODO: implement MEMStoreAccessor.rawExport(out, startTime, endTime)
+    // TODO: implement MEMStoreAccessor.rawExport(out, lastReplicatedBranchID, lastReplicatedCommitTime)
     throw new UnsupportedOperationException();
   }
 

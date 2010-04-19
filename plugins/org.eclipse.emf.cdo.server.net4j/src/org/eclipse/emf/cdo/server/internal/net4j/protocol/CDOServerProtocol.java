@@ -266,6 +266,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY:
       return new ReplicateRepositoryIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY_RAW:
+      return new ReplicateRepositoryRawIndication(this);
+
     case CDOProtocolConstants.SIGNAL_LOAD_CHANGE_SETS:
       return new LoadChangeSetsIndication(this);
 

@@ -123,6 +123,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
     for (IClassMapping classMapping : getClassMappings().values())
     {
+      out.writeBoolean(true);
       EClass eClass = classMapping.getEClass();
       out.writeCDOClassifierRef(eClass);
 
@@ -134,6 +135,8 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
         rawExportList(out, connection, listMapping, table, attrSuffix);
       }
     }
+
+    out.writeBoolean(false);
   }
 
   protected void rawExportList(CDODataOutput out, Connection connection, IListMapping listMapping, IDBTable attrTable,
@@ -156,7 +159,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   {
     Connection connection = accessor.getConnection();
 
-    for (;;)
+    while (in.readBoolean())
     {
       EClass eClass = (EClass)in.readCDOClassifierRefAndResolve();
       IClassMapping classMapping = getClassMapping(eClass);

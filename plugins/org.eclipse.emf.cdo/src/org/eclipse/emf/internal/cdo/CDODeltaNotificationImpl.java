@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDODeltaNotification;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -213,5 +214,17 @@ public class CDODeltaNotificationImpl extends ENotificationImpl implements CDODe
   public void setRevisionDelta(CDORevisionDelta revisionDelta)
   {
     this.revisionDelta = revisionDelta;
+  }
+
+  @Override
+  public boolean merge(Notification notification)
+  {
+    if (eventType == REMOVE_MANY && newValue == null)
+    {
+      // Means that clear all was executed and no merging can appear
+      return false;
+    }
+
+    return super.merge(notification);
   }
 }

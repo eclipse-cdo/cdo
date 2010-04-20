@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -75,6 +75,11 @@ public abstract class AbstractMonitor implements OMMonitor
   {
     checkBegun();
     AsyncTimerTask asyncTimerTask = createAsyncTimerTask(work);
+    if (asyncTimerTask == null)
+    {
+      throw new NullPointerException("No async timer task has been created");
+    }
+
     long period = getAsyncSchedulePeriod();
     getTimer().scheduleAtFixedRate(asyncTimerTask, period, period);
     return asyncTimerTask;

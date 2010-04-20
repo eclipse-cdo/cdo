@@ -87,6 +87,11 @@ public class Monitor extends AbstractMonitor
       }
       catch (Exception ex)
       {
+        if (TIMER != null)
+        {
+          TIMER.cancel();
+        }
+
         TIMER = new Timer("monitor-timer", true); //$NON-NLS-1$
       }
 

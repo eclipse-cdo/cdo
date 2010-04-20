@@ -81,7 +81,7 @@ public abstract class AbstractMonitor implements OMMonitor
     }
 
     long period = getAsyncSchedulePeriod();
-    getTimer().scheduleAtFixedRate(asyncTimerTask, period, period);
+    scheduleAtFixedRate(asyncTimerTask, period, period);
     return asyncTimerTask;
   }
 
@@ -130,6 +130,11 @@ public abstract class AbstractMonitor implements OMMonitor
   protected abstract long getAsyncSchedulePeriod();
 
   protected abstract Timer getTimer();
+
+  /**
+   * @since 3.0
+   */
+  protected abstract void scheduleAtFixedRate(TimerTask task, long delay, long period);
 
   private void checkBegun() throws MonitorCanceledException
   {

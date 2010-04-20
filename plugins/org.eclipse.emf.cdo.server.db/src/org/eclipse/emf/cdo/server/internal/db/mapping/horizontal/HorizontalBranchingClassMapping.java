@@ -580,55 +580,75 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, OMMonitor monitor)
   {
     Async async = null;
+    monitor.begin(10);
+
     try
     {
-      monitor.begin(10);
-      async = monitor.forkAsync();
-
-      CDOID id = revision.getID();
-
-      if (accessor.isNewObject(id))
+      try
       {
-        // put new objects into objectTypeCache
-        ((HorizontalBranchingMappingStrategy)getMappingStrategy()).putObjectType(accessor, id, getEClass());
-      }
-      else if (revision.getVersion() > CDOBranchVersion.FIRST_VERSION)
-      {
-        // if revision is not the first one, revise the old revision
-        long revised = revision.getTimeStamp() - 1;
-        reviseOldRevision(accessor, id, revision.getBranch(), revised);
-        for (IListMapping mapping : getListMappings())
+        async = monitor.forkAsync();
+        CDOID id = revision.getID();
+        if (accessor.isNewObject(id))
         {
-          mapping.objectDetached(accessor, id, revised);
+          // put new objects into objectTypeCache
+          ((HorizontalBranchingMappingStrategy)getMappingStrategy()).putObjectType(accessor, id, getEClass());
+        }
+        else if (revision.getVersion() > CDOBranchVersion.FIRST_VERSION)
+        {
+          // if revision is not the first one, revise the old revision
+          long revised = revision.getTimeStamp() - 1;
+          reviseOldRevision(accessor, id, revision.getBranch(), revised);
+          for (IListMapping mapping : getListMappings())
+          {
+            mapping.objectDetached(accessor, id, revised);
+          }
         }
       }
-
-      async.stop();
-      async = monitor.forkAsync();
-
-      if (revision.isResourceFolder() || revision.isResource())
+      finally
       {
-        checkDuplicateResources(accessor, revision);
+        async.stop();
       }
 
-      async.stop();
-      async = monitor.forkAsync();
-
-      // Write attribute table always (even without modeled attributes!)
-      writeValues(accessor, revision);
-
-      async.stop();
-      async = monitor.forkAsync(7);
-
-      // Write list tables only if they exist
-      if (getListMappings() != null)
+      try
       {
-        writeLists(accessor, revision);
+        async = monitor.forkAsync();
+        if (revision.isResourceFolder() || revision.isResource())
+        {
+          checkDuplicateResources(accessor, revision);
+        }
+      }
+      finally
+      {
+        async.stop();
+      }
+
+      try
+      {
+        // Write attribute table always (even without modeled attributes!)
+        async = monitor.forkAsync();
+        writeValues(accessor, revision);
+      }
+      finally
+      {
+        async.stop();
+      }
+
+      try
+      {
+        // Write list tables only if they exist
+        async = monitor.forkAsync(7);
+        if (getListMappings() != null)
+        {
+          writeLists(accessor, revision);
+        }
+      }
+      finally
+      {
+        async.stop();
       }
     }
     finally
     {
-      async.stop();
       monitor.done();
     }
   }

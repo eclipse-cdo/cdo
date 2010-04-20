@@ -424,21 +424,31 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created,
       OMMonitor monitor)
   {
+    Async async = null;
     monitor.begin();
-    Async async = monitor.forkAsync();
 
     try
     {
-      FeatureDeltaWriter writer = deltaWriter.get();
-      writer.process(accessor, delta, created);
+      try
+      {
+        async = monitor.forkAsync();
+        FeatureDeltaWriter writer = deltaWriter.get();
+        writer.process(accessor, delta, created);
+      }
+      finally
+      {
+        async.stop();
+      }
     }
     finally
     {
-      async.stop();
       monitor.done();
     }
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private class FeatureDeltaWriter implements CDOFeatureDeltaVisitor
   {
     private CDOID id;

@@ -435,17 +435,25 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   @Override
   protected final void doCommit(OMMonitor monitor)
   {
-    monitor.begin();
-    Async async = monitor.forkAsync();
-
     if (TRACER.isEnabled())
     {
       TRACER.format("--- DB COMMIT ---"); //$NON-NLS-1$
     }
 
+    Async async = null;
+    monitor.begin();
+
     try
     {
-      getConnection().commit();
+      try
+      {
+        async = monitor.forkAsync();
+        getConnection().commit();
+      }
+      finally
+      {
+        async.stop();
+      }
     }
     catch (SQLException ex)
     {
@@ -453,7 +461,6 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
     finally
     {
-      async.stop();
       monitor.done();
     }
   }

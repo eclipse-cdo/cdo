@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.concurrent;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,11 +35,6 @@ public abstract class Timeouter
     this.timeout = timeout;
     touched = System.currentTimeMillis();
     scheduleTimeout();
-  }
-
-  public Timer getTimer()
-  {
-    return timer;
   }
 
   public long getTimeout()
@@ -95,7 +92,14 @@ public abstract class Timeouter
       }
     };
 
-    long delay = Math.max(timeout - (System.currentTimeMillis() - touched), 0L);
-    timer.schedule(timeoutTask, delay);
+    try
+    {
+      long delay = Math.max(timeout - (System.currentTimeMillis() - touched), 0L);
+      timer.schedule(timeoutTask, delay);
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
   }
 }

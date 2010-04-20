@@ -409,53 +409,77 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
   public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, OMMonitor monitor)
   {
     Async async = null;
+    monitor.begin(10);
 
     try
     {
-      monitor.begin(10);
-      async = monitor.forkAsync();
-
-      CDOID id = revision.getID();
-      if (revision.getVersion() == CDORevision.FIRST_VERSION)
+      try
       {
-        mappingStrategy.putObjectType(accessor, id, eClass);
-      }
-      else
-      {
-        long revised = revision.getTimeStamp() - 1;
-        reviseOldRevision(accessor, id, revision.getBranch(), revised);
-        for (IListMapping mapping : getListMappings())
+        async = monitor.forkAsync();
+        CDOID id = revision.getID();
+        if (revision.getVersion() == CDORevision.FIRST_VERSION)
         {
-          mapping.objectDetached(accessor, id, revised);
+          mappingStrategy.putObjectType(accessor, id, eClass);
+        }
+        else
+        {
+          long revised = revision.getTimeStamp() - 1;
+          reviseOldRevision(accessor, id, revision.getBranch(), revised);
+          for (IListMapping mapping : getListMappings())
+          {
+            mapping.objectDetached(accessor, id, revised);
+          }
         }
       }
-
-      async.stop();
-      async = monitor.forkAsync();
-
-      if (revision.isResourceFolder() || revision.isResource())
+      finally
       {
-        checkDuplicateResources(accessor, revision);
+        async.stop();
       }
 
-      async.stop();
-      async = monitor.forkAsync();
-
-      // Write attribute table always (even without modeled attributes!)
-      writeValues(accessor, revision);
-
-      async.stop();
-      async = monitor.forkAsync(7);
-
-      // Write list tables only if they exist
-      if (listMappings != null)
+      try
       {
-        writeLists(accessor, revision);
+        async = monitor.forkAsync();
+        if (revision.isResourceFolder() || revision.isResource())
+        {
+          checkDuplicateResources(accessor, revision);
+        }
+      }
+      finally
+      {
+        async.stop();
+      }
+
+      try
+      {
+        // Write attribute table always (even without modeled attributes!)
+        async = monitor.forkAsync();
+        writeValues(accessor, revision);
+      }
+      finally
+      {
+        async.stop();
+      }
+
+      try
+      {
+        // Write list tables only if they exist
+        if (listMappings != null)
+        {
+          async = monitor.forkAsync(7);
+          writeLists(accessor, revision);
+        }
+        else
+        {
+          monitor.worked(7);
+        }
+      }
+      finally
+      {
+        async.stop();
       }
     }
     finally
     {
-      async.stop();
       monitor.done();
     }
   }
@@ -602,18 +626,19 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       // notify list mappings so they can clean up
       for (IListMapping mapping : getListMappings())
       {
-        async = monitor.forkAsync();
-        mapping.objectDetached(accessor, id, timeStamp);
-        async.stop();
+        try
+        {
+          async = monitor.forkAsync();
+          mapping.objectDetached(accessor, id, timeStamp);
+        }
+        finally
+        {
+          async.stop();
+        }
       }
     }
     finally
     {
-      if (async != null)
-      {
-        async.stop();
-      }
-
       monitor.done();
     }
   }

@@ -354,17 +354,24 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public void createMapping(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
+    Async async = null;
     monitor.begin();
-    Async async = monitor.forkAsync();
 
     try
     {
-      mapPackageUnits(packageUnits);
-      getStore().getDBAdapter().createTables(getModelTables(), connection);
+      try
+      {
+        async = monitor.forkAsync();
+        mapPackageUnits(packageUnits);
+        getStore().getDBAdapter().createTables(getModelTables(), connection);
+      }
+      finally
+      {
+        async.stop();
+      }
     }
     finally
     {
-      async.stop();
       monitor.done();
     }
   }

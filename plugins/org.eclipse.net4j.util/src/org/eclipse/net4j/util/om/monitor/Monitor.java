@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.om.monitor;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -96,6 +98,19 @@ public class Monitor extends AbstractMonitor
       }
 
       return TIMER;
+    }
+  }
+
+  @Override
+  protected void scheduleAtFixedRate(TimerTask task, long delay, long period)
+  {
+    try
+    {
+      getTimer().scheduleAtFixedRate(task, delay, period);
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
     }
   }
 }

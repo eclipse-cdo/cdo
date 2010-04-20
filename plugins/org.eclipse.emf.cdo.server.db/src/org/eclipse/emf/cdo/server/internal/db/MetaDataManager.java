@@ -205,23 +205,24 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   private void fillSystemTables(Connection connection, InternalCDOPackageUnit packageUnit, OMMonitor monitor)
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Writing package unit: {0}", packageUnit); //$NON-NLS-1$
+    }
+
+    InternalCDOPackageInfo[] packageInfos = packageUnit.getPackageInfos();
+    Async async = null;
+    monitor.begin(1 + packageInfos.length);
+
     try
     {
-      InternalCDOPackageInfo[] packageInfos = packageUnit.getPackageInfos();
-      monitor.begin(1 + packageInfos.length);
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Writing package unit: {0}", packageUnit); //$NON-NLS-1$
-      }
-
       String sql = "INSERT INTO " + CDODBSchema.PACKAGE_UNITS + " VALUES (?, ?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$
       DBUtil.trace(sql);
       PreparedStatement pstmt = null;
-      Async async = monitor.forkAsync();
 
       try
       {
+        async = monitor.forkAsync();
         pstmt = connection.prepareStatement(sql);
         pstmt.setString(1, packageUnit.getID());
         pstmt.setInt(2, packageUnit.getOriginalType().ordinal());

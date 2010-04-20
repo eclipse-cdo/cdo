@@ -255,12 +255,10 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   @Override
   public void deactivateSession(InternalCDOSession session) throws Exception
   {
+    commitInfoManager.deactivate();
     revisionManager.deactivate();
-    revisionManager = null;
-
+    branchManager.deactivate();
     packageRegistry.deactivate();
-    packageRegistry = null;
-
     super.deactivateSession(session);
   }
 

@@ -222,8 +222,30 @@ public class Net4jDBTest extends AbstractCDOTest
 
     for (Pair<DBType, Object> column : columns)
     {
-      assertEquals("Error with type " + column.getElement1(), column.getElement2(), readTypeValue(ins, column
-          .getElement1()));
+      Object actual = readTypeValue(ins, column.getElement1());
+      Class<? extends Object> type = column.getElement2().getClass();
+      if (type.isArray())
+      {
+        Class<?> componentType = type.getComponentType();
+        if (componentType == byte.class)
+        {
+          assertEquals("Error with type " + column.getElement1(), true, Arrays.equals((byte[])column.getElement2(),
+              (byte[])actual));
+        }
+        else if (componentType == char.class)
+        {
+          assertEquals("Error with type " + column.getElement1(), true, Arrays.equals((char[])column.getElement2(),
+              (char[])actual));
+        }
+        else
+        {
+          throw new IllegalStateException("Unexpected component type: " + componentType);
+        }
+      }
+      else
+      {
+        assertEquals("Error with type " + column.getElement1(), column.getElement2(), actual);
+      }
     }
   }
 

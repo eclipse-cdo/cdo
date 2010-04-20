@@ -16,8 +16,6 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.internal.db.ddl.DBTable;
-import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -135,11 +133,10 @@ public class Net4jDBTest extends AbstractCDOTest
     columns.add(column);
   }
 
-  @SuppressWarnings("restriction")
   private void prepareTable()
   {
     IDBSchema schema = store.getDBSchema();
-    IDBTable table = new DBTable((DBSchema)schema, TABLE_NAME);
+    IDBTable table = schema.addTable(TABLE_NAME);
     int c = 0;
 
     for (Pair<DBType, Object> column : columns)

@@ -23,15 +23,6 @@ public class Monitor extends AbstractMonitor
 {
   public static final long DEFAULT_ASYNC_SCHEDULE_PERIOD = 1000;
 
-  private static TimerTask TEST_TASK = new TimerTask()
-  {
-    @Override
-    public void run()
-    {
-      // Do nothing
-    }
-  };
-
   private static Timer TIMER;
 
   private boolean canceled;

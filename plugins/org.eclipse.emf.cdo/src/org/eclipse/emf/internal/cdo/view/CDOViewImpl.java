@@ -1792,7 +1792,10 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     try
     {
       CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-      sessionProtocol.closeView(viewID);
+      if (LifecycleUtil.isActive(sessionProtocol))
+      {
+        sessionProtocol.closeView(viewID);
+      }
     }
     catch (Exception ex)
     {

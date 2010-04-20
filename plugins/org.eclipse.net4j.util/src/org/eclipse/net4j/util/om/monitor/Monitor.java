@@ -82,18 +82,8 @@ public class Monitor extends AbstractMonitor
   {
     synchronized (Monitor.class)
     {
-      try
+      if (TIMER == null)
       {
-        // Check that timer exists and is not canceled.
-        TIMER.schedule(TEST_TASK, 0L);
-      }
-      catch (Exception ex)
-      {
-        if (TIMER != null)
-        {
-          TIMER.cancel();
-        }
-
         TIMER = new Timer("monitor-timer", true); //$NON-NLS-1$
       }
 

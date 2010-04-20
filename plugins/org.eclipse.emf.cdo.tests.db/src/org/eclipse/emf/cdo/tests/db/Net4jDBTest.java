@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -127,7 +127,7 @@ public class Net4jDBTest extends AbstractCDOTest
     doTest();
   }
 
-  // and so on for all DBTypes....
+  // TODO and so on for all DBTypes....
 
   private void registerColumn(DBType type, Object value)
   {
@@ -140,7 +140,6 @@ public class Net4jDBTest extends AbstractCDOTest
   {
     IDBSchema schema = store.getDBSchema();
     IDBTable table = new DBTable((DBSchema)schema, TABLE_NAME);
-
     int c = 0;
 
     for (Pair<DBType, Object> column : columns)
@@ -161,14 +160,14 @@ public class Net4jDBTest extends AbstractCDOTest
     for (Pair<DBType, Object> column : columns)
     {
       writeTypeValue(outs, column.getElement1(), column.getElement2());
-      if (first == true)
+      if (first)
       {
         builder.append("?");
         first = false;
       }
       else
       {
-        builder.append(",?");
+        builder.append(", ?");
       }
     }
 
@@ -229,7 +228,6 @@ public class Net4jDBTest extends AbstractCDOTest
       assertEquals("Error with type " + column.getElement1(), column.getElement2(), readTypeValue(ins, column
           .getElement1()));
     }
-
   }
 
   private void doTest() throws Exception
@@ -253,27 +251,35 @@ public class Net4jDBTest extends AbstractCDOTest
     case BIT:
       outs.writeBoolean((Boolean)value);
       return;
+
     case TINYINT:
       outs.writeByte((Byte)value);
       return;
+
     case CHAR:
       outs.writeChar((Character)value);
       return;
+
     case SMALLINT:
       outs.writeShort((Short)value);
       return;
+
     case INTEGER:
       outs.writeInt((Integer)value);
       return;
+
     case FLOAT:
       outs.writeFloat((Float)value);
       return;
+
     case REAL:
       outs.writeFloat((Float)value);
       return;
+
     case DOUBLE:
       outs.writeDouble((Double)value);
       return;
+
     case NUMERIC:
     case DECIMAL:
     {
@@ -282,6 +288,7 @@ public class Net4jDBTest extends AbstractCDOTest
       outs.writeInt(bigDecimal.scale());
       return;
     }
+
     case VARCHAR:
     case LONGVARCHAR:
       outs.writeString((String)value);
@@ -304,6 +311,7 @@ public class Net4jDBTest extends AbstractCDOTest
       {
         IOUtil.close(source);
       }
+
       return;
     }
 
@@ -337,8 +345,10 @@ public class Net4jDBTest extends AbstractCDOTest
       {
         IOUtil.close(source);
       }
+
       return;
     }
+
     default:
       throw new UnsupportedOperationException("not implemented");
     }

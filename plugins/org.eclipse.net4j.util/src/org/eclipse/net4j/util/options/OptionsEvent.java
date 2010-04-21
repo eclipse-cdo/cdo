@@ -29,6 +29,6 @@ public class OptionsEvent extends Event implements IOptionsEvent
   @Override
   public IOptions getSource()
   {
-    return getSource();
+    return (IOptions)super.getSource();
   }
 }

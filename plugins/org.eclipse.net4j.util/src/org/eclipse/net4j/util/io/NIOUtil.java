@@ -86,7 +86,6 @@ public final class NIOUtil
   @SuppressWarnings("unused")
   private static void copy(final File src, File dst, final boolean overwrite) throws IOException
   {
-    long q = System.currentTimeMillis();
     if (!src.isFile() || !src.exists())
     {
       throw new IllegalArgumentException("Source file '" + src.getAbsolutePath() + "' not found!"); //$NON-NLS-1$ //$NON-NLS-2$

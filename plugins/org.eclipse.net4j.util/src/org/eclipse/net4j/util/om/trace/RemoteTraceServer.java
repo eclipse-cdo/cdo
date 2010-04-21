@@ -61,6 +61,14 @@ public class RemoteTraceServer
     this.port = port;
     this.address = address;
     serverSocket = bind();
+    start();
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void start()
+  {
     new Thread("RemoteTraceServer") //$NON-NLS-1$
     {
       @Override

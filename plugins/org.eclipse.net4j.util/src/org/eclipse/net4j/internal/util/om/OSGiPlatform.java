@@ -58,7 +58,7 @@ public class OSGiPlatform extends AbstractPlatform
       DebugOptions debugOptions = getDebugOptions();
       return debugOptions.getOption(bundleID + "/" + option); //$NON-NLS-1$
     }
-    catch (Exception ex)
+    catch (RuntimeException ex)
     {
       return null;
     }
@@ -72,7 +72,7 @@ public class OSGiPlatform extends AbstractPlatform
       DebugOptions debugOptions = getDebugOptions();
       debugOptions.setOption(bundleID + "/" + option, value); //$NON-NLS-1$
     }
-    catch (Exception ex)
+    catch (RuntimeException ex)
     {
     }
   }

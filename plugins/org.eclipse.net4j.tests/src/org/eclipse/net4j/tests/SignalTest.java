@@ -18,6 +18,7 @@ import org.eclipse.net4j.tests.signal.IntRequest;
 import org.eclipse.net4j.tests.signal.StringRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.io.IOException;
@@ -103,7 +104,7 @@ public class SignalTest extends AbstractProtocolTest
     }
   }
 
-  public void _testCloseSocketChannel() throws Exception
+  public void testCloseSocketChannel() throws Exception
   {
     TestSignalProtocol protocol = null;
 
@@ -111,10 +112,17 @@ public class SignalTest extends AbstractProtocolTest
     {
       startTransport();
       protocol = new TestSignalProtocol(getConnector());
+      final ILifecycle lifecycle = protocol;
 
       closeSocketChannel((TCPConnector)getAcceptor().getAcceptedConnectors()[0]);
-      sleep(1000); // TODO Better timeout for server build!
-      assertEquals(false, protocol.isActive());
+      new PollingTimeOuter()
+      {
+        @Override
+        protected boolean successful()
+        {
+          return lifecycle.isActive();
+        }
+      }.assertNoTimeOut();
     }
     finally
     {

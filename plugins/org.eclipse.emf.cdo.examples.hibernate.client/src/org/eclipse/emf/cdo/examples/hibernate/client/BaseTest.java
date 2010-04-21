@@ -21,6 +21,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
@@ -67,6 +68,7 @@ public class BaseTest extends TestCase
     Net4jUtil.prepareContainer(container); // Register Net4j factories
     TCPUtil.prepareContainer(container); // Register TCP factories
     CDONet4jUtil.prepareContainer(container); // Register CDO factories
+//    LifecycleUtil.activate(container);
     container.activate();
 
     // Create connector

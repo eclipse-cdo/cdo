@@ -31,10 +31,6 @@ import java.util.Arrays;
  */
 public class SignalTest extends AbstractProtocolTest
 {
-  public SignalTest()
-  {
-  }
-
   public void testInteger() throws Exception
   {
     TestSignalProtocol protocol = null;

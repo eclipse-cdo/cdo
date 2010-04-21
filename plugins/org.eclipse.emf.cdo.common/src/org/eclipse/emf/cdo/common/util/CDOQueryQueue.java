@@ -298,6 +298,24 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
 
       return seqNumber < o.seqNumber ? -1 : 1;
     }
+
+    // @Override
+    // public boolean equals(Object obj)
+    // {
+    // if (this == obj)
+    // {
+    // return true;
+    // }
+    //
+    // if (obj instanceof QueueEntry<?>)
+    // {
+    // @SuppressWarnings("unchecked")
+    // QueueEntry<E> that = (QueueEntry<E>)obj;
+    // return compareTo(that) == 0;
+    // }
+    //
+    // return false;
+    // }
   }
 
   /**

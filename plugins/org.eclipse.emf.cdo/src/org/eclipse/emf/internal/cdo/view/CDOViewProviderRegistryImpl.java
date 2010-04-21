@@ -118,7 +118,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
     {
       public int compare(CDOViewProvider o1, CDOViewProvider o2)
       {
-        return -new Integer(o1.getPriority()).compareTo(o2.getPriority());
+        return -Integer.valueOf(o1.getPriority()).compareTo(o2.getPriority());
       }
     });
 

@@ -620,10 +620,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
                 && (eContainingFeature == null || EMFUtil.isPersistent(eContainingFeature)))
             {
               next = FSMUtil.adapt(eObject, transaction);
-              if (next instanceof InternalCDOObject)
-              {
-                return true;
-              }
+              return true;
             }
           }
 
@@ -714,7 +711,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private final class DetachTransition implements
+  private static final class DetachTransition implements
       ITransition<CDOState, CDOEvent, InternalCDOObject, List<InternalCDOObject>>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event,
@@ -814,7 +811,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Simon McDuff
    */
-  private final class WriteNewTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
+  private static final class WriteNewTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
@@ -827,7 +824,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Simon McDuff
    */
-  private final class RewriteTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
+  private static final class RewriteTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {

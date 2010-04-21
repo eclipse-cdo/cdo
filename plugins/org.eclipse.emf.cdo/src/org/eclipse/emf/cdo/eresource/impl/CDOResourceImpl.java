@@ -308,7 +308,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   public void setModified(boolean newModified)
   {
     boolean oldIsModified = isModified();
-    eSet(EresourcePackage.Literals.CDO_RESOURCE__MODIFIED, new Boolean(newModified));
+    eSet(EresourcePackage.Literals.CDO_RESOURCE__MODIFIED, Boolean.valueOf(newModified));
     if (eNotificationRequired())
     {
       Notification notification = new NotificationImpl(Notification.SET, oldIsModified, newModified)

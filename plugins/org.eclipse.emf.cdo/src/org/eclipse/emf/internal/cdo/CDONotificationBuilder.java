@@ -97,8 +97,8 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
     EStructuralFeature feature = delta.getFeature();
     int oldPosition = delta.getOldPosition();
     int newPosition = delta.getNewPosition();
-    add(new CDODeltaNotificationImpl(object, NotificationImpl.MOVE, getEFeatureID(feature), new Integer(oldPosition),
-        getOldValue(feature), newPosition));
+    add(new CDODeltaNotificationImpl(object, NotificationImpl.MOVE, getEFeatureID(feature), Integer
+        .valueOf(oldPosition), getOldValue(feature), newPosition));
   }
 
   public void visit(CDOAddFeatureDelta delta)

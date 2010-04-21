@@ -76,6 +76,7 @@ import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -1067,24 +1068,37 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
     {
-      return collectionLoadingPolicy;
+      synchronized (this)
+      {
+        return collectionLoadingPolicy;
+      }
     }
 
-    public synchronized void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy)
+    public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy)
     {
       if (policy == null)
       {
         policy = CDOCollectionLoadingPolicy.DEFAULT;
       }
 
-      if (collectionLoadingPolicy != policy)
+      IListener[] listeners = getListeners();
+      IEvent event = null;
+
+      synchronized (this)
       {
-        collectionLoadingPolicy = policy;
-        IListener[] listeners = getListeners();
-        if (listeners != null)
+        if (collectionLoadingPolicy != policy)
         {
-          fireEvent(new CollectionLoadingPolicyEventImpl(), listeners);
+          collectionLoadingPolicy = policy;
+          if (listeners != null)
+          {
+            event = new CollectionLoadingPolicyEventImpl();
+          }
         }
+      }
+
+      if (event != null)
+      {
+        fireEvent(event, listeners);
       }
     }
 

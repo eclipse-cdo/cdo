@@ -67,7 +67,7 @@ public final class CDORemoteSessionMessage
     data = in.readByteArray();
   }
 
-  public void write(ExtendedDataOutput out) throws IOException
+  public synchronized void write(ExtendedDataOutput out) throws IOException
   {
     out.writeString(type);
     out.writeByte(priority.ordinal());
@@ -98,23 +98,17 @@ public final class CDORemoteSessionMessage
   /**
    * Returns a copy of this message's data as a byte array. Thread-safety for the message data is ensured internally.
    */
-  public byte[] getData()
+  public synchronized byte[] getData()
   {
-    synchronized (this)
-    {
-      return copyData(data);
-    }
+    return copyData(data);
   }
 
   /**
    * Sets the data of this message as a byte array. Thread-safety for the message data is ensured internally.
    */
-  public void setData(byte[] data)
+  public synchronized void setData(byte[] data)
   {
-    synchronized (this)
-    {
-      this.data = copyData(data);
-    }
+    this.data = copyData(data);
   }
 
   /**

@@ -259,13 +259,10 @@ public final class FSMUtil
 
       public boolean hasNext()
       {
-        while (delegate.hasNext())
+        if (delegate.hasNext())
         {
           next = adapt(delegate.next(), view);
-          if (next instanceof InternalCDOObject)
-          {
-            return true;
-          }
+          return true;
         }
 
         return false;

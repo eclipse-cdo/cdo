@@ -29,11 +29,6 @@ import java.util.List;
  */
 public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Internal
 {
-  public CDOLegacyAdapter()
-  {
-    super(null);
-  }
-
   /**
    * @since 3.0
    */

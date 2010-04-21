@@ -33,7 +33,7 @@ public class CDOIDDanglingImpl extends AbstractCDOID implements CDOIDDangling
 
   private static final long serialVersionUID = 1L;
 
-  private InternalEObject target;
+  private transient InternalEObject target;
 
   // private List<Reference> references = new ArrayList<Reference>();
 

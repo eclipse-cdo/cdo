@@ -78,7 +78,7 @@ public class CDORemoteSessionImpl implements InternalCDORemoteSession
     int result = userID.compareTo(obj.getUserID());
     if (result == 0)
     {
-      result = new Integer(sessionID).compareTo(obj.getSessionID());
+      result = Integer.valueOf(sessionID).compareTo(obj.getSessionID());
     }
 
     return result;

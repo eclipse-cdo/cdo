@@ -387,7 +387,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
     @Override
     public IConnector getSource()
     {
-      return getSource();
+      return (IConnector)super.getSource();
     }
 
     public ConnectorState getOldState()

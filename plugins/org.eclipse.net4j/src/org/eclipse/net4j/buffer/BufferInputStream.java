@@ -65,7 +65,10 @@ public class BufferInputStream extends InputStream implements IBufferHandler
    */
   public void restartTimeout()
   {
-    stopTimeMillis = System.currentTimeMillis() + getMillisBeforeTimeout();
+    synchronized (this)
+    {
+      stopTimeMillis = System.currentTimeMillis() + getMillisBeforeTimeout();
+    }
   }
 
   /**

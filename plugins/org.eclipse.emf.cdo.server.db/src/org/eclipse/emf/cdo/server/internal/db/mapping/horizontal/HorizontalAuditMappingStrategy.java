@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 
-import org.eclipse.net4j.db.ddl.IDBTable;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -64,7 +63,7 @@ public class HorizontalAuditMappingStrategy extends AbstractHorizontalMappingStr
   }
 
   @Override
-  protected String getListJoin(IDBTable attrTable, IDBTable listTable)
+  protected String getListJoin(String attrTable, String listTable)
   {
     String join = super.getListJoin(attrTable, listTable);
     join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_VERSION + "=" + listTable + "."

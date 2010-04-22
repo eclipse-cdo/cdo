@@ -13,14 +13,8 @@ package org.eclipse.emf.cdo.tests;
 /**
  * @author Eike Stepper
  */
-public class OfflineRawTest extends AbstractSyncingTest
+public class OfflineRawTest extends OfflineTest
 {
-  @Override
-  protected boolean isFailover()
-  {
-    return false;
-  }
-
   @Override
   protected boolean isRawReplication()
   {

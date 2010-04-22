@@ -128,7 +128,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       out.writeCDOClassifierRef(eClass);
 
       IDBTable table = classMapping.getDBTables().get(0);
-      DBUtil.writeTable(out, connection, table, attrSuffix);
+      DBUtil.serializeTable(out, connection, table, attrSuffix);
 
       for (IListMapping listMapping : classMapping.getListMappings())
       {
@@ -144,14 +144,14 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   {
     for (IDBTable table : listMapping.getDBTables())
     {
-      String listSuffix = ", " + table + attrSuffix;
-      String listJoin = getListJoin(attrTable, table);
+      String listSuffix = ", " + attrTable + " cdo_2" + attrSuffix;
+      String listJoin = getListJoin("cdo_2", "cdo_1");
       if (listJoin != null)
       {
-        listSuffix += listSuffix + " AND " + listJoin;
+        listSuffix += listJoin;
       }
 
-      DBUtil.writeTable(out, connection, table, listSuffix);
+      DBUtil.serializeTable(out, connection, table, listSuffix);
     }
   }
 
@@ -165,7 +165,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       IClassMapping classMapping = getClassMapping(eClass);
 
       IDBTable table = classMapping.getDBTables().get(0);
-      DBUtil.readTable(in, connection, table);
+      DBUtil.deserializeTable(in, connection, table);
 
       for (IListMapping listMapping : classMapping.getListMappings())
       {
@@ -178,11 +178,11 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   {
     for (IDBTable table : listMapping.getDBTables())
     {
-      DBUtil.readTable(in, connection, table);
+      DBUtil.deserializeTable(in, connection, table);
     }
   }
 
-  protected String getListJoin(IDBTable attrTable, IDBTable listTable)
+  protected String getListJoin(String attrTable, String listTable)
   {
     return " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_ID + "=" + listTable + "." + CDODBSchema.LIST_REVISION_ID;
   }

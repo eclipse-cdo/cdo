@@ -58,6 +58,7 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
   public synchronized Map<String, Object> getTestProperties()
   {
     Map<String, Object> testProperties = super.getTestProperties();
+    testProperties.put(OfflineConfig.PROP_TEST_RAW_REPLICATION, isRawReplication());
     testProperties.put(OfflineConfig.PROP_TEST_SQUEEZE_COMMIT_INFOS, isSqueezedCommitInfos());
     testProperties.put(OfflineConfig.PROP_TEST_FAILOVER, isFailover());
     return testProperties;

@@ -568,7 +568,7 @@ public final class DBUtil
   /**
    * @since 3.0
    */
-  public static void writeTable(ExtendedDataOutput out, Connection connection, IDBTable table, String sqlSuffix)
+  public static void serializeTable(ExtendedDataOutput out, Connection connection, IDBTable table, String sqlSuffix)
       throws DBException, IOException
   {
     IDBField[] fields = table.getFields();
@@ -582,11 +582,14 @@ public final class DBUtil
         builder.append(", "); //$NON-NLS-1$
       }
 
+      builder.append("cdo_1."); //$NON-NLS-1$
       builder.append(fields[i]);
     }
 
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(table);
+    builder.append(" cdo_1"); //$NON-NLS-1$
+
     if (sqlSuffix != null)
     {
       builder.append(sqlSuffix);
@@ -609,7 +612,7 @@ public final class DBUtil
           for (int i = 0; i < fields.length; i++)
           {
             IDBField field = fields[i];
-            field.getType().writeValue(out, resultSet, i);
+            field.getType().writeValue(out, resultSet, i + 1);
           }
         }
 
@@ -637,7 +640,7 @@ public final class DBUtil
   /**
    * @since 3.0
    */
-  public static void readTable(ExtendedDataInput in, Connection connection, IDBTable table) throws IOException
+  public static void deserializeTable(ExtendedDataInput in, Connection connection, IDBTable table) throws IOException
   {
     IDBField[] fields = table.getFields();
 
@@ -675,7 +678,7 @@ public final class DBUtil
         for (int i = 0; i < fields.length; i++)
         {
           IDBField field = fields[i];
-          field.getType().readValue(in, statement, i);
+          field.getType().readValue(in, statement, i + 1);
         }
 
         statement.addBatch();

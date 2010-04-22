@@ -193,6 +193,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
   public void replicateRaw(CDODataInput in) throws IOException
   {
+    System.out.println();
   }
 
   @Override

@@ -63,12 +63,17 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
     return testProperties;
   }
 
-  protected final boolean isSqueezedCommitInfos()
+  protected abstract boolean isFailover();
+
+  protected boolean isRawReplication()
   {
     return false;
   }
 
-  protected abstract boolean isFailover();
+  protected boolean isSqueezedCommitInfos()
+  {
+    return false;
+  }
 
   protected static void checkEvent(TestListener listener, int newPackageUnits, int newObjects, int changedObjects,
       int detachedObjects)

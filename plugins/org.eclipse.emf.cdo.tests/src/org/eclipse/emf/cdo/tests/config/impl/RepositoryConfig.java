@@ -205,9 +205,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
    */
   public static abstract class OfflineConfig extends RepositoryConfig
   {
-    public static final String PROP_TEST_SQUEEZE_COMMIT_INFOS = "test.squeeze.commit.infos";
-
     public static final String PROP_TEST_FAILOVER = "test.failover";
+
+    public static final String PROP_TEST_RAW_REPLICATION = "test.raw.replication";
+
+    public static final String PROP_TEST_SQUEEZE_COMMIT_INFOS = "test.squeeze.commit.infos";
 
     private static final long serialVersionUID = 1L;
 
@@ -288,13 +290,14 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       RepositorySynchronizer synchronizer = new RepositorySynchronizer();
       synchronizer.setRemoteSessionConfigurationFactory(masterFactory);
       synchronizer.setRetryInterval(1);
+      synchronizer.setRawReplication(getTestRawReplication());
       synchronizer.setSqueezeCommitInfos(getTestSqueezeCommitInfos());
       return synchronizer;
     }
 
-    protected boolean getTestSqueezeCommitInfos()
+    protected boolean getTestFailover()
     {
-      Boolean result = (Boolean)getTestProperty(PROP_TEST_SQUEEZE_COMMIT_INFOS);
+      Boolean result = (Boolean)getTestProperty(PROP_TEST_FAILOVER);
       if (result == null)
       {
         result = false;
@@ -303,9 +306,20 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       return result;
     }
 
-    protected boolean getTestFailover()
+    protected boolean getTestRawReplication()
     {
-      Boolean result = (Boolean)getTestProperty(PROP_TEST_FAILOVER);
+      Boolean result = (Boolean)getTestProperty(PROP_TEST_RAW_REPLICATION);
+      if (result == null)
+      {
+        result = false;
+      }
+
+      return result;
+    }
+
+    protected boolean getTestSqueezeCommitInfos()
+    {
+      Boolean result = (Boolean)getTestProperty(PROP_TEST_SQUEEZE_COMMIT_INFOS);
       if (result == null)
       {
         result = false;

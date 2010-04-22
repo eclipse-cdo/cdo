@@ -14,8 +14,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.tests.FailoverTest;
-import org.eclipse.emf.cdo.tests.OfflineTest;
+import org.eclipse.emf.cdo.tests.OfflineRawTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import org.eclipse.net4j.db.DBUtil;
@@ -72,9 +71,9 @@ public class AllTestsDBH2Offline extends DBConfigs
   {
     // super.initTestClasses(testClasses);
 
-    testClasses.add(OfflineTest.class);
-    // testClasses.add(OfflineSqueezedTest.class);
-    testClasses.add(FailoverTest.class);
+    testClasses.add(OfflineRawTest.class);
+    // testClasses.add(OfflineTest.class);
+    // testClasses.add(FailoverTest.class);
   }
 
   /**

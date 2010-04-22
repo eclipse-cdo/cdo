@@ -31,5 +31,7 @@ public interface InternalRepositorySynchronizer extends IRepositorySynchronizer
 
   public boolean isSqueezeCommitInfos();
 
+  public void setRawReplication(boolean rawReplication);
+
   public void setSqueezeCommitInfos(boolean squeezeCommitInfos);
 }

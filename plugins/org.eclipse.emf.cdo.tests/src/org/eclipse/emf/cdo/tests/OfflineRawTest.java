@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.tests;
 /**
  * @author Eike Stepper
  */
-public class OfflineSqueezedTest extends AbstractSyncingTest
+public class OfflineRawTest extends AbstractSyncingTest
 {
   @Override
   protected boolean isFailover()
@@ -22,7 +22,7 @@ public class OfflineSqueezedTest extends AbstractSyncingTest
   }
 
   @Override
-  protected boolean isSqueezedCommitInfos()
+  protected boolean isRawReplication()
   {
     return true;
   }

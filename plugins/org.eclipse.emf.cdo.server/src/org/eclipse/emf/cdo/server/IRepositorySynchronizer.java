@@ -30,4 +30,6 @@ public interface IRepositorySynchronizer extends ILifecycle
   public CDOSessionConfigurationFactory getRemoteSessionConfigurationFactory();
 
   public CDOSession getRemoteSession();
+
+  public boolean isRawReplication();
 }

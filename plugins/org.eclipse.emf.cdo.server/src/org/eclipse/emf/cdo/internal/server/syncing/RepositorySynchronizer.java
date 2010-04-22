@@ -114,12 +114,12 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
     return remoteSession;
   }
 
-  protected boolean isRawReplication()
+  public boolean isRawReplication()
   {
     return rawReplication;
   }
 
-  protected void setRawReplication(boolean rawReplication)
+  public void setRawReplication(boolean rawReplication)
   {
     checkInactive();
     this.rawReplication = rawReplication;

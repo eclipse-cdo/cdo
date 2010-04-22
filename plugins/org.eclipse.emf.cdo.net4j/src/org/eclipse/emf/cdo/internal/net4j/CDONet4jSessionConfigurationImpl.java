@@ -37,6 +37,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.io.IStreamWrapper;
 
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
@@ -56,6 +57,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   private IConnector connector;
 
   private IFailOverStrategy failOverStrategy;
+
+  private IStreamWrapper streamWrapper;
 
   private InternalCDOBranchManager branchManager;
 
@@ -100,6 +103,17 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   {
     checkNotOpen();
     this.failOverStrategy = failOverStrategy;
+  }
+
+  public IStreamWrapper getStreamWrapper()
+  {
+    return streamWrapper;
+  }
+
+  public void setStreamWrapper(IStreamWrapper streamWrapper)
+  {
+    checkNotOpen();
+    this.streamWrapper = streamWrapper;
   }
 
   public InternalCDOBranchManager getBranchManager()
@@ -181,8 +195,14 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   public void activateSession(InternalCDOSession session) throws Exception
   {
     super.activateSession(session);
+
     CDOClientProtocol protocol = new CDOClientProtocol();
     protocol.setInfraStructure(session);
+    if (streamWrapper != null)
+    {
+      protocol.setStreamWrapper(streamWrapper);
+    }
+
     session.setSessionProtocol(protocol);
     if (connector != null)
     {

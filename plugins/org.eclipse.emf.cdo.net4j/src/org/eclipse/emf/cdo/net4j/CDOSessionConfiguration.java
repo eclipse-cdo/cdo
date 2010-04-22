@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
+import org.eclipse.net4j.util.io.IStreamWrapper;
 
 /**
  * @author Eike Stepper
@@ -38,6 +39,10 @@ public interface CDOSessionConfiguration extends org.eclipse.emf.cdo.session.CDO
    * The fail-over strategy must be set <b>before</b> the session is opened and can not be changed thereafter.
    */
   public void setFailOverStrategy(IFailOverStrategy failOverStrategy);
+
+  public IStreamWrapper getStreamWrapper();
+
+  public void setStreamWrapper(IStreamWrapper streamWrapper);
 
   /**
    * @see CDOSession#getPackageRegistry()

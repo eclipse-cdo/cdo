@@ -35,6 +35,8 @@ public abstract class DBConfigs extends AllTestsAllConfigs
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
+    testClasses.add(Net4jDBTest.class);
+
     super.initTestClasses(testClasses);
 
     // remove BranchingTests because most mappings do not support it

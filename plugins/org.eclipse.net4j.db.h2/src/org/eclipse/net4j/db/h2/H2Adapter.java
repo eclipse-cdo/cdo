@@ -61,7 +61,7 @@ public class H2Adapter extends DBAdapter
       return "VARCHAR"; //$NON-NLS-1$
 
     case NUMERIC:
-      return "INT"; //$NON-NLS-1$
+      return "DECIMAL"; //$NON-NLS-1$
 
     case LONGVARBINARY:
     case VARBINARY:

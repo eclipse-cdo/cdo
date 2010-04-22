@@ -15,9 +15,13 @@ import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import java.io.ByteArrayInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.PreparedStatement;
@@ -196,16 +200,26 @@ public enum DBType
     @Override
     public void writeValue(ExtendedDataOutput out, ResultSet resultSet, int column) throws SQLException, IOException
     {
-      // TODO: implement DBType.NUMERIC.writeValue()
-      throw new UnsupportedOperationException();
+      BigDecimal value = resultSet.getBigDecimal(column);
+      BigInteger valueUnscaled = value.unscaledValue();
+
+      byte[] byteArray = valueUnscaled.toByteArray();
+      out.writeInt(byteArray.length);
+      out.write(byteArray);
+      out.writeInt(value.scale());
     }
 
     @Override
     public void readValue(ExtendedDataInput in, PreparedStatement statement, int column) throws SQLException,
         IOException
     {
-      // TODO: implement DBType.NUMERIC.readValue()
-      throw new UnsupportedOperationException();
+      byte[] bytes = in.readByteArray();
+      int scale = in.readInt();
+      BigInteger valueUnscaled = new BigInteger(bytes);
+      BigDecimal value = new BigDecimal(valueUnscaled, scale);
+
+      // TODO: Read out the precision, scale information and bring the big decimal to the correct form.
+      statement.setBigDecimal(column, value);
     }
   },
 
@@ -214,16 +228,25 @@ public enum DBType
     @Override
     public void writeValue(ExtendedDataOutput out, ResultSet resultSet, int column) throws SQLException, IOException
     {
-      // TODO: implement DBType.DECIMAL.writeValue()
-      throw new UnsupportedOperationException();
+      BigDecimal value = resultSet.getBigDecimal(column);
+      BigInteger valueUnscaled = value.unscaledValue();
+
+      byte[] byteArray = valueUnscaled.toByteArray();
+      out.writeInt(byteArray.length);
+      out.write(byteArray);
+      out.writeInt(value.scale());
     }
 
     @Override
     public void readValue(ExtendedDataInput in, PreparedStatement statement, int column) throws SQLException,
         IOException
     {
-      // TODO: implement DBType.DECIMAL.readValue()
-      throw new UnsupportedOperationException();
+      byte[] bytes = in.readByteArray();
+      int scale = in.readInt();
+
+      BigInteger valueUnscaled = new BigInteger(bytes);
+      BigDecimal value = new BigDecimal(valueUnscaled, scale);
+      statement.setBigDecimal(column, value);
     }
   },
 
@@ -306,11 +329,62 @@ public enum DBType
     }
 
     @Override
-    public void readValue(ExtendedDataInput in, PreparedStatement statement, int column) throws SQLException,
+    public void readValue(final ExtendedDataInput in, PreparedStatement statement, int column) throws SQLException,
         IOException
     {
-      // TODO: implement DBType.CLOB.readValue()
-      throw new UnsupportedOperationException();
+      Reader reader;
+
+      long length = in.readLong();
+      if (length > 0)
+      {
+        reader = new Reader()
+        {
+          @Override
+          public int read(char[] cbuf, int off, int len) throws IOException
+          {
+            int read = 0;
+
+            try
+            {
+              while (read < len)
+              {
+                cbuf[off++] = in.readChar();
+                read++;
+              }
+            }
+            catch (EOFException ex)
+            {
+              read = -1;
+            }
+
+            return read;
+          }
+
+          @Override
+          public void close() throws IOException
+          {
+          }
+        };
+      }
+      else
+      {
+        reader = new Reader()
+        {
+          @Override
+          public int read(char[] cbuf, int off, int len) throws IOException
+          {
+            return -1;
+          }
+
+          @Override
+          public void close() throws IOException
+          {
+          }
+        };
+      }
+
+      statement.setCharacterStream(column, reader, (int)length);
+      reader.close();
     }
   },
 
@@ -377,16 +451,17 @@ public enum DBType
     @Override
     public void writeValue(ExtendedDataOutput out, ResultSet resultSet, int column) throws SQLException, IOException
     {
-      // TODO: implement DBType.BINARY.writeValue()
-      throw new UnsupportedOperationException();
+      byte[] value = resultSet.getBytes(column);
+      out.writeInt(value.length);
+      out.write(value);
     }
 
     @Override
     public void readValue(ExtendedDataInput in, PreparedStatement statement, int column) throws SQLException,
         IOException
     {
-      // TODO: implement DBType.BINARY.readValue()
-      throw new UnsupportedOperationException();
+      byte[] value = in.readByteArray();
+      statement.setBytes(column, value);
     }
   },
 
@@ -395,16 +470,17 @@ public enum DBType
     @Override
     public void writeValue(ExtendedDataOutput out, ResultSet resultSet, int column) throws SQLException, IOException
     {
-      // TODO: implement DBType.VARBINARY.writeValue()
-      throw new UnsupportedOperationException();
+      byte[] value = resultSet.getBytes(column);
+      out.writeInt(value.length);
+      out.write(value);
     }
 
     @Override
     public void readValue(ExtendedDataInput in, PreparedStatement statement, int column) throws SQLException,
         IOException
     {
-      // TODO: implement DBTypeVARBINARY.readValue()
-      throw new UnsupportedOperationException();
+      byte[] value = in.readByteArray();
+      statement.setBytes(column, value);
     }
   },
 
@@ -413,16 +489,17 @@ public enum DBType
     @Override
     public void writeValue(ExtendedDataOutput out, ResultSet resultSet, int column) throws SQLException, IOException
     {
-      // TODO: implement DBType.LONGVARBINARY.writeValue()
-      throw new UnsupportedOperationException();
+      byte[] value = resultSet.getBytes(column);
+      out.writeInt(value.length);
+      out.write(value);
     }
 
     @Override
     public void readValue(ExtendedDataInput in, PreparedStatement statement, int column) throws SQLException,
         IOException
     {
-      // TODO: implement DBType.LONGVARBINARY.readValue()
-      throw new UnsupportedOperationException();
+      byte[] value = in.readByteArray();
+      statement.setBytes(column, value);
     }
   },
 
@@ -451,11 +528,36 @@ public enum DBType
     }
 
     @Override
-    public void readValue(ExtendedDataInput in, PreparedStatement statement, int column) throws SQLException,
+    public void readValue(final ExtendedDataInput in, PreparedStatement statement, int column) throws SQLException,
         IOException
     {
-      // TODO: implement DBType.BLOB.readValue()
-      throw new UnsupportedOperationException();
+      long length = in.readLong();
+      InputStream value = null;
+
+      try
+      {
+        if (length > 0)
+        {
+          value = new InputStream()
+          {
+            @Override
+            public int read() throws IOException
+            {
+              return in.readByte() - Byte.MIN_VALUE;
+            }
+          };
+        }
+        else
+        {
+          value = new ByteArrayInputStream(new byte[0]);
+        }
+
+        statement.setBinaryStream(column, value, (int)length);
+      }
+      finally
+      {
+        IOUtil.close(value);
+      }
     }
   };
 

@@ -34,6 +34,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
@@ -56,7 +58,7 @@ public class Net4jDBTest extends AbstractCDOTest
     registerColumn(DBType.BIGINT, Long.MIN_VALUE);
     registerColumn(DBType.BIGINT, 0L);
     registerColumn(DBType.BIGINT, 42L);
-    doTest();
+    doTest(TABLE_NAME);
   }
 
   public void testBinary() throws Exception
@@ -70,14 +72,42 @@ public class Net4jDBTest extends AbstractCDOTest
     }
 
     registerColumn(DBType.BINARY, data);
-    doTest();
+    doTest(TABLE_NAME);
+  }
+
+  public void testVarBinary() throws Exception
+  {
+    registerColumn(DBType.VARBINARY, new byte[0]);
+
+    byte[] data = new byte[100];
+    for (int i = 0; i < data.length; i++)
+    {
+      data[i] = (byte)(Math.random() * (Byte.MAX_VALUE - Byte.MIN_VALUE) + Byte.MIN_VALUE);
+    }
+
+    registerColumn(DBType.VARBINARY, data);
+    doTest(TABLE_NAME);
+  }
+
+  public void testLongVarBinary() throws Exception
+  {
+    registerColumn(DBType.LONGVARBINARY, new byte[0]);
+
+    byte[] data = new byte[100];
+    for (int i = 0; i < data.length; i++)
+    {
+      data[i] = (byte)(Math.random() * (Byte.MAX_VALUE - Byte.MIN_VALUE) + Byte.MIN_VALUE);
+    }
+
+    registerColumn(DBType.LONGVARBINARY, data);
+    doTest(TABLE_NAME);
   }
 
   public void testBit() throws Exception
   {
     registerColumn(DBType.BIT, true);
     registerColumn(DBType.BIT, false);
-    doTest();
+    doTest(TABLE_NAME);
   }
 
   public void testBlob() throws Exception
@@ -91,23 +121,23 @@ public class Net4jDBTest extends AbstractCDOTest
     }
 
     registerColumn(DBType.BLOB, data);
-    doTest();
+    doTest(TABLE_NAME);
   }
 
   public void testBoolean() throws Exception
   {
     registerColumn(DBType.BOOLEAN, true);
     registerColumn(DBType.BOOLEAN, false);
-    doTest();
+    doTest(TABLE_NAME);
   }
 
   public void testChar() throws Exception
   {
-    registerColumn(DBType.CHAR, '\0');
-    registerColumn(DBType.CHAR, 'a');
-    registerColumn(DBType.CHAR, '\255');
-    registerColumn(DBType.CHAR, '\u1234');
-    doTest();
+    registerColumn(DBType.CHAR, "0");
+    registerColumn(DBType.CHAR, "a");
+    registerColumn(DBType.CHAR, "\255");
+    registerColumn(DBType.CHAR, "\u1234");
+    doTest(TABLE_NAME);
   }
 
   public void testClob() throws Exception
@@ -122,10 +152,182 @@ public class Net4jDBTest extends AbstractCDOTest
     }
 
     registerColumn(DBType.CLOB, b.toString());
-    doTest();
+    doTest(TABLE_NAME);
   }
 
-  // TODO and so on for all DBTypes....
+  public void testTinyInt() throws Exception
+  {
+    registerColumn(DBType.TINYINT, Byte.MAX_VALUE);
+    registerColumn(DBType.TINYINT, Byte.MIN_VALUE);
+    registerColumn(DBType.TINYINT, new Byte("0"));
+    registerColumn(DBType.TINYINT, new Integer(42).byteValue());
+    doTest(TABLE_NAME);
+  }
+
+  public void testSmallInt() throws Exception
+  {
+    registerColumn(DBType.SMALLINT, Short.MAX_VALUE);
+    registerColumn(DBType.SMALLINT, Short.MIN_VALUE);
+    registerColumn(DBType.SMALLINT, (short)-1);
+    registerColumn(DBType.SMALLINT, (short)5);
+    doTest(TABLE_NAME);
+  }
+
+  public void testInteger() throws Exception
+  {
+    registerColumn(DBType.INTEGER, Integer.MAX_VALUE);
+    registerColumn(DBType.INTEGER, Integer.MIN_VALUE);
+    registerColumn(DBType.INTEGER, -1);
+    registerColumn(DBType.INTEGER, 5);
+    doTest(TABLE_NAME);
+  }
+
+  public void testFloat() throws Exception
+  {
+    registerColumn(DBType.FLOAT, Float.MAX_VALUE);
+    registerColumn(DBType.FLOAT, Float.MIN_VALUE);
+    registerColumn(DBType.FLOAT, -.1f);
+    registerColumn(DBType.FLOAT, 3.33333f);
+    doTest(TABLE_NAME);
+  }
+
+  public void testReal() throws Exception
+  {
+    registerColumn(DBType.REAL, Float.MAX_VALUE);
+    registerColumn(DBType.REAL, Float.MIN_VALUE);
+    registerColumn(DBType.REAL, -.1f);
+    registerColumn(DBType.REAL, 3.33333f);
+    doTest(TABLE_NAME);
+  }
+
+  public void testDouble() throws Exception
+  {
+    registerColumn(DBType.DOUBLE, new Double(Double.MAX_VALUE));
+    registerColumn(DBType.DOUBLE, new Double(Double.MIN_VALUE));
+    registerColumn(DBType.DOUBLE, -.1d);
+    registerColumn(DBType.DOUBLE, 3.33333d);
+    doTest(TABLE_NAME);
+  }
+
+  public void testNumeric() throws Exception
+  {
+    String numberLiteral1 = "12345678901234567890123456789012";
+    String numberLiteral2 = "10000000000000000000000000000000";
+
+    for (int precision = 1; precision < 32; precision++)
+    {
+      BigInteger numberInteger1 = new BigInteger(numberLiteral1.substring(0, precision));
+      BigInteger numberInteger2 = new BigInteger(numberLiteral2.substring(0, precision));
+
+      for (int scale = 0; scale <= precision; scale++)
+      {
+        BigDecimal numberDecimal1 = new BigDecimal(numberInteger1, scale);
+        BigDecimal numberDecimal2 = new BigDecimal(numberInteger2, scale);
+
+        registerColumn(DBType.NUMERIC, numberDecimal1);
+        registerColumn(DBType.NUMERIC, numberDecimal2);
+
+        doTest(TABLE_NAME + precision + "_" + scale);
+        columns.clear();
+      }
+    }
+  }
+
+  public void testDecimal() throws Exception
+  {
+    String numberLiteral1 = "12345678901234567890123456789012";
+    String numberLiteral2 = "10000000000000000000000000000000";
+
+    for (int precision = 1; precision < 32; precision++)
+    {
+      BigInteger numberInteger1 = new BigInteger(numberLiteral1.substring(0, precision));
+      BigInteger numberInteger2 = new BigInteger(numberLiteral2.substring(0, precision));
+
+      for (int scale = 0; scale <= precision; scale++)
+      {
+        BigDecimal numberDecimal1 = new BigDecimal(numberInteger1, scale);
+        BigDecimal numberDecimal2 = new BigDecimal(numberInteger2, scale);
+
+        registerColumn(DBType.DECIMAL, numberDecimal1);
+        registerColumn(DBType.DECIMAL, numberDecimal2);
+
+        doTest(TABLE_NAME + precision + "_" + scale);
+        columns.clear();
+      }
+    }
+  }
+
+  public void testVarChar() throws Exception
+  {
+    registerColumn(DBType.VARCHAR, "");
+    registerColumn(DBType.VARCHAR, "\n");
+    registerColumn(DBType.VARCHAR, "\t");
+    registerColumn(DBType.VARCHAR, "\r");
+    registerColumn(DBType.VARCHAR, "\u1234");
+    registerColumn(DBType.VARCHAR, "The quick brown fox jumps over the lazy dog.");
+    registerColumn(DBType.VARCHAR, "\\,:\",\'");
+
+    doTest(TABLE_NAME);
+  }
+
+  public void testLongVarChar() throws Exception
+  {
+    registerColumn(DBType.LONGVARCHAR, "");
+    registerColumn(DBType.LONGVARCHAR, "\n");
+    registerColumn(DBType.LONGVARCHAR, "\t");
+    registerColumn(DBType.LONGVARCHAR, "\r");
+    registerColumn(DBType.LONGVARCHAR, "\u1234");
+    registerColumn(DBType.LONGVARCHAR, "The quick brown fox jumps over the lazy dog.");
+    registerColumn(DBType.LONGVARCHAR, "\\,:\",\'");
+
+    doTest(TABLE_NAME);
+  }
+
+  public void testDate() throws Exception
+  {
+    registerColumn(DBType.DATE, new GregorianCalendar(2010, 04, 21).getTimeInMillis());
+    registerColumn(DBType.DATE, new GregorianCalendar(1950, 04, 21).getTimeInMillis());
+    registerColumn(DBType.DATE, new GregorianCalendar(2030, 12, 31).getTimeInMillis());
+    registerColumn(DBType.DATE, new GregorianCalendar(0, 0, 0).getTimeInMillis());
+
+    doTest(TABLE_NAME);
+  }
+
+  public void testTime() throws Exception
+  {
+    registerColumn(DBType.TIME, HOURS_toMillis(10));
+    registerColumn(DBType.TIME, 0l);
+    registerColumn(DBType.TIME, HOURS_toMillis(11) + MINUTES_toMillis(59) + TimeUnit.SECONDS.toMillis(59));
+
+    // Following tests fail on H2 as 24h == 1 day => 0
+    //
+    // registerColumn(DBType.TIME, HOURS_toMillis(24));
+
+    doTest(TABLE_NAME);
+  }
+
+  private long HOURS_toMillis(int hours)
+  {
+    return 1000L * 60L * 60L * hours;
+  }
+
+  private long MINUTES_toMillis(int minutes)
+  {
+    return 1000L * 60L * minutes;
+  }
+
+  public void testTimestamp() throws Exception
+  {
+    registerColumn(DBType.TIME, HOURS_toMillis(10));
+    registerColumn(DBType.TIME, 0l);
+    registerColumn(DBType.TIME, HOURS_toMillis(11) + MINUTES_toMillis(59) + TimeUnit.SECONDS.toMillis(59));
+
+    // Following tests fail on H2 as 24h == 1 day => 0
+    //
+    // registerColumn(DBType.TIME, HOURS_toMillis(24));
+
+    doTest(TABLE_NAME);
+  }
 
   private void registerColumn(DBType type, Object value)
   {
@@ -133,27 +335,38 @@ public class Net4jDBTest extends AbstractCDOTest
     columns.add(column);
   }
 
-  private void prepareTable()
+  private void prepareTable(String tableName)
   {
     IDBSchema schema = store.getDBSchema();
-    IDBTable table = schema.addTable(TABLE_NAME);
+    IDBTable table = schema.addTable(tableName);
     int c = 0;
 
     for (Pair<DBType, Object> column : columns)
     {
-      table.addField(FIELD_NAME + c++, column.getElement1());
+      switch (column.getElement1())
+      {
+      case NUMERIC:
+      case DECIMAL:
+        BigDecimal value = (BigDecimal)column.getElement2();
+        table.addField(FIELD_NAME + c++, column.getElement1(), value.precision(), value.scale());
+        break;
+
+      default:
+        table.addField(FIELD_NAME + c++, column.getElement1());
+        break;
+      }
     }
 
     store.getDBAdapter().createTables(Arrays.asList(table), connection);
   }
 
-  private void writeValues() throws Exception
+  private void writeValues(String tableName) throws Exception
   {
     ByteArrayOutputStream output = new ByteArrayOutputStream();
     ExtendedDataOutputStream outs = new ExtendedDataOutputStream(output);
 
     boolean first = true;
-    StringBuilder builder = new StringBuilder("INSERT INTO " + TABLE_NAME + " VALUES (");
+    StringBuilder builder = new StringBuilder("INSERT INTO " + tableName + " VALUES (");
     for (Pair<DBType, Object> column : columns)
     {
       writeTypeValue(outs, column.getElement1(), column.getElement2());
@@ -194,10 +407,10 @@ public class Net4jDBTest extends AbstractCDOTest
     input.close();
   }
 
-  private void checkValues() throws Exception
+  private void checkValues(String tableName) throws Exception
   {
     Statement stmt = connection.createStatement();
-    ResultSet resultSet = stmt.executeQuery("SELECT * FROM " + TABLE_NAME);
+    ResultSet resultSet = stmt.executeQuery("SELECT * FROM " + tableName);
     assertTrue(resultSet.next());
 
     ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -249,14 +462,14 @@ public class Net4jDBTest extends AbstractCDOTest
     }
   }
 
-  private void doTest() throws Exception
+  private void doTest(String tableName) throws Exception
   {
     store = (DBStore)getRepository().getStore();
     connection = store.getDBConnectionProvider().getConnection();
 
-    prepareTable();
-    writeValues();
-    checkValues();
+    prepareTable(tableName);
+    writeValues(tableName);
+    checkValues(tableName);
 
     connection = null;
     store = null;
@@ -276,7 +489,7 @@ public class Net4jDBTest extends AbstractCDOTest
       return;
 
     case CHAR:
-      outs.writeChar((Character)value);
+      outs.writeString((String)value);
       return;
 
     case SMALLINT:
@@ -380,19 +593,26 @@ public class Net4jDBTest extends AbstractCDOTest
     case BOOLEAN:
     case BIT:
       return ins.readBoolean();
+
     case CHAR:
-      return ins.readChar();
+      return ins.readString();
+
     case TINYINT:
       return ins.readByte();
+
     case SMALLINT:
       return ins.readShort();
+
     case INTEGER:
       return ins.readInt();
+
     case FLOAT:
     case REAL:
       return ins.readFloat();
+
     case DOUBLE:
       return ins.readDouble();
+
     case NUMERIC:
     case DECIMAL:
     {
@@ -406,6 +626,7 @@ public class Net4jDBTest extends AbstractCDOTest
       int scale = ins.readInt();
       return new BigDecimal(unscaled, scale);
     }
+
     case VARCHAR:
     case LONGVARCHAR:
       return ins.readString();
@@ -443,6 +664,7 @@ public class Net4jDBTest extends AbstractCDOTest
     case BLOB:
     {
       ByteArrayOutputStream result = new ByteArrayOutputStream();
+
       try
       {
         long length = ins.readLong();
@@ -456,6 +678,7 @@ public class Net4jDBTest extends AbstractCDOTest
       {
         IOUtil.close(result);
       }
+
       return result.toByteArray();
     }
 
@@ -463,5 +686,4 @@ public class Net4jDBTest extends AbstractCDOTest
       throw new UnsupportedOperationException("not implemented");
     }
   }
-
 }

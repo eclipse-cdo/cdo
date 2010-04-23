@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.internal.server.Repository;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
@@ -193,7 +195,16 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
   public void replicateRaw(CDODataInput in) throws IOException
   {
-    System.out.println();
+    try
+    {
+      StoreThreadLocal.setSession(replicatorSession);
+      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+      accessor.rawImport(in);
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @Override

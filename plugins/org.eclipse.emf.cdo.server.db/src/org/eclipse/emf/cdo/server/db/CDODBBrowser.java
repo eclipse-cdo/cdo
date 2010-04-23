@@ -314,7 +314,8 @@ public class CDODBBrowser extends Worker
   {
     String table = getParam("table");
 
-    for (String tableName : DBUtil.getAllTableNames(connection, null))
+    List<String> allTableNames = DBUtil.getAllTableNames(connection, null);
+    for (String tableName : allTableNames)
     {
       String label = escape(tableName).toLowerCase();
       if (tableName.equals(table))

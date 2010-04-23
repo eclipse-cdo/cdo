@@ -157,7 +157,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
     InternalCDOBranchManager branchManager = getBranchManager();
     branchManager.createBranch(branchID, name, baseBranch, baseTimeStamp);
-    lastReplicatedBranchID = branchID;
+    setLastReplicatedBranchID(branchID);
   }
 
   public void handleCommitInfo(CDOCommitInfo commitInfo)
@@ -183,7 +183,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       commitContext.commit(new Monitor());
 
       setLastCommitTimeStamp(timeStamp);
-      lastReplicatedCommitTime = timeStamp;
+      setLastReplicatedCommitTime(timeStamp);
       success = true;
     }
     finally
@@ -241,8 +241,8 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       names.add(PROP_LAST_REPLICATED_COMMIT_TIME);
 
       map = store.getPropertyValues(names);
-      lastReplicatedBranchID = Integer.valueOf(map.get(PROP_LAST_REPLICATED_BRANCH_ID));
-      lastReplicatedCommitTime = Long.valueOf(map.get(PROP_LAST_REPLICATED_COMMIT_TIME));
+      setLastReplicatedBranchID(Integer.valueOf(map.get(PROP_LAST_REPLICATED_BRANCH_ID)));
+      setLastReplicatedCommitTime(Long.valueOf(map.get(PROP_LAST_REPLICATED_COMMIT_TIME)));
     }
     else
     {

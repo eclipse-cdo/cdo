@@ -98,7 +98,6 @@ public class CDOConnectionUtil
         + "://" + host + "?repositoryName=" + repositoryName);
 
     return currentSession;
-
   }
 
   public void closeCurrentSession()
@@ -218,7 +217,6 @@ public class CDOConnectionUtil
   // * opens a transaction on the session
   // */
 
-  @Deprecated
   public static CDOView openView(CDOSession session)
   {
     return session.openView();

@@ -10,7 +10,9 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.ui.views;
 
+import org.eclipse.emf.cdo.dawn.runtime.preferences.PreferenceConstants;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
+import org.eclipse.emf.cdo.dawn.ui.helper.EditorDescriptionHelper;
 import org.eclipse.emf.cdo.dawn.util.connection.CDOConnectionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
@@ -26,9 +28,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
-import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * @author Martin Fluegge
@@ -52,8 +52,8 @@ public class DawnExplorer extends CDOSessionsView
    */
   public DawnExplorer()
   {
-
-    CDOConnectionUtil.instance.init("repo1", "tcp", "localhost");
+    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
+        PreferenceConstants.getServerName());
     CDOSession session = CDOConnectionUtil.instance.openSession();
     view = CDOConnectionUtil.instance.openView(session);
   }
@@ -91,33 +91,14 @@ public class DawnExplorer extends CDOSessionsView
         {
           CDOResource resource = (CDOResource)obj;
 
-          // TODO access the registry to get the right editor for the extension
-          System.out.println(resource.getName());
-          IEditorDescriptor[] editors = PlatformUI.getWorkbench().getEditorRegistry().getEditors(resource.getName());
-
-          System.out.println("Editors:  " + editors);
-          System.out.println("Editors size:  " + editors.length);
-
-          String editorID = getEditorIdForDawnEditor(editors);
+          String editorID = EditorDescriptionHelper.getEditorIdForDawnEditor(resource.getName());
 
           if (editorID != null && !editorID.equals(""))
           {
-            System.out.println("Opening Dawn Editor " + editorID);
-            // CDOEditorInput editorInput = CDOEditorUtil.createCDOEditorInput(view, ((CDOResource)obj).getPath(),
-            // true);
-            // IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-            // return null != page.openEditor(new URIEditorInput(diagram.getURI()), DawnClassdiagramDiagramEditor.ID);
 
-            // DawnExplorer.this.getSite().getPage().openEditor(new URIEditorInput(diagram.getURI(),
-            // CDOEditor.EDITOR_ID);
-            // DawnExplorer.this.getSite().getPage().openEditor(editorInput, CDOEditor.EDITOR_ID);
             try
             {
-              // URIEditorInput editorInput=new URIEditorInput(resource.getURI());
-              // DawnEditorInput editorInput=new DawnEditorInput(resource);
               DawnEditorInput editorInput = new DawnEditorInput(resource.getURI());
-              // CDOEditorInput editorInput = CDOEditorUtil.createCDOEditorInput(view, ((CDOResource)obj).getPath(),
-              // true);
               DawnExplorer.this.getSite().getPage().openEditor(editorInput, editorID);
             }
             catch (PartInitException e)
@@ -127,8 +108,6 @@ public class DawnExplorer extends CDOSessionsView
           }
           else
           {
-            System.out.println("Opening Resource " + resource.getName());
-
             CDOTransaction transaction = view.getSession().openTransaction();
             CDOEditorInput editorInput = CDOEditorUtil.createCDOEditorInput(transaction, ((CDOResource)obj).getPath(),
                 true);
@@ -142,21 +121,6 @@ public class DawnExplorer extends CDOSessionsView
             }
           }
         }
-      }
-
-      private String getEditorIdForDawnEditor(IEditorDescriptor[] editors)
-      {
-        String id = "";
-        for (IEditorDescriptor editorDescriptor : editors)
-        {
-          // TODO make this more stable by getting the class name more reliably
-          if (editorDescriptor.getId().contains(".Dawn"))
-          {
-            return editorDescriptor.getId();
-          }
-        }
-
-        return id;
       }
     });
   }

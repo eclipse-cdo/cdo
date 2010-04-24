@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.ui.wizards;
 
+import org.eclipse.emf.cdo.dawn.runtime.preferences.PreferenceConstants;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.common.util.URI;
 
@@ -30,6 +31,8 @@ public class DawnCreateNewDiagramResourceWizardPage extends DawnCreateNewResourc
 
   public URI getURI()
   {
-    return URI.createURI("dawn://repo1/" + resourcePathText.getText() + "/" + resourceText.getText());
+    // TODO check why the dawn resource must be connected this way
+    return URI.createURI("dawn://" + PreferenceConstants.getRepositoryName() + "/" + resourcePathText.getText() + "/"
+        + resourceText.getText());
   }
 }

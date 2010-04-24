@@ -63,7 +63,6 @@ public class CDOConnectionUtil
 
   public CDOConnectionUtil()
   {
-
   }
 
   public void init(String repositoryName, String protocol, String host)
@@ -82,7 +81,6 @@ public class CDOConnectionUtil
     {
       pack.eClass();
     }
-
   }
 
   /**
@@ -153,70 +151,6 @@ public class CDOConnectionUtil
     return transactions;
   }
 
-  // ------------------------------------------
-
-  //
-  // public CDOSession openSession(String repositoryName)
-  // {
-  // CDOSessionConfiguration configuration =
-  // CDONet4jUtil.createSessionConfiguration();
-  //
-  // configuration.setConnector(connector);
-  // configuration.setRepositoryName(repositoryName);
-  //
-  // return configuration.openSession();
-  //
-  // }
-  //
-  // public CDOSession openCurrentSession(String repositoryName)
-  // {
-  // //TODO id for every editor instance
-  // currentSession =
-  // (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions",
-  // "cdo",
-  // "tcp://localhost?repositoryName=repo1&id=1");
-  // // CDOSessionConfiguration configuration =
-  // CDONet4jUtil.createSessionConfiguration();
-  // //
-  // // configuration.setConnector(connector);
-  // // configuration.setRepositoryName(repositoryName);
-  // //
-  // // setCurrentSession(configuration.openSession());
-  // return getCurrentSession();
-  //
-  // }
-  //
-  //
-  //
-  //
-  // public CDOTransaction openTransaction(CDOSession session, ResourceSet
-  // resourceSet)
-  // {
-  // return session.openTransaction(resourceSet);
-  // }
-  //
-  //
-  // private IManagedContainer prepareContainer()
-  // {
-  // IManagedContainer container = ContainerUtil.createContainer();
-  // container.activate();
-  // Net4jUtil.prepareContainer(container);
-  // TCPUtil.prepareContainer(container);
-  // CDONet4jUtil.prepareContainer(container);
-  // return container;
-  // }
-  //
-  //
-  // private void setCurrentSession(org.eclipse.emf.cdo.net4j.CDOSession
-  // currentSession)
-  // {
-  // this.currentSession = currentSession;
-  // }
-
-  // /**
-  // * opens a transaction on the session
-  // */
-
   public static CDOView openView(CDOSession session)
   {
     return session.openView();
@@ -234,7 +168,7 @@ public class CDOConnectionUtil
     session.close();
   }
 
-  public CDOTransaction getOrOpenCurrentTransaction(String id, ResourceSet resourceSet)
+  public CDOTransaction getOrOpenCurrentTransaction(String id, ResourceSet resourceSet, String repositoryName)
   {
     CDOTransaction transaction = getCurrentTransaction(id);
 
@@ -242,7 +176,7 @@ public class CDOConnectionUtil
 
     if (viewSet != null)
     {
-      return ((InternalCDOView)viewSet.resolveView("repo1")).toTransaction();
+      return ((InternalCDOView)viewSet.resolveView(repositoryName)).toTransaction();
     }
     if (transaction == null)
     {
@@ -250,5 +184,4 @@ public class CDOConnectionUtil
     }
     return transaction;
   }
-
 }

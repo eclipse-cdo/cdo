@@ -7,7 +7,8 @@ Bundle-Activator: org.eclipse.emf.cdo.dawn.ui.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.emf.cdo.ui;bundle-version="3.0.0",
- org.eclipse.emf.cdo.dawn.util;bundle-version="0.2.0"
+ org.eclipse.emf.cdo.dawn.util;bundle-version="0.2.0",
+ org.eclipse.emf.cdo.dawn.runtime;bundle-version="0.2.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: %providerName

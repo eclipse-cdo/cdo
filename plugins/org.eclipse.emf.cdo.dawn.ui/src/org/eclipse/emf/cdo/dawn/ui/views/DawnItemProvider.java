@@ -10,10 +10,13 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.ui.views;
 
+import org.eclipse.emf.cdo.dawn.ui.helper.EditorDescriptionHelper;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -58,5 +61,22 @@ public class DawnItemProvider extends CDOItemProvider
     }
 
     return super.getChildren(element);
+  }
+
+  @Override
+  public Image getImage(Object obj)
+  {
+
+    if (obj instanceof CDOResource)
+    {
+      CDOResource resource = ((CDOResource)obj);
+      Image img = EditorDescriptionHelper.getImageForEditor(resource.getName());
+      if (img != null)
+      {
+        return img;
+      }
+    }
+    return super.getImage(obj);
+
   }
 }

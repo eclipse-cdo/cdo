@@ -105,13 +105,12 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
 
     createResourcePathInput();
 
-    viewer = new TreeViewer(container, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
     itemProvider = createContainerItemProvider();
+
+    viewer = new TreeViewer(container, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
     viewer.setContentProvider(createContentProvider());
     viewer.setLabelProvider(createLabelProvider());
     viewer.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
-
-    // viewer.setInput(getManagedContainer());
     viewer.setInput(getManagedContainer());
     viewer.addFilter(new ViewerFilter()
     {
@@ -262,8 +261,8 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
     {
       setErrorMessage(null);
     }
+    
     setPageComplete(valid);
-
   }
 
   protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
@@ -361,12 +360,12 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
       this.resourceText.setText(resourceNamePrefix + i + "." + fileExtension);
       i++;
     }
-    
-    if(i<30)
+
+    if (i < 30)
     {
       return;
     }
-    //if we have tried 30 times to find a new resource name and still not succeeded just add a timestamp to the name
+    // if we have tried 30 times to find a new resource name and still not succeeded just add a timestamp to the name
     this.resourceText.setText(resourceNamePrefix + (new Date()).getTime() + "." + fileExtension);
   }
 

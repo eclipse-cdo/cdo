@@ -20,8 +20,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.gmf.runtime.notation.edit,
  org.eclipse.gmf.runtime.notation.providers,
  org.eclipse.gmf.runtime.diagram.ui.resources.editor,
- org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide,
- org.eclipse.emf.cdo.dawn.logging;bundle-version="1.0.0"
+ org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.emf.cdo.dawn.util,

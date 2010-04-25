@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.dawn.util;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.cdo.dawn.logging.logger.LOG;
+import org.eclipse.emf.cdo.dawn.internal.util.bundle.OM;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
@@ -28,6 +28,7 @@ import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -35,7 +36,7 @@ import org.eclipse.ui.PlatformUI;
  */
 public class DawnDiagramUpdater
 {
-
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnDiagramUpdater.class);
   public static void refreshEditPart(EditPart editPart)
   {
     refeshEditpartInternal(editPart);
@@ -50,7 +51,6 @@ public class DawnDiagramUpdater
         DawnDiagramUpdater.refreshEditPart(editPart);
       }
     });
-
   }
 
   public static void refreshEditCurrentSelected(TransactionalEditingDomain editingDomain)
@@ -81,7 +81,6 @@ public class DawnDiagramUpdater
               CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy)it.next();
               nextEditPolicy.refresh();
             }
-
           }
         }
       }
@@ -116,7 +115,6 @@ public class DawnDiagramUpdater
         {
           if (childEditPart instanceof EditPart)
           {
-            System.out.println("--connection---");
             refeshEditpartInternal((EditPart)childEditPart);
           }
         }
@@ -128,13 +126,11 @@ public class DawnDiagramUpdater
           refeshEditpartInternal((EditPart)childEditPart);
         }
       }
-
     }
     else
     {
       System.err.println("EDITPART is null");
     }
-
   }
 
   public static View findView(EObject element)
@@ -166,7 +162,10 @@ public class DawnDiagramUpdater
       {
         if (e instanceof View && ((View)e).getElement().equals(object))
         {
-          LOG.info("FOUND View: " + e + " for view obj: " + object);
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("FOUND View: {0} for view obj: {1} ", e,object); //$NON-NLS-1$
+          }
           return (View)e;
         }
       }
@@ -189,12 +188,18 @@ public class DawnDiagramUpdater
     {
       if (editPart == null) // does not exist?
       {
-        LOG.info("Editpart does not exist for view " + view);
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("EditPart does not exist for view  {0} ", view); //$NON-NLS-1$
+        }
         editPart = EditPartService.getInstance().createGraphicEditPart(view);
         setParentEditPart(editor, view, editPart);
       }
     }
-    LOG.info("found EditPart: " + editPart);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Found EditPart:  {0} ", editPart); //$NON-NLS-1$
+    }
     return editPart;
   }
 

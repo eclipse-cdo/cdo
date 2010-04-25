@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.ui.views;
 
+import org.eclipse.emf.cdo.dawn.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.dawn.runtime.preferences.PreferenceConstants;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.dawn.ui.helper.EditorDescriptionHelper;
@@ -26,6 +27,7 @@ import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 import org.eclipse.ui.PartInitException;
@@ -35,6 +37,9 @@ import org.eclipse.ui.PartInitException;
  */
 public class DawnExplorer extends CDOSessionsView
 {
+  
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnExplorer.class);
+
   /**
    * The ID of the view as specified by the extension.
    */
@@ -90,12 +95,16 @@ public class DawnExplorer extends CDOSessionsView
         if (obj instanceof CDOResource)
         {
           CDOResource resource = (CDOResource)obj;
+          
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Opening CDOResource {0} ", resource); //$NON-NLS-1$
+          }
 
           String editorID = EditorDescriptionHelper.getEditorIdForDawnEditor(resource.getName());
 
           if (editorID != null && !editorID.equals(""))
           {
-
             try
             {
               DawnEditorInput editorInput = new DawnEditorInput(resource.getURI());

@@ -34,12 +34,6 @@ import java.util.List;
  */
 public class OfflineTest extends AbstractSyncingTest
 {
-  @Override
-  protected boolean isFailover()
-  {
-    return false;
-  }
-
   public void testMasterCommits_ArrivalInClone() throws Exception
   {
     CDOSession session = openSession(getRepository().getName() + "_master");
@@ -344,7 +338,7 @@ public class OfflineTest extends AbstractSyncingTest
     transaction.commit();
   }
 
-  public void testSqueezedCommitInfos_Initial() throws Exception
+  public void testManyCommitInfos_Initial() throws Exception
   {
     OfflineClone clone = (OfflineClone)getRepository();
     waitForOnline(clone);

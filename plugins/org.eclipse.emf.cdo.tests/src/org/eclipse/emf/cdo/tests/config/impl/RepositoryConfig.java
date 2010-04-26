@@ -11,8 +11,10 @@
  */
 package org.eclipse.emf.cdo.tests.config.impl;
 
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
+import org.eclipse.emf.cdo.internal.server.syncing.OfflineClone;
 import org.eclipse.emf.cdo.internal.server.syncing.RepositorySynchronizer;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
@@ -30,12 +32,14 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
+import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -211,6 +215,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     public static final String PROP_TEST_SQUEEZE_COMMIT_INFOS = "test.squeeze.commit.infos";
 
+    public static final String PROP_TEST_DELAYED_COMMIT_HANDLING = "test.delayed.commit.handling";
+
     private static final long serialVersionUID = 1L;
 
     private transient IAcceptor masterAcceptor;
@@ -251,20 +257,68 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       final String masterName = name + "_master";
       IStore masterStore = createStore(masterName);
 
-      InternalRepository master = (InternalRepository)(failover ? CDOServerUtil.createFailoverParticipant(masterName,
-          masterStore, props, createSynchronizer("backup", name), true) : CDOServerUtil.createRepository(masterName,
-          masterStore, props));
+      InternalRepository master;
+      if (failover)
+      {
+        InternalRepositorySynchronizer synchronizer = createSynchronizer("backup", name);
+        master = (InternalRepository)CDOServerUtil.createFailoverParticipant(masterName, masterStore, props,
+            synchronizer, true);
+      }
+      else
+      {
+        master = (InternalRepository)CDOServerUtil.createRepository(masterName, masterStore, props);
+      }
 
       repositories.put(masterName, master);
       LifecycleUtil.activate(master);
-
       startMasterTransport();
 
       InternalRepositorySynchronizer synchronizer = createSynchronizer("master", masterName);
       IStore store = createStore(name);
 
-      return (InternalRepository)(failover ? CDOServerUtil.createFailoverParticipant(name, store, props, synchronizer,
-          false) : CDOServerUtil.createOfflineClone(name, store, props, synchronizer));
+      if (failover)
+      {
+        return (InternalRepository)CDOServerUtil.createFailoverParticipant(name, store, props, synchronizer, false);
+      }
+      else
+      {
+        OfflineClone repository = new OfflineClone()
+        {
+          @Override
+          public void handleCommitInfo(CDOCommitInfo commitInfo)
+          {
+            waitIfLockAvailable();
+            super.handleCommitInfo(commitInfo);
+          }
+
+          private void waitIfLockAvailable()
+          {
+            Object lock = getTestDelayedCommitHandling();
+            if (lock != null)
+            {
+              ConcurrencyUtil.sleep(2000);
+
+              // synchronized (lock)
+              // {
+              // try
+              // {
+              // lock.wait();
+              // }
+              // catch (InterruptedException ex)
+              // {
+              // throw WrappedException.wrap(ex);
+              // }
+              // }
+            }
+          }
+        };
+
+        repository.setName(name);
+        repository.setStore((InternalStore)store);
+        repository.setProperties(props);
+        repository.setSynchronizer(synchronizer);
+        return repository;
+      }
     }
 
     protected InternalRepositorySynchronizer createSynchronizer(final String acceptorName, final String repositoryName)
@@ -326,6 +380,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       }
 
       return result;
+    }
+
+    protected Object getTestDelayedCommitHandling()
+    {
+      return getTestProperty(PROP_TEST_DELAYED_COMMIT_HANDLING);
     }
 
     public void startMasterTransport()

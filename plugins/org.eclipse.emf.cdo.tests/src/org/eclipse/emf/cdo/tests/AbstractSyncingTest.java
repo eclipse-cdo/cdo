@@ -80,9 +80,9 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
     return false;
   }
 
-  protected Object getTestDelayedCommitHandling()
+  protected long getTestDelayedCommitHandling()
   {
-    return null;
+    return 0L;
   }
 
   protected static void checkEvent(TestListener listener, int newPackageUnits, int newObjects, int changedObjects,

@@ -293,22 +293,10 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
           private void waitIfLockAvailable()
           {
-            Object lock = getTestDelayedCommitHandling();
-            if (lock != null)
+            long millis = getTestDelayedCommitHandling();
+            if (millis != 0L)
             {
-              ConcurrencyUtil.sleep(2000);
-
-              // synchronized (lock)
-              // {
-              // try
-              // {
-              // lock.wait();
-              // }
-              // catch (InterruptedException ex)
-              // {
-              // throw WrappedException.wrap(ex);
-              // }
-              // }
+              ConcurrencyUtil.sleep(millis);
             }
           }
         };
@@ -382,9 +370,15 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       return result;
     }
 
-    protected Object getTestDelayedCommitHandling()
+    protected long getTestDelayedCommitHandling()
     {
-      return getTestProperty(PROP_TEST_DELAYED_COMMIT_HANDLING);
+      Long result = (Long)getTestProperty(PROP_TEST_DELAYED_COMMIT_HANDLING);
+      if (result == null)
+      {
+        result = 0L;
+      }
+
+      return result;
     }
 
     public void startMasterTransport()

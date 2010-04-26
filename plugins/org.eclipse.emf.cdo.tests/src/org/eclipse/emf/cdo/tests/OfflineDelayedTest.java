@@ -29,7 +29,95 @@ public class OfflineDelayedTest extends AbstractSyncingTest
     return 500L;
   }
 
+  public void _testSyncBeforeCommittingToMaster() throws Exception
+  {
+    TestListener listener = new TestListener();
+    InternalRepository clone = getRepository();
+    waitForOnline(clone);
+
+    {
+      getOfflineConfig().stopMasterTransport();
+      waitForOffline(clone);
+
+      CDOSession masterSession = openSession(clone.getName() + "_master");
+      CDOTransaction masterTransaction = masterSession.openTransaction();
+      CDOResource masterResource = masterTransaction.createResource("/master/resource");
+      for (int i = 0; i < 10; i++)
+      {
+        masterResource.getContents().add(getModel1Factory().createCompany());
+        masterTransaction.commit();
+      }
+
+      masterTransaction.close();
+      masterSession.addListener(listener);
+
+      getOfflineConfig().startMasterTransport();
+      waitForOnline(clone);
+    }
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("Test");
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+
+    resource.getContents().add(company);
+    transaction.commit();
+
+    IEvent[] events = listener.getEvents();
+    assertEquals(1, events.length);
+  }
+
   public void testSyncWhileCommittingToMaster() throws Exception
+  {
+    disableConsole();
+
+    InternalRepository clone = getRepository();
+    waitForOnline(clone);
+
+    {
+      CDOSession masterSession = openSession(clone.getName() + "_master");
+      CDOTransaction masterTransaction = masterSession.openTransaction();
+      CDOResource masterResource = masterTransaction.createResource("/master/resource");
+
+      masterResource.getContents().add(getModel1Factory().createCompany());
+      masterTransaction.commit();
+
+      getOfflineConfig().stopMasterTransport();
+      waitForOffline(clone);
+
+      for (int i = 0; i < 20; i++)
+      {
+        masterResource.getContents().add(getModel1Factory().createCompany());
+        masterTransaction.commit();
+      }
+
+      masterTransaction.close();
+      enableConsole();
+
+      getOfflineConfig().startMasterTransport();
+      sleep(1000L);
+    }
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("Test");
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+
+    resource.getContents().add(company);
+    transaction.commit();
+
+    waitForOnline(clone);
+  }
+
+  // public void testXXX() throws Exception
+  // {
+  // }
+
+  public void _testSyncWhileCommittingToMaster_NewPackage() throws Exception
   {
     TestListener listener = new TestListener();
     InternalRepository clone = getRepository();
@@ -52,7 +140,7 @@ public class OfflineDelayedTest extends AbstractSyncingTest
       masterSession.addListener(listener);
 
       getOfflineConfig().startMasterTransport();
-      waitForOnline(clone);
+      sleep(1000L);
     }
 
     Company company = getModel1Factory().createCompany();
@@ -64,6 +152,8 @@ public class OfflineDelayedTest extends AbstractSyncingTest
 
     resource.getContents().add(company);
     transaction.commit();
+
+    waitForOnline(clone);
 
     IEvent[] events = listener.getEvents();
     assertEquals(1, events.length);

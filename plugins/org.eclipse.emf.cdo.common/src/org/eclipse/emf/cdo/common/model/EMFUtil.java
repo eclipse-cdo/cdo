@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -27,6 +28,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -40,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -376,5 +379,45 @@ public final class EMFUtil
   public static ResourceSet newEcoreResourceSet()
   {
     return newEcoreResourceSet(EPackage.Registry.INSTANCE);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static EObject safeResolve(EObject proxy, ResourceSet resourceSet)
+  {
+    if (!proxy.eIsProxy())
+    {
+      return proxy;
+    }
+
+    EObject resolved = EcoreUtil.resolve(proxy, resourceSet);
+    if (resolved == proxy)
+    {
+      throw new IllegalStateException("Unresolvable proxy: " + ((InternalEObject)proxy).eProxyURI());
+    }
+
+    return resolved;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static void safeResolveAll(ResourceSet resourceSet)
+  {
+    TreeIterator<Notifier> it = resourceSet.getAllContents();
+    while (it.hasNext())
+    {
+      Notifier notifier = it.next();
+      if (notifier instanceof EObject)
+      {
+        EMFUtil.safeResolve((EObject)notifier, resourceSet);
+        Iterator<EObject> it2 = ((EObject)notifier).eCrossReferences().iterator();
+        while (it2.hasNext())
+        {
+          EMFUtil.safeResolve(it2.next(), resourceSet);
+        }
+      }
+    }
   }
 }

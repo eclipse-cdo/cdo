@@ -22,14 +22,18 @@ import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Enumerator;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EGenericType;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
@@ -377,10 +381,76 @@ public final class CDOModelUtil
   public static void writePackage(ExtendedDataOutput out, EPackage ePackage, boolean zipped,
       EPackage.Registry packageRegistry) throws IOException
   {
+    checkCrossResourceURIs(ePackage);
+
     byte[] bytes = EMFUtil.getEPackageBytes(ePackage, zipped, packageRegistry);
     out.writeString(ePackage.getNsURI());
     out.writeBoolean(zipped);
     out.writeByteArray(bytes);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static void checkCrossResourceURIs(EPackage ePackage)
+  {
+    TreeIterator<EObject> it = ePackage.eAllContents();
+    while (it.hasNext())
+    {
+      EObject e = it.next();
+      for (EObject r : e.eCrossReferences())
+      {
+        if (r.eIsProxy())
+        {
+          String msg = "Package '%s' contains unresolved proxy '%s'";
+          msg = String.format(msg, ePackage.getNsURI(), ((InternalEObject)r).eProxyURI());
+          throw new IllegalStateException(msg);
+        }
+
+        if (r.eResource() != null && r.eResource() != e.eResource())
+        {
+          // It's a ref into another resource
+          EPackage pkg = null;
+          if (r instanceof EClassifier)
+          {
+            pkg = ((EClassifier)r).getEPackage();
+          }
+          else if (r instanceof EStructuralFeature)
+          {
+            EStructuralFeature feature = (EStructuralFeature)r;
+            EClass ownerClass = (EClass)feature.eContainer();
+            pkg = ownerClass.getEPackage();
+          }
+          else if (r instanceof EGenericType)
+          {
+            EGenericType genType = (EGenericType)r;
+            EClassifier c = genType.getEClassifier();
+            if (c != null)
+            {
+              pkg = c.getEPackage();
+            }
+          }
+
+          if (pkg == null)
+          {
+            continue;
+          }
+
+          while (pkg.getESuperPackage() != null)
+          {
+            pkg = pkg.getESuperPackage();
+          }
+
+          String resourceURI = r.eResource().getURI().toString();
+          if (!resourceURI.toString().equals(pkg.getNsURI()))
+          {
+            String msg = "URI of the resource (%s) does not match the nsURI (%s) of the top-level package";
+            msg = String.format(msg, resourceURI, pkg.getNsURI());
+            throw new IllegalStateException(msg);
+          }
+        }
+      }
+    }
   }
 
   /**

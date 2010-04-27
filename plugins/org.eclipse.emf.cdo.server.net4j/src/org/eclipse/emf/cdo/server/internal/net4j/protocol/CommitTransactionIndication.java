@@ -50,8 +50,10 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
 import java.io.IOException;
 import java.util.List;
@@ -201,7 +203,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       }
 
       InternalCDOPackageRegistry packageRegistry = commitContext.getPackageRegistry();
-      ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(packageRegistry);
+      ResourceSet resourceSet = createResourceSet(packageRegistry);
       for (int i = 0; i < newPackageUnits.length; i++)
       {
         newPackageUnits[i] = (InternalCDOPackageUnit)in.readCDOPackageUnit(resourceSet);
@@ -210,7 +212,8 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       }
 
       // When all packages are deserialized and registered, resolve them
-      EcoreUtil.resolveAll(resourceSet);
+      // Note: EcoreUtil.resolveAll(resourceSet) does *not* do the trick
+      EMFUtil.safeResolveAll(resourceSet);
 
       // New objects
       if (TRACER.isEnabled())
@@ -252,6 +255,23 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     {
       monitor.done();
     }
+  }
+
+  private ResourceSet createResourceSet(InternalCDOPackageRegistry packageRegistry)
+  {
+    ResourceSet resourceSet = new ResourceSetImpl()
+    {
+      @Override
+      protected void demandLoad(Resource resource) throws IOException
+      {
+        // Do nothing: we don't want this ResourceSet to attempt demandloads.
+      }
+    };
+
+    Resource.Factory resourceFactory = new EcoreResourceFactoryImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory); //$NON-NLS-1$
+    resourceSet.setPackageRegistry(packageRegistry);
+    return resourceSet;
   }
 
   protected void initializeCommitContext(CDODataInput in) throws Exception

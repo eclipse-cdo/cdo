@@ -678,7 +678,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     assertEquals("Eike", company.getName());
   }
 
-  private static EPackage loadModel(String fileName) throws IOException
+  public static EPackage loadModel(String fileName) throws IOException
   {
     URI uri = URI.createURI("file://" + fileName);
     XMIResource resource = new XMIResourceImpl(uri);

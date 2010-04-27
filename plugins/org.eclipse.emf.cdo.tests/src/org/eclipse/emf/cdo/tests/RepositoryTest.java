@@ -16,8 +16,8 @@ import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
-import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.tests.model1.Customer;
@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -180,7 +181,12 @@ public class RepositoryTest extends AbstractCDOTest
       @Override
       protected String validate(ISession session, CDORevision revision)
       {
-        if (revision.getEClass() == customerClass)
+        EClass eClass = revision.getEClass();
+        EPackage ePackage = eClass.getEPackage();
+        assertNotSame("Revision has dynamic package: " + ePackage.getName(), EPackageImpl.class.getName(), ePackage
+            .getClass().getName());
+
+        if (eClass == customerClass)
         {
           String name = (String)revision.data().get(nameFeature, 0);
           if ("Admin".equals(name))

@@ -39,7 +39,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
   public void testLengthAnnotationPositive() throws Exception
   {
     msg("Opening session");
-    EPackage model1 = EcoreUtil.copy(getModel1Package());
+    EPackage model1 = createModel();
     addLengthAnnotation(model1, "8");
 
     CDOSession session = openSession();
@@ -69,7 +69,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
 
     msg("Opening session");
-    EPackage model1 = EcoreUtil.copy(getModel1Package());
+    EPackage model1 = createModel();
     addLengthAnnotation(model1, "8");
 
     CDOSession session = openSession();
@@ -104,7 +104,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
 
     msg("Opening session");
-    EPackage model1 = EcoreUtil.copy(getModel1Package());
+    EPackage model1 = createModel();
     addLengthAnnotation(model1, "8");
 
     CDOSession session = openSession();
@@ -147,7 +147,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     skipConfig(AllTestsDBHsqldbNonAudit.HsqldbNonAudit.INSTANCE);
 
     msg("Opening session");
-    EPackage model1 = EcoreUtil.copy(getModel1Package());
+    EPackage model1 = createModel();
     addTypeAnnotation(model1, "CLOB");
 
     CDOSession session = openSession();
@@ -186,7 +186,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
 
     msg("Opening session");
-    EPackage model1 = EcoreUtil.copy(getModel1Package());
+    EPackage model1 = createModel();
     addTableNameAnnotation(model1, "Subject");
 
     CDOSession session = openSession();
@@ -225,7 +225,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
 
     msg("Opening session");
-    EPackage model1 = EcoreUtil.copy(getModel1Package());
+    EPackage model1 = createModel();
     addColumnNameAnnotation(model1, "TOPIC");
 
     CDOSession session = openSession();
@@ -268,7 +268,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
 
     msg("Opening session");
-    EPackage model1 = EcoreUtil.copy(getModel1Package());
+    EPackage model1 = createModel();
     addColumnNameAndTypeAnnoation(model1, "TOPIC", "CLOB");
 
     CDOSession session = openSession();
@@ -305,7 +305,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
   public void testTableMappingAnnotationByMetaData()
   {
     msg("Opening session");
-    EPackage model1 = EcoreUtil.copy(getModel1Package());
+    EPackage model1 = createModel();
     addTableMappingAnnotation(model1, "OrderDetail", "Company");
 
     CDOSession session = openSession();
@@ -360,6 +360,13 @@ public class DBAnnotationsTest extends AbstractCDOTest
         assertEquals(true, categoryTableCreated);
       }
     }.verify();
+  }
+
+  private EPackage createModel()
+  {
+    EPackage ePackage = EcoreUtil.copy(getModel1Package());
+    ePackage.setNsURI(ePackage.getNsURI() + "-dynamic");
+    return ePackage;
   }
 
   private void addLengthAnnotation(EPackage model1, String value)

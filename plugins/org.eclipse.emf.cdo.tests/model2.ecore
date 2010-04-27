@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model2"
-    nsURI="http://model2" nsPrefix="model2">
+    nsURI="http://dynamic-model2" nsPrefix="model2">
   <eClassifiers xsi:type="ecore:EClass" name="CompanyProxy">
     <eStructuralFeatures xsi:type="ecore:EReference" name="company" eType="ecore:EClass model1.ecore#//Company"/>
   </eClassifiers>

@@ -285,6 +285,12 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
       CheckUtil.checkArg(resourceSet, "resourceSet"); //$NON-NLS-1$
       CheckUtil.checkNull(resourceSet.getPackageRegistry(), "ResourceSet's packageRegistry == null");
       ePackage = CDOModelUtil.readPackage(in, resourceSet, true);
+      EPackage globalPackage = loadPackageFromGlobalRegistry(ePackage.getNsURI());
+      if (globalPackage != null)
+      {
+        ePackage = globalPackage;
+      }
+
       setState(State.LOADED);
     }
 
@@ -357,7 +363,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     EPackage[] ePackages = new EPackage[packageInfos.length];
     for (int i = 0; i < ePackages.length; i++)
     {
-      ePackages[i] = EPackage.Registry.INSTANCE.getEPackage(packageInfos[i].getPackageURI());
+      ePackages[i] = loadPackageFromGlobalRegistry(packageInfos[i].getPackageURI());
       if (ePackages[i] == null)
       {
         return null;
@@ -365,5 +371,10 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     }
 
     return ePackages;
+  }
+
+  private EPackage loadPackageFromGlobalRegistry(String packageURI)
+  {
+    return EPackage.Registry.INSTANCE.getEPackage(packageURI);
   }
 }

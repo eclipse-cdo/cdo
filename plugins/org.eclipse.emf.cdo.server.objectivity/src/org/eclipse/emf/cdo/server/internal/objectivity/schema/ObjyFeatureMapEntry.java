@@ -22,7 +22,7 @@ import com.objy.as.app.d_Module;
 import com.objy.as.app.ooBaseType;
 import com.objy.db.app.ooId;
 
-public class FeatureMapEntry // extends ooObj
+public class ObjyFeatureMapEntry
 {
   // caching some details.
   protected long metaId;
@@ -33,7 +33,7 @@ public class FeatureMapEntry // extends ooObj
 
   protected Class_Object classObject;
 
-  public static final String MapEntryClassName = "oo_ooFeatureMapEntry";
+  public static final String MapEntryClassName = "ObjyFeatureMapEntry";
 
   public static final String MetaId = "metaId";
 
@@ -52,18 +52,18 @@ public class FeatureMapEntry // extends ooObj
 
       B.add_basic_attribute(com.objy.as.app.d_Module.LAST, // Access kind
           d_Access_Kind.d_PUBLIC, // Access kind
-          FeatureMapEntry.MetaId, // Attribute name
+          ObjyFeatureMapEntry.MetaId, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT64 // type
           );
 
       B.add_embedded_class_attribute(com.objy.as.app.d_Module.LAST, // Access kind
           d_Access_Kind.d_PUBLIC, // Access kind
-          FeatureMapEntry.EntryName, // Attribute name
+          ObjyFeatureMapEntry.EntryName, // Attribute name
           1, // # elements in fixed-size array
           "ooUtf8String"); // type
       B.add_ref_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
-          FeatureMapEntry.EntryObject, // Attribute name
+          ObjyFeatureMapEntry.EntryObject, // Attribute name
           1, // # elements in fixed-size array
           "ooObj", // Type of numeric data
           false); // Short reference
@@ -78,7 +78,7 @@ public class FeatureMapEntry // extends ooObj
    * @param tagName
    * @param oid
    */
-  public FeatureMapEntry(String tagName, ooId oid, long metaId, ooId near)
+  public ObjyFeatureMapEntry(String tagName, ooId oid, long metaId, ooId near)
   {
     this.tagName = tagName;
     object = oid;
@@ -101,7 +101,7 @@ public class FeatureMapEntry // extends ooObj
 
   }
 
-  public FeatureMapEntry(Class_Object classObject)
+  public ObjyFeatureMapEntry(Class_Object classObject)
   {
     this.classObject = classObject;
 

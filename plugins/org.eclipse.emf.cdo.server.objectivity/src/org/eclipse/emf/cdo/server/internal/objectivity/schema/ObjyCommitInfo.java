@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 
 import com.objy.db.app.ooObj;
 
-public class OoCommitInfo extends ooObj
+public class ObjyCommitInfo extends ooObj
 {
   protected int branchId;
 
@@ -25,7 +25,7 @@ public class OoCommitInfo extends ooObj
   /***
    * OoCommitInfo will be a readonly object.
    */
-  public OoCommitInfo(int branchId, long timeStamp, String userId, String comment)
+  public ObjyCommitInfo(int branchId, long timeStamp, String userId, String comment)
   {
     this.branchId = branchId;
     this.timeStamp = timeStamp;

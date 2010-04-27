@@ -12,13 +12,13 @@ package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 
 import com.objy.db.app.ooObj;
 
-public class OoProperty extends ooObj
+public class ObjyProperty extends ooObj
 {
   protected String name;
 
   protected String value;
 
-  public OoProperty(String name, String value)
+  public ObjyProperty(String name, String value)
   {
     this.name = name;
     this.value = value;

@@ -26,11 +26,11 @@ import com.objy.as.app.ooBaseType;
 /**
  * @author Simon McDuff
  */
-public class ooFeatureMapArrayList extends ooArrayList<FeatureMapEntry>
+public class ObjyFeatureMapArrayList extends ObjyArrayList<ObjyFeatureMapEntry>
 {
-  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ooFeatureMapArrayList.class);
+  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyFeatureMapArrayList.class);
 
-  static public String ClassName = "oo_ooFeatureMapArrayList";
+  static public String ClassName = "ObjyFeatureMapArrayList";
 
   // public class FeatureMapEntry
   // {
@@ -59,8 +59,8 @@ public class ooFeatureMapArrayList extends ooArrayList<FeatureMapEntry>
   {
     // Connection.current().registerClass(MapEntryClassName);
     d_Module top_mod = ObjySchema.getTopModule();
-    if (top_mod.resolve_class(ooFeatureMapArrayList.ClassName) == null
-        && top_mod.resolve_proposed_class(ooFeatureMapArrayList.ClassName) == null)
+    if (top_mod.resolve_class(ObjyFeatureMapArrayList.ClassName) == null
+        && top_mod.resolve_proposed_class(ObjyFeatureMapArrayList.ClassName) == null)
     {
 
       if (TRACER_DEBUG.isEnabled())
@@ -70,21 +70,21 @@ public class ooFeatureMapArrayList extends ooArrayList<FeatureMapEntry>
 
       boolean inProcess = top_mod.proposed_classes().hasNext();
 
-      FeatureMapEntry.buildSchema();
+      ObjyFeatureMapEntry.buildSchema();
 
       // Proposed_Class A = new Proposed_Class(ooFeatureMapArrayList.ClassName);
-      Proposed_Class A = top_mod.propose_new_class(ooFeatureMapArrayList.ClassName);
+      Proposed_Class A = top_mod.propose_new_class(ObjyFeatureMapArrayList.ClassName);
 
       A.add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC, "ooObj");
 
       A.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
-          ooArrayList.sizeName, // Attribute name
+          ObjyArrayList.sizeName, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT32 // Type of numeric data
           ); // Default value
       A.add_varray_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
-          ooArrayList.arrayName, // Attribute name
-          1, false, FeatureMapEntry.MapEntryClassName);
+          ObjyArrayList.arrayName, // Attribute name
+          1, false, ObjyFeatureMapEntry.MapEntryClassName);
 
       // top_mod.propose_new_class(A);
       if (!inProcess)
@@ -99,13 +99,13 @@ public class ooFeatureMapArrayList extends ooArrayList<FeatureMapEntry>
     }
   }
 
-  public ooFeatureMapArrayList(Class_Object classObject)
+  public ObjyFeatureMapArrayList(Class_Object classObject)
   {
     super(classObject);
   }
 
   @Override
-  protected void setValue(long index, FeatureMapEntry featureMapEntry)
+  protected void setValue(long index, ObjyFeatureMapEntry featureMapEntry)
   {
 
     getVArray().set_ooId(index, featureMapEntry.getOid());
@@ -115,11 +115,11 @@ public class ooFeatureMapArrayList extends ooArrayList<FeatureMapEntry>
   }
 
   @Override
-  protected FeatureMapEntry getValue(long index)
+  protected ObjyFeatureMapEntry getValue(long index)
   {
     Class_Object classObject = getVArray().get_class_obj(index);
 
-    return new FeatureMapEntry(classObject);
+    return new ObjyFeatureMapEntry(classObject);
 
     /***
      * FeatureMapEntry featureMapEntry = (FeatureMapEntry) ooObj.create_ooObj(getVArray().get_ooId(index)); return

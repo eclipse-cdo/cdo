@@ -16,7 +16,7 @@ import com.objy.db.app.Relationship;
 import com.objy.db.app.ToOneRelationship;
 import com.objy.db.app.ooObj;
 
-public class OoPackageInfo extends ooObj
+public class ObjyPackageInfo extends ooObj
 {
 
   protected String packageURI;
@@ -48,7 +48,7 @@ public class OoPackageInfo extends ooObj
    * @param node
    *          parent Node
    */
-  public void setPackageUnit(OoPackageUnit ooPackageUnit)
+  public void setPackageUnit(ObjyPackageUnit ooPackageUnit)
   {
     markModified();
     packageUnit.form(ooPackageUnit);
@@ -59,10 +59,10 @@ public class OoPackageInfo extends ooObj
    * 
    * @return related parent Node
    */
-  public OoPackageUnit getPackageUnit()
+  public ObjyPackageUnit getPackageUnit()
   {
     fetch();
-    return (OoPackageUnit)packageUnit.get();
+    return (ObjyPackageUnit)packageUnit.get();
   }
 
   /**

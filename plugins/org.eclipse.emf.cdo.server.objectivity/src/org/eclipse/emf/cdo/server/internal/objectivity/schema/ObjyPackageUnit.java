@@ -19,7 +19,7 @@ import com.objy.db.app.ooObj;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OoPackageUnit extends ooObj
+public class ObjyPackageUnit extends ooObj
 {
 
   protected String id;
@@ -32,7 +32,7 @@ public class OoPackageUnit extends ooObj
 
   private ToManyRelationship packageInfos;
 
-  public OoPackageUnit(int bufferSize)
+  public ObjyPackageUnit(int bufferSize)
   {
     packageAsBytes = new byte[bufferSize];
   }
@@ -51,15 +51,15 @@ public class OoPackageUnit extends ooObj
    * 
    * @return list of OoPackageInfo objects.
    */
-  public List<OoPackageInfo> getPackageInfos()
+  public List<ObjyPackageInfo> getPackageInfos()
   {
-    List<OoPackageInfo> list = new ArrayList<OoPackageInfo>();
+    List<ObjyPackageInfo> list = new ArrayList<ObjyPackageInfo>();
     fetch();
     com.objy.db.app.Iterator itr;
     itr = packageInfos.scan();
     while (itr.hasNext())
     {
-      list.add((OoPackageInfo)itr.next());
+      list.add((ObjyPackageInfo)itr.next());
     }
 
     return list;
@@ -70,7 +70,7 @@ public class OoPackageUnit extends ooObj
    * 
    * @param packgeInfo
    */
-  public void addPackageInfo(OoPackageInfo packageInfo)
+  public void addPackageInfo(ObjyPackageInfo packageInfo)
   {
     markModified();
     packageInfos.add(packageInfo);
@@ -91,7 +91,7 @@ public class OoPackageUnit extends ooObj
    * @param node
    *          child Node to be dropped
    */
-  public void removePackageInfo(OoPackageInfo packageInfo)
+  public void removePackageInfo(ObjyPackageInfo packageInfo)
   {
     markModified();
     packageInfos.remove(packageInfo);

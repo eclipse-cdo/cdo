@@ -26,16 +26,16 @@ import com.objy.as.app.ooBaseType;
 /**
  * @author Simon McDuff
  */
-public class ooArrayListLong extends ooArrayList<Long>
+public class ObjyArrayListLong extends ObjyArrayList<Long>
 {
-  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ooArrayListLong.class);
+  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyArrayListLong.class);
 
-  static public String ArrayName = "oo_ooArrayListLong";
+  static public String ArrayName = "ObjyArrayListLong";
 
   public static void buildSchema()
   {
     d_Module top_mod = ObjySchema.getTopModule();
-    if (top_mod.resolve_class(ooArrayListLong.ArrayName) == null)
+    if (top_mod.resolve_class(ObjyArrayListLong.ArrayName) == null)
     {
 
       if (TRACER_DEBUG.isEnabled())
@@ -46,18 +46,18 @@ public class ooArrayListLong extends ooArrayList<Long>
       boolean inProcess = top_mod.proposed_classes().hasNext();
 
       // Proposed_Class A = new Proposed_Class(ooArrayListLong.ArrayName);
-      Proposed_Class A = top_mod.propose_new_class(ooArrayListLong.ArrayName);
+      Proposed_Class A = top_mod.propose_new_class(ObjyArrayListLong.ArrayName);
 
       A.add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC, "ooObj");
 
       A.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
-          ooArrayList.sizeName, // Attribute name
+          ObjyArrayList.sizeName, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT32 // Type of numeric data
           ); // Default value
 
       A.add_varray_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
-          ooArrayList.arrayName, // Attribute name
+          ObjyArrayList.arrayName, // Attribute name
           1, ooBaseType.ooINT64);
 
       // top_mod.propose_new_class(A);
@@ -74,7 +74,7 @@ public class ooArrayListLong extends ooArrayList<Long>
     }
   }
 
-  public ooArrayListLong(Class_Object classObject)
+  public ObjyArrayListLong(Class_Object classObject)
   {
     super(classObject);
   }

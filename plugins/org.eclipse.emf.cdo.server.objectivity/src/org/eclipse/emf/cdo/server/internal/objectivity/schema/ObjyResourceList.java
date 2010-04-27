@@ -36,10 +36,10 @@ import com.objy.db.app.ooId;
  * 
  * @author ibrahim
  */
-public class OoResourceList
+public class ObjyResourceList
 {
 
-  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ooProxy.class);
+  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyProxy.class);
 
   static public String className = "ooResourceList";
 
@@ -49,7 +49,7 @@ public class OoResourceList
 
   protected Class_Object classObject;
 
-  protected ooArrayListId list = null;
+  protected ObjyArrayListId list = null;
 
   protected ooId objectId;
 
@@ -60,8 +60,8 @@ public class OoResourceList
   public static void buildSchema()
   {
     d_Module top_mod = ObjySchema.getTopModule();
-    if (top_mod.resolve_class(OoResourceList.className) == null
-        && top_mod.resolve_proposed_class(OoResourceList.className) == null)
+    if (top_mod.resolve_class(ObjyResourceList.className) == null
+        && top_mod.resolve_proposed_class(ObjyResourceList.className) == null)
     {
 
       if (TRACER_DEBUG.isEnabled())
@@ -72,16 +72,16 @@ public class OoResourceList
       boolean inProcess = top_mod.proposed_classes().hasNext();
 
       // Proposed_Class A = new Proposed_Class(ooArrayListId.ClassName);
-      Proposed_Class propClass = top_mod.propose_new_class(OoResourceList.className);
+      Proposed_Class propClass = top_mod.propose_new_class(ObjyResourceList.className);
 
       propClass
-          .add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC, ooBase.ClassName /* "ooObj" */);
+          .add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC, ObjyBase.ClassName /* "ooObj" */);
 
       propClass.add_ref_attribute(com.objy.as.app.d_Module.LAST, // Access kind
           d_Access_Kind.d_PUBLIC, // Access kind
-          OoResourceList.Attribute_arrayName, // Attribute name
+          ObjyResourceList.Attribute_arrayName, // Attribute name
           1, // # elements in fixed-size array
-          ooArrayListId.className, false); // Default value // Default value
+          ObjyArrayListId.className, false); // Default value // Default value
 
       // top_mod.propose_new_class(A);
       if (!inProcess)
@@ -97,7 +97,7 @@ public class OoResourceList
 
   }
 
-  public OoResourceList(ObjySession objySession, ObjyObject objyObject)
+  public ObjyResourceList(ObjySession objySession, ObjyObject objyObject)
   {
     classObject = objyObject.ooClassObject();
     this.objySession = objySession;
@@ -110,7 +110,7 @@ public class OoResourceList
   // this.objySession = objySession;
   // }
 
-  private ooArrayListId getList()
+  private ObjyArrayListId getList()
   {
     if (list != null)
     {
@@ -119,11 +119,11 @@ public class OoResourceList
 
     try
     {
-      Class_Position position = classObject.position_in_class(OoResourceList.Attribute_arrayName);
+      Class_Position position = classObject.position_in_class(ObjyResourceList.Attribute_arrayName);
       ooId oid = classObject.get_ooId(position);
       if (!oid.isNull())
       {
-        list = new ooArrayListId(Class_Object.class_object_from_oid(oid));
+        list = new ObjyArrayListId(Class_Object.class_object_from_oid(oid));
       }
     }
     catch (ObjyRuntimeException e)
@@ -168,7 +168,7 @@ public class OoResourceList
     {
       ObjyObject resource = getResource(i);
       CDOID resourceFolderId = (CDOID)resource.getEContainer();
-      String resourceName = OoResourceList.getResourceName(resource);
+      String resourceName = ObjyResourceList.getResourceName(resource);
       if (resourceFolderId != null && resourceFolderId.equals(folderId) && resourceName != null
           && resourceName.equals(name))
       {
@@ -190,15 +190,15 @@ public class OoResourceList
 
   public static ObjyObject create(ooId nearOid)
   {
-    Class_Object classObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(OoResourceList.className)
+    Class_Object classObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(ObjyResourceList.className)
         .getASClass(), nearOid, false);
-    Class_Position position = classObject.position_in_class(OoResourceList.Attribute_arrayName);
+    Class_Position position = classObject.position_in_class(ObjyResourceList.Attribute_arrayName);
     Class_Object arrayClassObject = Class_Object.new_persistent_object(ObjySchema.getTopModule().resolve_class(
-        ooArrayListId.className), classObject.objectID(), false);
+        ObjyArrayListId.className), classObject.objectID(), false);
     ooId arrayOid = arrayClassObject.objectID();
 
     classObject.set_ooId(position, arrayClassObject.objectID());
-    ooArrayListId.initObject(arrayClassObject);
+    ObjyArrayListId.initObject(arrayClassObject);
     ObjyObject objyObject = new ObjyObject(classObject);
     return objyObject;
   }

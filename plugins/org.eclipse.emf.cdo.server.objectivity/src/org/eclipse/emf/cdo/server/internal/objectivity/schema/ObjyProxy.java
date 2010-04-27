@@ -22,12 +22,12 @@ import com.objy.as.app.d_Access_Kind;
 import com.objy.as.app.d_Module;
 import com.objy.db.app.ooId;
 
-public class ooProxy
+public class ObjyProxy
 {
 
-  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ooProxy.class);
+  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyProxy.class);
 
-  static public String className = "ooProxy";
+  static public String className = "ObjyProxy";
 
   static public String uriAttributeName = "uri";
 
@@ -36,7 +36,8 @@ public class ooProxy
   public static void buildSchema()
   {
     d_Module top_mod = ObjySchema.getTopModule();
-    if (top_mod.resolve_class(ooProxy.className) == null && top_mod.resolve_proposed_class(ooProxy.className) == null)
+    if (top_mod.resolve_class(ObjyProxy.className) == null
+        && top_mod.resolve_proposed_class(ObjyProxy.className) == null)
     {
 
       if (TRACER_DEBUG.isEnabled())
@@ -46,7 +47,7 @@ public class ooProxy
 
       boolean inProcess = top_mod.proposed_classes().hasNext();
 
-      Proposed_Class propClass = top_mod.propose_new_class(ooProxy.className);
+      Proposed_Class propClass = top_mod.propose_new_class(ObjyProxy.className);
 
       propClass.add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC, "ooObj");
 
@@ -57,7 +58,7 @@ public class ooProxy
       // );
       //
       propClass.add_embedded_class_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PROTECTED, // access kind
-          ooProxy.uriAttributeName, // Attribute name
+          ObjyProxy.uriAttributeName, // Attribute name
           1, // # elements in fixed-size array
           "ooUtf8String" // name of embedded class
       );
@@ -77,28 +78,28 @@ public class ooProxy
   }
 
   // factory.
-  public static ooProxy createObject(ooId nearObject)
+  public static ObjyProxy createObject(ooId nearObject)
   {
-    Class_Object newClassObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(ooProxy.className)
+    Class_Object newClassObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(ObjyProxy.className)
         .getASClass(), nearObject, false);
-    ooProxy proxyObject = new ooProxy(newClassObject);
+    ObjyProxy proxyObject = new ObjyProxy(newClassObject);
     return proxyObject;
   }
 
-  public ooProxy(Class_Object classObject)
+  public ObjyProxy(Class_Object classObject)
   {
     this.classObject = classObject;
   }
 
   public void setUri(String uri)
   {
-    String_Value stringValue = classObject.nget_string(ooProxy.uriAttributeName);
+    String_Value stringValue = classObject.nget_string(ObjyProxy.uriAttributeName);
     stringValue.set(uri);
   }
 
   public String getUri()
   {
-    String_Value stringValue = classObject.nget_string(ooProxy.uriAttributeName);
+    String_Value stringValue = classObject.nget_string(ObjyProxy.uriAttributeName);
     return stringValue.toString();
   }
 

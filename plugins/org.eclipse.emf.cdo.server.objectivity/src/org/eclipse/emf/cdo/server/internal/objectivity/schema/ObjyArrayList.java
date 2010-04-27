@@ -20,7 +20,7 @@ import com.objy.db.app.ooId;
 /**
  * @author Simon McDuff
  */
-public abstract class ooArrayList<T>
+public abstract class ObjyArrayList<T>
 {
   final static String sizeName = "elementCount";
 
@@ -40,7 +40,7 @@ public abstract class ooArrayList<T>
     classObject.nset_numeric(sizeName, new Numeric_Value(0));
   }
 
-  public ooArrayList(Class_Object classObject)
+  public ObjyArrayList(Class_Object classObject)
   {
     this.classObject = classObject;
     this.cacheSize = -1;

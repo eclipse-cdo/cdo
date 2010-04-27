@@ -26,18 +26,18 @@ import com.objy.db.app.ooId;
 /**
  * @author Simon McDuff
  */
-public class ooArrayListId extends ooArrayList<ooId>
+public class ObjyArrayListId extends ObjyArrayList<ooId>
 {
 
-  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ooArrayListId.class);
+  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyArrayListId.class);
 
-  static public String className = "oo_ooArrayListId";
+  static public String className = "ObjyArrayListId";
 
   public static void buildSchema()
   {
     d_Module top_mod = ObjySchema.getTopModule();
-    if (top_mod.resolve_class(ooArrayListId.className) == null
-        && top_mod.resolve_proposed_class(ooArrayListId.className) == null)
+    if (top_mod.resolve_class(ObjyArrayListId.className) == null
+        && top_mod.resolve_proposed_class(ObjyArrayListId.className) == null)
     {
 
       if (TRACER_DEBUG.isEnabled())
@@ -48,18 +48,18 @@ public class ooArrayListId extends ooArrayList<ooId>
       boolean inProcess = top_mod.proposed_classes().hasNext();
 
       // Proposed_Class A = new Proposed_Class(ooArrayListId.ClassName);
-      Proposed_Class A = top_mod.propose_new_class(ooArrayListId.className);
+      Proposed_Class A = top_mod.propose_new_class(ObjyArrayListId.className);
 
       A.add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC, "ooObj" /* "ooObj" */);
 
       A.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
-          ooArrayList.sizeName, // Attribute name
+          ObjyArrayList.sizeName, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT32 // Type of numeric data
           ); // Default value
 
       A.add_varray_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
-          ooArrayList.arrayName, // Attribute name
+          ObjyArrayList.arrayName, // Attribute name
           1, // # elements in fixed-size array
           false, "ooObj");
 
@@ -77,7 +77,7 @@ public class ooArrayListId extends ooArrayList<ooId>
 
   }
 
-  public ooArrayListId(Class_Object classObject)
+  public ObjyArrayListId(Class_Object classObject)
   {
     super(classObject);
     // TODO Auto-generated constructor stub

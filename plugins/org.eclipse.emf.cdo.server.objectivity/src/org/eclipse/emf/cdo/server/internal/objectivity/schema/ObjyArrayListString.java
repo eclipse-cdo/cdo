@@ -36,11 +36,11 @@ import com.objy.db.app.ooObj;
  * This class we use VArray of fixed array of Strings, otherwise we have to create strigns as objects, which is
  * expensive.
  */
-public class ooArrayListString
+public class ObjyArrayListString
 {
-  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ooArrayListString.class);
+  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyArrayListString.class);
 
-  public static String ClassName = "oo_ooArrayListString";
+  public static String ClassName = "ObjyArrayListString";
 
   // embedded class parts.
   private static String embeddedClassName = "oo_StringElement";
@@ -50,7 +50,7 @@ public class ooArrayListString
   private static String embeddedAttributeNull = "isNull";
 
   // fixed array class parts.
-  private static String FixedArrayClassName = "oo_ooFixedStringArray";
+  private static String FixedArrayClassName = "ObjyFixedStringArray";
 
   private static String FixedElementsName = "elements";
 
@@ -68,7 +68,7 @@ public class ooArrayListString
   {
     d_Module top_mod = ObjySchema.getTopModule();
 
-    if (top_mod.resolve_class(ooArrayListString.ClassName) == null)
+    if (top_mod.resolve_class(ObjyArrayListString.ClassName) == null)
     {
 
       if (TRACER_DEBUG.isEnabled())
@@ -98,32 +98,32 @@ public class ooArrayListString
 
       // first the child class.
       // Proposed_Class fixedArrayClass = new Proposed_Class(ooArrayListString.FixedArrayClassName);
-      Proposed_Class fixedArrayClass = top_mod.propose_new_class(ooArrayListString.FixedArrayClassName);
+      Proposed_Class fixedArrayClass = top_mod.propose_new_class(ObjyArrayListString.FixedArrayClassName);
 
       fixedArrayClass.add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC, "ooObj");
 
       fixedArrayClass.add_embedded_class_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
-          ooArrayListString.FixedElementsName, // Attribute name
-          ooArrayListString.FixedElementsSize, // # elements in fixed-size array
+          ObjyArrayListString.FixedElementsName, // Attribute name
+          ObjyArrayListString.FixedElementsSize, // # elements in fixed-size array
           embeddedClassName // Type of numeric data
           ); // Default value
 
       // top_mod.propose_new_class(fixedArrayClass);
 
       // Proposed_Class StringArrayClass = new Proposed_Class(ooArrayListString.ClassName);
-      Proposed_Class StringArrayClass = top_mod.propose_new_class(ooArrayListString.ClassName);
+      Proposed_Class StringArrayClass = top_mod.propose_new_class(ObjyArrayListString.ClassName);
 
       StringArrayClass.add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC, "ooObj");
 
       StringArrayClass.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
-          ooArrayList.sizeName, // Attribute name
+          ObjyArrayList.sizeName, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT32 // Type of numeric data
           ); // Default value
 
       StringArrayClass.add_varray_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
-          ooArrayList.arrayName, // Attribute name
-          1, false, ooArrayListString.FixedArrayClassName);
+          ObjyArrayList.arrayName, // Attribute name
+          1, false, ObjyArrayListString.FixedArrayClassName);
 
       // top_mod.propose_new_class(StringArrayClass);
       if (!inProcess)
@@ -141,10 +141,10 @@ public class ooArrayListString
   public static void initObject(Class_Object classObject)
   {
     // set the size to 0;
-    classObject.nset_numeric(ooArrayList.sizeName, new Numeric_Value(0));
+    classObject.nset_numeric(ObjyArrayList.sizeName, new Numeric_Value(0));
   }
 
-  public ooArrayListString(Class_Object classObject)
+  public ObjyArrayListString(Class_Object classObject)
   {
     this.classObject = classObject;
   }
@@ -306,7 +306,7 @@ public class ooArrayListString
   {
     if (vArray == null)
     {
-      vArray = classObject.nget_varray(ooArrayList.arrayName);
+      vArray = classObject.nget_varray(ObjyArrayList.arrayName);
     }
     return vArray;
   }
@@ -383,7 +383,7 @@ public class ooArrayListString
 
   private void saveSize()
   {
-    classObject.nset_numeric(ooArrayList.sizeName, new Numeric_Value(cacheSize));
+    classObject.nset_numeric(ObjyArrayList.sizeName, new Numeric_Value(cacheSize));
     cacheSize = -1;
   }
 
@@ -394,7 +394,7 @@ public class ooArrayListString
   {
     if (cacheSize == -1)
     {
-      cacheSize = classObject.nget_numeric(ooArrayList.sizeName).longValue();
+      cacheSize = classObject.nget_numeric(ObjyArrayList.sizeName).longValue();
     }
     return cacheSize;
   }
@@ -404,7 +404,7 @@ public class ooArrayListString
    */
   public long size()
   {
-    return classObject.nget_numeric(ooArrayList.sizeName).longValue();
+    return classObject.nget_numeric(ObjyArrayList.sizeName).longValue();
   }
 
 }

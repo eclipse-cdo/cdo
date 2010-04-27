@@ -30,11 +30,11 @@ import com.objy.as.app.ooBaseType;
  * 
  * @author ibrahim
  */
-public class ooBase
+public class ObjyBase
 {
-  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ooBase.class);
+  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyBase.class);
 
-  static public String ClassName = "oo_ooBase";
+  static public String ClassName = "ObjyBase";
 
   static public String Attribute_containerId = "oo_containerId";
 
@@ -57,7 +57,7 @@ public class ooBase
   public static void buildSchema()
   {
     d_Module top_mod = ObjySchema.getTopModule();
-    if (top_mod.resolve_class(ooBase.ClassName) == null && top_mod.resolve_proposed_class(ooBase.ClassName) == null)
+    if (top_mod.resolve_class(ObjyBase.ClassName) == null && top_mod.resolve_proposed_class(ObjyBase.ClassName) == null)
     {
       if (TRACER_DEBUG.isEnabled())
       {
@@ -66,58 +66,58 @@ public class ooBase
 
       boolean inProcess = top_mod.proposed_classes().hasNext();
 
-      Proposed_Class propClass = top_mod.propose_new_class(ooBase.ClassName);
+      Proposed_Class propClass = top_mod.propose_new_class(ObjyBase.ClassName);
 
       propClass.add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC, "ooObj");
 
-      propClass.add_bidirectional_relationship(d_Module.LAST, d_Access_Kind.d_PUBLIC, ooBase.Attribute_revisions,
-          ooBase.ClassName, false, false, true, Rel_Copy.DELETE, Rel_Versioning.COPY,
-          Rel_Propagation.LOCK_YES_DELETE_YES, ooBase.Attribute_base, false);
+      propClass.add_bidirectional_relationship(d_Module.LAST, d_Access_Kind.d_PUBLIC, ObjyBase.Attribute_revisions,
+          ObjyBase.ClassName, false, false, true, Rel_Copy.DELETE, Rel_Versioning.COPY,
+          Rel_Propagation.LOCK_YES_DELETE_YES, ObjyBase.Attribute_base, false);
 
       // propClass.add_bidirectional_relationship(position, visibility,
       // name, destinationClassName, isInline, isShort, isToMany,
       // copyMode, versioning, propagation, inverseName, inverseIsToMany)
 
-      propClass.add_bidirectional_relationship(d_Module.LAST, d_Access_Kind.d_PUBLIC, ooBase.Attribute_base,
-          ooBase.ClassName, false, false, false, Rel_Copy.DELETE, Rel_Versioning.COPY,
-          Rel_Propagation.LOCK_YES_DELETE_YES, ooBase.Attribute_revisions, true);
+      propClass.add_bidirectional_relationship(d_Module.LAST, d_Access_Kind.d_PUBLIC, ObjyBase.Attribute_base,
+          ObjyBase.ClassName, false, false, false, Rel_Copy.DELETE, Rel_Versioning.COPY,
+          Rel_Propagation.LOCK_YES_DELETE_YES, ObjyBase.Attribute_revisions, true);
 
-      propClass.add_unidirectional_relationship(d_Module.LAST, d_Access_Kind.d_PUBLIC, ooBase.Attribute_lastRevision,
-          ooBase.ClassName, true, false, false, Rel_Copy.DELETE, Rel_Versioning.COPY,
+      propClass.add_unidirectional_relationship(d_Module.LAST, d_Access_Kind.d_PUBLIC, ObjyBase.Attribute_lastRevision,
+          ObjyBase.ClassName, true, false, false, Rel_Copy.DELETE, Rel_Versioning.COPY,
           Rel_Propagation.LOCK_YES_DELETE_YES);
 
       propClass.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
-          ooBase.Attribute_containerFeatureId, // Attribute name
+          ObjyBase.Attribute_containerFeatureId, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT32 // Type of numeric data
           ); // Default value
 
       propClass.add_ref_attribute(com.objy.as.app.d_Module.LAST, // Access kind
           d_Access_Kind.d_PUBLIC, // Access kind
-          ooBase.Attribute_containerId, // Attribute name
+          ObjyBase.Attribute_containerId, // Attribute name
           1, // # elements in fixed-size array
           "ooObj", false); // Default value // Default value
 
       propClass.add_ref_attribute(com.objy.as.app.d_Module.LAST, // Access kind
           d_Access_Kind.d_PUBLIC, // Access kind
-          ooBase.Attribute_resourceId, // Attribute name
+          ObjyBase.Attribute_resourceId, // Attribute name
           1, // # elements in fixed-size array
           "ooObj", false); // Default value // Default value
 
       propClass.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
-          ooBase.Attribute_version, // Attribute name
+          ObjyBase.Attribute_version, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT32 // Type of numeric data
           ); // Default value
 
       propClass.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
-          ooBase.Attribute_creationTime, // Attribute name
+          ObjyBase.Attribute_creationTime, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT64 // Type of numeric data
           ); // Default value
 
       propClass.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
-          ooBase.Attribute_revisedTime, // Attribute name
+          ObjyBase.Attribute_revisedTime, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT64 // Type of numeric data
           ); // Default value

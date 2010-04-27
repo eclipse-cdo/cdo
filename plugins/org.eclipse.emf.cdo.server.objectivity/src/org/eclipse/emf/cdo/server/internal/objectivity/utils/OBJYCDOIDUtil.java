@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooProxy;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyProxy;
 
 import com.objy.db.app.ooId;
 
@@ -135,7 +135,7 @@ public class OBJYCDOIDUtil
     return CDOIDUtil.createMetaRange(lowerBound, count);
   }
 
-  public static CDOIDExternal createCDIDExternal(ooProxy proxyObject)
+  public static CDOIDExternal createCDIDExternal(ObjyProxy proxyObject)
   {
     return CDOIDUtil.createExternal(proxyObject.getUri());
   }

@@ -65,6 +65,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -832,11 +833,11 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     String where = " WHERE " + CDODBSchema.BRANCHES_ID + " BETWEEN " + fromBranchID + " AND " + toBranchID;
     DBUtil.serializeTable(out, connection, CDODBSchema.BRANCHES, null, where);
 
-    IMetaDataManager metaDataManager = store.getMetaDataManager();
-    metaDataManager.rawExport(connection, out, fromCommitTime, toCommitTime);
-
     where = " WHERE " + CDODBSchema.COMMIT_INFOS_TIMESTAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, CDODBSchema.COMMIT_INFOS, null, where);
+
+    IMetaDataManager metaDataManager = store.getMetaDataManager();
+    metaDataManager.rawExport(connection, out, fromCommitTime, toCommitTime);
 
     IMappingStrategy mappingStrategy = store.getMappingStrategy();
     mappingStrategy.rawExport(this, out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
@@ -845,10 +846,13 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   public Collection<InternalCDOPackageUnit> rawImport(CDODataInput in, int fromBranchID, int toBranchID,
       long fromCommitTime, long toCommitTime) throws IOException
   {
-    DBUtil.deserializeTable(in, connection, CDODBSchema.BRANCHES);
-
     DBStore store = getStore();
+    IMappingStrategy mappingStrategy = store.getMappingStrategy();
     IMetaDataManager metaDataManager = store.getMetaDataManager();
+
+    DBUtil.deserializeTable(in, connection, CDODBSchema.BRANCHES);
+    DBUtil.deserializeTable(in, connection, CDODBSchema.COMMIT_INFOS);
+
     Collection<InternalCDOPackageUnit> packageUnits = metaDataManager.rawImport(getConnection(), in, fromCommitTime,
         toCommitTime);
 
@@ -858,9 +862,11 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       packageRegistry.putPackageUnit(packageUnit);
     }
 
-    DBUtil.deserializeTable(in, connection, CDODBSchema.COMMIT_INFOS);
+    // store.getDBAdapter().createTables(getModelTables(), connection);
 
-    IMappingStrategy mappingStrategy = store.getMappingStrategy();
+    mappingStrategy.createMapping(connection, packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]),
+        new Monitor());
+
     mappingStrategy.rawImport(this, in);
 
     try

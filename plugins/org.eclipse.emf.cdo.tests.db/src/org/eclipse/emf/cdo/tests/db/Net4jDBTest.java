@@ -209,7 +209,7 @@ public class Net4jDBTest extends AbstractCDOTest
     doTest(TABLE_NAME);
   }
 
-  public void testNumeric() throws Exception
+  public void _testNumeric() throws Exception
   {
     String numberLiteral1 = "12345678901234567890123456789012";
     String numberLiteral2 = "10000000000000000000000000000000";
@@ -233,7 +233,7 @@ public class Net4jDBTest extends AbstractCDOTest
     }
   }
 
-  public void testDecimal() throws Exception
+  public void _testDecimal() throws Exception
   {
     String numberLiteral1 = "12345678901234567890123456789012";
     String numberLiteral2 = "10000000000000000000000000000000";

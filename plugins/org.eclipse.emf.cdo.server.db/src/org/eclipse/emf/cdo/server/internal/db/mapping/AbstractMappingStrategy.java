@@ -360,11 +360,13 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
     try
     {
+      async = monitor.forkAsync();
+
       try
       {
-        async = monitor.forkAsync();
-        mapPackageUnits(packageUnits);
-        getStore().getDBAdapter().createTables(getModelTables(), connection);
+        Set<IDBTable> modelTables = new HashSet<IDBTable>();
+        mapPackageUnits(packageUnits, modelTables);
+        getStore().getDBAdapter().createTables(modelTables, connection);
       }
       finally
       {
@@ -377,30 +379,30 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     }
   }
 
-  private void mapPackageUnits(InternalCDOPackageUnit[] packageUnits)
+  private void mapPackageUnits(InternalCDOPackageUnit[] packageUnits, Set<IDBTable> modelTables)
   {
     if (packageUnits != null && packageUnits.length != 0)
     {
       for (InternalCDOPackageUnit packageUnit : packageUnits)
       {
-        mapPackageInfos(packageUnit.getPackageInfos());
+        mapPackageInfos(packageUnit.getPackageInfos(), modelTables);
       }
     }
   }
 
-  private void mapPackageInfos(InternalCDOPackageInfo[] packageInfos)
+  private void mapPackageInfos(InternalCDOPackageInfo[] packageInfos, Set<IDBTable> modelTables)
   {
     for (InternalCDOPackageInfo packageInfo : packageInfos)
     {
       EPackage ePackage = packageInfo.getEPackage();
       if (!CDOModelUtil.isCorePackage(ePackage))
       {
-        mapClasses(EMFUtil.getPersistentClasses(ePackage));
+        mapClasses(EMFUtil.getPersistentClasses(ePackage), modelTables);
       }
     }
   }
 
-  private void mapClasses(EClass... eClasses)
+  private void mapClasses(EClass[] eClasses, Set<IDBTable> modelTables)
   {
     for (EClass eClass : eClasses)
     {
@@ -411,7 +413,8 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
         // TODO Maybe we should explicitly report unknown values of the annotation
         if (mapping == null || !mapping.equalsIgnoreCase(DBAnnotation.TABLE_MAPPING_NONE))
         {
-          createClassMapping(eClass);
+          IClassMapping classMapping = createClassMapping(eClass);
+          modelTables.addAll(classMapping.getDBTables());
         }
       }
     }

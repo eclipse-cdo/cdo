@@ -662,8 +662,10 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
         }
       }
 
-      throw new IllegalStateException(MessageFormat.format(
-          Messages.getString("CDOPackageRegistryImpl.6"), metaInstance, ePackage) + "\n" + dump()); //$NON-NLS-1$ //$NON-NLS-2$
+      throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOPackageRegistryImpl.6"),
+          metaInstance, ePackage) // $NON-NLS-1$
+      // + "\n" + dump() // $NON-NLS-1$
+      );
     }
 
     private EPackage getContainingPackage(InternalEObject metaInstance)

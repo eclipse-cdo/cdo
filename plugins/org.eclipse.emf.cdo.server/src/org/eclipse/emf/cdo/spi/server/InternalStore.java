@@ -36,7 +36,11 @@ public interface InternalStore extends IStore, ILifecycle
 
   public int getNextLocalBranchID();
 
-  public long getLastCommitTime();
+  public void setLastBranchID(int lastBranchID);
+
+  public void setLastLocalBranchID(int lastLocalBranchID);
 
   public void setLastCommitTime(long lastCommitTime);
+
+  public void setLastMetaID(long lastMetaID);
 }

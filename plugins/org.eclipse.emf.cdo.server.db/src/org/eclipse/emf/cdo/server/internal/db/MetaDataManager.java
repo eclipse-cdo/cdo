@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
@@ -41,6 +43,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -162,6 +165,25 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     {
       monitor.done();
     }
+  }
+
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
+      throws IOException
+  {
+    String where = " WHERE p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.CORE_PACKAGE_URI + //
+        "' AND p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.RESOURCE_PACKAGE_URI + //
+        "' AND p_u." + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+    DBUtil.serializeTable(out, connection, CDODBSchema.PACKAGE_UNITS, "p_u", where);
+
+    String join = ", " + CDODBSchema.PACKAGE_UNITS + " p_u" + where + " AND p_i." + CDODBSchema.PACKAGE_INFOS_UNIT
+        + "=p_u." + CDODBSchema.PACKAGE_UNITS_ID;
+    DBUtil.serializeTable(out, connection, CDODBSchema.PACKAGE_INFOS, "p_i", join);
+  }
+
+  public void rawImport(Connection connection, CDODataInput in) throws IOException
+  {
+    DBUtil.deserializeTable(in, connection, CDODBSchema.PACKAGE_UNITS);
+    DBUtil.deserializeTable(in, connection, CDODBSchema.PACKAGE_INFOS);
   }
 
   protected IDBStore getStore()

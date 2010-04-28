@@ -1010,8 +1010,34 @@ public class Repository extends Container<Object> implements InternalRepository
   public CDOReplicationInfo replicateRaw(CDODataOutput out, int lastReplicatedBranchID, long lastReplicatedCommitTime)
       throws IOException
   {
+    final int fromBranchID = lastReplicatedBranchID + 1;
+    final int toBranchID = getStore().getLastBranchID();
+
+    final long fromCommitTime = lastReplicatedCommitTime + 1L;
+    final long toCommitTime = getStore().getLastCommitTime();
+
+    // InternalCDOPackageRegistry packageRegistry = getPackageRegistry(false);
+    // InternalCDOPackageUnit[] packageUnits = packageRegistry.getPackageUnits(fromCommitTime, toCommitTime);
+    // out.writeInt(packageUnits.length);
+    // for (InternalCDOPackageUnit packageUnit : packageUnits)
+    // {
+    // }
+
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-    return accessor.rawExport(out, lastReplicatedBranchID, lastReplicatedCommitTime);
+    accessor.rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
+
+    return new CDOReplicationInfo()
+    {
+      public int getLastReplicatedBranchID()
+      {
+        return toBranchID;
+      }
+
+      public long getLastReplicatedCommitTime()
+      {
+        return toCommitTime;
+      }
+    };
   }
 
   public void replicate(CDOReplicationContext context)

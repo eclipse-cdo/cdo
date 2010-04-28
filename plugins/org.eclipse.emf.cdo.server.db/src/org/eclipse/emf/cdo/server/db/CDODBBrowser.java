@@ -286,7 +286,7 @@ public class CDODBBrowser extends Worker
         pout.print("<tr>\r\n");
 
         pout.print("<td valign=\"top\">\r\n");
-        showTables(pout, connection);
+        showTables(pout, connection, repo);
         pout.print("</td>\r\n");
 
         if (table != null)
@@ -310,11 +310,11 @@ public class CDODBBrowser extends Worker
     }
   }
 
-  protected void showTables(PrintStream pout, Connection connection)
+  protected void showTables(PrintStream pout, Connection connection, String repo)
   {
     String table = getParam("table");
 
-    List<String> allTableNames = DBUtil.getAllTableNames(connection, null);
+    List<String> allTableNames = DBUtil.getAllTableNames(connection, repo);
     for (String tableName : allTableNames)
     {
       String label = escape(tableName).toLowerCase();

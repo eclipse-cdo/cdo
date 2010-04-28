@@ -105,18 +105,16 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
   }
 
-  public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, int lastReplicatedBranchID, int lastBranchID,
-      long lastReplicatedCommitTime, long lastCommitTime) throws IOException
+  public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, int fromBranchID, int toBranchID,
+      long fromCommitTime, long toCommitTime) throws IOException
   {
     StringBuilder builder = new StringBuilder();
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(lastReplicatedCommitTime);
-    builder.append("<"); //$NON-NLS-1$
+    builder.append(" WHERE a_t."); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append(" BETWEEN "); //$NON-NLS-1$
+    builder.append(fromCommitTime);
     builder.append(" AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-    builder.append("<="); //$NON-NLS-1$
-    builder.append(lastCommitTime);
+    builder.append(toCommitTime);
 
     String attrSuffix = builder.toString();
     Connection connection = accessor.getConnection();
@@ -128,7 +126,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       out.writeCDOClassifierRef(eClass);
 
       IDBTable table = classMapping.getDBTables().get(0);
-      DBUtil.serializeTable(out, connection, table, attrSuffix);
+      DBUtil.serializeTable(out, connection, table, "a_t", attrSuffix);
 
       for (IListMapping listMapping : classMapping.getListMappings())
       {
@@ -144,14 +142,14 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   {
     for (IDBTable table : listMapping.getDBTables())
     {
-      String listSuffix = ", " + attrTable + " cdo_2" + attrSuffix;
-      String listJoin = getListJoin("cdo_2", "cdo_1");
+      String listSuffix = ", " + attrTable + " a_t" + attrSuffix;
+      String listJoin = getListJoin("a_t", "l_t");
       if (listJoin != null)
       {
         listSuffix += listJoin;
       }
 
-      DBUtil.serializeTable(out, connection, table, listSuffix);
+      DBUtil.serializeTable(out, connection, table, "l_t", listSuffix);
     }
   }
 

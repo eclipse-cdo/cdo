@@ -13,6 +13,8 @@
  */
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -20,6 +22,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EPackage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.Collection;
 
@@ -83,4 +86,15 @@ public interface IMetaDataManager
    * @since 2.0
    */
   public void writePackageUnits(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor);
+
+  /**
+   * @since 3.0
+   */
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
+      throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  public void rawImport(Connection connection, CDODataInput in) throws IOException;
 }

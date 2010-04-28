@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
+import org.eclipse.emf.ecore.EModelElement;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -77,11 +79,32 @@ public interface IStore
   public long getCreationTime();
 
   /**
-   * Returns the time stamp of the last csuccessful commit operation.
+   * Returns the id of the last branch that has been created in this store.
+   * 
+   * @since 3.0
+   */
+  public int getLastBranchID();
+
+  /**
+   * Returns the id of the last local branch that has been created in this store.
+   * 
+   * @since 3.0
+   */
+  public int getLastLocalBranchID();
+
+  /**
+   * Returns the time stamp of the last successful commit operation.
    * 
    * @since 3.0
    */
   public long getLastCommitTime();
+
+  /**
+   * Returns the id of the last {@link EModelElement} that has been committed to this store.
+   * 
+   * @since 3.0
+   */
+  public long getLastMetaID();
 
   /**
    * @since 3.0

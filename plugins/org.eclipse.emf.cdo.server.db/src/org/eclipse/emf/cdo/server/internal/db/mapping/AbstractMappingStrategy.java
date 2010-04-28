@@ -187,7 +187,8 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     Set<CDOID> result = new HashSet<CDOID>();
     for (IClassMapping mapping : getClassMappings().values())
     {
-      result.addAll(mapping.readChangeSet(accessor, segments));
+      Set<CDOID> ids = mapping.readChangeSet(accessor, segments);
+      result.addAll(ids);
     }
 
     return result;

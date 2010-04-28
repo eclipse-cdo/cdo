@@ -33,7 +33,6 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
-import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
@@ -696,7 +695,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     throw new UnsupportedOperationException();
   }
 
-  public CDOReplicationInfo rawExport(CDODataOutput out, int lastReplicatedBranchID, long lastReplicatedCommitTime)
+  public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException
   {
     throw new UnsupportedOperationException();

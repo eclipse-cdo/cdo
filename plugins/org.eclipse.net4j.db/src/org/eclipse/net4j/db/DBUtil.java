@@ -246,7 +246,7 @@ public final class DBUtil
     {
       List<String> names = new ArrayList<String>();
       DatabaseMetaData metaData = connection.getMetaData();
-      tables = metaData.getTables(dbName, null, null, new String[] { "TABLE" }); //$NON-NLS-1$
+      tables = metaData.getTables(null, dbName.toUpperCase(), null, new String[] { "TABLE" }); //$NON-NLS-1$
       while (tables.next())
       {
         String name = tables.getString(3);
@@ -568,8 +568,8 @@ public final class DBUtil
   /**
    * @since 3.0
    */
-  public static void serializeTable(ExtendedDataOutput out, Connection connection, IDBTable table, String sqlSuffix)
-      throws DBException, IOException
+  public static void serializeTable(ExtendedDataOutput out, Connection connection, IDBTable table, String tableAlias,
+      String sqlSuffix) throws DBException, IOException
   {
     IDBField[] fields = table.getFields();
 
@@ -582,13 +582,22 @@ public final class DBUtil
         builder.append(", "); //$NON-NLS-1$
       }
 
-      builder.append("cdo_1."); //$NON-NLS-1$
+      if (tableAlias != null)
+      {
+        builder.append(tableAlias);
+        builder.append("."); //$NON-NLS-1$
+      }
+
       builder.append(fields[i]);
     }
 
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(table);
-    builder.append(" cdo_1"); //$NON-NLS-1$
+    if (tableAlias != null)
+    {
+      builder.append(" "); //$NON-NLS-1$
+      builder.append(tableAlias);
+    }
 
     if (sqlSuffix != null)
     {
@@ -612,7 +621,9 @@ public final class DBUtil
           for (int i = 0; i < fields.length; i++)
           {
             IDBField field = fields[i];
-            field.getType().writeValue(out, resultSet, i + 1);
+            DBType type = field.getType();
+            boolean canBeNull = !field.isNotNull();
+            type.writeValue(out, resultSet, i + 1, canBeNull);
           }
         }
 
@@ -678,7 +689,9 @@ public final class DBUtil
         for (int i = 0; i < fields.length; i++)
         {
           IDBField field = fields[i];
-          field.getType().readValue(in, statement, i + 1);
+          DBType type = field.getType();
+          boolean canBeNull = !field.isNotNull();
+          type.readValue(in, statement, i + 1, canBeNull);
         }
 
         statement.addBatch();

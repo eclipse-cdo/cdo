@@ -44,7 +44,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -823,34 +822,41 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     mappingStrategy.handleRevisions(this, eClass, branch, timeStamp, new DBRevisionHandler(handler));
   }
 
-  public CDOReplicationInfo rawExport(CDODataOutput out, int lastReplicatedBranchID, long lastReplicatedCommitTime)
-      throws IOException
+  public void rawExport(CDODataOutput out, int fromBranchID, final int toBranchID, long fromCommitTime,
+      final long toCommitTime) throws IOException
   {
-    final int lastBranchID = getStore().getLastBranchID();
-    final long lastCommitTime = getStore().getLastCommitTime();
+    Connection connection = getConnection();
+    DBStore store = getStore();
 
-    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    mappingStrategy
-        .rawExport(this, out, lastReplicatedBranchID, lastBranchID, lastReplicatedCommitTime, lastCommitTime);
+    IMetaDataManager metaDataManager = store.getMetaDataManager();
+    metaDataManager.rawExport(connection, out, fromCommitTime, toCommitTime);
 
-    return new CDOReplicationInfo()
-    {
-      public int getLastReplicatedBranchID()
-      {
-        return lastBranchID;
-      }
+    String where = " WHERE " + CDODBSchema.COMMIT_INFOS_TIMESTAMP + " BETWEEN " + fromCommitTime + " AND "
+        + toCommitTime;
+    DBUtil.serializeTable(out, connection, CDODBSchema.COMMIT_INFOS, null, where);
 
-      public long getLastReplicatedCommitTime()
-      {
-        return lastCommitTime;
-      }
-    };
+    IMappingStrategy mappingStrategy = store.getMappingStrategy();
+    mappingStrategy.rawExport(this, out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
   }
 
   public void rawImport(CDODataInput in) throws IOException
   {
+    IMetaDataManager metaDataManager = getStore().getMetaDataManager();
+    metaDataManager.rawImport(getConnection(), in);
+
+    DBUtil.deserializeTable(in, connection, CDODBSchema.COMMIT_INFOS);
+
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     mappingStrategy.rawImport(this, in);
+
+    try
+    {
+      connection.commit();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
   }
 
   /**

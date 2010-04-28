@@ -862,8 +862,6 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       packageRegistry.putPackageUnit(packageUnit);
     }
 
-    // store.getDBAdapter().createTables(getModelTables(), connection);
-
     mappingStrategy.createMapping(connection, packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]),
         new Monitor());
 

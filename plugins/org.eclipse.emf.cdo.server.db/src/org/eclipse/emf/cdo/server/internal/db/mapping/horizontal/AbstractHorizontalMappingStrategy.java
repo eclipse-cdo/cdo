@@ -135,7 +135,6 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
 
     out.writeBoolean(false);
-
     objectTypeCache.rawExport(connection, out, fromCommitTime, toCommitTime);
   }
 
@@ -172,6 +171,8 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
         rawImportList(in, connection, listMapping);
       }
     }
+
+    objectTypeCache.rawImport(connection, in);
   }
 
   protected void rawImportList(CDODataInput in, Connection connection, IListMapping listMapping) throws IOException

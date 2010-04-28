@@ -158,14 +158,14 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     sqlSelectForHandle = builder.toString();
 
     // ----------- Select all revisions (for handleRevision) ---
     builder = new StringBuilder("SELECT DISTINCT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     sqlSelectForChangeSet = builder.toString();
   }
@@ -419,7 +419,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
         CDOID id = revision.getID();
         if (revision.getVersion() == CDORevision.FIRST_VERSION)
         {
-          mappingStrategy.putObjectType(accessor, id, eClass);
+          long timeStamp = revision.getTimeStamp();
+          mappingStrategy.putObjectType(accessor, timeStamp, id, eClass);
         }
         else
         {

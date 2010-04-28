@@ -701,7 +701,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     throw new UnsupportedOperationException();
   }
 
-  public void rawImport(CDODataInput in) throws IOException
+  public Collection<InternalCDOPackageUnit> rawImport(CDODataInput in, int fromBranchID, int toBranchID,
+      long fromCommitTime, long toCommitTime) throws IOException
   {
     throw new UnsupportedOperationException();
   }

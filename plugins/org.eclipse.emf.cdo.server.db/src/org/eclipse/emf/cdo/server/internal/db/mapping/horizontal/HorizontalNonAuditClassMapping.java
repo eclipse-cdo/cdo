@@ -116,7 +116,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     for (ITypeMapping singleMapping : getValueMappings())
     {
       builder.append(", "); //$NON-NLS-1$
-      builder.append(singleMapping.getField().getName());
+      builder.append(singleMapping.getField());
     }
 
     if (unsettableFields != null)
@@ -129,7 +129,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
 
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append("=?"); //$NON-NLS-1$
@@ -139,7 +139,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     // ----------- Insert Attributes -------------------------
     builder = new StringBuilder();
     builder.append("INSERT INTO "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
 
     builder.append("("); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
@@ -161,7 +161,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     for (ITypeMapping singleMapping : getValueMappings())
     {
       builder.append(", "); //$NON-NLS-1$
-      builder.append(singleMapping.getField().getName());
+      builder.append(singleMapping.getField());
     }
 
     if (unsettableFields != null)
@@ -195,12 +195,12 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     sqlSelectAllObjectIDs = builder.toString();
 
     // ----------- Update attributes --------------------
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
     builder.append("=? ,"); //$NON-NLS-1$
@@ -312,13 +312,13 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     builder.append("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
     builder.append(">0 AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(nameValueMapping.getField().getName());
+    builder.append(nameValueMapping.getField());
     if (name == null)
     {
       builder.append(" IS NULL"); //$NON-NLS-1$
@@ -675,7 +675,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     {
       builder.append(", "); //$NON-NLS-1$
       ITypeMapping typeMapping = change.getElement1();
-      builder.append(typeMapping.getField().getName());
+      builder.append(typeMapping.getField());
       builder.append(" =? "); //$NON-NLS-1$
 
       if (typeMapping.getFeature().isUnsettable())

@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -31,6 +33,7 @@ import org.eclipse.net4j.util.om.monitor.Monitor;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -46,6 +49,9 @@ import java.util.Set;
  * <li>Provide custom branching strategies.
  * <li>Consider non-auditing masters.
  * <li>Test out-of-order commits.
+ * <li>Don't create branches table if branching not supported.
+ * <li>Implement raw replication for NUMERIC and DECIMAL.
+ * <li>Notify new branches during raw replication.
  * </ul>
  * 
  * @author Eike Stepper
@@ -197,9 +203,26 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   {
     try
     {
+      int fromBranchID = lastReplicatedBranchID + 1;
+      int toBranchID = in.readInt();
+      long fromCommitTime = lastReplicatedCommitTime + 1L;
+      long toCommitTime = in.readLong();
+
       StoreThreadLocal.setSession(replicatorSession);
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-      accessor.rawImport(in);
+
+      Collection<InternalCDOPackageUnit> packageUnits = accessor.rawImport(in, fromBranchID, toBranchID,
+          fromCommitTime, toCommitTime);
+
+      InternalCDOPackageRegistry packageRegistry = getPackageRegistry(false);
+      for (InternalCDOPackageUnit packageUnit : packageUnits)
+      {
+        packageRegistry.putPackageUnit(packageUnit);
+      }
+
+      setLastReplicatedBranchID(toBranchID);
+      setLastReplicatedCommitTime(toCommitTime);
+      setLastCommitTimeStamp(toCommitTime);
     }
     finally
     {

@@ -119,7 +119,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     for (ITypeMapping singleMapping : getValueMappings())
     {
       builder.append(", "); //$NON-NLS-1$
-      builder.append(singleMapping.getField().getName());
+      builder.append(singleMapping.getField());
     }
 
     if (unsettableFields != null)
@@ -132,7 +132,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
 
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append("=? AND "); //$NON-NLS-1$
@@ -167,7 +167,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     // ----------- Insert Attributes -------------------------
     builder = new StringBuilder();
     builder.append("INSERT INTO "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
 
     builder.append("("); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
@@ -191,7 +191,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     for (ITypeMapping singleMapping : getValueMappings())
     {
       builder.append(", "); //$NON-NLS-1$
-      builder.append(singleMapping.getField().getName());
+      builder.append(singleMapping.getField());
     }
 
     if (unsettableFields != null)
@@ -223,7 +223,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
     // ----------- Update to set revised ----------------
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
     builder.append("=? WHERE "); //$NON-NLS-1$
@@ -239,7 +239,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
     builder.append("=0"); //$NON-NLS-1$
@@ -253,14 +253,14 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     sqlSelectForHandle = builder.toString();
 
     // ----------- Select all revisions (for handleRevision) ---
     builder = new StringBuilder("SELECT DISTINCT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     sqlSelectForChangeSet = builder.toString();
   }
@@ -362,7 +362,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
     builder.append(">0 AND "); //$NON-NLS-1$
@@ -370,7 +370,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(nameValueMapping.getField().getName());
+    builder.append(nameValueMapping.getField());
     if (name == null)
     {
       builder.append(" IS NULL"); //$NON-NLS-1$
@@ -591,7 +591,9 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         if (accessor.isNewObject(id))
         {
           // put new objects into objectTypeCache
-          ((HorizontalBranchingMappingStrategy)getMappingStrategy()).putObjectType(accessor, id, getEClass());
+          long timeStamp = revision.getTimeStamp();
+          HorizontalBranchingMappingStrategy mappingStrategy = (HorizontalBranchingMappingStrategy)getMappingStrategy();
+          mappingStrategy.putObjectType(accessor, timeStamp, id, getEClass());
         }
         else if (revision.getVersion() > CDOBranchVersion.FIRST_VERSION)
         {

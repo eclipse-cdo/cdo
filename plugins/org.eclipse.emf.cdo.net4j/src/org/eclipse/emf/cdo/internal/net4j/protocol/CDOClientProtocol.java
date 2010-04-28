@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.CDORawReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
-import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -306,9 +305,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     send(new ReplicateRepositoryRequest(this, context));
   }
 
-  public CDOReplicationInfo replicateRepositoryRaw(CDORawReplicationContext context)
+  public void replicateRepositoryRaw(CDORawReplicationContext context)
   {
-    return send(new ReplicateRepositoryRawRequest(this, context));
+    send(new ReplicateRepositoryRawRequest(this, context));
   }
 
   public CDOChangeSetData[] loadChangeSets(CDOBranchPointRange... ranges)

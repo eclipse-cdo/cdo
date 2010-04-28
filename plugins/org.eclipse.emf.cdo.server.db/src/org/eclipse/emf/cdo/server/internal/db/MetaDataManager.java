@@ -13,6 +13,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
@@ -94,64 +95,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   public Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection)
   {
-    final Map<String, InternalCDOPackageUnit> packageUnits = new HashMap<String, InternalCDOPackageUnit>();
-    IDBRowHandler unitRowHandler = new IDBRowHandler()
-    {
-      public boolean handle(int row, final Object... values)
-      {
-        InternalCDOPackageUnit packageUnit = createPackageUnit();
-        packageUnit.setOriginalType(CDOPackageUnit.Type.values()[(Integer)values[1]]);
-        packageUnit.setTimeStamp((Long)values[2]);
-        packageUnits.put((String)values[0], packageUnit);
-        return true;
-      }
-    };
-
-    DBUtil.select(connection, unitRowHandler, CDODBSchema.PACKAGE_UNITS_ID, CDODBSchema.PACKAGE_UNITS_ORIGINAL_TYPE,
-        CDODBSchema.PACKAGE_UNITS_TIME_STAMP);
-
-    final Map<String, List<InternalCDOPackageInfo>> packageInfos = new HashMap<String, List<InternalCDOPackageInfo>>();
-    IDBRowHandler infoRowHandler = new IDBRowHandler()
-    {
-      public boolean handle(int row, final Object... values)
-      {
-        long metaLB = (Long)values[3];
-        long metaUB = (Long)values[4];
-        CDOIDMetaRange metaIDRange = metaLB == 0 ? null : CDOIDUtil.createMetaRange(CDOIDUtil.createMeta(metaLB),
-            (int)(metaUB - metaLB) + 1);
-
-        InternalCDOPackageInfo packageInfo = createPackageInfo();
-        packageInfo.setPackageURI((String)values[1]);
-        packageInfo.setParentURI((String)values[2]);
-        packageInfo.setMetaIDRange(metaIDRange);
-
-        String unit = (String)values[0];
-        List<InternalCDOPackageInfo> list = packageInfos.get(unit);
-        if (list == null)
-        {
-          list = new ArrayList<InternalCDOPackageInfo>();
-          packageInfos.put(unit, list);
-        }
-
-        list.add(packageInfo);
-        return true;
-      }
-    };
-
-    DBUtil.select(connection, infoRowHandler, CDODBSchema.PACKAGE_INFOS_UNIT, CDODBSchema.PACKAGE_INFOS_URI,
-        CDODBSchema.PACKAGE_INFOS_PARENT, CDODBSchema.PACKAGE_INFOS_META_LB, CDODBSchema.PACKAGE_INFOS_META_UB);
-
-    for (Entry<String, InternalCDOPackageUnit> entry : packageUnits.entrySet())
-    {
-      String id = entry.getKey();
-      InternalCDOPackageUnit packageUnit = entry.getValue();
-
-      List<InternalCDOPackageInfo> list = packageInfos.get(id);
-      InternalCDOPackageInfo[] array = list.toArray(new InternalCDOPackageInfo[list.size()]);
-      packageUnit.setPackageInfos(array);
-    }
-
-    return packageUnits.values();
+    return readPackageUnits(connection, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
   public final void writePackageUnits(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
@@ -170,20 +114,25 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
       throws IOException
   {
+    // Export package units
     String where = " WHERE p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.CORE_PACKAGE_URI + //
         "' AND p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.RESOURCE_PACKAGE_URI + //
         "' AND p_u." + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, CDODBSchema.PACKAGE_UNITS, "p_u", where);
 
+    // Export package infos
     String join = ", " + CDODBSchema.PACKAGE_UNITS + " p_u" + where + " AND p_i." + CDODBSchema.PACKAGE_INFOS_UNIT
         + "=p_u." + CDODBSchema.PACKAGE_UNITS_ID;
     DBUtil.serializeTable(out, connection, CDODBSchema.PACKAGE_INFOS, "p_i", join);
   }
 
-  public void rawImport(Connection connection, CDODataInput in) throws IOException
+  public Collection<InternalCDOPackageUnit> rawImport(Connection connection, CDODataInput in, long fromCommitTime,
+      long toCommitTime) throws IOException
   {
     DBUtil.deserializeTable(in, connection, CDODBSchema.PACKAGE_UNITS);
     DBUtil.deserializeTable(in, connection, CDODBSchema.PACKAGE_INFOS);
+
+    return readPackageUnits(connection, fromCommitTime, toCommitTime);
   }
 
   protected IDBStore getStore()
@@ -345,5 +294,74 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
       DBUtil.close(pstmt);
       async.stop();
     }
+  }
+
+  private Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection, long fromCommitTime,
+      long toCommitTime)
+  {
+    final Map<String, InternalCDOPackageUnit> packageUnits = new HashMap<String, InternalCDOPackageUnit>();
+    IDBRowHandler unitRowHandler = new IDBRowHandler()
+    {
+      public boolean handle(int row, final Object... values)
+      {
+        InternalCDOPackageUnit packageUnit = createPackageUnit();
+        packageUnit.setOriginalType(CDOPackageUnit.Type.values()[(Integer)values[1]]);
+        packageUnit.setTimeStamp((Long)values[2]);
+        packageUnits.put((String)values[0], packageUnit);
+        return true;
+      }
+    };
+
+    String where = null;
+    if (fromCommitTime != CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      where = CDODBSchema.PACKAGE_UNITS_TIME_STAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+    }
+
+    DBUtil.select(connection, unitRowHandler, where, CDODBSchema.PACKAGE_UNITS_ID,
+        CDODBSchema.PACKAGE_UNITS_ORIGINAL_TYPE, CDODBSchema.PACKAGE_UNITS_TIME_STAMP);
+
+    final Map<String, List<InternalCDOPackageInfo>> packageInfos = new HashMap<String, List<InternalCDOPackageInfo>>();
+    IDBRowHandler infoRowHandler = new IDBRowHandler()
+    {
+      public boolean handle(int row, final Object... values)
+      {
+        long metaLB = (Long)values[3];
+        long metaUB = (Long)values[4];
+        CDOIDMetaRange metaIDRange = metaLB == 0 ? null : CDOIDUtil.createMetaRange(CDOIDUtil.createMeta(metaLB),
+            (int)(metaUB - metaLB) + 1);
+
+        InternalCDOPackageInfo packageInfo = createPackageInfo();
+        packageInfo.setPackageURI((String)values[1]);
+        packageInfo.setParentURI((String)values[2]);
+        packageInfo.setMetaIDRange(metaIDRange);
+
+        String unit = (String)values[0];
+        List<InternalCDOPackageInfo> list = packageInfos.get(unit);
+        if (list == null)
+        {
+          list = new ArrayList<InternalCDOPackageInfo>();
+          packageInfos.put(unit, list);
+        }
+
+        list.add(packageInfo);
+        return true;
+      }
+    };
+
+    DBUtil.select(connection, infoRowHandler, CDODBSchema.PACKAGE_INFOS_UNIT, CDODBSchema.PACKAGE_INFOS_URI,
+        CDODBSchema.PACKAGE_INFOS_PARENT, CDODBSchema.PACKAGE_INFOS_META_LB, CDODBSchema.PACKAGE_INFOS_META_UB);
+
+    for (Entry<String, InternalCDOPackageUnit> entry : packageUnits.entrySet())
+    {
+      String id = entry.getKey();
+      InternalCDOPackageUnit packageUnit = entry.getValue();
+
+      List<InternalCDOPackageInfo> list = packageInfos.get(id);
+      InternalCDOPackageInfo[] array = list.toArray(new InternalCDOPackageInfo[list.size()]);
+      packageUnit.setPackageInfos(array);
+    }
+
+    return packageUnits.values();
   }
 }

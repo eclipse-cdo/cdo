@@ -96,5 +96,6 @@ public interface IMetaDataManager
   /**
    * @since 3.0
    */
-  public void rawImport(Connection connection, CDODataInput in) throws IOException;
+  public Collection<InternalCDOPackageUnit> rawImport(Connection connection, CDODataInput in, long fromCommitTime,
+      long toCommitTime) throws IOException;
 }

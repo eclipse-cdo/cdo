@@ -30,7 +30,6 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.CDORawReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
-import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader;
@@ -185,7 +184,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   /**
    * @since 3.0
    */
-  public CDOReplicationInfo replicateRepositoryRaw(CDORawReplicationContext context);
+  public void replicateRepositoryRaw(CDORawReplicationContext context);
 
   /**
    * @since 3.0

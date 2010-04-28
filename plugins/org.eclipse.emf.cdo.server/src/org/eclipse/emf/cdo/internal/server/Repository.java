@@ -1016,12 +1016,8 @@ public class Repository extends Container<Object> implements InternalRepository
     final long fromCommitTime = lastReplicatedCommitTime + 1L;
     final long toCommitTime = getStore().getLastCommitTime();
 
-    // InternalCDOPackageRegistry packageRegistry = getPackageRegistry(false);
-    // InternalCDOPackageUnit[] packageUnits = packageRegistry.getPackageUnits(fromCommitTime, toCommitTime);
-    // out.writeInt(packageUnits.length);
-    // for (InternalCDOPackageUnit packageUnit : packageUnits)
-    // {
-    // }
+    out.writeInt(toBranchID);
+    out.writeLong(toCommitTime);
 
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     accessor.rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);

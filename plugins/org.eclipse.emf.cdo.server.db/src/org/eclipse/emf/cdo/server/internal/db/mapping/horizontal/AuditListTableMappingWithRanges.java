@@ -48,8 +48,8 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBField;
-import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -203,7 +203,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
 
     // ----------------- remove current entry -----------------
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
     builder.append("=? "); //$NON-NLS-1$
@@ -218,7 +218,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
 
     // ----------------- delete temporary entry -----------------
     builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
@@ -230,7 +230,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
 
     // ----------------- update index -----------------
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
     builder.append("=? WHERE "); //$NON-NLS-1$
@@ -246,7 +246,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_VALUE);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
@@ -258,7 +258,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
 
     // ----------- clear list items -------------------------
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
     builder.append("=? "); //$NON-NLS-1$
@@ -271,7 +271,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
 
     // ----------- delete temporary list items -------------------------
     builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$

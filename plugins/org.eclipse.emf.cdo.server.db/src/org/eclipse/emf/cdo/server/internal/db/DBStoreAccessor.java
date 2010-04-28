@@ -822,27 +822,33 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     mappingStrategy.handleRevisions(this, eClass, branch, timeStamp, new DBRevisionHandler(handler));
   }
 
-  public void rawExport(CDODataOutput out, int fromBranchID, final int toBranchID, long fromCommitTime,
-      final long toCommitTime) throws IOException
+  public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
+      throws IOException
   {
     Connection connection = getConnection();
     DBStore store = getStore();
 
+    String where = " WHERE " + CDODBSchema.BRANCHES_ID + " BETWEEN " + fromBranchID + " AND " + toBranchID;
+    DBUtil.serializeTable(out, connection, CDODBSchema.BRANCHES, null, where);
+
     IMetaDataManager metaDataManager = store.getMetaDataManager();
     metaDataManager.rawExport(connection, out, fromCommitTime, toCommitTime);
 
-    String where = " WHERE " + CDODBSchema.COMMIT_INFOS_TIMESTAMP + " BETWEEN " + fromCommitTime + " AND "
-        + toCommitTime;
+    where = " WHERE " + CDODBSchema.COMMIT_INFOS_TIMESTAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, CDODBSchema.COMMIT_INFOS, null, where);
 
     IMappingStrategy mappingStrategy = store.getMappingStrategy();
     mappingStrategy.rawExport(this, out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
   }
 
-  public void rawImport(CDODataInput in) throws IOException
+  public Collection<InternalCDOPackageUnit> rawImport(CDODataInput in, int fromBranchID, int toBranchID,
+      long fromCommitTime, long toCommitTime) throws IOException
   {
+    DBUtil.deserializeTable(in, connection, CDODBSchema.BRANCHES);
+
     IMetaDataManager metaDataManager = getStore().getMetaDataManager();
-    metaDataManager.rawImport(getConnection(), in);
+    Collection<InternalCDOPackageUnit> packageUnits = metaDataManager.rawImport(getConnection(), in, fromCommitTime,
+        toCommitTime);
 
     DBUtil.deserializeTable(in, connection, CDODBSchema.COMMIT_INFOS);
 
@@ -857,6 +863,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     {
       throw new DBException(ex);
     }
+
+    return packageUnits;
   }
 
   /**

@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 
 import java.io.IOException;
 
@@ -41,8 +40,6 @@ public class ReplicateRepositoryRawIndication extends CDOReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    CDOReplicationInfo info = getRepository().replicateRaw(out, lastReplicatedBranchID, lastReplicatedCommitTime);
-    out.writeInt(info.getLastReplicatedBranchID());
-    out.writeLong(info.getLastReplicatedCommitTime());
+    getRepository().replicateRaw(out, lastReplicatedBranchID, lastReplicatedCommitTime);
   }
 }

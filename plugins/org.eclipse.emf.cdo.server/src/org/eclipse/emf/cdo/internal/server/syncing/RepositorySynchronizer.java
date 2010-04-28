@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
-import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
@@ -389,9 +388,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
       CDOSessionProtocol sessionProtocol = remoteSession.getSessionProtocol();
       if (isRawReplication())
       {
-        CDOReplicationInfo result = sessionProtocol.replicateRepositoryRaw(localRepository);
-        localRepository.setLastReplicatedBranchID(result.getLastReplicatedBranchID());
-        localRepository.setLastReplicatedCommitTime(result.getLastReplicatedCommitTime());
+        sessionProtocol.replicateRepositoryRaw(localRepository);
       }
       else
       {

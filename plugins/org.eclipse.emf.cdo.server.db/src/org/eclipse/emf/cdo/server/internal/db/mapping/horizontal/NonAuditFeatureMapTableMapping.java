@@ -92,7 +92,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     // ----------- clear list -------------------------
 
     builder.append("DELETE FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
     builder.append("=? "); //$NON-NLS-1$
@@ -108,7 +108,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     // ----------- update one item index --------------
     builder = new StringBuilder();
     builder.append("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_IDX);
     builder.append("=? "); //$NON-NLS-1$
@@ -122,7 +122,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     // ----------- update one item value --------------
     builder = new StringBuilder();
     builder.append("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
 
     builder.append(CDODBSchema.FEATUREMAP_TAG);
@@ -151,7 +151,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     // ----------- move down --------------
     builder = new StringBuilder();
     builder.append("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_IDX);
     builder.append("="); //$NON-NLS-1$
@@ -171,7 +171,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     // ----------- move up --------------
     builder = new StringBuilder();
     builder.append("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_IDX);
     builder.append("="); //$NON-NLS-1$

@@ -95,7 +95,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     StringBuilder builder = new StringBuilder();
 
     builder.append("DELETE FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
     builder.append("=? "); //$NON-NLS-1$
@@ -111,7 +111,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     // ----------- update one item --------------------
     builder = new StringBuilder();
     builder.append("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_VALUE);
     builder.append("=? "); //$NON-NLS-1$
@@ -125,7 +125,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     // ----------- insert one item --------------------
     builder = new StringBuilder();
     builder.append("INSERT INTO "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" ("); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
     builder.append(", "); //$NON-NLS-1$
@@ -138,7 +138,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     // ----------- update one item index --------------
     builder = new StringBuilder();
     builder.append("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
     builder.append("=? "); //$NON-NLS-1$

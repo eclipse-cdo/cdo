@@ -192,8 +192,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   public void rollback();
 
   /**
-   * @param toBranchID TODO
-   * @param toCommitTime TODO
    * @since 3.0
    */
   public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
@@ -202,7 +200,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   /**
    * @since 3.0
    */
-  public void rawImport(CDODataInput in) throws IOException;
+  public Collection<InternalCDOPackageUnit> rawImport(CDODataInput in, int fromBranchID, int toBranchID,
+      long fromCommitTime, long toCommitTime) throws IOException;
 
   public void release();
 

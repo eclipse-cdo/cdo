@@ -13,9 +13,12 @@ package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 
 import org.eclipse.emf.ecore.EClass;
 
+import java.io.IOException;
 import java.sql.Connection;
 
 /**
@@ -29,9 +32,9 @@ public interface IObjectTypeCache
   public CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id);
 
   /**
-   * @since 2.0
+   * @since 3.0
    */
-  public void putObjectType(IDBStoreAccessor accessor, CDOID id, EClass type);
+  public void putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type);
 
   /**
    * @since 2.0
@@ -47,4 +50,15 @@ public interface IObjectTypeCache
    * @since 3.0
    */
   public long getMaxID(Connection connection);
+
+  /**
+   * @since 3.0
+   */
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
+      throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  public void rawImport(Connection connection, CDODataInput in) throws IOException;
 }

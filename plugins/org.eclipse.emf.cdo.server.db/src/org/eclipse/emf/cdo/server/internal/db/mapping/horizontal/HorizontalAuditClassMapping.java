@@ -115,7 +115,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     for (ITypeMapping singleMapping : getValueMappings())
     {
       builder.append(", "); //$NON-NLS-1$
-      builder.append(singleMapping.getField().getName());
+      builder.append(singleMapping.getField());
     }
 
     if (unsettableFields != null)
@@ -128,7 +128,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     }
 
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append("=? AND ("); //$NON-NLS-1$
@@ -161,7 +161,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     // ----------- Insert Attributes -------------------------
     builder = new StringBuilder();
     builder.append("INSERT INTO "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
 
     builder.append("("); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
@@ -183,7 +183,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     for (ITypeMapping singleMapping : getValueMappings())
     {
       builder.append(", "); //$NON-NLS-1$
-      builder.append(singleMapping.getField().getName());
+      builder.append(singleMapping.getField());
     }
 
     if (unsettableFields != null)
@@ -215,7 +215,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
 
     // ----------- Update to set revised ----------------
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
     builder.append("=? WHERE "); //$NON-NLS-1$
@@ -229,7 +229,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
     builder.append("=0"); //$NON-NLS-1$
@@ -326,13 +326,13 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     builder.append("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable().getName());
+    builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
     builder.append(">0 AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(nameValueMapping.getField().getName());
+    builder.append(nameValueMapping.getField());
     if (name == null)
     {
       builder.append(" IS NULL"); //$NON-NLS-1$

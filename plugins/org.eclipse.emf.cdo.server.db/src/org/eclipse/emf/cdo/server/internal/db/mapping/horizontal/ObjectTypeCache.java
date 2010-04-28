@@ -16,6 +16,8 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.IObjectTypeCache;
@@ -37,6 +39,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.EClass;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -58,6 +61,8 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
   private IDBField idField;
 
   private IDBField typeField;
+
+  private IDBField timeField;
 
   private String sqlDelete;
 
@@ -113,7 +118,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     }
   }
 
-  public final void putObjectType(IDBStoreAccessor accessor, CDOID id, EClass type)
+  public final void putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
   {
     PreparedStatement stmt = null;
 
@@ -122,6 +127,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
       stmt = accessor.getStatementCache().getPreparedStatement(sqlInsert, ReuseProbability.MAX);
       stmt.setLong(1, CDOIDUtil.getLong(id));
       stmt.setLong(2, metaDataManager.getMetaID(type));
+      stmt.setLong(3, timeStamp);
       DBUtil.trace(stmt.toString());
       int result = stmt.executeUpdate();
 
@@ -175,6 +181,18 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     return DBUtil.selectMaximumLong(connection, idField);
   }
 
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
+      throws IOException
+  {
+    String where = " WHERE " + timeField + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+    DBUtil.serializeTable(out, connection, table, null, where);
+  }
+
+  public void rawImport(Connection connection, CDODataInput in) throws IOException
+  {
+    DBUtil.deserializeTable(in, connection, table);
+  }
+
   @Override
   protected void doBeforeActivate() throws Exception
   {
@@ -191,6 +209,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     table = schema.addTable(CDODBSchema.CDO_OBJECTS);
     idField = table.addField(CDODBSchema.ATTRIBUTES_ID, DBType.BIGINT);
     typeField = table.addField(CDODBSchema.ATTRIBUTES_CLASS, DBType.BIGINT);
+    timeField = table.addField(CDODBSchema.ATTRIBUTES_CREATED, DBType.BIGINT);
     table.addIndex(IDBIndex.Type.UNIQUE, idField);
 
     IDBStoreAccessor writer = getMappingStrategy().getStore().getWriter(null);
@@ -215,11 +234,9 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
       LifecycleUtil.deactivate(writer); // Don't let the null-context accessor go to the pool!
     }
 
-    sqlSelect = "SELECT " + typeField.getName() + " FROM " + table.getName() + " WHERE " + idField.getName() + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-    sqlInsert = "INSERT INTO " + table.getName() + "(" //$NON-NLS-1$ //$NON-NLS-2$
-        + idField.getName() + "," + typeField.getName() //$NON-NLS-1$
-        + ") VALUES (?,?)"; //$NON-NLS-1$
-    sqlDelete = "DELETE FROM " + table.getName() + " WHERE " + idField.getName() + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    sqlSelect = "SELECT " + typeField + " FROM " + table + " WHERE " + idField + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+    sqlInsert = "INSERT INTO " + table + "(" + idField + "," + typeField + "," + timeField + ") VALUES (?, ?, ?)";
+    sqlDelete = "DELETE FROM " + table + " WHERE " + idField + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
   @Override

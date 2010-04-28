@@ -70,9 +70,9 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     return objectTypeCache.getObjectType(accessor, id);
   }
 
-  public void putObjectType(IDBStoreAccessor accessor, CDOID id, EClass type)
+  public void putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
   {
-    objectTypeCache.putObjectType(accessor, id, type);
+    objectTypeCache.putObjectType(accessor, timeStamp, id, type);
   }
 
   public long[] repairAfterCrash(IDBAdapter dbAdapter, Connection connection)
@@ -135,6 +135,8 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
 
     out.writeBoolean(false);
+
+    objectTypeCache.rawExport(connection, out, fromCommitTime, toCommitTime);
   }
 
   protected void rawExportList(CDODataOutput out, Connection connection, IListMapping listMapping, IDBTable attrTable,

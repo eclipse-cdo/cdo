@@ -341,9 +341,10 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     throw new UnsupportedOperationException();
   }
 
-  public void rawImport(CDODataInput in) throws IOException
+  public Collection<InternalCDOPackageUnit> rawImport(CDODataInput in, int fromBranchID, int toBranchID,
+      long fromCommitTime, long toCommitTime) throws IOException
   {
-    // TODO: implement MEMStoreAccessor.rawImport(in)
+    // TODO: implement MEMStoreAccessor.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime)
     throw new UnsupportedOperationException();
   }
 

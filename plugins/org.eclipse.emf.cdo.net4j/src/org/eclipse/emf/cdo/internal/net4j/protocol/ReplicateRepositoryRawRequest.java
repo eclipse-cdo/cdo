@@ -14,14 +14,13 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.common.CDORawReplicationContext;
-import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 
 import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public class ReplicateRepositoryRawRequest extends CDOClientRequest<CDOReplicationInfo>
+public class ReplicateRepositoryRawRequest extends CDOClientRequest<Boolean>
 {
   private CDORawReplicationContext context;
 
@@ -39,22 +38,9 @@ public class ReplicateRepositoryRawRequest extends CDOClientRequest<CDOReplicati
   }
 
   @Override
-  protected CDOReplicationInfo confirming(CDODataInput in) throws IOException
+  protected Boolean confirming(CDODataInput in) throws IOException
   {
     context.replicateRaw(in);
-    final int lastBranchID = in.readInt();
-    final long lastCommitTime = in.readLong();
-    return new CDOReplicationInfo()
-    {
-      public int getLastReplicatedBranchID()
-      {
-        return lastBranchID;
-      }
-
-      public long getLastReplicatedCommitTime()
-      {
-        return lastCommitTime;
-      }
-    };
+    return true;
   }
 }

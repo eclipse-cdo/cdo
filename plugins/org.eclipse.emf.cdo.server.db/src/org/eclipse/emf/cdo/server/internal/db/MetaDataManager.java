@@ -316,7 +316,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     if (fromCommitTime != CDOBranchPoint.UNSPECIFIED_DATE)
     {
       where = CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.CORE_PACKAGE_URI + "' AND "
-          + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.RESOURCE_PACKAGE_URI + " AND "
+          + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.RESOURCE_PACKAGE_URI + "' AND "
           + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     }
 

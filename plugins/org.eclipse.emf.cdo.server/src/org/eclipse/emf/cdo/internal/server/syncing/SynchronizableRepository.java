@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
@@ -211,14 +210,8 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       StoreThreadLocal.setSession(replicatorSession);
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
 
-      Collection<InternalCDOPackageUnit> packageUnits = accessor.rawImport(in, fromBranchID, toBranchID,
-          fromCommitTime, toCommitTime);
-
-      InternalCDOPackageRegistry packageRegistry = getPackageRegistry(false);
-      for (InternalCDOPackageUnit packageUnit : packageUnits)
-      {
-        packageRegistry.putPackageUnit(packageUnit);
-      }
+      Collection<InternalCDOPackageUnit> XXXXXXXXXXXXXXXXXXXXXXXXX = //
+      accessor.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
 
       setLastReplicatedBranchID(toBranchID);
       setLastReplicatedCommitTime(toCommitTime);

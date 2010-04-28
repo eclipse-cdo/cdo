@@ -48,6 +48,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -846,13 +847,20 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   {
     DBUtil.deserializeTable(in, connection, CDODBSchema.BRANCHES);
 
-    IMetaDataManager metaDataManager = getStore().getMetaDataManager();
+    DBStore store = getStore();
+    IMetaDataManager metaDataManager = store.getMetaDataManager();
     Collection<InternalCDOPackageUnit> packageUnits = metaDataManager.rawImport(getConnection(), in, fromCommitTime,
         toCommitTime);
 
+    InternalCDOPackageRegistry packageRegistry = store.getRepository().getPackageRegistry(false);
+    for (InternalCDOPackageUnit packageUnit : packageUnits)
+    {
+      packageRegistry.putPackageUnit(packageUnit);
+    }
+
     DBUtil.deserializeTable(in, connection, CDODBSchema.COMMIT_INFOS);
 
-    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    IMappingStrategy mappingStrategy = store.getMappingStrategy();
     mappingStrategy.rawImport(this, in);
 
     try

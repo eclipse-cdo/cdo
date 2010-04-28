@@ -377,6 +377,17 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     }
   }
 
+  private void mapPackageUnits(InternalCDOPackageUnit[] packageUnits)
+  {
+    if (packageUnits != null && packageUnits.length != 0)
+    {
+      for (InternalCDOPackageUnit packageUnit : packageUnits)
+      {
+        mapPackageInfos(packageUnit.getPackageInfos());
+      }
+    }
+  }
+
   private void mapPackageInfos(InternalCDOPackageInfo[] packageInfos)
   {
     for (InternalCDOPackageInfo packageInfo : packageInfos)
@@ -402,17 +413,6 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
         {
           createClassMapping(eClass);
         }
-      }
-    }
-  }
-
-  private void mapPackageUnits(InternalCDOPackageUnit[] packageUnits)
-  {
-    if (packageUnits != null && packageUnits.length != 0)
-    {
-      for (InternalCDOPackageUnit packageUnit : packageUnits)
-      {
-        mapPackageInfos(packageUnit.getPackageInfos());
       }
     }
   }

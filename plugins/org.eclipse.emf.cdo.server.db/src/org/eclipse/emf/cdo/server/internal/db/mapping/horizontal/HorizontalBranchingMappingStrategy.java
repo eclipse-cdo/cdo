@@ -15,9 +15,17 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 
+import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.ddl.IDBTable;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * @author Eike Stepper
@@ -60,6 +68,58 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
   public IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature)
   {
     return new BranchingFeatureMapTableMapping(this, containingClass, feature);
+  }
+
+  @Override
+  protected void rawImportReviseOldRevisions(Connection connection, IDBTable table)
+  {
+    String sqlUpdate = "UPDATE " + table + " SET " + CDODBSchema.ATTRIBUTES_REVISED + "=? WHERE "
+        + CDODBSchema.ATTRIBUTES_ID + "=? AND " + CDODBSchema.ATTRIBUTES_BRANCH + "=? AND "
+        + CDODBSchema.ATTRIBUTES_VERSION + "=?";
+
+    String sqlQuery = "SELECT cdo1." + CDODBSchema.ATTRIBUTES_ID + ", cdo1." + CDODBSchema.ATTRIBUTES_BRANCH
+        + ", cdo1." + CDODBSchema.ATTRIBUTES_VERSION + ", cdo2." + CDODBSchema.ATTRIBUTES_CREATED + " FROM " + table
+        + " cdo1, " + table + " cdo2 WHERE cdo1." + CDODBSchema.ATTRIBUTES_ID + "=cdo2." + CDODBSchema.ATTRIBUTES_ID
+        + " AND cdo1." + CDODBSchema.ATTRIBUTES_BRANCH + "=cdo2." + CDODBSchema.ATTRIBUTES_BRANCH + " AND cdo1."
+        + CDODBSchema.ATTRIBUTES_VERSION + "=cdo2." + CDODBSchema.ATTRIBUTES_VERSION + "-1 AND cdo1."
+        + CDODBSchema.ATTRIBUTES_REVISED + "=0";
+
+    PreparedStatement stmtUpdate = null;
+    PreparedStatement stmtQuery = null;
+    ResultSet resultSet = null;
+
+    try
+    {
+      stmtUpdate = connection.prepareStatement(sqlUpdate);
+      stmtQuery = connection.prepareStatement(sqlQuery);
+
+      resultSet = stmtQuery.executeQuery();
+      while (resultSet.next())
+      {
+        long id = resultSet.getLong(1);
+        int branch = resultSet.getInt(2);
+        int version = resultSet.getInt(3);
+        long revised = resultSet.getLong(4) - 1L;
+
+        stmtUpdate.setLong(1, revised);
+        stmtUpdate.setLong(2, id);
+        stmtUpdate.setInt(3, branch);
+        stmtUpdate.setInt(4, version);
+        stmtUpdate.addBatch();
+      }
+
+      stmtUpdate.executeBatch();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+      DBUtil.close(stmtQuery);
+      DBUtil.close(stmtUpdate);
+    }
   }
 
   @Override

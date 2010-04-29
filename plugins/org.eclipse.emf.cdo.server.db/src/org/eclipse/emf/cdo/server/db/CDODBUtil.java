@@ -139,11 +139,12 @@ public final class CDODBUtil
   /**
    * @since 3.0
    */
-  public static long convertCDOIDToLong(IExternalReferenceManager manager, IDBStoreAccessor accessor, CDOID id)
+  public static long convertCDOIDToLong(IExternalReferenceManager manager, IDBStoreAccessor accessor, CDOID id,
+      long commitTime)
   {
     if (id.getType() == CDOID.Type.EXTERNAL_OBJECT)
     {
-      return manager.mapExternalReference(accessor, (CDOIDExternal)id);
+      return manager.mapExternalReference(accessor, (CDOIDExternal)id, commitTime);
     }
 
     return CDOIDUtil.getLong(id);

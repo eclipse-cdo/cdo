@@ -836,6 +836,9 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     where = " WHERE " + CDODBSchema.COMMIT_INFOS_TIMESTAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, CDODBSchema.COMMIT_INFOS, null, where);
 
+    where = " WHERE " + CDODBSchema.EXTERNAL_TIMESTAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+    DBUtil.serializeTable(out, connection, CDODBSchema.EXTERNAL_REFS, null, where);
+
     IMetaDataManager metaDataManager = store.getMetaDataManager();
     metaDataManager.rawExport(connection, out, fromCommitTime, toCommitTime);
 
@@ -843,29 +846,15 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     mappingStrategy.rawExport(this, out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
   }
 
-  public Collection<InternalCDOPackageUnit> rawImport(CDODataInput in, int fromBranchID, int toBranchID,
-      long fromCommitTime, long toCommitTime) throws IOException
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
+      throws IOException
   {
-    DBStore store = getStore();
-    IMappingStrategy mappingStrategy = store.getMappingStrategy();
-    IMetaDataManager metaDataManager = store.getMetaDataManager();
-
     DBUtil.deserializeTable(in, connection, CDODBSchema.BRANCHES);
     DBUtil.deserializeTable(in, connection, CDODBSchema.COMMIT_INFOS);
+    DBUtil.deserializeTable(in, connection, CDODBSchema.EXTERNAL_REFS);
 
-    Collection<InternalCDOPackageUnit> packageUnits = metaDataManager.rawImport(getConnection(), in, fromCommitTime,
-        toCommitTime);
-
-    InternalCDOPackageRegistry packageRegistry = store.getRepository().getPackageRegistry(false);
-    for (InternalCDOPackageUnit packageUnit : packageUnits)
-    {
-      packageRegistry.putPackageUnit(packageUnit);
-    }
-
-    mappingStrategy.createMapping(connection, packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]),
-        new Monitor());
-
-    mappingStrategy.rawImport(this, in);
+    rawImportPackageUnits(in, fromCommitTime, toCommitTime);
+    getStore().getMappingStrategy().rawImport(this, in);
 
     try
     {
@@ -875,8 +864,26 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     {
       throw new DBException(ex);
     }
+  }
 
-    return packageUnits;
+  protected void rawImportPackageUnits(CDODataInput in, long fromCommitTime, long toCommitTime) throws IOException
+  {
+    DBStore store = getStore();
+    IMetaDataManager metaDataManager = store.getMetaDataManager();
+    Collection<InternalCDOPackageUnit> packageUnits = metaDataManager.rawImport(getConnection(), in, fromCommitTime,
+        toCommitTime);
+
+    InternalRepository repository = store.getRepository();
+    InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
+
+    for (InternalCDOPackageUnit packageUnit : packageUnits)
+    {
+      packageRegistry.putPackageUnit(packageUnit);
+    }
+
+    IMappingStrategy mappingStrategy = store.getMappingStrategy();
+    mappingStrategy.createMapping(connection, packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]),
+        new Monitor());
   }
 
   /**

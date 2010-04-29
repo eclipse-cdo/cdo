@@ -448,25 +448,24 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   protected final void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
+    long commitTime = revision.getTimeStamp();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlInsertAttributes, ReuseProbability.HIGH);
-
       int col = 1;
-
+      stmt = statementCache.getPreparedStatement(sqlInsertAttributes, ReuseProbability.HIGH);
       stmt.setLong(col++, CDOIDUtil.getLong(revision.getID()));
       stmt.setInt(col++, revision.getVersion());
       stmt.setInt(col++, revision.getBranch().getID());
       stmt.setLong(col++, accessor.getStore().getMetaDataManager().getMetaID(revision.getEClass()));
-      stmt.setLong(col++, revision.getTimeStamp());
+      stmt.setLong(col++, commitTime);
       stmt.setLong(col++, revision.getRevised());
       stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, revision
-          .getResourceID()));
+          .getResourceID(), commitTime));
       stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, (CDOID)revision
-          .getContainerID()));
+          .getContainerID(), commitTime));
       stmt.setInt(col++, revision.getContainingFeatureID());
 
       int isSetCol = col + getValueMappings().size();

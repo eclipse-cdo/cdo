@@ -200,8 +200,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   /**
    * @since 3.0
    */
-  public Collection<InternalCDOPackageUnit> rawImport(CDODataInput in, int fromBranchID, int toBranchID,
-      long fromCommitTime, long toCommitTime) throws IOException;
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
+      throws IOException;
 
   public void release();
 

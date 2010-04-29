@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -32,7 +31,6 @@ import org.eclipse.net4j.util.om.monitor.Monitor;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -209,8 +207,6 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
       StoreThreadLocal.setSession(replicatorSession);
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-
-      Collection<InternalCDOPackageUnit> XXXXXXXXXXXXXXXXXXXXXXXXX = //
       accessor.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
 
       setLastReplicatedBranchID(toBranchID);

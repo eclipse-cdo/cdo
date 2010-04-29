@@ -41,10 +41,10 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
 {
   private IDBStore store;
 
-  private AtomicLong lastMappedId = new AtomicLong(0);
+  private AtomicLong lastMappedID = new AtomicLong(0);
 
   @ExcludeFromDump
-  private transient String sqlSelectByLongId;
+  private transient String sqlSelectByLongID;
 
   @ExcludeFromDump
   private transient String sqlSelectByURI;
@@ -66,7 +66,7 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
     this.store = store;
   }
 
-  public long mapExternalReference(IDBStoreAccessor accessor, CDOIDExternal id)
+  public long mapExternalReference(IDBStoreAccessor accessor, CDOIDExternal id, long commitTime)
   {
     String uri = id.getURI();
     long result = lookupByID(accessor, uri);
@@ -76,7 +76,7 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
       return result;
     }
 
-    return insertNew(accessor, uri);
+    return insertNew(accessor, uri, commitTime);
   }
 
   public CDOIDExternal unmapExternalReference(IDBStoreAccessor accessor, long mappedId)
@@ -86,7 +86,7 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlSelectByLongId, ReuseProbability.HIGH);
+      stmt = accessor.getStatementCache().getPreparedStatement(sqlSelectByLongID, ReuseProbability.HIGH);
       stmt.setLong(1, mappedId);
       rs = stmt.executeQuery();
 
@@ -134,7 +134,7 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
 
       if (result.next())
       {
-        lastMappedId.set(result.getLong(1));
+        lastMappedID.set(result.getLong(1));
       }
 
       // else: resultSet is empty => table is empty
@@ -150,7 +150,6 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
       LifecycleUtil.deactivate(reader); // Don't let the null-context accessor go to the pool!
     }
 
-    sqlInsert = "INSERT INTO " + CDODBSchema.EXTERNAL_REFS + " VALUES (?,?,?)"; //$NON-NLS-1$ //$NON-NLS-2$
     StringBuilder builder = new StringBuilder();
     builder.append("INSERT INTO ");
     builder.append(CDODBSchema.EXTERNAL_REFS);
@@ -158,8 +157,9 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
     builder.append(CDODBSchema.EXTERNAL_ID);
     builder.append(",");
     builder.append(CDODBSchema.EXTERNAL_URI);
-    builder.append(") VALUES (?,?)");
-
+    builder.append(",");
+    builder.append(CDODBSchema.EXTERNAL_TIMESTAMP);
+    builder.append(") VALUES (?, ?, ?)");
     sqlInsert = builder.toString();
 
     builder = new StringBuilder();
@@ -169,8 +169,7 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
     builder.append(CDODBSchema.EXTERNAL_REFS);
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.EXTERNAL_URI);
-    builder.append(" =? "); //$NON-NLS-1$
-
+    builder.append("=?"); //$NON-NLS-1$
     sqlSelectByURI = builder.toString();
 
     builder = new StringBuilder();
@@ -180,25 +179,24 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
     builder.append(CDODBSchema.EXTERNAL_REFS);
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.EXTERNAL_ID);
-    builder.append(" =? "); //$NON-NLS-1$
-
-    sqlSelectByLongId = builder.toString();
+    builder.append("=?"); //$NON-NLS-1$
+    sqlSelectByLongID = builder.toString();
   }
 
-  private long insertNew(IDBStoreAccessor accessor, String uri)
+  private long insertNew(IDBStoreAccessor accessor, String uri, long commitTime)
   {
-    long newMappedId = lastMappedId.decrementAndGet();
-
+    long newMappedID = lastMappedID.decrementAndGet();
     PreparedStatement stmt = null;
 
     try
     {
       stmt = accessor.getStatementCache().getPreparedStatement(sqlInsert, ReuseProbability.MEDIUM);
-      stmt.setLong(1, newMappedId);
+      stmt.setLong(1, newMappedID);
       stmt.setString(2, uri);
+      stmt.setLong(3, commitTime);
 
       CDODBUtil.sqlUpdate(stmt, true);
-      return newMappedId;
+      return newMappedID;
     }
     catch (SQLException e)
     {

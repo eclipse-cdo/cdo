@@ -420,17 +420,6 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     }
   }
 
-  private Set<IDBTable> getModelTables()
-  {
-    Set<IDBTable> tables = new HashSet<IDBTable>();
-    for (IClassMapping mapping : classMappings.values())
-    {
-      tables.addAll(mapping.getDBTables());
-    }
-
-    return tables;
-  }
-
   private IClassMapping createClassMapping(EClass eClass)
   {
     IClassMapping mapping = doCreateClassMapping(eClass);

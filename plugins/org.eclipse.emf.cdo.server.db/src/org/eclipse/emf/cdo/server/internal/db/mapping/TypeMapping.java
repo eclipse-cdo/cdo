@@ -18,8 +18,10 @@ package org.eclipse.emf.cdo.server.internal.db.mapping;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IExternalReferenceManager;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -359,8 +361,12 @@ public abstract class TypeMapping implements ITypeMapping
     @Override
     protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
     {
-      super.doSetValue(stmt, index, CDODBUtil.convertCDOIDToLong(getMappingStrategy().getStore()
-          .getExternalReferenceManager(), getAccessor(), (CDOID)value));
+      IDBStore store = getMappingStrategy().getStore();
+      IExternalReferenceManager externalReferenceManager = store.getExternalReferenceManager();
+      CommitContext commitContext = StoreThreadLocal.getCommitContext();
+      long commitTime = commitContext.getBranchPoint().getTimeStamp();
+      long id = CDODBUtil.convertCDOIDToLong(externalReferenceManager, getAccessor(), (CDOID)value, commitTime);
+      super.doSetValue(stmt, index, id);
     }
 
     private IDBStoreAccessor getAccessor()

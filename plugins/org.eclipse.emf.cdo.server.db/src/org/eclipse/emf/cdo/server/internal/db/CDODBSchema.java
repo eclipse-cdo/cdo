@@ -172,6 +172,9 @@ public class CDODBSchema extends DBSchema
   public static final IDBField EXTERNAL_URI = //
   EXTERNAL_REFS.addField("uri", DBType.VARCHAR); //$NON-NLS-1$
 
+  public static final IDBField EXTERNAL_TIMESTAMP = //
+  EXTERNAL_REFS.addField("committime", DBType.BIGINT); //$NON-NLS-1$
+
   public static final IDBIndex INDEX_EXTERNAL_REFS_ID = //
   EXTERNAL_REFS.addIndex(IDBIndex.Type.PRIMARY_KEY, EXTERNAL_ID);
 

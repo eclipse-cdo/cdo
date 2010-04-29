@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDExternal;
  */
 public interface IExternalReferenceManager
 {
-  public long mapExternalReference(IDBStoreAccessor accessor, CDOIDExternal id);
+  public long mapExternalReference(IDBStoreAccessor accessor, CDOIDExternal id, long commitTime);
 
   public CDOIDExternal unmapExternalReference(IDBStoreAccessor accessor, long mappedId);
 

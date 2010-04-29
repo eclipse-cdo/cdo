@@ -165,6 +165,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
       IDBTable table = classMapping.getDBTables().get(0);
       DBUtil.deserializeTable(in, connection, table);
+      rawImportReviseOldRevisions(connection, table);
 
       for (IListMapping listMapping : classMapping.getListMappings())
       {
@@ -173,6 +174,11 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
 
     objectTypeCache.rawImport(connection, in);
+  }
+
+  protected void rawImportReviseOldRevisions(Connection connection, IDBTable table)
+  {
+    throw new UnsupportedOperationException("Must be overridden");
   }
 
   protected void rawImportList(CDODataInput in, Connection connection, IListMapping listMapping) throws IOException

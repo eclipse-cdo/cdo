@@ -946,7 +946,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     CDOView view = object.cdoView();
     if (view != this)
     {
-      if (view.getSession() != session)
+      if (!view.getSession().getRepositoryInfo().getUUID().equals(session.getRepositoryInfo().getUUID()))
       {
         throw new IllegalArgumentException(MessageFormat.format(
             Messages.getString("CDOViewImpl.11"), objectFromDifferentView)); //$NON-NLS-1$

@@ -210,15 +210,17 @@ public class ViewTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testContextifyDifferentSession() throws Exception
+  public void testContextifyDifferentRepository() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     transaction.commit();
 
-    CDOSession session2 = openSession();
+    getRepository("repo2");
+    CDOSession session2 = openSession("repo2");
     CDOView view = session2.openView();
+
     try
     {
       view.getObject(resource);
@@ -232,6 +234,24 @@ public class ViewTest extends AbstractCDOTest
       session.close();
       session2.close();
     }
+  }
+
+  public void testContextifySameRepository() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+    transaction.commit();
+
+    CDOSession session2 = openSession();
+    CDOView view = session2.openView();
+
+    CDOResource object = view.getObject(resource);
+    assertNotSame(resource, object);
+    assertEquals(resource.cdoID(), object.cdoID());
+
+    session.close();
+    session2.close();
   }
 
   public void testCacheReferences() throws Exception

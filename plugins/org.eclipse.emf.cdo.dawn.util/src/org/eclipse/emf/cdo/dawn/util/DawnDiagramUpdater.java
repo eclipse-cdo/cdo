@@ -37,6 +37,7 @@ import org.eclipse.ui.PlatformUI;
 public class DawnDiagramUpdater
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnDiagramUpdater.class);
+
   public static void refreshEditPart(EditPart editPart)
   {
     refeshEditpartInternal(editPart);
@@ -150,9 +151,9 @@ public class DawnDiagramUpdater
         return findView(element.eContainer());
       }
     }
-    // return null;
   }
 
+  // TODO improve this method
   public static View findViewForModel(EObject object, DiagramDocumentEditor editor)
   {
 
@@ -164,7 +165,7 @@ public class DawnDiagramUpdater
         {
           if (TRACER.isEnabled())
           {
-            TRACER.format("FOUND View: {0} for view obj: {1} ", e,object); //$NON-NLS-1$
+            TRACER.format("FOUND View: {0} for view obj: {1} ", e, object); //$NON-NLS-1$
           }
           return (View)e;
         }
@@ -178,10 +179,8 @@ public class DawnDiagramUpdater
     return null;
   }
 
-  // copied from DawnGMFTransactionListener
   public static EditPart createOrFindEditPartIfViewExists(View view, DiagramDocumentEditor editor)
   {
-    // EditPart editPart = ResourceHelper.findEditPart(view, editor);
     EditPart editPart = findEditPart(view, editor.getDiagramEditPart());
 
     if (view != null)
@@ -203,7 +202,6 @@ public class DawnDiagramUpdater
     return editPart;
   }
 
-  // copied from DawnGMFTransactionListener
   public static void setParentEditPart(final DiagramDocumentEditor editor, View view, EditPart editPart)
   {
     View viewParent = (View)view.eContainer();
@@ -287,7 +285,7 @@ public class DawnDiagramUpdater
    * <b>org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionEditPart.registerModel()</b>
    * <p>
    * In our scenario the Edges will be wrongly connected to the diagram itself, which makes the CanonicalEditingPolicy
-   * to remove and restore the edge. Long, short story, we must 'to' the elements here to have the element set.
+   * to remove and restore the edge. Long, short story, we must 'touch' the elements here to have the element set.
    * 
    * @param diagram
    */

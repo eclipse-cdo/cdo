@@ -82,7 +82,6 @@ public class RollbackTransactionDialog extends TitleAreaDialog
   {
     StringBuilder builder = new StringBuilder();
     builder.append(Messages.getString("RollbackTransactionDialog.0")); //$NON-NLS-1$
-    builder.append("\n"); //$NON-NLS-1$
 
     append(builder, transaction.getNewObjects().size(),
         Messages.getString("RollbackTransactionDialog.4"), Messages.getString("RollbackTransactionDialog.5")); //$NON-NLS-1$ //$NON-NLS-2$

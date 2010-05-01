@@ -42,7 +42,8 @@ public class CDOLabelDecorator implements ILabelDecorator
 {
   public static final String[] DECORATION_PROPOSALS = { "${element}", "${id}", "${state}", "${created}", "${revised}" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
-  public static final String DEFAULT_DECORATION = DECORATION_PROPOSALS[0] + " [" + DECORATION_PROPOSALS[1] + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+  public static final String DEFAULT_DECORATION = DECORATION_PROPOSALS[0]
+      + " [" + DECORATION_PROPOSALS[1] + ", " + DECORATION_PROPOSALS[2] + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 
   public static final String NO_DECORATION = DECORATION_PROPOSALS[0];
 

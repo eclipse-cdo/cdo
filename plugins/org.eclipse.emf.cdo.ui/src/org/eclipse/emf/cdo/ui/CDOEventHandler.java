@@ -28,6 +28,7 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.om.pref.OMPreferencesChangeEvent;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
@@ -158,7 +159,7 @@ public class CDOEventHandler
 
   private void checkDetachedSelection(final Set<?> detachedObjects)
   {
-    treeViewer.getControl().getDisplay().asyncExec(new Runnable()
+    UIUtil.getDisplay().asyncExec(new Runnable()
     {
       public void run()
       {

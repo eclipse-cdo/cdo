@@ -10,8 +10,10 @@
  */
 package org.eclipse.emf.cdo.internal.ui.views;
 
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenSessionAction;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 
 import org.eclipse.net4j.util.container.IContainer;
@@ -65,5 +67,19 @@ public class CDOSessionsView extends ContainerView
   {
     manager.add(openSessionAction);
     super.fillLocalToolBar(manager);
+  }
+
+  @Override
+  protected void doubleClicked(Object object)
+  {
+    if (object instanceof CDOResource)
+    {
+      CDOResource resource = (CDOResource)object;
+      CDOEditorUtil.openEditor(getSite().getPage(), resource.cdoView(), resource.getPath());
+    }
+    else
+    {
+      super.doubleClicked(object);
+    }
   }
 }

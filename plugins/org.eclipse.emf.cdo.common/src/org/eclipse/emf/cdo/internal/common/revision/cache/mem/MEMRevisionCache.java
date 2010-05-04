@@ -375,7 +375,8 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
       for (ListIterator<KeyedReference<CDOIDAndVersion, InternalCDORevision>> it = listIterator(); it.hasNext();)
       {
         KeyedReference<CDOIDAndVersion, InternalCDORevision> ref = it.next();
-        if (ref.get() != null)
+        InternalCDORevision foundRevision = ref.get();
+        if (foundRevision != null)
         {
           CDOIDAndVersion key = ref.getKey();
           int v = key.getVersion();
@@ -386,7 +387,23 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
 
           if (v < version)
           {
-            it.previous();
+            if (foundRevision.getRevised() == CDORevision.UNSPECIFIED_DATE)
+            {
+              if (v == version - 1)
+              {
+                foundRevision.setRevised(revision.getCreated() - 1);
+              }
+              else
+              {
+                it.remove();
+              }
+            }
+
+            if (it.hasPrevious())
+            {
+              it.previous();
+            }
+
             it.add(reference);
             return true;
           }

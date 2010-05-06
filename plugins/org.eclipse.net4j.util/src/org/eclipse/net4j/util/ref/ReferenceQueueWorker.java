@@ -4,9 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - Bug 311840 - OutOfMemory with fast population of revision cache
  */
 package org.eclipse.net4j.util.ref;
 
@@ -23,7 +24,9 @@ public abstract class ReferenceQueueWorker<T> extends Worker
 {
   private static final int DEFAULT_POLL_MILLIS = 1000 * 60; // One minute
 
-  private static final int DEFAULT_MAX_WORK_PER_POLL = 100;
+  private static final int ALL_WORK_PER_POLL = -1;
+
+  private static final int DEFAULT_MAX_WORK_PER_POLL = ALL_WORK_PER_POLL;
 
   private ReferenceQueue<T> queue = new ReferenceQueue<T>();
 
@@ -65,7 +68,13 @@ public abstract class ReferenceQueueWorker<T> extends Worker
   @Override
   protected final void work(WorkContext context) throws Exception
   {
-    for (int i = 0; i < maxWorkPerPoll; i++)
+    int count = maxWorkPerPoll;
+    if (count == ALL_WORK_PER_POLL)
+    {
+      count = Integer.MAX_VALUE;
+    }
+
+    for (int i = 0; i < count; i++)
     {
       Reference<? extends T> reference = queue.poll();
       if (reference == null)

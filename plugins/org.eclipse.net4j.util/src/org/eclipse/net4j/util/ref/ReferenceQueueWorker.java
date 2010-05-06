@@ -22,11 +22,20 @@ import java.lang.ref.ReferenceQueue;
  */
 public abstract class ReferenceQueueWorker<T> extends Worker
 {
-  private static final int DEFAULT_POLL_MILLIS = 1000 * 60; // One minute
+  /**
+   * @since 3.0
+   */
+  public static final int DEFAULT_POLL_MILLIS = 1000 * 60; // One minute
 
-  private static final int ALL_WORK_PER_POLL = -1;
+  /**
+   * @since 3.0
+   */
+  public static final int ALL_WORK_PER_POLL = -1;
 
-  private static final int DEFAULT_MAX_WORK_PER_POLL = ALL_WORK_PER_POLL;
+  /**
+   * @since 3.0
+   */
+  public static final int DEFAULT_MAX_WORK_PER_POLL = ALL_WORK_PER_POLL;
 
   private ReferenceQueue<T> queue = new ReferenceQueue<T>();
 

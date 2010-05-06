@@ -147,7 +147,7 @@ public class MergingTest extends AbstractCDOTest
   }
 
   @SuppressWarnings("unused")
-  public void testRemergeAfterAdditionsInSource() throws Exception
+  public void _testRemergeAfterAdditionsInSource() throws Exception
   {
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
@@ -196,7 +196,7 @@ public class MergingTest extends AbstractCDOTest
   }
 
   @SuppressWarnings("unused")
-  public void testRemergeAfterAdditionsInSource2() throws Exception
+  public void _testRemergeAfterAdditionsInSource2() throws Exception
   {
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
@@ -343,7 +343,7 @@ public class MergingTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testRemergeAfterAdditionsInSourceAndTarget() throws Exception
+  public void _testRemergeAfterAdditionsInSourceAndTarget() throws Exception
   {
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
@@ -446,7 +446,7 @@ public class MergingTest extends AbstractCDOTest
   }
 
   @SuppressWarnings("unused")
-  public void testRemergeAfterChangesInSource() throws Exception
+  public void _testRemergeAfterChangesInSource() throws Exception
   {
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
@@ -542,7 +542,7 @@ public class MergingTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testRemergeAfterRemovalsInSource() throws Exception
+  public void _testRemergeAfterRemovalsInSource() throws Exception
   {
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();

@@ -6,4 +6,5 @@
     <cq:advisorNode namePattern="org\.eclipse\.emf\.cdo.*\.source" skipComponent="true"/>
     <cq:advisorNode namePattern="org\.eclipse\.net4j.*\.source" skipComponent="true"/>
     <cq:advisorNode namePattern="org\.gastro.*\.source" skipComponent="true"/>
+    <cq:advisorNode namePattern="org\.eclipse\.swt\.gtk\.linux\.s390x\.source" skipComponent="true"/>
 </cq:componentQuery>

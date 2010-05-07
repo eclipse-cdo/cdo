@@ -37,7 +37,7 @@ import org.eclipse.ui.PartInitException;
  */
 public class DawnExplorer extends CDOSessionsView
 {
-  
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnExplorer.class);
 
   /**
@@ -85,8 +85,6 @@ public class DawnExplorer extends CDOSessionsView
   @Override
   protected void hookDoubleClick()
   {
-    super.hookDoubleClick();
-
     getViewer().addDoubleClickListener(new IDoubleClickListener()
     {
       public void doubleClick(DoubleClickEvent event)
@@ -95,7 +93,7 @@ public class DawnExplorer extends CDOSessionsView
         if (obj instanceof CDOResource)
         {
           CDOResource resource = (CDOResource)obj;
-          
+
           if (TRACER.isEnabled())
           {
             TRACER.format("Opening CDOResource {0} ", resource); //$NON-NLS-1$

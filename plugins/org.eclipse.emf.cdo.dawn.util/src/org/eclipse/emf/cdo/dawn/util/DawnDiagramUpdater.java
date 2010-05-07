@@ -10,21 +10,28 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.util;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.cdo.dawn.internal.util.bundle.OM;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.ECrossReferenceAdapter;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpart.EditPartService;
+import org.eclipse.gmf.runtime.emf.core.util.CrossReferenceAdapter;
+import org.eclipse.gmf.runtime.notation.Connector;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.Edge;
+import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -37,6 +44,24 @@ import org.eclipse.ui.PlatformUI;
 public class DawnDiagramUpdater
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnDiagramUpdater.class);
+
+  public static void refresh(final IGraphicalEditPart editPart)
+  {
+    TransactionalEditingDomain editingDomain = editPart.getEditingDomain();
+    editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain)
+    {
+      public void doExecute()
+      {
+        editPart.refresh();
+
+        if (editPart instanceof ConnectionEditPart)
+        {
+          DawnDiagramUpdater.refresh((IGraphicalEditPart)((ConnectionEditPart)editPart).getTarget());
+          DawnDiagramUpdater.refresh((IGraphicalEditPart)((ConnectionEditPart)editPart).getSource());
+        }
+      }
+    });
+  }
 
   public static void refreshEditPart(EditPart editPart)
   {
@@ -112,14 +137,16 @@ public class DawnDiagramUpdater
 
       if (editPart instanceof DiagramEditPart)
       {
-        for (Object childEditPart : ((DiagramEditPart)editPart).getConnections())
+        for (Object connectionEditPart : ((DiagramEditPart)editPart).getConnections())
         {
-          if (childEditPart instanceof EditPart)
+          if (connectionEditPart instanceof EditPart)
           {
-            refeshEditpartInternal((EditPart)childEditPart);
+            if (((Connector)((EditPart)connectionEditPart).getModel()).getBendpoints() != null)
+              refeshEditpartInternal((EditPart)connectionEditPart);
           }
         }
       }
+
       for (Object childEditPart : editPart.getChildren())
       {
         if (childEditPart instanceof EditPart)
@@ -134,7 +161,7 @@ public class DawnDiagramUpdater
     }
   }
 
-  public static View findView(EObject element)
+  public static View findViewByContainer(EObject element)
   {
     if (element instanceof View)
       return (View)element;
@@ -148,7 +175,7 @@ public class DawnDiagramUpdater
       }
       else
       {
-        return findView(element.eContainer());
+        return findViewByContainer(element.eContainer());
       }
     }
   }
@@ -302,5 +329,37 @@ public class DawnDiagramUpdater
         edge.eSetDeliver(eDeliver);
       }
     }
+  }
+
+  public static View findViewFromCrossReferences(EObject element)
+  {
+    CrossReferenceAdapter crossreferenceAdapter = (CrossReferenceAdapter)ECrossReferenceAdapter
+        .getCrossReferenceAdapter(element);// getCrossReferenceAdapter(element);
+    if (crossreferenceAdapter != null)
+    {
+      Collection iinverseReferences = crossreferenceAdapter.getInverseReferencers(element, NotationPackage.eINSTANCE
+          .getView_Element(), null);
+
+      for (Object f : iinverseReferences)
+      {
+        if (f instanceof View)
+        {
+          return (View)f;
+
+        }
+      }
+    }
+    return null;
+  }
+
+  public static View findView(EObject element)
+  {
+    View view = DawnDiagramUpdater.findViewByContainer(element);
+
+    if (view == null)
+    {
+      view = DawnDiagramUpdater.findViewFromCrossReferences(element);
+    }
+    return view;
   }
 }

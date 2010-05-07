@@ -9,6 +9,7 @@
 		<isset property="server.build" />
 	</condition>
 
+	<echo message="Sourcing ${properties.file}" />
 	<property file="${properties.file}" />
 	<property environment="env" />
 
@@ -154,7 +155,10 @@
 		<eclipse.launch app="director">
 			<args>
 				<jvmarg value="-Declipse.p2.mirrors=false" />
+				<!--
+				Hudson Ant property --> org.eclipse.update.jarprocessor.pack200=/shared/common/ibm-java2-ppc-50/jre/bin
 				<jvmarg value="-Dorg.eclipse.update.jarprocessor.pack200=${org.eclipse.update.jarprocessor.pack200}" />
+				-->
 				<arg value="-r" />
 				<arg value="${eclipse.downloads}/${bm.headless.path}" />
 				<arg value="-d" />

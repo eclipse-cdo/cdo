@@ -40,7 +40,7 @@ public class ObjyPackageUnit extends ooObj
   public static OneToMany packageInfos_Relationship()
   {
     return new OneToMany("packageInfos", // field name
-        "org.eclipse.emf.cdo.server.internal.objectivity.schema.OoPackageInfo", // name of related class
+        "org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyPackageInfo", // name of related class
         "packageUnit", // inverse relationship field name
         Relationship.COPY_DELETE, Relationship.VERSION_DELETE, false, false, Relationship.INLINE_NONE); // none-inline
                                                                                                         // association
@@ -49,7 +49,7 @@ public class ObjyPackageUnit extends ooObj
   /**
    * get all related children
    * 
-   * @return list of OoPackageInfo objects.
+   * @return list of ObjyPackageInfo objects.
    */
   public List<ObjyPackageInfo> getPackageInfos()
   {

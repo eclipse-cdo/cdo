@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.server.internal.objectivity.mapper;
 
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.FeatureMapEntry;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooFeatureMapArrayList;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyFeatureMapEntry;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyFeatureMapArrayList;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -40,7 +40,7 @@ public class FeatureMapTypeMapper extends BasicTypeMapper implements IManyTypeMa
   {
     if (dClassObject == null)
     {
-      dClassObject = ObjySchema.getTopModule().resolve_class(ooFeatureMapArrayList.ClassName);
+      dClassObject = ObjySchema.getTopModule().resolve_class(ObjyFeatureMapArrayList.ClassName);
     }
     return dClassObject;
   }
@@ -51,7 +51,7 @@ public class FeatureMapTypeMapper extends BasicTypeMapper implements IManyTypeMa
         d_Access_Kind.d_PUBLIC, // Access kind
         feature.getName(), // Attribute name
         1, // # elements in fixed-size array
-        ooFeatureMapArrayList.ClassName, false); // Default value // Default value
+        ObjyFeatureMapArrayList.ClassName, false); // Default value // Default value
 
     return true;
   }
@@ -63,16 +63,16 @@ public class FeatureMapTypeMapper extends BasicTypeMapper implements IManyTypeMa
 
   public void setValue(ObjyObject objyObject, EStructuralFeature feature, int index, Object newValue)
   {
-    getList(objyObject, feature).set(index, (FeatureMapEntry)newValue);
+    getList(objyObject, feature).set(index, (ObjyFeatureMapEntry)newValue);
   }
 
-  public ooFeatureMapArrayList getList(ObjyObject objyObject, EStructuralFeature feature)
+  public ObjyFeatureMapArrayList getList(ObjyObject objyObject, EStructuralFeature feature)
   {
     Class_Position position = getAttributePosition(objyObject, feature);
-    ooFeatureMapArrayList list = (ooFeatureMapArrayList)objyObject.getFeatureList(position);
+    ObjyFeatureMapArrayList list = (ObjyFeatureMapArrayList)objyObject.getFeatureList(position);
     if (list == null)
     {
-      list = new ooFeatureMapArrayList(objyObject.get_class_obj(position));
+      list = new ObjyFeatureMapArrayList(objyObject.get_class_obj(position));
       objyObject.setFeatureList(position, list);
     }
     return list;
@@ -85,7 +85,7 @@ public class FeatureMapTypeMapper extends BasicTypeMapper implements IManyTypeMa
 
   public void add(ObjyObject objyObject, EStructuralFeature feature, int index, Object value)
   {
-    getList(objyObject, feature).add(index, (FeatureMapEntry)value);
+    getList(objyObject, feature).add(index, (ObjyFeatureMapEntry)value);
   }
 
   public void addAll(ObjyObject classObject, EStructuralFeature feature, int index, Object[] values)
@@ -107,7 +107,7 @@ public class FeatureMapTypeMapper extends BasicTypeMapper implements IManyTypeMa
     Class_Position position = classObject.type_of().position_in_class(getAttributeName(feature));
     classObject.set_ooId(position, newClassObject.objectID());
     // initialize the list structure.
-    ooFeatureMapArrayList.initObject(newClassObject);
+    ObjyFeatureMapArrayList.initObject(newClassObject);
   }
 
   public void delete(ObjyObject objyObject, EStructuralFeature feature)

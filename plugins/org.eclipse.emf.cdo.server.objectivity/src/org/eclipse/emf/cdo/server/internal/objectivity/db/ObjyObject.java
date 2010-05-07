@@ -23,9 +23,9 @@ import org.eclipse.emf.cdo.server.internal.objectivity.mapper.ISingleTypeMapper;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.ITypeMapper;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.ObjyMapper;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.SingleReferenceMapper;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.FeatureMapEntry;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooBase;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooProxy;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyFeatureMapEntry;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBase;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyProxy;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.OBJYCDOIDUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -88,19 +88,19 @@ public class ObjyObject
       TRACER_DEBUG.format("...classObject type: {0} - oid: {1}", classObject.type_of().name(), classObject.objectID()
           .getStoreString());
     }
-    baseRel = classObject.nget_relationship(ooBase.Attribute_base);
+    baseRel = classObject.nget_relationship(ObjyBase.Attribute_base);
     if (!baseRel.exists())
     {
       // we are the base...
-      revisionsRel = classObject.nget_relationship(ooBase.Attribute_revisions);
-      lastRevisionRel = classObject.nget_relationship(ooBase.Attribute_lastRevision);
+      revisionsRel = classObject.nget_relationship(ObjyBase.Attribute_revisions);
+      lastRevisionRel = classObject.nget_relationship(ObjyBase.Attribute_lastRevision);
     }
     else
     {
       baseClassObject = baseRel.get_class_obj();
       // TODO - we might want to delay getting the list of versions unless we need them.
-      revisionsRel = baseClassObject.nget_relationship(ooBase.Attribute_revisions);
-      lastRevisionRel = baseClassObject.nget_relationship(ooBase.Attribute_lastRevision);
+      revisionsRel = baseClassObject.nget_relationship(ObjyBase.Attribute_revisions);
+      lastRevisionRel = baseClassObject.nget_relationship(ObjyBase.Attribute_lastRevision);
     }
     setObjectId(classObject.objectID());
     objyClass = ObjySchema.getObjyClass(classObject.type_of().name());
@@ -154,7 +154,7 @@ public class ObjyObject
       } // for debugging.
     }
 
-    Class_Position position = objyClass.resolve_position(ooBase.Attribute_containerId);
+    Class_Position position = objyClass.resolve_position(ObjyBase.Attribute_containerId);
     SingleReferenceMapper.INSTANCE.setValue(this, position, containerID);
   }
 
@@ -172,7 +172,7 @@ public class ObjyObject
       } // for debugging.
     }
 
-    Class_Position position = objyClass.resolve_position(ooBase.Attribute_containerId);
+    Class_Position position = objyClass.resolve_position(ObjyBase.Attribute_containerId);
     Object value = SingleReferenceMapper.INSTANCE.getValue(this, position);
 
     return value;
@@ -192,7 +192,7 @@ public class ObjyObject
       } // for debugging.
     }
 
-    Class_Position position = objyClass.resolve_position(ooBase.Attribute_containerId);
+    Class_Position position = objyClass.resolve_position(ObjyBase.Attribute_containerId);
     ooId childOid = get_ooId(position);
     return childOid;
   }
@@ -211,7 +211,7 @@ public class ObjyObject
       } // for debugging.
     }
 
-    Class_Position position = objyClass.resolve_position(ooBase.Attribute_resourceId);
+    Class_Position position = objyClass.resolve_position(ObjyBase.Attribute_resourceId);
     SingleReferenceMapper.INSTANCE.setValue(this, position, resourceID);
 
   }
@@ -230,7 +230,7 @@ public class ObjyObject
       } // for debugging.
     }
 
-    Class_Position position = objyClass.resolve_position(ooBase.Attribute_resourceId);
+    Class_Position position = objyClass.resolve_position(ObjyBase.Attribute_resourceId);
     Object value = SingleReferenceMapper.INSTANCE.getValue(this, position);
 
     return value;
@@ -249,7 +249,7 @@ public class ObjyObject
         ex.printStackTrace();
       } // for debugging.
     }
-    Class_Position position = objyClass.resolve_position(ooBase.Attribute_resourceId);
+    Class_Position position = objyClass.resolve_position(ObjyBase.Attribute_resourceId);
     ooId childOid = get_ooId(position);
     return childOid;
   }
@@ -267,7 +267,7 @@ public class ObjyObject
         ex.printStackTrace();
       } // for debugging.
     }
-    Class_Position position = objyClass.resolve_position(ooBase.Attribute_containerFeatureId);
+    Class_Position position = objyClass.resolve_position(ObjyBase.Attribute_containerFeatureId);
     set_numeric(position, new Numeric_Value(contFeature));
   }
 
@@ -284,7 +284,7 @@ public class ObjyObject
         ex.printStackTrace();
       } // for debugging.
     }
-    Class_Position position = objyClass.resolve_position(ooBase.Attribute_containerFeatureId);
+    Class_Position position = objyClass.resolve_position(ObjyBase.Attribute_containerFeatureId);
     return get_numeric(position).intValue();
   }
 
@@ -318,7 +318,7 @@ public class ObjyObject
         ex.printStackTrace();
       } // for debugging.
     }
-    int version = classObject.nget_numeric(ooBase.Attribute_version).intValue();
+    int version = classObject.nget_numeric(ObjyBase.Attribute_version).intValue();
     return version;
   }
 
@@ -335,7 +335,7 @@ public class ObjyObject
         ex.printStackTrace();
       } // for debugging.
     }
-    classObject.nset_numeric(ooBase.Attribute_version, new Numeric_Value(version));
+    classObject.nset_numeric(ObjyBase.Attribute_version, new Numeric_Value(version));
     getVersion(); // TBD, verify the need for this call!!!!
   }
 
@@ -352,7 +352,7 @@ public class ObjyObject
         ex.printStackTrace();
       } // for debugging.
     }
-    long creationTime = classObject.nget_numeric(ooBase.Attribute_creationTime).longValue();
+    long creationTime = classObject.nget_numeric(ObjyBase.Attribute_creationTime).longValue();
     return creationTime;
   }
 
@@ -369,7 +369,7 @@ public class ObjyObject
         ex.printStackTrace();
       } // for debugging.
     }
-    classObject.nset_numeric(ooBase.Attribute_creationTime, new Numeric_Value(creationTime));
+    classObject.nset_numeric(ObjyBase.Attribute_creationTime, new Numeric_Value(creationTime));
   }
 
   public long getRevisedTime()
@@ -385,7 +385,7 @@ public class ObjyObject
         ex.printStackTrace();
       } // for debugging.
     }
-    long revisedTime = classObject.nget_numeric(ooBase.Attribute_revisedTime).longValue();
+    long revisedTime = classObject.nget_numeric(ObjyBase.Attribute_revisedTime).longValue();
     return revisedTime;
   }
 
@@ -402,7 +402,7 @@ public class ObjyObject
         ex.printStackTrace();
       } // for debugging.
     }
-    classObject.nset_numeric(ooBase.Attribute_revisedTime, new Numeric_Value(revisedTime));
+    classObject.nset_numeric(ObjyBase.Attribute_revisedTime, new Numeric_Value(revisedTime));
   }
 
   public ObjyObject copy(EClass eClass)
@@ -549,7 +549,7 @@ public class ObjyObject
             {
               System.out.println("value is a proxy object - it should be handled by the mapper.");
               // create an ObjyProxy object to hold the the value.
-              ooProxy proxyObject = ooProxy.createObject(ooId());
+              ObjyProxy proxyObject = ObjyProxy.createObject(ooId());
               proxyObject.setUri(((CDOIDExternal)value).getURI());
               values[i] = proxyObject.ooId();
 
@@ -572,7 +572,7 @@ public class ObjyObject
               {
                 System.out.println("value is a proxy object - it should be handled by the mapper.");
                 // create an ObjyProxy object to hold the the value.
-                ooProxy proxyObject = ooProxy.createObject(ooId());
+                ObjyProxy proxyObject = ObjyProxy.createObject(ooId());
                 proxyObject.setUri(((CDOIDExternal)entryValue).getURI());
                 oid = proxyObject.ooId();
               }
@@ -585,7 +585,7 @@ public class ObjyObject
                 System.out.println("OBJY: don't know what kind of entryValue is this!!! - " + entryValue);
               }
               // FeatureMapEntry is a presistent class.
-              FeatureMapEntry featureMapEntry = new FeatureMapEntry(entryFeature.getName(), oid, metaId, objectId);
+              ObjyFeatureMapEntry featureMapEntry = new ObjyFeatureMapEntry(entryFeature.getName(), oid, metaId, objectId);
               // this.cluster(featureMapEntry);
               values[i] = featureMapEntry;
             }
@@ -757,10 +757,10 @@ public class ObjyObject
                 // + childObject.getStoreString());
                 Class_Object refClassObject = Class_Object.class_object_from_oid((ooId)objects[i]);
 
-                if (refClassObject.type_of().name().equals(ooProxy.className))
+                if (refClassObject.type_of().name().equals(ObjyProxy.className))
                 {
                   System.out.println("OBJY: Got proxy: " + refClassObject.objectID().getStoreString());
-                  ooProxy proxyObject = new ooProxy(refClassObject);
+                  ObjyProxy proxyObject = new ObjyProxy(refClassObject);
                   // cdoList.set(i,
                   // OBJYCDOIDUtil.createCDIDExternal(proxyObject));
                   list.add(OBJYCDOIDUtil.createCDIDExternal(proxyObject));
@@ -772,18 +772,18 @@ public class ObjyObject
                   list.add(childID);
                 }
               }
-              else if (objects[i] instanceof FeatureMapEntry)
+              else if (objects[i] instanceof ObjyFeatureMapEntry)
               {
-                FeatureMapEntry mapEntry = (FeatureMapEntry)objects[i];
+                ObjyFeatureMapEntry mapEntry = (ObjyFeatureMapEntry)objects[i];
                 long metaId = mapEntry.getMetaId();
                 String name = mapEntry.getTagName();
                 ooId oid = mapEntry.getObject();
                 CDOID cdoId = null;
                 Class_Object refClassObject = Class_Object.class_object_from_oid(oid);
-                if (refClassObject.type_of().name().equals(ooProxy.className))
+                if (refClassObject.type_of().name().equals(ObjyProxy.className))
                 {
                   System.out.println("OBJY: Got proxy: " + refClassObject.objectID().getStoreString());
-                  ooProxy proxyObject = new ooProxy(refClassObject);
+                  ObjyProxy proxyObject = new ObjyProxy(refClassObject);
                   cdoId = OBJYCDOIDUtil.createCDIDExternal(proxyObject);
                 }
                 else
@@ -891,10 +891,10 @@ public class ObjyObject
             // + childObject.getStoreString());
             Class_Object refClassObject = Class_Object.class_object_from_oid((ooId)objects[i]);
 
-            if (refClassObject.type_of().name().equals(ooProxy.className))
+            if (refClassObject.type_of().name().equals(ObjyProxy.className))
             {
               System.out.println("OBJY: Got proxy: " + refClassObject.objectID().getStoreString());
-              ooProxy proxyObject = new ooProxy(refClassObject);
+              ObjyProxy proxyObject = new ObjyProxy(refClassObject);
 
               results.add(OBJYCDOIDUtil.createCDIDExternal(proxyObject));
             }
@@ -903,18 +903,18 @@ public class ObjyObject
               results.add(OBJYCDOIDUtil.getCDOID((ooId)objects[i]));
             }
           }
-          else if (objects[i] instanceof FeatureMapEntry)
+          else if (objects[i] instanceof ObjyFeatureMapEntry)
           {
-            FeatureMapEntry mapEntry = (FeatureMapEntry)objects[i];
+            ObjyFeatureMapEntry mapEntry = (ObjyFeatureMapEntry)objects[i];
             long metaId = mapEntry.getMetaId();
             String name = mapEntry.getTagName();
             ooId oid = mapEntry.getObject();
             CDOID cdoId = null;
             Class_Object refClassObject = Class_Object.class_object_from_oid(oid);
-            if (refClassObject.type_of().name().equals(ooProxy.className))
+            if (refClassObject.type_of().name().equals(ObjyProxy.className))
             {
               System.out.println("OBJY: Got proxy: " + refClassObject.objectID().getStoreString());
-              ooProxy proxyObject = new ooProxy(refClassObject);
+              ObjyProxy proxyObject = new ObjyProxy(refClassObject);
               cdoId = OBJYCDOIDUtil.createCDIDExternal(proxyObject);
             }
             else
@@ -1331,7 +1331,7 @@ public class ObjyObject
             // + childObject.getStoreString());
             Class_Object refClassObject = Class_Object.class_object_from_oid(oid);
 
-            if (refClassObject.type_of().name().equals(ooProxy.className))
+            if (refClassObject.type_of().name().equals(ObjyProxy.className))
             {
               // System.out.println("OBJY: delete proxy: "
               // + refClassObject.objectID().getStoreString());
@@ -1352,9 +1352,9 @@ public class ObjyObject
 
             }
           }
-          else if (objects[i] instanceof FeatureMapEntry)
+          else if (objects[i] instanceof ObjyFeatureMapEntry)
           {
-            FeatureMapEntry mapEntry = (FeatureMapEntry)objects[i];
+            ObjyFeatureMapEntry mapEntry = (ObjyFeatureMapEntry)objects[i];
             long metaId = mapEntry.getMetaId();
             String name = mapEntry.getTagName();
             ooId oid = mapEntry.getObject();

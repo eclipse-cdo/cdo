@@ -14,6 +14,10 @@ import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import com.objy.db.app.Session;
+import com.objy.db.app.ooContObj;
+import com.objy.db.app.ooDBObj;
+
 import org.w3c.dom.Element;
 
 import java.io.BufferedInputStream;
@@ -22,6 +26,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 public class FdManager
@@ -158,7 +165,9 @@ public class FdManager
     Process proc = null;
     File file = new File(bootFilePath);
     if (!file.exists())
+    {
       return true;
+    }
 
     String command = "oodeletefd" + " -force " + bootFilePath;
     TRACER_INFO.trace("Deleting FD: '" + bootFilePath + "'.");
@@ -412,7 +421,9 @@ public class FdManager
   public String getPageSize()
   {
     if (pageSize.equals(DEFAULT_VALUE))
+    {
       pageSize = "8192";
+    }
     return pageSize;
   }
 
@@ -468,7 +479,7 @@ public class FdManager
 
   public void configure(String name)
   {
-    this.fdDirPath = this.fdDirPath + "\\" + name;
+    fdDirPath = fdDirPath + "\\" + name;
     // insure that path exist.
     File dir = new File(fdDirPath);
     if (!dir.exists())
@@ -476,8 +487,51 @@ public class FdManager
       // create the directory.
       dir.mkdirs();
     }
-    Integer number = Math.abs((new Random()).nextInt() % 65000);
-    this.fdNumber = number.toString();
+    Integer number = Math.abs(new Random().nextInt() % 65000);
+    fdNumber = number.toString();
     initialize(false);
+  }
+
+  /**
+   * Data cleanup code, that's mostly used by the test applications. This code will not remove schema.
+   */
+  public void removeData()
+  {
+    // ObjyConnection.INSTANCE.disconnect();
+    // fdManager.resetFD();
+    Session session = new Session();
+    session.begin();
+    Iterator itr = session.getFD().containedDBs();
+    ooDBObj dbObj = null;
+    List<ooDBObj> dbList = new ArrayList<ooDBObj>();
+    List<ooContObj> contList = new ArrayList<ooContObj>();
+    while (itr.hasNext())
+    {
+      dbObj = (ooDBObj)itr.next();
+      dbList.add(dbObj);
+      // if (dbObj.getName().equals(ObjyDb.CONFIGDB_NAME))
+      {
+        Iterator contItr = dbObj.contains();
+        while (contItr.hasNext())
+        {
+          contList.add((ooContObj)contItr.next());
+        }
+      }
+    }
+    // itr.close();
+
+    for (ooContObj cont : contList)
+    {
+      cont.delete();
+    }
+
+    for (ooDBObj db : dbList)
+    {
+      // System.out.println("restFD() - deleting DB(" + db.getOid().getStoreString() + "):" + db.getName());
+      // db.delete();
+    }
+
+    session.commit();
+    session.terminate();
   }
 }

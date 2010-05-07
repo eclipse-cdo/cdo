@@ -29,18 +29,20 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.clustering.ObjyPlacementManagerLocal;
+import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyCommitInfoHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyPackageHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyScope;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySession;
-import org.eclipse.emf.cdo.server.internal.objectivity.db.OoCommitInfoHandler;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.OoCommitInfo;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.OoResourceList;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBranch;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyCommitInfo;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyResourceList;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.OBJYCDOIDUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
 import org.eclipse.emf.cdo.server.objectivity.IObjectivityStoreAccessor;
 import org.eclipse.emf.cdo.server.objectivity.IObjectivityStoreChunkReader;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -66,6 +68,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import com.objy.db.app.oo;
 import com.objy.db.app.ooId;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -201,7 +204,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       // is there a notion of delete propagate?
       if (ObjySchema.isResource(getStore(), objyObject.objyClass()))
       {
-        OoResourceList resourceList = objySession.getResourceList();
+        ObjyResourceList resourceList = objySession.getResourceList();
         resourceList.remove(objyObject);
       }
       objySession.getObjectManager().delete(this, objyObject);
@@ -375,6 +378,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     {
       // newObjyRevision = objySession.getObjectManager().copyRevision(this, objyRevision);
       objyRevision.setRevisedTime(branch.getPoint(created).getTimeStamp() - 1);
+      int id = branch.getID();
+      // objyRevision.setRevisedBranchId(branch.getID();
       InternalCDORevision originalRevision = getStore().getRepository().getRevisionManager().getRevisionByVersion(
           delta.getID(), delta, 0, true);
 
@@ -504,7 +509,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     ObjyObject newObjyRevision = objyObject;
 
-    if (revision.getVersion() > 1) // we're updating other versions...
+    if (revision.getVersion() > CDOBranchVersion.FIRST_VERSION) // we're updating other versions...
     {
       ObjyObject oldObjyRevision = objyObject.getRevision(revision.getVersion() - 1);
 
@@ -518,7 +523,6 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
         // objyRevision = objySession.getObjectManager().copyRevision(this, oldObjyRevision);
 
         InternalCDORevision newRevision = revision.copy();
-
         newObjyRevision = objySession.getObjectManager().newObject(newRevision.getEClass(), oldObjyRevision.ooId());
         oldObjyRevision.addToRevisions(newObjyRevision);
       }
@@ -644,7 +648,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     boolean exactMatch = context.exactMatch();
     System.out.println(">>>>IS:<<<< queryResources() for : " + (pathPrefix == null ? "NULL" : pathPrefix)
         + " - exactMatch: " + exactMatch);
-    OoResourceList resourceList = objySession.getResourceList();
+    ObjyResourceList resourceList = objySession.getResourceList();
     int size = resourceList.size();
     if (size == 0) // nothing yet.
     {
@@ -656,12 +660,11 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
         .getFolderID();
     for (int i = 0; i < size; i++)
     {
-      // ObjyObject resource = objySession.getObjectManager().getObject(getResourceList().get(i));
       ObjyObject resource = resourceList.getResource(i);
       // ensureBeginSession(resource);
       if (resource != null)
       {
-        String resourceName = OoResourceList.getResourceName(resource);
+        String resourceName = ObjyResourceList.getResourceName(resource);
         if (exactMatch && pathPrefix != null && pathPrefix.equals(resourceName))
         {
           CDOID resourceID = OBJYCDOIDUtil.getCDOID(resource.ooId());
@@ -880,8 +883,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       InternalCDORevision[] newObjects = commitContext.getNewObjects();
       monitor.begin(newObjects.length);
 
-      ObjyPlacementManagerLocal placementManager = new ObjyPlacementManagerLocal(getRepositoryName(), objySession,
-          commitContext);
+      ObjyPlacementManagerLocal placementManager = new ObjyPlacementManagerLocal(getStore(), objySession, commitContext);
 
       // iterate over the list and skip the ones we already have created.
       for (InternalCDORevision revision : newObjects)
@@ -925,15 +927,15 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   {
     ensureSessionBegin();
 
-    OoCommitInfoHandler commitInfoHandler = getStore().getCommitInfoHandle();
-    List<OoCommitInfo> commitInfoList = commitInfoHandler.getCommitInfo(branch, startTime, endTime);
+    ObjyCommitInfoHandler commitInfoHandler = getStore().getCommitInfoHandle();
+    List<ObjyCommitInfo> commitInfoList = commitInfoHandler.getCommitInfo(branch, startTime, endTime);
 
     InternalSessionManager manager = getSession().getManager();
     InternalRepository repository = manager.getRepository();
     InternalCDOBranchManager branchManager = repository.getBranchManager();
     InternalCDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
 
-    for (OoCommitInfo ooCommitInfo : commitInfoList)
+    for (ObjyCommitInfo ooCommitInfo : commitInfoList)
     {
       long timeStamp = ooCommitInfo.getTimeStamp();
       String userID = ooCommitInfo.getUserId();
@@ -957,7 +959,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     ensureSessionBegin();
     // we need to write the following...
     // ...branch.getID(), timeStamp, userID, comment.
-    OoCommitInfoHandler commitInfoHandler = getStore().getCommitInfoHandle();
+    ObjyCommitInfoHandler commitInfoHandler = getStore().getCommitInfoHandle();
     commitInfoHandler.writeCommitInfo(branch.getID(), timeStamp, userID, comment);
   }
 
@@ -973,22 +975,46 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
   public int createBranch(BranchInfo branchInfo)
   {
-    return 0;
+    ensureSessionBegin();
+    return objySession.getBranchManager(getRepositoryName()).createBranch(branchInfo);
   }
 
   public BranchInfo loadBranch(int branchID)
   {
-    return null;
+    ensureSessionBegin();
+    ObjyBranch objyBranch = objySession.getBranchManager(getRepositoryName()).getBranch(branchID);
+    return objyBranch != null ? objyBranch.getBranchInfo() : null;
   }
 
   public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
   {
-    throw new UnsupportedOperationException();
+    int count = 0;
+    List<ObjyBranch> branches = objySession.getBranchManager(getRepositoryName()).getBranches(startID, endID);
+    InternalCDOBranchManager branchManager = getStore().getRepository().getBranchManager();
+
+    for (ObjyBranch objyBranch : branches)
+    {
+      InternalCDOBranch branch = branchManager.getBranch(objyBranch.getBranchId(), new BranchInfo(objyBranch
+          .getBranchName(), objyBranch.getBaseBranchId(), objyBranch.getBaseBranchTimeStamp()));
+      branchHandler.handleBranch(branch);
+      count++;
+    }
+
+    return count;
+
   }
 
   public SubBranchInfo[] loadSubBranches(int branchID)
   {
-    return null;
+    ensureSessionBegin();
+    List<SubBranchInfo> result = new ArrayList<SubBranchInfo>();
+    List<ObjyBranch> objyBranchList = objySession.getBranchManager(getRepositoryName()).getSubBranches(branchID);
+    for (ObjyBranch objyBranch : objyBranchList)
+    {
+      SubBranchInfo subBranchInfo = new SubBranchInfo(objyBranch.getBranchId(), objyBranch.getBranchName(), objyBranch
+          .getBaseBranchTimeStamp());
+    }
+    return result.toArray(new SubBranchInfo[result.size()]);
   }
 
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler)

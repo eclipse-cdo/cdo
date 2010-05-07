@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.internal.objectivity.mapper;
 
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooArrayListString;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyArrayListString;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -36,13 +36,13 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
     try
     {
 
-      ooArrayListString.buildSchema();
+      ObjyArrayListString.buildSchema();
 
       proposedClass.add_ref_attribute(com.objy.as.app.d_Module.LAST, // Access kind
           d_Access_Kind.d_PUBLIC, // Access kind
           getAttributeName(feature), // Attribute name
           1, // # elements in fixed-size array
-          ooArrayListString.ClassName, false); // Default value // Default value
+          ObjyArrayListString.ClassName, false); // Default value // Default value
 
     }
     catch (ObjyRuntimeException ex)
@@ -77,13 +77,13 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
     return stringValue;
   }
 
-  protected ooArrayListString getList(ObjyObject objyObject, EStructuralFeature feature)
+  protected ObjyArrayListString getList(ObjyObject objyObject, EStructuralFeature feature)
   {
     Class_Position position = getAttributePosition(objyObject, feature);
-    ooArrayListString list = (ooArrayListString)objyObject.getFeatureList(position);
+    ObjyArrayListString list = (ObjyArrayListString)objyObject.getFeatureList(position);
     if (list == null)
     {
-      list = new ooArrayListString(objyObject.get_class_obj(position));
+      list = new ObjyArrayListString(objyObject.get_class_obj(position));
       objyObject.setFeatureList(position, list);
     }
     return list;
@@ -171,9 +171,9 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
   {
     Class_Position position = classObject.type_of().position_in_class(getAttributeName(feature));
     Class_Object newClassObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(
-        ooArrayListString.ClassName).getASClass(), classObject.objectID(), false);
+        ObjyArrayListString.ClassName).getASClass(), classObject.objectID(), false);
     classObject.set_ooId(position, newClassObject.objectID());
-    ooArrayListString.initObject(newClassObject);
+    ObjyArrayListString.initObject(newClassObject);
   }
 
   public void modifySchema(Proposed_Class proposedooClass, EStructuralFeature feature)

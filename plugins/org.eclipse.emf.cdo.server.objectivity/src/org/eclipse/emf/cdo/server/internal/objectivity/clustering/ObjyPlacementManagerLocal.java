@@ -12,11 +12,12 @@ package org.eclipse.emf.cdo.server.internal.objectivity.clustering;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStore;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyScope;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySession;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.OoResourceList;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyResourceList;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.OBJYCDOIDUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.SmartLock;
@@ -50,6 +51,8 @@ public class ObjyPlacementManagerLocal
 
   private String repositoryName = null;
 
+  private ObjyPlacementManager globalPlacementManager = null;
+
   ObjySession objySession = null;
 
   InternalCommitContext commitContext = null;
@@ -58,9 +61,12 @@ public class ObjyPlacementManagerLocal
 
   Map<CDOID, CDOID> idMapper;
 
-  public ObjyPlacementManagerLocal(String repositoryName, ObjySession objySession, InternalCommitContext commitContext)
+  public ObjyPlacementManagerLocal(ObjectivityStore objyStore, ObjySession objySession,
+      InternalCommitContext commitContext)
   {
-    this.repositoryName = repositoryName;
+    repositoryName = objyStore.getRepository().getName();
+    globalPlacementManager = objyStore.getGlobalPlacementManager();
+
     this.objySession = objySession;
     this.commitContext = commitContext;
     // first put them in a map for easy lookup and processing....
@@ -140,8 +146,8 @@ public class ObjyPlacementManagerLocal
     if (nearObject == null)
     {
       // we have to put it somewhere.
-      // TODO - call the global placement manager.
-      nearObject = objySession.getGlobalPlacementManager().getNearObject(null, null, revision.getEClass());
+      // call the global placement manager.
+      nearObject = globalPlacementManager.getNearObject(null, null, revision.getEClass());
     }
 
     ObjyObject objyObject = objySession.getObjectManager().newObject(eClass, nearObject);
@@ -150,7 +156,7 @@ public class ObjyPlacementManagerLocal
     if (revision.isResourceNode())
     {
       // Add resource to the list
-      OoResourceList resourceList = objySession.getResourceList();
+      ObjyResourceList resourceList = objySession.getResourceList();
 
       // before we update the data into the object we need to check
       // if it's a resource and we're trying to add a duplicate.

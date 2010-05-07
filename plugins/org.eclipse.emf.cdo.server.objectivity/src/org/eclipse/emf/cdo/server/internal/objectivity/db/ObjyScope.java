@@ -155,7 +155,7 @@ public class ObjyScope
   /**
    * This function will throw an exception if the lookupObj() fails to find the named object.
    */
-  public ObjyObject lookupObject(String nameObject)
+  public ObjyObject lookupObjyObject(String nameObject)
   {
     ObjyObject objyObject = null;
     ooId oid = lookupObjectOid(nameObject);
@@ -168,6 +168,13 @@ public class ObjyScope
     ooObj anObj = null;
     anObj = (ooObj)getContainerObj().lookupObj(nameObject);
     return anObj.getOid();
+  }
+
+  public ooObj lookupObject(String nameObject)
+  {
+    ooObj anObj = null;
+    anObj = (ooObj)getContainerObj().lookupObj(nameObject);
+    return anObj;
   }
 
   public void nameObj(String objName, ObjyObject objyObject)

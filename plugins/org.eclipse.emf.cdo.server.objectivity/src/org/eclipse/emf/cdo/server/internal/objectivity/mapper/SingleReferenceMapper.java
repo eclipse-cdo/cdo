@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.server.internal.objectivity.mapper;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooProxy;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyProxy;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.OBJYCDOIDUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.TypeConvert;
 
@@ -74,9 +74,9 @@ public class SingleReferenceMapper extends BasicTypeMapper implements ISingleTyp
       // System.out.println("-->> IS: getting Class_Object from OID: " + childObject.getStoreString());
       Class_Object refClassObject = Class_Object.class_object_from_oid(childObject);
 
-      if (refClassObject.type_of().name().equals(ooProxy.className))
+      if (refClassObject.type_of().name().equals(ObjyProxy.className))
       {
-        ooProxy proxyObject = new ooProxy(refClassObject);
+        ObjyProxy proxyObject = new ObjyProxy(refClassObject);
         return OBJYCDOIDUtil.createCDIDExternal(proxyObject);
       }
     }
@@ -98,7 +98,7 @@ public class SingleReferenceMapper extends BasicTypeMapper implements ISingleTyp
     if (newValue instanceof CDOIDExternal)
     {
       // create an ObjyProxy object to hold the the value.
-      ooProxy proxyObject = ooProxy.createObject(objyObject.ooId());
+      ObjyProxy proxyObject = ObjyProxy.createObject(objyObject.ooId());
       proxyObject.setUri(((CDOIDExternal)newValue).getURI());
       ooid = proxyObject.ooId();
     }

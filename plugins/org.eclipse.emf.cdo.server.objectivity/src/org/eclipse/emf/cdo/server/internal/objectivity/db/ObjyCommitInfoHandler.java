@@ -12,7 +12,8 @@ package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.OoCommitInfo;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyCommitInfo;
+import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
 
 import com.objy.db.app.Session;
 import com.objy.db.app.ooId;
@@ -23,13 +24,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class OoCommitInfoHandler
+public class ObjyCommitInfoHandler
 {
   protected ooId commitInfoSetId;
 
-  public OoCommitInfoHandler(ooId oid)
+  public ObjyCommitInfoHandler(String repositoryName)
   {
-    commitInfoSetId = oid;
+    commitInfoSetId = ObjyDb.getOrCreateCommitInfoList(repositoryName);
   }
 
   /***
@@ -50,7 +51,7 @@ public class OoCommitInfoHandler
 
   public void writeCommitInfo(int id, long timeStamp, String userID, String comment)
   {
-    OoCommitInfo commitInfo = new OoCommitInfo(id, timeStamp, userID, comment);
+    ObjyCommitInfo commitInfo = new ObjyCommitInfo(id, timeStamp, userID, comment);
     getTreeSet().add(commitInfo);
   }
 
@@ -58,14 +59,14 @@ public class OoCommitInfoHandler
    * Find all objects in the ooTreeListX that's between startTime and endTime inclusive, and have branch.getID() if
    * branch is not null We don't have any optimization for time, but we could make the treeset use custom comparator.
    */
-  public List<OoCommitInfo> getCommitInfo(CDOBranch branch, long startTime, long endTime)
+  public List<ObjyCommitInfo> getCommitInfo(CDOBranch branch, long startTime, long endTime)
   {
     ooTreeSetX treeSet = getTreeSet();
-    OoCommitInfo ooCommitInfo = null;
-    List<OoCommitInfo> results = new ArrayList<OoCommitInfo>();
+    ObjyCommitInfo ooCommitInfo = null;
+    List<ObjyCommitInfo> results = new ArrayList<ObjyCommitInfo>();
 
     boolean getIt = false;
-    Iterator<OoCommitInfo> itr = treeSet.iterator();
+    Iterator<ObjyCommitInfo> itr = treeSet.iterator();
     while (itr.hasNext())
     {
       ooCommitInfo = itr.next();

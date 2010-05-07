@@ -36,7 +36,7 @@ public class ObjyPackageInfo extends ooObj
   public static ManyToOne packageUnit_Relationship()
   {
     return new ManyToOne("packageUnit", // field name
-        "org.eclipse.emf.cdo.server.internal.objectivity.schema.OoPackageUnit", // name of related class
+        "org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyPackageUnit", // name of related class
         "packageInfos", // inverse relationship field name
         Relationship.COPY_DELETE, Relationship.VERSION_DELETE, false, false, Relationship.INLINE_NONE); // none-inline
                                                                                                         // association
@@ -48,10 +48,10 @@ public class ObjyPackageInfo extends ooObj
    * @param node
    *          parent Node
    */
-  public void setPackageUnit(ObjyPackageUnit ooPackageUnit)
+  public void setPackageUnit(ObjyPackageUnit objyPackageUnit)
   {
     markModified();
-    packageUnit.form(ooPackageUnit);
+    packageUnit.form(objyPackageUnit);
   }
 
   /**

@@ -16,12 +16,12 @@ import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStore;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.ITypeMapper;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.ObjyMapper;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.OoResourceList;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooArrayListId;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooArrayListString;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooBase;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooFeatureMapArrayList;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooProxy;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyResourceList;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyArrayListId;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyArrayListString;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBase;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyFeatureMapArrayList;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyProxy;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -453,12 +453,12 @@ public class ObjySchema
    */
   public static void createBaseSchema()
   {
-    ooArrayListId.buildSchema();
-    ooFeatureMapArrayList.buildSchema();
-    ooProxy.buildSchema();
-    ooArrayListString.buildSchema();
-    ooBase.buildSchema();
-    OoResourceList.buildSchema();
+    ObjyArrayListId.buildSchema();
+    ObjyFeatureMapArrayList.buildSchema();
+    ObjyProxy.buildSchema();
+    ObjyArrayListString.buildSchema();
+    ObjyBase.buildSchema();
+    ObjyResourceList.buildSchema();
   }
 
 }

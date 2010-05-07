@@ -10,8 +10,9 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
-import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStore;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.objectivity.clustering.ObjyPlacementManager;
+import org.eclipse.emf.cdo.server.internal.objectivity.clustering.ObjyPlacementManagerImpl;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -37,11 +38,9 @@ public class ObjyConnection
 
   protected String fdName = "";
 
-  protected ObjectivityStore store = null;
+  // protected ObjectivityStore store = null;
 
   private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyConnection.class);
-
-  private static final ContextTracer TRACER_ERROR = new ContextTracer(OM.ERROR, ObjyConnection.class);
 
   private static final ContextTracer TRACER_INFO = new ContextTracer(OM.INFO, ObjyConnection.class);
 
@@ -55,6 +54,8 @@ public class ObjyConnection
   protected ConcurrentHashMap<String, ObjySession> readPool;
 
   protected ConcurrentHashMap<String, ObjySession> writePool;
+
+  private ObjyPlacementManager defaultPlacementManager = null;
 
   private Object syncObject = new Object();
 
@@ -71,15 +72,14 @@ public class ObjyConnection
    * 
    * @param fdName
    */
-  synchronized public void connect(ObjectivityStore store, String fdName)
+  synchronized public void connect(String fdName)
   {
     /****
      * If
      */
     this.fdName = fdName;
     connect();
-    this.store = store;
-
+    // this.store = store;
   }
 
   private void connect()
@@ -139,7 +139,7 @@ public class ObjyConnection
       ObjySession session = writePool.get(sessionName);
       if (session == null)
       {
-        session = new ObjySession(sessionName, writePool, store);
+        session = new ObjySession(sessionName, writePool, this);
         writePool.put(sessionName, session);
       }
       session.join();
@@ -155,7 +155,7 @@ public class ObjyConnection
       ObjySession session = readPool.get(sessionName);
       if (session == null)
       {
-        session = new ObjySession(sessionName, writePool, store);
+        session = new ObjySession(sessionName, writePool, this);
         readPool.put(sessionName, session);
       }
       session.join();
@@ -315,6 +315,15 @@ public class ObjyConnection
   public void registerClass(String name)
   {
     connection.registerClass(name);
+  }
+
+  public ObjyPlacementManager getDefaultPlacementManager()
+  {
+    if (defaultPlacementManager == null)
+    {
+      defaultPlacementManager = new ObjyPlacementManagerImpl();
+    }
+    return defaultPlacementManager;
   }
 
   protected void cleanupSessionPool(ConcurrentHashMap<String, ObjySession> pool)

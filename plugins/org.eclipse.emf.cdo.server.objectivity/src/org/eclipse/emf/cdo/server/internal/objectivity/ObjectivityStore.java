@@ -19,16 +19,14 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.clustering.ObjyPlacementManager;
-import org.eclipse.emf.cdo.server.internal.objectivity.clustering.ObjyPlacementManagerImpl;
+import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyCommitInfoHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyConnection;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
+import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyPropertyMapHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyScope;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySession;
-import org.eclipse.emf.cdo.server.internal.objectivity.db.OoCommitInfoHandler;
-import org.eclipse.emf.cdo.server.internal.objectivity.db.OoPropertyMapHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyStoreInfo;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.OoResourceList;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
 import org.eclipse.emf.cdo.server.objectivity.IObjectivityStore;
 import org.eclipse.emf.cdo.server.objectivity.IObjectivityStoreConfig;
@@ -43,7 +41,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EClass;
 
 import com.objy.db.app.Connection;
-import com.objy.db.app.ooId;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,8 +66,6 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
   private IObjectivityStoreConfig storeConfig = null;
 
-  private ObjyPlacementManager placementManager = null;
-
   private boolean firstTime = false;
 
   private int nActivate = 0;
@@ -81,9 +76,9 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
   private boolean requiredToSupportBranches;
 
-  private OoCommitInfoHandler ooCommitInfoHandler = null;
+  private ObjyCommitInfoHandler ooCommitInfoHandler = null;
 
-  private OoPropertyMapHandler ooPropertyMapHandler = null;
+  private ObjyPropertyMapHandler ooPropertyMapHandler = null;
 
   private boolean storeInitialized = false;
 
@@ -108,21 +103,19 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     // the caller already used the StoreConfig to open the connection
     // to the FD so, get the current here.
     objyConnection = ObjyConnection.INSTANCE;
-    placementManager = new ObjyPlacementManagerImpl();
 
     // -----------------------------------------------------------------------
     // Initialize schema as needed, and also any other config information
 
     // connection to the FD.
-    ObjyConnection.INSTANCE.connect(this, storeConfig.getFdName());
+    objyConnection.connect(storeConfig.getFdName());
     Connection.current().setUserClassLoader(this.getClass().getClassLoader());
 
-    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyStoreInfo"); //$NON-NLS-1$
-    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.OoPackageInfo"); //$NON-NLS-1$
-    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.OoPackageUnit"); //$NON-NLS-1$
-    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ASPackage"); //$NON-NLS-1$
-    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.OoCommitInfo"); //$NON-NLS-1$
-    ObjyConnection.INSTANCE.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.OoProperty"); //$NON-NLS-1$
+    objyConnection.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyStoreInfo"); //$NON-NLS-1$
+    objyConnection.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyPackageInfo"); //$NON-NLS-1$
+    objyConnection.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyPackageUnit"); //$NON-NLS-1$
+    objyConnection.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyCommitInfo"); //$NON-NLS-1$
+    objyConnection.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyProperty"); //$NON-NLS-1$
 
     ObjySession objySession = objyConnection.getWriteSessionFromPool("Main"); //$NON-NLS-1$
     objySession.setRecoveryAutomatic(true);
@@ -132,9 +125,6 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
     try
     {
-      ooId commitInfoListId = null;
-      ooId propertyMapId = null;
-
       // check if we initialized the store for the first time.
       {
         ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.DEFAULT_CONT_NAME);
@@ -156,21 +146,11 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
       // This is used for the package storage...
       ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
-      ObjyObject resourceList = getOrCreateResourceList();
+      // make sure we have the root resource created.
+      ObjyObject resourceList = ObjyDb.getOrCreateResourceList();
 
-      // get OIDs for the CommitInfoTree and the PropertyMap.
-      if (commitInfoListId == null)
-      {
-        // commit info is per repository.
-        commitInfoListId = ObjyDb.getOrCreateCommitInfoList(getRepository().getName());
-      }
-      if (propertyMapId == null)
-      {
-        propertyMapId = ObjyDb.getOrCreatePropertyMap();
-      }
-
-      ooCommitInfoHandler = new OoCommitInfoHandler(commitInfoListId);
-      ooPropertyMapHandler = new OoPropertyMapHandler(propertyMapId);
+      ooCommitInfoHandler = new ObjyCommitInfoHandler(getRepository().getName());
+      ooPropertyMapHandler = new ObjyPropertyMapHandler();
 
       objySession.commit();
 
@@ -309,47 +289,6 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
   }
 
-  private ObjyObject createResourceList(ObjyScope objyScope)
-  {
-    if (TRACER_DEBUG.isEnabled())
-    {
-      TRACER_DEBUG.format("createResourceList()"); //$NON-NLS-1$
-    }
-    // TODO - this need refactoring...
-    ObjyObject resourceList = OoResourceList.create(objyScope.getScopeContOid());
-    objyScope.nameObj(ObjyDb.RESOURCELIST_NAME, resourceList);
-    return resourceList;
-  }
-
-  /***
-   * This function will return the resourceList after creation.
-   */
-  public ObjyObject getOrCreateResourceList()
-  {
-    if (TRACER_DEBUG.isEnabled())
-    {
-      TRACER_DEBUG.format("getOrCreateResourceList()"); //$NON-NLS-1$
-    }
-    ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.RESOURCELIST_CONT_NAME);
-    ObjyObject objyObject = null;
-    try
-    {
-      objyObject = objyScope.lookupObject(ObjyDb.RESOURCELIST_NAME);
-    }
-    catch (Exception ex)
-    {
-      // we need to create the resource.
-      objyObject = createResourceList(objyScope);
-    }
-
-    return objyObject;
-  }
-
-  public ObjyPlacementManager getPlacementManager()
-  {
-    return placementManager;
-  }
-
   public void addPackageMapping(String name1, String name2)
   {
     if (packageMapping.get(name1) == null)
@@ -401,9 +340,14 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     objySession.commit();
   }
 
-  public OoCommitInfoHandler getCommitInfoHandle()
+  public ObjyCommitInfoHandler getCommitInfoHandle()
   {
     return ooCommitInfoHandler;
+  }
+
+  public ObjyPlacementManager getGlobalPlacementManager()
+  {
+    return ObjyConnection.INSTANCE.getDefaultPlacementManager();
   }
 
 }

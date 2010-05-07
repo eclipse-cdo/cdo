@@ -18,8 +18,8 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStore;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.OoPackageInfo;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.OoPackageUnit;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyPackageInfo;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyPackageUnit;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.OBJYCDOIDUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.SmartLock;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -75,7 +75,7 @@ public class ObjyPackageHandler
 
       byte[] ePackageAsBytes = getEPackageBytes(packageUnit);
 
-      OoPackageUnit ooPackageUnit = new OoPackageUnit(ePackageAsBytes.length);
+      ObjyPackageUnit ooPackageUnit = new ObjyPackageUnit(ePackageAsBytes.length);
       objyScope.getContainerObj().cluster(ooPackageUnit);
 
       ooPackageUnit.setId(packageUnit.getID());
@@ -88,7 +88,7 @@ public class ObjyPackageHandler
         TRACER_DEBUG.trace("... writing OoPackageUnit.getId(): " + ooPackageUnit.getId());
       }
 
-      OoPackageInfo ooPackageInfo;
+      ObjyPackageInfo ooPackageInfo;
       for (InternalCDOPackageInfo packageInfo : packageInfos)
       {
         ooPackageInfo = createPackageInfo(packageInfo, monitor); // Don't fork monitor
@@ -111,14 +111,14 @@ public class ObjyPackageHandler
     }
   }
 
-  private OoPackageInfo createPackageInfo(InternalCDOPackageInfo packageInfo, OMMonitor monitor)
+  private ObjyPackageInfo createPackageInfo(InternalCDOPackageInfo packageInfo, OMMonitor monitor)
   {
     if (TRACER_INFO.isEnabled())
     {
       TRACER_INFO.format("Writing package info: {0}", packageInfo); //$NON-NLS-1$
     }
 
-    OoPackageInfo ooPackageInfo = new OoPackageInfo();
+    ObjyPackageInfo ooPackageInfo = new ObjyPackageInfo();
     ooPackageInfo.setPackageURI(packageInfo.getPackageURI());
     ooPackageInfo.setParentURI(packageInfo.getParentURI());
     ooPackageInfo.setUnitID(packageInfo.getPackageUnit().getID());
@@ -151,12 +151,12 @@ public class ObjyPackageHandler
 
   public Collection<InternalCDOPackageUnit> readPackageUnits()
   {
-    final Map<OoPackageUnit, InternalCDOPackageUnit> packageUnitsMap = new HashMap<OoPackageUnit, InternalCDOPackageUnit>();
+    final Map<ObjyPackageUnit, InternalCDOPackageUnit> packageUnitsMap = new HashMap<ObjyPackageUnit, InternalCDOPackageUnit>();
 
-    Iterator<?> itr = objyScope.getDatabaseObj().scan(OoPackageUnit.class.getName());
+    Iterator<?> itr = objyScope.getDatabaseObj().scan(ObjyPackageUnit.class.getName());
     while (itr.hasNext())
     {
-      OoPackageUnit ooPackageUnit = (OoPackageUnit)itr.next();
+      ObjyPackageUnit ooPackageUnit = (ObjyPackageUnit)itr.next();
       InternalCDOPackageUnit packageUnit = createPackageUnit();
       packageUnit.setOriginalType(CDOPackageUnit.Type.values()[ooPackageUnit.getOrdinal()]);
       packageUnit.setTimeStamp(ooPackageUnit.getTimeStamp());
@@ -168,13 +168,13 @@ public class ObjyPackageHandler
     }
 
     // create the package infos from the units.
-    for (Entry<OoPackageUnit, InternalCDOPackageUnit> entry : packageUnitsMap.entrySet())
+    for (Entry<ObjyPackageUnit, InternalCDOPackageUnit> entry : packageUnitsMap.entrySet())
     {
       // scan the relationship.
-      List<OoPackageInfo> ooPackageInfoList = entry.getKey().getPackageInfos();
+      List<ObjyPackageInfo> ooPackageInfoList = entry.getKey().getPackageInfos();
       List<InternalCDOPackageInfo> packageInfoList = new ArrayList<InternalCDOPackageInfo>();
       // create the package infos.
-      for (OoPackageInfo ooPackageInfo : ooPackageInfoList)
+      for (ObjyPackageInfo ooPackageInfo : ooPackageInfoList)
       {
         InternalCDOPackageInfo packageInfo = createPackageInfo(ooPackageInfo);
         packageInfoList.add(packageInfo);
@@ -202,7 +202,7 @@ public class ObjyPackageHandler
     return (InternalCDOPackageInfo)CDOModelUtil.createPackageInfo();
   }
 
-  private InternalCDOPackageInfo createPackageInfo(OoPackageInfo ooPackageInfo)
+  private InternalCDOPackageInfo createPackageInfo(ObjyPackageInfo ooPackageInfo)
   {
     if (TRACER_INFO.isEnabled())
     {
@@ -228,11 +228,11 @@ public class ObjyPackageHandler
     byte[] bytes = null;
 
     // TODO - we should use the predicate query.
-    Iterator<?> itr = objyScope.getDatabaseObj().scan(OoPackageUnit.class.getName());
+    Iterator<?> itr = objyScope.getDatabaseObj().scan(ObjyPackageUnit.class.getName());
     System.out.println("Looking for packageUnit.ID(): " + packageUnit.getID());
     while (itr.hasNext())
     {
-      OoPackageUnit ooPackageUnit = (OoPackageUnit)itr.next();
+      ObjyPackageUnit ooPackageUnit = (ObjyPackageUnit)itr.next();
       System.out.println("... found OoPackageUnit.getId(): " + ooPackageUnit.getId());
       if (ooPackageUnit.getId().equals(packageUnit.getID()))
       {

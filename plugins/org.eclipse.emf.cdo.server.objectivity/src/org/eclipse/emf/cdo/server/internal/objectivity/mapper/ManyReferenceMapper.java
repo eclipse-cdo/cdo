@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.internal.objectivity.mapper;
 
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooArrayListId;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyArrayListId;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.TypeConvert;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -41,7 +41,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
   {
     if (dClassObject == null)
     {
-      dClassObject = ObjySchema.getTopModule().resolve_class(ooArrayListId.className);
+      dClassObject = ObjySchema.getTopModule().resolve_class(ObjyArrayListId.className);
     }
     return dClassObject;
   }
@@ -56,7 +56,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
           d_Access_Kind.d_PUBLIC, // Access kind
           feature.getName(), // Attribute name
           1, // # elements in fixed-size array
-          ooArrayListId.className, false); // Default value // Default value
+          ObjyArrayListId.className, false); // Default value // Default value
 
       return true;
     }
@@ -69,7 +69,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
 
   public Object getValue(ObjyObject internal, EStructuralFeature feature, int index)
   {
-    ooArrayListId list = getList(internal, feature);
+    ObjyArrayListId list = getList(internal, feature);
     if (list != null)
     {
       return list.get(index);
@@ -91,7 +91,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
 
   public void setValue(ObjyObject internal, EStructuralFeature feature, int index, Object newValue)
   {
-    ooArrayListId list = getList(internal, feature);
+    ObjyArrayListId list = getList(internal, feature);
 
     if (list != null)
     {
@@ -112,11 +112,11 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
 
   }
 
-  public ooArrayListId getList(ObjyObject objyObject, EStructuralFeature feature)
+  public ObjyArrayListId getList(ObjyObject objyObject, EStructuralFeature feature)
   {
     // System.out.println("getList() for : " + objyObject.ooId().getStoreString() + " feature: " + feature.getName());
     Class_Position position = getAttributePosition(objyObject, feature);
-    ooArrayListId list = (ooArrayListId)objyObject.getFeatureList(position);
+    ObjyArrayListId list = (ObjyArrayListId)objyObject.getFeatureList(position);
     if (list == null)
     {
       try
@@ -124,7 +124,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
         ooId oid = objyObject.get_ooId(position);
         if (!oid.isNull())
         {
-          list = new ooArrayListId(Class_Object.class_object_from_oid(oid));
+          list = new ObjyArrayListId(Class_Object.class_object_from_oid(oid));
           objyObject.setFeatureList(position, list);
         }
       }
@@ -139,7 +139,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
 
   public int size(ObjyObject objyObject, EStructuralFeature feature)
   {
-    ooArrayListId list = getList(objyObject, feature);
+    ObjyArrayListId list = getList(objyObject, feature);
 
     return (int)(list == null ? 0 : list.size());
   }
@@ -147,7 +147,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
   public void add(ObjyObject objyObject, EStructuralFeature feature, int index, Object value)
   {
     ooId obj = TypeConvert.toOoId(value);
-    ooArrayListId list = getList(objyObject, feature);
+    ObjyArrayListId list = getList(objyObject, feature);
     if (list != null)
     {
       list.add(index, obj);
@@ -168,7 +168,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
 
   public void addAll(ObjyObject objyObject, EStructuralFeature feature, int index, Object[] value)
   {
-    ooArrayListId list = getList(objyObject, feature);
+    ObjyArrayListId list = getList(objyObject, feature);
     if (list != null)
     {
       list.addAll(index, value);
@@ -201,7 +201,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
     Class_Object newClassObject = Class_Object
         .new_persistent_object(getArrayListClass(), classObject.objectID(), false);
     classObject.set_ooId(position, newClassObject.objectID());
-    ooArrayListId.initObject(newClassObject);
+    ObjyArrayListId.initObject(newClassObject);
   }
 
   public void delete(ObjyObject objyObject, EStructuralFeature feature)
@@ -218,7 +218,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
 
   public void clear(ObjyObject objyObject, EStructuralFeature feature)
   {
-    ooArrayListId list = getList(objyObject, feature);
+    ObjyArrayListId list = getList(objyObject, feature);
     if (list != null)
     {
       list.clear();
@@ -243,7 +243,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
     // System.out.println("remove() for : " + objyObject.ooId().getStoreString() + " feature: " + feature.getName() +
     // " index: "+index);
     Object oldValue = getValue(objyObject, feature, index);
-    ooArrayListId list = getList(objyObject, feature);
+    ObjyArrayListId list = getList(objyObject, feature);
 
     if (list != null)
     {
@@ -276,7 +276,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
 
     // CDOList cdoList = CDOListFactory.DEFAULT.createList(size, size, 0);
     ooId[] ooIds = null;
-    ooArrayListId list = getList(objyObject, feature);
+    ObjyArrayListId list = getList(objyObject, feature);
 
     if (list != null)
     {
@@ -310,7 +310,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
 
   public void move(ObjyObject objyObject, EStructuralFeature feature, int targetIndex, int sourceIndex)
   {
-    ooArrayListId list = getList(objyObject, feature);
+    ObjyArrayListId list = getList(objyObject, feature);
 
     if (list != null)
     {

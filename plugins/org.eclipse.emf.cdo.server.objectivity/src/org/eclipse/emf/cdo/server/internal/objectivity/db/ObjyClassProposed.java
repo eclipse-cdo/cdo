@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.server.internal.objectivity.db;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.ITypeMapper;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.ObjyMapper;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooBase;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBase;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -93,7 +93,7 @@ public class ObjyClassProposed
         // ooBaseClass.buildSchema();
         proposedooClass.add_base_class(com.objy.as.app.d_Module.LAST, // Position
             d_Access_Kind.d_PUBLIC, // Access kind
-            ooBase.ClassName); // Base class name
+            ObjyBase.ClassName); // Base class name
 
       }
     }

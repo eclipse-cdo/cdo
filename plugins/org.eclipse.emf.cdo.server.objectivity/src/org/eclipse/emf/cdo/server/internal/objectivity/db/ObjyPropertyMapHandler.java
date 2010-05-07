@@ -10,7 +10,8 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.OoProperty;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyProperty;
+import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
 
 import com.objy.db.app.Session;
 import com.objy.db.app.ooId;
@@ -19,16 +20,16 @@ import com.objy.db.util.ooMap;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
-public class OoPropertyMapHandler
+public class ObjyPropertyMapHandler
 {
   protected ooId propertyMapId;
 
-  public OoPropertyMapHandler(ooId oid)
+  public ObjyPropertyMapHandler()
   {
-    propertyMapId = oid;
+    propertyMapId = ObjyDb.getOrCreatePropertyMap();
   }
 
   /***
@@ -51,7 +52,7 @@ public class OoPropertyMapHandler
     ooMap propertyMap = getMap();
     String key = null;
     String value = null;
-    OoProperty property = null;
+    ObjyProperty property = null;
     for (Entry<String, String> entry : properties.entrySet())
     {
       key = entry.getKey();
@@ -60,12 +61,12 @@ public class OoPropertyMapHandler
       // check if we have the property
       if (propertyMap.isMember(key))
       {
-        property = (OoProperty)propertyMap.lookup(key);
+        property = (ObjyProperty)propertyMap.lookup(key);
         property.setValue(value);
       }
       else
       {
-        property = new OoProperty(key, value);
+        property = new ObjyProperty(key, value);
         propertyMap.add(property, key);
       }
     }
@@ -78,12 +79,12 @@ public class OoPropertyMapHandler
   {
     // get the map.
     ooMap propertyMap = getMap();
-    OoProperty property = null;
+    ObjyProperty property = null;
     for (String key : names)
     {
       if (propertyMap.isMember(key))
       {
-        property = (OoProperty)propertyMap.lookup(key);
+        property = (ObjyProperty)propertyMap.lookup(key);
         // although removing the object will remove it from the map
         // it's cleaner to do it explicitly.
         propertyMap.remove(key);
@@ -100,13 +101,13 @@ public class OoPropertyMapHandler
     Map<String, String> properties = new HashMap<String, String>();
     // get the map.
     ooMap propertyMap = getMap();
-    OoProperty property = null;
+    ObjyProperty property = null;
 
     for (String key : names)
     {
       if (propertyMap.isMember(key))
       {
-        property = (OoProperty)propertyMap.lookup(key);
+        property = (ObjyProperty)propertyMap.lookup(key);
         properties.put(property.getKey(), property.getValue());
       }
     }

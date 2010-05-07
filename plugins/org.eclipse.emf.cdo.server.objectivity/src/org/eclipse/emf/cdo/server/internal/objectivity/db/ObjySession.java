@@ -10,9 +10,9 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
-import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStore;
-import org.eclipse.emf.cdo.server.internal.objectivity.clustering.ObjyPlacementManager;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.OoResourceList;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBranchManager;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyResourceList;
+import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
 
 import com.objy.db.app.Session;
 import com.objy.db.app.oo;
@@ -28,9 +28,11 @@ public class ObjySession extends Session
 {
   private ObjyObjectManager objectManger = null;
 
-  private OoResourceList resourceList;
+  private ObjyResourceList resourceList = null;
 
-  private ObjectivityStore store = null;
+  private ObjyBranchManager branchManager = null;
+
+  // private ObjectivityStore store = null;
 
   protected String sessionName;
 
@@ -38,21 +40,28 @@ public class ObjySession extends Session
 
   protected boolean available;
 
-  public ObjySession(String name, ConcurrentHashMap<String, ObjySession> pool, ObjectivityStore store)
+  public ObjySession(String name, ConcurrentHashMap<String, ObjySession> pool, ObjyConnection objyConnection)
   {
     super(600, 1000);
     setThreadPolicy(oo.THREAD_POLICY_UNRESTRICTED);
-    // for 10.0 -> setThreadPolicy(oo.THREAD_POLICY_CONCURRENT); // this is a workaround for issue with deaklocking
-    // threads
     sessionName = name;
     sessionPool = pool;
-    this.store = store;
-    objectManger = new ObjyObjectManager(store.getPlacementManager());
+    // this.store = store;
+    objectManger = new ObjyObjectManager(objyConnection.getDefaultPlacementManager());
   }
 
   public ObjyObjectManager getObjectManager()
   {
     return objectManger;
+  }
+
+  public ObjyBranchManager getBranchManager(String repositoryName)
+  {
+    if (branchManager == null)
+    {
+      branchManager = ObjyDb.getOrCreateBranchManager(repositoryName);
+    }
+    return branchManager;
   }
 
   public void setAvailable(boolean value)
@@ -75,18 +84,13 @@ public class ObjySession extends Session
     return sessionPool;
   }
 
-  public OoResourceList getResourceList()
+  public ObjyResourceList getResourceList()
   {
     if (resourceList == null)
     {
-      resourceList = new OoResourceList(this, store.getOrCreateResourceList());
+      resourceList = new ObjyResourceList(this, ObjyDb.getOrCreateResourceList());
     }
     return resourceList;
-  }
-
-  public ObjyPlacementManager getGlobalPlacementManager()
-  {
-    return store.getPlacementManager();
   }
 
   @Override

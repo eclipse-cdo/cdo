@@ -111,6 +111,7 @@ public class MemoryLeakTest extends AbstractCDOTest
     }
   }
 
+  @SuppressWarnings("unused")
   private Category selectCategory(EList<Category> categories)
   {
     int size = categories.size();

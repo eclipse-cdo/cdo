@@ -156,7 +156,7 @@
 			<args>
 				<jvmarg value="-Declipse.p2.mirrors=false" />
 				<!--
-				Hudson Ant property --> org.eclipse.update.jarprocessor.pack200=/shared/common/ibm-java2-ppc-50/jre/bin
+				Hudson Ant property: org.eclipse.update.jarprocessor.pack200=/shared/common/ibm-java2-ppc-50/jre/bin
 				<jvmarg value="-Dorg.eclipse.update.jarprocessor.pack200=${org.eclipse.update.jarprocessor.pack200}" />
 				-->
 				<arg value="-r" />

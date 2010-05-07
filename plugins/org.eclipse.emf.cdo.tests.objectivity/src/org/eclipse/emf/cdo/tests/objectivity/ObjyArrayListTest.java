@@ -2,7 +2,7 @@ package org.eclipse.emf.cdo.tests.objectivity;
 
 import static org.junit.Assert.*;
 import java.util.ArrayList;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ooArrayList;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyArrayList;
 import org.junit.*;
 
 import com.objy.as.app.Class_Object;
@@ -14,7 +14,7 @@ import com.objy.as.app.Class_Object;
  * @author ibrahim
  *
  */
-class ObjyLocalArrayListLong extends ooArrayList<Long>
+class ObjyLocalArrayListLong extends ObjyArrayList<Long>
 {
 	public ObjyLocalArrayListLong(Class_Object classObject)
   {

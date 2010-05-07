@@ -882,8 +882,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       {
         InternalCDOView view = object.cdoView();
         InternalCDOTransaction transaction = view.toTransaction();
-        transaction.setConflict(object);
         changeState(object, CDOState.CONFLICT);
+        transaction.setConflict(object);
       }
     }
   }
@@ -898,8 +898,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       InternalCDOView view = object.cdoView();
       InternalCDOTransaction transaction = view.toTransaction();
-      transaction.setConflict(object);
       changeState(object, CDOState.INVALID_CONFLICT);
+      transaction.setConflict(object);
     }
   }
 

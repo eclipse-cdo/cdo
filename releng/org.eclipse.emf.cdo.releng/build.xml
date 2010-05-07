@@ -57,9 +57,9 @@
 	<property name="result" location="${build.root}/result" />
 	<property name="workspace" location="${result}/workspace" />
 	<property name="targetPlatformPath" location="${result}/tp" />
-
 	<property name="buckminster.output.root" location="${result}/output" />
 	<property name="buckminster.temp.root" location="${result}/temp" />
+	<property name="site.p2.dir" location="${workspace}/_temp/org.eclipse.emf.cdo.site_3.0.0-eclipse.feature/site.p2" />
 
 	<!-- This macro executes the default application of an eclipse installation
 			 that resides in the folder ${buildtools}/@app -->
@@ -239,6 +239,11 @@
 				<arg value="org.eclipse.emf.cdo.site#site.p2" />
 			</cmdargs>
 		</buckminster>
+
+		<echo message="Creating human readable index.html" />
+		<unzip src="${site.p2.dir}/content.jar" dest="${site.p2.dir}/content.xml" />
+		<xslt style="web/P2Content.xsl" in="${site.p2.dir}/content.xml" out="${site.p2.dir}/index.html" />
+		<delete file="${site.p2.dir}/content.xml" />
 	</target>
 
 	<target name="test" depends="site.p2">

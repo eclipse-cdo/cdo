@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<project name="xform" default="xform">
+
+	<target name="xform">
+		<xslt style="P2Content.xsl" in="cdo-content.xml" out="cdo-site.html" />
+	</target>
+
+</project>

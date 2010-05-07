@@ -90,6 +90,7 @@ import org.eclipse.net4j.util.ref.ReferenceValueMap;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
@@ -1367,8 +1368,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     }
 
     sendInvalidationNotifications(changedObjects, detachedObjects);
-    fireInvalidationEvent(lastUpdateTime, Collections.unmodifiableSet(changedObjects), Collections
-        .unmodifiableSet(detachedObjects));
+    fireInvalidationEvent(lastUpdateTime, Collections.unmodifiableSet(changedObjects),
+        Collections.unmodifiableSet(detachedObjects));
 
     if (!deltas.isEmpty() || !detachedObjects.isEmpty())
     {
@@ -1523,7 +1524,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
               oldRevision = oldRevisions.get(id);
             }
 
-            NotificationImpl notification = builder.buildNotification(object, oldRevision, delta, detachedObjects);
+            NotificationChain notification = builder.buildNotification(object, oldRevision, delta, detachedObjects);
             if (notification != null)
             {
               notification.dispatch();

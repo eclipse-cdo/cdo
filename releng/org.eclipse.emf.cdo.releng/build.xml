@@ -9,7 +9,6 @@
 		<isset property="server.build" />
 	</condition>
 
-	<echo message="Sourcing ${properties.file}" />
 	<property file="${properties.file}" />
 	<property environment="env" />
 
@@ -133,6 +132,7 @@
 	</target>
 
 	<target name="init.checks" depends="init.clean.tools,init.clean.tp,init.clean.workspace,init.clean.output">
+		<echo message="Sourcing ${properties.file}" />
 		<available file="${tools}/director/director" property="director.exists" />
 		<available file="${tools}/buckminster/buckminster" property="buckminster.exists" />
 	</target>

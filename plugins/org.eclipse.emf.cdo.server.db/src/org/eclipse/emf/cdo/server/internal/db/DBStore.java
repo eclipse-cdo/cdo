@@ -436,23 +436,24 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     Connection connection = getConnection();
     LifecycleUtil.activate(mappingStrategy);
 
+    Set<IDBTable> createdTables = null;
     try
     {
-      Set<IDBTable> createdTables = CDODBSchema.INSTANCE.create(dbAdapter, connection);
-      if (createdTables.contains(CDODBSchema.PROPERTIES))
-      {
-        firstStart(connection);
-      }
-      else
-      {
-        reStart(connection);
-      }
-
+      createdTables = CDODBSchema.INSTANCE.create(dbAdapter, connection);
       connection.commit();
     }
     finally
     {
       DBUtil.close(connection);
+    }
+
+    if (createdTables.contains(CDODBSchema.PROPERTIES))
+    {
+      firstStart();
+    }
+    else
+    {
+      reStart();
     }
 
     externalReferenceManager = createExternalReferenceManager();
@@ -488,7 +489,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     super.doDeactivate();
   }
 
-  protected void firstStart(Connection connection)
+  protected void firstStart()
   {
     creationTime = getRepository().getTimeStamp();
     firstTime = true;
@@ -500,7 +501,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.8"), creationTime)); //$NON-NLS-1$
   }
 
-  protected void reStart(Connection connection)
+  protected void reStart()
   {
     Set<String> names = new HashSet<String>();
     names.add(PROP_REPOSITORY_CREATED);
@@ -529,21 +530,36 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     }
     else
     {
-      OM.LOG.info(Messages.getString("DBStore.9")); //$NON-NLS-1$
-      long[] result = mappingStrategy.repairAfterCrash(dbAdapter, connection);
+      Connection connection = getConnection();
+      try
+      {
+        connection.setAutoCommit(false);
+        connection.setReadOnly(true);
+        OM.LOG.info(Messages.getString("DBStore.9")); //$NON-NLS-1$
+        long[] result = mappingStrategy.repairAfterCrash(dbAdapter, connection);
 
-      setNextLocalObjectID(result[0]);
-      setLastObjectID(result[1]);
-      setLastMetaID(DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGE_INFOS_META_UB));
+        setNextLocalObjectID(result[0]);
+        setLastObjectID(result[1]);
+        setLastMetaID(DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGE_INFOS_META_UB));
 
-      int branchID = DBUtil.selectMaximumInt(connection, CDODBSchema.BRANCHES_ID);
-      setLastBranchID(branchID > 0 ? branchID : 0);
+        int branchID = DBUtil.selectMaximumInt(connection, CDODBSchema.BRANCHES_ID);
+        setLastBranchID(branchID > 0 ? branchID : 0);
 
-      int localBranchID = DBUtil.selectMinimumInt(connection, CDODBSchema.BRANCHES_ID);
-      setLastLocalBranchID(localBranchID < 0 ? localBranchID : 0);
+        int localBranchID = DBUtil.selectMinimumInt(connection, CDODBSchema.BRANCHES_ID);
+        setLastLocalBranchID(localBranchID < 0 ? localBranchID : 0);
 
-      setLastCommitTime(result[2]);
-      OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.10"), getLastObjectID(), getLastMetaID())); //$NON-NLS-1$
+        setLastCommitTime(result[2]);
+        OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.10"), getLastObjectID(), getLastMetaID())); //$NON-NLS-1$
+      }
+      catch (SQLException e)
+      {
+        OM.LOG.error(Messages.getString("DBStore.12"), e); //$NON-NLS-1$
+        throw new DBException(e);
+      }
+      finally
+      {
+        DBUtil.close(connection);
+      }
     }
 
     removePropertyValues(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));

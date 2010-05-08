@@ -127,7 +127,7 @@ public class RepositoryTest extends AbstractCDOTest
         }
       }
 
-      public void handleTransactionAfterCommitting(ITransaction transaction, CommitContext commitContext,
+      public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext,
           OMMonitor monitor)
       {
       }

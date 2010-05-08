@@ -984,7 +984,7 @@ public class Repository extends Container<Object> implements InternalRepository
           }
           else
           {
-            handler.handleTransactionAfterCommitting(transaction, commitContext, monitor.fork());
+            handler.handleTransactionAfterCommitted(transaction, commitContext, monitor.fork());
           }
         }
         catch (RuntimeException ex)

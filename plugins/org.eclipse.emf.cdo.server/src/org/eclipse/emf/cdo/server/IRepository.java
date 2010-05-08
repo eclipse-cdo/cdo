@@ -176,7 +176,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
      *          A monitor that should be used by the implementor to avoid timeouts.
      * @since 3.0
      */
-    public void handleTransactionAfterCommitting(ITransaction transaction, IStoreAccessor.CommitContext commitContext,
+    public void handleTransactionAfterCommitted(ITransaction transaction, IStoreAccessor.CommitContext commitContext,
         OMMonitor monitor);
   }
 

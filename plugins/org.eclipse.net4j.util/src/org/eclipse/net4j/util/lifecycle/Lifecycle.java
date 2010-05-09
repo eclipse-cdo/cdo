@@ -59,7 +59,7 @@ public class Lifecycle extends Notifier implements ILifecycle
         }
 
         lock();
-        lifecycleState = LifecycleState.ACTIVATING;
+
         IListener[] listeners = getListeners();
         if (listeners != null)
         {
@@ -67,6 +67,8 @@ public class Lifecycle extends Notifier implements ILifecycle
         }
 
         doBeforeActivate();
+
+        lifecycleState = LifecycleState.ACTIVATING;
         doActivate();
 
         if (!isDeferredActivation())
@@ -111,7 +113,7 @@ public class Lifecycle extends Notifier implements ILifecycle
         }
 
         lock();
-        lifecycleState = LifecycleState.DEACTIVATING;
+
         doBeforeDeactivate();
         IListener[] listeners = getListeners();
         if (listeners != null)
@@ -119,9 +121,12 @@ public class Lifecycle extends Notifier implements ILifecycle
           fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_DEACTIVATE), listeners);
         }
 
+        lifecycleState = LifecycleState.DEACTIVATING;
         doDeactivate();
+
         lifecycleState = LifecycleState.INACTIVE;
         unlock();
+
         if (listeners != null)
         {
           fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.DEACTIVATED), listeners);

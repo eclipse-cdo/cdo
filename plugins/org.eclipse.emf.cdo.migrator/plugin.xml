@@ -6,7 +6,7 @@
 	are made available under the terms of the Eclipse Public License v1.0
 	which accompanies this distribution, and is available at
 	http://www.eclipse.org/legal/epl-v10.html
-	
+
 	Contributors:
 	  Eike Stepper - initial API and implementation
 -->
@@ -14,15 +14,15 @@
 <plugin>
 
   <extension point="org.eclipse.emf.importer.modelImporterDescriptors">
-    <modelImporterDescriptor 
-    	id="org.eclipse.emf.importer.cdo" 
-    	name="%_UI_CDOImporter_label" 
-    	icon="icons/full/obj16/CDOModelFile.gif" 
-    	extensions="ecore,emof" 
-    	description="%_UI_CDOImporter_description" 
+    <modelImporterDescriptor
+    	id="org.eclipse.emf.importer.cdo"
+    	name="%_UI_CDOImporter_label"
+    	icon="icons/full/obj16/CDOModelFile.gif"
+    	extensions="ecore,emof"
+    	description="%_UI_CDOImporter_description"
     	wizard="org.eclipse.emf.cdo.internal.migrator.wizards.CDOImporterWizard" />
   </extension>
-  
+
   <extension
         point="org.eclipse.ui.popupMenus">
      <objectContribution
@@ -42,6 +42,13 @@
               enablesFor="1"
               id="org.eclipse.emf.cdo.migrator.MigrateAction"
               label="%action.label"
+              menubarPath="org.eclipse.emf.cdo.migrator.menu1/group1">
+        </action>
+        <action
+              class="org.eclipse.emf.cdo.internal.migrator.actions.MigrateDynamicAction"
+              enablesFor="1"
+              id="org.eclipse.emf.cdo.migrator.MigrateDynamicAction"
+              label="%action2.label"
               menubarPath="org.eclipse.emf.cdo.migrator.menu1/group1">
         </action>
      </objectContribution>

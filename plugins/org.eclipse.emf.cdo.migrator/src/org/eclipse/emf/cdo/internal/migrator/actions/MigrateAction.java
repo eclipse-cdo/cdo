@@ -4,15 +4,16 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.internal.migrator.actions;
 
 import org.eclipse.emf.cdo.internal.messages.Messages;
-import org.eclipse.emf.cdo.internal.migrator.CDOMigrator;
+import org.eclipse.emf.cdo.internal.migrator.CDOMigratorUtil;
 
+import org.eclipse.emf.codegen.ecore.genmodel.GenDelegationKind;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -87,7 +88,8 @@ public class MigrateAction implements IObjectActionDelegate
             }
             else
             {
-              String msg = CDOMigrator.adjustGenModel(genModel, file.getProject());
+              GenDelegationKind featureDelegation = getFeatureDelegation();
+              String msg = CDOMigratorUtil.adjustGenModel(genModel, featureDelegation);
               if (msg == null)
               {
                 showMessage(Messages.getString("MigrateAction_3"), false); //$NON-NLS-1$
@@ -109,6 +111,11 @@ public class MigrateAction implements IObjectActionDelegate
         return Status.OK_STATUS;
       }
     }.schedule();
+  }
+
+  protected GenDelegationKind getFeatureDelegation()
+  {
+    return GenDelegationKind.REFLECTIVE_LITERAL;
   }
 
   protected IFile getFile()

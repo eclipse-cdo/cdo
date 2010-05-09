@@ -30,8 +30,6 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.importer.ModelImporter;
 
-import org.eclipse.core.resources.IProject;
-
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -127,8 +125,7 @@ public class CDOImporter extends ModelImporter
       genModel.getForeignModel().add(makeRelative(uri, genModelURI).toString());
     }
 
-    IProject project = getWorkspaceRoot().getProject(getModelProjectName());
-    CDOMigrator.adjustGenModel(genModel, project);
+    CDOMigratorUtil.adjustGenModel(genModel);
   }
 
   @Override

@@ -10,6 +10,7 @@
  *    Eike Stepper - maintenance
  *    Stefan Winkler - bug 285270: [DB] Support XSD based models
  *    Stefan Winkler - Bug 289445
+ *    Heiko Ahlig - bug 309461
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
@@ -67,12 +68,30 @@ public enum TypeMappingFactory
     }
   },
 
-  DATE_MAPPING
+  DATE2TIMESTAMP_MAPPING
   {
     @Override
     public ITypeMapping doCreateTypeMapping(IMappingStrategy mappingStrategy, EStructuralFeature feature, DBType type)
     {
-      return new TypeMapping.TMDate(mappingStrategy, feature, type);
+      return new TypeMapping.TMDate2Timestamp(mappingStrategy, feature, type);
+    }
+  },
+
+  DATE2DATE_MAPPING
+  {
+    @Override
+    public ITypeMapping doCreateTypeMapping(IMappingStrategy mappingStrategy, EStructuralFeature feature, DBType type)
+    {
+      return new TypeMapping.TMDate2Date(mappingStrategy, feature, type);
+    }
+  },
+
+  DATE2TIME_MAPPING
+  {
+    @Override
+    public ITypeMapping doCreateTypeMapping(IMappingStrategy mappingStrategy, EStructuralFeature feature, DBType type)
+    {
+      return new TypeMapping.TMDate2Time(mappingStrategy, feature, type);
     }
   },
 
@@ -230,7 +249,9 @@ public enum TypeMappingFactory
     mappingTable.put(new Pair<CDOType, DBType>(CDOType.CHAR, DBType.CHAR), CHARACTER_MAPPING);
     mappingTable.put(new Pair<CDOType, DBType>(CDOType.CHARACTER_OBJECT, DBType.CHAR), CHARACTER_MAPPING);
 
-    mappingTable.put(new Pair<CDOType, DBType>(CDOType.DATE, DBType.TIMESTAMP), DATE_MAPPING);
+    mappingTable.put(new Pair<CDOType, DBType>(CDOType.DATE, DBType.TIMESTAMP), DATE2TIMESTAMP_MAPPING);
+    mappingTable.put(new Pair<CDOType, DBType>(CDOType.DATE, DBType.DATE), DATE2DATE_MAPPING);
+    mappingTable.put(new Pair<CDOType, DBType>(CDOType.DATE, DBType.TIME), DATE2TIME_MAPPING);
 
     mappingTable.put(new Pair<CDOType, DBType>(CDOType.DOUBLE, DBType.DOUBLE), DOUBLE_MAPPING);
     mappingTable.put(new Pair<CDOType, DBType>(CDOType.DOUBLE_OBJECT, DBType.DOUBLE), DOUBLE_MAPPING);

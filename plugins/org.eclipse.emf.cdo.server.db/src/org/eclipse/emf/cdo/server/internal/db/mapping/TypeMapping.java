@@ -12,6 +12,7 @@
  *    Kai Schlamp - bug 282976: [DB] Influence Mappings through EAnnotations
  *    Stefan Winkler - bug 282976: [DB] Influence Mappings through EAnnotations
  *    Stefan Winkler - bug 285270: [DB] Support XSD based models
+ *    Heiko Ahlig - bug 309461
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
@@ -46,7 +47,9 @@ import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -452,9 +455,9 @@ public abstract class TypeMapping implements ITypeMapping
   /**
    * @author Eike Stepper
    */
-  public static class TMDate extends TypeMapping
+  public static class TMDate2Timestamp extends TypeMapping
   {
-    public TMDate(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
+    public TMDate2Timestamp(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
     {
       super(strategy, feature, type);
     }
@@ -469,6 +472,52 @@ public abstract class TypeMapping implements ITypeMapping
     protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
     {
       stmt.setTimestamp(index, new Timestamp(((Date)value).getTime()));
+    }
+  }
+
+  /**
+   * @author Heiko Ahlig
+   */
+  public static class TMDate2Date extends TypeMapping
+  {
+    public TMDate2Date(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
+    {
+      super(strategy, feature, type);
+    }
+
+    @Override
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
+    {
+      return resultSet.getDate(getField().getName(), Calendar.getInstance());
+    }
+
+    @Override
+    protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
+    {
+      stmt.setDate(index, new java.sql.Date(((Date)value).getTime()), Calendar.getInstance());
+    }
+  }
+
+  /**
+   * @author Heiko Ahlig
+   */
+  public static class TMDate2Time extends TypeMapping
+  {
+    public TMDate2Time(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
+    {
+      super(strategy, feature, type);
+    }
+
+    @Override
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
+    {
+      return resultSet.getTime(getField().getName(), Calendar.getInstance());
+    }
+
+    @Override
+    protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
+    {
+      stmt.setTime(index, new Time(((Date)value).getTime()), Calendar.getInstance());
     }
   }
 

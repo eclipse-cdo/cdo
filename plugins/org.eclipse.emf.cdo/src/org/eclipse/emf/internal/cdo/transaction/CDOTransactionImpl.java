@@ -78,7 +78,6 @@ import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
-import org.eclipse.emf.cdo.view.CDOViewResourcesEvent;
 
 import org.eclipse.emf.internal.cdo.CDOObjectMerger;
 import org.eclipse.emf.internal.cdo.CDOObjectWrapper;
@@ -755,11 +754,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public void detach(CDOResourceImpl cdoResource)
   {
     CDOStateMachine.INSTANCE.detach(cdoResource);
-    IListener[] listeners = getListeners();
-    if (listeners != null)
-    {
-      fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.REMOVED), listeners);
-    }
   }
 
   /**
@@ -2190,40 +2184,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       return MessageFormat.format("CDOTransactionConflictEvent[source={0}, conflictingObject={1}, firstConflict={2}]", //$NON-NLS-1$
           getSource(), getConflictingObject(), isFirstConflict());
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class ResourcesEvent extends Event implements CDOViewResourcesEvent
-  {
-    private static final long serialVersionUID = 1L;
-
-    private String resourcePath;
-
-    private Kind kind;
-
-    public ResourcesEvent(String resourcePath, Kind kind)
-    {
-      this.resourcePath = resourcePath;
-      this.kind = kind;
-    }
-
-    public String getResourcePath()
-    {
-      return resourcePath;
-    }
-
-    public Kind getKind()
-    {
-      return kind;
-    }
-
-    @Override
-    public String toString()
-    {
-      return MessageFormat.format("CDOViewResourcesEvent[source={0}, {1}={2}]", getSource(), resourcePath, kind); //$NON-NLS-1$
     }
   }
 

@@ -921,10 +921,16 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       CDOID id = object.cdoID();
       InternalCDOView view = object.cdoView();
+
       InternalCDORevision revision = view.getRevision(id, true);
-      FSMUtil.validate(object, revision);
-      object.cdoInternalSetRevision(revision);
+      if (revision == null)
+      {
+        INSTANCE.detachRemote(object);
+        throw new InvalidObjectException(id, view);
+      }
+
       changeState(object, CDOState.CLEAN);
+      object.cdoInternalSetRevision(revision);
       object.cdoInternalPostLoad();
 
       if (forWrite)

@@ -14,18 +14,12 @@ package org.eclipse.emf.internal.cdo.util;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
-import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.util.InvalidObjectException;
 import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
-import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOLegacyAdapter;
-import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.CDOMetaWrapper;
-import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -97,18 +91,6 @@ public final class FSMUtil
     }
 
     return object instanceof org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
-  }
-
-  public static boolean isWatchable(Object obj)
-  {
-    // Only CLEAN and DIRTY CDOObjects are watchable
-    if (obj instanceof EObject)
-    {
-      CDOObject cdoObject = CDOUtil.getCDOObject((EObject)obj);
-      return cdoObject.cdoState() == CDOState.CLEAN || cdoObject.cdoState() == CDOState.DIRTY;
-    }
-
-    return false;
   }
 
   /**
@@ -207,49 +189,18 @@ public final class FSMUtil
     return (CDOLegacyAdapter)EcoreUtil.getAdapter(adapters, CDOLegacyAdapter.class);
   }
 
-  @Deprecated
-  public static CDOLegacyWrapper getLegacyWrapper(EList<?> listeners)
-  {
-    for (Object listener : listeners)
-    {
-      if (listener.getClass() == CDOLegacyWrapper.class)
-      {
-        return (CDOLegacyWrapper)listener;
-      }
-    }
-
-    return null;
-  }
-
-  /*
-   * IMPORTANT: Compile errors in this method might indicate an old version of EMF. Legacy support is only enabled for
-   * EMF with fixed bug #247130. These compile errors do not affect native models!
-   */
-  @Deprecated
-  public static Object getLegacyWrapper(InternalEObject object)
-  {
-    // TODO LEGACY
-    throw new UnsupportedOperationException();
-    // return getLegacyWrapper(object.eReadListeners());
-  }
-
-  public static void validate(CDOObject object, CDORevision revision)
-  {
-    if (revision == null)
-    {
-      CDOView view = object.cdoView();
-      CDOStateMachine.INSTANCE.detachRemote((InternalCDOObject)object);
-      throw new InvalidObjectException(object.cdoID(), view);
-    }
-  }
-
-  public static void validate(CDOID id, CDORevision revision)
-  {
-    if (revision == null)
-    {
-      throw new ObjectNotFoundException(id);
-    }
-  }
+  // public static CDOLegacyWrapper getLegacyWrapper(EList<?> listeners)
+  // {
+  // for (Object listener : listeners)
+  // {
+  // if (listener.getClass() == CDOLegacyWrapper.class)
+  // {
+  // return (CDOLegacyWrapper)listener;
+  // }
+  // }
+  //
+  // return null;
+  // }
 
   public static Iterator<InternalCDOObject> iterator(final Iterator<?> delegate, final InternalCDOView view)
   {

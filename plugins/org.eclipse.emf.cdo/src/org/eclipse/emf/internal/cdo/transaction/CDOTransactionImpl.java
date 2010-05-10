@@ -86,7 +86,6 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
-import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
@@ -843,29 +842,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return null;
   }
 
-  // TTT Map<InternalEObject, CDOIDDanglingImpl> danglingObjects = new
-  // HashMap<InternalEObject, CDOIDDanglingImpl>();
-  //
-  // @Override
-  // public CDOIDDangling convertDanglingObjectToID(InternalCDOObject source,
-  // EStructuralFeature feature,
-  // InternalEObject target)
-  // {
-  // CDOIDDanglingImpl id;
-  // synchronized (danglingObjects)
-  // {
-  // id = danglingObjects.get(target);
-  // if (id == null)
-  // {
-  // id = new CDOIDDanglingImpl(lastTemporaryID.incrementAndGet(), target);
-  // danglingObjects.put(target, id);
-  // }
-  // }
-  //
-  // id.addReference(source, feature);
-  // return id;
-  // }
-
   /**
    * @since 2.0
    */
@@ -880,7 +856,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     if (id.isTemporary() && isDetached(id))
     {
-      FSMUtil.validate(id, null);
+      throw new ObjectNotFoundException(id);
     }
 
     return super.getObject(id, loadOnDemand);

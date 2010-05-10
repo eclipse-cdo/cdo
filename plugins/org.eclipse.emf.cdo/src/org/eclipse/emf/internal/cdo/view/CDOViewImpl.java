@@ -1014,7 +1014,10 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     }
 
     InternalCDORevision revision = getRevision(id, true);
-    FSMUtil.validate(id, revision);
+    if (revision == null)
+    {
+      throw new ObjectNotFoundException(id);
+    }
 
     EClass eClass = revision.getEClass();
     InternalCDOObject object;

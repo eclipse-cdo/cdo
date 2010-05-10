@@ -12,9 +12,8 @@
 package org.eclipse.emf.cdo.internal.ui.dnd;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.util.CDOUtil;
-
-import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.ui.dnd.DNDDropAdapter;
@@ -51,7 +50,7 @@ public class CDOObjectDropAdapter extends DNDDropAdapter<TreeSelection>
       ArrayList<CDOObject> elementsToAdd = new ArrayList<CDOObject>();
       for (Object obj : data.toArray())
       {
-        if (FSMUtil.isWatchable(obj))
+        if (isWatchable(obj))
         {
           elementsToAdd.add(CDOUtil.getCDOObject((EObject)obj));
         }
@@ -70,15 +69,24 @@ public class CDOObjectDropAdapter extends DNDDropAdapter<TreeSelection>
     return true;
   }
 
-  // @Override
-  // public boolean validateDrop(Object target, int operation, TransferData type)
-  // {
-  // return getTransfers()[0].isSupportedType(type);
-  // }
-
   public static void support(StructuredViewer viewer)
   {
     int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
     viewer.addDropSupport(dndOperations, TRANSFERS, new CDOObjectDropAdapter(viewer));
+  }
+
+  public static boolean isWatchable(Object obj)
+  {
+    // Only CLEAN and DIRTY CDOObjects are watchable
+    if (obj instanceof EObject)
+    {
+      CDOObject cdoObject = CDOUtil.getCDOObject((EObject)obj);
+      if (cdoObject != null)
+      {
+        return cdoObject.cdoState() == CDOState.CLEAN || cdoObject.cdoState() == CDOState.DIRTY;
+      }
+    }
+
+    return false;
   }
 }

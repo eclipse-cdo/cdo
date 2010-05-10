@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -76,7 +75,7 @@ public class Bugzilla_252214_Test extends AbstractCDOTest
       CDOResource auditResource = audit.getResource("/res1");
       Company auditCompany = (Company)auditResource.getContents().get(0);
       CDOObject cdoAuditCompany = CDOUtil.getCDOObject(auditCompany);
-      CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)cdoAuditCompany, CDORevision.UNSPECIFIED_VERSION);
+      CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)cdoAuditCompany, null);
     }
 
     audit.setTimeStamp(commitTime2);

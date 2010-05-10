@@ -300,8 +300,12 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   public void cdoInternalPostInvalidate()
   {
-    InternalCDORevision revision = cdoView().getRevision(cdoID(), true);
-    cdoInternalSetRevision(revision);
+    if (cdoState() != CDOState.CLEAN)
+    {
+      InternalCDORevision revision = cdoView().getRevision(cdoID(), true);
+      cdoInternalSetRevision(revision);
+    }
+
     revisionToInstance();
     cdoInternalSetState(CDOState.CLEAN);
   }

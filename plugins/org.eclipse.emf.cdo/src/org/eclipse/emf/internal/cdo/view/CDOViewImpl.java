@@ -362,7 +362,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       if (existanceFlag)
       {
         // --> PROXY
-        CDOStateMachine.INSTANCE.invalidate(invalidObject, CDORevision.UNSPECIFIED_VERSION);
+        CDOStateMachine.INSTANCE.invalidate(invalidObject, null);
       }
       else
       {
@@ -1393,11 +1393,12 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       List<CDORevisionDelta> deltas, Set<InternalCDOObject> changedObjects, Set<CDOObject> detachedObjects)
   {
     Set<CDOObject> conflicts = null;
-    for (CDOIDAndVersion key : allChangedObjects)
+    for (CDORevisionKey key : allChangedObjects)
     {
+      CDORevisionDelta delta = null;
       if (key instanceof CDORevisionDelta)
       {
-        CDORevisionDelta delta = (CDORevisionDelta)key;
+        delta = (CDORevisionDelta)key;
         deltas.add(delta);
       }
 
@@ -1412,7 +1413,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       {
         // if (!isLocked(changedObject))
         {
-          CDOStateMachine.INSTANCE.invalidate(changedObject, key.getVersion());
+          CDOStateMachine.INSTANCE.invalidate(changedObject, key);
         }
 
         changedObjects.add(changedObject);

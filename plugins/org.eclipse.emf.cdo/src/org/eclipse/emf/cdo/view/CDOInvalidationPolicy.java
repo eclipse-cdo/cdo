@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.view;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
 
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -23,7 +24,7 @@ public interface CDOInvalidationPolicy
 {
   public static final CDOInvalidationPolicy DEFAULT = new CDOInvalidationPolicy()
   {
-    public void handleInvalidation(CDOObject object)
+    public void handleInvalidation(CDOObject object, CDORevisionKey key)
     {
       ((InternalCDOObject)object).cdoInternalSetRevision(null);
     }
@@ -36,7 +37,7 @@ public interface CDOInvalidationPolicy
 
   public static final CDOInvalidationPolicy RELAXED = new CDOInvalidationPolicy()
   {
-    public void handleInvalidation(CDOObject object)
+    public void handleInvalidation(CDOObject object, CDORevisionKey key)
     {
       // Do nothing
     }
@@ -47,7 +48,7 @@ public interface CDOInvalidationPolicy
     }
   };
 
-  public void handleInvalidation(CDOObject object);
+  public void handleInvalidation(CDOObject object, CDORevisionKey key);
 
   public void handleInvalidObject(CDOObject object);
 }

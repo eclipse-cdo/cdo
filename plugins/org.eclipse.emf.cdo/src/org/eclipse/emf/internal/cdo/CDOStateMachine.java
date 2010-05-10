@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
@@ -403,7 +404,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @since 3.0
    */
-  public void invalidate(InternalCDOObject object, int version)
+  public void invalidate(InternalCDOObject object, CDORevisionKey key)
   {
     ReentrantLock lock = lockView(object.cdoView());
 
@@ -414,7 +415,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         trace(object, CDOEvent.INVALIDATE);
       }
 
-      process(object, CDOEvent.INVALIDATE, version);
+      process(object, CDOEvent.INVALIDATE, key);
     }
     finally
     {
@@ -436,7 +437,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         trace(object, CDOEvent.DETACH_REMOTE);
       }
 
-      process(object, CDOEvent.DETACH_REMOTE, CDORevision.UNSPECIFIED_VERSION);
+      process(object, CDOEvent.DETACH_REMOTE, null);
     }
     finally
     {
@@ -851,19 +852,32 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private class InvalidateTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Integer>
+  private class InvalidateTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, CDORevisionKey>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Integer version)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CDORevisionKey key)
     {
       InternalCDORevision oldRevision = object.cdoRevision();
-      if (version == CDORevision.UNSPECIFIED_VERSION || oldRevision.getVersion() <= version)
+      if (key == null || key.getVersion() >= oldRevision.getVersion())
       {
-        changeState(object, CDOState.PROXY);
+        if (key instanceof CDORevisionDelta)
+        {
+          CDORevisionDelta delta = (CDORevisionDelta)key;
+          InternalCDORevision newRevision = oldRevision.copy();
+          delta.apply(newRevision);
 
-        InternalCDOView view = object.cdoView();
-        CDOInvalidationPolicy policy = view.options().getInvalidationPolicy();
-        policy.handleInvalidation(object);
-        object.cdoInternalPostInvalidate();
+          object.cdoInternalSetRevision(newRevision);
+          changeState(object, CDOState.CLEAN);
+          object.cdoInternalPostLoad();
+        }
+        else
+        {
+          changeState(object, CDOState.PROXY);
+
+          InternalCDOView view = object.cdoView();
+          CDOInvalidationPolicy policy = view.options().getInvalidationPolicy();
+          policy.handleInvalidation(object, key);
+          object.cdoInternalPostInvalidate();
+        }
       }
     }
   }
@@ -875,10 +889,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   private class ConflictTransition extends InvalidateTransition
   {
     @Override
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Integer version)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CDORevisionKey key)
     {
       InternalCDORevision oldRevision = object.cdoRevision();
-      if (version == CDORevision.UNSPECIFIED_VERSION || oldRevision.getVersion() <= version + 1)
+      if (key == null || key.getVersion() >= oldRevision.getVersion() - 1)
       {
         changeState(object, CDOState.CONFLICT);
         InternalCDOTransaction transaction = object.cdoView().toTransaction();
@@ -893,7 +907,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   private final class InvalidConflictTransition extends ConflictTransition
   {
     @Override
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Integer UNUSED)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CDORevisionKey UNUSED)
     {
       changeState(object, CDOState.INVALID_CONFLICT);
 

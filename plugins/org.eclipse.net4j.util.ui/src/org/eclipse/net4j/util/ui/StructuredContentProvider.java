@@ -103,7 +103,7 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
   {
     try
     {
-      getDisplay().syncExec(new Runnable()
+      getDisplay().asyncExec(new Runnable()
       {
         public void run()
         {
@@ -141,7 +141,7 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
   {
     try
     {
-      getDisplay().syncExec(new Runnable()
+      getDisplay().asyncExec(new Runnable()
       {
         public void run()
         {

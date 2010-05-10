@@ -75,101 +75,101 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.TRANSIENT, CDOEvent.PREPARE, new PrepareTransition());
     init(CDOState.TRANSIENT, CDOEvent.ATTACH, FAIL);
     init(CDOState.TRANSIENT, CDOEvent.DETACH, IGNORE);
+    init(CDOState.TRANSIENT, CDOEvent.REATTACH, new ReattachTransition());
     init(CDOState.TRANSIENT, CDOEvent.READ, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.WRITE, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.INVALIDATE, FAIL);
     init(CDOState.TRANSIENT, CDOEvent.DETACH_REMOTE, FAIL);
     init(CDOState.TRANSIENT, CDOEvent.COMMIT, FAIL);
     init(CDOState.TRANSIENT, CDOEvent.ROLLBACK, FAIL);
-    init(CDOState.TRANSIENT, CDOEvent.REATTACH, new ReattachTransition());
 
     init(CDOState.PREPARED, CDOEvent.PREPARE, FAIL);
     init(CDOState.PREPARED, CDOEvent.ATTACH, new AttachTransition());
     init(CDOState.PREPARED, CDOEvent.DETACH, FAIL);
+    init(CDOState.PREPARED, CDOEvent.REATTACH, FAIL);
     init(CDOState.PREPARED, CDOEvent.READ, IGNORE);
     init(CDOState.PREPARED, CDOEvent.WRITE, FAIL);
     init(CDOState.PREPARED, CDOEvent.INVALIDATE, FAIL);
     init(CDOState.PREPARED, CDOEvent.DETACH_REMOTE, FAIL);
     init(CDOState.PREPARED, CDOEvent.COMMIT, FAIL);
     init(CDOState.PREPARED, CDOEvent.ROLLBACK, FAIL);
-    init(CDOState.PREPARED, CDOEvent.REATTACH, FAIL);
 
     init(CDOState.NEW, CDOEvent.PREPARE, FAIL);
     init(CDOState.NEW, CDOEvent.ATTACH, FAIL);
     init(CDOState.NEW, CDOEvent.DETACH, new DetachTransition());
+    init(CDOState.NEW, CDOEvent.REATTACH, FAIL);
     init(CDOState.NEW, CDOEvent.READ, IGNORE);
     init(CDOState.NEW, CDOEvent.WRITE, new WriteNewTransition());
     init(CDOState.NEW, CDOEvent.INVALIDATE, FAIL);
     init(CDOState.NEW, CDOEvent.DETACH_REMOTE, FAIL);
     init(CDOState.NEW, CDOEvent.COMMIT, new CommitTransition(false));
     init(CDOState.NEW, CDOEvent.ROLLBACK, FAIL);
-    init(CDOState.NEW, CDOEvent.REATTACH, FAIL);
 
     init(CDOState.CLEAN, CDOEvent.PREPARE, FAIL);
     init(CDOState.CLEAN, CDOEvent.ATTACH, FAIL);
     init(CDOState.CLEAN, CDOEvent.DETACH, new DetachTransition());
+    init(CDOState.CLEAN, CDOEvent.REATTACH, FAIL);
     init(CDOState.CLEAN, CDOEvent.READ, IGNORE);
     init(CDOState.CLEAN, CDOEvent.WRITE, new WriteTransition());
     init(CDOState.CLEAN, CDOEvent.INVALIDATE, new InvalidateTransition());
     init(CDOState.CLEAN, CDOEvent.DETACH_REMOTE, DetachRemoteTransition.INSTANCE);
     init(CDOState.CLEAN, CDOEvent.COMMIT, FAIL);
     init(CDOState.CLEAN, CDOEvent.ROLLBACK, FAIL);
-    init(CDOState.CLEAN, CDOEvent.REATTACH, FAIL);
 
     init(CDOState.DIRTY, CDOEvent.PREPARE, FAIL);
     init(CDOState.DIRTY, CDOEvent.ATTACH, FAIL);
     init(CDOState.DIRTY, CDOEvent.DETACH, new DetachTransition());
+    init(CDOState.DIRTY, CDOEvent.REATTACH, FAIL);
     init(CDOState.DIRTY, CDOEvent.READ, IGNORE);
     init(CDOState.DIRTY, CDOEvent.WRITE, new RewriteTransition());
     init(CDOState.DIRTY, CDOEvent.INVALIDATE, new ConflictTransition());
     init(CDOState.DIRTY, CDOEvent.DETACH_REMOTE, new InvalidConflictTransition());
     init(CDOState.DIRTY, CDOEvent.COMMIT, new CommitTransition(true));
     init(CDOState.DIRTY, CDOEvent.ROLLBACK, new RollbackTransition());
-    init(CDOState.DIRTY, CDOEvent.REATTACH, FAIL);
 
     init(CDOState.PROXY, CDOEvent.PREPARE, FAIL);
     init(CDOState.PROXY, CDOEvent.ATTACH, FAIL);
     init(CDOState.PROXY, CDOEvent.DETACH, new DetachTransition());
+    init(CDOState.PROXY, CDOEvent.REATTACH, FAIL);
     init(CDOState.PROXY, CDOEvent.READ, new LoadTransition(false));
     init(CDOState.PROXY, CDOEvent.WRITE, new LoadTransition(true));
     init(CDOState.PROXY, CDOEvent.INVALIDATE, IGNORE);
     init(CDOState.PROXY, CDOEvent.DETACH_REMOTE, DetachRemoteTransition.INSTANCE);
     init(CDOState.PROXY, CDOEvent.COMMIT, FAIL);
     init(CDOState.PROXY, CDOEvent.ROLLBACK, FAIL);
-    init(CDOState.PROXY, CDOEvent.REATTACH, FAIL);
 
     init(CDOState.CONFLICT, CDOEvent.PREPARE, FAIL);
     init(CDOState.CONFLICT, CDOEvent.ATTACH, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.DETACH, new DetachTransition());
+    init(CDOState.CONFLICT, CDOEvent.REATTACH, FAIL);
     init(CDOState.CONFLICT, CDOEvent.READ, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.WRITE, new RewriteTransition());
     init(CDOState.CONFLICT, CDOEvent.INVALIDATE, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.DETACH_REMOTE, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.COMMIT, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.ROLLBACK, new RollbackTransition());
-    init(CDOState.CONFLICT, CDOEvent.REATTACH, FAIL);
 
     init(CDOState.INVALID, CDOEvent.PREPARE, InvalidTransition.INSTANCE);
     init(CDOState.INVALID, CDOEvent.ATTACH, InvalidTransition.INSTANCE);
     init(CDOState.INVALID, CDOEvent.DETACH, InvalidTransition.INSTANCE);
+    init(CDOState.INVALID, CDOEvent.REATTACH, FAIL);
     init(CDOState.INVALID, CDOEvent.READ, InvalidTransition.INSTANCE);
     init(CDOState.INVALID, CDOEvent.WRITE, InvalidTransition.INSTANCE);
     init(CDOState.INVALID, CDOEvent.INVALIDATE, IGNORE); // TODO Handle changeViewTarget!!!
     init(CDOState.INVALID, CDOEvent.DETACH_REMOTE, IGNORE);
     init(CDOState.INVALID, CDOEvent.COMMIT, InvalidTransition.INSTANCE);
     init(CDOState.INVALID, CDOEvent.ROLLBACK, InvalidTransition.INSTANCE);
-    init(CDOState.INVALID, CDOEvent.REATTACH, FAIL);
 
     init(CDOState.INVALID_CONFLICT, CDOEvent.PREPARE, InvalidTransition.INSTANCE);
     init(CDOState.INVALID_CONFLICT, CDOEvent.ATTACH, InvalidTransition.INSTANCE);
     init(CDOState.INVALID_CONFLICT, CDOEvent.DETACH, InvalidTransition.INSTANCE);
+    init(CDOState.INVALID_CONFLICT, CDOEvent.REATTACH, FAIL);
     init(CDOState.INVALID_CONFLICT, CDOEvent.READ, IGNORE);
     init(CDOState.INVALID_CONFLICT, CDOEvent.WRITE, IGNORE);
     init(CDOState.INVALID_CONFLICT, CDOEvent.INVALIDATE, IGNORE);
     init(CDOState.INVALID_CONFLICT, CDOEvent.DETACH_REMOTE, IGNORE);
     init(CDOState.INVALID_CONFLICT, CDOEvent.COMMIT, InvalidTransition.INSTANCE);
     init(CDOState.INVALID_CONFLICT, CDOEvent.ROLLBACK, DetachRemoteTransition.INSTANCE);
-    init(CDOState.INVALID_CONFLICT, CDOEvent.REATTACH, FAIL);
   }
 
   /**
@@ -959,8 +959,5 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
  */
 enum CDOEvent
 {
-  PREPARE, ATTACH, DETACH, READ, WRITE, INVALIDATE, DETACH_REMOTE, COMMIT, ROLLBACK,
-
-  // Bug 283985 (Re-attachment)
-  REATTACH
+  PREPARE, ATTACH, DETACH, REATTACH, READ, WRITE, INVALIDATE, DETACH_REMOTE, COMMIT, ROLLBACK
 }

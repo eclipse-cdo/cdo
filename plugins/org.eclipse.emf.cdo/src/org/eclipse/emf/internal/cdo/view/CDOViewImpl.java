@@ -49,6 +49,7 @@ import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
+import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
 import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
@@ -2294,6 +2295,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   {
     private boolean invalidationNotificationEnabled;
 
+    private CDOInvalidationPolicy invalidationPolicy = CDOInvalidationPolicy.DEFAULT;
+
     private CDORevisionPrefetchingPolicy revisionPrefetchingPolicy = CDOUtil
         .createRevisionPrefetchingPolicy(CDOView.Options.NO_REVISION_PREFETCHING);
 
@@ -2311,6 +2314,24 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     public CDOViewImpl getContainer()
     {
       return CDOViewImpl.this;
+    }
+
+    public CDOInvalidationPolicy getInvalidationPolicy()
+    {
+      return invalidationPolicy;
+    }
+
+    public void setInvalidationPolicy(CDOInvalidationPolicy policy)
+    {
+      if (invalidationPolicy != policy)
+      {
+        invalidationPolicy = policy;
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new InvalidationPolicyEventImpl(), listeners);
+        }
+      }
     }
 
     public boolean isInvalidationNotificationEnabled()
@@ -2594,6 +2615,19 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       private static final long serialVersionUID = 1L;
 
       public InvalidationNotificationEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class InvalidationPolicyEventImpl extends OptionsEvent implements InvalidationPolicyEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public InvalidationPolicyEventImpl()
       {
         super(OptionsImpl.this);
       }

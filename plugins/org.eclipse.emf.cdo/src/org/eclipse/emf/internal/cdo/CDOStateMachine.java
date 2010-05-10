@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.InvalidObjectException;
+import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -859,7 +859,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       if (version == CDORevision.UNSPECIFIED_VERSION || oldRevision.getVersion() <= version)
       {
         changeState(object, CDOState.PROXY);
-        object.cdoInternalSetRevision(null);
+
+        InternalCDOView view = object.cdoView();
+        CDOInvalidationPolicy policy = view.options().getInvalidationPolicy();
+        policy.handleInvalidation(object);
         object.cdoInternalPostInvalidate();
       }
     }
@@ -915,14 +918,13 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       object.cdoInternalPreLoad();
 
-      CDOID id = object.cdoID();
       InternalCDOView view = object.cdoView();
-
-      InternalCDORevision revision = view.getRevision(id, true);
+      InternalCDORevision revision = view.getRevision(object.cdoID(), true);
       if (revision == null)
       {
         INSTANCE.detachRemote(object);
-        throw new InvalidObjectException(id, view);
+        CDOInvalidationPolicy policy = view.options().getInvalidationPolicy();
+        policy.handleInvalidObject(object);
       }
 
       changeState(object, CDOState.CLEAN);
@@ -945,7 +947,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
-      throw new InvalidObjectException(object.cdoID(), object.cdoView());
+      InternalCDOView view = object.cdoView();
+      CDOInvalidationPolicy policy = view.options().getInvalidationPolicy();
+      policy.handleInvalidObject(object);
     }
   }
 }

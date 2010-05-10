@@ -373,6 +373,16 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
     public boolean setCacheReferenceType(ReferenceType referenceType);
 
     /**
+     * @since 3.0
+     */
+    public CDOInvalidationPolicy getInvalidationPolicy();
+
+    /**
+     * @since 3.0
+     */
+    public void setInvalidationPolicy(CDOInvalidationPolicy policy);
+
+    /**
      * Returns <code>true</code> if the {@link CDOObject objects} in this view will notify their
      * {@link org.eclipse.emf.common.notify.Adapter adapters} about the fact that they are <em>invalidated</em> (due to
      * remote changes), <code>false</code> otherwise.
@@ -479,10 +489,16 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
      */
     public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy);
 
+    /**
+     * @author Eike Stepper
+     */
     public interface CacheReferenceTypeEvent extends IOptionsEvent
     {
     }
 
+    /**
+     * @author Eike Stepper
+     */
     public interface ReferencePolicyEvent extends IOptionsEvent
     {
     }
@@ -494,14 +510,31 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
     {
     }
 
+    /**
+     * @author Eike Stepper
+     */
     public interface ChangeSubscriptionPoliciesEvent extends IOptionsEvent
     {
     }
 
+    /**
+     * @author Eike Stepper
+     * @since 3.0
+     */
+    public interface InvalidationPolicyEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * @author Eike Stepper
+     */
     public interface InvalidationNotificationEvent extends IOptionsEvent
     {
     }
 
+    /**
+     * @author Eike Stepper
+     */
     public interface RevisionPrefetchingPolicyEvent extends IOptionsEvent
     {
     }

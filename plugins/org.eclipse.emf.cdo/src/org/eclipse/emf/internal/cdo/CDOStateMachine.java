@@ -796,8 +796,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
-      InternalCDOView view = object.cdoView();
-      InternalCDOTransaction transaction = view.toTransaction();
+      InternalCDOTransaction transaction = object.cdoView().toTransaction();
 
       // Copy revision
       InternalCDORevision revision = object.cdoRevision().copy();
@@ -815,8 +814,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
-      InternalCDOView view = object.cdoView();
-      InternalCDOTransaction transaction = view.toTransaction();
+      InternalCDOTransaction transaction = object.cdoView().toTransaction();
       transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
     }
   }
@@ -828,8 +826,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
-      InternalCDOView view = object.cdoView();
-      InternalCDOTransaction transaction = view.toTransaction();
+      InternalCDOTransaction transaction = object.cdoView().toTransaction();
       transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
     }
   }
@@ -839,14 +836,14 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   private static class DetachRemoteTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
-    static DetachRemoteTransition INSTANCE = new DetachRemoteTransition();
+    static final DetachRemoteTransition INSTANCE = new DetachRemoteTransition();
 
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
+      CDOStateMachine.INSTANCE.changeState(object, CDOState.INVALID);
+
       InternalCDOView view = object.cdoView();
       view.deregisterObject(object);
-
-      object.cdoInternalSetState(CDOState.INVALID);
       object.cdoInternalPostDetach(true);
     }
   }
@@ -880,9 +877,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       InternalCDORevision oldRevision = object.cdoRevision();
       if (version == CDORevision.UNSPECIFIED_VERSION || oldRevision.getVersion() <= version + 1)
       {
-        InternalCDOView view = object.cdoView();
-        InternalCDOTransaction transaction = view.toTransaction();
         changeState(object, CDOState.CONFLICT);
+        InternalCDOTransaction transaction = object.cdoView().toTransaction();
         transaction.setConflict(object);
       }
     }
@@ -896,9 +892,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Integer UNUSED)
     {
-      InternalCDOView view = object.cdoView();
-      InternalCDOTransaction transaction = view.toTransaction();
       changeState(object, CDOState.INVALID_CONFLICT);
+
+      InternalCDOTransaction transaction = object.cdoView().toTransaction();
       transaction.setConflict(object);
     }
   }

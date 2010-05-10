@@ -818,10 +818,7 @@ public class ResourceTest extends AbstractCDOTest
     session.close();
   }
 
-  /**
-   * TODO Enable me!
-   */
-  public void _testDeleteResourceDifferentSession() throws Exception
+  public void testDeleteResourceDifferentSession() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
@@ -884,10 +881,7 @@ public class ResourceTest extends AbstractCDOTest
     session.close();
   }
 
-  /**
-   * TODO Enable me!
-   */
-  public void _testDeleteResourceDifferentSessionFresh() throws Exception
+  public void testDeleteResourceDifferentSessionFresh() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
@@ -1130,7 +1124,7 @@ public class ResourceTest extends AbstractCDOTest
     session.close();
   }
 
-  public void _testDeleteResourceFolderDifferentSession() throws Exception
+  public void testDeleteResourceFolderDifferentSession() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
@@ -1213,10 +1207,7 @@ public class ResourceTest extends AbstractCDOTest
     session.close();
   }
 
-  /**
-   * TODO Enable me!
-   */
-  public void _testDeleteResourceFolderDifferentSessionFresh() throws Exception
+  public void testDeleteResourceFolderDifferentSessionFresh() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();

@@ -321,7 +321,7 @@ public class ContainmentTest extends AbstractCDOTest
   }
 
   // TODO Re-include TC after fixing detachment
-  public void _testUnsetSingleContainment() throws Exception
+  public void testUnsetSingleContainment() throws Exception
   {
     Address address = getModel1Factory().createAddress();
     address.setName("Stepper");
@@ -581,23 +581,6 @@ public class ContainmentTest extends AbstractCDOTest
     result.setAttrBefore("BEFORE");
     result.setAttrAfter("AFTER");
     return result;
-  }
-
-  // TODO Revisit me
-  // Do not support legacy system
-  public void _testBug246540() throws Exception
-  {
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource1");
-
-    for (EClassifier eClassifier : EcorePackage.eINSTANCE.getEClassifiers())
-    {
-      resource.getContents().add(eClassifier);
-    }
-
-    transaction.commit();
-    session.close();
   }
 
   private EPackage createDynamicEPackage()

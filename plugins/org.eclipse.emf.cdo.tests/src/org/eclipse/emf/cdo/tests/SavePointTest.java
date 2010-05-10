@@ -276,7 +276,7 @@ public class SavePointTest extends AbstractCDOTest
    * client2: same as repository
    * </pre>
    */
-  public void _testScenario1()
+  public void testScenario1()
   {
     CDOSession client1 = openSession();
     CDOTransaction transaction1 = client1.openTransaction();

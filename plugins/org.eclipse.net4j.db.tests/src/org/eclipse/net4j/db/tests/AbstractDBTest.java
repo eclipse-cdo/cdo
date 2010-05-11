@@ -96,33 +96,33 @@ public abstract class AbstractDBTest<DATA_SOURCE extends DataSource> extends Abs
     assertEquals(count, tables.size());
   }
 
-  public void testEscapeStrings() throws Exception
-  {
-    IDBSchema schema = DBUtil.createSchema("testEscapeStrings"); //$NON-NLS-1$
-    IDBTable table = schema.addTable("testtable"); //$NON-NLS-1$
-    IDBField field = table.addField("strval", DBType.VARCHAR, 255); //$NON-NLS-1$
-    schema.create(dbAdapter, dbConnectionProvider);
-
-    insertString(field, "My name is 'nobody', not body"); //$NON-NLS-1$
-    insertString(field, "a = 'hello'"); //$NON-NLS-1$
-    insertString(field, "'hello' == a"); //$NON-NLS-1$
-    insertString(field, "'hello'"); //$NON-NLS-1$
-  }
-
-  private void insertString(IDBField field, String val)
-  {
-    Connection connection = getConnection();
-    IDBTable table = field.getTable();
-
-    try
-    {
-      DBUtil.insertRow(connection, dbAdapter, table, val);
-      Object[] result = DBUtil.select(connection, (String)null, field);
-      assertEquals(val, result[0]);
-    }
-    finally
-    {
-      DBUtil.update(connection, "DELETE FROM " + table); //$NON-NLS-1$
-    }
-  }
+  // public void testEscapeStrings() throws Exception
+  // {
+  //    IDBSchema schema = DBUtil.createSchema("testEscapeStrings"); //$NON-NLS-1$
+  //    IDBTable table = schema.addTable("testtable"); //$NON-NLS-1$
+  //    IDBField field = table.addField("strval", DBType.VARCHAR, 255); //$NON-NLS-1$
+  // schema.create(dbAdapter, dbConnectionProvider);
+  //
+  //    insertString(field, "My name is 'nobody', not body"); //$NON-NLS-1$
+  //    insertString(field, "a = 'hello'"); //$NON-NLS-1$
+  //    insertString(field, "'hello' == a"); //$NON-NLS-1$
+  //    insertString(field, "'hello'"); //$NON-NLS-1$
+  // }
+  //
+  // private void insertString(IDBField field, String val)
+  // {
+  // Connection connection = getConnection();
+  // IDBTable table = field.getTable();
+  //
+  // try
+  // {
+  // DBUtil.insertRow(connection, dbAdapter, table, val);
+  // Object[] result = DBUtil.select(connection, (String)null, field);
+  // assertEquals(val, result[0]);
+  // }
+  // finally
+  // {
+  //      DBUtil.update(connection, "DELETE FROM " + table); //$NON-NLS-1$
+  // }
+  // }
 }

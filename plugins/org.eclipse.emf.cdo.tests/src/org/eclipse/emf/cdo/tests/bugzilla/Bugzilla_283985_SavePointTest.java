@@ -15,9 +15,11 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
+import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -139,5 +141,36 @@ public class Bugzilla_283985_SavePointTest extends AbstractCDOTest
 
     assertTrue(order1.getOrderDetails().contains(detail1));
     assertEquals(id, CDOUtil.getCDOObject(detail1).cdoID());
+  }
+
+  public void test4()
+  {
+    CDOSession session = openSession();
+    session.options().setPassiveUpdateEnabled(false);
+
+    CDOTransaction tx = session.openTransaction();
+    CDOResource r1 = tx.createResource("/r2");
+
+    Company company = Model1Factory.eINSTANCE.createCompany();
+    PurchaseOrder purchaseOrder = Model1Factory.eINSTANCE.createPurchaseOrder();
+    company.getPurchaseOrders().add(purchaseOrder);
+    r1.getContents().add(company);
+    tx.commit();
+
+    CDOID id = CDOUtil.getCDOObject(purchaseOrder).cdoID();
+    assertSame(tx.getObject(id), purchaseOrder);
+
+    // Detach
+    company.getPurchaseOrders().remove(purchaseOrder);
+
+    // And re-attach
+    company.getPurchaseOrders().add(purchaseOrder);
+    assertSame(tx.getObject(id), purchaseOrder);
+
+    tx.rollback();
+    assertSame(tx.getObject(id), purchaseOrder);
+
+    tx.close();
+    session.close();
   }
 }

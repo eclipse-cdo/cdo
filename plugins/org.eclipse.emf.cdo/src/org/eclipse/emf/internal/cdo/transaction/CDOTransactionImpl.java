@@ -130,6 +130,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -966,10 +967,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       // Rollback new objects created after the save point
       removeObjects(itrSavepoint.getNewObjects().values());
 
-      // Bug 283985 (Re-attachment): Objects that were reattached must
-      // also be removed
-      Collection<CDOObject> reattachedObjects = itrSavepoint.getReattachedObjects().values();
-      removeObjects(reattachedObjects);
+      Set<CDOID> detachedIDs = itrSavepoint.getDetachedObjects().keySet();
+      List<CDOObject> reattachedNotDetachedObjects = new ArrayList<CDOObject>();
+      for (CDOObject reattachedObject : itrSavepoint.getReattachedObjects().values())
+      {
+        if (!detachedIDs.contains(reattachedObject.cdoID()))
+        {
+          reattachedNotDetachedObjects.add(reattachedObject);
+        }
+      }
+
+      removeObjects(reattachedNotDetachedObjects);
 
       Map<CDOID, CDORevisionDelta> revisionDeltas = itrSavepoint.getRevisionDeltas();
       if (!revisionDeltas.isEmpty())
@@ -984,10 +992,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       // Rollback all persisted objects
-      Map<CDOID, CDOObject> detachedObjects = itrSavepoint.getDetachedObjects();
-      if (!detachedObjects.isEmpty())
+      Map<CDOID, CDOObject> detachedObjectsMap = itrSavepoint.getDetachedObjects();
+      if (!detachedObjectsMap.isEmpty())
       {
-        for (Entry<CDOID, CDOObject> entryDirty : detachedObjects.entrySet())
+        for (Entry<CDOID, CDOObject> entryDirty : detachedObjectsMap.entrySet())
         {
           if (entryDirty.getKey().isTemporary())
           {
@@ -1008,11 +1016,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         {
           InternalCDOObject internalDirtyObject = (InternalCDOObject)entryDirtyObject.getValue();
 
-          // Bug 283985 (Re-attachment): Skip objects that were
-          // reattached, because
-          // they were already reset to TRANSIENT earlier in this
-          // method
-          if (!reattachedObjects.contains(internalDirtyObject))
+          // Bug 283985 (Re-attachment): Skip objects that were reattached, because
+          // they were already reset to TRANSIENT earlier in this method
+          if (!itrSavepoint.getReattachedObjects().values().contains(internalDirtyObject))
           {
             CDOStateMachine.INSTANCE.rollback(internalDirtyObject);
           }
@@ -1790,7 +1796,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * Bug 298561: This override removes references to remotely detached objects that are present in any DIRTY or NEW
    * objects.
-   * 
+   *
    * @since 3.0
    */
   @Override

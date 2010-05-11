@@ -130,7 +130,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -1796,7 +1795,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * Bug 298561: This override removes references to remotely detached objects that are present in any DIRTY or NEW
    * objects.
-   *
+   * 
    * @since 3.0
    */
   @Override

@@ -18,10 +18,10 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259869_Test;
 public class DISABLE_Bugzilla_259869_Test extends Bugzilla_259869_Test
 {
   @Override
-  public void _testBugzilla_259869_XA() throws InterruptedException
+  public void testBugzilla_259869_XA() throws InterruptedException
   {
     // XXX disabled because of Bug 290097
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
-    super._testBugzilla_259869_XA();
+    super.testBugzilla_259869_XA();
   }
 }

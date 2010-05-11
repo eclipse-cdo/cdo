@@ -2299,7 +2299,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     private CDOInvalidationPolicy invalidationPolicy = CDOInvalidationPolicy.DEFAULT;
 
     private CDORevisionPrefetchingPolicy revisionPrefetchingPolicy = CDOUtil
-        .createRevisionPrefetchingPolicy(CDOView.Options.NO_REVISION_PREFETCHING);
+        .createRevisionPrefetchingPolicy(DEFAULT_REVISION_PREFETCHING);
 
     private CDOStaleReferencePolicy staleReferencePolicy = CDOStaleReferencePolicy.EXCEPTION;
 

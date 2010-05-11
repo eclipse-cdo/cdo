@@ -352,7 +352,10 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
   public interface Options extends IOptions
   {
     /**
+     * @since 3.0
      */
+    public static final int DEFAULT_REVISION_PREFETCHING = 100;
+
     public static final int NO_REVISION_PREFETCHING = 1;
 
     /**

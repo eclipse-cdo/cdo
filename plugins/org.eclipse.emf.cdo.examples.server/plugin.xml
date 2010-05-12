@@ -15,7 +15,7 @@ Eike Stepper - initial API and implementation
 
 	<extension id="app" point="org.eclipse.core.runtime.applications" name="%extension.name">
 		<application cardinality="1" thread="any">
-			<run class="org.eclipse.emf.cdo.examples.server.Application"/>
+			<run class="org.eclipse.emf.cdo.examples.server.DemoServer"/>
 		</application>
 	</extension>
 

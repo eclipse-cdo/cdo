@@ -19,7 +19,7 @@ import org.eclipse.net4j.util.om.OSGiApplication;
 /**
  * @author Eike Stepper
  */
-public class Application extends OSGiApplication
+public class DemoServer extends OSGiApplication
 {
   public static final String ID = OM.BUNDLE_ID + ".app"; //$NON-NLS-1$
 
@@ -27,7 +27,7 @@ public class Application extends OSGiApplication
 
   private IRepository[] repositories;
 
-  public Application()
+  public DemoServer()
   {
     super(ID);
   }
@@ -36,7 +36,7 @@ public class Application extends OSGiApplication
   protected void doStart() throws Exception
   {
     super.doStart();
-    OM.LOG.info("CDO server starting");
+    OM.LOG.info("Demo server starting");
 
     String port = System.getProperty(PROP_BROWSER_PORT);
     if (port != null)
@@ -44,13 +44,13 @@ public class Application extends OSGiApplication
       IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.server.db.browsers", "default", port); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    OM.LOG.info("CDO server started");
+    OM.LOG.info("Demo server started");
   }
 
   @Override
   protected void doStop() throws Exception
   {
-    OM.LOG.info("CDO server stopping");
+    OM.LOG.info("Demo server stopping");
     if (repositories != null)
     {
       for (IRepository repository : repositories)
@@ -59,7 +59,7 @@ public class Application extends OSGiApplication
       }
     }
 
-    OM.LOG.info("CDO server stopped");
+    OM.LOG.info("Demo server stopped");
     super.doStop();
   }
 }

@@ -680,7 +680,6 @@ public class TransactionCommitContext implements InternalCommitContext
       monitor.worked();
       InternalRepository repository = transaction.getRepository();
       repository.notifyWriteAccessHandlers(transaction, this, false, monitor.fork());
-
     }
     finally
     {

@@ -15,13 +15,14 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
+import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 
 /**
  * @author Eike Stepper
  * @since 2.0
  */
-public interface ISignalProtocol<INFRA_STRUCTURE> extends IProtocol<INFRA_STRUCTURE>
+public interface ISignalProtocol<INFRA_STRUCTURE> extends IProtocol<INFRA_STRUCTURE>, INotifier
 {
   public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
 

@@ -233,21 +233,25 @@ public abstract class Signal implements Runnable
 
   void runSync() throws Exception
   {
+    Exception exception = null;
+
     try
     {
       execute(bufferInputStream, bufferOutputStream);
     }
     catch (IOTimeoutException ex) // Thrown from BufferInputStream
     {
-      throw ex.createTimeoutException();
+      exception = ex.createTimeoutException();
+      throw exception;
     }
     catch (Exception ex)
     {
-      throw ex;
+      exception = ex;
+      throw exception;
     }
     finally
     {
-      getProtocol().stopSignal(this);
+      getProtocol().stopSignal(this, exception);
     }
   }
 

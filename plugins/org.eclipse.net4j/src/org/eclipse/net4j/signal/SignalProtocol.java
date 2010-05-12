@@ -19,6 +19,7 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 import org.eclipse.net4j.util.io.StreamWrapperChain;
@@ -211,6 +212,8 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     }
 
     Signal signal;
+    boolean newSignalScheduled = false;
+
     synchronized (signals)
     {
       if (correlationID > 0)
@@ -235,6 +238,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
           signals.put(-correlationID, signal);
           getExecutorService().execute(signal);
+          newSignalScheduled = true;
         }
       }
       else
@@ -246,6 +250,15 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
     if (signal != null) // Can be null after timeout
     {
+      if (newSignalScheduled)
+      {
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new SignalScheduledEvent<INFRA_STRUCTURE>(this, signal), listeners);
+        }
+      }
+
       BufferInputStream inputStream = signal.getBufferInputStream();
       inputStream.handleBuffer(buffer);
     }
@@ -425,16 +438,28 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
       signals.put(correlationID, signalActor);
     }
 
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      fireEvent(new SignalScheduledEvent<INFRA_STRUCTURE>(this, signalActor), listeners);
+    }
+
     signalActor.runSync();
   }
 
-  void stopSignal(Signal signal)
+  void stopSignal(Signal signal, Exception exception)
   {
     int correlationID = signal.getCorrelationID();
     synchronized (signals)
     {
       signals.remove(correlationID);
       signals.notifyAll();
+    }
+
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      fireEvent(new SignalFinishedEvent<INFRA_STRUCTURE>(this, signal, exception), listeners);
     }
   }
 

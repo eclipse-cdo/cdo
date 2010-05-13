@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 
 import com.objy.db.app.ooId;
@@ -27,11 +28,14 @@ public class ObjyBranchManager extends ooObj
 {
   protected int nextBranchId;
 
+  protected int nextLocalBranchId;
+
   protected ooTreeSetX branchSet;
 
   public ObjyBranchManager()
   {
-    nextBranchId = 1; // 0 is the main branch.
+    nextBranchId = 0;
+    nextLocalBranchId = 0;
   }
 
   protected void createTreeSet(ooObj clusterObject)
@@ -42,14 +46,29 @@ public class ObjyBranchManager extends ooObj
 
   public int getNextBranchId()
   {
-    fetch();
-    return nextBranchId;
+    markModified();
+    return ++nextBranchId;
   }
 
-  public int createBranch(BranchInfo branchInfo)
+  public int getNextLocalBranchId()
   {
     markModified();
-    int branchId = nextBranchId++;
+    return --nextLocalBranchId;
+  }
+
+  public int createBranch(int branchId, BranchInfo branchInfo)
+  {
+    markModified();
+
+    if (branchId == BranchLoader.NEW_BRANCH)
+    {
+      branchId = getNextBranchId();
+    }
+    else if (branchId == BranchLoader.NEW_LOCAL_BRANCH)
+    {
+      branchId = getNextLocalBranchId();
+    }
+
     ObjyBranch newObjyBranch = new ObjyBranch(branchId, branchInfo);
     // if the baseBranchId is 0, then we just added to our branchSet, otherwise
     // we'll lookup the ObjyBranch with the id, and add the newly created

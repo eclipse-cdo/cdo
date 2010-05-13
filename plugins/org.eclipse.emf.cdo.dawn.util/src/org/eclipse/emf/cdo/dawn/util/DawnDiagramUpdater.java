@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 - 2010 Martin Fluegge (Berlin, Germany).
+ * Copyright (c) 2010 Martin Fluegge (Berlin, Germany).
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -155,10 +155,6 @@ public class DawnDiagramUpdater
         }
       }
     }
-    else
-    {
-      System.err.println("EDITPART is null");
-    }
   }
 
   public static View findViewByContainer(EObject element)
@@ -180,29 +176,25 @@ public class DawnDiagramUpdater
     }
   }
 
-  // TODO improve this method
   public static View findViewForModel(EObject object, DiagramDocumentEditor editor)
   {
-
-    try
+    if (object == null)
     {
-      for (EObject e : editor.getDiagram().eContents())
+      return null;
+    }
+    for (EObject e : editor.getDiagram().eContents())
+    {
+      if (e instanceof View)
       {
-        if (e instanceof View && ((View)e).getElement().equals(object))
-        {
+        View view = (View)e;
+        if (view != null && object.equals(view.getElement()))
           if (TRACER.isEnabled())
           {
             TRACER.format("FOUND View: {0} for view obj: {1} ", e, object); //$NON-NLS-1$
           }
-          return (View)e;
-        }
+        return (View)e;
       }
     }
-    catch (Exception e)
-    {
-      // quickhack
-    }
-
     return null;
   }
 

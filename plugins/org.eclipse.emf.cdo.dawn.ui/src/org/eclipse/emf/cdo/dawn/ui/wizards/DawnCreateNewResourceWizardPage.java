@@ -249,7 +249,6 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
             setErrorMessage("A resource with the same name already exists!");
             valid = false;
           }
-
         }
       }
       catch (Exception e)

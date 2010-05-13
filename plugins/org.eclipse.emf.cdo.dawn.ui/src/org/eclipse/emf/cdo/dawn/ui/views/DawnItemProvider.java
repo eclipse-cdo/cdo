@@ -27,11 +27,6 @@ public class DawnItemProvider extends CDOItemProvider
 
   private final DawnExplorer dawnExplorer;
 
-  // public DawnItemProvider(IWorkbenchPage page)
-  // {
-  // super(page);
-  // }
-  //
   public DawnItemProvider(IWorkbenchPage page, DawnExplorer dawnExplorer, IElementFilter rootElementFilter)
   {
     super(page, rootElementFilter);
@@ -76,7 +71,7 @@ public class DawnItemProvider extends CDOItemProvider
         return img;
       }
     }
-    return super.getImage(obj);
 
+    return super.getImage(obj);
   }
 }

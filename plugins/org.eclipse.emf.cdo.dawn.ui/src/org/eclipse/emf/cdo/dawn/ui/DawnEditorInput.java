@@ -29,12 +29,6 @@ public class DawnEditorInput extends URIEditorInput implements CDOEditorInput
     super(uri);
   }
 
-  // public DawnEditorInput(CDOResource resource)
-  // {
-  // super(resource.getURI());
-  // this.setResource(resource);
-  // }
-
   @Override
   public CDOView getView()
   {

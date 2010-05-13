@@ -102,6 +102,13 @@
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="org.apache.commons.lang"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 		<plugin id="org.gastro.business.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.gastro.business.edit.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.gastro.inventory.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
@@ -112,5 +119,6 @@
 		<plugin id="org.gastro.server.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.gastro.server.web.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.gastro.testclient.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+		<plugin id="org.apache.commons.lang.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
 </feature>

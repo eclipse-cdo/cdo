@@ -191,8 +191,7 @@
 	</rm:searchPath>
 
 	<rm:searchPath name="orbit">
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(build.type=N)">
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="{0}/tools/orbit/downloads/drops/S20100508202910/updateSite">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
@@ -207,8 +206,7 @@
 	</rm:searchPath>
 
 	<rm:searchPath name="gef.milestones">
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(build.type=N)">
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="{0}/tools/gef/updates/milestones/">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
@@ -216,14 +214,12 @@
 	</rm:searchPath>
 
 	<rm:searchPath name="modeling.milestones">
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(build.type=N)">
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="{0}/modeling/emf/teneo/updates/1.2.0/milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(build.type=N)">
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="{0}/modeling/emf/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>

@@ -17,17 +17,9 @@ Require-Bundle: org.apache.commons.logging;bundle-version="[1.0.0,2.0.0)",
  org.gastro.inventory;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: javax.servlet;version="[2.5.0,2.6.0)",
- javax.servlet.http;version="[2.5.0,2.6.0)"
+ javax.servlet.http;version="[2.5.0,2.6.0)",
+ org.apache.commons.lang;version="[2.3.0,3.0.0)"
 Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: .,
- org.apache.commons.lang_2.3.0.v200803061910.jar
-Export-Package: org.apache.commons.lang;version="2.3.0";x-internal:=true,
- org.apache.commons.lang.builder;version="2.3.0";x-internal:=true,
- org.apache.commons.lang.enums;version="2.3.0";x-internal:=true,
- org.apache.commons.lang.exception;version="2.3.0";x-internal:=true,
- org.apache.commons.lang.math;version="2.3.0";x-internal:=true,
- org.apache.commons.lang.mutable;version="2.3.0";x-internal:=true,
- org.apache.commons.lang.text;version="2.3.0";x-internal:=true,
- org.apache.commons.lang.time;version="2.3.0";x-internal:=true,
- org.gastro.server.internal.web;version="3.0.0";x-internal:=true,
+Bundle-ClassPath: .
+Export-Package: org.gastro.server.internal.web;version="3.0.0";x-internal:=true,
  templates;version="3.0.0";x-internal:=true

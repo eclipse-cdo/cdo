@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.server.IQueryHandler;
@@ -64,10 +66,12 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import com.objy.db.app.oo;
 import com.objy.db.app.ooId;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -606,7 +610,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
   private EPackage createEPackage(InternalCDOPackageUnit packageUnit, byte[] bytes)
   {
-    return EMFUtil.createEPackage(packageUnit.getID(), bytes, zipped, getPackageRegistry());
+    ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(getPackageRegistry());
+    return EMFUtil.createEPackage(packageUnit.getID(), bytes, zipped, resourceSet, false);
   }
 
   private CDOPackageRegistry getPackageRegistry()
@@ -973,10 +978,10 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     return null;
   }
 
-  public int createBranch(BranchInfo branchInfo)
+  public int createBranch(int branchID, BranchInfo branchInfo)
   {
     ensureSessionBegin();
-    return objySession.getBranchManager(getRepositoryName()).createBranch(branchInfo);
+    return objySession.getBranchManager(getRepositoryName()).createBranch(branchID, branchInfo);
   }
 
   public BranchInfo loadBranch(int branchID)
@@ -1023,6 +1028,18 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   }
 
   public Set<CDOID> readChangeSet(CDOChangeSetSegment... segments)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
+      throws IOException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
+      throws IOException
   {
     throw new UnsupportedOperationException();
   }

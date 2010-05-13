@@ -23,8 +23,10 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -36,6 +38,7 @@ import org.h2.jdbcx.JdbcDataSource;
 
 import javax.sql.DataSource;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -45,7 +48,7 @@ import java.util.Random;
  */
 public class DemoConfiguration extends Lifecycle
 {
-  private static final int NAME_LENGTH = 64;
+  private static final int NAME_LENGTH = 16;
 
   private static final String NAME_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
@@ -56,6 +59,8 @@ public class DemoConfiguration extends Lifecycle
   private transient String name;
 
   private transient InternalRepository repository;
+
+  private DemoUserManager userManager;
 
   private transient long lastAccess;
 
@@ -82,6 +87,17 @@ public class DemoConfiguration extends Lifecycle
   public void setUserIDs(String[] userIDs)
   {
     checkInactive();
+    if (userIDs != null)
+    {
+      if (userIDs.length != 0)
+      {
+        if (StringUtil.isEmpty(userIDs[0]))
+        {
+          userIDs = null;
+        }
+      }
+    }
+
     this.userIDs = userIDs;
   }
 
@@ -93,6 +109,16 @@ public class DemoConfiguration extends Lifecycle
   public IRepository getRepository()
   {
     return repository;
+  }
+
+  public Map<String, char[]> getUsers()
+  {
+    if (userManager == null)
+    {
+      return Collections.emptyMap();
+    }
+
+    return userManager.getUsers();
   }
 
   public long getLastAccess()
@@ -122,7 +148,7 @@ public class DemoConfiguration extends Lifecycle
       sessionManager.setUserManager(userManager);
     }
 
-    LifecycleUtil.activate(repository);
+    CDOServerUtil.addRepository(IPluginContainer.INSTANCE, repository);
   }
 
   @Override
@@ -175,7 +201,7 @@ public class DemoConfiguration extends Lifecycle
   protected DataSource createDataSource()
   {
     JdbcDataSource dataSource = new JdbcDataSource();
-    dataSource.setURL("jdbc:h2:databases/" + name + "/h2test;SCHEMA=" + name);
+    dataSource.setURL("jdbc:h2:databases/" + name + "/h2test");
     return dataSource;
   }
 
@@ -189,13 +215,16 @@ public class DemoConfiguration extends Lifecycle
       protected void onAdded(IContainer<ISession> container, ISession session)
       {
         ISignalProtocol<?> protocol = (ISignalProtocol<?>)session.getProtocol();
-        protocol.addListener(new IListener()
+        if (protocol != null)
         {
-          public void notifyEvent(IEvent event)
+          protocol.addListener(new IListener()
           {
-            lastAccess = System.currentTimeMillis();
-          }
-        });
+            public void notifyEvent(IEvent event)
+            {
+              lastAccess = System.currentTimeMillis();
+            }
+          });
+        }
       }
     });
 
@@ -204,7 +233,7 @@ public class DemoConfiguration extends Lifecycle
 
   protected IUserManager createUserManager()
   {
-    UserManager userManager = new UserManager();
+    userManager = new DemoUserManager();
     for (int i = 0; i < userIDs.length; i++)
     {
       String userID = userIDs[i];
@@ -213,6 +242,21 @@ public class DemoConfiguration extends Lifecycle
 
     userManager.activate();
     return userManager;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class DemoUserManager extends UserManager
+  {
+    public DemoUserManager()
+    {
+    }
+
+    public Map<String, char[]> getUsers()
+    {
+      return users;
+    }
   }
 
   /**

@@ -1,7 +1,7 @@
 <%@ jet
 	class="ConfigOverview"
 	package="templates"
-	imports="org.eclipse.emf.cdo.examples.server.*" %>
+	imports="java.util.* org.eclipse.emf.cdo.examples.server.*" %>
 
 <% DemoConfiguration config = (DemoConfiguration)argument; %>
 <% String title = "Demo Configuration " + AbstractTemplateServlet.html(config.getName()); %>
@@ -16,7 +16,19 @@
 <body>
 
 <h1><%=title%></h1>
+
 <table border="0" width="400">
+	<tr><td>Mode:</td><td><%=AbstractTemplateServlet.html(config.getMode().toString())%></td></tr>
+	<tr><td>User IDs:</td><td>
+	<%
+    Map<String, char[]> users = config.getUsers();
+    List<String> userIDs = new ArrayList<String>(users.keySet());
+    Collections.sort(userIDs);
+    for (String userID : userIDs)
+    { %>
+			<%=userID%>: <%=users.get(userID)%><br>
+    <% } %>
+		</td></tr>
 </table>
 
 </body>

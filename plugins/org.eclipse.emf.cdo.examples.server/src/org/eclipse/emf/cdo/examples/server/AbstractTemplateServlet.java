@@ -31,7 +31,7 @@ import java.text.NumberFormat;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractTemplateServlet extends HttpServlet
+public abstract class AbstractTemplateServlet<ARGUMENT> extends HttpServlet
 {
   private static final long serialVersionUID = 1L;
 
@@ -75,7 +75,7 @@ public abstract class AbstractTemplateServlet extends HttpServlet
 
     try
     {
-      Object argument = createTemplateArgument(req);
+      ARGUMENT argument = createTemplateArgument(req);
       String html = (String)method.invoke(template, argument);
       writer.print(html);
     }
@@ -105,7 +105,7 @@ public abstract class AbstractTemplateServlet extends HttpServlet
   {
   }
 
-  protected abstract Object createTemplateArgument(HttpServletRequest req);
+  protected abstract ARGUMENT createTemplateArgument(HttpServletRequest req);
 
   public static String html(String value)
   {

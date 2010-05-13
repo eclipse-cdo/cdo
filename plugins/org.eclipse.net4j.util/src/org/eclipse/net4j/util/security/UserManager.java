@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.security;
 
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
@@ -21,7 +22,7 @@ import java.util.Map;
  */
 public class UserManager extends Lifecycle implements IUserManager
 {
-  // Transient to prevent from logging
+  @ExcludeFromDump
   protected transient Map<String, char[]> users = new HashMap<String, char[]>();
 
   public UserManager()

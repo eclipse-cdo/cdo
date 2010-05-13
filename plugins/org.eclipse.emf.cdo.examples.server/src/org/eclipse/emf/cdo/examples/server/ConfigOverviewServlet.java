@@ -13,6 +13,8 @@
  */
 package org.eclipse.emf.cdo.examples.server;
 
+import org.eclipse.emf.cdo.examples.server.DemoConfiguration.Mode;
+
 import templates.ConfigOverview;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eike Stepper
  */
-public class ConfigOverviewServlet extends AbstractTemplateServlet
+public class ConfigOverviewServlet extends AbstractTemplateServlet<DemoConfiguration>
 {
   private static final long serialVersionUID = 1L;
 
@@ -31,8 +33,41 @@ public class ConfigOverviewServlet extends AbstractTemplateServlet
   }
 
   @Override
-  protected Object createTemplateArgument(HttpServletRequest req)
+  protected DemoConfiguration createTemplateArgument(HttpServletRequest req)
   {
-    return null;
+    String name = req.getParameter("name");
+    if (name != null)
+    {
+      return getDemoConfiguration(name);
+    }
+
+    String mode = req.getParameter("mode");
+    String userIDs = req.getParameter("userIDs");
+    return createDemoConfiguration(mode, userIDs);
+  }
+
+  protected DemoConfiguration createDemoConfiguration(String mode, String userIDs)
+  {
+    DemoConfiguration config = new DemoConfiguration();
+    config.setMode(Mode.valueOf(mode));
+    if (userIDs != null)
+    {
+      config.setUserIDs(userIDs.split(","));
+    }
+
+    config.activate();
+    DemoServer.INSTANCE.getConfigs().put(config.getName(), config);
+    return config;
+  }
+
+  protected DemoConfiguration getDemoConfiguration(String name)
+  {
+    DemoConfiguration config = DemoServer.INSTANCE.getConfigs().get(name);
+    if (config == null)
+    {
+      throw new IllegalStateException("No demo configuration available for " + name);
+    }
+
+    return config;
   }
 }

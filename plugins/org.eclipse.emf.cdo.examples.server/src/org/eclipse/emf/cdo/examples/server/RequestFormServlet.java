@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eike Stepper
  */
-public class RequestFormServlet extends AbstractTemplateServlet
+public class RequestFormServlet extends AbstractTemplateServlet<Object>
 {
   private static final long serialVersionUID = 1L;
 

@@ -20,8 +20,8 @@ Eike Stepper - initial API and implementation
 	</extension>
 
 	<extension id="product" point="org.eclipse.core.runtime.products">
-		<product name="%product.name" description="%product.description" application="org.eclipse.emf.cdo.server.app">
-			<property name="appName" value="CDO Server"/>
+		<product name="Demo Server" description="%product.description" application="org.eclipse.emf.cdo.examples.server.app">
+			<property name="appName" value="Demo Server"/>
 		</product>
 	</extension>
 

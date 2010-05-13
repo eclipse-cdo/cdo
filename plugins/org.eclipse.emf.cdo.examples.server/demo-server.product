@@ -30,6 +30,8 @@
 
    <plugins>
       <plugin id="javax.servlet"/>
+      <plugin id="org.apache.commons.lang"/>
+      <plugin id="org.apache.commons.logging"/>
       <plugin id="org.eclipse.ant.core"/>
       <plugin id="org.eclipse.core.contenttype"/>
       <plugin id="org.eclipse.core.expressions"/>
@@ -55,7 +57,9 @@
       <plugin id="org.eclipse.emf.ecore.xmi"/>
       <plugin id="org.eclipse.equinox.app"/>
       <plugin id="org.eclipse.equinox.common"/>
+      <plugin id="org.eclipse.equinox.http.jetty"/>
       <plugin id="org.eclipse.equinox.http.registry"/>
+      <plugin id="org.eclipse.equinox.http.servlet"/>
       <plugin id="org.eclipse.equinox.launcher"/>
       <plugin id="org.eclipse.equinox.launcher.gtk.linux.x86_64" fragment="true"/>
       <plugin id="org.eclipse.equinox.preferences"/>
@@ -75,7 +79,14 @@
       <plugin id="org.eclipse.update.core"/>
       <plugin id="org.eclipse.update.core.linux" fragment="true"/>
       <plugin id="org.h2"/>
+      <plugin id="org.mortbay.jetty.server"/>
+      <plugin id="org.mortbay.jetty.util"/>
    </plugins>
 
+   <configurations>
+      <plugin id="org.eclipse.equinox.http.jetty" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.equinox.http.registry" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.equinox.http.servlet" autoStart="true" startLevel="0" />
+   </configurations>
 
 </product>

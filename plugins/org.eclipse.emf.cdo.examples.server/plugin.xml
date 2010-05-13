@@ -28,16 +28,20 @@ Eike Stepper - initial API and implementation
    <extension
          point="org.eclipse.equinox.http.registry.servlets">
       <servlet
-            alias="/demo"
-            class="org.eclipse.emf.cdo.examples.server.DemoServlet"
+            alias="/requestForm.html"
+            class="org.eclipse.emf.cdo.examples.server.RequestFormServlet"
+            load-on-startup="true"/>
+      <servlet
+            alias="/configOverview.html"
+            class="org.eclipse.emf.cdo.examples.server.ConfigOverviewServlet"
             load-on-startup="true"/>
    </extension>
-   
+
    <extension
          point="org.eclipse.equinox.http.registry.resources">
       <resource
-            alias="/demo.css"
-            base-name="/demo.css">
+            alias="/demo-server.css"
+            base-name="/demo-server.css">
       </resource>
    </extension>
 

@@ -31,7 +31,7 @@ public class RequestFormServlet extends AbstractTemplateServlet
   }
 
   @Override
-  protected Object getTemplateArgument(HttpServletRequest req)
+  protected Object createTemplateArgument(HttpServletRequest req)
   {
     return null;
   }

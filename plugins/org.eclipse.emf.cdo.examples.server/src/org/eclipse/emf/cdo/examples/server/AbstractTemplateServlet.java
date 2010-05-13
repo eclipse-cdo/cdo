@@ -75,7 +75,7 @@ public abstract class AbstractTemplateServlet extends HttpServlet
 
     try
     {
-      Object argument = getTemplateArgument(req);
+      Object argument = createTemplateArgument(req);
       String html = (String)method.invoke(template, argument);
       writer.print(html);
     }
@@ -105,7 +105,7 @@ public abstract class AbstractTemplateServlet extends HttpServlet
   {
   }
 
-  protected abstract Object getTemplateArgument(HttpServletRequest req);
+  protected abstract Object createTemplateArgument(HttpServletRequest req);
 
   public static String html(String value)
   {

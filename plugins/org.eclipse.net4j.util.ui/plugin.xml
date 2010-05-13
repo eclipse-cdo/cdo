@@ -33,4 +33,13 @@
             icon="icons/full/view16/javabean.gif"/>
    </extension>
    
+   <extension
+         point="org.eclipse.net4j.util.factories">
+      <factory
+            class="org.eclipse.net4j.util.internal.ui.InteractiveCredentialsProviderFactory"
+            productGroup="org.eclipse.net4j.util.security.credentialsProviders"
+            type="interactive">
+      </factory>
+   </extension>
+   
 </plugin>

@@ -17,6 +17,9 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.security.CredentialsProviderFactory;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
@@ -32,11 +35,6 @@ public class CDONet4jSessionFactory extends CDOSessionFactory
     super(TYPE);
   }
 
-  public static CDOSession get(IManagedContainer container, String description)
-  {
-    return (CDOSession)container.getElement(PRODUCT_GROUP, TYPE, description);
-  }
-
   /**
    * @since 2.0
    */
@@ -44,10 +42,40 @@ public class CDONet4jSessionFactory extends CDOSessionFactory
   protected InternalCDOSession createSession(String repositoryName, boolean automaticPackageRegistry)
   {
     CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+    configuration.setRepositoryName(repositoryName);
+    configuration.getAuthenticator().setCredentialsProvider(getCredentialsProvider());
 
     // The session will be activated by the container
     configuration.setActivateOnOpen(false);
-    configuration.setRepositoryName(repositoryName);
     return (InternalCDOSession)configuration.openSession();
+  }
+
+  protected IPasswordCredentialsProvider getCredentialsProvider()
+  {
+    try
+    {
+      IManagedContainer container = getManagedContainer();
+      String type = getCredentialsProviderType();
+      return (IPasswordCredentialsProvider)container.getElement(CredentialsProviderFactory.PRODUCT_GROUP, type, null);
+    }
+    catch (Exception ex)
+    {
+      return null;
+    }
+  }
+
+  protected IManagedContainer getManagedContainer()
+  {
+    return IPluginContainer.INSTANCE;
+  }
+
+  protected String getCredentialsProviderType()
+  {
+    return "interactive";
+  }
+
+  public static CDOSession get(IManagedContainer container, String description)
+  {
+    return (CDOSession)container.getElement(PRODUCT_GROUP, TYPE, description);
   }
 }

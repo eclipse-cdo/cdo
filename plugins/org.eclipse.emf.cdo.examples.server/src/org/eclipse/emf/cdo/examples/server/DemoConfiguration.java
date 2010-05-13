@@ -48,7 +48,7 @@ import java.util.Random;
  */
 public class DemoConfiguration extends Lifecycle
 {
-  private static final int NAME_LENGTH = 16;
+  private static final int NAME_LENGTH = 8;
 
   private static final String NAME_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
@@ -164,7 +164,7 @@ public class DemoConfiguration extends Lifecycle
   protected String createRandomName()
   {
     Random random = new Random(System.currentTimeMillis());
-    StringBuilder builder = new StringBuilder();
+    StringBuilder builder = new StringBuilder("repo_");
     for (int i = 0; i < NAME_LENGTH; i++)
     {
       int pos = random.nextInt(NAME_ALPHABET.length());

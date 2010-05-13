@@ -171,7 +171,7 @@ public class ObjyBranchManagementTest
   public void getNextBranchId()
   {
     dbStore.begin();
-    int branchId = dbStore.getBranchManager().getNextBranchId();
+    int branchId = dbStore.getBranchManager().nextBranchId();
     dbStore.commit();
     assertTrue(branchId > 0);
   }
@@ -180,7 +180,7 @@ public class ObjyBranchManagementTest
   public void createBranch()
   {
     dbStore.begin();
-    int nextBranchId = dbStore.getBranchManager().getNextBranchId();
+    int nextBranchId = dbStore.getBranchManager().getLastBranchId() + 1;
     dbStore.commit();
 
     dbStore.begin();
@@ -223,7 +223,7 @@ public class ObjyBranchManagementTest
     dbStore.commit();
 
     dbStore.begin();
-    int nextBranchId = dbStore.getBranchManager().getNextBranchId();
+    int nextBranchId = dbStore.getBranchManager().nextBranchId();
     dbStore.commit();
     assertTrue(branchIdA < nextBranchId);
     assertTrue(branchIdB < nextBranchId);
@@ -272,7 +272,7 @@ public class ObjyBranchManagementTest
     {
       dbStore.begin();
       BranchInfo branchInfo = new BranchInfo(prefixString + i, thisBaseBranchId, thisBaseBranchTimeStamp);
-      int id = dbStore.getBranchManager().createBranch(NEW_LOCAL_BRANCH, branchInfo);
+      int id = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfo);
       branchList.add(id);
       dbStore.commit();
     }
@@ -319,13 +319,8 @@ public class ObjyBranchManagementTest
   public void deleteBranch()
   {
     dbStore.begin();
-    int nextBranchId = dbStore.getBranchManager().getNextBranchId();
-    dbStore.commit();
-
-    dbStore.begin();
     int branchId = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA);
     dbStore.commit();
-    assertEquals(branchId, nextBranchId);
 
     // delete it.
     dbStore.begin();

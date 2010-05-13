@@ -44,13 +44,25 @@ public class ObjyBranchManager extends ooObj
     clusterObject.cluster(branchSet);
   }
 
-  public int getNextBranchId()
+  public int getLastBranchId()
+  {
+    fetch();
+    return nextBranchId;
+  }
+
+  public int nextBranchId()
   {
     markModified();
     return ++nextBranchId;
   }
 
-  public int getNextLocalBranchId()
+  public int getlastLocalBranchId()
+  {
+    fetch();
+    return nextLocalBranchId;
+  }
+
+  public int nextLocalBranchId()
   {
     markModified();
     return --nextLocalBranchId;
@@ -62,11 +74,11 @@ public class ObjyBranchManager extends ooObj
 
     if (branchId == BranchLoader.NEW_BRANCH)
     {
-      branchId = getNextBranchId();
+      branchId = nextBranchId();
     }
     else if (branchId == BranchLoader.NEW_LOCAL_BRANCH)
     {
-      branchId = getNextLocalBranchId();
+      branchId = nextLocalBranchId();
     }
 
     ObjyBranch newObjyBranch = new ObjyBranch(branchId, branchInfo);

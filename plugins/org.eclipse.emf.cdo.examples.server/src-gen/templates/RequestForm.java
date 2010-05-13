@@ -1,15 +1,14 @@
 package templates;
 
-import org.gastro.inventory.*;
-import org.gastro.server.internal.web.*;
+import org.eclipse.emf.cdo.examples.server.*;
 
-public class MenuCardTemplate
+public class RequestForm
 {
   protected static String nl;
-  public static synchronized MenuCardTemplate create(String lineSeparator)
+  public static synchronized RequestForm create(String lineSeparator)
   {
     nl = lineSeparator;
-    MenuCardTemplate result = new MenuCardTemplate();
+    RequestForm result = new RequestForm();
     nl = null;
     return result;
   }

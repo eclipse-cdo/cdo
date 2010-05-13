@@ -25,4 +25,20 @@ Eike Stepper - initial API and implementation
 		</product>
 	</extension>
 
+   <extension
+         point="org.eclipse.equinox.http.registry.servlets">
+      <servlet
+            alias="/demo"
+            class="org.eclipse.emf.cdo.examples.server.DemoServlet"
+            load-on-startup="true"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.equinox.http.registry.resources">
+      <resource
+            alias="/demo.css"
+            base-name="/demo.css">
+      </resource>
+   </extension>
+
 </plugin>

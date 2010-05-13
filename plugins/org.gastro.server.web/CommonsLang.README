@@ -1,3 +1,0 @@
-Das commons.lang jar ist eigentlich ein Bundle und sollte auch als solches in die Target Platform installiert werden!
- Für das Packaging dieser Example Anwendung war ein eingebettetes jar jedoch einfacher.
- 

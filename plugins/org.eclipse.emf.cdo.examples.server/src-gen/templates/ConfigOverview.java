@@ -1,23 +1,22 @@
 package templates;
 
-import org.gastro.inventory.*;
-import org.gastro.server.internal.web.*;
+import org.eclipse.emf.cdo.examples.server.*;
 
-public class MenuCardTemplate
+public class ConfigOverview
 {
   protected static String nl;
-  public static synchronized MenuCardTemplate create(String lineSeparator)
+  public static synchronized ConfigOverview create(String lineSeparator)
   {
     nl = lineSeparator;
-    MenuCardTemplate result = new MenuCardTemplate();
+    ConfigOverview result = new ConfigOverview();
     nl = null;
     return result;
   }
 
   public final String NL = nl == null ? (System.getProperties().getProperty("line.separator")) : nl;
-  protected final String TEXT_1 = "\t";
+  protected final String TEXT_1 = "";
   protected final String TEXT_2 = NL + NL + "<html>" + NL + "  <header>" + NL + "\t  <title>" + NL + "\t\t\t";
-  protected final String TEXT_3 = NL + "\t  </title>" + NL + "\t\t<link media=\"screen\" href=\"gastro.css\" type=\"text/css\" rel=\"stylesheet\">" + NL + "\t<header>" + NL + "<body>" + NL + "<h1>";
+  protected final String TEXT_3 = NL + "\t  </title>" + NL + "\t\t<link media=\"screen\" href=\"gastro.css\" type=\"text/css\" rel=\"stylesheet\">" + NL + "\t<header>" + NL + "<body>" + NL + "" + NL + "<h1>";
   protected final String TEXT_4 = "</h1>" + NL + "<table border=\"0\" width=\"400\">";
   protected final String TEXT_5 = NL + "\t<tr><td colspan=\"3\"><h2>";
   protected final String TEXT_6 = "</h2></td></tr>" + NL + "\t<tr><td colspan=\"3\"><h4>";
@@ -26,7 +25,7 @@ public class MenuCardTemplate
   protected final String TEXT_9 = "</h3></td></tr>" + NL + "\t\t<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>";
   protected final String TEXT_10 = "</td>" + NL + "\t\t\t\t\t<td align=\"right\" valign=\"bottom\" width=\"80\">";
   protected final String TEXT_11 = " </td></tr>" + NL + "\t";
-  protected final String TEXT_12 = NL + "</table>" + NL + "</body>" + NL + "</html>";
+  protected final String TEXT_12 = NL + "</table>" + NL + "" + NL + "</body>" + NL + "</html>";
   protected final String TEXT_13 = NL;
 
   public String generate(Object argument)

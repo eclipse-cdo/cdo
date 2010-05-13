@@ -20,6 +20,7 @@
             class="org.gastro.server.internal.web.GastroServlet"
             load-on-startup="true"/>
    </extension>
+   
    <extension
          point="org.eclipse.equinox.http.registry.resources">
       <resource

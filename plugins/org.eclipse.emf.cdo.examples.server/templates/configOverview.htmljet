@@ -1,7 +1,7 @@
 <%@ jet
-	class="MenuCardTemplate"
+	class="ConfigOverview"
 	package="templates"
-	imports="org.gastro.inventory.* org.gastro.server.internal.web.*" %>
+	imports="org.eclipse.emf.cdo.examples.server.*" %>
 
 <% MenuCard menuCard = (MenuCard)argument; %>
 

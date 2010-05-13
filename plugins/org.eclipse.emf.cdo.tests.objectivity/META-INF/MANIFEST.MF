@@ -14,9 +14,4 @@ Import-Package: com.objy.as;version="3.0.0",
  com.objy.db;version="3.0.0",
  com.objy.db.app;version="3.0.0",
  com.objy.db.iapp;version="3.0.0",
- com.objy.pm;version="3.0.0",
- com.objy.pm.asapp;version="3.0.0",
- com.objy.pm.asexcep;version="3.0.0",
- com.objy.pm.sm,
- com.objy.pm.tmi;version="3.0.0",
- com.objy.pm.util
+ com.objy.pm;version="3.0.0"

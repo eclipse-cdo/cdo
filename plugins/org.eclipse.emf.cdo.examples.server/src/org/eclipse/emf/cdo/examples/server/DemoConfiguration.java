@@ -29,6 +29,7 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.IUserManager;
@@ -38,6 +39,8 @@ import org.h2.jdbcx.JdbcDataSource;
 
 import javax.sql.DataSource;
 
+import java.io.File;
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +51,7 @@ import java.util.Random;
  */
 public class DemoConfiguration extends Lifecycle
 {
-  private static final int NAME_LENGTH = 8;
+  private static final int NAME_LENGTH = 10;
 
   private static final String NAME_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
@@ -62,7 +65,7 @@ public class DemoConfiguration extends Lifecycle
 
   private DemoUserManager userManager;
 
-  private transient long lastAccess;
+  private transient long lastAccess = System.currentTimeMillis();
 
   public DemoConfiguration()
   {
@@ -121,9 +124,14 @@ public class DemoConfiguration extends Lifecycle
     return userManager.getUsers();
   }
 
-  public long getLastAccess()
+  public synchronized long getIdleTime()
   {
-    return lastAccess;
+    return System.currentTimeMillis() - lastAccess;
+  }
+
+  public String formatIdleTime()
+  {
+    return MessageFormat.format("{0,time,mm:ss}", getIdleTime());
   }
 
   @Override
@@ -156,15 +164,19 @@ public class DemoConfiguration extends Lifecycle
   {
     if (repository != null)
     {
+      File folder = new File(new File("databases"), repository.getName());
+
       LifecycleUtil.deactivate(repository);
       repository = null;
+
+      IOUtil.delete(folder);
     }
   }
 
   protected String createRandomName()
   {
     Random random = new Random(System.currentTimeMillis());
-    StringBuilder builder = new StringBuilder("repo_");
+    StringBuilder builder = new StringBuilder();
     for (int i = 0; i < NAME_LENGTH; i++)
     {
       int pos = random.nextInt(NAME_ALPHABET.length());
@@ -221,7 +233,10 @@ public class DemoConfiguration extends Lifecycle
           {
             public void notifyEvent(IEvent event)
             {
-              lastAccess = System.currentTimeMillis();
+              synchronized (DemoConfiguration.this)
+              {
+                lastAccess = System.currentTimeMillis();
+              }
             }
           });
         }

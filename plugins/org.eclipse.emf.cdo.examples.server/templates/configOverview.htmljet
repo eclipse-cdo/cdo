@@ -4,20 +4,23 @@
 	imports="java.util.* org.eclipse.emf.cdo.examples.server.*" %>
 
 <% DemoConfiguration config = (DemoConfiguration)argument; %>
-<% String title = "Demo Configuration " + AbstractTemplateServlet.html(config.getName()); %>
+<% String name = config.getName(); %>
 
 <html>
   <header>
 	  <title>
-			<%=title%>
+			Demo Configuration <%=name%>
 	  </title>
-		<link media="screen" href="gastro.css" type="text/css" rel="stylesheet">
+		<link media="screen" href="demo-server.css" type="text/css" rel="stylesheet">
 	<header>
 <body>
 
-<h1><%=title%></h1>
+<h1>Demo Configuration</h1>
+<hr>
 
 <table border="0" width="400">
+	<tr><td>Server:</td><td><b>tcp://cdo.eclipse.org:<%=DemoServer.PORT%></b></td></tr>
+	<tr><td>Repository:</td><td><b><%=name%></b></td></tr>
 	<tr><td>Mode:</td><td><%=AbstractTemplateServlet.html(config.getMode().toString())%></td></tr>
 	<tr><td>User IDs:</td><td>
 	<%
@@ -29,6 +32,9 @@
 			<%=userID%>: <%=users.get(userID)%><br>
     <% } %>
 		</td></tr>
+	</td></tr>
+	<tr><td>Idle Time:</td><td><%=AbstractTemplateServlet.html(config.formatIdleTime())%></td></tr>
+	<tr><td>&nbsp;</td><td><a href="?name=<%=name%>">Refresh Page</a></td></tr>
 </table>
 
 </body>

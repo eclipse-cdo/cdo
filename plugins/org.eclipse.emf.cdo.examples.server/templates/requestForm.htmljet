@@ -12,12 +12,13 @@
 <body>
 
 <h1>Demo Request Form</h1>
+<hr>
 
 <form method="post" action="configOverview.html">
 	<table border="0">
 		<tr><td>Mode:</td><td><select name="mode"><option>NORMAL</option><option>AUDITING</option><option>BRANCHING</option></select></td></tr>
-		<tr><td>User IDs:</td><td><input name="userIDs" type="input"></input></td></tr>
-		<tr><td>&nbsp;</td><td><input name="submit" type="submit">Submit Request</input></td></tr>
+		<!--<tr><td>User IDs:</td><td><input name="userIDs" type="input"/></td></tr>-->
+		<tr><td>&nbsp;</td><td><input name="submit" type="submit"/></td></tr>
 	</table>
 </form>
 

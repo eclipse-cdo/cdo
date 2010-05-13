@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.examples.server;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.tcp.TCPUtil;
+import org.eclipse.net4j.util.concurrent.Worker;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -32,11 +33,15 @@ public class DemoServer extends OSGiApplication
 
   public static final int PORT = 3003;
 
+  public static final long MAX_IDLE_TIME = 2 * 60 * 1000;
+
   public static DemoServer INSTANCE;
 
   private IAcceptor acceptor;
 
   private Map<String, DemoConfiguration> configs = new HashMap<String, DemoConfiguration>();
+
+  private Cleaner cleaner = new Cleaner();
 
   public DemoServer()
   {
@@ -49,9 +54,20 @@ public class DemoServer extends OSGiApplication
     return acceptor;
   }
 
-  public Map<String, DemoConfiguration> getConfigs()
+  public DemoConfiguration getConfig(String name)
   {
-    return configs;
+    synchronized (configs)
+    {
+      return configs.get(name);
+    }
+  }
+
+  public void addConfig(DemoConfiguration config)
+  {
+    synchronized (configs)
+    {
+      configs.put(config.getName(), config);
+    }
   }
 
   @Override
@@ -70,6 +86,7 @@ public class DemoServer extends OSGiApplication
       container.getElement("org.eclipse.emf.cdo.server.db.browsers", "default", port); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
+    cleaner.activate();
     OM.LOG.info("Demo server started");
   }
 
@@ -77,7 +94,9 @@ public class DemoServer extends OSGiApplication
   protected void doStop() throws Exception
   {
     OM.LOG.info("Demo server stopping");
-    for (DemoConfiguration config : configs.values().toArray(new DemoConfiguration[configs.size()]))
+    cleaner.deactivate();
+
+    for (DemoConfiguration config : getConfigs())
     {
       config.deactivate();
     }
@@ -92,5 +111,43 @@ public class DemoServer extends OSGiApplication
 
     OM.LOG.info("Demo server stopped");
     super.doStop();
+  }
+
+  protected DemoConfiguration[] getConfigs()
+  {
+    synchronized (configs)
+    {
+      return configs.values().toArray(new DemoConfiguration[configs.size()]);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class Cleaner extends Worker
+  {
+    @Override
+    protected void work(WorkContext context) throws Exception
+    {
+      for (DemoConfiguration config : getConfigs())
+      {
+        cleanIfNeeded(config);
+      }
+
+      context.nextWork(2000L);
+    }
+
+    protected void cleanIfNeeded(DemoConfiguration config)
+    {
+      if (config.getIdleTime() > MAX_IDLE_TIME)
+      {
+        synchronized (configs)
+        {
+          configs.remove(config.getName());
+        }
+
+        config.deactivate();
+      }
+    }
   }
 }

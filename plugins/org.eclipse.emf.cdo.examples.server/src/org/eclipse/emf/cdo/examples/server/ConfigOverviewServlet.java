@@ -56,13 +56,13 @@ public class ConfigOverviewServlet extends AbstractTemplateServlet<DemoConfigura
     }
 
     config.activate();
-    DemoServer.INSTANCE.getConfigs().put(config.getName(), config);
+    DemoServer.INSTANCE.addConfig(config);
     return config;
   }
 
   protected DemoConfiguration getDemoConfiguration(String name)
   {
-    DemoConfiguration config = DemoServer.INSTANCE.getConfigs().get(name);
+    DemoConfiguration config = DemoServer.INSTANCE.getConfig(name);
     if (config == null)
     {
       throw new IllegalStateException("No demo configuration available for " + name);

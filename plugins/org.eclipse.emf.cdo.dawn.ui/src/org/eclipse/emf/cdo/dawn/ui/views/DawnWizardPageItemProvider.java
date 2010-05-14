@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.view.CDOView;
+
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 

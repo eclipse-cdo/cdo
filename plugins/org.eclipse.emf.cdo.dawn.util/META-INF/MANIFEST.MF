@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %providerName
-Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.util
+Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.util;singleton:=true
 Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: org.eclipse.emf.cdo.dawn.util.Activator
 Require-Bundle: org.eclipse.ui;bundle-version="[3.6.0,4.0.0)",

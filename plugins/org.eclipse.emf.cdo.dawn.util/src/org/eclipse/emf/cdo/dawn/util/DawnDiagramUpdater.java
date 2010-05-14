@@ -10,15 +10,15 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.util;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
 import org.eclipse.emf.cdo.dawn.internal.util.bundle.OM;
+
+import org.eclipse.net4j.util.om.trace.ContextTracer;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.ECrossReferenceAdapter;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionEditPart;
@@ -35,8 +35,11 @@ import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.ui.PlatformUI;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Martin Fluegge
@@ -50,6 +53,7 @@ public class DawnDiagramUpdater
     TransactionalEditingDomain editingDomain = editPart.getEditingDomain();
     editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain)
     {
+      @Override
       public void doExecute()
       {
         editPart.refresh();
@@ -72,6 +76,7 @@ public class DawnDiagramUpdater
   {
     editor.getEditingDomain().getCommandStack().execute(new RecordingCommand(editor.getEditingDomain())
     {
+      @Override
       public void doExecute()
       {
         DawnDiagramUpdater.refreshEditPart(editPart);
@@ -101,8 +106,8 @@ public class DawnDiagramUpdater
               && ((EditPart)structuredSelection.getFirstElement()).getModel() instanceof View)
           {
             EObject modelElement = ((View)((EditPart)structuredSelection.getFirstElement()).getModel()).getElement();
-            List editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(modelElement);
-            for (Iterator it = editPolicies.iterator(); it.hasNext();)
+            List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(modelElement);
+            for (Iterator<?> it = editPolicies.iterator(); it.hasNext();)
             {
               CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy)it.next();
               nextEditPolicy.refresh();
@@ -142,7 +147,9 @@ public class DawnDiagramUpdater
           if (connectionEditPart instanceof EditPart)
           {
             if (((Connector)((EditPart)connectionEditPart).getModel()).getBendpoints() != null)
+            {
               refeshEditpartInternal((EditPart)connectionEditPart);
+            }
           }
         }
       }
@@ -160,20 +167,21 @@ public class DawnDiagramUpdater
   public static View findViewByContainer(EObject element)
   {
     if (element instanceof View)
-      return (View)element;
-    else
     {
-      if (element.eContainer() == null)
-        return null;
-      if (element.eContainer() instanceof View)
-      {
-        return (View)element.eContainer();
-      }
-      else
-      {
-        return findViewByContainer(element.eContainer());
-      }
+      return (View)element;
     }
+
+    if (element.eContainer() == null)
+    {
+      return null;
+    }
+
+    if (element.eContainer() instanceof View)
+    {
+      return (View)element.eContainer();
+    }
+
+    return findViewByContainer(element.eContainer());
   }
 
   public static View findViewForModel(EObject object, DiagramDocumentEditor editor)
@@ -187,11 +195,13 @@ public class DawnDiagramUpdater
       if (e instanceof View)
       {
         View view = (View)e;
-        if (view != null && object.equals(view.getElement()))
+        if (object.equals(view.getElement()))
+        {
           if (TRACER.isEnabled())
           {
             TRACER.format("FOUND View: {0} for view obj: {1} ", e, object); //$NON-NLS-1$
           }
+        }
         return (View)e;
       }
     }
@@ -329,7 +339,7 @@ public class DawnDiagramUpdater
         .getCrossReferenceAdapter(element);// getCrossReferenceAdapter(element);
     if (crossreferenceAdapter != null)
     {
-      Collection iinverseReferences = crossreferenceAdapter.getInverseReferencers(element, NotationPackage.eINSTANCE
+      Collection<?> iinverseReferences = crossreferenceAdapter.getInverseReferencers(element, NotationPackage.eINSTANCE
           .getView_Element(), null);
 
       for (Object f : iinverseReferences)

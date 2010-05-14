@@ -15,10 +15,9 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
+
 /**
- * 
  * @author Martin Fluegge
- *
  */
 public abstract class OM
 {
@@ -33,4 +32,4 @@ public abstract class OM
   public static final OMLogger LOG = BUNDLE.logger();
 
   public static final OMPreferences PREFS = BUNDLE.preferences();
- }
+}

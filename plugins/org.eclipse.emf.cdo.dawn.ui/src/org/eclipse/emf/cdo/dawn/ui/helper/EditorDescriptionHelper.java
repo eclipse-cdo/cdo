@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.dawn.ui.helper;
 
 import org.eclipse.emf.ecore.resource.Resource;
+
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.PlatformUI;
@@ -53,7 +54,7 @@ public class EditorDescriptionHelper
     {
       return editors[0];
     }
-    
+
     return null;
   }
 
@@ -75,7 +76,7 @@ public class EditorDescriptionHelper
     {
       return editorDescriptor.getImageDescriptor().createImage();
     }
-    
+
     return null;
   }
 }

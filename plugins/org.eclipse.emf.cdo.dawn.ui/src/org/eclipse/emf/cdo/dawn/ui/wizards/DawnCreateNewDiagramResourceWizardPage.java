@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.dawn.ui.wizards;
 
 import org.eclipse.emf.cdo.dawn.runtime.preferences.PreferenceConstants;
 import org.eclipse.emf.cdo.view.CDOView;
+
 import org.eclipse.emf.common.util.URI;
 
 /**
@@ -29,6 +30,7 @@ public class DawnCreateNewDiagramResourceWizardPage extends DawnCreateNewResourc
     super(fileExtension, showResources, view);
   }
 
+  @Override
   public URI getURI()
   {
     // TODO check why the dawn resource must be connected this way

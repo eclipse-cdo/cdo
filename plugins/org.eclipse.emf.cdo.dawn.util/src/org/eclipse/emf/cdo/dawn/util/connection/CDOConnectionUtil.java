@@ -10,10 +10,6 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.util.connection;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.eclipse.emf.cdo.dawn.util.exceptions.DawnInvalidIdException;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -22,14 +18,20 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewSet;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.spi.cdo.InternalCDOView;
+
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
+
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Martin Fluegge
@@ -76,7 +78,9 @@ public class CDOConnectionUtil
   public void registerPackages(List<EPackage> packages)
   {
     if (packages == null)
+    {
       return;
+    }
     for (EPackage pack : packages)
     {
       pack.eClass();
@@ -151,7 +155,7 @@ public class CDOConnectionUtil
     return transactions;
   }
 
-  public static CDOView openView(CDOSession session)
+  public CDOView openView(CDOSession session)
   {
     return session.openView();
   }

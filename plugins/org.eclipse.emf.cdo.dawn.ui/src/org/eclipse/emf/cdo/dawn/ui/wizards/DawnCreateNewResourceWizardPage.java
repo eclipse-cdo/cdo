@@ -4,20 +4,26 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.ui.wizards;
-
-import java.util.Date;
 
 import org.eclipse.emf.cdo.dawn.ui.views.DawnWizardPageItemProvider;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
+import org.eclipse.net4j.util.ui.views.IElementFilter;
+
 import org.eclipse.emf.common.util.URI;
+
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
@@ -30,11 +36,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
-import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
-import org.eclipse.net4j.util.ui.views.IElementFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -44,6 +45,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
+
+import java.util.Date;
 
 /**
  * @author Martin Fluegge
@@ -95,7 +98,6 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
 
   }
 
-  @Override
   public void createControl(Composite parent)
   {
     container = new Composite(parent, SWT.NULL);
@@ -125,10 +127,9 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
         return true;
       }
     });
+
     viewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
-
-      @Override
       public void selectionChanged(SelectionChangedEvent event)
       {
         if (event.getSelection().isEmpty())
@@ -136,6 +137,7 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
           resourceText.setText("");
           return;
         }
+
         if (event.getSelection() instanceof IStructuredSelection)
         {
           IStructuredSelection selection = (IStructuredSelection)event.getSelection();
@@ -151,6 +153,7 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
             resourcePathText.setText(((CDOResourceNode)element).getPath());
           }
         }
+
         validatePage();
       }
     });
@@ -175,19 +178,16 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
     resourceText.setText(getDefaultName() + "." + fileExtension);
     resourceText.addKeyListener(new KeyListener()
     {
-
-      @Override
       public void keyPressed(KeyEvent e)
       {
       }
 
-      @Override
       public void keyReleased(KeyEvent e)
       {
         validatePage();
       }
-
     });
+
     GridData gd = new GridData(GridData.FILL_HORIZONTAL);
     resourceText.setLayoutData(gd);
   }
@@ -201,18 +201,14 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
     resourcePathText.setText("");
     resourcePathText.addKeyListener(new KeyListener()
     {
-
-      @Override
       public void keyPressed(KeyEvent e)
       {
       }
 
-      @Override
       public void keyReleased(KeyEvent e)
       {
         validatePage();
       }
-
     });
     GridData gd = new GridData(GridData.FILL_HORIZONTAL);
     resourcePathText.setLayoutData(gd);
@@ -260,7 +256,7 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
     {
       setErrorMessage(null);
     }
-    
+
     setPageComplete(valid);
   }
 
@@ -319,7 +315,7 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
   public void setResourceNamePrefix(String resourceNamePrefix)
   {
     this.resourceNamePrefix = resourceNamePrefix;
-    this.resourceText.setText(resourceNamePrefix);
+    resourceText.setText(resourceNamePrefix);
   }
 
   public String getResourceNamePrefix()
@@ -356,7 +352,7 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
     int i = 2;
     while (i < 30 && view.hasResource(getURI().path()))
     {
-      this.resourceText.setText(resourceNamePrefix + i + "." + fileExtension);
+      resourceText.setText(resourceNamePrefix + i + "." + fileExtension);
       i++;
     }
 
@@ -365,7 +361,7 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
       return;
     }
     // if we have tried 30 times to find a new resource name and still not succeeded just add a timestamp to the name
-    this.resourceText.setText(resourceNamePrefix + (new Date()).getTime() + "." + fileExtension);
+    resourceText.setText(resourceNamePrefix + new Date().getTime() + "." + fileExtension);
   }
 
   public void setResourceValidationType(int resourceValidationType)

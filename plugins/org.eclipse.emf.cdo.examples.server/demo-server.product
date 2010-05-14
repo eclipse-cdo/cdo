@@ -107,8 +107,5 @@
       <plugin id="org.mortbay.jetty.util"/>
    </plugins>
 
-   <configurations>
-      <plugin id="org.eclipse.equinox.http.servlet" autoStart="true" startLevel="0" />
-   </configurations>
 
 </product>

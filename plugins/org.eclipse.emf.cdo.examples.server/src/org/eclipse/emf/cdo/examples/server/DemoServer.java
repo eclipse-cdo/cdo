@@ -33,7 +33,7 @@ public class DemoServer extends OSGiApplication
 
   public static final int PORT = 3003;
 
-  public static final long MAX_IDLE_TIME = 30 * 60 * 1000;
+  public static final long MAX_IDLE_TIME = 10 * 60 * 1000;
 
   public static DemoServer INSTANCE;
 

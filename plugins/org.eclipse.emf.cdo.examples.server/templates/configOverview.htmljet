@@ -12,6 +12,7 @@
 			Demo Configuration <%=name%>
 	  </title>
 		<link media="screen" href="demo-server.css" type="text/css" rel="stylesheet">
+		<meta http-equiv="refresh" content="5; URL=?name=<%=name%>">
 	<header>
 <body>
 

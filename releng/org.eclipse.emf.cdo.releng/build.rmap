@@ -29,13 +29,6 @@
 
 	<rm:locator searchPathRef="orbit" failOnError="false"/> <!-- MUST COME BEFORE MODELING! -->
 	<rm:locator searchPathRef="net4j.plus" failOnError="false"/>
-
-	<!--
-	<rm:locator searchPathRef="gef.milestones" failOnError="false"/>
-	<rm:locator searchPathRef="modeling.milestones" failOnError="false"/>
-	<rm:locator searchPathRef="helios.staging" failOnError="false"/>
-	-->
-
 	<rm:locator searchPathRef="platform.binaries"/>
 
 	<rm:searchPath name="cdo.releng">
@@ -218,27 +211,6 @@
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="">
 			<rm:uri format="http://net4j.sourceforge.net/update"/>
-		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="gef.milestones">
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="{0}/tools/gef/updates/milestones/">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
-		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="modeling.milestones">
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="{0}/modeling/emf/teneo/updates/1.2.0/milestones">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
-		</rm:provider>
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="{0}/modeling/emf/updates/milestones">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>
 

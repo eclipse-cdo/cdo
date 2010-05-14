@@ -124,14 +124,21 @@ public class DemoConfiguration extends Lifecycle
     return userManager.getUsers();
   }
 
-  public synchronized long getIdleTime()
+  public synchronized long getTimeoutMillis()
   {
-    return System.currentTimeMillis() - lastAccess;
+    long idleTime = System.currentTimeMillis() - lastAccess;
+    long time = DemoServer.MAX_IDLE_TIME - idleTime;
+    if (time < 0)
+    {
+      time = 0;
+    }
+
+    return time;
   }
 
-  public String formatIdleTime()
+  public String formatTimeoutMinutes()
   {
-    return MessageFormat.format("{0,time,mm:ss}", getIdleTime());
+    return MessageFormat.format("{0,time,mm:ss}", getTimeoutMillis());
   }
 
   @Override

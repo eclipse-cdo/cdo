@@ -34,7 +34,7 @@
     <% } %>
 		</td></tr>
 	</td></tr>
-	<tr><td>Idle Time:</td><td><%=AbstractTemplateServlet.html(config.formatIdleTime())%></td></tr>
+	<tr><td>Timeout In:</td><td><%=AbstractTemplateServlet.html(config.formatTimeoutMinutes())%> Minutes...</td></tr>
 	<tr><td>&nbsp;</td><td><a href="?name=<%=name%>">Refresh Page</a></td></tr>
 </table>
 

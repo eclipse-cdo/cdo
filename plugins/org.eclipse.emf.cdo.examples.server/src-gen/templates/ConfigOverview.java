@@ -25,8 +25,8 @@ public class ConfigOverview
   protected final String TEXT_8 = NL + "\t\t\t";
   protected final String TEXT_9 = ": ";
   protected final String TEXT_10 = "<br>";
-  protected final String TEXT_11 = NL + "\t\t</td></tr>" + NL + "\t</td></tr>" + NL + "\t<tr><td>Idle Time:</td><td>";
-  protected final String TEXT_12 = "</td></tr>" + NL + "\t<tr><td>&nbsp;</td><td><a href=\"?name=";
+  protected final String TEXT_11 = NL + "\t\t</td></tr>" + NL + "\t</td></tr>" + NL + "\t<tr><td>Timeout In:</td><td>";
+  protected final String TEXT_12 = " Minutes...</td></tr>" + NL + "\t<tr><td>&nbsp;</td><td><a href=\"?name=";
   protected final String TEXT_13 = "\">Refresh Page</a></td></tr>" + NL + "</table>" + NL + "" + NL + "</body>" + NL + "</html>";
   protected final String TEXT_14 = NL;
 
@@ -60,7 +60,7 @@ public class ConfigOverview
     stringBuffer.append(TEXT_10);
      } 
     stringBuffer.append(TEXT_11);
-    stringBuffer.append(AbstractTemplateServlet.html(config.formatIdleTime()));
+    stringBuffer.append(AbstractTemplateServlet.html(config.formatTimeoutMinutes()));
     stringBuffer.append(TEXT_12);
     stringBuffer.append(name);
     stringBuffer.append(TEXT_13);

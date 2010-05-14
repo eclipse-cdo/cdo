@@ -139,7 +139,7 @@ public class DemoServer extends OSGiApplication
 
     protected void cleanIfNeeded(DemoConfiguration config)
     {
-      if (config.getIdleTime() > MAX_IDLE_TIME)
+      if (config.getTimeoutMillis() == 0)
       {
         synchronized (configs)
         {

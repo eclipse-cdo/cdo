@@ -10,13 +10,15 @@
  */
 package org.eclipse.emf.cdo.examples.server;
 
+import org.eclipse.emf.cdo.examples.internal.server.OM;
+
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.concurrent.Worker;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.OSGiApplication;
 import org.eclipse.net4j.util.om.log.EclipseLoggingBridge;
 
 import java.util.HashMap;
@@ -25,17 +27,15 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class DemoServer extends OSGiApplication
+public class DemoServer extends Lifecycle
 {
-  public static final String ID = OM.BUNDLE_ID + ".app"; //$NON-NLS-1$
-
   public static final String PROP_BROWSER_PORT = OM.BUNDLE_ID + ".browser.port"; //$NON-NLS-1$
 
   public static final int PORT = 3003;
 
   public static final long MAX_IDLE_TIME = 10 * 60 * 1000;
 
-  public static DemoServer INSTANCE;
+  public static final DemoServer INSTANCE = new DemoServer();
 
   private IAcceptor acceptor;
 
@@ -43,15 +43,21 @@ public class DemoServer extends OSGiApplication
 
   private Cleaner cleaner = new Cleaner();
 
-  public DemoServer()
+  private DemoServer()
   {
-    super(ID);
-    INSTANCE = this;
   }
 
   public IAcceptor getAcceptor()
   {
     return acceptor;
+  }
+
+  public DemoConfiguration[] getConfigs()
+  {
+    synchronized (configs)
+    {
+      return configs.values().toArray(new DemoConfiguration[configs.size()]);
+    }
   }
 
   public DemoConfiguration getConfig(String name)
@@ -71,9 +77,9 @@ public class DemoServer extends OSGiApplication
   }
 
   @Override
-  protected void doStart() throws Exception
+  protected void doActivate() throws Exception
   {
-    super.doStart();
+    super.doActivate();
     OMPlatform.INSTANCE.removeLogHandler(EclipseLoggingBridge.INSTANCE);
     OM.LOG.info("Demo server starting");
 
@@ -91,7 +97,7 @@ public class DemoServer extends OSGiApplication
   }
 
   @Override
-  protected void doStop() throws Exception
+  protected void doDeactivate() throws Exception
   {
     OM.LOG.info("Demo server stopping");
     cleaner.deactivate();
@@ -110,15 +116,7 @@ public class DemoServer extends OSGiApplication
     }
 
     OM.LOG.info("Demo server stopped");
-    super.doStop();
-  }
-
-  protected DemoConfiguration[] getConfigs()
-  {
-    synchronized (configs)
-    {
-      return configs.values().toArray(new DemoConfiguration[configs.size()]);
-    }
+    super.doDeactivate();
   }
 
   /**

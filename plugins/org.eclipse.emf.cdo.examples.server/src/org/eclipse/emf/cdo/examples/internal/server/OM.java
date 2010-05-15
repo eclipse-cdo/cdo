@@ -8,7 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.examples.server;
+package org.eclipse.emf.cdo.examples.internal.server;
+
+import org.eclipse.emf.cdo.examples.server.DemoServer;
 
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -39,6 +41,18 @@ public abstract class OM
     public Activator()
     {
       super(BUNDLE);
+    }
+
+    @Override
+    protected void doStart() throws Exception
+    {
+      DemoServer.INSTANCE.activate();
+    }
+
+    @Override
+    protected void doStop() throws Exception
+    {
+      DemoServer.INSTANCE.deactivate();
     }
   }
 }

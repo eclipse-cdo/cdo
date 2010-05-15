@@ -32,8 +32,16 @@ Eike Stepper - initial API and implementation
 
 	<extension point="org.eclipse.ui.perspectiveExtensions">
 		<perspectiveExtension targetID="org.eclipse.emf.cdo.examples.server.rap.perspective">
-			<view standalone="true" minimized="false" relative="org.eclipse.ui.editorss" relationship="left"
-				id="org.eclipse.emf.cdo.examples.server.rap.view">
+			<view
+         closeable="false"
+         id="org.eclipse.emf.cdo.examples.server.rap.view"
+         minimized="false"
+         moveable="false"
+         relationship="left"
+         relative="org.eclipse.ui.editorss"
+         showTitle="false"
+         standalone="true"
+         visible="true">
 			</view>
 		</perspectiveExtension>
 	</extension>

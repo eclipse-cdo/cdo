@@ -67,29 +67,9 @@ public class DemoConfiguration extends Lifecycle
 
   private transient long lastAccess = System.currentTimeMillis();
 
-  public DemoConfiguration()
+  DemoConfiguration(Mode mode, String[] userIDs)
   {
-  }
-
-  public Mode getMode()
-  {
-    return mode;
-  }
-
-  public void setMode(Mode mode)
-  {
-    checkInactive();
     this.mode = mode;
-  }
-
-  public String[] getUserIDs()
-  {
-    return userIDs;
-  }
-
-  public void setUserIDs(String[] userIDs)
-  {
-    checkInactive();
     if (userIDs != null)
     {
       if (userIDs.length != 0)
@@ -102,6 +82,16 @@ public class DemoConfiguration extends Lifecycle
     }
 
     this.userIDs = userIDs;
+  }
+
+  public Mode getMode()
+  {
+    return mode;
+  }
+
+  public String[] getUserIDs()
+  {
+    return userIDs;
   }
 
   public String getName()
@@ -182,15 +172,7 @@ public class DemoConfiguration extends Lifecycle
 
   protected String createRandomName()
   {
-    Random random = new Random(System.currentTimeMillis());
-    StringBuilder builder = new StringBuilder();
-    for (int i = 0; i < NAME_LENGTH; i++)
-    {
-      int pos = random.nextInt(NAME_ALPHABET.length());
-      builder.append(NAME_ALPHABET.charAt(pos));
-    }
-
-    return builder.toString();
+    return createRandomString(NAME_LENGTH, NAME_ALPHABET);
   }
 
   protected IDBStore createStore()
@@ -264,6 +246,24 @@ public class DemoConfiguration extends Lifecycle
 
     userManager.activate();
     return userManager;
+  }
+
+  public static String createRandomString(int length, String alphabet)
+  {
+    Random random = new Random(System.currentTimeMillis());
+    StringBuilder builder = new StringBuilder();
+    for (int i = 0; i < length; i++)
+    {
+      int pos = random.nextInt(alphabet.length());
+      builder.append(alphabet.charAt(pos));
+    }
+
+    return builder.toString();
+  }
+
+  public static String createRandomString(int length)
+  {
+    return createRandomString(length, NAME_ALPHABET);
   }
 
   /**

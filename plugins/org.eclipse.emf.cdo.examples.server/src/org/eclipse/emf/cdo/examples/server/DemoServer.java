@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.examples.server;
 
 import org.eclipse.emf.cdo.examples.internal.server.OM;
+import org.eclipse.emf.cdo.examples.server.DemoConfiguration.Mode;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.tcp.TCPUtil;
@@ -68,12 +69,17 @@ public class DemoServer extends Lifecycle
     }
   }
 
-  public void addConfig(DemoConfiguration config)
+  public DemoConfiguration addConfig(Mode mode)
   {
+    DemoConfiguration config = new DemoConfiguration(mode, null);
+    config.activate();
+
     synchronized (configs)
     {
       configs.put(config.getName(), config);
     }
+
+    return config;
   }
 
   @Override

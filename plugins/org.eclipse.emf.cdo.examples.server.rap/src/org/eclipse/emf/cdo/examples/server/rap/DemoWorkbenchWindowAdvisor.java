@@ -41,7 +41,6 @@ public class DemoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
     configurer.setShowMenuBar(false);
     configurer.setShowCoolBar(false);
     configurer.setShowStatusLine(false);
-    configurer.setTitle("RCP Application");
   }
 
   @Override

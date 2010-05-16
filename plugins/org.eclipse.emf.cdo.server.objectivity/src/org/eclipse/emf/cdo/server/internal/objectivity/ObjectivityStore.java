@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.server.internal.objectivity.clustering.ObjyPlacementM
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyCommitInfoHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyConnection;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
+import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyPackageHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyPropertyMapHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyScope;
@@ -42,7 +43,6 @@ import org.eclipse.emf.ecore.EClass;
 
 import com.objy.db.app.Connection;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -70,15 +70,15 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
   private int nActivate = 0;
 
-  private Map<String, String> packageMapping = new HashMap<String, String>();
-
   private boolean requiredToSupportAudits;
 
   private boolean requiredToSupportBranches;
 
-  private ObjyCommitInfoHandler ooCommitInfoHandler = null;
+  private ObjyCommitInfoHandler objyCommitInfoHandler = null;
 
-  private ObjyPropertyMapHandler ooPropertyMapHandler = null;
+  private ObjyPropertyMapHandler objyPropertyMapHandler = null;
+
+  private ObjyPackageHandler objyPackageHandler = null;
 
   private boolean storeInitialized = false;
 
@@ -131,13 +131,15 @@ public class ObjectivityStore extends Store implements IObjectivityStore
         ObjyStoreInfo objyStoreInfo = null;
         try
         {
-          objyStoreInfo = (ObjyStoreInfo)objyScope.lookupObjectOid(ObjyDb.OBJYSTOREINFO_NAME);
+          objyStoreInfo = (ObjyStoreInfo)objyScope.lookupObject(ObjyDb.OBJYSTOREINFO_NAME);
         }
         catch (Exception ex)
         {
           // create the ObjyStoreInfo.
           objyStoreInfo = new ObjyStoreInfo(System.currentTimeMillis(), "...");
           objyScope.getContainerObj().cluster(objyStoreInfo);
+          objyScope.nameObj(ObjyDb.OBJYSTOREINFO_NAME, objyStoreInfo);
+
           // flag as first time.
           firstTime = true;
         }
@@ -149,8 +151,9 @@ public class ObjectivityStore extends Store implements IObjectivityStore
       // make sure we have the root resource created.
       ObjyObject resourceList = ObjyDb.getOrCreateResourceList();
 
-      ooCommitInfoHandler = new ObjyCommitInfoHandler(getRepository().getName());
-      ooPropertyMapHandler = new ObjyPropertyMapHandler();
+      objyCommitInfoHandler = new ObjyCommitInfoHandler(getRepository().getName());
+      objyPropertyMapHandler = new ObjyPropertyMapHandler();
+      objyPackageHandler = new ObjyPackageHandler();
 
       objySession.commit();
 
@@ -289,19 +292,6 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
   }
 
-  public void addPackageMapping(String name1, String name2)
-  {
-    if (packageMapping.get(name1) == null)
-    {
-      packageMapping.put(name1, name2);
-    }
-  }
-
-  public String getPackageMapping(String key)
-  {
-    return packageMapping.get(key);
-  }
-
   public InternalCDORevision createRevision(ObjyObject objyObject, CDOID id)
   {
     EClass eClass = ObjySchema.getEClass(this, objyObject.objyClass());
@@ -319,7 +309,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
   {
     ObjySession objySession = objyConnection.getReadSessionFromPool("Main");
     objySession.begin();
-    Map<String, String> properties = ooPropertyMapHandler.getPropertyValues(names);
+    Map<String, String> properties = objyPropertyMapHandler.getPropertyValues(names);
     objySession.commit();
     return properties;
   }
@@ -328,7 +318,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
   {
     ObjySession objySession = objyConnection.getWriteSessionFromPool("Main");
     objySession.begin();
-    ooPropertyMapHandler.setPropertyValues(properties);
+    objyPropertyMapHandler.setPropertyValues(properties);
     objySession.commit();
   }
 
@@ -336,13 +326,18 @@ public class ObjectivityStore extends Store implements IObjectivityStore
   {
     ObjySession objySession = objyConnection.getWriteSessionFromPool("Main");
     objySession.begin();
-    ooPropertyMapHandler.removePropertyValues(names);
+    objyPropertyMapHandler.removePropertyValues(names);
     objySession.commit();
   }
 
-  public ObjyCommitInfoHandler getCommitInfoHandle()
+  public ObjyCommitInfoHandler getCommitInfoHandler()
   {
-    return ooCommitInfoHandler;
+    return objyCommitInfoHandler;
+  }
+
+  public ObjyPackageHandler getPackageHandler()
+  {
+    return objyPackageHandler;
   }
 
   public ObjyPlacementManager getGlobalPlacementManager()

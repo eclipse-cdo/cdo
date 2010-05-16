@@ -16,12 +16,12 @@ import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStore;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.ITypeMapper;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.ObjyMapper;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyResourceList;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyArrayListId;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyArrayListString;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBase;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyFeatureMapArrayList;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyProxy;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyResourceList;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -38,6 +38,7 @@ import com.objy.as.app.d_Class;
 import com.objy.as.app.d_Module;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Wrapper for the AS schema code with caching of the wrapped classes. This class need to be reseted by the
@@ -59,6 +60,8 @@ public class ObjySchema
   private static HashMap<EClass, EClass> visitedClasses = new HashMap<EClass, EClass>();
 
   private static HashMap<EClass, EClass> visitedStructureOnlyClasses = new HashMap<EClass, EClass>();
+
+  private static Map<String, String> packageNameMapping = new HashMap<String, String>();
 
   private static d_Module topModule = null;
 
@@ -101,7 +104,7 @@ public class ObjySchema
    */
   static public String getObjectivityClassName(EClassifier eClassifier)
   {
-    return getObjectivityClassName(eClassifier, false);
+    return formObjectivityClassName(eClassifier, false);
   }
 
   /**
@@ -110,7 +113,7 @@ public class ObjySchema
    * @param eClassObject
    * @return
    */
-  static public String getObjectivityClassName(EClassifier eClassifier, boolean onlyStructure)
+  static String formObjectivityClassName(EClassifier eClassifier, boolean onlyStructure)
   {
     if (eClassifier == EcorePackage.eINSTANCE.getEObject())
     {
@@ -119,17 +122,33 @@ public class ObjySchema
 
     // same class names might exist in different nsUri.
     String nsURI = eClassifier.getEPackage().getNsURI();
-    // get the hash string for uniqueness.
-    String nsURIHash = new Integer(Math.abs(nsURI.hashCode())).toString();
+    // // get the hash string for uniqueness.
+    // String nsURIHash = new Integer(Math.abs(nsURI.hashCode())).toString();
+    String objyPackageName = getObjyPackageName(nsURI);
 
     if (onlyStructure)
     {
       // return "oo_" + eClassifier.getEPackage().getName() + "_" + eClassifier.getName() + "ST";
-      return "oo_" + nsURIHash + "_" + eClassifier.getEPackage().getNsPrefix() + "_" + eClassifier.getName() + "_ST";
+      // return "oo_" + nsURIHash + "_" + eClassifier.getEPackage().getNsPrefix() + "_" + eClassifier.getName() + "_ST";
+      return objyPackageName + ":" + eClassifier.getName() + "_ST";
     }
 
     // return "oo_" + eClassifier.getEPackage().getName() + "_" + eClassifier.getName();
-    return "oo_" + nsURIHash + "_" + eClassifier.getEPackage().getNsPrefix() + "_" + eClassifier.getName();
+    // return "oo_" + nsURIHash + "_" + eClassifier.getEPackage().getNsPrefix() + "_" + eClassifier.getName();
+    return objyPackageName + ":" + eClassifier.getName();
+  }
+
+  static public void setPackageNameMapping(String name1, String name2)
+  {
+    if (packageNameMapping.get(name1) == null)
+    {
+      packageNameMapping.put(name1, name2);
+    }
+  }
+
+  static public String getPackageNameMapping(String key)
+  {
+    return packageNameMapping.get(key);
   }
 
   /**
@@ -270,7 +289,7 @@ public class ObjySchema
     }
 
     hashMap.put(eClass, eClass);
-    String className = getObjectivityClassName(eClass, onlyStructure);
+    String className = formObjectivityClassName(eClass, onlyStructure);
     d_Class dClass = getTopModule().resolve_class(className);
 
     if (dClass != null)
@@ -299,7 +318,7 @@ public class ObjySchema
    */
   static void evolveObjyClassSchema(EClass eClass, boolean onlyStructure)
   {
-    String className = getObjectivityClassName(eClass, onlyStructure);
+    String className = formObjectivityClassName(eClass, onlyStructure);
 
     // check if the class has been proposed before
     if (getTopModule().resolve_proposed_class(className) == null)
@@ -408,18 +427,18 @@ public class ObjySchema
     EClass eClass = mapOfEClasses.get(className);
     if (eClass == null)
     {
-      // the format is "oo_HASH_packageName_className"
-      String[] splitClass = className.split("_");
+      // the format is "<some_URI_name_used_as_package_name>:className"
+      String[] splits = className.split(":");
       // get the mapping to the nsURI.
       CDOPackageRegistry registry = store.getRepository().getPackageRegistry();
-      String nsURI = store.getPackageMapping(splitClass[1]);
+      String nsURI = getPackageNameMapping(splits[0]);
       EPackage packageObject = registry.getEPackage(nsURI);
 
       if (packageObject == null)
       {
-        throw new RuntimeException("Package not found " + splitClass[1] + " for class name " + className);
+        throw new RuntimeException("Package not found " + splits[1] + " for class name " + className);
       }
-      eClass = (EClass)packageObject.getEClassifier(splitClass[3]);
+      eClass = (EClass)packageObject.getEClassifier(splits[splits.length - 1]);
       mapOfEClasses.put(className, eClass);
     }
     // else
@@ -459,6 +478,34 @@ public class ObjySchema
     ObjyArrayListString.buildSchema();
     ObjyBase.buildSchema();
     ObjyResourceList.buildSchema();
+  }
+
+  public static String getObjyPackageName(String packageURI)
+  {
+    String name = "";
+    boolean first = true;
+    // parse the URI, remove "http://" and replace each "." with "_"
+    String[] splits = packageURI.split("://");
+    for (String strValue : splits)
+    {
+      if (strValue.equals("http"))
+      {
+        continue;
+      }
+      if (!first)
+      {
+        name = name.concat("_");
+      }
+      else
+      {
+        first = false;
+      }
+
+      name = name.concat(strValue);
+    }
+    name = name.replace("/", ".");
+    name = name.replace(".", "_");
+    return name;
   }
 
 }

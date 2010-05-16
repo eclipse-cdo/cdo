@@ -186,11 +186,16 @@ public class ObjyScope
   public void nameObj(String objName, ooId oid)
   {
     ooObj object = ooObj.create_ooObj(oid);
-
-    if (!object.isPersistent())
-    {
-      getContainerObj().cluster(object);
-    }
-    getContainerObj().nameObj(object, objName);
+    nameObj(objName, object);
   }
+
+  public void nameObj(String objName, ooObj obj)
+  {
+    // if (!obj.isPersistent())
+    // {
+    // getContainerObj().cluster(obj);
+    // }
+    getContainerObj().nameObj(obj, objName);
+  }
+
 }

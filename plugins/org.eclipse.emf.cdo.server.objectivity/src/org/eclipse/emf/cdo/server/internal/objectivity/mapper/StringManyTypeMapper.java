@@ -101,7 +101,8 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
     String[] strings = new String[values.length];
     for (int i = 0; i < values.length; i++)
     {
-      strings[i] = stringFromObject(feature, values[i]);
+      // strings[i] = stringFromObject(feature, values[i]);
+      strings[i] = (String)values[i];
     }
     getList(objyObject, feature).addAll(index, strings);
   }

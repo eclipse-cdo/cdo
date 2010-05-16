@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.objectivity.utils;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyCommitInfoHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
+import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyPackageHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyPropertyMapHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyScope;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBranchManager;
@@ -53,6 +54,8 @@ public class ObjyDb
   private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyDb.class);
 
   private static final ContextTracer TRACER_INFO = new ContextTracer(OM.INFO, ObjyDb.class);
+
+  private static final String PACKAGEMAP_NAME = "PackageMap";
 
   /***
    * Unitily functions..
@@ -176,6 +179,33 @@ public class ObjyDb
       ex.printStackTrace();
     }
     return objyBranchManager;
+  }
+
+  protected static ooId createPackageMap(ObjyScope objyScope)
+  {
+    // TODO - this need refactoring...
+    ooId packageMapId = ObjyPackageHandler.create(objyScope.getScopeContOid());
+    objyScope.nameObj(ObjyDb.PACKAGEMAP_NAME, packageMapId);
+    return packageMapId;
+  }
+
+  public static ooId getOrCreatePackageMap()
+  {
+    ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
+    ooId packageMapId = null;
+    try
+    {
+      packageMapId = objyScope.lookupObjectOid(ObjyDb.PACKAGEMAP_NAME);
+    }
+    catch (ObjyRuntimeException ex)
+    {
+      packageMapId = createPackageMap(objyScope);
+    }
+    catch (Exception ex)
+    {
+      ex.printStackTrace();
+    }
+    return packageMapId;
   }
 
 }

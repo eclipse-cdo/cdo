@@ -72,7 +72,7 @@ public class CDOConnectionUtil
     this.repositoryName = repositoryName;
     this.protocol = protocol;
     this.host = host;
-    connector = (IConnector)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.connectors", protocol, host);
+    setConnector((IConnector)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.connectors", protocol, host));
   }
 
   public void registerPackages(List<EPackage> packages)
@@ -187,5 +187,15 @@ public class CDOConnectionUtil
       transaction = openCurrentTransaction(resourceSet, id);
     }
     return transaction;
+  }
+
+  public void setConnector(IConnector connector)
+  {
+    this.connector = connector;
+  }
+
+  public IConnector getConnector()
+  {
+    return connector;
   }
 }

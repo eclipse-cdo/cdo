@@ -10,13 +10,13 @@
  */
 package org.eclipse.emf.cdo.dawn.tests;
 
+import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
+
 import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 /**
  * @author Martin Fluegge

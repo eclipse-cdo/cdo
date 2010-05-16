@@ -35,7 +35,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Martin Fluegge
@@ -60,7 +59,7 @@ public class ProjectCreationHelper
   public IProject createProject() throws CoreException
   {
     IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
-    List<IClasspathEntry> classpathEntries = new ArrayList<IClasspathEntry>();
+    // List<IClasspathEntry> classpathEntries = new ArrayList<IClasspathEntry>();
 
     // if (project.exists())
     // {
@@ -165,7 +164,7 @@ public class ProjectCreationHelper
    * @param toBeRemoved
    * @throws JavaModelException
    */
-  private final static void removeFromClasspath(IJavaProject javaProject, IPath toBeRemoved) throws JavaModelException
+  public final static void removeFromClasspath(IJavaProject javaProject, IPath toBeRemoved) throws JavaModelException
   {
     IClasspathEntry[] oldEntries = javaProject.getRawClasspath();
     ArrayList<IClasspathEntry> newEntries = new ArrayList<IClasspathEntry>();
@@ -186,7 +185,7 @@ public class ProjectCreationHelper
   }
 
   /**
-   * @return
+   * @return the newly created java project
    * @throws CoreException
    */
   public IJavaProject createJavaProject() throws CoreException
@@ -196,8 +195,10 @@ public class ProjectCreationHelper
   }
 
   /**
+   * Creates a JavaProject prom the given project
+   * 
    * @param project
-   * @return
+   * @return the created JavaProject
    */
   public IJavaProject createJavaProject(IProject project)
   {
@@ -227,72 +228,12 @@ public class ProjectCreationHelper
   }
 
   /**
-   * create a sysdeo Plugin Project
-   * 
-   * @param project
-   * @return
-   */
-  public IJavaProject createSysdeoTomcatProject(IProject project)
-  {
-    try
-    {
-      IJavaProject javaProject = JavaCore.create(project);
-      createOutputFolder("WEB-INF/classes", project, javaProject);
-
-      /*
-       * quickfix because I could not figure out how the exclude "source" folder from root
-       */
-      clearSourcePath(javaProject);
-
-      addTomcatLibraries(javaProject);
-      addSourceFolder(project, javaProject);
-      addJREContainerToProject(javaProject);
-
-      return javaProject;
-    }
-    catch (CoreException e)
-    {
-
-      e.printStackTrace();
-    }
-    return null;
-
-  }
-
-  /**
-   * @param project
-   * @param javaProject
-   * @throws CoreException
-   * @throws JavaModelException
-   */
-  private void addSourceFolder(IProject project, IJavaProject javaProject) throws CoreException, JavaModelException
-  {
-    IClasspathEntry sourceFolder = createSourceFolder("WEB-INF/src", project);
-    addToClasspath(javaProject, sourceFolder);
-  }
-
-  /**
    * @param javaProject
    * @throws JavaModelException
    */
   private void addJREContainerToProject(IJavaProject javaProject) throws JavaModelException
   {
     addToClasspath(javaProject, JavaRuntime.getDefaultJREContainerEntry());
-  }
-
-  /**
-   * this adds the Tomcat project typical Variable entries to the project
-   * 
-   * @param javaProject
-   * @throws JavaModelException
-   */
-  private void addTomcatLibraries(IJavaProject javaProject) throws JavaModelException
-  {
-    addVariableEntryToBuildPath(new Path("TOMCAT_HOME/lib/annotations-api.jar"), javaProject);
-    addVariableEntryToBuildPath(new Path("TOMCAT_HOME/lib/el-api.jar"), javaProject);
-    addVariableEntryToBuildPath(new Path("TOMCAT_HOME/lib/jasper.jar"), javaProject);
-    addVariableEntryToBuildPath(new Path("TOMCAT_HOME/lib/jsp-api.jar"), javaProject);
-    addVariableEntryToBuildPath(new Path("TOMCAT_HOME/lib/servlet-api.jar"), javaProject);
   }
 
   /**
@@ -309,7 +250,7 @@ public class ProjectCreationHelper
    * @param project
    * @throws CoreException
    */
-  private void addJavaNature(IProject project) throws CoreException
+  public void addJavaNature(IProject project) throws CoreException
   {
     IProjectDescription description = project.getDescription();
     String[] natures = description.getNatureIds();
@@ -344,7 +285,7 @@ public class ProjectCreationHelper
    * @param path
    * @param project
    * @param javaProject
-   * @return
+   * @return the created source folder
    * @throws CoreException
    */
   public IFolder createSourceFolder(String path, IProject project, IJavaProject javaProject) throws CoreException
@@ -399,7 +340,7 @@ public class ProjectCreationHelper
   /**
    * @param name
    * @param project
-   * @return
+   * @return the created folder
    */
   public IFolder createFolder(String name, IProject project)
   {
@@ -430,7 +371,7 @@ public class ProjectCreationHelper
    * @param name
    * @param folder
    * @param content
-   * @return
+   * @return the created file
    */
   public IFile createFile(String name, IFolder folder, String content)
   {

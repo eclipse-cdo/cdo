@@ -11,6 +11,7 @@ package org.eclipse.emf.cdo.dawn.tests;
  *    Martin Fluegge - initial API and implementation
  */
 import org.eclipse.core.runtime.Plugin;
+
 import org.osgi.framework.BundleContext;
 
 /**

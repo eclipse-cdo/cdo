@@ -21,6 +21,7 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
+import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
@@ -206,6 +207,31 @@ public class DawnDiagramUpdater
       }
     }
     return null;
+  }
+
+  public static View getViewFromObject(EObject element, DiagramDocumentEditor editor)
+  {
+    View view;
+
+    if (element instanceof Diagram)
+    {
+      view = ViewUtil.getViewContainer(element);
+      return view;
+    }
+
+    if (element instanceof View)
+    {
+      view = (View)element;
+    }
+    else
+    {
+      view = DawnDiagramUpdater.findViewByContainer(element); // something which is not view (Edge or Node)
+      if (view == null)
+      {
+        view = DawnDiagramUpdater.findViewForModel(element, editor);
+      }
+    }
+    return view;
   }
 
   public static EditPart createOrFindEditPartIfViewExists(View view, DiagramDocumentEditor editor)

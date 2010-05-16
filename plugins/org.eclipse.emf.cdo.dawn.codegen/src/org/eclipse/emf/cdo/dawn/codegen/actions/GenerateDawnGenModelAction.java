@@ -49,11 +49,8 @@ public class GenerateDawnGenModelAction implements IObjectActionDelegate
 
   private final String generalPrefix = "Dawn";
 
-  private Object part;
-
   public void setActivePart(IAction action, IWorkbenchPart targetPart)
   {
-    part = targetPart;
   }
 
   public void run(IAction action)

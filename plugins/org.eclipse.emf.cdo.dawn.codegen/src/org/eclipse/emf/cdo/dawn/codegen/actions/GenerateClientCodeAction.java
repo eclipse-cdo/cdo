@@ -35,11 +35,8 @@ public class GenerateClientCodeAction implements IObjectActionDelegate
 {
   private IResource selectedElement;
 
-  private Object part;
-
   public void setActivePart(IAction action, IWorkbenchPart targetPart)
   {
-    part = targetPart;
   }
 
   public void run(IAction action)
@@ -52,7 +49,7 @@ public class GenerateClientCodeAction implements IObjectActionDelegate
 
         public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
         {
-          monitor.beginTask("Generate Dawn Code", 1000);
+          monitor.beginTask("Generating Dawn Code...", 1000);
           ArrayList<Creator> creators = new ArrayList<Creator>();
           creators.add(new GMFFragmentCreator(selectedElement));
 

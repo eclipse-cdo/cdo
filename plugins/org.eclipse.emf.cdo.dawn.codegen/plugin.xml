@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+ <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="false"
+            id="org.eclipse.emf.cdo.dawn.codegen.generate"
+            nameFilter="*.dawngenmodel"
+            objectClass="org.eclipse.core.resources.IFile">
+         <action
+               class="org.eclipse.emf.cdo.dawn.codegen.actions.GenerateClientCodeAction"
+               id="org.eclipse.emf.cdo.dawn.codegen.generateClientaction"
+               label="Generate Dawn GMF Fragment">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.eclipse.emf.cdo.dawn.codegen.generate.client"
+            nameFilter="*.gmfgen"
+            objectClass="org.eclipse.core.resources.IFile">
+         <action
+               class="org.eclipse.emf.cdo.dawn.codegen.actions.GenerateDawnGenModelAction"
+               id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodelaction"
+               label="Generate Dawn GenModel">
+         </action>
+      </objectContribution>
+   </extension>
+
+</plugin>

@@ -16,11 +16,11 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
-import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStore;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyPackageInfo;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyPackageUnit;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.OBJYCDOIDUtil;
+import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.SmartLock;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -29,6 +29,11 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
+
+import com.objy.db.app.Session;
+import com.objy.db.app.ooId;
+import com.objy.db.app.ooObj;
+import com.objy.db.util.ooMap;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,24 +52,36 @@ public class ObjyPackageHandler
 
   private static final ContextTracer TRACER_INFO = new ContextTracer(OM.INFO, ObjyPackageHandler.class);
 
-  private ObjyScope objyScope = null;
+  protected ooId packageMapId;
 
-  private ObjectivityStore store = null;
+  // private ObjectivityStore store = null;
 
-  private boolean zipped = false;
+  private boolean zipped = true;
 
-  public ObjyPackageHandler(ObjectivityStore store, ObjyScope objyScope, boolean zipped)
+  public ObjyPackageHandler()
   {
-    this.store = store;
-    this.objyScope = objyScope;
-    this.zipped = zipped;
+    // this.store = store;
+    packageMapId = ObjyDb.getOrCreatePackageMap();
   }
 
-  public void writePackages(InternalCDOPackageUnit packageUnit, OMMonitor monitor)
+  /***
+   * Factory method to create the PackageMap, which is an ooMap
+   */
+  public static ooId create(ooId scopeContOid)
+  {
+    ooMap map = new ooMap();
+    ooObj clusterObject = ooObj.create_ooObj(scopeContOid);
+    clusterObject.cluster(map);
+    return map.getOid();
+  }
+
+  public void writePackages(CDOPackageRegistry packageRegistry, InternalCDOPackageUnit packageUnit, OMMonitor monitor)
   {
     try
     {
-      SmartLock.lock(objyScope.getContainerObj());
+      ooMap packageMap = getMap();
+
+      SmartLock.lock(packageMap.getContainer());
       InternalCDOPackageInfo[] packageInfos = packageUnit.getPackageInfos();
       monitor.begin(1 + packageInfos.length);
 
@@ -73,37 +90,41 @@ public class ObjyPackageHandler
         TRACER_INFO.format("Writing package unit: {0}", packageUnit); //$NON-NLS-1$
       }
 
-      byte[] ePackageAsBytes = getEPackageBytes(packageUnit);
+      byte[] ePackageAsBytes = getEPackageBytes(packageRegistry, packageUnit);
 
-      ObjyPackageUnit ooPackageUnit = new ObjyPackageUnit(ePackageAsBytes.length);
-      objyScope.getContainerObj().cluster(ooPackageUnit);
+      ObjyPackageUnit objyPackageUnit = new ObjyPackageUnit(ePackageAsBytes.length);
+      packageMap.cluster(objyPackageUnit);
 
-      ooPackageUnit.setId(packageUnit.getID());
-      ooPackageUnit.setOrdinal(packageUnit.getOriginalType().ordinal());
-      ooPackageUnit.setTimeStamp(packageUnit.getTimeStamp());
-      ooPackageUnit.setPackageAsBytes(ePackageAsBytes);
+      objyPackageUnit.setId(packageUnit.getID());
+      objyPackageUnit.setOrdinal(packageUnit.getOriginalType().ordinal());
+      objyPackageUnit.setTimeStamp(packageUnit.getTimeStamp());
+      objyPackageUnit.setPackageAsBytes(ePackageAsBytes);
 
       if (TRACER_DEBUG.isEnabled())
       {
-        TRACER_DEBUG.trace("... writing OoPackageUnit.getId(): " + ooPackageUnit.getId());
+        TRACER_DEBUG.trace("... writing ObjyPackageUnit.getId(): " + objyPackageUnit.getId());
       }
 
-      ObjyPackageInfo ooPackageInfo;
+      ObjyPackageInfo objyPackageInfo;
       for (InternalCDOPackageInfo packageInfo : packageInfos)
       {
-        ooPackageInfo = createPackageInfo(packageInfo, monitor); // Don't fork monitor
-        ooPackageUnit.addPackageInfo(ooPackageInfo);
+        objyPackageInfo = createPackageInfo(packageInfo, monitor); // Don't fork monitor
+        objyPackageUnit.addPackageInfo(objyPackageInfo);
         // make sure we have the mapping between the Package name an the nsURI
         // set mapping between package name and the nsURI
         // getStore().addPackageMapping(packageInfo.getPackageURI(), ooPackageInfo.getPackageName());
         // getStore().addPackageMapping(ooPackageInfo.getPackageName(), packageInfo.getPackageURI());
-        getStore().addPackageMapping(packageInfo.getPackageURI(), ooPackageInfo.getPackageUniqueName());
-        getStore().addPackageMapping(ooPackageInfo.getPackageUniqueName(), packageInfo.getPackageURI());
+        String objyPackageName = ObjySchema.getObjyPackageName(packageInfo.getPackageURI());
+        ObjySchema.setPackageNameMapping(packageInfo.getPackageURI(), objyPackageName);
+        ObjySchema.setPackageNameMapping(objyPackageName, packageInfo.getPackageURI());
 
-        // we might as well create the schema in Objy.
+        // we might as well create the schema in Objy, although I`m not sure if we needed for the ecore pacakge.
         EPackage ePackage = packageInfo.getEPackage();
         ObjySchema.registerEPackage(ePackage);
       }
+
+      // add the package unit to the map.
+      packageMap.add(objyPackageUnit, objyPackageUnit.getId());
     }
     finally
     {
@@ -133,34 +154,26 @@ public class ObjyPackageHandler
     return ooPackageInfo;
   }
 
-  private byte[] getEPackageBytes(InternalCDOPackageUnit packageUnit)
+  private byte[] getEPackageBytes(CDOPackageRegistry packageRegistry, InternalCDOPackageUnit packageUnit)
   {
     EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
-    return EMFUtil.getEPackageBytes(ePackage, zipped, getPackageRegistry());
-  }
-
-  private CDOPackageRegistry getPackageRegistry()
-  {
-    return getStore().getRepository().getPackageRegistry();
-  }
-
-  private ObjectivityStore getStore()
-  {
-    return store;
+    return EMFUtil.getEPackageBytes(ePackage, zipped, packageRegistry);
   }
 
   public Collection<InternalCDOPackageUnit> readPackageUnits()
   {
     final Map<ObjyPackageUnit, InternalCDOPackageUnit> packageUnitsMap = new HashMap<ObjyPackageUnit, InternalCDOPackageUnit>();
 
-    Iterator<?> itr = objyScope.getDatabaseObj().scan(ObjyPackageUnit.class.getName());
+    ooMap packageMap = getMap();
+
+    Iterator<?> itr = packageMap.elements();
     while (itr.hasNext())
     {
-      ObjyPackageUnit ooPackageUnit = (ObjyPackageUnit)itr.next();
+      ObjyPackageUnit objyPackageUnit = (ObjyPackageUnit)itr.next();
       InternalCDOPackageUnit packageUnit = createPackageUnit();
-      packageUnit.setOriginalType(CDOPackageUnit.Type.values()[ooPackageUnit.getOrdinal()]);
-      packageUnit.setTimeStamp(ooPackageUnit.getTimeStamp());
-      packageUnitsMap.put(ooPackageUnit, packageUnit);
+      packageUnit.setOriginalType(CDOPackageUnit.Type.values()[objyPackageUnit.getOrdinal()]);
+      packageUnit.setTimeStamp(objyPackageUnit.getTimeStamp());
+      packageUnitsMap.put(objyPackageUnit, packageUnit);
       if (TRACER_INFO.isEnabled())
       {
         TRACER_INFO.format("Read package unit: {0}", packageUnit); //$NON-NLS-1$
@@ -171,18 +184,19 @@ public class ObjyPackageHandler
     for (Entry<ObjyPackageUnit, InternalCDOPackageUnit> entry : packageUnitsMap.entrySet())
     {
       // scan the relationship.
-      List<ObjyPackageInfo> ooPackageInfoList = entry.getKey().getPackageInfos();
+      List<ObjyPackageInfo> objyPackageInfoList = entry.getKey().getPackageInfos();
       List<InternalCDOPackageInfo> packageInfoList = new ArrayList<InternalCDOPackageInfo>();
       // create the package infos.
-      for (ObjyPackageInfo ooPackageInfo : ooPackageInfoList)
+      for (ObjyPackageInfo objyPackageInfo : objyPackageInfoList)
       {
-        InternalCDOPackageInfo packageInfo = createPackageInfo(ooPackageInfo);
+        InternalCDOPackageInfo packageInfo = createPackageInfo(objyPackageInfo);
         packageInfoList.add(packageInfo);
-        // set mapping between package name and the nsURI
+        // set mapping between package URI and the package name used in Objy Schema.
         // getStore().addPackageMapping(packageInfo.getPackageURI(), ooPackageInfo.getPackageName());
         // getStore().addPackageMapping(ooPackageInfo.getPackageName(), packageInfo.getPackageURI());
-        getStore().addPackageMapping(packageInfo.getPackageURI(), ooPackageInfo.getPackageUniqueName());
-        getStore().addPackageMapping(ooPackageInfo.getPackageUniqueName(), packageInfo.getPackageURI());
+        String objyPackageName = ObjySchema.getObjyPackageName(packageInfo.getPackageURI());
+        ObjySchema.setPackageNameMapping(packageInfo.getPackageURI(), objyPackageName);
+        ObjySchema.setPackageNameMapping(objyPackageName, packageInfo.getPackageURI());
       }
       // add the package infos to the unit.
       InternalCDOPackageInfo[] array = packageInfoList.toArray(new InternalCDOPackageInfo[packageInfoList.size()]);
@@ -227,25 +241,33 @@ public class ObjyPackageHandler
   {
     byte[] bytes = null;
 
-    // TODO - we should use the predicate query.
-    Iterator<?> itr = objyScope.getDatabaseObj().scan(ObjyPackageUnit.class.getName());
-    System.out.println("Looking for packageUnit.ID(): " + packageUnit.getID());
-    while (itr.hasNext())
+    ooMap map = getMap();
+    String packageUnitId = packageUnit.getID();
+    if (TRACER_INFO.isEnabled())
     {
-      ObjyPackageUnit ooPackageUnit = (ObjyPackageUnit)itr.next();
-      System.out.println("... found OoPackageUnit.getId(): " + ooPackageUnit.getId());
-      if (ooPackageUnit.getId().equals(packageUnit.getID()))
+      TRACER_INFO.format("Looking for package unit with ID: {0}", packageUnitId); //$NON-NLS-1$
+    }
+    if (map.isMember(packageUnitId))
+    {
+      if (TRACER_INFO.isEnabled())
       {
-        if (TRACER_INFO.isEnabled())
-        {
-          TRACER_INFO.format("Read package unit with ID: {0}", packageUnit.getID()); //$NON-NLS-1$
-        }
-        // this is our package...
-        bytes = ooPackageUnit.getPackageAsBytes();
-        break;
+        TRACER_INFO.format("Reading package unit with ID: {0}", packageUnitId); //$NON-NLS-1$
       }
+      ObjyPackageUnit objyPackageUnit = (ObjyPackageUnit)map.lookup(packageUnitId);
+      // this is our package...
+      bytes = objyPackageUnit.getPackageAsBytes();
     }
     return bytes;
+  }
+
+  /***
+   * This function assume we are in an Objy transaction.
+   */
+  private ooMap getMap()
+  {
+    ooMap map = null;
+    map = (ooMap)Session.getCurrent().getFD().objectFrom(packageMapId);
+    return map;
   }
 
 }

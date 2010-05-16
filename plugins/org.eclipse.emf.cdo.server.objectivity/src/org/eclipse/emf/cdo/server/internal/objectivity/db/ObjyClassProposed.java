@@ -55,7 +55,7 @@ public class ObjyClassProposed
 
   public void propose()
   {
-    String className = ObjySchema.getObjectivityClassName(eClass, onlyStructure);
+    String className = ObjySchema.formObjectivityClassName(eClass, onlyStructure);
 
     Proposed_Class proposedooClass = null;
 
@@ -80,7 +80,7 @@ public class ObjyClassProposed
 
         ObjySchema.createObjyClassSchema(eSuperObject, itrOnlyStructure);
 
-        String superClassName = ObjySchema.getObjectivityClassName(eSuperObject, itrOnlyStructure);
+        String superClassName = ObjySchema.formObjectivityClassName(eSuperObject, itrOnlyStructure);
         proposedooClass.add_base_class(com.objy.as.app.d_Module.LAST, // Position
             d_Access_Kind.d_PUBLIC, // Access kind
             superClassName); // Base class name*/
@@ -142,7 +142,7 @@ public class ObjyClassProposed
 
   public void evolve(d_Class dClass)
   {
-    String className = ObjySchema.getObjectivityClassName(eClass, onlyStructure);
+    String className = ObjySchema.formObjectivityClassName(eClass, onlyStructure);
 
     Proposed_Class proposedooClass = null;
 
@@ -224,7 +224,7 @@ public class ObjyClassProposed
 
     for (EClass classifier : toBeEvolve)
     {
-      String localName = ObjySchema.getObjectivityClassName(classifier, false);
+      String localName = ObjySchema.formObjectivityClassName(classifier, false);
       d_Class localDClass = ObjySchema.getTopModule().resolve_class(localName);
       if (localDClass == null)
       {

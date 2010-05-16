@@ -35,13 +35,11 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyCommitInfoHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyPackageHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
-import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyScope;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySession;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBranch;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyCommitInfo;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyResourceList;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.OBJYCDOIDUtil;
-import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
 import org.eclipse.emf.cdo.server.objectivity.IObjectivityStoreAccessor;
 import org.eclipse.emf.cdo.server.objectivity.IObjectivityStoreChunkReader;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -70,6 +68,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import com.objy.db.app.oo;
 import com.objy.db.app.ooId;
+import com.objy.db.app.ooObj;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -354,11 +353,14 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     ensureSessionBegin();
 
     ObjyObject objyObject = getObject(delta.getID());
+    ObjyObject objyRevision = objyObject.getLastRevision();
+    int deltaVersion = delta.getVersion();
 
     if (TRACER_DEBUG.isEnabled())
     {
       // TRACER_DEBUG.trace("Writing delta for object with id " + objyObject.ooId().getStoreString());
-      TRACER_DEBUG.format("Writing revision delta: {0} - OID: {1}", delta, objyObject.ooId().getStoreString()); //$NON-NLS-1$
+      TRACER_DEBUG.format("Writing revision delta: {0} - OID: {1} - v: {2}", delta, objyObject.ooId().getStoreString(),
+          objyRevision.getVersion());
     }
     // System.out.println(">>>IS: Delta Writing: " + delta.getID() + " - oid: " + objyObject.ooId().getStoreString());
     // System.out.println("\t - old version : " + delta.getVersion());
@@ -368,8 +370,6 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     // System.out.println("\t - branch TS   : " + branch.getPoint(created).getTimeStamp());
     // System.out.println("\t - delta       : " + delta.toString());
     // for debugging...
-    ObjyObject objyRevision = objyObject.getLastRevision();
-    int deltaVersion = delta.getVersion();
 
     if (objyRevision.getVersion() != deltaVersion)
     {
@@ -382,7 +382,6 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     {
       // newObjyRevision = objySession.getObjectManager().copyRevision(this, objyRevision);
       objyRevision.setRevisedTime(branch.getPoint(created).getTimeStamp() - 1);
-      int id = branch.getID();
       // objyRevision.setRevisedBranchId(branch.getID();
       InternalCDORevision originalRevision = getStore().getRepository().getRevisionManager().getRevisionByVersion(
           delta.getID(), delta, 0, true);
@@ -394,6 +393,14 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       newObjyRevision = objySession.getObjectManager().newObject(newRevision.getEClass(), objyRevision.ooId());
       newObjyRevision.update(this, newRevision);
       objyRevision.addToRevisions(newObjyRevision);
+
+      if (getStore().isRequiredToSupportBranches() && branch.getID() != branch.MAIN_BRANCH_ID)
+      {
+        // add the newObjyRevision to the proper branch.
+        ObjyBranch objyBranch = objySession.getBranchManager(getRepositoryName()).getBranch(branch.getID());
+        ooObj anObj = ooObj.create_ooObj(newObjyRevision.ooId());
+        objyBranch.addRevision(anObj);
+      }
     }
     else
     {
@@ -524,11 +531,17 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       if (getStore().isRequiredToSupportAudits())
       {
         // if we allow versioning, then create a new one here.
-        // objyRevision = objySession.getObjectManager().copyRevision(this, oldObjyRevision);
-
-        InternalCDORevision newRevision = revision.copy();
-        newObjyRevision = objySession.getObjectManager().newObject(newRevision.getEClass(), oldObjyRevision.ooId());
+        // IS: I'm not sure if we'll be called here we always go to the writeRevisionDelta call.
+        newObjyRevision = objySession.getObjectManager().newObject(revision.getEClass(), oldObjyRevision.ooId());
         oldObjyRevision.addToRevisions(newObjyRevision);
+
+        if (getStore().isRequiredToSupportBranches())
+        {
+          // add the newObjyRevision to the proper branch.
+          ObjyBranch objyBranch = objySession.getBranchManager(getRepositoryName()).getBranch(
+              revision.getBranch().getID());
+          objyBranch.addRevision(newObjyRevision);
+        }
       }
       else
       {
@@ -598,10 +611,11 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       TRACER_DEBUG.format("loadPackageUnit for: {0}", packageUnit.getID()); //$NON-NLS-1$
     }
 
-    ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
-    ObjyPackageHandler packageHandler = new ObjyPackageHandler(getStore(), objyScope, true);
+    // ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
+    // ObjyPackageHandler packageHandler = new ObjyPackageHandler(getStore(), objyScope, true);
+    ObjyPackageHandler objyPackageHandler = getStore().getPackageHandler();
 
-    bytes = packageHandler.readPackageBytes(packageUnit);
+    bytes = objyPackageHandler.readPackageBytes(packageUnit);
 
     EPackage ePackage = createEPackage(packageUnit, bytes);
 
@@ -723,11 +737,13 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     }
 
     ensureSessionBegin();
-    ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
 
-    ObjyPackageHandler packageHandler = new ObjyPackageHandler(getStore(), objyScope, true);
+    // ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
+    //
+    // ObjyPackageHandler packageHandler = new ObjyPackageHandler(getStore(), objyScope, true);
+    ObjyPackageHandler objyPackageHandler = getStore().getPackageHandler();
 
-    Collection<InternalCDOPackageUnit> packageUnits = packageHandler.readPackageUnits();
+    Collection<InternalCDOPackageUnit> packageUnits = objyPackageHandler.readPackageUnits();
 
     return packageUnits;
   }
@@ -777,10 +793,10 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.format("Fetching revision details for: {0} - OID: {1}", id, objyObject.ooId().getStoreString()); //$NON-NLS-1$
+      TRACER_DEBUG.format("Fetching revision details for: {0} - OID: {1}", id, objyRevision.ooId().getStoreString()); //$NON-NLS-1$
     }
 
-    boolean ok = objyObject.fetch(this, revision, listChunk);
+    boolean ok = objyRevision.fetch(this, revision, listChunk);
 
     return ok ? revision : null;
   }
@@ -805,15 +821,23 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     if (getStore().isRequiredToSupportAudits())
     {
       objyRevision = objyObject.getRevision(branchVersion.getVersion());
+      if (TRACER_DEBUG.isEnabled())
+      {
+        TRACER_DEBUG
+            .format(
+                "(Audit mode) Reading revision by version {0} for: {1} - OID: {2}", branchVersion.getVersion(), id, objyObject.ooId().getStoreString()); //$NON-NLS-1$
+      }
+
     }
     else
     {
       objyRevision = objyObject.getLastRevision();
-    }
 
-    if (TRACER_DEBUG.isEnabled())
-    {
-      TRACER_DEBUG.format("Reading revision by version for: {0} - OID: {1}", id, objyObject.ooId().getStoreString()); //$NON-NLS-1$
+      if (TRACER_DEBUG.isEnabled())
+      {
+        TRACER_DEBUG.format(
+            "(None-Audit) Reading revision by version for: {0} - OID: {1}", id, objyObject.ooId().getStoreString()); //$NON-NLS-1$
+      }
     }
 
     InternalCDORevision revision = getStore().createRevision(objyRevision, id);
@@ -855,13 +879,17 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     }
 
     ensureSessionBegin();
-    ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
 
-    ObjyPackageHandler packageHandler = new ObjyPackageHandler(getStore(), objyScope, true);
+    // ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
+    //
+    // ObjyPackageHandler packageHandler = new ObjyPackageHandler(getStore(), objyScope, true);
+
+    ObjyPackageHandler objyPackageHandler = getStore().getPackageHandler();
+    CDOPackageRegistry packageRegistry = getStore().getRepository().getPackageRegistry();
 
     for (InternalCDOPackageUnit packageUnit : packageUnits)
     {
-      packageHandler.writePackages(packageUnit, monitor/* .fork() */);
+      objyPackageHandler.writePackages(packageRegistry, packageUnit, monitor/* .fork() */);
     }
   }
 
@@ -932,7 +960,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   {
     ensureSessionBegin();
 
-    ObjyCommitInfoHandler commitInfoHandler = getStore().getCommitInfoHandle();
+    ObjyCommitInfoHandler commitInfoHandler = getStore().getCommitInfoHandler();
     List<ObjyCommitInfo> commitInfoList = commitInfoHandler.getCommitInfo(branch, startTime, endTime);
 
     InternalSessionManager manager = getSession().getManager();
@@ -964,7 +992,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     ensureSessionBegin();
     // we need to write the following...
     // ...branch.getID(), timeStamp, userID, comment.
-    ObjyCommitInfoHandler commitInfoHandler = getStore().getCommitInfoHandle();
+    ObjyCommitInfoHandler commitInfoHandler = getStore().getCommitInfoHandler();
     commitInfoHandler.writeCommitInfo(branch.getID(), timeStamp, userID, comment);
   }
 

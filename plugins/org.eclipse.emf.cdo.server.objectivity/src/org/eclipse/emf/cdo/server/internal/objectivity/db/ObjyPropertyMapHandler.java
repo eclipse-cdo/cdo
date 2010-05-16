@@ -115,7 +115,7 @@ public class ObjyPropertyMapHandler
   }
 
   /***
-   * This function assume we are in an Objy trnasaction.
+   * This function assume we are in an Objy transaction.
    */
   private ooMap getMap()
   {

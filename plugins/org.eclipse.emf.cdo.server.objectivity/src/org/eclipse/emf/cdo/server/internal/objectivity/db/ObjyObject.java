@@ -23,8 +23,8 @@ import org.eclipse.emf.cdo.server.internal.objectivity.mapper.ISingleTypeMapper;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.ITypeMapper;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.ObjyMapper;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.SingleReferenceMapper;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyFeatureMapEntry;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBase;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyFeatureMapEntry;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyProxy;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.OBJYCDOIDUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
@@ -405,6 +405,22 @@ public class ObjyObject
     classObject.nset_numeric(ObjyBase.Attribute_revisedTime, new Numeric_Value(revisedTime));
   }
 
+  public void setBranchId(int branchId)
+  {
+    if (TRACER_DEBUG.isEnabled())
+    {
+      try
+      {
+        checkSession();
+      }
+      catch (Exception ex)
+      {
+        ex.printStackTrace();
+      } // for debugging.
+    }
+    classObject.nset_numeric(ObjyBase.Attribute_BranchId, new Numeric_Value(branchId));
+  }
+
   public ObjyObject copy(EClass eClass)
   {
     ObjyObject newObjyObject = null;
@@ -510,6 +526,7 @@ public class ObjyObject
       setEContainingFeature(revision.getContainingFeatureID());
       setCreationTime(revision.getTimeStamp());
       setRevisedTime(revision.getRevised());
+      setBranchId(revision.getBranch().getID());
 
       for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
       {
@@ -585,7 +602,8 @@ public class ObjyObject
                 System.out.println("OBJY: don't know what kind of entryValue is this!!! - " + entryValue);
               }
               // FeatureMapEntry is a presistent class.
-              ObjyFeatureMapEntry featureMapEntry = new ObjyFeatureMapEntry(entryFeature.getName(), oid, metaId, objectId);
+              ObjyFeatureMapEntry featureMapEntry = new ObjyFeatureMapEntry(entryFeature.getName(), oid, metaId,
+                  objectId);
               // this.cluster(featureMapEntry);
               values[i] = featureMapEntry;
             }
@@ -631,7 +649,7 @@ public class ObjyObject
   public ObjyObject getRevision(int version)
   {
     ObjyObject objyRevision = null;
-    if (version == 0)
+    if (version <= 1)
     {
       // there is a first time for everything...
       return this;
@@ -712,10 +730,16 @@ public class ObjyObject
       revision.setContainerID(getEContainer());
       revision.setResourceID((CDOID)getEResource());
       revision.setContainingFeatureID(getEContainingFeature());
-      System.out.println("... ObjyObject.creationTime: " + getCreationTime());
-      System.out.println("... ObjyObject.revisedTime : " + getRevisedTime());
+      long creationTime = getCreationTime();
+      long revisedTime = getRevisedTime();
 
-      revision.setRevised(getRevisedTime());
+      if (TRACER_DEBUG.isEnabled())
+      {
+        TRACER_DEBUG.trace("... ObjyObject.creationTime: " + creationTime);
+        TRACER_DEBUG.trace("... ObjyObject.revisedTime : " + revisedTime);
+      }
+
+      revision.setRevised(revisedTime);
 
       for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
       {

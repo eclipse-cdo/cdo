@@ -50,6 +50,8 @@ public class ObjyBase
 
   public static final String Attribute_revisions = "oo_revisions";
 
+  public static final String Attribute_BranchId = "oo_branchId";
+
   public static final String Attribute_base = "oo_base";
 
   public static final String Attribute_lastRevision = "oo_lastRevision";
@@ -106,6 +108,12 @@ public class ObjyBase
 
       propClass.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
           ObjyBase.Attribute_version, // Attribute name
+          1, // # elements in fixed-size array
+          ooBaseType.ooINT32 // Type of numeric data
+          ); // Default value
+
+      propClass.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
+          ObjyBase.Attribute_BranchId, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT32 // Type of numeric data
           ); // Default value

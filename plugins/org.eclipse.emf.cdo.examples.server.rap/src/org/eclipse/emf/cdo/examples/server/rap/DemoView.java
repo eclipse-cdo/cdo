@@ -14,8 +14,6 @@ import org.eclipse.emf.cdo.examples.server.DemoConfiguration;
 import org.eclipse.emf.cdo.examples.server.DemoConfiguration.Mode;
 import org.eclipse.emf.cdo.examples.server.DemoServer;
 
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
-
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -229,7 +227,14 @@ public class DemoView extends ViewPart implements Runnable
         lastUpdate = now;
       }
 
-      ConcurrencyUtil.sleep(200L);
+      try
+      {
+        Thread.sleep(200L);
+      }
+      catch (Exception ex)
+      {
+        return;
+      }
     }
   }
 

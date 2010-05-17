@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.examples.server.rap;
 
 import org.eclipse.rwt.lifecycle.IEntryPoint;
+import org.eclipse.rwt.lifecycle.UICallBack;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.WorkbenchAdvisor;
@@ -22,6 +23,7 @@ public class DemoEntryPoint implements IEntryPoint
 {
   public int createUI()
   {
+    UICallBack.activate(getClass().getName());
     WorkbenchAdvisor workbenchAdvisor = new DemoWorkbenchAdvisor();
 
     Display display = PlatformUI.createDisplay();

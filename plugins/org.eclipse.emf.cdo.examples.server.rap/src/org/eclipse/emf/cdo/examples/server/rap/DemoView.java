@@ -14,8 +14,12 @@ import org.eclipse.emf.cdo.examples.server.DemoConfiguration;
 import org.eclipse.emf.cdo.examples.server.DemoConfiguration.Mode;
 import org.eclipse.emf.cdo.examples.server.DemoServer;
 
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
@@ -32,7 +36,7 @@ import org.eclipse.ui.part.ViewPart;
 /**
  * @author Eike Stepper
  */
-public class DemoView extends ViewPart
+public class DemoView extends ViewPart implements Runnable
 {
   public static final String ID = "org.eclipse.emf.cdo.examples.server.rap.view";
 
@@ -52,6 +56,10 @@ public class DemoView extends ViewPart
 
   private DemoConfiguration config;
 
+  private boolean updatingConfig;
+
+  private Thread timeouter = new Thread(this);
+
   public DemoView()
   {
   }
@@ -66,6 +74,7 @@ public class DemoView extends ViewPart
   @Override
   public void dispose()
   {
+    timeouter.interrupt();
     bigFont.dispose();
     wizban.dispose();
     logoImage.dispose();
@@ -91,6 +100,8 @@ public class DemoView extends ViewPart
     Label logo = new Label(composite, SWT.NONE);
     logo.setImage(logoImage);
     logo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+
+    timeouter.start();
   }
 
   private Control createPane(Composite parent)
@@ -101,7 +112,7 @@ public class DemoView extends ViewPart
       GridLayout gridLayout = new GridLayout(2, false);
       gridLayout.horizontalSpacing = 10;
       gridLayout.marginWidth = 0;
-      gridLayout.marginTop = 84;
+      gridLayout.marginTop = 16;
       gridLayout.marginBottom = 0;
       pane.setLayout(gridLayout);
     }
@@ -124,6 +135,18 @@ public class DemoView extends ViewPart
       nameText.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
       nameText.setTextLimit(DemoConfiguration.NAME_LENGTH);
       nameText.setFont(bigFont);
+      nameText.addModifyListener(new ModifyListener()
+      {
+        public void modifyText(ModifyEvent event)
+        {
+          if (!updatingConfig)
+          {
+            String name = nameText.getText();
+            config = DemoServer.INSTANCE.getConfig(name);
+            updateConfig();
+          }
+        }
+      });
 
       Button button = new Button(composite, SWT.PUSH);
       button.setText("New");
@@ -139,7 +162,7 @@ public class DemoView extends ViewPart
           {
             Mode mode = dialog.getMode();
             config = DemoServer.INSTANCE.addConfig(mode);
-            nameText.setText(config.getName());
+            updateConfig();
           }
         }
       });
@@ -152,6 +175,7 @@ public class DemoView extends ViewPart
 
       serverText = new Text(pane, SWT.BORDER);
       serverText.setText("tcp://cdo.eclipse.org:" + DemoServer.PORT);
+      serverText.setVisible(false);
       serverText.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
       serverText.setFont(bigFont);
     }
@@ -183,5 +207,73 @@ public class DemoView extends ViewPart
   public void setFocus()
   {
     nameText.setFocus();
+  }
+
+  public void run()
+  {
+    long lastUpdate = System.currentTimeMillis();
+    while (!timeouter.isInterrupted())
+    {
+      long now = System.currentTimeMillis();
+      if (now - lastUpdate >= 1000L)
+      {
+        timeoutLabel.getDisplay().asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            updateTimeout();
+          }
+        });
+
+        lastUpdate = now;
+      }
+
+      ConcurrencyUtil.sleep(200L);
+    }
+  }
+
+  private void updateConfig()
+  {
+    if (!updatingConfig)
+    {
+      try
+      {
+        updatingConfig = true;
+        if (config != null)
+        {
+          nameText.setText(config.getName());
+          serverText.setVisible(true);
+          modeLabel.setText(config.getMode().toString());
+          updateTimeout();
+        }
+        else
+        {
+          serverText.setVisible(false);
+          modeLabel.setText("");
+          timeoutLabel.setText("");
+        }
+      }
+      finally
+      {
+        updatingConfig = false;
+      }
+    }
+  }
+
+  private void updateTimeout()
+  {
+    if (timeoutLabel != null && config != null)
+    {
+      if (config.isActive())
+      {
+        timeoutLabel.setText(config.formatTimeoutMinutes() + " Minutes");
+      }
+      else
+      {
+        nameText.setText("");
+        config = null;
+        updateConfig();
+      }
+    }
   }
 }

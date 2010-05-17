@@ -51,7 +51,7 @@ import java.util.Random;
  */
 public class DemoConfiguration extends Lifecycle
 {
-  private static final int NAME_LENGTH = 10;
+  public static final int NAME_LENGTH = 10;
 
   private static final String NAME_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 

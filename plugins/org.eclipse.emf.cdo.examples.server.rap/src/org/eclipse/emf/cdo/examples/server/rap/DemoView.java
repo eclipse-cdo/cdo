@@ -44,6 +44,14 @@ public class DemoView extends ViewPart
 
   private Text nameText;
 
+  private Text serverText;
+
+  private Label modeLabel;
+
+  private Label timeoutLabel;
+
+  private DemoConfiguration config;
+
   public DemoView()
   {
   }
@@ -76,7 +84,6 @@ public class DemoView extends ViewPart
 
     Composite composite = new Composite(parent, SWT.NONE);
     composite.setLayout(gridLayout);
-    // composite.setBackground(composite.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 
     Control pane = createPane(composite);
     pane.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -88,40 +95,86 @@ public class DemoView extends ViewPart
 
   private Control createPane(Composite parent)
   {
-    GridLayout gridLayout = new GridLayout(3, false);
-    gridLayout.horizontalSpacing = 10;
-    gridLayout.marginWidth = 0;
-    gridLayout.marginTop = 84;
-    gridLayout.marginBottom = 0;
-
     Composite pane = new Composite(parent, SWT.NONE);
-    pane.setLayout(gridLayout);
 
-    Label label = new Label(pane, SWT.NONE);
-    label.setText("Repository:");
-    label.setFont(bigFont);
-
-    nameText = new Text(pane, SWT.BORDER);
-    nameText.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
-    nameText.setFont(bigFont);
-
-    Button button = new Button(pane, SWT.PUSH);
-    button.setText("New");
-    button.setFont(bigFont);
-    button.addSelectionListener(new SelectionAdapter()
     {
-      @Override
-      public void widgetSelected(SelectionEvent e)
+      GridLayout gridLayout = new GridLayout(2, false);
+      gridLayout.horizontalSpacing = 10;
+      gridLayout.marginWidth = 0;
+      gridLayout.marginTop = 84;
+      gridLayout.marginBottom = 0;
+      pane.setLayout(gridLayout);
+    }
+
+    {
+      Label label = new Label(pane, SWT.NONE);
+      label.setText("Repository:");
+      label.setFont(bigFont);
+
+      GridLayout gridLayout = new GridLayout(2, false);
+      gridLayout.horizontalSpacing = 10;
+      gridLayout.marginWidth = 0;
+      gridLayout.marginHeight = 0;
+
+      Composite composite = new Composite(pane, SWT.NONE);
+      composite.setLayout(gridLayout);
+      composite.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+
+      nameText = new Text(composite, SWT.BORDER);
+      nameText.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+      nameText.setTextLimit(DemoConfiguration.NAME_LENGTH);
+      nameText.setFont(bigFont);
+
+      Button button = new Button(composite, SWT.PUSH);
+      button.setText("New");
+      button.setFont(bigFont);
+      button.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+      button.addSelectionListener(new SelectionAdapter()
       {
-        NewRepositoryDialog dialog = new NewRepositoryDialog(getSite().getPage(), wizban);
-        if (dialog.open() == IDialogConstants.OK_ID)
+        @Override
+        public void widgetSelected(SelectionEvent e)
         {
-          Mode mode = dialog.getMode();
-          DemoConfiguration config = DemoServer.INSTANCE.addConfig(mode);
-          nameText.setText(config.getName());
+          NewRepositoryDialog dialog = new NewRepositoryDialog(getSite().getPage(), wizban);
+          if (dialog.open() == IDialogConstants.OK_ID)
+          {
+            Mode mode = dialog.getMode();
+            config = DemoServer.INSTANCE.addConfig(mode);
+            nameText.setText(config.getName());
+          }
         }
-      }
-    });
+      });
+    }
+
+    {
+      Label label = new Label(pane, SWT.NONE);
+      label.setText("Server:");
+      label.setFont(bigFont);
+
+      serverText = new Text(pane, SWT.BORDER);
+      serverText.setText("tcp://cdo.eclipse.org:" + DemoServer.PORT);
+      serverText.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+      serverText.setFont(bigFont);
+    }
+
+    {
+      Label label = new Label(pane, SWT.NONE);
+      label.setText("Mode:");
+      label.setFont(bigFont);
+
+      modeLabel = new Label(pane, SWT.NONE);
+      modeLabel.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+      modeLabel.setFont(bigFont);
+    }
+
+    {
+      Label label = new Label(pane, SWT.NONE);
+      label.setText("Timeout:");
+      label.setFont(bigFont);
+
+      timeoutLabel = new Label(pane, SWT.NONE);
+      timeoutLabel.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+      timeoutLabel.setFont(bigFont);
+    }
 
     return pane;
   }

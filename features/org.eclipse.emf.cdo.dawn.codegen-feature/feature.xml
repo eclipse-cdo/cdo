@@ -10,7 +10,7 @@
 	  Martin Fluegge - initial API and implementation
 -->
 <feature
-      id="org.eclipse.emf.cdo.dawn.examples"
+      id="org.eclipse.emf.cdo.dawn.codegen"
       label="%featureName (Experimental)"
       version="0.2.0.qualifier"
       provider-name="%providerName">
@@ -28,29 +28,28 @@
    </license>
 
    <plugin
-         id="org.eclipse.emf.cdo.dawn.reference.editor"
+         id="org.eclipse.emf.cdo.dawn.codegen"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.cdo.dawn.reference.editor.diagram"
+         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.cdo.dawn.reference.editor.diagram.dawn"
+         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.edit"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         fragment="true"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.cdo.dawn.reference.editor.edit"
+         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor"
          download-size="0"
          install-size="0"
          version="0.0.0"

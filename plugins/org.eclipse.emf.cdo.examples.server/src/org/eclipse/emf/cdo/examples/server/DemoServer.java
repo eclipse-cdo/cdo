@@ -34,7 +34,9 @@ public class DemoServer extends Lifecycle
 
   public static final int PORT = 3003;
 
-  public static final long MAX_IDLE_TIME = 1 * 60 * 1000;
+  public static final int MAX_IDLE_MINUTES = 15;
+
+  public static final long MAX_IDLE_MILLIS = MAX_IDLE_MINUTES * 60 * 1000;
 
   public static final DemoServer INSTANCE = new DemoServer();
 

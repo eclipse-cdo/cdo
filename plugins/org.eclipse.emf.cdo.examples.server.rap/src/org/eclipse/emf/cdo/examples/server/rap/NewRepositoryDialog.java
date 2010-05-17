@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.examples.server.rap;
 
 import org.eclipse.emf.cdo.examples.server.DemoConfiguration;
 import org.eclipse.emf.cdo.examples.server.DemoConfiguration.Mode;
+import org.eclipse.emf.cdo.examples.server.DemoServer;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -79,7 +80,8 @@ public class NewRepositoryDialog extends TitleAreaDialog
   @Override
   protected Control createDialogArea(Composite parent)
   {
-    setTitle("Create a new CDO model repository instance for demo purposes.\nIt will automatically be destroyed after 15 minutes of inactivity.");
+    setTitle("Create a new CDO model repository instance for demo purposes.\nIt will automatically be destroyed after "
+        + DemoServer.MAX_IDLE_MINUTES + " minutes of inactivity.");
     setTitleImage(wizban);
 
     GridLayout gridLayout = new GridLayout(2, false);

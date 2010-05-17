@@ -117,7 +117,7 @@ public class DemoConfiguration extends Lifecycle
   public synchronized long getTimeoutMillis()
   {
     long idleTime = System.currentTimeMillis() - lastAccess;
-    long time = DemoServer.MAX_IDLE_TIME - idleTime;
+    long time = DemoServer.MAX_IDLE_MILLIS - idleTime;
     if (time < 0)
     {
       time = 0;

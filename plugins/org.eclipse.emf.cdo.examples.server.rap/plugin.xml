@@ -15,7 +15,7 @@ Eike Stepper - initial API and implementation
 
 	<extension point="org.eclipse.rap.ui.entrypoint" id="org.eclipse.emf.cdo.examples.server.rap.DemoApplication">
 		<entrypoint class="org.eclipse.emf.cdo.examples.server.rap.DemoEntryPoint"
-			id="org.eclipse.emf.cdo.examples.server.rap.Application" parameter="default"/>
+			id="org.eclipse.emf.cdo.examples.server.rap.Application" parameter="server"/>
 	</extension>
 
 	<extension point="org.eclipse.ui.perspectives">
@@ -46,5 +46,14 @@ Eike Stepper - initial API and implementation
 			</menu>
 		</menuContribution>
 	</extension>
+ <extension
+       point="org.eclipse.rap.ui.branding">
+    <branding
+          defaultEntrypointId="org.eclipse.emf.cdo.examples.server.rap.Application"
+          id="org.eclipse.emf.cdo.examples.server.rap.branding1"
+          servletName="demo"
+          title="CDO Demo Server">
+    </branding>
+ </extension>
 
 </plugin>

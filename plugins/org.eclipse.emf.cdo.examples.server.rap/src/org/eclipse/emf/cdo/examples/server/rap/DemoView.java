@@ -101,6 +101,7 @@ public class DemoView extends ViewPart implements Runnable
     logo.setImage(logoImage);
     logo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
 
+    timeouter.setDaemon(true);
     timeouter.start();
   }
 

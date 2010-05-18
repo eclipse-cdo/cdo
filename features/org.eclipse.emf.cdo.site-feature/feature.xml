@@ -32,60 +32,21 @@
       <update label="%updateSiteName" url="http://download.eclipse.org/modeling/emf/cdo/updates/3.0/"/>
    </url>
 
-   <includes
-         id="org.eclipse.net4j.sdk"
-         version="0.0.0"/>
+   <includes id="org.eclipse.net4j.sdk" version="0.0.0"/>
+   <includes id="org.eclipse.net4j.db.derby" version="0.0.0"/>
+   <includes id="org.eclipse.net4j.db.h2" version="0.0.0"/>
+   <includes id="org.eclipse.net4j.db.hsqldb" version="0.0.0"/>
+   <includes id="org.eclipse.net4j.db.mysql" version="0.0.0"/>
+   <includes id="org.eclipse.net4j.db.postgresql" version="0.0.0"/>
+   <includes id="org.eclipse.net4j.tests" version="0.0.0"/>
+   <includes id="org.eclipse.net4j.examples" version="0.0.0"/>
 
-   <includes
-         id="org.eclipse.net4j.db.derby"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.net4j.db.h2"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.net4j.db.hsqldb"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.net4j.db.mysql"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.net4j.db.postgresql"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.net4j.tests"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.net4j.examples"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.epp"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.sdk"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.server.hibernate"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.tests"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.examples"
-         version="0.0.0"/>
-
-   <includes
-         id="org.gastro"
-         version="0.0.0"/>
+   <includes id="org.eclipse.emf.cdo.epp" version="0.0.0"/>
+   <includes id="org.eclipse.emf.cdo.sdk" version="0.0.0"/>
+   <includes id="org.eclipse.emf.cdo.server.hibernate" version="0.0.0"/>
+   <includes id="org.eclipse.emf.cdo.tests" version="0.0.0"/>
+   <includes id="org.eclipse.emf.cdo.examples" version="0.0.0"/>
+   <includes id="org.gastro" version="0.0.0"/>
+   <includes id="org.eclipse.emf.cdo.dawn.sdk" version="0.0.0"/>
 
 </feature>

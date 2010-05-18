@@ -22,6 +22,7 @@
         <cs:dependency name="org.eclipse.zest.source" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.gmf" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.gmf.source" componentType="eclipse.feature"/>
+		<cs:dependency name="org.eclipse.emf.mwe.core" componentType="eclipse.feature"/>
 
         <cs:dependency name="org.eclipse.rap.rwt.source" componentType="osgi.bundle"/>
         <cs:dependency name="org.eclipse.rap.rwt.q07" componentType="osgi.bundle"/>

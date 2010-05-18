@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBAnnotation;
 import org.eclipse.emf.cdo.server.internal.db.MetaDataManager;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBType;
@@ -49,6 +50,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -296,6 +298,13 @@ public abstract class TypeMapping implements ITypeMapping
       if (defaultValueLiteral != null)
       {
         EEnumLiteral literal = eenum.getEEnumLiteralByLiteral(defaultValueLiteral);
+        if (literal == null)
+        {
+          OM.LOG.warn(MessageFormat.format(
+              Messages.getString("DBStore.13"), getFeature().getDefaultValueLiteral(), getFeature())); //$NON-NLS-1$
+          literal = (EEnumLiteral)eenum.getDefaultValue();
+        }
+
         return literal.getValue();
       }
 

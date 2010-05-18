@@ -112,7 +112,7 @@ public abstract class Node extends PlatformObject
     {
       if (!getRepositoryProject().getView().getSession().getRepositoryInfo().isSupportingBranches())
       {
-        return CommonNavigatorUtils.createMessageProviderChild("Repository does not support branching",
+        return CommonNavigatorUtils.createMessageProviderChild(Messages.getString("Node.1"), //$NON-NLS-1$
             MessageType.INFO);
       }
 

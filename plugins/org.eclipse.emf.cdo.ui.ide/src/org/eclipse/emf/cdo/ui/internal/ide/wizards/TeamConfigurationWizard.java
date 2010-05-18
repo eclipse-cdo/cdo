@@ -47,7 +47,7 @@ public class TeamConfigurationWizard extends Wizard implements IConfigurationWiz
   @Override
   public void addPages()
   {
-    page1 = new CDOShareProjectWizardPage("page1");
+    page1 = new CDOShareProjectWizardPage("page1"); //$NON-NLS-1$
     page1.setTitle(Messages.getString("TeamConfigurationWizard_2")); //$NON-NLS-1$    
     addPage(page1);
   }

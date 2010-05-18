@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.ui.properties;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import java.util.Date;
@@ -21,9 +22,9 @@ import java.util.Date;
  */
 public class CDOSessionPropertySource extends CDOPropertySource<CDOSession>
 {
-  private static final String CATEGORY_SESSION = "Session";
+  private static final String CATEGORY_SESSION = "Session"; //$NON-NLS-1$
 
-  private static final String CATEGORY_REPOSITORY = "Repository";
+  private static final String CATEGORY_REPOSITORY = "Repository"; //$NON-NLS-1$
 
   private static final String SESSION_ID = "sessionID"; //$NON-NLS-1$
 
@@ -54,28 +55,28 @@ public class CDOSessionPropertySource extends CDOPropertySource<CDOSession>
   public CDOSessionPropertySource(CDOSession object)
   {
     super(object);
-    addPropertyDescriptor(CATEGORY_SESSION, SESSION_ID, "ID", "The ID of this session.");
-    addPropertyDescriptor(CATEGORY_SESSION, USER_ID, "User", "The ID of the authenticated user of this session.");
-    addPropertyDescriptor(CATEGORY_SESSION, PASSIVE_UPDATE_ENABLED, "Passive Updates Enabled",
-        "Whether this session is receiving passive updates from the repository.");
-    addPropertyDescriptor(CATEGORY_SESSION, PASSIVE_UPDATE_MODE, "Passive Updates Mode",
-        "One of INVALIDATIONS, CHANGES, ADDITIONS.");
-    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_NAME, "Name", "The name of the repository of this session.");
-    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_UUID, "UUID", "The UUID of the repository of this session.");
-    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_TYPE, "Type",
-        "The type of the repository of this session. One of MASTER, BACKUP, CLONE.");
-    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_STATE, "State",
-        "The state of the repository of this session. One of OFFLINE, SYNCING, ONLINE.");
-    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_CREATION_TIME, "Creation Time",
-        "The creation time of the repository of this session.");
-    addPropertyDescriptor(CATEGORY_REPOSITORY, SUPPORTING_AUDITS, "Supporting Audits",
-        "Whether the repository of this session is supporting auditing.");
-    addPropertyDescriptor(CATEGORY_REPOSITORY, SUPPORTING_BRANCHES, "Supporting Branches",
-        "Whether the repository of this session is supporting branching.");
-    addPropertyDescriptor(CATEGORY_REPOSITORY, STORE_TYPE, "Store Type",
-        "The type of the store that backs the repository of this session.");
-    addPropertyDescriptor(CATEGORY_REPOSITORY, OBJECT_ID_TYPES, "Object ID Types",
-        "The types of object IDs created by the store that backs the repository of this session.");
+    addPropertyDescriptor(CATEGORY_SESSION, SESSION_ID, Messages.getString("CDOSessionPropertySource_0"), Messages.getString("CDOSessionPropertySource_3")); //$NON-NLS-1$ //$NON-NLS-2$
+    addPropertyDescriptor(CATEGORY_SESSION, USER_ID, Messages.getString("CDOSessionPropertySource_4"), Messages.getString("CDOSessionPropertySource_5")); //$NON-NLS-1$ //$NON-NLS-2$
+    addPropertyDescriptor(CATEGORY_SESSION, PASSIVE_UPDATE_ENABLED, Messages.getString("CDOSessionPropertySource_6"), //$NON-NLS-1$
+        Messages.getString("CDOSessionPropertySource_7")); //$NON-NLS-1$
+    addPropertyDescriptor(CATEGORY_SESSION, PASSIVE_UPDATE_MODE, Messages.getString("CDOSessionPropertySource_8"), //$NON-NLS-1$
+        Messages.getString("CDOSessionPropertySource_9")); //$NON-NLS-1$
+    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_NAME, Messages.getString("CDOSessionPropertySource_10"), Messages.getString("CDOSessionPropertySource_11")); //$NON-NLS-1$ //$NON-NLS-2$
+    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_UUID, Messages.getString("CDOSessionPropertySource_12"), Messages.getString("CDOSessionPropertySource_13")); //$NON-NLS-1$ //$NON-NLS-2$
+    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_TYPE, Messages.getString("CDOSessionPropertySource_14"), //$NON-NLS-1$
+        Messages.getString("CDOSessionPropertySource_15")); //$NON-NLS-1$
+    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_STATE, Messages.getString("CDOSessionPropertySource_16"), //$NON-NLS-1$
+        Messages.getString("CDOSessionPropertySource_17")); //$NON-NLS-1$
+    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_CREATION_TIME, Messages.getString("CDOSessionPropertySource_18"), //$NON-NLS-1$
+        Messages.getString("CDOSessionPropertySource_19")); //$NON-NLS-1$
+    addPropertyDescriptor(CATEGORY_REPOSITORY, SUPPORTING_AUDITS, Messages.getString("CDOSessionPropertySource_20"), //$NON-NLS-1$
+        Messages.getString("CDOSessionPropertySource_21")); //$NON-NLS-1$
+    addPropertyDescriptor(CATEGORY_REPOSITORY, SUPPORTING_BRANCHES, Messages.getString("CDOSessionPropertySource_22"), //$NON-NLS-1$
+        Messages.getString("CDOSessionPropertySource_23")); //$NON-NLS-1$
+    addPropertyDescriptor(CATEGORY_REPOSITORY, STORE_TYPE, Messages.getString("CDOSessionPropertySource_24"), //$NON-NLS-1$
+        Messages.getString("CDOSessionPropertySource_25")); //$NON-NLS-1$
+    addPropertyDescriptor(CATEGORY_REPOSITORY, OBJECT_ID_TYPES, Messages.getString("CDOSessionPropertySource_26"), //$NON-NLS-1$
+        Messages.getString("CDOSessionPropertySource_27")); //$NON-NLS-1$
   }
 
   public Object getPropertyValue(Object id)

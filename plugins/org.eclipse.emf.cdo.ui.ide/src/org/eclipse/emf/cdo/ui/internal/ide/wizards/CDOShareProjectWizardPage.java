@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.ui.internal.ide.wizards;
 
+import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 import org.eclipse.emf.cdo.ui.widgets.SessionComposite;
 
 import org.eclipse.jface.wizard.WizardPage;
@@ -71,7 +72,7 @@ public class CDOShareProjectWizardPage extends WizardPage
       return true;
     }
 
-    CDOShareProjectWizardPage.this.setErrorMessage("Please introduce a valid server URL and repository name");
+    CDOShareProjectWizardPage.this.setErrorMessage(Messages.getString("CDOShareProjectWizardPage_0")); //$NON-NLS-1$
     return false;
   }
 }

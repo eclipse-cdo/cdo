@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.ui.ide.Node.ResourcesNode;
 import org.eclipse.emf.cdo.ui.ide.Node.SessionsNode;
 import org.eclipse.emf.cdo.ui.internal.ide.actions.RemoveResourceActionDelegate;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
+import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
@@ -165,7 +166,7 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     catch (Exception e)
     {
       OM.LOG.error(e);
-      return CommonNavigatorUtils.createMessageProviderChild("An error happened. See Error Log for more details.",
+      return CommonNavigatorUtils.createMessageProviderChild(Messages.getString("RepositoryContentProvider_0"), //$NON-NLS-1$
           MessageType.ERROR);
     }
   }

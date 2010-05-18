@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.ui;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -166,7 +167,7 @@ public class AsyncContentProvider implements ITreeContentProvider
     @Override
     public String toString()
     {
-      return "Pending...";
+      return Messages.getString("AsyncContentProvider_0"); //$NON-NLS-1$
     }
   }
 }

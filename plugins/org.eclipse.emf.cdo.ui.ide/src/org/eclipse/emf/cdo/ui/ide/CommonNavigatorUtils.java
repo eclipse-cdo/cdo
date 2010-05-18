@@ -26,7 +26,7 @@ import org.eclipse.ui.PartInitException;
  */
 public class CommonNavigatorUtils
 {
-  private static final String ERROR_LOG_ID = "org.eclipse.pde.runtime.LogView";
+  private static final String ERROR_LOG_ID = "org.eclipse.pde.runtime.LogView"; //$NON-NLS-1$
 
   public static Object createMessageProvider(final String message, final MessageType type)
   {

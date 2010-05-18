@@ -32,7 +32,6 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.ui.IWorkbench;
@@ -41,9 +40,6 @@ import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 import org.eclipse.ui.ide.undo.CreateProjectOperation;
 import org.eclipse.ui.ide.undo.WorkspaceUndoUtil;
-import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
-import org.eclipse.ui.internal.ide.StatusUtil;
-import org.eclipse.ui.internal.wizards.newresource.ResourceMessages;
 import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -54,7 +50,7 @@ import java.net.URI;
 /**
  * @author Victor Roldan Betancort
  */
-@SuppressWarnings("restriction")
+
 public class CDOProjectCreationWizard extends Wizard implements IWorkbenchWizard
 {
   private WizardNewProjectCreationPage projectCreationPage;
@@ -152,7 +148,8 @@ public class CDOProjectCreationWizard extends Wizard implements IWorkbenchWizard
     {
       public void run(IProgressMonitor monitor) throws InvocationTargetException
       {
-        CreateProjectOperation op = new CreateProjectOperation(description, ResourceMessages.NewProject_windowTitle);
+        CreateProjectOperation op = new CreateProjectOperation(description, Messages
+            .getString("CDOProjectCreationWizard.0")); //$NON-NLS-1$
         try
         {
           op.execute(monitor, WorkspaceUndoUtil.getUIInfoAdapter(getShell()));
@@ -183,23 +180,21 @@ public class CDOProjectCreationWizard extends Wizard implements IWorkbenchWizard
         StatusAdapter status;
         if (cause.getStatus().getCode() == IResourceStatus.CASE_VARIANT_EXISTS)
         {
-          status = new StatusAdapter(StatusUtil.newStatus(IStatus.WARNING, NLS.bind(
-              ResourceMessages.NewProject_caseVariantExistsError, newProjectHandle.getName()), cause));
+          status = new StatusAdapter(new Status(IStatus.WARNING, OM.BUNDLE_ID, cause.getMessage(), cause));
         }
         else
         {
-          status = new StatusAdapter(StatusUtil.newStatus(cause.getStatus().getSeverity(),
-              ResourceMessages.NewProject_errorMessage, cause));
+          status = new StatusAdapter(new Status(cause.getStatus().getSeverity(), OM.BUNDLE_ID, cause.getMessage(),
+              cause));
         }
 
-        status.setProperty(IStatusAdapterConstants.TITLE_PROPERTY, ResourceMessages.NewProject_errorMessage);
+        status.setProperty(IStatusAdapterConstants.TITLE_PROPERTY, Messages.getString("CDOProjectCreationWizard.1")); //$NON-NLS-1$
         StatusManager.getManager().handle(status, StatusManager.BLOCK);
       }
       else
       {
-        StatusAdapter status = new StatusAdapter(new Status(IStatus.WARNING, IDEWorkbenchPlugin.IDE_WORKBENCH, 0, NLS
-            .bind(ResourceMessages.NewProject_internalError, t.getMessage()), t));
-        status.setProperty(IStatusAdapterConstants.TITLE_PROPERTY, ResourceMessages.NewProject_errorMessage);
+        StatusAdapter status = new StatusAdapter(new Status(IStatus.WARNING, OM.BUNDLE_ID, t.getMessage(), t));
+        status.setProperty(IStatusAdapterConstants.TITLE_PROPERTY, Messages.getString("CDOProjectCreationWizard.1")); //$NON-NLS-1$
         StatusManager.getManager().handle(status, StatusManager.LOG | StatusManager.BLOCK);
       }
 
@@ -221,8 +216,8 @@ public class CDOProjectCreationWizard extends Wizard implements IWorkbenchWizard
       {
         try
         {
-          boolean result = MessageDialog.openQuestion(getShell(), "Change perspective",
-              "Do you want to switch to CDO Explorer perspective?");
+          boolean result = MessageDialog.openQuestion(getShell(), Messages.getString("CDOProjectCreationWizard.5"), //$NON-NLS-1$
+              Messages.getString("CDOProjectCreationWizard.6")); //$NON-NLS-1$
           if (result)
           {
             workbench.showPerspective(CDOExplorerPerspective.ID, workbench.getActiveWorkbenchWindow());

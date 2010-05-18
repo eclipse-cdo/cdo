@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.ui.internal.ide.actions;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.ui.ide.Node.BranchNode;
+import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -38,8 +39,8 @@ public class CreateBranchActionDelegate extends LongRunningActionDelegate
   @Override
   protected void preRun() throws Exception
   {
-    InputDialog dialog = new InputDialog(new Shell(), "Create a new branch",
-        "Please specify the name of the new branch", "", new BranchNameInputValidator());
+    InputDialog dialog = new InputDialog(new Shell(), Messages.getString("CreateBranchActionDelegate_0"), //$NON-NLS-1$
+        Messages.getString("CreateBranchActionDelegate_1"), "", new BranchNameInputValidator()); //$NON-NLS-1$ //$NON-NLS-2$
 
     if (dialog.open() == Dialog.OK)
     {
@@ -67,19 +68,19 @@ public class CreateBranchActionDelegate extends LongRunningActionDelegate
     {
       if (StringUtil.isEmpty(newText))
       {
-        return "Branch name cannot be empty";
+        return Messages.getString("CreateBranchActionDelegate_3"); //$NON-NLS-1$
       }
 
       if (newText.contains(CDOBranch.PATH_SEPARATOR))
       {
-        return "Branch name cannot contain path separators";
+        return Messages.getString("CreateBranchActionDelegate_4"); //$NON-NLS-1$
       }
 
       BranchNode branchNode = UIUtil.getElement(getSelection(), BranchNode.class);
       CDOBranch branch = branchNode.getBranch();
       if (branch.getBranch(newText) != null)
       {
-        return "A branch with that name already exists";
+        return Messages.getString("CreateBranchActionDelegate_5"); //$NON-NLS-1$
       }
 
       return null;

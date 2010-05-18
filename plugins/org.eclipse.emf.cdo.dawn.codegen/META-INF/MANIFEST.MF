@@ -32,8 +32,11 @@ Require-Bundle: com.ibm.icu;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.dawn.codegen.dawngenmodel;bundle-version="[0.2.0,1.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.cdo.dawn.codegen;version="0.2.0",
+Export-Package: metamodel;version="0.2.0";x-internal:=true,
+ org.eclipse.emf.cdo.dawn.codegen;version="0.2.0",
  org.eclipse.emf.cdo.dawn.codegen.actions;version="0.2.0",
  org.eclipse.emf.cdo.dawn.codegen.creators;version="0.2.0",
  org.eclipse.emf.cdo.dawn.codegen.creators.impl;version="0.2.0",
- org.eclipse.emf.cdo.dawn.codegen.util;version="0.2.0"
+ org.eclipse.emf.cdo.dawn.codegen.util;version="0.2.0",
+ template;version="0.2.0";x-internal:=true,
+ workflow;version="0.2.0";x-internal:=true

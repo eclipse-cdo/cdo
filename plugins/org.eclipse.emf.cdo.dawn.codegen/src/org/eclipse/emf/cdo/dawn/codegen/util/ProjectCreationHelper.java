@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.dawn.codegen.util;
 
-import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -331,7 +330,7 @@ public class ProjectCreationHelper
         javaProject.setOutputLocation(binFolder.getFullPath(), null);
       }
     }
-    catch (ResourceException e)
+    catch (Exception e)
     {
       e.printStackTrace();
     }

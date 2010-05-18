@@ -32,7 +32,6 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.pde.internal.core.natures.PDE;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -46,6 +45,10 @@ import java.util.Map;
 public class GMFFragmentCreator implements Creator
 {
   private final IResource selectedElement;
+
+  private final String PLUGIN_NATURE = "org.eclipse.pde.PluginNature";
+
+  private final String JAVA_NATURE = JavaCore.NATURE_ID;
 
   public GMFFragmentCreator(IResource selectedElement)
   {
@@ -67,7 +70,9 @@ public class GMFFragmentCreator implements Creator
 
     monitor.subTask("Create client fragment's basic structure");
 
-    String[] natures = new String[] { JavaCore.NATURE_ID, PDE.PLUGIN_NATURE };
+    // String[] natures = new String[] { JavaCore.NATURE_ID, PDE.PLUGIN_NATURE };
+    String[] natures = new String[] { JAVA_NATURE, PLUGIN_NATURE };
+
     ProjectCreationHelper projectCreationHelper = new ProjectCreationHelper();
     projectCreationHelper.setName(dawnGMFGenerator.getFragmentName());
     projectCreationHelper.setNatures(natures);

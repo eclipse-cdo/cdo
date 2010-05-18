@@ -38,7 +38,6 @@ import java.util.concurrent.ThreadFactory;
  */
 public class StandaloneManualExample
 {
-  @SuppressWarnings("restriction")
   public static void main(String[] args)
   {
     // Enable logging and tracing

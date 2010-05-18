@@ -27,7 +27,6 @@ public class OMTest
    */
   public static void main(String[] args) throws Exception
   {
-    @SuppressWarnings("restriction")
     OMBundle bundle = org.eclipse.net4j.internal.util.bundle.OM.BUNDLE;
 
     URL baseUrl = bundle.getBaseURL();

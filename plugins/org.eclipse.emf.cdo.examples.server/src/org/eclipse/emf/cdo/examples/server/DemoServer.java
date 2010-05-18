@@ -94,7 +94,7 @@ public class DemoServer extends Lifecycle
     IPluginContainer container = IPluginContainer.INSTANCE;
     acceptor = TCPUtil.getAcceptor(container, "0.0.0.0:" + PORT);
 
-    String port = System.getProperty(PROP_BROWSER_PORT);
+    String port = OMPlatform.INSTANCE.getProperty(PROP_BROWSER_PORT);
     if (port != null)
     {
       container.getElement("org.eclipse.emf.cdo.server.db.browsers", "default", port); //$NON-NLS-1$ //$NON-NLS-2$

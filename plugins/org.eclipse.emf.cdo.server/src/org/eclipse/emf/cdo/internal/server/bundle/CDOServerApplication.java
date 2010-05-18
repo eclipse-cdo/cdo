@@ -61,7 +61,7 @@ public class CDOServerApplication extends OSGiApplication
         OM.LOG.warn(Messages.getString("CDOServerApplication.3") + configFile.getAbsolutePath()); //$NON-NLS-1$
       }
 
-      String port = System.getProperty(PROP_BROWSER_PORT);
+      String port = OMPlatform.INSTANCE.getProperty(PROP_BROWSER_PORT);
       if (port != null)
       {
         IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.server.db.browsers", "default", port); //$NON-NLS-1$ //$NON-NLS-2$

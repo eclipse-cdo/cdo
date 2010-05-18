@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -257,7 +258,7 @@ public class Scenario implements IScenario
 
   public static File getStateFile()
   {
-    String home = System.getProperty("user.home");
+    String home = OMPlatform.INSTANCE.getProperty("user.home");
     if (home != null)
     {
       return new File(home, STATE_FILE);

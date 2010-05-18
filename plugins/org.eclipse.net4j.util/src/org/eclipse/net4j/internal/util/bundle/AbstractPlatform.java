@@ -56,7 +56,7 @@ public abstract class AbstractPlatform implements OMPlatform
 
   protected AbstractPlatform()
   {
-    debugging = Boolean.parseBoolean(System.getProperty("debug", "false")); //$NON-NLS-1$ //$NON-NLS-2$
+    debugging = Boolean.parseBoolean(getProperty("debug", "false")); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   public synchronized OMBundle bundle(String bundleID, Class<?> accessor)
@@ -120,10 +120,10 @@ public abstract class AbstractPlatform implements OMPlatform
 
   public File getStateFolder()
   {
-    String state = System.getProperty(SYSTEM_PROPERTY_NET4J_STATE);
+    String state = getProperty(SYSTEM_PROPERTY_NET4J_STATE);
     if (state == null)
     {
-      state = System.getProperty(SYSTEM_PROPERTY_OSGI_STATE);
+      state = getProperty(SYSTEM_PROPERTY_OSGI_STATE);
       if (state == null)
       {
         state = "state"; //$NON-NLS-1$
@@ -155,7 +155,7 @@ public abstract class AbstractPlatform implements OMPlatform
 
   public File getConfigFolder()
   {
-    String config = System.getProperty(SYSTEM_PROPERTY_NET4J_CONFIG, "config"); //$NON-NLS-1$
+    String config = getProperty(SYSTEM_PROPERTY_NET4J_CONFIG, "config"); //$NON-NLS-1$
     File configFolder = new File(config);
     if (!configFolder.exists())
     {
@@ -252,6 +252,16 @@ public abstract class AbstractPlatform implements OMPlatform
   protected Map<String, AbstractBundle> getBundles()
   {
     return bundles;
+  }
+
+  public String getProperty(String key)
+  {
+    return System.getProperty(key);
+  }
+
+  public String getProperty(String key, String defaultValue)
+  {
+    return System.getProperty(key, defaultValue);
   }
 
   protected abstract OMBundle createBundle(String bundleID, Class<?> accessor);

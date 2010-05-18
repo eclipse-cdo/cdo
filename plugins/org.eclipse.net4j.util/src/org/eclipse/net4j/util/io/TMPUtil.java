@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.io;
 
+import org.eclipse.net4j.util.om.OMPlatform;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -26,7 +28,7 @@ public final class TMPUtil
   /**
    * @since 2.0
    */
-  public static final String SYSTEM_TEMP_FOLDER = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
+  public static final String SYSTEM_TEMP_FOLDER = OMPlatform.INSTANCE.getProperty("java.io.tmpdir"); //$NON-NLS-1$
 
   private TMPUtil()
   {
@@ -37,7 +39,7 @@ public final class TMPUtil
    */
   public static File getTempFolder()
   {
-    String tempFolder = System.getProperty(TEMP_FOLDER_PROPERTY);
+    String tempFolder = OMPlatform.INSTANCE.getProperty(TEMP_FOLDER_PROPERTY);
     if (tempFolder == null)
     {
       tempFolder = SYSTEM_TEMP_FOLDER;

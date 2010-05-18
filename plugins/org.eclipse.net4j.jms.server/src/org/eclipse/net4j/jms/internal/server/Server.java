@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -22,6 +22,7 @@ import org.eclipse.net4j.jms.server.IStoreTransaction;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.concurrent.NonBlockingLongCounter;
 import org.eclipse.net4j.util.concurrent.QueueWorker;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import javax.jms.Destination;
 import javax.naming.Context;
@@ -201,9 +202,9 @@ public class Server extends QueueWorker<MessageImpl> implements IServer
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    String name = System.getProperty("net4j.jms.connection.factory.name", "net4j.jms.ConnectionFactory"); //$NON-NLS-1$ //$NON-NLS-2$
-    String type = System.getProperty("net4j.jms.connector.type", "tcp"); //$NON-NLS-1$ //$NON-NLS-2$
-    String desc = System.getProperty("net4j.jms.connector.description", "localhost"); //$NON-NLS-1$ //$NON-NLS-2$
+    String name = OMPlatform.INSTANCE.getProperty("net4j.jms.connection.factory.name", "net4j.jms.ConnectionFactory"); //$NON-NLS-1$ //$NON-NLS-2$
+    String type = OMPlatform.INSTANCE.getProperty("net4j.jms.connector.type", "tcp"); //$NON-NLS-1$ //$NON-NLS-2$
+    String desc = OMPlatform.INSTANCE.getProperty("net4j.jms.connector.description", "localhost"); //$NON-NLS-1$ //$NON-NLS-2$
 
     jndiContext = new InitialContext();
     jndiContext.rebind(name, new ConnectionFactoryImpl(type, desc));

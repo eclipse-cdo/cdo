@@ -45,6 +45,19 @@ public class OSGiPlatform extends AbstractPlatform
   }
 
   @Override
+  public String getProperty(String key)
+  {
+    return systemContext != null ? systemContext.getProperty(key) : null;
+  }
+
+  @Override
+  public String getProperty(String key, String defaultValue)
+  {
+    String property = getProperty(key);
+    return property != null ? property : defaultValue;
+  }
+
+  @Override
   protected OMBundle createBundle(String bundleID, Class<?> accessor)
   {
     return new OSGiBundle(this, bundleID, accessor);

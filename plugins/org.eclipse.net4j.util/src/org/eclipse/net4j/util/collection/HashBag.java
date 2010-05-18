@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -41,6 +41,20 @@ public final class HashBag<T> implements Set<T>
   public HashBag(Map<? extends T, ? extends HashBag.Counter> m)
   {
     map = new HashMap<T, Counter>(m);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public int getCounterFor(T o)
+  {
+    Counter counter = map.get(o);
+    if (counter == null)
+    {
+      return 0;
+    }
+
+    return counter.getValue();
   }
 
   public boolean add(T o)
@@ -152,6 +166,11 @@ public final class HashBag<T> implements Set<T>
 
     public Counter()
     {
+    }
+
+    public int getValue()
+    {
+      return value;
     }
 
     public int incValue()

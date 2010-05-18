@@ -11,7 +11,11 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.id.CDOIDExternal;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.net4j.protocol.LoadRevisionsRequest;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
@@ -24,6 +28,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.DanglingReferenceException;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
+import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.signal.SignalCounter;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.util.EList;
@@ -32,6 +38,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -39,9 +46,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.Map;
 
 /**
  * @author Simon McDuff
@@ -347,18 +356,14 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testUsingObjectsBetweenSameTransaction() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openSession();
 
-    msg("Opening transaction");
     CDOTransaction transaction1 = session.openTransaction();
     CDOTransaction transaction2 = session.openTransaction();
 
-    msg("Creating resource");
     CDOResource resource1 = transaction1.createResource("/test1");
     CDOResource resource2 = transaction2.createResource("/test2");
 
-    msg("Adding company");
     Supplier supplier = getModel1Factory().createSupplier();
     PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
     supplier.getPurchaseOrders().add(purchaseOrder);
@@ -366,26 +371,122 @@ public class ExternalReferenceTest extends AbstractCDOTest
     resource1.getContents().add(supplier);
     resource2.getContents().add(purchaseOrder);
 
-    msg("Committing");
     transaction1.commit();
+  }
+
+  public void testWithXML() throws Exception
+  {
+    ResourceSet resourceSet = new ResourceSetImpl();
+    Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+    map.put("xml", new XMLResourceFactoryImpl());
+
+    PurchaseOrder externalObject = getModel1Factory().createPurchaseOrder();
+    Resource externalResource = resourceSet.createResource(URI.createFileURI("/com/foo/bar.xml"));
+    externalResource.getContents().add(externalObject);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction(resourceSet);
+
+    Supplier supplier = getModel1Factory().createSupplier();
+    supplier.getPurchaseOrders().add(externalObject);
+
+    CDOResource resource = transaction.createResource("/internal");
+    resource.getContents().add(supplier);
+    transaction.commit();
+
+    CDORevision salesOrderRevision = CDOUtil.getCDOObject(supplier).cdoRevision();
+    Object externalReference = salesOrderRevision.data().get(getModel1Package().getSupplier_PurchaseOrders(), 0);
+    assertInstanceOf(CDOIDExternal.class, externalReference);
+  }
+
+  public void testWithXMLAndPrefetching() throws Exception
+  {
+    {
+      ResourceSet resourceSet = new ResourceSetImpl();
+      Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+      map.put("xml", new XMLResourceFactoryImpl());
+
+      Resource externalResource = resourceSet.createResource(URI.createFileURI("/com/foo/bar.xml"));
+
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction(resourceSet);
+
+      Supplier supplier = getModel1Factory().createSupplier();
+
+      for (int i = 0; i < 200; i++)
+      {
+        PurchaseOrder externalObject = getModel1Factory().createPurchaseOrder();
+        externalResource.getContents().add(externalObject);
+
+        supplier.getPurchaseOrders().add(externalObject);
+      }
+
+      CDOResource resource = transaction.createResource("/internal");
+      resource.getContents().add(supplier);
+      transaction.commit();
+    }
+
+    clearCache(getRepository().getRevisionManager());
+
+    {
+      ResourceSet resourceSet = new ResourceSetImpl();
+      Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+      map.put("xml", new XMLResourceFactoryImpl());
+
+      Resource externalResource = resourceSet.createResource(URI.createFileURI("/com/foo/bar.xml"));
+      for (int i = 0; i < 200; i++)
+      {
+        PurchaseOrder externalObject = getModel1Factory().createPurchaseOrder();
+        externalResource.getContents().add(externalObject);
+      }
+
+      SignalCounter signalCounter = new SignalCounter();
+
+      CDOSession session = openSession();
+      ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().getProtocol();
+      protocol.addListener(signalCounter);
+
+      CDOTransaction transaction = session.openTransaction(resourceSet);
+      transaction.options().setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(10));
+
+      CDOResource resource = transaction.getResource("/internal");
+      Supplier supplier = (Supplier)resource.getContents().get(0);
+
+      for (int i = 0; i < 200; i++)
+      {
+        PurchaseOrder externalObject = supplier.getPurchaseOrders().get(i);
+        System.out.println(externalObject);
+      }
+
+      int count = signalCounter.getCountFor(LoadRevisionsRequest.class);
+      assertEquals(2, count); // Resource + root object (supplier)
+
+      CDORevisionData data = CDOUtil.getCDOObject(supplier).cdoRevision().data();
+      EReference reference = getModel1Package().getSupplier_PurchaseOrders();
+      for (int i = 0; i < 200; i++)
+      {
+        Object value = data.get(reference, i);
+        assertInstanceOf(CDOIDExternal.class, value);
+      }
+    }
   }
 
   private EPackage createDynamicEPackage()
   {
-    final EcoreFactory efactory = EcoreFactory.eINSTANCE;
-    final EcorePackage epackage = EcorePackage.eINSTANCE;
+    final EcoreFactory eFactory = EcoreFactory.eINSTANCE;
+    final EcorePackage ePackage = EcorePackage.eINSTANCE;
 
-    EClass schoolBookEClass = efactory.createEClass();
+    EClass schoolBookEClass = eFactory.createEClass();
     schoolBookEClass.setName("SchoolBook");
 
     // create a new attribute for this EClass
-    EAttribute level = efactory.createEAttribute();
+    EAttribute level = eFactory.createEAttribute();
     level.setName("level");
-    level.setEType(epackage.getEInt());
+    level.setEType(ePackage.getEInt());
     schoolBookEClass.getEStructuralFeatures().add(level);
 
     // Create a new EPackage and add the new EClasses
-    EPackage schoolPackage = efactory.createEPackage();
+    EPackage schoolPackage = eFactory.createEPackage();
     schoolPackage.setName("elv");
     schoolPackage.setNsPrefix("elv");
     schoolPackage.setNsURI("http:///www.elver.org/School");

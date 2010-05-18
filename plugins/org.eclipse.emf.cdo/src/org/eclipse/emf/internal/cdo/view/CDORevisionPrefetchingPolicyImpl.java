@@ -54,7 +54,7 @@ public class CDORevisionPrefetchingPolicyImpl implements CDORevisionPrefetchingP
         if (element instanceof CDOID)
         {
           CDOID idElement = (CDOID)element;
-          if (!idElement.isTemporary())
+          if (!idElement.isTemporary() && !idElement.isExternal())
           {
             if (!revisionManager.containsRevision(idElement, branchPoint))
             {

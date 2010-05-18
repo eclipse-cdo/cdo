@@ -24,6 +24,7 @@
         <cs:dependency name="org.eclipse.gmf.source" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.mwe.core" componentType="eclipse.feature"/>
 
+		<!--
         <cs:dependency name="org.eclipse.rap.rwt.source" componentType="osgi.bundle"/>
         <cs:dependency name="org.eclipse.rap.rwt.q07" componentType="osgi.bundle"/>
         <cs:dependency name="org.eclipse.rap.rwt.q07.source" componentType="osgi.bundle"/>
@@ -32,6 +33,7 @@
 		<cs:dependency name="org.eclipse.rap.ui.forms.source" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.rap.ui.views.source" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.rap.ui.workbench.source" componentType="osgi.bundle"/>
+		-->
 
         <cs:dependency name="com.mysql.jdbc" componentType="eclipse.feature"/>
         <cs:dependency name="org.hsqldb" componentType="eclipse.feature"/>

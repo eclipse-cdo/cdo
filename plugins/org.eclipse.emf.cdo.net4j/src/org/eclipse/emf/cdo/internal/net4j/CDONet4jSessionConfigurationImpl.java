@@ -278,7 +278,6 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     commitInfoManager.deactivate();
     revisionManager.deactivate();
 
-    int fixMe;
     // branchManager.deactivate();
     // packageRegistry.deactivate();
 

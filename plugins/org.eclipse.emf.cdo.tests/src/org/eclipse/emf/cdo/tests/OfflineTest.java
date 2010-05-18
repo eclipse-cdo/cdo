@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -333,7 +332,7 @@ public class OfflineTest extends AbstractSyncingTest
     waitForOnline(clone);
 
     transaction.setBranch(session.getBranchManager().getMainBranch());
-    CDOChangeSetData result = transaction.merge(commitInfo, new DefaultCDOMerger.PerFeature.ManyValued());
+    transaction.merge(commitInfo, new DefaultCDOMerger.PerFeature.ManyValued());
 
     transaction.commit();
   }

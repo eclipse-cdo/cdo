@@ -175,7 +175,6 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
    */
   public void _testBugzilla_273565_Lock() throws Exception
   {
-    int fixMe;
     disableConsole();
 
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
@@ -278,8 +277,8 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
     CDOUtil.getCDOObject(orderDetail).cdoWriteLock().lock();
     orderDetail.setPrice(2);
 
-    boolean locked = CDOUtil.getCDOObject(orderDetail2).cdoWriteLock().tryLock(DEFAULT_TIMEOUT_EXPECTED,
-        TimeUnit.MILLISECONDS);
+    boolean locked = CDOUtil.getCDOObject(orderDetail2).cdoWriteLock()
+        .tryLock(DEFAULT_TIMEOUT_EXPECTED, TimeUnit.MILLISECONDS);
     assertEquals(false, locked);
   }
 }

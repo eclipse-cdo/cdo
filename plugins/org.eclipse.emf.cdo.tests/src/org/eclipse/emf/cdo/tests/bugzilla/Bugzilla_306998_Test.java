@@ -70,7 +70,7 @@ public class Bugzilla_306998_Test extends AbstractCDOTest
 
   public void testInalidEENumLiteral()
   {
-    // FIXME in MemStore!
+    // does not affect MemStore!
     skipConfig(MEM);
     skipConfig(MEM_AUDITS);
     skipConfig(MEM_BRANCHES);

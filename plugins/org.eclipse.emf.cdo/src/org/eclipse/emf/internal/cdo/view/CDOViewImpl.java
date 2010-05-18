@@ -1562,6 +1562,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   /**
    * TODO For this method to be useable locks must be cached locally!
    */
+  @SuppressWarnings("unused")
   private boolean isLocked(InternalCDOObject object)
   {
     if (object.cdoWriteLock().isLocked())
@@ -2299,7 +2300,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     private CDOInvalidationPolicy invalidationPolicy = CDOInvalidationPolicy.DEFAULT;
 
     private CDORevisionPrefetchingPolicy revisionPrefetchingPolicy = CDOUtil
-        .createRevisionPrefetchingPolicy(DEFAULT_REVISION_PREFETCHING);
+        .createRevisionPrefetchingPolicy(NO_REVISION_PREFETCHING);
 
     private CDOStaleReferencePolicy staleReferencePolicy = CDOStaleReferencePolicy.EXCEPTION;
 

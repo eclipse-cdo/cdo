@@ -1,13 +1,13 @@
 «REM»
- Copyright (c) 2010 Martin Fluegge (Berlin, Germany).
+ Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany).
  All rights reserved. This program and the accompanying materials
  are made available under the terms of the Eclipse Public License v1.0
  which accompanies this distribution, and is available at
  http://www.eclipse.org/legal/epl-v10.html
- 
+
  Contributors:
      Martin Fluegge - initial API and implementation
-     
+
 «ENDREM»
 
 «IMPORT gmfgen»
@@ -34,8 +34,8 @@
  «EXPAND dawnEditPolicyProvider FOR this»
  «EXPAND manifestMF FOR this.GMFGenEditorGenerator»
  «EXPAND buildPROPERTIES FOR this.GMFGenEditorGenerator»
- «EXPAND classpath FOR this.GMFGenEditorGenerator»   
- 
+ «EXPAND classpath FOR this.GMFGenEditorGenerator»
+
 «ENDDEFINE»
 
 «REM»############################################  Extended Editor ##################################################################«ENDREM»
@@ -45,8 +45,8 @@
 package  «this.GMFGenEditorGenerator.editor.packageName»;
 
 import «this.GMFGenEditorGenerator.diagram.domainDiagramElement.genPackage.basePackage».«this.GMFGenEditorGenerator.diagram.domainDiagramElement.ecoreClass.ePackage.name».«this.GMFGenEditorGenerator.diagram.domainDiagramElement.ecoreClass.name»;
-import org.eclipse.emf.cdo.dawn.runtime.diagram.part.IDawnDiagramEditor;
-import org.eclipse.emf.cdo.dawn.runtime.notifications.DawnNotificationUtil;
+import org.eclipse.emf.cdo.dawn.diagram.part.IDawnDiagramEditor;
+import org.eclipse.emf.cdo.dawn.notifications.DawnNotificationUtil;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
@@ -83,7 +83,7 @@ public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.cl
     super();
     setDocumentProvider(new «this.dawnDocumentProviderClassName»());
   }
-  
+
   «EXPAND generatedComment -»
   @Override
   public void setInput(IEditorInput input)
@@ -106,14 +106,14 @@ public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.cl
     DawnNotificationUtil.registerTransactionListeners(transaction, this);
     DawnNotificationUtil.setChangeSubscriptionPolicy(transaction);
   }
-  
+
   «EXPAND generatedComment -»
   @Override
   protected void initializeGraphicalViewer()
   {
     super.initializeGraphicalViewer();
   }
-  
+
   «EXPAND generatedComment -»
   @Override
   public void doSave(IProgressMonitor monitor)
@@ -138,20 +138,20 @@ public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.cl
       }
     }
   }
-  
+
   «EXPAND generatedComment -»
   @Override
   public boolean isDirty()
   {
     return dirty;
   }
-  
+
   «EXPAND generatedComment -»
   public String getContributorID()
   {
     return null;
   }
-  
+
   «EXPAND generatedComment -»
   @Override
   protected void setDocumentProvider(IEditorInput input)
@@ -165,7 +165,7 @@ public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.cl
       super.setDocumentProvider(input);
     }
   }
-  
+
   «EXPAND generatedComment -»
   @Override
   public void dispose()
@@ -182,13 +182,13 @@ public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.cl
       }
     }
   }
-  
+
   «EXPAND generatedComment -»
   public CDOView getView()
   {
     return transaction;
   }
-  
+
   «EXPAND generatedComment -»
   public void setDirty()
   {
@@ -206,7 +206,7 @@ public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.cl
 «FILE "src/"+getDiagramPackagePath()+"/edit/parts/"+this.dawnDiagramEditPartClassName+".java"»
 package «this.GMFGenEditorGenerator.diagram.editPartsPackageName»;
 
-import org.eclipse.emf.cdo.dawn.runtime.synchronize.DawnConflictHelper;
+import org.eclipse.emf.cdo.dawn.synchronize.DawnConflictHelper;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -222,7 +222,7 @@ public class «this.dawnDiagramEditPartClassName» extends «this.GMFGenEditorGener
   {
     super(view);
   }
-  
+
   «EXPAND generatedComment -»
   @Override
   protected void removeChild(EditPart child)
@@ -302,7 +302,7 @@ public class «this.dawnCanonicalEditingPolicyClassName» extends «this.GMFGenEdit
 «FILE "src/"+getDiagramPackagePath()+"/part/"+this.dawnCreationWizardClassName+".java"»
 package  «this.GMFGenEditorGenerator.editor.packageName»;
 
-import org.eclipse.emf.cdo.dawn.runtime.preferences.PreferenceConstants;
+import org.eclipse.emf.cdo.dawn.preferences.PreferenceConstants;
 import org.eclipse.emf.cdo.dawn.ui.wizards.DawnCreateNewDiagramResourceWizardPage;
 import org.eclipse.emf.cdo.dawn.ui.wizards.DawnCreateNewResourceWizardPage;
 import org.eclipse.emf.cdo.dawn.util.connection.CDOConnectionUtil;
@@ -445,9 +445,9 @@ import «this.GMFGenEditorGenerator.diagram.domainDiagramElement.genPackage.baseP
 import «this.GMFGenEditorGenerator.diagram.domainDiagramElement.genPackage.basePackage».«this.GMFGenEditorGenerator.diagram.domainDiagramElement.ecoreClass.ePackage.name».«this.GMFGenEditorGenerator.domainGenModel.modelName»Factory;
 
 import «this.GMFGenEditorGenerator.diagram.editPartsPackageName».«this.dawnDiagramEditPartClassName»;
-import org.eclipse.emf.cdo.dawn.runtime.commands.CreateSemanticResourceRecordingCommand;
-import org.eclipse.emf.cdo.dawn.runtime.preferences.PreferenceConstants;
-import org.eclipse.emf.cdo.dawn.runtime.transaction.DawnGMFEditingDomainFactory;
+import org.eclipse.emf.cdo.dawn.commands.CreateSemanticResourceRecordingCommand;
+import org.eclipse.emf.cdo.dawn.preferences.PreferenceConstants;
+import org.eclipse.emf.cdo.dawn.transaction.DawnGMFEditingDomainFactory;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.dawn.util.connection.CDOConnectionUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -599,13 +599,13 @@ public class «this.dawnEditorUtilClassName» extends «this.GMFGenEditorGenerator.
 
 «ENDFILE»
 «ENDDEFINE»
- 	
+
 «REM»############################################  DawnXXXDocumentProvider ##################################################################«ENDREM»
 «DEFINE dawnDocumentProvider FOR DawnGMFGenerator»
 «FILE "src/"+getDiagramPackagePath()+"/part/"+this.dawnDocumentProviderClassName+".java"»
 package  «this.GMFGenEditorGenerator.editor.packageName»;
 
-import org.eclipse.emf.cdo.dawn.runtime.transaction.DawnDiagramEditingDomainFactory;
+import org.eclipse.emf.cdo.dawn.transaction.DawnDiagramEditingDomainFactory;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.dawn.util.DawnDiagramUpdater;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -702,7 +702,7 @@ public class «this.dawnDocumentProviderClassName» extends «this.GMFGenEditorGene
     return editingDomain;
   }
 
-  
+
   «EXPAND generatedComment -»
   @Override
   protected void setDocumentContent(IDocument document, IEditorInput element) throws CoreException
@@ -796,7 +796,7 @@ public class «this.dawnDocumentProviderClassName» extends «this.GMFGenEditorGene
     {
       throw new CoreException(new Status(IStatus.ERROR, ClassdiagramDiagramEditorPlugin.ID, 0, NLS.bind(
           Messages.«this.GMFGenEditorGenerator.diagram.documentProviderClassName»_IncorrectInputError, new Object[] { element,
-              "org.eclipse.ui.part.FileEditorInput", "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$ //$NON-NLS-2$ 
+              "org.eclipse.ui.part.FileEditorInput", "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$ //$NON-NLS-2$
           null));
     }
   }
@@ -873,7 +873,7 @@ public class «dawnEditPolicyProviderClassName» extends AbstractProvider implemen
     }
     return false;
   }
-  
+
   «EXPAND generatedComment -»
   public void createEditPolicies(EditPart editPart)
   {
@@ -895,7 +895,7 @@ public class «dawnEditPolicyProviderClassName» extends AbstractProvider implemen
 <extension
          point="org.eclipse.ui.editors">
       <editor
-      
+
             class="«this.GMFGenEditorGenerator.editor.packageName».«this.dawnEditorClassName»"
             contributorClass="«this.GMFGenEditorGenerator.editor.packageName».«this.GMFGenEditorGenerator.editor.actionBarContributorClassName»"
             default="true"
@@ -953,8 +953,8 @@ public class «dawnEditPolicyProviderClassName» extends AbstractProvider implemen
 «ENDFILE»
 «ENDDEFINE»
 
- 	 	
- 	 	
+
+
 «REM»##############################################################################################################«ENDREM»
 «DEFINE manifestMF FOR GenEditorGenerator»
 «FILE "META-INF/MANIFEST.MF"»Manifest-Version: 1.0
@@ -964,7 +964,7 @@ Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.reference.editor.diagram.dawn;sing
 Bundle-Version: 0.2.0.qualifier
 Fragment-Host: org.eclipse.emf.cdo.dawn.reference.editor.diagram;bundle-version="0.2.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: org.eclipse.emf.cdo.dawn.runtime;bundle-version="0.2.0",
+Require-Bundle: org.eclipse.emf.cdo.dawn;bundle-version="0.2.0",
  org.eclipse.emf.cdo.dawn.util;bundle-version="0.0",
  org.eclipse.emf.cdo.ui;bundle-version="3.0.0",
  org.eclipse.emf.cdo.dawn.ui;bundle-version="0.2.0"

@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Dawngenmodel
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.codegen.dawngenmodel;singleton:=true
 Bundle-Version: 0.2.0.qualifier
 Bundle-Localization: plugin
@@ -14,3 +14,4 @@ Export-Package: org.eclipse.emf.cdo.dawn.codegen.dawngenmodel;version="0.2.0",
  org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl;version="0.2.0",
  org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.util;version="0.2.0",
  org.eclipse.emf.cdo.dawn.codegen.genmodel;version="0.2.0"
+Bundle-Vendor: %providerName

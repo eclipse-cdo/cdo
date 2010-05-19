@@ -14,9 +14,10 @@ package org.eclipse.emf.cdo.tests.config.impl;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
+import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
+import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionImpl;
 import org.eclipse.emf.cdo.internal.server.syncing.OfflineClone;
 import org.eclipse.emf.cdo.internal.server.syncing.RepositorySynchronizer;
-import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
@@ -44,6 +45,8 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.IUserManager;
+
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -217,6 +220,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     public static final String PROP_TEST_DELAYED_COMMIT_HANDLING = "test.delayed.commit.handling";
 
+    public static final String PROP_TEST_DELAYED2_COMMIT_HANDLING = "test.delayed2.commit.handling";
+
     private static final long serialVersionUID = 1L;
 
     private transient IAcceptor masterAcceptor;
@@ -321,7 +326,37 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
           InternalCDORevisionManager revisionManager = new CDORevisionManagerImpl();
           revisionManager.setCache(new NOOPRevisionCache());
 
-          CDOSessionConfiguration config = CDONet4jUtil.createSessionConfiguration();
+          CDOSessionConfiguration config = new CDONet4jSessionConfigurationImpl()
+          {
+            @Override
+            public InternalCDOSession createSession()
+            {
+              return new CDONet4jSessionImpl(this)
+              {
+                volatile int counter = 1;
+
+                @Override
+                public void handleCommitNotification(CDOCommitInfo commitInfo)
+                {
+                  long delay = getTestDelayed2CommitHandling();
+                  if (delay != 0L && counter++ % 2 == 0)
+                  {
+                    try
+                    {
+                      Thread.sleep(delay);
+                    }
+                    catch (InterruptedException ex)
+                    {
+                      return;
+                    }
+                  }
+
+                  super.handleCommitNotification(commitInfo);
+                }
+              };
+            }
+          };
+
           config.setConnector(connector);
           config.setRepositoryName(repositoryName);
           config.setRevisionManager(revisionManager);
@@ -373,6 +408,17 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     protected long getTestDelayedCommitHandling()
     {
       Long result = (Long)getTestProperty(PROP_TEST_DELAYED_COMMIT_HANDLING);
+      if (result == null)
+      {
+        result = 0L;
+      }
+
+      return result;
+    }
+
+    protected long getTestDelayed2CommitHandling()
+    {
+      Long result = (Long)getTestProperty(PROP_TEST_DELAYED2_COMMIT_HANDLING);
       if (result == null)
       {
         result = 0L;

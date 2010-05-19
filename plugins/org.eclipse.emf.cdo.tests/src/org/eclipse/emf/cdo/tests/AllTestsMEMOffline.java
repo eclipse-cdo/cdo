@@ -33,6 +33,7 @@ public class AllTestsMEMOffline extends AllTestsAllConfigs
     // super.initTestClasses(testClasses);
 
     testClasses.add(OfflineTest.class);
+    testClasses.add(OfflineDelayed2Test.class);
     // testClasses.add(OfflineSqueezedTest.class);
     testClasses.add(FailoverTest.class);
   }

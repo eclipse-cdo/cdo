@@ -149,7 +149,7 @@ public class CDODBSchema extends DBSchema
   COMMIT_INFOS.addField("comment", DBType.VARCHAR); //$NON-NLS-1$
 
   public static final IDBIndex INDEX_COMMIT_INFOS_PK = //
-  BRANCHES.addIndex(IDBIndex.Type.PRIMARY_KEY, COMMIT_INFOS_TIMESTAMP);
+  COMMIT_INFOS.addIndex(IDBIndex.Type.PRIMARY_KEY, COMMIT_INFOS_TIMESTAMP);
 
   public static final IDBIndex INDEX_COMMIT_INFOS_BRANCH = //
   COMMIT_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, COMMIT_INFOS_BRANCH);

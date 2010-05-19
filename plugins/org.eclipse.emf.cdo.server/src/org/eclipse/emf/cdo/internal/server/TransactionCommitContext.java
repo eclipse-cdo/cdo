@@ -49,6 +49,7 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
@@ -334,6 +335,18 @@ public class TransactionCommitContext implements InternalCommitContext
     OM.LOG.error(ex);
     String storeClass = transaction.getRepository().getStore().getClass().getSimpleName();
     rollback("Rollback in " + storeClass + ": " + StringUtil.formatException(ex)); //$NON-NLS-1$ //$NON-NLS-2$
+
+    if (ex instanceof Error)
+    {
+      throw (Error)ex;
+    }
+
+    if (ex instanceof RuntimeException)
+    {
+      throw (RuntimeException)ex;
+    }
+
+    throw WrappedException.wrap((Exception)ex);
   }
 
   protected long createTimeStamp()

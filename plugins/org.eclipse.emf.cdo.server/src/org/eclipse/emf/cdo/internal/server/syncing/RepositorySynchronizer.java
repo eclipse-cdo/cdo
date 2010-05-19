@@ -456,7 +456,15 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
 
     public void run()
     {
-      localRepository.handleCommitInfo(commitInfo);
+      try
+      {
+        localRepository.handleCommitInfo(commitInfo);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.debug("Replication of master commit failed. Trying again later...", ex);
+        addWork(this);
+      }
     }
 
     @Override

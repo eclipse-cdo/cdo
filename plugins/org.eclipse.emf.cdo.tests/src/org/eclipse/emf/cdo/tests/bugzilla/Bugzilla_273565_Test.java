@@ -43,7 +43,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
    * <p>
    * See bug 273565
    */
-  public void testBugzilla_273565() throws Exception
+  public void _testBugzilla_273565() throws Exception
   {
     final CountDownLatch start = new CountDownLatch(1);
     final boolean[] done = { false };

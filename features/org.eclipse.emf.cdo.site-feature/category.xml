@@ -66,6 +66,9 @@
    <feature url="features/org.eclipse.emf.cdo.server.hibernate_3.0.0.qualifier.jar" id="org.eclipse.emf.cdo.server.hibernate" version="3.0.0.qualifier">
       <category name="org.eclipse.emf.cdo"/>
    </feature>
+   <feature url="features/org.eclipse.emf.cdo.dawn.sdk_0.2.0.qualifier.jar" id="org.eclipse.emf.cdo.dawn.sdk" version="0.2.0.qualifier">
+      <category name="org.eclipse.emf.cdo"/>
+   </feature>
    <category-def name="org.eclipse.emf.cdo" label="CDO Model Repository"/>
    <category-def name="org.eclipse.net4j" label="Net4j Signalling Platform"/>
 </site>

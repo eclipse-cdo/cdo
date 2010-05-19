@@ -73,12 +73,14 @@ public class CustomDataTypeMapper extends StringTypeMapper
     throw new UnsupportedOperationException("Implement me!!");
   }
 
+  @Override
   public void modifySchema(Proposed_Class proposedooClass, EStructuralFeature feature)
   {
     // TODO Auto-generated method stub
 
   }
 
+  @Override
   public boolean validate(d_Attribute ooAttribute, EStructuralFeature feature)
   {
     // TODO Auto-generated method stub

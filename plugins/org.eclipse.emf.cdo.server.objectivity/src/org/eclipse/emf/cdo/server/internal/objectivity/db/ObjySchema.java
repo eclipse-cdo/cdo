@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ibrahim Sallam - initial API and implementation
  */
@@ -98,9 +98,6 @@ public class ObjySchema
 
   /**
    * Originally in EProposedManager.
-   * 
-   * @param eClassObject
-   * @return
    */
   static public String getObjectivityClassName(EClassifier eClassifier)
   {
@@ -109,9 +106,6 @@ public class ObjySchema
 
   /**
    * Originally in EProposedManager
-   * 
-   * @param eClassObject
-   * @return
    */
   static String formObjectivityClassName(EClassifier eClassifier, boolean onlyStructure)
   {
@@ -245,10 +239,6 @@ public class ObjySchema
     return null;
   }
 
-  /**
-   * @param eClass
-   * @return
-   */
   public static ObjyClass evolveObjyClass(EClass eClass)
   {
     try
@@ -276,9 +266,6 @@ public class ObjySchema
   /**
    * This function creates the schema in Objectivity, if the class is being proposed or already exist no action is
    * happening.
-   * 
-   * @param eClass
-   * @param itrOnlyStructure
    */
   static void createObjyClassSchema(EClass eClass, boolean onlyStructure)
   {
@@ -374,12 +361,9 @@ public class ObjySchema
     return true;
   }
 
-  /**
-   * From EProposedManager.
-   * 
-   * @param eClass
-   * @param onlyStructure
-   */
+  // /**
+  // * From EProposedManager.
+  // */
   // void ensureEClassExist(EClass eClass, boolean onlyStructure)
   // {
   // HashMap<EClass, EClass> hashMap = onlyStructure ? visitedStructureOnlyClass : visitedClass;
@@ -404,11 +388,9 @@ public class ObjySchema
   // }
   // }
 
-  /**
-   * From EProposedManager.
-   * 
-   * @param eClass
-   */
+  // /**
+  // * From EProposedManager.
+  // */
   // void ensureEClassExist(EClass eClass)
   // {
   // ensureEClassExist(eClass, false);
@@ -451,8 +433,6 @@ public class ObjySchema
   /***
    * identify if the class is of type Resource. TODO - why we need to pass the store, can't we keep the info we need for
    * the package mapping here?!!!
-   * 
-   * @return
    */
   public static boolean isResource(ObjectivityStore store, ObjyClass objyClass)
   {

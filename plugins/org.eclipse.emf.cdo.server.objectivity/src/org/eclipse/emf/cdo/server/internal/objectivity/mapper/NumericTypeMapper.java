@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ibrahim Sallam - initial API and implementation
  */
@@ -68,7 +68,7 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
   // Schema
   // ---------------------------------
   /**
-	 * 
+	 *
 	 */
   public boolean createSchema(Proposed_Class proposedClass, EStructuralFeature feature)
   {
@@ -109,7 +109,7 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
   }
 
   /**
-	 * 
+	 *
 	 */
   public boolean validate(d_Attribute ooAttribute, EStructuralFeature feature)
   {
@@ -229,10 +229,8 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
       {
         return new Numeric_Value(false);
       }
-      else
-      {
-        return new Numeric_Value(((Boolean)value).booleanValue());
-      }
+
+      return new Numeric_Value(((Boolean)value).booleanValue());
     }
   }
 
@@ -266,10 +264,8 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
       {
         return new Numeric_Value(0);
       }
-      else
-      {
-        return new Numeric_Value(((Byte)value).byteValue());
-      }
+
+      return new Numeric_Value(((Byte)value).byteValue());
     }
   }
 
@@ -303,10 +299,8 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
       {
         return new Numeric_Value(0);
       }
-      else
-      {
-        return new Numeric_Value(((Character)value).charValue());
-      }
+
+      return new Numeric_Value(((Character)value).charValue());
     }
   }
 
@@ -340,10 +334,8 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
       {
         return new Numeric_Value(0);
       }
-      else
-      {
-        return new Numeric_Value(((Date)value).getTime());
-      }
+
+      return new Numeric_Value(((Date)value).getTime());
     }
   }
 
@@ -377,10 +369,8 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
       {
         return new Numeric_Value(0.0);
       }
-      else
-      {
-        return new Numeric_Value(((Double)value).doubleValue());
-      }
+
+      return new Numeric_Value(((Double)value).doubleValue());
     }
   }
 
@@ -414,12 +404,9 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
       {
         return new Numeric_Value(0.0);
       }
-      else
-      {
-        return new Numeric_Value(((Float)value).floatValue());
-      }
-    }
 
+      return new Numeric_Value(((Float)value).floatValue());
+    }
   }
 
   // ---------------------------
@@ -451,10 +438,8 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
       {
         return new Numeric_Value(0);
       }
-      else
-      {
-        return new Numeric_Value(((Integer)value).intValue());
-      }
+
+      return new Numeric_Value(((Integer)value).intValue());
     }
   }
 
@@ -488,10 +473,8 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
       {
         return new Numeric_Value(0);
       }
-      else
-      {
-        return new Numeric_Value(((Long)value).longValue());
-      }
+
+      return new Numeric_Value(((Long)value).longValue());
     }
   }
 
@@ -524,10 +507,8 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
       {
         return new Numeric_Value(0);
       }
-      else
-      {
-        return new Numeric_Value(((Short)value).shortValue());
-      }
+
+      return new Numeric_Value(((Short)value).shortValue());
     }
   }
 

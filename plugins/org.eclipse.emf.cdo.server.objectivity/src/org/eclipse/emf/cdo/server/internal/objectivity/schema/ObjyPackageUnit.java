@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Ibrahim Sallam - code refactoring for CDO 3.0
@@ -67,8 +67,6 @@ public class ObjyPackageUnit extends ooObj
 
   /**
    * add packageInfo
-   * 
-   * @param packgeInfo
    */
   public void addPackageInfo(ObjyPackageInfo packageInfo)
   {
@@ -87,9 +85,6 @@ public class ObjyPackageUnit extends ooObj
 
   /**
    * removePackageInfo.
-   * 
-   * @param node
-   *          child Node to be dropped
    */
   public void removePackageInfo(ObjyPackageInfo packageInfo)
   {

@@ -5,7 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Ibrahim Sallam - code refactoring for CDO 3.0
@@ -52,15 +52,13 @@ public abstract class ObjyArrayList<T>
     return classObject.objectID();
   }
 
-  /**
-   * TODO - verify need.
-   * 
-   * @return
-   */
-  private Class_Object getClassObject()
-  {
-    return classObject;
-  }
+  // /**
+  // * TODO - verify need.
+  // */
+  // private Class_Object getClassObject()
+  // {
+  // return classObject;
+  // }
 
   public void clear()
   {
@@ -100,7 +98,7 @@ public abstract class ObjyArrayList<T>
   }
 
   /**
-	 * 
+	 *
 	 */
   protected void grow(int item)
   {
@@ -108,7 +106,7 @@ public abstract class ObjyArrayList<T>
   }
 
   /**
-	 * 
+	 *
 	 */
   private void prepareToInsert(int numberToAdd)
   {
@@ -154,7 +152,9 @@ public abstract class ObjyArrayList<T>
 
     for (int i = 0; i < newValue.length; i++)
     {
-      basicSet(index + i, (T)newValue[i]);
+      @SuppressWarnings("unchecked")
+      T value = (T)newValue[i];
+      basicSet(index + i, value);
     }
   }
 
@@ -234,9 +234,6 @@ public abstract class ObjyArrayList<T>
     cacheSize = -1;
   }
 
-  /**
-   * @return
-   */
   protected long cachedSize()
   {
     if (cacheSize == -1)
@@ -248,9 +245,6 @@ public abstract class ObjyArrayList<T>
     return cacheSize;
   }
 
-  /**
-   * @return
-   */
   public long size()
   {
     // System.out.println(">>> classObject: " + classObject.objectID().getStoreString() + " <<<");

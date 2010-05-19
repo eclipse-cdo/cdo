@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ibrahim Sallam - initial API and implementation
  */
@@ -48,7 +48,7 @@ public class ObjyPackageHandler
 
   private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyPackageHandler.class);
 
-  private static final ContextTracer TRACER_ERROR = new ContextTracer(OM.ERROR, ObjyPackageHandler.class);
+  // private static final ContextTracer TRACER_ERROR = new ContextTracer(OM.ERROR, ObjyPackageHandler.class);
 
   private static final ContextTracer TRACER_INFO = new ContextTracer(OM.INFO, ObjyPackageHandler.class);
 

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ibrahim Sallam - initial API and implementation
  */
@@ -36,7 +36,7 @@ public class ObjyObjectManager
 
   private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyObjectManager.class);
 
-  private static final ContextTracer TRACER_INFO = new ContextTracer(OM.INFO, ObjyObjectManager.class);
+  // private static final ContextTracer TRACER_INFO = new ContextTracer(OM.INFO, ObjyObjectManager.class);
 
   // private Map<Long, ObjyObject> idToObjyObjectMap = new ReferenceValueMap.Weak<Long, ObjyObject>();
   private WeakHashMap<Long, ObjyObject> idToObjyObjectMap = new WeakHashMap<Long, ObjyObject>();
@@ -49,7 +49,7 @@ public class ObjyObjectManager
   }
 
   /**
-	 * 
+	 *
 	 */
   public ObjyObject newObject(EClass eClass, ooId nearObject)
   {
@@ -135,9 +135,6 @@ public class ObjyObjectManager
   /**
    * return an ObjyObject based on the cdoId passed. usually this is used for existing object when trying to modify
    * them.
-   * 
-   * @param cdoId
-   * @return
    */
   public ObjyObject getObject(CDOID cdoId)
   {
@@ -152,9 +149,6 @@ public class ObjyObjectManager
 
   /**
    * return an ObjyObject based on the ooId passed.
-   * 
-   * @param ooId
-   * @return
    */
   public ObjyObject getObject(ooId oid)
   {

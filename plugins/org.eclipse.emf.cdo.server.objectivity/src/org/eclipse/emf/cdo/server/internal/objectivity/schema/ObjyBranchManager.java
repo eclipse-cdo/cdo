@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ibrahim Sallam - initial API and implementation
  */
@@ -85,7 +85,7 @@ public class ObjyBranchManager extends ooObj
     // if the baseBranchId is 0, then we just added to our branchSet, otherwise
     // we'll lookup the ObjyBranch with the id, and add the newly created
     // ObjyBranch to it's sub-branches set.
-    int baseBranchId = branchInfo.getBaseBranchID();
+    // int baseBranchId = branchInfo.getBaseBranchID();
 
     // Initially I thought we could make a tree of branches, but for the
     // first implementation we can just create a TreeSet of all branches,
@@ -120,6 +120,8 @@ public class ObjyBranchManager extends ooObj
   public ObjyBranch getBranch(int branchId)
   {
     fetch();
+
+    @SuppressWarnings("unchecked")
     Iterator<ObjyBranch> treeItr = branchSet.iterator();
     ObjyBranch objyBranch = null;
     while (treeItr.hasNext())
@@ -148,6 +150,8 @@ public class ObjyBranchManager extends ooObj
     boolean done = false;
 
     markModified();
+
+    @SuppressWarnings("unchecked")
     Iterator<ObjyBranch> treeItr = branchSet.iterator();
     ObjyBranch objyBranch = null;
     while (treeItr.hasNext())
@@ -168,6 +172,7 @@ public class ObjyBranchManager extends ooObj
     fetch();
     List<ObjyBranch> objyBranchList = new ArrayList<ObjyBranch>();
 
+    @SuppressWarnings("unchecked")
     Iterator<ObjyBranch> treeItr = branchSet.iterator();
     ObjyBranch objyBranch = null;
     while (treeItr.hasNext())
@@ -188,6 +193,7 @@ public class ObjyBranchManager extends ooObj
 
     int lastId = endId != 0 ? endId : Integer.MAX_VALUE;
 
+    @SuppressWarnings("unchecked")
     Iterator<ObjyBranch> treeItr = branchSet.iterator();
     ObjyBranch objyBranch = null;
     while (treeItr.hasNext())

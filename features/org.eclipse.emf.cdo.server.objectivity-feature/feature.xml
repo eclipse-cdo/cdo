@@ -11,7 +11,7 @@
 	  Ibrahim Sallam - Code refactring and CDO 3.0 support
 -->
 <feature
-      id="org.eclispe.emf.cdo.server.objectivity"
+      id="org.eclipse.emf.cdo.server.objectivity"
       label="%featureName"
       version="3.0.0.qualifier"
       provider-name="%providerName"
@@ -30,9 +30,7 @@
    </license>
 
    <url>
-      <update label="%emfUpdateSiteName" url="http://download.eclipse.org/modeling/emf/updates/"/>
-      <discovery label="%emfUpdateSiteName" url="http://download.eclipse.org/modeling/emf/updates/"/>
-      <discovery label="%emftUpdateSiteName" url="http://download.eclipse.org/modeling/emft/updates/"/>
+      <update label="%updateSiteName" url="http://download.eclipse.org/modeling/emf/cdo/updates/3.0/"/>
    </url>
 
    <plugin

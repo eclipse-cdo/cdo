@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ibrahim Sallam - initial API and implementation
  */
@@ -62,21 +62,16 @@ public class ObjyScope
     getContainerObj();
   }
 
-  /**
-   * TODO - verify need.
-   * 
-   * @return
-   */
-  private ooContObj getContainer(ooId id)
-  {
-    String contID = "#" + id.getDB() + "-" + id.getOC() + "-1-1";
+  // /**
+  // * TODO - verify need.
+  // */
+  // private ooContObj getContainer(ooId id)
+  // {
+  // String contID = "#" + id.getDB() + "-" + id.getOC() + "-1-1";
+  //
+  // return (ooContObj)Session.getCurrent().getFD().objectFrom(contID);
+  // }
 
-    return (ooContObj)Session.getCurrent().getFD().objectFrom(contID);
-  }
-
-  /**
-   * @return
-   */
   public ooContObj getContainerObj()
   {
 
@@ -100,8 +95,6 @@ public class ObjyScope
 
   /**
    * Need this when scanning a scope.
-   * 
-   * @return
    */
   public ooDBObj getDatabaseObj()
   {
@@ -124,15 +117,13 @@ public class ObjyScope
     return dbObj;
   }
 
-  /**
-   * TODO - verify need.
-   * 
-   * @return
-   */
-  private ooContObj createNewContainer()
-  {
-    return createNewContainer(null);
-  }
+  // /**
+  // * TODO - verify need.
+  // */
+  // private ooContObj createNewContainer()
+  // {
+  // return createNewContainer(null);
+  // }
 
   /**
    * TODO - verify need.

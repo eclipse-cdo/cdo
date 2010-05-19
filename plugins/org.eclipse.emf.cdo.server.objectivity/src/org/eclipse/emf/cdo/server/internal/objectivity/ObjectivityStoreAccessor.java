@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Ibrahim Sallam - code refactoring for CDO 3.0
@@ -383,8 +383,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       // newObjyRevision = objySession.getObjectManager().copyRevision(this, objyRevision);
       objyRevision.setRevisedTime(branch.getPoint(created).getTimeStamp() - 1);
       // objyRevision.setRevisedBranchId(branch.getID();
-      InternalCDORevision originalRevision = getStore().getRepository().getRevisionManager().getRevisionByVersion(
-          delta.getID(), delta, 0, true);
+      InternalCDORevision originalRevision = getStore().getRepository().getRevisionManager()
+          .getRevisionByVersion(delta.getID(), delta, 0, true);
 
       InternalCDORevision newRevision = originalRevision.copy();
 
@@ -394,7 +394,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       newObjyRevision.update(this, newRevision);
       objyRevision.addToRevisions(newObjyRevision);
 
-      if (getStore().isRequiredToSupportBranches() && branch.getID() != branch.MAIN_BRANCH_ID)
+      if (getStore().isRequiredToSupportBranches() && branch.getID() != CDOBranch.MAIN_BRANCH_ID)
       {
         // add the newObjyRevision to the proper branch.
         ObjyBranch objyBranch = objySession.getBranchManager(getRepositoryName()).getBranch(branch.getID());
@@ -675,8 +675,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       context.addResource(resourceID);
     }
 
-    CDOID folderID = org.eclipse.emf.cdo.common.id.CDOIDUtil.isNull(context.getFolderID()) ? null : context
-        .getFolderID();
+    // CDOID folderID = org.eclipse.emf.cdo.common.id.CDOIDUtil.isNull(context.getFolderID()) ? null : context
+    // .getFolderID();
     for (int i = 0; i < size; i++)
     {
       ObjyObject resource = resourceList.getResource(i);
@@ -785,7 +785,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     InternalCDORevision revision = getStore().createRevision(objyObject, id);
 
     // TODO - clean up the following 3 lines...
-    InternalCDOBranchManager branchManager = getStore().getRepository().getBranchManager();
+    // InternalCDOBranchManager branchManager = getStore().getRepository().getBranchManager();
     // CDOBranch mainBranch = branchManager.getBranch(CDOBranch.MAIN_BRANCH_ID);
     revision.setBranchPoint(branchPoint);
     CDOBranchPoint branchPoint2 = revision.getBranch().getPoint(objyObject.getCreationTime());
@@ -855,7 +855,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     if (ok && objyRevision.getVersion() != branchVersion.getVersion())
     {
-      throw new IllegalStateException("Can only retrieve current version " + revision.getVersion() + " for " + //$NON-NLS-1$ //$NON-NLS-2$ 
+      throw new IllegalStateException("Can only retrieve current version " + revision.getVersion() + " for " + //$NON-NLS-1$ //$NON-NLS-2$
           id + " - version requested was " + branchVersion + "."); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
@@ -1027,8 +1027,9 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     for (ObjyBranch objyBranch : branches)
     {
-      InternalCDOBranch branch = branchManager.getBranch(objyBranch.getBranchId(), new BranchInfo(objyBranch
-          .getBranchName(), objyBranch.getBaseBranchId(), objyBranch.getBaseBranchTimeStamp()));
+      InternalCDOBranch branch = branchManager
+          .getBranch(objyBranch.getBranchId(), new BranchInfo(objyBranch.getBranchName(), objyBranch.getBaseBranchId(),
+              objyBranch.getBaseBranchTimeStamp()));
       branchHandler.handleBranch(branch);
       count++;
     }
@@ -1041,12 +1042,12 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   {
     ensureSessionBegin();
     List<SubBranchInfo> result = new ArrayList<SubBranchInfo>();
-    List<ObjyBranch> objyBranchList = objySession.getBranchManager(getRepositoryName()).getSubBranches(branchID);
-    for (ObjyBranch objyBranch : objyBranchList)
-    {
-      SubBranchInfo subBranchInfo = new SubBranchInfo(objyBranch.getBranchId(), objyBranch.getBranchName(), objyBranch
-          .getBaseBranchTimeStamp());
-    }
+    // List<ObjyBranch> objyBranchList = objySession.getBranchManager(getRepositoryName()).getSubBranches(branchID);
+    // for (ObjyBranch objyBranch : objyBranchList)
+    // {
+    // SubBranchInfo subBranchInfo = new SubBranchInfo(objyBranch.getBranchId(), objyBranch.getBranchName(),
+    // objyBranch.getBaseBranchTimeStamp());
+    // }
     return result.toArray(new SubBranchInfo[result.size()]);
   }
 

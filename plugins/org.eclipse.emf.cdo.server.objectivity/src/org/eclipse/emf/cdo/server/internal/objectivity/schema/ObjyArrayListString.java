@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Ibrahim Sallam - code refactoring for CDO 3.0
@@ -166,7 +166,7 @@ public class ObjyArrayListString
       newValue = "";
     }
     value.set(newValue);
-    embeddedElement.set_numeric(1, newValue == null ? ITypeMapper.numericTrue : ITypeMapper.numericFalse);
+    embeddedElement.set_numeric(1, newValue.length() == 0 ? ITypeMapper.numericTrue : ITypeMapper.numericFalse);
   }
 
   protected String getValue(long index)
@@ -265,7 +265,7 @@ public class ObjyArrayListString
   }
 
   /**
-	 * 
+	 *
 	 */
   private void grow(int numToAdd)
   {
@@ -289,7 +289,7 @@ public class ObjyArrayListString
   }
 
   /**
-	 * 
+	 *
 	 */
   private void prepareToInsert(int numberToAdd)
   {
@@ -387,9 +387,6 @@ public class ObjyArrayListString
     cacheSize = -1;
   }
 
-  /**
-   * @return
-   */
   public long cachedSize()
   {
     if (cacheSize == -1)
@@ -399,9 +396,6 @@ public class ObjyArrayListString
     return cacheSize;
   }
 
-  /**
-   * @return
-   */
   public long size()
   {
     return classObject.nget_numeric(ObjyArrayList.sizeName).longValue();

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ibrahim Sallam - initial API and implementation
  */
@@ -74,8 +74,8 @@ public class ObjyResourceList
       // Proposed_Class A = new Proposed_Class(ooArrayListId.ClassName);
       Proposed_Class propClass = top_mod.propose_new_class(ObjyResourceList.className);
 
-      propClass
-          .add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC, ObjyBase.ClassName /* "ooObj" */);
+      propClass.add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC,
+          ObjyBase.ClassName /* "ooObj" */);
 
       propClass.add_ref_attribute(com.objy.as.app.d_Module.LAST, // Access kind
           d_Access_Kind.d_PUBLIC, // Access kind
@@ -193,9 +193,9 @@ public class ObjyResourceList
     Class_Object classObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(ObjyResourceList.className)
         .getASClass(), nearOid, false);
     Class_Position position = classObject.position_in_class(ObjyResourceList.Attribute_arrayName);
-    Class_Object arrayClassObject = Class_Object.new_persistent_object(ObjySchema.getTopModule().resolve_class(
-        ObjyArrayListId.className), classObject.objectID(), false);
-    ooId arrayOid = arrayClassObject.objectID();
+    Class_Object arrayClassObject = Class_Object.new_persistent_object(
+        ObjySchema.getTopModule().resolve_class(ObjyArrayListId.className), classObject.objectID(), false);
+    // ooId arrayOid = arrayClassObject.objectID();
 
     classObject.set_ooId(position, arrayClassObject.objectID());
     ObjyArrayListId.initObject(arrayClassObject);

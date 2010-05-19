@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Ibrahim Sallam - code refactoring for CDO 3.0
@@ -15,8 +15,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyProxy;
 
 import com.objy.db.app.ooId;
@@ -24,12 +24,12 @@ import com.objy.db.app.ooId;
 /**
  * TODO - this file was taken from the old code without verification for
  *        all its functionality's requirement to the new code.
- *        
+ *
  *      - We might need to cleanup the various CDOID transformations.
- *      
+ *
  *      * The idea is to convert the OID parts into long value, except that
  *        we only use the 6-bits from the DB, the rest is used to mark
- *        the OID as 
+ *        the OID as
  */
 
 /**
@@ -92,7 +92,19 @@ public class OBJYCDOIDUtil
   // 2.0 code
   public static boolean isValidObjyId(CDOID cdoId)
   {
-    return cdoId instanceof CDOIDObjectLongImpl && ((CDOIDObjectLongImpl)cdoId).getLongValue() > 1717828929;
+    if (cdoId instanceof CDOIDObject)
+    {
+      try
+      {
+        return CDOIDUtil.getLong(cdoId) > 1717828929;
+      }
+      catch (Exception ignore)
+      {
+        // Fall through
+      }
+    }
+
+    return false;
   }
 
   public static ooId getooId(long longCdoID)
@@ -115,7 +127,7 @@ public class OBJYCDOIDUtil
 
   public static ooId getooId(CDOID cdoId)
   {
-    long longCdoID = org.eclipse.emf.cdo.common.id.CDOIDUtil.getLong(cdoId);
+    long longCdoID = CDOIDUtil.getLong(cdoId);
     return getooId(longCdoID);
   }
 

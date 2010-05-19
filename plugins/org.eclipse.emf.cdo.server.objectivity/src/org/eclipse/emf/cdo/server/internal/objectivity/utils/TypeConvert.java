@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Ibrahim Sallam - code refactoring for CDO 3.0
@@ -38,10 +38,8 @@ public class TypeConvert
       {
         return null;
       }
-      else
-      {
-        return OBJYCDOIDUtil.getooId((CDOID)target);
-      }
+
+      return OBJYCDOIDUtil.getooId((CDOID)target);
     }
     if (target instanceof ooId)
     {
@@ -55,13 +53,10 @@ public class TypeConvert
     {
       return ((ooObj)target).getOid();
     }
+
     throw new IllegalArgumentException(target.toString());
   }
 
-  /***
-   * @param target
-   * @return
-   */
   static public ooObj toOoObj(Object target)
   {
     if (target instanceof ObjyObject)
@@ -75,10 +70,6 @@ public class TypeConvert
     throw new IllegalArgumentException(target.toString());
   }
 
-  /***
-   * @param target
-   * @return
-   */
   static public Class_Object toClassObject(Object target)
   {
     if (target == null)
@@ -102,10 +93,6 @@ public class TypeConvert
 
   }
 
-  /***
-   * @param target
-   * @return
-   */
   static public ObjyObject toObjyObject(Object target)
   {
     if (target == null)

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Ibrahim Sallam - code refactoring for CDO 3.0
@@ -212,10 +212,13 @@ public abstract class ListChunked<E> implements MoveableList<E>
     int localIndex = index - lookupChunk.getStart();
     if (lookupChunk.isResolved())
     {
-      return (E)lookupChunk.set(localIndex, element);
+      @SuppressWarnings("unchecked")
+      E result = (E)lookupChunk.set(localIndex, element);
+      return result;
     }
 
-    int originIndex = lookupChunk.getStartOrigin() + localIndex;
+    // int originIndex = lookupChunk.getStartOrigin() + localIndex;
+    @SuppressWarnings("unchecked")
     E oldElement = (E)resolveElement(lookupChunk.getStartOrigin() + index - lookupChunk.getStart());
 
     if (index == lookupChunk.getStart())
@@ -345,11 +348,19 @@ public abstract class ListChunked<E> implements MoveableList<E>
 
     if (!chunk.isResolved())
     {
+      if (!resolve)
+      {
+        return null;
+      }
 
-      return resolve ? (E)resolveElement(chunk.getStartOrigin() + index - chunk.getStart()) : null;
+      @SuppressWarnings("unchecked")
+      E result = (E)resolveElement(chunk.getStartOrigin() + index - chunk.getStart());
+      return result;
     }
 
-    return (E)chunk.get(index - chunk.getStart());
+    @SuppressWarnings("unchecked")
+    E result = (E)chunk.get(index - chunk.getStart());
+    return result;
   }
 
   @Override
@@ -437,7 +448,9 @@ public abstract class ListChunked<E> implements MoveableList<E>
       adjustChunk.setStart(adjustChunk.getStart() - 1);
     }
 
-    return (E)elementToReturn;
+    @SuppressWarnings("unchecked")
+    E result = (E)elementToReturn;
+    return result;
   }
 
   public boolean removeAll(Collection<?> c)
@@ -492,7 +505,14 @@ public abstract class ListChunked<E> implements MoveableList<E>
 
     public List<Object> getList()
     {
-      return list instanceof List ? (List<Object>)list : null;
+      if (list instanceof List)
+      {
+        @SuppressWarnings("unchecked")
+        List<Object> result = (List<Object>)list;
+        return result;
+      }
+
+      return null;
     }
 
     public void setList(List<Object> list)
@@ -683,8 +703,7 @@ public abstract class ListChunked<E> implements MoveableList<E>
       }
       return getList().remove(index);
     }
-
-  };
+  }
 
   /**
    * @author Simon McDuff

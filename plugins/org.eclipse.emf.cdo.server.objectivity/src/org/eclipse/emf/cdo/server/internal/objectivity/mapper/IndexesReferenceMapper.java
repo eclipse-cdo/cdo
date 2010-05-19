@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Ibrahim Sallam - code refactoring for CDO 3.0
@@ -33,7 +33,7 @@ public class IndexesReferenceMapper implements IManyTypeMapper
     EAnnotation annotation = feature.getEAnnotation("ooindex");
     if (annotation != null)
     {
-      String oclString = annotation.getDetails().get("key");
+      // String oclString = annotation.getDetails().get("key");
 
     }
     return true;

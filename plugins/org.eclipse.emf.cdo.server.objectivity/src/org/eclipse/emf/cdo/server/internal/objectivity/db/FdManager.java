@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ibrahim Sallam - initial API and implementation
  */
@@ -40,7 +40,7 @@ public class FdManager
 
   private static final String DEFAULT_VALUE = "_DEFAULT_";
 
-  private static FdManager fdManagerSingleton = null;
+  // private static FdManager fdManagerSingleton = null;
 
   private String fdName = "test";
 
@@ -136,10 +136,8 @@ public class FdManager
         dumpStream(proc.getErrorStream());
         throw new RuntimeException("Error creating FD...");
       }
-      else
-      {
-        dumpStream(proc.getInputStream());
-      }
+
+      dumpStream(proc.getInputStream());
       bRet = true;
       loadSchema();
 
@@ -180,10 +178,8 @@ public class FdManager
         dumpStream(proc.getErrorStream());
         throw new RuntimeException("Error deleting FD...");
       }
-      else
-      {
-        dumpStream(proc.getInputStream());
-      }
+
+      dumpStream(proc.getInputStream());
       bRet = true;
 
     }
@@ -219,10 +215,8 @@ public class FdManager
         dumpStream(proc.getErrorStream());
         throw new RuntimeException("Error deleting DBs...");
       }
-      else
-      {
-        dumpStream(proc.getInputStream());
-      }
+
+      dumpStream(proc.getInputStream());
       bRet = true;
 
     }
@@ -241,6 +235,7 @@ public class FdManager
 
   }
 
+  @SuppressWarnings("unused")
   private boolean deleteDBs_cl()
   {
     boolean bRet = false;
@@ -258,10 +253,8 @@ public class FdManager
         dumpStream(proc.getErrorStream());
         throw new RuntimeException("Error deleting DBs...");
       }
-      else
-      {
-        dumpStream(proc.getInputStream());
-      }
+
+      dumpStream(proc.getInputStream());
       bRet = true;
 
     }
@@ -501,7 +494,7 @@ public class FdManager
     // fdManager.resetFD();
     Session session = new Session();
     session.begin();
-    Iterator itr = session.getFD().containedDBs();
+    Iterator<?> itr = session.getFD().containedDBs();
     ooDBObj dbObj = null;
     List<ooDBObj> dbList = new ArrayList<ooDBObj>();
     List<ooContObj> contList = new ArrayList<ooContObj>();
@@ -511,7 +504,7 @@ public class FdManager
       dbList.add(dbObj);
       // if (dbObj.getName().equals(ObjyDb.CONFIGDB_NAME))
       {
-        Iterator contItr = dbObj.contains();
+        Iterator<?> contItr = dbObj.contains();
         while (contItr.hasNext())
         {
           contList.add((ooContObj)contItr.next());
@@ -525,11 +518,11 @@ public class FdManager
       cont.delete();
     }
 
-    for (ooDBObj db : dbList)
-    {
-      // System.out.println("restFD() - deleting DB(" + db.getOid().getStoreString() + "):" + db.getName());
-      // db.delete();
-    }
+    // for (ooDBObj db : dbList)
+    // {
+    // System.out.println("restFD() - deleting DB(" + db.getOid().getStoreString() + "):" + db.getName());
+    // db.delete();
+    // }
 
     session.commit();
     session.terminate();

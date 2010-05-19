@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.server.objectivity.stub
 Bundle-Version: 3.0.0.qualifier
+Bundle-Localization: plugin
 Bundle-ClassPath: oojava_epl.jar
 Export-Package: com.objy.as;version="3.0.0";uses:="com.objy.pm.asexcep,com.objy.db.app,com.objy.as.app",
  com.objy.as.app;version="3.0.0";uses:="com.objy.db.app,com.objy.pm.asapp",

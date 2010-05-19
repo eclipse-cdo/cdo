@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  */
@@ -36,7 +36,7 @@ import java.util.Vector;
  */
 public class SmartLock
 {
-  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, SmartLock.class);
+  // private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, SmartLock.class);
 
   private static final ContextTracer TRACER_INFO = new ContextTracer(OM.INFO, SmartLock.class);
 
@@ -69,19 +69,18 @@ public class SmartLock
       container.refresh(oo.READ);
       return true;
     }
-    else
+
+    try
     {
-      try
-      {
-        container.lock(oo.READ);
-      }
-      catch (Exception e)
-      {
-        // In MROW Mode, an Exception occur if we try to upgrade the lock from read to write when the container is
-        // Locked by someone else.
-        container.refresh(oo.READ);
-      }
+      container.lock(oo.READ);
     }
+    catch (Exception e)
+    {
+      // In MROW Mode, an Exception occur if we try to upgrade the lock from read to write when the container is
+      // Locked by someone else.
+      container.refresh(oo.READ);
+    }
+
     return false;
   }
 
@@ -93,19 +92,18 @@ public class SmartLock
       container.refresh(oo.WRITE);
       return true;
     }
-    else
+
+    try
     {
-      try
-      {
-        container.lock(oo.WRITE);
-      }
-      catch (Exception e)
-      {
-        // In MROW Mode, an Exception occur if we try to upgrade the lock from read to write when the container is
-        // Locked by someone else.
-        container.refresh(oo.WRITE);
-      }
+      container.lock(oo.WRITE);
     }
+    catch (Exception e)
+    {
+      // In MROW Mode, an Exception occur if we try to upgrade the lock from read to write when the container is
+      // Locked by someone else.
+      container.refresh(oo.WRITE);
+    }
+
     return false;
   }
 

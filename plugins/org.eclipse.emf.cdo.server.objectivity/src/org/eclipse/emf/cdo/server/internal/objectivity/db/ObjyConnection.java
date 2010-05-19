@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ibrahim Sallam - initial API and implementation
  */
@@ -42,14 +42,14 @@ public class ObjyConnection
 
   private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyConnection.class);
 
-  private static final ContextTracer TRACER_INFO = new ContextTracer(OM.INFO, ObjyConnection.class);
+  // private static final ContextTracer TRACER_INFO = new ContextTracer(OM.INFO, ObjyConnection.class);
 
   // TODO - session pools could be a configuration candidate.
   private static final String SESSION_POOL_NAME_READ = "ReadSP";
 
   private static final String SESSION_POOL_NAME_WRITE = "WriteSP";
 
-  private static final String PoolInfo = "PoolInfo";
+  // private static final String PoolInfo = "PoolInfo";
 
   protected ConcurrentHashMap<String, ObjySession> readPool;
 
@@ -201,6 +201,8 @@ public class ObjyConnection
 
       // TRACER_DEBUG.trace("ObjyConnection.disconnect() -- cleanup any other sessions. ");
       // for testing we need to find out if there are any open sessions.
+
+      @SuppressWarnings("unchecked")
       Vector<Session> sessions = connection.sessions();
       for (Session aSession : sessions)
       {

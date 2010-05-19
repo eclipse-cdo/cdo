@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ibrahim Sallam - initial API and implementation
  */
@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
 import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.IManyTypeMapper;
@@ -45,7 +44,6 @@ import com.objy.as.app.Numeric_Value;
 import com.objy.as.app.Relationship_Object;
 import com.objy.as.app.String_Value;
 import com.objy.as.app.VArray_Object;
-import com.objy.db.ObjyRuntimeException;
 import com.objy.db.app.Session;
 import com.objy.db.app.ooId;
 import com.objy.db.app.ooObj;
@@ -133,7 +131,7 @@ public class ObjyObject
   }
 
   /**
-		 * 
+		 *
 		 */
   public ooId ooId()
   {
@@ -291,9 +289,6 @@ public class ObjyObject
   /**
    * This is used to cache the composite features, (manyAttributes, manyReference, and featureMap. TBD - verify the need
    * of this.
-   * 
-   * @param position
-   * @return
    */
   public Object getFeatureList(Class_Position position)
   {
@@ -477,7 +472,7 @@ public class ObjyObject
       } // for debugging.
     }
 
-    EClass eClass = revision.getEClass();
+    // EClass eClass = revision.getEClass();
 
     try
     {
@@ -515,7 +510,7 @@ public class ObjyObject
     {
       if (TRACER_DEBUG.isEnabled())
       {
-        TRACER_DEBUG.trace("=> ObjyObject.updateData() - oid:" + ooId().getStoreString() + //$NON-NLS-1$ 
+        TRACER_DEBUG.trace("=> ObjyObject.updateData() - oid:" + ooId().getStoreString() + //$NON-NLS-1$
             " - version:" + revision.getVersion()); //$NON-NLS-1$
       }
 
@@ -562,7 +557,7 @@ public class ObjyObject
           {
             // TODO - this code need refactoring...
             Object value = list.get(i);
-            if (value instanceof CDOIDExternalImpl)
+            if (value instanceof CDOIDExternal)
             {
               System.out.println("value is a proxy object - it should be handled by the mapper.");
               // create an ObjyProxy object to hold the the value.
@@ -585,7 +580,7 @@ public class ObjyObject
               System.out.println("-->> FeatureMap.Entry (" + i + ") -> feature:" + entryFeature.getName() + " - value:"
                   + entryValue + " - MetaID: " + metaId);
               ooId oid = null;
-              if (entryValue instanceof CDOIDExternalImpl)
+              if (entryValue instanceof CDOIDExternal)
               {
                 System.out.println("value is a proxy object - it should be handled by the mapper.");
                 // create an ObjyProxy object to hold the the value.
@@ -656,6 +651,8 @@ public class ObjyObject
     }
     Session.getCurrent().setReturn_Class_Object(true);
     // int numRevisions = (int) revisions.size();
+
+    @SuppressWarnings("unchecked")
     Iterator<Class_Object> itr = revisionsRel.get_iterator();
     while (itr.hasNext())
     {
@@ -677,31 +674,24 @@ public class ObjyObject
     lastRevisionRel.form(objyRevision.objectId);
   }
 
-  /****
-   * Wrapper around ObjyObject to allow clustering of other objects near this one.
-   * 
-   * @param otherObj
-   */
-  private void cluster(ooObj otherObj)
-  {
-    try
-    {
-      ooObj thisObj = ooObj.create_ooObj(objectId);
-      thisObj.cluster(otherObj);
-    }
-    catch (ObjyRuntimeException ex)
-    {
-      ex.printStackTrace();
-    }
-  }
+  // /**
+  // * Wrapper around ObjyObject to allow clustering of other objects near this one.
+  // */
+  // private void cluster(ooObj otherObj)
+  // {
+  // try
+  // {
+  // ooObj thisObj = ooObj.create_ooObj(objectId);
+  // thisObj.cluster(otherObj);
+  // }
+  // catch (ObjyRuntimeException ex)
+  // {
+  // ex.printStackTrace();
+  // }
+  // }
 
   /**
    * Fetch data from the store and return a revision.
-   * 
-   * @param objectivityStoreAccessor
-   * @param revision
-   * @param listChunk
-   * @return
    */
   public boolean fetch(ObjectivityStoreAccessor storeAccessor, InternalCDORevision revision, int listChunk)
   {
@@ -869,11 +859,6 @@ public class ObjyObject
   /**
    * Fetch data for a specific feature from the store, and return a list of objects. Used by
    * ObjectivityStoreChunkAccessor
-   * 
-   * @param feature
-   * @param startIndex
-   * @param chunkSize
-   * @return
    */
   public Object[] fetch(ObjectivityStoreAccessor storeAccessor, EStructuralFeature feature, int startIndex,
       int chunkSize)
@@ -989,7 +974,7 @@ public class ObjyObject
       } // for debugging.
     }
 
-    Class_Position position = objyClass().resolve_position(feature.getName());
+    // Class_Position position = objyClass().resolve_position(feature.getName());
 
     IManyTypeMapper mapper = (IManyTypeMapper)ObjyMapper.INSTANCE.getTypeMapper(feature);
 
@@ -1162,12 +1147,6 @@ public class ObjyObject
     ((IManyTypeMapper)mapper).clear(this, feature);
   }
 
-  /***
-   * @param feature
-   * @param targetIndex
-   * @param sourceIndex
-   * @return
-   */
   public void move(EStructuralFeature feature, int targetIndex, int sourceIndex)
   {
     if (TRACER_DEBUG.isEnabled())
@@ -1192,11 +1171,6 @@ public class ObjyObject
     ((IManyTypeMapper)mapper).move(this, feature, targetIndex, sourceIndex);
   }
 
-  /***
-   * @param feature
-   * @param index
-   * @return
-   */
   public Object remove(EStructuralFeature feature, int index)
   {
     if (TRACER_DEBUG.isEnabled())
@@ -1216,7 +1190,7 @@ public class ObjyObject
       TRACER_DEBUG.trace("Remove object from '" + ooId().getStoreString() + "' at index " + index);
     }
 
-    Class_Position position = objyClass.resolve_position(feature.getName());
+    // Class_Position position = objyClass.resolve_position(feature.getName());
 
     IManyTypeMapper mapper = (IManyTypeMapper)ObjyMapper.INSTANCE.getTypeMapper(feature);
 
@@ -1233,12 +1207,6 @@ public class ObjyObject
 
   }
 
-  /***
-   * @param feature
-   * @param index
-   * @param value
-   * @return
-   */
   public Object set(EStructuralFeature feature, int index, Object value)
   {
     if (TRACER_DEBUG.isEnabled())
@@ -1315,10 +1283,6 @@ public class ObjyObject
 
   /***
    * TODO - Remove the eClass and just use the objyObject attributes to do the clean up.
-   * 
-   * @param objectManager
-   * @param objyObject
-   * @param eClass
    */
   public void delete(ObjyObjectManager objectManager, EClass eClass)
   {

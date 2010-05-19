@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Ibrahim Sallam - code refactoring for CDO 3.0
@@ -66,10 +66,8 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
     {
       return (String)objectValue;
     }
-    else
-    {
-      return null;
-    }
+
+    return null;
   }
 
   protected Object objectFromString(EStructuralFeature feature, String stringValue)
@@ -171,8 +169,8 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
   public void initialize(Class_Object classObject, EStructuralFeature feature)
   {
     Class_Position position = classObject.type_of().position_in_class(getAttributeName(feature));
-    Class_Object newClassObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(
-        ObjyArrayListString.ClassName).getASClass(), classObject.objectID(), false);
+    Class_Object newClassObject = Class_Object.new_persistent_object(
+        ObjySchema.getObjyClass(ObjyArrayListString.ClassName).getASClass(), classObject.objectID(), false);
     classObject.set_ooId(position, newClassObject.objectID());
     ObjyArrayListString.initObject(newClassObject);
   }

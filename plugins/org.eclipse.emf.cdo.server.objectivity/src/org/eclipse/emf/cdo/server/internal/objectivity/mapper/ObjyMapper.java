@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Ibrahim Sallam - code refactoring for CDO 3.0
@@ -43,7 +43,7 @@ public class ObjyMapper
   // private AttributeBridge manyRef = new ManyReferenceMapperTreeListX();
   private ITypeMapper singleRef = new SingleReferenceMapper();
 
-  private ITypeMapper singleContRef = new SingleContainementReferenceMapper();
+  // private ITypeMapper singleContRef = new SingleContainementReferenceMapper();
 
   public ObjyMapper()
   {
@@ -71,7 +71,9 @@ public class ObjyMapper
     boolean isMany = false;
 
     if (feature.isMany())
+    {
       isMany = true;
+    }
 
     if (feature instanceof EAttribute)
     {
@@ -84,9 +86,13 @@ public class ObjyMapper
       }
       ITypeMapper attrMapper = null;
       if (isMany)
+      {
         attrMapper = manyTypeMap.get(type);
+      }
       else
+      {
         attrMapper = typeMap.get(type);
+      }
       if (attrMapper != null)
       {
         return attrMapper;
@@ -101,9 +107,11 @@ public class ObjyMapper
       if (type instanceof EDataType)
       {
         if (isMany)
+        {
           return CustomDataManyTypeMapper.INSTANCE;
-        else
-          return CustomDataTypeMapper.INSTANCE;
+        }
+
+        return CustomDataTypeMapper.INSTANCE;
       }
     }
     else if (feature instanceof EReference)

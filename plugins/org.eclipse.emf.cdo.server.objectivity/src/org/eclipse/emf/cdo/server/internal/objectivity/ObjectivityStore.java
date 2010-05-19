@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Ibrahim Sallam - code refactoring for CDO 3.0
@@ -147,9 +147,9 @@ public class ObjectivityStore extends Store implements IObjectivityStore
       }
 
       // This is used for the package storage...
-      ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
+      // ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
       // make sure we have the root resource created.
-      ObjyObject resourceList = ObjyDb.getOrCreateResourceList();
+      // ObjyObject resourceList = ObjyDb.getOrCreateResourceList();
 
       objyCommitInfoHandler = new ObjyCommitInfoHandler(getRepository().getName());
       objyPropertyMapHandler = new ObjyPropertyMapHandler();
@@ -254,7 +254,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
       if (!com.objy.db.app.Session.getCurrent().getFD().hasDB(getRepository().getName()))
       {
         // Create the repo DB.
-        ObjyScope objyScope = new ObjyScope(getRepository().getName(), ObjyDb.DEFAULT_CONT_NAME);
+        // ObjyScope objyScope = new ObjyScope(getRepository().getName(), ObjyDb.DEFAULT_CONT_NAME);
         // ...do other initialisation of the repository here.
         // Note that in the current implementation we don't delete DBs by default, only delete
         // the containers (see ObjectivityStoreConfig.resetFD()) so any initialization done here

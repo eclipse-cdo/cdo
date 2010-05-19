@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ibrahim Sallam - initial API and implementation
  */
@@ -21,6 +21,7 @@ import org.w3c.dom.NodeList;
 
 public class ObjectivityStoreConfig extends Lifecycle implements IObjectivityStoreConfig
 {
+  private static final long serialVersionUID = 1L;
 
   FdManager fdManager = new FdManager();
 
@@ -83,7 +84,7 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
     String fdName = fdConfig.getAttribute("name"); //$NON-NLS-1$
     String lockServerHost = fdConfig.getAttribute("lockServerHost"); //$NON-NLS-1$
     String fdDirPath = fdConfig.getAttribute("fdDirPath"); //$NON-NLS-1$
-    String dbDirPath = fdConfig.getAttribute("dbDirPath"); //$NON-NLS-1$
+    //    String dbDirPath = fdConfig.getAttribute("dbDirPath"); //$NON-NLS-1$
     String fdFileHost = fdConfig.getAttribute("fdFileHost"); //$NON-NLS-1$
     String fdNumber = fdConfig.getAttribute("fdNumber"); //$NON-NLS-1$
     String pageSize = fdConfig.getAttribute("pageSize"); //$NON-NLS-1$

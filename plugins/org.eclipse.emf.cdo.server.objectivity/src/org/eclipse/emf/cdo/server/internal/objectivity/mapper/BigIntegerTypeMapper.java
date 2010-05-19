@@ -71,12 +71,14 @@ public class BigIntegerTypeMapper extends StringTypeMapper
     objyObject.set_numeric(nullPosition, isNullValue);
   }
 
+  @Override
   public void modifySchema(Proposed_Class proposedooClass, EStructuralFeature feature)
   {
     // TODO Auto-generated method stub
 
   }
 
+  @Override
   public boolean validate(d_Attribute ooAttribute, EStructuralFeature feature)
   {
     // TODO Auto-generated method stub

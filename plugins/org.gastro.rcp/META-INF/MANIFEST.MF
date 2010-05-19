@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Gastro RCP
+Bundle-Name: CDO Gastro Example RCP
 Bundle-SymbolicName: org.gastro.rcp; singleton:=true
 Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: org.gastro.internal.rcp.Activator
@@ -26,4 +26,4 @@ Export-Package: org.eclipse.nebula.animation;version="0.5.2",
 Bundle-ClassPath: .,
  org.eclipse.nebula.widgets.pshelf_1.0.0.HEAD.jar,
  org.eclipse.nebula.widgets.gallery_0.5.2.R_0_20090418.jar
-Bundle-Vendor: www.gastro.org
+Bundle-Vendor: Eclipse Modeling Project

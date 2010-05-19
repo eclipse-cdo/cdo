@@ -1,12 +1,12 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Gastro Table
+Bundle-Name: CDO Gastro Example RCP Table
 Bundle-SymbolicName: org.gastro.rcp.table; singleton:=true
 Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: org.gastro.rcp.internal.table.Activator
 Require-Bundle: org.gastro.rcp;bundle-version="[3.0.0,4.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Bundle-Vendor: www.gastro.org
+Bundle-Vendor: Eclipse Modeling Project
 Export-Package: com.swtdesigner;version="3.0.0";x-internal:=true,
  org.gastro.rcp.internal.table;version="3.0.0";x-internal:=true

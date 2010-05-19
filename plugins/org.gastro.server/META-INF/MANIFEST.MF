@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Gastro Server
+Bundle-Name: CDO Gastro Example Server
 Bundle-SymbolicName: org.gastro.server;singleton:=true
 Bundle-Version: 3.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
@@ -16,7 +16,7 @@ Import-Package: org.h2;version="1.1.114",
  org.h2.jdbcx;version="1.1.114",
  org.h2.tools;version="1.1.114",
  org.h2.util;version="1.1.114"
-Bundle-Vendor: www.gastro.org
+Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.gastro.internal.server;version="3.0.0";x-internal:=true,
  org.gastro.server;version="3.0.0"
 Bundle-ActivationPolicy: lazy

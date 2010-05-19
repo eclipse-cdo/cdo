@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Gastro Test Client
+Bundle-Name: CDO Gastro Example Test Client
 Bundle-SymbolicName: org.gastro.testclient
 Bundle-Version: 3.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
@@ -11,4 +11,4 @@ Require-Bundle: org.eclipse.net4j.tcp;bundle-version="[2.0.0,4.0.0)",
  org.gastro.business.edit;bundle-version="1.0.0",
  org.gastro.inventory;bundle-version="1.0.0",
  org.gastro.inventory.edit;bundle-version="1.0.0"
-Bundle-Vendor: www.gastro.org
+Bundle-Vendor: Eclipse Modeling Project

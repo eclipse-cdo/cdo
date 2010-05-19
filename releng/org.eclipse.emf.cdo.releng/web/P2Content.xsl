@@ -23,9 +23,9 @@
 				<em>For information about installing or updating software, see the
 					<a
 						href="http://help.eclipse.org/galileo/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/tasks-124.htm">
-						Eclipse Platform Help</a>.<br/>
-					Some features in this p2 repository may require <b>prior</b> installation of third party drivers from the <a href="http://net4j.sourceforge.net/update/">Net4j and CDO Plus</a> repository!
-				</em>
+						Eclipse Platform Help</a>.
+					<br/> Some plugins require third party drivers from
+					<a href="http://net4j.sourceforge.net/update/">Net4j and CDO Plus</a>. </em>
 
 			</p>
 			<table border="0">

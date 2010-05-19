@@ -40,3 +40,4 @@ Export-Package: metamodel;version="0.2.0";x-internal:=true,
  org.eclipse.emf.cdo.dawn.codegen.util;version="0.2.0",
  template;version="0.2.0";x-internal:=true,
  workflow;version="0.2.0";x-internal:=true
+Bundle-Localization: plugin

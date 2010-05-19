@@ -10,7 +10,7 @@
 	  Eike Stepper - initial API and implementation
 -->
 <feature
-      id="org.eclipse.emf.cdo.server"
+      id="org.eclipse.emf.cdo.server.db"
       label="%featureName"
       version="3.0.0.qualifier"
       provider-name="%providerName"
@@ -33,28 +33,7 @@
    </url>
 
    <plugin
-         id="org.eclipse.emf.cdo.common"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.server"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.server.net4j"
+         id="org.eclipse.emf.cdo.server.db"
          download-size="0"
          install-size="0"
          version="0.0.0"

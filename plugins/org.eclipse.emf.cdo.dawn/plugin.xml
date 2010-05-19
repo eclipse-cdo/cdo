@@ -129,25 +129,4 @@
              name="UnlockObjects">
        </command>
     </extension>
-    <extension
-          point="org.eclipse.ui.commands">
-       <command
-             id="org.eclipse.emf.cdo.dawn.handleConflict"
-             name="HandleConflict">
-       </command>
-       <command
-             id="org.eclipse.emf.cdo.dawn.lockObjects"
-             name="LockObjects">
-       </command>
-    </extension>
-    <extension
-          point="org.eclipse.ui.commands">
-       <command
-             id="org.eclipse.emf.cdo.dawn.handleConflict"
-             name="HandleConflict">
-       </command>
-    </extension>
-    <extension
-          point="org.eclipse.ui.commands">
-    </extension>
 </plugin>

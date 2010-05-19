@@ -6,7 +6,9 @@
          <meta.schema plugin="org.eclipse.emf.cdo.dawn" id="org.eclipse.emf.cdo.dawn.editpartstylizers" name="Dawn EditPart Stylizers"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         This extension point is used to define custom EditPartStylizers which can define the appearance of the EditPart&apos;s view.
+An EditPartStylizer can influence the visual representation of the models state. 
+Dawn knows three states - default, conflicted and locked. By implementing an own DawnEditPartStylizer you can influence the appearance of the three states for your EditPart and it&apos;s related models. New stylizer can be registered to Dawn using this extension point.
       </documentation>
    </annotation>
 
@@ -77,7 +79,7 @@
          <meta.section type="since"/>
       </appinfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         0.2.0
       </documentation>
    </annotation>
 
@@ -86,7 +88,12 @@
          <meta.section type="examples"/>
       </appinfo>
       <documentation>
-         [Enter extension point usage example here.]
+         Following is an example of how a EditPartStylizer can be registered:
+&lt;pre&gt;
+	&lt;DawnEditPartStylizers                 		editpart=&quot;org.eclipse.emf.cdo.dawn.reference.editor.classdiagram.diagram.edit.parts.AClassEditPart&quot;
+        stylizer=&quot;org.eclipse.emf.cdo.dawn.appearance.impl.DawnBasicNodeEditPartStylizerImpl&quot;&gt;
+	&lt;/DawnEditPartStylizers&gt;
+&lt;/pre&gt;
       </documentation>
    </annotation>
 
@@ -95,18 +102,19 @@
          <meta.section type="apiinfo"/>
       </appinfo>
       <documentation>
-         [Enter API information here.]
+         To customize the EditPart you must implement the interface org.eclipse.emf.cdo.dawn.appearance.EditPartStylizer. For Graphical EditParts this is typically done by extending the  org.eclipse.emf.cdo.dawn.appearance.impl.DawnBasicGraphicalEditPartStylizer. Set this implementation for the &lt;b&gt;stylizer&lt;/b&gt; attribute. The &lt;b&gt;editpart&lt;b/&gt; attribute takes the EditPart which should be customized. 
       </documentation>
    </annotation>
+
 
    <annotation>
       <appinfo>
-         <meta.section type="implementation"/>
+         <meta.section type="copyright"/>
       </appinfo>
       <documentation>
-         [Enter information about supplied implementation of this extension point.]
+         Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.&lt;br&gt;
+All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at &lt;a href=&quot;http://www.eclipse.org/legal/epl-v10.html&quot;&gt;http://www.eclipse.org/legal/epl-v10.html&lt;/a&gt;
       </documentation>
    </annotation>
-
 
 </schema>

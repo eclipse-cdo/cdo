@@ -6,7 +6,7 @@
          <meta.schema plugin="org.eclipse.emf.cdo.dawn" id="org.eclipse.emf.cdo.dawn.listeners" name="DawnListeners"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         This extension point allows to add a tranaction listener to the editor&apos;s related transaction. This Listener must extend org.eclipse.emf.cdo.dawn.notifications.BasicDawnListener. This allows to change the editors behavior an transaction changes. 
       </documentation>
    </annotation>
 
@@ -18,7 +18,6 @@
       </annotation>
       <complexType>
          <sequence>
-            <element ref="DawnResourceListener"/>
             <element ref="DawnTransactionListener"/>
          </sequence>
          <attribute name="point" type="string" use="required">
@@ -83,7 +82,7 @@
          <meta.section type="since"/>
       </appinfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         0.2.0
       </documentation>
    </annotation>
 
@@ -92,7 +91,14 @@
          <meta.section type="examples"/>
       </appinfo>
       <documentation>
-         [Enter extension point usage example here.]
+         This examples shows how to set an own implementation to the extension point.
+&lt;pre&gt;
+  &lt;extension  point=&quot;org.eclipse.emf.cdo.dawn.listeners&quot;&gt;
+    &lt;DawnTransactionListener
+                class=&quot;org.eclipse.emf.cdo.dawn.notifications.DawnGMFTransactionListener&quot;&gt;
+    &lt;/DawnTransactionListener&gt;
+  &lt;/extension&gt;
+&lt;/pre&gt;       
       </documentation>
    </annotation>
 
@@ -101,18 +107,19 @@
          <meta.section type="apiinfo"/>
       </appinfo>
       <documentation>
-         [Enter API information here.]
+         Extend org.eclipse.emf.cdo.dawn.notifications.BasicDawnListener and override the method notifyEvent(IEvent event) to change the behavior. Set your implementation to the &lt;b&gt;class&lt;/b&gt; attribute of the extension point. 
       </documentation>
    </annotation>
+
 
    <annotation>
       <appinfo>
-         <meta.section type="implementation"/>
+         <meta.section type="copyright"/>
       </appinfo>
       <documentation>
-         [Enter information about supplied implementation of this extension point.]
+         Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.&lt;br&gt;
+All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at &lt;a href=&quot;http://www.eclipse.org/legal/epl-v10.html&quot;&gt;http://www.eclipse.org/legal/epl-v10.html&lt;/a&gt;
       </documentation>
    </annotation>
-
 
 </schema>

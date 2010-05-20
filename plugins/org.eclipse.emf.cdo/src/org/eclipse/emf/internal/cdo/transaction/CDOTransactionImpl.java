@@ -65,7 +65,14 @@ import org.eclipse.net4j.util.options.OptionsEvent;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.util.EContentsEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.EContentsEList.FeatureIterator;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -81,6 +88,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1313,7 +1321,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     transactionStrategy = null;
     super.doDeactivate();
   }
-
+  
   /**
    * @author Simon McDuff
    */
@@ -1436,12 +1444,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           Set<CDOIDAndVersion> dirtyIDs = new HashSet<CDOIDAndVersion>();
           for (CDOObject dirtyObject : dirtyObjects.values())
           {
-            CDOState cdoState = dirtyObject.cdoState();
-            if (cdoState != CDOState.CLEAN)
-            {
-              System.out.println(cdoState);
-            }
-
             CDORevision revision = dirtyObject.cdoRevision();
             CDOIDAndVersion dirtyID = CDOIDUtil.createIDAndVersion(revision.getID(), revision.getVersion() - 1);
             dirtyIDs.add(dirtyID);

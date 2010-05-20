@@ -225,14 +225,12 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		<!--
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-		resolutionFilter="(|(build.type=N)(build.type=I))">
-		<rm:uri format="{0}/releases/helios">
-		<bc:propertyRef key="eclipse.downloads"/>
-		</rm:uri>
+			resolutionFilter="(|(build.type=N)(build.type=I))">
+			<rm:uri format="{0}/releases/helios">
+				<bc:propertyRef key="eclipse.downloads"/>
+			</rm:uri>
 		</rm:provider>
-		-->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(|(build.type=N)(build.type=I))">
 			<rm:uri format="{0}/eclipse/updates/3.6milestones">

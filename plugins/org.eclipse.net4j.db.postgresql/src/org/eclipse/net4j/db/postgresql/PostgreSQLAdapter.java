@@ -95,6 +95,7 @@ public class PostgreSQLAdapter extends DBAdapter
     DBType type = field.getType();
     switch (type)
     {
+    case LONGVARCHAR:
     case VARCHAR:
     case CLOB:
       return "text"; //$NON-NLS-1$

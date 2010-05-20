@@ -201,7 +201,7 @@
 
 	<rm:searchPath name="orbit">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="{0}/tools/orbit/downloads/drops/S20100508202910/updateSite">
+			<rm:uri format="{0}/tools/orbit/downloads/drops/S20100514103823/updateSite">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
@@ -225,7 +225,14 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
+			resolutionFilter="(|(build.type=N)(build.type=I))">
+			<rm:uri format="{0}/releases/helios">
+				<bc:propertyRef key="eclipse.downloads"/>
+			</rm:uri>
+		</rm:provider>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
+			resolutionFilter="(|(build.type=N)(build.type=I))">
 			<rm:uri format="{0}/eclipse/updates/3.6milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
@@ -233,12 +240,6 @@
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(|(build.type=M)(build.type=S)(build.type=R))">
 			<rm:uri format="{0}/releases/staging">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
-		</rm:provider>
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(|(build.type=N)(build.type=I))">
-			<rm:uri format="{0}/releases/helios">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>

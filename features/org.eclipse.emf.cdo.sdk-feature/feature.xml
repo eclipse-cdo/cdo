@@ -32,6 +32,12 @@
       <update label="%updateSiteName" url="http://download.eclipse.org/modeling/emf/cdo/updates/3.0/"/>
    </url>
 
+   <plugin
+         id="org.eclipse.emf.cdo.sdk"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
    <includes id="org.eclipse.emf.cdo" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.server" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.server.db" version="0.0.0"/>

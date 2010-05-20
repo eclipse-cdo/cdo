@@ -32,6 +32,12 @@
       <update label="%updateSiteName" url="http://download.eclipse.org/modeling/emf/cdo/updates/3.0/"/>
    </url>
 
+   <plugin
+         id="org.eclipse.net4j.sdk"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
    <includes
          id="org.eclipse.net4j"
          version="0.0.0"/>

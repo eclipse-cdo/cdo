@@ -43,5 +43,12 @@
             file="contexts.xml">
       </contexts>
    </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.emf.cdo.dawn.ui.categroy.examples"
+            name="Dawn Examples">
+      </category>
+   </extension>
 
 </plugin>

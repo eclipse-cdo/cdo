@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.util.connection;
 
+import org.eclipse.emf.cdo.dawn.internal.util.bundle.OM;
 import org.eclipse.emf.cdo.dawn.util.exceptions.DawnInvalidIdException;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -24,6 +25,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -38,6 +40,7 @@ import java.util.Map;
  */
 public class CDOConnectionUtil
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOConnectionUtil.class);
 
   public static CDOConnectionUtil instance = new CDOConnectionUtil();
 
@@ -116,7 +119,10 @@ public class CDOConnectionUtil
     {
       throw new DawnInvalidIdException("The identifier '" + id + "' is invalid for openeing a transaction");
     }
-    System.out.println("Opening transaction for " + id + " on " + resourceSet);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Opening transaction for {0} on {1}", id, resourceSet); //$NON-NLS-1$
+    }
     id = convert(id);
     CDOTransaction transaction = getCurrentSession().openTransaction(resourceSet);
     getTransactions().put(id, transaction);

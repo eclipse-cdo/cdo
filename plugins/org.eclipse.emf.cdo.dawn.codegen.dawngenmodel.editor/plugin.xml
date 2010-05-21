@@ -5,20 +5,17 @@
  <copyright>
  </copyright>
 
- $Id: plugin.xml,v 1.1 2010-05-16 16:04:11 mfluegge Exp $
+ $Id: plugin.xml,v 1.2 2010-05-21 15:00:52 mfluegge Exp $
 -->
 
 <plugin>
 
    <extension point="org.eclipse.ui.newWizards">
-      <category
-            id="org.eclipse.emf.ecore.Wizard.category.ID"
-            name="%_UI_Wizard_category"/>
       <wizard
             id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.presentation.DawngenmodelModelWizardID"
             name="%_UI_DawngenmodelModelWizard_label"
             class="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.presentation.DawngenmodelModelWizard"
-            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            category="org.eclipse.emf.cdo.dawn.ui.category.dawn"
             icon="icons/full/obj16/DawngenmodelModelFile.gif">
          <description>%_UI_DawngenmodelModelWizard_description</description>
          <selection class="org.eclipse.core.resources.IResource"/>

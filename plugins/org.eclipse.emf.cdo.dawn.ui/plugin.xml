@@ -46,9 +46,12 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <category
-            id="org.eclipse.emf.cdo.dawn.ui.categroy.examples"
+            id="org.eclipse.emf.cdo.dawn.ui.category.examples"
             name="Dawn Examples">
       </category>
+      <category
+            id="org.eclipse.emf.cdo.dawn.ui.category.dawn"
+            name="Dawn">
+      </category>
    </extension>
-
 </plugin>

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.clustering.ObjyPlacementManager;
@@ -104,7 +105,7 @@ public class ObjyObjectManager
     // Initialize the object
     for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
     {
-      if (!(feature instanceof EAttribute || feature instanceof EReference) || feature.isTransient())
+      if (!(feature instanceof EAttribute || feature instanceof EReference) || !EMFUtil.isPersistent(feature))
       {
         continue;
       }

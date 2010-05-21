@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -433,7 +434,7 @@ public class ObjyObject
       }
       for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
       {
-        if (!(feature instanceof EAttribute || feature instanceof EReference) || feature.isTransient())
+        if (!(feature instanceof EAttribute || feature instanceof EReference) || !EMFUtil.isPersistent(feature))
         {
           continue;
         }
@@ -525,7 +526,7 @@ public class ObjyObject
 
       for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
       {
-        if (!(feature instanceof EAttribute || feature instanceof EReference) || feature.isTransient())
+        if (!(feature instanceof EAttribute || feature instanceof EReference) || !EMFUtil.isPersistent(feature))
         {
           continue;
         }
@@ -733,7 +734,7 @@ public class ObjyObject
 
       for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
       {
-        if (!(feature instanceof EAttribute || feature instanceof EReference) || feature.isTransient())
+        if (!(feature instanceof EAttribute || feature instanceof EReference) || !EMFUtil.isPersistent(feature))
         {
           continue;
         }
@@ -1291,7 +1292,7 @@ public class ObjyObject
 
     for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
     {
-      if (!(feature instanceof EAttribute || feature instanceof EReference) || feature.isTransient())
+      if (!(feature instanceof EAttribute || feature instanceof EReference) || !EMFUtil.isPersistent(feature))
       {
         continue;
       }

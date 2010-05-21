@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.mapper;
 
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -59,7 +60,7 @@ public class ObjyMapper
 
   public ITypeMapper getTypeMapper(EStructuralFeature feature)
   {
-    if (feature == null || feature.isTransient())
+    if (feature == null || !EMFUtil.isPersistent(feature))
     {
       if (TRACER_DEBUG.isEnabled())
       {

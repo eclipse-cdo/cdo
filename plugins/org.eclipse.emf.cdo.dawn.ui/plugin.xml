@@ -20,7 +20,7 @@
       <view
             category="org.eclipse.emf.cdo.dawn.ui"
             class="org.eclipse.emf.cdo.dawn.ui.views.DawnExplorer"
-            icon="icons/dawn.gif"
+            icon="icons/dawn_16x16.gif"
             id="org.eclipse.emf.cdo.dawn.ui.views.DawnExplorer"
             name="Dawn Explorer">
       </view>

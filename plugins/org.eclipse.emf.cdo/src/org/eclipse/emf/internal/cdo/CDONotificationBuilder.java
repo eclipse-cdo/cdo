@@ -177,8 +177,10 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 
   public void visit(CDOListFeatureDelta deltas)
   {
-    patchIndices(deltas);
-    for (CDOFeatureDelta delta : deltas.getListChanges())
+    // patch the indices on a copy to avoid duplicate patching.
+    CDOListFeatureDelta workDelta = (CDOListFeatureDelta)deltas.copy();
+    patchIndices(workDelta);
+    for (CDOFeatureDelta delta : workDelta.getListChanges())
     {
       delta.accept(this);
     }

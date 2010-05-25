@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -29,7 +29,7 @@ import java.util.Map.Entry;
  */
 public class FormatChecker
 {
-  private static final String COPYRIGHT = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.";
+  private static final String COPYRIGHT = "Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.";
 
   private static Map<String, List<Integer>> complaints = new HashMap<String, List<Integer>>();
 

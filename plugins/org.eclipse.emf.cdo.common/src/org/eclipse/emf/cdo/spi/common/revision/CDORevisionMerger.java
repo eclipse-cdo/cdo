@@ -43,7 +43,7 @@ public class CDORevisionMerger extends CDOFeatureDeltaVisitorImpl
   @Override
   public void visit(CDOMoveFeatureDelta delta)
   {
-    revision.move(delta.getFeature(), delta.getOldPosition(), delta.getNewPosition());
+    revision.move(delta.getFeature(), delta.getNewPosition(), delta.getOldPosition());
   }
 
   @Override

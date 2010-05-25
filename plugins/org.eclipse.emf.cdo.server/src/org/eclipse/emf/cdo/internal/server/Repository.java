@@ -313,6 +313,11 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public int createBranch(int branchID, BranchInfo branchInfo)
   {
+    if (!isSupportingBranches())
+    {
+      throw new IllegalStateException("Branching is not supported by " + this);
+    }
+
     synchronized (createBranchLock)
     {
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();

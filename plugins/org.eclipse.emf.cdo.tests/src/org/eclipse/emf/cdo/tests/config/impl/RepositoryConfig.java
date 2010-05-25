@@ -120,6 +120,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   protected void initRepositoryProperties(Map<String, String> props)
   {
     props.put(Props.OVERRIDE_UUID, ""); // UUID := name !!!
+    props.put(Props.SUPPORTING_AUDITS, "false");
+    props.put(Props.SUPPORTING_BRANCHES, "false");
     props.put(Props.CURRENT_LRU_CAPACITY, "10000");
     props.put(Props.REVISED_LRU_CAPACITY, "10000");
   }

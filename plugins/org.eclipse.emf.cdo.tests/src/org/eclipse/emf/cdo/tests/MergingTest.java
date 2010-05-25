@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -26,20 +25,16 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 
-import java.util.Map;
-
 /**
  * @author Eike Stepper
  */
 public class MergingTest extends AbstractCDOTest
 {
   @Override
-  public synchronized Map<String, Object> getTestProperties()
+  protected void doSetUp() throws Exception
   {
-    Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(IRepository.Props.SUPPORTING_AUDITS, "true");
-    testProperties.put(IRepository.Props.SUPPORTING_BRANCHES, "true");
-    return testProperties;
+    super.doSetUp();
+    skipTest(!getRepository().isSupportingBranches());
   }
 
   public void testFromEmptyBranches() throws Exception

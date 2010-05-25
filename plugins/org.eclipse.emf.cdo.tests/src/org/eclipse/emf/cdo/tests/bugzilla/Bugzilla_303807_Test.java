@@ -25,6 +25,13 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
  */
 public class Bugzilla_303807_Test extends AbstractCDOTest
 {
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    super.doSetUp();
+    skipTest(!getRepository().isSupportingBranches());
+  }
+
   public void testBugzilla_303807() throws Exception
   {
     CDOSession session = openSession();

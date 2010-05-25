@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.cache.branch.BranchRevisionCache;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -52,18 +51,11 @@ public class BranchingTest extends AbstractCDOTest
   protected CDOSession session1;
 
   @Override
-  public synchronized Map<String, Object> getTestProperties()
-  {
-    Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(IRepository.Props.SUPPORTING_AUDITS, "true");
-    testProperties.put(IRepository.Props.SUPPORTING_BRANCHES, "true");
-    return testProperties;
-  }
-
-  @Override
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
+    skipTest(!getRepository().isSupportingBranches());
+
     Field disableGC = ReflectUtil.getField(BranchRevisionCache.class, "disableGC");
     ReflectUtil.setValue(disableGC, null, true);
   }
@@ -226,8 +218,8 @@ public class BranchingTest extends AbstractCDOTest
     assertEquals(mainBranch.getBasePath(), new CDOBranchPoint[] { mainBranch.getBase() });
     assertEquals(testing1.getBasePath(), new CDOBranchPoint[] { mainBranch.getBase(), testing1.getBase() });
     assertEquals(testing2.getBasePath(), new CDOBranchPoint[] { mainBranch.getBase(), testing2.getBase() });
-    assertEquals(subsub.getBasePath(), new CDOBranchPoint[] { mainBranch.getBase(), testing1.getBase(),
-        subsub.getBase() });
+    assertEquals(subsub.getBasePath(),
+        new CDOBranchPoint[] { mainBranch.getBase(), testing1.getBase(), subsub.getBase() });
     session.close();
   }
 

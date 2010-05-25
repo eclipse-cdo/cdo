@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
@@ -28,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -38,11 +36,10 @@ public class AuditTest extends AbstractCDOTest
   protected CDOSession session1;
 
   @Override
-  public synchronized Map<String, Object> getTestProperties()
+  protected void doSetUp() throws Exception
   {
-    Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(IRepository.Props.SUPPORTING_AUDITS, "true");
-    return testProperties;
+    super.doSetUp();
+    skipTest(!getRepository().isSupportingAudits());
   }
 
   protected CDOSession openSession1()

@@ -138,7 +138,7 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
 
   public void adjustAfterRemoval(int index)
   {
-    if (index <= this.index)
+    if (index <= this.index && this.index > 0)
     {
       --this.index;
     }

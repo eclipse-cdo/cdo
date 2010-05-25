@@ -30,7 +30,7 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
  */
 public class Bugzilla_314264_Test extends AbstractCDOTest
 {
-  public void testMergeTest() throws Exception
+  public void _testMergeTest() throws Exception
   {
     // setup transaction.
     final CDOSession session = openSession();

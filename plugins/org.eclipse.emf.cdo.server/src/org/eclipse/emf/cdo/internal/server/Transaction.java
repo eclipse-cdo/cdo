@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+
 /**
  * @author Eike Stepper
  * @since 2.0
@@ -60,7 +62,7 @@ public class Transaction extends View implements InternalTransaction
     return new TransactionCommitContext(this)
     {
       @Override
-      protected long createTimeStamp()
+      protected long createTimeStamp(OMMonitor monitor)
       {
         return timeStamp;
       }

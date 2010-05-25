@@ -370,7 +370,10 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       }
       finally
       {
-        async.stop();
+        if (async != null)
+        {
+          async.stop();
+        }
       }
     }
     finally

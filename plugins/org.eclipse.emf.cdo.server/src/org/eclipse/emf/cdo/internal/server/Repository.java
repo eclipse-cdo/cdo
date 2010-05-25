@@ -750,28 +750,38 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  public long createCommitTimeStamp(CDOBranch branch)
+  public long createCommitTimeStamp(CDOBranch branch, OMMonitor monitor)
   {
-    long now = getTimeStamp();
-    if (branch == null)
-    {
-      // Must be unique in a new branch
-      return now;
-    }
+    monitor.begin();
 
-    synchronized (lastCommitTimeStampLock)
+    try
     {
-      if (lastCommitTimeStamp != 0)
+      long now = getTimeStamp();
+      if (branch == null)
       {
-        while (lastCommitTimeStamp == now)
-        {
-          ConcurrencyUtil.sleep(1L);
-          now = getTimeStamp();
-        }
+        // Must be unique in a new branch
+        return now;
       }
 
-      lastCommitTimeStamp = now;
-      return now;
+      synchronized (lastCommitTimeStampLock)
+      {
+        if (lastCommitTimeStamp != 0)
+        {
+          while (lastCommitTimeStamp >= now)
+          {
+            ConcurrencyUtil.sleep(1L);
+            now = getTimeStamp();
+            monitor.checkCanceled();
+          }
+        }
+
+        lastCommitTimeStamp = now;
+        return now;
+      }
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 
@@ -1366,7 +1376,7 @@ public class Repository extends Container<Object> implements InternalRepository
     InternalCommitContext commitContext = new TransactionCommitContext(transaction)
     {
       @Override
-      protected long createTimeStamp()
+      protected long createTimeStamp(OMMonitor monitor)
       {
         return store.getCreationTime();
       }

@@ -66,7 +66,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
    */
   private ITypeMapping typeMapping;
 
-  // --------- SQL strings - see initSqlStrings() -----------------
+  // --------- SQL strings - see initSQLStrings() -----------------
   private String sqlSelectChunksPrefix;
 
   private String sqlOrderByIndex;
@@ -79,7 +79,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
   {
     super(mappingStrategy, eClass, feature);
     initTable();
-    initSqlStrings();
+    initSQLStrings();
   }
 
   private void initTable()
@@ -117,7 +117,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
     return Arrays.asList(table);
   }
 
-  private void initSqlStrings()
+  private void initSQLStrings()
   {
     String tableName = getTable().getName();
     FieldInfo[] fields = getKeyFields();

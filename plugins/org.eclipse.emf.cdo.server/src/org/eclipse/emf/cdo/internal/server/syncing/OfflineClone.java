@@ -81,7 +81,7 @@ public class OfflineClone extends SynchronizableRepository
 
   protected InternalCommitContext createBranchingCommitContext(InternalTransaction transaction, CDOBranch branch)
   {
-    long timeStamp = createCommitTimeStamp(null);
+    long timeStamp = createCommitTimeStamp(null, new Monitor());
     CDOBranch offlineBranch = createOfflineBranch(branch, timeStamp - 1L);
     transaction.setBranchPoint(offlineBranch.getHead());
     return new BranchingCommitContext(transaction, timeStamp);
@@ -257,7 +257,7 @@ public class OfflineClone extends SynchronizableRepository
     }
 
     @Override
-    protected long createTimeStamp()
+    protected long createTimeStamp(OMMonitor monitor)
     {
       // Already set after commit to the master
       return getTimeStamp();
@@ -317,7 +317,7 @@ public class OfflineClone extends SynchronizableRepository
     }
 
     @Override
-    protected long createTimeStamp()
+    protected long createTimeStamp(OMMonitor monitor)
     {
       return timeStamp;
     }

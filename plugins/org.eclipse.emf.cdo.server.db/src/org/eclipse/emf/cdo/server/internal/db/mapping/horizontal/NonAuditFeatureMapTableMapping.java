@@ -80,10 +80,10 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
   {
     super(mappingStrategy, eClass, feature);
 
-    initSqlStrings();
+    initSQLStrings();
   }
 
-  private void initSqlStrings()
+  private void initSQLStrings()
   {
     // TODO: add key fields length support
 

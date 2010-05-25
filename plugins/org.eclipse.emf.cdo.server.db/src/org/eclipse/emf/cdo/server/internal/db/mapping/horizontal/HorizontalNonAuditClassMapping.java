@@ -90,10 +90,10 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   {
     super(mappingStrategy, eClass);
 
-    initSqlStrings();
+    initSQLStrings();
   }
 
-  private void initSqlStrings()
+  private void initSQLStrings()
   {
     Map<EStructuralFeature, String> unsettableFields = getUnsettableFields();
 
@@ -239,10 +239,10 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       stmt.setLong(col++, accessor.getStore().getMetaDataManager().getMetaID(revision.getEClass()));
       stmt.setLong(col++, commitTime);
       stmt.setLong(col++, revision.getRevised());
-      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, revision
-          .getResourceID(), commitTime));
-      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, (CDOID)revision
-          .getContainerID(), commitTime));
+      stmt.setLong(col++,
+          CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, revision.getResourceID(), commitTime));
+      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor,
+          (CDOID)revision.getContainerID(), commitTime));
       stmt.setInt(col++, revision.getContainingFeatureID());
 
       int isSetCol = col + getValueMappings().size();
@@ -436,7 +436,10 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       }
       finally
       {
-        async.stop();
+        if (async != null)
+        {
+          async.stop();
+        }
       }
     }
     finally
@@ -577,8 +580,8 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       stmt.setInt(col++, newVersion);
       stmt.setLong(col++, created);
       stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, newResourceId, created));
-      stmt.setLong(col++, CDODBUtil
-          .convertCDOIDToLong(getExternalReferenceManager(), accessor, newContainerId, created));
+      stmt.setLong(col++,
+          CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, newContainerId, created));
       stmt.setInt(col++, newContainingFeatureId);
 
       col = setUpdateAttributeValues(attributeChanges, stmt, col);

@@ -274,7 +274,7 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     try
     {
-      monitor.begin(106);
+      monitor.begin(107);
 
       adjustMetaRanges();
       monitor.worked();
@@ -282,7 +282,7 @@ public class TransactionCommitContext implements InternalCommitContext
       lockObjects();
 
       // Could throw an exception
-      timeStamp = createTimeStamp();
+      timeStamp = createTimeStamp(monitor.fork());
       dirtyObjects = new InternalCDORevision[dirtyObjectDeltas.length];
 
       adjustForCommit();
@@ -349,10 +349,10 @@ public class TransactionCommitContext implements InternalCommitContext
     throw WrappedException.wrap((Exception)ex);
   }
 
-  protected long createTimeStamp()
+  protected long createTimeStamp(OMMonitor monitor)
   {
     InternalRepository repository = transaction.getSession().getManager().getRepository();
-    return repository.createCommitTimeStamp(getBranchPoint().getBranch());
+    return repository.createCommitTimeStamp(getBranchPoint().getBranch(), monitor);
   }
 
   protected void setTimeStamp(long timeStamp)

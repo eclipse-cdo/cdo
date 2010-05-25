@@ -65,9 +65,9 @@ public abstract class DelegatingRepository implements InternalRepository
     getDelegate().addListener(listener);
   }
 
-  public long createCommitTimeStamp(CDOBranch branch)
+  public long createCommitTimeStamp(CDOBranch branch, OMMonitor monitor)
   {
-    return getDelegate().createCommitTimeStamp(branch);
+    return getDelegate().createCommitTimeStamp(branch, monitor);
   }
 
   public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart,

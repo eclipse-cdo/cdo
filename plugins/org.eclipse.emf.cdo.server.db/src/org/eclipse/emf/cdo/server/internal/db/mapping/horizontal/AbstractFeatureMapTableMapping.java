@@ -85,7 +85,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
    */
   private Map<Long, ITypeMapping> typeMappings;
 
-  // --------- SQL strings - see initSqlStrings() -----------------
+  // --------- SQL strings - see initSQLStrings() -----------------
   private String sqlSelectChunksPrefix;
 
   private String sqlOrderByIndex;
@@ -101,7 +101,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
     super(mappingStrategy, eClass, feature);
     initDBTypes();
     initTable();
-    initSqlStrings();
+    initSQLStrings();
   }
 
   private void initDBTypes()
@@ -156,7 +156,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
     return Arrays.asList(table);
   }
 
-  private void initSqlStrings()
+  private void initSQLStrings()
   {
     String tableName = getTable().getName();
     FieldInfo[] fields = getKeyFields();

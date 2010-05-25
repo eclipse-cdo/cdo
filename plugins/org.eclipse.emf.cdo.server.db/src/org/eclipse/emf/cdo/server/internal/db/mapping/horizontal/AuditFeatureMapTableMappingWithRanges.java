@@ -117,7 +117,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
    */
   private Map<Long, ITypeMapping> typeMappings;
 
-  // --------- SQL strings - see initSqlStrings() -----------------
+  // --------- SQL strings - see initSQLStrings() -----------------
   private String sqlSelectChunksPrefix;
 
   private String sqlOrderByIndex;
@@ -146,7 +146,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     super(mappingStrategy, eClass, feature);
     initDBTypes();
     initTable();
-    initSqlStrings();
+    initSQLStrings();
   }
 
   private void initDBTypes()
@@ -198,7 +198,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     return Arrays.asList(table);
   }
 
-  private void initSqlStrings()
+  private void initSQLStrings()
   {
     String tableName = getTable().getName();
 

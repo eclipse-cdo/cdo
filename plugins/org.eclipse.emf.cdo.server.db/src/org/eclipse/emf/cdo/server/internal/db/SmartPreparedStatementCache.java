@@ -118,9 +118,9 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
       lists[cachedStatement.getProbability().ordinal()].add(cachedStatement);
 
       // put into lookup table
-      if (lookup.put(cachedStatement.getSql(), cachedStatement) != null)
+      if (lookup.put(cachedStatement.getSQL(), cachedStatement) != null)
       {
-        throw new ImplementationError(cachedStatement.getSql() + " already in cache."); //$NON-NLS-1$
+        throw new ImplementationError(cachedStatement.getSQL() + " already in cache."); //$NON-NLS-1$
       }
 
       // handle capacity overflow
@@ -148,7 +148,7 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
         }
       }
 
-      remove(lists[ordinal].tail().getSql());
+      remove(lists[ordinal].tail().getSQL());
     }
 
     public CachedPreparedStatement remove(String sql)
@@ -278,7 +278,7 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
       timeStamp = System.currentTimeMillis();
     }
 
-    public String getSql()
+    public String getSQL()
     {
       return sql;
     }

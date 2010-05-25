@@ -453,7 +453,10 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       }
       finally
       {
-        async.stop();
+        if (async != null)
+        {
+          async.stop();
+        }
       }
     }
     catch (SQLException ex)

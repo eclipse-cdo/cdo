@@ -462,10 +462,10 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       stmt.setLong(col++, accessor.getStore().getMetaDataManager().getMetaID(revision.getEClass()));
       stmt.setLong(col++, commitTime);
       stmt.setLong(col++, revision.getRevised());
-      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, revision
-          .getResourceID(), commitTime));
-      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, (CDOID)revision
-          .getContainerID(), commitTime));
+      stmt.setLong(col++,
+          CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, revision.getResourceID(), commitTime));
+      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor,
+          (CDOID)revision.getContainerID(), commitTime));
       stmt.setInt(col++, revision.getContainingFeatureID());
 
       int isSetCol = col + getValueMappings().size();
@@ -607,7 +607,10 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       }
       finally
       {
-        async.stop();
+        if (async != null)
+        {
+          async.stop();
+        }
       }
 
       try
@@ -620,7 +623,10 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       }
       finally
       {
-        async.stop();
+        if (async != null)
+        {
+          async.stop();
+        }
       }
 
       try
@@ -631,7 +637,10 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       }
       finally
       {
-        async.stop();
+        if (async != null)
+        {
+          async.stop();
+        }
       }
 
       try
@@ -645,7 +654,10 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       }
       finally
       {
-        async.stop();
+        if (async != null)
+        {
+          async.stop();
+        }
       }
     }
     finally
@@ -711,8 +723,8 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         if (version >= CDOBranchVersion.FIRST_VERSION)
         {
           CDOBranchVersion branchVersion = branchManager.getBranch(branchID).getVersion(Math.abs(version));
-          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(CDOIDUtil
-              .createLong(id), branchVersion, CDORevision.UNCHUNKED, true);
+          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(
+              CDOIDUtil.createLong(id), branchVersion, CDORevision.UNCHUNKED, true);
 
           handler.handleRevision(revision);
         }

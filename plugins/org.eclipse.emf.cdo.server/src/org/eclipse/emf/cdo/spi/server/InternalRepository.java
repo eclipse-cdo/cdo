@@ -94,7 +94,7 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
    * Returns a commit time stamp that is guaranteed to be unique in the given branch. If <code>null</code> is passed the
    * time stamp is expected to e used with a new branch, hence will be unique by definition.
    */
-  public long createCommitTimeStamp(CDOBranch branch);
+  public long createCommitTimeStamp(CDOBranch branch, OMMonitor monitor);
 
   public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart,
       int chunkEnd);

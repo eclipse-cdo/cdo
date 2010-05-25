@@ -86,10 +86,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   {
     super(mappingStrategy, eClass, feature);
 
-    initSqlStrings();
+    initSQLStrings();
   }
 
-  private void initSqlStrings()
+  private void initSQLStrings()
   {
     // ----------- clear list -------------------------
     StringBuilder builder = new StringBuilder();

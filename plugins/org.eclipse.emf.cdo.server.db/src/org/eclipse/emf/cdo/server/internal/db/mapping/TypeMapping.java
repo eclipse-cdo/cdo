@@ -117,7 +117,7 @@ public abstract class TypeMapping implements ITypeMapping
         TRACER.format("TypeMapping for {0}: converting Revision.NIL to DB-null", feature.getName()); //$NON-NLS-1$
       }
 
-      stmt.setNull(index, getSqlType());
+      stmt.setNull(index, getSQLType());
     }
     else if (value == null)
     {
@@ -128,7 +128,7 @@ public abstract class TypeMapping implements ITypeMapping
           TRACER.format("TypeMapping for {0}: writing Revision.null as DB.null", feature.getName()); //$NON-NLS-1$
         }
 
-        stmt.setNull(index, getSqlType());
+        stmt.setNull(index, getSQLType());
       }
       else
       {
@@ -227,7 +227,7 @@ public abstract class TypeMapping implements ITypeMapping
 
   protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
   {
-    stmt.setObject(index, value, getSqlType());
+    stmt.setObject(index, value, getSQLType());
   }
 
   /**
@@ -236,7 +236,7 @@ public abstract class TypeMapping implements ITypeMapping
    * 
    * @return The sql type of this TypeMapping.
    */
-  protected int getSqlType()
+  protected int getSQLType()
   {
     return getDBType().getCode();
   }

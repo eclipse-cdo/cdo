@@ -89,10 +89,10 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
   {
     super(mappingStrategy, eClass);
 
-    initSqlStrings();
+    initSQLStrings();
   }
 
-  private void initSqlStrings()
+  private void initSQLStrings()
   {
     Map<EStructuralFeature, String> unsettableFields = getUnsettableFields();
 
@@ -422,10 +422,10 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
       stmt.setLong(col++, accessor.getStore().getMetaDataManager().getMetaID(revision.getEClass()));
       stmt.setLong(col++, commitTime);
       stmt.setLong(col++, revision.getRevised());
-      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, revision
-          .getResourceID(), commitTime));
-      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, (CDOID)revision
-          .getContainerID(), commitTime));
+      stmt.setLong(col++,
+          CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, revision.getResourceID(), commitTime));
+      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor,
+          (CDOID)revision.getContainerID(), commitTime));
       stmt.setInt(col++, revision.getContainingFeatureID());
 
       int isSetCol = col + getValueMappings().size();
@@ -551,7 +551,10 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
       }
       finally
       {
-        async.stop();
+        if (async != null)
+        {
+          async.stop();
+        }
       }
     }
     finally

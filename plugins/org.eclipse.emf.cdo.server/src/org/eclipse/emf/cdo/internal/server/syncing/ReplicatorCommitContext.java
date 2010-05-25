@@ -69,7 +69,7 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
   }
 
   @Override
-  protected long createTimeStamp()
+  protected long createTimeStamp(OMMonitor monitor)
   {
     return commitTimeStamp;
   }

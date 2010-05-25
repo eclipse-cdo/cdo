@@ -94,7 +94,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
    */
   private ITypeMapping typeMapping;
 
-  // --------- SQL strings - see initSqlStrings() -----------------
+  // --------- SQL strings - see initSQLStrings() -----------------
   private String sqlSelectChunksPrefix;
 
   private String sqlOrderByIndex;
@@ -119,7 +119,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
   {
     super(mappingStrategy, eClass, feature);
     initTable();
-    initSqlStrings();
+    initSQLStrings();
   }
 
   private void initTable()
@@ -148,7 +148,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     return Arrays.asList(table);
   }
 
-  private void initSqlStrings()
+  private void initSQLStrings()
   {
     String tableName = getTable().getName();
 

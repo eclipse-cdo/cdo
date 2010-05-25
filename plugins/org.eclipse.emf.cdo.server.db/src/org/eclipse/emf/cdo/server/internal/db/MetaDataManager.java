@@ -217,7 +217,10 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
       finally
       {
         DBUtil.close(pstmt);
-        async.stop();
+        if (async != null)
+        {
+          async.stop();
+        }
       }
 
       for (InternalCDOPackageInfo packageInfo : packageInfos)
@@ -292,7 +295,10 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     finally
     {
       DBUtil.close(pstmt);
-      async.stop();
+      if (async != null)
+      {
+        async.stop();
+      }
     }
   }
 

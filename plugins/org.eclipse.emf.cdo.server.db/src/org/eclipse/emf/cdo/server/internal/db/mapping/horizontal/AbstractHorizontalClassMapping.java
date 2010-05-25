@@ -266,10 +266,10 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
       revision.setBranchPoint(branchPoint);
       revision.setRevised(resultSet.getLong(CDODBSchema.ATTRIBUTES_REVISED));
-      revision.setResourceID(CDODBUtil.convertLongToCDOID(getExternalReferenceManager(), accessor, resultSet
-          .getLong(CDODBSchema.ATTRIBUTES_RESOURCE)));
-      revision.setContainerID(CDODBUtil.convertLongToCDOID(getExternalReferenceManager(), accessor, resultSet
-          .getLong(CDODBSchema.ATTRIBUTES_CONTAINER)));
+      revision.setResourceID(CDODBUtil.convertLongToCDOID(getExternalReferenceManager(), accessor,
+          resultSet.getLong(CDODBSchema.ATTRIBUTES_RESOURCE)));
+      revision.setContainerID(CDODBUtil.convertLongToCDOID(getExternalReferenceManager(), accessor,
+          resultSet.getLong(CDODBSchema.ATTRIBUTES_CONTAINER)));
       revision.setContainingFeatureID(resultSet.getInt(CDODBSchema.ATTRIBUTES_FEATURE));
 
       for (ITypeMapping mapping : valueMappings)
@@ -434,7 +434,10 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       }
       finally
       {
-        async.stop();
+        if (async != null)
+        {
+          async.stop();
+        }
       }
 
       try
@@ -447,7 +450,10 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       }
       finally
       {
-        async.stop();
+        if (async != null)
+        {
+          async.stop();
+        }
       }
 
       try
@@ -458,7 +464,10 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       }
       finally
       {
-        async.stop();
+        if (async != null)
+        {
+          async.stop();
+        }
       }
 
       try
@@ -476,7 +485,10 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       }
       finally
       {
-        async.stop();
+        if (async != null)
+        {
+          async.stop();
+        }
       }
     }
     finally
@@ -528,8 +540,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
         if (version >= CDOBranchVersion.FIRST_VERSION)
         {
-          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(CDOIDUtil
-              .createLong(id), branchManager.getMainBranch().getVersion(version), CDORevision.UNCHUNKED, true);
+          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(
+              CDOIDUtil.createLong(id), branchManager.getMainBranch().getVersion(version), CDORevision.UNCHUNKED, true);
 
           handler.handleRevision(revision);
         }
@@ -634,7 +646,10 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
         }
         finally
         {
-          async.stop();
+          if (async != null)
+          {
+            async.stop();
+          }
         }
       }
     }

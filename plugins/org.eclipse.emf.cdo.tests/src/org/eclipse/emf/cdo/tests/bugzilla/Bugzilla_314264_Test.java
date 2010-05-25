@@ -30,7 +30,7 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
  */
 public class Bugzilla_314264_Test extends AbstractCDOTest
 {
-  public void _testMergeTest() throws Exception
+  public void testMergeTest() throws Exception
   {
     // setup transaction.
     final CDOSession session = openSession();
@@ -40,14 +40,13 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
     final CDOResource resource = tr1.createResource("/test1");
     TaskContainer container = getModel2Factory().createTaskContainer();
     resource.getContents().add(container);
+
     // add at least 2 elements to avoid getting a clear when removing one.
     container.getTasks().add(getModel2Factory().createTask());
     container.getTasks().add(getModel2Factory().createTask());
     tr1.commit();
 
-    // setup another branch & transaction.
-    final CDOBranch mainBranch = tr1.getBranch();
-    final CDOBranch otherBranch = mainBranch.createBranch("other");
+    final CDOBranch otherBranch = tr1.getBranch().createBranch("other");
     final CDOTransaction tr2 = session.openTransaction(otherBranch);
 
     TaskContainer otherContainer = tr2.getObject(container);
@@ -63,7 +62,7 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
     tr2.commit();
 
     // sleep to have the merger see the changes.
-    Thread.sleep(100);
+    // Thread.sleep(100);
 
     // merge the other branch to main.
     tr1.merge(tr2.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());

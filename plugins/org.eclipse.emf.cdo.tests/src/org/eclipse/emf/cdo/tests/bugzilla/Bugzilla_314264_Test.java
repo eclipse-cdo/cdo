@@ -32,6 +32,8 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
 {
   public void testMergeTest() throws Exception
   {
+    skipTest(!getRepository().isSupportingBranches());
+
     // setup transaction.
     final CDOSession session = openSession();
     final CDOTransaction tr1 = session.openTransaction();

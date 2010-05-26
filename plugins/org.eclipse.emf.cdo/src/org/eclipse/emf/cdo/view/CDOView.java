@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUpdatable;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
@@ -74,7 +75,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @noimplement This interface is not intended to be implemented by clients.
  * @since 2.0
  */
-public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
+public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOptionsContainer
 {
   /**
    * Returns the {@link CDOSession session} this view was opened by.

@@ -73,6 +73,11 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
   /**
    * @since 3.0
    */
+  public void setLastUpdateTime(long lastUpdateTime);
+
+  /**
+   * @since 3.0
+   */
   public void fireAdaptersNotifiedEvent(long timeStamp);
 
   /**

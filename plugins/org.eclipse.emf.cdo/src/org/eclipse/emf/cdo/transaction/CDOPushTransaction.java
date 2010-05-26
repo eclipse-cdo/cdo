@@ -311,6 +311,21 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.isLegacyModeEnabled();
   }
 
+  public long getLastUpdateTime()
+  {
+    return delegate.getLastUpdateTime();
+  }
+
+  public void waitForUpdate(long updateTime)
+  {
+    delegate.waitForUpdate(updateTime);
+  }
+
+  public boolean waitForUpdate(long updateTime, long timeoutMillis)
+  {
+    return delegate.waitForUpdate(updateTime, timeoutMillis);
+  }
+
   public Set<CDOObject> getConflicts()
   {
     return delegate.getConflicts();

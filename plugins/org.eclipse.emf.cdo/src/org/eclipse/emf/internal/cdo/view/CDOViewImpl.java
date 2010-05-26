@@ -75,6 +75,7 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.collection.FastList;
 import org.eclipse.net4j.util.collection.HashBag;
@@ -173,6 +174,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
   @ExcludeFromDump
   private transient InternalCDOObject lastLookupObject;
+
+  private long lastUpdateTime;
+
+  @ExcludeFromDump
+  private Object lastUpdateTimeLock = new Object();
 
   /**
    * @since 2.0
@@ -1390,6 +1396,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     }
 
     fireAdaptersNotifiedEvent(lastUpdateTime);
+    setLastUpdateTime(lastUpdateTime);
   }
 
   protected Set<CDOObject> invalidate(List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
@@ -1829,6 +1836,62 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     lastLookupID = null;
     lastLookupObject = null;
     options = null;
+  }
+
+  public long getLastUpdateTime()
+  {
+    synchronized (lastUpdateTimeLock)
+    {
+      return lastUpdateTime;
+    }
+  }
+
+  public void setLastUpdateTime(long lastUpdateTime)
+  {
+    synchronized (lastUpdateTimeLock)
+    {
+      if (this.lastUpdateTime < lastUpdateTime)
+      {
+        this.lastUpdateTime = lastUpdateTime;
+      }
+
+      lastUpdateTimeLock.notifyAll();
+    }
+  }
+
+  public void waitForUpdate(long updateTime)
+  {
+    waitForUpdate(updateTime, NO_TIMEOUT);
+  }
+
+  public boolean waitForUpdate(long updateTime, long timeoutMillis)
+  {
+    long end = timeoutMillis == NO_TIMEOUT ? Long.MAX_VALUE : System.currentTimeMillis() + timeoutMillis;
+    for (;;)
+    {
+      synchronized (lastUpdateTimeLock)
+      {
+        if (lastUpdateTime >= updateTime)
+        {
+          return true;
+        }
+
+        long now = System.currentTimeMillis();
+        if (now >= end)
+        {
+          return false;
+        }
+
+        try
+        {
+          lastUpdateTimeLock.wait(end - now);
+        }
+        catch (InterruptedException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+    }
   }
 
   /**

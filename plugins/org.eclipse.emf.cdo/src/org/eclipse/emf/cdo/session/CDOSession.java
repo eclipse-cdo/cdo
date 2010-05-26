@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUpdatable;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -50,7 +51,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
+public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<CDOView>
 {
   /**
    * @since 3.0
@@ -200,31 +201,6 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
    * @since 3.0
    */
   public long refresh();
-
-  /**
-   * Returns the time stamp of the last commit operation. May not be accurate if
-   * {@link Options#isPassiveUpdateEnabled() passive updates} are disabled.
-   * 
-   * @since 3.0
-   */
-  public long getLastUpdateTime();
-
-  /**
-   * Blocks the calling thread until a commit operation with the given time stamp or higher has occured.
-   * 
-   * @since 3.0
-   */
-  public void waitForUpdate(long updateTime);
-
-  /**
-   * Blocks the calling thread until a commit operation with the given time stamp or higher has occured or the given
-   * timeout has expired.
-   * 
-   * @return <code>true</code> if the specified commit operation has occured within the given timeout period,
-   *         <code>false</code> otherwise.
-   * @since 3.0
-   */
-  public boolean waitForUpdate(long updateTime, long timeoutMillis);
 
   /**
    * Returns the {@link Options options} of this session.

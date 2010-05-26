@@ -122,8 +122,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
-  private static final long NO_TIMEOUT = -1;
-
   private InternalCDOSessionConfiguration configuration;
 
   private ExceptionHandler exceptionHandler;

@@ -28,7 +28,7 @@ import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.io.IORuntimeException;
+import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -724,7 +724,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     }
     catch (CommitException ex)
     {
-      throw new IORuntimeException(ex);
+      throw new TransactionException(ex);
     }
 
     setModified(false);

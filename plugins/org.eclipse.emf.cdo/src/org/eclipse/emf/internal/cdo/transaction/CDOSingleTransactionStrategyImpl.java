@@ -14,22 +14,22 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
-import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
+import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -75,7 +75,7 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
       String rollbackMessage = result.getRollbackMessage();
       if (rollbackMessage != null)
       {
-        throw new TransactionException(rollbackMessage);
+        throw new CommitException(rollbackMessage);
       }
     }
 

@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
 
@@ -83,7 +84,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
               orderDetail.setPrice(3);
               transaction.commit();
             }
-            catch (TransactionException ex)
+            catch (CommitException ex)
             {
               transaction.rollback();
               continue;
@@ -94,7 +95,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
               orderDetail.setPrice(2);
               transaction.commit();
             }
-            catch (TransactionException ex)
+            catch (CommitException ex)
             {
               transaction.rollback();
               continue;

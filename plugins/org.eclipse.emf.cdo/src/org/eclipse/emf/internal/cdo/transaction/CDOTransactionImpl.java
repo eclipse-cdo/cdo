@@ -890,7 +890,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         if (hasConflict())
         {
-          throw new TransactionException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
+          throw new CommitException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
         }
 
         if (progressMonitor == null)

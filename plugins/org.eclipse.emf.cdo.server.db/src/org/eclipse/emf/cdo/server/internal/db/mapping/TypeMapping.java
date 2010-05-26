@@ -32,8 +32,6 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.math.BigDecimal;
@@ -520,22 +518,10 @@ public abstract class TypeMapping implements InternalITypeMapping
    */
   public static class TMCustom extends TypeMapping
   {
-    private EDataType dataType;
-
-    private EFactory factory;
 
     public TMCustom(IMappingStrategy mappingStrategy, EStructuralFeature feature, DBType type)
     {
       super(mappingStrategy, feature, type);
-      dataType = (EDataType)getFeature().getEType();
-      factory = dataType.getEPackage().getEFactoryInstance();
-    }
-
-    @Override
-    protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
-    {
-      String svalue = factory.convertToString(dataType, value);
-      stmt.setString(index, svalue);
     }
 
     @Override
@@ -547,7 +533,7 @@ public abstract class TypeMapping implements InternalITypeMapping
         return null;
       }
 
-      return factory.createFromString(dataType, val);
+      return val;
     }
   }
 }

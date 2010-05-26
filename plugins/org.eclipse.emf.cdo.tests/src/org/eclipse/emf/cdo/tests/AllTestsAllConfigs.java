@@ -57,6 +57,7 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_283985_CDOTest2;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_283985_SavePointTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_285008_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_289932_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_293283_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_294850_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_294859_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_299190_Test;
@@ -166,6 +167,7 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(Bugzilla_283985_CDOTest2.class);
     testClasses.add(Bugzilla_283985_SavePointTest.class);
     testClasses.add(Bugzilla_285008_Test.class);
+    testClasses.add(Bugzilla_293283_Test.class);
     testClasses.add(Bugzilla_294850_Test.class);
     testClasses.add(Bugzilla_294859_Test.class);
     testClasses.add(Bugzilla_299190_Test.class);

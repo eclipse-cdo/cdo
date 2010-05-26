@@ -38,6 +38,7 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -70,13 +71,6 @@ public final class CDOStore implements EStore
   private final ContextTracer TRACER = new ContextTracer(OM.DEBUG_STORE, CDOStore.class);
 
   private InternalCDOView view;
-
-  // // Used for optimization. Multiple call to CDStore will be sent like size and than add.
-  // private EStructuralFeature lastLookupEFeature;
-  //
-  // private EStructuralFeature lastLookupEStructuralFeature;
-  //
-  // private Object lock = new Object();
 
   /**
    * @since 2.0
@@ -480,6 +474,8 @@ public final class CDOStore implements EStore
 
   public Object remove(InternalEObject eObject, EStructuralFeature feature, int index)
   {
+    checkIndexOutOfBounds(eObject, feature, index); // Bugzilla 293283
+
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
@@ -488,11 +484,9 @@ public final class CDOStore implements EStore
 
     CDOFeatureDelta delta = new CDORemoveFeatureDeltaImpl(feature, index);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
-    Object result = revision.remove(feature, index);
 
-    result = convertToEMF(eObject, revision, feature, index, result);
-
-    return result;
+    Object oldValue = revision.remove(feature, index);
+    return convertToEMF(eObject, revision, feature, index, oldValue);
   }
 
   public void clear(InternalEObject eObject, EStructuralFeature feature)
@@ -598,6 +592,20 @@ public final class CDOStore implements EStore
     }
   }
 
+  private void checkIndexOutOfBounds(InternalEObject eObject, EStructuralFeature feature, int index)
+  {
+    // Bugzilla 293283
+    if (feature.isMany())
+    {
+      Object o = eObject.eGet(feature);
+      int size = ((EList<?>)o).size();
+      if (index >= size)
+      {
+        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+      }
+    }
+  }
+
   private static InternalCDORevision getRevisionForWriting(InternalCDOObject cdoObject, CDOFeatureDelta delta)
   {
     CDOStateMachine.INSTANCE.write(cdoObject, delta);
@@ -609,7 +617,7 @@ public final class CDOStore implements EStore
     InternalCDORevision revision = cdoObject.cdoRevision();
     if (revision == null)
     {
-      throw new IllegalStateException("revision == null"); //$NON-NLS-1$
+      throw new IllegalStateException("revision == null");
     }
 
     return revision;

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import com.objy.as.app.Class_Object;
+import com.objy.db.ObjyRuntimeException;
 import com.objy.db.app.Session;
 import com.objy.db.app.ooContObj;
 import com.objy.db.app.ooDBObj;
@@ -35,6 +36,41 @@ public class ObjyScope
   private String dbName;
 
   private String contName;
+
+  /**
+   * Static function used for initialisation of the store.
+   */
+  public static void insureScopeExist(ObjySession objySession, String dbName, String contName)
+  {
+    ooDBObj db;
+    ooContObj cont;
+    try
+    {
+      if (!objySession.getFD().hasDB(dbName))
+      {
+        db = Session.getCurrent().getFD().newDB(dbName);
+      }
+      else
+      {
+        db = Session.getCurrent().getFD().lookupDB(dbName);
+      }
+
+      if (db.hasContainer(contName))
+      {
+        cont = db.lookupContainer(contName);
+      }
+      else
+      {
+        cont = new ooContObj();
+        db.addContainer(cont, 0, contName, 0, 0);
+      }
+
+    }
+    catch (ObjyRuntimeException ex)
+    {
+      ex.printStackTrace();
+    }
+  }
 
   public ObjyScope(String dbName, String contName)
   {

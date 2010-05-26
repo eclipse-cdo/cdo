@@ -215,6 +215,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     OpenSessionResult result = protocol.openSession(repositoryName, isPassiveUpdateEnabled(), getPassiveUpdateMode());
     session.setSessionID(result.getSessionID());
+    session.setUserID(result.getUserID());
     session.setLastUpdateTime(result.getLastUpdateTime());
     session.setRepositoryInfo(new RepositoryInfo(repositoryName, result));
 

@@ -15,13 +15,14 @@ import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.Properties;
 
 /**
  * @author Eike Stepper
@@ -54,9 +55,16 @@ public class FileUserManager extends UserManager
     }
 
     File file = new File(fileName);
-    if (file.exists() && !file.isFile())
+    if (file.exists())
     {
-      throw new IllegalStateException("Not a file: " + fileName); //$NON-NLS-1$
+      if (!file.isFile())
+      {
+        throw new IllegalStateException("Not a file: " + fileName); //$NON-NLS-1$
+      }
+    }
+    else
+    {
+      throw new FileNotFoundException("User manager file not found: " + fileName);
     }
   }
 

@@ -110,6 +110,12 @@ public class OpenSessionIndication extends RepositoryTimeIndication
     out.writeInt(session.getSessionID());
     if (TRACER.isEnabled())
     {
+      TRACER.format("Writing userID: {0}", session.getUserID()); //$NON-NLS-1$
+    }
+
+    out.writeString(session.getUserID());
+    if (TRACER.isEnabled())
+    {
       TRACER.format("Writing repositoryUUID: {0}", repository.getUUID()); //$NON-NLS-1$
     }
 

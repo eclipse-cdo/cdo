@@ -205,6 +205,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   {
     private int sessionID;
 
+    private String userID;
+
     private String repositoryUUID;
 
     private CDOCommonRepository.Type repositoryType;
@@ -232,12 +234,13 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 3.0
      */
-    public OpenSessionResult(int sessionID, String repositoryUUID, CDOCommonRepository.Type repositoryType,
-        CDOCommonRepository.State repositoryState, String storeType, Set<CDOID.ObjectType> objectIDTypes,
-        long repositoryCreationTime, long lastUpdateTime, CDOID rootResourceID, boolean repositorySupportingAudits,
-        boolean repositorySupportingBranches)
+    public OpenSessionResult(int sessionID, String userID, String repositoryUUID,
+        CDOCommonRepository.Type repositoryType, CDOCommonRepository.State repositoryState, String storeType,
+        Set<CDOID.ObjectType> objectIDTypes, long repositoryCreationTime, long lastUpdateTime, CDOID rootResourceID,
+        boolean repositorySupportingAudits, boolean repositorySupportingBranches)
     {
       this.sessionID = sessionID;
+      this.userID = userID;
       this.repositoryUUID = repositoryUUID;
       this.repositoryType = repositoryType;
       this.repositoryState = repositoryState;
@@ -253,6 +256,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public int getSessionID()
     {
       return sessionID;
+    }
+
+    /**
+     * @since 3.0
+     */
+    public String getUserID()
+    {
+      return userID;
     }
 
     public String getRepositoryUUID()
@@ -498,9 +509,10 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     @Override
     public String toString()
     {
-      return MessageFormat.format("RepositoryTime[requested={0}, indicated={1}, responded={2}, confirmed={3}]", //$NON-NLS-1$
-          CDOCommonUtil.formatTimeStamp(requested), CDOCommonUtil.formatTimeStamp(indicated), CDOCommonUtil
-              .formatTimeStamp(responded), CDOCommonUtil.formatTimeStamp(confirmed));
+      return MessageFormat.format(
+          "RepositoryTime[requested={0}, indicated={1}, responded={2}, confirmed={3}]", //$NON-NLS-1$
+          CDOCommonUtil.formatTimeStamp(requested), CDOCommonUtil.formatTimeStamp(indicated),
+          CDOCommonUtil.formatTimeStamp(responded), CDOCommonUtil.formatTimeStamp(confirmed));
     }
   }
 

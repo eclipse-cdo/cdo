@@ -90,6 +90,12 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
       TRACER.format("Read sessionID: {0}", sessionID); //$NON-NLS-1$
     }
 
+    String userID = in.readString();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Read userID: {0}", userID); //$NON-NLS-1$
+    }
+
     String repositoryUUID = in.readString();
     if (TRACER.isEnabled())
     {
@@ -157,7 +163,7 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
       TRACER.format("Read repositorySupportingBranches: {0}", repositorySupportingBranches); //$NON-NLS-1$
     }
 
-    result = new OpenSessionResult(sessionID, repositoryUUID, repositoryType, repositoryState, storeType,
+    result = new OpenSessionResult(sessionID, userID, repositoryUUID, repositoryType, repositoryState, storeType,
         objectIDTypes, repositoryCreationTime, lastUpdateTime, rootResourceID, repositorySupportingAudits,
         repositorySupportingBranches);
 

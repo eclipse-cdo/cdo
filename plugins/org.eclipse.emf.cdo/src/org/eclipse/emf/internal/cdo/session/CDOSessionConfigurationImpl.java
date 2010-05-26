@@ -251,8 +251,6 @@ public abstract class CDOSessionConfigurationImpl implements InternalCDOSessionC
 
       IPasswordCredentials credentials = credentialsProvider.getCredentials();
       String userID = credentials.getUserID();
-      session.setUserID(userID);
-
       byte[] cryptedToken = encryptToken(credentials.getPassword(), randomToken);
       return new CDOAuthenticationResult(userID, cryptedToken);
     }

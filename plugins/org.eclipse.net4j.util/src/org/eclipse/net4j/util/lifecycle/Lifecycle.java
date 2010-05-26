@@ -58,10 +58,14 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
         }
 
         lock();
-        lifecycleState = ILifecycleState.ACTIVATING;
-        fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_ACTIVATE));
+
+        if (getListeners() != null)
+        {
+          fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_ACTIVATE));
+        }
 
         doBeforeActivate();
+        lifecycleState = ILifecycleState.ACTIVATING;
         doActivate();
 
         if (!isDeferredActivation())
@@ -106,14 +110,21 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
         }
 
         lock();
-        lifecycleState = ILifecycleState.DEACTIVATING;
         doBeforeDeactivate();
-        fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_DEACTIVATE));
+        if (getListeners() != null)
+        {
+          fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_DEACTIVATE));
+        }
 
+        lifecycleState = ILifecycleState.DEACTIVATING;
         doDeactivate();
+
         lifecycleState = ILifecycleState.INACTIVE;
         unlock();
-        fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.DEACTIVATED));
+        if (getListeners() != null)
+        {
+          fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.DEACTIVATED));
+        }
         return null;
       }
 

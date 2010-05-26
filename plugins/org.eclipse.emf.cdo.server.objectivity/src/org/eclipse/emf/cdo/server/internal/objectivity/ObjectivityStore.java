@@ -146,10 +146,10 @@ public class ObjectivityStore extends Store implements IObjectivityStore
         creationTime = objyStoreInfo.getCreationTime();
       }
 
-      // This is used for the package storage...
-      // ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
+      // This is used for the package storage, it could be lazily done though!!! (verify)
+      ObjyScope.insureScopeExist(objySession, ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
       // make sure we have the root resource created.
-      // ObjyObject resourceList = ObjyDb.getOrCreateResourceList();
+      ObjyDb.getOrCreateResourceList();
 
       objyCommitInfoHandler = new ObjyCommitInfoHandler(getRepository().getName());
       objyPropertyMapHandler = new ObjyPropertyMapHandler();
@@ -254,7 +254,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
       if (!com.objy.db.app.Session.getCurrent().getFD().hasDB(getRepository().getName()))
       {
         // Create the repo DB.
-        // ObjyScope objyScope = new ObjyScope(getRepository().getName(), ObjyDb.DEFAULT_CONT_NAME);
+        ObjyScope.insureScopeExist(objySession, getRepository().getName(), ObjyDb.DEFAULT_CONT_NAME);
         // ...do other initialisation of the repository here.
         // Note that in the current implementation we don't delete DBs by default, only delete
         // the containers (see ObjectivityStoreConfig.resetFD()) so any initialization done here

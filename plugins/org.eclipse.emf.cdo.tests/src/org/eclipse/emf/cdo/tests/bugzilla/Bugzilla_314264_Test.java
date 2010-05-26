@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.TestAdapter;
 import org.eclipse.emf.cdo.tests.model2.TaskContainer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -90,7 +91,7 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
     // setup additional view.
     CDOView view = session.openView();
     view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
-    view.getObject(container).eAdapters().add(new TestAdapter()
+    CDOUtil.getEObject(view.getObject(container)).eAdapters().add(new TestAdapter()
     {
       private int counter;
 

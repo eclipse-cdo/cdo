@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOLegacyAdapter;
 import org.eclipse.emf.internal.cdo.CDOMetaWrapper;
+import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -91,6 +92,11 @@ public final class FSMUtil
     }
 
     return object instanceof org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
+  }
+
+  public static boolean isNative(EObject eObject)
+  {
+    return eObject instanceof CDOObjectImpl;
   }
 
   /**

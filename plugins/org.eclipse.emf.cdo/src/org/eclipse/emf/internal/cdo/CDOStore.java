@@ -400,7 +400,10 @@ public final class CDOStore implements EStore
 
   public Object remove(InternalEObject eObject, EStructuralFeature feature, int index)
   {
-    checkIndexOutOfBounds(eObject, feature, index); // Bugzilla 293283
+    if (FSMUtil.isNative(eObject))
+    {
+      checkIndexOutOfBounds(eObject, feature, index); // Bugzilla 293283
+    }
 
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
@@ -570,6 +573,20 @@ public final class CDOStore implements EStore
     return value;
   }
 
+  private void checkIndexOutOfBounds(InternalEObject eObject, EStructuralFeature feature, int index)
+  {
+    // Bugzilla 293283
+    if (feature.isMany())
+    {
+      Object o = eObject.eGet(feature);
+      int size = ((EList<?>)o).size();
+      if (index >= size)
+      {
+        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+      }
+    }
+  }
+
   private Object convertIdToObject(InternalCDOView view, EObject eObject, EStructuralFeature feature, int index,
       Object value)
   {
@@ -608,20 +625,6 @@ public final class CDOStore implements EStore
     finally
     {
       viewLock.unlock();
-    }
-  }
-
-  private void checkIndexOutOfBounds(InternalEObject eObject, EStructuralFeature feature, int index)
-  {
-    // Bugzilla 293283
-    if (feature.isMany())
-    {
-      Object o = eObject.eGet(feature);
-      int size = ((EList<?>)o).size();
-      if (index >= size)
-      {
-        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-      }
     }
   }
 

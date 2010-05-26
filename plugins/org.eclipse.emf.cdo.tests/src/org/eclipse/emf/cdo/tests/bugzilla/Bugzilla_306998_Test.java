@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.tests.legacy.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -31,7 +32,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class Bugzilla_306998_Test extends AbstractCDOTest
 {
-  public void testValidEENumLiteral()
+  public void testValidEENumLiteral() throws CommitException
   {
     EPackage pkg = EMFUtil.createEPackage("pkg", "pkg", "http://cdo.eclipse.org/Bugzilla_306998_Test_1.ecore");
     EClass cls = EMFUtil.createEClass(pkg, "cls", false, false);
@@ -68,7 +69,7 @@ public class Bugzilla_306998_Test extends AbstractCDOTest
     }
   }
 
-  public void testInalidEENumLiteral()
+  public void testInalidEENumLiteral() throws CommitException
   {
     // does not affect MemStore!
     skipConfig(MEM);
@@ -96,7 +97,9 @@ public class Bugzilla_306998_Test extends AbstractCDOTest
       tx.close();
       session.close();
     }
+
     clearCache(getRepository().getRevisionManager());
+
     {
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);

@@ -25,12 +25,12 @@ import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.DanglingReferenceException;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.SignalCounter;
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -345,9 +345,9 @@ public class ExternalReferenceTest extends AbstractCDOTest
     {
       msg("Committing");
       transaction.commit();
-      fail("TransactionException expected");
+      fail("CommitException expected");
     }
-    catch (TransactionException success)
+    catch (CommitException success)
     {
       assertEquals(true, success.getCause() instanceof DanglingReferenceException);
       assertSame(purchaseOrder, ((DanglingReferenceException)success.getCause()).getTarget());

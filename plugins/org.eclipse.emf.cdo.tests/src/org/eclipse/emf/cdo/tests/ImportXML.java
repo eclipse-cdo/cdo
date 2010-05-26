@@ -14,8 +14,8 @@ import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IRepository.Props;
+import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
@@ -45,7 +46,7 @@ public class ImportXML
 {
   private static final String REPOSITORY_NAME = "repo1";
 
-  public static void main(String[] args)
+  public static void main(String[] args) throws CommitException
   {
     // Turn on tracing
     OMPlatform.INSTANCE.setDebugging(true);

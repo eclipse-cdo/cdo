@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
@@ -32,7 +33,7 @@ import org.eclipse.emf.ecore.resource.Resource;
  */
 public class TransactionMonitoringTest
 {
-  public static void main(String[] args)
+  public static void main(String[] args) throws CommitException
   {
     OMPlatform.INSTANCE.setDebugging(true);
     OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);

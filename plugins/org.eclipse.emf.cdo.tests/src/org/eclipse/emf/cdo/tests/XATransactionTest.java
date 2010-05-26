@@ -21,10 +21,9 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.internal.cdo.session.SessionUtil;
-
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -176,9 +175,9 @@ public class XATransactionTest extends AbstractCDOTest
       try
       {
         transactionA1.commit();
-        fail("We should have an exception");
+        fail("CommitException expected");
       }
-      catch (TransactionException exp)
+      catch (CommitException exp)
       {
       }
 
@@ -217,9 +216,9 @@ public class XATransactionTest extends AbstractCDOTest
       try
       {
         transactionA.commit();
-        fail("TransactionException expected");
+        fail("CommitException expected");
       }
-      catch (TransactionException expected)
+      catch (CommitException expected)
       {
       }
 

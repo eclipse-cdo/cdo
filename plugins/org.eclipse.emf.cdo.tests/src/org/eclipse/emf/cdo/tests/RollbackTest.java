@@ -18,8 +18,7 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
-
-import org.eclipse.net4j.util.transaction.TransactionException;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -49,7 +48,7 @@ public class RollbackTest extends AbstractCDOTest
     flow1(transaction1, transaction2);
   }
 
-  protected void flow1(CDOTransaction transaction1, CDOTransaction transaction2)
+  protected void flow1(CDOTransaction transaction1, CDOTransaction transaction2) throws CommitException
   {
     EStructuralFeature category_Products1 = getModel1Package().getCategory_Products();
 
@@ -101,9 +100,9 @@ public class RollbackTest extends AbstractCDOTest
     try
     {
       transaction2.commit();
-      fail("Commit on transaction2 should fail");
+      fail("CommitException expected");
     }
-    catch (TransactionException ex)
+    catch (CommitException ex)
     {
       // Commit process should no have changed state of the object
       CDOObject cdoObjectCategory2 = CDOUtil.getCDOObject(category2);

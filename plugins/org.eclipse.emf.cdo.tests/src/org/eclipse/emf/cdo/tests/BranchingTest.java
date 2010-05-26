@@ -29,13 +29,13 @@ import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.DanglingReferenceException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
@@ -413,9 +413,9 @@ public class BranchingTest extends AbstractCDOTest
     {
       // product.getOrderDetails() contains pointer to detached orderDetail
       commitInfo = transaction.commit();
-      fail("TransactionException expected");
+      fail("CommitException expected");
     }
-    catch (TransactionException expected)
+    catch (CommitException expected)
     {
       assertInstanceOf(DanglingReferenceException.class, expected.getCause());
     }
@@ -445,9 +445,9 @@ public class BranchingTest extends AbstractCDOTest
     {
       // New orderDetail is not attached
       commitInfo = transaction.commit();
-      fail("TransactionException expected");
+      fail("CommitException expected");
     }
-    catch (TransactionException expected)
+    catch (CommitException expected)
     {
       assertInstanceOf(DanglingReferenceException.class, expected.getCause());
     }
@@ -657,7 +657,7 @@ public class BranchingTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testSwitchViewTarget()
+  public void testSwitchViewTarget() throws CommitException
   {
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();

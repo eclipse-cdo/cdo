@@ -19,10 +19,12 @@ import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSession;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
@@ -90,6 +92,10 @@ public class Model extends Lifecycle implements IModel
           resource.getContents().add(restaurant);
           transaction.commit();
         }
+        catch (CommitException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
         finally
         {
           transaction.close();
@@ -132,6 +138,10 @@ public class Model extends Lifecycle implements IModel
           CDOResource resource = transaction.createResource(path);
           resource.getContents().add(businessDay);
           transaction.commit();
+        }
+        catch (CommitException ex)
+        {
+          throw WrappedException.wrap(ex);
         }
         finally
         {
@@ -180,6 +190,10 @@ public class Model extends Lifecycle implements IModel
       }
 
       return result;
+    }
+    catch (CommitException ex)
+    {
+      throw WrappedException.wrap(ex);
     }
     finally
     {

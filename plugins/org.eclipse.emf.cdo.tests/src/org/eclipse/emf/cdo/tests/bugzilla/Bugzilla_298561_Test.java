@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.RefSingleNonContainedNPL;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.emf.ecore.EReference;
@@ -33,7 +34,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
 {
   private static String RESOURCENAME = "/r1";
 
-  public void testNew()
+  public void testNew() throws CommitException
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
@@ -78,7 +79,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     session.close();
   }
 
-  public void testDirty()
+  public void testDirty() throws CommitException
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
@@ -124,7 +125,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     session.close();
   }
 
-  public void testNewMulti()
+  public void testNewMulti() throws CommitException
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
@@ -168,7 +169,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     session.close();
   }
 
-  public void testDirtyMulti()
+  public void testDirtyMulti() throws CommitException
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
@@ -215,7 +216,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     session.close();
   }
 
-  private void doSecondSession()
+  private void doSecondSession() throws CommitException
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();

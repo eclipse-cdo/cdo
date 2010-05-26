@@ -20,11 +20,12 @@ import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.transaction.CDOPushTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 import java.io.File;
 import java.util.Date;
@@ -513,9 +514,9 @@ public class PushTransactionTest extends AbstractCDOTest
     try
     {
       pushTransaction.push();
-      fail("TransactionException expected");
+      fail("CommitException expected");
     }
-    catch (TransactionException expected)
+    catch (CommitException expected)
     {
       // SUCCESS
     }
@@ -528,14 +529,24 @@ public class PushTransactionTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(resourcePath);
+
     msg("Populate resource");
     Supplier supplier0 = getModel1Factory().createSupplier();
     supplier0.setName(supplierName);
     resource.getContents().add(supplier0);
     Company company0 = getModel1Factory().createCompany();
     resource.getContents().add(company0);
-    msg("Commit");
-    transaction.commit();
+
+    try
+    {
+      msg("Commit");
+      transaction.commit();
+    }
+    catch (CommitException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+
     session.close();
   }
 }

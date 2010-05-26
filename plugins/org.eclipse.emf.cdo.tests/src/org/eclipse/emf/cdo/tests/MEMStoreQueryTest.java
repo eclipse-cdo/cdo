@@ -16,10 +16,12 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOQuery;
 
 import org.eclipse.emf.internal.cdo.query.CDOQueryResultIteratorImpl;
 
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 
 import java.util.HashSet;
@@ -210,7 +212,15 @@ public class MEMStoreQueryTest extends AbstractCDOTest
       resource1.getContents().add(category1);
     }
 
-    transaction.commit();
+    try
+    {
+      transaction.commit();
+    }
+    catch (CommitException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+
     return transaction;
   }
 }

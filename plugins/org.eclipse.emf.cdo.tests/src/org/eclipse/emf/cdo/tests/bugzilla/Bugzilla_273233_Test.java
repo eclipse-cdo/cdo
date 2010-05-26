@@ -18,14 +18,12 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
-import java.io.IOException;
-
 /**
  * @author Simon McDuff
  */
 public class Bugzilla_273233_Test extends AbstractCDOTest
 {
-  public void test_Bugzilla_273233_Simple() throws IOException
+  public void test_Bugzilla_273233_Simple() throws Exception
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
@@ -42,7 +40,7 @@ public class Bugzilla_273233_Test extends AbstractCDOTest
     session.close();
   }
 
-  public void test_Bugzilla_273233_TwoSessions() throws IOException
+  public void test_Bugzilla_273233_TwoSessions() throws Exception
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
@@ -81,7 +79,7 @@ public class Bugzilla_273233_Test extends AbstractCDOTest
     session.close();
   }
 
-  public void test_Bugzilla_273233_TwoSessionsWithClearCache() throws IOException
+  public void test_Bugzilla_273233_TwoSessionsWithClearCache() throws Exception
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
@@ -104,8 +102,10 @@ public class Bugzilla_273233_Test extends AbstractCDOTest
     trans.commit();
     clearCache(session2.getRevisionManager());
     assertFalse(FSMUtil.isConflict(res2));
+
     session2.refresh();
     assertTrue(FSMUtil.isConflict(res2));
+
     try
     {
       trans2.commit();

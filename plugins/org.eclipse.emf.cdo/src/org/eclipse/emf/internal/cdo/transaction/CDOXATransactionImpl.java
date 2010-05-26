@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
@@ -26,22 +27,21 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
-import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor.SynchronizedSubProgressMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOXASavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
-import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext.CDOXAState;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -56,8 +56,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -279,12 +279,12 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     return transactions;
   }
 
-  public CDOCommitInfo commit() throws TransactionException
+  public CDOCommitInfo commit() throws CommitException
   {
     return commit(new NullProgressMonitor());
   }
 
-  public CDOCommitInfo commit(IProgressMonitor progressMonitor) throws TransactionException
+  public CDOCommitInfo commit(IProgressMonitor progressMonitor) throws CommitException
   {
     CheckUtil.checkArg(progressMonitor, "progressMonitor"); //$NON-NLS-1$
     progressMonitor.beginTask(Messages.getString("CDOXATransactionImpl.4"), 3); //$NON-NLS-1$
@@ -333,7 +333,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
         }
       }
 
-      throw new TransactionException(ex);
+      throw new CommitException(ex);
     }
     finally
     {

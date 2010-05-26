@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.defs.util.Net4jDefsUtil;
 
@@ -62,7 +63,7 @@ public class CDOTransactionDefImplTest extends AbstractCDOTest
     newTransactionInstance.getSession().close();
   }
 
-  public void testCreateAndReadModel()
+  public void testCreateAndReadModel() throws CommitException
   {
     CDOSessionDef cdoSessionDef = //
     CDODefsUtil.createSessionDef( //

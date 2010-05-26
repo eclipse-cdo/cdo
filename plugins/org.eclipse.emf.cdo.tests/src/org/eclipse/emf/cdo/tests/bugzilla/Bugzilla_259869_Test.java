@@ -35,7 +35,7 @@ public class Bugzilla_259869_Test extends AbstractCDOTest
 {
   final static public String REPOSITORY2_NAME = "repo2";
 
-  public void testBugzilla_259869() throws InterruptedException
+  public void testBugzilla_259869() throws Exception
   {
     CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(getModel1Package());
@@ -66,7 +66,7 @@ public class Bugzilla_259869_Test extends AbstractCDOTest
     assertTrue(timeCommitWithChanges > timeToCommitNoChange * 1.2);
   }
 
-  public void testBugzilla_259869_XA() throws InterruptedException
+  public void testBugzilla_259869_XA() throws Exception
   {
     getRepository(REPOSITORY2_NAME);
 

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
@@ -34,7 +35,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class StandaloneContainerExample
 {
-  public static void main(String[] args)
+  public static void main(String[] args) throws CommitException
   {
     // Enable logging and tracing
     OMPlatform.INSTANCE.setDebugging(true);

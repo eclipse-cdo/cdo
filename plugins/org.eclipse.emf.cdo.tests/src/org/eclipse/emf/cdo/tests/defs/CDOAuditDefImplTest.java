@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.defs.util.Net4jDefsUtil;
@@ -36,7 +37,7 @@ public class CDOAuditDefImplTest extends AbstractCDOTest
 {
   private static final String RESOURCE_ID = "/defsTest1";
 
-  public void testCreateAuditCanRead()
+  public void testCreateAuditCanRead() throws CommitException
   {
     final String customerName = "Heino";
 

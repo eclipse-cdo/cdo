@@ -123,7 +123,7 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
   {
     private Object result;
 
-    public synchronized Object getResult() throws InterruptedException
+    public synchronized Object getResult() throws Exception
     {
       while (result == null)
       {

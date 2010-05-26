@@ -27,7 +27,7 @@ import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
  */
 public class Bugzilla_266857_Test extends AbstractCDOTest
 {
-  public void testBugzilla_266857() throws InterruptedException
+  public void testBugzilla_266857() throws Exception
   {
     CDOSession session = openSession();
 

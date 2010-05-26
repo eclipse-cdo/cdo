@@ -27,7 +27,9 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.event.IEvent;
 
 import org.eclipse.emf.ecore.EObject;
@@ -182,27 +184,41 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
 
   protected static CDOCommitInfo commitAndWaitForArrival(CDOTransaction transaction, CDOSession receiver)
   {
-    CDOCommitInfo commitInfo = transaction.commit();
-    long timeStamp = commitInfo.getTimeStamp();
-    while (receiver.getLastUpdateTime() < timeStamp)
+    try
     {
-      System.out.println("Waiting for arrival of commit " + CDOCommonUtil.formatTimeStamp(timeStamp));
-      sleep(SLEEP_MILLIS);
-    }
+      CDOCommitInfo commitInfo = transaction.commit();
+      long timeStamp = commitInfo.getTimeStamp();
+      while (receiver.getLastUpdateTime() < timeStamp)
+      {
+        System.out.println("Waiting for arrival of commit " + CDOCommonUtil.formatTimeStamp(timeStamp));
+        sleep(SLEEP_MILLIS);
+      }
 
-    return commitInfo;
+      return commitInfo;
+    }
+    catch (CommitException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
   }
 
   protected static CDOCommitInfo commitAndWaitForArrival(CDOTransaction transaction, IRepository receiver)
   {
-    CDOCommitInfo commitInfo = transaction.commit();
-    long timeStamp = commitInfo.getTimeStamp();
-    while (receiver.getLastCommitTimeStamp() < timeStamp)
+    try
     {
-      System.out.println("Waiting for arrival of commit " + CDOCommonUtil.formatTimeStamp(timeStamp));
-      sleep(SLEEP_MILLIS);
-    }
+      CDOCommitInfo commitInfo = transaction.commit();
+      long timeStamp = commitInfo.getTimeStamp();
+      while (receiver.getLastCommitTimeStamp() < timeStamp)
+      {
+        System.out.println("Waiting for arrival of commit " + CDOCommonUtil.formatTimeStamp(timeStamp));
+        sleep(SLEEP_MILLIS);
+      }
 
-    return commitInfo;
+      return commitInfo;
+    }
+    catch (CommitException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
   }
 }

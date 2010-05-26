@@ -199,7 +199,7 @@ public class InvalidationTest extends AbstractCDOTest
     assertEquals(true, notified);
   }
 
-  public void testConflictSameSession() throws InterruptedException, IOException
+  public void testConflictSameSession() throws Exception, IOException
   {
     CDOSession session = openSession();
     CDOTransaction trans1 = session.openTransaction();
@@ -207,7 +207,7 @@ public class InvalidationTest extends AbstractCDOTest
     testConflict(trans1, trans2);
   }
 
-  public void testConflictDifferentSession() throws InterruptedException, IOException
+  public void testConflictDifferentSession() throws Exception, IOException
   {
     CDOSession session1 = openSession();
     CDOTransaction trans1 = session1.openTransaction();
@@ -218,7 +218,7 @@ public class InvalidationTest extends AbstractCDOTest
     testConflict(trans1, trans2);
   }
 
-  private void testConflict(CDOTransaction trans1, CDOTransaction trans2) throws InterruptedException, IOException
+  private void testConflict(CDOTransaction trans1, CDOTransaction trans2) throws Exception
   {
     final CDOResource res1 = trans1.getOrCreateResource("/test");
     trans1.commit();
@@ -259,7 +259,7 @@ public class InvalidationTest extends AbstractCDOTest
     assertEquals(2, res1.getContents().size());
   }
 
-  public void testDetachedConflictSameSession() throws InterruptedException, IOException
+  public void testDetachedConflictSameSession() throws Exception, IOException
   {
     CDOSession session = openSession();
     CDOTransaction trans1 = session.openTransaction();
@@ -267,7 +267,7 @@ public class InvalidationTest extends AbstractCDOTest
     testDetachedConflict(trans1, trans2);
   }
 
-  public void testDetachedConflictDifferentSession() throws InterruptedException, IOException
+  public void testDetachedConflictDifferentSession() throws Exception, IOException
   {
     CDOSession session1 = openSession();
     CDOTransaction trans1 = session1.openTransaction();
@@ -278,8 +278,7 @@ public class InvalidationTest extends AbstractCDOTest
     testDetachedConflict(trans1, trans2);
   }
 
-  private void testDetachedConflict(CDOTransaction trans1, CDOTransaction trans2) throws InterruptedException,
-      IOException
+  private void testDetachedConflict(CDOTransaction trans1, CDOTransaction trans2) throws Exception
   {
     final CDOResource res1 = trans1.getOrCreateResource("/test");
     trans1.commit();
@@ -743,10 +742,10 @@ public class InvalidationTest extends AbstractCDOTest
     if (isRemoveRevision)
     {
       clearCache(getRepository().getRevisionManager());
-      getRepository().getRevisionManager().getCache().removeRevision(resourceA.cdoID(),
-          resourceA.cdoRevision().getBranch().getVersion(1));
-      getRepository().getRevisionManager().getCache().removeRevision(resourceA.cdoID(),
-          resourceA.cdoRevision().getBranch().getVersion(2));
+      getRepository().getRevisionManager().getCache()
+          .removeRevision(resourceA.cdoID(), resourceA.cdoRevision().getBranch().getVersion(1));
+      getRepository().getRevisionManager().getCache()
+          .removeRevision(resourceA.cdoID(), resourceA.cdoRevision().getBranch().getVersion(2));
     }
 
     assertEquals(0, testAdapter.getNotifications().length);

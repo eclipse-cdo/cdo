@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -17,8 +17,10 @@ import org.eclipse.emf.cdo.defs.CDOTransactionDef;
 import org.eclipse.emf.cdo.defs.ResourceMode;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.defs.impl.DefImpl;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -328,7 +330,16 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
   {
     CDOTransaction cdoTransaction = (CDOTransaction)getCdoTransaction().getInstance();
     CDOResource cdoResource = getResourceMode().getResource(getPath(), cdoTransaction);
-    cdoTransaction.commit();
+
+    try
+    {
+      cdoTransaction.commit();
+    }
+    catch (CommitException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+
     return cdoResource;
 
   }

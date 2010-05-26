@@ -8,20 +8,32 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.db;
-
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259869_Test;
+package org.eclipse.emf.cdo.util;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
-public class DISABLE_Bugzilla_259869_Test extends Bugzilla_259869_Test
+public class CommitException extends Exception
 {
-  @Override
-  public void testBugzilla_259869_XA() throws Exception
+  private static final long serialVersionUID = 1L;
+
+  public CommitException()
   {
-    // XXX disabled because of Bug 290097
-    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
-    super.testBugzilla_259869_XA();
+  }
+
+  public CommitException(String message)
+  {
+    super(message);
+  }
+
+  public CommitException(Throwable cause)
+  {
+    super(cause);
+  }
+
+  public CommitException(String message, Throwable cause)
+  {
+    super(message, cause);
   }
 }

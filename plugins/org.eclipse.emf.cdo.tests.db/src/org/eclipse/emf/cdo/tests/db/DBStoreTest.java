@@ -20,7 +20,10 @@ import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -92,7 +95,7 @@ public class DBStoreTest extends AbstractCDOTest
   }
 
   // Bug 217255
-  public void testStoreDate()
+  public void testStoreDate() throws CommitException
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
@@ -117,7 +120,7 @@ public class DBStoreTest extends AbstractCDOTest
     assertEquals(new GregorianCalendar(2008, 11, 24, 12, 34, 56).getTime(), o.getDate());
   }
 
-  public void testStoreCustom()
+  public void testStoreCustom() throws CommitException
   {
     EPackage pkg = EMFUtil.createEPackage("customTest", "ct", "http://tests.cdo.emf.eclipse.org/customTest");
 
@@ -253,7 +256,15 @@ public class DBStoreTest extends AbstractCDOTest
     // resulting string only contains one backslash
 
     resource.getContents().add(e);
-    transaction.commit();
+
+    try
+    {
+      transaction.commit();
+    }
+    catch (CommitException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
 
     transaction.close();
     session.close();

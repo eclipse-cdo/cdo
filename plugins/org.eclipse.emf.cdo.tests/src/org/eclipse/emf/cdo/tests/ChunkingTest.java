@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
 import org.eclipse.emf.cdo.tests.model5.Model5Factory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.EList;
@@ -243,7 +244,7 @@ public class ChunkingTest extends AbstractCDOTest
 
   private static final String RESOURCE_PATH = "/test";
 
-  public void testPartiallyLoadedAdd()
+  public void testPartiallyLoadedAdd() throws CommitException
   {
     createInitialList();
 
@@ -263,7 +264,7 @@ public class ChunkingTest extends AbstractCDOTest
     testListResult(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
   }
 
-  public void testPartiallyLoadedAddAtIndex()
+  public void testPartiallyLoadedAddAtIndex() throws CommitException
   {
     createInitialList();
 
@@ -283,7 +284,7 @@ public class ChunkingTest extends AbstractCDOTest
     testListResult(0, 1, 2, 3, 4, 9, 5, 6, 7, 8);
   }
 
-  public void testPartiallyLoadedSet()
+  public void testPartiallyLoadedSet() throws CommitException
   {
     createInitialList();
 
@@ -303,7 +304,7 @@ public class ChunkingTest extends AbstractCDOTest
     testListResult(0, 1, 2, 3, 4, 9, 6, 7, 8);
   }
 
-  public void testPartiallyLoadedRemoveIndex()
+  public void testPartiallyLoadedRemoveIndex() throws CommitException
   {
     createInitialList();
 
@@ -323,7 +324,7 @@ public class ChunkingTest extends AbstractCDOTest
     testListResult(0, 1, 2, 3, 4, 6, 7, 8);
   }
 
-  private void createInitialList()
+  private void createInitialList() throws CommitException
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();

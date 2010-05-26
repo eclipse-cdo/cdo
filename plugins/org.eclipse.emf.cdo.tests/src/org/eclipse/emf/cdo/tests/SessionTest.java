@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.signal.RemoteException;
@@ -50,7 +51,7 @@ public class SessionTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testRefresh()
+  public void testRefresh() throws CommitException
   {
     CDOSession session1 = openSession();
     session1.options().setPassiveUpdateEnabled(false);
@@ -77,7 +78,7 @@ public class SessionTest extends AbstractCDOTest
     assertEquals(2, resource2.getContents().size());
   }
 
-  public void testRefreshWithPackages()
+  public void testRefreshWithPackages() throws CommitException
   {
     CDOSession session1 = openSession();
     session1.options().setPassiveUpdateEnabled(false);

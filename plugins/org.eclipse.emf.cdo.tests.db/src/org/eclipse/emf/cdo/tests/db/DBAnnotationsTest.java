@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.db.verifier.DBStoreVerifier;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
@@ -98,7 +99,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     }
   }
 
-  public void testLengthAnnotationByMetaData()
+  public void testLengthAnnotationByMetaData() throws CommitException
   {
     // XXX [PSQL] disabled because of Bug 290095
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
@@ -137,7 +138,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     }.verify();
   }
 
-  public void testTypeAnnotationByMetaData()
+  public void testTypeAnnotationByMetaData() throws CommitException
   {
     // XXX [PSQL] disabled because of Bug 290095
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
@@ -180,7 +181,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     }.verify();
   }
 
-  public void testTableNameAnnotationByMetaData()
+  public void testTableNameAnnotationByMetaData() throws CommitException
   {
     // XXX [PSQL] disabled because of Bug 290095
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
@@ -219,7 +220,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     }.verify();
   }
 
-  public void testColumnNameAnnotationByMetaData()
+  public void testColumnNameAnnotationByMetaData() throws CommitException
   {
     // XXX [PSQL] disabled because of Bug 290095
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
@@ -258,7 +259,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     }.verify();
   }
 
-  public void testColumnNameTypeAnnotationByMetaData()
+  public void testColumnNameTypeAnnotationByMetaData() throws CommitException
   {
     // HSQL does not support type annotations
     skipConfig(AllTestsDBHsqldb.Hsqldb.INSTANCE);
@@ -302,7 +303,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     }.verify();
   }
 
-  public void testTableMappingAnnotationByMetaData()
+  public void testTableMappingAnnotationByMetaData() throws CommitException
   {
     msg("Opening session");
     EPackage model1 = createModel();

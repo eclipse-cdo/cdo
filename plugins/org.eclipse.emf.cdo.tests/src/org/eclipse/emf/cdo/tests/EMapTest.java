@@ -17,6 +17,9 @@ import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
+
+import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -74,8 +77,16 @@ public class EMapTest extends AbstractCDOTest
 
     fillResource(resource);
 
-    msg("Committing");
-    transaction.commit();
+    try
+    {
+      msg("Committing");
+      transaction.commit();
+    }
+    catch (CommitException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+
     enableConsole();
   }
 

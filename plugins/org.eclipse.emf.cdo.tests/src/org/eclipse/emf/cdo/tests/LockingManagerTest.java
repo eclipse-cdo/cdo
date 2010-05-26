@@ -20,12 +20,12 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
-import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -270,9 +270,9 @@ public class LockingManagerTest extends AbstractCDOTest
     try
     {
       transaction2.commit();
-      fail("Should have an exception");
+      fail("CommitException expected");
     }
-    catch (TransactionException exception)
+    catch (CommitException exception)
     {
     }
   }
@@ -303,9 +303,9 @@ public class LockingManagerTest extends AbstractCDOTest
     try
     {
       transaction2.commit();
-      fail("Should have an exception");
+      fail("CommitException expected");
     }
-    catch (TransactionException exception)
+    catch (CommitException exception)
     {
     }
   }
@@ -358,9 +358,9 @@ public class LockingManagerTest extends AbstractCDOTest
     try
     {
       transaction2.commit();
-      fail("Should have an exception");
+      fail("CommitException expected");
     }
-    catch (TransactionException exception)
+    catch (CommitException expected)
     {
     }
   }
@@ -385,9 +385,9 @@ public class LockingManagerTest extends AbstractCDOTest
     try
     {
       transaction2.commit();
-      fail("Should have an exception");
+      fail("CommitException expected");
     }
-    catch (TransactionException expected)
+    catch (CommitException expected)
     {
       IOUtil.print(expected);
     }

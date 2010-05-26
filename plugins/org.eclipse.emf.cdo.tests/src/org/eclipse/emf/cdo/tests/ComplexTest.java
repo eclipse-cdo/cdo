@@ -51,6 +51,9 @@ import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement;
 import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
+
+import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -118,7 +121,14 @@ public class ComplexTest extends AbstractCDOTest
 
   private void commit()
   {
-    transaction.commit();
+    try
+    {
+      transaction.commit();
+    }
+    catch (CommitException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
   }
 
   public void testPlainSingleNonContainedBidirectional()
@@ -490,8 +500,8 @@ public class ComplexTest extends AbstractCDOTest
 
     assertEquals(element0_, container.getElement());
     assertEquals(container, element0_.getParent());
-    assertEquals("IfcimplSingleNonContainedBidirectional-Element-0", ((ImplSingleRefNonContainedElement)element0_)
-        .getName());
+    assertEquals("IfcimplSingleNonContainedBidirectional-Element-0",
+        ((ImplSingleRefNonContainedElement)element0_).getName());
     assertEquals(resource1, container.eResource());
     assertEquals(resource1, element0_.eResource());
 
@@ -548,10 +558,10 @@ public class ComplexTest extends AbstractCDOTest
     assertEquals(element1_, container.getElements().get(1));
     assertEquals(container, element0_.getParent());
     assertEquals(container, element1_.getParent());
-    assertEquals("IfcimplMultiNonContainedBidirectional-Element-0", ((ImplMultiRefNonContainedElement)element0_)
-        .getName());
-    assertEquals("IfcimplMultiNonContainedBidirectional-Element-1", ((ImplMultiRefNonContainedElement)element1_)
-        .getName());
+    assertEquals("IfcimplMultiNonContainedBidirectional-Element-0",
+        ((ImplMultiRefNonContainedElement)element0_).getName());
+    assertEquals("IfcimplMultiNonContainedBidirectional-Element-1",
+        ((ImplMultiRefNonContainedElement)element1_).getName());
     assertEquals(resource1, container.eResource());
     assertEquals(resource1, element0_.eResource());
     assertEquals(resource1, element1_.eResource());
@@ -1023,7 +1033,7 @@ public class ComplexTest extends AbstractCDOTest
     assertContent(resource2, element1_);
   }
 
-  public void testMultipleTransactions3()
+  public void testMultipleTransactions3() throws CommitException
   {
     CDOTransaction transaction1 = session.openTransaction();
     String resource1path = "/resources/3/" + uniqueCounter;
@@ -1077,7 +1087,7 @@ public class ComplexTest extends AbstractCDOTest
     }
   }
 
-  public void testMultipleTransactions2()
+  public void testMultipleTransactions2() throws CommitException
   {
     CDOTransaction transaction1 = session.openTransaction();
     String resource1path = "/resources/3/" + uniqueCounter;

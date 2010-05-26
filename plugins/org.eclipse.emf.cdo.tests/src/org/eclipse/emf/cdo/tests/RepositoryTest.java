@@ -22,10 +22,10 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -140,9 +140,9 @@ public class RepositoryTest extends AbstractCDOTest
     try
     {
       transaction.commit();
-      fail("TransactionException expected");
+      fail("CommitException expected");
     }
-    catch (TransactionException expected)
+    catch (CommitException expected)
     {
       // Success
       transaction.rollback();

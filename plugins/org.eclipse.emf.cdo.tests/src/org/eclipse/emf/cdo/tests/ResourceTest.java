@@ -27,10 +27,9 @@ import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
-
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -318,7 +317,7 @@ public class ResourceTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testCommitMultipleResources()
+  public void testCommitMultipleResources() throws CommitException
   {
     {
       CDOSession session = openSession();
@@ -338,7 +337,7 @@ public class ResourceTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testLoadMultipleResources()
+  public void testLoadMultipleResources() throws CommitException
   {
     {
       CDOSession session = openSession();
@@ -372,9 +371,9 @@ public class ResourceTest extends AbstractCDOTest
     try
     {
       transaction.commit();
-      fail("TransactionException expected");
+      fail("CommitException expected");
     }
-    catch (TransactionException expected)
+    catch (CommitException expected)
     {
       // Success
     }

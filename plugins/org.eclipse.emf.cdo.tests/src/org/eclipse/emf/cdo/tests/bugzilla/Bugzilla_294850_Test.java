@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -84,7 +85,7 @@ public class Bugzilla_294850_Test extends AbstractCDOTest
     session.close();
   }
 
-  private void doSecondSession()
+  private void doSecondSession() throws CommitException
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();

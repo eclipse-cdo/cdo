@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.FactoriesProtocolProvider;
 import org.eclipse.net4j.Net4jUtil;
@@ -38,7 +39,7 @@ import java.util.concurrent.ThreadFactory;
  */
 public class StandaloneManualExample
 {
-  public static void main(String[] args)
+  public static void main(String[] args) throws CommitException
   {
     // Enable logging and tracing
     OMPlatform.INSTANCE.setDebugging(true);

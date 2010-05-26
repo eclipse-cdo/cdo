@@ -19,9 +19,8 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
-
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -291,9 +290,9 @@ public class CrossReferenceTest extends AbstractCDOTest
     try
     {
       transaction.commit();
-      fail("TransactionException expected");
+      fail("CommitException expected");
     }
-    catch (TransactionException expected)
+    catch (CommitException expected)
     {
     }
   }

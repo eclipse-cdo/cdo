@@ -76,6 +76,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
@@ -878,7 +879,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public CDOCommitInfo commit(IProgressMonitor progressMonitor) throws TransactionException
+  public CDOCommitInfo commit(IProgressMonitor progressMonitor) throws CommitException
   {
     checkActive();
     synchronized (getSession().getInvalidationLock())
@@ -900,17 +901,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         CDOTransactionStrategy transactionStrategy = getTransactionStrategy();
         return transactionStrategy.commit(this, progressMonitor);
       }
-      catch (LegacyModeNotEnabledException ex)
+      catch (CommitException ex)
       {
         throw ex;
       }
-      catch (TransactionException ex)
+      catch (Throwable t)
       {
-        throw ex;
-      }
-      catch (Exception ex)
-      {
-        throw new TransactionException(ex);
+        throw new CommitException(t);
       }
       finally
       {
@@ -919,7 +916,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  public CDOCommitInfo commit() throws TransactionException
+  public CDOCommitInfo commit() throws CommitException
   {
     return commit(null);
   }

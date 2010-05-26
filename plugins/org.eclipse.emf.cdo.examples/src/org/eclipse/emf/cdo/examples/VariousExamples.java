@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSession;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -27,7 +28,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
  */
 public class VariousExamples
 {
-  public static void openSessionAndUseTransaction()
+  public static void openSessionAndUseTransaction() throws CommitException
   {
     ResourceSet resourceSet = new ResourceSetImpl();
     IConnector connector = (IConnector)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.connectors", "tcp",
@@ -45,7 +46,7 @@ public class VariousExamples
     session.close();
   }
 
-  public static void registerSessionWithPluginContainer()
+  public static void registerSessionWithPluginContainer() throws CommitException
   {
     CDOSession session = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo",
         "tcp://repos.foo.org:2036/MyRepo");

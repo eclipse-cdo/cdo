@@ -16,7 +16,9 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.EList;
@@ -59,8 +61,15 @@ public class MemoryLeakTest extends AbstractCDOTest
 
   protected void commit()
   {
-    CDOTransaction transaction = (CDOTransaction)CDOUtil.getCDOObject(company).cdoView();
-    transaction.commit();
+    try
+    {
+      CDOTransaction transaction = (CDOTransaction)CDOUtil.getCDOObject(company).cdoView();
+      transaction.commit();
+    }
+    catch (CommitException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
   }
 
   public void testLargeModel() throws Exception

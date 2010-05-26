@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.tests.model5.Doctor;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -127,7 +128,7 @@ public class FeatureMapTest extends AbstractCDOTest
     tx.commit();
   }
 
-  public void _testAddDifferentTypes()
+  public void _testAddDifferentTypes() throws CommitException
   {
     EObject fMapObj = EcoreUtil.create(fmapContainer);
 

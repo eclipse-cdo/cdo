@@ -32,7 +32,9 @@ import org.eclipse.emf.cdo.tests.model1.impl.AddressImpl;
 import org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 import org.eclipse.net4j.util.tests.ConcurrentRunner;
@@ -106,7 +108,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     revisionCache.addRevision(revision);
   }
 
-  public void testGetRevisionReturnsLatestVersion()
+  public void testGetRevisionReturnsLatestVersion() throws Exception
   {
     CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision firstRevision = company.cdoRevision();
@@ -122,7 +124,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     assertEquals(2, fetchedCDORevision.getVersion());
   }
 
-  public void testAddedRevisionIsNotRevised()
+  public void testAddedRevisionIsNotRevised() throws Exception
   {
     CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision firstRevision = company.cdoRevision();
@@ -133,7 +135,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     assertTrue(fetchedRevision.getRevised() == 0);
   }
 
-  public void testFormerVersionIsGettable()
+  public void testFormerVersionIsGettable() throws Exception
   {
     CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision firstRevision = company.cdoRevision();
@@ -147,14 +149,14 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
     // fetch older version and check version and ID equality
     CDOID cdoID = company.cdoID();
-    CDORevision fetchedRevision = revisionCache.getRevisionByVersion(cdoID, BRANCH.getVersion(firstRevision
-        .getVersion()));
+    CDORevision fetchedRevision = revisionCache.getRevisionByVersion(cdoID,
+        BRANCH.getVersion(firstRevision.getVersion()));
     assertNotNull(fetchedRevision);
     assertTrue(firstRevision.getID().equals(fetchedRevision.getID()));
     assertTrue(firstRevision.getVersion() == fetchedRevision.getVersion());
   }
 
-  public void testAddRevisionUpdatesRevisedTimeStampOfLastRevision()
+  public void testAddRevisionUpdatesRevisedTimeStampOfLastRevision() throws Exception
   {
     CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     CDOID cdoID = company.cdoID();
@@ -178,7 +180,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     assertTrue(fetchedRevision.getRevised() == firstVersion.getRevised());
   }
 
-  public void testTheFormerRevisionOf2VersionsMayBeFetchedByTimestamp()
+  public void testTheFormerRevisionOf2VersionsMayBeFetchedByTimestamp() throws Exception
   {
     CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     CDOID cdoID = CDOUtil.getCDOObject(company).cdoID();
@@ -203,7 +205,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     assertTrue(secondRevision.getVersion() == fetchedRevision.getVersion());
   }
 
-  public void testGiven3ObjectsOf2TypesGetRevisionsReturns2Versions()
+  public void testGiven3ObjectsOf2TypesGetRevisionsReturns2Versions() throws Exception
   {
     CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     addRevision(company.cdoRevision());
@@ -222,7 +224,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     assertEquals(2, revisionList.size());
   }
 
-  public void testReturnsRemovedVersionWhenRemoving()
+  public void testReturnsRemovedVersionWhenRemoving() throws Exception
   {
     CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision firstVersion = company.cdoRevision();
@@ -239,7 +241,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     assertEqualRevisions(firstVersion, removedRevision);
   }
 
-  public void testRemovedRevisionIsRemovedFromCache()
+  public void testRemovedRevisionIsRemovedFromCache() throws Exception
   {
     CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision firstVersion = company.cdoRevision();
@@ -255,7 +257,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     assertNull(revisionCache.getRevisionByVersion(secondVersion.getID(), BRANCH.getVersion(secondVersion.getVersion())));
   }
 
-  public void testRemoveSecondRevisionResultsInNoActiveRevision()
+  public void testRemoveSecondRevisionResultsInNoActiveRevision() throws Exception
   {
     CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision firstVersion = company.cdoRevision();
@@ -272,7 +274,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     assertNull(fetchedRevision);
   }
 
-  public void testRemovedRevisionIsNotGettableByTimeStamp()
+  public void testRemovedRevisionIsNotGettableByTimeStamp() throws Exception
   {
     CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision firstVersion = company.cdoRevision();
@@ -288,7 +290,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     assertNull(fetchedRevision);
   }
 
-  public void testClearedCacheDoesNotContainAnyRevisions()
+  public void testClearedCacheDoesNotContainAnyRevisions() throws Exception
   {
     CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision firstVersion = company.cdoRevision();
@@ -300,12 +302,12 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     addRevision(secondVersion);
 
     revisionCache.clear();
-    CDORevision fetchedRevision = revisionCache.getRevisionByVersion(firstVersion.getID(), BRANCH
-        .getVersion(firstVersion.getVersion()));
+    CDORevision fetchedRevision = revisionCache.getRevisionByVersion(firstVersion.getID(),
+        BRANCH.getVersion(firstVersion.getVersion()));
     assertNull(fetchedRevision);
 
-    fetchedRevision = revisionCache.getRevisionByVersion(secondVersion.getID(), BRANCH.getVersion(secondVersion
-        .getVersion()));
+    fetchedRevision = revisionCache.getRevisionByVersion(secondVersion.getID(),
+        BRANCH.getVersion(secondVersion.getVersion()));
     assertNull(fetchedRevision);
   }
 
@@ -334,8 +336,8 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
             CDOObject company = createCompanyInResource("Puzzle", session.openTransaction());
             CDORevision revision = company.cdoRevision();
             addRevision(revision);
-            CDORevision fetchedRevision = revisionCache.getRevisionByVersion(revision.getID(), BRANCH
-                .getVersion(revision.getVersion()));
+            CDORevision fetchedRevision = revisionCache.getRevisionByVersion(revision.getID(),
+                BRANCH.getVersion(revision.getVersion()));
             assertEquals(revision.getVersion(), fetchedRevision.getVersion());
             assertEquals(revision.getTimeStamp(), fetchedRevision.getTimeStamp());
           }
@@ -395,7 +397,16 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     Company company = Model1Factory.eINSTANCE.createCompany();
     company.setName(name);
     resource.getContents().add(company);
-    transaction.commit();
+
+    try
+    {
+      transaction.commit();
+    }
+    catch (CommitException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+
     return CDOUtil.getCDOObject(company);
   }
 
@@ -403,7 +414,16 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
   {
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getOrCreateResource(RESOURCE_PATH);
-    transaction.commit();
+
+    try
+    {
+      transaction.commit();
+    }
+    catch (CommitException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+
     return resource;
   }
 

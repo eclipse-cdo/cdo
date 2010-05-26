@@ -6,6 +6,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -22,7 +23,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Stefan Winkler - initial API and implementation
  */
@@ -56,7 +57,7 @@ public class Bugzilla_308895_Test extends AbstractCDOTest
     CDOUtil.prepareDynamicEPackage(pkg);
   }
 
-  public void testCustomRegular()
+  public void testCustomRegular() throws CommitException
   {
     EObject obj = EcoreUtil.create(cls);
     obj.eSet(att, new CustomType(23, 42));
@@ -90,7 +91,7 @@ public class Bugzilla_308895_Test extends AbstractCDOTest
     }
   }
 
-  public void testCustomDefaultLiteral()
+  public void testCustomDefaultLiteral() throws CommitException
   {
     // valid default literal
     att.setDefaultValueLiteral("1;2");
@@ -127,7 +128,7 @@ public class Bugzilla_308895_Test extends AbstractCDOTest
     }
   }
 
-  public void testCustomDefaultDefault()
+  public void testCustomDefaultDefault() throws CommitException
   {
     // no default literal is set
     EObject obj = EcoreUtil.create(cls);
@@ -160,7 +161,7 @@ public class Bugzilla_308895_Test extends AbstractCDOTest
     }
   }
 
-  public void testCustomDefaultInvalidLiteral()
+  public void testCustomDefaultInvalidLiteral() throws CommitException
   {
     // invalid default literal
     att.setDefaultValueLiteral("1;2;3");

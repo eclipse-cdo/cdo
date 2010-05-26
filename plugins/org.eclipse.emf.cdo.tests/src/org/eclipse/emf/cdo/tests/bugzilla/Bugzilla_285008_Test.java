@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable;
 import org.eclipse.emf.cdo.tests.model4.model4Factory;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 
 /**
  * @author Caspar De Groot
@@ -26,7 +27,7 @@ public class Bugzilla_285008_Test extends AbstractCDOTest
 {
   private static String RESOURCENAME = "/r1";
 
-  public void testCDO_isSet()
+  public void testCDO_isSet() throws CommitException
   {
     {
       CDOSession session = openSession();
@@ -83,7 +84,7 @@ public class Bugzilla_285008_Test extends AbstractCDOTest
     }
   }
 
-  public void testCDO_crossReferences()
+  public void testCDO_crossReferences() throws CommitException
   {
     {
       CDOSession session = openSession();

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.model4.GenRefSingleContained;
 import org.eclipse.emf.cdo.tests.model4.ImplContainedElementNPL;
 import org.eclipse.emf.cdo.tests.model4.model4Factory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.ecore.resource.Resource;
 
@@ -73,12 +74,12 @@ public class Bugzilla_299190_Test extends AbstractCDOTest
     resource1 = transaction.getOrCreateResource(path1);
   }
 
-  private void commit()
+  private void commit() throws CommitException
   {
     transaction.commit();
   }
 
-  public void testGenRefSingleContainedUnidirectionalCDO()
+  public void testGenRefSingleContainedUnidirectionalCDO() throws CommitException
   {
     GenRefSingleContained container = factory.createGenRefSingleContained();
     ImplContainedElementNPL element0 = factory.createImplContainedElementNPL();
@@ -99,7 +100,7 @@ public class Bugzilla_299190_Test extends AbstractCDOTest
     check2(container, element0, resource1);
   }
 
-  public void testGenRefSingleContainedUnidirectionalResourceFirstCDO()
+  public void testGenRefSingleContainedUnidirectionalResourceFirstCDO() throws CommitException
   {
     GenRefSingleContained container = factory.createGenRefSingleContained();
     ImplContainedElementNPL element0 = factory.createImplContainedElementNPL();

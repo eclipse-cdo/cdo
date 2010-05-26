@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
@@ -27,6 +28,7 @@ import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -715,7 +717,16 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     CDOTransaction transaction = getTransaction(options);
     IProgressMonitor progressMonitor = options != null ? (IProgressMonitor)options
         .get(CDOResource.OPTION_SAVE_PROGRESS_MONITOR) : null;
-    transaction.commit(progressMonitor);
+
+    try
+    {
+      transaction.commit(progressMonitor);
+    }
+    catch (CommitException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+
     setModified(false);
   }
 

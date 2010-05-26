@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.defs.TCPConnectorDef;
@@ -76,7 +77,7 @@ public class CDOViewDefImplTest extends AbstractCDOTest
     assertTrue(thisCdoViewReference == thatCdoViewReference);
   }
 
-  public void testViewCreatedCanRead()
+  public void testViewCreatedCanRead() throws CommitException
   {
     CDOTransaction transaction = openSession().openTransaction();
     transaction.createResource(RESOURCE_ID);

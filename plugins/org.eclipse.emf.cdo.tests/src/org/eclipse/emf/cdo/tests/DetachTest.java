@@ -22,17 +22,18 @@ import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
+
+import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
-
-import java.io.IOException;
 
 import junit.framework.Assert;
 
@@ -182,7 +183,14 @@ public class DetachTest extends AbstractCDOTest
       assertNew(c1, transaction);
     }
 
-    transaction.commit();
+    try
+    {
+      transaction.commit();
+    }
+    catch (CommitException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
   }
 
   public void testKeepValue() throws Exception
@@ -331,7 +339,7 @@ public class DetachTest extends AbstractCDOTest
     assertTransient(resource);
   }
 
-  public void testDetachEmptyPersistedResource() throws IOException, InterruptedException
+  public void testDetachEmptyPersistedResource() throws Exception
   {
     CDOSession session = openSession();
 

@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.tests.model4.model4Factory;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 /**
@@ -26,7 +27,7 @@ import org.eclipse.emf.cdo.view.CDOView;
  */
 public class Bugzilla_270429_Test extends AbstractCDOTest
 {
-  public void testTwoWayReferenceDeletion()
+  public void testTwoWayReferenceDeletion() throws CommitException
   {
     {
       CDOSession session = openSession();

@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class Bugzilla_259695_Test extends AbstractCDOTest
 {
-  public void testBugzilla_259695_ClassCast() throws InterruptedException
+  public void testBugzilla_259695_ClassCast() throws Exception
   {
     CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(getModel4InterfacesPackage());

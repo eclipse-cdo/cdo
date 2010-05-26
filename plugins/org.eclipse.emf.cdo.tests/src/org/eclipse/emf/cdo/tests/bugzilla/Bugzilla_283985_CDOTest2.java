@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 
 /**
  * @author Caspar De Groot
@@ -49,7 +50,7 @@ public class Bugzilla_283985_CDOTest2 extends AbstractCDOTest
     order1.getOrderDetails().add(detail4);
   }
 
-  public void testMoveOnce()
+  public void testMoveOnce() throws CommitException
   {
     {
       CDOSession session = openSession();
@@ -102,7 +103,7 @@ public class Bugzilla_283985_CDOTest2 extends AbstractCDOTest
     }
   }
 
-  public void testMoveOnceAndBack()
+  public void testMoveOnceAndBack() throws CommitException
   {
     {
       CDOSession session = openSession();

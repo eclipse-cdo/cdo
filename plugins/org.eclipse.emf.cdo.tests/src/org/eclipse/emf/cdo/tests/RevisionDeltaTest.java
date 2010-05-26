@@ -31,8 +31,10 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.BasicEList;
@@ -159,10 +161,10 @@ public class RevisionDeltaTest extends AbstractCDOTest
     transaction.commit();
 
     salesOrder.setId(4711);
-    assertNotSame(CDOUtil.getCDOObject(salesOrder).cdoRevision(), ((InternalCDOTransaction)transaction).getRevision(
-        CDOUtil.getCDOObject(salesOrder).cdoID(), true));
-    assertEquals(CDOUtil.getCDOObject(salesOrder).cdoRevision(), transaction.getDirtyObjects().get(
-        CDOUtil.getCDOObject(salesOrder).cdoID()).cdoRevision());
+    assertNotSame(CDOUtil.getCDOObject(salesOrder).cdoRevision(),
+        ((InternalCDOTransaction)transaction).getRevision(CDOUtil.getCDOObject(salesOrder).cdoID(), true));
+    assertEquals(CDOUtil.getCDOObject(salesOrder).cdoRevision(),
+        transaction.getDirtyObjects().get(CDOUtil.getCDOObject(salesOrder).cdoID()).cdoRevision());
     transaction.close();
     session.close();
   }
@@ -470,7 +472,15 @@ public class RevisionDeltaTest extends AbstractCDOTest
         reference.add(company);
       }
 
-      transaction.commit();
+      try
+      {
+        transaction.commit();
+      }
+      catch (CommitException ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+
       transaction.close();
       session.close();
     }
@@ -485,7 +495,15 @@ public class RevisionDeltaTest extends AbstractCDOTest
       manipulator.doManipulations(resource.getContents());
       manipulator.doManipulations(reference);
 
-      transaction.commit();
+      try
+      {
+        transaction.commit();
+      }
+      catch (CommitException ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+
       transaction.close();
       session.close();
     }

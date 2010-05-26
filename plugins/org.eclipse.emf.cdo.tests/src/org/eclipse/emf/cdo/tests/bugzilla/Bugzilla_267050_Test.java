@@ -33,7 +33,7 @@ import java.util.Collection;
 public class Bugzilla_267050_Test extends AbstractCDOTest
 {
   @SuppressWarnings("unchecked")
-  public void testBugzilla_267050() throws InterruptedException
+  public void testBugzilla_267050() throws Exception
   {
     final Collection<CDOPackageUnit> newPackagesUnits[] = new Collection[1];
     CDOSession session = openSession();

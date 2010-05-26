@@ -24,7 +24,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
  */
 public class Bugzilla_256141_Test extends AbstractCDOTest
 {
-  public void testBugzilla_256141() throws InterruptedException
+  public void testBugzilla_256141() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
@@ -124,6 +125,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
   }
 
   protected <T> void testMultiValuedIOfAttribute(List<T> list, EClass containerClass, EStructuralFeature feature)
+      throws CommitException
   {
     {
       CDOSession session = openSession();

@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -34,7 +35,6 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -196,12 +196,12 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     }
   }
 
-  public CDOCommitInfo commit() throws TransactionException
+  public CDOCommitInfo commit() throws CommitException
   {
     return commit(null);
   }
 
-  public CDOCommitInfo commit(IProgressMonitor progressMonitor) throws TransactionException
+  public CDOCommitInfo commit(IProgressMonitor progressMonitor) throws CommitException
   {
     OutputStream out = null;
 
@@ -212,9 +212,9 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
       setDirty(false);
       return null;
     }
-    catch (IOException ex)
+    catch (Exception ex)
     {
-      throw new TransactionException("A problem occured while exporting changes to " + file.getAbsolutePath(), ex);
+      throw new CommitException("A problem occured while exporting changes to " + file.getAbsolutePath(), ex);
     }
     finally
     {
@@ -227,12 +227,12 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     throw new UnsupportedOperationException("Rollback not supported for push transactions");
   }
 
-  public void push() throws TransactionException
+  public void push() throws CommitException
   {
     push(null);
   }
 
-  public void push(IProgressMonitor progressMonitor) throws TransactionException
+  public void push(IProgressMonitor progressMonitor) throws CommitException
   {
     delegate.commit(progressMonitor);
     file.delete();

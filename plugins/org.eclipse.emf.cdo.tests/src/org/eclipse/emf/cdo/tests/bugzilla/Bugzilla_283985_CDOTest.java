@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -53,7 +54,7 @@ import java.util.List;
  */
 public class Bugzilla_283985_CDOTest extends AbstractCDOTest
 {
-  public void testBugzilla283985_PlainSingle()
+  public void testBugzilla283985_PlainSingle() throws CommitException
   {
     runWithClosure(new SingleItemClosure()
     {
@@ -69,7 +70,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     });
   }
 
-  public void testBugzilla283985_PlainMultiple()
+  public void testBugzilla283985_PlainMultiple() throws CommitException
   {
     runWithClosure(new MultiItemClosure()
     {
@@ -85,7 +86,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     });
   }
 
-  public void testBugzilla283985_DragAndDropSingle()
+  public void testBugzilla283985_DragAndDropSingle() throws CommitException
   {
     runWithClosure(new SingleItemClosure()
     {
@@ -101,7 +102,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     });
   }
 
-  public void testBugzilla283985_DragAndDropMultiple()
+  public void testBugzilla283985_DragAndDropMultiple() throws CommitException
   {
     runWithClosure(new MultiItemClosure()
     {
@@ -117,7 +118,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     });
   }
 
-  public void testBugzilla283985_DragAndDropMultipleMultiparent()
+  public void testBugzilla283985_DragAndDropMultipleMultiparent() throws CommitException
   {
     runWithClosure(new MultiItemMultiParentClosure()
     {
@@ -133,7 +134,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     });
   }
 
-  public void testBugzilla283985_RemoveAndAddSingle()
+  public void testBugzilla283985_RemoveAndAddSingle() throws CommitException
   {
     runWithClosure(new SingleItemClosure()
     {
@@ -147,7 +148,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     });
   }
 
-  public void testBugzilla283985_RemoveAndAddMultiple()
+  public void testBugzilla283985_RemoveAndAddMultiple() throws CommitException
   {
     runWithClosure(new MultiItemClosure()
     {
@@ -161,7 +162,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     });
   }
 
-  private void runWithClosure(IClosure closure)
+  private void runWithClosure(IClosure closure) throws CommitException
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
@@ -292,7 +293,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testEReferencesCorrupted()
+  public void testEReferencesCorrupted() throws CommitException
   {
     CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
@@ -344,7 +345,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
   }
 
-  public void testAddRemoveSequence()
+  public void testAddRemoveSequence() throws CommitException
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
@@ -411,7 +412,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testCanDaDmoreThanOnce()
+  public void testCanDaDmoreThanOnce() throws CommitException
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
@@ -467,7 +468,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testCanReattachDirtyObject()
+  public void testCanReattachDirtyObject() throws CommitException
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();

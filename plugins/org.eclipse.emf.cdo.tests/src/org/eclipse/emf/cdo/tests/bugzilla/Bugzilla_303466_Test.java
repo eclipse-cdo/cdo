@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Caspar De Groot
  */
@@ -16,9 +16,9 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.PackageRegistryTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.signal.RemoteException;
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -37,7 +37,7 @@ import java.util.Map;
  */
 public class Bugzilla_303466_Test extends AbstractCDOTest
 {
-  public void test_missingDependency() throws IOException
+  public void test_missingDependency() throws Exception
   {
     CDOSession session = openSession();
 
@@ -65,7 +65,7 @@ public class Bugzilla_303466_Test extends AbstractCDOTest
       tx.commit();
       fail("Should have thrown an exception because of the missing base package");
     }
-    catch (TransactionException e)
+    catch (CommitException e)
     {
       if (e.getCause() instanceof IllegalStateException)
       {
@@ -127,7 +127,7 @@ public class Bugzilla_303466_Test extends AbstractCDOTest
       tx.commit();
       fail("Should have thrown an exception because of the file URIs in the dependent package");
     }
-    catch (TransactionException e)
+    catch (CommitException e)
     {
       if (e.getCause() instanceof IllegalStateException)
       {

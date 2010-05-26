@@ -23,10 +23,9 @@ import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.internal.cdo.transaction.CDOSavepointImpl;
-
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
@@ -42,7 +41,7 @@ public class Bugzilla_294859_Test extends AbstractCDOTest
 {
   private static String RESOURCE_NAME = "/r1";
 
-  public void test()
+  public void test() throws CommitException
   {
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
@@ -94,9 +93,9 @@ public class Bugzilla_294859_Test extends AbstractCDOTest
     try
     {
       tx.commit();
-      fail("Should have thrown TransactionException because of conflict");
+      fail("CommitException expected");
     }
-    catch (TransactionException e)
+    catch (CommitException expected)
     {
       // Correct
     }
@@ -105,7 +104,7 @@ public class Bugzilla_294859_Test extends AbstractCDOTest
     session.close();
   }
 
-  private void doSecondSession()
+  private void doSecondSession() throws CommitException
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();

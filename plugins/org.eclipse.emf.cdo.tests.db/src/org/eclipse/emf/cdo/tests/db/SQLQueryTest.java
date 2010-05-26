@@ -24,8 +24,10 @@ import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOQuery;
 
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 
 import java.util.ArrayList;
@@ -286,8 +288,16 @@ public class SQLQueryTest extends AbstractCDOTest
 
     fillResource(resource);
 
-    msg("Committing");
-    transaction.commit();
+    try
+    {
+      msg("Committing");
+      transaction.commit();
+    }
+    catch (CommitException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+
     enableConsole();
   }
 

@@ -158,6 +158,8 @@ public class ObjyArrayListString
     Class_Object chunkObject = getVArray().get_class_obj(chunkItem);
     // String_Value value = chunkObject.nget_string(FixedElementsName, chunkIndex);
     Class_Object embeddedElement = chunkObject.nget_class_obj(FixedElementsName, chunkIndex);
+    // TODO - I don't like using magic numbers!!! we are using "1" to index into the embedded object.
+    embeddedElement.set_numeric(1, newValue == null ? ITypeMapper.numericTrue : ITypeMapper.numericFalse);
     // String_Value value = embeddedElement.get_string(0); // TODO - I don't like using magic numbers!!!
     String_Value value = embeddedElement.nget_string(embeddedAttributeName);
     value.update();
@@ -166,7 +168,6 @@ public class ObjyArrayListString
       newValue = "";
     }
     value.set(newValue);
-    embeddedElement.set_numeric(1, newValue.length() == 0 ? ITypeMapper.numericTrue : ITypeMapper.numericFalse);
   }
 
   protected String getValue(long index)

@@ -383,8 +383,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       // newObjyRevision = objySession.getObjectManager().copyRevision(this, objyRevision);
       objyRevision.setRevisedTime(branch.getPoint(created).getTimeStamp() - 1);
       // objyRevision.setRevisedBranchId(branch.getID();
-      InternalCDORevision originalRevision = getStore().getRepository().getRevisionManager()
-          .getRevisionByVersion(delta.getID(), delta, 0, true);
+      InternalCDORevision originalRevision = getStore().getRepository().getRevisionManager().getRevisionByVersion(
+          delta.getID(), delta, 0, true);
 
       InternalCDORevision newRevision = originalRevision.copy();
 
@@ -1027,9 +1027,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     for (ObjyBranch objyBranch : branches)
     {
-      InternalCDOBranch branch = branchManager
-          .getBranch(objyBranch.getBranchId(), new BranchInfo(objyBranch.getBranchName(), objyBranch.getBaseBranchId(),
-              objyBranch.getBaseBranchTimeStamp()));
+      InternalCDOBranch branch = branchManager.getBranch(objyBranch.getBranchId(), new BranchInfo(objyBranch
+          .getBranchName(), objyBranch.getBaseBranchId(), objyBranch.getBaseBranchTimeStamp()));
       branchHandler.handleBranch(branch);
       count++;
     }
@@ -1042,12 +1041,13 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   {
     ensureSessionBegin();
     List<SubBranchInfo> result = new ArrayList<SubBranchInfo>();
-    // List<ObjyBranch> objyBranchList = objySession.getBranchManager(getRepositoryName()).getSubBranches(branchID);
-    // for (ObjyBranch objyBranch : objyBranchList)
-    // {
-    // SubBranchInfo subBranchInfo = new SubBranchInfo(objyBranch.getBranchId(), objyBranch.getBranchName(),
-    // objyBranch.getBaseBranchTimeStamp());
-    // }
+    List<ObjyBranch> objyBranchList = objySession.getBranchManager(getRepositoryName()).getSubBranches(branchID);
+    for (ObjyBranch objyBranch : objyBranchList)
+    {
+      SubBranchInfo subBranchInfo = new SubBranchInfo(objyBranch.getBranchId(), objyBranch.getBranchName(), objyBranch
+          .getBaseBranchTimeStamp());
+      result.add(subBranchInfo);
+    }
     return result.toArray(new SubBranchInfo[result.size()]);
   }
 

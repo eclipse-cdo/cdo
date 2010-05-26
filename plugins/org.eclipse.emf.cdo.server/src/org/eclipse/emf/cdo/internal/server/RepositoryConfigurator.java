@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Lothar Werzinger - support for configuring user managers
  */
 package org.eclipse.emf.cdo.internal.server;
 
@@ -17,6 +18,7 @@ import org.eclipse.emf.cdo.server.IRepositoryFactory;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
@@ -24,6 +26,7 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.security.IUserManager;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -85,7 +88,7 @@ public class RepositoryConfigurator
     for (int i = 0; i < elements.getLength(); i++)
     {
       Element repositoryConfig = (Element)elements.item(i);
-      IRepository repository = configureRepository(repositoryConfig);
+      IRepository repository = getRepository(repositoryConfig);
       repositories.add(repository);
 
       if (container != null)
@@ -97,7 +100,26 @@ public class RepositoryConfigurator
     return repositories.toArray(new IRepository[repositories.size()]);
   }
 
-  protected IRepository configureRepository(Element repositoryConfig) throws CoreException
+  protected Document getDocument(File configFile) throws ParserConfigurationException, SAXException, IOException
+  {
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder builder = factory.newDocumentBuilder();
+    return builder.parse(configFile);
+  }
+
+  protected IRepositoryFactory getRepositoryFactory(String type) throws CoreException
+  {
+    IRepositoryFactory factory = (IRepositoryFactory)createExecutableExtension("repositoryFactories", //$NON-NLS-1$
+        "repositoryFactory", "repositoryType", type); //$NON-NLS-1$ //$NON-NLS-2$
+    if (factory == null)
+    {
+      throw new IllegalStateException("CDORepositoryInfo factory not found: " + type); //$NON-NLS-1$
+    }
+
+    return factory;
+  }
+
+  protected IRepository getRepository(Element repositoryConfig) throws CoreException
   {
     String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
     if (StringUtil.isEmpty(repositoryName))
@@ -116,11 +138,28 @@ public class RepositoryConfigurator
       TRACER.format("Configuring repository {0} (type={1})", repositoryName, repositoryType); //$NON-NLS-1$
     }
 
-    InternalRepository repository = (InternalRepository)createRepository(repositoryType);
+    InternalRepository repository = (InternalRepository)getRepository(repositoryType);
     repository.setName(repositoryName);
 
+    Element userManagerConfig = getUserManagerConfig(repositoryConfig);
+    if (userManagerConfig != null)
+    {
+      IUserManager userManager = getUserManager(userManagerConfig);
+      if (userManager != null)
+      {
+        InternalSessionManager sessionManager = repository.getSessionManager();
+        if (sessionManager == null)
+        {
+          sessionManager = new SessionManager();
+          repository.setSessionManager(sessionManager);
+        }
+
+        sessionManager.setUserManager(userManager);
+      }
+    }
+
     Element storeConfig = getStoreConfig(repositoryConfig);
-    InternalStore store = (InternalStore)configureStore(storeConfig);
+    InternalStore store = (InternalStore)getStore(storeConfig);
     repository.setStore(store);
 
     Map<String, String> properties = getProperties(repositoryConfig, 1);
@@ -129,17 +168,52 @@ public class RepositoryConfigurator
     return repository;
   }
 
-  protected IRepository createRepository(String repositoryType) throws CoreException
+  protected IRepository getRepository(String repositoryType) throws CoreException
   {
     IRepositoryFactory factory = getRepositoryFactory(repositoryType);
     return factory.createRepository();
   }
 
-  protected IStore configureStore(Element storeConfig) throws CoreException
+  protected Element getUserManagerConfig(Element repositoryConfig)
   {
-    String type = storeConfig.getAttribute("type"); //$NON-NLS-1$
-    IStoreFactory storeFactory = getStoreFactory(type);
-    return storeFactory.createStore(storeConfig);
+    NodeList userManagerConfig = repositoryConfig.getElementsByTagName("userManager"); //$NON-NLS-1$
+    if (userManagerConfig.getLength() > 1)
+    {
+      String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
+      throw new IllegalStateException("At most one user manager must be configured for repository " + repositoryName); //$NON-NLS-1$
+    }
+
+    return (Element)(userManagerConfig.getLength() > 0 ? userManagerConfig.item(0) : null);
+  }
+
+  protected IUserManager getUserManager(Element userManagerConfig) throws CoreException
+  {
+    String type = userManagerConfig.getAttribute("type"); //$NON-NLS-1$
+    String description = userManagerConfig.getAttribute("description"); //$NON-NLS-1$
+    return getUserManager(type, description);
+  }
+
+  protected IUserManager getUserManager(String type, String description) throws CoreException
+  {
+    IUserManager userManager = (IUserManager)container.getElement("org.eclipse.net4j.userManagers", type, description); //$NON-NLS-1$
+    if (userManager == null)
+    {
+      throw new IllegalStateException("UserManager factory not found: " + type); //$NON-NLS-1$
+    }
+
+    return userManager;
+  }
+
+  protected Element getStoreConfig(Element repositoryConfig)
+  {
+    NodeList storeConfigs = repositoryConfig.getElementsByTagName("store"); //$NON-NLS-1$
+    if (storeConfigs.getLength() != 1)
+    {
+      String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
+      throw new IllegalStateException("Exactly one store must be configured for repository " + repositoryName); //$NON-NLS-1$
+    }
+
+    return (Element)storeConfigs.item(0);
   }
 
   protected IStoreFactory getStoreFactory(String type) throws CoreException
@@ -154,35 +228,11 @@ public class RepositoryConfigurator
     return factory;
   }
 
-  protected IRepositoryFactory getRepositoryFactory(String type) throws CoreException
+  protected IStore getStore(Element storeConfig) throws CoreException
   {
-    IRepositoryFactory factory = (IRepositoryFactory)createExecutableExtension("repositoryFactories", //$NON-NLS-1$
-        "repositoryFactory", "repositoryType", type); //$NON-NLS-1$ //$NON-NLS-2$
-    if (factory == null)
-    {
-      throw new IllegalStateException("CDORepositoryInfo factory not found: " + type); //$NON-NLS-1$
-    }
-
-    return factory;
-  }
-
-  protected Document getDocument(File configFile) throws ParserConfigurationException, SAXException, IOException
-  {
-    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder builder = factory.newDocumentBuilder();
-    return builder.parse(configFile);
-  }
-
-  protected Element getStoreConfig(Element repositoryConfig)
-  {
-    NodeList storeConfigs = repositoryConfig.getElementsByTagName("store"); //$NON-NLS-1$
-    if (storeConfigs.getLength() != 1)
-    {
-      String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
-      throw new IllegalStateException("Exactly one store must be configured for repository " + repositoryName); //$NON-NLS-1$
-    }
-
-    return (Element)storeConfigs.item(0);
+    String type = storeConfig.getAttribute("type"); //$NON-NLS-1$
+    IStoreFactory storeFactory = getStoreFactory(type);
+    return storeFactory.createStore(storeConfig);
   }
 
   public static Map<String, String> getProperties(Element element, int levels)

@@ -7,7 +7,7 @@
 
 	<acceptor type="tcp" listenAddr="0.0.0.0" port="2036">
 		<!--
-		<negotiator type="challenge" description="/temp/users.db"/>
+		<negotiator type="challenge" description="_database/repo1.users"/>
 		-->
 	</acceptor>
 
@@ -18,6 +18,10 @@
 		<property name="supportingAudits" value="true"/>
 		<property name="supportingBranches" value="true"/>
 
+		<!--
+		<userManager type="file" description="_database/repo1.users"/>
+		-->
+
 		<store type="db">
 			<mappingStrategy type="horizontalBranching">
 				<property name="qualifiedNames" value="false"/>
@@ -27,34 +31,34 @@
 
 			<dbAdapter name="h2"/>
 			<dataSource class="org.h2.jdbcx.JdbcDataSource"
-				uRL="jdbc:h2:_database/cdodb3"/>
+				uRL="jdbc:h2:_database/repo1"/>
 
 			<!--
 			<dbAdapter name="derby-embedded"/>
 			<dataSource class="org.apache.derby.jdbc.EmbeddedDataSource"
-				databaseName="/temp/cdodb1"
+				databaseName="/temp/repo1"
 				createDatabase="create"/>
 			-->
 
 			<!--
 			<dbAdapter name="hsqldb"/>
 			<dataSource class="org.eclipse.net4j.db.hsqldb.HSQLDBDataSource"
-				database="jdbc:hsqldb:mem:cdodb1"
+				database="jdbc:hsqldb:mem:repo1"
 				user="sa"/>
 			-->
 
 			<!--
 			<dbAdapter name="mysql"/>
 			<dataSource class="com.mysql.jdbc.jdbc2.optional.MysqlDataSource"
-				url="jdbc:mysql://localhost/cdodb1"
+				url="jdbc:mysql://localhost/repo1"
 				user="sa"/>
 			-->
 
 			<!--
 			<dbAdapter name="postgresql"/>
 			<dataSource class="org.postgresql.ds.PGSimpleDataSource"
-				url="jdbc:postgresql://localhost:5432/cdo"
-				databaseName="cdo"
+				url="jdbc:postgresql://localhost:5432/repo1"
+				databaseName="repo1"
 				user="cdo"
 				password="cdo"/>
 			-->

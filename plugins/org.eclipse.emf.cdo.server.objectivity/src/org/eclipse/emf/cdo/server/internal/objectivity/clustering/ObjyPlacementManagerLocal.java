@@ -88,8 +88,10 @@ public class ObjyPlacementManagerLocal
       return;
     }
 
-    // create the object and add it to mapping.
-    // ObjyObject objyObject = createObjectAndAddToMapping(revision);
+    // create the object and add it to mapping, this will recursively call
+    // other object creation as needed, based on the default clustering of
+    // having each object is stored with its container.
+    createObjectAndAddToMapping(revision);
   }
 
   private ObjyObject createObjectAndAddToMapping(InternalCDORevision revision)

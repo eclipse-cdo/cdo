@@ -940,7 +940,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   /**
    * @since 2.0
    */
-  @SuppressWarnings("unchecked")
   public <T extends EObject> T getObject(T objectFromDifferentView)
   {
     checkActive();
@@ -955,7 +954,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       }
 
       CDOID id = object.cdoID();
-      objectFromDifferentView = (T)getObject(id, true);
+      InternalCDOObject contextified = getObject(id, true);
+
+      @SuppressWarnings("unchecked")
+      T cast = (T)CDOUtil.getEObject(contextified);
+      return cast;
     }
 
     return objectFromDifferentView;

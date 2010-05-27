@@ -48,6 +48,8 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
     container.getTasks().add(getModel2Factory().createTask());
     tr1.commit();
 
+    sleep(1000);
+
     final CDOBranch otherBranch = tr1.getBranch().createBranch("other");
     final CDOTransaction tr2 = session.openTransaction(otherBranch);
 

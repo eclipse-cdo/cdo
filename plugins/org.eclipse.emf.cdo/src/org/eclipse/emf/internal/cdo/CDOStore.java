@@ -41,7 +41,6 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -400,15 +399,22 @@ public final class CDOStore implements EStore
 
   public Object remove(InternalEObject eObject, EStructuralFeature feature, int index)
   {
-    if (FSMUtil.isNative(eObject))
-    {
-      checkIndexOutOfBounds(eObject, feature, index); // Bugzilla 293283
-    }
-
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
       TRACER.format("remove({0}, {1}, {2})", cdoObject, feature, index); //$NON-NLS-1$
+    }
+
+    // Bugzilla 293283 / 314387
+    if (feature.isMany())
+    {
+      InternalCDORevision readLockedRevision = getRevisionForReading(cdoObject);
+      CDOList list = readLockedRevision.getList(feature);
+      int size = list.size();
+      if (index < 0 || size <= index)
+      {
+        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+      }
     }
 
     CDOFeatureDelta delta = new CDORemoveFeatureDeltaImpl(feature, index);
@@ -571,20 +577,6 @@ public final class CDOStore implements EStore
     }
 
     return value;
-  }
-
-  private void checkIndexOutOfBounds(InternalEObject eObject, EStructuralFeature feature, int index)
-  {
-    // Bugzilla 293283
-    if (feature.isMany())
-    {
-      Object o = eObject.eGet(feature);
-      int size = ((EList<?>)o).size();
-      if (index >= size)
-      {
-        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-      }
-    }
   }
 
   private Object convertIdToObject(InternalCDOView view, EObject eObject, EStructuralFeature feature, int index,

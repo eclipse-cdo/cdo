@@ -1,13 +1,3 @@
-/**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Caspar De Groot - initial API and implementation
- */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -19,6 +9,19 @@ import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Caspar De Groot - initial API and implementation
+ */
+
+/**
+ * Bugzilla 293283/314387 - Failed writes on CDOObjects leave bad featureDeltas in transaction
+ * 
  * @author Caspar De Groot
  */
 public class Bugzilla_293283_Test extends AbstractCDOTest
@@ -80,7 +83,12 @@ public class Bugzilla_293283_Test extends AbstractCDOTest
 
   public void test5()
   {
-    test(Action.REMOVE);
+    test(Action.REMOVE1);
+  }
+
+  public void test6()
+  {
+    test(Action.REMOVE2);
   }
 
   private void test(Action action)
@@ -104,8 +112,12 @@ public class Bugzilla_293283_Test extends AbstractCDOTest
         order1.getOrderDetails().move(3, 0);
         break;
 
-      case REMOVE:
+      case REMOVE1:
         order1.getOrderDetails().remove(3);
+        break;
+
+      case REMOVE2:
+        order1.getOrderDetails().remove(-1);
         break;
 
       case SET:
@@ -135,6 +147,6 @@ public class Bugzilla_293283_Test extends AbstractCDOTest
 
   private enum Action
   {
-    ADD, MOVE1, MOVE2, REMOVE, SET
+    ADD, MOVE1, MOVE2, REMOVE1, REMOVE2, SET
   }
 }

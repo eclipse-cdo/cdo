@@ -316,7 +316,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         throw new IllegalStateException("Merging into dirty transactions not yet supported");
       }
 
-      long now = session.getRepositoryInfo().getTimeStamp();
+      long now = getLastUpdateTime();
       CDOBranchPoint target = getBranch().getPoint(now);
 
       CDOBranch sourceBranch = source.getBranch();

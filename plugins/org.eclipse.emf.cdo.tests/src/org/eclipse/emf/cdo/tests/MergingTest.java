@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -398,13 +399,30 @@ public class MergingTest extends AbstractCDOTest
     session.close();
   }
 
+  public void testFromBranchWithChangesInSource_100() throws Exception
+  {
+    disableConsole();
+    for (int i = 0; i < 100; i++)
+    {
+      System.out.println("run: " + i);
+      mergeFromBranchWithChangesInSource(i);
+    }
+
+    enableConsole();
+  }
+
   public void testFromBranchWithChangesInSource() throws Exception
+  {
+    mergeFromBranchWithChangesInSource(0);
+  }
+
+  private void mergeFromBranchWithChangesInSource(int run) throws CommitException
   {
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
 
-    CDOResource resource = transaction.createResource("/res");
+    CDOResource resource = transaction.createResource("/res" + run);
     EList<EObject> contents = resource.getContents();
     addCompany(contents);
     addCompany(contents);
@@ -412,11 +430,11 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     long time = transaction.commit().getTimeStamp();
-    CDOBranch source = mainBranch.createBranch("source", time);
+    CDOBranch source = mainBranch.createBranch("source" + run, time);
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source);
-    CDOResource res1 = tx1.getResource("/res");
+    CDOResource res1 = tx1.getResource("/res" + run);
     EList<EObject> contents1 = res1.getContents();
     ((Company)contents1.get(0)).setName("Company0");
     ((Company)contents1.get(1)).setName("Company1");

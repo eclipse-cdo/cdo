@@ -93,6 +93,7 @@ public class ConflictResolverTest extends AbstractCDOTest
       }
     }.assertNoTimeOut();
 
+    sleep(1000);
     assertEquals(true, transaction2.hasConflict());
     assertEquals("OTTAWA", address2.getCity());
   }

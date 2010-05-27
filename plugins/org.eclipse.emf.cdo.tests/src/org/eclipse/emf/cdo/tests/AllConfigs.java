@@ -81,7 +81,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public abstract class AllTestsAllConfigs extends ConfigTestSuite
+public abstract class AllConfigs extends ConfigTestSuite
 {
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)

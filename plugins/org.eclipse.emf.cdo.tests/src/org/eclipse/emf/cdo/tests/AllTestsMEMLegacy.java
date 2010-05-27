@@ -20,11 +20,11 @@ import junit.framework.TestSuite;
 /**
  * @author Martin Fluegge
  */
-public class AllTestsLegacy extends AllTestsAllConfigs
+public class AllTestsMEMLegacy extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsLegacy().getTestSuite(AllTestsAllConfigs.class.getName());
+    return new AllTestsMEMLegacy().getTestSuite(AllConfigs.class.getName());
   }
 
   @Override

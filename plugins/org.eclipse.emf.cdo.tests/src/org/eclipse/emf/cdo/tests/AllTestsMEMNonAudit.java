@@ -16,18 +16,16 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public class AutomatedTests extends AllTestsAllConfigs
+public class AllTestsMEMNonAudit extends AllConfigs
 {
   public static Test suite()
   {
-    return new AutomatedTests().getTestSuite(AutomatedTests.class.getName());
+    return new AllTestsMEMNonAudit().getTestSuite(AllConfigs.class.getName());
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
     addScenario(parent, COMBINED, MEM, JVM, NATIVE);
-    addScenario(parent, COMBINED, MEM, TCP, NATIVE);
-    addScenario(parent, SEPARATED, MEM, TCP, NATIVE);
   }
 }

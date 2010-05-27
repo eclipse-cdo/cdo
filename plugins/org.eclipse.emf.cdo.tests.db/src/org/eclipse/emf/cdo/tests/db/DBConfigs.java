@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
+import org.eclipse.emf.cdo.tests.AllConfigs;
 import org.eclipse.emf.cdo.tests.AttributeTest;
 import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.AuditTestSameSession;
@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public abstract class DBConfigs extends AllTestsAllConfigs
+public abstract class DBConfigs extends AllConfigs
 {
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)

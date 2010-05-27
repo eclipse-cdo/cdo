@@ -16,11 +16,11 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public class AllTests extends AllTestsAllConfigs
+public class AllTests extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTests().getTestSuite(AllTestsAllConfigs.class.getName());
+    return new AllTests().getTestSuite(AllConfigs.class.getName());
   }
 
   @Override
@@ -29,5 +29,7 @@ public class AllTests extends AllTestsAllConfigs
     addScenario(parent, COMBINED, MEM, JVM, NATIVE);
     addScenario(parent, COMBINED, MEM_AUDITS, JVM, NATIVE);
     addScenario(parent, COMBINED, MEM_BRANCHES, JVM, NATIVE);
+    addScenario(parent, COMBINED, MEM_BRANCHES, JVM, LEGACY);
+    addScenario(parent, COMBINED, MEM, TCP, NATIVE);
   }
 }

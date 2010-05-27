@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate;
 
-import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
+import org.eclipse.emf.cdo.tests.AllConfigs;
 import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.AuditTestSameSession;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
@@ -33,7 +33,7 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public class AllTestsHibernate extends AllTestsAllConfigs
+public class AllTestsHibernate extends AllConfigs
 {
   public static final RepositoryConfig HIBERNATE = HibernateConfig.INSTANCE;
 

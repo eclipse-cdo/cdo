@@ -16,16 +16,16 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public class AllTestsEmbedded extends AllTestsAllConfigs
+public class AllTestsMEMAudit extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsEmbedded().getTestSuite(AllTestsAllConfigs.class.getName());
+    return new AllTestsMEMAudit().getTestSuite(AllConfigs.class.getName());
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, MEM, EMBEDDED, NATIVE);
+    addScenario(parent, COMBINED, MEM_AUDITS, JVM, NATIVE);
   }
 }

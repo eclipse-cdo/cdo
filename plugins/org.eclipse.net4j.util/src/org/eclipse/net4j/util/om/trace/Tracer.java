@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -21,6 +21,13 @@ import java.text.MessageFormat;
  */
 public class Tracer implements OMTracer
 {
+  /**
+   * @since 3.0
+   */
+  public static final String PROP_DISABLE_TRACING = "org.eclipse.net4j.util.om.trace.disable";
+
+  private static final boolean isGloballyDisabled = Boolean.valueOf(System.getProperty(PROP_DISABLE_TRACING, "false"));
+
   private OMBundle bundle;
 
   private Tracer parent;
@@ -66,6 +73,11 @@ public class Tracer implements OMTracer
 
   public boolean isEnabled()
   {
+    if (isGloballyDisabled)
+    {
+      return false;
+    }
+
     DebugSupport debugSupport = bundle.getDebugSupport();
     return debugSupport.isDebugging() && debugSupport.getDebugOption(fullName, false);
   }

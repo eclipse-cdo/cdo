@@ -10,37 +10,22 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
-
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
  * @author Eike Stepper
  */
-public class AllTestsMEMOffline extends AllConfigs
+public class AllTestsMEMEmbedded extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsMEMOffline().getTestSuite(AllConfigs.class.getName());
-  }
-
-  @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
-  {
-    // super.initTestClasses(testClasses);
-
-    testClasses.add(OfflineTest.class);
-    testClasses.add(OfflineDelayed2Test.class);
-    // testClasses.add(OfflineSqueezedTest.class);
-    testClasses.add(FailoverTest.class);
+    return new AllTestsMEMEmbedded().getTestSuite(AllConfigs.class.getName());
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, MEM_OFFLINE, JVM, NATIVE);
+    addScenario(parent, COMBINED, MEM, EMBEDDED, NATIVE);
   }
 }

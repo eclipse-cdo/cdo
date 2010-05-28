@@ -724,7 +724,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResourceNode("/resource1");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -733,7 +733,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResource("/resource1");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -742,7 +742,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(resourceID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -751,7 +751,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(objectID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -783,7 +783,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResourceNode("/resource1");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -792,7 +792,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResource("/resource1");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -801,7 +801,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(resourceID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -810,7 +810,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(objectID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -839,6 +839,7 @@ public class ResourceTest extends AbstractCDOTest
     transaction.commit();
     transaction.close();
 
+    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
     assertEquals(false, view.hasResource("/resource1"));
 
     try
@@ -846,7 +847,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResourceNode("/resource1");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -855,7 +856,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResource("/resource1");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -864,7 +865,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(resourceID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -873,7 +874,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(objectID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -903,6 +904,7 @@ public class ResourceTest extends AbstractCDOTest
     transaction.close();
 
     clearCache(getRepository().getRevisionManager());
+    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
     assertEquals(false, view.hasResource("/resource1"));
 
     try
@@ -910,7 +912,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResourceNode("/resource1");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -942,9 +944,9 @@ public class ResourceTest extends AbstractCDOTest
       // at org.eclipse.equinox.launcher.Main.main(Main.java:1287)
       // at org.eclipse.core.launcher.Main.main(Main.java:34)
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
-      success.printStackTrace();
+      expected.printStackTrace();
     }
 
     try
@@ -952,7 +954,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(resourceID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -961,7 +963,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(objectID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -993,7 +995,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResourceNode("/folder");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -1002,7 +1004,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResourceNode("/folder/resource1");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -1011,7 +1013,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResource("/folder/resource1");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -1020,7 +1022,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(folderID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -1029,7 +1031,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(resourceID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -1038,7 +1040,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(objectID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -1071,7 +1073,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResourceNode("/folder");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -1080,7 +1082,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResourceNode("/folder/resource1");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -1089,7 +1091,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResource("/folder/resource1");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -1098,7 +1100,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(folderID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -1107,7 +1109,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(resourceID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -1116,7 +1118,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(objectID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -1147,6 +1149,7 @@ public class ResourceTest extends AbstractCDOTest
     transaction.commit();
     transaction.close();
 
+    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
     assertEquals(false, view.hasResource("/folder/resource1"));
 
     try
@@ -1154,7 +1157,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResourceNode("/folder");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -1163,7 +1166,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResourceNode("/folder/resource1");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -1172,7 +1175,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResource("/folder/resource1");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -1181,7 +1184,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(folderID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -1190,7 +1193,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(resourceID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -1199,7 +1202,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(objectID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -1231,6 +1234,7 @@ public class ResourceTest extends AbstractCDOTest
     transaction.close();
 
     clearCache(getRepository().getRevisionManager());
+    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
     assertEquals(false, view.hasResource("/folder/resource1"));
 
     try
@@ -1238,7 +1242,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResourceNode("/folder");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -1247,7 +1251,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getResourceNode("/folder/resource1");
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -1257,7 +1261,7 @@ public class ResourceTest extends AbstractCDOTest
       // TODO Fails on automated build
       fail("Exception expected");
     }
-    catch (Exception success)
+    catch (Exception expected)
     {
     }
 
@@ -1266,7 +1270,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(folderID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -1275,7 +1279,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(resourceID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 
@@ -1284,7 +1288,7 @@ public class ResourceTest extends AbstractCDOTest
       view.getObject(objectID);
       fail("ObjectNotFoundException expected");
     }
-    catch (ObjectNotFoundException success)
+    catch (ObjectNotFoundException expected)
     {
     }
 

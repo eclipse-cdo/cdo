@@ -119,6 +119,8 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
    */
   public CDOSavepoint[] importChanges(InputStream in, boolean reconstructSavepoints) throws IOException;
 
+  public long getLastCommitTime();
+
   /**
    * Returns the comment to be used in the next commit operation.
    * 

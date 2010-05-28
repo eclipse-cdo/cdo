@@ -249,6 +249,11 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.importChanges(in, reconstructSavepoints);
   }
 
+  public long getLastCommitTime()
+  {
+    return delegate.getLastCommitTime();
+  }
+
   @Override
   public void addListener(IListener listener)
   {

@@ -164,9 +164,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private int conflict;
 
+  private CDOTransactionStrategy transactionStrategy;
+
   private AtomicInteger lastTemporaryID = new AtomicInteger();
 
-  private CDOTransactionStrategy transactionStrategy;
+  private long lastCommitTime = UNSPECIFIED_DATE;
 
   private String commitComment;
 
@@ -899,7 +901,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
 
         CDOTransactionStrategy transactionStrategy = getTransactionStrategy();
-        return transactionStrategy.commit(this, progressMonitor);
+        CDOCommitInfo info = transactionStrategy.commit(this, progressMonitor);
+        if (info != null)
+        {
+          lastCommitTime = info.getTimeStamp();
+        }
+
+        return info;
       }
       catch (CommitException ex)
       {
@@ -1837,6 +1845,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
       }
     }
+  }
+
+  public long getLastCommitTime()
+  {
+    return lastCommitTime;
   }
 
   public String getCommitComment()

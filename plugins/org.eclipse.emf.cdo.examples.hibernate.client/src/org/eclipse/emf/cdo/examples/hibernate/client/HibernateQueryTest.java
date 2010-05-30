@@ -74,7 +74,6 @@ public class HibernateQueryTest extends BaseTest
         }
       }
       transaction.commit();
-
     }
 
     // then create new one

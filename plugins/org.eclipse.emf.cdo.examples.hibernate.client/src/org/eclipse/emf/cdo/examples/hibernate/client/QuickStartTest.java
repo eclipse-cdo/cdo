@@ -51,7 +51,6 @@ public class QuickStartTest extends BaseTest
       resource.getContents().add(address);
 
       transaction.commit();
-      session.close();
     }
 
     // read back and do some tests
@@ -64,7 +63,6 @@ public class QuickStartTest extends BaseTest
       final Address address = (Address)resource.getContents().get(0);
       assertEquals(addressName, address.getName());
       transaction.commit();
-      session.close();
     }
   }
 }

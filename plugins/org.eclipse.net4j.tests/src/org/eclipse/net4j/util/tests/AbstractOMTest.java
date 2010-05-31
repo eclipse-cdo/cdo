@@ -106,8 +106,23 @@ public abstract class AbstractOMTest extends TestCase
       IOUtil.OUT().println();
     }
 
-    doTearDown();
-    super.tearDown();
+    try
+    {
+      doTearDown();
+    }
+    catch (Exception ex)
+    {
+      IOUtil.print(ex);
+    }
+
+    try
+    {
+      super.tearDown();
+    }
+    catch (Exception ex)
+    {
+      IOUtil.print(ex);
+    }
 
     if (!SUPPRESS_OUTPUT)
     {
@@ -121,7 +136,37 @@ public abstract class AbstractOMTest extends TestCase
   {
     try
     {
-      super.runBare();
+      // Don't call super.runBare() because it does not clean up after exceptions from setUp()
+      Throwable exception = null;
+
+      try
+      {
+        setUp();
+        runTest();
+      }
+      catch (Throwable running)
+      {
+        exception = running;
+      }
+      finally
+      {
+        try
+        {
+          tearDown();
+        }
+        catch (Throwable tearingDown)
+        {
+          if (exception == null)
+          {
+            exception = tearingDown;
+          }
+        }
+      }
+
+      if (exception != null)
+      {
+        throw exception;
+      }
     }
     catch (SkipTestException ex)
     {

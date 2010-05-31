@@ -415,7 +415,15 @@ public class CDODBBrowser extends Worker
   @Override
   protected void doActivate() throws Exception
   {
-    serverSocket = new ServerSocket(port);
+    try
+    {
+      serverSocket = new ServerSocket(port);
+    }
+    catch (Exception ex)
+    {
+      throw new IllegalStateException("Could not open socket on port " + port, ex);
+    }
+
     super.doActivate();
   }
 

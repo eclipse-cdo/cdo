@@ -523,7 +523,22 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   @Override
   protected void doTearDown() throws Exception
   {
-    getScenario().tearDown();
-    super.doTearDown();
+    try
+    {
+      getScenario().tearDown();
+    }
+    catch (Exception ex)
+    {
+      IOUtil.print(ex);
+    }
+
+    try
+    {
+      super.doTearDown();
+    }
+    catch (Exception ex)
+    {
+      IOUtil.print(ex);
+    }
   }
 }

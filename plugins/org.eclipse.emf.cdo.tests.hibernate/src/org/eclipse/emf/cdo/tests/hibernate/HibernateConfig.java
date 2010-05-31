@@ -86,6 +86,7 @@ public class HibernateConfig extends RepositoryConfig
   {
     super.setUp();
     dbBrowser = new CDODBBrowser(repositories);
+    dbBrowser.setPort(7777);
     dbBrowser.activate();
   }
 

@@ -206,10 +206,41 @@ public class Scenario implements IScenario
 
   public synchronized void tearDown() throws Exception
   {
-    getModelConfig().tearDown();
-    getSessionConfig().tearDown();
-    getRepositoryConfig().tearDown();
-    getContainerConfig().tearDown();
+    try
+    {
+      getModelConfig().tearDown();
+    }
+    catch (Exception ex)
+    {
+      IOUtil.print(ex);
+    }
+
+    try
+    {
+      getSessionConfig().tearDown();
+    }
+    catch (Exception ex)
+    {
+      IOUtil.print(ex);
+    }
+
+    try
+    {
+      getRepositoryConfig().tearDown();
+    }
+    catch (Exception ex)
+    {
+      IOUtil.print(ex);
+    }
+
+    try
+    {
+      getContainerConfig().tearDown();
+    }
+    catch (Exception ex)
+    {
+      IOUtil.print(ex);
+    }
   }
 
   public synchronized void save()

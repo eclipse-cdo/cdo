@@ -305,7 +305,7 @@ public final class DBUtil
       while (tables.next())
       {
         String name = tables.getString(3);
-        System.out.println(tables.getString(2) + "." + name);
+        // System.out.println(tables.getString(2) + "." + name);
         names.add(name);
       }
 

@@ -25,8 +25,8 @@ public class AutomatedTests
     suite.addTest(AllTestsDBH2.suite());
     suite.addTest(AllTestsDBH2Branching.suite());
     // suite.addTest(AllTestsDBH2Offline.suite());
-    suite.addTest(AllTestsDBHsqldb.suite());
-    suite.addTest(AllTestsDBHsqldbNonAudit.suite());
+    // suite.addTest(AllTestsDBHsqldb.suite());
+    // suite.addTest(AllTestsDBHsqldbNonAudit.suite());
     return suite;
   }
 }

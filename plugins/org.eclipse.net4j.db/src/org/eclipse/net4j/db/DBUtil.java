@@ -238,6 +238,51 @@ public final class DBUtil
     return null;
   }
 
+  /**
+   * @since 3.0
+   */
+  public static List<String> getAllSchemaTableNames(Connection connection)
+  {
+    try
+    {
+      DatabaseMetaData metaData = connection.getMetaData();
+      return getAllSchemaTableNames(metaData);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static List<String> getAllSchemaTableNames(DatabaseMetaData metaData)
+  {
+    ResultSet schemas = null;
+
+    try
+    {
+      List<String> names = new ArrayList<String>();
+      schemas = metaData.getSchemas();
+      while (schemas.next())
+      {
+        String name = schemas.getString(1);
+        names.add(name);
+      }
+
+      return names;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      close(schemas);
+    }
+  }
+
   public static List<String> getAllTableNames(Connection connection, String dbName)
   {
     ResultSet tables = null;
@@ -246,10 +291,21 @@ public final class DBUtil
     {
       List<String> names = new ArrayList<String>();
       DatabaseMetaData metaData = connection.getMetaData();
-      tables = metaData.getTables(null, dbName.toUpperCase(), null, new String[] { "TABLE" }); //$NON-NLS-1$
+      if (dbName != null)
+      {
+        dbName = dbName.toUpperCase();
+        List<String> schemaNames = getAllSchemaTableNames(metaData);
+        if (!schemaNames.contains(dbName))
+        {
+          dbName = null;
+        }
+      }
+
+      tables = metaData.getTables(null, dbName, null, new String[] { "TABLE" }); //$NON-NLS-1$
       while (tables.next())
       {
         String name = tables.getString(3);
+        System.out.println(tables.getString(2) + "." + name);
         names.add(name);
       }
 

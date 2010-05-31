@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Stefan Winkler - 271444: [DB] Multiple refactorings 
+ *    Stefan Winkler - 271444: [DB] Multiple refactorings
  *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
  */
 package org.eclipse.emf.cdo.server.db;
@@ -24,7 +24,7 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 /**
  * @author Eike Stepper
  */
-public interface IDBStore extends IStore
+public interface IDBStore extends IStore, IDBConnectionProvider
 {
   /**
    * @since 2.0
@@ -34,11 +34,6 @@ public interface IDBStore extends IStore
   public IDBSchema getDBSchema();
 
   public IDBAdapter getDBAdapter();
-
-  /**
-   * @since 2.0
-   */
-  public IDBConnectionProvider getDBConnectionProvider();
 
   /**
    * Get the meta data manager associated with this DBStore.

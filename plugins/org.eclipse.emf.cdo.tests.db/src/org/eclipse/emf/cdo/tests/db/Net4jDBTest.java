@@ -442,13 +442,13 @@ public class Net4jDBTest extends AbstractCDOTest
         Class<?> componentType = type.getComponentType();
         if (componentType == byte.class)
         {
-          assertEquals("Error with type " + column.getElement1(), true, Arrays.equals((byte[])column.getElement2(),
-              (byte[])actual));
+          assertEquals("Error with type " + column.getElement1(), true,
+              Arrays.equals((byte[])column.getElement2(), (byte[])actual));
         }
         else if (componentType == char.class)
         {
-          assertEquals("Error with type " + column.getElement1(), true, Arrays.equals((char[])column.getElement2(),
-              (char[])actual));
+          assertEquals("Error with type " + column.getElement1(), true,
+              Arrays.equals((char[])column.getElement2(), (char[])actual));
         }
         else
         {
@@ -465,7 +465,7 @@ public class Net4jDBTest extends AbstractCDOTest
   private void doTest(String tableName) throws Exception
   {
     store = (DBStore)getRepository().getStore();
-    connection = store.getDBConnectionProvider().getConnection();
+    connection = store.getConnection();
 
     prepareTable(tableName);
     writeValues(tableName);

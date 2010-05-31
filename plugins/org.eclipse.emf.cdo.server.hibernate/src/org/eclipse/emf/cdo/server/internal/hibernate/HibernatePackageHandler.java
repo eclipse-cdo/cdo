@@ -36,6 +36,7 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -387,26 +388,27 @@ public class HibernatePackageHandler extends Lifecycle
     session.beginTransaction();
     try
     {
+      System.out.println(new File(".").getAbsolutePath());
       final Criteria c = session.createCriteria(SystemInformation.class);
       List<?> l = c.list();
+      int records = l.size();
 
       final SystemInformation systemInformation;
-      if (l.size() == 0)
+      if (records == 0)
       {
         systemInformation = new SystemInformation();
         systemInformation.setFirstTime(true);
         systemInformation.setCreationTime(System.currentTimeMillis());
         session.saveOrUpdate(systemInformation);
       }
-      else if (l.size() > 1)
-      {
-        throw new IllegalStateException(
-            "More than one records in the cdo_system_information table, this is an illegal situation"); //$NON-NLS-1$
-      }
-      else
+      else if (records == 1)
       {
         systemInformation = (SystemInformation)l.get(0);
         systemInformation.setFirstTime(false);
+      }
+      else
+      {
+        throw new IllegalStateException("More than one record in the cdo_system_information table");
       }
 
       return systemInformation;

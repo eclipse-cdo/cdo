@@ -284,7 +284,7 @@ public class Scenario implements IScenario
     private Default()
     {
       setContainerConfig(ContainerConfig.Combined.INSTANCE);
-      setRepositoryConfig(RepositoryConfig.MEM.INSTANCE);
+      setRepositoryConfig(RepositoryConfig.MEMBranches.INSTANCE);
       setSessionConfig(SessionConfig.TCP.INSTANCE);
       setModelConfig(ModelConfig.Native.INSTANCE);
     }

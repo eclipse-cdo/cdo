@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOInterceptor;
 import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
+import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -40,6 +41,9 @@ import org.hibernate.mapping.PersistentClass;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -259,6 +263,34 @@ public class HibernateStore extends Store implements IHibernateStore
     }
 
     return hibernateSessionFactory;
+  }
+
+  public Connection getConnection()
+  {
+    String connectionURL = getProperties().getProperty("hibernate.connection.url");
+    String userName = getProperties().getProperty("hibernate.connection.username");
+    String passWord = getProperties().getProperty("hibernate.connection.password");
+
+    try
+    {
+      Connection connection = DriverManager.getConnection(connectionURL, userName, passWord);
+      if (connection == null)
+      {
+        throw new DBException("No connection from driver manager: " + connectionURL); //$NON-NLS-1$
+      }
+
+      String autoCommit = getProperties().getProperty("hibernate.connection.autocommit");
+      if (autoCommit != null)
+      {
+        connection.setAutoCommit(Boolean.valueOf(autoCommit));
+      }
+
+      return connection;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
   }
 
   @Override

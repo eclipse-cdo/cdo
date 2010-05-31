@@ -10,11 +10,13 @@
  */
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.Worker;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
@@ -47,7 +49,6 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 3.0
  */
-@SuppressWarnings("nls")
 public class CDODBBrowser extends Worker
 {
   private static final String REQUEST_PREFIX = "GET ";
@@ -274,38 +275,42 @@ public class CDODBBrowser extends Worker
     InternalRepository repository = repositories.get(repo);
     if (repository != null)
     {
-      IDBStore store = (IDBStore)repository.getStore();
-      Connection connection = null;
-
-      try
+      IStore store = repository.getStore();
+      if (store instanceof IDBConnectionProvider)
       {
-        connection = store.getDBConnectionProvider().getConnection();
+        IDBConnectionProvider connectionProvider = (IDBConnectionProvider)store;
+        Connection connection = null;
 
-        pout.print("<p>\r\n");
-        pout.print("<table border=\"0\">\r\n");
-        pout.print("<tr>\r\n");
-
-        pout.print("<td valign=\"top\">\r\n");
-        showTables(pout, connection, repo);
-        pout.print("</td>\r\n");
-
-        if (table != null)
+        try
         {
-          pout.print("<td valign=\"top\">\r\n");
-          showTable(pout, connection);
-          pout.print("</td>\r\n");
-        }
+          connection = connectionProvider.getConnection();
 
-        pout.print("</tr>\r\n");
-        pout.print("</table>\r\n");
-      }
-      catch (DBException ex)
-      {
-        ex.printStackTrace();
-      }
-      finally
-      {
-        DBUtil.close(connection);
+          pout.print("<p>\r\n");
+          pout.print("<table border=\"0\">\r\n");
+          pout.print("<tr>\r\n");
+
+          pout.print("<td valign=\"top\">\r\n");
+          showTables(pout, connection, repo);
+          pout.print("</td>\r\n");
+
+          if (table != null)
+          {
+            pout.print("<td valign=\"top\">\r\n");
+            showTable(pout, connection);
+            pout.print("</td>\r\n");
+          }
+
+          pout.print("</tr>\r\n");
+          pout.print("</table>\r\n");
+        }
+        catch (DBException ex)
+        {
+          ex.printStackTrace();
+        }
+        finally
+        {
+          DBUtil.close(connection);
+        }
       }
     }
   }
@@ -317,7 +322,7 @@ public class CDODBBrowser extends Worker
     List<String> allTableNames = DBUtil.getAllTableNames(connection, repo);
     for (String tableName : allTableNames)
     {
-      String label = escape(tableName).toLowerCase();
+      String label = escape(tableName)/* .toLowerCase() */;
       if (tableName.equals(table))
       {
         pout.print("<b>" + label + "</b><br>\r\n");
@@ -335,7 +340,7 @@ public class CDODBBrowser extends Worker
     try
     {
       String order = getParam("order");
-      executeQuery(pout, connection, "SELECT * FROM " + table
+      executeQuery(pout, connection, "SELECT * FROM \"" + table + "\""
           + (order == null ? "" : " ORDER BY " + order + " " + getParam("direction")));
     }
     catch (Exception ex)
@@ -367,7 +372,7 @@ public class CDODBBrowser extends Worker
       pout.print("<td>&nbsp;</td>\r\n");
       for (int i = 0; i < columns; i++)
       {
-        String column = metaData.getColumnLabel(1 + i).toLowerCase();
+        String column = metaData.getColumnLabel(1 + i)/* .toLowerCase() */;
         String dir = column.equals(order) && "ASC".equals(direction) ? "DESC" : "ASC";
         pout.print("<td><b>" + href(column, "data", "order", column, "direction", dir) + "</b></td>\r\n");
       }

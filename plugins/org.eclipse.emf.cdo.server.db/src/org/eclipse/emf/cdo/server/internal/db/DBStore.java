@@ -153,9 +153,24 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     this.dbAdapter = dbAdapter;
   }
 
-  public IDBConnectionProvider getDBConnectionProvider()
+  public Connection getConnection()
   {
-    return dbConnectionProvider;
+    Connection connection = dbConnectionProvider.getConnection();
+    if (connection == null)
+    {
+      throw new DBException("No connection from connection provider: " + dbConnectionProvider); //$NON-NLS-1$
+    }
+
+    try
+    {
+      connection.setAutoCommit(false);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+
+    return connection;
   }
 
   public void setDbConnectionProvider(IDBConnectionProvider dbConnectionProvider)
@@ -347,26 +362,6 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     return new DBStoreAccessor(this, transaction);
   }
 
-  protected Connection getConnection()
-  {
-    Connection connection = dbConnectionProvider.getConnection();
-    if (connection == null)
-    {
-      throw new DBException("No connection from connection provider: " + dbConnectionProvider); //$NON-NLS-1$
-    }
-
-    try
-    {
-      connection.setAutoCommit(false);
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-
-    return connection;
-  }
-
   public Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
     final Map<CDOBranch, List<CDORevision>> result = new HashMap<CDOBranch, List<CDORevision>>();
@@ -417,8 +412,8 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     checkNull(dbAdapter, Messages.getString("DBStore.1")); //$NON-NLS-1$
     checkNull(dbConnectionProvider, Messages.getString("DBStore.0")); //$NON-NLS-1$
 
-    checkState(getRevisionTemporality() == RevisionTemporality.AUDITING == mappingStrategy.hasAuditSupport(), Messages
-        .getString("DBStore.7")); //$NON-NLS-1$
+    checkState(getRevisionTemporality() == RevisionTemporality.AUDITING == mappingStrategy.hasAuditSupport(),
+        Messages.getString("DBStore.7")); //$NON-NLS-1$
 
     checkState(getRevisionParallelism() == RevisionParallelism.BRANCHING == mappingStrategy.hasBranchingSupport(),
         Messages.getString("DBStore.11")); //$NON-NLS-1$

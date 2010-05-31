@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -51,10 +52,13 @@ public class SessionManager extends Container<ISession> implements InternalSessi
 
   private InternalRepository repository;
 
+  @ExcludeFromDump
   private String encryptionAlgorithmName = SecurityUtil.PBE_WITH_MD5_AND_DES;
 
+  @ExcludeFromDump
   private byte[] encryptionSaltBytes = SecurityUtil.DEFAULT_SALT;
 
+  @ExcludeFromDump
   private int encryptionIterationCount = SecurityUtil.DEFAULT_ITERATION_COUNT;
 
   private int tokenLength = DEFAULT_TOKEN_LENGTH;

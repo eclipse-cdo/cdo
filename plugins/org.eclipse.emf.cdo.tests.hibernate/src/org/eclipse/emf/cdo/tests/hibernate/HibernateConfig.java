@@ -10,8 +10,9 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate;
 
-import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IRepository.Props;
+import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.db.CDODBBrowser;
 import org.eclipse.emf.cdo.server.hibernate.CDOHibernateUtil;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.teneo.TeneoUtil;
@@ -36,6 +37,8 @@ public class HibernateConfig extends RepositoryConfig
 
   private Map<String, String> additionalProperties = new HashMap<String, String>();
 
+  private transient CDODBBrowser dbBrowser;
+
   public HibernateConfig()
   {
     super("Hibernate");
@@ -46,11 +49,13 @@ public class HibernateConfig extends RepositoryConfig
   {
     super.initRepositoryProperties(props);
     props.put(Props.SUPPORTING_AUDITS, "false");
+    props.put(Props.SUPPORTING_BRANCHES, "false");
 
     try
     {
       final Properties teneoProperties = new Properties();
-      teneoProperties.putAll(getAdditionalProperties());
+      Map<String, String> additionalProperties = getAdditionalProperties();
+      teneoProperties.putAll(additionalProperties);
       teneoProperties.load(getClass().getResourceAsStream("/app.properties"));
       for (Object key : teneoProperties.keySet())
       {
@@ -74,5 +79,20 @@ public class HibernateConfig extends RepositoryConfig
   public Map<String, String> getAdditionalProperties()
   {
     return additionalProperties;
+  }
+
+  @Override
+  public void setUp() throws Exception
+  {
+    super.setUp();
+    dbBrowser = new CDODBBrowser(repositories);
+    dbBrowser.activate();
+  }
+
+  @Override
+  public void tearDown() throws Exception
+  {
+    dbBrowser.deactivate();
+    super.tearDown();
   }
 }

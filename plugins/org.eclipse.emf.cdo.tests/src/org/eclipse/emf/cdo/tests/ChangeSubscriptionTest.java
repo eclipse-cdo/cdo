@@ -689,6 +689,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     details.add(getModel1Factory().createOrderDetail());
 
     Product1 product = getModel1Factory().createProduct1();
+    product.setName("test1");
     product.getOrderDetails().addAll(details);
 
     CDOSession session = openSession();
@@ -758,6 +759,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     details.add(getModel1Factory().createOrderDetail());
 
     Product1 product = getModel1Factory().createProduct1();
+    product.setName("test1");
     product.getOrderDetails().addAll(details);
 
     CDOSession session = openSession();

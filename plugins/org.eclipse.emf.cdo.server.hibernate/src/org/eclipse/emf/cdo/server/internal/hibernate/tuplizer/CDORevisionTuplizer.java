@@ -253,7 +253,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     {
       return new CDOIDPropertyGetter(this, mappedProperty.getName());
     }
-    else if (mappedProperty == mappedEntity.getVersion())
+    else if (mappedProperty.getMetaAttribute("version") != null)
     {
       return new CDOVersionPropertyGetter(this, mappedProperty.getName());
     }
@@ -302,7 +302,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
       return new CDOIDPropertySetter(this, mappedProperty.getName());
     }
 
-    if (mappedProperty == mappedEntity.getVersion())
+    if (mappedProperty.getMetaAttribute("version") != null)
     {
       return new CDOVersionPropertySetter(this, mappedProperty.getName());
     }

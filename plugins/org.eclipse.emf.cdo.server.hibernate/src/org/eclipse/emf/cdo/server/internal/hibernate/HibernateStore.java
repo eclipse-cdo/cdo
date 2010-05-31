@@ -439,6 +439,7 @@ public class HibernateStore extends Store implements IHibernateStore
       if (mappingProvider != null)
       {
         mappingProvider.setHibernateStore(this);
+        // System.err.println(mappingProvider.getMapping());
         hibernateConfiguration.addXML(mappingProvider.getMapping());
       }
 

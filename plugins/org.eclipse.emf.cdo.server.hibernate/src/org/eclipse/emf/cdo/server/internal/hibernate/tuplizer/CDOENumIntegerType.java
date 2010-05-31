@@ -68,9 +68,7 @@ public class CDOENumIntegerType extends CDOENumStringType
   {
     if (value == null)
     {
-      // an enum can not be null
-      st.setInt(index, ((Enumerator)getEEnum().getDefaultValue()).getValue());
-      // st.setNull(index, Types.INTEGER);
+      st.setNull(index, Types.INTEGER);
     }
 
     if (value instanceof Integer)

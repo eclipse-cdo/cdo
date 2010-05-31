@@ -62,6 +62,12 @@ public class CDOEntityMapper extends EntityMapper
       final Element columnElement = containerElement.addElement("column").addAttribute("name", //$NON-NLS-1$ //$NON-NLS-2$
           CDOHibernateConstants.CONTAINER_PROPERTY_COLUMN);
 
+      final Element versionElement = entityElement.addElement("property"); //$NON-NLS-1$
+      versionElement.addAttribute("name", getHbmContext().getVersionColumnName()); //$NON-NLS-1$
+      versionElement.addElement("meta").addAttribute("attribute", "version").setText("true");
+      versionElement.addElement("column").addAttribute("name", getHbmContext().getVersionColumnName()); //$NON-NLS-1$//$NON-NLS-2$
+      versionElement.addAttribute("type", Integer.class.getName()); //$NON-NLS-1$
+
       if (getHbmContext().getCurrentEClass() == EresourcePackage.eINSTANCE.getCDOResourceNode())
       {
         // not nice but teneo will assign the first unique-key the number c0

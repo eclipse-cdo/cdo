@@ -57,6 +57,11 @@ public class Bugzilla_308895_Test extends AbstractCDOTest
     CDOUtil.prepareDynamicEPackage(pkg);
   }
 
+  protected EAttribute getAtt()
+  {
+    return att;
+  }
+
   public void testCustomRegular() throws CommitException
   {
     EObject obj = EcoreUtil.create(cls);

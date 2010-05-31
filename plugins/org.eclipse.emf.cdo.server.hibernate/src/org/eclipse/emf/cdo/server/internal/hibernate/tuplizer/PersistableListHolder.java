@@ -44,6 +44,17 @@ public class PersistableListHolder
   public void putListMapping(Object target, EStructuralFeature feature, PersistentCollection collection)
   {
     Key key = new Key(target, feature);
+    final PersistentCollection currentCachedValue = getListMapping(target, feature);
+    if (currentCachedValue == collection)
+    {
+      return;
+    }
+
+    if (currentCachedValue != null)
+    {
+      throw new IllegalStateException("There is already a list mapping present");
+    }
+
     getListMapping().put(key, collection);
     if (TRACER.isEnabled())
     {

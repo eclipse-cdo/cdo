@@ -31,7 +31,7 @@ import org.hibernate.collection.PersistentCollection;
 // - cdo does not have direct java references but stores cdoids in the list while hibernate expects real java object
 // references.
 // - cdo uses a moveablearraylist and not the standard arraylist
-// 
+//
 // The solution:
 // - never return null when hibernate asks for the current value of the manyreference, always
 // return a MoveableArrayList so that hibernate uses that as the delegate, set the MoveableArrayList
@@ -57,6 +57,15 @@ public class CDOManyReferenceGetter extends CDOPropertyGetter
 
     InternalCDORevision revision = (InternalCDORevision)target;
     CDOList list = revision.getList(getEStructuralFeature(), 10);
+
+    if (list instanceof WrappedHibernateList)
+    {
+      final Object delegate = ((WrappedHibernateList)list).getDelegate();
+      if (delegate instanceof PersistentCollection)
+      {
+        return delegate;
+      }
+    }
 
     // Wrap the moveablearraylist
     HibernateMoveableListWrapper wrapper = new HibernateMoveableListWrapper();

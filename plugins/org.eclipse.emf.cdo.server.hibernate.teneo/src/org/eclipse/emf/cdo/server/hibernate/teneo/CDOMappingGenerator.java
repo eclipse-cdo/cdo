@@ -98,10 +98,8 @@ public class CDOMappingGenerator
   public String generateMapping(EPackage[] epackages, Properties props)
   {
     // set some default properties
-    if (!props.containsKey(PersistenceOptions.ALWAYS_VERSION))
-    {
-      props.put(PersistenceOptions.ALWAYS_VERSION, "true"); //$NON-NLS-1$
-    }
+    // never use hibernate optimistic locking
+    props.put(PersistenceOptions.ALWAYS_VERSION, "false"); //$NON-NLS-1$
 
     if (!props.containsKey(PersistenceOptions.ID_COLUMN_NAME))
     {

@@ -142,23 +142,29 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
     return result;
   }
 
-  protected CDOID getCDOID(Object o)
+  protected Object getValue(Object o)
   {
     if (o instanceof CDOIDMeta || o instanceof CDOIDExternal)
     {
-      return (CDOID)o;
+      return o;
+    }
+
+    // can happen for primitive typed lists
+    if (!(o instanceof CDORevision))
+    {
+      return o;
     }
 
     CDORevision cdoRevision = (CDORevision)o;
     return cdoRevision.getID();
   }
 
-  protected List<CDOID> getCDOIDs(Collection<?> c)
+  protected List<Object> getValues(Collection<?> c)
   {
-    List<CDOID> newC = new ArrayList<CDOID>();
+    List<Object> newC = new ArrayList<Object>();
     for (Object o : c)
     {
-      newC.add(getCDOID(o));
+      newC.add(getValue(o));
     }
 
     return newC;
@@ -166,22 +172,22 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
 
   public void add(int index, Object element)
   {
-    getDelegate().add(index, getCDOID(element));
+    getDelegate().add(index, getValue(element));
   }
 
   public boolean add(Object o)
   {
-    return getDelegate().add(getCDOID(o));
+    return getDelegate().add(getValue(o));
   }
 
   public boolean addAll(Collection<? extends Object> c)
   {
-    return getDelegate().addAll(getCDOIDs(c));
+    return getDelegate().addAll(getValues(c));
   }
 
   public boolean addAll(int index, Collection<? extends Object> c)
   {
-    return getDelegate().addAll(index, getCDOIDs(c));
+    return getDelegate().addAll(index, getValues(c));
   }
 
   public void clear()
@@ -191,12 +197,12 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
 
   public boolean contains(Object o)
   {
-    return getDelegate().contains(getCDOID(o));
+    return getDelegate().contains(getValue(o));
   }
 
   public boolean containsAll(Collection<?> c)
   {
-    return getDelegate().containsAll(getCDOIDs(c));
+    return getDelegate().containsAll(getValues(c));
   }
 
   public Object get(int index)
@@ -206,7 +212,7 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
 
   public int indexOf(Object o)
   {
-    return getDelegate().indexOf(getCDOID(o));
+    return getDelegate().indexOf(getValue(o));
   }
 
   public boolean isEmpty()
@@ -221,7 +227,7 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
 
   public int lastIndexOf(Object o)
   {
-    return getDelegate().lastIndexOf(getCDOID(o));
+    return getDelegate().lastIndexOf(getValue(o));
   }
 
   public ListIterator<Object> listIterator()
@@ -241,22 +247,22 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
 
   public boolean remove(Object o)
   {
-    return getDelegate().remove(getCDOID(o));
+    return getDelegate().remove(getValue(o));
   }
 
   public boolean removeAll(Collection<?> c)
   {
-    return getDelegate().removeAll(getCDOIDs(c));
+    return getDelegate().removeAll(getValues(c));
   }
 
   public boolean retainAll(Collection<?> c)
   {
-    return getDelegate().retainAll(getCDOIDs(c));
+    return getDelegate().retainAll(getValues(c));
   }
 
   public Object set(int index, Object element)
   {
-    return getDelegate().set(index, getCDOID(element));
+    return getDelegate().set(index, getValue(element));
   }
 
   public int size()

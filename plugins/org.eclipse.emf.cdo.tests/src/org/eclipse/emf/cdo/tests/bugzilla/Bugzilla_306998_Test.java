@@ -81,6 +81,7 @@ public class Bugzilla_306998_Test extends AbstractCDOTest
     EClass cls = EMFUtil.createEClass(pkg, "cls", false, false);
     EAttribute att = EMFUtil.createEAttribute(cls, "att", Model1Package.eINSTANCE.getVAT());
     att.setDefaultValueLiteral("vat8");
+    att.setDefaultValue(Model1Package.eINSTANCE.getVAT().getEEnumLiteral("vat8"));
 
     CDOUtil.prepareDynamicEPackage(pkg);
 

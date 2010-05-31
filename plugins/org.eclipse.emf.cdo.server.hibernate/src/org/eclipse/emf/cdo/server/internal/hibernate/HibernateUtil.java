@@ -359,10 +359,10 @@ public class HibernateUtil
     {
       final HibernateCommitContext commitContext = HibernateThreadContext.getCommitContext();
       InternalCDORevision revision;
-      if ((revision = commitContext.getDirtyObject(id)) != null)
-      {
-        return revision;
-      }
+      // if ((revision = commitContext.getDirtyObject(id)) != null)
+      // {
+      // return revision;
+      // }
 
       if ((revision = commitContext.getNewObject(id)) != null)
       {
@@ -531,7 +531,7 @@ public class HibernateUtil
   {
     // TODO: not the nicest check but we know that only these are supported
     // by the hibernatestore
-    return cdoID instanceof CDOClassifierRef.Provider;
+    return cdoID instanceof CDOClassifierRef.Provider || cdoID instanceof CDOIDExternal;
   }
 
   /**

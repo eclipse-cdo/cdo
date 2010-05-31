@@ -57,78 +57,71 @@ public class HibernateQueryHandler implements IQueryHandler
     // so all db access uses the same session.
     final Session session = hibernateStoreAccessor.getHibernateSession();
 
-    try
-    {
-      // create the query
-      final Query query = session.createQuery(info.getQueryString());
+    // create the query
+    final Query query = session.createQuery(info.getQueryString());
 
-      // get the parameters with some parameter conversion
-      int firstResult = -1;
-      for (String key : info.getParameters().keySet())
+    // get the parameters with some parameter conversion
+    int firstResult = -1;
+    for (String key : info.getParameters().keySet())
+    {
+      if (key.toLowerCase().equals(FIRST_RESULT.toLowerCase()))
       {
-        if (key.toLowerCase().equals(FIRST_RESULT.toLowerCase()))
+        final Object o = info.getParameters().get(key);
+        if (o != null)
         {
-          final Object o = info.getParameters().get(key);
-          if (o != null)
+          try
           {
-            try
-            {
-              firstResult = (Integer)o;
-            }
-            catch (ClassCastException e)
-            {
-              throw new IllegalArgumentException("Parameter firstResult must be an integer but it is a " + o //$NON-NLS-1$
-                  + " class " + o.getClass().getName()); //$NON-NLS-1$
-            }
+            firstResult = (Integer)o;
           }
+          catch (ClassCastException e)
+          {
+            throw new IllegalArgumentException("Parameter firstResult must be an integer but it is a " + o //$NON-NLS-1$
+                + " class " + o.getClass().getName()); //$NON-NLS-1$
+          }
+        }
+      }
+      else
+      {
+        // in case the parameter is a CDOID get the object from the db
+        final Object param = info.getParameters().get(key);
+        if (param instanceof CDOID && HibernateUtil.getInstance().isStoreCreatedID((CDOID)param))
+        {
+          final CDOID cdoID = (CDOID)param;
+          final String entityName = HibernateUtil.getInstance().getEntityName(cdoID);
+          final Serializable idValue = HibernateUtil.getInstance().getIdValue(cdoID);
+          final CDORevision revision = (CDORevision)session.get(entityName, idValue);
+          query.setEntity(key, revision);
+          hibernateStoreAccessor.addToRevisionCache(revision);
         }
         else
         {
-          // in case the parameter is a CDOID get the object from the db
-          final Object param = info.getParameters().get(key);
-          if (param instanceof CDOID && HibernateUtil.getInstance().isStoreCreatedID((CDOID)param))
-          {
-            final CDOID cdoID = (CDOID)param;
-            final String entityName = HibernateUtil.getInstance().getEntityName(cdoID);
-            final Serializable idValue = HibernateUtil.getInstance().getIdValue(cdoID);
-            final CDORevision revision = (CDORevision)session.get(entityName, idValue);
-            query.setEntity(key, revision);
-            hibernateStoreAccessor.addToRevisionCache(revision);
-          }
-          else
-          {
-            query.setParameter(key, param);
-          }
-        }
-      }
-
-      // set the first result
-      if (firstResult > -1)
-      {
-        query.setFirstResult(firstResult);
-      }
-
-      // the max result
-      if (info.getMaxResults() != CDOQueryInfo.UNLIMITED_RESULTS)
-      {
-        query.setMaxResults(info.getMaxResults());
-      }
-
-      // and go for the query
-      // future extension: support iterate, scroll through a parameter
-      for (Object o : query.list())
-      {
-        final boolean addOneMore = context.addResult(o);
-        hibernateStoreAccessor.addToRevisionCache(o);
-        if (!addOneMore)
-        {
-          return;
+          query.setParameter(key, param);
         }
       }
     }
-    finally
+
+    // set the first result
+    if (firstResult > -1)
     {
-      hibernateStoreAccessor.endHibernateSession();
+      query.setFirstResult(firstResult);
+    }
+
+    // the max result
+    if (info.getMaxResults() != CDOQueryInfo.UNLIMITED_RESULTS)
+    {
+      query.setMaxResults(info.getMaxResults());
+    }
+
+    // and go for the query
+    // future extension: support iterate, scroll through a parameter
+    for (Object o : query.list())
+    {
+      final boolean addOneMore = context.addResult(o);
+      hibernateStoreAccessor.addToRevisionCache(o);
+      if (!addOneMore)
+      {
+        return;
+      }
     }
   }
 

@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
@@ -438,9 +439,15 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       final EStructuralFeature feature = revision.getEClass().getEStructuralFeature(NAME_EFEATURE_NAME);
       if (feature != null)
       {
-        String revisionName = (String)revision.data().get(feature, 0);
-        boolean match = exactMatch || revisionName == null || name == null ? ObjectUtil.equals(revisionName, name)
-            : revisionName.startsWith(name);
+        Object value = revision.data().get(feature, 0);
+        if (value == CDORevisionData.NIL)
+        {
+          value = null;
+        }
+        
+        final String revisionName = (String)value;
+        final boolean match = exactMatch || revisionName == null || name == null ? ObjectUtil
+            .equals(revisionName, name) : revisionName.startsWith(name);
 
         if (match && !context.addResource(revision.getID()))
         {
@@ -519,17 +526,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       final Session session = getNewHibernateSession();
       session.setFlushMode(FlushMode.MANUAL);
 
-      // first decrease the version for all dirty objects
-      // hibernate will increase it again
-      for (CDORevision revision : context.getDirtyObjects())
-      {
-        if (revision instanceof InternalCDORevision)
-        {
-          InternalCDORevision internalRevision = (InternalCDORevision)revision;
-          internalRevision.setVersion(internalRevision.getVersion() - 1);
-        }
-      }
-
       // order is 1) insert, 2) update and then delete
       // this order is the most stable! Do not change it without testing
 
@@ -563,7 +559,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       for (CDORevision revision : context.getDirtyObjects())
       {
         final String entityName = HibernateUtil.getInstance().getEntityName(revision.getID());
-        session.saveOrUpdate(entityName, revision);
+        session.merge(entityName, revision);
         if (TRACER.isEnabled())
         {
           TRACER.trace("Updated Object " + revision.getEClass().getName() + " id: " + revision.getID()); //$NON-NLS-1$ //$NON-NLS-2$
@@ -701,8 +697,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     throw new UnsupportedOperationException();
   }
 
-  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID,
-      long fromCommitTime, long toCommitTime) throws IOException
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
+      throws IOException
   {
     throw new UnsupportedOperationException();
   }

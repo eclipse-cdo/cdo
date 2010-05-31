@@ -11,9 +11,11 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionPropertyAccessor.CDORevisionSetter;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -93,9 +95,31 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
     else
     {
       // hibernate sees enums, cdo sees int's
-      if (value instanceof EEnumLiteral)
+      if (value instanceof Enumerator)
+      {
+        revision.setValue(getEStructuralFeature(), ((Enumerator)value).getValue());
+      }
+      else if (value instanceof EEnumLiteral)
       {
         revision.setValue(getEStructuralFeature(), ((EEnumLiteral)value).getValue());
+      }
+      else if (value == null)
+      {
+        final Object defaultValue = getEStructuralFeature().getDefaultValue();
+        if (defaultValue == null)
+        {
+          revision.setValue(getEStructuralFeature(), null);
+        }
+        else if (getEStructuralFeature().isUnsettable())
+        {
+          revision.setValue(getEStructuralFeature(), null);
+        }
+        else
+        {
+          // there was a default value so was explicitly set to null
+          // otherwise the default value would be in the db
+          revision.setValue(getEStructuralFeature(), CDORevisionData.NIL);
+        }
       }
       else
       {

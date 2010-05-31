@@ -167,9 +167,8 @@ public class CDOENumStringType implements UserType, ParameterizedType
   {
     if (value == null)
     {
-      // don't support null value for enums, they must always be set anyway
-      st.setString(index, ((Enumerator)getEEnum().getDefaultValue()).getLiteral());
-      // st.setNull(index, Types.VARCHAR);
+      // st.setString(index, ((Enumerator)getEEnum().getDefaultValue()).getLiteral());
+      st.setNull(index, Types.VARCHAR);
     }
     else
     {

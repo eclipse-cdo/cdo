@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionPropertyAccessor.CDORevisionSetter;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EEnum;
 
 import org.hibernate.HibernateException;
@@ -62,20 +63,44 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
   public Object get(Object target) throws HibernateException
   {
     InternalCDORevision revision = (InternalCDORevision)target;
-    final Object value = revision.getValue(getEStructuralFeature());
-    if (value == null)
+    Object value = revision.getValue(getEStructuralFeature());
+    if (value == CDORevisionData.NIL)
     {
+      // explicitly set to null
       return null;
     }
 
-    if (value == CDORevisionData.NIL)
+    if (value == null)
     {
-      return null;
+      if (getEStructuralFeature().getDefaultValue() == null)
+      {
+        return null;
+      }
+
+      if (getEStructuralFeature().isUnsettable())
+      {
+        return null;
+      }
+
+      if (isEEnum)
+      {
+        // handle it a few lines lower
+        value = getEStructuralFeature().getDefaultValue();
+      }
+      else
+      {
+        return getEStructuralFeature().getDefaultValue();
+      }
     }
 
     // hibernate sees eenums, CDO sees int
     if (isEEnum)
     {
+      if (value instanceof Enumerator)
+      {
+        return value;
+      }
+      
       return eEnum.getEEnumLiteral((Integer)value);
     }
 

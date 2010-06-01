@@ -10,7 +10,8 @@
  */
 package org.eclipse.emf.cdo.dawn.tests;
 
-import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
+//import org.eclipse.emf.cdo.tests.allt.AllTestsAllConfigs;
+import org.eclipse.emf.cdo.tests.AllTests;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import java.util.List;
@@ -21,11 +22,11 @@ import junit.framework.TestSuite;
 /**
  * @author Martin Fluegge
  */
-public class AllTestsDawn extends AllTestsAllConfigs
+public class AllTestsDawn extends AllTests
 {
   public static Test suite()
   {
-    return new AllTestsDawn().getTestSuite(AllTestsAllConfigs.class.getName());
+    return new AllTestsDawn().getTestSuite(AllTests.class.getName());
   }
 
   @Override

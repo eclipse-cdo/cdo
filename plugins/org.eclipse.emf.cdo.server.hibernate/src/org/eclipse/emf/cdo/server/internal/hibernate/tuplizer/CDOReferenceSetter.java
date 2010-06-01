@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.SessionFactoryImplementor;
@@ -43,8 +43,7 @@ public class CDOReferenceSetter extends CDOPropertySetter
     }
     else
     {
-      CDORevision cdoValue = (CDORevision)value;
-      super.set(target, cdoValue.getID(), factory);
+      super.set(target, HibernateUtil.getInstance().getCDOID(value), factory);
     }
   }
 }

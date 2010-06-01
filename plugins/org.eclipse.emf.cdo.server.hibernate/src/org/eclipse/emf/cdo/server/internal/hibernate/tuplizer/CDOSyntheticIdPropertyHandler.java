@@ -60,12 +60,12 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
       return null;
     }
 
-    if (!HibernateUtil.getInstance().isStoreCreatedID(revision.getID()))
+    if (!HibernateUtil.getInstance().isStoreCreatedID(HibernateUtil.getInstance().getCDOID(revision)))
     {
       return null;
     }
 
-    return HibernateUtil.getInstance().getIdValue(revision.getID());
+    return HibernateUtil.getInstance().getIdValue(HibernateUtil.getInstance().getCDOID(revision));
   }
 
   @SuppressWarnings("rawtypes")
@@ -98,7 +98,7 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
     }
 
     final InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(target);
-    final CDOID cdoID = revision.getID();
+    final CDOID cdoID = HibernateUtil.getInstance().getCDOID(revision);
     if (cdoID == null || cdoID instanceof CDOIDTemp)
     {
       final CDOID newCDOID = HibernateUtil.getInstance().createCDOID(new CDOClassifierRef(revision.getEClass()), value);

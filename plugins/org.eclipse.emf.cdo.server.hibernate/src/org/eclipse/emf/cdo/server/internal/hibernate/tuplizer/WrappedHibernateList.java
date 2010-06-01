@@ -24,6 +24,8 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import org.hibernate.proxy.HibernateProxy;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -175,8 +177,7 @@ public class WrappedHibernateList implements InternalCDOList
 
   protected CDOID getCDOID(Object o)
   {
-    CDORevision cdoRevision = (CDORevision)o;
-    return cdoRevision.getID();
+    return HibernateUtil.getInstance().getCDOID(o);
   }
 
   protected List<CDOID> getCDOIDs(Collection<?> c)
@@ -228,9 +229,9 @@ public class WrappedHibernateList implements InternalCDOList
   public Object get(int index)
   {
     final Object value = getObject(getDelegate().get(index));
-    if (value instanceof CDORevision)
+    if (value instanceof CDORevision || value instanceof HibernateProxy)
     {
-      return ((CDORevision)value).getID();
+      return HibernateUtil.getInstance().getCDOID(value);
     }
 
     if (value instanceof EEnumLiteral)
@@ -391,7 +392,7 @@ public class WrappedHibernateList implements InternalCDOList
 
     public void add(Object o)
     {
-      delegate.add(((CDORevision)o).getID());
+      delegate.add(HibernateUtil.getInstance().getCDOID(o));
     }
 
     public boolean hasNext()
@@ -443,7 +444,7 @@ public class WrappedHibernateList implements InternalCDOList
 
     public void set(Object o)
     {
-      delegate.set(((CDORevision)o).getID());
+      delegate.set(HibernateUtil.getInstance().getCDOID(o));
     }
   }
 }

@@ -444,12 +444,12 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         {
           value = null;
         }
-        
+
         final String revisionName = (String)value;
         final boolean match = exactMatch || revisionName == null || name == null ? ObjectUtil
             .equals(revisionName, name) : revisionName.startsWith(name);
 
-        if (match && !context.addResource(revision.getID()))
+        if (match && !context.addResource(HibernateUtil.getInstance().getCDOID(revision)))
         {
           // No more results allowed
           break;
@@ -548,10 +548,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
         final String entityName = getStore().getEntityName(revision.getEClass());
         session.saveOrUpdate(entityName, revision);
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("Persisted new Object " + revision.getEClass().getName() + " id: " + revision.getID()); //$NON-NLS-1$ //$NON-NLS-2$
-        }
       }
 
       session.flush();
@@ -571,11 +567,18 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       // delete all objects
       for (CDOID id : context.getDetachedObjects())
       {
-        final CDORevision revision = HibernateUtil.getInstance().getCDORevision(id);
-        // maybe deleted in parallell?
-        if (revision != null)
+        try
         {
-          session.delete(revision);
+          final CDORevision revision = HibernateUtil.getInstance().getCDORevision(id);
+          // maybe deleted in parallell?
+          if (revision != null)
+          {
+            session.delete(revision);
+          }
+        }
+        catch (org.hibernate.ObjectNotFoundException ex)
+        {
+          // ignore these, an object can be removed through cascade deletes
         }
       }
 

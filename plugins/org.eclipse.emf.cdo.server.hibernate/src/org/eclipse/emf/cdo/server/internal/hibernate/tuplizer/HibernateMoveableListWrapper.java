@@ -155,8 +155,7 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
       return o;
     }
 
-    CDORevision cdoRevision = (CDORevision)o;
-    return cdoRevision.getID();
+    return HibernateUtil.getInstance().getCDOID(o);
   }
 
   protected List<Object> getValues(Collection<?> c)
@@ -345,7 +344,7 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
 
     public void add(Object o)
     {
-      delegate.add(((CDORevision)o).getID());
+      delegate.add(HibernateUtil.getInstance().getCDOID(o));
     }
 
     public boolean hasNext()
@@ -397,7 +396,7 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
 
     public void set(Object o)
     {
-      delegate.set(((CDORevision)o).getID());
+      delegate.set(HibernateUtil.getInstance().getCDOID(o));
     }
   }
 }

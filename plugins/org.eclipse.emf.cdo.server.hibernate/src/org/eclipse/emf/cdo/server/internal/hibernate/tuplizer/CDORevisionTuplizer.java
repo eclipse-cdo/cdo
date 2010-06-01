@@ -174,63 +174,6 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     }
   }
 
-  // MT: probably not required as the property getter/setter do all the work
-  // /*
-  // * (non-Javadoc)
-  // *
-  // * @see org.hibernate.tuple.entity.AbstractEntityTuplizer#getVersion(java.lang.Object)
-  // */
-  // @Override
-  // public Object getVersion(Object entity) throws HibernateException
-  // {
-  // if (entity instanceof CDORevision)
-  // {
-  // final CDORevision cdoRevision = (CDORevision)entity;
-  // return cdoRevision.getVersion();
-  // }
-  // throw new IllegalArgumentException("Entity of type: " + entity.getClass().getName()
-  // + " not supported by this tuplizer");
-  // }
-  //
-  // @Override
-  // public Serializable getIdentifier(Object entity) throws HibernateException
-  // {
-  // if (entity instanceof CDORevision)
-  // {
-  // final CDOID cdoID = ((CDORevision)entity).getID();
-  // if (cdoID instanceof CDOIDHibernate)
-  // {
-  // return ((CDOIDHibernate)cdoID).getId();
-  // }
-  // }
-  // throw new IllegalArgumentException("Entity of type: " + entity.getClass().getName()
-  // + " not supported by this tuplizer");
-  // }
-  //
-  // @Override
-  // public void setIdentifier(Object entity, Serializable id) throws HibernateException
-  // {
-  // if (entity instanceof InternalCDORevision)
-  // {
-  // final InternalCDORevision cdoRevision = (InternalCDORevision)entity;
-  // final CDOID cdoID = cdoRevision.getID();
-  // if (cdoID == null)
-  // {
-  // CDOIDHibernate hid = (CDOIDHibernate)HibernateStore.CDOID_OBJECT_FACTORY.createCDOIDObject(null);
-  // hid.setId(id);
-  // cdoRevision.setID(hid);
-  // return;
-  // }
-  // else if (cdoID instanceof CDOIDHibernate)
-  // {
-  // ((CDOIDHibernate)cdoID).setId(id);
-  // return;
-  // }
-  // }
-  // throw new IllegalArgumentException("Entity of type: " + entity.getClass().getName()
-  // + " not supported by this tuplizer");
-  // }
-
   public EClass getEClass()
   {
     return eClass;

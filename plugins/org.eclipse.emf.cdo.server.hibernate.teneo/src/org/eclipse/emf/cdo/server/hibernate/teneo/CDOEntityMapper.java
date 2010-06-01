@@ -49,9 +49,11 @@ public class CDOEntityMapper extends EntityMapper
   {
     super.processFeatures(features);
 
+    final Element entityElement = getHbmContext().getCurrent();
+    entityElement.addAttribute("lazy", "true");
+
     if (!addedExtraMappings && currentEntity.getPaSuperEntity() == null)
     {
-      final Element entityElement = getHbmContext().getCurrent();
       final Element resourceElement = entityElement.addElement("property"); //$NON-NLS-1$
       resourceElement.addAttribute("name", CDOHibernateConstants.RESOURCE_PROPERTY); //$NON-NLS-1$
       resourceElement.addElement("column").addAttribute("name", CDOHibernateConstants.RESOURCE_PROPERTY_COLUMN); //$NON-NLS-1$//$NON-NLS-2$

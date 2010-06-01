@@ -49,6 +49,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
 import org.hibernate.Session;
+import org.hibernate.proxy.HibernateProxy;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -228,6 +229,39 @@ public class HibernateUtil
     }
 
     return props;
+  }
+
+  /**
+   * Checks if the object is a HibernateProxy. If so creates the CDOID without resolving the hibernate proxy. If it not
+   * a proxy then the id is retrieved from the object itself. It is assumed to be a CDORevision then.
+   */
+  public CDOID getCDOID(Object o)
+  {
+    if (o instanceof HibernateProxy)
+    {
+      final Object idValue = ((HibernateProxy)o).getHibernateLazyInitializer().getIdentifier();
+      final String entityName = ((HibernateProxy)o).getHibernateLazyInitializer().getEntityName();
+      final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentStoreAccessor();
+      final EClass eClass = accessor.getStore().getEClass(entityName);
+      return HibernateUtil.getInstance().createCDOID(new CDOClassifierRef(eClass), idValue);
+    }
+
+    return ((CDORevision)o).getID();
+  }
+
+  /**
+   * Reads the entity name while taking account the fact that the object maybe a Hibernate proxy.
+   */
+  public String getEntityName(Object o)
+  {
+    if (o instanceof HibernateProxy)
+    {
+      return ((HibernateProxy)o).getHibernateLazyInitializer().getEntityName();
+    }
+
+    final EClass eClass = ((CDORevision)o).getEClass();
+    final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentStoreAccessor();
+    return accessor.getStore().getEntityName(eClass);
   }
 
   /**

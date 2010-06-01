@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
 import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
@@ -104,7 +105,7 @@ public class CDOIDExternalUserType implements UserType, ParameterizedType
     final Object localValue;
     if (value instanceof CDORevision)
     {
-      localValue = ((CDORevision)value).getID();
+      localValue = HibernateUtil.getInstance().getCDOID(value);
     }
     else
     {

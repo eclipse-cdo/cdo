@@ -13,11 +13,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-
-import org.eclipse.emf.ecore.EClass;
 
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
@@ -46,7 +42,7 @@ public class CDOInterceptor extends EmptyInterceptor
     }
 
     final CDORevision revision = (CDORevision)entity;
-    final CDOID cdoID = revision.getID();
+    final CDOID cdoID = HibernateUtil.getInstance().getCDOID(revision);
     if (cdoID.isNull() || cdoID.isTemporary())
     {
       return true;
@@ -63,10 +59,7 @@ public class CDOInterceptor extends EmptyInterceptor
       return object.getClass().getName();
     }
 
-    final InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(object);
-
-    final EClass eClass = revision.getEClass();
-    return HibernateThreadContext.getCurrentStoreAccessor().getStore().getEntityName(eClass);
+    return HibernateUtil.getInstance().getEntityName(object);
   }
 
   @Override

@@ -97,7 +97,7 @@ public class CDOIDUserType implements UserType
       final CDORevision revision = HibernateUtil.getInstance().getCDORevisionNullable((CDOID)value);
       if (revision != null)
       {
-        value = revision.getID();
+        value = HibernateUtil.getInstance().getCDOID(revision);
       }
     }
     else if (value instanceof CDORevision)

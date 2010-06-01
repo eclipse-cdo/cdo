@@ -50,7 +50,7 @@ public class CDOIDPropertySetter extends CDOPropertySetter
       return;
     }
 
-    final CDOID revisionID = revision.getID();
+    final CDOID revisionID = HibernateUtil.getInstance().getCDOID(revision);
     if (revisionID == null || revisionID instanceof CDOIDTemp)
     {
       final CDOID newCDOID = HibernateUtil.getInstance().createCDOID(new CDOClassifierRef(revision.getEClass()), value);

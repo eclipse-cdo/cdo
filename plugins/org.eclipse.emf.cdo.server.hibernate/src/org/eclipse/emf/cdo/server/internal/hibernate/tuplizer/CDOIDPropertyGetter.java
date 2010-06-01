@@ -39,7 +39,7 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
   public Object get(Object target) throws HibernateException
   {
     InternalCDORevision revision = (InternalCDORevision)target;
-    if (!(revision.getID() instanceof CDOIDObject))
+    if (!(HibernateUtil.getInstance().getCDOID(revision) instanceof CDOIDObject))
     {
       if (!isVirtualProperty())
       {
@@ -75,7 +75,7 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
   private void setCDOID(CDORevision target, Object value)
   {
     final InternalCDORevision revision = (InternalCDORevision)target;
-    final CDOID cdoID = revision.getID();
+    final CDOID cdoID = HibernateUtil.getInstance().getCDOID(revision);
     if (cdoID == null || cdoID instanceof CDOIDTemp)
     {
       final CDOID newCDOID = HibernateUtil.getInstance().createCDOID(new CDOClassifierRef(revision.getEClass()), value);

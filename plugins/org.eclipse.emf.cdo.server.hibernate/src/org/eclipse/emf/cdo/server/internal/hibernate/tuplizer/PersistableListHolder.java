@@ -4,17 +4,12 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Taal - copied from CDORevisionPropertyHandler and adapted
  *    Eike Stepper - maintenance
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
-
-import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -31,8 +26,6 @@ import java.util.Map;
  */
 public class PersistableListHolder
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, PersistableListHolder.class);
-
   private static PersistableListHolder instance = new PersistableListHolder();
 
   private static ThreadLocal<Map<Key, PersistentCollection>> listMapping = new ThreadLocal<Map<Key, PersistentCollection>>();
@@ -56,11 +49,6 @@ public class PersistableListHolder
     }
 
     getListMapping().put(key, collection);
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Stored hb list in threadlocal: " + ((CDORevision)target).getEClass().getName() + "." //$NON-NLS-1$ //$NON-NLS-2$
-          + feature.getName());
-    }
   }
 
   public PersistentCollection getListMapping(Object target, EStructuralFeature feature)

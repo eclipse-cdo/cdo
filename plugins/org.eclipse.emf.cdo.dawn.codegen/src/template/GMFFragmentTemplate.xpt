@@ -663,7 +663,8 @@ public class «this.dawnDocumentProviderClassName» extends «this.GMFGenEditorGene
   private TransactionalEditingDomain createEditingDomain()
   {
     TransactionalEditingDomain editingDomain = DawnDiagramEditingDomainFactory.getInstance().createEditingDomain();
-    editingDomain.setID("org.eclipse.emf.cdo.dawn.reference.editor.diagram.EditingDomain"); //$NON-NLS-1$
+    
+    editingDomain.setID("«this.GMFGenEditorGenerator.diagram.editingDomainID»"); //$NON-NLS-1$
     final NotificationFilter diagramResourceModifiedFilter = NotificationFilter.createNotifierFilter(
         editingDomain.getResourceSet()).and(NotificationFilter.createEventTypeFilter(Notification.ADD)).and(
         NotificationFilter.createFeatureFilter(ResourceSet.class, ResourceSet.RESOURCE_SET__RESOURCES));

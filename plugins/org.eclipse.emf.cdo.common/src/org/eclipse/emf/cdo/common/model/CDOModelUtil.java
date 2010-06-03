@@ -400,6 +400,8 @@ public final class CDOModelUtil
       EObject e = it.next();
       for (EObject r : e.eCrossReferences())
       {
+        EObject refTarget = null;
+
         if (r.eIsProxy())
         {
           String msg = "Package '%s' contains unresolved proxy '%s'";
@@ -413,10 +415,12 @@ public final class CDOModelUtil
           EPackage pkg = null;
           if (r instanceof EClassifier)
           {
+            refTarget = r;
             pkg = ((EClassifier)r).getEPackage();
           }
           else if (r instanceof EStructuralFeature)
           {
+            refTarget = r;
             EStructuralFeature feature = (EStructuralFeature)r;
             EClass ownerClass = (EClass)feature.eContainer();
             pkg = ownerClass.getEPackage();
@@ -427,6 +431,7 @@ public final class CDOModelUtil
             EClassifier c = genType.getEClassifier();
             if (c != null)
             {
+              refTarget = c;
               pkg = c.getEPackage();
             }
           }
@@ -441,7 +446,7 @@ public final class CDOModelUtil
             pkg = pkg.getESuperPackage();
           }
 
-          String resourceURI = r.eResource().getURI().toString();
+          String resourceURI = refTarget.eResource().getURI().toString();
           if (!resourceURI.toString().equals(pkg.getNsURI()))
           {
             String msg = "URI of the resource (%s) does not match the nsURI (%s) of the top-level package";

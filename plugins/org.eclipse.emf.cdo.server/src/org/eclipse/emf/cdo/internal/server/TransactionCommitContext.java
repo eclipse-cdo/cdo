@@ -383,14 +383,23 @@ public class TransactionCommitContext implements InternalCommitContext
       accessor = null;
       timeStamp = CDORevision.UNSPECIFIED_DATE;
 
-      packageRegistry.deactivate();
-      packageRegistry = null;
+      if (packageRegistry != null)
+      {
+        packageRegistry.deactivate();
+        packageRegistry = null;
+      }
 
-      metaIDRanges.clear();
-      metaIDRanges = null;
+      if (metaIDRanges != null)
+      {
+        metaIDRanges.clear();
+        metaIDRanges = null;
+      }
 
-      idMappings.clear();
-      idMappings = null;
+      if (idMappings != null)
+      {
+        idMappings.clear();
+        idMappings = null;
+      }
 
       rollbackMessage = null;
       newPackageUnits = null;

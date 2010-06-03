@@ -90,18 +90,22 @@ public final class StoreThreadLocal
 
   public static void release()
   {
-    IStoreAccessor accessor = ACCESSOR.get();
-    if (accessor != null)
+    try
     {
-      if (LifecycleUtil.isActive(accessor))
+      IStoreAccessor accessor = ACCESSOR.get();
+      if (accessor != null)
       {
-        accessor.release();
+        if (LifecycleUtil.isActive(accessor))
+        {
+          accessor.release();
+        }
       }
-
-      ACCESSOR.set(null);
     }
-
-    SESSION.set(null);
-    COMMIT_CONTEXT.set(null);
+    finally
+    {
+      ACCESSOR.set(null);
+      SESSION.set(null);
+      COMMIT_CONTEXT.set(null);
+    }
   }
 }

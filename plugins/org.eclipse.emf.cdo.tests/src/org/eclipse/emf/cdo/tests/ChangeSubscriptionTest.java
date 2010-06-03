@@ -12,7 +12,9 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDODeltaNotification;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -26,6 +28,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
@@ -813,6 +816,99 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     assertInstanceOf(Collection.class, oldValue[0]);
     assertEquals(details.size(), ((Collection<?>)oldValue[0]).size());
+  }
+
+  /**
+   * See bug 315409.
+   */
+  public void testInvalidationWithDeltas_SameBranch() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOView view = session.openView();
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("main-v1");
+
+    CDOResource resource = transaction.createResource("/test1");
+    resource.getContents().add(company);
+
+    transaction.commit();
+    view.waitForUpdate(transaction.getLastCommitTime());
+
+    company.setName("main-v2");
+    transaction.commit();
+    view.waitForUpdate(transaction.getLastCommitTime());
+
+    view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    Company company2 = view.getObject(company);
+    company2.eAdapters().add(new AdapterImpl());
+
+    company.setName("main-v3");
+    transaction.commit();
+    view.waitForUpdate(transaction.getLastCommitTime());
+
+    CDORevision revision2 = CDOUtil.getCDOObject(company2).cdoRevision();
+    assertEquals(3, revision2.getVersion());
+    assertEquals(transaction.getBranch(), revision2.getBranch());
+    assertEquals(transaction.getLastCommitTime(), revision2.getTimeStamp());
+
+    company.setName("main-v4");
+    transaction.commit();
+    view.waitForUpdate(transaction.getLastCommitTime());
+
+    revision2 = CDOUtil.getCDOObject(company2).cdoRevision();
+    assertEquals(4, revision2.getVersion());
+    assertEquals(transaction.getBranch(), revision2.getBranch());
+    assertEquals(transaction.getLastCommitTime(), revision2.getTimeStamp());
+  }
+
+  /**
+   * See bug 315409.
+   */
+  public void testInvalidationWithDeltas_SubBranch() throws Exception
+  {
+    skipTest(!getRepository().isSupportingBranches());
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("main-v1");
+
+    CDOResource resource = transaction.createResource("/test1");
+    resource.getContents().add(company);
+
+    transaction.commit();
+
+    company.setName("main-v2");
+    transaction.commit();
+
+    CDOBranch subBranch = transaction.getBranch().createBranch("SUB_BRANCH");
+    transaction.setBranch(subBranch);
+
+    CDOView view = session.openView(subBranch);
+    view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    Company company2 = view.getObject(company);
+    company2.eAdapters().add(new AdapterImpl());
+
+    company.setName("sub-v1");
+    transaction.commit();
+    view.waitForUpdate(transaction.getLastCommitTime());
+
+    CDORevision revision2 = CDOUtil.getCDOObject(company2).cdoRevision();
+    assertEquals(1, revision2.getVersion());
+    assertEquals(transaction.getBranch(), revision2.getBranch());
+    assertEquals(transaction.getLastCommitTime(), revision2.getTimeStamp());
+
+    company.setName("sub-v2");
+    transaction.commit();
+    view.waitForUpdate(transaction.getLastCommitTime());
+
+    revision2 = CDOUtil.getCDOObject(company2).cdoRevision();
+    assertEquals(2, revision2.getVersion());
+    assertEquals(transaction.getBranch(), revision2.getBranch());
+    assertEquals(transaction.getLastCommitTime(), revision2.getTimeStamp());
   }
 
   /**

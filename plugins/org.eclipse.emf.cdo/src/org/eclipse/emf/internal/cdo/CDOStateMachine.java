@@ -404,7 +404,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @since 3.0
    */
-  public void invalidate(InternalCDOObject object, CDORevisionKey key)
+  public void invalidate(InternalCDOObject object, CDORevisionKey key, long lastUpdateTime)
   {
     ReentrantLock lock = lockView(object.cdoView());
 
@@ -415,7 +415,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         trace(object, CDOEvent.INVALIDATE);
       }
 
-      process(object, CDOEvent.INVALIDATE, key);
+      process(object, CDOEvent.INVALIDATE, new Pair<CDORevisionKey, Long>(key, lastUpdateTime));
     }
     finally
     {
@@ -852,17 +852,22 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private class InvalidateTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, CDORevisionKey>
+  private class InvalidateTransition implements
+      ITransition<CDOState, CDOEvent, InternalCDOObject, Pair<CDORevisionKey, Long>>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CDORevisionKey key)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Pair<CDORevisionKey, Long> keyAndTime)
     {
+      CDORevisionKey key = keyAndTime.getElement1();
+      long lastUpdateTime = keyAndTime.getElement2();
       InternalCDORevision oldRevision = object.cdoRevision();
       if (key == null || key.getVersion() >= oldRevision.getVersion())
       {
+        InternalCDOView view = object.cdoView();
         if (key instanceof CDORevisionDelta)
         {
           CDORevisionDelta delta = (CDORevisionDelta)key;
           InternalCDORevision newRevision = oldRevision.copy();
+          newRevision.adjustForCommit(view.getBranch(), lastUpdateTime);
           delta.apply(newRevision);
 
           object.cdoInternalSetRevision(newRevision);
@@ -873,7 +878,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         {
           changeState(object, CDOState.PROXY);
 
-          InternalCDOView view = object.cdoView();
           CDOInvalidationPolicy policy = view.options().getInvalidationPolicy();
           policy.handleInvalidation(object, key);
           object.cdoInternalPostInvalidate();
@@ -889,8 +893,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   private class ConflictTransition extends InvalidateTransition
   {
     @Override
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CDORevisionKey key)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Pair<CDORevisionKey, Long> keyAndTime)
     {
+      CDORevisionKey key = keyAndTime.getElement1();
       InternalCDORevision oldRevision = object.cdoRevision();
       if (key == null || key.getVersion() >= oldRevision.getVersion() - 1)
       {
@@ -907,7 +912,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   private final class InvalidConflictTransition extends ConflictTransition
   {
     @Override
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CDORevisionKey UNUSED)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Pair<CDORevisionKey, Long> UNUSED)
     {
       changeState(object, CDOState.INVALID_CONFLICT);
 

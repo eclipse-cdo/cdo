@@ -368,7 +368,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       if (existanceFlag)
       {
         // --> PROXY
-        CDOStateMachine.INSTANCE.invalidate(invalidObject, null);
+        CDOStateMachine.INSTANCE.invalidate(invalidObject, null, CDOBranchPoint.UNSPECIFIED_DATE);
       }
       else
       {
@@ -1373,7 +1373,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     try
     {
       lock.lock();
-      conflicts = invalidate(allChangedObjects, allDetachedObjects, deltas, changedObjects, detachedObjects);
+      conflicts = invalidate(lastUpdateTime, allChangedObjects, allDetachedObjects, deltas, changedObjects,
+          detachedObjects);
     }
     finally
     {
@@ -1399,8 +1400,9 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     setLastUpdateTime(lastUpdateTime);
   }
 
-  protected Set<CDOObject> invalidate(List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
-      List<CDORevisionDelta> deltas, Set<InternalCDOObject> changedObjects, Set<CDOObject> detachedObjects)
+  protected Set<CDOObject> invalidate(long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
+      List<CDOIDAndVersion> allDetachedObjects, List<CDORevisionDelta> deltas, Set<InternalCDOObject> changedObjects,
+      Set<CDOObject> detachedObjects)
   {
     Set<CDOObject> conflicts = null;
     for (CDORevisionKey key : allChangedObjects)
@@ -1423,7 +1425,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       {
         // if (!isLocked(changedObject))
         {
-          CDOStateMachine.INSTANCE.invalidate(changedObject, key);
+          CDOStateMachine.INSTANCE.invalidate(changedObject, key, lastUpdateTime);
         }
 
         changedObjects.add(changedObject);

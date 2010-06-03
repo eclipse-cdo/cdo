@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchImpl;
@@ -608,7 +609,7 @@ public class StateMachineTest extends AbstractCDOTest
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
     if (cdoObject != null)
     {
-      CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)cdoObject, null);
+      CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)cdoObject, null, CDOBranchPoint.UNSPECIFIED_DATE);
     }
   }
 

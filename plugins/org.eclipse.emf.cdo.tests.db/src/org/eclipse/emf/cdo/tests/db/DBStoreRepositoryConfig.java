@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.CDODBBrowser;
+import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
@@ -55,7 +55,12 @@ public abstract class DBStoreRepositoryConfig extends RepositoryConfig
   @Override
   public void tearDown() throws Exception
   {
-    dbBrowser.deactivate();
+    if (dbBrowser != null)
+    {
+      dbBrowser.deactivate();
+      dbBrowser = null;
+    }
+
     super.tearDown();
   }
 

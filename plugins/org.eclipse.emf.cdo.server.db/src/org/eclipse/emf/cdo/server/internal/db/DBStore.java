@@ -59,6 +59,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.Timer;
 
 /**
  * @author Eike Stepper
@@ -122,6 +123,9 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
 
   @ExcludeFromDump
   private transient StoreAccessorPool writerPool = new StoreAccessorPool(this, null);
+
+  @ExcludeFromDump
+  private transient Timer connectionKeepAliveTimer;
 
   public DBStore()
   {
@@ -191,6 +195,11 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
   public IExternalReferenceManager getExternalReferenceManager()
   {
     return externalReferenceManager;
+  }
+
+  public Timer getConnectionKeepAliveTimer()
+  {
+    return connectionKeepAliveTimer;
   }
 
   @Override
@@ -423,6 +432,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    connectionKeepAliveTimer = new Timer("Connection-Keep-Alive-" + this); //$NON-NLS-1$
 
     dbSchema = createSchema();
     metaDataManager = new MetaDataManager(this);
@@ -481,6 +491,10 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
 
     readerPool.dispose();
     writerPool.dispose();
+
+    connectionKeepAliveTimer.cancel();
+    connectionKeepAliveTimer = null;
+
     super.doDeactivate();
   }
 

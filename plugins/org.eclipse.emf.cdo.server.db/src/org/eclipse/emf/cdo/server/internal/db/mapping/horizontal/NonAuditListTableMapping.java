@@ -233,7 +233,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("procssing deltas ..."); //$NON-NLS-1$
+      TRACER.format("Procssing deltas..."); //$NON-NLS-1$
     }
 
     for (CDOFeatureDelta listDelta : delta.getListChanges())
@@ -464,7 +464,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Performing {0} delete operations.", deleteCounter); //$NON-NLS-1$
+          TRACER.format("Performing {0} delete operations", deleteCounter); //$NON-NLS-1$
         }
 
         int[] result = deleteStmt.executeBatch();
@@ -479,7 +479,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Performing {0} move operations.", moveCounter); //$NON-NLS-1$
+          TRACER.format("Performing {0} move operations", moveCounter); //$NON-NLS-1$
         }
 
         int[] result = moveStmt.executeBatch();
@@ -494,7 +494,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Performing {0} insert operations.", insertCounter); //$NON-NLS-1$
+          TRACER.format("Performing {0} insert operations", insertCounter); //$NON-NLS-1$
         }
 
         int[] result = insertStmt.executeBatch();
@@ -509,7 +509,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Performing {0} set operations.", setValueCounter); //$NON-NLS-1$
+          TRACER.format("Performing {0} set operations", setValueCounter); //$NON-NLS-1$
         }
 
         int[] result = setValueStmt.executeBatch();

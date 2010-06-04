@@ -52,8 +52,8 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBField;
-import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -606,7 +606,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
         {
           if (TRACER.isEnabled())
           {
-            TRACER.format("Chunk finished."); //$NON-NLS-1$
+            TRACER.format("Chunk finished"); //$NON-NLS-1$
           }
 
           chunk = null;
@@ -775,8 +775,8 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     CDOBranch main = getMappingStrategy().getStore().getRepository().getBranchManager().getMainBranch();
 
     // get revision from cache to find out version number
-    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id,
-        main.getHead(), /* chunksize = */0, CDORevision.DEPTH_NONE, true);
+    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager()
+        .getRevision(id, main.getHead(), /* chunksize = */0, CDORevision.DEPTH_NONE, true);
 
     // set cdo_revision_removed for all list items (so we have no NULL values)
     clearList(accessor, id, revision.getVersion(), FINAL_VERSION);
@@ -802,7 +802,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("processing deltas ..."); //$NON-NLS-1$
+      TRACER.format("Processing deltas..."); //$NON-NLS-1$
     }
 
     for (CDOFeatureDelta listDelta : delta.getListChanges())
@@ -1248,7 +1248,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       ResultSet resultSet = pstmt.executeQuery();
       if (!resultSet.next())
       {
-        throw new DBException("getValue expects exactly one result.");
+        throw new DBException("getValue expects exactly one result");
       }
 
       Long tag = resultSet.getLong(1);

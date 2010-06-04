@@ -212,6 +212,12 @@ public class OfflineClone extends SynchronizableRepository
     }
 
     @Override
+    public void preWrite()
+    {
+      // Do nothing
+    }
+
+    @Override
     public void write(OMMonitor monitor)
     {
       // Do nothing

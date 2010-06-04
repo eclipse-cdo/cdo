@@ -85,7 +85,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Timer;
 import java.util.TimerTask;
 
 /**
@@ -98,8 +97,6 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   private Connection connection;
 
   private IPreparedStatementCache statementCache;
-
-  private Timer connectionKeepAliveTimer;
 
   private Set<CDOID> newObjects = new HashSet<CDOID>();
 
@@ -260,7 +257,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       if (success && revision.getVersion() != branchVersion.getVersion())
       {
         throw new IllegalStateException("Can only retrieve current version " + revision.getVersion() + " for " + id //$NON-NLS-1$ //$NON-NLS-2$
-            + " - version requested was " + branchVersion + "."); //$NON-NLS-1$ //$NON-NLS-2$
+            + " - version requested was " + branchVersion); //$NON-NLS-1$
       }
     }
 
@@ -332,7 +329,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
     if (!mappingStrategy.hasDeltaSupport())
     {
-      throw new UnsupportedOperationException("Mapping strategy does not support revision deltas."); //$NON-NLS-1$
+      throw new UnsupportedOperationException("Mapping strategy does not support revision deltas"); //$NON-NLS-1$
     }
 
     monitor.begin(revisionDeltas.length);
@@ -491,15 +488,12 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   protected void doActivate() throws Exception
   {
     connection = getStore().getConnection();
-
-    connectionKeepAliveTimer = new Timer("Connection-Keep-Alive-" + toString()); //$NON-NLS-1$
-    connectionKeepAliveTimer.schedule(new ConnectionKeepAliveTask(), ConnectionKeepAliveTask.EXECUTION_PERIOD,
-        ConnectionKeepAliveTask.EXECUTION_PERIOD);
+    getStore().getConnectionKeepAliveTimer().schedule(new ConnectionKeepAliveTask(),
+        ConnectionKeepAliveTask.EXECUTION_PERIOD, ConnectionKeepAliveTask.EXECUTION_PERIOD);
 
     // TODO - make this configurable?
     statementCache = CDODBUtil.createStatementCache();
     statementCache.setConnection(connection);
-
     LifecycleUtil.activate(statementCache);
   }
 
@@ -507,10 +501,6 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   protected void doDeactivate() throws Exception
   {
     LifecycleUtil.deactivate(statementCache);
-
-    connectionKeepAliveTimer.cancel();
-    connectionKeepAliveTimer = null;
-
     DBUtil.close(connection);
     connection = null;
   }
@@ -667,7 +657,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   {
     if (!getStore().getMappingStrategy().hasBranchingSupport())
     {
-      throw new UnsupportedOperationException("Mapping strategy does not support branching."); //$NON-NLS-1$
+      throw new UnsupportedOperationException("Mapping strategy does not support branching"); //$NON-NLS-1$
     }
   }
 
@@ -905,7 +895,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace("DB connection keep-alive task activated."); //$NON-NLS-1$
+          TRACER.trace("DB connection keep-alive task activated"); //$NON-NLS-1$
         }
 
         stmt = connection.createStatement();
@@ -913,7 +903,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       }
       catch (SQLException ex)
       {
-        OM.LOG.error("DB connection keep-alive failed.", ex); //$NON-NLS-1$
+        OM.LOG.error("DB connection keep-alive failed", ex); //$NON-NLS-1$
       }
       finally
       {

@@ -192,7 +192,7 @@ public final class CDODBUtil
 
     if (result == Statement.EXECUTE_FAILED)
     {
-      throw new IllegalStateException(stmt.toString() + " returned EXECUTE_FAILED."); //$NON-NLS-1$
+      throw new IllegalStateException(stmt.toString() + " returned EXECUTE_FAILED"); //$NON-NLS-1$
     }
 
     return result;

@@ -90,7 +90,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     // only support timestamp in audit mode
     if (context.getTimeStamp() != CDORevision.UNSPECIFIED_DATE && !hasAuditSupport())
     {
-      throw new UnsupportedOperationException("Mapping Strategy does not support audits."); //$NON-NLS-1$
+      throw new UnsupportedOperationException("Mapping Strategy does not support audits"); //$NON-NLS-1$
     }
 
     EresourcePackage resourcesPackage = EresourcePackage.eINSTANCE;

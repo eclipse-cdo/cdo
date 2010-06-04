@@ -366,7 +366,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       }
     }
 
-    throw new IllegalArgumentException("List mapping for feature " + feature + " does not exist."); //$NON-NLS-1$ //$NON-NLS-2$
+    throw new IllegalArgumentException("List mapping for feature " + feature + " does not exist"); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   protected final IDBTable getTable()

@@ -483,7 +483,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
         {
           if (TRACER.isEnabled())
           {
-            TRACER.format("Chunk finished."); //$NON-NLS-1$
+            TRACER.format("Chunk finished"); //$NON-NLS-1$
           }
 
           chunk = null;
@@ -598,8 +598,8 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     CDOBranch main = getMappingStrategy().getStore().getRepository().getBranchManager().getMainBranch();
 
     // get revision from cache to find out version number
-    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id,
-        main.getHead(), /* chunksize = */0, CDORevision.DEPTH_NONE, true);
+    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager()
+        .getRevision(id, main.getHead(), /* chunksize = */0, CDORevision.DEPTH_NONE, true);
 
     // set cdo_revision_removed for all list items (so we have no NULL values)
     clearList(accessor, id, revision.getVersion(), FINAL_VERSION);
@@ -625,7 +625,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("processing deltas ..."); //$NON-NLS-1$
+      TRACER.format("Processing deltas..."); //$NON-NLS-1$
     }
 
     for (CDOFeatureDelta listDelta : delta.getListChanges())

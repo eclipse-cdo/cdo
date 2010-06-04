@@ -42,6 +42,6 @@ public abstract class AbstractPreparedStatementCache extends Lifecycle implement
   @Override
   protected void doBeforeActivate()
   {
-    checkState(connection, "Must have valid connection to start."); //$NON-NLS-1$
+    checkState(connection, "Must have valid connection to start"); //$NON-NLS-1$
   }
 }

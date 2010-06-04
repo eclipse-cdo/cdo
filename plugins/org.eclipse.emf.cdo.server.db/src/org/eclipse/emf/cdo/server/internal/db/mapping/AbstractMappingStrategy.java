@@ -472,14 +472,14 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public final IListMapping createListMapping(EClass containingClass, EStructuralFeature feature)
   {
-    checkArg(feature.isMany(), "Only many-valued features allowed."); //$NON-NLS-1$
+    checkArg(feature.isMany(), "Only many-valued features allowed"); //$NON-NLS-1$
     IListMapping mapping = doCreateListMapping(containingClass, feature);
     return mapping;
   }
 
   public final IListMapping createFeatureMapMapping(EClass containingClass, EStructuralFeature feature)
   {
-    checkArg(FeatureMapUtil.isFeatureMap(feature), "Only FeatureMaps allowed."); //$NON-NLS-1$
+    checkArg(FeatureMapUtil.isFeatureMap(feature), "Only FeatureMaps allowed"); //$NON-NLS-1$
     IListMapping mapping = doCreateFeatureMapMapping(containingClass, feature);
     return mapping;
   }

@@ -362,7 +362,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     long timeStamp = revision.getTimeStamp();
     if (timeStamp != DBStore.UNSPECIFIED_DATE)
     {
-      throw new UnsupportedOperationException("Mapping strategy does not support audits."); //$NON-NLS-1$
+      throw new UnsupportedOperationException("Mapping strategy does not support audits"); //$NON-NLS-1$
     }
 
     IPreparedStatementCache statementCache = accessor.getStatementCache();

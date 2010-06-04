@@ -35,8 +35,8 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBField;
-import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -486,7 +486,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
         {
           if (TRACER.isEnabled())
           {
-            TRACER.format("Chunk finished.");
+            TRACER.format("Chunk finished");
           }
 
           chunk = null;

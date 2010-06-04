@@ -266,7 +266,7 @@ public class OfflineClone extends SynchronizableRepository
     protected long createTimeStamp(OMMonitor monitor)
     {
       // Already set after commit to the master
-      return getTimeStamp();
+      return WriteThroughCommitContext.this.getTimeStamp(); // Do not call getTimeStamp() of the enclosing Repo class!!!
     }
 
     @Override

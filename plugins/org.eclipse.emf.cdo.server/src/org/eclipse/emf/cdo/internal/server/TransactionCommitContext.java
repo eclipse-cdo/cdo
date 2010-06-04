@@ -355,6 +355,11 @@ public class TransactionCommitContext implements InternalCommitContext
     return repository.createCommitTimeStamp(getBranchPoint().getBranch(), monitor);
   }
 
+  protected long getTimeStamp()
+  {
+    return timeStamp;
+  }
+
   protected void setTimeStamp(long timeStamp)
   {
     this.timeStamp = timeStamp;

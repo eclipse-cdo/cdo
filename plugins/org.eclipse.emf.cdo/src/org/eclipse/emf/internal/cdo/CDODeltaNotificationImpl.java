@@ -14,6 +14,7 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDODeltaNotification;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ECollections;
@@ -21,6 +22,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 /**
  * @author Simon McDuff
@@ -210,7 +212,17 @@ public class CDODeltaNotificationImpl extends ENotificationImpl implements CDODe
   {
     if (object instanceof CDOID)
     {
-      object = getCDOObject().cdoView().getObject((CDOID)object, true);
+      CDOID id = (CDOID)object;
+
+      try
+      {
+        InternalCDOView view = getCDOObject().cdoView();
+        object = view.getObject(id, true);
+      }
+      catch (ObjectNotFoundException ex)
+      {
+        // Do nothing
+      }
     }
 
     return object;

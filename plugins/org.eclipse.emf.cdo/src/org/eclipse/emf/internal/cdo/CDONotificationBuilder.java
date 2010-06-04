@@ -62,6 +62,10 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 
   private InternalCDORevision oldRevision;
 
+  private CDOListFeatureDelta patchedListDelta;
+
+  private CDOListFeatureDelta unpatchedListDelta;
+
   /**
    * @since 3.0
    */
@@ -87,6 +91,8 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
     notification = null;
     revision = null;
     revisionLookedUp = false;
+    patchedListDelta = null;
+    unpatchedListDelta = null;
 
     this.object = object;
     this.revisionDelta = revisionDelta;
@@ -123,18 +129,18 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
           false);
     }
 
-    Object oldValue = revision == null ? null : revision.get(feature, index);
+    // Use patched index to retrieve object
+    int unpatchedIndex = unpatchedListDelta.getListChanges().indexOf(delta);
+    CDORemoveFeatureDelta unpatchedDelta = (CDORemoveFeatureDelta)patchedListDelta.getListChanges().get(unpatchedIndex);
+    int patchedIndex = unpatchedDelta.getIndex();
+    Object oldValue = revision == null ? null : revision.get(feature, patchedIndex);
     if (oldValue instanceof CDOID)
     {
-      CDOID id = (CDOID)oldValue;
-      oldValue = view.getObject(id, false);
-      if (oldValue == null)
+      CDOID oldID = (CDOID)oldValue;
+      CDOObject object = findObjectByID(oldID);
+      if (object != null)
       {
-        CDOObject cdoObject = findDetachedObjectByID(id);
-        if (cdoObject != null)
-        {
-          oldValue = cdoObject;
-        }
+        oldValue = object;
       }
     }
 
@@ -147,11 +153,11 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
     Object oldValue = getOldValue(feature);
     if (oldValue instanceof CDOID)
     {
-      CDOID oldValueId = (CDOID)oldValue;
-      CDOObject cdoObject = findDetachedObjectByID(oldValueId);
-      if (cdoObject != null)
+      CDOID oldID = (CDOID)oldValue;
+      CDOObject object = findObjectByID(oldID);
+      if (object != null)
       {
-        oldValue = cdoObject;
+        oldValue = object;
       }
     }
 
@@ -164,11 +170,11 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
     Object oldValue = getOldValue(feature);
     if (oldValue instanceof CDOID)
     {
-      CDOID oldValueId = (CDOID)oldValue;
-      CDOObject cdoObject = findDetachedObjectByID(oldValueId);
-      if (cdoObject != null)
+      CDOID oldID = (CDOID)oldValue;
+      CDOObject object = findObjectByID(oldID);
+      if (object != null)
       {
-        oldValue = cdoObject;
+        oldValue = object;
       }
     }
 
@@ -177,10 +183,10 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 
   public void visit(CDOListFeatureDelta deltas)
   {
-    // patch the indices on a copy to avoid duplicate patching.
-    CDOListFeatureDelta workDelta = (CDOListFeatureDelta)deltas.copy();
-    patchIndices(workDelta);
-    for (CDOFeatureDelta delta : workDelta.getListChanges())
+    unpatchedListDelta = deltas;
+    patchedListDelta = (CDOListFeatureDelta)deltas.copy();
+    patchIndices(patchedListDelta);
+    for (CDOFeatureDelta delta : deltas.getListChanges())
     {
       delta.accept(this);
     }
@@ -261,18 +267,14 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
       List<?> list = (List<?>)oldValue;
       if (!list.isEmpty() && list.get(0) instanceof CDOID)
       {
-        List<CDOObject> oldValueObjects = new ArrayList<CDOObject>(list.size());
+        List<Object> oldValueObjects = new ArrayList<Object>(list.size());
 
         @SuppressWarnings("unchecked")
         List<CDOID> ids = (List<CDOID>)list;
-
         for (CDOID id : ids)
         {
-          CDOObject oldObject = findDetachedObjectByID(id);
-          if (oldObject != null)
-          {
-            oldValueObjects.add(oldObject);
-          }
+          CDOObject oldObject = findObjectByID(id);
+          oldValueObjects.add(oldObject != null ? oldObject : id);
         }
 
         oldValue = oldValueObjects;
@@ -282,13 +284,24 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
     add(new CDODeltaNotificationImpl(object, Notification.REMOVE_MANY, getEFeatureID(feature), oldValue, null));
   }
 
+  private CDOObject findObjectByID(CDOID id)
+  {
+    CDOObject object = view.getObject(id, false);
+    if (object == null)
+    {
+      object = findDetachedObjectByID(id);
+    }
+
+    return object;
+  }
+
   private CDOObject findDetachedObjectByID(CDOID id)
   {
     if (detachedObjects != null)
     {
       for (CDOObject object : detachedObjects)
       {
-        if (object.cdoID().equals(id))
+        if (id.equals(object.cdoID()))
         {
           return object;
         }
@@ -307,11 +320,11 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 
       if (oldValue instanceof CDOID)
       {
-        CDOID oldValueId = (CDOID)oldValue;
-        CDOObject cdoObject = findDetachedObjectByID(oldValueId);
-        if (cdoObject != null)
+        CDOID oldID = (CDOID)oldValue;
+        CDOObject object = findObjectByID(oldID);
+        if (object != null)
         {
-          oldValue = cdoObject;
+          oldValue = object;
         }
       }
 

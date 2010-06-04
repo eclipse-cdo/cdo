@@ -28,7 +28,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
  */
 public class Bugzilla_306710_Test extends AbstractCDOTest
 {
-  public void testBugzilla_306710() throws Exception
+  public void testBugzilla_306710_remove() throws Exception
   {
     final NotifyCounter counter = new NotifyCounter();
 
@@ -44,7 +44,7 @@ public class Bugzilla_306710_Test extends AbstractCDOTest
     company1.getCategories().add(category1a);
     transaction1.commit();
 
-    Thread.sleep(100);
+    // Thread.sleep(100);
 
     // setup connection2.
     CDOSession session2 = openSession();
@@ -80,7 +80,68 @@ public class Bugzilla_306710_Test extends AbstractCDOTest
     transaction1.commit();
 
     // wait for the invalidation to arrive on transaction2.
-    Thread.sleep(1000);
+    transaction2.waitForUpdate(transaction1.getLastCommitTime());
+
+    // cleanup.
+    session1.close();
+    session2.close();
+
+    // check if the notifications arrived (which is not the case because of the exception).
+    assertEquals(1, counter.getAdds());
+    assertEquals(1, counter.getRemoves());
+  }
+
+  public void _testBugzilla_306710_addRemove() throws Exception
+  {
+    final NotifyCounter counter = new NotifyCounter();
+
+    // setup connection1.
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
+    CDOResource resource1 = transaction1.createResource("/test1");
+
+    // add initial model.
+    Company company1 = getModel1Factory().createCompany();
+    resource1.getContents().add(company1);
+    transaction1.commit();
+
+    // Thread.sleep(100);
+
+    // setup connection2.
+    CDOSession session2 = openSession();
+    CDOTransaction transaction2 = session2.openTransaction();
+    transaction2.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    CDOResource resource2 = transaction2.getOrCreateResource("/test1");
+
+    // add adapter to company2 to have sendDeltaNotification being called.
+    Company company2 = (Company)resource2.getContents().get(0);
+    company2.eAdapters().add(new AdapterImpl()
+    {
+      @Override
+      public void notifyChanged(Notification msg)
+      {
+        if (msg.getEventType() == Notification.ADD)
+        {
+          counter.incAdds();
+        }
+        else if (msg.getEventType() == Notification.REMOVE)
+        {
+          counter.incRemoves();
+        }
+      }
+    });
+
+    // add and remove an object from category list of company to have the CDONotificationBuilder call remove with an
+    // index not known to the oldRevision.
+    Category category1a = getModel1Factory().createCategory();
+    company1.getCategories().add(0, category1a);
+    company1.getCategories().remove(0);
+
+    // commit the changes.
+    transaction1.commit();
+
+    // wait for the invalidation to arrive on transaction2.
+    transaction2.waitForUpdate(transaction1.getLastCommitTime());
 
     // cleanup.
     session1.close();

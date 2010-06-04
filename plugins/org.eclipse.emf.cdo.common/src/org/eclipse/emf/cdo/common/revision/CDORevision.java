@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
 import org.eclipse.emf.ecore.EClass;
@@ -30,7 +31,7 @@ public interface CDORevision extends CDORevisionKey, CDOBranchPoint
   /**
    * @since 3.0
    */
-  public static final int FIRST_VERSION = 1;
+  public static final int FIRST_VERSION = CDOBranchVersion.FIRST_VERSION;
 
   public static final int UNCHUNKED = -1;
 

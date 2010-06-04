@@ -200,7 +200,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
+    getRepository(REPO_NAME).getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
@@ -319,7 +319,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(
+    getRepository(REPO_NAME).getCommitInfoManager().getCommitInfos(
         getRepository(REPO_NAME).getBranchManager().getBranch(transaction.getBranch().getID()),
         CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
@@ -444,7 +444,7 @@ public class CommitInfoTest extends AbstractCDOTest
     transaction.commit();
 
     Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE,
+    getRepository(REPO_NAME).getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE,
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 

@@ -107,7 +107,7 @@ public class LockingManagerTest extends AbstractCDOTest
     executors.execute(step1);
     executors.execute(step1);
 
-    Thread.sleep(1000);
+    sleep(1000);
 
     keys.clear();
     keys.add(1);

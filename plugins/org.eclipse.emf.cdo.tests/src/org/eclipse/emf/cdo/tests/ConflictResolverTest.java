@@ -47,7 +47,7 @@ public class ConflictResolverTest extends AbstractCDOTest
     transaction.commit();
 
     // Resolver should be triggered. Should we always used a timer ?
-    Thread.sleep(1000);
+    sleep(1000);
 
     assertEquals(false, CDOUtil.getCDOObject(address2).cdoConflict());
     assertEquals(false, transaction2.hasConflict());

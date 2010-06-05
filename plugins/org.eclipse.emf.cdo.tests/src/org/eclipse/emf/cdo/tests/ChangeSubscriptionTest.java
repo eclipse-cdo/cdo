@@ -868,7 +868,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
    */
   public void _testInvalidationWithDeltas_SubBranch() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();

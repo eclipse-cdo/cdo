@@ -288,6 +288,7 @@ public abstract class AbstractOMTest extends TestCase
 
   public static void sleep(long millis)
   {
+    msg("Sleeping " + millis);
     ConcurrencyUtil.sleep(millis);
   }
 

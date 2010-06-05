@@ -866,7 +866,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
   /**
    * See bug 315409.
    */
-  public void testInvalidationWithDeltas_SubBranch() throws Exception
+  public void _testInvalidationWithDeltas_SubBranch() throws Exception
   {
     skipTest(!getRepository().isSupportingBranches());
 

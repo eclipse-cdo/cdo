@@ -32,7 +32,7 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
 {
   public void testMergeTest() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     // setup transaction.
     final CDOSession session = openSession();
@@ -66,7 +66,7 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
     tr2.commit();
 
     // sleep to have the merger see the changes.
-    // Thread.sleep(100);
+    // sleep(100);
 
     // merge the other branch to main.
     tr1.merge(tr2.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());

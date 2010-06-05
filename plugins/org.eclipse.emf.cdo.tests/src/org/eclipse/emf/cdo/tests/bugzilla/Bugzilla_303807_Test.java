@@ -29,7 +29,7 @@ public class Bugzilla_303807_Test extends AbstractCDOTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
   }
 
   public void testBugzilla_303807() throws Exception

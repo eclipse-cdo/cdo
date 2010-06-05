@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  */
@@ -54,7 +54,7 @@ public class Bugzilla_267352_Test extends AbstractCDOTest
           CDOObject customerToLoad = transaction.getObject(CDOUtil.getCDOObject(customer).cdoID());
           while (!done[0])
           {
-            Thread.sleep(10);
+            sleep(10);
 
             // Could fail if the attach is not thread safe
             transaction.reload(customerToLoad);

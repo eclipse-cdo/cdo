@@ -66,7 +66,7 @@ public class Bugzilla_313913_Test extends AbstractCDOTest
     container.getTasks().add(getModel2Factory().createTask());
     transaction.commit();
 
-    Thread.sleep(100);
+    sleep(100);
 
     System.out.println(container.getTasks().toString());
     System.out.println(view.getObject(container).getTasks().toString());

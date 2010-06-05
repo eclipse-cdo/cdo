@@ -54,7 +54,7 @@ public class BranchingTest extends AbstractCDOTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     Field disableGC = ReflectUtil.getField(BranchRevisionCache.class, "disableGC");
     ReflectUtil.setValue(disableGC, null, true);

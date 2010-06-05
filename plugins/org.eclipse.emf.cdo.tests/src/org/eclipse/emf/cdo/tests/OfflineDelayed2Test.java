@@ -55,7 +55,12 @@ public class OfflineDelayed2Test extends AbstractSyncingTest
       masterTransaction.commit();
     }
 
-    Thread.sleep(5000);
+    sleep(1000);
+    sleep(1000);
+    sleep(1000);
+    sleep(1000);
+    sleep(1000);
+
     CDOTransaction cloneTransaction = cloneSession.openTransaction();
     CDOObject cloneCompany = CDOUtil.getCDOObject(cloneTransaction.getObject(CDOUtil.getCDOObject(masterCompany)
         .cdoID()));

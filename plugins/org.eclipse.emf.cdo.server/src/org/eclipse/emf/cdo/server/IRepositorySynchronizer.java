@@ -32,4 +32,12 @@ public interface IRepositorySynchronizer extends ILifecycle
   public CDOSession getRemoteSession();
 
   public boolean isRawReplication();
+
+  public int getMaxRecommits();
+
+  public void setMaxRecommits(int maxRecommits);
+
+  public int getRecommitInterval();
+
+  public void setRecommitInterval(int recommitInterval);
 }

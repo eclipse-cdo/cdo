@@ -67,7 +67,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testLocalSubBranch() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     CDOSession session = openSession();
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
@@ -157,7 +157,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testServerSubBranch() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
@@ -275,7 +275,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testServerSubBranchWithBranch() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
@@ -354,7 +354,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testServerTimestampWithWrongBranch() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
@@ -376,7 +376,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testServerBranchWithWrongBranch() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
@@ -398,7 +398,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testServerSubBranchWithWrongBranch() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
@@ -421,7 +421,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testServerUserWithWrongBranch() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     UserManager userManager = new UserManager();
     userManager.activate();
@@ -453,7 +453,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testServerCommentWithWrongBranch() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
@@ -514,7 +514,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testClientSubBranch() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     CDOSession session = openSession();
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
@@ -620,7 +620,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testClientSubBranchWithBranch() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     CDOSession session = openSession();
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
@@ -690,7 +690,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testClientTimestampWithWrongBranch() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     CDOSession session = openSession();
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
@@ -710,7 +710,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testClientBranchWithWrongBranch() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     CDOSession session = openSession();
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
@@ -730,7 +730,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testClientSubBranchWithWrongBranch() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     CDOSession session = openSession();
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
@@ -751,7 +751,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testClientUserWithWrongBranch() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     UserManager userManager = new UserManager();
     userManager.activate();
@@ -781,7 +781,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testClientCommentWithWrongBranch() throws Exception
   {
-    skipTest(!getRepository().isSupportingBranches());
+    skipUnlessBranching();
 
     CDOSession session = openSession();
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");

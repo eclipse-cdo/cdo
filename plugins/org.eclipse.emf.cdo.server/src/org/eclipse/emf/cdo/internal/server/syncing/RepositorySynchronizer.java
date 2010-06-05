@@ -35,6 +35,10 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
@@ -45,6 +49,10 @@ import java.util.concurrent.PriorityBlockingQueue;
 public class RepositorySynchronizer extends QueueRunner implements InternalRepositorySynchronizer
 {
   public static final int DEFAULT_RETRY_INTERVAL = 3;
+
+  public static final int DEFAULT_MAX_RECOMMITS = 10;
+
+  public static final int DEFAULT_RECOMMIT_INTERVAL = 1;
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, RepositorySynchronizer.class);
 
@@ -71,6 +79,12 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
   private boolean rawReplication;
 
   private boolean squeezeCommitInfos;
+
+  private int maxRecommits = DEFAULT_MAX_RECOMMITS;
+
+  private int recommitInterval = DEFAULT_RECOMMIT_INTERVAL;
+
+  private Timer recommitTimer;
 
   public RepositorySynchronizer()
   {
@@ -135,6 +149,26 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
     this.squeezeCommitInfos = squeezeCommitInfos;
   }
 
+  public int getMaxRecommits()
+  {
+    return maxRecommits;
+  }
+
+  public void setMaxRecommits(int maxRecommits)
+  {
+    this.maxRecommits = maxRecommits;
+  }
+
+  public int getRecommitInterval()
+  {
+    return recommitInterval;
+  }
+
+  public void setRecommitInterval(int recommitInterval)
+  {
+    this.recommitInterval = recommitInterval;
+  }
+
   @Override
   protected String getThreadName()
   {
@@ -165,6 +199,12 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
   @Override
   protected void doDeactivate() throws Exception
   {
+    if (recommitTimer != null)
+    {
+      recommitTimer.cancel();
+      recommitTimer = null;
+    }
+
     if (remoteSession != null)
     {
       remoteSession.removeListener(remoteSessionListener);
@@ -449,6 +489,8 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
   {
     private CDOCommitInfo commitInfo;
 
+    private List<Exception> failedRuns;
+
     public CommitRunnable(CDOCommitInfo commitInfo)
     {
       this.commitInfo = commitInfo;
@@ -462,8 +504,37 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
       }
       catch (Exception ex)
       {
-        OM.LOG.debug("Replication of master commit failed. Trying again later...", ex);
-        addWork(this);
+        if (failedRuns == null)
+        {
+          failedRuns = new ArrayList<Exception>();
+        }
+
+        failedRuns.add(ex);
+        if (failedRuns.size() <= maxRecommits)
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Replication of master commit failed. Trying again in {0} seconds...", recommitInterval); //$NON-NLS-1$
+          }
+
+          if (recommitTimer == null)
+          {
+            recommitTimer = new Timer("RecommitTimer-" + RepositorySynchronizer.this);
+          }
+
+          recommitTimer.schedule(new TimerTask()
+          {
+            @Override
+            public void run()
+            {
+              addWork(CommitRunnable.this);
+            }
+          }, recommitInterval * 1000L);
+        }
+        else
+        {
+          OM.LOG.error("Replication of master commit failed:" + commitInfo, ex);
+        }
       }
     }
 

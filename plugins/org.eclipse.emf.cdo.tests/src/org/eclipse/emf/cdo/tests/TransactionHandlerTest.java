@@ -380,7 +380,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
     // Wait a little bit to let the async finish. It is only there to not have Transaction not active exception and
     // mislead the test.
-    Thread.sleep(300);
+    sleep(300);
     session.close();
   }
 

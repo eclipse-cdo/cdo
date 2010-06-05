@@ -469,6 +469,16 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
         && !ObjectUtil.equals(getModelConfig().getName(), name));
   }
 
+  protected void skipUnlessAuditing()
+  {
+    skipTest(!getRepository().isSupportingAudits());
+  }
+
+  protected void skipUnlessBranching()
+  {
+    skipTest(!getRepository().isSupportingBranches());
+  }
+
   protected void clearCache(CDORevisionManager revisionManager)
   {
     ((InternalCDORevisionManager)revisionManager).getCache().clear();

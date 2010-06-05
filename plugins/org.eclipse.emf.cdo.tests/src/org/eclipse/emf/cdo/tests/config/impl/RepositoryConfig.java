@@ -45,6 +45,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.IUserManager;
+import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
@@ -343,14 +344,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
                   long delay = getTestDelayed2CommitHandling();
                   if (delay != 0L && counter++ % 2 == 0)
                   {
-                    try
-                    {
-                      Thread.sleep(delay);
-                    }
-                    catch (InterruptedException ex)
-                    {
-                      return;
-                    }
+                    AbstractOMTest.sleep(delay);
                   }
 
                   super.handleCommitNotification(commitInfo);

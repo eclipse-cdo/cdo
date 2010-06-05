@@ -30,6 +30,8 @@ public class Bugzilla_313326_Test extends AbstractCDOTest
 {
   public void testNotificationBuilderBranch() throws Exception
   {
+    skipUnlessBranching();
+
     // setup transaction.
     final CDOSession session = openSession();
     final CDOTransaction tr1 = session.openTransaction();

@@ -44,7 +44,7 @@ public class Bugzilla_306710_Test extends AbstractCDOTest
     company1.getCategories().add(category1a);
     transaction1.commit();
 
-    // Thread.sleep(100);
+    // sleep(100);
 
     // setup connection2.
     CDOSession session2 = openSession();
@@ -105,7 +105,7 @@ public class Bugzilla_306710_Test extends AbstractCDOTest
     resource1.getContents().add(company1);
     transaction1.commit();
 
-    // Thread.sleep(100);
+    // sleep(100);
 
     // setup connection2.
     CDOSession session2 = openSession();

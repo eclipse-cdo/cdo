@@ -32,7 +32,9 @@ import org.eclipse.emf.cdo.server.internal.db.DBAnnotation;
 import org.eclipse.emf.cdo.server.internal.db.ObjectIDIterator;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -45,6 +47,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -92,6 +95,8 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   private Map<String, String> properties;
 
   private ConcurrentMap<EClass, IClassMapping> classMappings;
+
+  private boolean allClassMappingsCreated;
 
   public AbstractMappingStrategy()
   {
@@ -436,11 +441,6 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   protected abstract IClassMapping doCreateClassMapping(EClass eClass);
 
-  public final Map<EClass, IClassMapping> getClassMappings()
-  {
-    return classMappings;
-  }
-
   public final IClassMapping getClassMapping(EClass eClass)
   {
     // Try without synchronization first; this will almost always succeed, so it avoids the
@@ -463,6 +463,48 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     }
 
     return result;
+  }
+
+  public final Map<EClass, IClassMapping> getClassMappings()
+  {
+    return getClassMappings(true);
+  }
+
+  public final Map<EClass, IClassMapping> getClassMappings(boolean createOnDemand)
+  {
+    if (createOnDemand)
+    {
+      synchronized (classMappings)
+      {
+        if (!allClassMappingsCreated)
+        {
+          createAllClassMappings();
+          allClassMappingsCreated = true;
+        }
+      }
+    }
+
+    return classMappings;
+  }
+
+  private void createAllClassMappings()
+  {
+    InternalRepository repository = (InternalRepository)getStore().getRepository();
+    InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
+    for (InternalCDOPackageInfo packageInfo : packageRegistry.getPackageInfos())
+    {
+      if (!packageInfo.isSystemPackage())
+      {
+        for (EClassifier eClassifier : packageInfo.getEPackage().getEClassifiers())
+        {
+          if (eClassifier instanceof EClass)
+          {
+            EClass eClass = (EClass)eClassifier;
+            getClassMapping(eClass); // Get or create it
+          }
+        }
+      }
+    }
   }
 
   public ITypeMapping createValueMapping(EStructuralFeature feature)

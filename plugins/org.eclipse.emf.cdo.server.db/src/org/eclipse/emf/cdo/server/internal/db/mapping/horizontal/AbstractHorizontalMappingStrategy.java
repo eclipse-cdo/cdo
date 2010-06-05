@@ -119,7 +119,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     String attrSuffix = builder.toString();
     Connection connection = accessor.getConnection();
 
-    for (IClassMapping classMapping : getClassMappings().values())
+    for (IClassMapping classMapping : getClassMappings(true).values())
     {
       out.writeBoolean(true);
       EClass eClass = classMapping.getEClass();

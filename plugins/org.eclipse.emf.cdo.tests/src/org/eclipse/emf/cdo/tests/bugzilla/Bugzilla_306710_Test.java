@@ -80,7 +80,7 @@ public class Bugzilla_306710_Test extends AbstractCDOTest
     transaction1.commit();
 
     // wait for the invalidation to arrive on transaction2.
-    transaction2.waitForUpdate(transaction1.getLastCommitTime());
+    transaction2.waitForUpdate(transaction1.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     // cleanup.
     session1.close();
@@ -141,7 +141,7 @@ public class Bugzilla_306710_Test extends AbstractCDOTest
     transaction1.commit();
 
     // wait for the invalidation to arrive on transaction2.
-    transaction2.waitForUpdate(transaction1.getLastCommitTime());
+    transaction2.waitForUpdate(transaction1.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     // cleanup.
     session1.close();

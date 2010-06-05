@@ -834,11 +834,11 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     resource.getContents().add(company);
 
     transaction.commit();
-    view.waitForUpdate(transaction.getLastCommitTime());
+    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     company.setName("main-v2");
     transaction.commit();
-    view.waitForUpdate(transaction.getLastCommitTime());
+    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     Company company2 = view.getObject(company);
@@ -846,7 +846,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     company.setName("main-v3");
     transaction.commit();
-    view.waitForUpdate(transaction.getLastCommitTime());
+    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     CDORevision revision2 = CDOUtil.getCDOObject(company2).cdoRevision();
     assertEquals(3, revision2.getVersion());
@@ -855,7 +855,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     company.setName("main-v4");
     transaction.commit();
-    view.waitForUpdate(transaction.getLastCommitTime());
+    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     revision2 = CDOUtil.getCDOObject(company2).cdoRevision();
     assertEquals(4, revision2.getVersion());
@@ -894,7 +894,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     company.setName("sub-v1");
     transaction.commit();
-    view.waitForUpdate(transaction.getLastCommitTime());
+    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     CDORevision revision2 = CDOUtil.getCDOObject(company2).cdoRevision();
     assertEquals(1, revision2.getVersion());
@@ -903,7 +903,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     company.setName("sub-v2");
     transaction.commit();
-    view.waitForUpdate(transaction.getLastCommitTime());
+    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     revision2 = CDOUtil.getCDOObject(company2).cdoRevision();
     assertEquals(2, revision2.getVersion());

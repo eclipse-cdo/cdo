@@ -914,7 +914,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
             {
               if (id.isTemporary())
               {
-                throw new ObjectNotFoundException(id);
+                throw new ObjectNotFoundException(id, this);
               }
 
               localLookupObject = createObject(id);
@@ -1026,7 +1026,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     InternalCDORevision revision = getRevision(id, true);
     if (revision == null)
     {
-      throw new ObjectNotFoundException(id);
+      throw new ObjectNotFoundException(id, this);
     }
 
     EClass eClass = revision.getEClass();

@@ -92,6 +92,26 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     return name == null;
   }
 
+  public String getPathName()
+  {
+    StringBuilder builder = new StringBuilder();
+    computePathName(this, builder);
+    return builder.toString();
+  }
+
+  private void computePathName(CDOBranch branch, StringBuilder builder)
+  {
+    CDOBranchPoint base = branch.getBase();
+    CDOBranch parent = base.getBranch();
+    if (parent != null)
+    {
+      computePathName(parent, builder);
+      builder.append(PATH_SEPARATOR);
+    }
+
+    builder.append(branch.getName());
+  }
+
   public CDOBranchPoint[] getBasePath()
   {
     List<CDOBranchPoint> path = new ArrayList<CDOBranchPoint>();

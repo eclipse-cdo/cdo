@@ -859,7 +859,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     if (id.isTemporary() && isDetached(id))
     {
-      throw new ObjectNotFoundException(id);
+      throw new ObjectNotFoundException(id, this);
     }
 
     return super.getObject(id, loadOnDemand);

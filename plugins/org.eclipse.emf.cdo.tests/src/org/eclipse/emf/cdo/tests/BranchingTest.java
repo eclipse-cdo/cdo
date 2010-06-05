@@ -202,6 +202,30 @@ public class BranchingTest extends AbstractCDOTest
     session.close();
   }
 
+  public void testGetPathName() throws Exception
+  {
+    CDOSession session = openSession1();
+    CDOBranchManager branchManager = session.getBranchManager();
+    CDOBranch mainBranch = branchManager.getMainBranch();
+    CDOBranch testing1 = mainBranch.createBranch("testing1");
+    mainBranch.createBranch("testing2");
+    testing1.createBranch("subsub");
+    closeSession1();
+
+    session = openSession2();
+    branchManager = session.getBranchManager();
+    mainBranch = branchManager.getMainBranch();
+    assertEquals("MAIN", branchManager.getBranch("MAIN").getPathName());
+    assertEquals("MAIN/testing1", branchManager.getBranch("MAIN/testing1").getPathName());
+    assertEquals("MAIN/testing2", branchManager.getBranch("MAIN/testing2").getPathName());
+    assertEquals("MAIN/testing1/subsub", branchManager.getBranch("MAIN/testing1/subsub").getPathName());
+    assertEquals("MAIN/testing1", mainBranch.getBranch("testing1").getPathName());
+    assertEquals("MAIN/testing2", mainBranch.getBranch("testing2").getPathName());
+    assertEquals("MAIN/testing1/subsub", mainBranch.getBranch("testing1/subsub").getPathName());
+    assertEquals("MAIN/testing1/subsub", testing1.getBranch("subsub").getPathName());
+    session.close();
+  }
+
   public void testBasePath() throws Exception
   {
     CDOSession session = openSession1();

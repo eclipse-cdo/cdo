@@ -124,7 +124,7 @@ public class AOperationItemProvider
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/AOperation"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/AOperation.png"));
   }
 
   /**

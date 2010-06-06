@@ -11,47 +11,49 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.util;
 
-import java.util.List;
-
-import org.eclipse.emf.cdo.dawn.examples.acore.*;
+import org.eclipse.emf.cdo.dawn.examples.acore.AAttribute;
+import org.eclipse.emf.cdo.dawn.examples.acore.ABasicClass;
+import org.eclipse.emf.cdo.dawn.examples.acore.AClass;
+import org.eclipse.emf.cdo.dawn.examples.acore.AClassChild;
+import org.eclipse.emf.cdo.dawn.examples.acore.ACoreRoot;
+import org.eclipse.emf.cdo.dawn.examples.acore.AInterface;
+import org.eclipse.emf.cdo.dawn.examples.acore.AOperation;
+import org.eclipse.emf.cdo.dawn.examples.acore.AParameter;
+import org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
+import java.util.List;
+
 /**
- * <!-- begin-user-doc -->
- * The <b>Switch</b> for the model's inheritance hierarchy.
- * It supports the call {@link #doSwitch(EObject) doSwitch(object)}
- * to invoke the <code>caseXXX</code> method for each class of the model,
- * starting with the actual class of the object
- * and proceeding up the inheritance hierarchy
- * until a non-null result is returned,
- * which is the result of the switch.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
+ * {@link #doSwitch(EObject) doSwitch(object)} to invoke the <code>caseXXX</code> method for each class of the model,
+ * starting with the actual class of the object and proceeding up the inheritance hierarchy until a non-null result is
+ * returned, which is the result of the switch. <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage
  * @generated
  */
 public class AcoreSwitch<T>
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany).\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n \r\nContributors:\r\n    Martin Fluegge - initial API and implementation\r\n";
 
   /**
-   * The cached model package
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected static AcorePackage modelPackage;
 
   /**
-   * Creates an instance of the switch.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates an instance of the switch. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public AcoreSwitch()
@@ -64,8 +66,8 @@ public class AcoreSwitch<T>
 
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -76,8 +78,8 @@ public class AcoreSwitch<T>
 
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -90,17 +92,14 @@ public class AcoreSwitch<T>
     else
     {
       List<EClass> eSuperTypes = theEClass.getESuperTypes();
-      return
-        eSuperTypes.isEmpty() ?
-          defaultCase(theEObject) :
-          doSwitch(eSuperTypes.get(0), theEObject);
+      return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
     }
   }
 
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -108,77 +107,89 @@ public class AcoreSwitch<T>
   {
     switch (classifierID)
     {
-      case AcorePackage.ACLASS:
-      {
-        AClass aClass = (AClass)theEObject;
-        T result = caseAClass(aClass);
-        if (result == null) result = caseABasicClass(aClass);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case AcorePackage.AINTERFACE:
-      {
-        AInterface aInterface = (AInterface)theEObject;
-        T result = caseAInterface(aInterface);
-        if (result == null) result = caseABasicClass(aInterface);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case AcorePackage.ACORE_ROOT:
-      {
-        ACoreRoot aCoreRoot = (ACoreRoot)theEObject;
-        T result = caseACoreRoot(aCoreRoot);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case AcorePackage.AATTRIBUTE:
-      {
-        AAttribute aAttribute = (AAttribute)theEObject;
-        T result = caseAAttribute(aAttribute);
-        if (result == null) result = caseAClassChild(aAttribute);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case AcorePackage.AOPERATION:
-      {
-        AOperation aOperation = (AOperation)theEObject;
-        T result = caseAOperation(aOperation);
-        if (result == null) result = caseAClassChild(aOperation);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case AcorePackage.ABASIC_CLASS:
-      {
-        ABasicClass aBasicClass = (ABasicClass)theEObject;
-        T result = caseABasicClass(aBasicClass);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case AcorePackage.APARAMETER:
-      {
-        AParameter aParameter = (AParameter)theEObject;
-        T result = caseAParameter(aParameter);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case AcorePackage.ACLASS_CHILD:
-      {
-        AClassChild aClassChild = (AClassChild)theEObject;
-        T result = caseAClassChild(aClassChild);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      default: return defaultCase(theEObject);
+    case AcorePackage.ACLASS:
+    {
+      AClass aClass = (AClass)theEObject;
+      T result = caseAClass(aClass);
+      if (result == null)
+        result = caseABasicClass(aClass);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case AcorePackage.AINTERFACE:
+    {
+      AInterface aInterface = (AInterface)theEObject;
+      T result = caseAInterface(aInterface);
+      if (result == null)
+        result = caseABasicClass(aInterface);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case AcorePackage.ACORE_ROOT:
+    {
+      ACoreRoot aCoreRoot = (ACoreRoot)theEObject;
+      T result = caseACoreRoot(aCoreRoot);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case AcorePackage.AATTRIBUTE:
+    {
+      AAttribute aAttribute = (AAttribute)theEObject;
+      T result = caseAAttribute(aAttribute);
+      if (result == null)
+        result = caseAClassChild(aAttribute);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case AcorePackage.AOPERATION:
+    {
+      AOperation aOperation = (AOperation)theEObject;
+      T result = caseAOperation(aOperation);
+      if (result == null)
+        result = caseAClassChild(aOperation);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case AcorePackage.ABASIC_CLASS:
+    {
+      ABasicClass aBasicClass = (ABasicClass)theEObject;
+      T result = caseABasicClass(aBasicClass);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case AcorePackage.APARAMETER:
+    {
+      AParameter aParameter = (AParameter)theEObject;
+      T result = caseAParameter(aParameter);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case AcorePackage.ACLASS_CHILD:
+    {
+      AClassChild aClassChild = (AClassChild)theEObject;
+      T result = caseAClassChild(aClassChild);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    default:
+      return defaultCase(theEObject);
     }
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>AClass</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>AClass</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>AClass</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -189,12 +200,11 @@ public class AcoreSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>AInterface</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>AInterface</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>AInterface</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -205,12 +215,11 @@ public class AcoreSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>ACore Root</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>ACore Root</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>ACore Root</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -221,12 +230,11 @@ public class AcoreSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>AAttribute</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>AAttribute</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>AAttribute</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -237,12 +245,11 @@ public class AcoreSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>AOperation</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>AOperation</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>AOperation</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -253,12 +260,11 @@ public class AcoreSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>ABasic Class</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>ABasic Class</em>'. <!-- begin-user-doc -->
+   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>ABasic Class</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -269,12 +275,11 @@ public class AcoreSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>AParameter</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>AParameter</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>AParameter</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -285,12 +290,11 @@ public class AcoreSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>AClass Child</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>AClass Child</em>'. <!-- begin-user-doc -->
+   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>AClass Child</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -301,12 +305,12 @@ public class AcoreSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch, but this is the last case anyway.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch, but this is the last case
+   * anyway. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated
@@ -316,4 +320,4 @@ public class AcoreSwitch<T>
     return null;
   }
 
-} //AcoreSwitch
+} // AcoreSwitch

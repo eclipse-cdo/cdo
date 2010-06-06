@@ -87,7 +87,7 @@ public class AInterfaceAAttributeInterfaceCompartmentEditPart extends ListCompar
   protected void setRatio(Double ratio)
   {
     // nothing to do -- parent layout does not accept Double constraints as ratio
-    // super.setRatio(ratio); 
+    // super.setRatio(ratio);
   }
 
 }

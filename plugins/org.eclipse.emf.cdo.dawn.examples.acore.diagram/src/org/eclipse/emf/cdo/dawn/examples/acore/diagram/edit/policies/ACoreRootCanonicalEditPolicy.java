@@ -139,7 +139,8 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
     List<View> orphaned = cleanCanonicalSemanticChildren(getViewChildren(), semanticChildren);
     boolean changed = deleteViews(orphaned.iterator());
     // leave descriptors that reference survived semanticChildren.
-    // NOTE, we may want to stop using cleanCanonicalSemanticChildren() here, replacing with own code, that respects NodeDescriptors 
+    // NOTE, we may want to stop using cleanCanonicalSemanticChildren() here, replacing with own code, that respects
+    // NodeDescriptors
     for (Iterator<AcoreNodeDescriptor> it = childDescriptors.iterator(); it.hasNext();)
     {
       AcoreNodeDescriptor next = it.next();

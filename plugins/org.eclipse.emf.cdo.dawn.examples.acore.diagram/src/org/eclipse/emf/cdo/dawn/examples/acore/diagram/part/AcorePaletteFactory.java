@@ -42,6 +42,7 @@ public class AcorePaletteFactory
 
   /**
    * Creates "Node" palette tool group
+   * 
    * @generated
    */
   private PaletteContainer createNode1Group()
@@ -57,6 +58,7 @@ public class AcorePaletteFactory
 
   /**
    * Creates "Connections" palette tool group
+   * 
    * @generated
    */
   private PaletteContainer createConnections2Group()

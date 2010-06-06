@@ -14,36 +14,34 @@ package org.eclipse.emf.cdo.dawn.examples.acore.impl;
 import org.eclipse.emf.cdo.dawn.examples.acore.AParameter;
 import org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage;
 
-import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
+import org.eclipse.emf.ecore.EClass;
+
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>AParameter</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>AParameter</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.dawn.examples.acore.impl.AParameterImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.dawn.examples.acore.impl.AParameterImpl#getType <em>Type</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.dawn.examples.acore.impl.AParameterImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.dawn.examples.acore.impl.AParameterImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class AParameterImpl extends CDOObjectImpl implements AParameter
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany).\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n \r\nContributors:\r\n    Martin Fluegge - initial API and implementation\r\n";
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected AParameterImpl()
@@ -52,8 +50,8 @@ public class AParameterImpl extends CDOObjectImpl implements AParameter
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -63,8 +61,8 @@ public class AParameterImpl extends CDOObjectImpl implements AParameter
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -74,8 +72,8 @@ public class AParameterImpl extends CDOObjectImpl implements AParameter
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -84,8 +82,8 @@ public class AParameterImpl extends CDOObjectImpl implements AParameter
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -94,8 +92,8 @@ public class AParameterImpl extends CDOObjectImpl implements AParameter
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getType()
@@ -104,8 +102,8 @@ public class AParameterImpl extends CDOObjectImpl implements AParameter
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setType(String newType)
@@ -113,4 +111,4 @@ public class AParameterImpl extends CDOObjectImpl implements AParameter
     eSet(AcorePackage.Literals.APARAMETER__TYPE, newType);
   }
 
-} //AParameterImpl
+} // AParameterImpl

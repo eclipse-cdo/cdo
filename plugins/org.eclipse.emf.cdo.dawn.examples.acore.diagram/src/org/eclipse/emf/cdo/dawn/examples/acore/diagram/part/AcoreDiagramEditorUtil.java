@@ -169,6 +169,7 @@ public class AcoreDiagramEditorUtil
 
   /**
    * This method should be called within a workspace modify operation since it creates resources.
+   * 
    * @generated
    */
   public static Resource createDiagram(URI diagramURI, URI modelURI, IProgressMonitor progressMonitor)
@@ -224,9 +225,8 @@ public class AcoreDiagramEditorUtil
   }
 
   /**
-   * Create a new instance of domain element associated with canvas.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Create a new instance of domain element associated with canvas. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private static ACoreRoot createInitialModel()
@@ -235,9 +235,8 @@ public class AcoreDiagramEditorUtil
   }
 
   /**
-   * Store model element in the resource.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Store model element in the resource. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private static void attachModelToResource(ACoreRoot model, Resource resource)
@@ -248,7 +247,7 @@ public class AcoreDiagramEditorUtil
   /**
    * @generated
    */
-  public static void selectElementsInDiagram(IDiagramWorkbenchPart diagramPart, List/*EditPart*/editParts)
+  public static void selectElementsInDiagram(IDiagramWorkbenchPart diagramPart, List/* EditPart */editParts)
   {
     diagramPart.getDiagramGraphicalViewer().deselectAll();
 
@@ -445,6 +444,6 @@ public class AcoreDiagramEditorUtil
       }
       return element2ViewMap;
     }
-  } //LazyElement2ViewMap	
+  } // LazyElement2ViewMap
 
 }

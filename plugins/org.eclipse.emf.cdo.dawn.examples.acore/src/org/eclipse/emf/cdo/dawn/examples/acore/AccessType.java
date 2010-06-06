@@ -11,17 +11,16 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore;
 
+import org.eclipse.emf.common.util.Enumerator;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.emf.common.util.Enumerator;
-
 /**
- * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>Access Type</b></em>',
- * and utility methods for working with them.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the literals of the enumeration '<em><b>Access Type</b></em>', and
+ * utility methods for working with them. <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getAccessType()
  * @model extendedMetaData="name='AccessType'"
  * @generated
@@ -29,9 +28,8 @@ import org.eclipse.emf.common.util.Enumerator;
 public enum AccessType implements Enumerator
 {
   /**
-   * The '<em><b>PUBLIC</b></em>' literal object.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The '<em><b>PUBLIC</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #PUBLIC_VALUE
    * @generated
    * @ordered
@@ -39,9 +37,8 @@ public enum AccessType implements Enumerator
   PUBLIC(0, "PUBLIC", "public"),
 
   /**
-   * The '<em><b>PRIVATE</b></em>' literal object.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The '<em><b>PRIVATE</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #PRIVATE_VALUE
    * @generated
    * @ordered
@@ -49,9 +46,8 @@ public enum AccessType implements Enumerator
   PRIVATE(1, "PRIVATE", "private"),
 
   /**
-   * The '<em><b>PROECTED</b></em>' literal object.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The '<em><b>PROECTED</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #PROECTED_VALUE
    * @generated
    * @ordered
@@ -59,9 +55,8 @@ public enum AccessType implements Enumerator
   PROECTED(2, "PROECTED", "protected"),
 
   /**
-   * The '<em><b>PACKAGE</b></em>' literal object.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The '<em><b>PACKAGE</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #PACKAGE_VALUE
    * @generated
    * @ordered
@@ -69,20 +64,20 @@ public enum AccessType implements Enumerator
   PACKAGE(3, "PACKAGE", "package");
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany).\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n \r\nContributors:\r\n    Martin Fluegge - initial API and implementation\r\n";
 
   /**
-   * The '<em><b>PUBLIC</b></em>' literal value.
-   * <!-- begin-user-doc -->
+   * The '<em><b>PUBLIC</b></em>' literal value. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of '<em><b>PUBLIC</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of '<em><b>PUBLIC</b></em>' literal object isn't clear, there really should be more of a description
+   * here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @see #PUBLIC
    * @model literal="public"
    * @generated
@@ -91,13 +86,13 @@ public enum AccessType implements Enumerator
   public static final int PUBLIC_VALUE = 0;
 
   /**
-   * The '<em><b>PRIVATE</b></em>' literal value.
-   * <!-- begin-user-doc -->
+   * The '<em><b>PRIVATE</b></em>' literal value. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of '<em><b>PRIVATE</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of '<em><b>PRIVATE</b></em>' literal object isn't clear, there really should be more of a
+   * description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @see #PRIVATE
    * @model literal="private"
    * @generated
@@ -106,13 +101,13 @@ public enum AccessType implements Enumerator
   public static final int PRIVATE_VALUE = 1;
 
   /**
-   * The '<em><b>PROECTED</b></em>' literal value.
-   * <!-- begin-user-doc -->
+   * The '<em><b>PROECTED</b></em>' literal value. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of '<em><b>PROECTED</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of '<em><b>PROECTED</b></em>' literal object isn't clear, there really should be more of a
+   * description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @see #PROECTED
    * @model literal="protected"
    * @generated
@@ -121,13 +116,13 @@ public enum AccessType implements Enumerator
   public static final int PROECTED_VALUE = 2;
 
   /**
-   * The '<em><b>PACKAGE</b></em>' literal value.
-   * <!-- begin-user-doc -->
+   * The '<em><b>PACKAGE</b></em>' literal value. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of '<em><b>PACKAGE</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of '<em><b>PACKAGE</b></em>' literal object isn't clear, there really should be more of a
+   * description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @see #PACKAGE
    * @model literal="package"
    * @generated
@@ -136,32 +131,24 @@ public enum AccessType implements Enumerator
   public static final int PACKAGE_VALUE = 3;
 
   /**
-   * An array of all the '<em><b>Access Type</b></em>' enumerators.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * An array of all the '<em><b>Access Type</b></em>' enumerators. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
-  private static final AccessType[] VALUES_ARRAY =
-    new AccessType[]
-    {
-      PUBLIC,
-      PRIVATE,
-      PROECTED,
-      PACKAGE,
-    };
+  private static final AccessType[] VALUES_ARRAY = new AccessType[] { PUBLIC, PRIVATE, PROECTED, PACKAGE, };
 
   /**
-   * A public read-only list of all the '<em><b>Access Type</b></em>' enumerators.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * A public read-only list of all the '<em><b>Access Type</b></em>' enumerators. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @generated
    */
   public static final List<AccessType> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
   /**
-   * Returns the '<em><b>Access Type</b></em>' literal with the specified literal value.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Returns the '<em><b>Access Type</b></em>' literal with the specified literal value. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @generated
    */
   public static AccessType get(String literal)
@@ -178,9 +165,9 @@ public enum AccessType implements Enumerator
   }
 
   /**
-   * Returns the '<em><b>Access Type</b></em>' literal with the specified name.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Returns the '<em><b>Access Type</b></em>' literal with the specified name. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @generated
    */
   public static AccessType getByName(String name)
@@ -197,48 +184,51 @@ public enum AccessType implements Enumerator
   }
 
   /**
-   * Returns the '<em><b>Access Type</b></em>' literal with the specified integer value.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Returns the '<em><b>Access Type</b></em>' literal with the specified integer value. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @generated
    */
   public static AccessType get(int value)
   {
     switch (value)
     {
-      case PUBLIC_VALUE: return PUBLIC;
-      case PRIVATE_VALUE: return PRIVATE;
-      case PROECTED_VALUE: return PROECTED;
-      case PACKAGE_VALUE: return PACKAGE;
+    case PUBLIC_VALUE:
+      return PUBLIC;
+    case PRIVATE_VALUE:
+      return PRIVATE;
+    case PROECTED_VALUE:
+      return PROECTED;
+    case PACKAGE_VALUE:
+      return PACKAGE;
     }
     return null;
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private final int value;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private final String name;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private final String literal;
 
   /**
-   * Only this class can construct instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Only this class can construct instances. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private AccessType(int value, String name, String literal)
@@ -249,8 +239,8 @@ public enum AccessType implements Enumerator
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getValue()
@@ -259,8 +249,8 @@ public enum AccessType implements Enumerator
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -269,8 +259,8 @@ public enum AccessType implements Enumerator
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getLiteral()
@@ -279,9 +269,9 @@ public enum AccessType implements Enumerator
   }
 
   /**
-   * Returns the literal value of the enumerator, which is its string representation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Returns the literal value of the enumerator, which is its string representation. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -289,5 +279,5 @@ public enum AccessType implements Enumerator
   {
     return literal;
   }
-  
-} //AccessType
+
+} // AccessType

@@ -111,12 +111,13 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   }
 
   /**
-   * Sets up the given document as it would be provided for the given element. The
-   * content of the document is not changed. This default implementation is empty.
-   * Subclasses may reimplement.
+   * Sets up the given document as it would be provided for the given element. The content of the document is not
+   * changed. This default implementation is empty. Subclasses may reimplement.
    * 
-   * @param element the blue-print element
-   * @param document the document to set up
+   * @param element
+   *          the blue-print element
+   * @param document
+   *          the document to set up
    * @generated
    */
   protected void setupDocument(Object element, IDocument document)
@@ -235,7 +236,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           try
           {
             Map options = new HashMap(GMFResourceFactory.getDefaultLoadOptions());
-            // @see 171060 
+            // @see 171060
             // options.put(org.eclipse.emf.ecore.xmi.XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
             resource.load(options);
           }
@@ -387,7 +388,8 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
         catch (CoreException ex)
         {
           AcoreDiagramEditorPlugin.getInstance().logError(Messages.AcoreDocumentProvider_isModifiable, ex);
-          // Error message to log was initially taken from org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide.internal.l10n.EditorMessages.StorageDocumentProvider_isModifiable
+          // Error message to log was initially taken from
+          // org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide.internal.l10n.EditorMessages.StorageDocumentProvider_isModifiable
         }
       }
       return info.isReadOnly();
@@ -419,7 +421,8 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
         catch (CoreException ex)
         {
           AcoreDiagramEditorPlugin.getInstance().logError(Messages.AcoreDocumentProvider_isModifiable, ex);
-          // Error message to log was initially taken from org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide.internal.l10n.EditorMessages.StorageDocumentProvider_isModifiable
+          // Error message to log was initially taken from
+          // org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide.internal.l10n.EditorMessages.StorageDocumentProvider_isModifiable
         }
       }
       return info.isModifiable();
@@ -583,10 +586,8 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
     do
     {
       /*
-       * XXX This is a workaround for
-       * https://bugs.eclipse.org/bugs/show_bug.cgi?id=67601
-       * IResourceRuleFactory.createRule should iterate the hierarchy
-       * itself.
+       * XXX This is a workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=67601
+       * IResourceRuleFactory.createRule should iterate the hierarchy itself.
        */
       toCreateOrModify = parent;
       parent = toCreateOrModify.getParent();
@@ -632,7 +633,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
       try
       {
         monitor.beginTask(Messages.AcoreDocumentProvider_SaveDiagramTask,
-            info.getResourceSet().getResources().size() + 1); //"Saving diagram"
+            info.getResourceSet().getResources().size() + 1); // "Saving diagram"
         for (Iterator<Resource> it = info.getLoadedResourcesIterator(); it.hasNext();)
         {
           Resource nextResource = it.next();
@@ -745,7 +746,8 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
       catch (CoreException ex)
       {
         AcoreDiagramEditorPlugin.getInstance().logError(Messages.AcoreDocumentProvider_handleElementContentChanged, ex);
-        // Error message to log was initially taken from org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide.internal.l10n.EditorMessages.FileDocumentProvider_handleElementContentChanged
+        // Error message to log was initially taken from
+        // org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide.internal.l10n.EditorMessages.FileDocumentProvider_handleElementContentChanged
       }
     }
     changedResource.unload();
@@ -1167,7 +1169,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           if (resource.isLoaded())
           {
             boolean modified = false;
-            for (Iterator/*<org.eclipse.emf.ecore.resource.Resource>*/it = myInfo.getLoadedResourcesIterator(); it
+            for (Iterator/* <org.eclipse.emf.ecore.resource.Resource> */it = myInfo.getLoadedResourcesIterator(); it
                 .hasNext()
                 && !modified;)
             {

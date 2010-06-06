@@ -32,7 +32,8 @@ public class AllTestsDawn extends AllTests
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
-    testClasses.add(GMFTest.class);
+    // testClasses.add(GMFTest.class);
+    testClasses.add(DawnWrapperResourceTest.class);
   }
 
   @Override

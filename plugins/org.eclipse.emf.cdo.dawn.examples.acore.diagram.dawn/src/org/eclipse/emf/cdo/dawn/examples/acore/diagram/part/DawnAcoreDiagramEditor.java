@@ -10,10 +10,10 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
-import org.eclipse.emf.cdo.dawn.diagram.part.IDawnDiagramEditor;
-import org.eclipse.emf.cdo.dawn.notifications.DawnNotificationUtil;
+import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
+import org.eclipse.emf.cdo.dawn.editors.IDawnEditorSupport;
+import org.eclipse.emf.cdo.dawn.editors.impl.DawnGMFEditorSupport;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -34,20 +34,19 @@ import org.eclipse.ui.IFileEditorInput;
 /**
  * @author Martin Fluegge
  */
-public class DawnAcoreDiagramEditor extends AcoreDiagramEditor implements IDawnDiagramEditor
+public class DawnAcoreDiagramEditor extends AcoreDiagramEditor implements IDawnEditor
 {
 
-  private CDOTransaction transaction;
-
-  private boolean dirty;
-
   public static String ID = "org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.DawnAcoreDiagramEditor";
+
+  private IDawnEditorSupport dawnEditorSupport;
 
   public DawnAcoreDiagramEditor()
   {
     super();
     AcoreDiagramEditorPlugin.getInstance().logInfo("CDO Editor ist starting");
     setDocumentProvider(new DawnAcoreDocumentProvider());
+    setDawnEditorSupport(new DawnGMFEditorSupport(this));
   }
 
   @Override
@@ -67,11 +66,13 @@ public class DawnAcoreDiagramEditor extends AcoreDiagramEditor implements IDawnD
       Shell shell = getSite().getShell();
       ErrorDialog.openError(shell, title, msg, x.getStatus());
     }
-    transaction = (CDOTransaction)((DawnEditorInput)input).getView();
+    // transaction = (CDOTransaction)((DawnEditorInput)input).getView();
+    dawnEditorSupport.setView(((DawnEditorInput)input).getView());
+    dawnEditorSupport.registerListeners();
 
-    DawnNotificationUtil.registerResourceListeners(getEditingDomain().getResourceSet(), this);
-    DawnNotificationUtil.registerTransactionListeners(transaction, this);
-    DawnNotificationUtil.setChangeSubscriptionPolicy(transaction);
+    // DawnNotificationUtil.registerResourceListeners(getEditingDomain().getResourceSet(), this);
+    // DawnNotificationUtil.registerTransactionListeners(transaction, this);
+    // DawnNotificationUtil.setChangeSubscriptionPolicy(transaction);
   }
 
   @Override
@@ -85,7 +86,8 @@ public class DawnAcoreDiagramEditor extends AcoreDiagramEditor implements IDawnD
   {
     try
     {
-      dirty = false;
+      // dirty = false;
+      dawnEditorSupport.setDirty(false);
       updateState(getEditorInput());
       validateState(getEditorInput());
       performSave(false, monitor);
@@ -110,12 +112,12 @@ public class DawnAcoreDiagramEditor extends AcoreDiagramEditor implements IDawnD
     // return super.isDirty() | transaction.isDirty();
     // return transaction.isDirty();
     // return super.isDirty() ;
-    return dirty;
+    return dawnEditorSupport.isDirty();
   }
 
   public String getContributorID()
   {
-    return null;
+    return ID;
   }
 
   /**
@@ -143,22 +145,31 @@ public class DawnAcoreDiagramEditor extends AcoreDiagramEditor implements IDawnD
     }
     finally
     {
-      if (transaction != null && !transaction.isClosed())
-      {
-        transaction.close();
-      }
+      dawnEditorSupport.close();
     }
   }
 
   public CDOView getView()
   {
     // TODO Auto-generated method stub
-    return transaction;
+    // return transaction;
+    return dawnEditorSupport.getView();
   }
 
   public void setDirty()
   {
-    dirty = true;
+    // dirty = true;
+    dawnEditorSupport.setDirty(true);
     ((AbstractDocumentProvider)getDocumentProvider()).changed(getEditorInput());
+  }
+
+  public void setDawnEditorSupport(IDawnEditorSupport dawnEditorSupport)
+  {
+    this.dawnEditorSupport = dawnEditorSupport;
+  }
+
+  public IDawnEditorSupport getDawnEditorSupport()
+  {
+    return dawnEditorSupport;
   }
 }

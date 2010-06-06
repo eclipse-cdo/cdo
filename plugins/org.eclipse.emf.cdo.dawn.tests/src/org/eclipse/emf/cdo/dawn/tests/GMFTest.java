@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.dawn.tests;
 
-import org.eclipse.emf.cdo.dawn.reference.editor.classdiagram.ClassDiagram;
-import org.eclipse.emf.cdo.dawn.reference.editor.classdiagram.ClassdiagramPackage;
+import org.eclipse.emf.cdo.dawn.examples.acore.ACoreRoot;
+import org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -252,7 +252,7 @@ public class GMFTest extends AbstractCDOTest
     {
 
       ResourceSet resourceSet = new ResourceSetImpl();
-      ClassdiagramPackage.eINSTANCE.eClass();
+      AcorePackage.eINSTANCE.eClass();
       resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("classdiagram_diagram",
           new XMIResourceFactoryImpl());
 
@@ -265,7 +265,7 @@ public class GMFTest extends AbstractCDOTest
           true);
 
       Diagram diagram = (Diagram)gmfResource.getContents().get(0);
-      ClassDiagram classDiagram = (ClassDiagram)diagram.getElement();
+      ACoreRoot classDiagram = (ACoreRoot)diagram.getElement();
 
       for (Object o : diagram.getPersistedChildren())
       {
@@ -301,7 +301,7 @@ public class GMFTest extends AbstractCDOTest
 
       Diagram reloadedDiagram = (Diagram)resource.getContents().get(1);
 
-      assertInstanceOf(ClassDiagram.class, reloadedDiagram.getElement());
+      assertInstanceOf(ACoreRoot.class, reloadedDiagram.getElement());
       assertEquals(true, reloadedDiagram.isVisible());
       assertEquals(false, reloadedDiagram.isMutable());
 

@@ -29,21 +29,21 @@
    </license>
 
    <plugin
-         id="org.eclipse.emf.cdo.dawn.reference.editor"
+         id="org.eclipse.emf.cdo.dawn.examples.acore"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.cdo.dawn.reference.editor.diagram"
+         id="org.eclipse.emf.cdo.dawn.examples.acore.diagram"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.cdo.dawn.reference.editor.diagram.dawn"
+         id="org.eclipse.emf.cdo.dawn.examples.acore.diagram.dawn"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -51,7 +51,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.cdo.dawn.reference.editor.edit"
+         id="org.eclipse.emf.cdo.dawn.examples.acore.edit"
          download-size="0"
          install-size="0"
          version="0.0.0"

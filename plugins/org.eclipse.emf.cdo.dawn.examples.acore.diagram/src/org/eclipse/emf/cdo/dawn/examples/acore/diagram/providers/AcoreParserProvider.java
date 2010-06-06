@@ -194,6 +194,7 @@ public class AcoreParserProvider extends AbstractProvider implements IParserProv
 
   /**
    * Utility method that consults ParserService
+   * 
    * @generated
    */
   public static IParser getParser(IElementType type, EObject object, String parserHint)

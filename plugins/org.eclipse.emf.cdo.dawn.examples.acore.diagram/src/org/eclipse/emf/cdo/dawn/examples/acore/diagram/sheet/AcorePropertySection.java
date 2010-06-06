@@ -71,6 +71,7 @@ public class AcorePropertySection extends AdvancedPropertySection implements IPr
 
   /**
    * Modify/unwrap selection.
+   * 
    * @generated
    */
   protected Object transformSelection(Object selected)

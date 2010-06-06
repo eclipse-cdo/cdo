@@ -108,10 +108,9 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
   protected boolean provides(CreateViewForKindOperation op)
   {
     /*
-     if (op.getViewKind() == Node.class)
-     return getNodeViewClass(op.getSemanticAdapter(), op.getContainerView(), op.getSemanticHint()) != null;
-     if (op.getViewKind() == Edge.class)
-     return getEdgeViewClass(op.getSemanticAdapter(), op.getContainerView(), op.getSemanticHint()) != null;
+     * if (op.getViewKind() == Node.class) return getNodeViewClass(op.getSemanticAdapter(), op.getContainerView(),
+     * op.getSemanticHint()) != null; if (op.getViewKind() == Edge.class) return
+     * getEdgeViewClass(op.getSemanticAdapter(), op.getContainerView(), op.getSemanticHint()) != null;
      */
     return true;
   }
@@ -310,7 +309,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     ViewUtil.insertChildView(containerView, node, index, persisted);
     node.setElement(domainElement);
     stampShortcut(containerView, node);
-    // initializeFromPreferences 
+    // initializeFromPreferences
     final IPreferenceStore prefStore = (IPreferenceStore)preferencesHint.getPreferenceStore();
 
     org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter
@@ -352,7 +351,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     ViewUtil.insertChildView(containerView, node, index, persisted);
     node.setElement(domainElement);
     stampShortcut(containerView, node);
-    // initializeFromPreferences 
+    // initializeFromPreferences
     final IPreferenceStore prefStore = (IPreferenceStore)preferencesHint.getPreferenceStore();
 
     org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter
@@ -686,9 +685,9 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
   private Node createCompartment(View owner, String hint, boolean canCollapse, boolean hasTitle, boolean canSort,
       boolean canFilter)
   {
-    //SemanticListCompartment rv = NotationFactory.eINSTANCE.createSemanticListCompartment();
-    //rv.setShowTitle(showTitle);
-    //rv.setCollapsed(isCollapsed);
+    // SemanticListCompartment rv = NotationFactory.eINSTANCE.createSemanticListCompartment();
+    // rv.setShowTitle(showTitle);
+    // rv.setCollapsed(isCollapsed);
     Node rv;
     if (canCollapse)
     {

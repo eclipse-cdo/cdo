@@ -33,9 +33,8 @@ import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.View;
 
 /**
- * This registry is used to determine which type of visual object should be
- * created for the corresponding Diagram, Node, ChildNode or Link represented
- * by a domain model object.
+ * This registry is used to determine which type of visual object should be created for the corresponding Diagram, Node,
+ * ChildNode or Link represented by a domain model object.
  * 
  * @generated
  */
@@ -309,8 +308,7 @@ public class AcoreVisualIDRegistry
   }
 
   /**
-   * User can change implementation of this method to handle some specific
-   * situations not covered by default logic.
+   * User can change implementation of this method to handle some specific situations not covered by default logic.
    * 
    * @generated
    */

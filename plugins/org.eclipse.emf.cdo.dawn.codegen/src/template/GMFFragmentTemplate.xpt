@@ -32,7 +32,7 @@
  «EXPAND dawnEditPartProvider FOR this»
  «EXPAND fragmentXML FOR this»
  «EXPAND dawnEditPolicyProvider FOR this»
- «EXPAND manifestMF FOR this.GMFGenEditorGenerator»
+ «EXPAND manifestMF FOR this»
  «EXPAND buildPROPERTIES FOR this.GMFGenEditorGenerator»
  «EXPAND classpath FOR this.GMFGenEditorGenerator»
 
@@ -45,10 +45,10 @@
 package  «this.GMFGenEditorGenerator.editor.packageName»;
 
 import «this.GMFGenEditorGenerator.diagram.domainDiagramElement.genPackage.basePackage».«this.GMFGenEditorGenerator.diagram.domainDiagramElement.ecoreClass.ePackage.name».«this.GMFGenEditorGenerator.diagram.domainDiagramElement.ecoreClass.name»;
-import org.eclipse.emf.cdo.dawn.diagram.part.IDawnDiagramEditor;
-import org.eclipse.emf.cdo.dawn.notifications.DawnNotificationUtil;
+import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
+import org.eclipse.emf.cdo.dawn.editors.IDawnEditorSupport;
+import org.eclipse.emf.cdo.dawn.editors.impl.DawnGMFEditorSupport;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -67,21 +67,18 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 
 «EXPAND generatedComment -»
-public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.className» implements  IDawnDiagramEditor
+public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.className» implements  IDawnEditor
 {
-
-  private CDOTransaction transaction;
-
-  private boolean dirty;
-
   public static String ID = "«this.GMFGenEditorGenerator.editor.packageName».«this.dawnEditorClassName» ";
 
+  private IDawnEditorSupport dawnEditorSupport;
 
   «EXPAND generatedComment -»
   public «this.dawnEditorClassName» ()
   {
     super();
     setDocumentProvider(new «this.dawnDocumentProviderClassName»());
+    setDawnEditorSupport(new DawnGMFEditorSupport(this));
   }
 
   «EXPAND generatedComment -»
@@ -100,11 +97,9 @@ public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.cl
       Shell shell = getSite().getShell();
       ErrorDialog.openError(shell, title, msg, x.getStatus());
     }
-    transaction = (CDOTransaction)((DawnEditorInput)input).getView();
-
-    DawnNotificationUtil.registerResourceListeners(getEditingDomain().getResourceSet(), this);
-    DawnNotificationUtil.registerTransactionListeners(transaction, this);
-    DawnNotificationUtil.setChangeSubscriptionPolicy(transaction);
+    
+    dawnEditorSupport.setView(((DawnEditorInput)input).getView());
+    dawnEditorSupport.registerListeners();
   }
 
   «EXPAND generatedComment -»
@@ -120,7 +115,7 @@ public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.cl
   {
     try
     {
-      dirty = false;
+      dawnEditorSupport.setDirty(false);
       updateState(getEditorInput());
       validateState(getEditorInput());
       performSave(false, monitor);
@@ -143,13 +138,13 @@ public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.cl
   @Override
   public boolean isDirty()
   {
-    return dirty;
+    return dawnEditorSupport.isDirty();
   }
 
   «EXPAND generatedComment -»
   public String getContributorID()
   {
-    return null;
+      return ID;
   }
 
   «EXPAND generatedComment -»
@@ -176,24 +171,31 @@ public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.cl
     }
     finally
     {
-      if (transaction != null && !transaction.isClosed())
-      {
-        transaction.close();
-      }
+      dawnEditorSupport.close();
     }
   }
 
   «EXPAND generatedComment -»
   public CDOView getView()
   {
-    return transaction;
+    return dawnEditorSupport.getView();
   }
 
   «EXPAND generatedComment -»
   public void setDirty()
   {
-    dirty = true;
+    dawnEditorSupport.setDirty(true);
     ((AbstractDocumentProvider)getDocumentProvider()).changed(getEditorInput());
+  }
+  
+  public void setDawnEditorSupport(IDawnEditorSupport dawnEditorSupport)
+  {
+    this.dawnEditorSupport = dawnEditorSupport;
+  }
+
+  public IDawnEditorSupport getDawnEditorSupport()
+  {
+    return dawnEditorSupport;
   }
 }
 
@@ -361,7 +363,7 @@ public class «this.dawnCreationWizardClassName» extends «this.GMFGenEditorGenera
           }
           catch (PartInitException e)
           {
-            ErrorDialog.openError(getContainer().getShell(), Messages.ClassdiagramCreationWizardOpenEditorError, null,
+            ErrorDialog.openError(getContainer().getShell(), Messages.«this.GMFGenEditorGenerator.diagram.creationWizardClassName»OpenEditorError, null,
                 e.getStatus());
           }
         }
@@ -775,7 +777,7 @@ public class «this.dawnDocumentProviderClassName» extends «this.GMFGenEditorGene
             }
           }
         }
-        throw new RuntimeException(Messages.ClassdiagramDocumentProvider_NoDiagramInResourceError);
+        throw new RuntimeException(Messages.«this.GMFGenEditorGenerator.diagram.documentProviderClassName»_NoDiagramInResourceError);
       }
       catch (Exception e)
       {
@@ -795,7 +797,7 @@ public class «this.dawnDocumentProviderClassName» extends «this.GMFGenEditorGene
     }
     else
     {
-      throw new CoreException(new Status(IStatus.ERROR, ClassdiagramDiagramEditorPlugin.ID, 0, NLS.bind(
+      throw new CoreException(new Status(IStatus.ERROR, «this.GMFGenEditorGenerator.plugin.activatorClassName».ID, 0, NLS.bind(
           Messages.«this.GMFGenEditorGenerator.diagram.documentProviderClassName»_IncorrectInputError, new Object[] { element,
               "org.eclipse.ui.part.FileEditorInput", "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$ //$NON-NLS-2$
           null));
@@ -957,22 +959,20 @@ public class «dawnEditPolicyProviderClassName» extends AbstractProvider implemen
 
 
 «REM»##############################################################################################################«ENDREM»
-«DEFINE manifestMF FOR GenEditorGenerator»
+«DEFINE manifestMF FOR DawnGMFGenerator»
 «FILE "META-INF/MANIFEST.MF"»Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Dawn
-Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.reference.editor.diagram.dawn;singleton:=true
-Bundle-Version: 0.2.0.qualifier
-Fragment-Host: org.eclipse.emf.cdo.dawn.reference.editor.diagram;bundle-version="0.2.0"
+Bundle-Name: Dawn «this.GMFGenEditorGenerator.plugin.name» 
+Bundle-SymbolicName: «this.fragmentName»;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: «this.GMFGenEditorGenerator.plugin.iD»;bundle-version="0.2.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.emf.cdo.dawn;bundle-version="0.2.0",
  org.eclipse.emf.cdo.dawn.util;bundle-version="0.0",
  org.eclipse.emf.cdo.ui;bundle-version="3.0.0",
  org.eclipse.emf.cdo.dawn.ui;bundle-version="0.2.0"
-Export-Package: org.eclipse.emf.cdo.dawn.reference.editor.classdiagram.diagram.edit.parts;version="0.2.0",
- org.eclipse.emf.cdo.dawn.reference.editor.classdiagram.diagram.edit.policies;version="0.2.0",
- org.eclipse.emf.cdo.dawn.reference.editor.classdiagram.diagram.part;version="0.2.0",
- org.eclipse.emf.cdo.dawn.reference.editor.classdiagram.diagram.providers;version="0.2.0"
+Export-Package: 
+
 «ENDFILE»
 «ENDDEFINE»
 

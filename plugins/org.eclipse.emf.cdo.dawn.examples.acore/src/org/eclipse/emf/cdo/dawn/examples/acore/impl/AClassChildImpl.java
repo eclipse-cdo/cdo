@@ -15,37 +15,35 @@ import org.eclipse.emf.cdo.dawn.examples.acore.AClassChild;
 import org.eclipse.emf.cdo.dawn.examples.acore.AccessType;
 import org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage;
 
-import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
+import org.eclipse.emf.ecore.EClass;
+
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>AClass Child</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>AClass Child</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.dawn.examples.acore.impl.AClassChildImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.dawn.examples.acore.impl.AClassChildImpl#getAccessright <em>Accessright</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.dawn.examples.acore.impl.AClassChildImpl#getDataType <em>Data Type</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.dawn.examples.acore.impl.AClassChildImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.dawn.examples.acore.impl.AClassChildImpl#getAccessright <em>Accessright</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.dawn.examples.acore.impl.AClassChildImpl#getDataType <em>Data Type</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class AClassChildImpl extends CDOObjectImpl implements AClassChild
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany).\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n \r\nContributors:\r\n    Martin Fluegge - initial API and implementation\r\n";
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected AClassChildImpl()
@@ -54,8 +52,8 @@ public class AClassChildImpl extends CDOObjectImpl implements AClassChild
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -65,8 +63,8 @@ public class AClassChildImpl extends CDOObjectImpl implements AClassChild
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -76,8 +74,8 @@ public class AClassChildImpl extends CDOObjectImpl implements AClassChild
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -86,8 +84,8 @@ public class AClassChildImpl extends CDOObjectImpl implements AClassChild
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -96,8 +94,8 @@ public class AClassChildImpl extends CDOObjectImpl implements AClassChild
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public AccessType getAccessright()
@@ -106,8 +104,8 @@ public class AClassChildImpl extends CDOObjectImpl implements AClassChild
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setAccessright(AccessType newAccessright)
@@ -116,8 +114,8 @@ public class AClassChildImpl extends CDOObjectImpl implements AClassChild
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void unsetAccessright()
@@ -126,8 +124,8 @@ public class AClassChildImpl extends CDOObjectImpl implements AClassChild
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public boolean isSetAccessright()
@@ -136,8 +134,8 @@ public class AClassChildImpl extends CDOObjectImpl implements AClassChild
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getDataType()
@@ -146,8 +144,8 @@ public class AClassChildImpl extends CDOObjectImpl implements AClassChild
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setDataType(String newDataType)
@@ -155,4 +153,4 @@ public class AClassChildImpl extends CDOObjectImpl implements AClassChild
     eSet(AcorePackage.Literals.ACLASS_CHILD__DATA_TYPE, newDataType);
   }
 
-} //AClassChildImpl
+} // AClassChildImpl

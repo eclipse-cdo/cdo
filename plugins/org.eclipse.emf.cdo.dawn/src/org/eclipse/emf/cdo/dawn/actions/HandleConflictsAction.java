@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.dawn.actions;
 
-import org.eclipse.emf.cdo.dawn.diagram.part.IDawnDiagramEditor;
+import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.helper.DawnEditorHelper;
 import org.eclipse.emf.cdo.dawn.synchronize.DawnConflictHelper;
 import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
@@ -52,7 +52,7 @@ public class HandleConflictsAction implements IObjectActionDelegate
     }
 
     IEditorPart activeEditor = DawnEditorHelper.getActiveEditor();
-    if (activeEditor instanceof IDawnDiagramEditor)
+    if (activeEditor instanceof IDawnEditor)
     {
       MessageDialog dialog = new MessageDialog(DawnEditorHelper.getActiveShell(), "Conflict", null,
           "There are conflicts in your diagram. Would you like to rollback your current transaction?",

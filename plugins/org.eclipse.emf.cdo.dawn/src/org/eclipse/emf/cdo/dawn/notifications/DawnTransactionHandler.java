@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.dawn.notifications;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
-import org.eclipse.emf.cdo.dawn.diagram.part.IDawnDiagramEditor;
+import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.util.DawnDiagramUpdater;
 import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
@@ -37,9 +37,9 @@ public class DawnTransactionHandler implements CDOTransactionHandler
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnElementChangeListener.class);
 
-  private final IDawnDiagramEditor editor;
+  private final IDawnEditor editor;
 
-  public DawnTransactionHandler(IDawnDiagramEditor editor)
+  public DawnTransactionHandler(IDawnEditor editor)
   {
     this.editor = editor;
   }

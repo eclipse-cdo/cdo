@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.dawn.synchronize;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.dawn.appearance.DawnAppearancer;
-import org.eclipse.emf.cdo.dawn.diagram.part.IDawnDiagramEditor;
+import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.util.DawnDiagramUpdater;
 import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -63,7 +63,7 @@ public class DawnConflictHelper
 
   public static void rollback(final DiagramDocumentEditor editor)
   {
-    CDOView view = ((IDawnDiagramEditor)editor).getView();
+    CDOView view = ((IDawnEditor)editor).getView();
 
     if (view != null && view instanceof CDOTransaction)
     {

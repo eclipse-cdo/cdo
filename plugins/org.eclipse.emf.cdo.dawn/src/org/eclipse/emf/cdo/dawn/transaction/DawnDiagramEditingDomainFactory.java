@@ -1,5 +1,6 @@
 package org.eclipse.emf.cdo.dawn.transaction;
 
+import org.eclipse.emf.cdo.dawn.resources.DawnPathmapManager;
 import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -16,6 +17,7 @@ import org.eclipse.emf.workspace.impl.WorkspaceCommandStackImpl;
 import org.eclipse.core.commands.operations.IOperationHistory;
 import org.eclipse.gmf.runtime.diagram.core.DiagramEditingDomainFactory;
 
+@SuppressWarnings("restriction")
 public class DawnDiagramEditingDomainFactory extends DiagramEditingDomainFactory
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnDiagramEditingDomainFactory.class);
@@ -84,6 +86,16 @@ public class DawnDiagramEditingDomainFactory extends DiagramEditingDomainFactory
     mapResourceSet(result);
     configure(result);
     return result;
+  }
+
+  @Override
+  protected void configure(final TransactionalEditingDomain domain)
+  {
+    super.configure(domain);
+
+    final ResourceSet rset = domain.getResourceSet();
+    DawnPathmapManager.removePathMapMananger(rset.eAdapters());
+    rset.eAdapters().add(new DawnPathmapManager());
   }
 
   public static WorkspaceEditingDomainFactory getInstance()

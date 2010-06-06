@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.notifications;
 
-import org.eclipse.emf.cdo.dawn.diagram.part.IDawnDiagramEditor;
+import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
@@ -72,7 +72,7 @@ public class DawnNotificationUtil
     // }
   }
 
-  public static void registerTransactionListeners(CDOTransaction transaction, IDawnDiagramEditor editor)
+  public static void registerTransactionListeners(CDOTransaction transaction, IDawnEditor editor)
   {
     BasicDawnListener transactionListener = DawnNotificationRegistry
         .createDawnTransactionListener((DiagramDocumentEditor)editor);

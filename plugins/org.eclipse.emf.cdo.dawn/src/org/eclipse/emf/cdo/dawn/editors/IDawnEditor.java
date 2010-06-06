@@ -8,14 +8,14 @@
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.cdo.dawn.diagram.part;
+package org.eclipse.emf.cdo.dawn.editors;
 
 import org.eclipse.emf.cdo.view.CDOView;
 
 /**
  * @author Martin Fluegge
  */
-public interface IDawnDiagramEditor
+public interface IDawnEditor
 {
 
   public String getContributorID();

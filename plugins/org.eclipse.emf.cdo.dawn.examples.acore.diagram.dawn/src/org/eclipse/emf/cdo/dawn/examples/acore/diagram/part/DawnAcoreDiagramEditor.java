@@ -66,13 +66,9 @@ public class DawnAcoreDiagramEditor extends AcoreDiagramEditor implements IDawnE
       Shell shell = getSite().getShell();
       ErrorDialog.openError(shell, title, msg, x.getStatus());
     }
-    // transaction = (CDOTransaction)((DawnEditorInput)input).getView();
+
     dawnEditorSupport.setView(((DawnEditorInput)input).getView());
     dawnEditorSupport.registerListeners();
-
-    // DawnNotificationUtil.registerResourceListeners(getEditingDomain().getResourceSet(), this);
-    // DawnNotificationUtil.registerTransactionListeners(transaction, this);
-    // DawnNotificationUtil.setChangeSubscriptionPolicy(transaction);
   }
 
   @Override
@@ -86,7 +82,6 @@ public class DawnAcoreDiagramEditor extends AcoreDiagramEditor implements IDawnE
   {
     try
     {
-      // dirty = false;
       dawnEditorSupport.setDirty(false);
       updateState(getEditorInput());
       validateState(getEditorInput());
@@ -109,9 +104,6 @@ public class DawnAcoreDiagramEditor extends AcoreDiagramEditor implements IDawnE
   @Override
   public boolean isDirty()
   {
-    // return super.isDirty() | transaction.isDirty();
-    // return transaction.isDirty();
-    // return super.isDirty() ;
     return dawnEditorSupport.isDirty();
   }
 
@@ -151,14 +143,11 @@ public class DawnAcoreDiagramEditor extends AcoreDiagramEditor implements IDawnE
 
   public CDOView getView()
   {
-    // TODO Auto-generated method stub
-    // return transaction;
     return dawnEditorSupport.getView();
   }
 
   public void setDirty()
   {
-    // dirty = true;
     dawnEditorSupport.setDirty(true);
     ((AbstractDocumentProvider)getDocumentProvider()).changed(getEditorInput());
   }

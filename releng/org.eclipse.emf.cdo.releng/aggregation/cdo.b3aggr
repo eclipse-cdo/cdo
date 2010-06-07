@@ -25,8 +25,8 @@
   <contributions label="3.0 RC3">
     <repositories location="https://build.eclipse.org/hudson/job/emf-cdo-integration/521/artifact/result/site.p2/" mirrorArtifacts="false"/>
   </contributions>
-  <contributions label="3.0 RC4">
-    <repositories location="https://build.eclipse.org/hudson/job/emf-cdo-integration/533/artifact/result/site.p2/" mirrorArtifacts="false"/>
+  <contributions label="536">
+    <repositories location="https://build.eclipse.org/hudson/job/emf-cdo-integration/536/artifact/result/site.p2/" mirrorArtifacts="false"/>
   </contributions>
   <contacts name="Eike Stepper" email="stepper@esc-net.de"/>
 </aggregator:Aggregator>

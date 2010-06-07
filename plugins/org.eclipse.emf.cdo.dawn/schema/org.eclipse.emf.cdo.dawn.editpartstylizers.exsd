@@ -7,7 +7,7 @@
       </appinfo>
       <documentation>
          This extension point is used to define custom EditPartStylizers which can define the appearance of the EditPart&apos;s view.
-An EditPartStylizer can influence the visual representation of the models state. 
+An EditPartStylizer can influence the visual representation of the models state.
 Dawn knows three states - default, conflicted and locked. By implementing an own DawnEditPartStylizer you can influence the appearance of the three states for your EditPart and it&apos;s related models. New stylizer can be registered to Dawn using this extension point.
       </documentation>
    </annotation>
@@ -25,21 +25,21 @@ Dawn knows three states - default, conflicted and locked. By implementing an own
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="id" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
                <appinfo>
                   <meta.attribute translatable="true"/>
@@ -54,7 +54,7 @@ Dawn knows three states - default, conflicted and locked. By implementing an own
          <attribute name="editpart" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.gef.EditPart"/>
@@ -64,7 +64,7 @@ Dawn knows three states - default, conflicted and locked. By implementing an own
          <attribute name="stylizer" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.emf.cdo.dawn.appearance.DawnEditPartStylizer"/>
@@ -90,7 +90,7 @@ Dawn knows three states - default, conflicted and locked. By implementing an own
       <documentation>
          Following is an example of how a EditPartStylizer can be registered:
 &lt;pre&gt;
-	&lt;DawnEditPartStylizers                 		editpart=&quot;org.eclipse.emf.cdo.dawn.reference.editor.classdiagram.diagram.edit.parts.AClassEditPart&quot;
+	&lt;DawnEditPartStylizers                 		editpart=&quot;org.eclipse.emf.cdo.dawn.examples.acore.classdiagram.diagram.edit.parts.AClassEditPart&quot;
         stylizer=&quot;org.eclipse.emf.cdo.dawn.appearance.impl.DawnBasicNodeEditPartStylizerImpl&quot;&gt;
 	&lt;/DawnEditPartStylizers&gt;
 &lt;/pre&gt;
@@ -102,7 +102,7 @@ Dawn knows three states - default, conflicted and locked. By implementing an own
          <meta.section type="apiinfo"/>
       </appinfo>
       <documentation>
-         To customize the EditPart you must implement the interface org.eclipse.emf.cdo.dawn.appearance.EditPartStylizer. For Graphical EditParts this is typically done by extending the  org.eclipse.emf.cdo.dawn.appearance.impl.DawnBasicGraphicalEditPartStylizer. Set this implementation for the &lt;b&gt;stylizer&lt;/b&gt; attribute. The &lt;b&gt;editpart&lt;b/&gt; attribute takes the EditPart which should be customized. 
+         To customize the EditPart you must implement the interface org.eclipse.emf.cdo.dawn.appearance.EditPartStylizer. For Graphical EditParts this is typically done by extending the  org.eclipse.emf.cdo.dawn.appearance.impl.DawnBasicGraphicalEditPartStylizer. Set this implementation for the &lt;b&gt;stylizer&lt;/b&gt; attribute. The &lt;b&gt;editpart&lt;b/&gt; attribute takes the EditPart which should be customized.
       </documentation>
    </annotation>
 

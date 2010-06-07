@@ -17,7 +17,6 @@ import org.eclipse.emf.workspace.impl.WorkspaceCommandStackImpl;
 import org.eclipse.core.commands.operations.IOperationHistory;
 import org.eclipse.gmf.runtime.diagram.core.DiagramEditingDomainFactory;
 
-@SuppressWarnings("restriction")
 public class DawnDiagramEditingDomainFactory extends DiagramEditingDomainFactory
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnDiagramEditingDomainFactory.class);

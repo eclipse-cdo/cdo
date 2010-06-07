@@ -14,7 +14,6 @@ import org.eclipse.emf.workspace.impl.WorkspaceCommandStackImpl;
 import org.eclipse.core.commands.operations.IOperationHistory;
 import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
 
-@SuppressWarnings("restriction")
 public class DawnGMFEditingDomainFactory extends GMFEditingDomainFactory
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnGMFEditingDomainFactory.class);

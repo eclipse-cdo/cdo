@@ -28,6 +28,11 @@
       %license
    </license>
 
+   <url>
+      <update label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
+      <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
+   </url>
+
    <plugin
          id="org.eclipse.emf.cdo.dawn.codegen"
          download-size="0"

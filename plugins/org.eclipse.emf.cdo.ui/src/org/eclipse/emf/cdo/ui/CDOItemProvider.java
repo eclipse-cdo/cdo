@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.internal.ui.actions.RegisterSinglePackageAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ReloadViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RollbackTransactionAction;
+import org.eclipse.emf.cdo.internal.ui.actions.ToggleLegacyModeDefaultAction;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
@@ -291,6 +292,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     a2.setText(a2.getText() + SafeAction.INTERACTIVE);
     manager.add(a2);
 
+    manager.add(new ToggleLegacyModeDefaultAction(session));
     manager.add(new Separator());
     manager.add(new CloseSessionAction(page, session));
   }

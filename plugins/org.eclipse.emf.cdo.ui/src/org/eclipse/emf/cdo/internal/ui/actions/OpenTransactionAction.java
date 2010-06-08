@@ -11,9 +11,11 @@
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
+import org.eclipse.emf.cdo.internal.ui.LegacyModeRegistry;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;
@@ -35,6 +37,7 @@ public final class OpenTransactionAction extends AbstractOpenViewAction
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
+    CDOUtil.setLegacyModeDefault(LegacyModeRegistry.isLegacyEnabled(getSession()));
     getSession().openTransaction();
 
     // CDOTransaction transaction = getSession().openTransaction();

@@ -500,7 +500,10 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
           if (eClassifier instanceof EClass)
           {
             EClass eClass = (EClass)eClassifier;
-            getClassMapping(eClass); // Get or create it
+            if (!eClass.isAbstract() && !eClass.isInterface())
+            {
+              getClassMapping(eClass); // Get or create it
+            }
           }
         }
       }

@@ -347,6 +347,15 @@ public abstract class AbstractListTableMapping implements IListMapping
       else
       {
         int result = resultSet.getInt(1);
+        if (resultSet.wasNull())
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("No last index found -> list is empty. NULL "); //$NON-NLS-1$
+          }
+          return -1;
+        }
+
         if (TRACER.isEnabled())
         {
           TRACER.trace("Read list last index = " + result); //$NON-NLS-1$

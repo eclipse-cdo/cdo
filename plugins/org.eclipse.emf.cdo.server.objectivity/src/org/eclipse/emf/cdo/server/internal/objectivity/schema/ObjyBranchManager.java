@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 
@@ -32,7 +33,7 @@ public class ObjyBranchManager extends ooObj
 
   protected ooTreeSetX branchSet;
 
-  public ObjyBranchManager()
+  private ObjyBranchManager()
   {
     nextBranchId = 0;
     nextLocalBranchId = 0;
@@ -81,7 +82,7 @@ public class ObjyBranchManager extends ooObj
       branchId = nextLocalBranchId();
     }
 
-    ObjyBranch newObjyBranch = new ObjyBranch(branchId, branchInfo);
+    ObjyBranch newObjyBranch = ObjyBranch.create(this, branchId, branchInfo);
     // if the baseBranchId is 0, then we just added to our branchSet, otherwise
     // we'll lookup the ObjyBranch with the id, and add the newly created
     // ObjyBranch to it's sub-branches set.
@@ -141,8 +142,18 @@ public class ObjyBranchManager extends ooObj
     ObjyBranchManager branchManager = new ObjyBranchManager();
     ooObj clusterObject = ooObj.create_ooObj(scopeContOid);
     clusterObject.cluster(branchManager);
+
     branchManager.createTreeSet(branchManager);
+    branchManager.createMainBranch();
+
     return branchManager;
+  }
+
+  public void createMainBranch()
+  {
+    ObjyBranch newObjyBranch = ObjyBranch.create(this, CDOBranch.MAIN_BRANCH_ID, CDOBranch.MAIN_BRANCH_ID,
+        CDOBranch.MAIN_BRANCH_NAME, 0);
+    branchSet.add(newObjyBranch); // implicit clustering.
   }
 
   public boolean deleteBranch(int branchId)
@@ -167,7 +178,7 @@ public class ObjyBranchManager extends ooObj
     return done;
   }
 
-  public List<ObjyBranch> getSubBranches(int branchId)
+  public List<ObjyBranch> getSubBranches(int baseBranchId)
   {
     fetch();
     List<ObjyBranch> objyBranchList = new ArrayList<ObjyBranch>();
@@ -178,7 +189,11 @@ public class ObjyBranchManager extends ooObj
     while (treeItr.hasNext())
     {
       objyBranch = treeItr.next();
-      if (branchId == objyBranch.getBaseBranchId())
+      if (objyBranch.getBranchId() == objyBranch.getBaseBranchId())
+      {
+        continue;
+      }
+      if (objyBranch.getBaseBranchId() == baseBranchId)
       {
         objyBranchList.add(objyBranch);
       }

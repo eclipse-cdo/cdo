@@ -17,10 +17,8 @@ import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyScope;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySession;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyResourceList;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.OBJYCDOIDUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
-import org.eclipse.emf.cdo.server.internal.objectivity.utils.SmartLock;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
@@ -132,7 +130,7 @@ public class ObjyPlacementManagerLocal
       // container in the repo database, except the first root (ID == resourceID).
       if (revision.getID() == revision.getResourceID()) // Check with Eike!
       {
-        nearObject = objySession.getResourceList().ooId();
+        nearObject = objySession.getResourceList(repositoryName).ooId();
       }
       else
       {
@@ -154,24 +152,24 @@ public class ObjyPlacementManagerLocal
 
     ObjyObject objyObject = objySession.getObjectManager().newObject(eClass, nearObject);
 
-    // if it's a resource, collect it.
-    if (revision.isResourceNode())
-    {
-      // Add resource to the list
-      ObjyResourceList resourceList = objySession.getResourceList();
-
-      // before we update the data into the object we need to check
-      // if it's a resource and we're trying to add a duplicate.
-      // TODO - do we need to check for Folder and resouce, or is the isResourceNode()
-      // check is enough?!!!
-      if (revision.isResourceFolder() || revision.isResource())
-      {
-        // this call will throw exception if we have a duplicate resource we trying to add.
-        resourceList.checkDuplicateResources(revision);
-      }
-      SmartLock.lock(objyObject);
-      resourceList.add(objyObject);
-    }
+    // // if it's a resource, collect it.
+    // if (revision.isResourceNode())
+    // {
+    // // Add resource to the list
+    // ObjyResourceList resourceList = objySession.getResourceList();
+    //
+    // // before we update the data into the object we need to check
+    // // if it's a resource and we're trying to add a duplicate.
+    // // TODO - do we need to check for Folder and resouce, or is the isResourceNode()
+    // // check is enough?!!!
+    // if (revision.isResourceFolder() || revision.isResource())
+    // {
+    // // this call will throw exception if we have a duplicate resource we trying to add.
+    // resourceList.checkDuplicateResources(revision);
+    // }
+    // SmartLock.lock(objyObject);
+    // resourceList.add(objyObject);
+    // }
 
     return objyObject;
   }

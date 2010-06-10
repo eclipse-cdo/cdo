@@ -25,7 +25,7 @@ public class ObjectivityStoreFactory implements IStoreFactory
 
   public IStore createStore(Element storeConfig)
   {
-    System.out.println(">>> OSF.createStore()");
+    // System.out.println(">>> OSF.createStore()");
     // TODO - we might want to initialize Objy with the
     // FD name here!!!
     ObjectivityStoreConfig objyStoreConfig = new ObjectivityStoreConfig(storeConfig);

@@ -27,29 +27,29 @@ import com.objy.db.app.ooId;
 public class ObjyDb
 {
 
-  static public final String CONFIGDB_NAME = "ConfigDb";
+  public static final String CONFIGDB_NAME = "ConfigDb";
 
-  static public final String RESOURCELIST_NAME = "ResourceList";
+  public static final String RESOURCELIST_NAME = "ResourceList";
 
-  static public final String RESOURCELIST_CONT_NAME = "ResourceListCont";
+  public static final String RESOURCELIST_CONT_NAME = "ResourceListCont";
 
-  static public final String PACKAGESTORE_CONT_NAME = "PackageCont";
+  public static final String PACKAGESTORE_CONT_NAME = "PackageCont";
 
-  static public final String COMMITINFOSET_CONT_NAME = "CommitInfoCont";
+  public static final String COMMITINFOSET_CONT_NAME = "CommitInfoCont";
 
-  static public final String COMMITINFOSET_NAME = "CommitInfoSet";
+  public static final String COMMITINFOSET_NAME = "CommitInfoSet";
 
-  static public final String PROPERTYMAP_NAME = "PropertyMap";
+  public static final String PROPERTYMAP_NAME = "PropertyMap";
 
-  static public final String PROPERTYMAP_CONT_NAME = "PropertyCont";
+  public static final String PROPERTYMAP_CONT_NAME = "PropertyCont";
 
-  static public final String OBJYSTOREINFO_NAME = "ObjyStoreInfo";
+  public static final String OBJYSTOREINFO_NAME = "ObjyStoreInfo";
 
   public static final String DEFAULT_CONT_NAME = "_ooDefaultContObj"; // this is objy default cont name.
 
-  static public final String BRANCHMANAGER_NAME = "BranchManager";
+  public static final String BRANCHMANAGER_NAME = "BranchManager";
 
-  static public final String BRANCHING_CONT_NAME = "BranchingCont";
+  public static final String BRANCHING_CONT_NAME = "BranchingCont";
 
   private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyDb.class);
 
@@ -62,15 +62,16 @@ public class ObjyDb
    */
 
   /***
-   * This function will return the resourceList after creation.
+   * This function will return the resourceList after creation. Each repository (stored in its own DB) will have its own
+   * ResourceList.
    */
-  public static ObjyObject getOrCreateResourceList()
+  public static ObjyObject getOrCreateResourceList(String repositoryName)
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.format("getOrCreateResourceList()"); //$NON-NLS-1$
+      TRACER_DEBUG.format("getOrCreateResourceList() for " + repositoryName); //$NON-NLS-1$
     }
-    ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.RESOURCELIST_CONT_NAME);
+    ObjyScope objyScope = new ObjyScope(repositoryName, ObjyDb.RESOURCELIST_CONT_NAME);
     ObjyObject objyObject = null;
     try
     {
@@ -136,9 +137,9 @@ public class ObjyDb
     return propertyMapId;
   }
 
-  public static ooId getOrCreatePropertyMap()
+  public static ooId getOrCreatePropertyMap(String repositoryName)
   {
-    ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PROPERTYMAP_CONT_NAME);
+    ObjyScope objyScope = new ObjyScope(repositoryName, ObjyDb.PROPERTYMAP_CONT_NAME);
     ooId propertyMapId = null;
     try
     {
@@ -189,9 +190,9 @@ public class ObjyDb
     return packageMapId;
   }
 
-  public static ooId getOrCreatePackageMap()
+  public static ooId getOrCreatePackageMap(String repositoryName)
   {
-    ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
+    ObjyScope objyScope = new ObjyScope(repositoryName, ObjyDb.PACKAGESTORE_CONT_NAME);
     ooId packageMapId = null;
     try
     {

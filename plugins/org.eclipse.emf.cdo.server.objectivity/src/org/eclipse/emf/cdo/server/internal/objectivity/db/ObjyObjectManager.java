@@ -221,12 +221,8 @@ public class ObjyObjectManager
    * @param storeAccessor
    * @param objyObject
    */
-  public void delete(ObjectivityStoreAccessor storeAccessor, ObjyObject objyObject)
+  public void remove(ObjyObject objyObject)
   {
-    EClass eClass = ObjySchema.getEClass(storeAccessor.getStore(), objyObject.objyClass());
-
-    objyObject.delete(this, eClass);
-
     if (TRACER_DEBUG.isEnabled())
     {
       TRACER_DEBUG.trace("ObjyObjectManager.delete(" + objyObject.ooId().getStoreString() + ")");

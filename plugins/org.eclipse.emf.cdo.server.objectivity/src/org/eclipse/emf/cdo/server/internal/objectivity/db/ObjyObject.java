@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -82,27 +83,28 @@ public class ObjyObject
   public ObjyObject(Class_Object classObject)
   {
     this.classObject = classObject;
+    objyClass = ObjySchema.getObjyClass(classObject.type_of().name());
+
     if (TRACER_DEBUG.isEnabled())
     {
       TRACER_DEBUG.format("...classObject type: {0} - oid: {1}", classObject.type_of().name(), classObject.objectID()
           .getStoreString());
     }
-    baseRel = classObject.nget_relationship(ObjyBase.Attribute_base);
+    baseRel = classObject.get_relationship(objyClass.resolve_position(ObjyBase.ATT_BASE));
     if (!baseRel.exists())
     {
       // we are the base...
-      revisionsRel = classObject.nget_relationship(ObjyBase.Attribute_revisions);
-      lastRevisionRel = classObject.nget_relationship(ObjyBase.Attribute_lastRevision);
+      revisionsRel = classObject.get_relationship(objyClass.resolve_position(ObjyBase.ATT_REVISIONS));
+      lastRevisionRel = classObject.get_relationship(objyClass.resolve_position(ObjyBase.ATT_LAST_REVISION));
     }
     else
     {
       baseClassObject = baseRel.get_class_obj();
       // TODO - we might want to delay getting the list of versions unless we need them.
-      revisionsRel = baseClassObject.nget_relationship(ObjyBase.Attribute_revisions);
-      lastRevisionRel = baseClassObject.nget_relationship(ObjyBase.Attribute_lastRevision);
+      // revisionsRel = baseClassObject.get_relationship(objyClass.resolve_position(ObjyBase.ATT_REVISIONS));
+      // lastRevisionRel = baseClassObject.get_relationship(objyClass.resolve_position(ObjyBase.ATT_LAST_REVISION));
     }
     setObjectId(classObject.objectID());
-    objyClass = ObjySchema.getObjyClass(classObject.type_of().name());
   }
 
   public ObjyClass objyClass()
@@ -114,14 +116,7 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
     return classObject;
   }
@@ -143,17 +138,10 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
 
-    Class_Position position = objyClass.resolve_position(ObjyBase.Attribute_containerId);
+    Class_Position position = objyClass.resolve_position(ObjyBase.ATT_CONTAINERID);
     SingleReferenceMapper.INSTANCE.setValue(this, position, containerID);
   }
 
@@ -161,17 +149,10 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
 
-    Class_Position position = objyClass.resolve_position(ObjyBase.Attribute_containerId);
+    Class_Position position = objyClass.resolve_position(ObjyBase.ATT_CONTAINERID);
     Object value = SingleReferenceMapper.INSTANCE.getValue(this, position);
 
     return value;
@@ -181,17 +162,10 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
 
-    Class_Position position = objyClass.resolve_position(ObjyBase.Attribute_containerId);
+    Class_Position position = objyClass.resolve_position(ObjyBase.ATT_CONTAINERID);
     ooId childOid = get_ooId(position);
     return childOid;
   }
@@ -200,17 +174,10 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
 
-    Class_Position position = objyClass.resolve_position(ObjyBase.Attribute_resourceId);
+    Class_Position position = objyClass.resolve_position(ObjyBase.ATT_RESOURCEID);
     SingleReferenceMapper.INSTANCE.setValue(this, position, resourceID);
 
   }
@@ -219,17 +186,10 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
 
-    Class_Position position = objyClass.resolve_position(ObjyBase.Attribute_resourceId);
+    Class_Position position = objyClass.resolve_position(ObjyBase.ATT_RESOURCEID);
     Object value = SingleReferenceMapper.INSTANCE.getValue(this, position);
 
     return value;
@@ -239,16 +199,9 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
-    Class_Position position = objyClass.resolve_position(ObjyBase.Attribute_resourceId);
+    Class_Position position = objyClass.resolve_position(ObjyBase.ATT_RESOURCEID);
     ooId childOid = get_ooId(position);
     return childOid;
   }
@@ -257,16 +210,9 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
-    Class_Position position = objyClass.resolve_position(ObjyBase.Attribute_containerFeatureId);
+    Class_Position position = objyClass.resolve_position(ObjyBase.ATT_CONTAINER_FEATUERID);
     set_numeric(position, new Numeric_Value(contFeature));
   }
 
@@ -274,16 +220,9 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
-    Class_Position position = objyClass.resolve_position(ObjyBase.Attribute_containerFeatureId);
+    Class_Position position = objyClass.resolve_position(ObjyBase.ATT_CONTAINER_FEATUERID);
     return get_numeric(position).intValue();
   }
 
@@ -305,16 +244,9 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
-    int version = classObject.nget_numeric(ObjyBase.Attribute_version).intValue();
+    int version = classObject.get_numeric(objyClass.resolve_position(ObjyBase.ATT_VERSION)).intValue();
     return version;
   }
 
@@ -322,16 +254,9 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
-    classObject.nset_numeric(ObjyBase.Attribute_version, new Numeric_Value(version));
+    classObject.set_numeric(objyClass.resolve_position(ObjyBase.ATT_VERSION), new Numeric_Value(version));
     getVersion(); // TBD, verify the need for this call!!!!
   }
 
@@ -339,16 +264,9 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
-    long creationTime = classObject.nget_numeric(ObjyBase.Attribute_creationTime).longValue();
+    long creationTime = classObject.get_numeric(objyClass.resolve_position(ObjyBase.ATT_CREATION_TIME)).longValue();
     return creationTime;
   }
 
@@ -356,32 +274,18 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
-    classObject.nset_numeric(ObjyBase.Attribute_creationTime, new Numeric_Value(creationTime));
+    classObject.set_numeric(objyClass.resolve_position(ObjyBase.ATT_CREATION_TIME), new Numeric_Value(creationTime));
   }
 
   public long getRevisedTime()
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
-    long revisedTime = classObject.nget_numeric(ObjyBase.Attribute_revisedTime).longValue();
+    long revisedTime = classObject.get_numeric(objyClass.resolve_position(ObjyBase.ATT_REVISED_TIME)).longValue();
     return revisedTime;
   }
 
@@ -389,32 +293,28 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
-    classObject.nset_numeric(ObjyBase.Attribute_revisedTime, new Numeric_Value(revisedTime));
+    classObject.set_numeric(objyClass.resolve_position(ObjyBase.ATT_REVISED_TIME), new Numeric_Value(revisedTime));
   }
 
   public void setBranchId(int branchId)
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
-    classObject.nset_numeric(ObjyBase.Attribute_BranchId, new Numeric_Value(branchId));
+    classObject.set_numeric(objyClass.resolve_position(ObjyBase.ATT_BRANCHID), new Numeric_Value(branchId));
+  }
+
+  public long getBranchId()
+  {
+    if (TRACER_DEBUG.isEnabled())
+    {
+      checkSession();
+    }
+    int branchId = classObject.get_numeric(objyClass.resolve_position(ObjyBase.ATT_BRANCHID)).intValue();
+    return branchId;
   }
 
   public ObjyObject copy(EClass eClass)
@@ -461,25 +361,12 @@ public class ObjyObject
    */
   public void update(ObjectivityStoreAccessor storeAccessor, InternalCDORevision revision)
   {
-    if (TRACER_DEBUG.isEnabled())
-    {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
-    }
-
-    // EClass eClass = revision.getEClass();
-
     try
     {
 
       if (TRACER_DEBUG.isEnabled())
       {
+        checkSession();
         TRACER_DEBUG.trace("=> ObjyObject.update() - oid:" + ooId().getStoreString() + " - version:"
             + revision.getVersion());
       }
@@ -560,7 +447,7 @@ public class ObjyObject
             Object value = list.get(i);
             if (value instanceof CDOIDExternal)
             {
-              System.out.println("value is a proxy object - it should be handled by the mapper.");
+              // System.out.println("value is a proxy object - it should be handled by the mapper.");
               // create an ObjyProxy object to hold the the value.
               ObjyProxy proxyObject = ObjyProxy.createObject(ooId());
               proxyObject.setUri(((CDOIDExternal)value).getURI());
@@ -578,12 +465,13 @@ public class ObjyObject
               Object entryValue = entry.getValue();
               long metaId = storeAccessor.getMetaID(entryFeature);
 
-              System.out.println("-->> FeatureMap.Entry (" + i + ") -> feature:" + entryFeature.getName() + " - value:"
-                  + entryValue + " - MetaID: " + metaId);
+              // System.out.println("-->> FeatureMap.Entry (" + i + ") -> feature:" + entryFeature.getName() +
+              // " - value:"
+              // + entryValue + " - MetaID: " + metaId);
               ooId oid = null;
               if (entryValue instanceof CDOIDExternal)
               {
-                System.out.println("value is a proxy object - it should be handled by the mapper.");
+                // System.out.println("value is a proxy object - it should be handled by the mapper.");
                 // create an ObjyProxy object to hold the the value.
                 ObjyProxy proxyObject = ObjyProxy.createObject(ooId());
                 proxyObject.setUri(((CDOIDExternal)entryValue).getURI());
@@ -642,10 +530,10 @@ public class ObjyObject
     return new ObjyObject(lastRevision);
   }
 
-  public ObjyObject getRevision(int version)
+  public ObjyObject getRevisionByVersion(int version)
   {
     ObjyObject objyRevision = null;
-    if (version <= 1)
+    if (Math.abs(getVersion()) == version)
     {
       // there is a first time for everything...
       return this;
@@ -658,7 +546,7 @@ public class ObjyObject
     while (itr.hasNext())
     {
       objyRevision = new ObjyObject(itr.next());
-      if (objyRevision.getVersion() == version)
+      if (Math.abs(objyRevision.getVersion()) == version)
       {
         return objyRevision;
       }
@@ -699,14 +587,7 @@ public class ObjyObject
     boolean bRet = true;
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
     EClass eClass = revision.getEClass();
 
@@ -868,14 +749,7 @@ public class ObjyObject
 
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
 
     try
@@ -965,14 +839,7 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
 
     // Class_Position position = objyClass().resolve_position(feature.getName());
@@ -1009,14 +876,7 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
+      checkSession();
     }
 
     if (TRACER_DEBUG.isEnabled())
@@ -1040,11 +900,6 @@ public class ObjyObject
       value = ((ISingleTypeMapper)mapper).getValue(this, feature);
     }
 
-    /**
-     * TODO - we might need to convert the object from the mapper to the EMF world. TBD!!
-     */
-    // Object objectFromResource = provider.convertEMF(ooObject, value);
-
     return value;
   }
 
@@ -1060,18 +915,7 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
-    }
-
-    if (TRACER_DEBUG.isEnabled())
-    {
+      checkSession();
       // TODO - verify the message.
       TRACER_DEBUG.trace("Get All objects for ID: " + ooId().getStoreString() + " <feature ' " + feature/*
                                                                                                          * .getName( )
@@ -1091,18 +935,7 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
-    }
-
-    if (TRACER_DEBUG.isEnabled())
-    {
+      checkSession();
       TRACER_DEBUG.trace("Adding object " + value + " to " + ooId().getStoreString());
     }
 
@@ -1126,18 +959,7 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
-    }
-
-    if (TRACER_DEBUG.isEnabled())
-    {
+      checkSession();
       TRACER_DEBUG.trace("Clear List for " + ooId().getStoreString());
     }
 
@@ -1152,18 +974,7 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
-    }
-
-    if (TRACER_DEBUG.isEnabled())
-    {
+      checkSession();
       TRACER_DEBUG.trace("Move element from " + sourceIndex + " to " + targetIndex);
     }
 
@@ -1176,18 +987,7 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
-    }
-
-    if (TRACER_DEBUG.isEnabled())
-    {
+      checkSession();
       TRACER_DEBUG.trace("Remove object from '" + ooId().getStoreString() + "' at index " + index);
     }
 
@@ -1212,18 +1012,7 @@ public class ObjyObject
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      try
-      {
-        checkSession();
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
-    }
-
-    if (TRACER_DEBUG.isEnabled())
-    {
+      checkSession();
       TRACER_DEBUG.trace("Set object '" + ooId().getStoreString() + "' feature : " + feature.getName());
     }
 
@@ -1266,29 +1055,31 @@ public class ObjyObject
     set(feature, 0, null);
   }
 
-  protected void checkSession() throws Exception
+  protected void checkSession()
   {
-    // if (!classObject.getPersistor().getSession().isOpen())
-    // {
-    // throw new Exception("Attempt to work on an object without a trx. [Session: "
-    // + classObject.getPersistor().getSession() + "]");
-    // }
+    if (TRACER_DEBUG.isEnabled())
+    {
+      try
+      {
+        if (!classObject.getPersistor().getSession().isOpen())
+        {
+          throw new Exception("Attempt to work on an object " + objectId.toString() + " without a trx. [Session: "
+              + classObject.getPersistor().getSession() + "]");
+        }
+      }
+      catch (Exception ex)
+      {
+        ex.printStackTrace();
+      } // for debugging.
+    }
   }
 
-  // public Session getSession()
-  // {
-  // if (classObject != null)
-  // return classObject.getPersistor().getSession();
-  // return null;
-  // }
-
   /***
-   * TODO - Remove the eClass and just use the objyObject attributes to do the clean up.
+   * Iterate over the attributes and references and mark them deleted. This will only be called in non-audit mode.
    */
-  public void delete(ObjyObjectManager objectManager, EClass eClass)
+  public void delete(ObjectivityStoreAccessor storeAccessor, ObjyObjectManager objectManager)
   {
-    // DO NOT CALL ooObj.delete(), problem of reuse OOID
-    setVersion(-1);
+    EClass eClass = ObjySchema.getEClass(storeAccessor.getStore(), objyClass());
 
     for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
     {
@@ -1316,14 +1107,10 @@ public class ObjyObject
               continue;
             }
 
-            // System.out.println("-->> IS: getting Class_Object from OID: "
-            // + childObject.getStoreString());
             Class_Object refClassObject = Class_Object.class_object_from_oid(oid);
 
             if (refClassObject.type_of().name().equals(ObjyProxy.className))
             {
-              // System.out.println("OBJY: delete proxy: "
-              // + refClassObject.objectID().getStoreString());
               obj.delete();
             }
             else
@@ -1334,9 +1121,10 @@ public class ObjyObject
               ObjyObject childObjyObject = objectManager.getObject(oid);
               ooId containerId = childObjyObject.getEContainerAsOid();
               ooId resourceId = childObjyObject.getEResourceAsOid();
+              int childVersion = childObjyObject.getVersion();
               if (containerId.equals(objectId) || resourceId.equals(objectId))
               {
-                childObjyObject.setVersion(-1);
+                childObjyObject.setVersion(-childVersion);
               }
 
             }
@@ -1347,17 +1135,19 @@ public class ObjyObject
             long metaId = mapEntry.getMetaId();
             String name = mapEntry.getTagName();
             ooId oid = mapEntry.getObject();
-            System.out.println("-->> FeatureMapEntry (" + i + ") -> feature:" + name + " - value:" + oid
-                + " - metaId: " + metaId);
+            // System.out.println("-->> FeatureMapEntry (" + i + ") -> feature:" + name + " - value:" + oid
+            // + " - metaId: " + metaId);
             ooObj obj = ooObj.create_ooObj(oid);
             obj.delete();
           }
           else
           {
             // different feature then.
-            System.out.println("-->> Hmmm delete() feature (" + i + ") -> feature:" + feature.getName() + " - value:"
-                + objects[i] + " ... nothing to do here.");
-            // cdoList.set(i, objects[i]);
+            if (TRACER_DEBUG.isEnabled())
+            {
+              TRACER_DEBUG.trace("-->> No process to delete() feature (" + i + ") -> feature:" + feature.getName()
+                  + " - value:" + objects[i] + " ... nothing to do here.");
+            }
           }
         }
       }
@@ -1408,6 +1198,97 @@ public class ObjyObject
   public void set_ooId(Class_Position position, ooId object)
   {
     classObject.set_ooId(position, object);
+  }
+
+  /**
+   * Return the CDOID for the ObjyObject, it will go up to the base revision, and return it's ID.
+   */
+  public CDOID getRevisionId()
+  {
+    ooId oid = objectId;
+
+    if (baseClassObject != null)
+    {
+      oid = baseClassObject.objectID();
+    }
+
+    return OBJYCDOIDUtil.getCDOID(oid);
+  }
+
+  /**
+   * Return the revision that satisfies the timeStamp and branchId constrains.
+   */
+  public ObjyObject getRevision(long timeStamp, int branchId)
+  {
+    ObjyObject objyRevision = null;
+    Session.getCurrent().setReturn_Class_Object(true);
+    // int numRevisions = (int) revisions.size();
+
+    // evaluate current first.
+    if (evaluateRevision(timeStamp, branchId, this))
+    {
+      return this;
+    }
+
+    // if we don't have other revisions.
+    if (!lastRevisionRel.exists())
+    {
+      return null;
+    }
+    else
+    {
+      @SuppressWarnings("unchecked")
+      Iterator<Class_Object> itr = revisionsRel.get_iterator();
+      while (itr.hasNext())
+      {
+        objyRevision = new ObjyObject(itr.next());
+        if (evaluateRevision(timeStamp, branchId, objyRevision))
+        {
+          return objyRevision;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * return true if the objyRevision satisfies the constrains.
+   */
+  protected boolean evaluateRevision(long timeStamp, int branchId, ObjyObject objyRevision)
+  {
+    // check the branchId first.
+    if (objyRevision.getBranchId() == branchId)
+    {
+      long revisedTS = objyRevision.getRevisedTime();
+      if (timeStamp != 0)
+      {
+        long creationTS = objyRevision.getCreationTime();
+        if (creationTS <= timeStamp && (revisedTS == 0 || revisedTS >= timeStamp))
+        {
+          return true;
+        }
+      }
+      else if (revisedTS == 0) // return the latest version in that branch.
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public void detach(int version, CDOBranch branch, long timeStamp)
+  {
+    ObjyClass objyClass = ObjySchema.getObjyClass(ObjyBase.CLASS_NAME);
+    Class_Object detachedClassObject = Class_Object.new_persistent_object(objyClass.getASClass(), objectId, false);
+    ObjyObject detachedObjyObject = new ObjyObject(detachedClassObject);
+
+    detachedObjyObject.setVersion(-(version + 1));
+    detachedObjyObject.setBranchId(branch.getID());
+    detachedObjyObject.setCreationTime(timeStamp);
+
+    // add it to the revisions.
+    addToRevisions(detachedObjyObject);
   }
 
 }

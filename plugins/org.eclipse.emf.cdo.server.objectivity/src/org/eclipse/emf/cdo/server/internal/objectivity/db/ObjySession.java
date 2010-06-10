@@ -42,7 +42,7 @@ public class ObjySession extends Session
 
   public ObjySession(String name, ConcurrentHashMap<String, ObjySession> pool, ObjyConnection objyConnection)
   {
-    super(600, 1000);
+    super(objyConnection.getMinSessionCacheSize(), objyConnection.getMaxSessionCacheSize());
     setThreadPolicy(oo.THREAD_POLICY_UNRESTRICTED);
     sessionName = name;
     sessionPool = pool;
@@ -84,11 +84,11 @@ public class ObjySession extends Session
     return sessionPool;
   }
 
-  public ObjyResourceList getResourceList()
+  public ObjyResourceList getResourceList(String repositoryName)
   {
     if (resourceList == null)
     {
-      resourceList = new ObjyResourceList(this, ObjyDb.getOrCreateResourceList());
+      resourceList = new ObjyResourceList(this, ObjyDb.getOrCreateResourceList(repositoryName));
     }
     return resourceList;
   }

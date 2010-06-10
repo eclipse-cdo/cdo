@@ -27,9 +27,9 @@ public class ObjyPropertyMapHandler
 {
   protected ooId propertyMapId;
 
-  public ObjyPropertyMapHandler()
+  public ObjyPropertyMapHandler(String repositoryName)
   {
-    propertyMapId = ObjyDb.getOrCreatePropertyMap();
+    propertyMapId = ObjyDb.getOrCreatePropertyMap(repositoryName);
   }
 
   /***

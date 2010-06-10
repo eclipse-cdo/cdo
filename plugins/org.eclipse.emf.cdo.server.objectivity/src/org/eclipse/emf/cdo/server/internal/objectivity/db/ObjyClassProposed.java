@@ -94,7 +94,7 @@ public class ObjyClassProposed
         // ooBaseClass.buildSchema();
         proposedooClass.add_base_class(com.objy.as.app.d_Module.LAST, // Position
             d_Access_Kind.d_PUBLIC, // Access kind
-            ObjyBase.ClassName); // Base class name
+            ObjyBase.CLASS_NAME); // Base class name
 
       }
     }

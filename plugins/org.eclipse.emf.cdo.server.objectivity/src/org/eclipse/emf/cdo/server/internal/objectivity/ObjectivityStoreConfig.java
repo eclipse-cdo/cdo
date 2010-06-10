@@ -25,6 +25,10 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
 
   FdManager fdManager = new FdManager();
 
+  private int sessionMinCacheSize = 0;
+
+  private int sessionMaxCacheSize = 0;
+
   public ObjectivityStoreConfig()
   {
     // fdManager.deleteFD();
@@ -89,6 +93,10 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
     String fdNumber = fdConfig.getAttribute("fdNumber"); //$NON-NLS-1$
     String pageSize = fdConfig.getAttribute("pageSize"); //$NON-NLS-1$
 
+    // Session Cache data.
+    sessionMinCacheSize = getIntegerValue(fdConfig.getAttribute("SessionMinCacheSize"), 0); //$NON-NLS-1$
+    sessionMaxCacheSize = getIntegerValue(fdConfig.getAttribute("SessionMaxCacheSize"), 0); //$NON-NLS-1$
+
     fdManager.setFdName(fdName);
     fdManager.setFdDirPath(fdDirPath);
     fdManager.setFdNumber(fdNumber);
@@ -96,5 +104,25 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
     fdManager.setLockServerHost(lockServerHost);
     fdManager.setPageSize(pageSize);
 
+  }
+
+  private int getIntegerValue(String str, int defaultValue)
+  {
+    if (str.isEmpty())
+    {
+      return defaultValue;
+    }
+
+    return new Integer(str).intValue();
+  }
+
+  public int getSessionMinCacheSize()
+  {
+    return sessionMinCacheSize;
+  }
+
+  public int getSessionMaxCacheSize()
+  {
+    return sessionMaxCacheSize;
   }
 }

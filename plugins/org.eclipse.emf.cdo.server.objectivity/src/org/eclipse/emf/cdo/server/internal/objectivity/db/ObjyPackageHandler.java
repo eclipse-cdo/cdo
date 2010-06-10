@@ -48,20 +48,16 @@ public class ObjyPackageHandler
 
   private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyPackageHandler.class);
 
-  // private static final ContextTracer TRACER_ERROR = new ContextTracer(OM.ERROR, ObjyPackageHandler.class);
-
   private static final ContextTracer TRACER_INFO = new ContextTracer(OM.INFO, ObjyPackageHandler.class);
 
   protected ooId packageMapId;
 
-  // private ObjectivityStore store = null;
-
   private boolean zipped = true;
 
-  public ObjyPackageHandler()
+  public ObjyPackageHandler(String repositoryName)
   {
     // this.store = store;
-    packageMapId = ObjyDb.getOrCreatePackageMap();
+    packageMapId = ObjyDb.getOrCreatePackageMap(repositoryName);
   }
 
   /***

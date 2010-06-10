@@ -502,7 +502,6 @@ public class FdManager
     {
       dbObj = (ooDBObj)itr.next();
       dbList.add(dbObj);
-      // if (dbObj.getName().equals(ObjyDb.CONFIGDB_NAME))
       {
         Iterator<?> contItr = dbObj.contains();
         while (contItr.hasNext())
@@ -511,7 +510,6 @@ public class FdManager
         }
       }
     }
-    // itr.close();
 
     for (ooContObj cont : contList)
     {

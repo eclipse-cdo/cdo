@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -21,7 +20,6 @@ import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.clustering.ObjyPlacementManager;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyCommitInfoHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyConnection;
-import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyPackageHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyPropertyMapHandler;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
@@ -31,15 +29,12 @@ import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyStoreInfo;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
 import org.eclipse.emf.cdo.server.objectivity.IObjectivityStore;
 import org.eclipse.emf.cdo.server.objectivity.IObjectivityStoreConfig;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.LongIDStore;
 import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
-
-import org.eclipse.emf.ecore.EClass;
 
 import com.objy.db.app.Connection;
 
@@ -103,6 +98,8 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     // the caller already used the StoreConfig to open the connection
     // to the FD so, get the current here.
     objyConnection = ObjyConnection.INSTANCE;
+    objyConnection.setSessionMinCacheSize(storeConfig.getSessionMinCacheSize());
+    objyConnection.setSessionMaxCacheSize(storeConfig.getSessionMaxCacheSize());
 
     // -----------------------------------------------------------------------
     // Initialize schema as needed, and also any other config information
@@ -125,13 +122,18 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
     try
     {
+      String repositoryName = getRepository().getName();
       // check if we initialized the store for the first time.
       {
-        ObjyScope objyScope = new ObjyScope(ObjyDb.CONFIGDB_NAME, ObjyDb.DEFAULT_CONT_NAME);
+        // we have one-to-one mapping between a store and a repository. In Objectivity, we
+        // can still use one federation to store multiple repository, each will have its
+        // own ObjyStoreInfo object in the default container.
+        ObjyScope objyScope = new ObjyScope(repositoryName, ObjyDb.DEFAULT_CONT_NAME);
         ObjyStoreInfo objyStoreInfo = null;
         try
         {
           objyStoreInfo = (ObjyStoreInfo)objyScope.lookupObject(ObjyDb.OBJYSTOREINFO_NAME);
+          creationTime = objyStoreInfo.getCreationTime();
         }
         catch (Exception ex)
         {
@@ -147,13 +149,13 @@ public class ObjectivityStore extends Store implements IObjectivityStore
       }
 
       // This is used for the package storage, it could be lazily done though!!! (verify)
-      ObjyScope.insureScopeExist(objySession, ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
-      // make sure we have the root resource created.
-      ObjyDb.getOrCreateResourceList();
+      // ObjyScope.insureScopeExist(objySession, ObjyDb.CONFIGDB_NAME, ObjyDb.PACKAGESTORE_CONT_NAME);
 
-      objyCommitInfoHandler = new ObjyCommitInfoHandler(getRepository().getName());
-      objyPropertyMapHandler = new ObjyPropertyMapHandler();
-      objyPackageHandler = new ObjyPackageHandler();
+      // make sure we have the root resource created.
+      // ObjyDb.getOrCreateResourceList();
+      objyCommitInfoHandler = new ObjyCommitInfoHandler(repositoryName);
+      objyPropertyMapHandler = new ObjyPropertyMapHandler(repositoryName);
+      objyPackageHandler = new ObjyPackageHandler(repositoryName);
 
       objySession.commit();
 
@@ -173,12 +175,23 @@ public class ObjectivityStore extends Store implements IObjectivityStore
   @Override
   protected IStoreAccessor createReader(ISession session)
   {
+    // System.out
+    // .println(">>>>IS:<<<< ObjectivityStore.createRead() - " + (session == null ? "null" : session.toString()));
     return new ObjectivityStoreAccessor(this, session);
   }
 
   @Override
   protected IStoreAccessor createWriter(ITransaction transaction)
   {
+    // if (transaction == null)
+    // {
+    // System.out.println(">>>>IS:<<<< ObjectivityStore.createWriter() - transaction: null");
+    // }
+    // else
+    // {
+    // System.out.println(">>>>IS:<<<< ObjectivityStore.createWriter() - "
+    // + (transaction.getSession() == null ? "null" : transaction.getSession().toString()));
+    // }
     return new ObjectivityStoreAccessor(this, transaction);
   }
 
@@ -251,7 +264,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
     try
     {
-      if (!com.objy.db.app.Session.getCurrent().getFD().hasDB(getRepository().getName()))
+      if (!objySession.getFD().hasDB(getRepository().getName()))
       {
         // Create the repo DB.
         ObjyScope.insureScopeExist(objySession, getRepository().getName(), ObjyDb.DEFAULT_CONT_NAME);
@@ -290,19 +303,6 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     // writerPool.dispose();
     super.doDeactivate();
 
-  }
-
-  public InternalCDORevision createRevision(ObjyObject objyObject, CDOID id)
-  {
-    EClass eClass = ObjySchema.getEClass(this, objyObject.objyClass());
-
-    if (eClass == null)
-    {
-      System.out.println("OBJY: Can't find eClass for id:" + id);
-      return null;
-    }
-
-    return super.createRevision(eClass, id);
   }
 
   public Map<String, String> getPropertyValues(Set<String> names)

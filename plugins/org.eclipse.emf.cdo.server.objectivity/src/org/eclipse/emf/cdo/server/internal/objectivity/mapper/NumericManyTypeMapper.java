@@ -342,15 +342,17 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
 
     // long size = (int)getArray(objyObject, feature).size();
     // TODO - check boundaries...
+    int start = 0;
+    int end = 0;
 
-    if (targetIndex < sourceIndex)
+    if (sourceIndex > targetIndex)
     {
-      for (int i = targetIndex; i < sourceIndex; i++)
+      for (int i = sourceIndex; i > targetIndex; i--)
       {
-        setValue(objyObject, feature, i + 1, getValue(objyObject, feature, i));
+        setValue(objyObject, feature, i, getValue(objyObject, feature, i - 1));
       }
     }
-    if (targetIndex > sourceIndex)
+    else if (sourceIndex < targetIndex)
     {
       for (int i = sourceIndex; i < targetIndex; i++)
       {
@@ -359,6 +361,7 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
     }
     // set the saved value at target
     setValue(objyObject, feature, targetIndex, value);
+
   }
 
   public void initialize(Class_Object classObject, EStructuralFeature feature)

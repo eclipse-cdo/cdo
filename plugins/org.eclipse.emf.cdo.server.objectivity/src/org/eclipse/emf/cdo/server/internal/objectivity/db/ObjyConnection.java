@@ -61,6 +61,10 @@ public class ObjyConnection
 
   private ReentrantLock lock = new ReentrantLock();
 
+  private int sessionMinCacheSize = 600;
+
+  private int sessionMaxCacheSize = 1000;
+
   public ObjyConnection()
   {
     readPool = new ConcurrentHashMap<String, ObjySession>(20);
@@ -84,6 +88,13 @@ public class ObjyConnection
 
   private void connect()
   {
+
+    if (TRACER_DEBUG.isEnabled())
+    {
+      TRACER_DEBUG.trace(" SessionMinCacheSize: " + sessionMinCacheSize);
+      TRACER_DEBUG.trace(" SessionMaxCacheSize: " + sessionMaxCacheSize);
+    }
+
     if (!isConnected)
     {
       try
@@ -96,7 +107,10 @@ public class ObjyConnection
               "c:\\data", // String logDirPath,
               "MainLog.txt"// String mainLogFileName
           );
-          System.out.println("OBJY: creating new Connection");
+          if (TRACER_DEBUG.isEnabled())
+          {
+            TRACER_DEBUG.trace(" creating new Connection");
+          }
           connection = Connection.open(fdName, oo.openReadWrite);
           connection.useContextClassLoader(true);
 
@@ -363,5 +377,31 @@ public class ObjyConnection
       }
     }
     pool.clear();
+  }
+
+  public void setSessionMinCacheSize(int sessionMinCacheSize)
+  {
+    if (sessionMinCacheSize > this.sessionMinCacheSize)
+    {
+      this.sessionMinCacheSize = sessionMinCacheSize;
+    }
+  }
+
+  public void setSessionMaxCacheSize(int sessionMaxCacheSize)
+  {
+    if (sessionMaxCacheSize > this.sessionMaxCacheSize)
+    {
+      this.sessionMaxCacheSize = sessionMaxCacheSize;
+    }
+  }
+
+  public int getMinSessionCacheSize()
+  {
+    return sessionMinCacheSize;
+  }
+
+  public int getMaxSessionCacheSize()
+  {
+    return sessionMaxCacheSize;
   }
 }

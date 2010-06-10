@@ -75,7 +75,7 @@ public class ObjyResourceList
       Proposed_Class propClass = top_mod.propose_new_class(ObjyResourceList.className);
 
       propClass.add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC,
-          ObjyBase.ClassName /* "ooObj" */);
+          ObjyBase.CLASS_NAME /* "ooObj" */);
 
       propClass.add_ref_attribute(com.objy.as.app.d_Module.LAST, // Access kind
           d_Access_Kind.d_PUBLIC, // Access kind
@@ -167,6 +167,7 @@ public class ObjyResourceList
     for (int i = 0; i < size; i++)
     {
       ObjyObject resource = getResource(i);
+      int v = resource.getVersion();
       CDOID resourceFolderId = (CDOID)resource.getEContainer();
       String resourceName = ObjyResourceList.getResourceName(resource);
       if (resourceFolderId != null && resourceFolderId.equals(folderId) && resourceName != null
@@ -193,8 +194,8 @@ public class ObjyResourceList
     Class_Object classObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(ObjyResourceList.className)
         .getASClass(), nearOid, false);
     Class_Position position = classObject.position_in_class(ObjyResourceList.Attribute_arrayName);
-    Class_Object arrayClassObject = Class_Object.new_persistent_object(
-        ObjySchema.getTopModule().resolve_class(ObjyArrayListId.className), classObject.objectID(), false);
+    Class_Object arrayClassObject = Class_Object.new_persistent_object(ObjySchema.getTopModule().resolve_class(
+        ObjyArrayListId.className), classObject.objectID(), false);
     // ooId arrayOid = arrayClassObject.objectID();
 
     classObject.set_ooId(position, arrayClassObject.objectID());

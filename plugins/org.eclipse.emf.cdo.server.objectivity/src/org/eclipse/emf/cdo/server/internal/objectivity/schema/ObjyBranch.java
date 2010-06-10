@@ -20,6 +20,12 @@ import java.util.Iterator;
 /**
  * @author Ibrahim Sallam
  */
+/**
+ * @author Ibrahim Sallam
+ */
+/**
+ * @author Ibrahim Sallam
+ */
 public class ObjyBranch extends ooObj
 {
   protected int branchId;
@@ -32,12 +38,37 @@ public class ObjyBranch extends ooObj
 
   protected ooTreeSetX revisions;
 
-  public ObjyBranch(int id, BranchInfo branchInfo)
+  public static ObjyBranch create(ooObj clusterObj, int branchId, int baseBranchId, String branchName, long timeStamp)
+  {
+    ObjyBranch objyBranch = new ObjyBranch(branchId, baseBranchId, branchName, timeStamp);
+    clusterObj.cluster(objyBranch);
+    objyBranch.createRevisionsSet();
+    return objyBranch;
+  }
+
+  public static ObjyBranch create(ooObj clusterObj, int branchId, BranchInfo branchInfo)
+  {
+    ObjyBranch objyBranch = new ObjyBranch(branchId, branchInfo);
+    clusterObj.cluster(objyBranch);
+    objyBranch.createRevisionsSet();
+    return objyBranch;
+  }
+
+  private ObjyBranch(int id, BranchInfo branchInfo)
   {
     branchId = id;
     baseBranchId = branchInfo.getBaseBranchID();
     baseBranchTimeStamp = branchInfo.getBaseTimeStamp();
     branchName = branchInfo.getName();
+    revisions = null;
+  }
+
+  private ObjyBranch(int branchId, int baseBranchId, String branchName, long timeStamp)
+  {
+    this.branchId = branchId;
+    this.baseBranchId = baseBranchId;
+    baseBranchTimeStamp = timeStamp;
+    this.branchName = branchName;
     revisions = null;
   }
 
@@ -65,7 +96,7 @@ public class ObjyBranch extends ooObj
     return branchName;
   }
 
-  public void addRevision(Object objyObject)
+  public void addRevision(ooObj anObj)
   {
     markModified();
     if (revisions == null) // we'll only allocate if needed.
@@ -73,7 +104,7 @@ public class ObjyBranch extends ooObj
       revisions = new ooTreeSetX();
       this.cluster(revisions);
     }
-    revisions.add(objyObject);
+    revisions.add(anObj);
   }
 
   public int numberOfRevisions()
@@ -85,6 +116,12 @@ public class ObjyBranch extends ooObj
   public Iterator<?> getRevisions()
   {
     fetch();
+    // // we don't want to allocate the ooTreeSetX object if the branch is empty.
+    // if (revisions == null)
+    // {
+    // return new ArrayList<Object>().iterator();
+    // }
+
     return revisions.iterator();
   }
 
@@ -99,6 +136,15 @@ public class ObjyBranch extends ooObj
   {
     markModified();
     return revisions.remove(anObject);
+  }
+
+  private void createRevisionsSet()
+  {
+    if (revisions == null) // we'll only allocate if needed.
+    {
+      revisions = new ooTreeSetX();
+      this.cluster(revisions);
+    }
   }
 
 }

@@ -31,7 +31,9 @@
 				fdFileHost = "_DEFAULT_"
 				fdNumber = "5555"
 				dbDirPath = "_DEFAULT_"
-				pageSize = "_DEFAULT_">
+				pageSize = "_DEFAULT_"
+				SessionMinCacheSize = "600"
+				SessionMaxCacheSize = "1000">
 			</fdConfig>
 		</store>
 	</repository>

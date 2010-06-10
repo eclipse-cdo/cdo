@@ -19,4 +19,8 @@ public interface IObjectivityStoreConfig extends Serializable
 
   void resetFD();
 
+  int getSessionMinCacheSize();
+
+  int getSessionMaxCacheSize();
+
 }

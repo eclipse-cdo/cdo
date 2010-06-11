@@ -11,10 +11,11 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.mapper;
 
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyFeatureMapEntry;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyFeatureMapArrayList;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyFeatureMapEntry;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -136,7 +137,7 @@ public class FeatureMapTypeMapper extends BasicTypeMapper implements IManyTypeMa
   {
     // throw new UnsupportedOperationException("Implement me!!");
     int size = (int)getList(objyObject, feature).size();
-    if (chunkSize != -1)
+    if (chunkSize != CDORevision.UNCHUNKED)
     {
       size = Math.min(size, chunkSize);
     }

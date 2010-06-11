@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.mapper;
 
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
@@ -304,7 +305,7 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
   {
     int size = size(objyObject, feature);
 
-    if (chunkSize != -1)
+    if (chunkSize != CDORevision.UNCHUNKED)
     {
       size = Math.min(size, chunkSize);
     }

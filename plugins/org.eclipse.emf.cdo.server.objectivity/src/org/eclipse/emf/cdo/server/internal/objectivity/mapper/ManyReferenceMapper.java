@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.mapper;
 
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyArrayListId;
@@ -268,7 +269,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
   {
     int size = size(objyObject, feature);
 
-    if (chunkSize != -1)
+    if (chunkSize != CDORevision.UNCHUNKED)
     {
       size = Math.min(size, chunkSize);
     }
@@ -279,7 +280,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
 
     if (list != null)
     {
-      ooIds = list.getAll(index, chunkSize);
+      ooIds = list.getAll(index, size);
     }
     else
     {

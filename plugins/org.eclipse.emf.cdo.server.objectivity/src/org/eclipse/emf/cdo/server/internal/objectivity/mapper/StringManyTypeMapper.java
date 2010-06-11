@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.mapper;
 
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyArrayListString;
@@ -114,12 +115,12 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
   {
     int size = size(objyObject, feature);
 
-    if (chunkSize != -1)
+    if (chunkSize != CDORevision.UNCHUNKED)
     {
       size = Math.min(size, chunkSize);
     }
 
-    String[] strings = getList(objyObject, feature).getAll(index, chunkSize);
+    String[] strings = getList(objyObject, feature).getAll(index, size);
 
     Object[] objects = new Object[strings.length];
 
@@ -169,8 +170,8 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
   public void initialize(Class_Object classObject, EStructuralFeature feature)
   {
     Class_Position position = classObject.type_of().position_in_class(getAttributeName(feature));
-    Class_Object newClassObject = Class_Object.new_persistent_object(
-        ObjySchema.getObjyClass(ObjyArrayListString.ClassName).getASClass(), classObject.objectID(), false);
+    Class_Object newClassObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(
+        ObjyArrayListString.ClassName).getASClass(), classObject.objectID(), false);
     classObject.set_ooId(position, newClassObject.objectID());
     ObjyArrayListString.initObject(newClassObject);
   }

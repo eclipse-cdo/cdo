@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
 
@@ -103,7 +104,7 @@ public class ObjyArrayListId extends ObjyArrayList<ooId>
     long size = size();
     // System.out.println("ooArrayListId.getAll() - size:" + size);
 
-    if (chunkSize != -1)
+    if (chunkSize != CDORevision.UNCHUNKED)
     {
       size = Math.min(size, chunkSize);
     }

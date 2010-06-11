@@ -1057,21 +1057,23 @@ public class ObjyObject
 
   protected void checkSession()
   {
-    if (TRACER_DEBUG.isEnabled())
-    {
-      try
-      {
-        if (!classObject.getPersistor().getSession().isOpen())
-        {
-          throw new Exception("Attempt to work on an object " + objectId.toString() + " without a trx. [Session: "
-              + classObject.getPersistor().getSession() + "]");
-        }
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      } // for debugging.
-    }
+    // 100610 - IS: disabled for now, since we have an issue with oojava_epl.jar "getSession()"
+    // is not available.
+    // if (TRACER_DEBUG.isEnabled())
+    // {
+    // try
+    // {
+    // if (!classObject.getPersistor().getSession().isOpen())
+    // {
+    // throw new Exception("Attempt to work on an object " + objectId.toString() + " without a trx. [Session: "
+    // + classObject.getPersistor().getSession() + "]");
+    // }
+    // }
+    // catch (Exception ex)
+    // {
+    // ex.printStackTrace();
+    // } // for debugging.
+    // }
   }
 
   /***

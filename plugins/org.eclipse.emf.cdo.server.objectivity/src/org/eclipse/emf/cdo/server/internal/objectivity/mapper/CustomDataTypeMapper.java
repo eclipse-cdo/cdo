@@ -12,8 +12,6 @@ package org.eclipse.emf.cdo.server.internal.objectivity.mapper;
 
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import com.objy.as.app.Class_Position;
@@ -37,15 +35,21 @@ public class CustomDataTypeMapper extends StringTypeMapper
     String_Value stringValue = objyObject.get_string(position);
     boolean isNull = objyObject.get_numeric(nullPosition).booleanValue();
 
-    EDataType dataType = (EDataType)feature.getEType();
-    EFactory factory = dataType.getEPackage().getEFactoryInstance();
-    Object value = null;
-    if (!isNull)
+    // EDataType dataType = (EDataType)feature.getEType();
+    // EFactory factory = dataType.getEPackage().getEFactoryInstance();
+    // Object value = null;
+    // if (!isNull)
+    // {
+    // value = factory.createFromString(dataType, stringValue.toString());
+    // }
+    //
+    // return value;
+    if (isNull)
     {
-      value = factory.createFromString(dataType, stringValue.toString());
+      return null;
     }
 
-    return value;
+    return stringValue.toString();
   }
 
   @Override
@@ -57,13 +61,13 @@ public class CustomDataTypeMapper extends StringTypeMapper
     String_Value stringValue = objyObject.get_string(position);
     stringValue.update();
 
-    EDataType dataType = (EDataType)feature.getEType();
-    EFactory factory = dataType.getEPackage().getEFactoryInstance();
-    String valueAsString = factory.convertToString(dataType, newValue);
-
+    // EDataType dataType = (EDataType)feature.getEType();
+    // EFactory factory = dataType.getEPackage().getEFactoryInstance();
+    // String valueAsString = factory.convertToString(dataType, newValue);
+    //
     Numeric_Value isNullValue = newValue == null ? numericTrue : numericFalse;
-    String strValue = newValue == null ? null : valueAsString;
-    stringValue.set((strValue == null ? "" : strValue));
+    // String strValue = newValue == null ? null : valueAsString;
+    stringValue.set((newValue == null ? "" : newValue.toString()));
     objyObject.set_numeric(nullPosition, isNullValue);
   }
 

@@ -108,7 +108,7 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
 
   private int getIntegerValue(String str, int defaultValue)
   {
-    if (str.isEmpty())
+    if (str.length() == 0) // once we move to JDK 6 we can use isEmpty().
     {
       return defaultValue;
     }

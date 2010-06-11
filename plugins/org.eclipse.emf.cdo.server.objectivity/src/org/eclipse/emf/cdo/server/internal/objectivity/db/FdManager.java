@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 
+import org.eclipse.net4j.util.io.TMPUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import com.objy.db.app.Session;
@@ -46,7 +47,7 @@ public class FdManager
 
   private String fdFileHost = DEFAULT_VALUE;
 
-  private String fdDirPath = "c:\\data";
+  private String fdDirPath = null;
 
   private String lockServerHost = DEFAULT_VALUE;
 
@@ -54,16 +55,27 @@ public class FdManager
 
   private String pageSize = DEFAULT_VALUE;
 
-  private String fdFilePath = fdDirPath + "\\" + fdName + ".fdb";
+  private String fdFilePath = null;
 
-  private String bootFilePath = fdDirPath + "\\" + fdName + ".boot";
+  private String bootFilePath = null;
 
   private boolean initialized = false;
 
   public void initialize(boolean reset)
   {
-    fdFilePath = fdDirPath + "\\" + fdName + ".fdb";
-    bootFilePath = fdDirPath + "\\" + fdName + ".boot";
+    if (fdDirPath == null)
+    {
+      File dataFolder = TMPUtil.createTempFolder("Objy", "data");
+      fdDirPath = dataFolder.getAbsolutePath();
+    }
+    if (fdFilePath == null)
+    {
+      fdFilePath = fdDirPath + File.separator + fdName + ".fdb";
+    }
+    if (bootFilePath == null)
+    {
+      bootFilePath = fdDirPath + File.separator + fdName + ".boot";
+    }
 
     if (!initialized)
     {
@@ -274,33 +286,36 @@ public class FdManager
   private boolean fdExists()
   {
     boolean bRet = false;
-    Process proc = null;
 
-    String command = "oochange" + " -notitle " + bootFilePath;
-    TRACER_DEBUG.trace("Checking if FD: '" + bootFilePath + "' exists.");
-
-    try
-    {
-      proc = Runtime.getRuntime().exec(command);
-      if (proc.waitFor() != 0)
-      {
-        dumpStream(proc.getErrorStream());
-      }
-      else
-      {
-        dumpStream(proc.getInputStream());
-        bRet = true;
-      }
-    }
-    catch (IOException e)
-    {
-      e.printStackTrace();
-    }
-    catch (InterruptedException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    File file = new File(bootFilePath);
+    bRet = file.exists();
+    // Process proc = null;
+    //
+    // String command = "oochange" + " -notitle " + bootFilePath;
+    // TRACER_DEBUG.trace("Checking if FD: '" + bootFilePath + "' exists.");
+    //
+    // try
+    // {
+    // proc = Runtime.getRuntime().exec(command);
+    // if (proc.waitFor() != 0)
+    // {
+    // dumpStream(proc.getErrorStream());
+    // }
+    // else
+    // {
+    // dumpStream(proc.getInputStream());
+    // bRet = true;
+    // }
+    // }
+    // catch (IOException e)
+    // {
+    // e.printStackTrace();
+    // }
+    // catch (InterruptedException e)
+    // {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // }
 
     return bRet;
   }
@@ -312,7 +327,7 @@ public class FdManager
     boolean bRet = false;
     Process proc = null;
 
-    String command = "ooschemaupgrade" + " -infile config\\schema.txt " + bootFilePath;
+    String command = "ooschemaupgrade" + " -infile config" + File.separator + "schema.txt " + bootFilePath;
     TRACER_DEBUG.trace("Loading schema to FD: '" + bootFilePath + "'.");
 
     try
@@ -472,7 +487,7 @@ public class FdManager
 
   public void configure(String name)
   {
-    fdDirPath = fdDirPath + "\\" + name;
+    fdDirPath = fdDirPath + File.separator + name;
     // insure that path exist.
     File dir = new File(fdDirPath);
     if (!dir.exists())

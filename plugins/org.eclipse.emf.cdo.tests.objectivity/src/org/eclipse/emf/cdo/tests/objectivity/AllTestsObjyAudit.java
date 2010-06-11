@@ -12,9 +12,6 @@
 package org.eclipse.emf.cdo.tests.objectivity;
 
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.tests.AuditTest;
-import org.eclipse.emf.cdo.tests.AuditTestSameSession;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import java.util.List;
@@ -26,18 +23,17 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public class AllTestsObjyNonAudit extends ObjyDBConfigs
+public class AllTestsObjyAudit extends ObjyDBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsObjyNonAudit().getTestSuite("CDO Tests (ObjectivityStore - non-audit mode)"); //$NON-NLS-1$
+    return new AllTestsObjyAudit().getTestSuite("CDO Tests (ObjectivityStore - audit mode)"); //$NON-NLS-1$
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    // ObjyStoreRepositoryConfig repoConfig = ObjyNonAuditConfig.INSTANCE;
-    ObjyStoreRepositoryConfig repoConfig = new ObjyNonAuditConfig("ObjectivityStore: (non-audit)"); //$NON-NLS-1$
+    ObjyStoreRepositoryConfig repoConfig = ObjyAuditConfig.INSTANCE;
     addScenario(parent, COMBINED, repoConfig, JVM, NATIVE);
   }
 
@@ -45,25 +41,12 @@ public class AllTestsObjyNonAudit extends ObjyDBConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
     super.initTestClasses(testClasses);
-
-    // non-audit mode - remove audit tests
-    testClasses.remove(AuditTest.class);
-    testClasses.remove(AuditTestSameSession.class);
-    testClasses.remove(Bugzilla_252214_Test.class);
-    // non-branching mode - remove branch tests.
-    // testClasses.remove(BranchingTest.class);
-    // testClasses.remove(BranchingTestSameSession.class);
-
-    // Objy has a deadlock issue which prevent this test from completing.
-    // testClasses.remove(ExternalReferenceTest.class);
-    // testClasses.remove(XATransactionTest.class);
-
   }
 
   @Override
   protected boolean hasAuditSupport()
   {
-    return false;
+    return true;
   }
 
   @Override
@@ -72,14 +55,13 @@ public class AllTestsObjyNonAudit extends ObjyDBConfigs
     return false;
   }
 
-  public static class ObjyNonAuditConfig extends ObjyStoreRepositoryConfig
+  public static class ObjyAuditConfig extends ObjyStoreRepositoryConfig
   {
     private static final long serialVersionUID = 1L;
 
-    public static final AllTestsObjyNonAudit.ObjyNonAuditConfig INSTANCE = new ObjyNonAuditConfig(
-        "ObjectivityStore: (non-audit)"); //$NON-NLS-1$
+    public static final AllTestsObjyAudit.ObjyAuditConfig INSTANCE = new ObjyAuditConfig("ObjectivityStore: (audit)"); //$NON-NLS-1$
 
-    public ObjyNonAuditConfig(String name)
+    public ObjyAuditConfig(String name)
     {
       super(name);
 
@@ -91,7 +73,7 @@ public class AllTestsObjyNonAudit extends ObjyDBConfigs
     protected void initRepositoryProperties(Map<String, String> props)
     {
       super.initRepositoryProperties(props);
-      props.put(IRepository.Props.SUPPORTING_AUDITS, "false");
+      props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
       props.put(IRepository.Props.SUPPORTING_BRANCHES, "false");
     }
   }

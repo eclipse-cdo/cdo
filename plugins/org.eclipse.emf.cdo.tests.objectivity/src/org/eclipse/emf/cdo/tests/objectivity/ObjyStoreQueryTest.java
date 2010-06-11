@@ -12,18 +12,17 @@
 package org.eclipse.emf.cdo.tests.objectivity;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOQuery;
 
 import org.eclipse.emf.internal.cdo.query.CDOQueryResultIteratorImpl;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
-import org.eclipse.net4j.util.tests.AbstractOMTest.PollingTimeOuter;
 
 import java.util.HashSet;
 import java.util.List;
@@ -36,7 +35,7 @@ public class ObjyStoreQueryTest extends AbstractCDOTest
 {
   public void testObjyStoreBasicQuery() throws Exception
   {
-    //skipUnlessConfig(MEM);
+    // skipUnlessConfig(MEM);
 
     Set<Object> objects = new HashSet<Object>();
     CDOSession session = openSession();
@@ -71,7 +70,7 @@ public class ObjyStoreQueryTest extends AbstractCDOTest
 
   public void testObjyStoreBasicQuery_EClassParameter() throws Exception
   {
-    //skipUnlessConfig(MEM);
+    // skipUnlessConfig(MEM);
 
     Set<Object> objects = new HashSet<Object>();
     CDOSession session = openSession();
@@ -106,53 +105,53 @@ public class ObjyStoreQueryTest extends AbstractCDOTest
 
   public void testObjyStoreQueryCancel_successful() throws Exception
   {
-    //skipUnlessConfig(MEM);
+    // skipUnlessConfig(MEM);
 
-	    CDOTransaction transaction = initialize(500);
-	    CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
-	    query.setParameter("sleep", 1000L);
-	    final CloseableIterator<Object> result = query.getResultAsync(Object.class);
-	    result.close();
+    CDOTransaction transaction = initialize(500);
+    CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
+    query.setParameter("sleep", 1000L);
+    final CloseableIterator<Object> result = query.getResultAsync(Object.class);
+    result.close();
 
-	    new PollingTimeOuter()
-	    {
-	      @Override
-	      protected boolean successful()
-	      {
-	        return !getRepository().getQueryManager().isRunning(((CDOQueryResultIteratorImpl<?>)result).getQueryID());
-	      }
-	    }.assertNoTimeOut();
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return !getRepository().getQueryManager().isRunning(((CDOQueryResultIteratorImpl<?>)result).getQueryID());
+      }
+    }.assertNoTimeOut();
 
-	    CDOSession session = transaction.getSession();
-	    transaction.close();
-	    session.close();
+    CDOSession session = transaction.getSession();
+    transaction.close();
+    session.close();
   }
 
   public void testObjyStoreQueryCancel_ViewClose() throws Exception
   {
-    //skipUnlessConfig(MEM);
+    // skipUnlessConfig(MEM);
 
-	    CDOTransaction transaction = initialize(500);
-	    CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
-	    query.setParameter("sleep", 1000L);
-	    final CloseableIterator<Object> result = query.getResultAsync(Object.class);
-	    CDOSession session = transaction.getSession();
-	    transaction.close();
-	    new PollingTimeOuter()
-	    {
-	      @Override
-	      protected boolean successful()
-	      {
-	        return !getRepository().getQueryManager().isRunning(((CDOQueryResultIteratorImpl<?>)result).getQueryID());
-	      }
-	    }.assertNoTimeOut();
+    CDOTransaction transaction = initialize(500);
+    CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
+    query.setParameter("sleep", 1000L);
+    final CloseableIterator<Object> result = query.getResultAsync(Object.class);
+    CDOSession session = transaction.getSession();
+    transaction.close();
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return !getRepository().getQueryManager().isRunning(((CDOQueryResultIteratorImpl<?>)result).getQueryID());
+      }
+    }.assertNoTimeOut();
 
-	    session.close();
+    session.close();
   }
 
   public void testObjyStoreQueryCancel_SessionClose() throws Exception
   {
-    //skipUnlessConfig(MEM);
+    // skipUnlessConfig(MEM);
 
     CDOTransaction transaction = initialize(500);
     CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
@@ -213,7 +212,14 @@ public class ObjyStoreQueryTest extends AbstractCDOTest
       resource1.getContents().add(category1);
     }
 
-    transaction.commit();
+    try
+    {
+      transaction.commit();
+    }
+    catch (CommitException ex)
+    {
+      ex.printStackTrace();
+    }
     return transaction;
   }
 }

@@ -12,9 +12,9 @@
 package org.eclipse.emf.cdo.tests.objectivity;
 
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.tests.AuditTest;
-import org.eclipse.emf.cdo.tests.AuditTestSameSession;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
+import org.eclipse.emf.cdo.tests.BranchingTest;
+import org.eclipse.emf.cdo.tests.BranchingTestSameSession;
+import org.eclipse.emf.cdo.tests.MergingTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import java.util.List;
@@ -26,18 +26,17 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public class AllTestsObjyNonAudit extends ObjyDBConfigs
+public class AllTestsObjyBranching extends ObjyDBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsObjyNonAudit().getTestSuite("CDO Tests (ObjectivityStore - non-audit mode)"); //$NON-NLS-1$
+    return new AllTestsObjyBranching().getTestSuite("CDO Tests (ObjectivityStore - branching mode)"); //$NON-NLS-1$
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    // ObjyStoreRepositoryConfig repoConfig = ObjyNonAuditConfig.INSTANCE;
-    ObjyStoreRepositoryConfig repoConfig = new ObjyNonAuditConfig("ObjectivityStore: (non-audit)"); //$NON-NLS-1$
+    ObjyStoreRepositoryConfig repoConfig = ObjyBranchingConfig.INSTANCE;
     addScenario(parent, COMBINED, repoConfig, JVM, NATIVE);
   }
 
@@ -46,40 +45,32 @@ public class AllTestsObjyNonAudit extends ObjyDBConfigs
   {
     super.initTestClasses(testClasses);
 
-    // non-audit mode - remove audit tests
-    testClasses.remove(AuditTest.class);
-    testClasses.remove(AuditTestSameSession.class);
-    testClasses.remove(Bugzilla_252214_Test.class);
-    // non-branching mode - remove branch tests.
-    // testClasses.remove(BranchingTest.class);
-    // testClasses.remove(BranchingTestSameSession.class);
-
-    // Objy has a deadlock issue which prevent this test from completing.
-    // testClasses.remove(ExternalReferenceTest.class);
-    // testClasses.remove(XATransactionTest.class);
-
+    // add branching tests for this testsuite
+    testClasses.add(BranchingTest.class);
+    testClasses.add(BranchingTestSameSession.class);
+    testClasses.add(MergingTest.class);
   }
 
   @Override
   protected boolean hasAuditSupport()
   {
-    return false;
+    return true;
   }
 
   @Override
   protected boolean hasBranchingSupport()
   {
-    return false;
+    return true;
   }
 
-  public static class ObjyNonAuditConfig extends ObjyStoreRepositoryConfig
+  public static class ObjyBranchingConfig extends ObjyStoreRepositoryConfig
   {
     private static final long serialVersionUID = 1L;
 
-    public static final AllTestsObjyNonAudit.ObjyNonAuditConfig INSTANCE = new ObjyNonAuditConfig(
-        "ObjectivityStore: (non-audit)"); //$NON-NLS-1$
+    public static final AllTestsObjyBranching.ObjyBranchingConfig INSTANCE = new ObjyBranchingConfig(
+        "ObjectivityStore: (branching)"); //$NON-NLS-1$
 
-    public ObjyNonAuditConfig(String name)
+    public ObjyBranchingConfig(String name)
     {
       super(name);
 
@@ -91,8 +82,8 @@ public class AllTestsObjyNonAudit extends ObjyDBConfigs
     protected void initRepositoryProperties(Map<String, String> props)
     {
       super.initRepositoryProperties(props);
-      props.put(IRepository.Props.SUPPORTING_AUDITS, "false");
-      props.put(IRepository.Props.SUPPORTING_BRANCHES, "false");
+      props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
+      props.put(IRepository.Props.SUPPORTING_BRANCHES, "true");
     }
   }
 }

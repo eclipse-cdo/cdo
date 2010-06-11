@@ -96,6 +96,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
   private Connection connection;
 
+  private ConnectionKeepAliveTask connectionKeepAliveTask;
+
   private IPreparedStatementCache statementCache;
 
   private Set<CDOID> newObjects = new HashSet<CDOID>();
@@ -488,7 +490,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   protected void doActivate() throws Exception
   {
     connection = getStore().getConnection();
-    getStore().getConnectionKeepAliveTimer().schedule(new ConnectionKeepAliveTask(),
+    connectionKeepAliveTask = new ConnectionKeepAliveTask();
+    getStore().getConnectionKeepAliveTimer().schedule(connectionKeepAliveTask,
         ConnectionKeepAliveTask.EXECUTION_PERIOD, ConnectionKeepAliveTask.EXECUTION_PERIOD);
 
     // TODO - make this configurable?
@@ -501,6 +504,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   protected void doDeactivate() throws Exception
   {
     LifecycleUtil.deactivate(statementCache);
+    connectionKeepAliveTask.cancel();
     DBUtil.close(connection);
     connection = null;
   }
@@ -901,7 +905,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
         stmt = connection.createStatement();
         stmt.executeQuery("SELECT 1 FROM " + CDODBSchema.PROPERTIES); //$NON-NLS-1$
       }
-      catch (SQLException ex)
+      catch (Exception ex) // Important: Do not throw any unchecked exceptions to the TimerThread!!!
       {
         OM.LOG.error("DB connection keep-alive failed", ex); //$NON-NLS-1$
       }

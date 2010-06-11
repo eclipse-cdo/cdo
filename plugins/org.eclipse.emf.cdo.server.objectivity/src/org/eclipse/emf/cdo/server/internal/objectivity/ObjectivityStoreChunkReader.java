@@ -42,14 +42,17 @@ public class ObjectivityStoreChunkReader extends StoreChunkReader implements IOb
   {
     CDOID cdoId = getRevision().getID();
     ObjyObject objyObject = getAccessor().getObject(cdoId);
+    ObjyObject objyRevision = objyObject.getRevisionByVersion(getRevision().getVersion());
 
-    for (Chunk chunk : getChunks())
+    List<Chunk> chunks = getChunks();
+
+    for (Chunk chunk : chunks)
     {
       int chunkStartIndex = chunk.getStartIndex();
       int chunkSize = chunk.size();
 
       // get the data from the feature.
-      Object[] objects = objyObject.fetch((ObjectivityStoreAccessor)getAccessor(), getFeature(), chunkStartIndex,
+      Object[] objects = objyRevision.fetch((ObjectivityStoreAccessor)getAccessor(), getFeature(), chunkStartIndex,
           chunkSize);
       // although we asked for a chunkSize we might get less.
       for (int i = 0; i < objects.length; i++)
@@ -57,7 +60,6 @@ public class ObjectivityStoreChunkReader extends StoreChunkReader implements IOb
         chunk.add(i, objects[i]);
       }
     }
-    return getChunks();
+    return chunks;
   }
-
 }

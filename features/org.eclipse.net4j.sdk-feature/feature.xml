@@ -62,14 +62,11 @@
 		<plugin id="org.eclipse.net4j.db.hsqldb.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.db.mysql.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.eclipse.net4j.db.postgresql.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-
-		<!--
+		<plugin id="javax.servlet.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.apache.commons.codec.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.apache.commons.logging.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.apache.commons.httpclient.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.apache.derby.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 		<plugin id="org.h2.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="javax.servlet.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		-->
 
 </feature>

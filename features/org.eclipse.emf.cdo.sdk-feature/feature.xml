@@ -33,11 +33,8 @@
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
 
-   <plugin
-         id="org.eclipse.emf.cdo.sdk"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
+   <plugin id="org.eclipse.emf.cdo.migrator" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.eclipse.emf.cdo.sdk" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <includes id="org.eclipse.emf.cdo" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.server" version="0.0.0"/>
@@ -45,14 +42,8 @@
    <includes id="org.eclipse.emf.cdo.server.objectivity" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.defs" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.doc" version="0.0.0"/>
-   <plugin id="org.eclipse.emf.cdo.migrator" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
-   <includes id="org.eclipse.emf.cdo.source" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.server.source" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.server.db.source" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.server.objectivity.source" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.defs.source" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.doc.source" version="0.0.0"/>
+   <includes id="org.eclipse.emf.cdo.sdk.source" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.server.hibernate.source" version="0.0.0"/>
    <plugin id="org.eclipse.emf.cdo.migrator.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 

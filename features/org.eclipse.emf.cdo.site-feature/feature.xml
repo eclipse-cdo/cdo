@@ -42,11 +42,11 @@
    <includes id="org.eclipse.net4j.examples" version="0.0.0"/>
 
    <includes id="org.eclipse.emf.cdo.epp" version="0.0.0"/>
+   <includes id="org.eclipse.emf.cdo.dawn.sdk" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.sdk" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.server.hibernate" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.tests" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.examples" version="0.0.0"/>
    <includes id="org.gastro" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.dawn.sdk" version="0.0.0"/>
 
 </feature>

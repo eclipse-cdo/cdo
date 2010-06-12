@@ -110,16 +110,8 @@
          version="0.0.0"
          unpack="false"/>
 
-		<plugin id="org.gastro.business.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.gastro.business.edit.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.gastro.inventory.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.gastro.inventory.edit.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.gastro.rcp.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.gastro.rcp.department.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.gastro.rcp.table.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.gastro.server.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.gastro.server.web.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.gastro.testclient.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-		<plugin id="org.apache.commons.lang.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <includes
+         id="org.gastro.source"
+         version="0.0.0"/>
 
 </feature>

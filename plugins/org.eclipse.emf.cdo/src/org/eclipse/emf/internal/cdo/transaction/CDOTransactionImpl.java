@@ -939,25 +939,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     cleanUp();
   }
 
-  private void removeObjects(Collection<? extends CDOObject> objects)
+  private void removeObject(CDOID id, CDOObject object)
   {
-    if (!objects.isEmpty())
+    ((InternalCDOObject)object).cdoInternalSetState(CDOState.TRANSIENT);
+    removeObject(id);
+
+    if (object instanceof CDOResource)
     {
-      for (CDOObject object : objects)
-      {
-        ((InternalCDOObject)object).cdoInternalSetState(CDOState.TRANSIENT);
-        removeObject(object.cdoID());
-
-        if (object instanceof CDOResource)
-        {
-          getResourceSet().getResources().remove(object);
-        }
-
-        ((InternalCDOObject)object).cdoInternalSetID(null);
-        ((InternalCDOObject)object).cdoInternalSetRevision(null);
-        ((InternalCDOObject)object).cdoInternalSetView(null);
-      }
+      getResourceSet().getResources().remove(object);
     }
+
+    ((InternalCDOObject)object).cdoInternalSetID(null);
+    ((InternalCDOObject)object).cdoInternalSetRevision(null);
+    ((InternalCDOObject)object).cdoInternalSetView(null);
   }
 
   private Set<CDOID> rollbackCompletely(CDOUserSavepoint savepoint)
@@ -969,19 +963,22 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         .getPreviousSavepoint())
     {
       // Rollback new objects created after the save point
-      removeObjects(itrSavepoint.getNewObjects().values());
-
-      Set<CDOID> detachedIDs = itrSavepoint.getDetachedObjects().keySet();
-      List<CDOObject> reattachedNotDetachedObjects = new ArrayList<CDOObject>();
-      for (CDOObject reattachedObject : itrSavepoint.getReattachedObjects().values())
+      Map<CDOID, CDOObject> newObjects = itrSavepoint.getNewObjects();
+      for (CDOID id : newObjects.keySet())
       {
-        if (!detachedIDs.contains(reattachedObject.cdoID()))
-        {
-          reattachedNotDetachedObjects.add(reattachedObject);
-        }
+        CDOObject object = newObjects.get(id);
+        removeObject(id, object);
       }
 
-      removeObjects(reattachedNotDetachedObjects);
+      Set<CDOID> detachedIDs = itrSavepoint.getDetachedObjects().keySet();
+      for (CDOObject reattachedObject : itrSavepoint.getReattachedObjects().values())
+      {
+        CDOID cdoID = reattachedObject.cdoID();
+        if (!detachedIDs.contains(cdoID))
+        {
+          removeObject(cdoID, reattachedObject);
+        }
+      }
 
       Map<CDOID, CDORevisionDelta> revisionDeltas = itrSavepoint.getRevisionDeltas();
       if (!revisionDeltas.isEmpty())
@@ -1066,6 +1063,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
         // Load the object from revision to EObject
         object.cdoInternalPostLoad();
+        if (super.getObject(object.cdoID(), false) == null)
+        {
+          registerObject(object);
+        }
       }
     }
 
@@ -1141,19 +1142,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       // Determine if we added object
       if (map.containsKey(id))
       {
-        // deregister object
-        deregisterObject(object);
         map.remove(id);
       }
       else
       {
         getLastSavepoint().getDetachedObjects().put(id, object);
       }
+
+      // deregister object
+      deregisterObject(object);
     }
     else
     {
       getLastSavepoint().getDetachedObjects().put(id, object);
-
       if (!formerRevisions.containsKey(object))
       {
         formerRevisions.put(object, object.cdoRevision());

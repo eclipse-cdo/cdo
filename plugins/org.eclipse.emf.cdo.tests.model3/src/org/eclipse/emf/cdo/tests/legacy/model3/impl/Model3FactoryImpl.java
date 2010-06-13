@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.tests.legacy.model3.Model3Factory;
 import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
+import org.eclipse.emf.cdo.tests.model3.NodeA;
+import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
@@ -83,6 +85,10 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
       return createPolygon();
     case Model3Package.POLYGON_WITH_DUPLICATES:
       return createPolygonWithDuplicates();
+    case Model3Package.NODE_A:
+      return createNodeA();
+    case Model3Package.NODE_B:
+      return createNodeB();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -164,6 +170,28 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
   {
     PolygonWithDuplicatesImpl polygonWithDuplicates = new PolygonWithDuplicatesImpl();
     return polygonWithDuplicates;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public NodeA createNodeA()
+  {
+    NodeAImpl nodeA = new NodeAImpl();
+    return nodeA;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public NodeB createNodeB()
+  {
+    NodeBImpl nodeB = new NodeBImpl();
+    return nodeB;
   }
 
   /**

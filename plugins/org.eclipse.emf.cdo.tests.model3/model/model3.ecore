@@ -19,6 +19,18 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="points" unique="false"
         lowerBound="1" upperBound="-1" eType="#//Point"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NodeA">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//NodeA" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NodeB">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//NodeB" containment="true" eOpposite="#//NodeB/parent"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//NodeB"
+        eOpposite="#//NodeB/children"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+  </eClassifiers>
   <eSubpackages name="subpackage" nsURI="http://www.eclipse.org/emf/CDO/tests/subpackage/1.0.0"
       nsPrefix="subpackage">
     <eClassifiers xsi:type="ecore:EClass" name="Class2">

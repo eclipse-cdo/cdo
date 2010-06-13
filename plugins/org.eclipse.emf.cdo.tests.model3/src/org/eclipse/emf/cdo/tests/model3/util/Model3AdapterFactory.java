@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.tests.model3.util;
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
+import org.eclipse.emf.cdo.tests.model3.NodeA;
+import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 
@@ -104,6 +106,18 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseNodeA(NodeA object)
+    {
+      return createNodeAAdapter();
+    }
+
+    @Override
+    public Adapter caseNodeB(NodeB object)
+    {
+      return createNodeBAdapter();
+    }
+
+    @Override
     public Adapter defaultCase(EObject object)
     {
       return createEObjectAdapter();
@@ -177,6 +191,34 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createPolygonWithDuplicatesAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model3.NodeA <em>Node A</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeA
+   * @generated
+   */
+  public Adapter createNodeAAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model3.NodeB <em>Node B</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeB
+   * @generated
+   */
+  public Adapter createNodeBAdapter()
   {
     return null;
   }

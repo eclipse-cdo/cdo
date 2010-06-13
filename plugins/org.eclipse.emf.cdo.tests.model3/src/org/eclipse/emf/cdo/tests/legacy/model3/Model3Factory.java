@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.tests.legacy.model3;
 
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
+import org.eclipse.emf.cdo.tests.model3.NodeA;
+import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 
@@ -62,6 +64,22 @@ public interface Model3Factory extends org.eclipse.emf.cdo.tests.model3.Model3Fa
    * @generated
    */
   PolygonWithDuplicates createPolygonWithDuplicates();
+
+  /**
+   * Returns a new object of class '<em>Node A</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Node A</em>'.
+   * @generated
+   */
+  NodeA createNodeA();
+
+  /**
+   * Returns a new object of class '<em>Node B</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Node B</em>'.
+   * @generated
+   */
+  NodeB createNodeB();
 
   /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->

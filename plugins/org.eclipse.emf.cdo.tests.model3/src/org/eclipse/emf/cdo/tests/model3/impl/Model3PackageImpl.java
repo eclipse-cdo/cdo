@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.cdo.tests.model3.Model3Factory;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
+import org.eclipse.emf.cdo.tests.model3.NodeA;
+import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
@@ -62,6 +64,20 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * @generated
    */
   private EClass polygonWithDuplicatesEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass nodeAEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass nodeBEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -230,6 +246,76 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * 
    * @generated
    */
+  public EClass getNodeA()
+  {
+    return nodeAEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getNodeA_Children()
+  {
+    return (EReference)nodeAEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNodeA_Name()
+  {
+    return (EAttribute)nodeAEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getNodeB()
+  {
+    return nodeBEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getNodeB_Children()
+  {
+    return (EReference)nodeBEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getNodeB_Parent()
+  {
+    return (EReference)nodeBEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNodeB_Name()
+  {
+    return (EAttribute)nodeBEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EDataType getPoint()
   {
     return pointEDataType;
@@ -278,6 +364,15 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
     polygonWithDuplicatesEClass = createEClass(POLYGON_WITH_DUPLICATES);
     createEAttribute(polygonWithDuplicatesEClass, POLYGON_WITH_DUPLICATES__POINTS);
+
+    nodeAEClass = createEClass(NODE_A);
+    createEReference(nodeAEClass, NODE_A__CHILDREN);
+    createEAttribute(nodeAEClass, NODE_A__NAME);
+
+    nodeBEClass = createEClass(NODE_B);
+    createEReference(nodeBEClass, NODE_B__CHILDREN);
+    createEReference(nodeBEClass, NODE_B__PARENT);
+    createEAttribute(nodeBEClass, NODE_B__NAME);
 
     // Create data types
     pointEDataType = createEDataType(POINT);
@@ -335,13 +430,31 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(polygonEClass, Polygon.class, "Polygon", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPolygon_Points(), getPoint(), "points", null, 1, -1, Polygon.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPolygon_Points(), this.getPoint(), "points", null, 1, -1, Polygon.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(polygonWithDuplicatesEClass, PolygonWithDuplicates.class, "PolygonWithDuplicates", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPolygonWithDuplicates_Points(), getPoint(), "points", null, 1, -1, PolygonWithDuplicates.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPolygonWithDuplicates_Points(), this.getPoint(), "points", null, 1, -1,
+        PolygonWithDuplicates.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(nodeAEClass, NodeA.class, "NodeA", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getNodeA_Children(), this.getNodeA(), null, "children", null, 0, -1, NodeA.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+    initEAttribute(getNodeA_Name(), theEcorePackage.getEString(), "name", null, 0, 1, NodeA.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(nodeBEClass, NodeB.class, "NodeB", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getNodeB_Children(), this.getNodeB(), this.getNodeB_Parent(), "children", null, 0, -1, NodeB.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getNodeB_Parent(), this.getNodeB(), this.getNodeB_Children(), "parent", null, 0, 1, NodeB.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNodeB_Name(), theEcorePackage.getEString(), "name", null, 0, 1, NodeB.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(pointEDataType, Point.class, "Point", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

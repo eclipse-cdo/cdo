@@ -166,13 +166,91 @@ public interface Model3Package extends EPackage
   int POLYGON_WITH_DUPLICATES_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.NodeAImpl <em>Node A</em>}' class. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model3.impl.NodeAImpl
+   * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getNodeA()
+   * @generated
+   */
+  int NODE_A = 4;
+
+  /**
+   * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_A__CHILDREN = 0;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_A__NAME = 1;
+
+  /**
+   * The number of structural features of the '<em>Node A</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_A_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.NodeBImpl <em>Node B</em>}' class. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model3.impl.NodeBImpl
+   * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getNodeB()
+   * @generated
+   */
+  int NODE_B = 5;
+
+  /**
+   * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_B__CHILDREN = 0;
+
+  /**
+   * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_B__PARENT = 1;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_B__NAME = 2;
+
+  /**
+   * The number of structural features of the '<em>Node B</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_B_FEATURE_COUNT = 3;
+
+  /**
    * The meta object id for the '<em>Point</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @see org.eclipse.emf.cdo.tests.model3.Point
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getPoint()
    * @generated
    */
-  int POINT = 4;
+  int POINT = 6;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.Class1 <em>Class1</em>}'. <!--
@@ -258,6 +336,83 @@ public interface Model3Package extends EPackage
    * @generated
    */
   EAttribute getPolygonWithDuplicates_Points();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.NodeA <em>Node A</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Node A</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeA
+   * @generated
+   */
+  EClass getNodeA();
+
+  /**
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.tests.model3.NodeA#getChildren <em>Children</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Children</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeA#getChildren()
+   * @see #getNodeA()
+   * @generated
+   */
+  EReference getNodeA_Children();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.NodeA#getName <em>Name</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeA#getName()
+   * @see #getNodeA()
+   * @generated
+   */
+  EAttribute getNodeA_Name();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.NodeB <em>Node B</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Node B</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeB
+   * @generated
+   */
+  EClass getNodeB();
+
+  /**
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.tests.model3.NodeB#getChildren <em>Children</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Children</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeB#getChildren()
+   * @see #getNodeB()
+   * @generated
+   */
+  EReference getNodeB_Children();
+
+  /**
+   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.model3.NodeB#getParent
+   * <em>Parent</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the container reference '<em>Parent</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeB#getParent()
+   * @see #getNodeB()
+   * @generated
+   */
+  EReference getNodeB_Parent();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.NodeB#getName <em>Name</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeB#getName()
+   * @see #getNodeB()
+   * @generated
+   */
+  EAttribute getNodeB_Name();
 
   /**
    * Returns the meta object for data type '{@link org.eclipse.emf.cdo.tests.model3.Point <em>Point</em>}'. <!--
@@ -363,6 +518,66 @@ public interface Model3Package extends EPackage
      * @generated
      */
     EAttribute POLYGON_WITH_DUPLICATES__POINTS = eINSTANCE.getPolygonWithDuplicates_Points();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model3.impl.NodeAImpl <em>Node A</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model3.impl.NodeAImpl
+     * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getNodeA()
+     * @generated
+     */
+    EClass NODE_A = eINSTANCE.getNodeA();
+
+    /**
+     * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference NODE_A__CHILDREN = eINSTANCE.getNodeA_Children();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NODE_A__NAME = eINSTANCE.getNodeA_Name();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model3.impl.NodeBImpl <em>Node B</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model3.impl.NodeBImpl
+     * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getNodeB()
+     * @generated
+     */
+    EClass NODE_B = eINSTANCE.getNodeB();
+
+    /**
+     * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference NODE_B__CHILDREN = eINSTANCE.getNodeB_Children();
+
+    /**
+     * The meta object literal for the '<em><b>Parent</b></em>' container reference feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference NODE_B__PARENT = eINSTANCE.getNodeB_Parent();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NODE_B__NAME = eINSTANCE.getNodeB_Name();
 
     /**
      * The meta object literal for the '<em>Point</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->

@@ -300,6 +300,12 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
   }
 
+  protected void setReplicationCountersToLatest()
+  {
+    setLastReplicatedBranchID(getStore().getLastBranchID());
+    setLastReplicatedCommitTime(getLastCommitTimeStamp());
+  }
+
   protected void doInitRootResource()
   {
     super.initRootResource();

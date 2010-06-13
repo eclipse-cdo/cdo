@@ -78,7 +78,7 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
       Object element = super.get(i);
       handleAdjustReference(i, element);
       Object newID = type.adjustReferences(revisionAdjuster, element);
-      if (newID != element)
+      if (newID != element) // Just an optimization for NOOP adjusters
       {
         super.set(i, newID);
       }

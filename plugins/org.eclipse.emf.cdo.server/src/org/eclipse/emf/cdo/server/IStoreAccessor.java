@@ -218,6 +218,11 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   public interface CommitContext
   {
     /**
+     * @since 3.0
+     */
+    public static final String PROP_AUTO_LOCK_NEW_TARGETS = "autoLockNewTargets";
+
+    /**
      * Returns the ID of the transactional view (<code>ITransaction</code>) which is the scope of the commit operation
      * represented by this <code>CommitContext</code>.
      */

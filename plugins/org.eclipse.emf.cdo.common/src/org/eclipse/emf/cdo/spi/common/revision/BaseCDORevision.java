@@ -516,7 +516,12 @@ public abstract class BaseCDORevision extends AbstractCDORevision
         else
         {
           CDOType type = CDOModelUtil.getType(feature);
-          setValue(i, type.adjustReferences(revisionAdjuster, getValue(i)));
+          Object oldValue = getValue(i);
+          Object newValue = type.adjustReferences(revisionAdjuster, oldValue);
+          if (oldValue != newValue) // Just an optimization for NOOP adjusters
+          {
+            setValue(i, newValue);
+          }
         }
       }
     }

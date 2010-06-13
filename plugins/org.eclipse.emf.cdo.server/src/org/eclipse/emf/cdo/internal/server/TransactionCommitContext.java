@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
@@ -25,7 +26,10 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
@@ -36,6 +40,7 @@ import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureDeltaVisitorImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -108,6 +113,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private String rollbackMessage;
 
+  private boolean autoLockNewTargetsEnabled;
+
   private boolean autoReleaseLocksEnabled;
 
   public TransactionCommitContext(InternalTransaction transaction)
@@ -115,6 +122,8 @@ public class TransactionCommitContext implements InternalCommitContext
     this.transaction = transaction;
 
     InternalRepository repository = transaction.getRepository();
+    autoLockNewTargetsEnabled = isAutoLockNewTargetsEnabled(repository);
+
     packageRegistry = new TransactionPackageRegistry(repository.getPackageRegistry(false));
     packageRegistry.activate();
   }
@@ -532,13 +541,53 @@ public class TransactionCommitContext implements InternalCommitContext
   protected void lockObjects() throws InterruptedException
   {
     lockedObjects.clear();
-    boolean supportingBranches = transaction.getRepository().isSupportingBranches();
+    final boolean supportingBranches = transaction.getRepository().isSupportingBranches();
+
+    CDOFeatureDeltaVisitor deltaTargetLocker = null;
+    if (autoLockNewTargetsEnabled)
+    {
+      deltaTargetLocker = new CDOFeatureDeltaVisitorImpl()
+      {
+        @Override
+        public void visit(CDOAddFeatureDelta delta)
+        {
+          lockTarget(delta.getValue(), supportingBranches);
+        }
+
+        @Override
+        public void visit(CDOSetFeatureDelta delta)
+        {
+          lockTarget(delta.getValue(), supportingBranches);
+        }
+      };
+
+      CDOReferenceAdjuster revisionTargetLocker = new CDOReferenceAdjuster()
+      {
+        public Object adjustReference(Object value)
+        {
+          lockTarget(value, supportingBranches);
+          return value;
+        }
+      };
+
+      for (int i = 0; i < newObjects.length; i++)
+      {
+        InternalCDORevision newRevision = newObjects[i];
+        newRevision.adjustReferences(revisionTargetLocker);
+      }
+    }
 
     for (int i = 0; i < dirtyObjectDeltas.length; i++)
     {
-      CDOID id = dirtyObjectDeltas[i].getID();
+      InternalCDORevisionDelta delta = dirtyObjectDeltas[i];
+      CDOID id = delta.getID();
       Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
       lockedObjects.add(key);
+
+      if (deltaTargetLocker != null)
+      {
+        delta.accept(deltaTargetLocker);
+      }
     }
 
     for (int i = 0; i < detachedObjects.length; i++)
@@ -561,6 +610,22 @@ public class TransactionCommitContext implements InternalCommitContext
       lockedObjects.clear();
       throw exception;
     }
+  }
+
+  private void lockTarget(Object value, boolean supportingBranches)
+  {
+    if (value instanceof CDOIDObject)
+    {
+      CDOIDObject id = (CDOIDObject)value;
+      Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
+      lockedObjects.add(key);
+    }
+  }
+
+  private boolean isAutoLockNewTargetsEnabled(InternalRepository repository)
+  {
+    String value = repository.getProperties().get(PROP_AUTO_LOCK_NEW_TARGETS);
+    return value == null ? false : Boolean.valueOf(value);
   }
 
   private synchronized void unlockObjects()

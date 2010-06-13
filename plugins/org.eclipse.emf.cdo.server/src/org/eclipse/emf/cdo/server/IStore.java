@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
@@ -98,6 +99,13 @@ public interface IStore
    * @since 3.0
    */
   public long getLastCommitTime();
+
+  /**
+   * Returns the time stamp of the last successful commit operation to a non-local {@link CDOBranch branch}.
+   * 
+   * @since 3.0
+   */
+  public long getLastNonLocalCommitTime();
 
   /**
    * Returns the id of the last {@link EModelElement} that has been committed to this store.

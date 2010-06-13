@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -624,7 +625,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private boolean isAutoLockNewTargetsEnabled(InternalRepository repository)
   {
-    String value = repository.getProperties().get(PROP_AUTO_LOCK_NEW_TARGETS);
+    String value = repository.getProperties().get(Props.AUTO_LOCK_NEW_TARGETS);
     return value == null ? false : Boolean.valueOf(value);
   }
 

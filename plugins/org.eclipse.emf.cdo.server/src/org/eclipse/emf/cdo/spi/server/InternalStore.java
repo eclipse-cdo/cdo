@@ -42,5 +42,7 @@ public interface InternalStore extends IStore, ILifecycle
 
   public void setLastCommitTime(long lastCommitTime);
 
+  public void setLastNonLocalCommitTime(long lastNonLocalCommitTime);
+
   public void setLastMetaID(long lastMetaID);
 }

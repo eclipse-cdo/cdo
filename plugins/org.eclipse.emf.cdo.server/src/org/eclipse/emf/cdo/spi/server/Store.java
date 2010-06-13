@@ -97,6 +97,12 @@ public abstract class Store extends Lifecycle implements InternalStore
   @ExcludeFromDump
   private transient Object lastCommitTimeLock = new Object();
 
+  @ExcludeFromDump
+  private transient long lastNonLocalCommitTime;
+
+  @ExcludeFromDump
+  private transient Object lastNonLocalCommitTimeLock = new Object();
+
   /**
    * @since 3.0
    */
@@ -300,6 +306,31 @@ public abstract class Store extends Lifecycle implements InternalStore
       if (this.lastCommitTime < lastCommitTime)
       {
         this.lastCommitTime = lastCommitTime;
+      }
+    }
+  }
+
+  /**
+   * @since 3.0
+   */
+  public long getLastNonLocalCommitTime()
+  {
+    synchronized (lastNonLocalCommitTimeLock)
+    {
+      return lastNonLocalCommitTime;
+    }
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void setLastNonLocalCommitTime(long lastNonLocalCommitTime)
+  {
+    synchronized (lastNonLocalCommitTimeLock)
+    {
+      if (this.lastNonLocalCommitTime < lastNonLocalCommitTime)
+      {
+        this.lastNonLocalCommitTime = lastNonLocalCommitTime;
       }
     }
   }

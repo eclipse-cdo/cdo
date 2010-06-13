@@ -245,21 +245,21 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       Map<String, String> map = store.getPropertyValues(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
       if (!map.containsKey(PROP_GRACEFULLY_SHUT_DOWN))
       {
-        throw new IllegalStateException("Local repository was not gracefully shut down");
+        setReplicationCountersToLatest();
       }
+      else
+      {
+        Set<String> names = new HashSet<String>();
+        names.add(PROP_LAST_REPLICATED_BRANCH_ID);
+        names.add(PROP_LAST_REPLICATED_COMMIT_TIME);
 
-      Set<String> names = new HashSet<String>();
-      names.add(PROP_LAST_REPLICATED_BRANCH_ID);
-      names.add(PROP_LAST_REPLICATED_COMMIT_TIME);
+        map = store.getPropertyValues(names);
+        setLastReplicatedBranchID(Integer.valueOf(map.get(PROP_LAST_REPLICATED_BRANCH_ID)));
+        setLastReplicatedCommitTime(Long.valueOf(map.get(PROP_LAST_REPLICATED_COMMIT_TIME)));
+      }
+    }
 
-      map = store.getPropertyValues(names);
-      setLastReplicatedBranchID(Integer.valueOf(map.get(PROP_LAST_REPLICATED_BRANCH_ID)));
-      setLastReplicatedCommitTime(Long.valueOf(map.get(PROP_LAST_REPLICATED_COMMIT_TIME)));
-    }
-    else
-    {
-      store.removePropertyValues(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
-    }
+    store.removePropertyValues(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
 
     if (getType() != MASTER)
     {
@@ -303,7 +303,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   protected void setReplicationCountersToLatest()
   {
     setLastReplicatedBranchID(getStore().getLastBranchID());
-    setLastReplicatedCommitTime(getLastCommitTimeStamp());
+    setLastReplicatedCommitTime(getStore().getLastNonLocalCommitTime());
   }
 
   protected void doInitRootResource()

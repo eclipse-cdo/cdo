@@ -118,6 +118,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return repository;
   }
 
+  @SuppressWarnings("deprecation")
   protected void initRepositoryProperties(Map<String, String> props)
   {
     props.put(Props.OVERRIDE_UUID, ""); // UUID := name !!!

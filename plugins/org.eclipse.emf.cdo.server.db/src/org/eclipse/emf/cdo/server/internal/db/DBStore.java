@@ -84,6 +84,8 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
 
   private static final String PROP_LAST_COMMITTIME = "org.eclipse.emf.cdo.server.db.lastCommitTime"; //$NON-NLS-1$
 
+  private static final String PROP_LAST_NONLOCAL_COMMITTIME = "org.eclipse.emf.cdo.server.db.lastNonLocalCommitTime"; //$NON-NLS-1$
+
   private static final String PROP_GRACEFULLY_SHUT_DOWN = "org.eclipse.emf.cdo.server.db.gracefullyShutDown"; //$NON-NLS-1$
 
   private long creationTime;
@@ -487,6 +489,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     map.put(PROP_LAST_BRANCHID, Integer.toString(getLastBranchID()));
     map.put(PROP_LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
     map.put(PROP_LAST_COMMITTIME, Long.toString(getLastCommitTime()));
+    map.put(PROP_LAST_NONLOCAL_COMMITTIME, Long.toString(getLastNonLocalCommitTime()));
     setPropertyValues(map);
 
     readerPool.dispose();
@@ -528,6 +531,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
       names.add(PROP_LAST_BRANCHID);
       names.add(PROP_LAST_LOCAL_BRANCHID);
       names.add(PROP_LAST_COMMITTIME);
+      names.add(PROP_LAST_NONLOCAL_COMMITTIME);
       map = getPropertyValues(names);
 
       setNextLocalObjectID(Long.valueOf(map.get(PROP_NEXT_LOCAL_CDOID)));
@@ -536,6 +540,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
       setLastBranchID(Integer.valueOf(map.get(PROP_LAST_BRANCHID)));
       setLastLocalBranchID(Integer.valueOf(map.get(PROP_LAST_LOCAL_BRANCHID)));
       setLastCommitTime(Long.valueOf(map.get(PROP_LAST_COMMITTIME)));
+      setLastNonLocalCommitTime(Long.valueOf(map.get(PROP_LAST_NONLOCAL_COMMITTIME)));
     }
     else
     {
@@ -558,6 +563,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
         setLastLocalBranchID(localBranchID < 0 ? localBranchID : 0);
 
         setLastCommitTime(result[2]);
+        setLastNonLocalCommitTime(result[3]);
         OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.10"), getLastObjectID(), getLastMetaID())); //$NON-NLS-1$
       }
       catch (SQLException e)

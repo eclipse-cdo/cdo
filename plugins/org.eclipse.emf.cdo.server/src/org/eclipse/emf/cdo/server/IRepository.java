@@ -182,6 +182,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
 
   /**
    * @author Eike Stepper
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface Props
   {
@@ -201,13 +202,20 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
     public static final String SUPPORTING_BRANCHES = "supportingBranches"; //$NON-NLS-1$
 
     /**
+     * @since 3.0
+     */
+    public static final String AUTO_LOCK_NEW_TARGETS = "autoLockNewTargets"; //$NON-NLS-1$
+
+    /**
      * @since 2.0
      */
+    @Deprecated
     public static final String CURRENT_LRU_CAPACITY = "currentLRUCapacity"; //$NON-NLS-1$
 
     /**
      * @since 2.0
      */
+    @Deprecated
     public static final String REVISED_LRU_CAPACITY = "revisedLRUCapacity"; //$NON-NLS-1$
   }
 }

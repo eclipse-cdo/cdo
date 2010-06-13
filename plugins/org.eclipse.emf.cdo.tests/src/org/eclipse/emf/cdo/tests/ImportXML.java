@@ -79,6 +79,7 @@ public class ImportXML
     connector.close();
   }
 
+  @SuppressWarnings("deprecation")
   private static IRepository createRepository()
   {
     Map<String, String> props = new HashMap<String, String>();

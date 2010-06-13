@@ -206,16 +206,29 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     doCommit(monitor);
 
     long latest = CDORevision.UNSPECIFIED_DATE;
+    long latestNonLocal = CDORevision.UNSPECIFIED_DATE;
     for (CommitContext commitContext : commitContexts)
     {
-      long timeStamp = commitContext.getBranchPoint().getTimeStamp();
+      CDOBranchPoint branchPoint = commitContext.getBranchPoint();
+      long timeStamp = branchPoint.getTimeStamp();
       if (timeStamp > latest)
       {
         latest = timeStamp;
       }
+
+      CDOBranch branch = branchPoint.getBranch();
+      if (!branch.isLocal())
+      {
+        if (timeStamp > latestNonLocal)
+        {
+          latestNonLocal = timeStamp;
+        }
+      }
     }
 
     store.setLastCommitTime(latest);
+    store.setLastNonLocalCommitTime(latestNonLocal);
+
   }
 
   /**

@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
@@ -79,9 +80,9 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   {
     long minLocalID = getMinLocalID(connection);
     long maxID = objectTypeCache.getMaxID(connection);
-    long maxTime = getMaxTime(connection);
+    long[] maxTimes = getMaxTimes(connection);
 
-    long[] result = { minLocalID, maxID, maxTime };
+    long[] result = { minLocalID, maxID, maxTimes[0], maxTimes[1] };
     return result;
   }
 
@@ -302,9 +303,12 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     return min;
   }
 
-  private long getMaxTime(Connection connection)
+  private long[] getMaxTimes(Connection connection)
   {
     long max = CDORevision.UNSPECIFIED_DATE;
+    long maxNonLocal = CDORevision.UNSPECIFIED_DATE;
+    final String where = CDODBSchema.ATTRIBUTES_BRANCH + ">=" + CDOBranch.MAIN_BRANCH_ID;
+
     for (IClassMapping classMapping : getClassMappings().values())
     {
       IDBTable table = classMapping.getDBTables().get(0);
@@ -314,8 +318,14 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       {
         max = timeStamp;
       }
+
+      timeStamp = DBUtil.selectMaximumLong(connection, field, where);
+      if (timeStamp > maxNonLocal)
+      {
+        maxNonLocal = timeStamp;
+      }
     }
 
-    return max;
+    return new long[] { max, maxNonLocal };
   }
 }

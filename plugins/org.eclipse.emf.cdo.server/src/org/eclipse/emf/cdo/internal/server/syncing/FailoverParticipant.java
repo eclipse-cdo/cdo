@@ -42,6 +42,10 @@ public class FailoverParticipant extends SynchronizableRepository
       }
       else
       {
+        // Bug 312879
+        setLastReplicatedBranchID(getStore().getLastBranchID());
+        setLastReplicatedCommitTime(getLastCommitTimeStamp());
+
         // Switch on synchronizer
         doStartSynchronization();
       }

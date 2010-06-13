@@ -335,7 +335,7 @@ public class XATransactionTest extends AbstractCDOTest
 
     xaTransaction.rollback();
 
-    sleep(1000);
+    transactionA1.waitForUpdate(transactionC1.getLastCommitTime(), DEFAULT_TIMEOUT);
     assertEquals(null, purchaseOrder.getDate());
     assertEquals(1, supplier.getPurchaseOrders().size());
   }

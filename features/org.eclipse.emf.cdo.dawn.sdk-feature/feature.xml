@@ -33,14 +33,39 @@
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
 
-   <plugin id="org.eclipse.emf.cdo.dawn.sdk" download-size="0" install-size="0" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.dawn.sdk.source" version="0.0.0"/>
+   <includes
+         id="org.eclipse.emf.cdo.dawn.sdk.source"
+         version="0.0.0"/>
 
-   <includes id="org.eclipse.emf.cdo.dawn" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.dawn.codegen" version="0.0.0"/>
-   <includes id="org.eclipse.emf.cdo.dawn.examples" version="0.0.0"/>
+   <includes
+         id="org.eclipse.emf.cdo.dawn"
+         version="0.0.0"/>
 
-   <plugin id="org.apache.commons.lang.source" download-size="0" install-size="0" version="0.0.0"/>
-   <plugin id="org.apache.commons.logging.source" download-size="0" install-size="0" version="0.0.0"/>
+   <includes
+         id="org.eclipse.emf.cdo.dawn.codegen"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.dawn.examples"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.dawn.sdk"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.lang.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.commons.logging.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
 
 </feature>

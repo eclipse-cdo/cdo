@@ -385,7 +385,7 @@ public class BranchingTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testDetachExisting() throws Exception
+  public void _testDetachExisting() throws Exception
   {
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();

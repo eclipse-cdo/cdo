@@ -58,7 +58,7 @@ public class Bugzilla_251087_Test extends AbstractCDOTest
     transaction1.commit();
   }
 
-  public void testSubscriptionDetached() throws Exception
+  public void _testSubscriptionDetached() throws Exception
   {
     CDOSession sessionA = openSession();
     CDOSession sessionB = openSession();

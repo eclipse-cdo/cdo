@@ -73,8 +73,8 @@ public class AllTestsObjyAudit extends ObjyDBConfigs
     protected void initRepositoryProperties(Map<String, String> props)
     {
       super.initRepositoryProperties(props);
-      props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
-      props.put(IRepository.Props.SUPPORTING_BRANCHES, "false");
+      props.put(IRepository.Props.SUPPORTING_AUDITS, "true"); //$NON-NLS-1$
+      props.put(IRepository.Props.SUPPORTING_BRANCHES, "false"); //$NON-NLS-1$
     }
   }
 }

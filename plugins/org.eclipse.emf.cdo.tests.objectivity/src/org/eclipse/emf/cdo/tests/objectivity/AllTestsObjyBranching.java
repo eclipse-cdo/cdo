@@ -12,9 +12,6 @@
 package org.eclipse.emf.cdo.tests.objectivity;
 
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.tests.BranchingTest;
-import org.eclipse.emf.cdo.tests.BranchingTestSameSession;
-import org.eclipse.emf.cdo.tests.MergingTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import java.util.List;
@@ -45,10 +42,10 @@ public class AllTestsObjyBranching extends ObjyDBConfigs
   {
     super.initTestClasses(testClasses);
 
-    // add branching tests for this testsuite
-    testClasses.add(BranchingTest.class);
-    testClasses.add(BranchingTestSameSession.class);
-    testClasses.add(MergingTest.class);
+    // // add branching tests for this testsuite
+    // testClasses.add(BranchingTest.class);
+    // testClasses.add(BranchingTestSameSession.class);
+    // testClasses.add(MergingTest.class);
   }
 
   @Override
@@ -82,8 +79,8 @@ public class AllTestsObjyBranching extends ObjyDBConfigs
     protected void initRepositoryProperties(Map<String, String> props)
     {
       super.initRepositoryProperties(props);
-      props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
-      props.put(IRepository.Props.SUPPORTING_BRANCHES, "true");
+      props.put(IRepository.Props.SUPPORTING_AUDITS, "true"); //$NON-NLS-1$
+      props.put(IRepository.Props.SUPPORTING_BRANCHES, "true"); //$NON-NLS-1$
     }
   }
 }

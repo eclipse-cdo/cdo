@@ -18,11 +18,13 @@ import org.eclipse.emf.cdo.tests.BranchingTestSameSession;
 import org.eclipse.emf.cdo.tests.ChunkingTest;
 import org.eclipse.emf.cdo.tests.ChunkingWithMEMTest;
 import org.eclipse.emf.cdo.tests.CommitInfoTest;
+import org.eclipse.emf.cdo.tests.ComplexTest;
 import org.eclipse.emf.cdo.tests.DetachTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 import org.eclipse.emf.cdo.tests.InvalidationTest;
 import org.eclipse.emf.cdo.tests.LockingManagerTest;
 import org.eclipse.emf.cdo.tests.MergingTest;
+import org.eclipse.emf.cdo.tests.MultiValuedOfAttributeTest;
 import org.eclipse.emf.cdo.tests.PushTransactionTest;
 import org.eclipse.emf.cdo.tests.RepositoryTest;
 import org.eclipse.emf.cdo.tests.ResourceTest;
@@ -72,7 +74,7 @@ public class SampleTestsObjy extends ObjyDBConfigs
 
     testClasses.clear();
 
-    // testClasses.add(ComplexTest.class);
+    testClasses.add(ComplexTest.class);
     // testClasses.add(AttributeTest.class);
     testClasses.add(UnsetTest.class);
     testClasses.add(BranchingTest.class);
@@ -91,6 +93,7 @@ public class SampleTestsObjy extends ObjyDBConfigs
     // testClasses.add(XATransactionTest.class);
     testClasses.add(RepositoryTest.class);
     testClasses.add(LockingManagerTest.class);
+    testClasses.add(MultiValuedOfAttributeTest.class);
     testClasses.add(Bugzilla_248124_Test.class);
     testClasses.add(Bugzilla_258933_Test.class);
     testClasses.add(Bugzilla_259869_Test.class);

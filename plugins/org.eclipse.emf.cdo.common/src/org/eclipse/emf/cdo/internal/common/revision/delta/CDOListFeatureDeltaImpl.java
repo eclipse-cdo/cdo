@@ -162,13 +162,20 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   {
     if (cachedIndices == null || unprocessedFeatureDeltas != null)
     {
+      List<CDOFeatureDelta> featureDeltasToBeProcessed = unprocessedFeatureDeltas == null ? featureDeltas
+          : unprocessedFeatureDeltas;
+
+      // Actually the required capacity is the number of ListTargetAdding instances in the
+      // featureDeltasToBeProcessed.. so this is an overestimate
+      int requiredCapacity = featureDeltasToBeProcessed.size() + 1;
+
       if (cachedIndices == null)
       {
         cachedIndices = new int[1 + featureDeltas.size()];
       }
-      else if (cachedIndices.length <= 1 + featureDeltas.size())
+      else if (cachedIndices.length < requiredCapacity)
       {
-        int newCapacity = Math.max(10, cachedIndices.length * 3 / 2 + 1);
+        int newCapacity = Math.max(requiredCapacity, cachedIndices.length * 3 / 2);
         int[] newElements = new int[newCapacity];
         System.arraycopy(cachedIndices, 0, newElements, 0, cachedIndices.length);
         cachedIndices = newElements;
@@ -176,20 +183,17 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
 
       if (cachedSources == null)
       {
-        cachedSources = new ListTargetAdding[1 + featureDeltas.size()];
+        cachedSources = new ListTargetAdding[requiredCapacity];
       }
-      else if (cachedSources.length <= 1 + featureDeltas.size())
+      else if (cachedSources.length <= requiredCapacity)
       {
-        int newCapacity = Math.max(10, cachedSources.length * 3 / 2 + 1);
+        int newCapacity = Math.max(requiredCapacity, cachedSources.length * 3 / 2);
         ListTargetAdding[] newElements = new ListTargetAdding[newCapacity];
         System.arraycopy(cachedSources, 0, newElements, 0, cachedSources.length);
         cachedSources = newElements;
       }
 
-      List<CDOFeatureDelta> featureDeltasToBeProcess = unprocessedFeatureDeltas == null ? featureDeltas
-          : unprocessedFeatureDeltas;
-
-      for (CDOFeatureDelta featureDelta : featureDeltasToBeProcess)
+      for (CDOFeatureDelta featureDelta : featureDeltasToBeProcessed)
       {
         if (featureDelta instanceof ListIndexAffecting)
         {

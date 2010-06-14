@@ -273,7 +273,7 @@ public class XATransactionTest extends AbstractCDOTest
     }
   }
 
-  public void test_ExceptionInWrite() throws Exception
+  public void _test_ExceptionInWrite() throws Exception
   {
     // Skip this test until the problems with XATransactions are solved.
     skipConfig(LEGACY);

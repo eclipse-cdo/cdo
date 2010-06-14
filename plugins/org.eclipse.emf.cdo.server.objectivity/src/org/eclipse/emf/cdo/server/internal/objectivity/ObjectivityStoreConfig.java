@@ -52,7 +52,7 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
   @Override
   public void doActivate()
   {
-    System.out.println("ObjectivityStoreConfig.doActivate()");
+    // System.out.println("ObjectivityStoreConfig.doActivate()");
     fdManager.deleteFD();
     fdManager.configure();
   }
@@ -60,7 +60,7 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
   @Override
   public void doDeactivate()
   {
-    System.out.println("ObjectivityStoreConfig.doDeactivate()");
+    // System.out.println("ObjectivityStoreConfig.doDeactivate()");
     fdManager.deleteFD();
   }
 
@@ -71,9 +71,9 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
 
   public void resetFD()
   {
-    System.out.println("ObjectivityStoreConfig.resetFD() - Start.");
+    // System.out.println("ObjectivityStoreConfig.resetFD() - Start.");
     fdManager.removeData();
-    System.out.println("ObjectivityStoreConfig.resetFD() - END.");
+    // system.out.println("ObjectivityStoreConfig.resetFD() - END.");
   }
 
   private void getFdProperties(Element storeConfig)

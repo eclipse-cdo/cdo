@@ -49,6 +49,11 @@ public class ObjyObjectManager
     globalPlacementManager = placementManager;
   }
 
+  public int sizeOfObjectMap()
+  {
+    return idToObjyObjectMap.size();
+  }
+
   /**
 	 *
 	 */
@@ -218,7 +223,6 @@ public class ObjyObjectManager
   /***
    * TODO - Remove the eClass and just use the objyObject attributes to do the clean up.
    * 
-   * @param storeAccessor
    * @param objyObject
    */
   public void remove(ObjyObject objyObject)

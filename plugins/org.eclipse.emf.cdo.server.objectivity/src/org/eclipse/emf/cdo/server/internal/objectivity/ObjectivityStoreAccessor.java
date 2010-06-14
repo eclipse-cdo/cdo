@@ -224,14 +224,14 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       objyObject.delete(this, objySession.getObjectManager());
     }
 
-    // we'll need to find it's containing object/resource and remove it from there.
-    // TODO - do we need to deal with dependent objects, i.e. delete them as well,
-    // is there a notion of delete propagate?
-    if (ObjySchema.isResource(getStore(), objyObject.objyClass()))
-    {
-      ObjyResourceList resourceList = objySession.getResourceList(getRepositoryName());
-      resourceList.remove(objyObject);
-    }
+    // // we'll need to find it's containing object/resource and remove it from there.
+    // // TODO - do we need to deal with dependent objects, i.e. delete them as well,
+    // // is there a notion of delete propagate?
+    // if (ObjySchema.isResource(getStore(), objyObject.objyClass()))
+    // {
+    // ObjyResourceList resourceList = objySession.getResourceList(getRepositoryName());
+    // resourceList.remove(objyObject);
+    // }
     objySession.getObjectManager().remove(objyObject); // removed it from the cache.
   }
 
@@ -329,7 +329,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   {
     try
     {
-      // if (TRACER_DEBUG.isEnabled())
+      if (TRACER_DEBUG.isEnabled())
       {
         TRACER_DEBUG.trace("Rollback session " + objySession);
       }
@@ -338,8 +338,11 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       if (objySession.isOpen())
       {
         objySession.abort();
+        if (TRACER_DEBUG.isEnabled())
+        {
+          TRACER_DEBUG.trace("OBJY: session aborted - Session: " + objySession + " - open:" + objySession.isOpen());
+        }
       }
-      System.out.println("OBJY: session aborted - Session: " + objySession + " - open:" + objySession.isOpen());
     }
     catch (RuntimeException exception)
     {
@@ -605,7 +608,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       if (revision.isResourceFolder() || revision.isResource())
       {
         // this call will throw exception if we have a duplicate resource we trying to add.
-        resourceList.checkDuplicateResources(revision);
+        resourceList.checkDuplicateResources(this, revision);
       }
       SmartLock.lock(newObjyRevision);
       resourceList.add(newObjyRevision);
@@ -653,8 +656,6 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     {
       TRACER_DEBUG.trace("\t commit time: " + (System.currentTimeMillis() - start));
     }
-    System.out.println();
-
   }
 
   public IObjectivityStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature)
@@ -737,8 +738,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     }
 
     // TBD: We need to verify the folderID as well!!
-    CDOID folderID = org.eclipse.emf.cdo.common.id.CDOIDUtil.isNull(context.getFolderID()) ? null : context
-        .getFolderID();
+    // CDOID folderID = org.eclipse.emf.cdo.common.id.CDOIDUtil.isNull(context.getFolderID()) ? null : context
+    // .getFolderID();
     for (int i = 0; i < size; i++)
     {
       ObjyObject resource = resourceList.getResource(i);
@@ -879,8 +880,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
         TRACER_DEBUG.format("...revision for: {0} - OID: {1} is detached.", id, objyObject.ooId().getStoreString()); //$NON-NLS-1$
       }
       EClass eClass = ObjySchema.getEClass(getStore(), objyObject.objyClass());
-      return new DetachedCDORevision(eClass, id, branchPoint.getBranch(), -objyRevision.getVersion(), branchPoint
-          .getTimeStamp());
+      return new DetachedCDORevision(eClass, id, branchPoint.getBranch(), -objyRevision.getVersion(), objyRevision
+          .getCreationTime());
     }
 
     CDOBranchPoint branchPoint2 = revision.getBranch().getPoint(objyRevision.getCreationTime());
@@ -925,7 +926,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     {
       TRACER_DEBUG
           .format(
-              "(Audit mode) Reading revision by version {0} for: {1} - OID: {2}", branchVersion.getVersion(), id, objyObject.ooId().getStoreString()); //$NON-NLS-1$
+              "Reading revision by version {0} for: {1} - OID: {2}", branchVersion.getVersion(), id, objyObject.ooId().getStoreString()); //$NON-NLS-1$
     }
 
     // }
@@ -1004,7 +1005,10 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     if (eClass == null)
     {
-      System.out.println("OBJY: Can't find eClass for id:" + id);
+      if (TRACER_DEBUG.isEnabled())
+      {
+        TRACER_DEBUG.trace("OBJY: Can't find eClass for id:" + id);
+      }
       return null;
     }
 

@@ -343,8 +343,6 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
 
     // long size = (int)getArray(objyObject, feature).size();
     // TODO - check boundaries...
-    int start = 0;
-    int end = 0;
 
     if (sourceIndex > targetIndex)
     {

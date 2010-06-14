@@ -220,7 +220,10 @@ public class ObjyConnection
       Vector<Session> sessions = connection.sessions();
       for (Session aSession : sessions)
       {
-        System.out.println("Session: " + aSession + " - open state: " + aSession.isOpen());
+        if (TRACER_DEBUG.isEnabled())
+        {
+          TRACER_DEBUG.trace("Session: " + aSession + " - open state: " + aSession.isOpen());
+        }
         // we need to make sure that any open session is aborted, otherwise we
         // can't reopen the fd.
         if (aSession.isOpen())

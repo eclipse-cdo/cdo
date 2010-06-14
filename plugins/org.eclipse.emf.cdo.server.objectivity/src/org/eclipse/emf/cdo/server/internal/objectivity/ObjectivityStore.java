@@ -292,7 +292,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     try
     {
       ObjySchema.resetCache();
-      System.out.println(" -------- doDeactivate() ObjectivityStore ----------");
+      // System.out.println(" -------- doDeactivate() ObjectivityStore ----------");
     }
     finally
     {

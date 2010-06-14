@@ -6,8 +6,9 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Simon McDuff - initial API and implementation
- *    Eike Stepper - maintenance
+ *    Simon McDuff  - initial API and implementation
+ *    Eike Stepper  - maintenance
+ *    Cyril Jaquier - Bug 310574 (with the help of Pascal Lehmann)
  */
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
@@ -15,9 +16,11 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -34,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 /**
@@ -204,7 +208,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     }
   }
 
-  private void cleanupWithNewDelta(CDOFeatureDelta featureDelta)
+  private boolean cleanupWithNewDelta(CDOFeatureDelta featureDelta)
   {
     EStructuralFeature feature = getFeature();
     if ((feature instanceof EReference || FeatureMapUtil.isFeatureMap(feature))
@@ -218,8 +222,139 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
         int index = cachedIndices[i];
         if (indexToRemove == index)
         {
-          cachedSources[i].clear();
-          break;
+          // The previous implementation set the value of the feature delta to CDOID.NULL. Databinding and probably
+          // others don't really like it. We now remove the ADD (or SET which seems to appear in CDOListFeatureDelta
+          // during opposite adjustment!? Why???) and patch the other feature deltas.
+          // See https://bugs.eclipse.org/bugs/show_bug.cgi?id=310574
+
+          ListTargetAdding delta = cachedSources[i];
+
+          // We use a "floating" index which is the index (in the list) of the item to remove at the time when the
+          // object was still in the list. This index evolves with the feature deltas.
+          int floatingIndex = delta.getIndex();
+
+          // First updates cachedSources and cachedIndices using CDORemoveFeatureDelta.
+          ListIndexAffecting affecting = (ListIndexAffecting)featureDelta;
+          affecting.affectIndices(cachedSources, cachedIndices);
+
+          // Then adjusts the remaining feature deltas.
+          boolean skip = true;
+          ListIterator<CDOFeatureDelta> iterator = featureDeltas.listIterator();
+
+          while (iterator.hasNext())
+          {
+            CDOFeatureDelta fd = iterator.next();
+
+            // We only need to process feature deltas that come after the ADD (or SET) to be removed.
+            if (skip)
+            {
+              if (fd == delta)
+              {
+                // Found the ADD (or SET) feature delta that we need to remove. So remove it from the list and start
+                // processing the next feature deltas.
+                skip = false;
+                iterator.remove();
+              }
+              continue;
+            }
+
+            // SET
+            // Should we take care of it?
+
+            // ADD
+            if (fd instanceof CDOAddFeatureDelta)
+            {
+              // Increases the floating index if the ADD came in front of the item.
+              if (((CDOAddFeatureDelta)fd).getIndex() <= floatingIndex)
+              {
+                ++floatingIndex;
+              }
+              // Adjusts the feature delta too.
+              ((WithIndex)fd).adjustAfterRemoval(floatingIndex);
+            }
+
+            // REMOVE
+            else if (fd instanceof CDORemoveFeatureDelta)
+            {
+              int idx = floatingIndex;
+              // Decreases the floating index if the REMOVE came in front of the item.
+              if (((CDORemoveFeatureDelta)fd).getIndex() <= floatingIndex)
+              {
+                --floatingIndex;
+              }
+              // Adjusts the feature delta too.
+              ((WithIndex)fd).adjustAfterRemoval(idx);
+            }
+
+            // MOVE
+            else if (fd instanceof CDOMoveFeatureDelta)
+            {
+              // Remembers the positions before we patch them.
+              int from = ((CDOMoveFeatureDelta)fd).getOldPosition();
+              int to = ((CDOMoveFeatureDelta)fd).getNewPosition();
+
+              if (floatingIndex == from)
+              {
+                // We are moving the "to be deleted" item. So we update our floating index and remove the MOVE. It has
+                // no effect on the list.
+                floatingIndex = to;
+                iterator.remove();
+              }
+              else
+              {
+                // In the other cases, we need to patch the positions.
+
+                // If the old position is greater or equal to the current position of the item to be removed (remember,
+                // that's our floating index), decrease the position.
+                int patchedFrom = floatingIndex <= from ? from - 1 : from;
+
+                // The new position requires more care. We need to know the direction of the move (left-to-right or
+                // right-to-left).
+                int patchedTo;
+                if (from > to)
+                {
+                  // left-to-right. Only decreases the position if it is strictly greater than the current item
+                  // position.
+                  patchedTo = floatingIndex < to ? to - 1 : to;
+                }
+                else
+                {
+                  // right-to-left. Decreases the position if it is greater or equal than the current item position.
+                  patchedTo = floatingIndex <= to ? to - 1 : to;
+                }
+
+                // We can now update our floating index. We use the original positions because the floating index
+                // represents the item "to be deleted" before it was actually removed.
+                if (from < floatingIndex && floatingIndex <= to)
+                {
+                  --floatingIndex;
+                }
+                else if (to <= floatingIndex && floatingIndex < from)
+                {
+                  ++floatingIndex;
+                }
+
+                // And finally adjust the feature delta.
+                if (patchedFrom == patchedTo)
+                {
+                  // Source and destination are the same so just remove the feature delta.
+                  iterator.remove();
+                }
+                else
+                {
+                  // It is not possible to modify the positions of a CDOMoveFeatureDeltaImpl so we create a new instance
+                  // that will replace the old one.
+                  CDOMoveFeatureDelta move = new CDOMoveFeatureDeltaImpl(fd.getFeature(), patchedTo, patchedFrom);
+                  iterator.set(move);
+                }
+
+              }
+            }
+
+          }
+
+          // We virtually "executed" the REMOVE so we do not add it to the feature deltas.
+          return false;
         }
       }
     }
@@ -233,12 +368,17 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
 
       unprocessedFeatureDeltas.add(featureDelta);
     }
+
+    return true;
   }
 
   public void add(CDOFeatureDelta featureDelta)
   {
-    cleanupWithNewDelta(featureDelta);
-    featureDeltas.add(featureDelta);
+    // Only adds the feature delta to the list if required.
+    if (cleanupWithNewDelta(featureDelta))
+    {
+      featureDeltas.add(featureDelta);
+    }
   }
 
   public void apply(CDORevision revision)

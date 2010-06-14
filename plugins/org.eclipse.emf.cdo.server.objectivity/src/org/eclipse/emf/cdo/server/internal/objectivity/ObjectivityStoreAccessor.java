@@ -401,8 +401,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     {
       TRACER_DEBUG.format("Writing revision delta: {0}, v:{1} - OID:{2}, v: {3}", delta, deltaVersion, objyObject
           .ooId().getStoreString(), objyRevision.getVersion());
-      TRACER_DEBUG.format("... delta branch ID: {0} - revision branch ID: {1}", branch.getID(), objyRevision
-          .getBranchId());
+      TRACER_DEBUG.format("... delta branch ID: {0} - revision branch ID: {1}", branch.getID(),
+          objyRevision.getBranchId());
     }
     // System.out.println(">>>IS: Delta Writing: " + delta.getID() + " - oid: " + objyObject.ooId().getStoreString());
     // System.out.println("\t - old version : " + delta.getVersion());
@@ -425,8 +425,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       // newObjyRevision = objySession.getObjectManager().copyRevision(this, objyRevision);
       objyRevision.setRevisedTime(branch.getPoint(created).getTimeStamp() - 1);
       // objyRevision.setRevisedBranchId(branch.getID();
-      InternalCDORevision originalRevision = getStore().getRepository().getRevisionManager().getRevisionByVersion(
-          delta.getID(), delta, 0, true);
+      InternalCDORevision originalRevision = getStore().getRepository().getRevisionManager()
+          .getRevisionByVersion(delta.getID(), delta, 0, true);
 
       InternalCDORevision newRevision = originalRevision.copy();
 
@@ -803,6 +803,12 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
   }
 
+  public void queryXRefs(QueryXRefsContext context)
+  {
+    // TODO: implement ObjectivityStoreAccessor.queryXRefs(context)
+    throw new UnsupportedOperationException();
+  }
+
   /**
    * Read all package units from the store. It's the opposite of writePackageUnits
    */
@@ -880,8 +886,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
         TRACER_DEBUG.format("...revision for: {0} - OID: {1} is detached.", id, objyObject.ooId().getStoreString()); //$NON-NLS-1$
       }
       EClass eClass = ObjySchema.getEClass(getStore(), objyObject.objyClass());
-      return new DetachedCDORevision(eClass, id, branchPoint.getBranch(), -objyRevision.getVersion(), objyRevision
-          .getCreationTime());
+      return new DetachedCDORevision(eClass, id, branchPoint.getBranch(), -objyRevision.getVersion(),
+          objyRevision.getCreationTime());
     }
 
     CDOBranchPoint branchPoint2 = revision.getBranch().getPoint(objyRevision.getCreationTime());
@@ -1154,8 +1160,9 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     for (ObjyBranch objyBranch : branches)
     {
-      InternalCDOBranch branch = branchManager.getBranch(objyBranch.getBranchId(), new BranchInfo(objyBranch
-          .getBranchName(), objyBranch.getBaseBranchId(), objyBranch.getBaseBranchTimeStamp()));
+      InternalCDOBranch branch = branchManager
+          .getBranch(objyBranch.getBranchId(), new BranchInfo(objyBranch.getBranchName(), objyBranch.getBaseBranchId(),
+              objyBranch.getBaseBranchTimeStamp()));
       branchHandler.handleBranch(branch);
       count++;
     }
@@ -1171,8 +1178,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     List<ObjyBranch> objyBranchList = objySession.getBranchManager(getRepositoryName()).getSubBranches(branchID);
     for (ObjyBranch objyBranch : objyBranchList)
     {
-      SubBranchInfo subBranchInfo = new SubBranchInfo(objyBranch.getBranchId(), objyBranch.getBranchName(), objyBranch
-          .getBaseBranchTimeStamp());
+      SubBranchInfo subBranchInfo = new SubBranchInfo(objyBranch.getBranchId(), objyBranch.getBranchName(),
+          objyBranch.getBaseBranchTimeStamp());
       result.add(subBranchInfo);
     }
     return result.toArray(new SubBranchInfo[result.size()]);

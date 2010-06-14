@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
@@ -37,6 +38,7 @@ import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 
@@ -481,6 +483,16 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
       boolean exactMatch)
   {
     return delegate.queryResourcesAsync(folder, name, exactMatch);
+  }
+
+  public List<CDOObjectReference> queryXRefs(Set<CDOObject> targetObjects, EReference... sourceReferences)
+  {
+    return delegate.queryXRefs(targetObjects, sourceReferences);
+  }
+
+  public CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects, EReference... sourceReferences)
+  {
+    return delegate.queryXRefsAsync(targetObjects, sourceReferences);
   }
 
   public int reload(CDOObject... objects)

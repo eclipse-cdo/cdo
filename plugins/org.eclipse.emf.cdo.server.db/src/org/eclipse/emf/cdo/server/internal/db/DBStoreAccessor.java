@@ -275,6 +275,12 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     mappingStrategy.queryResources(this, context);
   }
 
+  public void queryXRefs(QueryXRefsContext context)
+  {
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    mappingStrategy.queryXRefs(this, context);
+  }
+
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
     if (SQLQueryHandler.QUERY_LANGUAGE.equals(info.getQueryLanguage()))

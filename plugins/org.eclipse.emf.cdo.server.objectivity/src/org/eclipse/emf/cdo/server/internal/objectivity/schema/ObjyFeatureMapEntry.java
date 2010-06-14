@@ -55,7 +55,7 @@ public class ObjyFeatureMapEntry
           ObjyFeatureMapEntry.MetaId, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT64 // type
-          );
+      );
 
       B.add_embedded_class_attribute(com.objy.as.app.d_Module.LAST, // Access kind
           d_Access_Kind.d_PUBLIC, // Access kind

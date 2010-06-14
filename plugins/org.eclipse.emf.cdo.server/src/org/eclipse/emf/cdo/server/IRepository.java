@@ -204,7 +204,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
     /**
      * @since 3.0
      */
-    public static final String AUTO_LOCK_NEW_TARGETS = "autoLockNewTargets"; //$NON-NLS-1$
+    public static final String ENSURE_REFERENTIAL_INTEGRITY = "ensureReferentialIntegrity"; //$NON-NLS-1$
 
     /**
      * @since 2.0

@@ -34,6 +34,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
@@ -144,6 +145,11 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * @since 2.0
    */
   public void queryResources(QueryResourcesContext context);
+
+  /**
+   * @since 3.0
+   */
+  public void queryXRefs(QueryXRefsContext context);
 
   /**
    * @since 2.0
@@ -336,5 +342,31 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     {
       public CDOID getResourceID();
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.0
+   * @noimplement This interface is not intended to be implemented by clients.
+   */
+  public interface QueryXRefsContext extends CDOBranchPoint
+  {
+    public Set<CDOID> getTargetObjects();
+
+    public EReference[] getSourceReferences();
+
+    /**
+     * Returns the maximum number of results expected by the client or {@link CDOQueryInfo#UNLIMITED_RESULTS} for no
+     * limitation.
+     */
+    public int getMaxResults();
+
+    /**
+     * Adds the data of one cross reference to the results of the underlying query.
+     * 
+     * @return <code>true</code> to indicate that more results can be passed subsequently, <code>false</code> otherwise
+     *         (i.e. maxResults has been reached or an asynchronous query has been canceled).
+     */
+    public boolean addXRef(CDOID targetID, CDOID sourceID, EReference sourceReference, int sourceIndex);
   }
 }

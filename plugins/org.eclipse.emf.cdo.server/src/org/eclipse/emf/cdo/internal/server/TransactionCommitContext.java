@@ -114,7 +114,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private String rollbackMessage;
 
-  private boolean autoLockNewTargetsEnabled;
+  private boolean referentialIntegrityEnsured;
 
   private boolean autoReleaseLocksEnabled;
 
@@ -123,7 +123,7 @@ public class TransactionCommitContext implements InternalCommitContext
     this.transaction = transaction;
 
     InternalRepository repository = transaction.getRepository();
-    autoLockNewTargetsEnabled = isAutoLockNewTargetsEnabled(repository);
+    referentialIntegrityEnsured = isReferentialIntegrityEnsured(repository);
 
     packageRegistry = new TransactionPackageRegistry(repository.getPackageRegistry(false));
     packageRegistry.activate();
@@ -545,7 +545,7 @@ public class TransactionCommitContext implements InternalCommitContext
     final boolean supportingBranches = transaction.getRepository().isSupportingBranches();
 
     CDOFeatureDeltaVisitor deltaTargetLocker = null;
-    if (autoLockNewTargetsEnabled)
+    if (referentialIntegrityEnsured)
     {
       deltaTargetLocker = new CDOFeatureDeltaVisitorImpl()
       {
@@ -623,9 +623,9 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private boolean isAutoLockNewTargetsEnabled(InternalRepository repository)
+  private boolean isReferentialIntegrityEnsured(InternalRepository repository)
   {
-    String value = repository.getProperties().get(Props.AUTO_LOCK_NEW_TARGETS);
+    String value = repository.getProperties().get(Props.ENSURE_REFERENTIAL_INTEGRITY);
     return value == null ? false : Boolean.valueOf(value);
   }
 

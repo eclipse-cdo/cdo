@@ -458,6 +458,12 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
   }
 
+  public void queryXRefs(QueryXRefsContext context)
+  {
+    // TODO: implement HibernateStoreAccessor.queryXRefs(context)
+    throw new UnsupportedOperationException();
+  }
+
   private CDOID getHibernateID(CDOID id)
   {
     if (!CDOIDUtil.isNull(id))

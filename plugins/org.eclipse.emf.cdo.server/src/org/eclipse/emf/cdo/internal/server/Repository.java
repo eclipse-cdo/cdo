@@ -811,9 +811,15 @@ public class Repository extends Container<Object> implements InternalRepository
    */
   public synchronized IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
-    if (CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES.equals(info.getQueryLanguage()))
+    String language = info.getQueryLanguage();
+    if (CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES.equals(language))
     {
       return new ResourcesQueryHandler();
+    }
+
+    if (CDOProtocolConstants.QUERY_LANGUAGE_XREFS.equals(language))
+    {
+      return new XRefsQueryHandler();
     }
 
     IStoreAccessor storeAccessor = StoreThreadLocal.getAccessor();

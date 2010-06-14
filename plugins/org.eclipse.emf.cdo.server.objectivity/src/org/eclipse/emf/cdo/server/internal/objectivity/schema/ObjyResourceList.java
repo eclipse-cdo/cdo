@@ -213,8 +213,8 @@ public class ObjyResourceList
     Class_Object classObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(ObjyResourceList.className)
         .getASClass(), nearOid, false);
     Class_Position position = classObject.position_in_class(ObjyResourceList.Attribute_arrayName);
-    Class_Object arrayClassObject = Class_Object.new_persistent_object(ObjySchema.getTopModule().resolve_class(
-        ObjyArrayListId.className), classObject.objectID(), false);
+    Class_Object arrayClassObject = Class_Object.new_persistent_object(
+        ObjySchema.getTopModule().resolve_class(ObjyArrayListId.className), classObject.objectID(), false);
     // ooId arrayOid = arrayClassObject.objectID();
 
     classObject.set_ooId(position, arrayClassObject.objectID());

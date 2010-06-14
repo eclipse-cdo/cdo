@@ -324,6 +324,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     getStore().queryResources(context);
   }
 
+  public void queryXRefs(QueryXRefsContext context)
+  {
+    // TODO: implement MEMStoreAccessor.queryXRefs(context)
+    throw new UnsupportedOperationException();
+  }
+
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
     if ("TEST".equals(info.getQueryLanguage())) //$NON-NLS-1$
@@ -341,8 +347,8 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     throw new UnsupportedOperationException();
   }
 
-  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID,
-      long fromCommitTime, long toCommitTime) throws IOException
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
+      throws IOException
   {
     // TODO: implement MEMStoreAccessor.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime)
     throw new UnsupportedOperationException();

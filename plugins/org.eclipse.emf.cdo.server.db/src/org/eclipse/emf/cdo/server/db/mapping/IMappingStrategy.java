@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
+import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
@@ -196,7 +197,7 @@ public interface IMappingStrategy
   public boolean hasBranchingSupport();
 
   /**
-   * Execute a resource query.
+   * Executes a resource query.
    * 
    * @param accessor
    *          the accessor to use.
@@ -204,6 +205,17 @@ public interface IMappingStrategy
    *          the context from which the query parameters are read and to which the result is written.
    */
   public void queryResources(IDBStoreAccessor accessor, QueryResourcesContext context);
+
+  /**
+   * Executes a cross reference query.
+   * 
+   * @param accessor
+   *          the accessor to use.
+   * @param context
+   *          the context from which the query parameters are read and to which the result is written.
+   * @since 3.0
+   */
+  public void queryXRefs(IDBStoreAccessor accessor, QueryXRefsContext context);
 
   /**
    * Read the type (i.e. class) of the object referred to by a given ID.

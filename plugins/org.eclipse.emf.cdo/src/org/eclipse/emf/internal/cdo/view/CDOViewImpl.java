@@ -14,6 +14,7 @@ package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -800,7 +801,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
    */
   public List<CDOResourceNode> queryResources(CDOResourceFolder folder, String name, boolean exactMatch)
   {
-    checkActive();
     CDOQuery resourceQuery = createResourcesQuery(folder, name, exactMatch);
     return resourceQuery.getResult(CDOResourceNode.class);
   }
@@ -811,16 +811,65 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   public CloseableIterator<CDOResourceNode> queryResourcesAsync(CDOResourceFolder folder, String name,
       boolean exactMatch)
   {
-    checkActive();
     CDOQuery resourceQuery = createResourcesQuery(folder, name, exactMatch);
     return resourceQuery.getResultAsync(CDOResourceNode.class);
   }
 
   private CDOQuery createResourcesQuery(CDOResourceFolder folder, String name, boolean exactMatch)
   {
+    checkActive();
     CDOQuery query = createQuery(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES, name);
     query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES_FOLDER_ID, folder == null ? null : folder.cdoID());
     query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES_EXACT_MATCH, exactMatch);
+    return query;
+  }
+
+  public List<CDOObjectReference> queryXRefs(Set<CDOObject> targetObjects, EReference... sourceReferences)
+  {
+    CDOQuery xrefsQuery = createXRefsQuery(targetObjects, sourceReferences);
+    return xrefsQuery.getResult(CDOObjectReference.class);
+  }
+
+  public CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects,
+      EReference... sourceReferences)
+  {
+    CDOQuery xrefsQuery = createXRefsQuery(targetObjects, sourceReferences);
+    return xrefsQuery.getResultAsync(CDOObjectReference.class);
+  }
+
+  private CDOQuery createXRefsQuery(Set<CDOObject> targetObjects, EReference... sourceReferences)
+  {
+    checkActive();
+
+    StringBuilder builder = new StringBuilder();
+    for (CDOObject target : targetObjects)
+    {
+      if (FSMUtil.isTransient(target))
+      {
+        throw new IllegalArgumentException("Cross referencing for transient objects not supported " + target);
+      }
+
+      CDOID id = target.cdoID();
+      if (id.isTemporary())
+      {
+        throw new IllegalArgumentException("Cross referencing for uncommitted new objects not supported " + target);
+      }
+
+      if (builder.length() != 0)
+      {
+        builder.append("#");
+      }
+
+      builder.append(id.toURIFragment());
+    }
+
+    CDOQuery query = createQuery(CDOProtocolConstants.QUERY_LANGUAGE_XREFS, builder.toString());
+
+    if (sourceReferences.length != 0)
+    {
+      // query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES, sourceReferences);
+    }
+
     return query;
   }
 

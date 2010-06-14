@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.view;
 import org.eclipse.emf.cdo.CDOAdapter;
 import org.eclipse.emf.cdo.CDOInvalidationNotification;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
@@ -39,11 +40,13 @@ import org.eclipse.net4j.util.ref.ReferenceType;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -259,6 +262,32 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
    */
   public CloseableIterator<CDOResourceNode> queryResourcesAsync(CDOResourceFolder folder, String name,
       boolean exactMatch);
+
+  /**
+   * Returns a list of the resources in the given folder with a name equal to or starting with the value of the name
+   * parameter.
+   * 
+   * @param targetObjects
+   *          The set of target objects that referencing objects are requested for.
+   * @param sourceReferences
+   *          The reference features that referencing objects are requested for, or an empty array if all reference
+   *          features are to be used in the request.
+   * @since 3.0
+   */
+  public List<CDOObjectReference> queryXRefs(Set<CDOObject> targetObjects, EReference... sourceReferences);
+
+  /**
+   * Returns an iterator over the resources in the given folder with a name equal to or starting with the value of the
+   * name parameter. The underlying query will be executed asynchronously.
+   * 
+   * @param targetObjects
+   *          The set of target objects that referencing objects are requested for.
+   * @param sourceReferences
+   *          The reference features that referencing objects are requested for, or an empty array if all reference
+   *          features are to be used in the request.
+   * @since 3.0
+   */
+  public CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects, EReference... sourceReferences);
 
   /**
    * Returns the object for the given CDOID.

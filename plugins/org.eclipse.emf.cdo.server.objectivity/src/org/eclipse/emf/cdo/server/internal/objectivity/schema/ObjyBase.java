@@ -59,7 +59,8 @@ public class ObjyBase
   public static void buildSchema()
   {
     d_Module top_mod = ObjySchema.getTopModule();
-    if (top_mod.resolve_class(ObjyBase.CLASS_NAME) == null && top_mod.resolve_proposed_class(ObjyBase.CLASS_NAME) == null)
+    if (top_mod.resolve_class(ObjyBase.CLASS_NAME) == null
+        && top_mod.resolve_proposed_class(ObjyBase.CLASS_NAME) == null)
     {
       if (TRACER_DEBUG.isEnabled())
       {

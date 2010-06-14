@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
+import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IObjectTypeCache;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
@@ -104,6 +105,12 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     {
       queryResources(accessor, getClassMapping(resourcesPackage.getCDOResource()), context);
     }
+  }
+
+  public void queryXRefs(IDBStoreAccessor accessor, QueryXRefsContext context)
+  {
+    // TODO: implement AbstractHorizontalMappingStrategy.queryXRefs(accessor, context)
+    throw new UnsupportedOperationException();
   }
 
   public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, int fromBranchID, int toBranchID,

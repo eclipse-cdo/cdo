@@ -483,7 +483,10 @@ public class ObjyObject
               }
               else
               {
-                System.out.println("OBJY: don't know what kind of entryValue is this!!! - " + entryValue);
+                if (TRACER_DEBUG.isEnabled())
+                {
+                  TRACER_DEBUG.trace("OBJY: don't know what kind of entryValue is this!!! - " + entryValue);
+                }
               }
               // FeatureMapEntry is a presistent class.
               ObjyFeatureMapEntry featureMapEntry = new ObjyFeatureMapEntry(entryFeature.getName(), oid, metaId,
@@ -494,7 +497,8 @@ public class ObjyObject
             else
             {
               // different feature then.
-              System.out.println("-->> Hmmm feature (" + i + ") -> feature:" + feature.getName() + " - value:" + value);
+              // System.out.println("-->> Hmmm feature (" + i + ") -> feature:" + feature.getName() + " - value:" +
+              // value);
               values[i] = value;
             }
           }
@@ -505,10 +509,10 @@ public class ObjyObject
         else
         {
           Object newValue = revision.get(feature, feature.getFeatureID());
-          if (newValue instanceof CDOIDExternal)
-          {
-            System.out.println("value is a proxy object");
-          }
+          // if (newValue instanceof CDOIDExternal)
+          // {
+          // System.out.println("value is a proxy object");
+          // }
           ((ISingleTypeMapper)mapper).setValue(this, feature, newValue);
         }
       }
@@ -649,13 +653,11 @@ public class ObjyObject
               {
                 // TODO - this code need refactoring....
 
-                // System.out.println("-->> IS: getting Class_Object from OID: "
-                // + childObject.getStoreString());
                 Class_Object refClassObject = Class_Object.class_object_from_oid((ooId)objects[i]);
 
                 if (refClassObject.type_of().name().equals(ObjyProxy.className))
                 {
-                  System.out.println("OBJY: Got proxy: " + refClassObject.objectID().getStoreString());
+                  // System.out.println("OBJY: Got proxy: " + refClassObject.objectID().getStoreString());
                   ObjyProxy proxyObject = new ObjyProxy(refClassObject);
                   // cdoList.set(i,
                   // OBJYCDOIDUtil.createCDIDExternal(proxyObject));
@@ -667,6 +669,7 @@ public class ObjyObject
                   // cdoList.set(i, childID);
                   list.add(childID);
                 }
+                refClassObject = null;
               }
               else if (objects[i] instanceof ObjyFeatureMapEntry)
               {
@@ -678,7 +681,7 @@ public class ObjyObject
                 Class_Object refClassObject = Class_Object.class_object_from_oid(oid);
                 if (refClassObject.type_of().name().equals(ObjyProxy.className))
                 {
-                  System.out.println("OBJY: Got proxy: " + refClassObject.objectID().getStoreString());
+                  // System.out.println("OBJY: Got proxy: " + refClassObject.objectID().getStoreString());
                   ObjyProxy proxyObject = new ObjyProxy(refClassObject);
                   cdoId = OBJYCDOIDUtil.createCDIDExternal(proxyObject);
                 }
@@ -686,24 +689,25 @@ public class ObjyObject
                 {
                   cdoId = OBJYCDOIDUtil.getCDOID((ooId)objects[i]);
                 }
-                System.out.println("-->> FeatureMapEntry (" + i + ") -> feature:" + name + " - value:" + cdoId
-                    + " - metaId: " + metaId);
+                // System.out.println("-->> FeatureMapEntry (" + i + ") -> feature:" + name + " - value:" + cdoId
+                // + " - metaId: " + metaId);
                 // get the entry feature using the metaId.
                 EStructuralFeature entryFeature = (EStructuralFeature)storeAccessor.getMetaInstance(metaId);
                 FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, cdoId);
                 // for verifications...
                 entryFeature = entry.getEStructuralFeature();
                 Object entryValue = entry.getValue();
-                System.out.println("-->> (fetch) FeatureMap.Entry (" + i + ") -> feature:" + entryFeature.getName()
-                    + " - value:" + entryValue);
+                // System.out.println("-->> (fetch) FeatureMap.Entry (" + i + ") -> feature:" + entryFeature.getName()
+                // + " - value:" + entryValue);
 
                 list.add(entry);
+                refClassObject = null;
               }
               else
               {
                 // different feature then.
-                System.out.println("-->> Hmmm fetch() feature (" + i + ") -> feature:" + feature.getName()
-                    + " - value:" + objects[i]);
+                // System.out.println("-->> Hmmm fetch() feature (" + i + ") -> feature:" + feature.getName()
+                // + " - value:" + objects[i]);
                 // cdoList.set(i, objects[i]);
                 list.add(objects[i]);
               }
@@ -777,7 +781,6 @@ public class ObjyObject
 
             if (refClassObject.type_of().name().equals(ObjyProxy.className))
             {
-              System.out.println("OBJY: Got proxy: " + refClassObject.objectID().getStoreString());
               ObjyProxy proxyObject = new ObjyProxy(refClassObject);
 
               results.add(OBJYCDOIDUtil.createCDIDExternal(proxyObject));
@@ -797,7 +800,6 @@ public class ObjyObject
             Class_Object refClassObject = Class_Object.class_object_from_oid(oid);
             if (refClassObject.type_of().name().equals(ObjyProxy.className))
             {
-              System.out.println("OBJY: Got proxy: " + refClassObject.objectID().getStoreString());
               ObjyProxy proxyObject = new ObjyProxy(refClassObject);
               cdoId = OBJYCDOIDUtil.createCDIDExternal(proxyObject);
             }
@@ -805,16 +807,16 @@ public class ObjyObject
             {
               cdoId = OBJYCDOIDUtil.getCDOID((ooId)objects[i]);
             }
-            System.out.println("-->> FeatureMapEntry (" + i + ") -> feature:" + name + " - value:" + cdoId
-                + " - metaId: " + metaId);
+            // System.out.println("-->> FeatureMapEntry (" + i + ") -> feature:" + name + " - value:" + cdoId
+            // + " - metaId: " + metaId);
             // get the entry feature using the metaId.
             EStructuralFeature entryFeature = (EStructuralFeature)storeAccessor.getMetaInstance(metaId);
             FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, cdoId);
             // for verifications...
             entryFeature = entry.getEStructuralFeature();
             Object entryValue = entry.getValue();
-            System.out.println("-->> (fetch) FeatureMap.Entry (" + i + ") -> feature:" + entryFeature.getName()
-                + " - value:" + entryValue);
+            // System.out.println("-->> (fetch) FeatureMap.Entry (" + i + ") -> feature:" + entryFeature.getName()
+            // + " - value:" + entryValue);
 
             results.add(entry);
           }
@@ -1134,8 +1136,8 @@ public class ObjyObject
           else if (objects[i] instanceof ObjyFeatureMapEntry)
           {
             ObjyFeatureMapEntry mapEntry = (ObjyFeatureMapEntry)objects[i];
-            long metaId = mapEntry.getMetaId();
-            String name = mapEntry.getTagName();
+            // long metaId = mapEntry.getMetaId();
+            // String name = mapEntry.getTagName();
             ooId oid = mapEntry.getObject();
             // System.out.println("-->> FeatureMapEntry (" + i + ") -> feature:" + name + " - value:" + oid
             // + " - metaId: " + metaId);
@@ -1237,17 +1239,15 @@ public class ObjyObject
     {
       return null;
     }
-    else
+
+    @SuppressWarnings("unchecked")
+    Iterator<Class_Object> itr = revisionsRel.get_iterator();
+    while (itr.hasNext())
     {
-      @SuppressWarnings("unchecked")
-      Iterator<Class_Object> itr = revisionsRel.get_iterator();
-      while (itr.hasNext())
+      objyRevision = new ObjyObject(itr.next());
+      if (evaluateRevision(timeStamp, branchId, objyRevision))
       {
-        objyRevision = new ObjyObject(itr.next());
-        if (evaluateRevision(timeStamp, branchId, objyRevision))
-        {
-          return objyRevision;
-        }
+        return objyRevision;
       }
     }
 

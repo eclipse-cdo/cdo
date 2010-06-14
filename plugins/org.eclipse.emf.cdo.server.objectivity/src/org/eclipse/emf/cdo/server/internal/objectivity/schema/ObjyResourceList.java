@@ -10,8 +10,10 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
@@ -153,7 +155,8 @@ public class ObjyResourceList
     getList().add(objyObject.ooId());
   }
 
-  public void checkDuplicateResources(InternalCDORevision revision) throws IllegalStateException
+  public void checkDuplicateResources(ObjectivityStoreAccessor storeAccessor, InternalCDORevision revision)
+      throws IllegalStateException
   {
     // CDOID folderID = (CDOID)revision.data().getContainerID();
     CDOID folderId = (CDOID)revision.data().getContainerID();
@@ -167,9 +170,25 @@ public class ObjyResourceList
     for (int i = 0; i < size; i++)
     {
       ObjyObject resource = getResource(i);
-      int v = resource.getVersion();
-      CDOID resourceFolderId = (CDOID)resource.getEContainer();
-      String resourceName = ObjyResourceList.getResourceName(resource);
+      ObjyObject resourceRevision = resource;
+      // get the proper revision of the resource (might need to refactor this code, see readRevision())
+      if (storeAccessor.getStore().isRequiredToSupportBranches())
+      {
+        resourceRevision = resource.getRevision(revision.getTimeStamp(), revision.getBranch().getID());
+      }
+      else if (storeAccessor.getStore().isRequiredToSupportAudits())
+      {
+        resourceRevision = resource.getRevision(revision.getTimeStamp(), CDOBranch.MAIN_BRANCH_ID);
+      }
+
+      if (resourceRevision == null || resourceRevision.getVersion() < 0)
+      {
+        continue;
+      }
+
+      // int v = resource.getVersion();
+      CDOID resourceFolderId = (CDOID)resourceRevision.getEContainer();
+      String resourceName = ObjyResourceList.getResourceName(resourceRevision);
       if (resourceFolderId != null && resourceFolderId.equals(folderId) && resourceName != null
           && resourceName.equals(name))
       {

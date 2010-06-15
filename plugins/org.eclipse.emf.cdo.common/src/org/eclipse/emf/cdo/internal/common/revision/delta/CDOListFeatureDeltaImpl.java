@@ -40,11 +40,11 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
 {
   private List<CDOFeatureDelta> featureDeltas = new ArrayList<CDOFeatureDelta>();
 
-  private transient int[] cacheIndices;
+  private transient int[] cachedIndices;
 
-  private transient IListTargetAdding[] cacheSources;
+  private transient IListTargetAdding[] cachedSources;
 
-  private transient List<CDOFeatureDelta> notProcessedFeatureDelta;
+  private transient List<CDOFeatureDelta> unprocessedFeatureDeltas;
 
   public CDOListFeatureDeltaImpl(EStructuralFeature feature)
   {
@@ -102,57 +102,61 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   public Pair<IListTargetAdding[], int[]> reconstructAddedIndices()
   {
     reconstructAddedIndicesWithNoCopy();
-    return new Pair<IListTargetAdding[], int[]>(copyOf(cacheSources, cacheSources.length, cacheSources.getClass()),
-        copyOf(cacheIndices, cacheIndices.length));
+    return new Pair<IListTargetAdding[], int[]>(copyOf(cachedSources, cachedSources.length, cachedSources.getClass()),
+        copyOf(cachedIndices, cachedIndices.length));
   }
 
   private void reconstructAddedIndicesWithNoCopy()
   {
-    if (cacheIndices == null || notProcessedFeatureDelta != null)
+    if (cachedIndices == null || unprocessedFeatureDeltas != null)
     {
-      if (cacheIndices == null)
+      List<CDOFeatureDelta> featureDeltasToBeProcessed = unprocessedFeatureDeltas == null ? featureDeltas
+          : unprocessedFeatureDeltas;
+
+      // Actually the required capacity is the number of ListTargetAdding instances in the
+      // featureDeltasToBeProcessed.. so this is an overestimate
+      int requiredCapacity = featureDeltasToBeProcessed.size() + 1;
+
+      if (cachedIndices == null)
       {
-        cacheIndices = new int[1 + featureDeltas.size()];
+        cachedIndices = new int[1 + featureDeltas.size()];
       }
-      else if (cacheIndices.length <= 1 + featureDeltas.size())
+      else if (cachedIndices.length < requiredCapacity)
       {
-        int newCapacity = Math.max(10, cacheIndices.length * 3 / 2 + 1);
+        int newCapacity = Math.max(requiredCapacity, cachedIndices.length * 3 / 2);
         int[] newElements = new int[newCapacity];
-        System.arraycopy(cacheIndices, 0, newElements, 0, cacheIndices.length);
-        cacheIndices = newElements;
+        System.arraycopy(cachedIndices, 0, newElements, 0, cachedIndices.length);
+        cachedIndices = newElements;
       }
 
-      if (cacheSources == null)
+      if (cachedSources == null)
       {
-        cacheSources = new IListTargetAdding[1 + featureDeltas.size()];
+        cachedSources = new IListTargetAdding[requiredCapacity];
       }
-      else if (cacheSources.length <= 1 + featureDeltas.size())
+      else if (cachedSources.length <= requiredCapacity)
       {
-        int newCapacity = Math.max(10, cacheSources.length * 3 / 2 + 1);
+        int newCapacity = Math.max(requiredCapacity, cachedSources.length * 3 / 2);
         IListTargetAdding[] newElements = new IListTargetAdding[newCapacity];
-        System.arraycopy(cacheSources, 0, newElements, 0, cacheSources.length);
-        cacheSources = newElements;
+        System.arraycopy(cachedSources, 0, newElements, 0, cachedSources.length);
+        cachedSources = newElements;
       }
 
-      List<CDOFeatureDelta> featureDeltasToBeProcess = notProcessedFeatureDelta == null ? featureDeltas
-          : notProcessedFeatureDelta;
-
-      for (CDOFeatureDelta featureDelta : featureDeltasToBeProcess)
+      for (CDOFeatureDelta featureDelta : featureDeltasToBeProcessed)
       {
         if (featureDelta instanceof IListIndexAffecting)
         {
           IListIndexAffecting affecting = (IListIndexAffecting)featureDelta;
-          affecting.affectIndices(cacheSources, cacheIndices);
+          affecting.affectIndices(cachedSources, cachedIndices);
         }
 
         if (featureDelta instanceof IListTargetAdding)
         {
-          cacheIndices[++cacheIndices[0]] = ((IListTargetAdding)featureDelta).getIndex();
-          cacheSources[cacheIndices[0]] = (IListTargetAdding)featureDelta;
+          cachedIndices[++cachedIndices[0]] = ((IListTargetAdding)featureDelta).getIndex();
+          cachedSources[cachedIndices[0]] = (IListTargetAdding)featureDelta;
         }
       }
 
-      notProcessedFeatureDelta = null;
+      unprocessedFeatureDeltas = null;
     }
   }
 
@@ -165,25 +169,25 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
       int indexToRemove = ((CDORemoveFeatureDelta)featureDelta).getIndex();
       reconstructAddedIndicesWithNoCopy();
 
-      for (int i = 1; i <= cacheIndices[0]; i++)
+      for (int i = 1; i <= cachedIndices[0]; i++)
       {
-        int index = cacheIndices[i];
+        int index = cachedIndices[i];
         if (indexToRemove == index)
         {
-          cacheSources[i].clear();
+          cachedSources[i].clear();
           break;
         }
       }
     }
 
-    if (cacheIndices != null)
+    if (cachedIndices != null)
     {
-      if (notProcessedFeatureDelta == null)
+      if (unprocessedFeatureDeltas == null)
       {
-        notProcessedFeatureDelta = new ArrayList<CDOFeatureDelta>();
+        unprocessedFeatureDeltas = new ArrayList<CDOFeatureDelta>();
       }
 
-      notProcessedFeatureDelta.add(featureDelta);
+      unprocessedFeatureDeltas.add(featureDelta);
     }
   }
 

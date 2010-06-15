@@ -545,16 +545,19 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     else
     {
       Connection connection = getConnection();
+
       try
       {
         connection.setAutoCommit(false);
         connection.setReadOnly(true);
         OM.LOG.info(Messages.getString("DBStore.9")); //$NON-NLS-1$
-        long[] result = mappingStrategy.repairAfterCrash(dbAdapter, connection);
 
+        long[] result = mappingStrategy.repairAfterCrash(dbAdapter, connection);
         setNextLocalObjectID(result[0]);
         setLastObjectID(result[1]);
-        setLastMetaID(DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGE_INFOS_META_UB));
+
+        long lastMetaID = DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGE_INFOS_META_UB);
+        setLastMetaID(lastMetaID);
 
         int branchID = DBUtil.selectMaximumInt(connection, CDODBSchema.BRANCHES_ID);
         setLastBranchID(branchID > 0 ? branchID : 0);
@@ -562,8 +565,13 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
         int localBranchID = DBUtil.selectMinimumInt(connection, CDODBSchema.BRANCHES_ID);
         setLastLocalBranchID(localBranchID < 0 ? localBranchID : 0);
 
-        setLastCommitTime(result[2]);
-        setLastNonLocalCommitTime(result[3]);
+        long lastCommitTime = DBUtil.selectMaximumLong(connection, CDODBSchema.COMMIT_INFOS_TIMESTAMP);
+        setLastCommitTime(lastCommitTime);
+
+        long lastNonLocalCommitTime = DBUtil.selectMaximumLong(connection, CDODBSchema.COMMIT_INFOS_TIMESTAMP,
+            CDOBranch.MAIN_BRANCH_ID + "<=" + CDODBSchema.COMMIT_INFOS_BRANCH);
+        setLastNonLocalCommitTime(lastNonLocalCommitTime);
+
         OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.10"), getLastObjectID(), getLastMetaID())); //$NON-NLS-1$
       }
       catch (SQLException e)

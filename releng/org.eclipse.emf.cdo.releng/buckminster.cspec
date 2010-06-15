@@ -12,8 +12,6 @@
         <cs:dependency name="org.eclipse.emf" componentType="eclipse.feature"/>
         <cs:dependency name="org.eclipse.emf.source" componentType="eclipse.feature"/>
         <cs:dependency name="com.mysql.jdbc" componentType="eclipse.feature"/>
-        <cs:dependency name="org.apache.derby" componentType="eclipse.feature"/>
-        <cs:dependency name="org.h2.jdbc" componentType="eclipse.feature"/>
         <cs:dependency name="org.hsqldb" componentType="eclipse.feature"/>
         <cs:dependency name="org.postgresql.jdbc3" componentType="eclipse.feature"/>
     </cs:dependencies>

@@ -9,4 +9,5 @@
     <cq:advisorNode namePattern="org\.eclipse\.emf\.cdo.*" branchTagPath="R2_0_maintenance"/>
     <cq:advisorNode namePattern="org\.eclipse\.net4j.*" branchTagPath="R2_0_maintenance"/>
     <cq:advisorNode namePattern="org\.gastro.*" branchTagPath="R2_0_maintenance"/>
+	<cq:advisorNode namePattern=".*" useMaterialization="false" useTargetPlatform="false"/>
 </cq:componentQuery>

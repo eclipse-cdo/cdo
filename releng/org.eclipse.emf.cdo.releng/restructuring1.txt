@@ -1,6 +1,7 @@
-deprecated
-features
-incubation
-plugins
-releng
-vserver
+		org.eclipse.emf.cdo
+				deprecated
+				features
+				incubation
+				plugins
+				releng
+				vserver

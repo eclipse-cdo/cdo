@@ -37,7 +37,6 @@ import java.util.Map;
  */
 public abstract class AbstractCDOTest extends ConfigTest
 {
-  @SuppressWarnings("restriction")
   @Override
   protected void doSetUp() throws Exception
   {

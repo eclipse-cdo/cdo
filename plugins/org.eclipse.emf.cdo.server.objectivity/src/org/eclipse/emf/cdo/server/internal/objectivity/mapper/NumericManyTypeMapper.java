@@ -29,6 +29,7 @@ import com.objy.as.app.VArray_Object;
 import com.objy.as.app.d_Access_Kind;
 import com.objy.as.app.d_Attribute;
 import com.objy.as.app.d_Class;
+import com.objy.as.app.d_Module;
 import com.objy.as.app.ooBaseType;
 
 import java.util.Date;
@@ -85,7 +86,10 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
   {
     boolean bDone = true;
 
-    Proposed_Class propClass = new Proposed_Class(embeddedClassName());
+    d_Module top_mod = ObjySchema.getTopModule();
+    boolean inProcess = top_mod.proposed_classes().hasNext();
+
+    Proposed_Class propClass = top_mod.propose_new_class(embeddedClassName());
 
     propClass.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
         embeddedAttributeName, // Attribute name
@@ -101,7 +105,11 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
 
     // System.out.println("OBJY: Propose Creating new class: " + embeddedClassName());
 
-    ObjySchema.getTopModule().propose_new_class(propClass);
+    // ObjySchema.getTopModule().propose_new_class(propClass);
+    if (!inProcess)
+    {
+      top_mod.activate_proposals(true, true);
+    }
 
     return bDone;
   }

@@ -675,7 +675,6 @@ public class ObjyObject
               {
                 ObjyFeatureMapEntry mapEntry = (ObjyFeatureMapEntry)objects[i];
                 long metaId = mapEntry.getMetaId();
-                String name = mapEntry.getTagName();
                 ooId oid = mapEntry.getObject();
                 CDOID cdoId = null;
                 Class_Object refClassObject = Class_Object.class_object_from_oid(oid);
@@ -689,16 +688,10 @@ public class ObjyObject
                 {
                   cdoId = OBJYCDOIDUtil.getCDOID((ooId)objects[i]);
                 }
-                // System.out.println("-->> FeatureMapEntry (" + i + ") -> feature:" + name + " - value:" + cdoId
-                // + " - metaId: " + metaId);
-                // get the entry feature using the metaId.
                 EStructuralFeature entryFeature = (EStructuralFeature)storeAccessor.getMetaInstance(metaId);
                 FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, cdoId);
                 // for verifications...
                 entryFeature = entry.getEStructuralFeature();
-                Object entryValue = entry.getValue();
-                // System.out.println("-->> (fetch) FeatureMap.Entry (" + i + ") -> feature:" + entryFeature.getName()
-                // + " - value:" + entryValue);
 
                 list.add(entry);
                 refClassObject = null;
@@ -794,7 +787,6 @@ public class ObjyObject
           {
             ObjyFeatureMapEntry mapEntry = (ObjyFeatureMapEntry)objects[i];
             long metaId = mapEntry.getMetaId();
-            String name = mapEntry.getTagName();
             ooId oid = mapEntry.getObject();
             CDOID cdoId = null;
             Class_Object refClassObject = Class_Object.class_object_from_oid(oid);
@@ -807,16 +799,11 @@ public class ObjyObject
             {
               cdoId = OBJYCDOIDUtil.getCDOID((ooId)objects[i]);
             }
-            // System.out.println("-->> FeatureMapEntry (" + i + ") -> feature:" + name + " - value:" + cdoId
-            // + " - metaId: " + metaId);
             // get the entry feature using the metaId.
             EStructuralFeature entryFeature = (EStructuralFeature)storeAccessor.getMetaInstance(metaId);
             FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, cdoId);
             // for verifications...
             entryFeature = entry.getEStructuralFeature();
-            Object entryValue = entry.getValue();
-            // System.out.println("-->> (fetch) FeatureMap.Entry (" + i + ") -> feature:" + entryFeature.getName()
-            // + " - value:" + entryValue);
 
             results.add(entry);
           }

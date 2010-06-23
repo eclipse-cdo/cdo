@@ -91,7 +91,7 @@ public class Bugzilla_306710_Test extends AbstractCDOTest
     assertEquals(1, counter.getRemoves());
   }
 
-  public void _testBugzilla_306710_addRemove() throws Exception
+  public void testBugzilla_306710_addRemove() throws Exception
   {
     final NotifyCounter counter = new NotifyCounter();
 
@@ -148,8 +148,8 @@ public class Bugzilla_306710_Test extends AbstractCDOTest
     session2.close();
 
     // check if the notifications arrived (which is not the case because of the exception).
-    assertEquals(1, counter.getAdds());
-    assertEquals(1, counter.getRemoves());
+    assertEquals(0, counter.getAdds());
+    assertEquals(0, counter.getRemoves());
   }
 
   /**

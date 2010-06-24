@@ -382,10 +382,10 @@ public class TransactionCommitContext implements InternalCommitContext
       if (success)
       {
         InternalSession sender = transaction.getSession();
-        CDOCommitInfo createCommitInfo = createCommitInfo();
+        CDOCommitInfo commitInfo = createCommitInfo();
 
         InternalSessionManager sessionManager = transaction.getRepository().getSessionManager();
-        sessionManager.sendCommitNotification(sender, createCommitInfo);
+        sessionManager.sendCommitNotification(sender, commitInfo);
       }
     }
     catch (Exception ex)

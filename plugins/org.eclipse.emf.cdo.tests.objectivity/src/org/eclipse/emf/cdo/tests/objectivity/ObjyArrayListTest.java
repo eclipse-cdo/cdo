@@ -1,11 +1,16 @@
 package org.eclipse.emf.cdo.tests.objectivity;
 
-import static org.junit.Assert.*;
-import java.util.ArrayList;
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyArrayList;
-import org.junit.*;
 
 import com.objy.as.app.Class_Object;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
 
 /**
  * Class to be used for testing, all persistence related calls are

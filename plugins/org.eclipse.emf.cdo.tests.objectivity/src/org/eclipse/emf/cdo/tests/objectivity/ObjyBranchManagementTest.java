@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ibrahim Sallam - initial API and implementation
  */
@@ -84,7 +84,7 @@ class Temp extends ooObj
 class DbStore
 {
 
-  private final String fdName = "c:\\data\\objyBranchTest.boot"; // TODO - this is windows path style, generalise it.
+  // private final String fdName = "c:\\data\\objyBranchTest.boot"; // TODO - this is windows path style, generalise it.
 
   private final String repoName = "TestRepo";
 
@@ -333,7 +333,7 @@ public class ObjyBranchManagementTest
   {
     dbStore.begin();
     int thisBaseBranchId = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA);
-    int branchIdB = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoB);
+    dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoB);
     long thisBaseBranchTimeStamp = System.currentTimeMillis();
     // using the created branch we'll create subBranches.
     dbStore.commit();

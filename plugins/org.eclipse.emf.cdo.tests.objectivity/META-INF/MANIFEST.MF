@@ -15,3 +15,4 @@ Import-Package: com.objy.as;version="3.0.0",
  com.objy.db.app;version="3.0.0",
  com.objy.db.iapp;version="3.0.0",
  com.objy.pm;version="3.0.0"
+Export-Package: org.eclipse.emf.cdo.tests.objectivity;version="3.0.0"

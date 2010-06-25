@@ -5,9 +5,14 @@
 
 	<rm:property key="build.type" mutable="true" value="N"/>
 
-	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.releng" searchPathRef="cdo.releng"/>
-	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.formatchecker" searchPathRef="cdo.releng"/>
+	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.releng" searchPathRef="releng"/>
+	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.formatchecker" searchPathRef="releng"/>
 
+	<rm:locator pattern="^org\.eclipse\.emf\.cdo.*" searchPathRef="sources"/>
+	<rm:locator pattern="^org\.eclipse\.net4j.*" searchPathRef="sources"/>
+	<rm:locator pattern="^org\.gastro.*" searchPathRef="sources"/>
+
+	<!--
 	<rm:locator pattern="^org\.gastro.*" searchPathRef="cdo.examples.gastro"/>
 	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.doc.*" searchPathRef="cdo.doc"/>
 	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.tests\.hibernate.*" searchPathRef="cdo.hibernate"/>
@@ -26,12 +31,13 @@
 	<rm:locator pattern="^org\.eclipse\.net4j\.db\.tests.*" searchPathRef="net4j.tests"/>
 	<rm:locator pattern="^org\.eclipse\.net4j\.jms\.tests.*" searchPathRef="net4j.tests"/>
 	<rm:locator pattern="^org\.eclipse\.net4j.*" searchPathRef="net4j.featuresAndPlugins"/>
+	-->
 
 	<rm:locator searchPathRef="orbit" failOnError="false"/> <!-- MUST COME BEFORE MODELING! -->
 	<rm:locator searchPathRef="net4j.plus" failOnError="false"/>
 	<rm:locator searchPathRef="platform.binaries"/>
 
-	<rm:searchPath name="cdo.releng">
+	<rm:searchPath name="releng">
 		<rm:provider componentTypes="buckminster,osgi.bundle" readerType="cvs">
 			<rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/releng/{1}">
 				<bc:propertyRef key="cvs.repository"/>
@@ -40,6 +46,22 @@
 		</rm:provider>
 	</rm:searchPath>
 
+	<rm:searchPath name="sources">
+		<rm:provider componentTypes="osgi.bundle" readerType="cvs">
+			<rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/plugins/{1}">
+				<bc:propertyRef key="cvs.repository"/>
+				<bc:propertyRef key="buckminster.component"/>
+			</rm:uri>
+		</rm:provider>
+		<rm:provider componentTypes="eclipse.feature" readerType="cvs">
+			<rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/features/{1}-feature">
+				<bc:propertyRef key="cvs.repository"/>
+				<bc:propertyRef key="buckminster.component"/>
+			</rm:uri>
+		</rm:provider>
+	</rm:searchPath>
+
+	<!--
 	<rm:searchPath name="cdo.doc">
 		<rm:provider componentTypes="osgi.bundle" readerType="cvs">
 			<rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/doc/{1}">
@@ -198,6 +220,7 @@
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>
+	-->
 
 	<rm:searchPath name="orbit">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">

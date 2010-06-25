@@ -14,20 +14,14 @@ package org.eclipse.emf.cdo.tests.objectivity;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
-import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.transaction.CDOXATransaction;
-import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.DanglingReferenceException;
-import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -40,9 +34,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 
 /**
  * @author Simon McDuff

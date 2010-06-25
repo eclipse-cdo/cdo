@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.server;singleton:=true
-Bundle-Version: 3.0.100.qualifier
+Bundle-Version: 3.0.1.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -11,13 +11,13 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)";resolution:=optional,
  org.eclipse.emf.cdo;bundle-version="[3.0.0,4.0.0)";visibility:=reexport
-Export-Package: org.eclipse.emf.cdo.internal.server;version="3.0.100";x-friends:="org.eclipse.emf.cdo.server.db,org.eclipse.emf.cdo.server.net4j,org.eclipse.emf.cdo.tests",
- org.eclipse.emf.cdo.internal.server.bundle;version="3.0.100";x-internal:=true,
- org.eclipse.emf.cdo.internal.server.embedded;version="3.0.100";x-friends:="org.eclipse.emf.cdo.tests",
- org.eclipse.emf.cdo.internal.server.mem;version="3.0.100";x-friends:="org.eclipse.emf.cdo.tests",
- org.eclipse.emf.cdo.internal.server.messages;version="3.0.100";x-internal:=true,
- org.eclipse.emf.cdo.internal.server.syncing;version="3.0.100";x-friends:="org.eclipse.emf.cdo.tests",
- org.eclipse.emf.cdo.server;version="3.0.100",
- org.eclipse.emf.cdo.server.embedded;version="3.0.100",
- org.eclipse.emf.cdo.server.mem;version="3.0.100",
- org.eclipse.emf.cdo.spi.server;version="3.0.100"
+Export-Package: org.eclipse.emf.cdo.internal.server;version="3.0.1";x-friends:="org.eclipse.emf.cdo.server.db,org.eclipse.emf.cdo.server.net4j,org.eclipse.emf.cdo.tests",
+ org.eclipse.emf.cdo.internal.server.bundle;version="3.0.1";x-internal:=true,
+ org.eclipse.emf.cdo.internal.server.embedded;version="3.0.1";x-friends:="org.eclipse.emf.cdo.tests",
+ org.eclipse.emf.cdo.internal.server.mem;version="3.0.1";x-friends:="org.eclipse.emf.cdo.tests",
+ org.eclipse.emf.cdo.internal.server.messages;version="3.0.1";x-internal:=true,
+ org.eclipse.emf.cdo.internal.server.syncing;version="3.0.1";x-friends:="org.eclipse.emf.cdo.tests",
+ org.eclipse.emf.cdo.server;version="3.0.1",
+ org.eclipse.emf.cdo.server.embedded;version="3.0.1",
+ org.eclipse.emf.cdo.server.mem;version="3.0.1",
+ org.eclipse.emf.cdo.spi.server;version="3.0.1"

@@ -14,7 +14,7 @@
 - Bootstrap the releng component: http://dev.eclipse.org/viewcvs/index.cgi/org.eclipse.emf/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/psf/pserver/_bootstrap.psf?root=Modeling_Project&view=co
 	Commiters use: http://dev.eclipse.org/viewcvs/index.cgi/org.eclipse.emf/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/psf/extssh/_bootstrap.psf?root=Modeling_Project&view=co
 
-- Only for CDO 2.0: Team|Switch to "R2_0_maintenance" branch (not tag!)
+- Only for CDO 3.0: Team|Switch to "R3_0_maintenance" branch (not tag!)
 
 - Right-click local.mspec, Buckminster|Import..., wait, press Finish
 

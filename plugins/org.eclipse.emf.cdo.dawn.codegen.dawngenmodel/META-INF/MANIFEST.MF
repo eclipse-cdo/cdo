@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.codegen.dawngenmodel;singleton:=true
-Bundle-Version: 0.2.1.qualifier
+Bundle-Version: 0.2.0.qualifier
 Bundle-Localization: plugin
 Bundle-Activator: org.eclipse.emf.cdo.dawn.codegen.genmodel.DawnGenModelPlugin
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
@@ -10,8 +10,8 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
  org.eclipse.gmf.codegen;bundle-version="[2.2.0,3.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.cdo.dawn.codegen.dawngenmodel;version="0.2.1",
- org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl;version="0.2.1",
- org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.util;version="0.2.1",
- org.eclipse.emf.cdo.dawn.codegen.genmodel;version="0.2.1"
+Export-Package: org.eclipse.emf.cdo.dawn.codegen.dawngenmodel;version="0.2.0",
+ org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl;version="0.2.0",
+ org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.util;version="0.2.0",
+ org.eclipse.emf.cdo.dawn.codegen.genmodel;version="0.2.0"
 Bundle-Vendor: %providerName

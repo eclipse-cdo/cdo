@@ -6,6 +6,8 @@
 		<!--
 		<cs:dependency name="org.eclipse.emf.cdo.formatchecker" componentType="osgi.bundle"/>
 		-->
+		<cs:dependency name="org.eclipse.emf.cdo.dawn.tests" componentType="osgi.bundle"/>
+		<cs:dependency name="org.eclipse.emf.cdo.tests.objectivity" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.examples.server" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.server.product" componentType="eclipse.feature"/>
 		<cs:dependency name="org.gastro" componentType="eclipse.feature"/>

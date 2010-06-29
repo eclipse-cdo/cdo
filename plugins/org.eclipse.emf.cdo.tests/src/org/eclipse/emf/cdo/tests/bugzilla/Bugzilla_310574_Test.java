@@ -10,19 +10,27 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IRepository.WriteAccessHandler;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
-import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.model1.Category;
+import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -78,6 +86,132 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
 
     // Adds our handler.
     // getRepository().addHandler(printHandler);
+  }
+
+  public void testAddAndRemoveWithNull() throws Exception
+  {
+    // setup connection1.
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+
+    // add initial model.
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    transaction.commit();
+
+    // add and remove an object from category list of company.
+    Category category = getModel1Factory().createCategory();
+    company.getCategories().add(0, category);
+    company.getCategories().remove(0);
+
+    // Inspect the transaction.
+    CDORevisionDelta delta = transaction.getRevisionDeltas().get(CDOUtil.getCDOObject(company).cdoID());
+    for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
+    {
+      if (featureDelta instanceof CDOListFeatureDelta)
+      {
+        CDOListFeatureDelta listFeatureDelta = (CDOListFeatureDelta)featureDelta;
+        for (CDOFeatureDelta featureDelta2 : listFeatureDelta.getListChanges())
+        {
+          if (featureDelta2 instanceof CDOAddFeatureDelta)
+          {
+            CDOAddFeatureDelta addFeatureDelta = (CDOAddFeatureDelta)featureDelta2;
+            assertNotSame(CDOID.NULL, addFeatureDelta.getValue());
+          }
+        }
+      }
+    }
+
+    // ignore the changes.
+    transaction.rollback();
+
+    // cleanup.
+    session.close();
+  }
+
+  public void testOptimizeAddAndRemove() throws Exception
+  {
+    // setup connection1.
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource1 = transaction.createResource("/test1");
+
+    // add initial model.
+    Company company = getModel1Factory().createCompany();
+    resource1.getContents().add(company);
+    transaction.commit();
+
+    // add and remove an object from category list of company.
+    Category category = getModel1Factory().createCategory();
+
+    // add and remove the same object repeatedly.
+    for (int i = 0; i < 100; i++)
+    {
+      company.getCategories().add(0, category);
+      company.getCategories().remove(0);
+    }
+
+    // Inspect the transaction.
+    CDORevisionDelta delta = transaction.getRevisionDeltas().get(CDOUtil.getCDOObject(company).cdoID());
+    for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
+    {
+      if (featureDelta instanceof CDOListFeatureDelta)
+      {
+        CDOListFeatureDelta listFeatureDelta = (CDOListFeatureDelta)featureDelta;
+        assertEquals(0, listFeatureDelta.getListChanges().size());
+      }
+    }
+
+    // ignore the changes.
+    transaction.rollback();
+
+    // cleanup.
+    session.close();
+  }
+
+  public void testOptimizeInterleavedAddMoveAndRemove() throws Exception
+  {
+    // setup connection1.
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+
+    // add initial model.
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    transaction.commit();
+
+    // add and remove an object from category list of company.
+    Category aCategory = getModel1Factory().createCategory();
+    Category bCategory = getModel1Factory().createCategory();
+
+    // add and remove the same object repeatedly.
+    for (int i = 0; i < 100; i++)
+    {
+      company.getCategories().add(aCategory);
+      company.getCategories().add(bCategory);
+      company.getCategories().move(0, 1);
+      company.getCategories().remove(aCategory);
+      company.getCategories().remove(bCategory);
+    }
+
+    // Inspect the transaction.
+    CDORevisionDelta delta = transaction.getRevisionDeltas().get(CDOUtil.getCDOObject(company).cdoID());
+    for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
+    {
+      if (featureDelta instanceof CDOListFeatureDelta)
+      {
+        CDOListFeatureDelta listFeatureDelta = (CDOListFeatureDelta)featureDelta;
+        assertEquals(0, listFeatureDelta.getListChanges().size());
+      }
+    }
+
+    // ignore the changes.
+    transaction.rollback();
+
+    // cleanup.
+    session.close();
   }
 
   public void testAddAndModifyAndRemoveFromPersistedList() throws Exception

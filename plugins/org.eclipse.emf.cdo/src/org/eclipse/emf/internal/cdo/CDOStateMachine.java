@@ -79,8 +79,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.TRANSIENT, CDOEvent.REATTACH, new ReattachTransition());
     init(CDOState.TRANSIENT, CDOEvent.READ, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.WRITE, IGNORE);
-    init(CDOState.TRANSIENT, CDOEvent.INVALIDATE, FAIL);
-    init(CDOState.TRANSIENT, CDOEvent.DETACH_REMOTE, FAIL);
+    init(CDOState.TRANSIENT, CDOEvent.INVALIDATE, IGNORE);
+    init(CDOState.TRANSIENT, CDOEvent.DETACH_REMOTE, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.COMMIT, FAIL);
     init(CDOState.TRANSIENT, CDOEvent.ROLLBACK, FAIL);
 

@@ -134,15 +134,8 @@ public class StateMachineTest extends AbstractCDOTest
     Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
     assertTransient(supplier);
-    try
-    {
-      invalidate(supplier);
-      fail("IllegalStateException expected");
-    }
-    catch (IllegalStateException expected)
-    {
-      assertFailure(expected);
-    }
+    invalidate(supplier);
+    assertTransient(supplier);
   }
 
   public void test_TRANSIENT_with_COMMIT() throws Exception

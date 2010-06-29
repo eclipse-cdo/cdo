@@ -11,10 +11,15 @@
 package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+
+import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver;
 
-import java.util.Set;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A strategy used to customize the default conflict resolution behaviour of {@link CDOTransaction transactions}.
@@ -38,7 +43,12 @@ public interface CDOConflictResolver
   /**
    * Resolves conflicts after remote invalidations arrived for objects that are locally dirty or detached.
    * <p>
+   * Depending on the decisions taken to resolve the conflict, it may be necessary to adjust the notifications that will
+   * be sent to the adapters in the current transaction. This can be achieved by adjusting the {@link CDORevisionDelta}
+   * in <code>deltas</code>.
+   * <p>
    * The implementor might want to use/extend {@link AbstractObjectConflictResolver}.
    */
-  public void resolveConflicts(Set<CDOObject> conflicts);
+  public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
+      List<CDORevisionDelta> deltas);
 }

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDODetachedRevisionDeltaImpl;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -24,6 +25,13 @@ import java.util.List;
  */
 public interface CDORevisionDelta extends CDORevisionKey
 {
+  /**
+   * This constant is only passed into conflict resolvers to indicate that a conflict was caused by remote detachment of
+   * an object. Calling any method on this marker instance will result in an {@link UnsupportedOperationException} being
+   * thrown.
+   */
+  public static final CDORevisionDelta DETACHED = new CDODetachedRevisionDeltaImpl();
+
   /**
    * @since 3.0
    */

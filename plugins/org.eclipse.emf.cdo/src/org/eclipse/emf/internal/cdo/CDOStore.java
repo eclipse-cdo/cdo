@@ -123,8 +123,8 @@ public final class CDOStore implements EStore
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
-    return (InternalEObject)convertIdToObject(cdoObject.cdoView(), cdoObject,
-        EcorePackage.eINSTANCE.eContainingFeature(), -1, revision.getContainerID());
+    return (InternalEObject)convertIdToObject(cdoObject.cdoView(), cdoObject, EcorePackage.eINSTANCE
+        .eContainingFeature(), -1, revision.getContainerID());
   }
 
   public int getContainingFeatureID(InternalEObject eObject)
@@ -151,8 +151,8 @@ public final class CDOStore implements EStore
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
-    return (InternalEObject)convertIdToObject(cdoObject.cdoView(), cdoObject,
-        EcorePackage.eINSTANCE.eContainingFeature(), -1, revision.getResourceID());
+    return (InternalEObject)convertIdToObject(cdoObject.cdoView(), cdoObject, EcorePackage.eINSTANCE
+        .eContainingFeature(), -1, revision.getResourceID());
   }
 
   @Deprecated
@@ -405,6 +405,8 @@ public final class CDOStore implements EStore
       TRACER.format("remove({0}, {1}, {2})", cdoObject, feature, index); //$NON-NLS-1$
     }
 
+    Object oldValue = null;
+
     // Bugzilla 293283 / 314387
     if (feature.isMany())
     {
@@ -415,12 +417,15 @@ public final class CDOStore implements EStore
       {
         throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
       }
+      
+      // FIXME This is really, really bad I know. But I don't know how to get the CDOID of a CDOElementProxy.
+      oldValue = resolveProxy(readLockedRevision, feature, index, list.get(index));
     }
 
-    CDOFeatureDelta delta = new CDORemoveFeatureDeltaImpl(feature, index);
+    CDOFeatureDelta delta = new CDORemoveFeatureDeltaImpl(feature, index, oldValue);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
 
-    Object oldValue = revision.remove(feature, index);
+    oldValue = revision.remove(feature, index);
     return convertToEMF(eObject, revision, feature, index, oldValue);
   }
 

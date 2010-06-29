@@ -25,11 +25,12 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.net4j.util.collection.Pair;
+
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Simon McDuff
@@ -82,13 +83,14 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
 
   public void setConflict(InternalCDOObject object);
 
-  public void handleConflicts(Set<CDOObject> conflicts);
+  public void handleConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
+      List<CDORevisionDelta> deltas);
 
   /**
    * @since 3.0
    */
-  public CDOChangeSetData applyChangeSetData(CDOChangeSetData changeSetData,
-      CDORevisionAvailabilityInfo ancestorInfo, CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo);
+  public CDOChangeSetData applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionAvailabilityInfo ancestorInfo,
+      CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo);
 
   /**
    * @since 3.0

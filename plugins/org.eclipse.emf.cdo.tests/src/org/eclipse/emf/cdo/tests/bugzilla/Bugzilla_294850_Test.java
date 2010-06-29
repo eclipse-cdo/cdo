@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -25,6 +26,8 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver;
+
+import java.util.List;
 
 /**
  * Bug 294850 - Lock.lock() should invoke conflict resolver in case of conflicts - but doesn't
@@ -109,7 +112,8 @@ public class Bugzilla_294850_Test extends AbstractCDOTest
     public boolean gotCalled;
 
     @Override
-    protected void resolveConflict(CDOObject conflict, CDORevisionDelta revisionDelta)
+    protected void resolveConflict(CDOObject conflict, CDORevision oldRevision, CDORevisionDelta localDelta,
+        CDORevisionDelta remoteDelta, List<CDORevisionDelta> deltas)
     {
       gotCalled = true;
     }

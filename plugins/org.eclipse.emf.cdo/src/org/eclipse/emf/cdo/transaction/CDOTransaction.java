@@ -59,8 +59,6 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
 
   public Set<CDOObject> getConflicts();
 
-  public void resolveConflicts(CDOConflictResolver... resolver);
-
   /**
    * @since 3.0
    */

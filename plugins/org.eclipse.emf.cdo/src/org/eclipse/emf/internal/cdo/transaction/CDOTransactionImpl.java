@@ -93,6 +93,7 @@ import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.FastList;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -104,19 +105,19 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EContentsEList;
-import org.eclipse.emf.ecore.util.EContentsEList.FeatureIterator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.EContentsEList.FeatureIterator;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -133,9 +134,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.WeakHashMap;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
@@ -297,15 +298,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     return conflicts;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void resolveConflicts(CDOConflictResolver... resolvers)
-  {
-    Set<CDOObject> conflicts = getConflicts();
-    handleConflicts(conflicts, resolvers);
   }
 
   public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)
@@ -578,12 +570,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  public void handleConflicts(Set<CDOObject> conflicts)
+  public void handleConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
+      List<CDORevisionDelta> deltas)
   {
-    handleConflicts(conflicts, options().getConflictResolvers());
+    handleConflicts(conflicts, options().getConflictResolvers(), deltas);
   }
 
-  private void handleConflicts(Set<CDOObject> conflicts, CDOConflictResolver[] resolvers)
+  private void handleConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
+      CDOConflictResolver[] resolvers, List<CDORevisionDelta> deltas)
   {
     if (resolvers.length == 0)
     {
@@ -593,7 +587,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     // Remember original state to be able to restore it after an exception
     List<CDOState> states = new ArrayList<CDOState>(conflicts.size());
     List<CDORevision> revisions = new ArrayList<CDORevision>(conflicts.size());
-    for (CDOObject conflict : conflicts)
+    for (CDOObject conflict : conflicts.keySet())
     {
       states.add(conflict.cdoState());
       revisions.add(conflict.cdoRevision());
@@ -603,11 +597,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     try
     {
-      Set<CDOObject> remaining = new HashSet<CDOObject>(conflicts);
+      Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> remaining = new HashMap<CDOObject, Pair<CDORevision, CDORevisionDelta>>(
+          conflicts);
       for (CDOConflictResolver resolver : resolvers)
       {
-        resolver.resolveConflicts(Collections.unmodifiableSet(remaining));
-        for (Iterator<CDOObject> it = remaining.iterator(); it.hasNext();)
+        resolver.resolveConflicts(Collections.unmodifiableMap(remaining), deltas);
+        for (Iterator<CDOObject> it = remaining.keySet().iterator(); it.hasNext();)
         {
           CDOObject object = it.next();
           if (!object.cdoConflict())
@@ -623,7 +618,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       // Restore original state
       Iterator<CDOState> state = states.iterator();
       Iterator<CDORevision> revision = revisions.iterator();
-      for (CDOObject object : conflicts)
+      for (CDOObject object : conflicts.keySet())
       {
         ((InternalCDOObject)object).cdoInternalSetState(state.next());
         ((InternalCDOObject)object).cdoInternalSetRevision(revision.next());
@@ -1419,7 +1414,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * TODO Simon: Should this method go to CDOSavePointImpl?
    */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @SuppressWarnings( { "rawtypes", "unchecked" })
   private void registerNew(Map map, InternalCDOObject object)
   {
     Object old = map.put(object.cdoID(), object);
@@ -1805,9 +1800,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * @since 3.0
    */
   @Override
-  protected Set<CDOObject> invalidate(long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects, List<CDORevisionDelta> deltas, Set<InternalCDOObject> changedObjects,
-      Set<CDOObject> detachedObjects)
+  protected Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> invalidate(long lastUpdateTime,
+      List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects, List<CDORevisionDelta> deltas,
+      Set<InternalCDOObject> changedObjects, Set<CDOObject> detachedObjects)
   {
     if (!allDetachedObjects.isEmpty())
     {

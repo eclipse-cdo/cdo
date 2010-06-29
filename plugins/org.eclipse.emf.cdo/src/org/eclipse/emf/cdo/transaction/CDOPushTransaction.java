@@ -490,7 +490,8 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.queryXRefs(targetObjects, sourceReferences);
   }
 
-  public CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects, EReference... sourceReferences)
+  public CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects,
+      EReference... sourceReferences)
   {
     return delegate.queryXRefsAsync(targetObjects, sourceReferences);
   }
@@ -508,11 +509,6 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public void removeTransactionHandler(CDOTransactionHandler handler)
   {
     delegate.removeTransactionHandler(handler);
-  }
-
-  public void resolveConflicts(CDOConflictResolver... resolver)
-  {
-    delegate.resolveConflicts(resolver);
   }
 
   public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)

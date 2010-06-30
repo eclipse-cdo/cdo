@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="VersionNature"
+         name="Version Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.eclipse.emf.cdo.releng.version.VersionNature">
+         </run>
+      </runtime>
+      <builder
+            id="org.eclipse.emf.cdo.releng.version.VersionBuilder">
+      </builder>
+   </extension>
+
+   <extension
+         id="VersionBuilder"
+         name="Version Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            callOnEmptyDelta="false"
+            hasNature="true"
+            isConfigurable="true">
+         <run
+               class="org.eclipse.emf.cdo.releng.version.VersionBuilder">
+         </run>
+      </builder>
+   </extension>
+
+   <extension
+         id="VersionProblem"
+         name="Version Problem"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+
+</plugin>

@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.spi.common.revision.CDORevisionMerger;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
-import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
+import org.eclipse.emf.cdo.transaction.CDOConflictResolver2;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
@@ -55,7 +55,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractObjectConflictResolver implements CDOConflictResolver
+public abstract class AbstractObjectConflictResolver implements CDOConflictResolver2
 {
   private CDOTransaction transaction;
 
@@ -86,10 +86,30 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
     }
   }
 
+  public void resolveConflicts(Set<CDOObject> conflicts)
+  {
+    Map<CDOID, CDORevisionDelta> localDeltas = transaction.getRevisionDeltas();
+    for (CDOObject conflict : conflicts)
+    {
+      CDORevisionDelta localDelta = localDeltas.get(conflict.cdoID());
+      resolveConflict(conflict, localDelta);
+    }
+  }
+
+  /**
+   * Resolves the conflict of a single object in the current transaction.
+   */
+  protected void resolveConflict(CDOObject conflict, CDORevisionDelta localDelta)
+  {
+    // Do nothing
+  }
+
   /**
    * Resolves the conflicts in the current transaction. Depending on the decision taken to resolve the conflicts, it may
    * be necessary to adjust the notifications that will be sent to the adapters in the current transaction. This can be
    * achieved by adjusting the {@link CDORevisionDelta} in <code>deltas</code>.
+   * 
+   * @since 3.1
    */
   public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
       List<CDORevisionDelta> deltas)
@@ -109,9 +129,14 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
    * Resolves the conflict of a single object in the current transaction. Depending on the decision taken to resolve the
    * conflict, it may be necessary to adjust the notification that will be sent to the adapters in the current
    * transaction. This can be achieved by adjusting the {@link CDORevisionDelta} in <code>deltas</code>.
+   * 
+   * @since 3.1
    */
-  protected abstract void resolveConflict(CDOObject conflict, CDORevision oldRevision, CDORevisionDelta localDelta,
-      CDORevisionDelta remoteDelta, List<CDORevisionDelta> deltas);
+  protected void resolveConflict(CDOObject conflict, CDORevision oldRevision, CDORevisionDelta localDelta,
+      CDORevisionDelta remoteDelta, List<CDORevisionDelta> deltas)
+  {
+    throw new UnsupportedOperationException("Must be overridden");
+  }
 
   protected void hookTransaction(CDOTransaction transaction)
   {
@@ -162,8 +187,14 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
     }
 
     @Override
-    protected void resolveConflict(CDOObject conflict, CDORevision oldRevision, CDORevisionDelta localDelta,
-        CDORevisionDelta remoteDelta, List<CDORevisionDelta> deltas)
+    public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
+        List<CDORevisionDelta> deltas)
+    {
+      // Do nothing
+    }
+
+    @Override
+    protected void resolveConflict(CDOObject conflict, CDORevisionDelta localDelta)
     {
       rollbackObject(conflict);
       changeObject(conflict, localDelta);
@@ -230,6 +261,12 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
     {
       transaction.removeTransactionHandler(handler);
       transaction.options().removeChangeSubscriptionPolicy(this);
+    }
+
+    @Override
+    public void resolveConflicts(Set<CDOObject> conflicts)
+    {
+      // Do nothing
     }
 
     @Override

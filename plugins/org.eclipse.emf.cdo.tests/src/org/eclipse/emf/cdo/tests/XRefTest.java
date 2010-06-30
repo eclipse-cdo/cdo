@@ -28,6 +28,7 @@ import java.util.List;
  * implement https://bugs.eclipse.org/bugs/show_bug.cgi?id=300149
  * 
  * @author Eike Stepper
+ * @since 4.0
  */
 public class XRefTest extends AbstractCDOTest
 {

@@ -16,9 +16,9 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IRepository.WriteAccessHandler;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -88,6 +88,9 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     // getRepository().addHandler(printHandler);
   }
 
+  /**
+   * @since 4.0
+   */
   public void testAddAndRemoveWithNull() throws Exception
   {
     // setup connection1.
@@ -130,6 +133,9 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     session.close();
   }
 
+  /**
+   * @since 4.0
+   */
   public void testOptimizeAddAndRemove() throws Exception
   {
     // setup connection1.
@@ -170,6 +176,9 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     session.close();
   }
 
+  /**
+   * @since 4.0
+   */
   public void testOptimizeInterleavedAddMoveAndRemove() throws Exception
   {
     // setup connection1.

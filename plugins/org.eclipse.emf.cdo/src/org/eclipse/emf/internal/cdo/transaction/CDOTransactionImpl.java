@@ -67,6 +67,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
+import org.eclipse.emf.cdo.transaction.CDOConflictResolver2;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -570,7 +571,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  public void handleConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
+  @Override
+  protected void handleConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
       List<CDORevisionDelta> deltas)
   {
     handleConflicts(conflicts, options().getConflictResolvers(), deltas);
@@ -601,7 +603,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           conflicts);
       for (CDOConflictResolver resolver : resolvers)
       {
-        resolver.resolveConflicts(Collections.unmodifiableMap(remaining), deltas);
+        resolver.resolveConflicts(Collections.unmodifiableSet(remaining.keySet()));
+        if (resolver instanceof CDOConflictResolver2)
+        {
+          ((CDOConflictResolver2)resolver).resolveConflicts(Collections.unmodifiableMap(remaining), deltas);
+        }
+
         for (Iterator<CDOObject> it = remaining.keySet().iterator(); it.hasNext();)
         {
           CDOObject object = it.next();

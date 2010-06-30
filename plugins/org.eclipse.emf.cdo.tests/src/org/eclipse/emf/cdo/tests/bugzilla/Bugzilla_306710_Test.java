@@ -91,6 +91,9 @@ public class Bugzilla_306710_Test extends AbstractCDOTest
     assertEquals(1, counter.getRemoves());
   }
 
+  /**
+   * @since 4.0
+   */
   public void testBugzilla_306710_addRemove() throws Exception
   {
     final NotifyCounter counter = new NotifyCounter();

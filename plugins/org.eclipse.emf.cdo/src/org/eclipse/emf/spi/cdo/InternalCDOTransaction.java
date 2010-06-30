@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.spi.cdo;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -24,8 +23,6 @@ import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-
-import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
@@ -82,9 +79,6 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   public void registerRevisionDelta(CDORevisionDelta revisionDelta);
 
   public void setConflict(InternalCDOObject object);
-
-  public void handleConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
-      List<CDORevisionDelta> deltas);
 
   /**
    * @since 3.0

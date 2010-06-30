@@ -1437,12 +1437,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         Collections.unmodifiableSet(detachedObjects));
 
     // First handle the conflicts, if any.
-    if (conflicts != null)
-    {
-      InternalCDOTransaction transaction = (InternalCDOTransaction)this;
-      // Pass the deltas to the conflict resolvers, which can modify them before they're sent by sendDeltaNotifications.
-      transaction.handleConflicts(conflicts, deltas);
-    }
+    handleConflicts(conflicts, deltas);
 
     // Then send the notifications. The deltas could have been modified by the conflict resolvers.
     if (!deltas.isEmpty() || !detachedObjects.isEmpty())
@@ -1529,6 +1524,12 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     }
 
     return conflicts;
+  }
+
+  protected void handleConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
+      List<CDORevisionDelta> deltas)
+  {
+    // Do nothing
   }
 
   private void sendInvalidationNotifications(Set<CDOObject> dirtyObjects, Set<CDOObject> detachedObjects)

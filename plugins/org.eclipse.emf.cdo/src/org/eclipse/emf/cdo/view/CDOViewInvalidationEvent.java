@@ -47,6 +47,8 @@ public interface CDOViewInvalidationEvent extends CDOViewEvent
   /**
    * Returns a map with the {@link CDORevisionDelta change deltas} per object. Note that this map may contain object/
    * <code>null</code> mappings, if the delta is not available!
+   * 
+   * @since 3.1
    */
   public Map<CDOObject, CDORevisionDelta> getRevisionDeltas();
 

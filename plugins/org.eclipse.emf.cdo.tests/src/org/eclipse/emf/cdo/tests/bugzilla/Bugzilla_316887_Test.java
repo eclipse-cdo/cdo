@@ -37,6 +37,7 @@ import java.util.List;
  * See bug 316887
  * 
  * @author Cyril Jaquier
+ * @since 4.0
  */
 public class Bugzilla_316887_Test extends AbstractCDOTest
 {
@@ -90,7 +91,7 @@ public class Bugzilla_316887_Test extends AbstractCDOTest
     TaskContainer otherContainer = tr2.getObject(container);
     assertNotNull(otherContainer);
 
-    // 
+    //
     TestAdapter adapter = new TestAdapter();
     otherContainer.eAdapters().add(adapter);
 

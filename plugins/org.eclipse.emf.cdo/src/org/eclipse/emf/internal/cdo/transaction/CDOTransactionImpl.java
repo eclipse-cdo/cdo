@@ -105,19 +105,19 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EContentsEList;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EContentsEList.FeatureIterator;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -134,9 +134,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.WeakHashMap;
-import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
@@ -1414,7 +1414,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * TODO Simon: Should this method go to CDOSavePointImpl?
    */
-  @SuppressWarnings( { "rawtypes", "unchecked" })
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   private void registerNew(Map map, InternalCDOObject object)
   {
     Object old = map.put(object.cdoID(), object);
@@ -1802,7 +1802,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   protected Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> invalidate(long lastUpdateTime,
       List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects, List<CDORevisionDelta> deltas,
-      Set<InternalCDOObject> changedObjects, Set<CDOObject> detachedObjects)
+      Map<CDOObject, CDORevisionDelta> revisionDeltas, Set<CDOObject> detachedObjects)
   {
     if (!allDetachedObjects.isEmpty())
     {
@@ -1819,7 +1819,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       removeCrossReferences(cachedNewObjects, referencedOIDs);
     }
 
-    return super.invalidate(lastUpdateTime, allChangedObjects, allDetachedObjects, deltas, changedObjects,
+    return super.invalidate(lastUpdateTime, allChangedObjects, allDetachedObjects, deltas, revisionDeltas,
         detachedObjects);
   }
 

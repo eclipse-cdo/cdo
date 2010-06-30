@@ -75,9 +75,9 @@ import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.collection.FastList;
 import org.eclipse.net4j.util.collection.HashBag;
@@ -106,12 +106,12 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -121,8 +121,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -1418,13 +1418,13 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   {
     Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = null;
     List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>();
-    Set<InternalCDOObject> changedObjects = new HashSet<InternalCDOObject>();
+    Map<CDOObject, CDORevisionDelta> revisionDeltas = new HashMap<CDOObject, CDORevisionDelta>();
     Set<CDOObject> detachedObjects = new HashSet<CDOObject>();
 
     try
     {
       lock.lock();
-      conflicts = invalidate(lastUpdateTime, allChangedObjects, allDetachedObjects, deltas, changedObjects,
+      conflicts = invalidate(lastUpdateTime, allChangedObjects, allDetachedObjects, deltas, revisionDeltas,
           detachedObjects);
     }
     finally
@@ -1432,16 +1432,15 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       lock.unlock();
     }
 
-    sendInvalidationNotifications(changedObjects, detachedObjects);
-    fireInvalidationEvent(lastUpdateTime, Collections.unmodifiableSet(changedObjects), Collections
-        .unmodifiableSet(detachedObjects));
+    sendInvalidationNotifications(revisionDeltas.keySet(), detachedObjects);
+    fireInvalidationEvent(lastUpdateTime, Collections.unmodifiableMap(revisionDeltas),
+        Collections.unmodifiableSet(detachedObjects));
 
-    // First handle the conflicts if any.
+    // First handle the conflicts, if any.
     if (conflicts != null)
     {
       InternalCDOTransaction transaction = (InternalCDOTransaction)this;
-      // Give the deltas to the conflict resolvers. Thus they can adjust them so that sendDeltaNotifications can
-      // generate correct notifications.
+      // Pass the deltas to the conflict resolvers, which can modify them before they're sent by sendDeltaNotifications.
       transaction.handleConflicts(conflicts, deltas);
     }
 
@@ -1457,7 +1456,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
   protected Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> invalidate(long lastUpdateTime,
       List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects, List<CDORevisionDelta> deltas,
-      Set<InternalCDOObject> changedObjects, Set<CDOObject> detachedObjects)
+      Map<CDOObject, CDORevisionDelta> revisionDeltas, Set<CDOObject> detachedObjects)
   {
     Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = null;
     for (CDORevisionKey key : allChangedObjects)
@@ -1471,10 +1470,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         {
           delta = new CDORevisionDeltaImpl(delta, true);
         }
+
         deltas.add(delta);
       }
 
-      InternalCDOObject changedObject = null;
+      CDOObject changedObject = null;
       // 258831 - Causes deadlock when introduce thread safe mechanisms in State machine.
       synchronized (objects)
       {
@@ -1483,14 +1483,14 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
       if (changedObject != null)
       {
-        Pair<CDORevision, CDORevisionDelta> oldInfo = new Pair<CDORevision, CDORevisionDelta>(changedObject
-            .cdoRevision(), delta);
+        Pair<CDORevision, CDORevisionDelta> oldInfo = new Pair<CDORevision, CDORevisionDelta>(
+            changedObject.cdoRevision(), delta);
         // if (!isLocked(changedObject))
         {
-          CDOStateMachine.INSTANCE.invalidate(changedObject, key, lastUpdateTime);
+          CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)changedObject, key, lastUpdateTime);
         }
 
-        changedObjects.add(changedObject);
+        revisionDeltas.put(changedObject, delta);
         if (changedObject.cdoConflict())
         {
           if (conflicts == null)
@@ -1508,8 +1508,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       InternalCDOObject detachedObject = removeObject(key.getID());
       if (detachedObject != null)
       {
-        Pair<CDORevision, CDORevisionDelta> oldInfo = new Pair<CDORevision, CDORevisionDelta>(detachedObject
-            .cdoRevision(), CDORevisionDelta.DETACHED);
+        Pair<CDORevision, CDORevisionDelta> oldInfo = new Pair<CDORevision, CDORevisionDelta>(
+            detachedObject.cdoRevision(), CDORevisionDelta.DETACHED);
         // if (!isLocked(detachedObject))
         {
           CDOStateMachine.INSTANCE.detachRemote(detachedObject);
@@ -1531,13 +1531,13 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     return conflicts;
   }
 
-  private void sendInvalidationNotifications(Set<InternalCDOObject> dirtyObjects, Set<CDOObject> detachedObjects)
+  private void sendInvalidationNotifications(Set<CDOObject> dirtyObjects, Set<CDOObject> detachedObjects)
   {
     if (options().isInvalidationNotificationEnabled())
     {
-      for (InternalCDOObject dirtyObject : dirtyObjects)
+      for (CDOObject dirtyObject : dirtyObjects)
       {
-        if (dirtyObject.eNotificationRequired())
+        if (((InternalCDOObject)dirtyObject).eNotificationRequired())
         {
           CDOInvalidationNotificationImpl notification = new CDOInvalidationNotificationImpl(dirtyObject);
           dirtyObject.eNotify(notification);
@@ -1558,15 +1558,15 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   /**
    * @since 2.0
    */
-  private void fireInvalidationEvent(long timeStamp, Set<? extends CDOObject> dirtyObjects,
-      Set<? extends CDOObject> detachedObjects)
+  private void fireInvalidationEvent(long timeStamp, Map<CDOObject, CDORevisionDelta> revisionDeltas,
+      Set<CDOObject> detachedObjects)
   {
-    if (!dirtyObjects.isEmpty() || !detachedObjects.isEmpty())
+    if (!revisionDeltas.isEmpty() || !detachedObjects.isEmpty())
     {
       IListener[] listeners = getListeners();
       if (listeners != null)
       {
-        fireEvent(new InvalidationEvent(timeStamp, dirtyObjects, detachedObjects), listeners);
+        fireEvent(new InvalidationEvent(timeStamp, revisionDeltas, detachedObjects), listeners);
       }
     }
   }
@@ -2335,15 +2335,15 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     private long timeStamp;
 
-    private Set<? extends CDOObject> dirtyObjects;
+    private Map<CDOObject, CDORevisionDelta> revisionDeltas;
 
-    private Set<? extends CDOObject> detachedObjects;
+    private Set<CDOObject> detachedObjects;
 
-    public InvalidationEvent(long timeStamp, Set<? extends CDOObject> dirtyOIDs,
-        Set<? extends CDOObject> detachedObjects)
+    public InvalidationEvent(long timeStamp, Map<CDOObject, CDORevisionDelta> revisionDeltas,
+        Set<CDOObject> detachedObjects)
     {
       this.timeStamp = timeStamp;
-      dirtyObjects = dirtyOIDs;
+      this.revisionDeltas = revisionDeltas;
       this.detachedObjects = detachedObjects;
     }
 
@@ -2352,12 +2352,17 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       return timeStamp;
     }
 
-    public Set<? extends CDOObject> getDirtyObjects()
+    public Set<CDOObject> getDirtyObjects()
     {
-      return dirtyObjects;
+      return revisionDeltas.keySet();
     }
 
-    public Set<? extends CDOObject> getDetachedObjects()
+    public Map<CDOObject, CDORevisionDelta> getRevisionDeltas()
+    {
+      return revisionDeltas;
+    }
+
+    public Set<CDOObject> getDetachedObjects()
     {
       return detachedObjects;
     }
@@ -2365,7 +2370,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     @Override
     public String toString()
     {
-      return "CDOViewInvalidationEvent: " + dirtyObjects; //$NON-NLS-1$
+      return "CDOViewInvalidationEvent: " + revisionDeltas; //$NON-NLS-1$
     }
   }
 

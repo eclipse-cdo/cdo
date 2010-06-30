@@ -13,10 +13,12 @@ package org.eclipse.emf.cdo.view;
 
 import org.eclipse.emf.cdo.CDOInvalidationNotification;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.util.event.IListener;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -40,12 +42,16 @@ public interface CDOViewInvalidationEvent extends CDOViewEvent
   /**
    * Returns a set of the {@link CDOObject CDOObjects} of the modified objects.
    */
-  public Set<? extends CDOObject> getDirtyObjects();
+  public Set<CDOObject> getDirtyObjects();
+
+  /**
+   * Returns a map with the {@link CDORevisionDelta change deltas} per object. Note that this map may contain object/
+   * <code>null</code> mappings, if the delta is not available!
+   */
+  public Map<CDOObject, CDORevisionDelta> getRevisionDeltas();
 
   /**
    * Returns a set of the {@link CDOObject CDOObjects} of the removed objects.
-   * 
-   * @since 2.0
    */
-  public Set<? extends CDOObject> getDetachedObjects();
+  public Set<CDOObject> getDetachedObjects();
 }

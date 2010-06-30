@@ -22,6 +22,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
 public interface CDORevisionDelta extends CDORevisionKey
 {
@@ -29,6 +30,8 @@ public interface CDORevisionDelta extends CDORevisionKey
    * This constant is only passed into conflict resolvers to indicate that a conflict was caused by remote detachment of
    * an object. Calling any method on this marker instance will result in an {@link UnsupportedOperationException} being
    * thrown.
+   * 
+   * @since 3.1
    */
   public static final CDORevisionDelta DETACHED = new CDODetachedRevisionDeltaImpl();
 

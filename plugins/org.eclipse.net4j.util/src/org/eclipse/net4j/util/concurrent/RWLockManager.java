@@ -22,8 +22,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * Support Multiple reads/no write and upgrade lock from read to write. Many context could request
@@ -198,7 +198,21 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     return entry != null && lockingStrategy.isLockedByOthers(entry, context);
   }
 
-  private LockStrategy<OBJECT, CONTEXT> getLockingStrategy(LockType type)
+  /**
+   * @since 3.1
+   */
+  protected LockEntry<OBJECT, CONTEXT> getLockEntry(OBJECT objectToLock)
+  {
+    synchronized (lockChanged)
+    {
+      return lockEntries.get(objectToLock);
+    }
+  }
+
+  /**
+   * @since 3.1
+   */
+  protected LockStrategy<OBJECT, CONTEXT> getLockingStrategy(LockType type)
   {
     if (type == LockType.READ)
     {
@@ -334,18 +348,11 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     return null;
   }
 
-  private LockEntry<OBJECT, CONTEXT> getLockEntry(OBJECT objectToLock)
-  {
-    synchronized (lockChanged)
-    {
-      return lockEntries.get(objectToLock);
-    }
-  }
-
   /**
    * @author Simon McDuff
+   * @since 3.1
    */
-  private interface LockStrategy<OBJECT, CONTEXT>
+  protected interface LockStrategy<OBJECT, CONTEXT>
   {
     public boolean isLocked(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context);
 
@@ -360,8 +367,9 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
 
   /**
    * @author Simon McDuff
+   * @since 3.1
    */
-  private interface LockEntry<OBJECT, CONTEXT>
+  protected interface LockEntry<OBJECT, CONTEXT>
   {
     public OBJECT getObject();
 

@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.spi.cdo;
 
-import org.eclipse.emf.cdo.CDODeltaNotification;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -28,6 +27,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
+import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
 import org.eclipse.emf.internal.cdo.CDOObjectMerger;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
@@ -35,9 +35,10 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -207,8 +208,6 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
    */
   public static abstract class ThreeWayMerge extends AbstractObjectConflictResolver implements CDOAdapterPolicy
   {
-    private ChangeSubscriptionAdapter adapter = new ChangeSubscriptionAdapter();
-
     private CDOTransactionHandler handler = new CDODefaultTransactionHandler()
     {
       @Override
@@ -219,16 +218,17 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
           adapter.attach(object);
         }
       }
-
+    
       @Override
       public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
       {
         if (getTransaction() == transaction)
         {
           adapter.reset();
+          collector.reset();
         }
       }
-
+    
       @Override
       public void rolledBackTransaction(CDOTransaction transaction)
       {
@@ -236,9 +236,14 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
         if (getTransaction() == transaction && transaction.getLastSavepoint().getPreviousSavepoint() == null)
         {
           adapter.reset();
+          collector.reset();
         }
       }
     };
+
+    private ChangeSubscriptionAdapter adapter = new ChangeSubscriptionAdapter();
+
+    private RevisionDeltaCollector collector = new RevisionDeltaCollector();
 
     public ThreeWayMerge()
     {
@@ -252,15 +257,17 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
     @Override
     protected void hookTransaction(CDOTransaction transaction)
     {
-      transaction.options().addChangeSubscriptionPolicy(this);
       transaction.addTransactionHandler(handler);
+      transaction.options().addChangeSubscriptionPolicy(this);
+      transaction.addListener(collector);
     }
 
     @Override
     protected void unhookTransaction(CDOTransaction transaction)
     {
-      transaction.removeTransactionHandler(handler);
+      transaction.removeListener(collector);
       transaction.options().removeChangeSubscriptionPolicy(this);
+      transaction.removeTransactionHandler(handler);
     }
 
     @Override
@@ -273,7 +280,7 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
     protected void resolveConflict(CDOObject conflict, CDORevision oldRevision, CDORevisionDelta localDelta,
         CDORevisionDelta remoteDelta, List<CDORevisionDelta> deltas)
     {
-      resolveConflict(conflict, localDelta, Collections.singletonList(remoteDelta));
+      resolveConflict(conflict, localDelta, collector.getDeltas(conflict));
     }
 
     protected abstract void resolveConflict(CDOObject conflict, CDORevisionDelta localDelta,
@@ -283,35 +290,12 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
      * @author Eike Stepper
      * @since 2.0
      */
-    public static class ChangeSubscriptionAdapter extends AdapterImpl
+    private static class ChangeSubscriptionAdapter extends AdapterImpl
     {
       private Set<CDOObject> notifiers = new HashSet<CDOObject>();
 
-      private Map<CDOObject, List<CDORevisionDelta>> deltas = new HashMap<CDOObject, List<CDORevisionDelta>>();
-
       public ChangeSubscriptionAdapter()
       {
-      }
-
-      public List<CDORevisionDelta> getRevisionDeltas(CDOObject notifier)
-      {
-        List<CDORevisionDelta> list = deltas.get(CDOUtil.getEObject(notifier));
-        if (list == null)
-        {
-          return Collections.emptyList();
-        }
-
-        return list;
-      }
-
-      public Set<CDOObject> getNotifiers()
-      {
-        return notifiers;
-      }
-
-      public Map<CDOObject, List<CDORevisionDelta>> getDeltas()
-      {
-        return deltas;
       }
 
       public void attach(CDOObject notifier)
@@ -330,29 +314,55 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
         }
 
         notifiers.clear();
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private static class RevisionDeltaCollector implements IListener
+    {
+      private Map<CDOObject, List<CDORevisionDelta>> deltas = new HashMap<CDOObject, List<CDORevisionDelta>>();
+
+      public RevisionDeltaCollector()
+      {
+      }
+
+      public List<CDORevisionDelta> getDeltas(CDOObject notifier)
+      {
+        List<CDORevisionDelta> list = deltas.get(CDOUtil.getEObject(notifier));
+        if (list == null)
+        {
+          return Collections.emptyList();
+        }
+
+        return list;
+      }
+
+      public void reset()
+      {
         deltas.clear();
       }
 
-      @Override
-      public void notifyChanged(Notification msg)
+      public void notifyEvent(IEvent event)
       {
         try
         {
-          if (msg instanceof CDODeltaNotification)
+          if (event instanceof CDOViewInvalidationEvent)
           {
-            CDODeltaNotification deltaNotification = (CDODeltaNotification)msg;
-            Object notifier = deltaNotification.getNotifier();
-            if (!deltaNotification.hasNext() && notifiers.contains(notifier))
+            CDOViewInvalidationEvent e = (CDOViewInvalidationEvent)event;
+            for (Map.Entry<CDOObject, CDORevisionDelta> entry : e.getRevisionDeltas().entrySet())
             {
-              CDORevisionDelta revisionDelta = deltaNotification.getRevisionDelta();
+              CDOObject notifier = entry.getKey();
               List<CDORevisionDelta> list = deltas.get(notifier);
               if (list == null)
               {
-                list = new ArrayList<CDORevisionDelta>(1);
-                deltas.put(CDOUtil.getCDOObject((EObject)notifier), list);
+                list = new ArrayList<CDORevisionDelta>();
+                deltas.put(notifier, list);
               }
 
-              list.add(revisionDelta);
+              CDORevisionDelta delta = entry.getValue();
+              list.add(delta);
             }
           }
         }

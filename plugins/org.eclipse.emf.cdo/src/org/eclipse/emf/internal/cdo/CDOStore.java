@@ -123,8 +123,8 @@ public final class CDOStore implements EStore
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
-    return (InternalEObject)convertIdToObject(cdoObject.cdoView(), cdoObject,
-        EcorePackage.eINSTANCE.eContainingFeature(), -1, revision.getContainerID());
+    return (InternalEObject)convertIdToObject(cdoObject.cdoView(), cdoObject, EcorePackage.eINSTANCE
+        .eContainingFeature(), -1, revision.getContainerID());
   }
 
   public int getContainingFeatureID(InternalEObject eObject)
@@ -151,8 +151,8 @@ public final class CDOStore implements EStore
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
-    return (InternalEObject)convertIdToObject(cdoObject.cdoView(), cdoObject,
-        EcorePackage.eINSTANCE.eContainingFeature(), -1, revision.getResourceID());
+    return (InternalEObject)convertIdToObject(cdoObject.cdoView(), cdoObject, EcorePackage.eINSTANCE
+        .eContainingFeature(), -1, revision.getResourceID());
   }
 
   @Deprecated
@@ -424,16 +424,13 @@ public final class CDOStore implements EStore
       {
         throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
       }
-
-      // FIXME This is really, really bad I know. But I don't know how to get the CDOID of a CDOElementProxy.
-      oldValue = resolveProxy(readLockedRevision, feature, index, list.get(index));
     }
     else
     {
       throw new UnsupportedOperationException("REMOVE is not supported for single-valued features");
     }
 
-    CDOFeatureDelta delta = new CDORemoveFeatureDeltaImpl(feature, index, oldValue);
+    CDOFeatureDelta delta = new CDORemoveFeatureDeltaImpl(feature, index);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
 
     oldValue = revision.remove(feature, index);

@@ -35,10 +35,19 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
+import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOMoveFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSingleValueFeatureDeltaImpl;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -51,6 +60,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureDeltaVisitorImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -88,6 +98,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.options.OptionsEvent;
 
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -737,6 +748,66 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     // Apply deltas and cache the resulting new revisions, if possible...
     for (CDORevisionKey key : commitInfo.getChangedObjects())
     {
+      // Add old values to revision deltas.
+      if (key instanceof CDORevisionDelta)
+      {
+        final CDORevisionDelta revisionDelta = (CDORevisionDelta)key;
+        final CDORevision oldRevision = revisionManager.getRevisionByVersion(revisionDelta.getID(), revisionDelta,
+            CDORevision.UNCHUNKED, false);
+
+        if (oldRevision != null)
+        {
+          CDOFeatureDeltaVisitor visitor = new CDOFeatureDeltaVisitorImpl()
+          {
+            private List<Object> workList;
+
+            @Override
+            public void visit(CDOAddFeatureDelta delta)
+            {
+              workList.add(delta.getIndex(), delta.getValue());
+            }
+
+            @Override
+            public void visit(CDOClearFeatureDelta delta)
+            {
+              workList.clear();
+            }
+
+            @Override
+            public void visit(CDOListFeatureDelta deltas)
+            {
+              @SuppressWarnings("unchecked")
+              List<Object> list = (List<Object>)((InternalCDORevision)oldRevision).getValue(deltas.getFeature());
+              if (list != null)
+              {
+                workList = new ArrayList<Object>(list);
+                super.visit(deltas);
+              }
+            }
+
+            @Override
+            public void visit(CDOMoveFeatureDelta delta)
+            {
+              Object value = workList.get(delta.getOldPosition());
+              ((CDOMoveFeatureDeltaImpl)delta).setValue(value);
+              ECollections.move(workList, delta.getNewPosition(), delta.getOldPosition());
+            }
+
+            @Override
+            public void visit(CDORemoveFeatureDelta delta)
+            {
+              Object oldValue = workList.remove(delta.getIndex());
+              ((CDOSingleValueFeatureDeltaImpl)delta).setValue(oldValue);
+            }
+          };
+
+          for (CDOFeatureDelta featureDelta : revisionDelta.getFeatureDeltas())
+          {
+            featureDelta.accept(visitor);
+          }
+        }
+      }
+
       CDOID id = key.getID();
       Pair<InternalCDORevision, InternalCDORevision> pair = createNewRevision(key, commitInfo);
       if (pair != null)
@@ -1976,4 +2047,5 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
   }
+
 }

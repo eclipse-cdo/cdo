@@ -283,7 +283,9 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
             protected void createRemoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object value,
                 int index)
             {
-              CDORemoveFeatureDeltaImpl delta = new CDORemoveFeatureDeltaImpl(feature, index, value);
+              CDORemoveFeatureDeltaImpl delta = new CDORemoveFeatureDeltaImpl(feature, index);
+              // fix until ListDifferenceAnalyzer delivers the correct value (bug #308618).
+              delta.setValue(oldList.get(index));
               changes.add(delta);
               oldList.remove(index);
             }

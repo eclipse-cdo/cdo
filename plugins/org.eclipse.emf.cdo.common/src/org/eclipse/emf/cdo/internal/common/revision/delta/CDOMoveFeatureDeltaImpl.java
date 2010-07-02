@@ -38,11 +38,14 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
 
   private int newPosition;
 
+  private Object value;
+
   public CDOMoveFeatureDeltaImpl(EStructuralFeature feature, int newPosition, int oldPosition)
   {
     super(feature);
     this.newPosition = newPosition;
     this.oldPosition = oldPosition;
+    value = UNKNOWN_VALUE;
   }
 
   public CDOMoveFeatureDeltaImpl(CDODataInput in, EClass eClass) throws IOException
@@ -50,6 +53,7 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     super(in, eClass);
     newPosition = in.readInt();
     oldPosition = in.readInt();
+    value = UNKNOWN_VALUE;
   }
 
   @Override
@@ -75,9 +79,21 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     return Type.MOVE;
   }
 
+  public Object getValue()
+  {
+    return value;
+  }
+
+  public void setValue(Object value)
+  {
+    this.value = value;
+  }
+
   public CDOFeatureDelta copy()
   {
-    return new CDOMoveFeatureDeltaImpl(getFeature(), newPosition, oldPosition);
+    CDOFeatureDelta copy = new CDOMoveFeatureDeltaImpl(getFeature(), newPosition, oldPosition);
+    ((CDOMoveFeatureDeltaImpl)copy).setValue(getValue());
+    return copy;
   }
 
   public void apply(CDORevision revision)
@@ -177,4 +193,5 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
   {
     return MessageFormat.format("from={0}, to={1}", oldPosition, newPosition);
   }
+
 }

@@ -35,7 +35,14 @@ public interface CDOConflictResolver2 extends CDOConflictResolver
    * in <code>deltas</code>.
    * <p>
    * The implementor might want to use/extend {@link AbstractObjectConflictResolver}.
+   * 
+   * @param conflicts
+   *          A map that contains the local objects with conflicts as the keys. Each value in this map is a {@link Pair
+   *          pair} that <b>optionally</b> contains the old remote revision (<i>ancestor</i>) as element1 and the remote
+   *          delta as element2. Any of the pair elements can be <code>null</code> if it is not possible to determine it
+   *          locally (depends on local revision caching and server behaviour regarding transmission of deltas instead
+   *          of invalidations).
    */
   public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
-      List<CDORevisionDelta> deltas);
+      List<CDORevisionDelta> allRemoteDeltas);
 }

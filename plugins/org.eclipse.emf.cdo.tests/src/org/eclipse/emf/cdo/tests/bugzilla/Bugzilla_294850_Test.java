@@ -112,8 +112,8 @@ public class Bugzilla_294850_Test extends AbstractCDOTest
     public boolean gotCalled;
 
     @Override
-    protected void resolveConflict(CDOObject conflict, CDORevision oldRevision, CDORevisionDelta localDelta,
-        CDORevisionDelta remoteDelta, List<CDORevisionDelta> deltas)
+    protected void resolveConflict(CDOObject conflict, CDORevision oldRemoteRevision, CDORevisionDelta localDelta,
+        CDORevisionDelta remoteDelta, List<CDORevisionDelta> allRemoteDeltas)
     {
       gotCalled = true;
     }

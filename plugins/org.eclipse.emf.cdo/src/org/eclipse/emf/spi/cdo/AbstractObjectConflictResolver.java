@@ -106,14 +106,10 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
   }
 
   /**
-   * Resolves the conflicts in the current transaction. Depending on the decision taken to resolve the conflicts, it may
-   * be necessary to adjust the notifications that will be sent to the adapters in the current transaction. This can be
-   * achieved by adjusting the {@link CDORevisionDelta} in <code>deltas</code>.
-   * 
    * @since 3.1
    */
   public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
-      List<CDORevisionDelta> deltas)
+      List<CDORevisionDelta> allRemoteDeltas)
   {
     Map<CDOID, CDORevisionDelta> localDeltas = transaction.getRevisionDeltas();
     for (Entry<CDOObject, Pair<CDORevision, CDORevisionDelta>> entry : conflicts.entrySet())
@@ -122,7 +118,7 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
       CDORevision oldRevision = entry.getValue().getElement1();
       CDORevisionDelta remoteDelta = entry.getValue().getElement2();
       CDORevisionDelta localDelta = localDeltas.get(conflict.cdoID());
-      resolveConflict(conflict, oldRevision, localDelta, remoteDelta, deltas);
+      resolveConflict(conflict, oldRevision, localDelta, remoteDelta, allRemoteDeltas);
     }
   }
 
@@ -133,8 +129,8 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
    * 
    * @since 3.1
    */
-  protected void resolveConflict(CDOObject conflict, CDORevision oldRevision, CDORevisionDelta localDelta,
-      CDORevisionDelta remoteDelta, List<CDORevisionDelta> deltas)
+  protected void resolveConflict(CDOObject conflict, CDORevision oldRemoteRevision, CDORevisionDelta localDelta,
+      CDORevisionDelta remoteDelta, List<CDORevisionDelta> allRemoteDeltas)
   {
     throw new UnsupportedOperationException("Must be overridden");
   }
@@ -189,7 +185,7 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
 
     @Override
     public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
-        List<CDORevisionDelta> deltas)
+        List<CDORevisionDelta> allRemoteDeltas)
     {
       // Do nothing
     }
@@ -218,7 +214,7 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
           adapter.attach(object);
         }
       }
-    
+
       @Override
       public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
       {
@@ -228,7 +224,7 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
           collector.reset();
         }
       }
-    
+
       @Override
       public void rolledBackTransaction(CDOTransaction transaction)
       {
@@ -277,8 +273,8 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
     }
 
     @Override
-    protected void resolveConflict(CDOObject conflict, CDORevision oldRevision, CDORevisionDelta localDelta,
-        CDORevisionDelta remoteDelta, List<CDORevisionDelta> deltas)
+    protected void resolveConflict(CDOObject conflict, CDORevision oldRemoteRevision, CDORevisionDelta localDelta,
+        CDORevisionDelta remoteDelta, List<CDORevisionDelta> allRemoteDeltas)
     {
       resolveConflict(conflict, localDelta, collector.getDeltas(conflict));
     }

@@ -68,8 +68,8 @@ public class Bugzilla_316887_Test extends AbstractCDOTest
     tr2.options().addConflictResolver(new AbstractObjectConflictResolver()
     {
       @Override
-      protected void resolveConflict(CDOObject conflict, CDORevision oldRevision, CDORevisionDelta localDelta,
-          CDORevisionDelta remoteDelta, List<CDORevisionDelta> deltas)
+      protected void resolveConflict(CDOObject conflict, CDORevision oldRemoteRevision, CDORevisionDelta localDelta,
+          CDORevisionDelta remoteDelta, List<CDORevisionDelta> allRemoteDeltas)
       {
         rollbackObject(conflict);
 
@@ -81,7 +81,7 @@ public class Bugzilla_316887_Test extends AbstractCDOTest
         changeObject(conflict, localDelta);
 
         // Adjusts the "notifications"
-        CDORevisionDelta delta = deltas.get(0);
+        CDORevisionDelta delta = allRemoteDeltas.get(0);
         list = (CDOListFeatureDelta)delta.getFeatureDeltas().get(0);
         CDOMoveFeatureDelta move = (CDOMoveFeatureDelta)list.getListChanges().get(0);
         ((WithIndex)move).adjustAfterRemoval(0);

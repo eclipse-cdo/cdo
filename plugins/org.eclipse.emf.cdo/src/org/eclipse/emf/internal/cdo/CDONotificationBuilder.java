@@ -91,16 +91,34 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
     EStructuralFeature feature = delta.getFeature();
     int oldPosition = delta.getOldPosition();
     int newPosition = delta.getNewPosition();
+
+    Object oldValue = getOldValue(feature);
+    if (oldValue != null)
+    {
+      @SuppressWarnings("unchecked")
+      List<Object> list = (List<Object>)getOldValue(feature);
+      oldValue = list.get(oldPosition);
+      if (oldValue instanceof CDOID)
+      {
+        CDOID oldID = (CDOID)oldValue;
+        CDOObject object = findObjectByID(oldID);
+        if (object != null)
+        {
+          oldValue = object;
+        }
+      }
+    }
+
     add(new CDODeltaNotificationImpl(object, Notification.MOVE, getEFeatureID(feature), Integer.valueOf(oldPosition),
-        getOldValue(feature), newPosition));
+        oldValue, newPosition));
   }
 
   @Override
   public void visit(CDOAddFeatureDelta delta)
   {
     EStructuralFeature feature = delta.getFeature();
-    add(new CDODeltaNotificationImpl(object, Notification.ADD, getEFeatureID(feature), getOldValue(feature), delta
-        .getValue(), delta.getIndex()));
+    add(new CDODeltaNotificationImpl(object, Notification.ADD, getEFeatureID(feature), getOldValue(feature),
+        delta.getValue(), delta.getIndex()));
   }
 
   @Override

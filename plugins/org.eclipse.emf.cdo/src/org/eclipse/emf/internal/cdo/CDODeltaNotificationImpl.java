@@ -246,12 +246,15 @@ public class CDODeltaNotificationImpl extends ENotificationImpl implements CDODe
   @Override
   public boolean merge(Notification notification)
   {
-    if (eventType == REMOVE_MANY && newValue == null)
-    {
-      // Means that clear all was executed and no merging can appear
-      return false;
-    }
+    // Do not merge at all. See bug 317144.
+    return false;
 
-    return super.merge(notification);
+    // if (eventType == REMOVE_MANY && newValue == null)
+    // {
+    // // Means that clear all was executed and no merging can appear
+    // return false;
+    // }
+    //
+    // return super.merge(notification);
   }
 }

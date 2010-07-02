@@ -8,6 +8,7 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Martin Fluegge - maintenance, bug 318518
  */
 package org.eclipse.emf.cdo.internal.server;
 
@@ -27,11 +28,13 @@ import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDRevisionDeltaLockWrapper;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IRepository.Props;
@@ -63,6 +66,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
@@ -578,12 +582,24 @@ public class TransactionCommitContext implements InternalCommitContext
       }
     }
 
+    InternalLockManager lockManager = transaction.getRepository().getLockManager();
+
     for (int i = 0; i < dirtyObjectDeltas.length; i++)
     {
       InternalCDORevisionDelta delta = dirtyObjectDeltas[i];
       CDOID id = delta.getID();
       Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
-      lockedObjects.add(key);
+      lockedObjects.add(new CDOIDRevisionDeltaLockWrapper(key, delta));
+
+      if (referentialIntegrityEnsured && hasContainmentChanges(delta))
+      {
+        InternalCDORevisionManager revisionManager = transaction.getRepository().getRevisionManager();
+        if (isContainerLocked(delta, revisionManager, lockManager))
+        {
+          lockedObjects.clear();
+          throw new ContainmentCycleDetectedException("Parent (" + key + ") is already locked for containment changes");
+        }
+      }
 
       if (deltaTargetLocker != null)
       {
@@ -602,7 +618,6 @@ public class TransactionCommitContext implements InternalCommitContext
     {
       if (!lockedObjects.isEmpty())
       {
-        InternalLockManager lockManager = transaction.getRepository().getLockManager();
         lockManager.lock(LockType.WRITE, transaction, lockedObjects, 1000);
       }
     }
@@ -611,6 +626,72 @@ public class TransactionCommitContext implements InternalCommitContext
       lockedObjects.clear();
       throw exception;
     }
+  }
+
+  /**
+   * Iterates up the eContainers of an object and returns <code>true</code> on the first parent locked by another view.
+   * 
+   * @return <code>true</code> if any parent is locked, <code>false</code> otherwise.
+   */
+  private boolean isContainerLocked(InternalCDORevisionDelta delta, InternalCDORevisionManager revisionManager,
+      InternalLockManager lockManager)
+  {
+    CDOID id = delta.getID();
+    InternalCDORevision revision = revisionManager.getRevisionByVersion(id, delta, CDORevision.UNCHUNKED, true);
+    return isContainerLocked(revision, revisionManager, lockManager);
+  }
+
+  private boolean isContainerLocked(InternalCDORevision revision, InternalCDORevisionManager revisionManager,
+      InternalLockManager lockManager)
+  {
+    CDOID id = (CDOID)revision.getContainerID();
+    if (CDOIDUtil.isNull(id))
+    {
+      return false;
+    }
+
+    final boolean supportingBranches = transaction.getRepository().isSupportingBranches();
+    Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
+
+    if (lockManager.hasLockByOthers(LockType.WRITE, transaction, key))
+    {
+      Object object = lockManager.getLockEntryObject(key);
+      if (object instanceof CDOIDRevisionDeltaLockWrapper)
+      {
+        InternalCDORevisionDelta delta = ((CDOIDRevisionDeltaLockWrapper)object).getDelta();
+        if (delta != null && hasContainmentChanges(delta))
+        {
+          return true;
+        }
+      }
+    }
+
+    InternalCDORevision parent = revisionManager.getRevision(id, transaction, CDORevision.UNCHUNKED,
+        CDORevision.DEPTH_NONE, true);
+
+    if (parent != null)
+    {
+      return isContainerLocked(parent, revisionManager, lockManager);
+    }
+
+    return false;
+  }
+
+  private boolean hasContainmentChanges(InternalCDORevisionDelta delta)
+  {
+    for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
+    {
+      EStructuralFeature feature = featureDelta.getFeature();
+      if (feature instanceof EReference)
+      {
+        if (((EReference)feature).isContainment())
+        {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   private void lockTarget(Object value, boolean supportingBranches)
@@ -911,6 +992,33 @@ public class TransactionCommitContext implements InternalCommitContext
     protected void disposePackageUnits()
     {
       // Do nothing
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class ContainmentCycleDetectedException extends IllegalStateException
+  {
+    private static final long serialVersionUID = 1L;
+
+    public ContainmentCycleDetectedException()
+    {
+    }
+
+    public ContainmentCycleDetectedException(String message, Throwable cause)
+    {
+      super(message, cause);
+    }
+
+    public ContainmentCycleDetectedException(String s)
+    {
+      super(s);
+    }
+
+    public ContainmentCycleDetectedException(Throwable cause)
+    {
+      super(cause);
     }
   }
 }

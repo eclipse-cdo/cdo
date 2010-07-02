@@ -71,6 +71,12 @@ public class LockManager extends RWLockManager<Object, IView> implements Interna
     this.repository = repository;
   }
 
+  public Object getLockEntryObject(Object key)
+  {
+    LockEntry<Object, IView> lockEntry = getLockEntry(key);
+    return lockEntry.getObject();
+  }
+
   @Override
   protected void doActivate() throws Exception
   {

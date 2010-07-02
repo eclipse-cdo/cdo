@@ -28,4 +28,9 @@ public interface InternalLockManager extends IRWLockManager<Object, IView>
   public InternalRepository getRepository();
 
   public void setRepository(InternalRepository repository);
+
+  /**
+   * @since 4.0
+   */
+  public Object getLockEntryObject(Object key);
 }

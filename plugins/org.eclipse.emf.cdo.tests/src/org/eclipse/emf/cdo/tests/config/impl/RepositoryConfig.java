@@ -42,7 +42,10 @@ import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.IUserManager;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
@@ -69,6 +72,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   private static final long serialVersionUID = 1L;
 
   protected transient Map<String, InternalRepository> repositories;
+
+  private transient IListener repositoryListener;
 
   public RepositoryConfig(String name)
   {
@@ -110,7 +115,22 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       {
         repository = createRepository(name);
       }
+      else
+      {
+        if (repository.getStore() == null)
+        {
+          IStore store = createStore(name);
+          repository.setStore((InternalStore)store);
+        }
 
+        if (repository.getProperties() == null)
+        {
+          Map<String, String> props = getRepositoryProperties();
+          repository.setProperties(props);
+        }
+      }
+
+      repository.addListener(repositoryListener);
       repositories.put(name, repository);
       LifecycleUtil.activate(repository);
     }
@@ -134,6 +154,18 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     super.setUp();
     StoreThreadLocal.release();
     repositories = new HashMap<String, InternalRepository>();
+    repositoryListener = new LifecycleEventAdapter()
+    {
+      @Override
+      protected void onDeactivated(ILifecycle repository)
+      {
+        synchronized (repositories)
+        {
+          repositories.remove(((IRepository)repository).getName());
+        }
+      }
+    };
+
     IManagedContainer serverContainer = getCurrentTest().getServerContainer();
     CDONet4jServerUtil.prepareContainer(serverContainer, new IRepositoryProvider()
     {
@@ -150,7 +182,13 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   @Override
   public void tearDown() throws Exception
   {
-    for (Object repository : repositories.values().toArray())
+    Object[] array;
+    synchronized (repositories)
+    {
+      array = repositories.values().toArray();
+    }
+
+    for (Object repository : array)
     {
       LifecycleUtil.deactivate(repository);
     }
@@ -278,7 +316,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
         master = (InternalRepository)CDOServerUtil.createRepository(masterName, masterStore, props);
       }
 
-      repositories.put(masterName, master);
+      synchronized (repositories)
+      {
+        repositories.put(masterName, master);
+      }
+
       LifecycleUtil.activate(master);
       startMasterTransport();
 

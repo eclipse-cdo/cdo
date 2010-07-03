@@ -194,7 +194,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       session.close();
     }
 
-    restartRepository();
+    // restartRepository();
 
     {
       CDOSession session = (CDOSession)openSession(REPOSITORY_NAME);
@@ -373,33 +373,42 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     @Override
     public void run()
     {
-      msg("Started Thread A");
-      CDOTransaction transaction = session.openTransaction();
-      Resource resource = transaction.getResource(resourcePath, true);
-
-      NodeB root = (NodeB)resource.getContents().get(0);
-      assertEquals("root", root.getName());
-
-      NodeB B = getElementFromGraphNodeB(root, "B");
-      NodeB E = getElementFromGraphNodeB(root, "E");
-
-      assertEquals("B", B.getName());
-      assertEquals("E", E.getName());
-
-      E.getChildren().add(B);
-
       try
       {
-        transaction.commit();
-      }
-      catch (CommitException ex)
-      {
-        exceptions.add(ex);
-      }
+        msg("Started Thread A " + session);
+        CDOTransaction transaction = session.openTransaction();
+        Resource resource = transaction.getResource(resourcePath, true);
 
-      session.close();
-      msg("Finished Thread A");
+        NodeB root = (NodeB)resource.getContents().get(0);
+        assertEquals("root", root.getName());
+
+        NodeB B = getElementFromGraphNodeB(root, "B");
+        NodeB E = getElementFromGraphNodeB(root, "E");
+
+        assertEquals("B", B.getName());
+        assertEquals("E", E.getName());
+
+        E.getChildren().add(B);
+
+        try
+        {
+          transaction.commit();
+        }
+        catch (CommitException ex)
+        {
+          exceptions.add(ex);
+        }
+
+        session.close();
+        msg("Finished Thread A " + session);
+      }
+      catch (Exception e)
+      {
+        exceptions.add(e);
+
+      }
     }
+
   }
 
   /**
@@ -420,7 +429,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     @Override
     public void run()
     {
-      msg("Started Thread B");
+      msg("Started Thread B " + session);
       CDOTransaction transaction = session.openTransaction();
       Resource resource = transaction.getResource(resourcePath, true);
 
@@ -440,6 +449,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       }
       catch (CommitException ex)
       {
+        msg("Finished (Passed) Thread B " + session);
         // passed
         return;
       }
@@ -447,7 +457,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       exceptions.add(new ThreadBShouldHaveThrownAnExceptionException("Thread B should have thrown an exception"));
 
       session.close();
-      msg("Finished Thread B");
+      msg("Finished Thread B " + session);
     }
   }
 
@@ -461,7 +471,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     public ThreadX(String resourcePath)
     {
       super(resourcePath);
-      msg("Starting Thread A");
+      msg("Starting Thread X");
       session = (CDOSession)openSession(REPOSITORY_NAME);
       idSessionA = session.getSessionID();
     }
@@ -469,29 +479,36 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     @Override
     public void run()
     {
-      msg("Started Thread X");
-      CDOTransaction transaction = session.openTransaction();
-      Resource resource = transaction.getResource(resourcePath, true);
-
-      NodeB root = (NodeB)resource.getContents().get(0);
-      assertEquals("root", root.getName());
-
-      NodeB D = getElementFromGraphNodeB(root, "D");
-
-      assertEquals("D", D.getName());
-      D.setName("DD");
-
       try
       {
-        transaction.commit();
-      }
-      catch (CommitException ex)
-      {
-        exceptions.add(ex);
-      }
+        msg("Started Thread X" + session);
+        CDOTransaction transaction = session.openTransaction();
+        Resource resource = transaction.getResource(resourcePath, true);
 
-      session.close();
-      msg("Finished Thread X");
+        NodeB root = (NodeB)resource.getContents().get(0);
+        assertEquals("root", root.getName());
+
+        NodeB D = getElementFromGraphNodeB(root, "D");
+
+        assertEquals("D", D.getName());
+        D.setName("DD");
+
+        try
+        {
+          transaction.commit();
+        }
+        catch (CommitException ex)
+        {
+          exceptions.add(ex);
+        }
+
+        session.close();
+        msg("Finished Thread X");
+      }
+      catch (Exception e)
+      {
+        exceptions.add(e);
+      }
     }
   }
 

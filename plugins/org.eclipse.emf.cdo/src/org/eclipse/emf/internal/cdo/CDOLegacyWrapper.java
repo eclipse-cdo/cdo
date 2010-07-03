@@ -194,7 +194,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(eClass))
     {
       EReference oppositeReference = ((EStructuralFeature.Internal)feature).getEOpposite();
-      if (oppositeReference != null)
+      if (oppositeReference != null && !oppositeReference.isContainment())
       {
         if (feature.isMany())
         {

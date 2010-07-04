@@ -14,7 +14,7 @@ import org.eclipse.net4j.util.collection.FastList;
 
 /**
  * @author Eike Stepper
- * @since 3.0
+ * @since 3.1
  */
 public class FastListTest extends AbstractOMTest
 {

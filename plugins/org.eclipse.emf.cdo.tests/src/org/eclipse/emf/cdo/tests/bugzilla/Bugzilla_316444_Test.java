@@ -556,6 +556,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     return null;
   }
 
+  @SuppressWarnings("unused")
   private void restartRepository()
   {
     LifecycleUtil.deactivate(getRepository());

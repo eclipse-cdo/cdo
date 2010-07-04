@@ -205,6 +205,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       ThreadA threadA = new ThreadA(resourcePath);
 
       threadA.start();
+      sleepIfNeeded();
       threadX.start();
 
       threadX.join(DEFAULT_TIMEOUT);
@@ -296,8 +297,9 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       ThreadA threadA = new ThreadA(RESOURCE_PATH);
       ThreadB threadB = new ThreadB(RESOURCE_PATH);
 
-      threadB.start();
       threadA.start();
+      sleepIfNeeded();
+      threadB.start();
 
       threadA.join(DEFAULT_TIMEOUT);
       threadB.join(DEFAULT_TIMEOUT);
@@ -318,7 +320,15 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       session.close();
       msg("finished");
     }
+  }
 
+  private void sleepIfNeeded()
+  {
+    if (isConfig(LEGACY))
+    {
+      // sleep in legacy while Bug 318816 is not solved
+      sleep(1000);
+    }
   }
 
   private void checkInitialGraph(NodeB root, NodeB A, NodeB B, NodeB C, NodeB D, NodeB E)
@@ -405,10 +415,8 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       catch (Exception e)
       {
         exceptions.add(e);
-
       }
     }
-
   }
 
   /**
@@ -429,35 +437,44 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     @Override
     public void run()
     {
-      msg("Started Thread B " + session);
-      CDOTransaction transaction = session.openTransaction();
-      Resource resource = transaction.getResource(resourcePath, true);
-
-      NodeB root = (NodeB)resource.getContents().get(0);
-      assertEquals("root", root.getName());
-      NodeB C = getElementFromGraphNodeB(root, "C");
-      NodeB D = getElementFromGraphNodeB(root, "D");
-
-      assertEquals("C", C.getName());
-      assertEquals("D", D.getName());
-
-      C.getChildren().add(D);
-
       try
       {
-        transaction.commit();
+        msg("Started Thread B " + session);
+        CDOTransaction transaction = session.openTransaction();
+
+        Resource resource = transaction.getResource(resourcePath, true);
+
+        NodeB root = (NodeB)resource.getContents().get(0);
+        assertEquals("root", root.getName());
+        NodeB C = getElementFromGraphNodeB(root, "C");
+        NodeB D = getElementFromGraphNodeB(root, "D");
+
+        assertEquals("C", C.getName());
+        assertEquals("D", D.getName());
+
+        C.getChildren().add(D);
+
+        try
+        {
+          transaction.commit();
+        }
+        catch (CommitException ex)
+        {
+          msg("Finished (Passed) Thread B " + session);
+          // passed
+          return;
+        }
+
+        exceptions.add(new ThreadBShouldHaveThrownAnExceptionException("Thread B should have thrown an exception"));
+
+        session.close();
+
       }
-      catch (CommitException ex)
+      catch (Exception e)
       {
-        msg("Finished (Passed) Thread B " + session);
-        // passed
-        return;
+        exceptions.add(e);
+        msg("Finished Thread B " + session);
       }
-
-      exceptions.add(new ThreadBShouldHaveThrownAnExceptionException("Thread B should have thrown an exception"));
-
-      session.close();
-      msg("Finished Thread B " + session);
     }
   }
 
@@ -473,7 +490,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       super(resourcePath);
       msg("Starting Thread X");
       session = (CDOSession)openSession(REPOSITORY_NAME);
-      idSessionA = session.getSessionID();
+      idSessionB = session.getSessionID();
     }
 
     @Override

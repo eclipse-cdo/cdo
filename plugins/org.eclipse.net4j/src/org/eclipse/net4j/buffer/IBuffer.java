@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -33,17 +33,17 @@ import java.nio.channels.SocketChannel;
  * This interface is <b>not</b> intended to be implemented by clients.
  * <p>
  * <dt><b>Class Diagram:</b></dt>
- * <dd><img src="doc-files/Buffers.png" title="Diagram Buffers" border="0" usemap="#Buffers.png"/></dd>
+ * <dd><img src="doc-files/IBuffer-1.gif" title="Diagram Buffers" border="0" usemap="#IBuffer-1.gif"/></dd>
  * <p>
- * <MAP NAME="Buffers.png"> <AREA SHAPE="RECT" COORDS="303,12,403,72" HREF="IBufferHandler.html"> <AREA SHAPE="RECT"
+ * <MAP NAME="IBuffer-1.gif"> <AREA SHAPE="RECT" COORDS="303,12,403,72" HREF="IBufferHandler.html"> <AREA SHAPE="RECT"
  * COORDS="533,199,619,249" HREF="http://java.sun.com/j2se/1.5.0/docs/api/java/nio/ByteBuffer.html"> <AREA SHAPE="RECT"
  * COORDS="283,126,422,322" HREF="IBuffer.html"> <AREA SHAPE="RECT" COORDS="9,180,155,268" HREF="IBufferProvider.html">
  * <AREA SHAPE="RECT" COORDS="33,321,132,399" HREF="IBufferPool.html"></MAP>
  * <p>
  * <dt><b>State Machine Diagram:</b></dt>
- * <dd><img src="doc-files/BufferStates.png" title="Diagram Buffer States" border="0" usemap="#BufferStates.png"/></dd>
+ * <dd><img src="doc-files/BufferState-1.gif" title="Diagram Buffer States" border="0" usemap="#BufferState-1.gif"/></dd>
  * <p>
- * <MAP NAME="BufferStates.png"> <AREA SHAPE="RECT" COORDS="300,8,449,34" HREF="BufferState.html#INITIAL"> <AREA
+ * <MAP NAME="BufferState-1.gif"> <AREA SHAPE="RECT" COORDS="300,8,449,34" HREF="BufferState.html#INITIAL"> <AREA
  * SHAPE="RECT" COORDS="46,115,195,139" HREF="BufferState.html#PUTTING"> <AREA SHAPE="RECT" COORDS="48,271,195,295"
  * HREF="BufferState.html#WRITING"> <AREA SHAPE="RECT" COORDS="533,112,681,140" HREF="BufferState.html#READING_HEADER">
  * <AREA SHAPE="RECT" COORDS="533,271,680,295" HREF="BufferState.html#READING_BODY"> <AREA SHAPE="RECT"
@@ -64,9 +64,17 @@ import java.nio.channels.SocketChannel;
  * 
  * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
  * // Obtain a fresh buffer
- * Buffer buffer = bufferProvider.getBuffer(); // Read the contents of the Buffer from a // SocketChannel without
- * blocking ByteBuffer byteBuffer; while ((byteBuffer = buffer.startGetting(socketChannel)) == null) { // Do something
- * else } // Access the contents of the buffer and // release it to its provider double value = byteBuffer.getDouble();
+ * Buffer buffer = bufferProvider.getBuffer();
+ * 
+ * // Read the contents of the Buffer from a SocketChannel without blocking
+ * ByteBuffer byteBuffer;
+ * while ((byteBuffer = buffer.startGetting(socketChannel)) == null)
+ * {
+ *   // Do something else
+ * }
+ * 
+ * // Access the contents of the buffer and release it to its provider
+ * double value = byteBuffer.getDouble();
  * buffer.release();
  * </pre>
  * 

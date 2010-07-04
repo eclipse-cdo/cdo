@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -28,19 +28,18 @@ import org.eclipse.spi.net4j.Acceptor;
  * {@link Acceptor} class.
  * <p>
  * <dt><b>Class Diagram:</b></dt>
- * <dd><img src="doc-files/Acceptors.png" title="Diagram Acceptors" border="0" usemap="#Acceptors.png"/></dd>
+ * <dd><img src="doc-files/IAcceptor-1.gif" title="Diagram Acceptors" border="0" usemap="#IAcceptor-1.gif"/></dd>
  * <p>
- * <MAP NAME="Acceptors.png"> <AREA SHAPE="RECT" COORDS="10,8,99,58" HREF="IAcceptor.html"> <AREA SHAPE="RECT"
- * COORDS="289,8,378,58" HREF="IConnector.html"> </MAP>
+ * <MAP NAME="IAcceptor-1.gif"> <AREA SHAPE="RECT" COORDS="10,8,99,58" HREF="IAcceptor.html"> <AREA SHAPE="RECT"
+ * COORDS="289,8,378,58" HREF="../connector/IConnector.html"> </MAP>
  * <p>
  * <dt><b>Sequence Diagram:</b></dt>
- * <dd><img src="doc-files/ConnectionProcess.jpg" title="Connection Process" border="0"
- * usemap="#ConnectionProcess.jpg"/></dd>
+ * <dd><img src="doc-files/IAcceptor-2.gif" title="Connection Process" border="0" usemap="#IAcceptor-2.gif"/></dd>
  * <p>
- * <MAP NAME="ConnectionProcess.jpg"> <AREA SHAPE="RECT" COORDS="146,136,265,165" HREF="IConnector.html"> <AREA
- * SHAPE="RECT" COORDS="485,75,564,105" HREF="IAcceptor.html"> <AREA SHAPE="RECT" COORDS="296,325,414,355"
- * HREF="IConnector.html"> <AREA SHAPE="RECT" COORDS="64,426,444,506" HREF="ConnectorState.html#CONNECTING"> <AREA
- * SHAPE="RECT" COORDS="64,516,444,596" HREF="ConnectorState.html#NEGOTIATING"> </MAP>
+ * <MAP NAME="IAcceptor-2.gif"> <AREA SHAPE="RECT" COORDS="146,136,265,165" HREF="IConnector.html"> <AREA SHAPE="RECT"
+ * COORDS="485,75,564,105" HREF="IAcceptor.html"> <AREA SHAPE="RECT" COORDS="296,325,414,355" HREF="IConnector.html">
+ * <AREA SHAPE="RECT" COORDS="64,426,444,506" HREF="ConnectorState.html#CONNECTING"> <AREA SHAPE="RECT"
+ * COORDS="64,516,444,596" HREF="ConnectorState.html#NEGOTIATING"> </MAP>
  * 
  * @author Eike Stepper
  */

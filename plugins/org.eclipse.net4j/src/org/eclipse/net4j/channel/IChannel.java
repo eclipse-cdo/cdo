@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -25,41 +25,54 @@ import org.eclipse.net4j.util.security.IUserAware;
  * multiplexer}.
  * <p>
  * <dt><b>Class Diagram:</b></dt>
- * <dd><img src="doc-files/Channels.png" title="Diagram Buffers" border="0" usemap="#Channels.png"/></dd>
+ * <dd><img src="doc-files/IChannel-1.gif" title="Diagram Buffers" border="0" usemap="#IChannel-1.gif"/></dd>
  * <p>
- * <MAP NAME="Channels.png"> <AREA SHAPE="RECT" COORDS="301,8,451,68" HREF="IChannelID.html"> <AREA SHAPE="RECT"
+ * <MAP NAME="IChannel-1.gif"> <AREA SHAPE="RECT" COORDS="301,8,451,68" HREF="IChannelID.html"> <AREA SHAPE="RECT"
  * COORDS="301,141,451,211" HREF="IChannel.html"> <AREA SHAPE="RECT" COORDS="599,151,696,201"
- * HREF="IBufferHandler.html"> <AREA SHAPE="RECT" COORDS="7,151,96,201" HREF="IConnector.html"> </MAP>
- * <p>
- * <dt><b>Sequence Diagram: Communication Process</b></dt>
- * <dd><img src="doc-files/CommunicationProcess.jpg" title="Communication Process" border="0"
- * usemap="#CommunicationProcess.jpg"/></dd>
- * <p>
- * <MAP NAME="CommunicationProcess.jpg"> <AREA SHAPE="RECT" COORDS="128,94,247,123" HREF="IConnector.html"> <AREA
- * SHAPE="RECT" COORDS="648,95,767,123" HREF="IConnector.html"> <AREA SHAPE="RECT" COORDS="509,254,608,283"
- * HREF="IChannel.html"> <AREA SHAPE="RECT" COORDS="287,355,387,383" HREF="IChannel.html"> <AREA SHAPE="RECT"
- * COORDS="818,195,897,222" HREF="IProtocol.html"> </MAP>
+ * HREF="../buffer/IBufferHandler.html"> <AREA SHAPE="RECT" COORDS="7,151,96,201" HREF="../connector/IConnector.html">
+ * </MAP>
  * <p>
  * An example for opening a channel on an {@link IConnector} and sending an {@link IBuffer}:
  * <p>
  * 
  * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
  * // Open a channel
- * IChannel channel = connector.openChannel(); short channelID = channel.getIndex(); // Fill a buffer Buffer buffer =
- * bufferProvider.getBuffer(); ByteBuffer byteBuffer = buffer.startPutting(channelID); byteBuffer.putDouble(15.47); //
- * Let the channel send the buffer without blocking channel.sendBuffer(buffer);
+ * IChannel channel = connector.openChannel();
+ * short channelID = channel.getIndex();
+ * 
+ * // Fill a buffer
+ * Buffer buffer = bufferProvider.getBuffer();
+ * ByteBuffer byteBuffer = buffer.startPutting(channelID);
+ * byteBuffer.putDouble(15.47);
+ * 
+ * // Let the channel send the buffer without blocking
+ * channel.sendBuffer(buffer);
  * </pre>
  * <p>
  * An example for receiving {@link IBuffer}s from channels on an {@link IConnector}:
  * <p>
  * 
  * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
- * // Create a receive
- * handler final IBufferHandler receiveHandler = new IBufferHandler() { public void handleBuffer(IBuffer buffer) {
- * ByteBuffer byteBuffer = buffer.getByteBuffer(); IOUtil.OUT().println(&quot;Received &quot; + byteBuffer.getDouble());
- * buffer.release(); } }; // Set the receive handler to all new channels connector.addListener(new
- * ContainerEventAdapter() { protected void onAdded(IContainer container, Object element) { IChannel channel =
- * (IChannel)element; channel.setReceiveHandler(receiveHandler); } });
+ * // Create a receive handler
+ * final IBufferHandler receiveHandler = new IBufferHandler()
+ * {
+ *   public void handleBuffer(IBuffer buffer)
+ *   {
+ *     ByteBuffer byteBuffer = buffer.getByteBuffer();
+ *     IOUtil.OUT().println(&quot;Received &quot; + byteBuffer.getDouble());
+ *     buffer.release();
+ *   }
+ * };
+ * 
+ * // Set the receive handler to all new channels
+ * connector.addListener(new ContainerEventAdapter()
+ * {
+ *   protected void onAdded(IContainer container, Object element)
+ *   {
+ *     IChannel channel = (IChannel)element;
+ *     channel.setReceiveHandler(receiveHandler);
+ *   }
+ * });
  * </pre>
  * 
  * @author Eike Stepper

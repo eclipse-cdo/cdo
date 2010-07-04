@@ -10,15 +10,40 @@
  */
 package org.eclipse.emf.cdo.common.branch;
 
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+
 /**
+ * A {@link #getTimeStamp() point in time} in a particular {@link #getBranch() branch}.
+ * 
+ * @see CDOCommitInfo
+ * @see CDOBranchTag
+ * @see CDOBranch#getBase()
+ * @see CDOBranch#getHead()
+ * @see CDOBranch#getPoint(long)
+ * @see CDOBranchUtil#copyBranchPoint(CDOBranchPoint)
  * @author Eike Stepper
  * @since 3.0
  */
 public interface CDOBranchPoint extends Comparable<CDOBranchPoint>
 {
+  /**
+   * The fixed special time stamp <i>unspecified</i>.
+   * 
+   * @see CDOBranch#getHead()
+   */
   public static final long UNSPECIFIED_DATE = 0;
 
+  /**
+   * Returns the branch of this branch point, or <code>null</code> if this branch point is the
+   * {@link CDOBranch#getBase() base} of the {@link CDOBranchManager#getMainBranch() main branch}.
+   */
   public CDOBranch getBranch();
 
+  /**
+   * Returns the time stamp of this branch point, or the fixed special time stamp <i>
+   * {@link CDOBranchPoint#UNSPECIFIED_DATE unspecified}</i> if this branch point marks the {@link CDOBranch#getHead()
+   * head} of a branch.
+   */
   public long getTimeStamp();
 }

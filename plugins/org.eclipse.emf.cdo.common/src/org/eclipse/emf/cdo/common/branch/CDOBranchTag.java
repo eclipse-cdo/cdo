@@ -11,10 +11,15 @@
 package org.eclipse.emf.cdo.common.branch;
 
 /**
+ * A named {@link CDOBranchPoint branch point}.
+ * 
  * @author Eike Stepper
  * @since 3.0
  */
 public interface CDOBranchTag extends CDOBranchPoint
 {
+  /**
+   * Returns the name of this branch tag.
+   */
   public String getName();
 }

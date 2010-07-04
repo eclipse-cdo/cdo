@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.net4j.util" version="2">
+    <resource path="src/org/eclipse/net4j/util/collection/FastList.java" type="org.eclipse.net4j.util.collection.FastList">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.collection.FastList"/>
+                <message_argument value="main(String[])"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.collection.FastList"/>
+                <message_argument value="testAddFirst()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.collection.FastList"/>
+                <message_argument value="testAddSecond()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.collection.FastList"/>
+                <message_argument value="testNotFoundInEmpty()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.collection.FastList"/>
+                <message_argument value="testNotFoundInMany()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.collection.FastList"/>
+                <message_argument value="testNotFoundInOne()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.collection.FastList"/>
+                <message_argument value="testRemoveHead()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.collection.FastList"/>
+                <message_argument value="testRemoveLast()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.collection.FastList"/>
+                <message_argument value="testRemoveMiddle()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.collection.FastList"/>
+                <message_argument value="testRemoveTail()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.collection.FastList.TestList"/>
+                <message_argument value="org.eclipse.net4j.util_3.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

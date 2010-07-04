@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.server;
 
 /**
+ * A repository with the ability to {@link IRepositorySynchronizer synchronize} its content with another repository.
+ * 
  * @author Eike Stepper
  * @since 3.0
  */

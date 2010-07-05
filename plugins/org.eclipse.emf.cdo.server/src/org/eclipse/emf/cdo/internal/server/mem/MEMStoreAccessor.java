@@ -326,8 +326,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
 
   public void queryXRefs(QueryXRefsContext context)
   {
-    // TODO: implement MEMStoreAccessor.queryXRefs(context)
-    throw new UnsupportedOperationException();
+    getStore().queryXRefs(context);
   }
 
   public IQueryHandler getQueryHandler(CDOQueryInfo info)

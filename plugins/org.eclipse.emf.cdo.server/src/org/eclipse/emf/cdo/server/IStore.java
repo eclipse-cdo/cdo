@@ -41,6 +41,11 @@ public interface IStore
   public Set<CDOID.ObjectType> getObjectIDTypes();
 
   /**
+   * @since 4.0
+   */
+  public CDOID createObjectID(String val);
+
+  /**
    * @since 2.0
    */
   public Set<ChangeFormat> getSupportedChangeFormats();

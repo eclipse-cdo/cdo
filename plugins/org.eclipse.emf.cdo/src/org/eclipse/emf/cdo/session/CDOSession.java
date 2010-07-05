@@ -50,6 +50,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * 
  * @author Eike Stepper
  * @since 2.0
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<CDOView>
 {
@@ -194,6 +195,11 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
    * @see #openTransaction()
    */
   public CDOView[] getViews();
+
+  /**
+   * @since 3.1
+   */
+  public CDOView getView(int viewID);
 
   /**
    * Refreshes the object caches of all (non-historical) {@link CDOView views}.

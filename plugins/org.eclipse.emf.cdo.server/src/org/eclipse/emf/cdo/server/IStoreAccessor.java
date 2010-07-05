@@ -351,9 +351,17 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    */
   public interface QueryXRefsContext extends CDOBranchPoint
   {
-    public Set<CDOID> getTargetObjects();
+    /**
+     * @since 4.0
+     */
+    public Map<CDOID, EClass> getTargetObjects();
 
     public EReference[] getSourceReferences();
+
+    /**
+     * @since 4.0
+     */
+    public Map<EClass, List<EReference>> getSourceCandidates();
 
     /**
      * Returns the maximum number of results expected by the client or {@link CDOQueryInfo#UNLIMITED_RESULTS} for no

@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
@@ -46,6 +47,7 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
@@ -529,6 +531,85 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
         }
       }
     }
+  }
+
+  public synchronized void queryXRefs(QueryXRefsContext context)
+  {
+    Set<CDOID> targetIDs = context.getTargetObjects().keySet();
+    Map<EClass, List<EReference>> sourceCandidates = context.getSourceCandidates();
+
+    for (Entry<Object, List<InternalCDORevision>> entry : revisions.entrySet())
+    {
+      CDOBranch branch = getBranch(entry.getKey());
+      if (!ObjectUtil.equals(branch, context.getBranch()))
+      {
+        continue;
+      }
+
+      List<InternalCDORevision> list = entry.getValue();
+      if (list.isEmpty())
+      {
+        continue;
+      }
+
+      InternalCDORevision revision = getRevision(list, context);
+      if (revision == null || revision instanceof SyntheticCDORevision)
+      {
+        continue;
+      }
+
+      EClass eClass = revision.getEClass();
+      CDOID sourceID = revision.getID();
+
+      List<EReference> eReferences = sourceCandidates.get(eClass);
+      if (eReferences != null)
+      {
+        for (EReference eReference : eReferences)
+        {
+          Object value = revision.getValue(eReference);
+
+          if (eReference.isMany())
+          {
+            @SuppressWarnings("unchecked")
+            List<CDOID> ids = (List<CDOID>)value;
+            int index = 0;
+            for (CDOID id : ids)
+            {
+              if (!queryXRefs(context, targetIDs, id, sourceID, eReference, index++))
+              {
+                return;
+              }
+            }
+          }
+          else
+          {
+            CDOID id = (CDOID)value;
+            if (!queryXRefs(context, targetIDs, id, sourceID, eReference, 0))
+            {
+              return;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  private boolean queryXRefs(QueryXRefsContext context, Set<CDOID> targetIDs, CDOID targetID, CDOID sourceID,
+      EReference sourceReference, int index)
+  {
+    for (CDOID id : targetIDs)
+    {
+      if (id.equals(targetID))
+      {
+        if (!context.addXRef(targetID, sourceID, sourceReference, index))
+        {
+          // No more results allowed
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 
   @Override

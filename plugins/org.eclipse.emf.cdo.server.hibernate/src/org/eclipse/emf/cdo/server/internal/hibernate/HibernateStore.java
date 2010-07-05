@@ -293,6 +293,16 @@ public class HibernateStore extends Store implements IHibernateStore
     }
   }
 
+  public CDOID createObjectID(String val)
+  {
+    // TODO: implement HibernateStore.createObjectID(val)
+    throw new UnsupportedOperationException();
+
+    // CDOClassifierRef classifierRef = null;
+    // Object id = null;
+    // return HibernateUtil.getInstance().createCDOID(classifierRef, id);
+  }
+
   @Override
   public HibernateStoreAccessor createReader(ISession session)
   {

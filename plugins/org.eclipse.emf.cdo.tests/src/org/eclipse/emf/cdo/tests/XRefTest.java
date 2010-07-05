@@ -34,35 +34,35 @@ public class XRefTest extends AbstractCDOTest
 {
   public void testCrossReferenceMultivalueEReferenceQuery() throws Exception
   {
-    Supplier supplier1 = getModel1Factory().createSupplier();
     PurchaseOrder purchaseOrder1 = getModel1Factory().createPurchaseOrder();
     PurchaseOrder purchaseOrder2 = getModel1Factory().createPurchaseOrder();
     PurchaseOrder purchaseOrder3 = getModel1Factory().createPurchaseOrder();
     PurchaseOrder purchaseOrder4 = getModel1Factory().createPurchaseOrder();
-    supplier1.getPurchaseOrders().add(purchaseOrder1);
-    supplier1.getPurchaseOrders().add(purchaseOrder2);
-    supplier1.getPurchaseOrders().add(purchaseOrder3);
-    supplier1.getPurchaseOrders().add(purchaseOrder4);
+
+    Supplier supplier = getModel1Factory().createSupplier();
+    supplier.getPurchaseOrders().add(purchaseOrder1);
+    supplier.getPurchaseOrders().add(purchaseOrder2);
+    supplier.getPurchaseOrders().add(purchaseOrder3);
+    supplier.getPurchaseOrders().add(purchaseOrder4);
 
     CDOSession session1 = openSession();
-    CDOTransaction transaction1 = session1.openTransaction();
-    CDOResource resource = transaction1.createResource("/test1");
+    CDOTransaction transaction = session1.openTransaction();
 
-    resource.getContents().add(supplier1);
+    CDOResource resource = transaction.createResource("/test1");
+    resource.getContents().add(supplier);
     resource.getContents().add(purchaseOrder1);
     resource.getContents().add(purchaseOrder2);
     resource.getContents().add(purchaseOrder3);
     resource.getContents().add(purchaseOrder4);
-    transaction1.commit();
 
-    session1.close();
+    transaction.commit();
 
     /******************/
 
     CDOSession session2 = openSession();
     CDOView view = session2.openView();
 
-    List<CDOObjectReference> results = view.queryXRefs(Collections.singleton(CDOUtil.getCDOObject(supplier1)));
+    List<CDOObjectReference> results = view.queryXRefs(Collections.singleton(CDOUtil.getCDOObject(supplier)));
     assertEquals(4, results.size());
 
     for (CDOObjectReference result : results)

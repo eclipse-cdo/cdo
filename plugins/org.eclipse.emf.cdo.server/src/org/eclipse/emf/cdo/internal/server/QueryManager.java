@@ -26,8 +26,8 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
-import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
+import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -243,6 +243,11 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
       {
         unregister(this);
       }
+    }
+
+    public int getResultCount()
+    {
+      return resultCount;
     }
 
     public boolean addResult(Object object)

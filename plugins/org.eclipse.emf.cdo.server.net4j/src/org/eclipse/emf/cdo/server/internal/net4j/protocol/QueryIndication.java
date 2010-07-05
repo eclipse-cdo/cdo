@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -23,6 +24,8 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EReference;
+
 import java.io.IOException;
 
 /**
@@ -31,6 +34,8 @@ import java.io.IOException;
 public class QueryIndication extends CDOReadIndication
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, QueryIndication.class);
+
+  private boolean xrefs;
 
   private InternalQueryResult queryResult;
 
@@ -43,10 +48,13 @@ public class QueryIndication extends CDOReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     int viewID = in.readInt();
-    CDOQueryInfo cdoQuery = new CDOQueryInfoImpl(in); // TODO Add CDODataInput.readCDOQueryInfo()
     InternalView view = getSession().getView(viewID);
+
+    CDOQueryInfo queryInfo = new CDOQueryInfoImpl(in);
+    xrefs = queryInfo.getQueryLanguage().equals(CDOProtocolConstants.QUERY_LANGUAGE_XREFS);
+
     InternalQueryManager queryManager = getRepository().getQueryManager();
-    queryResult = queryManager.execute(view, cdoQuery);
+    queryResult = queryManager.execute(view, queryInfo);
   }
 
   @Override
@@ -64,7 +72,26 @@ public class QueryIndication extends CDOReadIndication
       // Object to return
       numberOfResults++;
       out.writeBoolean(true);
-      out.writeCDORevisionOrPrimitive(object);
+
+      if (xrefs)
+      {
+        Object[] values = (Object[])object;
+        CDOID targetID = (CDOID)values[0];
+        CDOID sourceID = (CDOID)values[1];
+        EReference sourceReference = (EReference)values[2];
+        int sourceIndex = (Integer)values[3];
+
+        out.writeCDOID(targetID);
+        out.writeCDOID(sourceID);
+        out.writeCDOClassifierRef(sourceReference.eClass());
+        out.writeString(sourceReference.getName());
+        out.writeInt(sourceIndex);
+      }
+      else
+      {
+        out.writeCDORevisionOrPrimitive(object);
+      }
+
       if (queryResult.peek() == null)
       {
         flush();

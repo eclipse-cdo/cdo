@@ -80,9 +80,9 @@ public abstract class AbstractOMTest extends TestCase
     if (!SUPPRESS_OUTPUT)
     {
       IOUtil.OUT().println("*******************************************************"); //$NON-NLS-1$
-      sleep(1L);
+      Thread.yield();
       IOUtil.ERR().println(this);
-      sleep(1L);
+      Thread.yield();
       IOUtil.OUT().println("*******************************************************"); //$NON-NLS-1$
     }
 

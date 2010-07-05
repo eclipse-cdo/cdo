@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 
 /**
@@ -264,20 +265,23 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
     Object oldValue = getOldValue(feature);
     if (oldValue instanceof List<?>)
     {
-      List<?> list = (List<?>)oldValue;
-      if (!list.isEmpty() && list.get(0) instanceof CDOID)
+      @SuppressWarnings("unchecked")
+      List<Object> list = (List<Object>)oldValue;
+      if (!list.isEmpty())
       {
-        List<Object> oldValueObjects = new ArrayList<Object>(list.size());
-
-        @SuppressWarnings("unchecked")
-        List<CDOID> ids = (List<CDOID>)list;
-        for (CDOID id : ids)
+        for (ListIterator<Object> it = list.listIterator(); it.hasNext();)
         {
-          CDOObject oldObject = findObjectByID(id);
-          oldValueObjects.add(oldObject != null ? oldObject : id);
+          Object element = it.next();
+          if (element instanceof CDOID)
+          {
+            CDOID id = (CDOID)element;
+            CDOObject oldObject = findObjectByID(id);
+            if (oldObject != null)
+            {
+              it.set(oldObject);
+            }
+          }
         }
-
-        oldValue = oldValueObjects;
       }
     }
 

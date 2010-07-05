@@ -312,6 +312,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     private boolean supportingBranches;
 
+    private boolean ensuringReferentialIntegrity;
+
     public RepositoryInfo(String name, OpenSessionResult result)
     {
       this.name = name;
@@ -325,6 +327,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       rootResourceID = result.getRootResourceID();
       supportingAudits = result.isRepositorySupportingAudits();
       supportingBranches = result.isRepositorySupportingBranches();
+      ensuringReferentialIntegrity = result.isRepositoryEnsuringReferentialIntegrity();
     }
 
     public String getName()
@@ -403,6 +406,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     public boolean isSupportingBranches()
     {
       return supportingBranches;
+    }
+
+    public boolean isEnsuringReferentialIntegrity()
+    {
+      return ensuringReferentialIntegrity;
     }
 
     private RepositoryTimeResult refreshTime()

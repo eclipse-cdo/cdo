@@ -163,9 +163,15 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
       TRACER.format("Read repositorySupportingBranches: {0}", repositorySupportingBranches); //$NON-NLS-1$
     }
 
+    boolean repositoryEnsuringReferentialIntegrity = in.readBoolean();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Read repositoryEnsuringReferentialIntegrity: {0}", repositoryEnsuringReferentialIntegrity); //$NON-NLS-1$
+    }
+
     result = new OpenSessionResult(sessionID, userID, repositoryUUID, repositoryType, repositoryState, storeType,
         objectIDTypes, repositoryCreationTime, lastUpdateTime, rootResourceID, repositorySupportingAudits,
-        repositorySupportingBranches);
+        repositorySupportingBranches, repositoryEnsuringReferentialIntegrity);
 
     CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);
     for (int i = 0; i < packageUnits.length; i++)

@@ -200,6 +200,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   /**
    * @author Eike Stepper
    * @since 3.0
+   * @noinstantiate This class is not intended to be instantiated by clients.
    */
   public final class OpenSessionResult
   {
@@ -229,15 +230,18 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private boolean repositorySupportingBranches;
 
+    private boolean repositoryEnsuringReferentialIntegrity;
+
     private List<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
 
     /**
-     * @since 3.0
+     * @since 3.1
      */
     public OpenSessionResult(int sessionID, String userID, String repositoryUUID,
         CDOCommonRepository.Type repositoryType, CDOCommonRepository.State repositoryState, String storeType,
         Set<CDOID.ObjectType> objectIDTypes, long repositoryCreationTime, long lastUpdateTime, CDOID rootResourceID,
-        boolean repositorySupportingAudits, boolean repositorySupportingBranches)
+        boolean repositorySupportingAudits, boolean repositorySupportingBranches,
+        boolean repositoryEnsuringReferentialIntegrity)
     {
       this.sessionID = sessionID;
       this.userID = userID;
@@ -251,6 +255,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       this.rootResourceID = rootResourceID;
       this.repositorySupportingAudits = repositorySupportingAudits;
       this.repositorySupportingBranches = repositorySupportingBranches;
+      this.repositoryEnsuringReferentialIntegrity = repositoryEnsuringReferentialIntegrity;
     }
 
     public int getSessionID()
@@ -327,6 +332,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public boolean isRepositorySupportingBranches()
     {
       return repositorySupportingBranches;
+    }
+
+    /**
+     * @since 3.1
+     */
+    public boolean isRepositoryEnsuringReferentialIntegrity()
+    {
+      return repositoryEnsuringReferentialIntegrity;
     }
 
     public RepositoryTimeResult getRepositoryTimeResult()

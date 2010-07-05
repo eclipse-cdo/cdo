@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
 import org.eclipse.emf.cdo.net4j.CDOSession;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
@@ -141,11 +140,6 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     };
 
     Map<String, String> props = getRepositoryProperties();
-
-    // Map<String, String> props = new HashMap<String, String>();
-    // props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
-    // props.put(IRepository.Props.SUPPORTING_BRANCHES, "true");
-    props.put(IRepository.Props.ENSURE_REFERENTIAL_INTEGRITY, "true");
     ((InternalRepository)repository).setProperties(props);
 
     repository.setName(REPOSITORY_NAME);

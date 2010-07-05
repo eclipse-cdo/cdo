@@ -50,12 +50,14 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -239,16 +241,36 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
         monitor.worked();
       }
 
+      Map<CDOID, EClass> detachedObjectTypes = null;
+      if (getRepository().isEnsuringReferentialIntegrity())
+      {
+        detachedObjectTypes = new HashMap<CDOID, EClass>();
+      }
+
       for (int i = 0; i < detachedObjects.length; i++)
       {
-        detachedObjects[i] = in.readCDOID();
+        CDOID id = in.readCDOID();
+        detachedObjects[i] = id;
+
+        if (detachedObjectTypes != null)
+        {
+          EClass eClass = (EClass)in.readCDOClassifierRefAndResolve();
+          detachedObjectTypes.put(id, eClass);
+        }
+
         monitor.worked();
+      }
+
+      if (detachedObjectTypes != null && detachedObjectTypes.isEmpty())
+      {
+        detachedObjectTypes = null;
       }
 
       commitContext.setNewPackageUnits(newPackageUnits);
       commitContext.setNewObjects(newObjects);
       commitContext.setDirtyObjectDeltas(dirtyObjectDeltas);
       commitContext.setDetachedObjects(detachedObjects);
+      commitContext.setDetachedObjectTypes(detachedObjectTypes);
       commitContext.setCommitComment(commitComment);
     }
     finally

@@ -20,6 +20,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  * @since 3.0
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOCommonRepository extends CDOTimeProvider
 {
@@ -72,6 +73,13 @@ public interface CDOCommonRepository extends CDOTimeProvider
    * Returns <code>true</code> if this repository supports branching, <code>false</code> otherwise.
    */
   public boolean isSupportingBranches();
+
+  /**
+   * Returns <code>true</code> if this repository ensures referential integrity, <code>false</code> otherwise.
+   * 
+   * @since 3.1
+   */
+  public boolean isEnsuringReferentialIntegrity();
 
   /**
    * @author Eike Stepper

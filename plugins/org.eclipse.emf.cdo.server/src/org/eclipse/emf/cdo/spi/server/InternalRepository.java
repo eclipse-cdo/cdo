@@ -45,6 +45,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  * @since 3.0
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface InternalRepository extends IRepository, PackageLoader, BranchLoader, RevisionLoader, CommitInfoLoader
 {

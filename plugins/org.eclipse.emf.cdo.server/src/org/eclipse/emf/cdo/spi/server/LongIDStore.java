@@ -48,6 +48,9 @@ public abstract class LongIDStore extends Store
     super(type, OBJECT_ID_TYPES, supportedChangeFormats, supportedRevisionTemporalities, supportedRevisionParallelisms);
   }
 
+  /**
+   * @since 4.0
+   */
   public CDOID createObjectID(String val)
   {
     Long id = Long.valueOf(val);

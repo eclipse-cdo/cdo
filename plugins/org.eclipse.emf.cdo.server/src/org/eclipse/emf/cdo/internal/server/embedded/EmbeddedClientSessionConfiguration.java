@@ -167,6 +167,11 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
       return repository.isSupportingBranches();
     }
 
+    public boolean isEnsuringReferentialIntegrity()
+    {
+      return repository.isEnsuringReferentialIntegrity();
+    }
+
     public String getStoreType()
     {
       return repository.getStoreType();

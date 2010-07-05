@@ -20,6 +20,10 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributable;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
+import org.eclipse.emf.ecore.EClass;
+
+import java.util.Map;
+
 /**
  * @author Eike Stepper
  * @since 3.0
@@ -70,6 +74,11 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext
   public void setDirtyObjectDeltas(InternalCDORevisionDelta[] dirtyObjectDeltas);
 
   public void setDetachedObjects(CDOID[] detachedObjects);
+
+  /**
+   * @since 4.0
+   */
+  public void setDetachedObjectTypes(Map<CDOID, EClass> detachedObjectTypes);
 
   public void setAutoReleaseLocksEnabled(boolean on);
 

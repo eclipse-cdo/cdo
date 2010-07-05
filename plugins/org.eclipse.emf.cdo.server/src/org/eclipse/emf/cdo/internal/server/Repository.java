@@ -134,6 +134,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private boolean supportingBranches;
 
+  private boolean ensuringReferentialIntegrity;
+
   private InternalCDOPackageRegistry packageRegistry;
 
   private InternalCDOBranchManager branchManager;
@@ -283,6 +285,11 @@ public class Repository extends Container<Object> implements InternalRepository
   public boolean isSupportingBranches()
   {
     return supportingBranches;
+  }
+
+  public boolean isEnsuringReferentialIntegrity()
+  {
+    return ensuringReferentialIntegrity;
   }
 
   public String getStoreType()
@@ -1287,6 +1294,14 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     revisionManager.setSupportingBranches(supportingBranches);
+
+    {
+      String value = getProperties().get(Props.ENSURE_REFERENTIAL_INTEGRITY);
+      if (value != null)
+      {
+        ensuringReferentialIntegrity = Boolean.valueOf(value);
+      }
+    }
   }
 
   @Override

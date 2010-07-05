@@ -15,12 +15,4 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/spi/cdo/InternalCDOTransaction.java" type="org.eclipse.emf.spi.cdo.InternalCDOTransaction">
-        <filter id="405901410">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOTransaction"/>
-                <message_argument value="handleConflicts(Set&lt;CDOObject&gt;)"/>
-            </message_arguments>
-        </filter>
-    </resource>
 </component>

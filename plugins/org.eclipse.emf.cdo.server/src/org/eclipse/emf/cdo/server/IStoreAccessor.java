@@ -291,6 +291,13 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public CDOID[] getDetachedObjects();
 
     /**
+     * Returns a map with an {@link EClass} value per {@link CDOID} type.
+     * 
+     * @since 4.0
+     */
+    public Map<CDOID, EClass> getDetachedObjectTypes();
+
+    /**
      * Returns an unmodifiable map from all temporary IDs (meta or not) to their persistent counter parts. It is
      * initially populated with the mappings of all new <b>meta</b> objects.
      */

@@ -22,6 +22,7 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.FileLogHandler;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.log.PrintLogHandler;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
 import java.io.File;
@@ -47,6 +48,8 @@ public abstract class AbstractOMTest extends TestCase
   public static final long DEFAULT_TIMEOUT = 120 * 1000;
 
   public static final long DEFAULT_TIMEOUT_EXPECTED = 2 * 1000;
+
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractOMTest.class);
 
   public static boolean SUPPRESS_OUTPUT;
 
@@ -379,9 +382,9 @@ public abstract class AbstractOMTest extends TestCase
   {
     if (!SUPPRESS_OUTPUT)
     {
-      if (consoleEnabled)
+      if (consoleEnabled && TRACER.isEnabled())
       {
-        IOUtil.OUT().println("--> " + m); //$NON-NLS-1$
+        TRACER.trace("--> " + m); //$NON-NLS-1$
       }
     }
   }

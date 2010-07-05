@@ -591,7 +591,7 @@ public class TransactionCommitContext implements InternalCommitContext
       Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
       lockedObjects.add(new CDOIDRevisionDeltaLockWrapper(key, delta));
 
-      if (referentialIntegrityEnsured && hasContainmentChanges(delta))
+      if (hasContainmentChanges(delta))
       {
         InternalCDORevisionManager revisionManager = transaction.getRepository().getRevisionManager();
         if (isContainerLocked(delta, revisionManager, lockManager))

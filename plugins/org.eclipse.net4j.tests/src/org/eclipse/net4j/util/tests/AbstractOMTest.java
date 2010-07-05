@@ -81,8 +81,10 @@ public abstract class AbstractOMTest extends TestCase
     {
       IOUtil.OUT().println("*******************************************************"); //$NON-NLS-1$
       Thread.yield();
+      Thread.sleep(2L);
       IOUtil.ERR().println(this);
       Thread.yield();
+      Thread.sleep(2L);
       IOUtil.OUT().println("*******************************************************"); //$NON-NLS-1$
     }
 

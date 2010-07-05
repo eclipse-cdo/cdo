@@ -461,14 +461,11 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
         catch (CommitException ex)
         {
           msg("Finished (Passed) Thread B " + session);
-          // passed
           return;
         }
 
         exceptions.add(new ThreadBShouldHaveThrownAnExceptionException("Thread B should have thrown an exception"));
-
         session.close();
-
       }
       catch (Exception e)
       {
@@ -562,6 +559,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     {
       return node;
     }
+
     for (NodeA child : node.getChildren())
     {
       NodeA elementFromGraph = getElementFromGraphNodeA(child, name);
@@ -570,6 +568,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
         return elementFromGraph;
       }
     }
+
     return null;
   }
 

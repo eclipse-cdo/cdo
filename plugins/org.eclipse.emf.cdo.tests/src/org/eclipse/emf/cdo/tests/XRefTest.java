@@ -68,7 +68,7 @@ public class XRefTest extends AbstractCDOTest
     for (CDOObjectReference result : results)
     {
       CDOObject sourceObject = result.getSourceObject();
-      assertInstanceOf(PurchaseOrder.class, sourceObject);
+      assertInstanceOf(PurchaseOrder.class, CDOUtil.getEObject(sourceObject));
     }
   }
 

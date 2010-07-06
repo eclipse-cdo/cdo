@@ -1471,7 +1471,10 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         Collections.unmodifiableSet(detachedObjects));
 
     // First handle the conflicts, if any.
-    handleConflicts(conflicts, deltas);
+    if (conflicts != null)
+    {
+      handleConflicts(conflicts, deltas);
+    }
 
     // Then send the notifications. The deltas could have been modified by the conflict resolvers.
     if (!deltas.isEmpty() || !detachedObjects.isEmpty())

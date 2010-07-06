@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.RepositoryNotFoundException;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
@@ -137,6 +138,7 @@ public class OpenSessionIndication extends RepositoryTimeIndication
     out.writeCDOID(repository.getRootResourceID());
     out.writeBoolean(repository.isSupportingAudits());
     out.writeBoolean(repository.isSupportingBranches());
+    out.writeBoolean(repository instanceof Repository && ((Repository)repository).isEnsuringReferentialIntegrity());
 
     CDOPackageUnit[] packageUnits = repository.getPackageRegistry().getPackageUnits();
     out.writeCDOPackageUnits(packageUnits);

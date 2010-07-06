@@ -14,6 +14,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
@@ -40,6 +41,7 @@ import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.MetaInstanceMapper;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
 
@@ -50,8 +52,9 @@ import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.io.IOException;
 import java.util.List;
@@ -192,9 +195,23 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
       TRACER.format("Writing {0} detached objects", detachedObjects.size()); //$NON-NLS-1$
     }
 
+    CDOTransaction transaction = null;
+    boolean ensuringReferentialIntegrity = getSession().getRepositoryInfo().isEnsuringReferentialIntegrity();
+    if (ensuringReferentialIntegrity)
+    {
+      transaction = (CDOTransaction)getSession().getView(transactionID);
+    }
+
     for (CDOIDAndVersion detachedObject : detachedObjects)
     {
-      out.writeCDOID(detachedObject.getID());
+      CDOID id = detachedObject.getID();
+      out.writeCDOID(id);
+      if (ensuringReferentialIntegrity)
+      {
+        CDOObject object = transaction.getObject(id);
+        EClass eClass = object.eClass();
+        out.writeCDOClassifierRef(eClass);
+      }
     }
   }
 

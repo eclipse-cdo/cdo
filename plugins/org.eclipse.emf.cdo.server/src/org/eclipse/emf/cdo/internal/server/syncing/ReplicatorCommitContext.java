@@ -98,6 +98,7 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
     // Do nothing
   }
 
+  @Override
   protected void checkXRefs()
   {
     // Do nothing

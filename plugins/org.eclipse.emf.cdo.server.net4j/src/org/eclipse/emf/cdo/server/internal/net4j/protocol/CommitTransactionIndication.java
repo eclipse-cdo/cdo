@@ -28,6 +28,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
+import org.eclipse.emf.cdo.internal.server.Repository;
+import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -50,12 +52,14 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -239,16 +243,42 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
         monitor.worked();
       }
 
+      Map<CDOID, EClass> detachedObjectTypes = null;
+      InternalRepository repository = getRepository();
+      if (repository instanceof Repository && ((Repository)repository).isEnsuringReferentialIntegrity())
+      {
+        detachedObjectTypes = new HashMap<CDOID, EClass>();
+      }
+
       for (int i = 0; i < detachedObjects.length; i++)
       {
-        detachedObjects[i] = in.readCDOID();
+        CDOID id = in.readCDOID();
+        detachedObjects[i] = id;
+
+        if (detachedObjectTypes != null)
+        {
+          EClass eClass = (EClass)in.readCDOClassifierRefAndResolve();
+          detachedObjectTypes.put(id, eClass);
+        }
+
         monitor.worked();
+      }
+
+      if (detachedObjectTypes != null && detachedObjectTypes.isEmpty())
+      {
+        detachedObjectTypes = null;
       }
 
       commitContext.setNewPackageUnits(newPackageUnits);
       commitContext.setNewObjects(newObjects);
       commitContext.setDirtyObjectDeltas(dirtyObjectDeltas);
       commitContext.setDetachedObjects(detachedObjects);
+
+      if (commitContext instanceof TransactionCommitContext)
+      {
+        ((TransactionCommitContext)commitContext).setDetachedObjectTypes(detachedObjectTypes);
+      }
+
       commitContext.setCommitComment(commitComment);
     }
     finally

@@ -24,7 +24,9 @@ import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.QueryHandlerFactory;
 import org.eclipse.emf.cdo.spi.server.Store;
 
@@ -70,6 +72,94 @@ public class XRefsQueryHandler implements IQueryHandler
       xrefsContext.setBranchPoint(branchPoint);
       accessor.queryXRefs(xrefsContext);
     }
+  }
+
+  public static void collectSourceCandidates(IView view, Collection<EClass> concreteTypes,
+      Map<EClass, List<EReference>> sourceCandidates)
+  {
+    InternalRepository repository = (InternalRepository)view.getRepository();
+    CDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
+
+    for (CDOPackageInfo packageInfo : packageRegistry.getPackageInfos())
+    {
+      // System.out.println();
+      // System.out.println();
+      // System.out.println(packageInfo);
+      collectSourceCandidates(packageInfo, concreteTypes, sourceCandidates);
+      // for (Entry<EClass, List<EReference>> entry : sourceCandidates.entrySet())
+      // {
+      // System.out.println(" ---> " + entry.getKey().getName());
+      // for (EReference eReference : entry.getValue())
+      // {
+      // System.out.println("      ---> " + eReference.getName());
+      // }
+      // }
+      //
+      // System.out.println();
+      // System.out.println();
+    }
+  }
+
+  public static void collectSourceCandidates(CDOPackageInfo packageInfo, Collection<EClass> concreteTypes,
+      Map<EClass, List<EReference>> sourceCandidates)
+  {
+    State state = packageInfo.getPackageUnit().getState();
+    if (state == CDOPackageUnit.State.LOADED || state == CDOPackageUnit.State.PROXY)
+    {
+      EPackage ePackage = packageInfo.getEPackage();
+      for (EClassifier eClassifier : ePackage.getEClassifiers())
+      {
+        if (eClassifier instanceof EClass)
+        {
+          collectSourceCandidates((EClass)eClassifier, concreteTypes, sourceCandidates);
+        }
+      }
+    }
+  }
+
+  public static void collectSourceCandidates(EClass eClass, Collection<EClass> concreteTypes,
+      Map<EClass, List<EReference>> sourceCandidates)
+  {
+    for (EStructuralFeature eStructuralFeature : eClass.getEStructuralFeatures())
+    {
+      if (eStructuralFeature instanceof EReference)
+      {
+        collectSourceCandidates((EReference)eStructuralFeature, concreteTypes, sourceCandidates);
+      }
+    }
+  }
+
+  public static void collectSourceCandidates(EReference eReference, Collection<EClass> concreteTypes,
+      Map<EClass, List<EReference>> sourceCandidates)
+  {
+    if (!eReference.isContainer() && !eReference.isContainment())
+    {
+      if (canReference(eReference.getEReferenceType(), concreteTypes))
+      {
+        EClass eClass = eReference.getEContainingClass();
+        List<EReference> list = sourceCandidates.get(eClass);
+        if (list == null)
+        {
+          list = new ArrayList<EReference>();
+          sourceCandidates.put(eClass, list);
+        }
+
+        list.add(eReference);
+      }
+    }
+  }
+
+  private static boolean canReference(EClass declaredType, Collection<EClass> concreteTypes)
+  {
+    for (EClass concreteType : concreteTypes)
+    {
+      if (declaredType.isSuperTypeOf(concreteType))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -193,77 +283,23 @@ public class XRefsQueryHandler implements IQueryHandler
       if (sourceCandidates == null)
       {
         sourceCandidates = new HashMap<EClass, List<EReference>>();
+        Collection<EClass> concreteTypes = getTargetObjects().values();
         EReference[] sourceReferences = getSourceReferences();
+
         if (sourceReferences.length != 0)
         {
           for (EReference eReference : sourceReferences)
           {
-            getSourceCandidates(eReference);
+            collectSourceCandidates(eReference, concreteTypes, sourceCandidates);
           }
         }
         else
         {
-          CDOPackageRegistry packageRegistry = context.getView().getRepository().getPackageRegistry();
-          for (CDOPackageInfo packageInfo : packageRegistry.getPackageInfos())
-          {
-            State state = packageInfo.getPackageUnit().getState();
-            if (state == CDOPackageUnit.State.LOADED || state == CDOPackageUnit.State.PROXY)
-            {
-              EPackage ePackage = packageInfo.getEPackage();
-              for (EClassifier eClassifier : ePackage.getEClassifiers())
-              {
-                if (eClassifier instanceof EClass)
-                {
-                  EClass eClass = (EClass)eClassifier;
-                  for (EStructuralFeature eStructuralFeature : eClass.getEStructuralFeatures())
-                  {
-                    if (eStructuralFeature instanceof EReference)
-                    {
-                      EReference eReference = (EReference)eStructuralFeature;
-                      getSourceCandidates(eReference);
-                    }
-                  }
-                }
-              }
-            }
-          }
+          collectSourceCandidates(context.getView(), concreteTypes, sourceCandidates);
         }
       }
 
       return sourceCandidates;
-    }
-
-    private void getSourceCandidates(EReference eReference)
-    {
-      if (!eReference.isContainer() && !eReference.isContainment())
-      {
-        Collection<EClass> concreteTypes = getTargetObjects().values();
-        if (canReference(eReference.getEReferenceType(), concreteTypes))
-        {
-          EClass eClass = eReference.getEContainingClass();
-          List<EReference> list = sourceCandidates.get(eClass);
-          if (list == null)
-          {
-            list = new ArrayList<EReference>();
-            sourceCandidates.put(eClass, list);
-          }
-
-          list.add(eReference);
-        }
-      }
-    }
-
-    private boolean canReference(EClass declaredType, Collection<EClass> concreteTypes)
-    {
-      for (EClass concreteType : concreteTypes)
-      {
-        if (declaredType.isSuperTypeOf(concreteType))
-        {
-          return true;
-        }
-      }
-
-      return false;
     }
 
     public int getMaxResults()

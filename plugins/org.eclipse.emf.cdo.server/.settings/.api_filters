@@ -8,10 +8,36 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/DelegatingRepository.java" type="org.eclipse.emf.cdo.internal.server.DelegatingRepository">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="InternalRepository"/>
+                <message_argument value="CDOCommonRepository"/>
+                <message_argument value="DelegatingRepository"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/embedded/EmbeddedClientSessionConfiguration.java" type="org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionConfiguration$RepositoryInfo">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="CDORepositoryInfo"/>
+                <message_argument value="CDOCommonRepository"/>
+                <message_argument value="RepositoryInfo"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/IQueryContext.java" type="org.eclipse.emf.cdo.server.IQueryContext">
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getResultCount()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/IRepository.java" type="org.eclipse.emf.cdo.server.IRepository">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOCommonRepository"/>
+                <message_argument value="IRepository"/>
             </message_arguments>
         </filter>
     </resource>

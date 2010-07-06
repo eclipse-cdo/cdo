@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
+import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -165,6 +166,16 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
     public boolean isSupportingBranches()
     {
       return repository.isSupportingBranches();
+    }
+
+    public boolean isEnsuringReferentialIntegrity()
+    {
+      if (repository instanceof Repository)
+      {
+        return ((Repository)repository).isEnsuringReferentialIntegrity();
+      }
+
+      return false;
     }
 
     public String getStoreType()

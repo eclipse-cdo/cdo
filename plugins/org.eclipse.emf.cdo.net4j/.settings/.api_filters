@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.net4j" version="2">
+    <resource path="src/org/eclipse/emf/cdo/internal/net4j/CDONet4jSessionConfigurationImpl.java" type="org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl$RepositoryInfo">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="CDORepositoryInfo"/>
+                <message_argument value="CDOCommonRepository"/>
+                <message_argument value="RepositoryInfo"/>
+            </message_arguments>
+        </filter>
+        <filter id="640712815">
+            <message_arguments>
+                <message_argument value="OpenSessionResult"/>
+                <message_argument value="RepositoryInfo"/>
+                <message_argument value="isRepositoryEnsuringReferentialIntegrity()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/net4j/protocol/CommitTransactionRequest.java" type="org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest">
+        <filter id="640712815">
+            <message_arguments>
+                <message_argument value="CDORepositoryInfo"/>
+                <message_argument value="CommitTransactionRequest"/>
+                <message_argument value="isEnsuringReferentialIntegrity()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/net4j/protocol/OpenSessionRequest.java" type="org.eclipse.emf.cdo.internal.net4j.protocol.OpenSessionRequest">
+        <filter id="572522506">
+            <message_arguments>
+                <message_argument value="OpenSessionResult"/>
+                <message_argument value="OpenSessionRequest"/>
+            </message_arguments>
+        </filter>
+        <filter id="640712815">
+            <message_arguments>
+                <message_argument value="OpenSessionResult"/>
+                <message_argument value="OpenSessionRequest"/>
+                <message_argument value="setRepositoryEnsuringReferentialIntegrity(boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

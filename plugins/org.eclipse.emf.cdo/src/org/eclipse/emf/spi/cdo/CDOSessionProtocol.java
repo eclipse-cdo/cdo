@@ -200,6 +200,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   /**
    * @author Eike Stepper
    * @since 3.0
+   * @noinstantiate This class is not intended to be instantiated by clients.
    */
   public final class OpenSessionResult
   {
@@ -229,11 +230,10 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private boolean repositorySupportingBranches;
 
+    private boolean repositoryEnsuringReferentialIntegrity;
+
     private List<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
 
-    /**
-     * @since 3.0
-     */
     public OpenSessionResult(int sessionID, String userID, String repositoryUUID,
         CDOCommonRepository.Type repositoryType, CDOCommonRepository.State repositoryState, String storeType,
         Set<CDOID.ObjectType> objectIDTypes, long repositoryCreationTime, long lastUpdateTime, CDOID rootResourceID,
@@ -327,6 +327,26 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public boolean isRepositorySupportingBranches()
     {
       return repositorySupportingBranches;
+    }
+
+    /**
+     * since 3.0.1
+     * 
+     * @noreference This method is not intended to be referenced by clients.
+     */
+    public boolean isRepositoryEnsuringReferentialIntegrity()
+    {
+      return repositoryEnsuringReferentialIntegrity;
+    }
+
+    /**
+     * since 3.0.1
+     * 
+     * @noreference This method is not intended to be referenced by clients.
+     */
+    public void setRepositoryEnsuringReferentialIntegrity(boolean repositoryEnsuringReferentialIntegrity)
+    {
+      this.repositoryEnsuringReferentialIntegrity = repositoryEnsuringReferentialIntegrity;
     }
 
     public RepositoryTimeResult getRepositoryTimeResult()

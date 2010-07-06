@@ -31,11 +31,12 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -62,15 +63,20 @@ import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -100,6 +106,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private CDOID[] detachedObjects = new CDOID[0];
 
+  private Map<CDOID, EClass> detachedObjectTypes;
+
   private InternalCDORevision[] dirtyObjects = new InternalCDORevision[0];
 
   private List<InternalCDORevision> detachedRevisions = new ArrayList<InternalCDORevision>();
@@ -114,7 +122,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private String rollbackMessage;
 
-  private boolean referentialIntegrityEnsured;
+  private boolean ensuringReferentialIntegrity;
 
   private boolean autoReleaseLocksEnabled;
 
@@ -123,7 +131,8 @@ public class TransactionCommitContext implements InternalCommitContext
     this.transaction = transaction;
 
     InternalRepository repository = transaction.getRepository();
-    referentialIntegrityEnsured = isReferentialIntegrityEnsured(repository);
+    ensuringReferentialIntegrity = repository instanceof Repository
+        && ((Repository)repository).isEnsuringReferentialIntegrity();
 
     packageRegistry = new TransactionPackageRegistry(repository.getPackageRegistry(false));
     packageRegistry.activate();
@@ -187,6 +196,11 @@ public class TransactionCommitContext implements InternalCommitContext
   public CDOID[] getDetachedObjects()
   {
     return detachedObjects;
+  }
+
+  public Map<CDOID, EClass> getDetachedObjectTypes()
+  {
+    return detachedObjectTypes;
   }
 
   public InternalCDORevisionDelta[] getDirtyObjectDeltas()
@@ -267,6 +281,11 @@ public class TransactionCommitContext implements InternalCommitContext
     this.detachedObjects = detachedObjects;
   }
 
+  public void setDetachedObjectTypes(Map<CDOID, EClass> detachedObjectTypes)
+  {
+    this.detachedObjectTypes = detachedObjectTypes;
+  }
+
   public void setAutoReleaseLocksEnabled(boolean on)
   {
     autoReleaseLocksEnabled = on;
@@ -286,15 +305,15 @@ public class TransactionCommitContext implements InternalCommitContext
     {
       monitor.begin(107);
 
+      dirtyObjects = new InternalCDORevision[dirtyObjectDeltas.length];
       adjustMetaRanges();
       monitor.worked();
 
       lockObjects();
+      checkXRefs();
 
       // Could throw an exception
       timeStamp = createTimeStamp(monitor.fork());
-      dirtyObjects = new InternalCDORevision[dirtyObjectDeltas.length];
-
       adjustForCommit();
       monitor.worked();
 
@@ -545,7 +564,7 @@ public class TransactionCommitContext implements InternalCommitContext
     final boolean supportingBranches = transaction.getRepository().isSupportingBranches();
 
     CDOFeatureDeltaVisitor deltaTargetLocker = null;
-    if (referentialIntegrityEnsured)
+    if (ensuringReferentialIntegrity)
     {
       deltaTargetLocker = new CDOFeatureDeltaVisitorImpl()
       {
@@ -623,10 +642,73 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private boolean isReferentialIntegrityEnsured(InternalRepository repository)
+  protected void checkXRefs()
   {
-    String value = repository.getProperties().get(Props.ENSURE_REFERENTIAL_INTEGRITY);
-    return value == null ? false : Boolean.valueOf(value);
+    if (!ensuringReferentialIntegrity || detachedObjectTypes == null)
+    {
+      return;
+    }
+
+    final Map<EClass, List<EReference>> sourceCandidates = new HashMap<EClass, List<EReference>>();
+    XRefsQueryHandler.collectSourceCandidates(transaction, detachedObjectTypes.values(), sourceCandidates);
+
+    final Set<CDOID> xrefs = new HashSet<CDOID>();
+    QueryXRefsContext context = new QueryXRefsContext()
+    {
+      public int compareTo(CDOBranchPoint o)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      public long getTimeStamp()
+      {
+        return CDOBranchPoint.UNSPECIFIED_DATE;
+      }
+
+      public CDOBranch getBranch()
+      {
+        return transaction.getBranch();
+      }
+
+      public Map<CDOID, EClass> getTargetObjects()
+      {
+        return detachedObjectTypes;
+      }
+
+      public EReference[] getSourceReferences()
+      {
+        return new EReference[0];
+      }
+
+      public Map<EClass, List<EReference>> getSourceCandidates()
+      {
+        return sourceCandidates;
+      }
+
+      public int getMaxResults()
+      {
+        return CDOQueryInfo.UNLIMITED_RESULTS;
+      }
+
+      public boolean addXRef(CDOID targetID, CDOID sourceID, EReference sourceReference, int sourceIndex)
+      {
+        xrefs.add(sourceID);
+        return true;
+      }
+    };
+
+    accessor.queryXRefs(context);
+
+    for (CDOID id : detachedObjects)
+    {
+      xrefs.remove(id);
+    }
+
+    if (!xrefs.isEmpty())
+    {
+      throw new IllegalStateException(
+          "The following objects are still pointing to one or more of the objects to be detached: " + xrefs);
+    }
   }
 
   private synchronized void unlockObjects()

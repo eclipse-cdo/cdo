@@ -27,4 +27,11 @@ public interface CDORepositoryInfo extends CDOCommonRepository
    * @see CDOCommonRepository#getTimeStamp()
    */
   public long getTimeStamp(boolean forceRefresh);
+
+  /**
+   * since 3.0.1
+   * 
+   * @noreference This method is not intended to be referenced by clients.
+   */
+  public boolean isEnsuringReferentialIntegrity();
 }

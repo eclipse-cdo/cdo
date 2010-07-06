@@ -44,7 +44,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
 /**
@@ -83,21 +82,21 @@ public class XRefsQueryHandler implements IQueryHandler
 
     for (CDOPackageInfo packageInfo : packageRegistry.getPackageInfos())
     {
-      System.out.println();
-      System.out.println();
-      System.out.println(packageInfo);
+      // System.out.println();
+      // System.out.println();
+      // System.out.println(packageInfo);
       collectSourceCandidates(packageInfo, concreteTypes, sourceCandidates);
-      for (Entry<EClass, List<EReference>> entry : sourceCandidates.entrySet())
-      {
-        System.out.println(" ---> " + entry.getKey().getName());
-        for (EReference eReference : entry.getValue())
-        {
-          System.out.println("      ---> " + eReference.getName());
-        }
-      }
-
-      System.out.println();
-      System.out.println();
+      // for (Entry<EClass, List<EReference>> entry : sourceCandidates.entrySet())
+      // {
+      // System.out.println(" ---> " + entry.getKey().getName());
+      // for (EReference eReference : entry.getValue())
+      // {
+      // System.out.println("      ---> " + eReference.getName());
+      // }
+      // }
+      //
+      // System.out.println();
+      // System.out.println();
     }
   }
 

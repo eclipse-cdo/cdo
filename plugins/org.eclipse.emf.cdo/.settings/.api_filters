@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo" version="2">
+    <resource path="src/org/eclipse/emf/cdo/transaction/CDOPushTransaction.java" type="org.eclipse.emf.cdo.transaction.CDOPushTransaction">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.transaction.CDOPushTransaction"/>
+                <message_argument value="resolveConflicts(CDOConflictResolver[])"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/transaction/CDOTransaction.java" type="org.eclipse.emf.cdo.transaction.CDOTransaction">
         <filter id="405901410">
             <message_arguments>
@@ -12,6 +20,14 @@
         <filter id="337686583">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.ThreeWayMerge.ChangeSubscriptionAdapter"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/spi/cdo/InternalCDOTransaction.java" type="org.eclipse.emf.spi.cdo.InternalCDOTransaction">
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOTransaction"/>
+                <message_argument value="handleConflicts(Set&lt;CDOObject&gt;)"/>
             </message_arguments>
         </filter>
     </resource>

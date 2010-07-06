@@ -57,7 +57,6 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
@@ -1085,7 +1084,7 @@ public class Repository extends Container<Object> implements InternalRepository
     Set<CDOPackageUnit> replicatedPackageUnits = new HashSet<CDOPackageUnit>();
     InternalCDOCommitInfoManager manager = getCommitInfoManager();
 
-    List<CDOChangeSetSegment> segments = getBaselineSegments(startTime);
+    List<CDOChangeSetSegment> segments = getBaselineSegments(startTime, getBranchManager().getMainBranch());
     for (CDOChangeSetSegment segment : segments)
     {
       List<CDOPackageUnit> newPackages = getPackageUnitsToReplicate(segment, replicatedPackageUnits);
@@ -1108,23 +1107,22 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  private List<CDOChangeSetSegment> getBaselineSegments(long startTime)
+  private List<CDOChangeSetSegment> getBaselineSegments(long startTime, CDOBranch branch)
   {
     List<CDOChangeSetSegment> segments = new ArrayList<CDOChangeSetSegment>();
-    InternalCDOBranch branch = getBranchManager().getMainBranch();
     getBaselineSegments(startTime, branch, segments);
     Collections.sort(segments);
     return segments;
   }
 
-  private void getBaselineSegments(long startTime, InternalCDOBranch branch, List<CDOChangeSetSegment> segments)
+  private void getBaselineSegments(long startTime, CDOBranch branch, List<CDOChangeSetSegment> segments)
   {
     if (startTime == CDOBranchPoint.UNSPECIFIED_DATE)
     {
       startTime = branch.getBase().getTimeStamp();
     }
 
-    InternalCDOBranch[] branches = branch.getBranches();
+    CDOBranch[] branches = branch.getBranches();
     Arrays.sort(branches, new Comparator<CDOBranch>()
     {
       public int compare(CDOBranch o1, CDOBranch o2)
@@ -1133,7 +1131,7 @@ public class Repository extends Container<Object> implements InternalRepository
       }
     });
 
-    for (InternalCDOBranch subBranch : branches)
+    for (CDOBranch subBranch : branches)
     {
       long baseTimeStamp = subBranch.getBase().getTimeStamp();
       if (baseTimeStamp > startTime)

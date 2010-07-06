@@ -1494,7 +1494,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       if (key instanceof CDORevisionDelta)
       {
         delta = (CDORevisionDelta)key;
-        // Clone the revision delta if we are a transaction. Thus a conflict resolver will be allowed to modify them.
+        // Copy the revision delta if we are a transaction, so that conflict resolvers can modify it.
         if (this instanceof CDOTransaction)
         {
           delta = new CDORevisionDeltaImpl(delta, true);

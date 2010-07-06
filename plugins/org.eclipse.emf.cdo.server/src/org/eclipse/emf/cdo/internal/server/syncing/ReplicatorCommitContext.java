@@ -99,6 +99,12 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
   }
 
   @Override
+  protected void checkXRefs()
+  {
+    // Do nothing
+  }
+
+  @Override
   protected InternalCDORevision getOldRevision(InternalCDORevisionManager revisionManager,
       InternalCDORevisionDelta delta)
   {

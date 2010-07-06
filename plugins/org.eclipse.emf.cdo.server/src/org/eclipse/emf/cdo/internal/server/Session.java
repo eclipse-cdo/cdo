@@ -76,6 +76,11 @@ public class Session extends Container<IView> implements InternalSession
 
   private PassiveUpdateMode passiveUpdateMode = PassiveUpdateMode.INVALIDATIONS;
 
+  private long lastUpdateTime;
+
+  @ExcludeFromDump
+  private Object lastUpdateTimeLock = new Object();
+
   private ConcurrentMap<Integer, InternalView> views = new ConcurrentHashMap<Integer, InternalView>();
 
   private AtomicInteger lastTempViewID = new AtomicInteger();
@@ -195,6 +200,14 @@ public class Session extends Container<IView> implements InternalSession
     checkActive();
     checkArg(passiveUpdateMode, "passiveUpdateMode");
     this.passiveUpdateMode = passiveUpdateMode;
+  }
+
+  public long getLastUpdateTime()
+  {
+    synchronized (lastUpdateTimeLock)
+    {
+      return lastUpdateTime;
+    }
   }
 
   public InternalView[] getElements()
@@ -436,6 +449,11 @@ public class Session extends Container<IView> implements InternalSession
         };
       }
     });
+
+    synchronized (lastUpdateTimeLock)
+    {
+      lastUpdateTime = commitInfo.getTimeStamp();
+    }
   }
 
   private boolean hasSubscription(CDOID id, InternalView[] views)

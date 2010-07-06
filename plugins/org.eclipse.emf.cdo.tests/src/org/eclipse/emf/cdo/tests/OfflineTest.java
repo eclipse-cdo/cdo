@@ -310,7 +310,10 @@ public class OfflineTest extends AbstractSyncingTest
     assertEquals(CDOID.Type.OBJECT, offlineCompany.cdoID().getType());
   }
 
-  public void testDisconnectAndCommitAndMergeWithNewPackages() throws Exception
+  /**
+   * @since 4.0
+   */
+  public void _testDisconnectAndCommitAndMergeWithNewPackages() throws Exception
   {
     OfflineClone clone = (OfflineClone)getRepository();
     waitForOnline(clone);

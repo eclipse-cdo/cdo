@@ -923,7 +923,7 @@ public class TransactionCommitContext implements InternalCommitContext
       addNewPackageUnits(monitor.fork());
       addRevisions(newObjects, monitor.fork());
       addRevisions(dirtyObjects, monitor.fork());
-      revisedDetachObjects(monitor.fork());
+      reviseDetachedObjects(monitor.fork());
       unlockObjects();
       monitor.worked();
 
@@ -992,7 +992,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private void revisedDetachObjects(OMMonitor monitor)
+  private void reviseDetachedObjects(OMMonitor monitor)
   {
     try
     {

@@ -33,6 +33,11 @@ public interface ISession extends CDOCommonSession, IContainer<IView>
   public ISessionProtocol getProtocol();
 
   /**
+   * @since 4.0
+   */
+  public long getLastUpdateTime();
+
+  /**
    * @since 2.0
    */
   public boolean isSubscribed();

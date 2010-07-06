@@ -13,16 +13,28 @@ package org.eclipse.emf.cdo.internal.server.syncing;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
@@ -36,6 +48,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -209,6 +222,9 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
       accessor.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
 
+      replicateRawReviseRevisions();
+      replicateRawNotifyClients(lastReplicatedCommitTime, toCommitTime);
+
       setLastReplicatedBranchID(toBranchID);
       setLastReplicatedCommitTime(toCommitTime);
       setLastCommitTimeStamp(toCommitTime);
@@ -217,6 +233,69 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     {
       StoreThreadLocal.release();
     }
+  }
+
+  private void replicateRawReviseRevisions()
+  {
+    InternalCDORevisionCache cache = getRevisionManager().getCache();
+    for (CDORevision revision : cache.getCurrentRevisions())
+    {
+      cache.removeRevision(revision.getID(), revision);
+    }
+  }
+
+  private void replicateRawNotifyClients(long fromCommitTime, long toCommitTime)
+  {
+    InternalCDOCommitInfoManager manager = getCommitInfoManager();
+    InternalSessionManager sessionManager = getSessionManager();
+
+    Map<CDOBranch, TimeRange> branches = replicateRawGetBranches(fromCommitTime, toCommitTime);
+    for (Entry<CDOBranch, TimeRange> entry : branches.entrySet())
+    {
+      CDOBranch branch = entry.getKey();
+      TimeRange range = entry.getValue();
+      fromCommitTime = range.getTime1();
+      toCommitTime = range.getTime2();
+
+      CDOBranchPoint startPoint = branch.getPoint(fromCommitTime);
+      CDOBranchPoint endPoint = branch.getPoint(toCommitTime);
+      CDOChangeSetData changeSet = getChangeSet(startPoint, endPoint);
+
+      List<CDOPackageUnit> newPackages = Collections.emptyList(); // TODO Notify about new packages
+      List<CDOIDAndVersion> newObjects = changeSet.getNewObjects();
+      List<CDORevisionKey> changedObjects = changeSet.getChangedObjects();
+      List<CDOIDAndVersion> detachedObjects = changeSet.getDetachedObjects();
+      CDOCommitData data = new CDOCommitDataImpl(newPackages, newObjects, changedObjects, detachedObjects);
+
+      String comment = "<replicate raw commits>"; //$NON-NLS-1$
+      CDOCommitInfo commitInfo = manager.createCommitInfo(branch, toCommitTime, SYSTEM_USER_ID, comment, data);
+      sessionManager.sendCommitNotification(replicatorSession, commitInfo);
+    }
+  }
+
+  private Map<CDOBranch, TimeRange> replicateRawGetBranches(long fromCommitTime, long toCommitTime)
+  {
+    final Map<CDOBranch, TimeRange> branches = new HashMap<CDOBranch, TimeRange>();
+    CDOCommitInfoHandler handler = new CDOCommitInfoHandler()
+    {
+      public void handleCommitInfo(CDOCommitInfo commitInfo)
+      {
+        CDOBranch branch = commitInfo.getBranch();
+        long timeStamp = commitInfo.getTimeStamp();
+        TimeRange range = branches.get(branch);
+        if (range == null)
+        {
+          branches.put(branch, new TimeRange(timeStamp));
+        }
+        else
+        {
+          range.update(timeStamp);
+        }
+      }
+    };
+
+    getCommitInfoManager().getCommitInfos(fromCommitTime, toCommitTime, handler);
+    return branches;
   }
 
   @Override
@@ -315,5 +394,50 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   protected void initRootResource()
   {
     setState(INITIAL);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class TimeRange
+  {
+    private long time1;
+
+    private long time2;
+
+    public TimeRange(long time)
+    {
+      time1 = time;
+      time2 = time;
+    }
+
+    public void update(long time)
+    {
+      if (time < time1)
+      {
+        time1 = time;
+      }
+
+      if (time > time2)
+      {
+        time2 = time;
+      }
+    }
+
+    public long getTime1()
+    {
+      return time1;
+    }
+
+    public long getTime2()
+    {
+      return time2;
+    }
+
+    @Override
+    public String toString()
+    {
+      return "[" + CDOCommonUtil.formatTimeStamp(time1) + " - " + CDOCommonUtil.formatTimeStamp(time1) + "]";
+    }
   }
 }

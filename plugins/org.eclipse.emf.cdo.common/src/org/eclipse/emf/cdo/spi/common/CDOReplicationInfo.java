@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.spi.common;
 
-
 /**
  * @author Eike Stepper
  * @since 3.0

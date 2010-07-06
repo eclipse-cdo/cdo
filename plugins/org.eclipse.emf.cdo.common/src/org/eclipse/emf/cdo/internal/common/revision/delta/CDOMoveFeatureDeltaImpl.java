@@ -18,9 +18,9 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.ListIndexAffecting;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.WithIndex;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -191,7 +191,7 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
   @Override
   protected String toStringAdditional()
   {
-    return MessageFormat.format("from={0}, to={1}", oldPosition, newPosition);
+    return MessageFormat.format("from={0}, to={1}, value={2}", oldPosition, newPosition, value);
   }
 
 }

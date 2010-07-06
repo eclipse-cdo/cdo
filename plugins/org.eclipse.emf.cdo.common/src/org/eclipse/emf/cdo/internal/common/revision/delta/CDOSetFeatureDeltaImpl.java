@@ -16,8 +16,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.ListTargetAdding;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;

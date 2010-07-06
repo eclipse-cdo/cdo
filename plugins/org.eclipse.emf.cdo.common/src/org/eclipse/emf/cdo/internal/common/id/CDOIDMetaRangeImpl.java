@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.internal.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
+import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 
 import java.text.MessageFormat;
 

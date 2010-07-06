@@ -208,8 +208,8 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk,
       boolean loadOnDemand)
   {
-    checkArg(branchVersion.getVersion() >= CDOBranchVersion.FIRST_VERSION, "Invalid version: "
-        + branchVersion.getVersion());
+    checkArg(branchVersion.getVersion() >= CDOBranchVersion.FIRST_VERSION,
+        "Invalid version: " + branchVersion.getVersion());
     acquireAtomicRequestLock(loadAndAddLock);
 
     try
@@ -400,8 +400,8 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
         CDOBranchVersion target = pointer.getTarget();
         if (target instanceof InternalCDORevision)
         {
-          revision = new PointerCDORevision(pointer.getEClass(), pointer.getID(), pointer.getBranch(), pointer
-              .getRevised(), CDOBranchUtil.copyBranchVersion(target));
+          revision = new PointerCDORevision(pointer.getEClass(), pointer.getID(), pointer.getBranch(),
+              pointer.getRevised(), CDOBranchUtil.copyBranchVersion(target));
         }
       }
 

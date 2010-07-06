@@ -231,8 +231,8 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     }
 
     CDOChangeSetData data = readCDOChangeSetData();
-    return new CDOCommitDataImpl(newPackageUnits, data.getNewObjects(), data.getChangedObjects(), data
-        .getDetachedObjects());
+    return new CDOCommitDataImpl(newPackageUnits, data.getNewObjects(), data.getChangedObjects(),
+        data.getDetachedObjects());
   }
 
   public CDOCommitInfo readCDOCommitInfo() throws IOException

@@ -349,6 +349,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
                   // It is not possible to modify the positions of a CDOMoveFeatureDeltaImpl so we create a new instance
                   // that will replace the old one.
                   CDOMoveFeatureDelta move = new CDOMoveFeatureDeltaImpl(fd.getFeature(), patchedTo, patchedFrom);
+                  ((CDOMoveFeatureDeltaImpl)move).setValue(((CDOMoveFeatureDelta)fd).getValue());
                   iterator.set(move);
                 }
 
@@ -437,8 +438,8 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   private static <T, U> T[] copyOf(U[] original, int newLength, Class<? extends T[]> newType)
   {
     @SuppressWarnings("unchecked")
-    T[] copy = (Object)newType == (Object)Object[].class ? (T[])new Object[newLength] : (T[])Array.newInstance(newType
-        .getComponentType(), newLength);
+    T[] copy = (Object)newType == (Object)Object[].class ? (T[])new Object[newLength] : (T[])Array.newInstance(
+        newType.getComponentType(), newLength);
     System.arraycopy(original, 0, copy, 0, Math.min(original.length, newLength));
     return copy;
   }

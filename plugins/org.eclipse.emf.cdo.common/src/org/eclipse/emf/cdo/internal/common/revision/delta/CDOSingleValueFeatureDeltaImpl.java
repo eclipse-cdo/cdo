@@ -25,8 +25,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMap;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.util.FeatureMap.Entry;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.io.IOException;
 import java.text.MessageFormat;

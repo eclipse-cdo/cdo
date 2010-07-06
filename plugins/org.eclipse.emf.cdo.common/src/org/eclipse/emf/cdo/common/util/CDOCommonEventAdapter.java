@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.common.util;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession;
-import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;

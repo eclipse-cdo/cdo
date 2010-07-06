@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 
@@ -46,6 +46,13 @@ public abstract class LongIDStore extends Store
       Set<RevisionTemporality> supportedRevisionTemporalities, Set<RevisionParallelism> supportedRevisionParallelisms)
   {
     super(type, OBJECT_ID_TYPES, supportedChangeFormats, supportedRevisionTemporalities, supportedRevisionParallelisms);
+  }
+
+  @Override
+  public CDOID createObjectID(String val)
+  {
+    Long id = Long.valueOf(val);
+    return CDOIDUtil.createLong(id);
   }
 
   public long getLastObjectID()

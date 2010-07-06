@@ -255,9 +255,13 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     public E getObjectWithException()
     {
       Throwable exception = getException();
-      if (exception != null)
+      if (exception instanceof Exception)
       {
         throw WrappedException.wrap((Exception)exception);
+      }
+      else if (exception instanceof Error)
+      {
+        throw (Error)exception;
       }
 
       return (E)internalObject;

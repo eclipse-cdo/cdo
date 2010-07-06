@@ -13,21 +13,36 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit.State;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.server.QueryHandlerFactory;
+import org.eclipse.emf.cdo.spi.server.Store;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  * @author Eike Stepper
@@ -47,7 +62,7 @@ public class XRefsQueryHandler implements IQueryHandler
 
     CDOBranchPoint branchPoint = context;
     CDOBranch branch = branchPoint.getBranch();
-    while (!branch.isMainBranch() && xrefsContext.getXRefIDs().size() < info.getMaxResults())
+    while (!branch.isMainBranch() && context.getResultCount() < info.getMaxResults())
     {
       branchPoint = branch.getBase();
       branch = branchPoint.getBranch();
@@ -69,7 +84,11 @@ public class XRefsQueryHandler implements IQueryHandler
 
     private CDOBranchPoint branchPoint;
 
-    private Set<CDOID> xrefIDs = new HashSet<CDOID>();
+    private Map<CDOID, EClass> targetObjects;
+
+    private Map<EClass, List<EReference>> sourceCandidates;
+
+    private EReference[] sourceReferences;
 
     public QueryContext(CDOQueryInfo info, IQueryContext context)
     {
@@ -83,11 +102,6 @@ public class XRefsQueryHandler implements IQueryHandler
       this.branchPoint = branchPoint;
     }
 
-    public Set<CDOID> getXRefIDs()
-    {
-      return xrefIDs;
-    }
-
     public CDOBranch getBranch()
     {
       return branchPoint.getBranch();
@@ -98,17 +112,158 @@ public class XRefsQueryHandler implements IQueryHandler
       return branchPoint.getTimeStamp();
     }
 
-    public Set<CDOID> getTargetObjects()
+    public Map<CDOID, EClass> getTargetObjects()
     {
-      // return (Set<CDOID>)info.getParameters().get(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES_FOLDER_ID);
-      // TODO: implement XRefsQueryHandler.QueryContext.getTargetObjects()
-      throw new UnsupportedOperationException();
+      if (targetObjects == null)
+      {
+        IRepository repository = context.getView().getRepository();
+        CDOPackageRegistry packageRegistry = repository.getPackageRegistry();
+
+        targetObjects = new HashMap<CDOID, EClass>();
+        if (!(repository.getStore() instanceof Store))
+        {
+          throw new UnsupportedOperationException("Store misses the createObjectID() method");
+        }
+
+        Store store = (Store)repository.getStore();
+
+        StringTokenizer tokenizer = new StringTokenizer(info.getQueryString(), "|");
+        while (tokenizer.hasMoreTokens())
+        {
+          String val = tokenizer.nextToken();
+          CDOID id = store.createObjectID(val);
+
+          CDOClassifierRef classifierRef;
+          if (id instanceof CDOClassifierRef.Provider)
+          {
+            classifierRef = ((CDOClassifierRef.Provider)id).getClassifierRef();
+          }
+          else
+          {
+            val = tokenizer.nextToken();
+            classifierRef = new CDOClassifierRef(val);
+          }
+
+          EClass eClass = (EClass)classifierRef.resolve(packageRegistry);
+          targetObjects.put(id, eClass);
+        }
+      }
+
+      return targetObjects;
     }
 
     public EReference[] getSourceReferences()
     {
-      // TODO: implement XRefsQueryHandler.QueryContext.getSourceFeatures()
-      throw new UnsupportedOperationException();
+      if (sourceReferences == null)
+      {
+        sourceReferences = parseSourceReferences();
+      }
+
+      return sourceReferences;
+    }
+
+    private EReference[] parseSourceReferences()
+    {
+      List<EReference> result = new ArrayList<EReference>();
+      CDOPackageRegistry packageRegistry = context.getView().getRepository().getPackageRegistry();
+
+      String params = (String)info.getParameters().get(CDOProtocolConstants.QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES);
+      if (params == null)
+      {
+        return new EReference[0];
+      }
+
+      StringTokenizer tokenizer = new StringTokenizer(params, "|");
+      while (tokenizer.hasMoreTokens())
+      {
+        String className = tokenizer.nextToken();
+        CDOClassifierRef classifierRef = new CDOClassifierRef(className);
+        EClass eClass = (EClass)classifierRef.resolve(packageRegistry);
+
+        String featureName = tokenizer.nextToken();
+        EReference sourceReference = (EReference)eClass.getEStructuralFeature(featureName);
+        result.add(sourceReference);
+      }
+
+      return result.toArray(new EReference[result.size()]);
+    }
+
+    public Map<EClass, List<EReference>> getSourceCandidates()
+    {
+      if (sourceCandidates == null)
+      {
+        sourceCandidates = new HashMap<EClass, List<EReference>>();
+        EReference[] sourceReferences = getSourceReferences();
+        if (sourceReferences.length != 0)
+        {
+          for (EReference eReference : sourceReferences)
+          {
+            getSourceCandidates(eReference);
+          }
+        }
+        else
+        {
+          CDOPackageRegistry packageRegistry = context.getView().getRepository().getPackageRegistry();
+          for (CDOPackageInfo packageInfo : packageRegistry.getPackageInfos())
+          {
+            State state = packageInfo.getPackageUnit().getState();
+            if (state == CDOPackageUnit.State.LOADED || state == CDOPackageUnit.State.PROXY)
+            {
+              EPackage ePackage = packageInfo.getEPackage();
+              for (EClassifier eClassifier : ePackage.getEClassifiers())
+              {
+                if (eClassifier instanceof EClass)
+                {
+                  EClass eClass = (EClass)eClassifier;
+                  for (EStructuralFeature eStructuralFeature : eClass.getEStructuralFeatures())
+                  {
+                    if (eStructuralFeature instanceof EReference)
+                    {
+                      EReference eReference = (EReference)eStructuralFeature;
+                      getSourceCandidates(eReference);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      return sourceCandidates;
+    }
+
+    private void getSourceCandidates(EReference eReference)
+    {
+      if (!eReference.isContainer() && !eReference.isContainment())
+      {
+        Collection<EClass> concreteTypes = getTargetObjects().values();
+        if (canReference(eReference.getEReferenceType(), concreteTypes))
+        {
+          EClass eClass = eReference.getEContainingClass();
+          List<EReference> list = sourceCandidates.get(eClass);
+          if (list == null)
+          {
+            list = new ArrayList<EReference>();
+            sourceCandidates.put(eClass, list);
+          }
+
+          list.add(eReference);
+        }
+      }
+    }
+
+    private boolean canReference(EClass declaredType, Collection<EClass> concreteTypes)
+    {
+      for (EClass concreteType : concreteTypes)
+      {
+        if (declaredType.isSuperTypeOf(concreteType))
+        {
+          return true;
+        }
+      }
+
+      return false;
     }
 
     public int getMaxResults()
@@ -118,12 +273,8 @@ public class XRefsQueryHandler implements IQueryHandler
 
     public boolean addXRef(CDOID targetID, CDOID sourceID, EReference sourceReference, int sourceIndex)
     {
-      if (xrefIDs.add(targetID))
-      {
-        return context.addResult(targetID);
-      }
-
-      return true;
+      Object[] result = { targetID, sourceID, sourceReference, sourceIndex };
+      return context.addResult(result);
     }
 
     public int compareTo(CDOBranchPoint o)

@@ -50,20 +50,19 @@ public final class CDOClassifierRef
   }
 
   /**
-   * @since 3.0
+   * since 3.0.1
    */
-  public CDOClassifierRef(CDODataInput in) throws IOException
+  public CDOClassifierRef(String uri)
   {
-    String uri = in.readCDOPackageURI();
     if (uri == null)
     {
-      throw new IOException(Messages.getString("CDOClassifierRef.1") + uri); //$NON-NLS-1$
+      throw new IllegalArgumentException(Messages.getString("CDOClassifierRef.1") + uri); //$NON-NLS-1$
     }
 
     int hash = uri.lastIndexOf(URI_SEPARATOR);
     if (hash == -1)
     {
-      throw new IOException(Messages.getString("CDOClassifierRef.1") + uri); //$NON-NLS-1$
+      throw new IllegalArgumentException(Messages.getString("CDOClassifierRef.1") + uri); //$NON-NLS-1$
     }
 
     packageURI = uri.substring(0, hash);
@@ -73,9 +72,25 @@ public final class CDOClassifierRef
   /**
    * @since 3.0
    */
+  public CDOClassifierRef(CDODataInput in) throws IOException
+  {
+    this(in.readCDOPackageURI());
+  }
+
+  /**
+   * @since 3.0
+   */
   public void write(CDODataOutput out) throws IOException
   {
-    out.writeCDOPackageURI(packageURI + URI_SEPARATOR + classifierName);
+    out.writeCDOPackageURI(getURI());
+  }
+
+  /**
+   * since 3.0.1
+   */
+  public String getURI()
+  {
+    return packageURI + URI_SEPARATOR + classifierName;
   }
 
   public String getPackageURI()

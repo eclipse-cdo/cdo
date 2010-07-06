@@ -162,6 +162,14 @@ public abstract class Store extends Lifecycle implements InternalStore
     return supportedChangeFormats;
   }
 
+  /**
+   * @noreference This method is not intended to be referenced by clients.
+   */
+  public CDOID createObjectID(String val)
+  {
+    throw new UnsupportedOperationException("Should be overridden");
+  }
+
   public Set<RevisionTemporality> getSupportedRevisionTemporalities()
   {
     return supportedRevisionTemporalities;

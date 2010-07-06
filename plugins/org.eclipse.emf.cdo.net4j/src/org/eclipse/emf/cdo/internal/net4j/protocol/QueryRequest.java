@@ -11,12 +11,17 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.internal.common.CDOQueryInfoImpl;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
+import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.emf.internal.cdo.CDOObjectReferenceImpl;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -55,16 +60,36 @@ public class QueryRequest extends CDOClientRequest<Boolean>
   {
     int queryID = in.readInt();
     queryResult.setQueryID(queryID);
-
     CDOQueryQueue<Object> resultQueue = queryResult.getQueue();
+
+    CDOView view = null;
+    boolean xrefs = queryResult.getQueryInfo().getQueryLanguage().equals(CDOProtocolConstants.QUERY_LANGUAGE_XREFS);
+    if (xrefs)
+    {
+      view = getSession().getView(viewID);
+    }
 
     try
     {
       int numberOfObjectsReceived = 0;
       while (in.readBoolean())
       {
-        // result
-        Object element = in.readCDORevisionOrPrimitive();
+        Object element;
+        if (xrefs)
+        {
+          CDOID targetID = in.readCDOID();
+          CDOID sourceID = in.readCDOID();
+          CDOClassifierRef classifierRef = in.readCDOClassifierRef();
+          String featureName = in.readString();
+          int sourceIndex = in.readInt();
+
+          element = new CDOObjectReferenceImpl(view, targetID, sourceID, classifierRef, featureName, sourceIndex);
+        }
+        else
+        {
+          element = in.readCDORevisionOrPrimitive();
+        }
+
         resultQueue.add(element);
         numberOfObjectsReceived++;
       }

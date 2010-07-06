@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.server" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="924844039">
+            <message_arguments>
+                <message_argument value="3.0.1.qualifier"/>
+                <message_argument value="3.0.0.v20100614-1654"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/IQueryContext.java" type="org.eclipse.emf.cdo.server.IQueryContext">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getResultCount()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/IStoreAccessor.java" type="org.eclipse.emf.cdo.server.IStoreAccessor$QueryXRefsContext">
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext"/>
+                <message_argument value="getTargetObjects()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getSourceCandidates()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTargetObjects()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

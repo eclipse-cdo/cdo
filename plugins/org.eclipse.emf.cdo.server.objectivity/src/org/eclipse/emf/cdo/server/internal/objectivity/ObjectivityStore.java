@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -205,6 +207,13 @@ public class ObjectivityStore extends Store implements IObjectivityStore
   protected StoreAccessorPool getWriterPool(IView view, boolean forReleasing)
   {
     return writerPool;
+  }
+
+  @Override
+  public CDOID createObjectID(String val)
+  {
+    Long id = Long.valueOf(val);
+    return CDOIDUtil.createLong(id);
   }
 
   public long getCreationTime()

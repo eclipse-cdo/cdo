@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -841,6 +842,20 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   {
     checkActive();
 
+    String string = createXRefsQueryString(targetObjects);
+    CDOQuery query = createQuery(CDOProtocolConstants.QUERY_LANGUAGE_XREFS, string);
+
+    if (sourceReferences.length != 0)
+    {
+      string = createXRefsQueryParameter(sourceReferences);
+      query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES, string);
+    }
+
+    return query;
+  }
+
+  private String createXRefsQueryString(Set<CDOObject> targetObjects)
+  {
     StringBuilder builder = new StringBuilder();
     for (CDOObject target : targetObjects)
     {
@@ -857,20 +872,39 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
       if (builder.length() != 0)
       {
-        builder.append("#");
+        builder.append("|");
       }
 
       builder.append(id.toURIFragment());
+
+      if (!(id instanceof CDOClassifierRef.Provider))
+      {
+        builder.append("|");
+        CDOClassifierRef classifierRef = new CDOClassifierRef(target.eClass());
+        builder.append(classifierRef.getURI());
+      }
     }
 
-    CDOQuery query = createQuery(CDOProtocolConstants.QUERY_LANGUAGE_XREFS, builder.toString());
+    return builder.toString();
+  }
 
-    if (sourceReferences.length != 0)
+  private String createXRefsQueryParameter(EReference[] sourceReferences)
+  {
+    StringBuilder builder = new StringBuilder();
+    for (EReference sourceReference : sourceReferences)
     {
-      // query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES, sourceReferences);
+      if (builder.length() != 0)
+      {
+        builder.append("|");
+      }
+
+      CDOClassifierRef classifierRef = new CDOClassifierRef(sourceReference.eClass());
+      builder.append(classifierRef.getURI());
+      builder.append("|");
+      builder.append(sourceReference.getName());
     }
 
-    return query;
+    return builder.toString();
   }
 
   public CDOResourceImpl getResource(CDOID resourceID)

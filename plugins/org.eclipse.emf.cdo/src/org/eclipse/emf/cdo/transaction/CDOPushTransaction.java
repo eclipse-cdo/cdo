@@ -338,6 +338,14 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.getConflicts();
   }
 
+  /**
+   * @since 3.1
+   */
+  public CDOChangeSetData getChangeSetData()
+  {
+    return delegate.getChangeSetData();
+  }
+
   public Map<CDOID, CDOObject> getDetachedObjects()
   {
     return delegate.getDetachedObjects();
@@ -509,6 +517,12 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public void removeTransactionHandler(CDOTransactionHandler handler)
   {
     delegate.removeTransactionHandler(handler);
+  }
+
+  @Deprecated
+  public void resolveConflicts(CDOConflictResolver... resolver)
+  {
+    delegate.resolveConflicts(resolver);
   }
 
   public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)

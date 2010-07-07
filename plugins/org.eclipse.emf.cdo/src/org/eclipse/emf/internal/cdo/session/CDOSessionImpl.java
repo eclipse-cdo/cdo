@@ -1355,6 +1355,16 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       return false;
     }
 
+    public CDOChangeSetData copy()
+    {
+      return commitInfo.copy();
+    }
+
+    public void merge(CDOChangeSetData changeSetData)
+    {
+      commitInfo.merge(changeSetData);
+    }
+
     public List<CDOPackageUnit> getNewPackageUnits()
     {
       return commitInfo.getNewPackageUnits();

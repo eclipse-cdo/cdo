@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.common.commit;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -20,10 +21,29 @@ import java.util.List;
 /**
  * @author Eike Stepper
  * @since 3.0
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface CDOChangeSetData
 {
+  /**
+   * Returns <code>true</code>, if this change set data does not contain any changes, <code>false</code> otherwise.
+   */
   public boolean isEmpty();
+
+  /**
+   * Returns a deep copy of this change set data.
+   * 
+   * @since 3.1
+   */
+  public CDOChangeSetData copy();
+
+  /**
+   * Changes the internal state of this change set data by adding the changes of the given change set data.
+   * 
+   * @since 3.1
+   */
+  public void merge(CDOChangeSetData changeSetData);
 
   /**
    * Returns a collection of keys denoting which revisions have been added in the context of a commit operation.
@@ -39,5 +59,10 @@ public interface CDOChangeSetData
    */
   public List<CDORevisionKey> getChangedObjects();
 
+  /**
+   * Returns a collection of keys denoting which revisions have been revised (corresponds to detached objects) in the
+   * context of a commit operation. Depending on various conditions the version part of particular elements can be
+   * {@link CDOBranchVersion#UNSPECIFIED_VERSION unspecified}.
+   */
   public List<CDOIDAndVersion> getDetachedObjects();
 }

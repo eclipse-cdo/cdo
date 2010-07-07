@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.spi.cdo;
 
+import org.eclipse.emf.cdo.CDODeltaNotification;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -39,6 +40,7 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -56,40 +58,15 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractObjectConflictResolver implements CDOConflictResolver2
+public abstract class AbstractObjectConflictResolver extends AbstractConflictResolver implements CDOConflictResolver2
 {
-  private CDOTransaction transaction;
-
   public AbstractObjectConflictResolver()
   {
   }
 
-  public CDOTransaction getTransaction()
-  {
-    return transaction;
-  }
-
-  public void setTransaction(CDOTransaction transaction)
-  {
-    if (this.transaction != transaction)
-    {
-      if (this.transaction != null)
-      {
-        unhookTransaction(this.transaction);
-      }
-
-      this.transaction = transaction;
-
-      if (this.transaction != null)
-      {
-        hookTransaction(this.transaction);
-      }
-    }
-  }
-
   public void resolveConflicts(Set<CDOObject> conflicts)
   {
-    Map<CDOID, CDORevisionDelta> localDeltas = transaction.getRevisionDeltas();
+    Map<CDOID, CDORevisionDelta> localDeltas = getTransaction().getRevisionDeltas();
     for (CDOObject conflict : conflicts)
     {
       CDORevisionDelta localDelta = localDeltas.get(conflict.cdoID());
@@ -111,7 +88,7 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
   public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
       List<CDORevisionDelta> allRemoteDeltas)
   {
-    Map<CDOID, CDORevisionDelta> localDeltas = transaction.getRevisionDeltas();
+    Map<CDOID, CDORevisionDelta> localDeltas = getTransaction().getRevisionDeltas();
     for (Entry<CDOObject, Pair<CDORevision, CDORevisionDelta>> entry : conflicts.entrySet())
     {
       CDOObject conflict = entry.getKey();
@@ -133,14 +110,6 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
       CDORevisionDelta remoteDelta, List<CDORevisionDelta> allRemoteDeltas)
   {
     throw new UnsupportedOperationException("Must be overridden");
-  }
-
-  protected void hookTransaction(CDOTransaction transaction)
-  {
-  }
-
-  protected void unhookTransaction(CDOTransaction transaction)
-  {
   }
 
   public static void rollbackObject(CDOObject object)
@@ -237,7 +206,7 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
       }
     };
 
-    private ChangeSubscriptionAdapter adapter = new ChangeSubscriptionAdapter();
+    private CDOChangeSubscriptionAdapter adapter;
 
     private RevisionDeltaCollector collector = new RevisionDeltaCollector();
 
@@ -247,14 +216,14 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
 
     public boolean isValid(EObject object, Adapter adapter)
     {
-      return adapter instanceof ChangeSubscriptionAdapter;
+      return adapter instanceof CDOChangeSubscriptionAdapter;
     }
 
     @Override
     protected void hookTransaction(CDOTransaction transaction)
     {
       transaction.addTransactionHandler(handler);
-      transaction.options().addChangeSubscriptionPolicy(this);
+      adapter = new CDOChangeSubscriptionAdapter(getTransaction());
       transaction.addListener(collector);
     }
 
@@ -262,7 +231,8 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
     protected void unhookTransaction(CDOTransaction transaction)
     {
       transaction.removeListener(collector);
-      transaction.options().removeChangeSubscriptionPolicy(this);
+      adapter.dispose();
+      adapter = null;
       transaction.removeTransactionHandler(handler);
     }
 
@@ -286,12 +256,36 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
      * @author Eike Stepper
      * @since 2.0
      */
-    private static class ChangeSubscriptionAdapter extends AdapterImpl
+    @Deprecated
+    public static class ChangeSubscriptionAdapter extends AdapterImpl
     {
       private Set<CDOObject> notifiers = new HashSet<CDOObject>();
 
+      private Map<CDOObject, List<CDORevisionDelta>> deltas = new HashMap<CDOObject, List<CDORevisionDelta>>();
+
       public ChangeSubscriptionAdapter()
       {
+      }
+
+      public List<CDORevisionDelta> getRevisionDeltas(CDOObject notifier)
+      {
+        List<CDORevisionDelta> list = deltas.get(CDOUtil.getEObject(notifier));
+        if (list == null)
+        {
+          return Collections.emptyList();
+        }
+
+        return list;
+      }
+
+      public Set<CDOObject> getNotifiers()
+      {
+        return notifiers;
+      }
+
+      public Map<CDOObject, List<CDORevisionDelta>> getDeltas()
+      {
+        return deltas;
       }
 
       public void attach(CDOObject notifier)
@@ -310,13 +304,44 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
         }
 
         notifiers.clear();
+        deltas.clear();
+      }
+
+      @Override
+      public void notifyChanged(Notification msg)
+      {
+        try
+        {
+          if (msg instanceof CDODeltaNotification)
+          {
+            CDODeltaNotification deltaNotification = (CDODeltaNotification)msg;
+            Object notifier = deltaNotification.getNotifier();
+            if (!deltaNotification.hasNext() && notifiers.contains(notifier))
+            {
+              CDORevisionDelta revisionDelta = deltaNotification.getRevisionDelta();
+              List<CDORevisionDelta> list = deltas.get(notifier);
+              if (list == null)
+              {
+                list = new ArrayList<CDORevisionDelta>(1);
+                deltas.put(CDOUtil.getCDOObject((EObject)notifier), list);
+              }
+
+              list.add(revisionDelta);
+            }
+          }
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
       }
     }
 
     /**
      * @author Eike Stepper
+     * @since 3.1
      */
-    private static class RevisionDeltaCollector implements IListener
+    public static class RevisionDeltaCollector implements IListener
     {
       private Map<CDOObject, List<CDORevisionDelta>> deltas = new HashMap<CDOObject, List<CDORevisionDelta>>();
 

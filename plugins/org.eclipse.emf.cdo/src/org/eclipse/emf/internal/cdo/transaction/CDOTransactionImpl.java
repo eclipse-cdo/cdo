@@ -303,6 +303,27 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return conflicts;
   }
 
+  /**
+   * @since 2.0
+   */
+  @Deprecated
+  public void resolveConflicts(CDOConflictResolver... resolvers)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Deprecated
+  public void handleConflicts(Set<CDOObject> conflicts)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CDOChangeSetData getChangeSetData()
+  {
+    // TODO: implement CDOTransactionImpl.getChangeSet()
+    throw new UnsupportedOperationException();
+  }
+
   public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)
   {
     InternalCDOSession session = getSession();
@@ -605,10 +626,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           conflicts);
       for (CDOConflictResolver resolver : resolvers)
       {
-        resolver.resolveConflicts(Collections.unmodifiableSet(remaining.keySet()));
         if (resolver instanceof CDOConflictResolver2)
         {
           ((CDOConflictResolver2)resolver).resolveConflicts(Collections.unmodifiableMap(remaining), deltas);
+        }
+        else
+        {
+          resolver.resolveConflicts(Collections.unmodifiableSet(remaining.keySet()));
         }
 
         for (Iterator<CDOObject> it = remaining.keySet().iterator(); it.hasNext();)

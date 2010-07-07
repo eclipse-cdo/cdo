@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
@@ -67,6 +68,19 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
   public boolean isEmpty()
   {
     return false;
+  }
+
+  public CDOChangeSetData copy()
+  {
+    return commitData == null ? null : commitData.copy();
+  }
+
+  public void merge(CDOChangeSetData changeSetData)
+  {
+    if (commitData != null)
+    {
+      commitData.merge(changeSetData);
+    }
   }
 
   public synchronized List<CDOPackageUnit> getNewPackageUnits()

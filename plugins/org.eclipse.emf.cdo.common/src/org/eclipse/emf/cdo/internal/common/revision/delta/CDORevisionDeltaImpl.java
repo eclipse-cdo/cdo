@@ -179,6 +179,11 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     return featureDeltas;
   }
 
+  public CDORevisionDelta copy()
+  {
+    return new CDORevisionDeltaImpl(this, true);
+  }
+
   public List<CDOFeatureDelta> getFeatureDeltas()
   {
     return new ArrayList<CDOFeatureDelta>(featureDeltas.values());

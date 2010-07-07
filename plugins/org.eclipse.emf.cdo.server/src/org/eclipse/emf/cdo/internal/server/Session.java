@@ -16,6 +16,7 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
@@ -390,6 +391,16 @@ public class Session extends Container<IView> implements InternalSession
       public boolean isEmpty()
       {
         return getDelegate().isEmpty();
+      }
+
+      public CDOChangeSetData copy()
+      {
+        return getDelegate().copy();
+      }
+
+      public void merge(CDOChangeSetData changeSetData)
+      {
+        getDelegate().merge(changeSetData);
       }
 
       @Override

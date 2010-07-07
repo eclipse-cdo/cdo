@@ -21,8 +21,9 @@ import java.util.List;
 
 /**
  * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
  * @since 2.0
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface CDORevisionDelta extends CDORevisionKey
 {
@@ -44,6 +45,11 @@ public interface CDORevisionDelta extends CDORevisionKey
    * @since 3.0
    */
   public boolean isEmpty();
+
+  /**
+   * @since 3.1
+   */
+  public CDORevisionDelta copy();
 
   public List<CDOFeatureDelta> getFeatureDeltas();
 

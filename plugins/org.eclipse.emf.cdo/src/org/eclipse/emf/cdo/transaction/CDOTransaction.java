@@ -19,6 +19,7 @@ package org.eclipse.emf.cdo.transaction;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetDataProvider;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -43,7 +44,7 @@ import java.util.Set;
  * @noimplement This interface is not intended to be implemented by clients.
  * @since 2.0
  */
-public interface CDOTransaction extends CDOView, CDOUserTransaction
+public interface CDOTransaction extends CDOView, CDOUserTransaction, CDOChangeSetDataProvider
 {
   /**
    * Returns <code>true</code> if this transaction is not closed and contains uncommitted changes, <code>false</code>
@@ -58,6 +59,9 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
   public boolean hasConflict();
 
   public Set<CDOObject> getConflicts();
+
+  @Deprecated
+  public void resolveConflicts(CDOConflictResolver... resolver);
 
   /**
    * @since 3.0

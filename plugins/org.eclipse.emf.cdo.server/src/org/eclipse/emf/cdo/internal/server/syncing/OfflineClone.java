@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.server.syncing;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
@@ -122,6 +123,16 @@ public class OfflineClone extends SynchronizableRepository
     public boolean isEmpty()
     {
       return false;
+    }
+
+    public CDOChangeSetData copy()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void merge(CDOChangeSetData changeSetData)
+    {
+      throw new UnsupportedOperationException();
     }
 
     public List<CDOPackageUnit> getNewPackageUnits()

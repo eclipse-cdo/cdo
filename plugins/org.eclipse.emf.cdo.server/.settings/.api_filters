@@ -9,12 +9,30 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/Repository.java" type="org.eclipse.emf.cdo.internal.server.Repository">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="InternalRepository"/>
+                <message_argument value="CDOCommonRepository"/>
+                <message_argument value="Repository"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/embedded/EmbeddedClientSessionConfiguration.java" type="org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionConfiguration$RepositoryInfo">
         <filter id="574660632">
             <message_arguments>
                 <message_argument value="CDORepositoryInfo"/>
                 <message_argument value="CDOCommonRepository"/>
                 <message_argument value="RepositoryInfo"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/syncing/OfflineClone.java" type="org.eclipse.emf.cdo.internal.server.syncing.OfflineClone$CommitContextData">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="CDOCommitData"/>
+                <message_argument value="CDOChangeSetData"/>
+                <message_argument value="CommitContextData"/>
             </message_arguments>
         </filter>
     </resource>

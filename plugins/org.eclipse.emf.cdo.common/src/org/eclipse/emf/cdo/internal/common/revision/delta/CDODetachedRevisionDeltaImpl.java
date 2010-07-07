@@ -55,6 +55,11 @@ public class CDODetachedRevisionDeltaImpl implements CDORevisionDelta
     throw new UnsupportedOperationException();
   }
 
+  public CDORevisionDelta copy()
+  {
+    return this;
+  }
+
   public List<CDOFeatureDelta> getFeatureDeltas()
   {
     throw new UnsupportedOperationException();

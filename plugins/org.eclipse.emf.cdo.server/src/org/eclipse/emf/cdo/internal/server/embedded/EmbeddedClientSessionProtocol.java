@@ -51,6 +51,7 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
@@ -379,7 +380,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
   }
 
   public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
-      CDOCommitData commitData, OMMonitor monitor)
+      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }

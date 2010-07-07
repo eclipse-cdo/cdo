@@ -99,6 +99,7 @@ import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.options.OptionsEvent;
 
 import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -1535,14 +1536,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
-        CDOCommitData commitData, OMMonitor monitor)
+        CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, OMMonitor monitor)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          return delegate.commitDelegation(branch, userID, comment, commitData, monitor);
+          return delegate.commitDelegation(branch, userID, comment, commitData, detachedObjectTypes, monitor);
         }
         catch (Exception ex)
         {

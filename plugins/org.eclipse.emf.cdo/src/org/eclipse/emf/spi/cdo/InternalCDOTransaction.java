@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.spi.cdo;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -29,7 +28,6 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Simon McDuff
@@ -82,9 +80,6 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   public void registerRevisionDelta(CDORevisionDelta revisionDelta);
 
   public void setConflict(InternalCDOObject object);
-
-  @Deprecated
-  public void handleConflicts(Set<CDOObject> conflicts);
 
   /**
    * @since 3.0

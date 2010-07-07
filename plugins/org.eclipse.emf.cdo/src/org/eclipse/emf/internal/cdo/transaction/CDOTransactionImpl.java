@@ -303,21 +303,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return conflicts;
   }
 
-  /**
-   * @since 2.0
-   */
-  @Deprecated
-  public void resolveConflicts(CDOConflictResolver... resolvers)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Deprecated
-  public void handleConflicts(Set<CDOObject> conflicts)
-  {
-    throw new UnsupportedOperationException();
-  }
-
   public CDOChangeSetData getChangeSetData()
   {
     checkActive();

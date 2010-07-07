@@ -123,8 +123,8 @@ public final class CDOStore implements EStore
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
-    return (InternalEObject)convertIdToObject(cdoObject.cdoView(), cdoObject, EcorePackage.eINSTANCE
-        .eContainingFeature(), -1, revision.getContainerID());
+    return (InternalEObject)convertIdToObject(cdoObject.cdoView(), cdoObject,
+        EcorePackage.eINSTANCE.eContainingFeature(), -1, revision.getContainerID());
   }
 
   public int getContainingFeatureID(InternalEObject eObject)
@@ -151,11 +151,10 @@ public final class CDOStore implements EStore
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
-    return (InternalEObject)convertIdToObject(cdoObject.cdoView(), cdoObject, EcorePackage.eINSTANCE
-        .eContainingFeature(), -1, revision.getResourceID());
+    return (InternalEObject)convertIdToObject(cdoObject.cdoView(), cdoObject,
+        EcorePackage.eINSTANCE.eContainingFeature(), -1, revision.getResourceID());
   }
 
-  @Deprecated
   public EStructuralFeature getContainingFeature(InternalEObject eObject)
   {
     throw new UnsupportedOperationException("Use getContainingFeatureID() instead"); //$NON-NLS-1$

@@ -60,9 +60,6 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction, CDOChangeSe
 
   public Set<CDOObject> getConflicts();
 
-  @Deprecated
-  public void resolveConflicts(CDOConflictResolver... resolver);
-
   /**
    * @since 3.0
    */

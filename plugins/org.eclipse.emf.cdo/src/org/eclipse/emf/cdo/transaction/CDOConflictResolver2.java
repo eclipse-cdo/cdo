@@ -23,7 +23,7 @@ import java.util.Map;
 
 /**
  * @author Eike Stepper
- * @since 3.1
+ * @since 4.0
  */
 public interface CDOConflictResolver2 extends CDOConflictResolver
 {

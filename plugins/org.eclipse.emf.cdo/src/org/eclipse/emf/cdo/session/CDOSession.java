@@ -197,7 +197,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
   public CDOView[] getViews();
 
   /**
-   * @since 3.1
+   * @since 4.0
    */
   public CDOView getView(int viewID);
 

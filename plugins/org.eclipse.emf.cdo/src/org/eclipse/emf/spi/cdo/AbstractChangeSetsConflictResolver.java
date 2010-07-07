@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
 
 /**
  * @author Eike Stepper
- * @since 3.1
+ * @since 4.0
  */
 public abstract class AbstractChangeSetsConflictResolver extends AbstractConflictResolver
 {

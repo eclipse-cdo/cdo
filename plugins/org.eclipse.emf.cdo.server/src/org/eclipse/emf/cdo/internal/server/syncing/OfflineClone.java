@@ -247,7 +247,8 @@ public class OfflineClone extends SynchronizableRepository
 
       // Delegate commit to the master
       CDOSessionProtocol sessionProtocol = getSynchronizer().getRemoteSession().getSessionProtocol();
-      CommitTransactionResult result = sessionProtocol.commitDelegation(branch, userID, comment, commitData, monitor);
+      CommitTransactionResult result = sessionProtocol.commitDelegation(branch, userID, comment, commitData,
+          getDetachedObjectTypes(), monitor);
 
       // Stop if commit to master failed
       String rollbackMessage = result.getRollbackMessage();

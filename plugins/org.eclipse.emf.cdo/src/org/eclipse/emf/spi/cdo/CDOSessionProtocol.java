@@ -43,6 +43,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
@@ -139,10 +140,10 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       CDOIDProvider idProvider, CDOCommitData commitData, OMMonitor monitor);
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
   public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
-      CDOCommitData commitData, OMMonitor monitor);
+      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, OMMonitor monitor);
 
   /**
    * @since 3.0
@@ -235,7 +236,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     private List<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
 
     /**
-     * @since 3.1
+     * @since 4.0
      */
     public OpenSessionResult(int sessionID, String userID, String repositoryUUID,
         CDOCommonRepository.Type repositoryType, CDOCommonRepository.State repositoryState, String storeType,
@@ -335,7 +336,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     }
 
     /**
-     * @since 3.1
+     * @since 4.0
      */
     public boolean isRepositoryEnsuringReferentialIntegrity()
     {

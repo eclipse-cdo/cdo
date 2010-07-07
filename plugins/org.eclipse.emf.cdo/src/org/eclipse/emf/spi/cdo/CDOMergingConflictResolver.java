@@ -19,7 +19,7 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
- * @since 3.1
+ * @since 4.0
  */
 public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolver
 {

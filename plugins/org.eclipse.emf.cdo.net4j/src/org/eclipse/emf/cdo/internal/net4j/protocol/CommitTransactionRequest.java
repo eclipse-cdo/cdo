@@ -195,24 +195,24 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
       TRACER.format("Writing {0} detached objects", detachedObjects.size()); //$NON-NLS-1$
     }
 
-    CDOTransaction transaction = null;
     boolean ensuringReferentialIntegrity = getSession().getRepositoryInfo().isEnsuringReferentialIntegrity();
-    if (ensuringReferentialIntegrity)
-    {
-      transaction = (CDOTransaction)getSession().getView(transactionID);
-    }
-
     for (CDOIDAndVersion detachedObject : detachedObjects)
     {
       CDOID id = detachedObject.getID();
       out.writeCDOID(id);
       if (ensuringReferentialIntegrity)
       {
-        CDOObject object = transaction.getObject(id);
-        EClass eClass = object.eClass();
+        EClass eClass = getObjectType(id);
         out.writeCDOClassifierRef(eClass);
       }
     }
+  }
+
+  protected EClass getObjectType(CDOID id)
+  {
+    CDOTransaction transaction = (CDOTransaction)getSession().getView(transactionID);
+    CDOObject object = transaction.getObject(id);
+    return object.eClass();
   }
 
   @Override

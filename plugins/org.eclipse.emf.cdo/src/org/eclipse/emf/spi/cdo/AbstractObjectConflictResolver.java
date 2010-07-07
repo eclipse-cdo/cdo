@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.spi.cdo;
 
-import org.eclipse.emf.cdo.CDODeltaNotification;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -40,8 +39,6 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -83,7 +80,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
   }
 
   /**
-   * @since 3.1
+   * @since 4.0
    */
   public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
       List<CDORevisionDelta> allRemoteDeltas)
@@ -104,7 +101,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
    * conflict, it may be necessary to adjust the notification that will be sent to the adapters in the current
    * transaction. This can be achieved by adjusting the {@link CDORevisionDelta} in <code>deltas</code>.
    * 
-   * @since 3.1
+   * @since 4.0
    */
   protected void resolveConflict(CDOObject conflict, CDORevision oldRemoteRevision, CDORevisionDelta localDelta,
       CDORevisionDelta remoteDelta, List<CDORevisionDelta> allRemoteDeltas)
@@ -254,92 +251,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
 
     /**
      * @author Eike Stepper
-     * @since 2.0
-     */
-    @Deprecated
-    public static class ChangeSubscriptionAdapter extends AdapterImpl
-    {
-      private Set<CDOObject> notifiers = new HashSet<CDOObject>();
-
-      private Map<CDOObject, List<CDORevisionDelta>> deltas = new HashMap<CDOObject, List<CDORevisionDelta>>();
-
-      public ChangeSubscriptionAdapter()
-      {
-      }
-
-      public List<CDORevisionDelta> getRevisionDeltas(CDOObject notifier)
-      {
-        List<CDORevisionDelta> list = deltas.get(CDOUtil.getEObject(notifier));
-        if (list == null)
-        {
-          return Collections.emptyList();
-        }
-
-        return list;
-      }
-
-      public Set<CDOObject> getNotifiers()
-      {
-        return notifiers;
-      }
-
-      public Map<CDOObject, List<CDORevisionDelta>> getDeltas()
-      {
-        return deltas;
-      }
-
-      public void attach(CDOObject notifier)
-      {
-        if (notifiers.add(notifier))
-        {
-          notifier.eAdapters().add(this);
-        }
-      }
-
-      public void reset()
-      {
-        for (CDOObject notifier : notifiers)
-        {
-          notifier.eAdapters().remove(this);
-        }
-
-        notifiers.clear();
-        deltas.clear();
-      }
-
-      @Override
-      public void notifyChanged(Notification msg)
-      {
-        try
-        {
-          if (msg instanceof CDODeltaNotification)
-          {
-            CDODeltaNotification deltaNotification = (CDODeltaNotification)msg;
-            Object notifier = deltaNotification.getNotifier();
-            if (!deltaNotification.hasNext() && notifiers.contains(notifier))
-            {
-              CDORevisionDelta revisionDelta = deltaNotification.getRevisionDelta();
-              List<CDORevisionDelta> list = deltas.get(notifier);
-              if (list == null)
-              {
-                list = new ArrayList<CDORevisionDelta>(1);
-                deltas.put(CDOUtil.getCDOObject((EObject)notifier), list);
-              }
-
-              list.add(revisionDelta);
-            }
-          }
-        }
-        catch (Exception ex)
-        {
-          OM.LOG.error(ex);
-        }
-      }
-    }
-
-    /**
-     * @author Eike Stepper
-     * @since 3.1
+     * @since 4.0
      */
     public static class RevisionDeltaCollector implements IListener
     {

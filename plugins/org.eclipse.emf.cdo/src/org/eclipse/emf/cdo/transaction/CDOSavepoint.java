@@ -105,7 +105,7 @@ public interface CDOSavepoint extends CDOUserSavepoint, CDOChangeSetDataProvider
   public Map<CDOID, CDORevisionDelta> getAllRevisionDeltas();
 
   /**
-   * @since 3.1
+   * @since 4.0
    */
   public CDOChangeSetData getAllChangeSetData();
 }

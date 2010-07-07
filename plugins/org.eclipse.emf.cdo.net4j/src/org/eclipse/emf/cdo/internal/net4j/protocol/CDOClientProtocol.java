@@ -48,6 +48,7 @@ import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
@@ -260,9 +261,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   }
 
   public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
-      CDOCommitData commitData, OMMonitor monitor)
+      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, OMMonitor monitor)
   {
-    return send(new CommitDelegationRequest(this, branch, userID, comment, commitData), monitor);
+    return send(new CommitDelegationRequest(this, branch, userID, comment, commitData, detachedObjectTypes), monitor);
   }
 
   public CommitTransactionResult commitXATransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor)

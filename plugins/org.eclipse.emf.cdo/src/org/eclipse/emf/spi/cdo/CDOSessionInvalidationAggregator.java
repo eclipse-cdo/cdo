@@ -21,7 +21,7 @@ import org.eclipse.net4j.util.event.IListener;
 
 /**
  * @author Eike Stepper
- * @since 3.1
+ * @since 4.0
  */
 public class CDOSessionInvalidationAggregator
 {

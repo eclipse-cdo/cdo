@@ -13,11 +13,9 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
-
-
 /**
  * @author Eike Stepper
- * @since 3.1
+ * @since 4.0
  */
 public abstract class AbstractConflictResolver implements CDOConflictResolver
 {

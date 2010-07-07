@@ -19,7 +19,10 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.MetaInstanceMapper;
 
+import org.eclipse.emf.ecore.EClass;
+
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -32,14 +35,17 @@ public class CommitDelegationRequest extends CommitTransactionRequest
 
   private String userID;
 
+  private Map<CDOID, EClass> detachedObjectTypes;
+
   public CommitDelegationRequest(CDOClientProtocol protocol, CDOBranch branch, String userID, String comment,
-      CDOCommitData commitData)
+      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_DELEGATION, UNKNOWN_TRANSACTION_ID, comment, false,
         CDOIDProvider.NOOP, commitData);
 
     this.branch = branch;
     this.userID = userID;
+    this.detachedObjectTypes = detachedObjectTypes;
   }
 
   @Override
@@ -47,6 +53,12 @@ public class CommitDelegationRequest extends CommitTransactionRequest
   {
     out.writeCDOBranch(branch);
     out.writeString(userID);
+  }
+
+  @Override
+  protected EClass getObjectType(CDOID id)
+  {
+    return detachedObjectTypes.get(id);
   }
 
   @Override

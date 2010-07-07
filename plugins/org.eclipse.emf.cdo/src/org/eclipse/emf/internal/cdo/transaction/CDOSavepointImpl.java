@@ -13,11 +13,17 @@
 package org.eclipse.emf.internal.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
+import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 
@@ -28,12 +34,14 @@ import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -172,6 +180,40 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   public ConcurrentMap<CDOID, CDORevisionDelta> getRevisionDeltas()
   {
     return revisionDeltas;
+  }
+
+  public CDOChangeSetData getChangeSetData()
+  {
+    return createChangeSetData(newObjects, revisionDeltas, detachedObjects);
+  }
+
+  public CDOChangeSetData getAllChangeSetData()
+  {
+    return createChangeSetData(getAllNewObjects(), getAllRevisionDeltas(), getAllDetachedObjects());
+  }
+
+  private CDOChangeSetData createChangeSetData(Map<CDOID, CDOObject> newObjects,
+      Map<CDOID, CDORevisionDelta> revisionDeltas, Map<CDOID, CDOObject> detachedObjects)
+  {
+    List<CDOIDAndVersion> newList = new ArrayList<CDOIDAndVersion>(newObjects.size());
+    for (CDOObject object : newObjects.values())
+    {
+      newList.add(object.cdoRevision());
+    }
+
+    List<CDORevisionKey> changedList = new ArrayList<CDORevisionKey>(revisionDeltas.size());
+    for (CDORevisionDelta delta : revisionDeltas.values())
+    {
+      changedList.add(delta);
+    }
+
+    List<CDOIDAndVersion> detachedList = new ArrayList<CDOIDAndVersion>(detachedObjects.size());
+    for (CDOID id : detachedObjects.keySet())
+    {
+      detachedList.add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
+    }
+
+    return new CDOChangeSetDataImpl(newList, changedList, detachedList);
   }
 
   public Map<CDOID, CDORevision> getBaseNewObjects()

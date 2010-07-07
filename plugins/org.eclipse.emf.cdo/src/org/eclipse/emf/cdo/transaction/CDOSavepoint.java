@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetDataProvider;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -20,8 +22,10 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOSavepoint extends CDOUserSavepoint
+public interface CDOSavepoint extends CDOUserSavepoint, CDOChangeSetDataProvider
 {
   /**
    * @since 3.0
@@ -99,4 +103,9 @@ public interface CDOSavepoint extends CDOUserSavepoint
    * @since 3.0
    */
   public Map<CDOID, CDORevisionDelta> getAllRevisionDeltas();
+
+  /**
+   * @since 3.1
+   */
+  public CDOChangeSetData getAllChangeSetData();
 }

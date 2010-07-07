@@ -320,8 +320,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public CDOChangeSetData getChangeSetData()
   {
-    // TODO: implement CDOTransactionImpl.getChangeSet()
-    throw new UnsupportedOperationException();
+    checkActive();
+    return lastSavepoint.getAllChangeSetData();
   }
 
   public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)

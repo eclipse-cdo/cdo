@@ -1006,17 +1006,20 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       if (cdoObject != null && !FSMUtil.isTransient(cdoObject))
       {
         EStore eStore = cdoObject.eStore();
-        if (feature.isMany())
+        if (eStore != null)
         {
-          int index = eStore.indexOf(cdoObject, feature, instance.cdoID());
-          if (index != EStore.NO_INDEX)
+          if (feature.isMany())
           {
-            eStore.set(cdoObject, feature, index, instance);
+            int index = eStore.indexOf(cdoObject, feature, instance.cdoID());
+            if (index != EStore.NO_INDEX)
+            {
+              eStore.set(cdoObject, feature, index, instance);
+            }
           }
-        }
-        else
-        {
-          eStore.set(cdoObject, feature, 0, instance);
+          else
+          {
+            eStore.set(cdoObject, feature, 0, instance);
+          }
         }
       }
       else

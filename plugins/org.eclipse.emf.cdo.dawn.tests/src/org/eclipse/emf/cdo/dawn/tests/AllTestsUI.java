@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.dawn.tests;
 
+import org.eclipse.emf.cdo.dawn.tests.ui.BasicUITest;
 import org.eclipse.emf.cdo.tests.AllTests;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
@@ -21,24 +22,22 @@ import junit.framework.TestSuite;
 /**
  * @author Martin Fluegge
  */
-public class AllTestsDawn extends AllTests
+public class AllTestsUI extends AllTests
 {
   public static Test suite()
   {
-    return new AllTestsDawn().getTestSuite(AllTests.class.getName());
+    return new AllTestsUI().getTestSuite(AllTests.class.getName());
   }
 
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
-    testClasses.add(TestFrameworkTest.class);
-    testClasses.add(GMFTest.class);
-    // testClasses.add(DawnWrapperResourceTest.class);
+    testClasses.add(BasicUITest.class);
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, MEM, JVM, NATIVE);
+    addScenario(parent, COMBINED, MEM, TCP, NATIVE);
   }
 }

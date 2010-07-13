@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010 Martin Fluegge (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -34,6 +34,7 @@ import org.eclipse.gmf.runtime.notation.RelativeBendpoints;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.runtime.notation.datatype.RelativeBendpoint;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -253,15 +254,21 @@ public class GMFTest extends AbstractCDOTest
 
       ResourceSet resourceSet = new ResourceSetImpl();
       AcorePackage.eINSTANCE.eClass();
-      resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("classdiagram_diagram",
-          new XMIResourceFactoryImpl());
+      resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
+          .put("acore_diagram", new XMIResourceFactoryImpl());
 
-      resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("classdiagram",
-          new XMIResourceFactoryImpl());
-      Resource emfResource = resourceSet.getResource(URI
-          .createURI("file:/D:/Development/CDO/org.eclipse.emf.cdo.dawn.tests/testdata/default.classdiagram"), true);
-      Resource gmfResource = resourceSet.getResource(URI
-          .createURI("file:/D:/Development/CDO/org.eclipse.emf.cdo.dawn.tests/testdata/default.classdiagram_diagram"),
+      resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("acore", new XMIResourceFactoryImpl());
+
+      System.out.println(GMFTest.class.getResource("."));
+      System.out.println(GMFTest.class.getResource("/"));
+
+      URL resourceURI = GMFTest.class.getResource("");
+      String resourcePath = resourceURI.toString().substring(0, resourceURI.toString().lastIndexOf("/bin"));
+
+      System.out.println(resourcePath);
+
+      Resource emfResource = resourceSet.getResource(URI.createURI(resourcePath + "/testdata/simple.acore"), true);
+      Resource gmfResource = resourceSet.getResource(URI.createURI(resourcePath + "/testdata/simple.acore_diagram"),
           true);
 
       Diagram diagram = (Diagram)gmfResource.getContents().get(0);
@@ -279,17 +286,6 @@ public class GMFTest extends AbstractCDOTest
       resource.getContents().add(classDiagram);
       resource.getContents().add(diagram);
 
-      // for(AClass aclass: classDiagram.getClasses())
-      // {
-      // System.out.println(aclass);
-      // }
-      //
-      //
-      // for(AInterface aInterface : classDiagram.getInterfaces())
-      // {
-      // System.out.println(aInterface);
-      // }
-
       transaction.commit();
     }
     session.close();
@@ -306,7 +302,7 @@ public class GMFTest extends AbstractCDOTest
       assertEquals(false, reloadedDiagram.isMutable());
 
       assertEquals(3, reloadedDiagram.getChildren().size());
-      assertEquals(3, reloadedDiagram.getEdges().size());
+      assertEquals(2, reloadedDiagram.getEdges().size());
 
       for (Object o : reloadedDiagram.getEdges())
       {
@@ -315,9 +311,6 @@ public class GMFTest extends AbstractCDOTest
         assertNotNull(bendpoints);
         assertTrue(bendpoints.getPoints().size() > 0);
       }
-
     }
-
   }
-
 }

@@ -1,7 +1,5 @@
-package org.eclipse.emf.cdo.dawn.tests;
-
 /**
- * Copyright (c) 2010 Martin Fluegge (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,6 +8,8 @@ package org.eclipse.emf.cdo.dawn.tests;
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
+package org.eclipse.emf.cdo.dawn.tests;
+
 import org.eclipse.core.runtime.Plugin;
 
 import org.osgi.framework.BundleContext;
@@ -37,6 +37,7 @@ public class Activator extends Plugin
    * (non-Javadoc)
    * @see org.eclipse.core.runtime.Plugins#start(org.osgi.framework.BundleContext)
    */
+  @Override
   public void start(BundleContext context) throws Exception
   {
     super.start(context);
@@ -47,6 +48,7 @@ public class Activator extends Plugin
    * (non-Javadoc)
    * @see org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext)
    */
+  @Override
   public void stop(BundleContext context) throws Exception
   {
     plugin = null;

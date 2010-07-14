@@ -107,8 +107,40 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
   public void queryXRefs(IDBStoreAccessor accessor, QueryXRefsContext context)
   {
-    // TODO: implement AbstractHorizontalMappingStrategy.queryXRefs(accessor, context)
-    throw new UnsupportedOperationException();
+    StringBuilder builder = null;
+
+    // create a string containing "(id1,id2,...)"
+    // NOTE: this might not scale infinitely, because of dbms-dependent
+    // max size for SQL strings. But for now, it's the easiest way...
+    for (CDOID targetID : context.getTargetObjects().keySet())
+    {
+      // NOTE: currently no support for external references!
+      if (builder == null)
+      {
+        builder = new StringBuilder("(");
+      }
+      else
+      {
+        builder.append(",");
+      }
+
+      long id = CDOIDUtil.getLong(targetID);
+      builder.append(id);
+    }
+
+    builder.append(")");
+    String idString = builder.toString();
+
+    for (EClass eClass : context.getSourceCandidates().keySet())
+    {
+      IClassMapping classMapping = getClassMapping(eClass);
+      boolean more = classMapping.queryXRefs(accessor, context, idString);
+      if (!more)
+      {
+        // cancel query (max results reached or user canceled)
+        return;
+      }
+    }
   }
 
   public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, int fromBranchID, int toBranchID,
@@ -195,7 +227,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
   }
 
-  protected String getListJoin(String attrTable, String listTable)
+  public String getListJoin(String attrTable, String listTable)
   {
     return " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_ID + "=" + listTable + "." + CDODBSchema.LIST_REVISION_ID;
   }

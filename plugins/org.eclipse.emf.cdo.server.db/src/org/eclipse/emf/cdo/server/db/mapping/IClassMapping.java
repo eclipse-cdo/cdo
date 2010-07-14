@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -174,4 +175,15 @@ public interface IClassMapping
    * @since 3.0
    */
   public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, CDOChangeSetSegment[] segments);
+
+  /**
+   * Retrieve cross-references from DB
+   * 
+   * @param idString
+   *          a string of the form "(id1, id2, id3, ...)" which can be used directly in SQL to form the where-part
+   *          "SELECT * FROM foobar WHERE foobar.target IN [idString]".
+   * @see IStoreAccessor#queryXRefs(QueryXRefsContext)
+   * @since 4.0
+   */
+  public boolean queryXRefs(IDBStoreAccessor accessor, QueryXRefsContext context, String idString);
 }

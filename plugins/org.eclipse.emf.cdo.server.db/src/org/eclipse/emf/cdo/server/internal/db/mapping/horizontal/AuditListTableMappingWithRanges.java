@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
@@ -1074,5 +1075,11 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     }
 
     return result;
+  }
+
+  public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere,
+      QueryXRefsContext context, String idString)
+  {
+    throw new UnsupportedOperationException("This mapping strategy does not support cross-reference querying.");
   }
 }

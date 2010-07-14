@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.server.db.mapping;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
@@ -98,4 +100,14 @@ public interface IListMapping
    * @since 3.0
    */
   public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised);
+
+  /**
+   * Retrieve cross-references from DB
+   * 
+   * @see IClassMapping#queryXRefs(IDBStoreAccessor, QueryXRefsContext, String)
+   * @see IStoreAccessor#queryXRefs(QueryXRefsContext)
+   * @since 4.0
+   */
+  public boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere,
+      QueryXRefsContext context, String idString);
 }

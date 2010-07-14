@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
@@ -677,13 +678,13 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       builder.append(", "); //$NON-NLS-1$
       ITypeMapping typeMapping = change.getElement1();
       builder.append(typeMapping.getField());
-      builder.append(" =? "); //$NON-NLS-1$
+      builder.append("=?"); //$NON-NLS-1$
 
       if (typeMapping.getFeature().isUnsettable())
       {
         builder.append(", "); //$NON-NLS-1$
         builder.append(getUnsettableFields().get(typeMapping.getFeature()));
-        builder.append(" =? "); //$NON-NLS-1$
+        builder.append("=?"); //$NON-NLS-1$
       }
     }
 
@@ -695,5 +696,26 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   protected void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long timeStamp)
   {
     // do nothing
+  }
+
+  @Override
+  protected String getListXRefsWhere(QueryXRefsContext context)
+  {
+    if (CDORevision.UNSPECIFIED_DATE != context.getTimeStamp())
+    {
+      throw new IllegalArgumentException("Non-audit mode does not support timestamp specification");
+    }
+
+    if (CDOBranch.MAIN_BRANCH_ID != context.getBranch().getID())
+    {
+      throw new IllegalArgumentException("Non-audit mode does not support branch specification");
+    }
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("(");
+    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append("=0)"); //$NON-NLS-1$
+
+    return builder.toString();
   }
 }

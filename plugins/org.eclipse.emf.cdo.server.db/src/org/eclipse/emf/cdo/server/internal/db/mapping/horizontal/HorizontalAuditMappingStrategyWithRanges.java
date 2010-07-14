@@ -61,7 +61,7 @@ public class HorizontalAuditMappingStrategyWithRanges extends AbstractHorizontal
   }
 
   @Override
-  protected String getListJoin(String attrTable, String listTable)
+  public String getListJoin(String attrTable, String listTable)
   {
     // TODO: implement HorizontalAuditMappingStrategyWithRanges.getListJoin(attrTable, listTable)
     throw new UnsupportedOperationException();

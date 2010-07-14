@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IExternalReferenceManager;
@@ -52,12 +53,14 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -658,6 +661,118 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       monitor.done();
     }
   }
+
+  public final boolean queryXRefs(IDBStoreAccessor accessor, QueryXRefsContext context, String idString)
+  {
+    String tableName = getTable().getName();
+    EClass eClass = getEClass();
+    List<EReference> refs = context.getSourceCandidates().get(eClass);
+    List<EReference> scalarRefs = new ArrayList<EReference>();
+
+    for (EReference ref : refs)
+    {
+      if (ref.isMany())
+      {
+        IListMapping listMapping = getListMapping(ref);
+        String where = getListXRefsWhere(context);
+
+        boolean more = listMapping.queryXRefs(accessor, tableName, where, context, idString);
+        if (!more)
+        {
+          return false;
+        }
+      }
+      else
+      {
+        scalarRefs.add(ref);
+      }
+    }
+
+    if (!scalarRefs.isEmpty())
+    {
+      boolean more = queryScalarXRefs(accessor, scalarRefs, context, idString);
+      if (!more)
+      {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  protected final boolean queryScalarXRefs(IDBStoreAccessor accessor, List<EReference> scalarRefs,
+      QueryXRefsContext context, String idString)
+  {
+    String tableName = getTable().getName();
+    String where = getListXRefsWhere(context);
+
+    for (EReference ref : scalarRefs)
+    {
+      ITypeMapping valueMapping = getValueMapping(ref);
+      String valueField = valueMapping.getField().getName();
+
+      StringBuilder builder = new StringBuilder();
+      builder.append("SELECT ");
+      builder.append(CDODBSchema.ATTRIBUTES_ID);
+      builder.append(", ");
+      builder.append(valueField);
+      builder.append(" FROM ");
+      builder.append(tableName);
+      builder.append(" WHERE ");
+      builder.append(where);
+      String sql = builder.toString();
+
+      ResultSet resultSet = null;
+      Statement stmt = null;
+
+      try
+      {
+        stmt = accessor.getConnection().createStatement();
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("Query XRefs (attributes): {0}", sql);
+        }
+
+        resultSet = stmt.executeQuery(sql);
+        while (resultSet.next())
+        {
+          long idLong = resultSet.getLong(1);
+          CDOID srcId = CDOIDUtil.createLong(idLong);
+          idLong = resultSet.getLong(2);
+          CDOID targetId = CDOIDUtil.createLong(idLong);
+
+          boolean more = context.addXRef(targetId, srcId, ref, 0);
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("  add XRef to context: src={0}, tgt={1}, idx=0", srcId, targetId);
+          }
+
+          if (!more)
+          {
+            if (TRACER.isEnabled())
+            {
+              TRACER.format("  result limit reached. Ignoring further results.");
+            }
+
+            return false;
+          }
+        }
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      finally
+      {
+        DBUtil.close(resultSet);
+        DBUtil.close(stmt);
+      }
+    }
+
+    return true;
+  }
+
+  protected abstract String getListXRefsWhere(QueryXRefsContext context);
 
   protected abstract void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch,
       long timeStamp, OMMonitor fork);

@@ -293,4 +293,9 @@ public interface IMappingStrategy
    * @since 3.0
    */
   public void rawImport(IDBStoreAccessor accessor, CDODataInput in) throws IOException;
+
+  /**
+   * @since 4.0
+   */
+  public String getListJoin(String attrTable, String listTable);
 }

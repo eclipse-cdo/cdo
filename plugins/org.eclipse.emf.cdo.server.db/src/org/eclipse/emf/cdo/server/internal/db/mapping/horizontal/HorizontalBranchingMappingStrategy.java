@@ -123,13 +123,13 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
   }
 
   @Override
-  protected String getListJoin(String attrTable, String listTable)
+  public String getListJoin(String attrTable, String listTable)
   {
     String join = super.getListJoin(attrTable, listTable);
-    join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_VERSION + "=" + listTable + "."
-        + CDODBSchema.LIST_REVISION_VERSION;
-    join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_BRANCH + "=" + listTable + "."
-        + CDODBSchema.LIST_REVISION_BRANCH;
+    join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_VERSION;
+    join += "=" + listTable + "." + CDODBSchema.LIST_REVISION_VERSION;
+    join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_BRANCH;
+    join += "=" + listTable + "." + CDODBSchema.LIST_REVISION_BRANCH;
     return join;
   }
 }

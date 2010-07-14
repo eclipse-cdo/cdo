@@ -16,6 +16,7 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
@@ -37,6 +38,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -656,4 +658,15 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
       return dbType;
     }
   }
+
+  public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere,
+      QueryXRefsContext context, String idString)
+  {
+    /*
+     * must never be called (a feature map is not associated with an EReference feature, so XRefs are nor supported
+     * here)
+     */
+    throw new ImplementationError("Should never be called!");
+  }
+
 }

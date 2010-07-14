@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
@@ -807,5 +808,37 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       DBUtil.close(rs);
       statementCache.releasePreparedStatement(stmt);
     }
+  }
+
+  @Override
+  protected String getListXRefsWhere(QueryXRefsContext context)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append("=");
+    builder.append(context.getBranch().getID());
+    builder.append(" AND (");
+
+    long timeStamp = context.getTimeStamp();
+    if (timeStamp == CDORevision.UNSPECIFIED_DATE)
+    {
+      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append("=0)"); //$NON-NLS-1$
+    }
+    else
+    {
+      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+      builder.append("<=");
+      builder.append(timeStamp);
+      builder.append(" AND ("); //$NON-NLS-1$
+      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append("=0 OR "); //$NON-NLS-1$
+      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(">=");
+      builder.append(timeStamp);
+      builder.append("))"); //$NON-NLS-1$
+    }
+
+    return builder.toString();
   }
 }

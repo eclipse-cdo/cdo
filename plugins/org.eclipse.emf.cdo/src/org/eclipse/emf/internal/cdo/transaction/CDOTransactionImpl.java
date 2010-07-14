@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
@@ -76,6 +77,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
@@ -106,8 +108,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.util.EContentsEList;
-import org.eclipse.emf.ecore.util.EContentsEList.FeatureIterator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
@@ -1828,23 +1830,40 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         detachedObjects);
   }
 
-  private void removeCrossReferences(Collection<CDOObject> objects, Set<CDOID> referencedOIDs)
+  private void removeCrossReferences(Collection<CDOObject> referencers, Set<CDOID> referencedOIDs)
   {
-    for (CDOObject object : objects)
+    for (CDOObject referencer : referencers)
     {
-      EContentsEList.FeatureIterator<EObject> it = (FeatureIterator<EObject>)object.eCrossReferences().iterator();
+      EContentsEList.FeatureIterator<EObject> it = (EContentsEList.FeatureIterator<EObject>)referencer
+          .eCrossReferences().iterator();
       while (it.hasNext())
       {
-        EObject crossReferencedObject = it.next();
-        if (crossReferencedObject instanceof CDOObject)
+        EObject referencedObject = it.next();
+        CDOID referencedOID = CDOUtil.getCDOObject(referencedObject).cdoID();
+
+        if (referencedOIDs.contains(referencedOID))
         {
-          CDOID id = ((CDOObject)crossReferencedObject).cdoID();
-          if (referencedOIDs.contains(id))
+          EReference reference = (EReference)it.feature();
+
+          // In the case of DIRTY, we must investigate further: Is the referencer dirty
+          // because a reference to the referencedObject was added? Only in this case
+          // should we remove it. If this is not the case (i.e. it is dirty in a different
+          // way, we must ignore it.)
+          if (referencer.cdoState() == CDOState.DIRTY)
           {
-            EReference eReference = (EReference)it.feature();
-            Setting setting = ((InternalEObject)object).eSetting(eReference);
-            EcoreUtil.remove(setting, crossReferencedObject);
+            InternalCDORevision cleanRevision = getSession().getRevisionManager().getRevisionByVersion(
+                referencer.cdoID(), referencer.cdoRevision(), CDORevision.UNCHUNKED, true);
+            Object value = cleanRevision.get(reference, EStore.NO_INDEX);
+            if (value instanceof CDOObject && value == referencedObject || //
+                value instanceof CDOID && value.equals(referencedOID) || //
+                value instanceof CDOList && ((CDOList)value).contains(referencedOID))
+            {
+              continue;
+            }
           }
+
+          Setting setting = ((InternalEObject)referencer).eSetting(reference);
+          EcoreUtil.remove(setting, referencedObject);
         }
       }
     }

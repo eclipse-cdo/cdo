@@ -30,10 +30,10 @@ import org.eclipse.pde.core.build.IBuildEntry;
 import org.eclipse.pde.core.build.IBuildModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -276,25 +276,40 @@ public class DigestValidator extends VersionValidator
 
     try
     {
-      MessageDigest digest = MessageDigest.getInstance("SHA-1");
-      stream = new DigestInputStream(file.getContents(), digest)
+      final MessageDigest digest = MessageDigest.getInstance("SHA-1");
+      stream = new FilterInputStream(file.getContents())
       {
         @Override
         public int read() throws IOException
         {
-          int read;
-          while ((read = super.read()) == 10 || read == 13)
+          for (;;)
           {
-            // Read again
-          }
+            int ch = super.read();
+            switch (ch)
+            {
+            case -1:
+              return -1;
 
-          return read;
+            case 10:
+            case 13:
+              continue;
+
+            }
+
+            digest.update((byte)ch);
+            return ch;
+          }
         }
 
         @Override
         public int read(byte[] b, int off, int len) throws IOException
         {
           int read = super.read(b, off, len);
+          if (read == -1)
+          {
+            return -1;
+          }
+
           for (int i = off; i < off + read; i++)
           {
             byte c = b[i];
@@ -310,6 +325,7 @@ public class DigestValidator extends VersionValidator
             }
           }
 
+          digest.update(b, off, read);
           return read;
         }
       };

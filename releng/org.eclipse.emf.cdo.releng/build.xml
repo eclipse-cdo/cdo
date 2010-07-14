@@ -59,7 +59,7 @@
 	<property name="targetPlatformPath" location="${result}/tp" />
 	<property name="buckminster.output.root" location="${result}/output" />
 	<property name="buckminster.temp.root" location="${result}/temp" />
-	<property name="site.p2.dir" location="${workspace}/_temp/org.eclipse.emf.cdo.site_3.0.0-eclipse.feature/site.p2" />
+	<property name="site.p2.dir" location="${workspace}/_temp/org.eclipse.emf.cdo.site_4.0.0-eclipse.feature/site.p2" />
 
 	<!-- This macro executes the default application of an eclipse installation
 			 that resides in the folder ${buildtools}/@app -->

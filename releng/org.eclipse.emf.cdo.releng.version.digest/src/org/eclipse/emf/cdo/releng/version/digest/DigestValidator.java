@@ -115,7 +115,7 @@ public class DigestValidator extends VersionValidator
       }
 
       byte[] digest = getFolderDigest(memberStates);
-      System.out.println("Considered: " + container.getFullPath() + " --> " + formatDigest(digest));
+      VersionBuilder.trace("Considered: " + container.getFullPath() + " --> " + formatDigest(digest));
       result.setDigest(digest);
       result.setChildren(memberStates.toArray(new DigestValidatorState[memberStates.size()]));
     }
@@ -123,7 +123,7 @@ public class DigestValidator extends VersionValidator
     {
       IFile file = (IFile)resource;
       byte[] digest = getFileDigest(file);
-      System.out.println("Considered: " + file.getFullPath() + " --> " + formatDigest(digest));
+      VersionBuilder.trace("Considered: " + file.getFullPath() + " --> " + formatDigest(digest));
       result.setDigest(digest);
     }
 

@@ -23,7 +23,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.osgi.service.resolver.BundleDescription;
+import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.osgi.service.resolver.ExportPackageDescription;
+import org.eclipse.osgi.service.resolver.ImportPackageSpecification;
+import org.eclipse.osgi.service.resolver.VersionRange;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.core.plugin.PluginRegistry;
 
@@ -76,6 +79,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
         throw new IllegalStateException("Could not locate the plugin model base for project: " + getProject().getName());
       }
 
+      checkDependencyRanges(pluginModel);
       checkPackageExports(pluginModel);
 
       /*
@@ -237,6 +241,72 @@ public class VersionBuilder extends IncrementalProjectBuilder
     return new Element(name, version, Type.PLUGIN);
   }
 
+  private void checkDependencyRanges(IPluginModelBase pluginModel) throws CoreException, IOException
+  {
+    BundleDescription description = pluginModel.getBundleDescription();
+    for (BundleSpecification requiredBundle : description.getRequiredBundles())
+    {
+      VersionRange range = requiredBundle.getVersionRange();
+      if (isUnspecified(range.getMaximum()))
+      {
+        addRequireMarker(requiredBundle.getName(), "dependency must specify a version range");
+      }
+      else
+      {
+        if (!range.getIncludeMinimum())
+        {
+          addRequireMarker(requiredBundle.getName(), "dependency range must include the minimum");
+        }
+
+        if (range.getIncludeMaximum())
+        {
+          addRequireMarker(requiredBundle.getName(), "dependency range must not include the maximum");
+        }
+      }
+    }
+
+    for (ImportPackageSpecification importPackage : description.getImportPackages())
+    {
+      VersionRange range = importPackage.getVersionRange();
+      if (isUnspecified(range.getMaximum()))
+      {
+        addImportMarker(importPackage.getName(), "dependency must specify a version range");
+      }
+      else
+      {
+        if (!range.getIncludeMinimum())
+        {
+          addImportMarker(importPackage.getName(), "dependency range must include the minimum");
+        }
+
+        if (range.getIncludeMaximum())
+        {
+          addImportMarker(importPackage.getName(), "dependency range must not include the maximum");
+        }
+      }
+    }
+  }
+
+  private boolean isUnspecified(Version version)
+  {
+    if (version.getMajor() != Integer.MAX_VALUE)
+    {
+      return false;
+    }
+
+    if (version.getMinor() != Integer.MAX_VALUE)
+    {
+      return false;
+    }
+
+    if (version.getMicro() != Integer.MAX_VALUE)
+    {
+      return false;
+    }
+
+    return true;
+  }
+
   private void checkPackageExports(IPluginModelBase pluginModel) throws CoreException, IOException
   {
     BundleDescription description = pluginModel.getBundleDescription();
@@ -282,6 +352,20 @@ public class VersionBuilder extends IncrementalProjectBuilder
     }
 
     return false;
+  }
+
+  private void addRequireMarker(String name, String message) throws CoreException, IOException
+  {
+    IFile file = getProject().getFile(MANIFEST_PATH);
+    String regex = ".* " + name.replaceAll("\\.", "\\\\.") + ";bundle-version=\"([^\\\"]*)\".*";
+    Markers.addMarker(file, "'" + name + "' " + message, IMarker.SEVERITY_ERROR, regex);
+  }
+
+  private void addImportMarker(String name, String message) throws CoreException, IOException
+  {
+    IFile file = getProject().getFile(MANIFEST_PATH);
+    String regex = ".* " + name.replaceAll("\\.", "\\\\.") + ";version=\"([^\\\"]*)\".*";
+    Markers.addMarker(file, "'" + name + "' " + message, IMarker.SEVERITY_ERROR, regex);
   }
 
   private void addExportMarker(String name) throws CoreException, IOException

@@ -77,7 +77,7 @@ public interface CDOCommonRepository extends CDOTimeProvider
   /**
    * Returns <code>true</code> if this repository ensures referential integrity, <code>false</code> otherwise.
    * 
-   * @since 3.1
+   * @since 4.0
    */
   public boolean isEnsuringReferentialIntegrity();
 

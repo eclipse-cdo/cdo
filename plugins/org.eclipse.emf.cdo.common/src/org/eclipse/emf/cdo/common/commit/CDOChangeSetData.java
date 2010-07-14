@@ -34,14 +34,14 @@ public interface CDOChangeSetData
   /**
    * Returns a deep copy of this change set data.
    * 
-   * @since 3.1
+   * @since 4.0
    */
   public CDOChangeSetData copy();
 
   /**
    * Changes the internal state of this change set data by adding the changes of the given change set data.
    * 
-   * @since 3.1
+   * @since 4.0
    */
   public void merge(CDOChangeSetData changeSetData);
 

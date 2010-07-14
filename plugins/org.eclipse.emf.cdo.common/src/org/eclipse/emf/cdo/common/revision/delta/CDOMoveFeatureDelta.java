@@ -22,7 +22,7 @@ public interface CDOMoveFeatureDelta extends CDOFeatureDelta
   public int getNewPosition();
 
   /**
-   * @since 3.1
+   * @since 4.0
    */
   public Object getValue();
 }

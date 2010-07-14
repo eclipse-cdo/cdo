@@ -50,7 +50,7 @@ public final class CDOClassifierRef
   }
 
   /**
-   * @since 3.1
+   * @since 4.0
    */
   public CDOClassifierRef(String uri)
   {
@@ -86,7 +86,7 @@ public final class CDOClassifierRef
   }
 
   /**
-   * @since 3.1
+   * @since 4.0
    */
   public String getURI()
   {

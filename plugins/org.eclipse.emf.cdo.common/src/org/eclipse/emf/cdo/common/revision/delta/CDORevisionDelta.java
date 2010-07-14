@@ -32,7 +32,7 @@ public interface CDORevisionDelta extends CDORevisionKey
    * an object. Calling any method on this marker instance will result in an {@link UnsupportedOperationException} being
    * thrown.
    * 
-   * @since 3.1
+   * @since 4.0
    */
   public static final CDORevisionDelta DETACHED = new CDODetachedRevisionDeltaImpl();
 
@@ -47,7 +47,7 @@ public interface CDORevisionDelta extends CDORevisionKey
   public boolean isEmpty();
 
   /**
-   * @since 3.1
+   * @since 4.0
    */
   public CDORevisionDelta copy();
 

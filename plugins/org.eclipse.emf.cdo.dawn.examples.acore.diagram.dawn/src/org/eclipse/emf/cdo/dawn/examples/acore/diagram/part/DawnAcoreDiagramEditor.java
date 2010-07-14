@@ -141,6 +141,9 @@ public class DawnAcoreDiagramEditor extends AcoreDiagramEditor implements IDawnE
     }
   }
 
+  /**
+   * @since 1.0
+   */
   public CDOView getView()
   {
     return dawnEditorSupport.getView();

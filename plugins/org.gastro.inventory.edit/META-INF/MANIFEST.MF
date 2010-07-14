@@ -8,7 +8,7 @@ Bundle-Activator: org.gastro.inventory.provider.InventoryEditPlugin$Implementati
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.gastro.inventory.provider;version="3.0.0"
+Export-Package: org.gastro.inventory.provider;version="4.0.0"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.cdo.edit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.gastro.inventory;bundle-version="[4.0.0,5.0.0)";visibility:=reexport

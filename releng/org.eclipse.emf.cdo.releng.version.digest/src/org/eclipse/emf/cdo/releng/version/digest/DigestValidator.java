@@ -277,7 +277,42 @@ public class DigestValidator extends VersionValidator
     try
     {
       MessageDigest digest = MessageDigest.getInstance("SHA-1");
-      stream = new DigestInputStream(file.getContents(), digest);
+      stream = new DigestInputStream(file.getContents(), digest)
+      {
+        @Override
+        public int read() throws IOException
+        {
+          int read;
+          while ((read = super.read()) == 10 || read == 13)
+          {
+            // Read again
+          }
+
+          return read;
+        }
+
+        @Override
+        public int read(byte[] b, int off, int len) throws IOException
+        {
+          int read = super.read(b, off, len);
+          for (int i = off; i < off + read; i++)
+          {
+            byte c = b[i];
+            if (c == 10 || c == 13)
+            {
+              if (i + 1 < off + read)
+              {
+                System.arraycopy(b, i + 1, b, i, read - i - 1);
+                --i;
+              }
+
+              --read;
+            }
+          }
+
+          return read;
+        }
+      };
 
       while (stream.read(BUFFER) != -1)
       {

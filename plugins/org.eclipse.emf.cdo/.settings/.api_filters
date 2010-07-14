@@ -15,4 +15,11 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOObjectReferenceImpl.java" type="org.eclipse.emf.internal.cdo.CDOObjectReferenceImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectReferenceImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

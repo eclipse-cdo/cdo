@@ -20,10 +20,10 @@
      <package
        		uri="http://www.eclipse.org/emf/CDO/Eresource/2.0.0"
        		class="org.eclipse.emf.cdo.eresource.EresourcePackage"
-       		genModel="model/resource.genmodel"/>
+       		genModel="model/eresource.genmodel"/>
    </extension>
 
-   
+
    <extension
          point="org.eclipse.emf.ecore.protocol_parser">
       <parser
@@ -31,8 +31,8 @@
             protocolName="cdo">
       </parser>
    </extension>
-   
-  <extension 
+
+  <extension
   			point="org.eclipse.core.expressions.propertyTesters">
     <propertyTester
       id="org.eclipse.emf.cdo.SessionTester"
@@ -43,5 +43,5 @@
     </propertyTester>
   </extension>
 
-   
+
 </plugin>

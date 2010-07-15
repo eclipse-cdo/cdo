@@ -37,7 +37,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * @author David Bonneau
  */
-public class Bugzilla262875_Test extends AbstractOMTest
+public class Bugzilla_262875_Test extends AbstractOMTest
 {
   /** the length of the metadata sent in a buffer: channelID, correlationID */
   private static final short BUFFER_METADATA_LENTGH = 10;

@@ -33,7 +33,7 @@ import org.eclipse.spi.net4j.InternalChannel;
 /**
  * @author Eike Stepper
  */
-public class Bugzilla241463_Test extends AbstractTransportTest
+public class Bugzilla_241463_Test extends AbstractTransportTest
 {
   @Override
   protected IManagedContainer createContainer()

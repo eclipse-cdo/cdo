@@ -12,6 +12,8 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -867,7 +869,19 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         {
           CDORevisionDelta delta = (CDORevisionDelta)key;
           InternalCDORevision newRevision = oldRevision.copy();
-          newRevision.adjustForCommit(view.getBranch(), lastUpdateTime);
+
+          CDOBranchVersion target = delta.getTarget();
+          if (target != null)
+          {
+            newRevision.setBranchPoint(target.getBranch().getPoint(lastUpdateTime));
+            newRevision.setVersion(target.getVersion());
+            newRevision.setRevised(CDOBranchPoint.UNSPECIFIED_DATE);
+          }
+          else
+          {
+            newRevision.adjustForCommit(view.getBranch(), lastUpdateTime);
+          }
+
           delta.apply(newRevision);
 
           object.cdoInternalSetRevision(newRevision);

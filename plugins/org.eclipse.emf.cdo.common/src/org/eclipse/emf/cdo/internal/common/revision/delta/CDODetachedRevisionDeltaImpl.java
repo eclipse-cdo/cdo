@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -46,6 +47,11 @@ public class CDODetachedRevisionDeltaImpl implements CDORevisionDelta
   }
 
   public EClass getEClass()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CDOBranchVersion getTarget()
   {
     throw new UnsupportedOperationException();
   }

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.spi.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -44,4 +45,9 @@ public interface InternalCDORevisionDelta extends CDORevisionDelta
    * @since 3.0
    */
   public void setVersion(int version);
+
+  /**
+   * @since 4.0
+   */
+  public void setTarget(CDOBranchVersion target);
 }

@@ -207,6 +207,11 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     @Override
     public void startTransport() throws Exception
     {
+      if (System.getProperty("org.eclipse.net4j.tcp.acceptor.port") == null)
+      {
+        System.setProperty("org.eclipse.net4j.tcp.acceptor.port", "2037");
+      }
+
       IAcceptor acceptor = getAcceptor();
       LifecycleUtil.activate(acceptor);
 

@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 
 /**
@@ -20,5 +19,4 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
  */
 public interface CDORevisionKey extends CDOBranchVersion, CDOIDAndVersion
 {
-  public CDOID getID();
 }

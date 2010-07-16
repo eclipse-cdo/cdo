@@ -81,6 +81,9 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private CDOID resourceID;
 
+  /**
+   * On a client, between a local modification and the commit the value of this <i>ID</i> can be an EObject.
+   */
   private Object containerID;
 
   private int containingFeatureID;

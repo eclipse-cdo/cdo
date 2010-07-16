@@ -11,7 +11,10 @@
  */
 package org.eclipse.emf.cdo.common.revision.delta;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 
 import org.eclipse.emf.ecore.EClass;
@@ -36,6 +39,13 @@ public interface CDORevisionDelta extends CDORevisionKey
 
   public List<CDOFeatureDelta> getFeatureDeltas();
 
+  /**
+   * Applies the {@link #getFeatureDeltas() feature deltas} in this revision delta to the {@link CDORevisionData data}
+   * of the given revision.
+   * <p>
+   * The system data of the given revision, e.g. {@link CDOBranchPoint branch point} or {@link CDOBranchVersion branch
+   * version} of the given revision are <b>not</b> modified.
+   */
   public void apply(CDORevision revision);
 
   public void accept(CDOFeatureDeltaVisitor visitor);

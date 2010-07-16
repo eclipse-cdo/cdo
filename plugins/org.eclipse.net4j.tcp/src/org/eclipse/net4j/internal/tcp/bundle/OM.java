@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -30,6 +30,34 @@ public abstract class OM
   public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
 
   public static final OMLogger LOG = BUNDLE.logger();
+
+  /**
+   * @since 3.1
+   */
+  public static final String DEFAULT_PORT_PROPERTY = BUNDLE_ID + ".port";
+
+  /**
+   * @since 3.1
+   */
+  public static final int DEFAULT_PORT = 2036;
+
+  public static int getDefaultPort()
+  {
+    try
+    {
+      String property = BUNDLE.getPlatform().getProperty(DEFAULT_PORT_PROPERTY);
+      if (property != null)
+      {
+        return Integer.valueOf(property);
+      }
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
+
+    return DEFAULT_PORT;
+  }
 
   /**
    * @author Eike Stepper

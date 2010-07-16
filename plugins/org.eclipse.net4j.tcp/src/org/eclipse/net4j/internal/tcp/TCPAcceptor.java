@@ -60,7 +60,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
 
   private String address = DEFAULT_ADDRESS;
 
-  private int port = getDefaultPort();
+  private int port = DEFAULT_PORT;
 
   public TCPAcceptor()
   {
@@ -255,23 +255,5 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
   protected TCPServerConnector createConnector()
   {
     return new TCPServerConnector(this);
-  }
-
-  private static int getDefaultPort()
-  {
-    try
-    {
-      String property = System.getProperty(DEFAULT_PORT_PROPERTY);
-      if (property != null)
-      {
-        return Integer.valueOf(property);
-      }
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-    }
-
-    return DEFAULT_PORT;
   }
 }

@@ -530,17 +530,21 @@ public class AttributeTest extends AbstractCDOTest
 
     assertEquals(true, points.containsAll(points));
 
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6),
-        new Point(7, 8), new Point(9, 0) })));
-    assertEquals(true, points.containsAll(Arrays
-        .asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
+    assertEquals(
+        true,
+        points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6), new Point(7, 8),
+            new Point(9, 0) })));
+    assertEquals(true,
+        points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
     assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(9, 0) })));
     assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(9, 0) })));
 
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6),
-        new Point(7, 8), new Point(0, 0) })));
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8),
-        new Point(0, 0) })));
+    assertEquals(
+        false,
+        points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6), new Point(7, 8),
+            new Point(0, 0) })));
+    assertEquals(false,
+        points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(0, 0) })));
     assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(0, 0) })));
     assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(0, 0) })));
 
@@ -552,17 +556,21 @@ public class AttributeTest extends AbstractCDOTest
     points = polygon.getPoints();
     assertEquals(true, points.containsAll(points));
 
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6),
-        new Point(7, 8), new Point(9, 0) })));
-    assertEquals(true, points.containsAll(Arrays
-        .asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
+    assertEquals(
+        true,
+        points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6), new Point(7, 8),
+            new Point(9, 0) })));
+    assertEquals(true,
+        points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
     assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(9, 0) })));
     assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(9, 0) })));
 
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6),
-        new Point(7, 8), new Point(0, 0) })));
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8),
-        new Point(0, 0) })));
+    assertEquals(
+        false,
+        points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6), new Point(7, 8),
+            new Point(0, 0) })));
+    assertEquals(false,
+        points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(0, 0) })));
     assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(0, 0) })));
     assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(0, 0) })));
 
@@ -571,17 +579,21 @@ public class AttributeTest extends AbstractCDOTest
     points = polygon.getPoints();
     assertEquals(true, points.containsAll(points));
 
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6),
-        new Point(7, 8), new Point(9, 0) })));
-    assertEquals(true, points.containsAll(Arrays
-        .asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
+    assertEquals(
+        true,
+        points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6), new Point(7, 8),
+            new Point(9, 0) })));
+    assertEquals(true,
+        points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
     assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(9, 0) })));
     assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(9, 0) })));
 
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6),
-        new Point(7, 8), new Point(0, 0) })));
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8),
-        new Point(0, 0) })));
+    assertEquals(
+        false,
+        points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6), new Point(7, 8),
+            new Point(0, 0) })));
+    assertEquals(false,
+        points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(0, 0) })));
     assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(0, 0) })));
     assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(0, 0) })));
 
@@ -594,17 +606,21 @@ public class AttributeTest extends AbstractCDOTest
     points = polygon.getPoints();
     assertEquals(true, points.containsAll(points));
 
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6),
-        new Point(7, 8), new Point(9, 0) })));
-    assertEquals(true, points.containsAll(Arrays
-        .asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
+    assertEquals(
+        true,
+        points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6), new Point(7, 8),
+            new Point(9, 0) })));
+    assertEquals(true,
+        points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
     assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(9, 0) })));
     assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(9, 0) })));
 
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6),
-        new Point(7, 8), new Point(0, 0) })));
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8),
-        new Point(0, 0) })));
+    assertEquals(
+        false,
+        points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6), new Point(7, 8),
+            new Point(0, 0) })));
+    assertEquals(false,
+        points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(0, 0) })));
     assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(0, 0) })));
     assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(0, 0) })));
   }
@@ -767,5 +783,37 @@ public class AttributeTest extends AbstractCDOTest
     assertEquals(-1, points.lastIndexOf(new Point(0, 6)));
     assertEquals(-1, points.lastIndexOf(new Point(0, 8)));
     assertEquals(-1, points.lastIndexOf(new Point(0, 0)));
+  }
+
+  public void testManyValuedCustomDataType_Bugzilla_319950() throws Exception
+  {
+    Polygon polygon = getModel3Factory().createPolygon();
+    EList<Point> points = polygon.getPoints();
+    points.add(new Point(1, 2));
+    points.add(new Point(3, 4));
+    points.add(new Point(5, 6));
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+    resource.getContents().add(polygon);
+    transaction.commit();
+    session.close();
+
+    session = openSession();
+    transaction = session.openTransaction();
+    resource = transaction.getResource("/my/resource");
+
+    polygon = (Polygon)resource.getContents().get(0);
+    resource.getContents().remove(0); // DETACH/export !!!
+
+    transaction.commit();
+    session.close();
+
+    points = polygon.getPoints();
+    assertEquals(3, points.size());
+    assertInstanceOf(Point.class, points.get(0));
+    assertInstanceOf(Point.class, points.get(1));
+    assertInstanceOf(Point.class, points.get(2));
   }
 }

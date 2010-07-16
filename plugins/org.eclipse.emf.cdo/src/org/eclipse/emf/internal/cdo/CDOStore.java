@@ -123,7 +123,7 @@ public final class CDOStore implements EStore
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
-    return (InternalEObject)convertIdToObject(cdoObject.cdoView(), cdoObject,
+    return (InternalEObject)convertIDToObject(cdoObject.cdoView(), cdoObject,
         EcorePackage.eINSTANCE.eContainingFeature(), -1, revision.getContainerID());
   }
 
@@ -151,7 +151,7 @@ public final class CDOStore implements EStore
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
-    return (InternalEObject)convertIdToObject(cdoObject.cdoView(), cdoObject,
+    return (InternalEObject)convertIDToObject(cdoObject.cdoView(), cdoObject,
         EcorePackage.eINSTANCE.eContainingFeature(), -1, revision.getResourceID());
   }
 
@@ -565,14 +565,14 @@ public final class CDOStore implements EStore
 
       if (feature instanceof EReference)
       {
-        value = convertIdToObject(view, eObject, feature, index, value);
+        value = convertIDToObject(view, eObject, feature, index, value);
       }
       else if (FeatureMapUtil.isFeatureMap(feature))
       {
         FeatureMap.Entry entry = (FeatureMap.Entry)value;
         EStructuralFeature innerFeature = entry.getEStructuralFeature();
         Object innerValue = entry.getValue();
-        Object convertedValue = convertIdToObject(view, eObject, feature, index, innerValue);
+        Object convertedValue = convertIDToObject(view, eObject, feature, index, innerValue);
         if (convertedValue != innerValue)
         {
           value = FeatureMapUtil.createEntry(innerFeature, convertedValue);
@@ -591,7 +591,7 @@ public final class CDOStore implements EStore
     return value;
   }
 
-  private Object convertIdToObject(InternalCDOView view, EObject eObject, EStructuralFeature feature, int index,
+  private Object convertIDToObject(InternalCDOView view, EObject eObject, EStructuralFeature feature, int index,
       Object value)
   {
     // The EReference condition should be in the CDOType.convertToCDO.

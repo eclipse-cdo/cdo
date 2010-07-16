@@ -32,6 +32,7 @@ public class AllTestsUI extends AllTests
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
+    testClasses.add(DawnCreationWizardTest.class);
     testClasses.add(BasicUITest.class);
   }
 

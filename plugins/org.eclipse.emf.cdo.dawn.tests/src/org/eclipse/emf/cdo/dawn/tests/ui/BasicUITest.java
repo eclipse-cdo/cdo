@@ -42,9 +42,6 @@ public class BasicUITest extends AbstractCDOTest
   public void testGetEditorIdForDawnEditor()
   {
     final CDOSession session = openSession();
-
-    long timeStamp1;
-    long timeStamp2;
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test.acore_diagram"); //$NON-NLS-1$
 
@@ -56,8 +53,6 @@ public class BasicUITest extends AbstractCDOTest
   {
     final CDOSession session = openSession();
 
-    long timeStamp1;
-    long timeStamp2;
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/sample/test.acore_diagram"); //$NON-NLS-1$
 
@@ -76,16 +71,11 @@ public class BasicUITest extends AbstractCDOTest
   public void testOpenEditor() throws PartInitException
   {
     final CDOSession session = openSession();
-
-    // CDOConnectionUtil.instance.init("repo1", "jvm", "127.0.0.1");
-
     DawnAcoreDiagramEditorUtil.createDiagram(URI.createURI("dawn://repo1//test.acore_diagram"),
         URI.createURI("cdo://test.acore"), new NullProgressMonitor());
 
-    long timeStamp1;
-    long timeStamp2;
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test.acore_diagram"); //$NON-NLS-1$
+    CDOResource resource = transaction.createResource("/test.acore_diagram");
 
     String editorID = EditorDescriptionHelper.getEditorIdForDawnEditor(resource.getName());
     assertEquals(DawnAcoreDiagramEditor.ID, editorID);

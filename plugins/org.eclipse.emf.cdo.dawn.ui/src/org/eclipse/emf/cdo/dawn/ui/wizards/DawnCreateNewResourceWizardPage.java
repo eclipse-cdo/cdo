@@ -218,6 +218,7 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
   private void validatePage()
   {
     boolean valid = false;
+    System.out.println(resourceText.getText());
     if (resourceText.getText().length() != 0)
     {
       setPageComplete(true);
@@ -323,13 +324,13 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
     return resourceNamePrefix;
   }
 
-  public void setResourcePath(String resourcePathText)
+  public void setResourcePath(String text)
   {
-    if (!resourcePathText.endsWith("/") || !!resourcePathText.endsWith("\\"))
+    if (!text.endsWith("/") || !!text.endsWith("\\"))
     {
-      resourcePathText += "/";
+      text += "/";
     }
-    this.resourcePathText.setText(resourcePathText);
+    resourcePathText.setText(text);
   }
 
   public String getResourcePath()

@@ -267,7 +267,7 @@ public class GMFTest extends AbstractCDOTest
 
       System.out.println(resourcePath);
 
-      Resource emfResource = resourceSet.getResource(URI.createURI(resourcePath + "/testdata/simple.acore"), true);
+      // Resource emfResource = resourceSet.getResource(URI.createURI(resourcePath + "/testdata/simple.acore"), true);
       Resource gmfResource = resourceSet.getResource(URI.createURI(resourcePath + "/testdata/simple.acore_diagram"),
           true);
 

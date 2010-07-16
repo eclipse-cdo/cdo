@@ -33,7 +33,7 @@ public class AllTestsDawn extends AllTests
   {
     testClasses.add(TestFrameworkTest.class);
     testClasses.add(GMFTest.class);
-    // testClasses.add(DawnWrapperResourceTest.class);
+    testClasses.add(DawnWrapperResourceTest.class);
   }
 
   @Override

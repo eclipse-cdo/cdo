@@ -18,16 +18,15 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
-import org.eclipse.gmf.runtime.notation.View;
 
 import java.net.URL;
 
@@ -68,21 +67,15 @@ public class AbstractDawnTest extends AbstractCDOTest
     URL resourceURI = GMFTest.class.getResource("");
     String resourcePath = resourceURI.toString().substring(0, resourceURI.toString().lastIndexOf("/bin"));
 
-    System.out.println(resourcePath);
-
     Resource emfResource = resourceSet.getResource(
         URI.createURI(resourcePath + "/testdata/" + resourceName + "." + packageName), true);
     Resource gmfResource = resourceSet.getResource(
         URI.createURI(resourcePath + "/testdata/" + resourceName + "." + packageName + "_diagram"), true);
 
-    Diagram notationalRoot = (Diagram)gmfResource.getContents().get(0);
-    EObject semanticRoot = notationalRoot.getElement();
+    EcoreUtil.resolveAll(emfResource);
+    EcoreUtil.resolveAll(gmfResource);
 
-    for (Object o : notationalRoot.getPersistedChildren())
-    {
-      View view = (View)o;
-      view.getElement();
-    }
+    Diagram notationalRoot = (Diagram)gmfResource.getContents().get(0);
 
     ResourceSet dawnResourceSet = new ResourceSetImpl();
     dawnResourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("dawn", new DawnResourceFactoryImpl());
@@ -99,5 +92,4 @@ public class AbstractDawnTest extends AbstractCDOTest
     transaction.commit();
     transaction.close();
   }
-
 }

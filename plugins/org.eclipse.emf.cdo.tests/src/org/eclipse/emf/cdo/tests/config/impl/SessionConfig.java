@@ -207,11 +207,6 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     @Override
     public void startTransport() throws Exception
     {
-      if (System.getProperty("org.eclipse.net4j.tcp.acceptor.port") == null)
-      {
-        System.setProperty("org.eclipse.net4j.tcp.acceptor.port", "2037");
-      }
-
       IAcceptor acceptor = getAcceptor();
       LifecycleUtil.activate(acceptor);
 
@@ -278,13 +273,13 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     @Override
     public IAcceptor getAcceptor()
     {
-      return TCPUtil.getAcceptor(getCurrentTest().getServerContainer(), null);
+      return TCPUtil.getAcceptor(getCurrentTest().getServerContainer(), "0.0.0.0:2037");
     }
 
     @Override
     public IConnector getConnector()
     {
-      return TCPUtil.getConnector(getCurrentTest().getClientContainer(), CONNECTOR_HOST);
+      return TCPUtil.getConnector(getCurrentTest().getClientContainer(), CONNECTOR_HOST + ":2037");
     }
 
     @Override

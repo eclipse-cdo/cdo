@@ -11,6 +11,7 @@
 package org.eclipse.net4j.tcp;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
+import org.eclipse.net4j.internal.tcp.bundle.OM;
 
 /**
  * @author Eike Stepper
@@ -20,7 +21,11 @@ public interface ITCPAcceptor extends IAcceptor
 {
   public static final String DEFAULT_ADDRESS = "0.0.0.0"; //$NON-NLS-1$
 
-  public static final int DEFAULT_PORT = 2036;
+  /**
+   * The value of the <i>org.eclipse.net4j.tcp.port</i> bundle/system property if defined, the value <i>2036</i>
+   * otherwise.
+   */
+  public static final int DEFAULT_PORT = OM.getDefaultPort();
 
   public String getAddress();
 

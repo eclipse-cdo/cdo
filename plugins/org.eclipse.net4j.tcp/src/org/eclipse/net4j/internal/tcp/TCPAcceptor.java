@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -60,7 +60,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
 
   private String address = DEFAULT_ADDRESS;
 
-  private int port = DEFAULT_PORT;
+  private int port = getDefaultPort();
 
   public TCPAcceptor()
   {
@@ -208,7 +208,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
   @Override
   public String toString()
   {
-    return MessageFormat.format("TCPAcceptor[{0}:{1}]", address, port); //$NON-NLS-1$ 
+    return MessageFormat.format("TCPAcceptor[{0}:{1}]", address, port); //$NON-NLS-1$
   }
 
   @Override
@@ -255,5 +255,23 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
   protected TCPServerConnector createConnector()
   {
     return new TCPServerConnector(this);
+  }
+
+  private static int getDefaultPort()
+  {
+    try
+    {
+      String property = System.getProperty(DEFAULT_PORT_PROPERTY);
+      if (property != null)
+      {
+        return Integer.valueOf(property);
+      }
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
+
+    return DEFAULT_PORT;
   }
 }

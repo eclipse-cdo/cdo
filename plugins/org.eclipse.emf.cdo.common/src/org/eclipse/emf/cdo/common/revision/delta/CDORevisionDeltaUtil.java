@@ -50,9 +50,9 @@ public final class CDORevisionDeltaUtil
     return new CDORevisionDeltaImpl(revisionDelta, true);
   }
 
-  public static CDORevisionDelta create(CDORevision originRevision, CDORevision dirtyRevision)
+  public static CDORevisionDelta create(CDORevision sourceRevision, CDORevision targetRevision)
   {
-    return new CDORevisionDeltaImpl(originRevision, dirtyRevision);
+    return new CDORevisionDeltaImpl(sourceRevision, targetRevision);
   }
 
   /**

@@ -2058,5 +2058,4 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
   }
-
 }

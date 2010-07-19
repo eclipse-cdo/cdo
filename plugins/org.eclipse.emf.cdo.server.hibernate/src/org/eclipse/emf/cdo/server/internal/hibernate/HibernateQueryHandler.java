@@ -48,11 +48,6 @@ public class HibernateQueryHandler implements IQueryHandler
    */
   public void executeQuery(CDOQueryInfo info, IQueryContext context)
   {
-    if (!QUERY_LANGUAGE.equals(info.getQueryLanguage().toLowerCase()))
-    {
-      throw new IllegalArgumentException("Query language " + info.getQueryLanguage() + " not supported by this store"); //$NON-NLS-1$ //$NON-NLS-2$
-    }
-
     // get a transaction, the hibernateStoreAccessor is placed in a threadlocal
     // so all db access uses the same session.
     final Session session = hibernateStoreAccessor.getHibernateSession();

@@ -63,6 +63,7 @@ import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
@@ -283,7 +284,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
-    if (SQLQueryHandler.QUERY_LANGUAGE.equals(info.getQueryLanguage()))
+    String queryLanguage = info.getQueryLanguage();
+    if (StringUtil.equalsUpperOrLowerCase(queryLanguage, SQLQueryHandler.QUERY_LANGUAGE))
     {
       return new SQLQueryHandler(this);
     }

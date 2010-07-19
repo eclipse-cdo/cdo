@@ -45,6 +45,7 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessor;
 import org.eclipse.emf.cdo.spi.server.StoreChunkReader;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -490,9 +491,15 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
    */
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
-    final HibernateQueryHandler queryHandler = new HibernateQueryHandler();
-    queryHandler.setHibernateStoreAccessor(this);
-    return queryHandler;
+    String queryLanguage = info.getQueryLanguage();
+    if (StringUtil.equalsUpperOrLowerCase(queryLanguage, HibernateQueryHandler.QUERY_LANGUAGE))
+    {
+      final HibernateQueryHandler queryHandler = new HibernateQueryHandler();
+      queryHandler.setHibernateStoreAccessor(this);
+      return queryHandler;
+    }
+
+    return null;
   }
 
   /**

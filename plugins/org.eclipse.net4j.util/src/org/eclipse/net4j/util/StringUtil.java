@@ -86,6 +86,19 @@ public final class StringUtil
   }
 
   /**
+   * @since 3.1
+   */
+  public static boolean equalsUpperOrLowerCase(String s, String upperOrLowerCase)
+  {
+    if (s == null)
+    {
+      return upperOrLowerCase == null;
+    }
+
+    return s.equals(upperOrLowerCase.toLowerCase()) || s.equals(upperOrLowerCase.toUpperCase());
+  }
+
+  /**
    * @since 2.0
    */
   public static String capAll(String str)

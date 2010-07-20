@@ -10,8 +10,10 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IRepository.WriteAccessHandler;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
@@ -95,6 +97,11 @@ public class Bugzilla_319836_Test extends AbstractCDOTest
       }
 
       n3.getChildren().add(n2);
+
+      // Problem is with n2; the removal of its child has been lost
+      CDOID n2ID = CDOUtil.getCDOObject(n2).cdoID();
+      CDORevisionDelta revDelta = tr1.getRevisionDeltas().get(n2ID);
+      assertEquals(2, revDelta.getFeatureDeltas().size());
 
       tr1.commit();
 

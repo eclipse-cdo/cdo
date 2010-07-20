@@ -205,7 +205,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   private void attachOrReattach(InternalCDOObject object, InternalCDOTransaction transaction)
   {
     // Bug 283985 (Re-attachment)
-    if (transaction.getFormerRevisions().containsKey(object))
+    if (transaction.getFormerRevisionKeys().containsKey(object))
     {
       reattachObject(object, transaction);
     }
@@ -569,8 +569,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       InternalCDOTransaction transaction = transactionAndContents.getElement1();
       List<InternalCDOObject> contents = transactionAndContents.getElement2();
 
-      Map<InternalCDOObject, InternalCDORevision> formerRevisionMap = transaction.getFormerRevisions();
-      boolean reattaching = formerRevisionMap.containsKey(object);
+      boolean reattaching = transaction.getFormerRevisionKeys().containsKey(object);
 
       if (!reattaching)
       {
@@ -681,9 +680,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, InternalCDOTransaction transaction)
     {
       InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
-      InternalCDORevision formerRevision = transaction.getFormerRevisions().get(object);
-      CDOID id = formerRevision.getID();
+      CDORevisionKey revKey = transaction.getFormerRevisionKeys().get(object);
 
+      CDOID id = revKey.getID();
       object.cdoInternalSetID(id);
       object.cdoInternalSetView(transaction);
 
@@ -692,16 +691,15 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       InternalCDORevision revision = (InternalCDORevision)factory.createRevision(object.eClass());
       revision.setID(id);
       revision.setBranchPoint(transaction.getBranch().getHead());
-      revision.setVersion(formerRevision.getVersion());
+      revision.setVersion(revKey.getVersion());
 
       // Populate the revision based on the values in the CDOObject
       object.cdoInternalSetRevision(revision);
       object.cdoInternalPostAttach();
 
       // Compute a revision delta and register it with the tx
-      // CDOBranchVersion branchVersion = transaction.getBranch().getVersion(revision.getVersion());
-      // CDORevision originalRevision = revisionManager.getRevisionByVersion(id, branchVersion, -1, true);
-      CDORevisionDelta revisionDelta = CDORevisionDeltaUtil.create(formerRevision, revision);
+      CDORevision cleanRevision = revisionManager.getRevisionByVersion(id, revKey, -1, true);
+      CDORevisionDelta revisionDelta = CDORevisionDeltaUtil.create(cleanRevision, revision);
       transaction.registerRevisionDelta(revisionDelta);
       transaction.registerDirty(object, null);
       changeState(object, CDOState.DIRTY);

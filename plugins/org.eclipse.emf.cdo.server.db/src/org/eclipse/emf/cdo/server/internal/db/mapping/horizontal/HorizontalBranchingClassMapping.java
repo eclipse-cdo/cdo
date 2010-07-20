@@ -590,7 +590,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         CDOID id = revision.getID();
         if (accessor.isNewObject(id))
         {
-          // put new objects into objectTypeCache
+          // put new objects into objectTypeMapper
           long timeStamp = revision.getTimeStamp();
           HorizontalBranchingMappingStrategy mappingStrategy = (HorizontalBranchingMappingStrategy)getMappingStrategy();
           mappingStrategy.putObjectType(accessor, timeStamp, id, getEClass());

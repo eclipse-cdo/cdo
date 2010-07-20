@@ -83,6 +83,20 @@ public interface IMappingStrategy
   public static final String PROP_FORCE_NAMES_WITH_ID = "forceNamesWithID"; //$NON-NLS-1$
 
   /**
+   * Name of the integer property that configures the size of the object type in-memory cache. Possible configuration
+   * values are:
+   * <ul>
+   * <li>0 (zero). Don't use memory caching.
+   * <li>&gt;0. Use memory caching with the cache size given.
+   * </ul>
+   * Default is a memory cache size of 10,000,000.
+   * <p>
+   * 
+   * @since 4.0
+   */
+  public static final String PROP_OBJECT_TYPE_CACHE_SIZE = "objectTypeCacheSize"; //$NON-NLS-1$
+
+  /**
    * @return the store, this MappingStrategy instance belongs to.
    */
   public IDBStore getStore();

@@ -7,244 +7,87 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Stefan Winkler - bug 259402
- *    Stefan Winkler - redesign (prepared statements)
- *    Stefan Winkler - bug 276926
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
-import org.eclipse.emf.cdo.common.protocol.CDODataInput;
-import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
-import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IMetaDataManager;
-import org.eclipse.emf.cdo.server.db.IObjectTypeCache;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
-import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
-
-import org.eclipse.net4j.db.DBException;
-import org.eclipse.net4j.db.DBType;
-import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.ddl.IDBField;
-import org.eclipse.net4j.db.ddl.IDBIndex;
-import org.eclipse.net4j.db.ddl.IDBSchema;
-import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-
-import org.eclipse.emf.ecore.EClass;
-
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @since 4.0
  */
-public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
+public class ObjectTypeCache extends DelegatingObjectTypeMapper
 {
-  private static final String SQL_STATE_UNIQUE_KEY_VIOLATION = "23001";
+  public static final int DEFAULT_CACHE_CAPACITY = 10000000;
 
-  private IMappingStrategy mappingStrategy;
+  private Map<Long, Long> memoryCache;
 
-  private IDBTable table;
+  private int cacheSize;
 
-  private IDBField idField;
-
-  private IDBField typeField;
-
-  private IDBField timeField;
-
-  private String sqlDelete;
-
-  private String sqlInsert;
-
-  private String sqlSelect;
-
-  private IMetaDataManager metaDataManager;
-
-  public ObjectTypeCache()
+  public ObjectTypeCache(int cacheSize)
   {
-  }
-
-  public IMappingStrategy getMappingStrategy()
-  {
-    return mappingStrategy;
-  }
-
-  public void setMappingStrategy(IMappingStrategy mappingStrategy)
-  {
-    this.mappingStrategy = mappingStrategy;
-  }
-
-  public final CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id)
-  {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
-
-    try
-    {
-      stmt = statementCache.getPreparedStatement(sqlSelect, ReuseProbability.MAX);
-      stmt.setLong(1, CDOIDUtil.getLong(id));
-      DBUtil.trace(stmt.toString());
-      ResultSet resultSet = stmt.executeQuery();
-
-      if (!resultSet.next())
-      {
-        DBUtil.trace("ClassID for CDOID " + id + " not found"); //$NON-NLS-1$ //$NON-NLS-2$
-        return null;
-      }
-
-      long classID = resultSet.getLong(1);
-      EClass eClass = (EClass)metaDataManager.getMetaInstance(classID);
-      return new CDOClassifierRef(eClass);
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      statementCache.releasePreparedStatement(stmt);
-    }
-  }
-
-  public final void putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
-  {
-    PreparedStatement stmt = null;
-
-    try
-    {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlInsert, ReuseProbability.MAX);
-      stmt.setLong(1, CDOIDUtil.getLong(id));
-      stmt.setLong(2, metaDataManager.getMetaID(type));
-      stmt.setLong(3, timeStamp);
-      DBUtil.trace(stmt.toString());
-      int result = stmt.executeUpdate();
-
-      if (result != 1)
-      {
-        throw new DBException("Object type could not be inserted: " + id); //$NON-NLS-1$
-      }
-    }
-    catch (SQLException ex)
-    {
-      // Unique key violation can occur in rare cases (merging new objects from other branches)
-      if (!SQL_STATE_UNIQUE_KEY_VIOLATION.equals(ex.getSQLState()))
-      {
-        throw new DBException(ex);
-      }
-    }
-    finally
-    {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
-    }
-  }
-
-  public final void removeObjectType(IDBStoreAccessor accessor, CDOID id)
-  {
-    PreparedStatement stmt = null;
-
-    try
-    {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlDelete, ReuseProbability.MAX);
-      stmt.setLong(1, CDOIDUtil.getLong(id));
-      DBUtil.trace(stmt.toString());
-      int result = stmt.executeUpdate();
-
-      if (result != 1)
-      {
-        throw new DBException("Object type could not be deleted: " + id); //$NON-NLS-1$
-      }
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
-    }
-  }
-
-  public long getMaxID(Connection connection)
-  {
-    return DBUtil.selectMaximumLong(connection, idField);
-  }
-
-  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
-      throws IOException
-  {
-    String where = " WHERE " + timeField + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
-    DBUtil.serializeTable(out, connection, table, null, where);
-  }
-
-  public void rawImport(Connection connection, CDODataInput in) throws IOException
-  {
-    DBUtil.deserializeTable(in, connection, table);
+    this.cacheSize = cacheSize;
   }
 
   @Override
-  protected void doBeforeActivate() throws Exception
+  protected Long doGetObjectType(long id)
   {
-    super.doBeforeActivate();
-    checkState(mappingStrategy, "mappingStrategy"); //$NON-NLS-1$
+    return memoryCache.get(id);
+  }
+
+  @Override
+  protected void doPutObjectType(long id, long type)
+  {
+    memoryCache.put(id, type);
+  }
+
+  @Override
+  protected void doRemoveObjectType(long id)
+  {
+    memoryCache.remove(id);
+  }
+
+  @Override
+  protected Long doGetMaxID()
+  {
+    return null;
   }
 
   @Override
   protected void doActivate() throws Exception
   {
-    metaDataManager = getMappingStrategy().getStore().getMetaDataManager();
-
-    IDBSchema schema = mappingStrategy.getStore().getDBSchema();
-    table = schema.addTable(CDODBSchema.CDO_OBJECTS);
-    idField = table.addField(CDODBSchema.ATTRIBUTES_ID, DBType.BIGINT);
-    typeField = table.addField(CDODBSchema.ATTRIBUTES_CLASS, DBType.BIGINT);
-    timeField = table.addField(CDODBSchema.ATTRIBUTES_CREATED, DBType.BIGINT);
-    table.addIndex(IDBIndex.Type.UNIQUE, idField);
-
-    IDBStoreAccessor writer = getMappingStrategy().getStore().getWriter(null);
-    Connection connection = writer.getConnection();
-    IDBAdapter dbAdapter = mappingStrategy.getStore().getDBAdapter();
-
-    Statement statement = null;
-    try
-    {
-      statement = connection.createStatement();
-      dbAdapter.createTable(table, statement);
-      connection.commit();
-    }
-    catch (SQLException ex)
-    {
-      connection.rollback();
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(statement);
-      LifecycleUtil.deactivate(writer); // Don't let the null-context accessor go to the pool!
-    }
-
-    sqlSelect = "SELECT " + typeField + " FROM " + table + " WHERE " + idField + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-    sqlInsert = "INSERT INTO " + table + "(" + idField + "," + typeField + "," + timeField + ") VALUES (?, ?, ?)";
-    sqlDelete = "DELETE FROM " + table + " WHERE " + idField + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    super.doActivate();
+    memoryCache = Collections.synchronizedMap(new MemoryCache(cacheSize));
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    table = null;
-    idField = null;
-    typeField = null;
+    memoryCache = null;
     super.doDeactivate();
+  }
+
+  /**
+   * @author Stefan Winkler
+   */
+  private static final class MemoryCache extends LinkedHashMap<Long, Long>
+  {
+    private static final long serialVersionUID = 1L;
+
+    private int capacity;
+
+    public MemoryCache(int capacity)
+    {
+      super(capacity, 0.75f, true);
+      this.capacity = capacity;
+    }
+
+    @Override
+    protected boolean removeEldestEntry(java.util.Map.Entry<Long, Long> eldest)
+    {
+      return size() > capacity;
+    }
   }
 }

@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IObjectTypeCache;
+import org.eclipse.emf.cdo.server.db.IObjectTypeMapper;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
@@ -62,24 +62,24 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractHorizontalMappingStrategy.class);
 
   /**
-   * The associated object type cache.
+   * The associated object type mapper.
    */
-  private IObjectTypeCache objectTypeCache;
+  private IObjectTypeMapper objectTypeMapper;
 
   public CDOClassifierRef readObjectType(IDBStoreAccessor accessor, CDOID id)
   {
-    return objectTypeCache.getObjectType(accessor, id);
+    return objectTypeMapper.getObjectType(accessor, id);
   }
 
   public void putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
   {
-    objectTypeCache.putObjectType(accessor, timeStamp, id, type);
+    objectTypeMapper.putObjectType(accessor, timeStamp, id, type);
   }
 
   public long[] repairAfterCrash(IDBAdapter dbAdapter, Connection connection)
   {
     long minLocalID = getMinLocalID(connection);
-    long maxID = objectTypeCache.getMaxID(connection);
+    long maxID = objectTypeMapper.getMaxID(connection);
 
     long[] result = { minLocalID, maxID };
     return result;
@@ -173,7 +173,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
 
     out.writeBoolean(false);
-    objectTypeCache.rawExport(connection, out, fromCommitTime, toCommitTime);
+    objectTypeMapper.rawExport(connection, out, fromCommitTime, toCommitTime);
   }
 
   protected void rawExportList(CDODataOutput out, Connection connection, IListMapping listMapping, IDBTable attrTable,
@@ -211,7 +211,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       }
     }
 
-    objectTypeCache.rawImport(connection, in);
+    objectTypeMapper.rawImport(connection, in);
   }
 
   protected void rawImportReviseOldRevisions(Connection connection, IDBTable table)
@@ -242,26 +242,57 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    if (objectTypeCache == null)
+    if (objectTypeMapper == null)
     {
-      objectTypeCache = createObjectTypeCache();
-      LifecycleUtil.activate(objectTypeCache);
+      objectTypeMapper = createObjectTypeMapper();
+      LifecycleUtil.activate(objectTypeMapper);
     }
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    LifecycleUtil.deactivate(objectTypeCache);
-    objectTypeCache = null;
+    LifecycleUtil.deactivate(objectTypeMapper);
+    objectTypeMapper = null;
     super.doDeactivate();
   }
 
-  private IObjectTypeCache createObjectTypeCache()
+  private IObjectTypeMapper createObjectTypeMapper()
   {
-    ObjectTypeCache cache = new ObjectTypeCache();
+    ObjectTypeTable table = new ObjectTypeTable();
+    table.setMappingStrategy(this);
+
+    int cacheSize = getObjectTypeCacheSize();
+    if (cacheSize == 0)
+    {
+      return table;
+    }
+
+    ObjectTypeCache cache = new ObjectTypeCache(cacheSize);
     cache.setMappingStrategy(this);
+    cache.setDelegate(table);
     return cache;
+  }
+
+  private int getObjectTypeCacheSize()
+  {
+    int objectTypeCacheSize = ObjectTypeCache.DEFAULT_CACHE_CAPACITY;
+
+    Object value = getProperties().get(PROP_OBJECT_TYPE_CACHE_SIZE);
+    if (value != null)
+    {
+      try
+      {
+        int intValue = Integer.parseInt((String)value);
+        objectTypeCacheSize = intValue;
+      }
+      catch (NumberFormatException e)
+      {
+        OM.LOG.warn("Malformed configuration option for object type cache size. Using default.");
+      }
+    }
+
+    return objectTypeCacheSize;
   }
 
   /**

@@ -32,17 +32,12 @@ public class AllTestsMEMLegacy extends AllConfigs
   {
     super.initTestClasses(testClasses);
     // testClasses.add(PerformanceTest.class);
-
-    // testClasses.add(ExternalReferenceTest.class); // null value contraint violated
-    // testClasses.add(XATransactionTest.class);// we shoudl have an exception here
-
-    // // Legacy only
-    // testClasses.add(GMFTest.class);
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
     addScenario(parent, COMBINED, MEM, JVM, LEGACY);
+    addScenario(parent, COMBINED, MEM_BRANCHES, JVM, LEGACY);
   }
 }

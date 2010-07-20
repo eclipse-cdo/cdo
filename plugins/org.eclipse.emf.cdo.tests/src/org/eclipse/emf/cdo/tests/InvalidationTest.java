@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.util.InvalidObjectException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
+import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.IEvent;
@@ -36,7 +37,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
@@ -416,7 +416,7 @@ public class InvalidationTest extends AbstractCDOTest
       transactionA.commit();
 
       cdoidA = CDOUtil.getCDOObject(categoryA).cdoID();
-      ((InternalCDOTransaction)transactionA).removeObject(cdoidA);
+      ((CDOViewImpl)transactionA).removeObject(cdoidA);
     }
 
     // *************************************************************

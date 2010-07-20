@@ -138,17 +138,18 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     if (object instanceof InternalCDOObject)
     {
       InternalCDOObject internalCDOObject = FSMUtil.adapt(object, view);
-      if (internalCDOObject.cdoID() == null)
+      CDOID id = internalCDOObject.cdoID();
+      if (id == null)
       {
         throw new UnsupportedOperationException(OBJECT_NOT_PERSISTED_MESSAGE);
       }
 
-      if (internalCDOObject.cdoID().isTemporary())
+      if (id.isTemporary())
       {
         throw new UnsupportedOperationException(OBJECT_NOT_PERSISTED_MESSAGE);
       }
 
-      return internalCDOObject.cdoID();
+      return id;
     }
 
     return object;

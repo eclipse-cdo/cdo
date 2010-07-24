@@ -47,6 +47,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureDeltaVisitorImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -117,6 +118,8 @@ public class TransactionCommitContext implements InternalCommitContext
   private List<InternalCDORevision> detachedRevisions = new ArrayList<InternalCDORevision>();
 
   private List<Object> lockedObjects = new ArrayList<Object>();
+
+  private List<CDOID> lockedTargets;
 
   private List<CDOIDMetaRange> metaIDRanges = new ArrayList<CDOIDMetaRange>();
 
@@ -438,6 +441,7 @@ public class TransactionCommitContext implements InternalCommitContext
         idMappings = null;
       }
 
+      lockedTargets = null;
       rollbackMessage = null;
       newPackageUnits = null;
       newObjects = null;
@@ -564,6 +568,8 @@ public class TransactionCommitContext implements InternalCommitContext
   protected void lockObjects() throws InterruptedException
   {
     lockedObjects.clear();
+    lockedTargets = null;
+
     final boolean supportingBranches = transaction.getRepository().isSupportingBranches();
 
     CDOFeatureDeltaVisitor deltaTargetLocker = null;
@@ -601,6 +607,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
 
     InternalLockManager lockManager = transaction.getRepository().getLockManager();
+    InternalCDORevisionManager revisionManager = transaction.getRepository().getRevisionManager();
 
     for (int i = 0; i < dirtyObjectDeltas.length; i++)
     {
@@ -611,7 +618,6 @@ public class TransactionCommitContext implements InternalCommitContext
 
       if (hasContainmentChanges(delta))
       {
-        InternalCDORevisionManager revisionManager = transaction.getRepository().getRevisionManager();
         if (isContainerLocked(delta, revisionManager, lockManager))
         {
           lockedObjects.clear();
@@ -636,7 +642,24 @@ public class TransactionCommitContext implements InternalCommitContext
     {
       if (!lockedObjects.isEmpty())
       {
+        // First lock all objects (incl. possible ref targets).
+        // This is a transient operation, it does not check for existance!
         lockManager.lock(LockType.WRITE, transaction, lockedObjects, 1000);
+
+        // If all locks could be acquired, check if locked targets do still exist
+        if (lockedTargets != null)
+        {
+          for (CDOID id : lockedTargets)
+          {
+            InternalCDORevision revision = revisionManager.getRevision(id, transaction, CDORevision.UNCHUNKED,
+                CDORevision.DEPTH_NONE, true);
+            if (revision == null || revision instanceof DetachedCDORevision)
+            {
+              throw new IllegalStateException("Object " + id
+                  + " can not be referenced anymore because it has been detached");
+            }
+          }
+        }
       }
     }
     catch (TimeoutRuntimeException exception)
@@ -717,8 +740,22 @@ public class TransactionCommitContext implements InternalCommitContext
     if (value instanceof CDOIDObject)
     {
       CDOIDObject id = (CDOIDObject)value;
+      if (id.isNull())
+      {
+        return;
+      }
+
+      // Let this object be locked
       Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
       lockedObjects.add(key);
+
+      // Let this object be checked for existance after it has been locked
+      if (lockedTargets == null)
+      {
+        lockedTargets = new ArrayList<CDOID>();
+      }
+
+      lockedTargets.add(id);
     }
   }
 

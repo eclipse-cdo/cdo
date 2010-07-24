@@ -20,6 +20,7 @@ import org.eclipse.net4j.internal.tcp.TCPClientConnector;
 import org.eclipse.net4j.internal.tcp.TCPSelector;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tests.bundle.OM;
+import org.eclipse.net4j.util.collection.RoundRobinBlockingQueue;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -32,9 +33,11 @@ import org.eclipse.net4j.util.security.ResponseNegotiator;
 import org.eclipse.net4j.util.security.UserManager;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
+import org.eclipse.spi.net4j.Channel;
 import org.eclipse.spi.net4j.InternalChannel;
 
 import java.nio.channels.ServerSocketChannel;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -502,4 +505,48 @@ public class TCPConnectorTest extends AbstractOMTest
       OM.LOG.info("Expected IllegalStateException:", ex); //$NON-NLS-1$
     }
   }
+
+  public void testRoundRobinBlockingQueue() throws Exception
+  {
+    BlockingQueue<IChannel> queue = new RoundRobinBlockingQueue<IChannel>();
+
+    Channel[] channels = new Channel[3];
+
+    for (int i = 0; i < channels.length; i++)
+    {
+      Channel c = new Channel();
+      c.setID((short)i);
+      channels[i] = c;
+    }
+
+    assertTrue(queue.isEmpty());
+    assertNull(queue.peek());
+    assertNull(queue.poll());
+
+    // Order will be 0000...1111...2222...
+    for (int i = 0; i < channels.length; i++)
+    {
+      for (int j = 0; j < 10; j++)
+      {
+        queue.put(channels[i]);
+      }
+    }
+
+    for (int i = 0; i < 30; i++)
+    {
+      IChannel peek1 = queue.peek();
+      IChannel peek2 = queue.peek();
+      assertSame(peek1, peek2);
+
+      IChannel poll = queue.poll();
+      // The order should be 012012012012...
+      assertEquals(i % 3, poll.getID());
+      assertSame(peek1, poll);
+    }
+
+    assertTrue(queue.isEmpty());
+    assertNull(queue.peek());
+    assertNull(queue.poll());
+  }
+
 }

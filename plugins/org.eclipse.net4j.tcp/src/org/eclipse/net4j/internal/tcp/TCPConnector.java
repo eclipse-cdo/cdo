@@ -22,8 +22,9 @@ import org.eclipse.net4j.tcp.ITCPActiveSelectorListener;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.ITCPNegotiationContext;
 import org.eclipse.net4j.tcp.ITCPSelector;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.RoundRobinBlockingQueue;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -40,7 +41,6 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author Eike Stepper
@@ -56,7 +56,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   @ExcludeFromDump
   private SelectionKey selectionKey;
 
-  private BlockingQueue<InternalChannel> writeQueue = new LinkedBlockingQueue<InternalChannel>();
+  private BlockingQueue<InternalChannel> writeQueue = new RoundRobinBlockingQueue<InternalChannel>();
 
   private IBuffer inputBuffer;
 
@@ -438,15 +438,5 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
 
       super.setFinished(success);
     }
-
-    // @Override
-    // protected void finalize() throws Throwable
-    // {
-    // if (buffer != null)
-    // {
-    // buffer.release();
-    // buffer = null;
-    // }
-    // }
   }
 }

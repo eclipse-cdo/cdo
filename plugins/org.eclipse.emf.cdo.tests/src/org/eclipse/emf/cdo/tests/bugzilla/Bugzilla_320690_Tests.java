@@ -37,7 +37,7 @@ public class Bugzilla_320690_Tests extends AbstractCDOTest
   public void testLockRefTargets() throws Exception
   {
     CDOSession session1 = openSession();
-    // session1.options().setPassiveUpdateEnabled(false);
+    session1.options().setPassiveUpdateEnabled(false);
     CDOTransaction transaction1 = session1.openTransaction();
 
     msg("Creating test data");
@@ -53,7 +53,7 @@ public class Bugzilla_320690_Tests extends AbstractCDOTest
     dumpAllRevisions(getRepository().getStore());
 
     CDOSession session2 = openSession();
-    // session2.options().setPassiveUpdateEnabled(false);
+    session2.options().setPassiveUpdateEnabled(false);
     CDOTransaction transaction2 = session2.openTransaction();
     RefSingleNonContainedNPL nonContainer2 = transaction2.getObject(nonContainer1);
     ContainedElementNoOpposite contained2 = transaction2.getObject(contained1);

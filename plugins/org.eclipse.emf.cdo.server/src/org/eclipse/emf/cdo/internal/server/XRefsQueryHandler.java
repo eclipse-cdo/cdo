@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.State;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryContext;
@@ -120,9 +121,10 @@ public class XRefsQueryHandler implements IQueryHandler
   public static void collectSourceCandidates(EClass eClass, Collection<EClass> concreteTypes,
       Map<EClass, List<EReference>> sourceCandidates)
   {
+
     for (EStructuralFeature eStructuralFeature : eClass.getEStructuralFeatures())
     {
-      if (eStructuralFeature instanceof EReference)
+      if (eStructuralFeature instanceof EReference && EMFUtil.isPersistent(eStructuralFeature))
       {
         collectSourceCandidates((EReference)eStructuralFeature, concreteTypes, sourceCandidates);
       }

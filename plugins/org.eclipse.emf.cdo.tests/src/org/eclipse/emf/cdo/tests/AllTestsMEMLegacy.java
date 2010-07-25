@@ -10,10 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
-
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -28,16 +24,10 @@ public class AllTestsMEMLegacy extends AllConfigs
   }
 
   @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
-  {
-    super.initTestClasses(testClasses);
-    // testClasses.add(PerformanceTest.class);
-  }
-
-  @Override
   protected void initConfigSuites(TestSuite parent)
   {
     addScenario(parent, COMBINED, MEM, JVM, LEGACY);
+    addScenario(parent, COMBINED, MEM_AUDITS, JVM, LEGACY);
     addScenario(parent, COMBINED, MEM_BRANCHES, JVM, LEGACY);
   }
 }

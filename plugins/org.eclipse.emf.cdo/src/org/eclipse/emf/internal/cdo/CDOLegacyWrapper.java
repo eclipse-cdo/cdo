@@ -416,12 +416,14 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     {
       registerWrapper(this);
       counter.increment();
-      revisionToInstanceContainment();
-
+      revisionToInstanceContainer();
+     
       for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(revision.getEClass()))
       {
         revisionToInstanceFeature(feature);
       }
+      
+      revisionToInstanceResource();
     }
     catch (RuntimeException ex)
     {
@@ -446,15 +448,24 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
-  protected void revisionToInstanceContainment()
+  /**
+   * @since 4.0
+   */
+  protected void revisionToInstanceContainer()
+  {
+    Object containerID = revision.getContainerID();
+    InternalEObject container = getEObjectFromPotentialID(view, null, containerID);
+    setInstanceContainer(container, revision.getContainingFeatureID());
+  }
+
+  /**
+   * @since 4.0
+   */
+  protected void revisionToInstanceResource()
   {
     CDOID resourceID = revision.getResourceID();
     InternalEObject resource = getEObjectFromPotentialID(view, null, resourceID);
     setInstanceResource((Resource.Internal)resource);
-
-    Object containerID = revision.getContainerID();
-    InternalEObject container = getEObjectFromPotentialID(view, null, containerID);
-    setInstanceContainer(container, revision.getContainingFeatureID());
   }
 
   /**

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
@@ -305,6 +306,11 @@ public class XRefsQueryHandler implements IQueryHandler
 
     public boolean addXRef(CDOID targetID, CDOID sourceID, EReference sourceReference, int sourceIndex)
     {
+      if (CDOIDUtil.isNull(targetID))
+      {
+        return true;
+      }
+
       Object[] result = { targetID, sourceID, sourceReference, sourceIndex };
       return context.addResult(result);
     }

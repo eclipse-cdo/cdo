@@ -706,16 +706,11 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       throw new IllegalArgumentException("Non-audit mode does not support timestamp specification");
     }
 
-    if (CDOBranch.MAIN_BRANCH_ID != context.getBranch().getID())
+    if (!context.getBranch().isMainBranch())
     {
       throw new IllegalArgumentException("Non-audit mode does not support branch specification");
     }
 
-    StringBuilder builder = new StringBuilder();
-    builder.append("(");
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append("=0)"); //$NON-NLS-1$
-
-    return builder.toString();
+    return CDODBSchema.ATTRIBUTES_REVISED + "=0";
   }
 }

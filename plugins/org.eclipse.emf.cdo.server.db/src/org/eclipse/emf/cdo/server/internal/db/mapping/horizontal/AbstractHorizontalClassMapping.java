@@ -719,7 +719,13 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       builder.append(" FROM ");
       builder.append(tableName);
       builder.append(" WHERE ");
+      builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+      builder.append(">0 AND ");
       builder.append(where);
+      builder.append(" AND ");
+      builder.append(valueField);
+      builder.append(" IN ");
+      builder.append(idString);
       String sql = builder.toString();
 
       ResultSet resultSet = null;

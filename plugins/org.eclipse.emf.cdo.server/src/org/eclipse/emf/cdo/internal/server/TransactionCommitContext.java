@@ -809,7 +809,11 @@ public class TransactionCommitContext implements InternalCommitContext
 
       public boolean addXRef(CDOID targetID, CDOID sourceID, EReference sourceReference, int sourceIndex)
       {
-        xrefs.add(sourceID);
+        if (!CDOIDUtil.isNull(targetID))
+        {
+          xrefs.add(sourceID);
+        }
+
         return true;
       }
     };

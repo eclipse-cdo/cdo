@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -803,17 +804,9 @@ public class AttributeTest extends AbstractCDOTest
     session = openSession();
     transaction = session.openTransaction();
     resource = transaction.getResource("/my/resource");
+    EList<EObject> contents = resource.getContents();
 
-    polygon = (Polygon)resource.getContents().get(0);
-    resource.getContents().remove(0); // DETACH/export !!!
-
-    transaction.commit();
-    session.close();
-
-    points = polygon.getPoints();
-    assertEquals(3, points.size());
-    assertInstanceOf(Point.class, points.get(0));
-    assertInstanceOf(Point.class, points.get(1));
-    assertInstanceOf(Point.class, points.get(2));
+    // java.lang.ClassCastException: org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl
+    EcoreUtil.copyAll(contents);
   }
 }

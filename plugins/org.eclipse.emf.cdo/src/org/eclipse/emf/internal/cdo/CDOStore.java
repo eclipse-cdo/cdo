@@ -190,16 +190,15 @@ public final class CDOStore implements EStore
     {
       if (feature.isMany())
       {
-        Object value = get(eObject, feature, NO_INDEX);
-
-        @SuppressWarnings("unchecked")
-        List<Object> list = (List<Object>)value;
+        InternalCDORevision revision = getRevisionForReading(cdoObject);
+        CDOList list = revision.getList(feature);
         return list != null && !list.isEmpty();
       }
 
       return !ObjectUtil.equals(eObject.eGet(feature), feature.getDefaultValue());
     }
 
+    // TODO This get() may not work for lists, see above
     Object value = get(eObject, feature, NO_INDEX);
     return value != null;
   }

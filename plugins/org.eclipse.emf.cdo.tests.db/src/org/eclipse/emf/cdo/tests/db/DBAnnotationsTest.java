@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 
 /**
@@ -130,8 +129,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
       @Override
       protected void doVerify() throws Exception
       {
-        DatabaseMetaData metaData = getStatement().getConnection().getMetaData();
-        ResultSet rset = metaData.getColumns(null, null, "PRODUCT1", "NAME");
+        ResultSet rset = getMetaData().getColumns(null, null, "PRODUCT1", "NAME");
         rset.next();
         assertEquals("8", rset.getString(7));
       }
@@ -173,8 +171,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
       @Override
       protected void doVerify() throws Exception
       {
-        DatabaseMetaData metaData = getStatement().getConnection().getMetaData();
-        ResultSet rset = metaData.getColumns(null, null, "CATEGORY", "NAME");
+        ResultSet rset = getMetaData().getColumns(null, null, "CATEGORY", "NAME");
         rset.next();
         assertEquals("CLOB", rset.getString(6));
       }
@@ -212,8 +209,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
       @Override
       protected void doVerify() throws Exception
       {
-        DatabaseMetaData metaData = getStatement().getConnection().getMetaData();
-        ResultSet rset = metaData.getTables(null, null, "SUBJECT", null);
+        ResultSet rset = getMetaData().getTables(null, null, "SUBJECT", null);
         rset.next();
         assertEquals("SUBJECT", rset.getString(3));
       }
@@ -251,8 +247,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
       @Override
       protected void doVerify() throws Exception
       {
-        DatabaseMetaData metaData = getStatement().getConnection().getMetaData();
-        ResultSet rset = metaData.getColumns(null, null, "CATEGORY", "TOPIC");
+        ResultSet rset = getMetaData().getColumns(null, null, "CATEGORY", "TOPIC");
         rset.next();
         assertEquals("TOPIC", rset.getString(4));
       }
@@ -294,8 +289,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
       @Override
       protected void doVerify() throws Exception
       {
-        DatabaseMetaData metaData = getStatement().getConnection().getMetaData();
-        ResultSet rset = metaData.getColumns(null, null, "CATEGORY", "TOPIC");
+        ResultSet rset = getMetaData().getColumns(null, null, "CATEGORY", "TOPIC");
         rset.next();
         assertEquals("TOPIC", rset.getString(4));
         assertEquals("CLOB", rset.getString(6));
@@ -332,8 +326,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
       @Override
       protected void doVerify() throws Exception
       {
-        DatabaseMetaData metaData = getStatement().getConnection().getMetaData();
-        ResultSet rset = metaData.getTables(null, null, null, null);
+        ResultSet rset = getMetaData().getTables(null, null, null, null);
 
         boolean orderDetailTableCreated = false;
         boolean companyTableCreated = false;

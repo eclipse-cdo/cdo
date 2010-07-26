@@ -34,6 +34,8 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -88,6 +90,16 @@ public abstract class DBStoreVerifier
       ex.printStackTrace();
       return null;
     }
+  }
+
+  protected Connection getConnection() throws SQLException
+  {
+    return getStatement().getConnection();
+  }
+
+  protected DatabaseMetaData getMetaData() throws SQLException
+  {
+    return getConnection().getMetaData();
   }
 
   protected List<IClassMapping> getClassMappings()
@@ -367,8 +379,8 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          assertEquals("Index " + indexShouldBe + " missing for ID" + id + "v" + version, indexShouldBe++, resultSet
-              .getInt(1));
+          assertEquals("Index " + indexShouldBe + " missing for ID" + id + "v" + version, indexShouldBe++,
+              resultSet.getInt(1));
         }
       }
       catch (AssertionFailedError e)

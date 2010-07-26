@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBUtil;
@@ -28,6 +29,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -79,6 +81,14 @@ public class AllTestsDBH2 extends DBConfigs
     {
       super(name);
       this.mappingStrategy = mappingStrategy;
+    }
+
+    @Override
+    protected void initRepositoryProperties(Map<String, String> props)
+    {
+      super.initRepositoryProperties(props);
+      props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
+      props.put(IRepository.Props.SUPPORTING_BRANCHES, "false");
     }
 
     @SuppressWarnings("unchecked")

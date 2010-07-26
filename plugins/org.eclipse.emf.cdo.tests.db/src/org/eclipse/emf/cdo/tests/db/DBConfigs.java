@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.BranchingTestSameSession;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 import org.eclipse.emf.cdo.tests.FeatureMapTest;
+import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
 import org.eclipse.emf.cdo.tests.MergingTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
@@ -36,8 +37,12 @@ public abstract class DBConfigs extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
     testClasses.add(Net4jDBTest.class);
+    testClasses.add(DBAnnotationsTest.class);
+    testClasses.add(DBStoreTest.class);
+    testClasses.add(SQLQueryTest.class);
 
     super.initTestClasses(testClasses);
+    testClasses.remove(MEMStoreQueryTest.class);
 
     // remove BranchingTests because most mappings do not support it
     // Subclasses should add Banching tests if supported
@@ -56,10 +61,6 @@ public abstract class DBConfigs extends AllConfigs
       testClasses.remove(AuditTestSameSession.class);
       testClasses.remove(Bugzilla_252214_Test.class);
     }
-
-    testClasses.add(DBStoreTest.class);
-    testClasses.add(SQLQueryTest.class);
-    testClasses.add(DBAnnotationsTest.class);
 
     // fails because of Bug 284109
     testClasses.remove(XATransactionTest.class);

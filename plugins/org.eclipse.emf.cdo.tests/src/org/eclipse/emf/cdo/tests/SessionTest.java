@@ -167,7 +167,9 @@ public class SessionTest extends AbstractCDOTest
     final CDOTransaction transaction = openSession().openTransaction();
     transaction.createResource("ttt");
 
-    final CountDownLatch latch = new CountDownLatch(1);
+    final CountDownLatch startLatch = new CountDownLatch(1);
+    final CountDownLatch stopLatch = new CountDownLatch(1);
+
     new Thread()
     {
       @Override
@@ -175,9 +177,12 @@ public class SessionTest extends AbstractCDOTest
       {
         try
         {
-          latch.await();
+          startLatch.await();
+
           msg("Committing NOW!");
           transaction.commit();
+
+          stopLatch.countDown();
         }
         catch (Exception ex)
         {
@@ -188,8 +193,9 @@ public class SessionTest extends AbstractCDOTest
 
     CDOSession session2 = openSession();
 
-    latch.countDown();
+    startLatch.countDown();
     assertEquals(true, session2.waitForUpdate(System.currentTimeMillis(), DEFAULT_TIMEOUT));
+    stopLatch.await();
 
     transaction.getSession().close();
     session2.close();

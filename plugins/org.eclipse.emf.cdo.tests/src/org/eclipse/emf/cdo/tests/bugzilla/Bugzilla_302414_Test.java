@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class Bugzilla_302414_Test extends AbstractCDOTest
 {
-  public void test() throws CommitException
+  public void test1() throws CommitException
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
@@ -52,8 +52,47 @@ public class Bugzilla_302414_Test extends AbstractCDOTest
       company.getPurchaseOrders().add(Model1Factory.eINSTANCE.createPurchaseOrder());
     }
 
-    // The following statement must not fail!
-    list.remove(bar);
+    try
+    {
+      list.remove(bar);
+    }
+    catch (ArrayIndexOutOfBoundsException e)
+    {
+      e.printStackTrace();
+      fail("Should not have thrown " + e.getClass().getName());
+    }
+
+    tx.close();
+    session.close();
+  }
+
+  public void test2() throws CommitException
+  {
+    CDOSession session = openSession();
+    CDOTransaction tx = session.openTransaction();
+    CDOResource r1 = tx.createResource("/r1"); //$NON-NLS-1$
+
+    Company company = Model1Factory.eINSTANCE.createCompany();
+    r1.getContents().add(company);
+    tx.commit();
+
+    List<PurchaseOrder> list = company.getPurchaseOrders();
+
+    try
+    {
+      for (int i = 0; i < 20; i++)
+      {
+        PurchaseOrder foo1 = Model1Factory.eINSTANCE.createPurchaseOrder();
+        PurchaseOrder foo2 = Model1Factory.eINSTANCE.createPurchaseOrder();
+        list.add(foo1);
+        list.add(foo2);
+        list.remove(foo1);
+      }
+    }
+    catch (ArrayIndexOutOfBoundsException e)
+    {
+      fail("Should not have thrown " + e.getClass().getName());
+    }
 
     tx.close();
     session.close();

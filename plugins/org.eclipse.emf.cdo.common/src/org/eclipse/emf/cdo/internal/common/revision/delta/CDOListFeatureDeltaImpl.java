@@ -160,39 +160,39 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
 
   private void reconstructAddedIndicesWithNoCopy()
   {
+    // Note that cachedIndices and cachedSources are always either both null or
+    // both non-null, and in the latter case, are always of the same length.
+    // Furthermore, there can only be unprocessedFeatureDeltas if cachesIndices
+    // and cachedSources are non-null.
+
     if (cachedIndices == null || unprocessedFeatureDeltas != null)
     {
-      List<CDOFeatureDelta> featureDeltasToBeProcessed = unprocessedFeatureDeltas == null ? featureDeltas
-          : unprocessedFeatureDeltas;
-
-      // Actually the required capacity is the number of ListTargetAdding instances in the
-      // featureDeltasToBeProcessed.. so this is an overestimate
-      int requiredCapacity = featureDeltasToBeProcessed.size() + 1;
-
       if (cachedIndices == null)
       {
-        cachedIndices = new int[1 + featureDeltas.size()];
+        int initialCapacity = featureDeltas.size() + 1;
+        cachedIndices = new int[initialCapacity];
+        cachedSources = new ListTargetAdding[initialCapacity];
       }
-      else if (cachedIndices.length < requiredCapacity)
+      else
+      // i.e. unprocessedFeatureDeltas != null
       {
-        int newCapacity = Math.max(requiredCapacity, cachedIndices.length * 3 / 2);
-        int[] newElements = new int[newCapacity];
-        System.arraycopy(cachedIndices, 0, newElements, 0, cachedIndices.length);
-        cachedIndices = newElements;
+        int requiredCapacity = 1 + cachedIndices[0] + unprocessedFeatureDeltas.size();
+        if (cachedIndices.length < requiredCapacity)
+        {
+          int newCapacity = Math.max(requiredCapacity, cachedIndices.length * 2);
+
+          int[] newIndices = new int[newCapacity];
+          System.arraycopy(cachedIndices, 0, newIndices, 0, cachedIndices.length);
+          cachedIndices = newIndices;
+
+          ListTargetAdding[] newSources = new ListTargetAdding[newCapacity];
+          System.arraycopy(cachedSources, 0, newSources, 0, cachedSources.length);
+          cachedSources = newSources;
+        }
       }
 
-      if (cachedSources == null)
-      {
-        cachedSources = new ListTargetAdding[requiredCapacity];
-      }
-      else if (cachedSources.length <= requiredCapacity)
-      {
-        int newCapacity = Math.max(requiredCapacity, cachedSources.length * 3 / 2);
-        ListTargetAdding[] newElements = new ListTargetAdding[newCapacity];
-        System.arraycopy(cachedSources, 0, newElements, 0, cachedSources.length);
-        cachedSources = newElements;
-      }
-
+      List<CDOFeatureDelta> featureDeltasToBeProcessed = unprocessedFeatureDeltas == null ? featureDeltas
+          : unprocessedFeatureDeltas;
       for (CDOFeatureDelta featureDelta : featureDeltasToBeProcessed)
       {
         if (featureDelta instanceof ListIndexAffecting)

@@ -41,6 +41,7 @@ import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
@@ -137,7 +138,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
@@ -175,7 +175,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private String commitComment;
 
   // Bug 283985 (Re-attachment)
-  private WeakHashMap<InternalCDOObject, InternalCDORevision> formerRevisions = new WeakHashMap<InternalCDOObject, InternalCDORevision>();
+  private Map<InternalCDOObject, CDORevisionKey> formerRevisionKeys = new HashMap<InternalCDOObject, CDORevisionKey>();
 
   // Bug 283985 (Re-attachment)
   private final ThreadLocal<Boolean> providingCDOID = new InheritableThreadLocal<Boolean>()
@@ -1157,9 +1157,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     else
     {
       getLastSavepoint().getDetachedObjects().put(id, object);
-      if (!formerRevisions.containsKey(object))
+      if (!formerRevisionKeys.containsKey(object))
       {
-        formerRevisions.put(object, object.cdoRevision());
+        CDORevisionKey revKey = CDORevisionUtil.createRevisionKey(object.cdoRevision());
+        formerRevisionKeys.put(object, revKey);
       }
 
       // Object may have been reattached previously, in which case it must
@@ -1518,7 +1519,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     firstSavepoint.getSharedDetachedObjects().clear();
 
     // Bug 283985 (Re-attachment)
-    formerRevisions.clear();
+    formerRevisionKeys.clear();
 
     dirty = false;
     conflict = 0;
@@ -1745,9 +1746,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return lastSavepoint.getAllDetachedObjects();
   }
 
+  public Map<InternalCDOObject, CDORevisionKey> getFormerRevisionKeys()
+  {
+    return formerRevisionKeys;
+  }
+
   public Map<InternalCDOObject, InternalCDORevision> getFormerRevisions()
   {
-    return formerRevisions;
+    throw new UnsupportedOperationException("This method is no longer supported. Call getFormerRevisionKeys() instead.");
   }
 
   @Override
@@ -1757,16 +1763,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     // The super implementation will return null for a transient (unattached) object;
     // but in a tx, an transient object may previously have been attached, so we consult
-    // the formerRevisions -- unless this is being called indirectly through provideCDOID.
+    // the formerIDs -- unless this is being called indirectly through provideCDOID.
     // The latter case occurs when deltas or revisions are being written out to a stream; in
     // which case null must be returned (for transients) so that the caller will detect a
     // dangling reference
     if (!providingCDOID.get().booleanValue() && id == null)
     {
-      CDORevision formerRevision = formerRevisions.get(object);
-      if (formerRevision != null)
+      CDORevisionKey revKey = formerRevisionKeys.get(object);
+      if (revKey != null)
       {
-        id = formerRevision.getID();
+        id = revKey.getID();
       }
     }
 

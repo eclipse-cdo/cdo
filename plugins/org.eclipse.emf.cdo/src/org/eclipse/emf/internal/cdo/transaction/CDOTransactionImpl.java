@@ -348,15 +348,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       CDOChangeSet targetChanges = createChangeSet(ids, ancestorInfo, targetInfo);
       CDOChangeSet sourceChanges = createChangeSet(ids, ancestorInfo, sourceInfo);
-      CDOChangeSetData result = merger.merge(targetChanges, sourceChanges);
 
+      CDOChangeSetData result = merger.merge(targetChanges, sourceChanges);
       if (result == null)
       {
         return null;
-      }
-
-      if (sourceBranch.isLocal())
-      {
       }
 
       return applyChangeSetData(result, ancestorInfo, targetInfo, sourceInfo);

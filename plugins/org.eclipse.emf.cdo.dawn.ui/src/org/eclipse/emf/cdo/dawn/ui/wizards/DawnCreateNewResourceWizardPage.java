@@ -171,10 +171,18 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
 
   private void createResourceInput()
   {
-    Label label1 = new Label(container, SWT.NULL);
-    label1.setText("File name: ");
 
-    resourceText = new Text(container, SWT.BORDER | SWT.SINGLE);
+    Composite nameGroup = new Composite(container, SWT.NONE);
+    GridLayout layout = new GridLayout();
+    layout.numColumns = 2;
+    layout.marginWidth = 0;
+    nameGroup.setLayout(layout);
+    nameGroup.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.GRAB_HORIZONTAL));
+
+    Label label1 = new Label(nameGroup, SWT.NONE);
+    label1.setText("File name:");
+
+    resourceText = new Text(nameGroup, SWT.BORDER | SWT.SINGLE);
     resourceText.setText(getDefaultName() + "." + fileExtension);
     resourceText.addKeyListener(new KeyListener()
     {

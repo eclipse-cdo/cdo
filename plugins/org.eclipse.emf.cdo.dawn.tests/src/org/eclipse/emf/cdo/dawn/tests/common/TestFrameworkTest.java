@@ -8,11 +8,12 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.tests;
+package org.eclipse.emf.cdo.dawn.tests.common;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.ACoreRoot;
 import org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage;
 import org.eclipse.emf.cdo.dawn.resources.DawnWrapperResource;
+import org.eclipse.emf.cdo.dawn.tests.AbstractDawnTest;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -30,7 +31,6 @@ import org.eclipse.gmf.runtime.notation.Diagram;
  */
 public class TestFrameworkTest extends AbstractDawnTest
 {
-
   public void testResourceCreation() throws CommitException
   {
     CDOSession session = openSession();
@@ -57,5 +57,4 @@ public class TestFrameworkTest extends AbstractDawnTest
     assertEquals(3, diagram.getChildren().size());
     assertEquals(2, diagram.getEdges().size());
   }
-
 }

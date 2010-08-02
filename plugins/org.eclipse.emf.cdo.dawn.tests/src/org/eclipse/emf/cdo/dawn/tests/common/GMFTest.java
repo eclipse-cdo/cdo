@@ -8,7 +8,7 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.tests;
+package org.eclipse.emf.cdo.dawn.tests.common;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.ACoreRoot;
 import org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage;
@@ -43,10 +43,8 @@ import java.util.List;
  */
 public class GMFTest extends AbstractCDOTest
 {
-
   public void testDiagram() throws Exception
   {
-
     CDOSession session = openSession();
     {
       CDOTransaction transaction = session.openTransaction();
@@ -62,6 +60,7 @@ public class GMFTest extends AbstractCDOTest
 
       transaction.commit();
     }
+
     session.close();
     session = openSession();
 
@@ -76,12 +75,10 @@ public class GMFTest extends AbstractCDOTest
       assertEquals(true, diagram.isVisible());
       assertEquals(false, diagram.isMutable());
     }
-
   }
 
   public void testSimpleNode() throws Exception
   {
-
     CDOSession session = openSession();
     {
       CDOTransaction transaction = session.openTransaction();
@@ -96,8 +93,10 @@ public class GMFTest extends AbstractCDOTest
 
       transaction.commit();
     }
+
     session.close();
     session = openSession();
+
     {
       CDOTransaction transaction = session.openTransaction();
 
@@ -115,9 +114,7 @@ public class GMFTest extends AbstractCDOTest
       assertEquals(888, bounds.getY());
 
       assertInstanceOf(MangoValue.class, node.getElement());
-
     }
-
   }
 
   private Node createExampleNode()
@@ -137,7 +134,6 @@ public class GMFTest extends AbstractCDOTest
 
   public void testSimpleEdge() throws Exception
   {
-
     CDOSession session = openSession();
     {
       CDOTransaction transaction = session.openTransaction();
@@ -165,9 +161,7 @@ public class GMFTest extends AbstractCDOTest
       {
         assertInstanceOf(RelativeBendpoint.class, ((RelativeBendpoints)edge.getBendpoints()).getPoints().get(i));
       }
-
     }
-
   }
 
   private Edge createExampleEdge()
@@ -195,7 +189,6 @@ public class GMFTest extends AbstractCDOTest
 
   public void testSimpleDiagramWithViews() throws Exception
   {
-
     CDOSession session = openSession();
     {
       CDOTransaction transaction = session.openTransaction();
@@ -227,8 +220,10 @@ public class GMFTest extends AbstractCDOTest
       resource.getContents().add(diagram);
       transaction.commit();
     }
+
     session.close();
     session = openSession();
+
     {
       CDOTransaction transaction = session.openTransaction();
 
@@ -241,17 +236,13 @@ public class GMFTest extends AbstractCDOTest
 
       assertEquals(10, diagram.getChildren().size());
       assertEquals(5, diagram.getEdges().size());
-
     }
-
   }
 
   public void testDiagramFromXMIResource() throws Exception
   {
-
     CDOSession session = openSession();
     {
-
       ResourceSet resourceSet = new ResourceSetImpl();
       AcorePackage.eINSTANCE.eClass();
       resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()

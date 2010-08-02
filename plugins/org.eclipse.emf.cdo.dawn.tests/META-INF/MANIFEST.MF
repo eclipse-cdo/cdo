@@ -16,12 +16,22 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
  org.eclipse.emf.cdo.dawn.ui;bundle-version="0.2.100",
  org.eclipse.ui;bundle-version="3.6.0",
  org.eclipse.emf.cdo.ui;bundle-version="4.0.0",
- org.eclipse.emf.cdo.dawn.util;bundle-version="0.2.100"
+ org.eclipse.emf.cdo.dawn.util;bundle-version="0.2.100",
+ org.eclipse.swtbot.eclipse.core;bundle-version="2.0.0",
+ org.eclipse.swtbot.eclipse.finder;bundle-version="2.0.0",
+ org.eclipse.swtbot.eclipse.gef.finder;bundle-version="2.0.0",
+ org.eclipse.swtbot.eclipse.spy;bundle-version="2.0.0",
+ org.eclipse.swtbot.go;bundle-version="2.0.0",
+ org.eclipse.swtbot.swt.finder;bundle-version="2.0.0",
+ org.eclipse.gef;bundle-version="3.6.0",
+ org.eclipse.gmf.common;bundle-version="1.2.0",
+ org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.4.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %providerName
 Export-Package: org.eclipse.emf.cdo.dawn.tests;version="0.2.0",
- org.eclipse.emf.cdo.dawn.tests.ui;version="0.2.0"
+ org.eclipse.emf.cdo.dawn.tests.ui;version="0.2.0",
+ org.eclipse.emf.cdo.dawn.tests.ui.util;version="0.2.0"
 Import-Package: org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.commands;version="1.0.0",
  org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.helpers;version="1.0.0",
  org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts;version="1.0.0",

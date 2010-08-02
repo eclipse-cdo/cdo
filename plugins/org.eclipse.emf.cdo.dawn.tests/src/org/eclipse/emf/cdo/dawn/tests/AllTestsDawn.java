@@ -10,6 +10,9 @@
  */
 package org.eclipse.emf.cdo.dawn.tests;
 
+import org.eclipse.emf.cdo.dawn.tests.common.DawnWrapperResourceTest;
+import org.eclipse.emf.cdo.dawn.tests.common.GMFTest;
+import org.eclipse.emf.cdo.dawn.tests.common.TestFrameworkTest;
 import org.eclipse.emf.cdo.tests.AllTests;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
@@ -19,7 +22,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * @author Martin Fluegge
+ * @author Martin Fluegge This test suite should be run as plain JUnit test.
  */
 public class AllTestsDawn extends AllTests
 {

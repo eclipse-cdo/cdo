@@ -1,14 +1,14 @@
 /**
- * Copyright (c) 2010 Martin Fluegge (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.tests;
+package org.eclipse.emf.cdo.dawn.tests.ui;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.DawnAcoreCreationWizard;
 import org.eclipse.emf.cdo.dawn.helper.DawnEditorHelper;
@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -31,7 +30,6 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Text;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -40,8 +38,7 @@ import java.lang.reflect.Method;
 public class DawnCreationWizardTest extends AbstractCDOTest
 {
 
-  public void testCreationWizardSetWrongDiagramName() throws IllegalArgumentException, SecurityException,
-      IllegalAccessException, InvocationTargetException, NoSuchMethodException
+  public void testCreationWizardSetWrongDiagramName() throws Exception
   {
 
     CDOSession session = openSession();
@@ -74,10 +71,8 @@ public class DawnCreationWizardTest extends AbstractCDOTest
     assertEquals(true, dawnDiagramModelFilePage.isPageComplete());
   }
 
-  public void testCreationWizardSetWrongSemanticNameWarn_Default() throws IllegalArgumentException, SecurityException,
-      IllegalAccessException, InvocationTargetException, NoSuchMethodException, NoSuchFieldException
+  public void testCreationWizardSetWrongSemanticNameWarn_Default() throws Exception
   {
-
     CDOSession session = openSession();
     CDOConnectionUtil.instance.openView(session);
 
@@ -108,8 +103,7 @@ public class DawnCreationWizardTest extends AbstractCDOTest
     assertEquals("something.acore", dawnDomainModelFilePage.getDefaultName());
   }
 
-  public void testCreationWizardSetWrongSemanticNameError() throws IllegalArgumentException, SecurityException,
-      IllegalAccessException, InvocationTargetException, NoSuchMethodException, NoSuchFieldException
+  public void testCreationWizardSetWrongSemanticNameError() throws Exception
   {
     CDOSession session = openSession();
     CDOConnectionUtil.instance.openView(session);
@@ -136,8 +130,7 @@ public class DawnCreationWizardTest extends AbstractCDOTest
     assertEquals(false, dawnDomainModelFilePage.isPageComplete());
   }
 
-  public void testCreationWizardCreateAutomaticName() throws IllegalArgumentException, SecurityException,
-      IllegalAccessException, InvocationTargetException, NoSuchMethodException, NoSuchFieldException, CommitException
+  public void testCreationWizardCreateAutomaticName() throws Exception
   {
     {
       CDOSession session = openSession();
@@ -162,8 +155,7 @@ public class DawnCreationWizardTest extends AbstractCDOTest
     assertEquals("default2.acore_diagram", getResourceText(dawnDiagramModelFilePage).getText());
   }
 
-  public void testCreationWizardSetExistingResourceError() throws IllegalArgumentException, SecurityException,
-      IllegalAccessException, InvocationTargetException, NoSuchMethodException, NoSuchFieldException, CommitException
+  public void testCreationWizardSetExistingResourceError() throws Exception
   {
     {
       CDOSession session = openSession();
@@ -193,8 +185,7 @@ public class DawnCreationWizardTest extends AbstractCDOTest
     assertEquals("A resource with the same name already exists!", dawnDiagramModelFilePage.getErrorMessage());
   }
 
-  public void testCreationWizardSetExistingResourceWarn() throws IllegalArgumentException, SecurityException,
-      IllegalAccessException, InvocationTargetException, NoSuchMethodException, NoSuchFieldException, CommitException
+  public void testCreationWizardSetExistingResourceWarn() throws Exception
   {
     {
       CDOSession session = openSession();
@@ -224,8 +215,7 @@ public class DawnCreationWizardTest extends AbstractCDOTest
     assertEquals("A resource with the same name already exists!", dawnDiagramModelFilePage.getMessage());
   }
 
-  public void testCreationWizardSetExistingResourceNone() throws IllegalArgumentException, SecurityException,
-      IllegalAccessException, InvocationTargetException, NoSuchMethodException, NoSuchFieldException, CommitException
+  public void testCreationWizardSetExistingResourceNone() throws Exception
   {
     {
       CDOSession session = openSession();
@@ -255,10 +245,8 @@ public class DawnCreationWizardTest extends AbstractCDOTest
     assertEquals(null, dawnDiagramModelFilePage.getErrorMessage());
   }
 
-  public void testCreationWizardCreateResources() throws IllegalArgumentException, SecurityException,
-      IllegalAccessException, InvocationTargetException, NoSuchMethodException
+  public void testCreationWizardCreateResources() throws Exception
   {
-
     {
       CDOSession session = openSession();
       ResourceSet resourceSet = new ResourceSetImpl();
@@ -323,8 +311,7 @@ public class DawnCreationWizardTest extends AbstractCDOTest
     DawnEditorHelper.getActiveEditor().getSite().getPage().closeAllEditors(false);
   }
 
-  private void callValidatePage(DawnCreateNewResourceWizardPage page) throws IllegalArgumentException,
-      IllegalAccessException, InvocationTargetException, SecurityException, NoSuchMethodException
+  private void callValidatePage(DawnCreateNewResourceWizardPage page) throws Exception
   {
     Class<DawnCreateNewResourceWizardPage> clazz = DawnCreateNewResourceWizardPage.class;
     java.lang.Class<Object>[] parameterType = null;
@@ -334,8 +321,7 @@ public class DawnCreationWizardTest extends AbstractCDOTest
     method.invoke(page, args);
   }
 
-  private Text getResourceText(DawnCreateNewResourceWizardPage dawnDomainModelFilePage) throws SecurityException,
-      NoSuchFieldException, IllegalArgumentException, IllegalAccessException
+  private Text getResourceText(DawnCreateNewResourceWizardPage dawnDomainModelFilePage) throws Exception
   {
     Class<DawnCreateNewResourceWizardPage> clazz = DawnCreateNewResourceWizardPage.class;
     Field field = clazz.getDeclaredField("resourceText");

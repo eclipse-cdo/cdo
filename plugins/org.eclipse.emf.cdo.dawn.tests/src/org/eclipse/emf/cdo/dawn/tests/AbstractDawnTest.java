@@ -11,11 +11,13 @@
 package org.eclipse.emf.cdo.dawn.tests;
 
 import org.eclipse.emf.cdo.dawn.resources.impl.DawnResourceFactoryImpl;
+import org.eclipse.emf.cdo.dawn.tests.common.GMFTest;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -35,7 +37,6 @@ import java.net.URL;
  */
 public class AbstractDawnTest extends AbstractCDOTest
 {
-
   @Override
   public void setUp() throws Exception
   {
@@ -91,5 +92,15 @@ public class AbstractDawnTest extends AbstractCDOTest
     semanticResource.getContents().add(emfResource.getContents().get(0));
     transaction.commit();
     transaction.close();
+  }
+
+  protected boolean resourceExists(String resourcePath)
+  {
+    CDOSession session = openSession();
+    CDOView view = session.openView();
+
+    CDOResource resource = view.getResource(resourcePath);
+
+    return resource != null ? true : false;
   }
 }

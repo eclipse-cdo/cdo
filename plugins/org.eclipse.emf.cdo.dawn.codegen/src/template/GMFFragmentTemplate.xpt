@@ -287,6 +287,16 @@ public class «this.dawnEditPartFactoryClassName» extends «this.GMFGenEditorGener
 «FILE "src/"+getDiagramPackagePath()+"/edit/policies/"+this.dawnCanonicalEditingPolicyClassName+".java"»
 package «this.GMFGenEditorGenerator.diagram.editPoliciesPackageName»;
 
+
+import org.eclipse.emf.ecore.EObject;
+
+import org.eclipse.gmf.runtime.diagram.ui.requests.CreateViewRequest;
+import org.eclipse.gmf.runtime.diagram.ui.requests.CreateViewRequest.ViewDescriptor;
+import org.eclipse.gmf.runtime.notation.View;
+
+import java.util.ArrayList;
+import java.util.List;
+
 «EXPAND generatedComment -»
 public class «this.dawnCanonicalEditingPolicyClassName» extends «this.GMFGenEditorGenerator.diagram.canonicalEditPolicyClassName»
 {
@@ -294,6 +304,38 @@ public class «this.dawnCanonicalEditingPolicyClassName» extends «this.GMFGenEdit
   public «this.dawnCanonicalEditingPolicyClassName»()
   {
     super();
+  }
+  
+  @Override
+  protected CreateViewRequest getCreateViewRequest(List<ViewDescriptor> descriptors)
+  {
+    List<View> viewChildren = getViewChildren();
+
+    List<ViewDescriptor> tbr = new ArrayList<CreateViewRequest.ViewDescriptor>();
+
+    for (ViewDescriptor desc : descriptors)
+    {
+      EObject obj = (EObject)((CanonicalElementAdapter)desc.getElementAdapter()).getRealObject();
+
+      boolean found = false;
+
+      for (View view : viewChildren)
+      {
+        if (view.getElement().equals(obj))
+        {
+          found = true;
+          break;
+        }
+      }
+      if (!found)
+      {
+        tbr.add(desc);
+      }
+    }
+
+    descriptors.removeAll(tbr);
+
+    return new CreateViewRequest(descriptors);
   }
 }
 «ENDFILE»

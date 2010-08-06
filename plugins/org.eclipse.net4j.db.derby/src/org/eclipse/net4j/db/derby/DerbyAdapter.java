@@ -72,4 +72,18 @@ public abstract class DerbyAdapter extends DBAdapter
   {
     return RESERVED_WORDS;
   }
+
+  @Override
+  public boolean isValidFirstChar(char ch)
+  {
+    switch (ch)
+    {
+    case '_':
+      return false;
+
+    default:
+      return super.isValidFirstChar(ch);
+    }
+  }
+
 }

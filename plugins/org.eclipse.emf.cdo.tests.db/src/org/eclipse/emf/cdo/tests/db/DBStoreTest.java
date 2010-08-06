@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.GregorianCalendar;
@@ -277,5 +278,49 @@ public class DBStoreTest extends AbstractCDOTest
     assertEquals(1, resource.getContents().size());
     e = (Company)resource.getContents().get(0);
     assertEquals(s, e.getName());
+  }
+
+  public void testUnderscoreFeature() throws Exception
+  {
+    EPackage pkg = EMFUtil.createEPackage("underscoreTest", "uct", "http://cdo.eclipse.org/tests/underscoreTest.ecore");
+    EClass cls = EMFUtil.createEClass(pkg, "foo", false, false);
+    EAttribute att = EMFUtil.createEAttribute(cls, "_bar", EcorePackage.eINSTANCE.getEString());
+
+    if (!isConfig(LEGACY))
+    {
+      CDOUtil.prepareDynamicEPackage(pkg);
+    }
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test");
+
+    EObject foo = EcoreUtil.create(cls);
+    foo.eSet(att, "foobar");
+    resource.getContents().add(foo);
+    transaction.commit();
+    session.close();
+  }
+
+  public void testUnderscoreClass() throws Exception
+  {
+    EPackage pkg = EMFUtil.createEPackage("underscoreTest", "uct", "http://cdo.eclipse.org/tests/underscoreTest.ecore");
+    EClass cls = EMFUtil.createEClass(pkg, "foo", false, false);
+    EAttribute att = EMFUtil.createEAttribute(cls, "_bar", EcorePackage.eINSTANCE.getEString());
+
+    if (!isConfig(LEGACY))
+    {
+      CDOUtil.prepareDynamicEPackage(pkg);
+    }
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test");
+
+    EObject foo = EcoreUtil.create(cls);
+    foo.eSet(att, "foobar");
+    resource.getContents().add(foo);
+    transaction.commit();
+    session.close();
   }
 }

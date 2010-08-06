@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 
@@ -27,7 +28,9 @@ import javax.sql.DataSource;
 import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -90,6 +93,13 @@ public class AllTestsDBDerby extends DBConfigs
     }
 
     @Override
+    protected void initRepositoryProperties(Map<String, String> props)
+    {
+      super.initRepositoryProperties(props);
+      props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
+    }
+
+    @Override
     protected DataSource createDataSource(String repoName)
     {
       File dbFolder = createDBFolder(repoName);
@@ -104,10 +114,15 @@ public class AllTestsDBDerby extends DBConfigs
       return dataSource;
     }
 
+    public Collection<File> getDbFolders()
+    {
+      return dbFolders;
+    }
+
     @Override
     public void tearDown() throws Exception
     {
-      for (File folder : dbFolders)
+      for (File folder : getDbFolders())
       {
         tearDownClean(folder);
       }
@@ -163,6 +178,12 @@ public class AllTestsDBDerby extends DBConfigs
         tearDownClean(reusableFolder);
 
         return dataSource;
+      }
+
+      @Override
+      public Collection<File> getDbFolders()
+      {
+        return dbFolders.values();
       }
 
       @Override

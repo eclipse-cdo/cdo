@@ -10,9 +10,9 @@ Bundle-Activator: org.eclipse.emf.cdo.tests.bundle.OM$Activator
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.net4j.tests;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
- org.eclipse.net4j.db;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
- org.eclipse.net4j.db.derby;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
- org.eclipse.net4j.db.h2;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
+ org.eclipse.net4j.db;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
+ org.eclipse.net4j.db.derby;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
+ org.eclipse.net4j.db.h2;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.ecore.xmi;bundle-version="[2.4.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.edit;bundle-version="[2.4.0,3.0.0)",
  org.eclipse.emf.cdo.common;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,

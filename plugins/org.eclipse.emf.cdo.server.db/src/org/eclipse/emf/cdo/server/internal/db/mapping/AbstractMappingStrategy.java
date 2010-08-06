@@ -83,6 +83,8 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   protected static final String TYPE_PREFIX_PACKAGE = "P"; //$NON-NLS-1$
 
+  protected static final String GENERAL_PREFIX = "X"; //$NON-NLS-1$
+
   /**
    * Prefix for unsettable feature helper columns
    */
@@ -341,6 +343,12 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   private String getName(String name, String suffix, int maxLength)
   {
     boolean forceNamesWithID = isForceNamesWithID();
+
+    if (!store.getDBAdapter().isValidFirstChar(name.charAt(0)))
+    {
+      name = GENERAL_PREFIX + name;
+    }
+
     if (store.getDBAdapter().isReservedWord(name))
     {
       forceNamesWithID = true;

@@ -69,4 +69,12 @@ public interface IDBAdapter
    * @since 3.0
    */
   public DBType adaptType(DBType type);
+
+  /**
+   * Check if a character is valid as first character. (e.g., underscores are forbidden as first character in Derby
+   * elements.
+   * 
+   * @since 4.0
+   */
+  public boolean isValidFirstChar(char ch);
 }

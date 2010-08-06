@@ -493,4 +493,12 @@ public abstract class DBAdapter implements IDBAdapter
   {
     return type;
   }
+
+  /**
+   * @since 4.0
+   */
+  public boolean isValidFirstChar(char ch)
+  {
+    return true;
+  }
 }

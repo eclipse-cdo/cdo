@@ -33,6 +33,12 @@ public class CDOIDRevisionDeltaLockWrapper implements CDOIDAndBranch
   @Override
   public boolean equals(Object obj)
   {
+    if (obj instanceof CDOIDRevisionDeltaLockWrapper)
+    {
+      CDOIDRevisionDeltaLockWrapper wrapper = (CDOIDRevisionDeltaLockWrapper)obj;
+      return key.equals(wrapper.getKey());
+    }
+
     return key.equals(obj);
   }
 

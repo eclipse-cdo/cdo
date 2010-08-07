@@ -117,7 +117,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private List<InternalCDORevision> detachedRevisions = new ArrayList<InternalCDORevision>();
 
-  private List<Object> lockedObjects = new ArrayList<Object>();
+  private Set<Object> lockedObjects = new HashSet<Object>();
 
   private List<CDOID> lockedTargets;
 
@@ -624,7 +624,11 @@ public class TransactionCommitContext implements InternalCommitContext
           throw new ContainmentCycleDetectedException("Parent (" + key + ") is already locked for containment changes");
         }
       }
+    }
 
+    for (int i = 0; i < dirtyObjectDeltas.length; i++)
+    {
+      InternalCDORevisionDelta delta = dirtyObjectDeltas[i];
       if (deltaTargetLocker != null)
       {
         delta.accept(deltaTargetLocker);
@@ -694,9 +698,10 @@ public class TransactionCommitContext implements InternalCommitContext
     final boolean supportingBranches = transaction.getRepository().isSupportingBranches();
     Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
 
-    if (lockManager.hasLockByOthers(LockType.WRITE, transaction, key))
+    CDOIDRevisionDeltaLockWrapper lockWrapper = new CDOIDRevisionDeltaLockWrapper(key, null);
+    if (lockManager.hasLockByOthers(LockType.WRITE, transaction, lockWrapper))
     {
-      Object object = lockManager.getLockEntryObject(key);
+      Object object = lockManager.getLockEntryObject(lockWrapper);
       if (object instanceof CDOIDRevisionDeltaLockWrapper)
       {
         InternalCDORevisionDelta delta = ((CDOIDRevisionDeltaLockWrapper)object).getDelta();

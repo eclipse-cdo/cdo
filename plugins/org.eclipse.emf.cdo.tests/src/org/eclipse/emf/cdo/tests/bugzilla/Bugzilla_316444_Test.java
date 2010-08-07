@@ -12,7 +12,9 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
+import org.eclipse.emf.cdo.internal.server.TransactionCommitContext.ContainmentCycleDetectedException;
 import org.eclipse.emf.cdo.net4j.CDOSession;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
@@ -148,10 +150,16 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     map.put(RepositoryConfig.PROP_TEST_REPOSITORY, repository);
   }
 
+  @Override
+  public synchronized Map<String, Object> getTestProperties()
+  {
+    Map<String, Object> map = super.getTestProperties();
+    map.put(IRepository.Props.ENSURE_REFERENTIAL_INTEGRITY, "true");
+    return map;
+  }
+
   public void testLockParentWithEAttributeChange() throws Exception
   {
-    skipUnlessBranching();
-
     String resourcePath = RESOURCE_PATH + "1";
     {
       CDOSession session = (CDOSession)openSession(REPOSITORY_NAME);
@@ -214,7 +222,6 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
 
   public void testMovingSubtree() throws Exception
   {
-    skipUnlessBranching();
     exceptions.clear();
 
     {
@@ -454,8 +461,24 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
         }
         catch (CommitException ex)
         {
-          msg("Finished (Passed) Thread B " + session);
-          return;
+          try
+          {
+            Exception ex1 = (Exception)ex.getCause();
+            Exception ex2 = (Exception)ex1.getCause();
+            Exception ex3 = (Exception)ex2.getCause();
+
+            if (ex3 == null || !(ex3 instanceof ContainmentCycleDetectedException))
+            {
+              throw new RuntimeException(ex1);
+            }
+
+            msg("Finished (Passed) Thread B " + session);
+            return;
+          }
+          catch (Exception exx)
+          {
+            throw new RuntimeException(exx);
+          }
         }
 
         exceptions.add(new ThreadBShouldHaveThrownAnExceptionException("Thread B should have thrown an exception"));

@@ -1287,7 +1287,13 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     if (view != null && view.getSession() == getSession())
     {
-      return object.cdoID();
+      boolean sameTarget = view.getBranch().equals(getBranch()) && view.getTimeStamp() == getTimeStamp();
+      if (sameTarget)
+      {
+        return object.cdoID();
+      }
+
+      throw new IllegalArgumentException("Object " + object + " is managed by a view with different target: " + view);
     }
 
     return null;

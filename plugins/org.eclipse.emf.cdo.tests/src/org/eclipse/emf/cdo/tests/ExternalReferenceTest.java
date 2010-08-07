@@ -57,7 +57,7 @@ import java.util.Map;
  */
 public class ExternalReferenceTest extends AbstractCDOTest
 {
-  final static public String REPOSITORY2_NAME = "repo2";
+  final static public String REPOSITORY_B_NAME = "repo2";
 
   public void testExternalWithDynamicEObject() throws Exception
   {
@@ -158,11 +158,11 @@ public class ExternalReferenceTest extends AbstractCDOTest
   public void testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
   {
     byte[] dataOfresD = null;
-    getRepository(REPOSITORY2_NAME);
+    getRepository(REPOSITORY_B_NAME);
 
     {
       CDOSession sessionA = openSession();
-      CDOSession sessionB = openSession(REPOSITORY2_NAME);
+      CDOSession sessionB = openSession(REPOSITORY_B_NAME);
       ResourceSet resourceSet = new ResourceSetImpl();
       resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
 
@@ -226,7 +226,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction(resourceSet);
 
-      CDOSession session2 = openSession(REPOSITORY2_NAME);
+      CDOSession session2 = openSession(REPOSITORY_B_NAME);
       CDOTransaction transaction2 = session2.openTransaction(resourceSet);
 
       CDOViewSet set = CDOUtil.getViewSet(resourceSet);
@@ -263,36 +263,35 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testManyViewsOnOneResourceSet() throws Exception
   {
-
     // Skip this test until the problems with XATransactions are solved.
     skipConfig(LEGACY);
 
-    getRepository(REPOSITORY2_NAME);
+    getRepository(REPOSITORY_B_NAME);
 
     {
-      CDOSession sessionA = openSession();
-      sessionA.getPackageRegistry().putEPackage(getModel1Package());
+      CDOSession session = openSession();
+      session.getPackageRegistry().putEPackage(getModel1Package());
 
-      CDOSession sessionB = openSession(REPOSITORY2_NAME);
+      CDOSession sessionB = openSession(REPOSITORY_B_NAME);
 
       ResourceSet resourceSet = new ResourceSetImpl();
-      CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
-      CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
+      CDOTransaction transaction = session.openTransaction(resourceSet);
+      CDOTransaction transactionB = sessionB.openTransaction(resourceSet);
 
-      CDOResource resA = transactionA1.createResource("/resA");
-      CDOResource resB = transactionB1.createResource("/resB");
+      CDOResource res = transaction.createResource("/resA");
+      CDOResource resB = transactionB.createResource("/resB");
 
-      Supplier supplier = getModel1Factory().createSupplier();
       PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
-
+      Supplier supplier = getModel1Factory().createSupplier();
       supplier.getPurchaseOrders().add(purchaseOrder);
+
       resB.getContents().add(supplier);
-      resA.getContents().add(purchaseOrder);
+      res.getContents().add(purchaseOrder);
 
       CDOXATransaction transSet = CDOUtil.createXATransaction();
       transSet.add(CDOUtil.getViewSet(resourceSet));
 
-      transactionA1.commit();
+      transaction.commit();
     }
 
     clearCache(getRepository().getRevisionManager());
@@ -302,7 +301,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       CDOSession sessionA = openSession();
       CDOTransaction transactionA = sessionA.openTransaction(resourceSet);
 
-      CDOSession sessionB = openSession(REPOSITORY2_NAME);
+      CDOSession sessionB = openSession(REPOSITORY_B_NAME);
       CDOTransaction transactionB = sessionB.openTransaction(resourceSet);
 
       CDOResource resA = transactionA.getResource("/resA");

@@ -503,8 +503,6 @@ public final class CDOStore implements EStore
     {
       if (feature instanceof EReference)
       {
-        // The EReference condition should be in the CDOType.convertToCDO. Since common package do not have access to
-        // InternalCDOView I kept it here.
         value = view.convertObjectToID(value, true);
       }
       else if (FeatureMapUtil.isFeatureMap(feature))
@@ -593,8 +591,6 @@ public final class CDOStore implements EStore
   private Object convertIDToObject(InternalCDOView view, EObject eObject, EStructuralFeature feature, int index,
       Object value)
   {
-    // The EReference condition should be in the CDOType.convertToCDO.
-    // Since common package do not have access to InternalCDOView I kept it here.
     try
     {
       value = view.convertIDToObject(value);

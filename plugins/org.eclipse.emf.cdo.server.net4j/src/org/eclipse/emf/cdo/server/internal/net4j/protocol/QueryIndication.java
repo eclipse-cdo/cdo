@@ -83,7 +83,7 @@ public class QueryIndication extends CDOReadIndication
 
         out.writeCDOID(targetID);
         out.writeCDOID(sourceID);
-        out.writeCDOClassifierRef(sourceReference.eClass());
+        out.writeCDOClassifierRef(sourceReference.getEContainingClass());
         out.writeString(sourceReference.getName());
         out.writeInt(sourceIndex);
       }

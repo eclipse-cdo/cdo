@@ -573,13 +573,11 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     }
 
     StringBuilder builder = new StringBuilder();
-    builder.append("(");
-
     long timeStamp = context.getTimeStamp();
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-      builder.append("=0)"); //$NON-NLS-1$
+      builder.append("=0"); //$NON-NLS-1$
     }
     else
     {
@@ -592,7 +590,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
       builder.append(">=");
       builder.append(timeStamp);
-      builder.append("))"); //$NON-NLS-1$
+      builder.append(")"); //$NON-NLS-1$
     }
 
     return builder.toString();

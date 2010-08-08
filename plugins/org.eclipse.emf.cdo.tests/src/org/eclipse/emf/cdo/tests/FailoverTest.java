@@ -269,31 +269,36 @@ public class FailoverTest extends AbstractSyncingTest
     }
 
     startBackupTransport();
-    getRepository().setType(CDOCommonRepository.Type.MASTER);
-    getRepository(getRepository().getName() + "_master").setType(CDOCommonRepository.Type.BACKUP);
-
-    company.setName("Commit should fail");
 
     try
     {
+      getRepository().setType(CDOCommonRepository.Type.MASTER);
+      getRepository(getRepository().getName() + "_master").setType(CDOCommonRepository.Type.BACKUP);
+      company.setName("Commit should fail");
+
+      try
+      {
+        transaction.commit();
+        fail("Exception expected");
+      }
+      catch (Exception expected)
+      {
+        // SUCCESS
+      }
+
+      session.close();
+      session = openSession();
+      transaction = session.openTransaction();
+      resource = transaction.getResource("/my/resource");
+      company = (Company)resource.getContents().get(0);
+      company.setName("Commit should NOT fail");
       transaction.commit();
-      fail("Exception expected");
     }
-    catch (Exception expected)
+    finally
     {
-      // SUCCESS
+      stopBackupTransport();
+      session.close();
     }
-
-    session.close();
-    session = openSession();
-    transaction = session.openTransaction();
-    resource = transaction.getResource("/my/resource");
-
-    company = (Company)resource.getContents().get(0);
-    company.setName("Commit should NOT fail");
-    transaction.commit();
-
-    session.close();
   }
 
   public void testSwitchMasterAndCommit() throws Exception
@@ -317,23 +322,30 @@ public class FailoverTest extends AbstractSyncingTest
     }
 
     startBackupTransport();
-    getRepository().setType(CDOCommonRepository.Type.MASTER);
-    getRepository(getRepository().getName() + "_master").setType(CDOCommonRepository.Type.BACKUP);
 
-    session.close();
-    session = openSession();
-    transaction = session.openTransaction();
-
-    resource = transaction.getResource("/my/resource");
-    company = (Company)resource.getContents().get(0);
-
-    for (int i = 0; i < 10; i++)
+    try
     {
-      company.setName("AfterFailover-" + i);
-      transaction.setCommitComment("Name changed after failover");
-      transaction.commit();
-    }
+      getRepository().setType(CDOCommonRepository.Type.MASTER);
+      getRepository(getRepository().getName() + "_master").setType(CDOCommonRepository.Type.BACKUP);
 
-    session.close();
+      session.close();
+      session = openSession();
+      transaction = session.openTransaction();
+
+      resource = transaction.getResource("/my/resource");
+      company = (Company)resource.getContents().get(0);
+
+      for (int i = 0; i < 10; i++)
+      {
+        company.setName("AfterFailover-" + i);
+        transaction.setCommitComment("Name changed after failover");
+        transaction.commit();
+      }
+    }
+    finally
+    {
+      stopBackupTransport();
+      session.close();
+    }
   }
 }

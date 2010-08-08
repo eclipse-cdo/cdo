@@ -103,16 +103,25 @@ public final class CDOServerUtil
   }
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
   public static ISynchronizableRepository createFailoverParticipant(String name, IStore store,
-      Map<String, String> props, IRepositorySynchronizer synchronizer, boolean master)
+      Map<String, String> props, IRepositorySynchronizer synchronizer, boolean master, boolean allowBackupCommits)
   {
     FailoverParticipant repository = new FailoverParticipant();
     initRepository(repository, name, store, props);
     repository.setSynchronizer((InternalRepositorySynchronizer)synchronizer);
     repository.setType(master ? CDOCommonRepository.Type.MASTER : CDOCommonRepository.Type.BACKUP);
     return repository;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static ISynchronizableRepository createFailoverParticipant(String name, IStore store,
+      Map<String, String> props, IRepositorySynchronizer synchronizer, boolean master)
+  {
+    return createFailoverParticipant(name, store, props, synchronizer, master, false);
   }
 
   private static void initRepository(Repository repository, String name, IStore store, Map<String, String> props)

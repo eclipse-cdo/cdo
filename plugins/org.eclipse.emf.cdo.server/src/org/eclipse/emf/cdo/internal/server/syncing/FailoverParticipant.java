@@ -18,9 +18,21 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
  */
 public class FailoverParticipant extends SynchronizableRepository
 {
+  private boolean allowBackupCommits;
+
   public FailoverParticipant()
   {
     setState(OFFLINE);
+  }
+
+  public boolean isAllowBackupCommits()
+  {
+    return allowBackupCommits;
+  }
+
+  public void setAllowBackupCommits(boolean allowBackupCommits)
+  {
+    this.allowBackupCommits = allowBackupCommits;
   }
 
   @Override
@@ -99,11 +111,18 @@ public class FailoverParticipant extends SynchronizableRepository
   {
     if (getType() == BACKUP)
     {
-      if (transaction.getSession() != getReplicatorSession())
+      if (getState() != ONLINE)
       {
-        throw new IllegalStateException(
-            "Only the repository synchronizer is allowed to commit transactions to a backup repository");
+        throw new IllegalStateException("Backup repository is not online");
       }
+
+      if (allowBackupCommits || transaction.getSession() == getReplicatorSession())
+      {
+        return createWriteThroughCommitContext(transaction);
+      }
+
+      throw new IllegalStateException(
+          "Only the repository synchronizer is allowed to commit transactions to a backup repository");
     }
 
     return createNormalCommitContext(transaction);

@@ -36,7 +36,7 @@ public class OfflineRawTest extends OfflineTest
   /**
    * @since 4.0
    */
-  public void testNotification() throws Exception
+  public void _testNotification() throws Exception
   {
     InternalRepository clone = getRepository();
     waitForOnline(clone);

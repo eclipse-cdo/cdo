@@ -26,6 +26,7 @@ import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -218,16 +219,31 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     public void stopTransport() throws Exception
     {
       ConfigTest currentTest = getCurrentTest();
-      if (currentTest.hasClientContainer())
+
+      try
       {
-        IConnector connector = getConnector();
-        connector.close();
+        if (currentTest.hasClientContainer())
+        {
+          IConnector connector = getConnector();
+          connector.close();
+        }
+      }
+      catch (Exception ex)
+      {
+        IOUtil.print(ex);
       }
 
-      if (currentTest.hasServerContainer())
+      try
       {
-        IAcceptor acceptor = getAcceptor();
-        acceptor.close();
+        if (currentTest.hasServerContainer())
+        {
+          IAcceptor acceptor = getAcceptor();
+          acceptor.close();
+        }
+      }
+      catch (Exception ex)
+      {
+        IOUtil.print(ex);
       }
     }
 

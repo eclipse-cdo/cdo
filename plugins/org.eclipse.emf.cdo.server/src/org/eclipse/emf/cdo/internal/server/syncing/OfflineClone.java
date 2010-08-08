@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
@@ -33,13 +32,8 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.transaction.TransactionException;
-
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -86,11 +80,6 @@ public class OfflineClone extends SynchronizableRepository
     CDOBranch offlineBranch = createOfflineBranch(branch, timeStamp - 1L);
     transaction.setBranchPoint(offlineBranch.getHead());
     return new BranchingCommitContext(transaction, timeStamp);
-  }
-
-  protected InternalCommitContext createWriteThroughCommitContext(InternalTransaction transaction)
-  {
-    return new WriteThroughCommitContext(transaction);
   }
 
   protected CDOBranch createOfflineBranch(CDOBranch baseBranch, long baseTimeStamp)
@@ -209,109 +198,6 @@ public class OfflineClone extends SynchronizableRepository
           return detachedObjects.length;
         }
       };
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  protected final class WriteThroughCommitContext extends TransactionCommitContext
-  {
-    public WriteThroughCommitContext(InternalTransaction transaction)
-    {
-      super(transaction);
-    }
-
-    @Override
-    public void preWrite()
-    {
-      // Do nothing
-    }
-
-    @Override
-    public void write(OMMonitor monitor)
-    {
-      // Do nothing
-    }
-
-    @Override
-    public void commit(OMMonitor monitor)
-    {
-      InternalTransaction transaction = getTransaction();
-
-      // Prepare commit to the master
-      CDOBranch branch = transaction.getBranch();
-      String userID = getUserID();
-      String comment = getCommitComment();
-      CDOCommitData commitData = new CommitContextData(this);
-
-      // Delegate commit to the master
-      CDOSessionProtocol sessionProtocol = getSynchronizer().getRemoteSession().getSessionProtocol();
-      CommitTransactionResult result = sessionProtocol.commitDelegation(branch, userID, comment, commitData,
-          getDetachedObjectTypes(), monitor);
-
-      // Stop if commit to master failed
-      String rollbackMessage = result.getRollbackMessage();
-      if (rollbackMessage != null)
-      {
-        throw new TransactionException(rollbackMessage);
-      }
-
-      // Prepare data needed for commit result and commit notifications
-      long timeStamp = result.getTimeStamp();
-      setTimeStamp(timeStamp);
-      addMetaIDRanges(commitData.getNewPackageUnits());
-      addIDMappings(result.getIDMappings());
-      applyIDMappings(new Monitor());
-
-      // Commit to the local repository
-      super.preWrite();
-      super.write(new Monitor());
-      super.commit(new Monitor());
-
-      // Remember commit time in the local repository
-      setLastCommitTimeStamp(timeStamp);
-      setLastReplicatedCommitTime(timeStamp);
-    }
-
-    @Override
-    protected long createTimeStamp(OMMonitor monitor)
-    {
-      // Already set after commit to the master
-      return WriteThroughCommitContext.this.getTimeStamp(); // Do not call getTimeStamp() of the enclosing Repo class!!!
-    }
-
-    @Override
-    protected void lockObjects() throws InterruptedException
-    {
-      // Do nothing
-    }
-
-    @Override
-    protected void adjustMetaRanges()
-    {
-      // Do nothing
-    }
-
-    private void addMetaIDRanges(List<CDOPackageUnit> newPackageUnits)
-    {
-      for (CDOPackageUnit newPackageUnit : newPackageUnits)
-      {
-        for (CDOPackageInfo packageInfo : newPackageUnit.getPackageInfos())
-        {
-          addMetaIDRange(packageInfo.getMetaIDRange());
-        }
-      }
-    }
-
-    private void addIDMappings(Map<CDOID, CDOID> idMappings)
-    {
-      for (Map.Entry<CDOID, CDOID> idMapping : idMappings.entrySet())
-      {
-        CDOID oldID = idMapping.getKey();
-        CDOID newID = idMapping.getValue();
-        addIDMapping(oldID, newID);
-      }
     }
   }
 

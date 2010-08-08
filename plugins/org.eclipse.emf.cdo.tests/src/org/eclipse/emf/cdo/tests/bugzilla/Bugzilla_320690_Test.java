@@ -14,17 +14,19 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
 import org.eclipse.emf.cdo.tests.model4.RefSingleContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.RefSingleNonContainedNPL;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public class Bugzilla_320690_Tests extends AbstractCDOTest
+public class Bugzilla_320690_Test extends AbstractCDOTest
 {
   @Override
   public synchronized Map<String, Object> getTestProperties()
@@ -79,5 +81,93 @@ public class Bugzilla_320690_Tests extends AbstractCDOTest
     }
 
     dumpAllRevisions(getRepository().getStore());
+  }
+
+  public void testDeleteTarget() throws Exception
+  {
+    NodeA a = getModel3Factory().createNodeA();
+    NodeA b = getModel3Factory().createNodeA();
+    NodeA c = getModel3Factory().createNodeA();
+
+    a.getChildren().add(c);
+    b.getOtherNodes().add(c);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test");
+
+    resource.getContents().add(a);
+    resource.getContents().add(b);
+    transaction.commit();
+
+    a.getChildren().remove(c);
+
+    try
+    {
+      transaction.commit();
+      fail("CommitException expected");
+    }
+    catch (CommitException ex)
+    {
+      // SUCCESS
+    }
+  }
+
+  public void testDeleteTargetAndReferenceAtOnce() throws Exception
+  {
+    NodeA a = getModel3Factory().createNodeA();
+    NodeA b = getModel3Factory().createNodeA();
+    NodeA c = getModel3Factory().createNodeA();
+
+    a.getChildren().add(c);
+    b.getOtherNodes().add(c);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test");
+
+    resource.getContents().add(a);
+    resource.getContents().add(b);
+    transaction.commit();
+    dumpAllRevisions(getRepository().getStore());
+
+    a.getChildren().remove(c);
+    b.getOtherNodes().remove(c);
+
+    // Must not fail:
+    transaction.commit();
+  }
+
+  public void testDeleteTargetRemoveAndAddReference() throws Exception
+  {
+    NodeA a = getModel3Factory().createNodeA();
+    NodeA b = getModel3Factory().createNodeA();
+    NodeA c = getModel3Factory().createNodeA();
+
+    a.getChildren().add(c);
+    b.getOtherNodes().add(c);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test");
+
+    resource.getContents().add(a);
+    resource.getContents().add(b);
+    transaction.commit();
+    dumpAllRevisions(getRepository().getStore());
+
+    a.getChildren().remove(c);
+    b.getOtherNodes().remove(c);
+    b.getOtherNodes().add(c);
+
+    try
+    {
+      transaction.commit();
+      fail("CommitException expected");
+    }
+    catch (CommitException ex)
+    {
+      // SUCCESS
+    }
   }
 }

@@ -193,12 +193,20 @@ public interface Model3Package extends EPackage
   int NODE_A__NAME = 1;
 
   /**
+   * The feature id for the '<em><b>Other Nodes</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_A__OTHER_NODES = 2;
+
+  /**
    * The number of structural features of the '<em>Node A</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int NODE_A_FEATURE_COUNT = 2;
+  int NODE_A_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.NodeBImpl <em>Node B</em>}' class. <!--
@@ -369,6 +377,17 @@ public interface Model3Package extends EPackage
    * @generated
    */
   EAttribute getNodeA_Name();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model3.NodeA#getOtherNodes
+   * <em>Other Nodes</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference list '<em>Other Nodes</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeA#getOtherNodes()
+   * @see #getNodeA()
+   * @generated
+   */
+  EReference getNodeA_OtherNodes();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.NodeB <em>Node B</em>}'. <!--
@@ -544,6 +563,14 @@ public interface Model3Package extends EPackage
      * @generated
      */
     EAttribute NODE_A__NAME = eINSTANCE.getNodeA_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Other Nodes</b></em>' reference list feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference NODE_A__OTHER_NODES = eINSTANCE.getNodeA_OtherNodes();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model3.impl.NodeBImpl <em>Node B</em>}' class.

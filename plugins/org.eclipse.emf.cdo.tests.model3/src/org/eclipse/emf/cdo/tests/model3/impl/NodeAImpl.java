@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EClass;
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeAImpl#getChildren <em>Children</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeAImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeAImpl#getOtherNodes <em>Other Nodes</em>}</li>
  * </ul>
  * </p>
  * 
@@ -93,6 +94,17 @@ public class NodeAImpl extends CDOObjectImpl implements NodeA
   public void setName(String newName)
   {
     eSet(Model3Package.Literals.NODE_A__NAME, newName);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @SuppressWarnings("unchecked")
+  public EList<NodeA> getOtherNodes()
+  {
+    return (EList<NodeA>)eGet(Model3Package.Literals.NODE_A__OTHER_NODES, true);
   }
 
 } // NodeAImpl

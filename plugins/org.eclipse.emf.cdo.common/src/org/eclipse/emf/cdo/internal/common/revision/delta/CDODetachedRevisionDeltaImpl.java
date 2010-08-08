@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.List;
 
@@ -64,6 +65,11 @@ public class CDODetachedRevisionDeltaImpl implements CDORevisionDelta
   public CDORevisionDelta copy()
   {
     return this;
+  }
+
+  public CDOFeatureDelta getFeatureDelta(EStructuralFeature feature)
+  {
+    throw new UnsupportedOperationException();
   }
 
   public List<CDOFeatureDelta> getFeatureDeltas()

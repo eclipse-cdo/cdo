@@ -12,8 +12,8 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
-import org.eclipse.emf.cdo.internal.server.TransactionCommitContext.ContainmentCycleDetectedException;
 import org.eclipse.emf.cdo.net4j.CDOSession;
+import org.eclipse.emf.cdo.server.ContainmentCycleDetectedException;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;

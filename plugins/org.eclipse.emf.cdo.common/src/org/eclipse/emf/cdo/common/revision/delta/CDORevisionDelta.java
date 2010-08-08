@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDODetachedRevisionDeltaImpl;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.List;
 
@@ -58,6 +59,11 @@ public interface CDORevisionDelta extends CDORevisionKey
    * @since 4.0
    */
   public CDORevisionDelta copy();
+
+  /**
+   * @since 4.0
+   */
+  public CDOFeatureDelta getFeatureDelta(EStructuralFeature feature);
 
   public List<CDOFeatureDelta> getFeatureDeltas();
 

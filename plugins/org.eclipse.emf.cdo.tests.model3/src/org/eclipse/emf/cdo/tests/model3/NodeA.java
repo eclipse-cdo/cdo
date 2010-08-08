@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.tests.model3.NodeA#getChildren <em>Children</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.tests.model3.NodeA#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.NodeA#getOtherNodes <em>Other Nodes</em>}</li>
  * </ul>
  * </p>
  * 
@@ -70,5 +71,21 @@ public interface NodeA extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Other Nodes</b></em>' reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.tests.model3.NodeA}. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Other Nodes</em>' reference list isn't clear, there really should be more of a
+   * description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Other Nodes</em>' reference list.
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeA_OtherNodes()
+   * @model
+   * @generated
+   */
+  EList<NodeA> getOtherNodes();
 
 } // NodeA

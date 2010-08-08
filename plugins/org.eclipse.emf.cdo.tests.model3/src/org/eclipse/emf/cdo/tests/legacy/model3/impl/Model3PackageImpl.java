@@ -126,14 +126,11 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   public static Model3Package init()
   {
     if (isInited)
-    {
       return (Model3Package)EPackage.Registry.INSTANCE.getEPackage(Model3Package.eNS_URI);
-    }
 
     // Obtain or create and register package
     Model3PackageImpl theModel3Package = (Model3PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model3PackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI)
-        : new Model3PackageImpl());
+        .get(eNS_URI) : new Model3PackageImpl());
 
     isInited = true;
 
@@ -276,6 +273,16 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * 
    * @generated
    */
+  public EReference getNodeA_OtherNodes()
+  {
+    return (EReference)nodeAEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EClass getNodeB()
   {
     return nodeBEClass;
@@ -347,9 +354,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   public void createPackageContents()
   {
     if (isCreated)
-    {
       return;
-    }
     isCreated = true;
 
     // Create classes and their features
@@ -368,6 +373,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     nodeAEClass = createEClass(NODE_A);
     createEReference(nodeAEClass, NODE_A__CHILDREN);
     createEAttribute(nodeAEClass, NODE_A__NAME);
+    createEReference(nodeAEClass, NODE_A__OTHER_NODES);
 
     nodeBEClass = createEClass(NODE_B);
     createEReference(nodeBEClass, NODE_B__CHILDREN);
@@ -394,9 +400,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   public void initializePackageContents()
   {
     if (isInitialized)
-    {
       return;
-    }
     isInitialized = true;
 
     // Initialize package
@@ -430,26 +434,30 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(polygonEClass, Polygon.class, "Polygon", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPolygon_Points(), getPoint(), "points", null, 1, -1, Polygon.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPolygon_Points(), this.getPoint(), "points", null, 1, -1, Polygon.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(polygonWithDuplicatesEClass, PolygonWithDuplicates.class, "PolygonWithDuplicates", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPolygonWithDuplicates_Points(), getPoint(), "points", null, 1, -1, PolygonWithDuplicates.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPolygonWithDuplicates_Points(), this.getPoint(), "points", null, 1, -1,
+        PolygonWithDuplicates.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(nodeAEClass, NodeA.class, "NodeA", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getNodeA_Children(), getNodeA(), null, "children", null, 0, -1, NodeA.class, !IS_TRANSIENT,
+    initEReference(getNodeA_Children(), this.getNodeA(), null, "children", null, 0, -1, NodeA.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
     initEAttribute(getNodeA_Name(), theEcorePackage.getEString(), "name", null, 0, 1, NodeA.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNodeA_OtherNodes(), this.getNodeA(), null, "otherNodes", null, 0, -1, NodeA.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     initEClass(nodeBEClass, NodeB.class, "NodeB", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getNodeB_Children(), getNodeB(), getNodeB_Parent(), "children", null, 0, -1, NodeB.class,
+    initEReference(getNodeB_Children(), this.getNodeB(), this.getNodeB_Parent(), "children", null, 0, -1, NodeB.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getNodeB_Parent(), getNodeB(), getNodeB_Children(), "parent", null, 0, 1, NodeB.class,
+    initEReference(getNodeB_Parent(), this.getNodeB(), this.getNodeB_Children(), "parent", null, 0, 1, NodeB.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getNodeB_Name(), theEcorePackage.getEString(), "name", null, 0, 1, NodeB.class, !IS_TRANSIENT,

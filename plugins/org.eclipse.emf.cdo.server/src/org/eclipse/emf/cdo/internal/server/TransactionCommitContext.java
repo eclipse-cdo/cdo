@@ -28,16 +28,20 @@ import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
+import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDRevisionDeltaLockWrapper;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.server.ContainmentCycleDetectedException;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
@@ -63,7 +67,6 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -570,80 +573,80 @@ public class TransactionCommitContext implements InternalCommitContext
     lockedObjects.clear();
     lockedTargets = null;
 
-    final boolean supportingBranches = transaction.getRepository().isSupportingBranches();
-
-    CDOFeatureDeltaVisitor deltaTargetLocker = null;
-    if (ensuringReferentialIntegrity)
-    {
-      deltaTargetLocker = new CDOFeatureDeltaVisitorImpl()
-      {
-        @Override
-        public void visit(CDOAddFeatureDelta delta)
-        {
-          lockTarget(delta.getValue(), supportingBranches);
-        }
-
-        @Override
-        public void visit(CDOSetFeatureDelta delta)
-        {
-          lockTarget(delta.getValue(), supportingBranches);
-        }
-      };
-
-      CDOReferenceAdjuster revisionTargetLocker = new CDOReferenceAdjuster()
-      {
-        public Object adjustReference(Object value)
-        {
-          lockTarget(value, supportingBranches);
-          return value;
-        }
-      };
-
-      for (int i = 0; i < newObjects.length; i++)
-      {
-        InternalCDORevision newRevision = newObjects[i];
-        newRevision.adjustReferences(revisionTargetLocker);
-      }
-    }
-
-    InternalLockManager lockManager = transaction.getRepository().getLockManager();
-    InternalCDORevisionManager revisionManager = transaction.getRepository().getRevisionManager();
-
-    for (int i = 0; i < dirtyObjectDeltas.length; i++)
-    {
-      InternalCDORevisionDelta delta = dirtyObjectDeltas[i];
-      CDOID id = delta.getID();
-      Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
-      lockedObjects.add(new CDOIDRevisionDeltaLockWrapper(key, delta));
-
-      if (hasContainmentChanges(delta))
-      {
-        if (isContainerLocked(delta, revisionManager, lockManager))
-        {
-          lockedObjects.clear();
-          throw new ContainmentCycleDetectedException("Parent (" + key + ") is already locked for containment changes");
-        }
-      }
-    }
-
-    for (int i = 0; i < dirtyObjectDeltas.length; i++)
-    {
-      InternalCDORevisionDelta delta = dirtyObjectDeltas[i];
-      if (deltaTargetLocker != null)
-      {
-        delta.accept(deltaTargetLocker);
-      }
-    }
-
-    for (int i = 0; i < detachedObjects.length; i++)
-    {
-      CDOID id = detachedObjects[i];
-      Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
-      lockedObjects.add(key);
-    }
-
     try
     {
+      InternalLockManager lockManager = transaction.getRepository().getLockManager();
+      InternalCDORevisionManager revisionManager = transaction.getRepository().getRevisionManager();
+
+      final boolean supportingBranches = transaction.getRepository().isSupportingBranches();
+
+      CDOFeatureDeltaVisitor deltaTargetLocker = null;
+      if (ensuringReferentialIntegrity)
+      {
+        deltaTargetLocker = new CDOFeatureDeltaVisitorImpl()
+        {
+          @Override
+          public void visit(CDOAddFeatureDelta delta)
+          {
+            lockTarget(delta.getValue(), supportingBranches);
+          }
+
+          @Override
+          public void visit(CDOSetFeatureDelta delta)
+          {
+            lockTarget(delta.getValue(), supportingBranches);
+          }
+        };
+
+        CDOReferenceAdjuster revisionTargetLocker = new CDOReferenceAdjuster()
+        {
+          public Object adjustReference(Object value)
+          {
+            lockTarget(value, supportingBranches);
+            return value;
+          }
+        };
+
+        for (int i = 0; i < newObjects.length; i++)
+        {
+          InternalCDORevision newRevision = newObjects[i];
+          newRevision.adjustReferences(revisionTargetLocker);
+        }
+      }
+
+      for (int i = 0; i < dirtyObjectDeltas.length; i++)
+      {
+        InternalCDORevisionDelta delta = dirtyObjectDeltas[i];
+        CDOID id = delta.getID();
+        Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
+        lockedObjects.add(new CDOIDRevisionDeltaLockWrapper(key, delta));
+
+        if (hasContainmentChanges(delta))
+        {
+          if (isContainerLocked(delta, revisionManager, lockManager))
+          {
+            throw new ContainmentCycleDetectedException("Parent (" + key
+                + ") is already locked for containment changes");
+          }
+        }
+      }
+
+      for (int i = 0; i < dirtyObjectDeltas.length; i++)
+      {
+        InternalCDORevisionDelta delta = dirtyObjectDeltas[i];
+        if (deltaTargetLocker != null)
+        {
+          delta.accept(deltaTargetLocker);
+        }
+      }
+
+      for (int i = 0; i < detachedObjects.length; i++)
+      {
+        CDOID id = detachedObjects[i];
+        Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
+        lockedObjects.add(key);
+      }
+
       if (!lockedObjects.isEmpty())
       {
         // First lock all objects (incl. possible ref targets).
@@ -666,10 +669,11 @@ public class TransactionCommitContext implements InternalCommitContext
         }
       }
     }
-    catch (TimeoutRuntimeException exception)
+    catch (RuntimeException ex)
     {
       lockedObjects.clear();
-      throw exception;
+      lockedTargets = null;
+      throw ex;
     }
   }
 
@@ -750,6 +754,11 @@ public class TransactionCommitContext implements InternalCommitContext
         return;
       }
 
+      if (detachedObjectTypes != null && detachedObjectTypes.containsKey(id))
+      {
+        throw new IllegalStateException("This commit deletes object " + id + " and adds a reference at the same time");
+      }
+
       // Let this object be locked
       Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
       lockedObjects.add(key);
@@ -771,69 +780,12 @@ public class TransactionCommitContext implements InternalCommitContext
       return;
     }
 
-    final Map<EClass, List<EReference>> sourceCandidates = new HashMap<EClass, List<EReference>>();
-    XRefsQueryHandler.collectSourceCandidates(transaction, detachedObjectTypes.values(), sourceCandidates);
-
-    final Set<CDOID> xrefs = new HashSet<CDOID>();
-    QueryXRefsContext context = new QueryXRefsContext()
-    {
-      public int compareTo(CDOBranchPoint o)
-      {
-        throw new UnsupportedOperationException();
-      }
-
-      public long getTimeStamp()
-      {
-        return CDOBranchPoint.UNSPECIFIED_DATE;
-      }
-
-      public CDOBranch getBranch()
-      {
-        return transaction.getBranch();
-      }
-
-      public Map<CDOID, EClass> getTargetObjects()
-      {
-        return detachedObjectTypes;
-      }
-
-      public EReference[] getSourceReferences()
-      {
-        return new EReference[0];
-      }
-
-      public Map<EClass, List<EReference>> getSourceCandidates()
-      {
-        return sourceCandidates;
-      }
-
-      public int getMaxResults()
-      {
-        return CDOQueryInfo.UNLIMITED_RESULTS;
-      }
-
-      public boolean addXRef(CDOID targetID, CDOID sourceID, EReference sourceReference, int sourceIndex)
-      {
-        if (!CDOIDUtil.isNull(targetID))
-        {
-          xrefs.add(sourceID);
-        }
-
-        return true;
-      }
-    };
-
-    accessor.queryXRefs(context);
-
-    for (CDOID id : detachedObjects)
-    {
-      xrefs.remove(id);
-    }
-
-    if (!xrefs.isEmpty())
+    XRefContext context = new XRefContext();
+    Set<CDOID> xRefs = context.getXRefs(accessor);
+    if (!xRefs.isEmpty())
     {
       throw new IllegalStateException(
-          "The following objects are still pointing to one or more of the objects to be detached: " + xrefs);
+          "The following objects are still pointing to one or more of the objects to be detached: " + xRefs);
     }
   }
 
@@ -1131,27 +1083,148 @@ public class TransactionCommitContext implements InternalCommitContext
   /**
    * @author Eike Stepper
    */
-  public static class ContainmentCycleDetectedException extends IllegalStateException
+  private final class XRefContext implements QueryXRefsContext
   {
-    private static final long serialVersionUID = 1L;
+    private Map<EClass, List<EReference>> sourceCandidates = new HashMap<EClass, List<EReference>>();
 
-    public ContainmentCycleDetectedException()
+    private Map<CDOID, InternalCDORevisionDelta> revisionDeltas = new HashMap<CDOID, InternalCDORevisionDelta>();
+
+    private Set<CDOID> xRefs = new HashSet<CDOID>();
+
+    public XRefContext()
     {
+      XRefsQueryHandler.collectSourceCandidates(transaction, detachedObjectTypes.values(), sourceCandidates);
+      for (InternalCDORevisionDelta revisionDelta : dirtyObjectDeltas)
+      {
+        revisionDeltas.put(revisionDelta.getID(), revisionDelta);
+      }
     }
 
-    public ContainmentCycleDetectedException(String message, Throwable cause)
+    public Set<CDOID> getXRefs(IStoreAccessor accessor)
     {
-      super(message, cause);
+      accessor.queryXRefs(this);
+      for (CDOID id : detachedObjects)
+      {
+        xRefs.remove(id);
+      }
+
+      return xRefs;
     }
 
-    public ContainmentCycleDetectedException(String s)
+    public int compareTo(CDOBranchPoint o)
     {
-      super(s);
+      throw new UnsupportedOperationException();
     }
 
-    public ContainmentCycleDetectedException(Throwable cause)
+    public long getTimeStamp()
     {
-      super(cause);
+      return CDOBranchPoint.UNSPECIFIED_DATE;
+    }
+
+    public CDOBranch getBranch()
+    {
+      return transaction.getBranch();
+    }
+
+    public Map<CDOID, EClass> getTargetObjects()
+    {
+      return detachedObjectTypes;
+    }
+
+    public EReference[] getSourceReferences()
+    {
+      return new EReference[0];
+    }
+
+    public Map<EClass, List<EReference>> getSourceCandidates()
+    {
+      return sourceCandidates;
+    }
+
+    public int getMaxResults()
+    {
+      return CDOQueryInfo.UNLIMITED_RESULTS;
+    }
+
+    public boolean addXRef(CDOID targetID, CDOID sourceID, EReference sourceReference, int sourceIndex)
+    {
+      if (CDOIDUtil.isNull(targetID))
+      {
+        return true;
+      }
+
+      InternalCDORevisionDelta revisionDelta = revisionDeltas.get(sourceID);
+      if (revisionDelta != null)
+      {
+        CDOFeatureDelta featureDelta = revisionDelta.getFeatureDelta(sourceReference);
+        if (featureDelta != null)
+        {
+          XRefExcluder excluder = new XRefExcluder(targetID, sourceIndex);
+          if (excluder.isExcluded(featureDelta))
+          {
+            return true;
+          }
+        }
+      }
+
+      xRefs.add(sourceID);
+      return true;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class XRefExcluder extends CDOFeatureDeltaVisitorImpl
+  {
+    private CDOID targetID;
+
+    private int sourceIndex;
+
+    private boolean excluded;
+
+    public XRefExcluder(CDOID targetID, int sourceIndex)
+    {
+      this.targetID = targetID;
+      this.sourceIndex = sourceIndex;
+    }
+
+    public boolean isExcluded(CDOFeatureDelta featureDelta)
+    {
+      featureDelta.accept(this);
+      return excluded;
+    }
+
+    @Override
+    public void visit(CDOSetFeatureDelta delta)
+    {
+      if (!targetID.equals(delta.getValue()))
+      {
+        excluded = true;
+      }
+    }
+
+    @Override
+    public void visit(CDOUnsetFeatureDelta delta)
+    {
+      excluded = true;
+    }
+
+    @Override
+    public void visit(CDOClearFeatureDelta delta)
+    {
+      excluded = true;
+      stopVisit();
+    }
+
+    @Override
+    public void visit(CDORemoveFeatureDelta delta)
+    {
+      if (sourceIndex == delta.getIndex())
+      {
+        excluded = true;
+        stopVisit();
+      }
     }
   }
 }

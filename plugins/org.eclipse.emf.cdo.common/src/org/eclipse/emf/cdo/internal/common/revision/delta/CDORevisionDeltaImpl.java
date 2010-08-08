@@ -204,14 +204,19 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     return featureDeltas.isEmpty();
   }
 
+  public CDORevisionDelta copy()
+  {
+    return new CDORevisionDeltaImpl(this, true);
+  }
+
   public Map<EStructuralFeature, CDOFeatureDelta> getFeatureDeltaMap()
   {
     return featureDeltas;
   }
 
-  public CDORevisionDelta copy()
+  public CDOFeatureDelta getFeatureDelta(EStructuralFeature feature)
   {
-    return new CDORevisionDeltaImpl(this, true);
+    return featureDeltas.get(feature);
   }
 
   public List<CDOFeatureDelta> getFeatureDeltas()

@@ -567,26 +567,28 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
         for (EReference eReference : eReferences)
         {
           Object value = revision.getValue(eReference);
-
-          if (eReference.isMany())
+          if (value != null)
           {
-            @SuppressWarnings("unchecked")
-            List<CDOID> ids = (List<CDOID>)value;
-            int index = 0;
-            for (CDOID id : ids)
+            if (eReference.isMany())
             {
-              if (!queryXRefs(context, targetIDs, id, sourceID, eReference, index++))
+              @SuppressWarnings("unchecked")
+              List<CDOID> ids = (List<CDOID>)value;
+              int index = 0;
+              for (CDOID id : ids)
+              {
+                if (!queryXRefs(context, targetIDs, id, sourceID, eReference, index++))
+                {
+                  return;
+                }
+              }
+            }
+            else
+            {
+              CDOID id = (CDOID)value;
+              if (!queryXRefs(context, targetIDs, id, sourceID, eReference, 0))
               {
                 return;
               }
-            }
-          }
-          else
-          {
-            CDOID id = (CDOID)value;
-            if (!queryXRefs(context, targetIDs, id, sourceID, eReference, 0))
-            {
-              return;
             }
           }
         }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -48,7 +48,14 @@ public class CDOFeatureDeltaVisitorImpl implements CDOFeatureDeltaVisitor
   {
     for (CDOFeatureDelta delta : deltas.getListChanges())
     {
-      delta.accept(this);
+      try
+      {
+        delta.accept(this);
+      }
+      catch (StopVisitException ex)
+      {
+        return;
+      }
     }
   }
 
@@ -66,5 +73,26 @@ public class CDOFeatureDeltaVisitorImpl implements CDOFeatureDeltaVisitor
 
   public void visit(CDOUnsetFeatureDelta delta)
   {
+  }
+
+  /**
+   * @since 4.0
+   */
+  protected void stopVisit()
+  {
+    throw new StopVisitException();
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.0
+   */
+  private static final class StopVisitException extends RuntimeException
+  {
+    private static final long serialVersionUID = 1L;
+
+    public StopVisitException()
+    {
+    }
   }
 }

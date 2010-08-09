@@ -287,7 +287,8 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
    *          features are to be used in the request.
    * @since 3.0
    */
-  public CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects, EReference... sourceReferences);
+  public CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects,
+      EReference... sourceReferences);
 
   /**
    * Returns the object for the given CDOID.
@@ -470,11 +471,17 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
      * <p>
      * <b>Note:</b> It can be used with <code>CDOSession.options().setPassiveUpdate(false)</code>. In this case, it will
      * receive changes without having the objects changed.
+     * 
+     * @see #removeChangeSubscriptionPolicy(CDOAdapterPolicy)
+     * @see #getChangeSubscriptionPolicies()
      */
     public void addChangeSubscriptionPolicy(CDOAdapterPolicy policy);
 
     /**
      * Removes a change subscription policy from this view.
+     * 
+     * @see #addChangeSubscriptionPolicy(CDOAdapterPolicy)
+     * @see #getChangeSubscriptionPolicies()
      */
     public void removeChangeSubscriptionPolicy(CDOAdapterPolicy policy);
 

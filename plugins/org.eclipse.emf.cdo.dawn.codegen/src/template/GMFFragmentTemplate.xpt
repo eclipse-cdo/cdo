@@ -44,7 +44,6 @@
 
 package  «this.GMFGenEditorGenerator.editor.packageName»;
 
-import «this.GMFGenEditorGenerator.diagram.domainDiagramElement.genPackage.basePackage».«this.GMFGenEditorGenerator.diagram.domainDiagramElement.ecoreClass.ePackage.name».«this.GMFGenEditorGenerator.diagram.domainDiagramElement.ecoreClass.name»;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditorSupport;
 import org.eclipse.emf.cdo.dawn.editors.impl.DawnGMFEditorSupport;
@@ -485,16 +484,15 @@ public class «this.dawnCreationWizardClassName» extends «this.GMFGenEditorGenera
 «FILE "src/"+getDiagramPackagePath()+"/part/"+this.dawnEditorUtilClassName+".java"»
 package  «this.GMFGenEditorGenerator.editor.packageName»;
 
-import «this.GMFGenEditorGenerator.diagram.domainDiagramElement.genPackage.basePackage».«this.GMFGenEditorGenerator.diagram.domainDiagramElement.ecoreClass.ePackage.name».«this.GMFGenEditorGenerator.diagram.domainDiagramElement.ecoreClass.name»;
+import org.eclipse.emf.cdo.dawn.commands.CreateSemanticResourceRecordingCommand;
 import «this.GMFGenEditorGenerator.diagram.domainDiagramElement.genPackage.basePackage».«this.GMFGenEditorGenerator.diagram.domainDiagramElement.ecoreClass.ePackage.name».«this.GMFGenEditorGenerator.domainGenModel.modelName»Factory;
 
+
 import «this.GMFGenEditorGenerator.diagram.editPartsPackageName».«this.dawnDiagramEditPartClassName»;
-import org.eclipse.emf.cdo.dawn.commands.CreateSemanticResourceRecordingCommand;
 import org.eclipse.emf.cdo.dawn.preferences.PreferenceConstants;
 import org.eclipse.emf.cdo.dawn.transaction.DawnGMFEditingDomainFactory;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.dawn.util.connection.CDOConnectionUtil;
-import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.common.util.URI;

@@ -40,6 +40,7 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import java.io.File;
@@ -200,6 +201,26 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   public InternalRepository getRepository()
   {
     return getRepositoryConfig().getRepository(IRepositoryConfig.REPOSITORY_NAME);
+  }
+
+  public void restartRepository()
+  {
+    restartRepository(IRepositoryConfig.REPOSITORY_NAME);
+  }
+
+  public void restartRepository(String name)
+  {
+    try
+    {
+      getRepositoryConfig().setRestarting(true);
+      InternalRepository repo = getRepository(name);
+      LifecycleUtil.deactivate(repo);
+      getRepository(name);
+    }
+    finally
+    {
+      getRepositoryConfig().setRestarting(false);
+    }
   }
 
   // /////////////////////////////////////////////////////////////////////////

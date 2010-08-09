@@ -24,4 +24,6 @@ public interface IRepositoryConfig extends IConfig
   public Map<String, String> getRepositoryProperties();
 
   public InternalRepository getRepository(String name);
+
+  public void setRestarting(boolean b);
 }

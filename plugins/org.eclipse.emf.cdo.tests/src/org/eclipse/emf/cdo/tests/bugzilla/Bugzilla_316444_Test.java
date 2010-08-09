@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.resource.Resource;
 
@@ -589,13 +588,10 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     return null;
   }
 
-  @SuppressWarnings("unused")
-  private void restartRepository()
-  {
-    LifecycleUtil.deactivate(getRepository());
-    createRepository();
-    getRepository();
-  }
+  /*
+   * @SuppressWarnings("unused") private void restartRepository() { LifecycleUtil.deactivate(getRepository());
+   * createRepository(); getRepository(); }
+   */
 
   /**
    * @author Martin Fluegge

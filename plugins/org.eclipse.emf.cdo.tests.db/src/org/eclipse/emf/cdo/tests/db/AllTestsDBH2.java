@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.h2.H2Adapter;
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
@@ -157,8 +156,6 @@ public class AllTestsDBH2 extends DBConfigs
 
       private transient ArrayList<String> repoNames = new ArrayList<String>();
 
-      private transient String lastTest;
-
       public ReusableFolder(String name, String mappingStrategy)
       {
         super(name, mappingStrategy);
@@ -188,14 +185,12 @@ public class AllTestsDBH2 extends DBConfigs
           conn = defaultDataSource.getConnection();
           stmt = conn.createStatement();
 
-          String currentTest = getCurrentTest().getClass().getName() + "." + getCurrentTest().getName();
-          if (!ObjectUtil.equals(currentTest, lastTest))
+          if (!isRestarting())
           {
             stmt.execute("DROP SCHEMA IF EXISTS " + repoName);
-            lastTest = currentTest;
           }
 
-          stmt.execute("CREATE SCHEMA " + repoName);
+          stmt.execute("CREATE SCHEMA IF NOT EXISTS " + repoName);
         }
         catch (Exception e)
         {

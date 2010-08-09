@@ -23,8 +23,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
@@ -683,8 +681,7 @@ public class MergingTest extends AbstractCDOTest
       session.close();
     }
 
-    LifecycleUtil.deactivate(getRepository());
-    getRepository();
+    restartRepository();
 
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();

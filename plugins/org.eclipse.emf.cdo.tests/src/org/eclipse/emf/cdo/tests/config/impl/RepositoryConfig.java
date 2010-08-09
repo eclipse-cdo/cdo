@@ -73,11 +73,27 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   protected transient Map<String, InternalRepository> repositories;
 
+  /**
+   * Flag used to signal that a repository is being restarted. This prevents cleaning and reinitialization of persistent
+   * data and should only be used during {@link ConfigTest#restartRepository(String)}.
+   */
+  private transient boolean restarting;
+
   private transient IListener repositoryListener;
 
   public RepositoryConfig(String name)
   {
     super(name);
+  }
+
+  public void setRestarting(boolean restarting)
+  {
+    this.restarting = restarting;
+  }
+
+  public boolean isRestarting()
+  {
+    return restarting;
   }
 
   public Map<String, String> getRepositoryProperties()

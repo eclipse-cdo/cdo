@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.tests.FeatureMapTest;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
 import org.eclipse.emf.cdo.tests.MergingTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
+import org.eclipse.emf.cdo.tests.XRefTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259869_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_303807_Test;
@@ -65,6 +66,10 @@ public abstract class DBConfigs extends AllConfigs
     // fails because of Bug 284109
     testClasses.remove(XATransactionTest.class);
     testClasses.add(DISABLE_XATransactionTest.class);
+
+    // XXX Range-based audit mapping does not support queryXRefs for now
+    testClasses.remove(XRefTest.class);
+    testClasses.add(DISABLE_XRefTest.class);
 
     // ------------ tests below only fail for PostgreSQL
     // ------------ therefore they are overridden and

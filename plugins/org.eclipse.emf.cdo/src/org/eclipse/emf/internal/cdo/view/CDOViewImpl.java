@@ -1404,6 +1404,12 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       InternalCDOObject object = objects.remove(oldID);
       newID = object.cdoID();
       objects.put(newID, object);
+
+      if (lastLookupID == oldID)
+      {
+        lastLookupID = null;
+        lastLookupObject = null;
+      }
     }
 
     if (TRACER.isEnabled())

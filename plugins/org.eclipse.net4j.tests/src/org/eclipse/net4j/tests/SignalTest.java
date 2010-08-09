@@ -116,7 +116,7 @@ public class SignalTest extends AbstractProtocolTest
         @Override
         protected boolean successful()
         {
-          return lifecycle.isActive();
+          return !lifecycle.isActive();
         }
       }.assertNoTimeOut();
     }

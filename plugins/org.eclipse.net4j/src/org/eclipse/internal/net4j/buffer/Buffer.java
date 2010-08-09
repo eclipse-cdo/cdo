@@ -151,12 +151,7 @@ public class Buffer implements InternalBuffer
 
       if (state == BufferState.READING_HEADER)
       {
-        int num = socketChannel.read(byteBuffer);
-        if (num == -1)
-        {
-          throw new ClosedChannelException();
-        }
-
+        readChannel(socketChannel, byteBuffer);
         if (byteBuffer.hasRemaining())
         {
           return null;
@@ -178,11 +173,7 @@ public class Buffer implements InternalBuffer
         state = BufferState.READING_BODY;
       }
 
-      if (socketChannel.read(byteBuffer) == -1)
-      {
-        throw new ClosedChannelException();
-      }
-
+      readChannel(socketChannel, byteBuffer);
       if (byteBuffer.hasRemaining())
       {
         return null;
@@ -406,5 +397,20 @@ public class Buffer implements InternalBuffer
     }
 
     release();
+  }
+
+  private static void readChannel(SocketChannel socketChannel, ByteBuffer buffer) throws ClosedChannelException
+  {
+    try
+    {
+      if (socketChannel.read(buffer) == -1)
+      {
+        throw new ClosedChannelException();
+      }
+    }
+    catch (IOException ex)
+    {
+      throw new ClosedChannelException();
+    }
   }
 }

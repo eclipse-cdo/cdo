@@ -280,17 +280,23 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   }
 
   @Override
-  protected void doDeactivate() throws Exception
+  protected void doBeforeDeactivate() throws Exception
   {
-    for (Signal signal : getSignals())
+    synchronized (signals)
     {
-      if (signal instanceof RequestWithConfirmation<?>)
+      // Wait at most 10 seconds for running signals to finish
+      int waitMillis = 10 * 1000;
+      long stop = System.currentTimeMillis() + waitMillis;
+      while (!signals.isEmpty() && System.currentTimeMillis() < stop)
       {
-        RequestWithConfirmation<?> request = (RequestWithConfirmation<?>)signal;
-        request.setRemoteException(new IllegalStateException("Request canceled due to protocol deactivation"), false); //$NON-NLS-1$
+        signals.wait(1000L);
       }
     }
+  }
 
+  @Override
+  protected void doDeactivate() throws Exception
+  {
     synchronized (signals)
     {
       signals.clear();
@@ -356,14 +362,6 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   protected SignalReactor createSignalReactor(short signalID)
   {
     return null;
-  }
-
-  private Signal[] getSignals()
-  {
-    synchronized (signals)
-    {
-      return signals.values().toArray(new Signal[signals.size()]);
-    }
   }
 
   synchronized int getNextCorrelationID()

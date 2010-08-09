@@ -41,6 +41,7 @@ import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -355,7 +356,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         return null;
       }
 
-      return applyChangeSetData(result, ancestorInfo, targetInfo, sourceInfo);
+      return applyChangeSetData(result, ancestorInfo, targetInfo, source);
     }
   }
 
@@ -424,11 +425,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return new CDOChangeSetImpl(startInfo.getBranchPoint(), endInfo.getBranchPoint(), data);
   }
 
-  public CDOChangeSetData applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionAvailabilityInfo ancestorInfo,
-      CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo)
+  public CDOChangeSetData applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionProvider ancestorProvider,
+      CDORevisionProvider targetProvider, CDOBranchPoint source)
   {
     CDOChangeSetData result = new CDOChangeSetDataImpl();
-    if (sourceInfo.getBranchPoint().getBranch().isLocal())
+    if (source.getBranch().isLocal())
     {
       mapLocalIDs(changeSetData);
     }
@@ -461,7 +462,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       InternalCDORevisionDelta ancestorGoalDelta = (InternalCDORevisionDelta)key;
       CDOID id = ancestorGoalDelta.getID();
-      InternalCDORevision ancestorRevision = (InternalCDORevision)ancestorInfo.getRevision(id);
+      InternalCDORevision ancestorRevision = (InternalCDORevision)ancestorProvider.getRevision(id);
 
       InternalCDOObject object = getObject(id);
       boolean revisionChanged = false;
@@ -469,7 +470,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       InternalCDORevision targetRevision = object.cdoRevision();
       if (targetRevision == null)
       {
-        targetRevision = (InternalCDORevision)targetInfo.getRevision(id);
+        targetRevision = (InternalCDORevision)targetProvider.getRevision(id);
         object.cdoInternalSetRevision(targetRevision);
         revisionChanged = true;
       }

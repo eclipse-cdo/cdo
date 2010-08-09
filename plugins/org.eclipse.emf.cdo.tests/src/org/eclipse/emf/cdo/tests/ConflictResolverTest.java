@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.MergeLocalChangesPerFeature;
+import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
 /**
  * @author Simon McDuff
@@ -96,5 +97,40 @@ public class ConflictResolverTest extends AbstractCDOTest
     sleep(1000);
     assertEquals(true, transaction2.hasConflict());
     assertEquals("OTTAWA", address2.getCity());
+  }
+
+  public void _testCDOMergingConflictResolver() throws Exception
+  {
+    msg("Opening session");
+    CDOSession session = openSession();
+
+    CDOTransaction transaction = session.openTransaction();
+
+    Address address = getModel1Factory().createAddress();
+
+    transaction.getOrCreateResource("/res1").getContents().add(address);
+
+    transaction.commit();
+
+    CDOTransaction transaction2 = session.openTransaction();
+    transaction2.options().addConflictResolver(new CDOMergingConflictResolver());
+    Address address2 = (Address)transaction2.getOrCreateResource("/res1").getContents().get(0);
+
+    address2.setCity("OTTAWA");
+
+    address.setName("NAME1");
+
+    transaction.commit();
+
+    // Resolver should be triggered. Should we always used a timer ?
+    sleep(1000);
+
+    assertEquals(false, CDOUtil.getCDOObject(address2).cdoConflict());
+    assertEquals(false, transaction2.hasConflict());
+
+    assertEquals("NAME1", address2.getName());
+    assertEquals("OTTAWA", address2.getCity());
+
+    transaction2.commit();
   }
 }

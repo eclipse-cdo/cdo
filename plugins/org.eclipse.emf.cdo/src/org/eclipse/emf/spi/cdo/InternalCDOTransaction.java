@@ -11,14 +11,15 @@
  */
 package org.eclipse.emf.spi.cdo;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
-import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -80,10 +81,10 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   public void setConflict(InternalCDOObject object);
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public CDOChangeSetData applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionAvailabilityInfo ancestorInfo,
-      CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo);
+  public CDOChangeSetData applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionProvider ancestorProvider,
+      CDORevisionProvider targetProvider, CDOBranchPoint source);
 
   /**
    * @since 4.0

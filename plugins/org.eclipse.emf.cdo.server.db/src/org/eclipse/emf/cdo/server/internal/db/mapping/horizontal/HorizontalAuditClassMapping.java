@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -153,8 +154,9 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
 
     builder = new StringBuilder(sqlSelectAttributesPrefix);
 
+    builder.append("ABS(");
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
-    builder.append("=?)"); //$NON-NLS-1$
+    builder.append(")=?)"); //$NON-NLS-1$
 
     sqlSelectAttributesByVersion = builder.toString();
 
@@ -293,7 +295,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
       boolean success = readValuesFromStatement(pstmt, revision, accessor);
 
       // Read multival tables only if revision exists
-      if (success)
+      if (success && revision.getVersion() >= CDOBranchVersion.FIRST_VERSION)
       {
         readLists(accessor, revision, listChunk);
       }

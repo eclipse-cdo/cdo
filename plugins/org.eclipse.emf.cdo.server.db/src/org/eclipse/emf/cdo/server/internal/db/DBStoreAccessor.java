@@ -206,7 +206,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       int version = revision.getVersion();
       if (version < CDOBranchVersion.FIRST_VERSION - 1)
       {
-        return new DetachedCDORevision(eClass, id, revision.getBranch(), -version, revision.getTimeStamp());
+        return new DetachedCDORevision(eClass, id, revision.getBranch(), -version, revision.getTimeStamp(),
+            revision.getRevised());
       }
 
       return revision;
@@ -238,12 +239,19 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
         TRACER.format("Selecting revision {0} from {1}", id, branchVersion); //$NON-NLS-1$
       }
 
-      // if audit support is present, just use the audit method
+      // If audit support is present, just use the audit method
       success = ((IClassMappingAuditSupport)mapping).readRevisionByVersion(this, revision, listChunk);
+      if (success && revision.getVersion() < CDOBranchVersion.FIRST_VERSION - 1)
+      {
+        // It is detached revision
+        revision = new DetachedCDORevision(eClass, id, revision.getBranch(), -revision.getVersion(),
+            revision.getTimeStamp(), revision.getRevised());
+
+      }
     }
     else
     {
-      // if audit support is not present, we still have to provide a method
+      // If audit support is not present, we still have to provide a method
       // to readRevisionByVersion because TransactionCommitContext.computeDirtyObject
       // needs to lookup the base revision for a change. Hence we emulate this
       // behavior by getting the current revision and asserting that the version

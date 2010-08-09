@@ -180,30 +180,31 @@ public class AllTestsDBH2 extends DBConfigs
           defaultDataSource.setURL("jdbc:h2:" + dbFolder.getAbsolutePath() + "/h2test");
         }
 
-        String currentTest = getCurrentTest().getClass().getName() + "." + getCurrentTest().getName();
-        if (!ObjectUtil.equals(currentTest, lastTest))
+        Connection conn = null;
+        Statement stmt = null;
+
+        try
         {
-          Connection conn = null;
-          Statement stmt = null;
+          conn = defaultDataSource.getConnection();
+          stmt = conn.createStatement();
 
-          try
+          String currentTest = getCurrentTest().getClass().getName() + "." + getCurrentTest().getName();
+          if (!ObjectUtil.equals(currentTest, lastTest))
           {
-            conn = defaultDataSource.getConnection();
-            stmt = conn.createStatement();
             stmt.execute("DROP SCHEMA IF EXISTS " + repoName);
-            stmt.execute("CREATE SCHEMA " + repoName);
-          }
-          catch (Exception e)
-          {
-            e.printStackTrace();
-          }
-          finally
-          {
-            DBUtil.close(conn);
-            DBUtil.close(stmt);
+            lastTest = currentTest;
           }
 
-          lastTest = currentTest;
+          stmt.execute("CREATE SCHEMA " + repoName);
+        }
+        catch (Exception e)
+        {
+          e.printStackTrace();
+        }
+        finally
+        {
+          DBUtil.close(conn);
+          DBUtil.close(stmt);
         }
 
         JdbcDataSource dataSource = new JdbcDataSource();

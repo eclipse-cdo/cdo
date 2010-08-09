@@ -280,6 +280,21 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   }
 
   @Override
+  protected void doBeforeDeactivate() throws Exception
+  {
+    synchronized (signals)
+    {
+      // Wait at most 10 seconds for running signals to finish
+      int waitMillis = 10 * 1000;
+      long stop = System.currentTimeMillis() + waitMillis;
+      while (!signals.isEmpty() && System.currentTimeMillis() < stop)
+      {
+        signals.wait(1000L);
+      }
+    }
+  }
+
+  @Override
   protected void doDeactivate() throws Exception
   {
     for (Signal signal : getSignals())

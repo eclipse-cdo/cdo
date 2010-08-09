@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.h2.H2Adapter;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
@@ -156,6 +157,8 @@ public class AllTestsDBH2 extends DBConfigs
 
       private transient ArrayList<String> repoNames = new ArrayList<String>();
 
+      private transient String lastTest;
+
       public ReusableFolder(String name, String mappingStrategy)
       {
         super(name, mappingStrategy);
@@ -177,24 +180,30 @@ public class AllTestsDBH2 extends DBConfigs
           defaultDataSource.setURL("jdbc:h2:" + dbFolder.getAbsolutePath() + "/h2test");
         }
 
-        Connection conn = null;
-        Statement stmt = null;
+        String currentTest = getCurrentTest().getClass().getName() + "." + getCurrentTest().getName();
+        if (!ObjectUtil.equals(currentTest, lastTest))
+        {
+          Connection conn = null;
+          Statement stmt = null;
 
-        try
-        {
-          conn = defaultDataSource.getConnection();
-          stmt = conn.createStatement();
-          stmt.execute("DROP SCHEMA IF EXISTS " + repoName);
-          stmt.execute("CREATE SCHEMA " + repoName);
-        }
-        catch (Exception e)
-        {
-          e.printStackTrace();
-        }
-        finally
-        {
-          DBUtil.close(conn);
-          DBUtil.close(stmt);
+          try
+          {
+            conn = defaultDataSource.getConnection();
+            stmt = conn.createStatement();
+            stmt.execute("DROP SCHEMA IF EXISTS " + repoName);
+            stmt.execute("CREATE SCHEMA " + repoName);
+          }
+          catch (Exception e)
+          {
+            e.printStackTrace();
+          }
+          finally
+          {
+            DBUtil.close(conn);
+            DBUtil.close(stmt);
+          }
+
+          lastTest = currentTest;
         }
 
         JdbcDataSource dataSource = new JdbcDataSource();

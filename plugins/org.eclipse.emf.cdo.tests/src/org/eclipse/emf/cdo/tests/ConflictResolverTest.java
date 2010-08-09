@@ -47,7 +47,7 @@ public class ConflictResolverTest extends AbstractCDOTest
 
     transaction.commit();
 
-    // Resolver should be triggered. Should we always used a timer ?
+    // Resolver should be triggered. Should we always use a timer ?
     sleep(1000);
 
     assertEquals(false, CDOUtil.getCDOObject(address2).cdoConflict());
@@ -99,30 +99,25 @@ public class ConflictResolverTest extends AbstractCDOTest
     assertEquals("OTTAWA", address2.getCity());
   }
 
-  public void _testCDOMergingConflictResolver() throws Exception
+  public void testCDOMergingConflictResolver() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openSession();
-
     CDOTransaction transaction = session.openTransaction();
 
     Address address = getModel1Factory().createAddress();
-
     transaction.getOrCreateResource("/res1").getContents().add(address);
-
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
     transaction2.options().addConflictResolver(new CDOMergingConflictResolver());
-    Address address2 = (Address)transaction2.getOrCreateResource("/res1").getContents().get(0);
 
+    Address address2 = (Address)transaction2.getOrCreateResource("/res1").getContents().get(0);
     address2.setCity("OTTAWA");
 
     address.setName("NAME1");
-
     transaction.commit();
 
-    // Resolver should be triggered. Should we always used a timer ?
+    // Resolver should be triggered. Should we always use a timer ?
     sleep(1000);
 
     assertEquals(false, CDOUtil.getCDOObject(address2).cdoConflict());

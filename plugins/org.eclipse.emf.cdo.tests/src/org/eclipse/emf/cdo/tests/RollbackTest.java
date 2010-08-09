@@ -130,4 +130,33 @@ public class RollbackTest extends AbstractCDOTest
     assertEquals(false, transaction1.hasConflict());
     assertEquals("client2", category1.getName());
   }
+
+  /**
+   * Bug 296680.
+   */
+  public void test_Bugzilla_296680() throws Exception
+  {
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/res");
+      resource.getContents().add(getModel1Factory().createCompany());
+      transaction.commit();
+      session.close();
+    }
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource("/res");
+
+    Company company = (Company)resource.getContents().get(0);
+    company.setName("MyCompany");
+
+    resource.getContents().add(getModel1Factory().createCompany());
+    transaction.setSavepoint();
+    resource.getContents().remove(1);
+
+    transaction.rollback();
+    session.close();
+  }
 }

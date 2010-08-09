@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 import org.eclipse.emf.cdo.tests.FeatureMapTest;
 import org.eclipse.emf.cdo.tests.MergingTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
+import org.eclipse.emf.cdo.tests.XRefTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259869_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_303807_Test;
@@ -60,6 +61,7 @@ public abstract class DBConfigs extends AllConfigs
     testClasses.add(DBStoreTest.class);
     testClasses.add(SQLQueryTest.class);
     testClasses.add(DBAnnotationsTest.class);
+    testClasses.remove(XRefTest.class);
 
     // fails because of Bug 284109
     testClasses.remove(XATransactionTest.class);

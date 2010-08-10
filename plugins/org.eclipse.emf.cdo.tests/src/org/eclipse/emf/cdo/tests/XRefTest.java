@@ -204,7 +204,6 @@ public class XRefTest extends AbstractCDOTest
     session2.close();
   }
 
-  @SuppressWarnings("unchecked")
   public void testXRefsToOne() throws Exception
   {
     // create model

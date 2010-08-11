@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Caspar De Groot - maintenance
  */
 package org.eclipse.net4j.util.tests;
 
@@ -107,6 +108,24 @@ public class FastListTest extends AbstractOMTest
     assertEquals(true, result[3] == 1);
     assertEquals(true, result[4] == 4);
     assertEquals(true, result[5] == 8);
+  }
+
+  public void testRemoveMiddleOfThree()
+  {
+    TestList list = new TestList();
+    Integer one = new Integer(1);
+    Integer two = new Integer(2);
+    Integer three = new Integer(3);
+
+    list.add(one);
+    list.add(two);
+    list.add(three);
+
+    list.remove(two);
+
+    Integer[] elements = list.get();
+    assertSame(one, elements[0]);
+    assertSame(three, elements[1]);
   }
 
   public static void testRemoveTail() throws Exception

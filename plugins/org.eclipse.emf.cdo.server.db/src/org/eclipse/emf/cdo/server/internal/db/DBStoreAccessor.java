@@ -487,6 +487,9 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     try
     {
       getConnection().rollback();
+
+      // Bugzilla 298632: Must rollback DBSchema to its prior state and drop the tables
+      getStore().getMappingStrategy().removeMapping(getConnection(), commitContext.getNewPackageUnits());
     }
     catch (SQLException ex)
     {

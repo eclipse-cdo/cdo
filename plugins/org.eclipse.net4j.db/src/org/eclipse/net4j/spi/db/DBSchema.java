@@ -76,6 +76,15 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
   }
 
   /**
+   * @since 4.0
+   */
+  public IDBTable removeTable(String name)
+  {
+    assertUnlocked();
+    return tables.remove(name);
+  }
+
+  /**
    * @since 2.0
    */
   public IDBTable getTable(String name)

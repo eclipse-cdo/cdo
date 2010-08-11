@@ -174,6 +174,18 @@ public interface IMappingStrategy
   public void createMapping(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor);
 
   /**
+   * Remove the mapping infrastructure for the given packages. Should be called from the DBStore or the DBStoreAccessor.
+   * 
+   * @param connection
+   *          the connection to use.
+   * @param packageUnits
+   *          the packages for which the mappings should be removed
+   * @since 4.0
+   */
+  // Bugzilla 298632
+  public void removeMapping(Connection connection, InternalCDOPackageUnit[] packageUnits);
+
+  /**
    * Look up an existing class mapping for the given class. Before this method is called, the class mapping must have
    * been initialized by calling {@link #createMapping(Connection, InternalCDOPackageUnit[], OMMonitor)} on its
    * containing package.

@@ -27,6 +27,11 @@ public interface IDBSchema extends IDBSchemaElement
 {
   public IDBTable addTable(String name) throws DBException;
 
+  /**
+   * @since 4.0
+   */
+  public IDBTable removeTable(String name) throws DBException;
+
   public IDBTable getTable(String name);
 
   public IDBTable[] getTables();

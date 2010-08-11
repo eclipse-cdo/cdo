@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringUtil;
@@ -377,9 +378,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
       try
       {
-        Set<IDBTable> modelTables = new HashSet<IDBTable>();
-        mapPackageUnits(packageUnits, modelTables);
-        getStore().getDBAdapter().createTables(modelTables, connection);
+        mapPackageUnits(packageUnits, connection, false);
       }
       finally
       {
@@ -395,42 +394,58 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     }
   }
 
-  private void mapPackageUnits(InternalCDOPackageUnit[] packageUnits, Set<IDBTable> modelTables)
+  public void removeMapping(Connection connection, InternalCDOPackageUnit[] packageUnits)
+  {
+    mapPackageUnits(packageUnits, connection, true);
+  }
+
+  private void mapPackageUnits(InternalCDOPackageUnit[] packageUnits, Connection connection, boolean unmap)
   {
     if (packageUnits != null && packageUnits.length != 0)
     {
       for (InternalCDOPackageUnit packageUnit : packageUnits)
       {
-        mapPackageInfos(packageUnit.getPackageInfos(), modelTables);
+        mapPackageInfos(packageUnit.getPackageInfos(), connection, unmap);
       }
     }
   }
 
-  private void mapPackageInfos(InternalCDOPackageInfo[] packageInfos, Set<IDBTable> modelTables)
+  private void mapPackageInfos(InternalCDOPackageInfo[] packageInfos, Connection connection, boolean unmap)
   {
     for (InternalCDOPackageInfo packageInfo : packageInfos)
     {
       EPackage ePackage = packageInfo.getEPackage();
       if (!CDOModelUtil.isCorePackage(ePackage))
       {
-        mapClasses(EMFUtil.getPersistentClasses(ePackage), modelTables);
+        mapClasses(connection, unmap, EMFUtil.getPersistentClasses(ePackage));
       }
     }
   }
 
-  private void mapClasses(EClass[] eClasses, Set<IDBTable> modelTables)
+  private void mapClasses(Connection connection, boolean unmap, EClass... eClasses)
   {
     for (EClass eClass : eClasses)
     {
       if (!(eClass.isInterface() || eClass.isAbstract()))
       {
-        String mapping = DBAnnotation.TABLE_MAPPING.getValue(eClass);
+        String mappingAnnotation = DBAnnotation.TABLE_MAPPING.getValue(eClass);
 
         // TODO Maybe we should explicitly report unknown values of the annotation
-        if (mapping == null || !mapping.equalsIgnoreCase(DBAnnotation.TABLE_MAPPING_NONE))
+        if (mappingAnnotation != null && mappingAnnotation.equalsIgnoreCase(DBAnnotation.TABLE_MAPPING_NONE))
         {
-          IClassMapping classMapping = createClassMapping(eClass);
-          modelTables.addAll(classMapping.getDBTables());
+          continue;
+        }
+
+        if (!unmap)
+        {
+          // TODO Bugzilla 296087: Before we go ahead with creation, we should check if it's already there
+          IClassMapping mapping = createClassMapping(eClass);
+          getStore().getDBAdapter().createTables(mapping.getDBTables(), connection);
+        }
+        else
+        {
+          IClassMapping mapping = removeClassMapping(eClass);
+          getStore().getDBAdapter().dropTables(mapping.getDBTables(), connection);
         }
       }
     }
@@ -444,6 +459,21 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       classMappings.put(eClass, mapping);
     }
 
+    return mapping;
+  }
+
+  private IClassMapping removeClassMapping(EClass eClass)
+  {
+    IClassMapping mapping = classMappings.get(eClass);
+    if (mapping != null)
+    {
+      IDBSchema schema = getStore().getDBSchema();
+      for (IDBTable table : mapping.getDBTables())
+      {
+        schema.removeTable(table.getName());
+      }
+      classMappings.remove(eClass);
+    }
     return mapping;
   }
 

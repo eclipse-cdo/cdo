@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.common.commit;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 
 /**
+ * The returned <code>CommitInfo</code> should be ordered by TimeStamp, earlier first.
+ * 
  * @author Andre Dietisheim
  * @since 3.0
  */

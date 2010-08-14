@@ -45,6 +45,11 @@ public interface InternalCDOFeatureDelta extends CDOFeatureDelta
    */
   public interface ListTargetAdding
   {
+    /**
+     * @since 4.0
+     */
+    public Object getValue();
+
     public int getIndex();
 
     public void clear();

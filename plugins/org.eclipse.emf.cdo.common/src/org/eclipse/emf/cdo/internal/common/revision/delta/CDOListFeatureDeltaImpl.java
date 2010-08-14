@@ -259,6 +259,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
                 skip = false;
                 iterator.remove();
               }
+
               continue;
             }
 

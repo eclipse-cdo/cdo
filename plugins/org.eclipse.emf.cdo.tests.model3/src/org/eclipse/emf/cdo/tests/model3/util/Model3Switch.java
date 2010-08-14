@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
+import org.eclipse.emf.cdo.tests.model3.NodeC;
+import org.eclipse.emf.cdo.tests.model3.NodeD;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 
@@ -145,6 +147,22 @@ public class Model3Switch<T>
         result = defaultCase(theEObject);
       return result;
     }
+    case Model3Package.NODE_C:
+    {
+      NodeC nodeC = (NodeC)theEObject;
+      T result = caseNodeC(nodeC);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model3Package.NODE_D:
+    {
+      NodeD nodeD = (NodeD)theEObject;
+      T result = caseNodeD(nodeD);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
     default:
       return defaultCase(theEObject);
     }
@@ -237,6 +255,36 @@ public class Model3Switch<T>
    * @generated
    */
   public T caseNodeB(NodeB object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Node C</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Node C</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNodeC(NodeC object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Node D</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Node D</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNodeD(NodeD object)
   {
     return null;
   }

@@ -77,6 +77,22 @@ public interface Model3Factory extends EFactory
   NodeB createNodeB();
 
   /**
+   * Returns a new object of class '<em>Node C</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Node C</em>'.
+   * @generated
+   */
+  NodeC createNodeC();
+
+  /**
+   * Returns a new object of class '<em>Node D</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Node D</em>'.
+   * @generated
+   */
+  NodeD createNodeD();
+
+  /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the package supported by this factory.

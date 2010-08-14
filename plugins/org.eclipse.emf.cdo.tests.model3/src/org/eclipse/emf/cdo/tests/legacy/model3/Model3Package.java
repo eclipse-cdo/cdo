@@ -192,12 +192,20 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   int NODE_A__NAME = 1;
 
   /**
+   * The feature id for the '<em><b>Other Nodes</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_A__OTHER_NODES = 2;
+
+  /**
    * The number of structural features of the '<em>Node A</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int NODE_A_FEATURE_COUNT = 2;
+  int NODE_A_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeBImpl <em>Node B</em>}' class.
@@ -243,13 +251,132 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   int NODE_B_FEATURE_COUNT = 3;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeCImpl <em>Node C</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeCImpl
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getNodeC()
+   * @generated
+   */
+  int NODE_C = 6;
+
+  /**
+   * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_C__CHILDREN = 0;
+
+  /**
+   * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_C__PARENT = 1;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_C__NAME = 2;
+
+  /**
+   * The feature id for the '<em><b>Other Nodes</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_C__OTHER_NODES = 3;
+
+  /**
+   * The feature id for the '<em><b>Opposite Nodes</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_C__OPPOSITE_NODES = 4;
+
+  /**
+   * The number of structural features of the '<em>Node C</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_C_FEATURE_COUNT = 5;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl <em>Node D</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getNodeD()
+   * @generated
+   */
+  int NODE_D = 7;
+
+  /**
+   * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_D__CHILDREN = 0;
+
+  /**
+   * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_D__PARENT = 1;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_D__NAME = 2;
+
+  /**
+   * The feature id for the '<em><b>Other Nodes</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_D__OTHER_NODES = 3;
+
+  /**
+   * The feature id for the '<em><b>Opposite Node</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_D__OPPOSITE_NODE = 4;
+
+  /**
+   * The number of structural features of the '<em>Node D</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int NODE_D_FEATURE_COUNT = 5;
+
+  /**
    * The meta object id for the '<em>Point</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @see org.eclipse.emf.cdo.tests.model3.Point
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getPoint()
    * @generated
    */
-  int POINT = 6;
+  int POINT = 8;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.Class1 <em>Class1</em>}'. <!--
@@ -370,6 +497,17 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EAttribute getNodeA_Name();
 
   /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeA#getOtherNodes
+   * <em>Other Nodes</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference list '<em>Other Nodes</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeA#getOtherNodes()
+   * @see #getNodeA()
+   * @generated
+   */
+  EReference getNodeA_OtherNodes();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeB <em>Node B</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -413,6 +551,141 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
    * @generated
    */
   EAttribute getNodeB_Name();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeC <em>Node C</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Node C</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeC
+   * @generated
+   */
+  EClass getNodeC();
+
+  /**
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getChildren <em>Children</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Children</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getChildren()
+   * @see #getNodeC()
+   * @generated
+   */
+  EReference getNodeC_Children();
+
+  /**
+   * Returns the meta object for the container reference '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getParent <em>Parent</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the container reference '<em>Parent</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getParent()
+   * @see #getNodeC()
+   * @generated
+   */
+  EReference getNodeC_Parent();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getName
+   * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getName()
+   * @see #getNodeC()
+   * @generated
+   */
+  EAttribute getNodeC_Name();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getOtherNodes
+   * <em>Other Nodes</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference list '<em>Other Nodes</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getOtherNodes()
+   * @see #getNodeC()
+   * @generated
+   */
+  EReference getNodeC_OtherNodes();
+
+  /**
+   * Returns the meta object for the reference list '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getOppositeNodes <em>Opposite Nodes</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference list '<em>Opposite Nodes</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getOppositeNodes()
+   * @see #getNodeC()
+   * @generated
+   */
+  EReference getNodeC_OppositeNodes();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD <em>Node D</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Node D</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeD
+   * @generated
+   */
+  EClass getNodeD();
+
+  /**
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getChildren <em>Children</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Children</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getChildren()
+   * @see #getNodeD()
+   * @generated
+   */
+  EReference getNodeD_Children();
+
+  /**
+   * Returns the meta object for the container reference '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getParent <em>Parent</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the container reference '<em>Parent</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getParent()
+   * @see #getNodeD()
+   * @generated
+   */
+  EReference getNodeD_Parent();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getName
+   * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getName()
+   * @see #getNodeD()
+   * @generated
+   */
+  EAttribute getNodeD_Name();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getOtherNodes
+   * <em>Other Nodes</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference list '<em>Other Nodes</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getOtherNodes()
+   * @see #getNodeD()
+   * @generated
+   */
+  EReference getNodeD_OtherNodes();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getOppositeNode
+   * <em>Opposite Node</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference '<em>Opposite Node</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getOppositeNode()
+   * @see #getNodeD()
+   * @generated
+   */
+  EReference getNodeD_OppositeNode();
 
   /**
    * Returns the meta object for data type '{@link org.eclipse.emf.cdo.tests.model3.Point <em>Point</em>}'. <!--
@@ -546,6 +819,14 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
     EAttribute NODE_A__NAME = eINSTANCE.getNodeA_Name();
 
     /**
+     * The meta object literal for the '<em><b>Other Nodes</b></em>' reference list feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference NODE_A__OTHER_NODES = eINSTANCE.getNodeA_OtherNodes();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeBImpl <em>Node B</em>}'
      * class. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -578,6 +859,106 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
      * @generated
      */
     EAttribute NODE_B__NAME = eINSTANCE.getNodeB_Name();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeCImpl <em>Node C</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeCImpl
+     * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getNodeC()
+     * @generated
+     */
+    EClass NODE_C = eINSTANCE.getNodeC();
+
+    /**
+     * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference NODE_C__CHILDREN = eINSTANCE.getNodeC_Children();
+
+    /**
+     * The meta object literal for the '<em><b>Parent</b></em>' container reference feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference NODE_C__PARENT = eINSTANCE.getNodeC_Parent();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NODE_C__NAME = eINSTANCE.getNodeC_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Other Nodes</b></em>' reference list feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference NODE_C__OTHER_NODES = eINSTANCE.getNodeC_OtherNodes();
+
+    /**
+     * The meta object literal for the '<em><b>Opposite Nodes</b></em>' reference list feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference NODE_C__OPPOSITE_NODES = eINSTANCE.getNodeC_OppositeNodes();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl <em>Node D</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl
+     * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getNodeD()
+     * @generated
+     */
+    EClass NODE_D = eINSTANCE.getNodeD();
+
+    /**
+     * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference NODE_D__CHILDREN = eINSTANCE.getNodeD_Children();
+
+    /**
+     * The meta object literal for the '<em><b>Parent</b></em>' container reference feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference NODE_D__PARENT = eINSTANCE.getNodeD_Parent();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute NODE_D__NAME = eINSTANCE.getNodeD_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Other Nodes</b></em>' reference list feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference NODE_D__OTHER_NODES = eINSTANCE.getNodeD_OtherNodes();
+
+    /**
+     * The meta object literal for the '<em><b>Opposite Node</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference NODE_D__OPPOSITE_NODE = eINSTANCE.getNodeD_OppositeNode();
 
     /**
      * The meta object literal for the '<em>Point</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->

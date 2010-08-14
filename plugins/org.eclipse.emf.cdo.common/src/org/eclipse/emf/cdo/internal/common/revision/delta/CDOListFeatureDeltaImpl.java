@@ -274,6 +274,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
               {
                 ++floatingIndex;
               }
+
               // Adjusts the feature delta too.
               ((WithIndex)fd).adjustAfterRemoval(floatingIndex);
             }
@@ -287,6 +288,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
               {
                 --floatingIndex;
               }
+
               // Adjusts the feature delta too.
               ((WithIndex)fd).adjustAfterRemoval(idx);
             }
@@ -353,10 +355,8 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
                   ((CDOMoveFeatureDeltaImpl)move).setValue(((CDOMoveFeatureDelta)fd).getValue());
                   iterator.set(move);
                 }
-
               }
             }
-
           }
 
           // We virtually "executed" the REMOVE so we do not add it to the feature deltas.

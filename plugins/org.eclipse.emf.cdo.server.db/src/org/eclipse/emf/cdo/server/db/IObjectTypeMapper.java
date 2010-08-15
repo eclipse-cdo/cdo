@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+
 import org.eclipse.emf.ecore.EClass;
 
 import java.io.IOException;
@@ -45,5 +47,5 @@ public interface IObjectTypeMapper
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
       throws IOException;
 
-  public void rawImport(Connection connection, CDODataInput in) throws IOException;
+  public void rawImport(Connection connection, CDODataInput in, OMMonitor monitor) throws IOException;
 }

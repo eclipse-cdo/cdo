@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -13,28 +13,8 @@ package org.eclipse.net4j.util.om.monitor;
 /**
  * @author Eike Stepper
  */
-public interface OMMonitor
+public interface OMMonitor extends OMMonitorProgress
 {
-  /**
-   * @since 2.0
-   */
-  public static final double ZERO = 0;
-
-  /**
-   * @since 2.0
-   */
-  public static final double ONE = 1;
-
-  /**
-   * @since 2.0
-   */
-  public static final double TEN = 10;
-
-  /**
-   * @since 2.0
-   */
-  public static final double HUNDRED = 100;
-
   /**
    * @since 2.0
    */
@@ -112,21 +92,6 @@ public interface OMMonitor
    * @since 2.0
    */
   public void done();
-
-  /**
-   * @since 2.0
-   */
-  public double getTotalWork();
-
-  /**
-   * @since 2.0
-   */
-  public double getWork();
-
-  /**
-   * @since 2.0
-   */
-  public double getWorkPercent();
 
   /**
    * @author Eike Stepper

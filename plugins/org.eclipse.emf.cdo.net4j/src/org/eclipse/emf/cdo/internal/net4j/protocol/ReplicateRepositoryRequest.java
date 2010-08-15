@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+
 import java.io.IOException;
 
 /**
@@ -24,10 +26,14 @@ public class ReplicateRepositoryRequest extends CDOClientRequest<Boolean>
 {
   private CDOReplicationContext context;
 
-  public ReplicateRepositoryRequest(CDOClientProtocol protocol, CDOReplicationContext context)
+  @SuppressWarnings("unused")
+  private OMMonitor monitor;
+
+  public ReplicateRepositoryRequest(CDOClientProtocol protocol, CDOReplicationContext context, OMMonitor monitor)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY);
     this.context = context;
+    this.monitor = monitor;
   }
 
   @Override

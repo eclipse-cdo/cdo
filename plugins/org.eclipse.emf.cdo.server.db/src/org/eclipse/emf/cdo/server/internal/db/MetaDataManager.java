@@ -35,6 +35,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -95,7 +96,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   public Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection)
   {
-    return readPackageUnits(connection, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE);
+    return readPackageUnits(connection, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, new Monitor());
   }
 
   public final void writePackageUnits(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
@@ -127,12 +128,20 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   }
 
   public Collection<InternalCDOPackageUnit> rawImport(Connection connection, CDODataInput in, long fromCommitTime,
-      long toCommitTime) throws IOException
+      long toCommitTime, OMMonitor monitor) throws IOException
   {
-    DBUtil.deserializeTable(in, connection, CDODBSchema.PACKAGE_UNITS);
-    DBUtil.deserializeTable(in, connection, CDODBSchema.PACKAGE_INFOS);
+    monitor.begin(3);
 
-    return readPackageUnits(connection, fromCommitTime, toCommitTime);
+    try
+    {
+      DBUtil.deserializeTable(in, connection, CDODBSchema.PACKAGE_UNITS, monitor.fork());
+      DBUtil.deserializeTable(in, connection, CDODBSchema.PACKAGE_INFOS, monitor.fork());
+      return readPackageUnits(connection, fromCommitTime, toCommitTime, monitor.fork());
+    }
+    finally
+    {
+      monitor.done();
+    }
   }
 
   protected IDBStore getStore()
@@ -303,7 +312,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   }
 
   private Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection, long fromCommitTime,
-      long toCommitTime)
+      long toCommitTime, OMMonitor monitor)
   {
     final Map<String, InternalCDOPackageUnit> packageUnits = new HashMap<String, InternalCDOPackageUnit>();
     IDBRowHandler unitRowHandler = new IDBRowHandler()
@@ -357,8 +366,19 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
       }
     };
 
-    DBUtil.select(connection, infoRowHandler, CDODBSchema.PACKAGE_INFOS_UNIT, CDODBSchema.PACKAGE_INFOS_URI,
-        CDODBSchema.PACKAGE_INFOS_PARENT, CDODBSchema.PACKAGE_INFOS_META_LB, CDODBSchema.PACKAGE_INFOS_META_UB);
+    monitor.begin();
+    Async async = monitor.forkAsync();
+
+    try
+    {
+      DBUtil.select(connection, infoRowHandler, CDODBSchema.PACKAGE_INFOS_UNIT, CDODBSchema.PACKAGE_INFOS_URI,
+          CDODBSchema.PACKAGE_INFOS_PARENT, CDODBSchema.PACKAGE_INFOS_META_LB, CDODBSchema.PACKAGE_INFOS_META_UB);
+    }
+    finally
+    {
+      async.stop();
+      monitor.done();
+    }
 
     for (Entry<String, InternalCDOPackageUnit> entry : packageUnits.entrySet())
     {

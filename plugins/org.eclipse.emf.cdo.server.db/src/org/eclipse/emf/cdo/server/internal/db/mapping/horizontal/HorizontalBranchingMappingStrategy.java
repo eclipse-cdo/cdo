@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -71,7 +73,7 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
   }
 
   @Override
-  protected void rawImportReviseOldRevisions(Connection connection, IDBTable table)
+  protected void rawImportReviseOldRevisions(Connection connection, IDBTable table, OMMonitor monitor)
   {
     String sqlUpdate = "UPDATE " + table + " SET " + CDODBSchema.ATTRIBUTES_REVISED + "=? WHERE "
         + CDODBSchema.ATTRIBUTES_ID + "=? AND " + CDODBSchema.ATTRIBUTES_BRANCH + "=? AND "
@@ -91,9 +93,16 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
     try
     {
       stmtUpdate = connection.prepareStatement(sqlUpdate);
-      stmtQuery = connection.prepareStatement(sqlQuery);
+      stmtQuery = connection.prepareStatement(sqlQuery, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
       resultSet = stmtQuery.executeQuery();
+      int size = DBUtil.getRowCount(resultSet);
+      if (size == 0)
+      {
+        return;
+      }
+
+      monitor.begin(2 * size);
       while (resultSet.next())
       {
         long id = resultSet.getLong(1);
@@ -106,9 +115,18 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
         stmtUpdate.setInt(3, branch);
         stmtUpdate.setInt(4, version);
         stmtUpdate.addBatch();
+        monitor.worked();
       }
 
-      stmtUpdate.executeBatch();
+      Async async = monitor.forkAsync(size);
+      try
+      {
+        stmtUpdate.executeBatch();
+      }
+      finally
+      {
+        async.stop();
+      }
     }
     catch (SQLException ex)
     {
@@ -119,6 +137,7 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
       DBUtil.close(resultSet);
       DBUtil.close(stmtQuery);
       DBUtil.close(stmtUpdate);
+      monitor.done();
     }
   }
 

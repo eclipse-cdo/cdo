@@ -219,7 +219,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
   }
 
-  public void replicateRaw(CDODataInput in) throws IOException
+  public void replicateRaw(CDODataInput in, OMMonitor monitor) throws IOException
   {
     try
     {
@@ -230,7 +230,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
       StoreThreadLocal.setSession(replicatorSession);
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-      accessor.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
+      accessor.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime, monitor);
 
       replicateRawReviseRevisions();
       replicateRawNotifyClients(lastReplicatedCommitTime, toCommitTime);

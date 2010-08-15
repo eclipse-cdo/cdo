@@ -19,6 +19,8 @@ import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import javax.sql.DataSource;
@@ -622,6 +624,45 @@ public final class DBUtil
   }
 
   /**
+   * Returns the number of rows contained in the given result set.
+   * <p>
+   * The {@link ResultSet#getStatement() statement} of the result set must have been created with
+   * {@link ResultSet#TYPE_SCROLL_INSENSITIVE TYPE_SCROLL_INSENSITIVE}.
+   * 
+   * @since 4.0
+   */
+  public static int getRowCount(ResultSet resultSet) throws DBException
+  {
+    reset(resultSet);
+
+    try
+    {
+      resultSet.last();
+      return resultSet.getRow();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      reset(resultSet);
+    }
+  }
+
+  private static void reset(ResultSet resultSet) throws DBException
+  {
+    try
+    {
+      resultSet.beforeFirst();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+  }
+
+  /**
    * @since 3.0
    */
   public static void serializeTable(ExtendedDataOutput out, Connection connection, IDBTable table, String tableAlias,
@@ -666,14 +707,22 @@ public final class DBUtil
 
     try
     {
-      statement = connection.createStatement();
+      statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
       try
       {
         resultSet = statement.executeQuery(sql);
+
+        // Write resultSet size for progress monitoring
+        int size = getRowCount(resultSet);
+        out.writeInt(size);
+        if (size == 0)
+        {
+          return;
+        }
+
         while (resultSet.next())
         {
-          out.writeBoolean(true);
           for (int i = 0; i < fields.length; i++)
           {
             IDBField field = fields[i];
@@ -682,8 +731,6 @@ public final class DBUtil
             type.writeValue(out, resultSet, i + 1, canBeNull);
           }
         }
-
-        out.writeBoolean(false);
       }
       catch (SQLException ex)
       {
@@ -705,10 +752,17 @@ public final class DBUtil
   }
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public static void deserializeTable(ExtendedDataInput in, Connection connection, IDBTable table) throws IOException
+  public static void deserializeTable(ExtendedDataInput in, Connection connection, IDBTable table, OMMonitor monitor)
+      throws IOException
   {
+    int size = in.readInt();
+    if (size == 0)
+    {
+      return;
+    }
+
     IDBField[] fields = table.getFields();
 
     StringBuilder builder = new StringBuilder();
@@ -737,10 +791,14 @@ public final class DBUtil
     String sql = trace(builder.toString());
     PreparedStatement statement = null;
 
+    monitor.begin(1 + 2 * size);
+
     try
     {
       statement = connection.prepareStatement(sql);
-      while (in.readBoolean())
+      monitor.worked();
+
+      for (int row = 0; row < size; row++)
       {
         for (int i = 0; i < fields.length; i++)
         {
@@ -751,9 +809,19 @@ public final class DBUtil
         }
 
         statement.addBatch();
+        monitor.worked();
       }
 
-      statement.executeBatch();
+      Async async = monitor.forkAsync(size);
+
+      try
+      {
+        statement.executeBatch();
+      }
+      finally
+      {
+        async.stop();
+      }
     }
     catch (SQLException ex)
     {
@@ -762,6 +830,7 @@ public final class DBUtil
     finally
     {
       close(statement);
+      monitor.done();
     }
   }
 

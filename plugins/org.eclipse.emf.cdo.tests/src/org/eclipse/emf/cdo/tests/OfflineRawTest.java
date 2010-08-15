@@ -17,10 +17,12 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
 import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.om.monitor.NotifyingMonitor.ProgressEvent;
 
 /**
  * @author Eike Stepper
@@ -166,5 +168,62 @@ public class OfflineRawTest extends OfflineTest
 
     CDOListFeatureDelta listDelta = (CDOListFeatureDelta)delta.getFeatureDeltas().get(0);
     assertEquals(2, listDelta.getListChanges().size());
+  }
+
+  /**
+   * @since 4.0
+   */
+  public void testSyncProgressEvents() throws Exception
+  {
+    InternalSynchronizableRepository clone = (InternalSynchronizableRepository)getRepository();
+    waitForOnline(clone);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+
+    resource.getContents().add(getModel1Factory().createCompany());
+    transaction.setCommitComment("resource with one company created on clone");
+    transaction.commit();
+
+    getOfflineConfig().stopMasterTransport();
+    waitForOffline(clone);
+
+    {
+      CDOSession masterSession = openSession(clone.getName() + "_master");
+      CDOTransaction masterTransaction = masterSession.openTransaction();
+      CDOResource masterResource = masterTransaction.getResource("/my/resource");
+
+      for (int i = 0; i < 100; i++)
+      {
+        masterResource.getContents().add(getModel1Factory().createCompany());
+        masterTransaction.setCommitComment("one company added on master");
+        masterTransaction.commit();
+      }
+
+      masterTransaction.close();
+    }
+
+    final int[] workPercent = { 0 };
+    TestListener listener = new TestListener()
+    {
+      @Override
+      public void notifyEvent(IEvent event)
+      {
+        super.notifyEvent(event);
+        if (event instanceof ProgressEvent)
+        {
+          ProgressEvent e = (ProgressEvent)event;
+          workPercent[0] = (int)e.getWorkPercent();
+          msg(e.getTask() + ": " + workPercent[0] + " percent");
+        }
+      }
+    };
+
+    clone.getSynchronizer().addListener(listener);
+
+    getOfflineConfig().startMasterTransport();
+    waitForOnline(clone);
+    assertEquals(100, workPercent[0]);
   }
 }

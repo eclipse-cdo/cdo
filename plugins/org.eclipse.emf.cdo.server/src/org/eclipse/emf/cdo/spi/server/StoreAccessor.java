@@ -160,7 +160,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     try
     {
       monitor.begin(1 + newPackageUnits.length + 2 + newObjects.length + detachedObjects.length + dirtyCount);
-      writeCommitInfo(branch, timeStamp, userID, commitComment, monitor.fork(1));
+      writeCommitInfo(branch, timeStamp, userID, commitComment, monitor.fork());
 
       if (newPackageUnits.length != 0)
       {

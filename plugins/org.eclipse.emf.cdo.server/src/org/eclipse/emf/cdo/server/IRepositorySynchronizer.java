@@ -13,13 +13,13 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 
-import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.event.INotifier;
 
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public interface IRepositorySynchronizer extends ILifecycle
+public interface IRepositorySynchronizer extends INotifier
 {
   public int getRetryInterval();
 

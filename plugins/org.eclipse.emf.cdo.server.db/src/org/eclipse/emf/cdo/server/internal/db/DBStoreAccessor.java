@@ -66,7 +66,6 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -854,44 +853,71 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     mappingStrategy.rawExport(this, out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
   }
 
-  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
-      throws IOException
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
+      OMMonitor monitor) throws IOException
   {
-    DBUtil.deserializeTable(in, connection, CDODBSchema.BRANCHES);
-    DBUtil.deserializeTable(in, connection, CDODBSchema.COMMIT_INFOS);
-    DBUtil.deserializeTable(in, connection, CDODBSchema.EXTERNAL_REFS);
-
-    rawImportPackageUnits(in, fromCommitTime, toCommitTime);
-    getStore().getMappingStrategy().rawImport(this, in);
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    int size = mappingStrategy.getClassMappings().size();
+    int commitWork = 4;
+    monitor.begin(commitWork + size + commitWork);
 
     try
     {
-      connection.commit();
+      DBUtil.deserializeTable(in, connection, CDODBSchema.BRANCHES, monitor.fork());
+      DBUtil.deserializeTable(in, connection, CDODBSchema.COMMIT_INFOS, monitor.fork());
+      DBUtil.deserializeTable(in, connection, CDODBSchema.EXTERNAL_REFS, monitor.fork());
+      rawImportPackageUnits(in, fromCommitTime, toCommitTime, monitor.fork());
+
+      mappingStrategy.rawImport(this, in, monitor.fork(size));
+
+      Async async = monitor.forkAsync(commitWork);
+      try
+      {
+        connection.commit();
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      finally
+      {
+        async.stop();
+      }
     }
-    catch (SQLException ex)
+    finally
     {
-      throw new DBException(ex);
+      monitor.done();
     }
   }
 
-  protected void rawImportPackageUnits(CDODataInput in, long fromCommitTime, long toCommitTime) throws IOException
+  protected void rawImportPackageUnits(CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor)
+      throws IOException
   {
-    DBStore store = getStore();
-    IMetaDataManager metaDataManager = store.getMetaDataManager();
-    Collection<InternalCDOPackageUnit> packageUnits = metaDataManager.rawImport(getConnection(), in, fromCommitTime,
-        toCommitTime);
+    monitor.begin(2);
 
-    InternalRepository repository = store.getRepository();
-    InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
-
-    for (InternalCDOPackageUnit packageUnit : packageUnits)
+    try
     {
-      packageRegistry.putPackageUnit(packageUnit);
-    }
+      DBStore store = getStore();
+      IMetaDataManager metaDataManager = store.getMetaDataManager();
+      Collection<InternalCDOPackageUnit> packageUnits = metaDataManager.rawImport(getConnection(), in, fromCommitTime,
+          toCommitTime, monitor.fork());
 
-    IMappingStrategy mappingStrategy = store.getMappingStrategy();
-    mappingStrategy.createMapping(connection, packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]),
-        new Monitor());
+      InternalRepository repository = store.getRepository();
+      InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
+
+      for (InternalCDOPackageUnit packageUnit : packageUnits)
+      {
+        packageRegistry.putPackageUnit(packageUnit);
+      }
+
+      IMappingStrategy mappingStrategy = store.getMappingStrategy();
+      mappingStrategy.createMapping(connection, packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]),
+          monitor.fork());
+    }
+    finally
+    {
+      monitor.done();
+    }
   }
 
   /**

@@ -13,13 +13,15 @@ package org.eclipse.emf.cdo.spi.server;
 import org.eclipse.emf.cdo.server.IRepositorySynchronizer;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public interface InternalRepositorySynchronizer extends IRepositorySynchronizer
+public interface InternalRepositorySynchronizer extends IRepositorySynchronizer, ILifecycle
 {
   public InternalSynchronizableRepository getLocalRepository();
 

@@ -301,14 +301,14 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new UnsubscribeRemoteSessionsRequest(this));
   }
 
-  public void replicateRepository(CDOReplicationContext context)
+  public void replicateRepository(CDOReplicationContext context, OMMonitor monitor)
   {
-    send(new ReplicateRepositoryRequest(this, context));
+    send(new ReplicateRepositoryRequest(this, context, monitor));
   }
 
-  public void replicateRepositoryRaw(CDORawReplicationContext context)
+  public void replicateRepositoryRaw(CDORawReplicationContext context, OMMonitor monitor)
   {
-    send(new ReplicateRepositoryRawRequest(this, context));
+    send(new ReplicateRepositoryRawRequest(this, context, monitor));
   }
 
   public CDOChangeSetData[] loadChangeSets(CDOBranchPointRange... ranges)

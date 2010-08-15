@@ -114,7 +114,7 @@ public abstract class AbstractMonitor implements OMMonitor
 
   public double getWorkPercent()
   {
-    return Math.min(work * OMMonitor.HUNDRED / totalWork, OMMonitor.HUNDRED);
+    return percent(work, totalWork);
   }
 
   protected OMMonitor createNestedMonitor(double work)
@@ -142,6 +142,14 @@ public abstract class AbstractMonitor implements OMMonitor
     {
       throw new IllegalStateException("begin() has not been called"); //$NON-NLS-1$
     }
+  }
+
+  /**
+   * @since 3.1
+   */
+  protected static double percent(double part, double whole)
+  {
+    return Math.min(part * HUNDRED / whole, HUNDRED);
   }
 
   /**

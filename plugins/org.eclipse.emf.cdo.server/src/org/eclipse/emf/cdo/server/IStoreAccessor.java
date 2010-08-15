@@ -204,10 +204,10 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
       throws IOException;
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
-      throws IOException;
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
+      OMMonitor monitor) throws IOException;
 
   public void release();
 

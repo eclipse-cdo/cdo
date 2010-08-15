@@ -1231,8 +1231,11 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     throw new UnsupportedOperationException();
   }
 
-  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
-      throws IOException
+  /**
+   * @since 4.0
+   */
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
+      OMMonitor monitor) throws IOException
   {
     throw new UnsupportedOperationException();
   }

@@ -30,6 +30,8 @@ import org.eclipse.net4j.util.concurrent.QueueRunner;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
+import org.eclipse.net4j.util.om.monitor.NotifyingMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
@@ -429,13 +431,15 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
       localRepository.setState(CDOCommonRepository.State.SYNCING);
 
       CDOSessionProtocol sessionProtocol = remoteSession.getSessionProtocol();
+      OMMonitor monitor = new NotifyingMonitor("Synchronizing", getListeners());
+
       if (isRawReplication())
       {
-        sessionProtocol.replicateRepositoryRaw(localRepository);
+        sessionProtocol.replicateRepositoryRaw(localRepository, monitor);
       }
       else
       {
-        sessionProtocol.replicateRepository(localRepository);
+        sessionProtocol.replicateRepository(localRepository, monitor);
       }
 
       localRepository.setState(CDOCommonRepository.State.ONLINE);

@@ -197,6 +197,13 @@ public interface IMappingStrategy
   public IClassMapping getClassMapping(EClass eClass);
 
   /**
+   * Returns all class mappings of this strategy.
+   * 
+   * @since 4.0
+   */
+  public Map<EClass, IClassMapping> getClassMappings();
+
+  /**
    * Query if this mapping supports revision deltas. <br>
    * If this method returns <code>true</code>, it is guaranteed that all class mappings returned by
    * {@link #getClassMapping(EClass)} implement {@link IClassMappingDeltaSupport}.
@@ -316,9 +323,9 @@ public interface IMappingStrategy
       long lastReplicatedCommitTime, long lastCommitTime) throws IOException;
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public void rawImport(IDBStoreAccessor accessor, CDODataInput in) throws IOException;
+  public void rawImport(IDBStoreAccessor accessor, CDODataInput in, OMMonitor monitor) throws IOException;
 
   /**
    * @since 4.0

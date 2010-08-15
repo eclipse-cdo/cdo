@@ -32,6 +32,7 @@ import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -170,9 +171,9 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     DBUtil.serializeTable(out, connection, table, null, where);
   }
 
-  public void rawImport(Connection connection, CDODataInput in) throws IOException
+  public void rawImport(Connection connection, CDODataInput in, OMMonitor monitor) throws IOException
   {
-    DBUtil.deserializeTable(in, connection, table);
+    DBUtil.deserializeTable(in, connection, table, monitor);
   }
 
   @Override

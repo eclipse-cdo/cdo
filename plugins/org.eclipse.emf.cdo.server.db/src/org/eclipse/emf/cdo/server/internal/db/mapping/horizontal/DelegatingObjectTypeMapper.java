@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IObjectTypeMapper;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -97,9 +98,9 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
     delegate.rawExport(connection, out, fromCommitTime, toCommitTime);
   }
 
-  public void rawImport(Connection connection, CDODataInput in) throws IOException
+  public void rawImport(Connection connection, CDODataInput in, OMMonitor monitor) throws IOException
   {
-    delegate.rawImport(connection, in);
+    delegate.rawImport(connection, in, monitor);
   }
 
   @Override

@@ -178,14 +178,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public boolean unsubscribeRemoteSessions();
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public void replicateRepository(CDOReplicationContext context);
+  public void replicateRepository(CDOReplicationContext context, OMMonitor monitor);
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public void replicateRepositoryRaw(CDORawReplicationContext context);
+  public void replicateRepositoryRaw(CDORawReplicationContext context, OMMonitor monitor);
 
   /**
    * @since 3.0

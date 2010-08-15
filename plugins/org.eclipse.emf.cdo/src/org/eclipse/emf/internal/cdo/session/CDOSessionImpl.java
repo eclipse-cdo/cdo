@@ -1963,14 +1963,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public void replicateRepository(CDOReplicationContext context)
+    public void replicateRepository(CDOReplicationContext context, OMMonitor monitor)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          delegate.replicateRepository(context);
+          delegate.replicateRepository(context, monitor);
           return;
         }
         catch (Exception ex)
@@ -1980,14 +1980,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public void replicateRepositoryRaw(CDORawReplicationContext context)
+    public void replicateRepositoryRaw(CDORawReplicationContext context, OMMonitor monitor)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          delegate.replicateRepositoryRaw(context);
+          delegate.replicateRepositoryRaw(context, monitor);
           return;
         }
         catch (Exception ex)

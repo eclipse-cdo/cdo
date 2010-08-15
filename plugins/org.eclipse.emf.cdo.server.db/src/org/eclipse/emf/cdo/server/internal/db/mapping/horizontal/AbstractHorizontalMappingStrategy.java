@@ -35,6 +35,7 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -45,6 +46,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * * This abstract base class refines {@link AbstractMappingStrategy} by implementing aspects common to horizontal
@@ -157,9 +159,11 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     String attrSuffix = builder.toString();
     Connection connection = accessor.getConnection();
 
-    for (IClassMapping classMapping : getClassMappings(true).values())
+    Collection<IClassMapping> classMappings = getClassMappings(true).values();
+    out.writeInt(classMappings.size());
+
+    for (IClassMapping classMapping : classMappings)
     {
-      out.writeBoolean(true);
       EClass eClass = classMapping.getEClass();
       out.writeCDOClassifierRef(eClass);
 
@@ -172,7 +176,6 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       }
     }
 
-    out.writeBoolean(false);
     objectTypeMapper.rawExport(connection, out, fromCommitTime, toCommitTime);
   }
 
@@ -192,38 +195,89 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
   }
 
-  public void rawImport(IDBStoreAccessor accessor, CDODataInput in) throws IOException
+  public void rawImport(IDBStoreAccessor accessor, CDODataInput in, OMMonitor monitor) throws IOException
   {
-    Connection connection = accessor.getConnection();
-
-    while (in.readBoolean())
+    int size = in.readInt();
+    if (size == 0)
     {
-      EClass eClass = (EClass)in.readCDOClassifierRefAndResolve();
-      IClassMapping classMapping = getClassMapping(eClass);
-
-      IDBTable table = classMapping.getDBTables().get(0);
-      DBUtil.deserializeTable(in, connection, table);
-      rawImportReviseOldRevisions(connection, table);
-
-      for (IListMapping listMapping : classMapping.getListMappings())
-      {
-        rawImportList(in, connection, listMapping);
-      }
+      return;
     }
 
-    objectTypeMapper.rawImport(connection, in);
+    int objectTypeMapperWork = 10;
+    monitor.begin(3 * size + objectTypeMapperWork);
+
+    try
+    {
+      Connection connection = accessor.getConnection();
+      for (int i = 0; i < size; i++)
+      {
+        EClass eClass = (EClass)in.readCDOClassifierRefAndResolve();
+        IClassMapping classMapping = getClassMapping(eClass);
+
+        IDBTable table = classMapping.getDBTables().get(0);
+        DBUtil.deserializeTable(in, connection, table, monitor.fork());
+        rawImportReviseOldRevisions(connection, table, monitor.fork());
+
+        List<IListMapping> listMappings = classMapping.getListMappings();
+        int listSize = listMappings.size();
+        if (listSize == 0)
+        {
+          monitor.worked();
+        }
+        else
+        {
+          OMMonitor listMonitor = monitor.fork();
+          listMonitor.begin(listSize);
+
+          try
+          {
+            for (IListMapping listMapping : listMappings)
+            {
+              rawImportList(in, connection, listMapping, listMonitor.fork());
+            }
+          }
+          finally
+          {
+            listMonitor.done();
+          }
+        }
+      }
+
+      objectTypeMapper.rawImport(connection, in, monitor.fork(objectTypeMapperWork));
+    }
+    finally
+    {
+      monitor.done();
+    }
   }
 
-  protected void rawImportReviseOldRevisions(Connection connection, IDBTable table)
+  protected void rawImportReviseOldRevisions(Connection connection, IDBTable table, OMMonitor monitor)
   {
     throw new UnsupportedOperationException("Must be overridden");
   }
 
-  protected void rawImportList(CDODataInput in, Connection connection, IListMapping listMapping) throws IOException
+  protected void rawImportList(CDODataInput in, Connection connection, IListMapping listMapping, OMMonitor monitor)
+      throws IOException
   {
-    for (IDBTable table : listMapping.getDBTables())
+    Collection<IDBTable> tables = listMapping.getDBTables();
+    int size = tables.size();
+    if (size == 0)
     {
-      DBUtil.deserializeTable(in, connection, table);
+      return;
+    }
+
+    monitor.begin(size);
+
+    try
+    {
+      for (IDBTable table : tables)
+      {
+        DBUtil.deserializeTable(in, connection, table, monitor.fork());
+      }
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 

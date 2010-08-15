@@ -8,22 +8,25 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.spi.common;
-
-import org.eclipse.emf.cdo.common.protocol.CDODataInput;
-
-import org.eclipse.net4j.util.om.monitor.OMMonitor;
-
-import java.io.IOException;
+package org.eclipse.net4j.util.om.monitor;
 
 /**
  * @author Eike Stepper
- * @since 3.0
+ * @since 3.1
  */
-public interface CDORawReplicationContext extends CDOReplicationInfo
+public interface OMMonitorProgress
 {
-  /**
-   * @since 4.0
-   */
-  public void replicateRaw(CDODataInput in, OMMonitor monitor) throws IOException;
+  public static final double ZERO = 0;
+
+  public static final double ONE = 1;
+
+  public static final double TEN = 10;
+
+  public static final double HUNDRED = 100;
+
+  public double getTotalWork();
+
+  public double getWork();
+
+  public double getWorkPercent();
 }

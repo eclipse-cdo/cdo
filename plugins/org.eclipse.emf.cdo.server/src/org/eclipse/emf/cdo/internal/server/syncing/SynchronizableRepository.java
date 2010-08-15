@@ -161,6 +161,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
   }
 
+  @Deprecated
   public boolean isSqueezeCommitInfos()
   {
     return synchronizer.isSqueezeCommitInfos();

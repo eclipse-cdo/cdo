@@ -29,9 +29,11 @@ public interface InternalRepositorySynchronizer extends IRepositorySynchronizer
 
   public InternalCDOSession getRemoteSession();
 
+  @Deprecated
   public boolean isSqueezeCommitInfos();
 
-  public void setRawReplication(boolean rawReplication);
-
+  @Deprecated
   public void setSqueezeCommitInfos(boolean squeezeCommitInfos);
+
+  public void setRawReplication(boolean rawReplication);
 }

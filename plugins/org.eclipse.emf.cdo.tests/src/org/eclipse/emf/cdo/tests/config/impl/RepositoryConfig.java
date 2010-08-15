@@ -423,7 +423,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       synchronizer.setRemoteSessionConfigurationFactory(masterFactory);
       synchronizer.setRetryInterval(1);
       synchronizer.setRawReplication(getTestRawReplication());
-      synchronizer.setSqueezeCommitInfos(getTestSqueezeCommitInfos());
+      // synchronizer.setSqueezeCommitInfos(getTestSqueezeCommitInfos());
       return synchronizer;
     }
 

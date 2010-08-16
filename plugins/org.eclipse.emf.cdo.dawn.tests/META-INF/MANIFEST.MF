@@ -29,11 +29,13 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
  org.eclipse.gmf.xpand;bundle-version="[2.1.0,3.0.0)",
  org.eclipse.emf.mwe.core;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.emf.mwe.utils;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.emf.cdo.dawn.codegen;bundle-version="[0.2.100,1.0.0)"
+ org.eclipse.emf.cdo.dawn.codegen;bundle-version="[0.2.100,1.0.0)",
+ org.eclipse.emf.cdo.tests.ui;bundle-version="[4.0.0,5.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %providerName
 Export-Package: org.eclipse.emf.cdo.dawn.tests;version="0.2.0",
+ org.eclipse.emf.cdo.dawn.tests.bugzillas;version="0.2.0",
  org.eclipse.emf.cdo.dawn.tests.common;version="0.2.0",
  org.eclipse.emf.cdo.dawn.tests.ui;version="0.2.0",
  org.eclipse.emf.cdo.dawn.tests.ui.util;version="0.2.0"

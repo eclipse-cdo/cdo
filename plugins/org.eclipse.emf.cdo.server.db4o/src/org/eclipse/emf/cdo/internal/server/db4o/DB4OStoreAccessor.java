@@ -360,6 +360,12 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
   public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException
   {
+
+  }
+
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
+      OMMonitor monitor) throws IOException
+  {
     throw new UnsupportedOperationException("not implemented");
   }
 
@@ -591,5 +597,4 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
       QueryUtil.removeRevisionFromContainer(getObjectContainer(), branch.getID(), id);
     }
   }
-
 }

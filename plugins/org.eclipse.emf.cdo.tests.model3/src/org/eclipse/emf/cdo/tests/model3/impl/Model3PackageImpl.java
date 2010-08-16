@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.tests.model3.Model3Factory;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
+import org.eclipse.emf.cdo.tests.model3.NodeC;
+import org.eclipse.emf.cdo.tests.model3.NodeD;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
@@ -84,6 +86,20 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * 
    * @generated
    */
+  private EClass nodeCEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass nodeDEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   private EDataType pointEDataType = null;
 
   /**
@@ -126,14 +142,11 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   public static Model3Package init()
   {
     if (isInited)
-    {
       return (Model3Package)EPackage.Registry.INSTANCE.getEPackage(Model3Package.eNS_URI);
-    }
 
     // Obtain or create and register package
     Model3PackageImpl theModel3Package = (Model3PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model3PackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI)
-        : new Model3PackageImpl());
+        .get(eNS_URI) : new Model3PackageImpl());
 
     isInited = true;
 
@@ -276,6 +289,16 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * 
    * @generated
    */
+  public EReference getNodeA_OtherNodes()
+  {
+    return (EReference)nodeAEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EClass getNodeB()
   {
     return nodeBEClass;
@@ -316,6 +339,126 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * 
    * @generated
    */
+  public EClass getNodeC()
+  {
+    return nodeCEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getNodeC_Children()
+  {
+    return (EReference)nodeCEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getNodeC_Parent()
+  {
+    return (EReference)nodeCEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNodeC_Name()
+  {
+    return (EAttribute)nodeCEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getNodeC_OtherNodes()
+  {
+    return (EReference)nodeCEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getNodeC_OppositeNodes()
+  {
+    return (EReference)nodeCEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getNodeD()
+  {
+    return nodeDEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getNodeD_Children()
+  {
+    return (EReference)nodeDEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getNodeD_Parent()
+  {
+    return (EReference)nodeDEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getNodeD_Name()
+  {
+    return (EAttribute)nodeDEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getNodeD_OtherNodes()
+  {
+    return (EReference)nodeDEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getNodeD_OppositeNode()
+  {
+    return (EReference)nodeDEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EDataType getPoint()
   {
     return pointEDataType;
@@ -347,9 +490,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   public void createPackageContents()
   {
     if (isCreated)
-    {
       return;
-    }
     isCreated = true;
 
     // Create classes and their features
@@ -368,11 +509,26 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     nodeAEClass = createEClass(NODE_A);
     createEReference(nodeAEClass, NODE_A__CHILDREN);
     createEAttribute(nodeAEClass, NODE_A__NAME);
+    createEReference(nodeAEClass, NODE_A__OTHER_NODES);
 
     nodeBEClass = createEClass(NODE_B);
     createEReference(nodeBEClass, NODE_B__CHILDREN);
     createEReference(nodeBEClass, NODE_B__PARENT);
     createEAttribute(nodeBEClass, NODE_B__NAME);
+
+    nodeCEClass = createEClass(NODE_C);
+    createEReference(nodeCEClass, NODE_C__CHILDREN);
+    createEReference(nodeCEClass, NODE_C__PARENT);
+    createEAttribute(nodeCEClass, NODE_C__NAME);
+    createEReference(nodeCEClass, NODE_C__OTHER_NODES);
+    createEReference(nodeCEClass, NODE_C__OPPOSITE_NODES);
+
+    nodeDEClass = createEClass(NODE_D);
+    createEReference(nodeDEClass, NODE_D__CHILDREN);
+    createEReference(nodeDEClass, NODE_D__PARENT);
+    createEAttribute(nodeDEClass, NODE_D__NAME);
+    createEReference(nodeDEClass, NODE_D__OTHER_NODES);
+    createEReference(nodeDEClass, NODE_D__OPPOSITE_NODE);
 
     // Create data types
     pointEDataType = createEDataType(POINT);
@@ -394,9 +550,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   public void initializePackageContents()
   {
     if (isInitialized)
-    {
       return;
-    }
     isInitialized = true;
 
     // Initialize package
@@ -445,6 +599,9 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
         IS_ORDERED);
     initEAttribute(getNodeA_Name(), theEcorePackage.getEString(), "name", null, 0, 1, NodeA.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNodeA_OtherNodes(), this.getNodeA(), null, "otherNodes", null, 0, -1, NodeA.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     initEClass(nodeBEClass, NodeB.class, "NodeB", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getNodeB_Children(), this.getNodeB(), this.getNodeB_Parent(), "children", null, 0, -1, NodeB.class,
@@ -455,6 +612,38 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getNodeB_Name(), theEcorePackage.getEString(), "name", null, 0, 1, NodeB.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(nodeCEClass, NodeC.class, "NodeC", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getNodeC_Children(), this.getNodeC(), this.getNodeC_Parent(), "children", null, 0, -1, NodeC.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getNodeC_Parent(), this.getNodeC(), this.getNodeC_Children(), "parent", null, 0, 1, NodeC.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNodeC_Name(), theEcorePackage.getEString(), "name", null, 0, 1, NodeC.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNodeC_OtherNodes(), this.getNodeC(), this.getNodeC_OppositeNodes(), "otherNodes", null, 0, -1,
+        NodeC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNodeC_OppositeNodes(), this.getNodeC(), this.getNodeC_OtherNodes(), "oppositeNodes", null, 0, -1,
+        NodeC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(nodeDEClass, NodeD.class, "NodeD", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getNodeD_Children(), this.getNodeD(), this.getNodeD_Parent(), "children", null, 0, -1, NodeD.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getNodeD_Parent(), this.getNodeD(), this.getNodeD_Children(), "parent", null, 0, 1, NodeD.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNodeD_Name(), theEcorePackage.getEString(), "name", null, 0, 1, NodeD.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNodeD_OtherNodes(), this.getNodeD(), this.getNodeD_OppositeNode(), "otherNodes", null, 0, -1,
+        NodeD.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNodeD_OppositeNode(), this.getNodeD(), this.getNodeD_OtherNodes(), "oppositeNode", null, 0, 1,
+        NodeD.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(pointEDataType, Point.class, "Point", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

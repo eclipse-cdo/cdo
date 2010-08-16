@@ -16,10 +16,12 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOListFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -29,6 +31,7 @@ import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
+import org.eclipse.emf.cdo.tests.model3.NodeD;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -232,6 +235,92 @@ public class RevisionDeltaTest extends AbstractCDOTest
 
     transaction.commit();
     transaction.close();
+    session.close();
+  }
+
+  @SuppressWarnings("unused")
+  public void testDetachWithXRef() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+
+    NodeD a = getModel3Factory().createNodeD();
+    NodeD b = getModel3Factory().createNodeD();
+    NodeD c = getModel3Factory().createNodeD();
+
+    a.getChildren().add(b);
+    c.getOtherNodes().add(b);
+
+    resource.getContents().add(a);
+    resource.getContents().add(c);
+
+    if (true)
+    {
+      transaction.commit();
+      transaction.close();
+      transaction = session.openTransaction();
+      resource = transaction.getResource("/test1");
+    }
+
+    // Start test logic
+
+    a = (NodeD)resource.getContents().get(0);
+    b = a.getChildren().get(0);
+    c = (NodeD)resource.getContents().get(1);
+
+    a.getChildren().remove(0);
+    Object[] cB = c.getOtherNodes().toArray();
+
+    CDORevisionDelta aDelta = transaction.getRevisionDeltas().get(CDOUtil.getCDOObject(a).cdoID());
+    CDORevisionDelta cDelta = transaction.getRevisionDeltas().get(CDOUtil.getCDOObject(c).cdoID());
+
+    session.close();
+  }
+
+  @SuppressWarnings("unused")
+  public void testDetachWithXRef_Remove() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+
+    NodeD a = getModel3Factory().createNodeD();
+    NodeD b = getModel3Factory().createNodeD();
+    NodeD c = getModel3Factory().createNodeD();
+
+    a.getChildren().add(b);
+    c.getOtherNodes().add(b);
+
+    resource.getContents().add(a);
+    resource.getContents().add(c);
+
+    if (true)
+    {
+      transaction.commit();
+      transaction.close();
+      transaction = session.openTransaction();
+      resource = transaction.getResource("/test1");
+    }
+
+    // Start test logic
+
+    a = (NodeD)resource.getContents().get(0);
+    b = a.getChildren().get(0);
+    c = (NodeD)resource.getContents().get(1);
+
+    a.getChildren().remove(0);
+    c.getOtherNodes().remove(0);
+
+    Object[] cB = c.getOtherNodes().toArray();
+
+    CDORevisionDelta aDelta = transaction.getRevisionDeltas().get(CDOUtil.getCDOObject(a).cdoID());
+    CDORevisionDelta cDelta = transaction.getRevisionDeltas().get(CDOUtil.getCDOObject(c).cdoID());
+
+    CDORevisionDeltaImpl cDelta2 = (CDORevisionDeltaImpl)cDelta;
+    CDOListFeatureDelta list = (CDOListFeatureDelta)cDelta2.getFeatureDelta(getModel3Package().getNodeD_OtherNodes());
+    assertEquals(1, list.getListChanges().size());
+
     session.close();
   }
 

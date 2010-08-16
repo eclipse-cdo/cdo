@@ -156,9 +156,7 @@ public class PolygonImpl extends EObjectImpl implements Polygon
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (points: ");

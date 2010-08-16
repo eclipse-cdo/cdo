@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
+import org.eclipse.emf.cdo.tests.model3.NodeC;
+import org.eclipse.emf.cdo.tests.model3.NodeD;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 
@@ -80,6 +82,22 @@ public interface Model3Factory extends org.eclipse.emf.cdo.tests.model3.Model3Fa
    * @generated
    */
   NodeB createNodeB();
+
+  /**
+   * Returns a new object of class '<em>Node C</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Node C</em>'.
+   * @generated
+   */
+  NodeC createNodeC();
+
+  /**
+   * Returns a new object of class '<em>Node D</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Node D</em>'.
+   * @generated
+   */
+  NodeD createNodeD();
 
   /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->

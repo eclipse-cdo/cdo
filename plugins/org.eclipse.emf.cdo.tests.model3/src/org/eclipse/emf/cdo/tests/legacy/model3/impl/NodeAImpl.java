@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import java.util.Collection;
@@ -32,6 +33,7 @@ import java.util.Collection;
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl#getChildren <em>Children</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl#getOtherNodes <em>Other Nodes</em>}</li>
  * </ul>
  * </p>
  * 
@@ -67,6 +69,16 @@ public class NodeAImpl extends EObjectImpl implements NodeA
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getOtherNodes() <em>Other Nodes</em>}' reference list. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @see #getOtherNodes()
+   * @generated
+   * @ordered
+   */
+  protected EList<NodeA> otherNodes;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -131,6 +143,20 @@ public class NodeAImpl extends EObjectImpl implements NodeA
    * 
    * @generated
    */
+  public EList<NodeA> getOtherNodes()
+  {
+    if (otherNodes == null)
+    {
+      otherNodes = new EObjectResolvingEList<NodeA>(NodeA.class, this, Model3Package.NODE_A__OTHER_NODES);
+    }
+    return otherNodes;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -156,6 +182,8 @@ public class NodeAImpl extends EObjectImpl implements NodeA
       return getChildren();
     case Model3Package.NODE_A__NAME:
       return getName();
+    case Model3Package.NODE_A__OTHER_NODES:
+      return getOtherNodes();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -178,6 +206,10 @@ public class NodeAImpl extends EObjectImpl implements NodeA
     case Model3Package.NODE_A__NAME:
       setName((String)newValue);
       return;
+    case Model3Package.NODE_A__OTHER_NODES:
+      getOtherNodes().clear();
+      getOtherNodes().addAll((Collection<? extends NodeA>)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -198,6 +230,9 @@ public class NodeAImpl extends EObjectImpl implements NodeA
     case Model3Package.NODE_A__NAME:
       setName(NAME_EDEFAULT);
       return;
+    case Model3Package.NODE_A__OTHER_NODES:
+      getOtherNodes().clear();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -216,6 +251,8 @@ public class NodeAImpl extends EObjectImpl implements NodeA
       return children != null && !children.isEmpty();
     case Model3Package.NODE_A__NAME:
       return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+    case Model3Package.NODE_A__OTHER_NODES:
+      return otherNodes != null && !otherNodes.isEmpty();
     }
     return super.eIsSet(featureID);
   }

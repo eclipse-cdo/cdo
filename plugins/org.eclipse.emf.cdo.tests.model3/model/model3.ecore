@@ -23,6 +23,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
         eType="#//NodeA" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="otherNodes" upperBound="-1"
+        eType="#//NodeA"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NodeB">
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
@@ -30,6 +32,28 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//NodeB"
         eOpposite="#//NodeB/children"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NodeC">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//NodeC" containment="true" eOpposite="#//NodeC/parent"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//NodeC"
+        eOpposite="#//NodeC/children"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="otherNodes" upperBound="-1"
+        eType="#//NodeC" eOpposite="#//NodeC/oppositeNodes"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="oppositeNodes" upperBound="-1"
+        eType="#//NodeC" eOpposite="#//NodeC/otherNodes"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NodeD">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//NodeD" containment="true" eOpposite="#//NodeD/parent"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//NodeD"
+        eOpposite="#//NodeD/children"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="otherNodes" upperBound="-1"
+        eType="#//NodeD" eOpposite="#//NodeD/oppositeNode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="oppositeNode" eType="#//NodeD"
+        eOpposite="#//NodeD/otherNodes"/>
   </eClassifiers>
   <eSubpackages name="subpackage" nsURI="http://www.eclipse.org/emf/CDO/tests/subpackage/1.0.0"
       nsPrefix="subpackage">

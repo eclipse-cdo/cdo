@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
+import org.eclipse.emf.cdo.tests.model3.NodeC;
+import org.eclipse.emf.cdo.tests.model3.NodeD;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 
@@ -115,6 +117,18 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
     public Adapter caseNodeB(NodeB object)
     {
       return createNodeBAdapter();
+    }
+
+    @Override
+    public Adapter caseNodeC(NodeC object)
+    {
+      return createNodeCAdapter();
+    }
+
+    @Override
+    public Adapter caseNodeD(NodeD object)
+    {
+      return createNodeDAdapter();
     }
 
     @Override
@@ -219,6 +233,34 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createNodeBAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model3.NodeC <em>Node C</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeC
+   * @generated
+   */
+  public Adapter createNodeCAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model3.NodeD <em>Node D</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model3.NodeD
+   * @generated
+   */
+  public Adapter createNodeDAdapter()
   {
     return null;
   }

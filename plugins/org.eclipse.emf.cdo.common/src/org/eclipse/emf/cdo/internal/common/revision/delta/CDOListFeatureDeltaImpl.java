@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.Pair;
@@ -357,8 +358,10 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
 
           }
 
-          // We virtually "executed" the REMOVE so we do not add it to the feature deltas.
-          return false;
+          // If the removed delta was SET we we add the REMOVE to the feature deltas.
+          // If the removed delta was ADD we we do not add the REMOVE to the feature deltas.
+          boolean addRemoveDelta = delta instanceof CDOSetFeatureDelta;
+          return addRemoveDelta;
         }
       }
     }

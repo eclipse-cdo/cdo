@@ -78,10 +78,8 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
       if (ePackageRef != oldEPackageRef)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model3Package.META_REF__EPACKAGE_REF,
               oldEPackageRef, ePackageRef));
-        }
       }
     }
     return ePackageRef;
@@ -107,10 +105,8 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
     EPackage oldEPackageRef = ePackageRef;
     ePackageRef = newEPackageRef;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.META_REF__EPACKAGE_REF, oldEPackageRef,
           ePackageRef));
-    }
   }
 
   /**
@@ -125,9 +121,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
     {
     case Model3Package.META_REF__EPACKAGE_REF:
       if (resolve)
-      {
         return getEPackageRef();
-      }
       return basicGetEPackageRef();
     }
     return super.eGet(featureID, resolve, coreType);

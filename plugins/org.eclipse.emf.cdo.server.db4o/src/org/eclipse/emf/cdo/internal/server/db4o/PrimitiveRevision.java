@@ -278,11 +278,10 @@ public class PrimitiveRevision
               throw new IllegalStateException("CDOList should contain only CDOID instances but received "
                   + listElement.getClass().getName() + " instead");
             }
-            else
-            {
-              list.add(getObjectFromId((CDOID)listElement));
-            }
+
+            list.add(getObjectFromId((CDOID)listElement));
           }
+
           values.add(i, list);
         }
         else
@@ -291,6 +290,7 @@ public class PrimitiveRevision
         }
       }
     }
+
     return new PrimitiveRevision(nsURI, className, id, version, branchID, revised, resourceID, containerID,
         containingFeatureID, values, timeStamp, isResource, isResourceNode, isResourceFolder, isRootResource);
   }

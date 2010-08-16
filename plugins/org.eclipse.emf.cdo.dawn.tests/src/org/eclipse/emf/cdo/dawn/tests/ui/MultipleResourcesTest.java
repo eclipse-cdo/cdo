@@ -82,7 +82,7 @@ public class MultipleResourcesTest extends AbstractDawnUITest
 
     editor.activateTool(A_CLASS);
     editor.click(100, 100);
-    typeTextToFocusedWidget("A", bot);
+    typeTextToFocusedWidget("A", bot, true);
 
     editor.saveAndClose();
     // editor.save();
@@ -112,11 +112,11 @@ public class MultipleResourcesTest extends AbstractDawnUITest
 
     editor.activateTool(A_CLASS);
     editor.click(100, 100);
-    typeTextToFocusedWidget("B", bot);
+    typeTextToFocusedWidget("B", bot, true);
 
     editor.activateTool(A_CLASS);
     editor.click(300, 300);
-    typeTextToFocusedWidget("C", bot);
+    typeTextToFocusedWidget("C", bot, true);
     editor.click(200, 200);
     editor.saveAndClose();
 

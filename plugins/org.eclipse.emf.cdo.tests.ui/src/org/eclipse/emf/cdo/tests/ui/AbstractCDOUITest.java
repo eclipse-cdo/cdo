@@ -37,9 +37,9 @@ public abstract class AbstractCDOUITest extends AbstractCDOTest
   @Override
   public void setUp() throws Exception
   {
-    super.setUp();
     SWTBotPreferences.KEYBOARD_LAYOUT = "EN_US";
     SWTBotPreferences.SCREENSHOTS_DIR = System.getProperty("java.io.tmpdir") + "/cdotests";
+    super.setUp();
   }
 
   protected void closeAllEditors()
@@ -119,7 +119,8 @@ public abstract class AbstractCDOUITest extends AbstractCDOTest
   {
     Keyboard keyboard = KeyboardFactory.getSWTKeyboard();
     bot.getFocusedWidget();
-    keyboard.typeText(text, 100);
+    keyboard.typeText(text, 50);
+
     if (hitCR)
     {
       keyboard.pressShortcut(Keystrokes.CR);

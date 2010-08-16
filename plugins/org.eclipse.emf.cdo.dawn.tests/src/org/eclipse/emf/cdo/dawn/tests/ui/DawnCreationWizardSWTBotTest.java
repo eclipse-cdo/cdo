@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.dawn.tests.ui;
 
 import org.eclipse.emf.cdo.dawn.tests.AbstractDawnUITest;
+import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnSWTBotUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -47,7 +48,7 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnUITest
   public static void beforeClass() throws Exception
   {
     bot = new SWTGefBot();
-    bot.viewByTitle("Welcome").close();
+    DawnSWTBotUtil.initTest(bot);
   }
 
   @Override
@@ -61,7 +62,6 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnUITest
   @After
   public void tearDown() throws Exception
   {
-    closeAllEditors();
     super.tearDown();
   }
 

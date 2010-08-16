@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -35,7 +34,7 @@ import java.net.URL;
 /**
  * @author Martin Fluegge
  */
-public class AbstractDawnTest extends AbstractCDOTest
+public abstract class AbstractDawnTest extends AbstractCDOTest
 {
   @Override
   public void setUp() throws Exception
@@ -53,7 +52,6 @@ public class AbstractDawnTest extends AbstractCDOTest
   protected void createCDOResourcesFromXMI(String resourceName, EPackage ePackage, CDOSession session)
       throws CommitException
   {
-
     NotationPackage.eINSTANCE.getClass();
     String packageName = ePackage.getName();
     ResourceSet resourceSet = new ResourceSetImpl();
@@ -61,9 +59,6 @@ public class AbstractDawnTest extends AbstractCDOTest
         .put(packageName + "_diagram", new XMIResourceFactoryImpl());
 
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(packageName, new XMIResourceFactoryImpl());
-
-    System.out.println(GMFTest.class.getResource("."));
-    System.out.println(GMFTest.class.getResource("/"));
 
     URL resourceURI = GMFTest.class.getResource("");
     String resourcePath = resourceURI.toString().substring(0, resourceURI.toString().lastIndexOf("/bin"));
@@ -92,15 +87,5 @@ public class AbstractDawnTest extends AbstractCDOTest
     semanticResource.getContents().add(emfResource.getContents().get(0));
     transaction.commit();
     transaction.close();
-  }
-
-  protected boolean resourceExists(String resourcePath)
-  {
-    CDOSession session = openSession();
-    CDOView view = session.openView();
-
-    CDOResource resource = view.getResource(resourcePath);
-
-    return resource != null ? true : false;
   }
 }

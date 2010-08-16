@@ -21,13 +21,15 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * @author Martin Fluegge This test suite should be run as JUnit Plug-in test.
+ * This test suite should be executed as JUnit Plug-in test.
+ * 
+ * @author Martin Fluegge
  */
-public class AllTestsUI extends AllTests
+public class AllTestsDawnUI extends AllTests
 {
   public static Test suite()
   {
-    return new AllTestsUI().getTestSuite(AllTests.class.getName());
+    return new AllTestsDawnUI().getTestSuite(AllTests.class.getName());
   }
 
   @Override

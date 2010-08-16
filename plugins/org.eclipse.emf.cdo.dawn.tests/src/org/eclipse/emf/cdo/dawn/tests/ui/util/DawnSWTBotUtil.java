@@ -36,4 +36,5 @@ public class DawnSWTBotUtil
       // already closed the welcome screen.
     }
   }
+
 }

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.dawn.tests;
 
+import org.eclipse.emf.cdo.dawn.tests.bugzillas.Bugzilla_321024_Test;
 import org.eclipse.emf.cdo.dawn.tests.ui.DawnCreationWizardSWTBotTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.MultipleResourcesTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.SimpleDiagramTest;
@@ -19,12 +20,14 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
- * This test suite should be run as SWTBot test.
+ * This test suite should be executed as SWTBot test.
  * 
  * @author Martin Fluegge
  */
 @RunWith(Suite.class)
-@SuiteClasses({ DawnCreationWizardSWTBotTest.class, SimpleDiagramTest.class, MultipleResourcesTest.class })
-public class AllTestsUISWTBot
+@SuiteClasses({ DawnCreationWizardSWTBotTest.class, SimpleDiagramTest.class, MultipleResourcesTest.class,
+    Bugzilla_321024_Test.class })
+public class AllTestsDawnUISWTBot
 {
+
 }

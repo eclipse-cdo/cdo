@@ -18,7 +18,12 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.internal.db.ddl.DBTable;
 import org.eclipse.net4j.spi.db.DBSchema;
+import org.eclipse.net4j.util.ReflectUtil;
+
+import java.lang.reflect.Field;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -253,5 +258,14 @@ public class CDODBSchema extends DBSchema
   static
   {
     INSTANCE.lock();
+  }
+
+  public void removeTable(String name)
+  {
+    Field tablesField = ReflectUtil.getField(DBSchema.class, "tables");
+
+    @SuppressWarnings("unchecked")
+    Map<String, DBTable> tables = (Map<String, DBTable>)ReflectUtil.getValue(tablesField, this);
+    tables.remove(name);
   }
 }

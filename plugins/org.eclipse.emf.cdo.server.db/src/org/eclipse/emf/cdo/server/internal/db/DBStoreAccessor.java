@@ -44,6 +44,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -493,6 +494,10 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     try
     {
       getConnection().rollback();
+
+      // Bugzilla 298632: Must rollback DBSchema to its prior state and drop the tables
+      IMappingStrategy strategy = getStore().getMappingStrategy();
+      ((AbstractMappingStrategy)strategy).removeMapping(getConnection(), commitContext.getNewPackageUnits());
     }
     catch (SQLException ex)
     {

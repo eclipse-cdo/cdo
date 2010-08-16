@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.legacy.model5;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EReference;
 
 /**
@@ -416,6 +417,41 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   int GEN_LIST_OF_CHAR_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfIntArrayImpl
+   * <em>Gen List Of Int Array</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfIntArrayImpl
+   * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getGenListOfIntArray()
+   * @generated
+   */
+  int GEN_LIST_OF_INT_ARRAY = 13;
+
+  /**
+   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_INT_ARRAY__ELEMENTS = 0;
+
+  /**
+   * The number of structural features of the '<em>Gen List Of Int Array</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_INT_ARRAY_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '<em>Int Array</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getIntArray()
+   * @generated
+   */
+  int INT_ARRAY = 14;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.TestFeatureMap
    * <em>Test Feature Map</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -702,6 +738,37 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EAttribute getGenListOfChar_Elements();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfIntArray
+   * <em>Gen List Of Int Array</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Gen List Of Int Array</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfIntArray
+   * @generated
+   */
+  EClass getGenListOfIntArray();
+
+  /**
+   * Returns the meta object for the attribute list '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfIntArray#getElements <em>Elements</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute list '<em>Elements</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfIntArray#getElements()
+   * @see #getGenListOfIntArray()
+   * @generated
+   */
+  EAttribute getGenListOfIntArray_Elements();
+
+  /**
+   * Returns the meta object for data type '<em>Int Array</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for data type '<em>Int Array</em>'.
+   * @model instanceClass="int[]"
+   * @generated
+   */
+  EDataType getIntArray();
+
+  /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the factory that creates the instances of the model.
@@ -956,6 +1023,32 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
      * @generated
      */
     EAttribute GEN_LIST_OF_CHAR__ELEMENTS = eINSTANCE.getGenListOfChar_Elements();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfIntArrayImpl
+     * <em>Gen List Of Int Array</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfIntArrayImpl
+     * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getGenListOfIntArray()
+     * @generated
+     */
+    EClass GEN_LIST_OF_INT_ARRAY = eINSTANCE.getGenListOfIntArray();
+
+    /**
+     * The meta object literal for the '<em><b>Elements</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute GEN_LIST_OF_INT_ARRAY__ELEMENTS = eINSTANCE.getGenListOfIntArray_Elements();
+
+    /**
+     * The meta object literal for the '<em>Int Array</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getIntArray()
+     * @generated
+     */
+    EDataType INT_ARRAY = eINSTANCE.getIntArray();
 
   }
 

@@ -163,9 +163,7 @@ public class GenListOfFloatImpl extends EObjectImpl implements GenListOfFloat
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (elements: ");

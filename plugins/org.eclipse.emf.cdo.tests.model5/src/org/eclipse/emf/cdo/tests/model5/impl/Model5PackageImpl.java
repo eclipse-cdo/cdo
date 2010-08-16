@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.model5.GenListOfDate;
 import org.eclipse.emf.cdo.tests.model5.GenListOfDouble;
 import org.eclipse.emf.cdo.tests.model5.GenListOfFloat;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
+import org.eclipse.emf.cdo.tests.model5.GenListOfIntArray;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
 import org.eclipse.emf.cdo.tests.model5.GenListOfLong;
 import org.eclipse.emf.cdo.tests.model5.GenListOfShort;
@@ -28,6 +29,7 @@ import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -135,6 +137,20 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * 
    * @generated
    */
+  private EClass genListOfIntArrayEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EDataType intArrayEDataType = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   private EClass genListOfStringEClass = null;
 
   /**
@@ -177,14 +193,11 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   public static Model5Package init()
   {
     if (isInited)
-    {
       return (Model5Package)EPackage.Registry.INSTANCE.getEPackage(Model5Package.eNS_URI);
-    }
 
     // Obtain or create and register package
     Model5PackageImpl theModel5Package = (Model5PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model5PackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI)
-        : new Model5PackageImpl());
+        .get(eNS_URI) : new Model5PackageImpl());
 
     isInited = true;
 
@@ -447,6 +460,36 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * 
    * @generated
    */
+  public EClass getGenListOfIntArray()
+  {
+    return genListOfIntArrayEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getGenListOfIntArray_Elements()
+  {
+    return (EAttribute)genListOfIntArrayEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EDataType getIntArray()
+  {
+    return intArrayEDataType;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EClass getGenListOfString()
   {
     return genListOfStringEClass;
@@ -488,9 +531,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   public void createPackageContents()
   {
     if (isCreated)
-    {
       return;
-    }
     isCreated = true;
 
     // Create classes and their features
@@ -532,6 +573,12 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
     genListOfCharEClass = createEClass(GEN_LIST_OF_CHAR);
     createEAttribute(genListOfCharEClass, GEN_LIST_OF_CHAR__ELEMENTS);
+
+    genListOfIntArrayEClass = createEClass(GEN_LIST_OF_INT_ARRAY);
+    createEAttribute(genListOfIntArrayEClass, GEN_LIST_OF_INT_ARRAY__ELEMENTS);
+
+    // Create data types
+    intArrayEDataType = createEDataType(INT_ARRAY);
   }
 
   /**
@@ -550,9 +597,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   public void initializePackageContents()
   {
     if (isInitialized)
-    {
       return;
-    }
     isInitialized = true;
 
     // Initialize package
@@ -569,10 +614,10 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
     // Initialize classes and features; add operations and parameters
     initEClass(testFeatureMapEClass, TestFeatureMap.class, "TestFeatureMap", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTestFeatureMap_Managers(), getManager(), null, "managers", null, 0, -1, TestFeatureMap.class,
-        IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEReference(getTestFeatureMap_Doctors(), getDoctor(), null, "doctors", null, 0, -1, TestFeatureMap.class,
+    initEReference(getTestFeatureMap_Managers(), this.getManager(), null, "managers", null, 0, -1,
+        TestFeatureMap.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTestFeatureMap_Doctors(), this.getDoctor(), null, "doctors", null, 0, -1, TestFeatureMap.class,
         IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTestFeatureMap_People(), ecorePackage.getEFeatureMapEntry(), "people", null, 0, -1,
@@ -638,6 +683,15 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getGenListOfChar_Elements(), ecorePackage.getEChar(), "elements", null, 0, -1, GenListOfChar.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(genListOfIntArrayEClass, GenListOfIntArray.class, "GenListOfIntArray", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getGenListOfIntArray_Elements(), this.getIntArray(), "elements", null, 0, -1,
+        GenListOfIntArray.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    // Initialize data types
+    initEDataType(intArrayEDataType, int[].class, "IntArray", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

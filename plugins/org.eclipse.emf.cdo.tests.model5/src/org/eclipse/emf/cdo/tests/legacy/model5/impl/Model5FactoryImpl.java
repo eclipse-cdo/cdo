@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.tests.model5.GenListOfDate;
 import org.eclipse.emf.cdo.tests.model5.GenListOfDouble;
 import org.eclipse.emf.cdo.tests.model5.GenListOfFloat;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
+import org.eclipse.emf.cdo.tests.model5.GenListOfIntArray;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
 import org.eclipse.emf.cdo.tests.model5.GenListOfLong;
 import org.eclipse.emf.cdo.tests.model5.GenListOfShort;
@@ -27,6 +28,7 @@ import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
@@ -115,8 +117,44 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
       return createGenListOfDate();
     case Model5Package.GEN_LIST_OF_CHAR:
       return createGenListOfChar();
+    case Model5Package.GEN_LIST_OF_INT_ARRAY:
+      return createGenListOfIntArray();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public Object createFromString(EDataType eDataType, String initialValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+    case Model5Package.INT_ARRAY:
+      return createIntArrayFromString(eDataType, initialValue);
+    default:
+      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public String convertToString(EDataType eDataType, Object instanceValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+    case Model5Package.INT_ARRAY:
+      return convertIntArrayToString(eDataType, instanceValue);
+    default:
+      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 
@@ -261,6 +299,37 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
   {
     GenListOfCharImpl genListOfChar = new GenListOfCharImpl();
     return genListOfChar;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public GenListOfIntArray createGenListOfIntArray()
+  {
+    GenListOfIntArrayImpl genListOfIntArray = new GenListOfIntArrayImpl();
+    return genListOfIntArray;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public int[] createIntArrayFromString(EDataType eDataType, String initialValue)
+  {
+    return (int[])super.createFromString(initialValue);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public String convertIntArrayToString(EDataType eDataType, Object instanceValue)
+  {
+    return super.convertToString(instanceValue);
   }
 
   /**

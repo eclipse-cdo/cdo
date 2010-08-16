@@ -132,6 +132,14 @@ public interface Model5Factory extends EFactory
   GenListOfChar createGenListOfChar();
 
   /**
+   * Returns a new object of class '<em>Gen List Of Int Array</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Gen List Of Int Array</em>'.
+   * @generated
+   */
+  GenListOfIntArray createGenListOfIntArray();
+
+  /**
    * Returns a new object of class '<em>Gen List Of String</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return a new object of class '<em>Gen List Of String</em>'.

@@ -65,4 +65,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="elements" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EChar"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GenListOfIntArray">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="elements" upperBound="-1"
+        eType="#//IntArray"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="IntArray" instanceClassName="int[]"/>
 </ecore:EPackage>

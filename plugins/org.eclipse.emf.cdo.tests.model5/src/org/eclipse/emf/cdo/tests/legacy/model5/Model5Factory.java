@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.model5.GenListOfDate;
 import org.eclipse.emf.cdo.tests.model5.GenListOfDouble;
 import org.eclipse.emf.cdo.tests.model5.GenListOfFloat;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
+import org.eclipse.emf.cdo.tests.model5.GenListOfIntArray;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
 import org.eclipse.emf.cdo.tests.model5.GenListOfLong;
 import org.eclipse.emf.cdo.tests.model5.GenListOfShort;
@@ -150,6 +151,14 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
    * @generated
    */
   GenListOfChar createGenListOfChar();
+
+  /**
+   * Returns a new object of class '<em>Gen List Of Int Array</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Gen List Of Int Array</em>'.
+   * @generated
+   */
+  GenListOfIntArray createGenListOfIntArray();
 
   /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->

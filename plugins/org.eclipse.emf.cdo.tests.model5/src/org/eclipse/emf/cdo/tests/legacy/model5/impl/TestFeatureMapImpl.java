@@ -178,9 +178,7 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
       return getDoctors();
     case Model5Package.TEST_FEATURE_MAP__PEOPLE:
       if (coreType)
-      {
         return getPeople();
-      }
       return ((FeatureMap.Internal)getPeople()).getWrapper();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -264,9 +262,7 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (people: ");

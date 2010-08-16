@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.model5.GenListOfDate;
 import org.eclipse.emf.cdo.tests.model5.GenListOfDouble;
 import org.eclipse.emf.cdo.tests.model5.GenListOfFloat;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
+import org.eclipse.emf.cdo.tests.model5.GenListOfIntArray;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
 import org.eclipse.emf.cdo.tests.model5.GenListOfLong;
 import org.eclipse.emf.cdo.tests.model5.GenListOfShort;
@@ -171,6 +172,12 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
     public Adapter caseGenListOfChar(GenListOfChar object)
     {
       return createGenListOfCharAdapter();
+    }
+
+    @Override
+    public Adapter caseGenListOfIntArray(GenListOfIntArray object)
+    {
+      return createGenListOfIntArrayAdapter();
     }
 
     @Override
@@ -363,6 +370,21 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createGenListOfCharAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfIntArray
+   * <em>Gen List Of Int Array</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
+   * end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfIntArray
+   * @generated
+   */
+  public Adapter createGenListOfIntArrayAdapter()
   {
     return null;
   }

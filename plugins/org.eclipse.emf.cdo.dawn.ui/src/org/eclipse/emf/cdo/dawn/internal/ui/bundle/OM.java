@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.dawn.internal.ui.bundle;
 
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
@@ -32,4 +33,16 @@ public abstract class OM
   public static final OMLogger LOG = BUNDLE.logger();
 
   public static final OMPreferences PREFS = BUNDLE.preferences();
+
+  /**
+   * @author Martin Fluegge
+   * @since 1.0
+   */
+  public static final class Activator extends OSGiActivator
+  {
+    public Activator()
+    {
+      super(BUNDLE);
+    }
+  }
 }

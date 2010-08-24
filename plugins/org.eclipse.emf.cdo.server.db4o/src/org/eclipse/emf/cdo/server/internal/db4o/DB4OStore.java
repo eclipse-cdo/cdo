@@ -138,6 +138,17 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     return requiredToSupportBranches;
   }
 
+  // @Override
+  // public CDOID getNextCDOID(LongIDStoreAccessor accessor, CDORevision revision)
+  // {
+  // ObjectContainer objectContainer = ((DB4OStoreAccessor)accessor).getObjectContainer();
+  // ExtObjectContainer ext = objectContainer.ext();
+  // ext.store(revision);
+  //
+  // long id = ext.getID(revision);
+  // return CDOIDUtil.createLong(id);
+  // }
+
   public ObjectContainer openClient()
   {
     return server.openClient();

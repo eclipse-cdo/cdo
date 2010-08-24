@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.spi.server;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 
@@ -84,11 +85,11 @@ public abstract class LongIDStore extends Store
   }
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public CDOID getNextCDOID(boolean local)
+  public CDOID getNextCDOID(LongIDStoreAccessor accessor, CDORevision revision)
   {
-    if (local)
+    if (revision.getBranch().isLocal())
     {
       return CDOIDUtil.createLong(nextLocalObjectID.getAndDecrement());
     }

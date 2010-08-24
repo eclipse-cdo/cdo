@@ -62,15 +62,10 @@ public class DB4ORevision
   // TODO enum RevisionType { NORMAL, ROOT_RESOURCE, RESOURCE, RESOURCE_FOLDER }??
   private boolean isResource;
 
-  private boolean isResourceNode;
-
   private boolean isResourceFolder;
 
-  private boolean isRootResource;
-
   public DB4ORevision(String packageURI, String className, long id, int version, long resourceID, Object containerID,
-      int containingFeatureID, List<Object> values, long timestamp, boolean isResource, boolean isResourceNode,
-      boolean isResourceFolder, boolean isRootResource)
+      int containingFeatureID, List<Object> values, long timestamp, boolean isResource, boolean isResourceFolder)
   {
     setPackageURI(packageURI);
     setClassName(className);
@@ -82,9 +77,7 @@ public class DB4ORevision
     setValues(values);
     setTimeStamp(timestamp);
     setResource(isResource);
-    setResourceNode(isResourceNode);
     setResourceFolder(isResourceFolder);
-    setRootResource(isRootResource);
   }
 
   public void setPackageURI(String packageURI)
@@ -197,16 +190,6 @@ public class DB4ORevision
     return isResource;
   }
 
-  public void setResourceNode(boolean isResourceNode)
-  {
-    this.isResourceNode = isResourceNode;
-  }
-
-  public boolean isResourceNode()
-  {
-    return isResourceNode;
-  }
-
   public void setResourceFolder(boolean isResourceFolder)
   {
     this.isResourceFolder = isResourceFolder;
@@ -217,14 +200,9 @@ public class DB4ORevision
     return isResourceFolder;
   }
 
-  public void setRootResource(boolean isRootResource)
+  public boolean isResourceNode()
   {
-    this.isRootResource = isRootResource;
-  }
-
-  public boolean isRootResource()
-  {
-    return isRootResource;
+    return isResource || isResourceFolder;
   }
 
   public static DB4ORevision getDB4ORevision(InternalCDORevision revision)
@@ -241,9 +219,7 @@ public class DB4ORevision
     }
 
     boolean isResource = revision.isResource();
-    boolean isResourceNode = revision.isResourceNode();
     boolean isResourceFolder = revision.isResourceFolder();
-    boolean isRootResource = CDOIDUtil.getLong(revisionID) == 1;
 
     long id = CDOIDUtil.getLong(revisionID);
     int version = revision.getVersion();
@@ -290,7 +266,7 @@ public class DB4ORevision
     }
 
     return new DB4ORevision(packageURI, className, id, version, resourceID, containerID, containingFeatureID, values,
-        timeStamp, isResource, isResourceNode, isResourceFolder, isRootResource);
+        timeStamp, isResource, isResourceFolder);
   }
 
   public static InternalCDORevision getCDORevision(IStore store, DB4ORevision primitiveRevision)

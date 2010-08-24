@@ -54,7 +54,7 @@ public abstract class LongIDStoreAccessor extends StoreAccessor
         if (id instanceof CDOIDTemp)
         {
           CDOIDTemp oldID = (CDOIDTemp)id;
-          CDOID newID = longIDStore.getNextCDOID(revision.getBranch().isLocal());
+          CDOID newID = longIDStore.getNextCDOID(this, revision);
           if (CDOIDUtil.isNull(newID) || newID.isTemporary())
           {
             throw new IllegalStateException("newID=" + newID); //$NON-NLS-1$

@@ -44,7 +44,10 @@
    <includes id="org.eclipse.emf.cdo.doc" version="0.0.0"/>
 
    <includes id="org.eclipse.emf.cdo.sdk.source" version="0.0.0"/>
+   <includes id="org.eclipse.emf.cdo.tests.source" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.server.hibernate.source" version="0.0.0"/>
+   <includes id="org.eclipse.emf.cdo.server.db4o.source" version="0.0.0"/>
+
    <plugin id="org.eclipse.emf.cdo.migrator.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
 </feature>

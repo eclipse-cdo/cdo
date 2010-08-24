@@ -25,7 +25,7 @@
 		<cs:dependency name="org.eclipse.gmf.source" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.mwe.core" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.mwe2.runtime.sdk" componentType="eclipse.feature"/>
-				
+
 		<cs:dependency name="org.eclipse.swtbot" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.swtbot.eclipse" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.swtbot.eclipse.gef" componentType="eclipse.feature"/>
@@ -49,6 +49,7 @@
 		<cs:dependency name="org.hsqldb" componentType="eclipse.feature"/>
 		<cs:dependency name="org.postgresql.jdbc3" componentType="eclipse.feature"/>
 		<cs:dependency name="org.hibernate" componentType="eclipse.feature"/>
+		<cs:dependency name="com.db4o" componentType="eclipse.feature"/>
 	</cs:dependencies>
 	<cs:actions>
 		<cs:public name="clear.site" actor="ant" always="true">

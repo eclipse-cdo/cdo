@@ -8,7 +8,7 @@
  * Contributors:
  *    Victor Roldan Betancort - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.server.db4o;
+package org.eclipse.emf.cdo.server.internal.db4o;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
@@ -22,22 +22,25 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
-import org.eclipse.emf.cdo.internal.server.db4o.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.internal.db4o.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -87,11 +90,6 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
     return objectContainer;
   }
 
-  public void setObjectContainer(ObjectContainer objectContainer)
-  {
-    this.objectContainer = objectContainer;
-  }
-
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
   {
     return packageUnit.getEPackages(true);
@@ -99,16 +97,18 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
 
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
-    // TODO Where is this monitor worked on?
     monitor.begin(packageUnits.length);
 
     try
     {
+      DB4OStore store = getStore();
+      ObjectContainer objectContainer = getObjectContainer();
+
       for (InternalCDOPackageUnit packageUnit : packageUnits)
       {
-        PrimitivePackageUnit primitivePackageUnit = PrimitivePackageUnit.getPrimitivePackageUnit(getStore(),
-            packageUnit);
-        getObjectContainer().store(primitivePackageUnit);
+        DB4OPackageUnit primitivePackageUnit = DB4OPackageUnit.getPrimitivePackageUnit(store, packageUnit);
+        objectContainer.store(primitivePackageUnit);
+        monitor.worked(1);
       }
     }
     catch (Exception ex)
@@ -123,23 +123,24 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
 
   public Collection<InternalCDOPackageUnit> readPackageUnits()
   {
-    Collection<PrimitivePackageUnit> primitivePackageUnits = getObjectContainer().query(PrimitivePackageUnit.class);
     List<InternalCDOPackageUnit> result = new ArrayList<InternalCDOPackageUnit>();
-    for (PrimitivePackageUnit primitivePackageUnit : primitivePackageUnits)
+    InternalCDOPackageRegistry packageRegistry = getStore().getRepository().getPackageRegistry();
+    Collection<DB4OPackageUnit> primitivePackageUnits = getObjectContainer().query(DB4OPackageUnit.class);
+
+    for (DB4OPackageUnit primitivePackageUnit : primitivePackageUnits)
     {
-      InternalCDOPackageUnit packageUnit = PrimitivePackageUnit.getPackageUnit(getStore().getRepository()
-          .getPackageRegistry(), primitivePackageUnit);
+      InternalCDOPackageUnit packageUnit = DB4OPackageUnit.getPackageUnit(packageRegistry, primitivePackageUnit);
       result.add(packageUnit);
     }
+
     return result;
   }
 
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
       CDORevisionCacheAdder cache)
   {
-    InternalCDORevision revision = getRevisionFromContainer(branchPoint.getBranch().getID(), id);
-    cache.addRevision(revision);
-    return revision;
+    int branchID = branchPoint.getBranch().getID();
+    return getRevisionFromContainer(branchID, id);
   }
 
   public void queryResources(QueryResourcesContext context)
@@ -148,24 +149,25 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
     final String name = context.getName();
     final boolean exactMatch = context.exactMatch();
 
-    ObjectSet<PrimitiveRevision> revisionObjectSet = getObjectContainer().query(new Predicate<PrimitiveRevision>()
+    ObjectSet<DB4ORevision> revisionObjectSet = getObjectContainer().query(new Predicate<DB4ORevision>()
     {
       private static final long serialVersionUID = 1L;
 
       @Override
-      public boolean match(PrimitiveRevision primitiveRevision)
+      public boolean match(DB4ORevision primitiveRevision)
       {
         if (!primitiveRevision.isResourceNode())
         {
           return false;
         }
+
         // is Root resource
         if (primitiveRevision.isRootResource())
         {
           return false;
         }
 
-        if (PrimitiveRevision.compareIDObject(primitiveRevision.getContainerID(), folderID))
+        if (ObjectUtil.equals(primitiveRevision.getContainerID(), folderID))
         {
           String candidateName = (String)primitiveRevision.getValues().get(EresourcePackage.CDO_RESOURCE__NAME);
           if (exactMatch)
@@ -187,12 +189,11 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
 
         return false;
       }
-
     });
 
-    for (PrimitiveRevision revision : revisionObjectSet)
+    for (DB4ORevision revision : revisionObjectSet)
     {
-      if (!context.addResource(PrimitiveRevision.getIDFromObject(revision.getId())))
+      if (!context.addResource(DB4ORevision.getCDOID(revision.getID())))
       {
         // No more results allowed
         break;
@@ -203,7 +204,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
 
   public IStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature)
   {
-    throw new UnsupportedOperationException("not yet implemented");
+    throw new UnsupportedOperationException();
   }
 
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
@@ -214,20 +215,26 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
   @Override
   protected void doActivate() throws Exception
   {
-    setObjectContainer(getStore().openClient());
+    objectContainer = getStore().openClient();
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    getObjectContainer().close();
-    setObjectContainer(null);
+    if (objectContainer != null)
+    {
+      objectContainer.close();
+      objectContainer = null;
+    }
   }
 
   @Override
   protected void doPassivate() throws Exception
   {
-    getObjectContainer().rollback();
+    if (objectContainer != null)
+    {
+      objectContainer.rollback();
+    }
   }
 
   @Override
@@ -241,42 +248,45 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
     getObjectContainer().rollback();
   }
 
-  private InternalCDORevision getRevisionFromContainer(int branchId, CDOID id)
+  /**
+   * TODO Branching can only be supported with auditing. Where is the timeStamp parameter?
+   */
+  private InternalCDORevision getRevisionFromContainer(int branchID, CDOID id)
   {
-    PrimitiveRevision lastRevision = QueryUtil.getLastPrimitiveRevision(getObjectContainer(), branchId, id);
-
-    // Revision does not exist. Return null to signal inexistent Revision
+    DB4ORevision lastRevision = DB4OQueryUtil.getRevision(getObjectContainer(), id, branchID);
     if (lastRevision == null)
     {
+      // Revision does not exist. Return null to signal inexistent Revision
       return null;
     }
-    return PrimitiveRevision.getRevision(getStore(), lastRevision);
+
+    return DB4ORevision.getCDORevision(getStore(), lastRevision);
   }
 
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
       CDORevisionCacheAdder cache)
   {
-    PrimitiveRevision revisionByVersion = QueryUtil.getPrimitiveRevisionByVersion(getObjectContainer(), id,
-        branchVersion.getBranch().getID(), branchVersion.getVersion());
+    int branchID = branchVersion.getBranch().getID();
+    int version = branchVersion.getVersion();
+    DB4ORevision revisionByVersion = DB4OQueryUtil.getRevisionByVersion(getObjectContainer(), id, branchID, version);
 
     // Revision does not exist. Return null to signal inexistent Revision
     if (revisionByVersion == null)
     {
       return null;
     }
-    InternalCDORevision revision = PrimitiveRevision.getRevision(getStore(), revisionByVersion);
-    cache.addRevision(revision);
-    return revision;
+
+    return DB4ORevision.getCDORevision(getStore(), revisionByVersion);
   }
 
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
   {
-    throw new UnsupportedOperationException("not implemented");
+    throw new UnsupportedOperationException();
   }
 
   public Set<CDOID> readChangeSet(CDOChangeSetSegment... segments)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public void queryXRefs(final QueryXRefsContext context)
@@ -292,14 +302,14 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
         final String eClassName = eClass.getName();
         final String nsURI = eClass.getEPackage().getNsURI();
         final List<EReference> eReferences = context.getSourceCandidates().get(eClass);
-        getObjectContainer().query(new Predicate<PrimitiveRevision>()
+        getObjectContainer().query(new Predicate<DB4ORevision>()
         {
           private static final long serialVersionUID = 1L;
 
           private boolean moreResults = true;
 
           @Override
-          public boolean match(PrimitiveRevision primitiveRevision)
+          public boolean match(DB4ORevision primitiveRevision)
           {
             if (!moreResults)
             {
@@ -310,7 +320,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
               return false;
             }
 
-            if (!primitiveRevision.getNsURI().equals(nsURI))
+            if (!primitiveRevision.getPackageURI().equals(nsURI))
             {
               return false;
             }
@@ -328,16 +338,14 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
                 List<?> list = (List<?>)obj;
                 if (list.contains(targetID))
                 {
-                  moreResults = context.addXRef(target, PrimitiveRevision.getIDFromObject(primitiveRevision.getId()),
-                      eReference, 0);
+                  moreResults = context.addXRef(target, DB4ORevision.getCDOID(primitiveRevision.getID()), eReference, 0);
                 }
               }
               else if (obj instanceof CDOID)
               {
                 if (CDOIDUtil.getLong((CDOID)obj) == targetID)
                 {
-                  moreResults = context.addXRef(target, PrimitiveRevision.getIDFromObject(primitiveRevision.getId()),
-                      eReference, 0);
+                  moreResults = context.addXRef(target, DB4ORevision.getCDOID(primitiveRevision.getID()), eReference, 0);
                 }
               }
             }
@@ -354,50 +362,50 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
   public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException
   {
-    throw new UnsupportedOperationException("not implemented");
+    throw new UnsupportedOperationException();
   }
 
   public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException
   {
-
+    throw new UnsupportedOperationException();
   }
 
   public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
       OMMonitor monitor) throws IOException
   {
-    throw new UnsupportedOperationException("not implemented");
+    throw new UnsupportedOperationException();
   }
 
   public int createBranch(int branchID, BranchInfo branchInfo)
   {
-    return 0;
+    throw new UnsupportedOperationException();
   }
 
   public BranchInfo loadBranch(int branchID)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public SubBranchInfo[] loadSubBranches(int branchID)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
   {
-    return 0;
+    throw new UnsupportedOperationException();
   }
 
   public void loadCommitInfos(final CDOBranch branch, final long startTime, final long endTime,
       CDOCommitInfoHandler handler)
   {
-    ObjectSet<CommitInfo> resultSet = getObjectContainer().query(new Predicate<CommitInfo>()
+    ObjectSet<DB4OCommitInfo> resultSet = getObjectContainer().query(new Predicate<DB4OCommitInfo>()
     {
       private static final long serialVersionUID = 1L;
 
       @Override
-      public boolean match(CommitInfo info)
+      public boolean match(DB4OCommitInfo info)
       {
         if (startTime != CDOBranchPoint.UNSPECIFIED_DATE && info.getTimeStamp() < startTime)
         {
@@ -416,26 +424,26 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
 
         return true;
       }
-
     });
+
     InternalRepository repository = getStore().getRepository();
     InternalCDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
     InternalCDOBranchManager branchManager = repository.getBranchManager();
 
-    // Although not specified in the API, the test-case suite
+    // Although not specified in the API, the test suite
     // suggests CommitInfos should be returned ordered by timeStamp
+    // TODO Specify this in the API!
 
-    List<CommitInfo> infos = new ArrayList<CommitInfo>();
-    infos.addAll(resultSet);
-    Collections.sort(infos, new Comparator<CommitInfo>()
+    List<DB4OCommitInfo> infos = new ArrayList<DB4OCommitInfo>(resultSet);
+    Collections.sort(infos, new Comparator<DB4OCommitInfo>()
     {
-
-      public int compare(CommitInfo arg0, CommitInfo arg1)
+      public int compare(DB4OCommitInfo arg0, DB4OCommitInfo arg1)
       {
-        return arg0.getTimeStamp() <= arg1.getTimeStamp() ? -1 : 1;
+        return CDOCommonUtil.compareTimeStamps(arg0.getTimeStamp(), arg1.getTimeStamp());
       }
     });
-    for (CommitInfo info : infos)
+
+    for (DB4OCommitInfo info : infos)
     {
       info.handle(branchManager, commitInfoManager, handler);
     }
@@ -465,16 +473,17 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
   @Override
   protected void writeCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment, OMMonitor monitor)
   {
-    CommitInfo commitInfo = new CommitInfo(branch.getID(), timeStamp, userID, comment);
+    DB4OCommitInfo commitInfo = new DB4OCommitInfo(branch.getID(), timeStamp, userID, comment);
     writeObject(commitInfo, monitor);
   }
 
   @Override
   protected void writeRevisions(InternalCDORevision[] revisions, CDOBranch branch, OMMonitor monitor)
   {
+    monitor.begin(revisions.length);
+
     try
     {
-      monitor.begin(revisions.length);
       for (InternalCDORevision revision : revisions)
       {
         writeRevision(revision, monitor.fork());
@@ -492,19 +501,19 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
     final long revisionID = CDOIDUtil.getLong(revision.getID());
     final String name = (String)revision.data().get(EresourcePackage.eINSTANCE.getCDOResourceNode_Name(), 0);
 
-    ObjectSet<PrimitiveRevision> resultSet = getObjectContainer().query(new Predicate<PrimitiveRevision>()
+    ObjectSet<DB4ORevision> resultSet = getObjectContainer().query(new Predicate<DB4ORevision>()
     {
       private static final long serialVersionUID = 1L;
 
       @Override
-      public boolean match(PrimitiveRevision revision)
+      public boolean match(DB4ORevision revision)
       {
-        if (revision.isResourceNode() && PrimitiveRevision.compareIDObject(revision.getContainerID(), folderID))
+        if (revision.isResourceNode() && ObjectUtil.equals(revision.getContainerID(), folderID))
         {
           String candidateName = (String)revision.getValues().get(EresourcePackage.CDO_RESOURCE__NAME);
           if (StringUtil.compare(name, candidateName) == 0)
           {
-            if (!PrimitiveRevision.compareIDObject(revision.getId(), revisionID))
+            if (!ObjectUtil.equals(revision.getID(), revisionID))
             {
               return true;
             }
@@ -513,7 +522,6 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
 
         return false;
       }
-
     });
 
     if (!resultSet.isEmpty())
@@ -526,6 +534,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
   {
     Async async = null;
     monitor.begin(10);
+
     try
     {
       try
@@ -545,14 +554,16 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
       }
 
       // If revision is in the store, remove old, store new
-      PrimitiveRevision revisionAlreadyInStore = QueryUtil.getLastPrimitiveRevision(getObjectContainer(), revision
-          .getBranch().getID(), revision.getID());
+      ObjectContainer objectContainer = getObjectContainer();
+      int branchID = revision.getBranch().getID();
+      CDOID id = revision.getID();
+      DB4ORevision revisionAlreadyInStore = DB4OQueryUtil.getRevision(objectContainer, id, branchID);
       if (revisionAlreadyInStore != null)
       {
-        QueryUtil.removeRevisionFromContainer(getObjectContainer(), revision.getBranch().getID(), revision.getID());
+        DB4OQueryUtil.removeRevisionFromContainer(objectContainer, branchID, id);
       }
 
-      PrimitiveRevision primitiveRevision = PrimitiveRevision.getPrimitiveRevision(revision);
+      DB4ORevision primitiveRevision = DB4ORevision.getDB4ORevision(revision);
       writeObject(primitiveRevision, monitor);
     }
     finally
@@ -585,16 +596,26 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
   protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created,
       OMMonitor monitor)
   {
-    throw new UnsupportedOperationException("not implemented");
+    throw new UnsupportedOperationException();
   }
 
   @Override
   protected void detachObjects(CDOID[] detachedObjects, CDOBranch branch, long timeStamp, OMMonitor monitor)
   {
-    // TODO Work on monitor
-    for (CDOID id : detachedObjects)
+    monitor.begin(detachedObjects.length);
+
+    try
     {
-      QueryUtil.removeRevisionFromContainer(getObjectContainer(), branch.getID(), id);
+      int branchID = branch.getID();
+      for (CDOID id : detachedObjects)
+      {
+        DB4OQueryUtil.removeRevisionFromContainer(getObjectContainer(), branchID, id);
+        monitor.worked();
+      }
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 }

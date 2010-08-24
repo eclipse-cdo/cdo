@@ -8,9 +8,10 @@
  * Contributors:
  *    Victor Roldan Betancort - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.server.db4o;
+package org.eclipse.emf.cdo.server.internal.db4o;
 
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
@@ -35,17 +36,11 @@ import java.util.Set;
  */
 public class DB4OStore extends LongIDStore implements IDB4OStore
 {
-  private transient ObjectServer server;
-
-  @ExcludeFromDump
-  private transient final StoreAccessorPool readerPool = new StoreAccessorPool(this, null);
-
-  @ExcludeFromDump
-  private transient final StoreAccessorPool writerPool = new StoreAccessorPool(this, null);
-
   private transient String storeLocation;
 
   private transient int port;
+
+  private transient ObjectServer server;
 
   private transient Configuration serverConfiguration;
 
@@ -55,11 +50,14 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
 
   private boolean requiredToSupportBranches;
 
+  @ExcludeFromDump
+  private transient final StoreAccessorPool readerPool = new StoreAccessorPool(this, null);
+
+  @ExcludeFromDump
+  private transient final StoreAccessorPool writerPool = new StoreAccessorPool(this, null);
+
   public DB4OStore(String storeLocation, int port)
   {
-    // super(IDB4OStore.TYPE, Collections.singleton(ChangeFormat.REVISION), Collections
-    // .singleton(RevisionTemporality.NONE), Collections.singleton(RevisionParallelism.NONE));
-
     super(IDB4OStore.TYPE, set(ChangeFormat.REVISION), set(RevisionTemporality.NONE, RevisionTemporality.AUDITING),
         set(RevisionParallelism.NONE, RevisionParallelism.BRANCHING));
 
@@ -73,6 +71,16 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     this.serverConfiguration = serverConfiguration;
   }
 
+  public String getStoreLocation()
+  {
+    return storeLocation;
+  }
+
+  public int getPort()
+  {
+    return port;
+  }
+
   public long getCreationTime()
   {
     return getServerInfo().getCreationTime();
@@ -83,33 +91,38 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     return getServerInfo().isFirstTime();
   }
 
-  public ObjectContainer openClient()
-  {
-    // Configuration configuration = clientConfiguration;
-    // if (configuration == null)
-    // {
-    // configuration = createClientConfiguration();
-    // }
-
-    // server.openClient(configuration);
-    return server.openClient();
-  }
-
   public Map<String, String> getPropertyValues(Set<String> names)
   {
-    Map<String, String> properties = getServerInfo().getProperties();
-    Map<String, String> propertiesSubSet = new HashMap<String, String>();
+    Map<String, String> result = new HashMap<String, String>();
     for (String key : names)
     {
-      propertiesSubSet.put(key, properties.get(key));
+      String value = getServerInfo().getProperties().get(key);
+      if (value != null)
+      {
+        result.put(key, value);
+      }
     }
-    return propertiesSubSet;
+
+    return result;
   }
 
   public void setPropertyValues(Map<String, String> properties)
   {
-    getServerInfo().setProperties(properties);
-    commitServerInfo(getServerInfo());
+    ServerInfo serverInfo = getServerInfo();
+    serverInfo.getProperties().putAll(properties);
+    commitServerInfo(null);
+  }
+
+  public void removePropertyValues(Set<String> names)
+  {
+    ServerInfo serverInfo = getServerInfo();
+    Map<String, String> properties = serverInfo.getProperties();
+    for (String key : names)
+    {
+      properties.remove(key);
+    }
+
+    commitServerInfo(null);
   }
 
   public boolean isRequiredToSupportAudits()
@@ -122,22 +135,16 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     return requiredToSupportBranches;
   }
 
+  public ObjectContainer openClient()
+  {
+    return server.openClient();
+  }
+
   @Override
   protected void doBeforeActivate()
   {
     requiredToSupportAudits = getRepository().isSupportingAudits();
     requiredToSupportBranches = getRepository().isSupportingBranches();
-  }
-
-  public void removePropertyValues(Set<String> names)
-  {
-    Map<String, String> properties = getServerInfo().getProperties();
-    for (String key : names)
-    {
-      properties.remove(key);
-    }
-    getServerInfo().setProperties(properties);
-    commitServerInfo(getServerInfo());
   }
 
   @Override
@@ -158,49 +165,63 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
   {
     if (serverInfo == null)
     {
-      serverInfo = initServerInfo();
+      initServerInfo();
     }
 
     return serverInfo;
   }
 
-  private ServerInfo initServerInfo()
+  private void initServerInfo()
   {
     ObjectContainer container = openClient();
-    ObjectSet<ServerInfo> infos = container.query(ServerInfo.class);
 
-    if (infos.size() > 1)
+    try
     {
-      throw new IllegalStateException("ServeInfo is stored in container more than once");
-    }
-
-    ServerInfo newServerInfo = null;
-    if (infos.isEmpty())
-    {
-      newServerInfo = new ServerInfo();
-      newServerInfo.setFirstTime(true);
-      newServerInfo.setCreationTime(System.currentTimeMillis());
-      commitServerInfo(newServerInfo);
-    }
-    else
-    {
-      newServerInfo = infos.get(0);
-      if (newServerInfo.isFirstTime())
+      ObjectSet<ServerInfo> infos = container.query(ServerInfo.class);
+      if (infos.size() > 1)
       {
-        newServerInfo.setFirstTime(false);
-        commitServerInfo(newServerInfo);
+        throw new IllegalStateException("ServeInfo is stored in container more than once");
+      }
+
+      if (infos.isEmpty())
+      {
+        serverInfo = new ServerInfo();
+        serverInfo.setFirstTime(true);
+        serverInfo.setCreationTime(System.currentTimeMillis());
+        commitServerInfo(container);
+      }
+      else
+      {
+        serverInfo = infos.get(0);
+        if (serverInfo.isFirstTime())
+        {
+          serverInfo.setFirstTime(false);
+          commitServerInfo(container);
+        }
       }
     }
-    container.close();
-    return newServerInfo;
+    finally
+    {
+      container.close();
+    }
   }
 
-  private void commitServerInfo(ServerInfo serverInfo)
+  private void commitServerInfo(ObjectContainer container)
   {
-    ObjectContainer container = openClient();
-    container.store(serverInfo);
-    container.commit();
-    container.close();
+    ObjectContainer usedContainer = container != null ? container : openClient();
+
+    try
+    {
+      usedContainer.store(serverInfo);
+      usedContainer.commit();
+    }
+    finally
+    {
+      if (usedContainer != container)
+      {
+        usedContainer.close();
+      }
+    }
   }
 
   @Override
@@ -213,8 +234,7 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
 
   protected Configuration createServerConfiguration()
   {
-    Configuration conf = Db4o.newConfiguration();
-    return conf;
+    return Db4o.newConfiguration();
   }
 
   @Override
@@ -239,5 +259,50 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
   protected StoreAccessorPool getWriterPool(IView view, boolean forReleasing)
   {
     return writerPool;
+  }
+
+  /**
+   * Carries {@link IStore}-related information.
+   * 
+   * @author Victor Roldan Betancort
+   */
+  private static final class ServerInfo
+  {
+    private boolean isFirstTime;
+
+    private long creationTime;
+
+    private Map<String, String> properties = new HashMap<String, String>();
+
+    public boolean isFirstTime()
+    {
+      return isFirstTime;
+    }
+
+    public void setFirstTime(boolean isFirstTime)
+    {
+      this.isFirstTime = isFirstTime;
+    }
+
+    public void setCreationTime(long creationTime)
+    {
+      this.creationTime = creationTime;
+    }
+
+    public long getCreationTime()
+    {
+      return creationTime;
+    }
+
+    @SuppressWarnings("unused")
+    public void setProperties(Map<String, String> properties)
+    {
+      this.properties = properties;
+    }
+
+    public Map<String, String> getProperties()
+    {
+      return properties;
+    }
   }
 }

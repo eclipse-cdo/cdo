@@ -8,11 +8,12 @@
  * Contributors:
  *    Victor Roldan Betancort - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.server.db4o;
+package org.eclipse.emf.cdo.server.internal.db4o;
 
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
 import org.eclipse.emf.cdo.server.db4o.IDB4OStore;
+import org.eclipse.emf.cdo.server.internal.db4o.bundle.OM;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -39,9 +40,9 @@ public class DB4OStoreFactory implements IStoreFactory
       int port = getPort(storeConfig);
       return new DB4OStore(dataFilePath, port);
     }
-    catch (Exception e)
+    catch (Exception ex)
     {
-      e.printStackTrace();
+      OM.LOG.error(ex);
     }
 
     return null;

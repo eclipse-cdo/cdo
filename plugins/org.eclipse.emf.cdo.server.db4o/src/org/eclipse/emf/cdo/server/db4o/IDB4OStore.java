@@ -19,4 +19,8 @@ import org.eclipse.emf.cdo.server.IStore;
 public interface IDB4OStore extends IStore
 {
   public static final String TYPE = "db4o";
+
+  public String getStoreLocation();
+
+  public int getPort();
 }

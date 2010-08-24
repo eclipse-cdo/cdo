@@ -9,7 +9,7 @@
  *    Victor Roldan Betancort - initial API and implementation
  */
 
-package org.eclipse.emf.cdo.internal.server.db4o.bundle;
+package org.eclipse.emf.cdo.server.internal.db4o.bundle;
 
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;

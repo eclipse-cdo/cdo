@@ -10,9 +10,9 @@
  */
 package com.eclipse.emf.cdo.test.db4o;
 
-import org.eclipse.emf.cdo.internal.server.db4o.DB4OStore;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.internal.db4o.DB4OStore;
 import org.eclipse.emf.cdo.tests.AllConfigs;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_261218_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
@@ -31,11 +31,11 @@ import junit.framework.TestSuite;
 /**
  * @author Victor Roldan Betancort
  */
-public class DB4OTestConfing extends AllConfigs
+public class AllTestsDB4O extends AllConfigs
 {
   public static Test suite()
   {
-    return new DB4OTestConfing().getTestSuite("CDO Tests (DB4O Repository)");
+    return new AllTestsDB4O().getTestSuite("CDO Tests (DB4O)");
   }
 
   @Override

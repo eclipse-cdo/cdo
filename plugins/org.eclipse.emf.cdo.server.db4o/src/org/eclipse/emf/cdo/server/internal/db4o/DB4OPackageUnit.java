@@ -8,7 +8,7 @@
  * Contributors:
  *    Victor Roldan Betancort - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.server.db4o;
+package org.eclipse.emf.cdo.server.internal.db4o;
 
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @author Victor Roldan Betancort
  */
-public class PrimitivePackageUnit
+public class DB4OPackageUnit
 {
   private String id;
 
@@ -38,7 +38,7 @@ public class PrimitivePackageUnit
 
   private List<Byte> ePackageBytes;
 
-  public PrimitivePackageUnit(String id, Integer ordinalType, Long timeStamp, List<Byte> ePackageBytes)
+  public DB4OPackageUnit(String id, Integer ordinalType, Long timeStamp, List<Byte> ePackageBytes)
   {
     setId(id);
     setOrdinalType(ordinalType);
@@ -86,14 +86,14 @@ public class PrimitivePackageUnit
     return ePackageBytes;
   }
 
-  public static PrimitivePackageUnit getPrimitivePackageUnit(IStore store, InternalCDOPackageUnit packageUnit)
+  public static DB4OPackageUnit getPrimitivePackageUnit(IStore store, InternalCDOPackageUnit packageUnit)
   {
-    return new PrimitivePackageUnit(new String(packageUnit.getID()), new Integer(packageUnit.getOriginalType()
+    return new DB4OPackageUnit(new String(packageUnit.getID()), new Integer(packageUnit.getOriginalType()
         .ordinal()), new Long(packageUnit.getTimeStamp()), getEPackageBytes(store, packageUnit));
   }
 
   public static InternalCDOPackageUnit getPackageUnit(InternalCDOPackageRegistry packageRegistry,
-      PrimitivePackageUnit packageUnit)
+      DB4OPackageUnit packageUnit)
   {
     InternalCDOPackageUnit cdoPackageUnit = (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
     CDOPackageUnit.Type type = CDOPackageUnit.Type.values()[packageUnit.getOrdinalType()];
@@ -127,6 +127,7 @@ public class PrimitivePackageUnit
     {
       packageBytes[i] = ePackageBytesList.get(i);
     }
+
     EPackage ePackage = EMFUtil.createEPackage("", packageBytes, true, rSet, false);
     return ePackage;
   }

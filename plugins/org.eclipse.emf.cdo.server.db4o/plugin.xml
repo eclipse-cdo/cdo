@@ -17,7 +17,7 @@
    <extension
          point="org.eclipse.emf.cdo.server.storeFactories">
       <storeFactory
-            class="org.eclipse.emf.cdo.internal.server.db4o.DB4OStoreFactory"
+            class="org.eclipse.emf.cdo.server.internal.db4o.DB4OStoreFactory"
             storeType="db4o">
       </storeFactory>
    </extension>

@@ -9,7 +9,7 @@
  *    Victor Roldan Betancort - initial API and implementation
  */
 
-package org.eclipse.emf.cdo.internal.server.db4o;
+package org.eclipse.emf.cdo.server.internal.db4o;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
@@ -35,13 +36,13 @@ import java.util.List;
 /**
  * @author Victor Roldan Betancort
  */
-public class PrimitiveRevision
+public class DB4ORevision
 {
-  private String nsURI;
+  private String packageURI;
 
   private String className;
 
-  private Object id;
+  private long id;
 
   private int version;
 
@@ -51,14 +52,15 @@ public class PrimitiveRevision
 
   private long timeStamp;
 
-  private Object resourceID;
+  private long resourceID;
 
-  private Object containerID;
+  private long containerID;
 
   private int containingFeatureID;
 
   private List<Object> values;
 
+  // TODO enum RevisionType { NORMAL, ROOT_RESOURCE, RESOURCE, RESOURCE_FOLDER }??
   private boolean isResource;
 
   private boolean isResourceNode;
@@ -67,13 +69,13 @@ public class PrimitiveRevision
 
   private boolean isRootResource;
 
-  public PrimitiveRevision(String nsURI, String className, Object id, int version, int branchID, long revised,
-      Object resourceID, Object containerID, int containingFeatureID, List<Object> values, long timestamp,
+  public DB4ORevision(String packageURI, String className, long id, int version, int branchID, long revised,
+      long resourceID, long containerID, int containingFeatureID, List<Object> values, long timestamp,
       boolean isResource, boolean isResourceNode, boolean isResourceFolder, boolean isRootResource)
   {
-    setNsURI(nsURI);
+    setPackageURI(packageURI);
     setClassName(className);
-    setId(id);
+    setID(id);
     setVersion(version);
     setBranchID(branchID);
     setRevised(revised);
@@ -88,14 +90,14 @@ public class PrimitiveRevision
     setRootResource(isRootResource);
   }
 
-  public void setNsURI(String nsURI)
+  public void setPackageURI(String packageURI)
   {
-    this.nsURI = nsURI;
+    this.packageURI = packageURI;
   }
 
-  public String getNsURI()
+  public String getPackageURI()
   {
-    return nsURI;
+    return packageURI;
   }
 
   public void setClassName(String className)
@@ -108,12 +110,12 @@ public class PrimitiveRevision
     return className;
   }
 
-  public void setId(Object id)
+  public void setID(long id)
   {
     this.id = id;
   }
 
-  public Object getId()
+  public long getID()
   {
     return id;
   }
@@ -148,22 +150,22 @@ public class PrimitiveRevision
     return revised;
   }
 
-  public void setResourceID(Object resourceID)
+  public void setResourceID(long resourceID)
   {
     this.resourceID = resourceID;
   }
 
-  public Object getResourceID()
+  public long getResourceID()
   {
     return resourceID;
   }
 
-  public void setContainerID(Object containerID)
+  public void setContainerID(long containerID)
   {
     this.containerID = containerID;
   }
 
-  public Object getContainerID()
+  public long getContainerID()
   {
     return containerID;
   }
@@ -228,30 +230,41 @@ public class PrimitiveRevision
     return isResourceFolder;
   }
 
-  static public PrimitiveRevision getPrimitiveRevision(InternalCDORevision revision)
+  public void setRootResource(boolean isRootResource)
+  {
+    this.isRootResource = isRootResource;
+  }
+
+  public boolean isRootResource()
+  {
+    return isRootResource;
+  }
+
+  public static DB4ORevision getDB4ORevision(InternalCDORevision revision)
   {
     CDOClassInfo classInfo = revision.getClassInfo();
     EClass eClass = classInfo.getEClass();
-    String nsURI = eClass.getEPackage().getNsURI();
+    String packageURI = eClass.getEPackage().getNsURI();
     String className = eClass.getName();
 
-    if (revision.getID().isTemporary())
+    CDOID revisionID = revision.getID();
+    if (revisionID.isTemporary())
     {
-      System.err.println("TEMPORARY CDOID");
+      throw new IllegalArgumentException("TEMPORARY CDOID: " + revisionID);
     }
 
     boolean isResource = revision.isResource();
     boolean isResourceNode = revision.isResourceNode();
     boolean isResourceFolder = revision.isResourceFolder();
-    boolean isRootResource = CDOIDUtil.getLong(revision.getID()) == 1;
+    boolean isRootResource = CDOIDUtil.getLong(revisionID) == 1;
 
-    Object id = getObjectFromId(revision.getID());
+    long id = (Long)getDB4OID(revisionID);
     int version = revision.getVersion();
     int branchID = revision.getBranch().getID();
     long timeStamp = revision.getTimeStamp();
     long revised = revision.getRevised();
-    Object resourceID = getObjectFromId(revision.getResourceID());
-    Object containerID = getObjectFromId((CDOID)revision.getContainerID());
+    long resourceID = (Long)getDB4OID(revision.getResourceID());
+    long containerID = (Long)getDB4OID((CDOID)revision.getContainerID());
     int containingFeatureID = revision.getContainingFeatureID();
 
     EStructuralFeature[] features = classInfo.getAllPersistentFeatures();
@@ -279,7 +292,7 @@ public class PrimitiveRevision
                   + listElement.getClass().getName() + " instead");
             }
 
-            list.add(getObjectFromId((CDOID)listElement));
+            list.add(getDB4OID((CDOID)listElement));
           }
 
           values.add(i, list);
@@ -291,107 +304,74 @@ public class PrimitiveRevision
       }
     }
 
-    return new PrimitiveRevision(nsURI, className, id, version, branchID, revised, resourceID, containerID,
+    return new DB4ORevision(packageURI, className, id, version, branchID, revised, resourceID, containerID,
         containingFeatureID, values, timeStamp, isResource, isResourceNode, isResourceFolder, isRootResource);
   }
 
-  public static InternalCDORevision getRevision(IStore store, PrimitiveRevision primitiveRevision)
+  public static InternalCDORevision getCDORevision(IStore store, DB4ORevision primitiveRevision)
   {
-    String nsURI = primitiveRevision.getNsURI();
+    String nsURI = primitiveRevision.getPackageURI();
     String className = primitiveRevision.getClassName();
     EPackage ePackage = store.getRepository().getPackageRegistry().getEPackage(nsURI);
     EClass eClass = (EClass)ePackage.getEClassifier(className);
     InternalCDORevision revision = (InternalCDORevision)CDORevisionFactory.DEFAULT.createRevision(eClass);
 
-    revision.setID(getIDFromObject(primitiveRevision.getId()));
-    revision.setVersion(primitiveRevision.getVersion());
-    int branchID = primitiveRevision.getBranchID();
-    CDOBranch branch = store.getRepository().getBranchManager().getBranch(branchID);
+    CDOBranch branch = store.getRepository().getBranchManager().getBranch(primitiveRevision.getBranchID());
     CDOBranchPoint point = branch.getPoint(primitiveRevision.getTimeStamp());
+
+    revision.setID(getCDOID(primitiveRevision.getID()));
+    revision.setVersion(primitiveRevision.getVersion());
     revision.setBranchPoint(point);
     revision.setRevised(primitiveRevision.getRevised());
-    revision.setResourceID(getIDFromObject(primitiveRevision.getResourceID()));
-    revision.setContainerID(getIDFromObject(primitiveRevision.getContainerID()));
+    revision.setResourceID(getCDOID(primitiveRevision.getResourceID()));
+    revision.setContainerID(getCDOID(primitiveRevision.getContainerID()));
     revision.setContainingFeatureID(primitiveRevision.getContainingFeatureID());
     EStructuralFeature[] features = revision.getClassInfo().getAllPersistentFeatures();
 
     int i = 0;
-    List<?> values = primitiveRevision.getValues();
-    for (Object value : values)
+    for (Object value : primitiveRevision.getValues())
     {
       EStructuralFeature feature = features[i++];
-      // transform List to CDOList
       if (feature instanceof EReference && value instanceof List<?>)
       {
         List<?> sourceList = (List<?>)value;
-        // CDOList list = new CDOListImpl(sourceList.size(), sourceList.size());
-        CDOList list = CDOListFactory.DEFAULT.createList(sourceList.size(), sourceList.size(), sourceList.size());
+        CDOList list = CDOListFactory.DEFAULT.createList(sourceList.size(), sourceList.size(), CDORevision.UNCHUNKED);
         for (int j = 0; j < sourceList.size(); j++)
         {
-          list.set(j, getIDFromObject(sourceList.get(j)));
+          list.set(j, getCDOID(sourceList.get(j)));
         }
-        revision.setValue(feature, list);
+
+        value = list;
       }
-      else
-      {
-        revision.setValue(feature, value);
-      }
+
+      revision.setValue(feature, value);
     }
 
     return revision;
   }
 
-  public static Object getObjectFromId(CDOID cdoid)
+  public static Object getDB4OID(CDOID id)
   {
-    Object objectID = null;
-    if (cdoid.isExternal())
+    if (id.isExternal())
     {
-      objectID = new String(((CDOIDExternal)cdoid).getURI());
+      return new String(((CDOIDExternal)id).getURI());
     }
-    else
-    {
-      objectID = CDOIDUtil.getLong(cdoid);
-    }
-    return objectID;
+
+    return CDOIDUtil.getLong(id);
   }
 
-  public static CDOID getIDFromObject(Object id)
+  public static CDOID getCDOID(Object id)
   {
     if (id == null)
     {
       return CDOID.NULL;
     }
-    else if (id instanceof String)
+
+    if (id instanceof String)
     {
       return CDOIDUtil.createExternal((String)id);
     }
-    else
-    {
-      return CDOIDUtil.createLong((Long)id);
-    }
+
+    return CDOIDUtil.createLong((Long)id);
   }
-
-  public static boolean compareIDObject(Object id1, Object id2)
-  {
-    if (id1.getClass().equals(id2.getClass()))
-    {
-      if (id1.equals(id2))
-      {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  public void setRootResource(boolean isRootResource)
-  {
-    this.isRootResource = isRootResource;
-  }
-
-  public boolean isRootResource()
-  {
-    return isRootResource;
-  }
-
 }

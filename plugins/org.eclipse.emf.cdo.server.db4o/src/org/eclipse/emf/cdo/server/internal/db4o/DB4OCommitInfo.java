@@ -9,17 +9,18 @@
  *    Victor Roldan Betancort - initial API and implementation
  */
 
-package org.eclipse.emf.cdo.internal.server.db4o;
+package org.eclipse.emf.cdo.server.internal.db4o;
 
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 
 /**
  * @author Victor Roldan Betancort
  */
-public class CommitInfo
+public class DB4OCommitInfo
 {
   private int branchID;
 
@@ -29,9 +30,9 @@ public class CommitInfo
 
   private String comment;
 
-  public CommitInfo(int branchId, long timeStamp, String userID, String comment)
+  public DB4OCommitInfo(int branchID, long timeStamp, String userID, String comment)
   {
-    branchID = branchId;
+    this.branchID = branchID;
     this.timeStamp = timeStamp;
     this.userID = userID;
     this.comment = comment;
@@ -50,8 +51,8 @@ public class CommitInfo
   public void handle(InternalCDOBranchManager branchManager, InternalCDOCommitInfoManager manager,
       CDOCommitInfoHandler handler)
   {
-    CDOCommitInfo commitInfo = manager.createCommitInfo(branchManager.getBranch(branchID), timeStamp, userID, comment,
-        null);
+    InternalCDOBranch branch = branchManager.getBranch(branchID);
+    CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, userID, comment, null);
     handler.handleCommitInfo(commitInfo);
   }
 }

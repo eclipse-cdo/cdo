@@ -139,8 +139,14 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
       CDORevisionCacheAdder cache)
   {
-    int branchID = branchPoint.getBranch().getID();
-    return getRevisionFromContainer(branchID, id);
+    DB4ORevision lastRevision = DB4OStore.getRevision(getObjectContainer(), id);
+    if (lastRevision == null)
+    {
+      // Revision does not exist. Return null to signal inexistent Revision
+      return null;
+    }
+
+    return DB4ORevision.getCDORevision(getStore(), lastRevision);
   }
 
   public void queryResources(QueryResourcesContext context)
@@ -248,35 +254,16 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
     getObjectContainer().rollback();
   }
 
-  /**
-   * TODO Branching can only be supported with auditing. Where is the timeStamp parameter?
-   */
-  private InternalCDORevision getRevisionFromContainer(int branchID, CDOID id)
-  {
-    DB4ORevision lastRevision = DB4OQueryUtil.getRevision(getObjectContainer(), id, branchID);
-    if (lastRevision == null)
-    {
-      // Revision does not exist. Return null to signal inexistent Revision
-      return null;
-    }
-
-    return DB4ORevision.getCDORevision(getStore(), lastRevision);
-  }
-
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
       CDORevisionCacheAdder cache)
   {
-    int branchID = branchVersion.getBranch().getID();
-    int version = branchVersion.getVersion();
-    DB4ORevision revisionByVersion = DB4OQueryUtil.getRevisionByVersion(getObjectContainer(), id, branchID, version);
-
-    // Revision does not exist. Return null to signal inexistent Revision
-    if (revisionByVersion == null)
+    DB4ORevision revision = DB4OStore.getRevision(getObjectContainer(), id);
+    if (revision == null || revision.getVersion() != branchVersion.getVersion())
     {
       return null;
     }
 
-    return DB4ORevision.getCDORevision(getStore(), revisionByVersion);
+    return DB4ORevision.getCDORevision(getStore(), revision);
   }
 
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
@@ -295,8 +282,6 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
 
     for (final CDOID target : context.getTargetObjects().keySet())
     {
-      final long targetID = CDOIDUtil.getLong(target);
-
       for (final EClass eClass : context.getSourceCandidates().keySet())
       {
         final String eClassName = eClass.getName();
@@ -309,43 +294,53 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
           private boolean moreResults = true;
 
           @Override
-          public boolean match(DB4ORevision primitiveRevision)
+          public boolean match(DB4ORevision revision)
           {
             if (!moreResults)
             {
               return false;
             }
-            if (!primitiveRevision.getClassName().equals(eClassName))
+
+            if (!revision.getClassName().equals(eClassName))
             {
               return false;
             }
 
-            if (!primitiveRevision.getPackageURI().equals(nsURI))
+            if (!revision.getPackageURI().equals(nsURI))
             {
               return false;
             }
 
-            if (!(primitiveRevision.getBranchID() == branchID))
+            if (!(revision.getBranchID() == branchID))
             {
               return false;
             }
 
+            CDOID id = DB4ORevision.getCDOID(revision.getID());
             for (EReference eReference : eReferences)
             {
-              Object obj = primitiveRevision.getValues().get(eReference.getFeatureID());
+              Object obj = revision.getValues().get(eReference.getFeatureID());
               if (obj instanceof List)
               {
                 List<?> list = (List<?>)obj;
-                if (list.contains(targetID))
+                int index = 0;
+                for (Object element : list)
                 {
-                  moreResults = context.addXRef(target, DB4ORevision.getCDOID(primitiveRevision.getID()), eReference, 0);
+                  CDOID ref = DB4ORevision.getCDOID(element);
+                  if (ObjectUtil.equals(ref, target))
+                  {
+                    moreResults = context.addXRef(target, id, eReference, index);
+                  }
+
+                  ++index;
                 }
               }
-              else if (obj instanceof CDOID)
+              else
               {
-                if (CDOIDUtil.getLong((CDOID)obj) == targetID)
+                CDOID ref = DB4ORevision.getCDOID(obj);
+                if (ObjectUtil.equals(ref, target))
                 {
-                  moreResults = context.addXRef(target, DB4ORevision.getCDOID(primitiveRevision.getID()), eReference, 0);
+                  moreResults = context.addXRef(target, id, eReference, 0);
                 }
               }
             }
@@ -353,9 +348,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
             return false;
           }
         });
-
       }
-
     }
   }
 
@@ -495,41 +488,6 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
     }
   }
 
-  protected void checkDuplicateResources(CDORevision revision) throws IllegalStateException
-  {
-    final long folderID = CDOIDUtil.getLong((CDOID)revision.data().getContainerID());
-    final long revisionID = CDOIDUtil.getLong(revision.getID());
-    final String name = (String)revision.data().get(EresourcePackage.eINSTANCE.getCDOResourceNode_Name(), 0);
-
-    ObjectSet<DB4ORevision> resultSet = getObjectContainer().query(new Predicate<DB4ORevision>()
-    {
-      private static final long serialVersionUID = 1L;
-
-      @Override
-      public boolean match(DB4ORevision revision)
-      {
-        if (revision.isResourceNode() && ObjectUtil.equals(revision.getContainerID(), folderID))
-        {
-          String candidateName = (String)revision.getValues().get(EresourcePackage.CDO_RESOURCE__NAME);
-          if (StringUtil.compare(name, candidateName) == 0)
-          {
-            if (!ObjectUtil.equals(revision.getID(), revisionID))
-            {
-              return true;
-            }
-          }
-        }
-
-        return false;
-      }
-    });
-
-    if (!resultSet.isEmpty())
-    {
-      throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder " + folderID); //$NON-NLS-1$ //$NON-NLS-2$
-    }
-  }
-
   protected void writeRevision(InternalCDORevision revision, OMMonitor monitor)
   {
     Async async = null;
@@ -555,12 +513,11 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
 
       // If revision is in the store, remove old, store new
       ObjectContainer objectContainer = getObjectContainer();
-      int branchID = revision.getBranch().getID();
       CDOID id = revision.getID();
-      DB4ORevision revisionAlreadyInStore = DB4OQueryUtil.getRevision(objectContainer, id, branchID);
+      DB4ORevision revisionAlreadyInStore = DB4OStore.getRevision(objectContainer, id);
       if (revisionAlreadyInStore != null)
       {
-        DB4OQueryUtil.removeRevisionFromContainer(objectContainer, branchID, id);
+        DB4OStore.removeRevision(objectContainer, id);
       }
 
       DB4ORevision primitiveRevision = DB4ORevision.getDB4ORevision(revision);
@@ -606,16 +563,50 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
 
     try
     {
-      int branchID = branch.getID();
       for (CDOID id : detachedObjects)
       {
-        DB4OQueryUtil.removeRevisionFromContainer(getObjectContainer(), branchID, id);
+        DB4OStore.removeRevision(getObjectContainer(), id);
         monitor.worked();
       }
     }
     finally
     {
       monitor.done();
+    }
+  }
+
+  protected void checkDuplicateResources(CDORevision revision) throws IllegalStateException
+  {
+    final long folderID = CDOIDUtil.getLong((CDOID)revision.data().getContainerID());
+    final long revisionID = CDOIDUtil.getLong(revision.getID());
+    final String name = (String)revision.data().get(EresourcePackage.eINSTANCE.getCDOResourceNode_Name(), 0);
+
+    ObjectSet<DB4ORevision> resultSet = getObjectContainer().query(new Predicate<DB4ORevision>()
+    {
+      private static final long serialVersionUID = 1L;
+
+      @Override
+      public boolean match(DB4ORevision revision)
+      {
+        if (revision.isResourceNode() && ObjectUtil.equals(revision.getContainerID(), folderID))
+        {
+          String candidateName = (String)revision.getValues().get(EresourcePackage.CDO_RESOURCE__NAME);
+          if (StringUtil.compare(name, candidateName) == 0)
+          {
+            if (!ObjectUtil.equals(revision.getID(), revisionID))
+            {
+              return true;
+            }
+          }
+        }
+
+        return false;
+      }
+    });
+
+    if (!resultSet.isEmpty())
+    {
+      throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder " + folderID); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 }

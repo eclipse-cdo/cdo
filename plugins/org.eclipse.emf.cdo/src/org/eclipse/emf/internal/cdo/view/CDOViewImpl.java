@@ -104,6 +104,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
@@ -1205,7 +1206,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         }
       }
 
-      if (eObject.eResource() != null)
+      Resource eResource = eObject.eResource();
+      if (eResource != null)
       {
         return CDOIDUtil.createExternal(uri);
       }

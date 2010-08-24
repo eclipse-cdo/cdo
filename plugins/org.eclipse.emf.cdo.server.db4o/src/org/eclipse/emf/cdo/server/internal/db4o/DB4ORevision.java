@@ -46,15 +46,14 @@ public class DB4ORevision
 
   private int version;
 
-  private int branchID;
-
-  private long revised;
-
   private long timeStamp;
 
   private long resourceID;
 
-  private long containerID;
+  /**
+   * Can be an external ID!
+   */
+  private Object containerID;
 
   private int containingFeatureID;
 
@@ -69,16 +68,14 @@ public class DB4ORevision
 
   private boolean isRootResource;
 
-  public DB4ORevision(String packageURI, String className, long id, int version, int branchID, long revised,
-      long resourceID, long containerID, int containingFeatureID, List<Object> values, long timestamp,
-      boolean isResource, boolean isResourceNode, boolean isResourceFolder, boolean isRootResource)
+  public DB4ORevision(String packageURI, String className, long id, int version, long resourceID, Object containerID,
+      int containingFeatureID, List<Object> values, long timestamp, boolean isResource, boolean isResourceNode,
+      boolean isResourceFolder, boolean isRootResource)
   {
     setPackageURI(packageURI);
     setClassName(className);
     setID(id);
     setVersion(version);
-    setBranchID(branchID);
-    setRevised(revised);
     setResourceID(resourceID);
     setContainerID(containerID);
     setContainingFeatureID(containingFeatureID);
@@ -120,6 +117,11 @@ public class DB4ORevision
     return id;
   }
 
+  public int getBranchID()
+  {
+    return CDOBranch.MAIN_BRANCH_ID;
+  }
+
   public void setVersion(int version)
   {
     this.version = version;
@@ -130,24 +132,9 @@ public class DB4ORevision
     return version;
   }
 
-  public void setBranchID(int branchID)
-  {
-    this.branchID = branchID;
-  }
-
-  public int getBranchID()
-  {
-    return branchID;
-  }
-
-  public void setRevised(long revised)
-  {
-    this.revised = revised;
-  }
-
   public long getRevised()
   {
-    return revised;
+    return CDORevision.UNSPECIFIED_DATE;
   }
 
   public void setResourceID(long resourceID)
@@ -160,12 +147,12 @@ public class DB4ORevision
     return resourceID;
   }
 
-  public void setContainerID(long containerID)
+  public void setContainerID(Object containerID)
   {
     this.containerID = containerID;
   }
 
-  public long getContainerID()
+  public Object getContainerID()
   {
     return containerID;
   }
@@ -258,13 +245,11 @@ public class DB4ORevision
     boolean isResourceFolder = revision.isResourceFolder();
     boolean isRootResource = CDOIDUtil.getLong(revisionID) == 1;
 
-    long id = (Long)getDB4OID(revisionID);
+    long id = CDOIDUtil.getLong(revisionID);
     int version = revision.getVersion();
-    int branchID = revision.getBranch().getID();
     long timeStamp = revision.getTimeStamp();
-    long revised = revision.getRevised();
-    long resourceID = (Long)getDB4OID(revision.getResourceID());
-    long containerID = (Long)getDB4OID((CDOID)revision.getContainerID());
+    long resourceID = CDOIDUtil.getLong(revision.getResourceID());
+    Object containerID = getDB4OID((CDOID)revision.getContainerID());
     int containingFeatureID = revision.getContainingFeatureID();
 
     EStructuralFeature[] features = classInfo.getAllPersistentFeatures();
@@ -304,8 +289,8 @@ public class DB4ORevision
       }
     }
 
-    return new DB4ORevision(packageURI, className, id, version, branchID, revised, resourceID, containerID,
-        containingFeatureID, values, timeStamp, isResource, isResourceNode, isResourceFolder, isRootResource);
+    return new DB4ORevision(packageURI, className, id, version, resourceID, containerID, containingFeatureID, values,
+        timeStamp, isResource, isResourceNode, isResourceFolder, isRootResource);
   }
 
   public static InternalCDORevision getCDORevision(IStore store, DB4ORevision primitiveRevision)
@@ -316,7 +301,7 @@ public class DB4ORevision
     EClass eClass = (EClass)ePackage.getEClassifier(className);
     InternalCDORevision revision = (InternalCDORevision)CDORevisionFactory.DEFAULT.createRevision(eClass);
 
-    CDOBranch branch = store.getRepository().getBranchManager().getBranch(primitiveRevision.getBranchID());
+    CDOBranch branch = store.getRepository().getBranchManager().getMainBranch();
     CDOBranchPoint point = branch.getPoint(primitiveRevision.getTimeStamp());
 
     revision.setID(getCDOID(primitiveRevision.getID()));
@@ -370,6 +355,11 @@ public class DB4ORevision
     if (id instanceof String)
     {
       return CDOIDUtil.createExternal((String)id);
+    }
+
+    if (id instanceof CDOID)
+    {
+      return (CDOID)id;
     }
 
     return CDOIDUtil.createLong((Long)id);

@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.server.internal.db4o;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -26,6 +28,7 @@ import com.db4o.ObjectContainer;
 import com.db4o.ObjectServer;
 import com.db4o.ObjectSet;
 import com.db4o.config.Configuration;
+import com.db4o.query.Query;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -259,6 +262,32 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
   protected StoreAccessorPool getWriterPool(IView view, boolean forReleasing)
   {
     return writerPool;
+  }
+
+  public static DB4ORevision getRevision(ObjectContainer container, CDOID id)
+  {
+    Query query = container.query();
+    query.constrain(DB4ORevision.class);
+    query.descend("id").constrain(CDOIDUtil.getLong(id));
+
+    ObjectSet<?> revisions = query.execute();
+    if (revisions.isEmpty())
+    {
+      return null;
+    }
+
+    return (DB4ORevision)revisions.get(0);
+  }
+
+  public static void removeRevision(ObjectContainer container, CDOID id)
+  {
+    DB4ORevision revision = getRevision(container, id);
+    if (revision == null)
+    {
+      throw new IllegalArgumentException("Revision with ID " + id + " not found");
+    }
+
+    container.delete(revision);
   }
 
   /**

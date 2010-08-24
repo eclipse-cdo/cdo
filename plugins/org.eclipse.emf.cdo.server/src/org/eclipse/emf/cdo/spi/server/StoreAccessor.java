@@ -228,7 +228,6 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
 
     store.setLastCommitTime(latest);
     store.setLastNonLocalCommitTime(latestNonLocal);
-
   }
 
   /**

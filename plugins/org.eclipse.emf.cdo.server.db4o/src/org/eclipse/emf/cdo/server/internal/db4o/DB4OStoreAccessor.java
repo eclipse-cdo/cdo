@@ -154,28 +154,29 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
     final long folderID = CDOIDUtil.getLong(context.getFolderID());
     final String name = context.getName();
     final boolean exactMatch = context.exactMatch();
+    final Object rootResourceID = DB4ORevision.getDB4OID(getStore().getRepository().getRootResourceID());
 
     ObjectSet<DB4ORevision> revisionObjectSet = getObjectContainer().query(new Predicate<DB4ORevision>()
     {
       private static final long serialVersionUID = 1L;
 
       @Override
-      public boolean match(DB4ORevision primitiveRevision)
+      public boolean match(DB4ORevision revision)
       {
-        if (!primitiveRevision.isResourceNode())
+        if (!revision.isResourceNode())
         {
           return false;
         }
 
-        // is Root resource
-        if (primitiveRevision.isRootResource())
+        if (ObjectUtil.equals(rootResourceID, revision.getID()))
         {
+          // is Root resource
           return false;
         }
 
-        if (ObjectUtil.equals(primitiveRevision.getContainerID(), folderID))
+        if (ObjectUtil.equals(revision.getContainerID(), folderID))
         {
-          String candidateName = (String)primitiveRevision.getValues().get(EresourcePackage.CDO_RESOURCE__NAME);
+          String candidateName = (String)revision.getValues().get(EresourcePackage.CDO_RESOURCE__NAME);
           if (exactMatch)
           {
             if (candidateName != null && candidateName.equals(name))
@@ -498,7 +499,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
       try
       {
         async = monitor.forkAsync();
-        if (revision.isResourceFolder() || revision.isResource())
+        if (revision.isResourceNode())
         {
           checkDuplicateResources(revision);
         }

@@ -49,10 +49,6 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
 
   private ServerInfo serverInfo;
 
-  private boolean requiredToSupportAudits;
-
-  private boolean requiredToSupportBranches;
-
   @ExcludeFromDump
   private transient final StoreAccessorPool readerPool = new StoreAccessorPool(this, null);
 
@@ -128,16 +124,6 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     commitServerInfo(null);
   }
 
-  public boolean isRequiredToSupportAudits()
-  {
-    return requiredToSupportAudits;
-  }
-
-  public boolean isRequiredToSupportBranches()
-  {
-    return requiredToSupportBranches;
-  }
-
   // @Override
   // public CDOID getNextCDOID(LongIDStoreAccessor accessor, CDORevision revision)
   // {
@@ -152,13 +138,6 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
   public ObjectContainer openClient()
   {
     return server.openClient();
-  }
-
-  @Override
-  protected void doBeforeActivate()
-  {
-    requiredToSupportAudits = getRepository().isSupportingAudits();
-    requiredToSupportBranches = getRepository().isSupportingBranches();
   }
 
   @Override

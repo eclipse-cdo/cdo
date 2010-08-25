@@ -62,6 +62,7 @@ public class CommonNavigatorUtils
             }
           };
         }
+
         if (adapter.equals(Runnable.class))
         {
           return new Runnable()
@@ -79,6 +80,7 @@ public class CommonNavigatorUtils
             }
           };
         }
+
         return null;
       }
 

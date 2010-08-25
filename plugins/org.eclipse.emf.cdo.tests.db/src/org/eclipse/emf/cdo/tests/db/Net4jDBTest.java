@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.collection.Pair;
@@ -467,12 +468,26 @@ public class Net4jDBTest extends AbstractCDOTest
     store = (DBStore)getRepository().getStore();
     connection = store.getConnection();
 
-    prepareTable(tableName);
-    writeValues(tableName);
-    checkValues(tableName);
+    try
+    {
+      prepareTable(tableName);
+      writeValues(tableName);
+      checkValues(tableName);
 
-    connection = null;
-    store = null;
+    }
+    finally
+    {
+      try
+      {
+        connection.commit();
+      }
+      finally
+      {
+        DBUtil.close(connection);
+        connection = null;
+        store = null;
+      }
+    }
   }
 
   private void writeTypeValue(ExtendedDataOutputStream outs, DBType type, Object value) throws IOException

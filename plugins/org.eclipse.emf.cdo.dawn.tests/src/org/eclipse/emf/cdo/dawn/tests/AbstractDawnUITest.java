@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.ui.AbstractCDOUITest;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.gmf.runtime.notation.Bounds;
+import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
@@ -37,6 +39,7 @@ public abstract class AbstractDawnUITest extends AbstractCDOUITest// AbstractDaw
   {
     SWTBotPreferences.KEYBOARD_LAYOUT = "EN_US";
     SWTBotPreferences.SCREENSHOTS_DIR = DawnTestPlatform.instance.getTestFolder();
+    resetWorkbench();
     super.setUp();
   }
 
@@ -61,18 +64,15 @@ public abstract class AbstractDawnUITest extends AbstractCDOUITest// AbstractDaw
           IWorkbenchPage page = window.getActivePage();
           String editorID = EditorDescriptionHelper.getEditorIdForDawnEditor(resource.getName());
 
-          // if (editorID != null && !editorID.equals(""))
+          try
           {
-            try
-            {
-              DawnEditorInput editorInput = new DawnEditorInput(resource.getURI());
+            DawnEditorInput editorInput = new DawnEditorInput(resource.getURI());
 
-              page.openEditor(editorInput, editorID);
-            }
-            catch (PartInitException e)
-            {
-              e.printStackTrace();
-            }
+            page.openEditor(editorInput, editorID);
+          }
+          catch (PartInitException e)
+          {
+            e.printStackTrace();
           }
         }
       }
@@ -107,5 +107,13 @@ public abstract class AbstractDawnUITest extends AbstractCDOUITest// AbstractDaw
   {
     editor.activateTool(type);
     editor.drag(fromXPosition, fromYPosition, toXPosition, toYPosition);
+  }
+
+  protected void createEdge(String type, Node nodeFrom, Node nodeTo, SWTBotGefEditor editor)
+  {
+
+    Bounds boundsA = (Bounds)nodeFrom.getLayoutConstraint();
+    Bounds boundsB = (Bounds)nodeTo.getLayoutConstraint();
+    createEdge(type, boundsA.getX(), boundsA.getY(), boundsB.getX(), boundsB.getY(), editor);
   }
 }

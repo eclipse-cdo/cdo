@@ -41,6 +41,7 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Martin Fluegge
@@ -49,6 +50,10 @@ import java.util.List;
 public class SimpleDiagramTest extends AbstractDawnUITest
 {
   private static SWTGefBot bot;
+
+  {
+    Locale.setDefault(Locale.US);
+  }
 
   @BeforeClass
   public static void beforeClass() throws Exception
@@ -73,7 +78,7 @@ public class SimpleDiagramTest extends AbstractDawnUITest
   }
 
   @Test
-  public void createNewDawnDiagramAndAddElements() throws Exception
+  public void testCreateNewDawnDiagramAndAddElements() throws Exception
   {
     SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
     assertNotNull(editor);
@@ -89,7 +94,6 @@ public class SimpleDiagramTest extends AbstractDawnUITest
       CDOView view = session.openView();
 
       CDOResource diagramResource = view.getResource("/default.acore_diagram");
-      // TODO: Fix this naming after BUG 321024 is solved.
       CDOResource semanticResource = view.getResource("/default.acore");
 
       assertNotNull(diagramResource);
@@ -111,7 +115,7 @@ public class SimpleDiagramTest extends AbstractDawnUITest
   }
 
   @Test
-  public void createNewDawnDiagramAndAddElementsWithEdges() throws Exception
+  public void testCreateNewDawnDiagramAndAddElementsWithEdges() throws Exception
   {
     SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
     assertNotNull(editor);
@@ -135,7 +139,6 @@ public class SimpleDiagramTest extends AbstractDawnUITest
 
       CDOResource diagramResource = view.getResource("/default.acore_diagram");
 
-      // TODO: Fix this naming after BUG 321024 is solved.
       CDOResource semanticResource = view.getResource("/default.acore");
 
       assertNotNull(diagramResource);
@@ -154,7 +157,6 @@ public class SimpleDiagramTest extends AbstractDawnUITest
         name++;
       }
       view.close();
-      // session.close();
     }
 
     // for (SWTBotGefEditPart ep : connectionEditParts)
@@ -189,7 +191,6 @@ public class SimpleDiagramTest extends AbstractDawnUITest
 
       CDOResource diagramResource = view.getResource("/default.acore_diagram");
 
-      // TODO: Fix this naming after BUG 321024 is solved.
       CDOResource semanticResource = view.getResource("/default.acore");
 
       assertNotNull(diagramResource);
@@ -228,7 +229,6 @@ public class SimpleDiagramTest extends AbstractDawnUITest
 
       CDOResource diagramResource = view.getResource("/default.acore_diagram");
 
-      // TODO: Fix this naming after BUG 321024 is solved.
       CDOResource semanticResource = view.getResource("/default.acore");
 
       assertNotNull(diagramResource);
@@ -267,7 +267,6 @@ public class SimpleDiagramTest extends AbstractDawnUITest
 
       CDOResource diagramResource = view.getResource("/default.acore_diagram");
 
-      // TODO: Fix this naming after BUG 321024 is solved.
       CDOResource semanticResource = view.getResource("/default.acore");
 
       assertNotNull(diagramResource);
@@ -316,7 +315,6 @@ public class SimpleDiagramTest extends AbstractDawnUITest
 
       CDOResource diagramResource = view.getResource("/default.acore_diagram");
 
-      // TODO: Fix this naming after BUG 321024 is solved.
       CDOResource semanticResource = view.getResource("/default.acore");
 
       assertNotNull(diagramResource);
@@ -352,7 +350,6 @@ public class SimpleDiagramTest extends AbstractDawnUITest
       assertEquals(1, D.getCompositions().size());
       assertEquals(C, D.getCompositions().get(0));
       view.close();
-      // session.close();
     }
 
     editor.close();

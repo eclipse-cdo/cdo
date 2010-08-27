@@ -11,25 +11,43 @@
 package org.eclipse.emf.cdo.dawn.tests.ui;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.AClass;
-import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassEditPart;
+import org.eclipse.emf.cdo.dawn.examples.acore.ACoreRoot;
+import org.eclipse.emf.cdo.dawn.examples.acore.AcoreFactory;
+import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassAggregationsEditPart;
+import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassAssociationsEditPart;
+import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassCompositionsEditPart;
+import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassImplementedInterfacesEditPart;
+import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassSubClassesEditPart;
 import org.eclipse.emf.cdo.dawn.tests.AbstractDawnUITest;
+import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnAcoreTestUtil;
+import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnSWTBotUtil;
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.emf.ecore.util.EcoreUtil;
+
+import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.notation.Bounds;
+import org.eclipse.gmf.runtime.notation.Diagram;
+import org.eclipse.gmf.runtime.notation.Edge;
+import org.eclipse.gmf.runtime.notation.Node;
+import org.eclipse.gmf.runtime.notation.NotationFactory;
+import org.eclipse.gmf.runtime.notation.RelativeBendpoints;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.gmf.runtime.notation.datatype.RelativeBendpoint;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
-import org.eclipse.swtbot.swt.finder.matchers.AbstractMatcher;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 
-import org.hamcrest.Description;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,15 +56,13 @@ import java.util.List;
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class MultipleResourcesTest extends AbstractDawnUITest
 {
-  private static final String A_CLASS = "AClass";
-
   private static SWTGefBot bot;
 
   @BeforeClass
   public static void beforeClass() throws Exception
   {
     bot = new SWTGefBot();
-    // DawnSWTBotUtil.initTest(bot);
+    DawnSWTBotUtil.initTest(bot);
   }
 
   @Override
@@ -60,93 +76,450 @@ public class MultipleResourcesTest extends AbstractDawnUITest
   @After
   public void tearDown() throws Exception
   {
+    sleep(500);
     closeAllEditors();
     super.tearDown();
   }
 
   @Test
-  public void createNewDawnDiagramAndAddElements() throws Exception
+  public void testRemotelyRenameAClass() throws Exception
   {
-    bot.menu("File").menu("New").menu("Other...").click();
-
-    SWTBotShell shell = bot.shell("New");
-    shell.activate();
-    bot.tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
-
-    bot.button("Next >").click();
-    bot.button("Next >").click();
-    bot.button("Finish").click();
-
-    SWTBotGefEditor editor = bot.gefEditor("default.acore_diagram");
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
     assertNotNull(editor);
 
-    editor.activateTool(A_CLASS);
-    editor.click(100, 100);
-    typeTextToFocusedWidget("A", bot, true);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
 
-    editor.saveAndClose();
-    // editor.save();
+    editor.save();
 
-    // create second diagram
-    bot.menu("File").menu("New").menu("Other...").click();
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource2 = transaction.getResource("/default.acore_diagram");
 
-    shell = bot.shell("New");
-    shell.activate();
-    shell.setFocus();
-    bot.tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 250, 100, "B", bot, editor);
 
-    bot.button("Next >").click();
-    SWTBotText fileNameLabel = bot.textWithLabel("File name:");
-    fileNameLabel.setText("default2.acore_diagram");
-    bot.button("Next >").click();
+    editor.save();
 
-    fileNameLabel = bot.textWithLabel("File name:");
-    fileNameLabel.setText("default.acore");
+    Diagram diagram = (Diagram)resource2.getContents().get(0);
 
-    bot.button("Finish").click();
+    assertEquals(2, diagram.getChildren().size());
 
-    editor = bot.gefEditor("default2.acore_diagram");
+    View nodeB = (View)diagram.getChildren().get(1);
 
-    List<SWTBotGefEditPart> editParts = getAClassEditParts(editor);
-    assertEquals(0, editParts.size());
+    AClass classB = (AClass)nodeB.getElement();
 
-    editor.activateTool(A_CLASS);
-    editor.click(100, 100);
-    typeTextToFocusedWidget("B", bot, true);
+    assertEquals("B", classB.getName());
 
-    editor.activateTool(A_CLASS);
-    editor.click(300, 300);
-    typeTextToFocusedWidget("C", bot, true);
-    editor.click(200, 200);
-    editor.saveAndClose();
+    classB.setName("C");
+    transaction.commit();
 
-    openEditor("/default.acore_diagram");
-
-    editor = bot.gefEditor("default.acore_diagram");
-    editParts = getAClassEditParts(editor);
-
-    assertEquals(1, editParts.size());
-
-    SWTBotGefEditPart swtBotGefEditPart = editParts.get(0);
-    View view = (View)swtBotGefEditPart.part().getModel();
-
-    assertEquals("A", ((AClass)view.getElement()).getName());
+    List<SWTBotGefEditPart> aClassEditParts = DawnAcoreTestUtil.getAClassEditParts(editor);
+    SWTBotGefEditPart classBEditpart = aClassEditParts.get(1);
+    AClass editorClassB = (AClass)((View)classBEditpart.part().getModel()).getElement();
+    assertEquals("C", editorClassB.getName());
   }
 
-  private List<SWTBotGefEditPart> getAClassEditParts(SWTBotGefEditor editor)
+  @Test
+  public void testRemotelyMoveNode() throws Exception
   {
-    List<SWTBotGefEditPart> editParts = editor.editParts(new AbstractMatcher<AClassEditPart>()
-    {
-      @Override
-      protected boolean doMatch(Object item)
-      {
-        return item instanceof AClassEditPart;
-      }
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+    assertNotNull(editor);
 
-      public void describeTo(Description description)
-      {
-      }
-    });
-    return editParts;
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
+
+    editor.save();
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource2 = transaction.getResource("/default.acore_diagram");
+
+    Diagram diagram = (Diagram)resource2.getContents().get(0);
+
+    assertEquals(1, diagram.getChildren().size());
+
+    Node nodeA = (Node)diagram.getChildren().get(0);
+
+    Bounds bounds = (Bounds)nodeA.getLayoutConstraint();
+    bounds.setHeight(40);
+    bounds.setWidth(30);
+    bounds.setX(200);
+    bounds.setY(250);
+
+    transaction.commit();
+
+    sleep(500);
+
+    List<SWTBotGefEditPart> aClassEditParts = DawnAcoreTestUtil.getAClassEditParts(editor);
+    SWTBotGefEditPart classBEditpart = aClassEditParts.get(0);
+    Node editorNodeA = (Node)classBEditpart.part().getModel();
+    Bounds editorBounds = (Bounds)editorNodeA.getLayoutConstraint();
+
+    assertEquals(bounds.getX(), editorBounds.getX());
+    assertEquals(bounds.getY(), editorBounds.getY());
+    assertEquals(bounds.getWidth(), editorBounds.getWidth());
+    assertEquals(bounds.getHeight(), editorBounds.getHeight());
+  }
+
+  @Test
+  public void testCreateNodeRemotely() throws Exception
+  {
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+    assertNotNull(editor);
+    editor.save();
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource2 = transaction.getResource("/default.acore_diagram");
+
+    Diagram diagram = (Diagram)resource2.getContents().get(0);
+
+    ACoreRoot aCoreRoot = (ACoreRoot)diagram.getElement();
+
+    AClass newAClass = AcoreFactory.eINSTANCE.createAClass();
+    newAClass.setName("A-Team");
+
+    aCoreRoot.getClasses().add(newAClass);
+
+    Node newNode = DawnAcoreTestUtil.createNewAClassRemote(diagram, newAClass);
+
+    newNode.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
+    Bounds bounds = (Bounds)newNode.getLayoutConstraint();
+    bounds.setHeight(40);
+    bounds.setWidth(30);
+    bounds.setX(200);
+    bounds.setY(250);
+
+    newNode.setElement(newAClass);
+
+    assertEquals(1, diagram.getChildren().size());
+    assertEquals(1, aCoreRoot.getClasses().size());
+
+    transaction.commit();
+
+    sleep(1000);
+
+    List<SWTBotGefEditPart> aClassEditParts = DawnAcoreTestUtil.getAClassEditParts(editor);
+
+    assertEquals(1, aClassEditParts.size());
+
+    SWTBotGefEditPart classBEditpart = aClassEditParts.get(0);
+    Node editorNewNode = (Node)classBEditpart.part().getModel();
+    AClass editorNewAclass = (AClass)editorNewNode.getElement();
+
+    assertEquals("A-Team", editorNewAclass.getName());
+    Bounds editorBounds = (Bounds)editorNewNode.getLayoutConstraint();
+
+    assertEquals(bounds.getX(), editorBounds.getX());
+    assertEquals(bounds.getY(), editorBounds.getY());
+    assertEquals(bounds.getWidth(), editorBounds.getWidth());
+    assertEquals(bounds.getHeight(), editorBounds.getHeight());
+
+  }
+
+  @Test
+  public void testAddNodeRemotely() throws Exception
+  {
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+    assertNotNull(editor);
+
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
+
+    editor.save();
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource2 = transaction.getResource("/default.acore_diagram");
+
+    Diagram diagram = (Diagram)resource2.getContents().get(0);
+
+    Node newNode = EcoreUtil.copy((Node)diagram.getChildren().get(0));// diagram.createChild(NotationPackage.eINSTANCE.getNode());
+
+    newNode.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
+    Bounds bounds = (Bounds)newNode.getLayoutConstraint();
+    bounds.setHeight(40);
+    bounds.setWidth(30);
+    bounds.setX(200);
+    bounds.setY(250);
+
+    AClass newAClass = AcoreFactory.eINSTANCE.createAClass();
+    newAClass.setName("A-Team");
+    newNode.setElement(newAClass);
+
+    ACoreRoot aCoreRoot = (ACoreRoot)diagram.getElement();
+    aCoreRoot.getClasses().add(newAClass);
+
+    diagram.insertChild(newNode);
+    assertEquals(2, diagram.getChildren().size());
+    assertEquals(2, aCoreRoot.getClasses().size());
+
+    transaction.commit();
+
+    sleep(1000);
+
+    List<SWTBotGefEditPart> aClassEditParts = DawnAcoreTestUtil.getAClassEditParts(editor);
+
+    assertEquals(2, aClassEditParts.size());
+
+    SWTBotGefEditPart classBEditpart = aClassEditParts.get(1);
+    Node editorNewNode = (Node)classBEditpart.part().getModel();
+    AClass editorNewAclass = (AClass)editorNewNode.getElement();
+
+    assertEquals("A-Team", editorNewAclass.getName());
+    Bounds editorBounds = (Bounds)editorNewNode.getLayoutConstraint();
+
+    assertEquals(bounds.getX(), editorBounds.getX());
+    assertEquals(bounds.getY(), editorBounds.getY());
+    assertEquals(bounds.getWidth(), editorBounds.getWidth());
+    assertEquals(bounds.getHeight(), editorBounds.getHeight());
+  }
+
+  @Test
+  public void testModifyConnectionRemotely() throws Exception
+  {
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+    assertNotNull(editor);
+
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", bot, editor);
+
+    List<SWTBotGefEditPart> aClassEditParts = DawnAcoreTestUtil.getAClassEditParts(editor);
+
+    Node nodeA = (Node)aClassEditParts.get(0).part().getModel();
+    Node nodeB = (Node)aClassEditParts.get(1).part().getModel();
+
+    createEdge(DawnAcoreTestUtil.CONNECTION_ASSOCIATION, nodeA, nodeB, editor);
+    editor.save();
+
+    {
+      List<SWTBotGefEditPart> aaClassAssociationsEditParts = DawnAcoreTestUtil.getAClassAssociationsEditParts(editor);
+      assertEquals(1, aaClassAssociationsEditParts.size());
+      EditPart part = aaClassAssociationsEditParts.get(0).part();
+      Edge editorEdge = (Edge)part.getModel();
+      assertEquals(2, ((RelativeBendpoints)editorEdge.getBendpoints()).getPoints().size());
+    }
+
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource2 = transaction.getResource("/default.acore_diagram");
+
+      Diagram diagram = (Diagram)resource2.getContents().get(0);
+      List<?> edges = diagram.getEdges();
+      assertEquals(1, edges.size());
+
+      Edge edge = (Edge)edges.get(0);
+
+      RelativeBendpoint relativeBendpoint = new RelativeBendpoint(0, 100, -100, 0);
+
+      RelativeBendpoints relativeBendpoints = (RelativeBendpoints)edge.getBendpoints();
+
+      @SuppressWarnings("unchecked")
+      List<RelativeBendpoint> points = relativeBendpoints.getPoints();
+      List<RelativeBendpoint> newBendPoints = new ArrayList<RelativeBendpoint>(points);
+      newBendPoints.add(1, relativeBendpoint);
+      relativeBendpoints.setPoints(newBendPoints);
+
+      transaction.commit();
+      sleep(1000);
+    }
+
+    List<SWTBotGefEditPart> aaClassAssociationsEditParts = DawnAcoreTestUtil.getAClassAssociationsEditParts(editor);
+    assertEquals(1, aaClassAssociationsEditParts.size());
+    EditPart part = aaClassAssociationsEditParts.get(0).part();
+    Edge editorEdge = (Edge)part.getModel();
+    assertEquals(3, ((RelativeBendpoints)editorEdge.getBendpoints()).getPoints().size());
+  }
+
+  @Test
+  public void testCreateAssociationConnectionRemotely() throws Exception
+  {
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", bot, editor);
+
+    editor.save();
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource2 = transaction.getResource("/default.acore_diagram");
+
+      Diagram diagram = (Diagram)resource2.getContents().get(0);
+
+      Node nodeA = (Node)diagram.getChildren().get(0);
+      Node nodeB = (Node)diagram.getChildren().get(1);
+
+      List<RelativeBendpoint> newBendPoints = new ArrayList<RelativeBendpoint>();
+
+      RelativeBendpoint relativeBendpoint = new RelativeBendpoint(0, 100, -100, 0);
+      newBendPoints.add(relativeBendpoint);
+
+      Edge edge = DawnAcoreTestUtil.createNewAssociationRemote(nodeA, nodeB, newBendPoints);
+
+      assertNotNull(edge);
+      transaction.commit();
+      sleep(1000);
+    }
+    List<SWTBotGefEditPart> connectionEditParts = DawnSWTBotUtil.getAllConnections(editor);
+    assertEquals(1, connectionEditParts.size());
+    EditPart part = connectionEditParts.get(0).part();
+    assertInstanceOf(AClassAssociationsEditPart.class, part);
+    assertInstanceOf(Edge.class, part.getModel());
+    Edge editorEdge = (Edge)part.getModel();
+    assertEquals(3, ((RelativeBendpoints)editorEdge.getBendpoints()).getPoints().size());
+  }
+
+  @Test
+  public void testCreateAggregationConnectionRemotely() throws Exception
+  {
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", bot, editor);
+    editor.save();
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource2 = transaction.getResource("/default.acore_diagram");
+
+      Diagram diagram = (Diagram)resource2.getContents().get(0);
+
+      Node nodeA = (Node)diagram.getChildren().get(0);
+      Node nodeB = (Node)diagram.getChildren().get(1);
+
+      List<RelativeBendpoint> newBendPoints = new ArrayList<RelativeBendpoint>();
+
+      RelativeBendpoint relativeBendpoint = new RelativeBendpoint(0, 100, -100, 0);
+      newBendPoints.add(relativeBendpoint);
+
+      Edge edge = DawnAcoreTestUtil.createNewAggregationRemote(nodeA, nodeB, newBendPoints);
+
+      assertNotNull(edge);
+      transaction.commit();
+      sleep(1000);
+    }
+    List<SWTBotGefEditPart> connectionEditParts = DawnSWTBotUtil.getAllConnections(editor);
+    assertEquals(1, connectionEditParts.size());
+    EditPart part = connectionEditParts.get(0).part();
+    assertInstanceOf(AClassAggregationsEditPart.class, part);
+    assertInstanceOf(Edge.class, part.getModel());
+    Edge editorEdge = (Edge)part.getModel();
+    assertEquals(3, ((RelativeBendpoints)editorEdge.getBendpoints()).getPoints().size());
+  }
+
+  @Test
+  public void testCreateCompositionConnectionRemotely() throws Exception
+  {
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", bot, editor);
+
+    editor.save();
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource2 = transaction.getResource("/default.acore_diagram");
+
+      Diagram diagram = (Diagram)resource2.getContents().get(0);
+
+      Node nodeA = (Node)diagram.getChildren().get(0);
+      Node nodeB = (Node)diagram.getChildren().get(1);
+
+      List<RelativeBendpoint> newBendPoints = new ArrayList<RelativeBendpoint>();
+
+      RelativeBendpoint relativeBendpoint = new RelativeBendpoint(0, 100, -100, 0);
+      newBendPoints.add(relativeBendpoint);
+
+      Edge edge = DawnAcoreTestUtil.createNewCompositionRemote(nodeA, nodeB, newBendPoints);
+
+      assertNotNull(edge);
+      transaction.commit();
+      sleep(1000);
+    }
+    List<SWTBotGefEditPart> connectionEditParts = DawnSWTBotUtil.getAllConnections(editor);
+    assertEquals(1, connectionEditParts.size());
+    EditPart part = connectionEditParts.get(0).part();
+    assertInstanceOf(AClassCompositionsEditPart.class, part);
+    assertInstanceOf(Edge.class, part.getModel());
+    Edge editorEdge = (Edge)part.getModel();
+    assertEquals(3, ((RelativeBendpoints)editorEdge.getBendpoints()).getPoints().size());
+  }
+
+  @Test
+  public void testCreateInheritanceConnectionRemotely() throws Exception
+  {
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", bot, editor);
+
+    editor.save();
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource2 = transaction.getResource("/default.acore_diagram");
+
+      Diagram diagram = (Diagram)resource2.getContents().get(0);
+
+      Node nodeA = (Node)diagram.getChildren().get(0);
+      Node nodeB = (Node)diagram.getChildren().get(1);
+
+      List<RelativeBendpoint> newBendPoints = new ArrayList<RelativeBendpoint>();
+
+      RelativeBendpoint relativeBendpoint = new RelativeBendpoint(0, 100, -100, 0);
+      newBendPoints.add(relativeBendpoint);
+
+      Edge edge = DawnAcoreTestUtil.createNewInheritanceRelationRemote(nodeA, nodeB, newBendPoints);
+
+      assertNotNull(edge);
+      transaction.commit();
+      sleep(1000);
+    }
+    List<SWTBotGefEditPart> connectionEditParts = DawnSWTBotUtil.getAllConnections(editor);
+    assertEquals(1, connectionEditParts.size());
+    EditPart part = connectionEditParts.get(0).part();
+    assertInstanceOf(AClassSubClassesEditPart.class, part);
+    assertInstanceOf(Edge.class, part.getModel());
+    Edge editorEdge = (Edge)part.getModel();
+    assertEquals(3, ((RelativeBendpoints)editorEdge.getBendpoints()).getPoints().size());
+  }
+
+  @Test
+  public void testCreateImplementsConnectionRemotely() throws Exception
+  {
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+
+    createNodeWithLabel(DawnAcoreTestUtil.A_INTERFACE, 100, 100, "A", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", bot, editor);
+
+    editor.save();
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource2 = transaction.getResource("/default.acore_diagram");
+
+      Diagram diagram = (Diagram)resource2.getContents().get(0);
+
+      Node nodeA = (Node)diagram.getChildren().get(0);
+      Node nodeB = (Node)diagram.getChildren().get(1);
+
+      List<RelativeBendpoint> newBendPoints = new ArrayList<RelativeBendpoint>();
+
+      RelativeBendpoint relativeBendpoint = new RelativeBendpoint(0, 100, -100, 0);
+      newBendPoints.add(relativeBendpoint);
+
+      Edge edge = DawnAcoreTestUtil.createNewImplementsRelationRemote(nodeA, nodeB, newBendPoints);
+
+      assertNotNull(edge);
+      transaction.commit();
+      sleep(1000);
+    }
+    List<SWTBotGefEditPart> connectionEditParts = DawnSWTBotUtil.getAllConnections(editor);
+    assertEquals(1, connectionEditParts.size());
+    EditPart part = connectionEditParts.get(0).part();
+    assertInstanceOf(AClassImplementedInterfacesEditPart.class, part);
+    assertInstanceOf(Edge.class, part.getModel());
+    Edge editorEdge = (Edge)part.getModel();
+    assertEquals(3, ((RelativeBendpoints)editorEdge.getBendpoints()).getPoints().size());
   }
 }

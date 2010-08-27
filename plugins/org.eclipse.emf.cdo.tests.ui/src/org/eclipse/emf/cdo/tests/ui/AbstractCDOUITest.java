@@ -28,6 +28,9 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author Martin Fluegge
  */
@@ -44,6 +47,28 @@ public abstract class AbstractCDOUITest extends AbstractCDOTest
 
   protected void closeAllEditors()
   {
+    final CountDownLatch countDownLatch = new CountDownLatch(1);
+    Display.getDefault().asyncExec(new Runnable()
+    {
+
+      public void run()
+      {
+        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closeAllEditors(false);
+        countDownLatch.countDown();
+      }
+    });
+    try
+    {
+      countDownLatch.await(5000, TimeUnit.MILLISECONDS);
+    }
+    catch (InterruptedException ex)
+    {
+      throw new RuntimeException(ex);
+    }
+  }
+
+  protected void closeAllEditorsSync()
+  {
     UIThreadRunnable.syncExec(new VoidResult()
     {
       public void run()
@@ -55,7 +80,8 @@ public abstract class AbstractCDOUITest extends AbstractCDOTest
 
   protected void resetWorkbench()
   {
-    UIThreadRunnable.syncExec(new VoidResult()
+    final CountDownLatch countDownLatch = new CountDownLatch(1);
+    UIThreadRunnable.asyncExec(new VoidResult()
     {
       public void run()
       {
@@ -66,7 +92,7 @@ public abstract class AbstractCDOUITest extends AbstractCDOTest
           IWorkbenchPage page = workbenchWindow.getActivePage();
           Shell activeShell = Display.getCurrent().getActiveShell();
 
-          if (activeShell != workbenchWindow.getShell())
+          if (activeShell != workbenchWindow.getShell() && activeShell != null)
           {
             activeShell.close();
           }
@@ -83,8 +109,20 @@ public abstract class AbstractCDOUITest extends AbstractCDOTest
         {
           throw new RuntimeException(e);
         }
+        finally
+        {
+          countDownLatch.countDown();
+        }
       }
     });
+    try
+    {
+      countDownLatch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+    }
+    catch (InterruptedException ex)
+    {
+      throw new RuntimeException(ex);
+    }
   }
 
   /**

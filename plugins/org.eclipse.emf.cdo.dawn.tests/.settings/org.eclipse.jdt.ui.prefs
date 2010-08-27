@@ -1,4 +1,4 @@
-#Thu Feb 04 09:44:24 CET 2010
+#Fri Aug 20 17:54:44 CEST 2010
 cleanup.add_default_serial_version_id=true
 cleanup.add_generated_serial_version_id=false
 cleanup.add_missing_annotations=true
@@ -54,7 +54,7 @@ cleanup_profile=_EMFT
 cleanup_settings_version=2
 eclipse.preferences.version=1
 editor_save_participant_org.eclipse.jdt.ui.postsavelistener.cleanup=true
-formatter_profile=_EMFT
+formatter_profile=_Unmanaged profile 'EMFT' (Dawn)
 formatter_settings_version=11
 org.eclipse.jdt.ui.exception.name=ex
 org.eclipse.jdt.ui.gettersetter.use.is=true

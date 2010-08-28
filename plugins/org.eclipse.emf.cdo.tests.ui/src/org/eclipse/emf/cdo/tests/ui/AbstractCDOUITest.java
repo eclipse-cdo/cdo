@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.tests.ui;
 
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
+
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swtbot.swt.finder.SWTBot;
@@ -195,7 +197,11 @@ public abstract class AbstractCDOUITest extends AbstractCDOTest
     {
       try
       {
-        latch.await(timeout, TimeUnit.MILLISECONDS);
+        if (!latch.await(timeout, TimeUnit.MILLISECONDS))
+        {
+          throw new TimeoutRuntimeException("Timeout after " + timeout + " milliseconds");
+        }
+
         if (result instanceof RuntimeException)
         {
           throw (RuntimeException)result;

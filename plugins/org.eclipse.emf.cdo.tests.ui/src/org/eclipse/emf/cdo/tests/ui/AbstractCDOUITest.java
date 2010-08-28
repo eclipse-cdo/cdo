@@ -34,7 +34,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Martin Fluegge
  */
-
 public abstract class AbstractCDOUITest extends AbstractCDOTest
 {
   @Override
@@ -47,26 +46,20 @@ public abstract class AbstractCDOUITest extends AbstractCDOTest
 
   protected void closeAllEditors()
   {
-    final CountDownLatch countDownLatch = new CountDownLatch(1);
-    Display.getDefault().asyncExec(new Runnable()
+    LatchedRunnable runnable = new LatchedRunnable()
     {
-
-      public void run()
+      @Override
+      protected void runWithLatch()
       {
         PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closeAllEditors(false);
-        countDownLatch.countDown();
       }
-    });
-    try
-    {
-      countDownLatch.await(5000, TimeUnit.MILLISECONDS);
-    }
-    catch (InterruptedException ex)
-    {
-      throw new RuntimeException(ex);
-    }
+    };
+
+    Display.getDefault().asyncExec(runnable);
+    runnable.await();
   }
 
+  @Deprecated
   protected void closeAllEditorsSync()
   {
     UIThreadRunnable.syncExec(new VoidResult()
@@ -115,6 +108,7 @@ public abstract class AbstractCDOUITest extends AbstractCDOTest
         }
       }
     });
+
     try
     {
       countDownLatch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
@@ -126,7 +120,7 @@ public abstract class AbstractCDOUITest extends AbstractCDOTest
   }
 
   /**
-   * walks true the tree and selects the first element which matches the name
+   * Walks through the tree and selects the first element which matches the name.
    */
   protected void selectFolder(SWTBotTreeItem[] items, String name, boolean exactMatch)
   {
@@ -148,6 +142,7 @@ public abstract class AbstractCDOUITest extends AbstractCDOTest
           return;
         }
       }
+
       item.expand();
       selectFolder(item.getItems(), name, exactMatch);
     }
@@ -162,6 +157,83 @@ public abstract class AbstractCDOUITest extends AbstractCDOTest
     if (hitCR)
     {
       keyboard.pressShortcut(Keystrokes.CR);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class LatchedRunnable implements Runnable
+  {
+    private CountDownLatch latch = new CountDownLatch(1);
+
+    private Throwable result;
+
+    public LatchedRunnable()
+    {
+    }
+
+    public void run()
+    {
+      try
+      {
+        runWithLatch();
+      }
+      catch (Throwable t)
+      {
+        result = t;
+      }
+      finally
+      {
+        latch.countDown();
+      }
+    }
+
+    protected abstract void runWithLatch();
+
+    public void await(long timeout)
+    {
+      try
+      {
+        latch.await(timeout, TimeUnit.MILLISECONDS);
+        if (result instanceof RuntimeException)
+        {
+          throw (RuntimeException)result;
+        }
+
+        if (result instanceof Error)
+        {
+          throw (Error)result;
+        }
+      }
+      catch (InterruptedException ex)
+      {
+        throw new RuntimeException(ex);
+      }
+    }
+
+    public void await()
+    {
+      await(DEFAULT_TIMEOUT);
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class Delegating extends LatchedRunnable
+    {
+      private Runnable delegate;
+
+      public Delegating(Runnable delegate)
+      {
+        this.delegate = delegate;
+      }
+
+      @Override
+      protected void runWithLatch()
+      {
+        delegate.run();
+      }
     }
   }
 }

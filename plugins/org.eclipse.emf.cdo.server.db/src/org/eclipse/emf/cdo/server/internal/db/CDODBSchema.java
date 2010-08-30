@@ -146,7 +146,7 @@ public class CDODBSchema extends DBSchema
   COMMIT_INFOS.addField("user_id", DBType.VARCHAR); //$NON-NLS-1$
 
   public static final IDBField COMMIT_INFOS_COMMENT = //
-  COMMIT_INFOS.addField("comment", DBType.VARCHAR); //$NON-NLS-1$
+  COMMIT_INFOS.addField("commit_comment", DBType.VARCHAR); //$NON-NLS-1$
 
   public static final IDBIndex INDEX_COMMIT_INFOS_PK = //
   COMMIT_INFOS.addIndex(IDBIndex.Type.PRIMARY_KEY, COMMIT_INFOS_TIMESTAMP);

@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class Bugzilla_318998_Tests extends AbstractCDOTest
+public class Bugzilla_318998_Test extends AbstractCDOTest
 {
   @Override
   public synchronized Map<String, Object> getTestProperties()

@@ -1,0 +1,89 @@
+/**
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
+package org.eclipse.emf.cdo.tests.bugzilla;
+
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.transaction.CDOCommitContext;
+import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
+/**
+ * @author Eike Stepper
+ */
+public class Bugzilla_323958_Test extends AbstractCDOTest
+{
+  public void testModificationFromTransactionHandler() throws Exception
+  {
+    {
+      final Company company = getModel1Factory().createCompany();
+      company.setName("X");
+
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      transaction.addTransactionHandler(new CDODefaultTransactionHandler()
+      {
+        @Override
+        public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+        {
+          company.setName("Y");
+        }
+      });
+
+      CDOResource resource = transaction.createResource("/test");
+      resource.getContents().add(company);
+
+      transaction.commit();
+      session.close();
+    }
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource("/test");
+
+    Company company = (Company)resource.getContents().get(0);
+    assertEquals("Y", company.getName());
+  }
+
+  public void testAdditionFromTransactionHandler() throws Exception
+  {
+    {
+      final Company company = getModel1Factory().createCompany();
+      company.setName("X");
+
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      transaction.addTransactionHandler(new CDODefaultTransactionHandler()
+      {
+        @Override
+        public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+        {
+          company.getCategories().add(getModel1Factory().createCategory());
+        }
+      });
+
+      CDOResource resource = transaction.createResource("/test");
+      resource.getContents().add(company);
+
+      transaction.commit();
+      session.close();
+    }
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource("/test");
+
+    Company company = (Company)resource.getContents().get(0);
+    assertEquals(1, company.getCategories().size());
+  }
+}

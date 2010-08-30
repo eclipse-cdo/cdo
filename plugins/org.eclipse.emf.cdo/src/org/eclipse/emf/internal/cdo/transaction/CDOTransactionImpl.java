@@ -69,6 +69,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
+import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -877,7 +878,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public InternalCDOCommitContext createCommitContext()
   {
-    return new CDOCommitContextImpl(this, analyzeNewPackages());
+    return new CDOCommitContextImpl(this);
   }
 
   /**
@@ -1442,7 +1443,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  private List<CDOPackageUnit> analyzeNewPackages()
+  public List<CDOPackageUnit> analyzeNewPackages()
   {
     CDOPackageRegistry packageRegistry = getSession().getPackageRegistry();
     Set<EPackage> usedPackages = new HashSet<EPackage>();
@@ -1899,10 +1900,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     private CDOCommitData commitData;
 
-    public CDOCommitContextImpl(InternalCDOTransaction transaction, List<CDOPackageUnit> newPackageUnits)
+    public CDOCommitContextImpl(InternalCDOTransaction transaction)
     {
       this.transaction = transaction;
+      calculateCommitData();
+    }
 
+    private void calculateCommitData()
+    {
+      List<CDOPackageUnit> newPackageUnits = analyzeNewPackages();
       List<CDOIDAndVersion> revisions = new ArrayList<CDOIDAndVersion>(getNewObjects().size());
       for (CDOObject newObject : getNewObjects().values())
       {
@@ -1973,10 +1979,34 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         CDOTransactionHandler[] handlers = getTransactionHandlers();
         if (handlers != null)
         {
-          for (int i = 0; i < handlers.length; i++)
+          final boolean[] modifiedAgain = { false };
+          CDOTransactionHandler modifiedAgainHandler = new CDODefaultTransactionHandler()
           {
-            CDOTransactionHandler handler = handlers[i];
-            handler.committingTransaction(getTransaction(), this);
+            @Override
+            public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureChange)
+            {
+              modifiedAgain[0] = true;
+            }
+          };
+
+          addTransactionHandler(modifiedAgainHandler);
+
+          try
+          {
+            for (int i = 0; i < handlers.length; i++)
+            {
+              modifiedAgain[0] = false;
+              CDOTransactionHandler handler = handlers[i];
+              handler.committingTransaction(getTransaction(), this);
+              if (modifiedAgain[0])
+              {
+                calculateCommitData();
+              }
+            }
+          }
+          finally
+          {
+            removeTransactionHandler(modifiedAgainHandler);
           }
         }
 

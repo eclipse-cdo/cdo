@@ -51,7 +51,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import junit.framework.AssertionFailedError;
 import junit.framework.TestResult;
 
 /**
@@ -429,6 +428,10 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     {
       return super.run();
     }
+    catch (ConfigTestException ex)
+    {
+      throw ex;
+    }
     catch (Throwable ex)
     {
       throw new ConfigTestException("Error in " + this, ex);
@@ -442,7 +445,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     {
       super.runBare();
     }
-    catch (AssertionFailedError error)
+    catch (AssertionError error)
     {
       throw error;
     }

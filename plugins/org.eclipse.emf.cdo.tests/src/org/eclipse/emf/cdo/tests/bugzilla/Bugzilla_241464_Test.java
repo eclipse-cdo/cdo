@@ -10,13 +10,15 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
+import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.impl.TestRevisionManager;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Make timeouts in read-access requests configurable
@@ -30,12 +32,17 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
   public void testBugzilla_241464() throws Exception
   {
     {
-      Customer customer = getModel1Factory().createCustomer();
-      customer.setName("customer");
-
       CDOSession session = openSession();
+      if (!(session instanceof org.eclipse.emf.cdo.net4j.CDOSession))
+      {
+        return;
+      }
+
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/test1");
+
+      Customer customer = getModel1Factory().createCustomer();
+      customer.setName("customer");
       resource.getContents().add(customer);
 
       transaction.commit();
@@ -43,28 +50,27 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
     }
 
     CDOSession session = openSession();
-    if (session instanceof org.eclipse.emf.cdo.net4j.CDOSession)
-    {
-      ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().getProtocol().setTimeout(2000L);
-    }
-
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource("/test1");
 
-    LifecycleUtil.deactivate(getRepository());
+    TestRevisionManager revisionManager = (TestRevisionManager)getRepository().getRevisionManager();
+    revisionManager.setGetRevisionsDelay(10000L); // Make the protocol time out
+    ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().getProtocol().setTimeout(2000L);
 
     try
     {
       Customer customer = (Customer)resource.getContents().get(0);
       System.out.println(customer.getName());
-      fail("IllegalStateException expected");
+      fail("TransportException expected");
     }
-    catch (IllegalStateException success)
+    catch (TransportException expected)
     {
+      assertInstanceOf(TimeoutException.class, expected.getCause());
+      // SUCCESS
     }
     finally
     {
-      session.close();
+      revisionManager.setGetRevisionsDelay(0L); // Terminate repo
     }
   }
 }

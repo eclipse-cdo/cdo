@@ -11,11 +11,15 @@
 package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
+import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 
-import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.event.IListener;
 
 import java.util.List;
 
@@ -24,14 +28,53 @@ import java.util.List;
  */
 public class TestRevisionManager extends CDORevisionManagerImpl
 {
+  private Object lock = new Object();
+
+  private long getRevisionsDelay;
+
   private int loadCounter;
 
   private int additionalCounter;
 
-  private Object lock = new Object();
-
   public TestRevisionManager()
   {
+  }
+
+  public void setGetRevisionsDelay(long millis)
+  {
+    synchronized (lock)
+    {
+      getRevisionsDelay = millis;
+    }
+  }
+
+  @Override
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk,
+      int prefetchDepth, boolean loadOnDemand, SyntheticCDORevision[] synthetics)
+  {
+    if (getRevisionsDelay > 0)
+    {
+      long start = System.currentTimeMillis();
+      for (;;)
+      {
+        ConcurrencyUtil.sleep(1L);
+        synchronized (lock)
+        {
+          if (System.currentTimeMillis() > start + getRevisionsDelay)
+          {
+            break;
+          }
+        }
+      }
+    }
+
+    return super.getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, synthetics);
+  }
+
+  @Override
+  public void addListener(IListener listener)
+  {
+    super.addListener(listener);
   }
 
   public void resetLoadCounter()
@@ -70,26 +113,14 @@ public class TestRevisionManager extends CDORevisionManagerImpl
   protected List<InternalCDORevision> loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint,
       int referenceChunk, int prefetchDepth)
   {
+    List<InternalCDORevision> result = super.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
+
     synchronized (lock)
     {
+      additionalCounter += result == null ? 0 : result.size();
       loadCounter += infosToLoad.size();
     }
 
-    List<InternalCDORevision> additionals = super
-        .loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
-    if (additionals != null)
-    {
-      for (InternalCDORevision revision : additionals)
-      {
-        IOUtil.OUT().println("Additional revision: " + revision);
-      }
-
-      synchronized (lock)
-      {
-        additionalCounter += additionals.size();
-      }
-    }
-
-    return additionals;
+    return result;
   }
 }

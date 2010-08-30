@@ -360,8 +360,8 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
             }
           }
 
-          // If the removed delta was SET we we add the REMOVE to the feature deltas.
-          // If the removed delta was ADD we we do not add the REMOVE to the feature deltas.
+          // If the removed delta was SET we add the REMOVE to the feature deltas.
+          // If the removed delta was ADD we do not add the REMOVE to the feature deltas.
           boolean addRemoveDelta = delta instanceof CDOSetFeatureDelta;
           return addRemoveDelta;
         }

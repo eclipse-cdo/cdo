@@ -220,11 +220,14 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     IStore store = createStore(name);
     Map<String, String> props = getRepositoryProperties();
     InternalRepository repository = (InternalRepository)CDOServerUtil.createRepository(name, store, props);
+
     InternalCDORevisionManager revisionManager = getTestRevisionManager();
-    if (revisionManager != null)
+    if (revisionManager == null)
     {
-      repository.setRevisionManager(revisionManager);
+      revisionManager = new TestRevisionManager();
     }
+
+    repository.setRevisionManager(revisionManager);
 
     IUserManager userManager = getTestUserManager();
     if (userManager != null)

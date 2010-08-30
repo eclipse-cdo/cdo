@@ -1,0 +1,95 @@
+/**
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
+package org.eclipse.emf.cdo.tests.config.impl;
+
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
+
+import org.eclipse.net4j.util.io.IOUtil;
+
+import java.util.List;
+
+/**
+ * @author Eike Stepper
+ */
+public class TestRevisionManager extends CDORevisionManagerImpl
+{
+  private int loadCounter;
+
+  private int additionalCounter;
+
+  private Object lock = new Object();
+
+  public TestRevisionManager()
+  {
+  }
+
+  public void resetLoadCounter()
+  {
+    synchronized (lock)
+    {
+      loadCounter = 0;
+    }
+  }
+
+  public int getLoadCounter()
+  {
+    synchronized (lock)
+    {
+      return loadCounter;
+    }
+  }
+
+  public void resetAdditionalCounter()
+  {
+    synchronized (lock)
+    {
+      additionalCounter = 0;
+    }
+  }
+
+  public int getAdditionalCounter()
+  {
+    synchronized (lock)
+    {
+      return additionalCounter;
+    }
+  }
+
+  @Override
+  protected List<InternalCDORevision> loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint,
+      int referenceChunk, int prefetchDepth)
+  {
+    synchronized (lock)
+    {
+      loadCounter += infosToLoad.size();
+    }
+
+    List<InternalCDORevision> additionals = super
+        .loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
+    if (additionals != null)
+    {
+      for (InternalCDORevision revision : additionals)
+      {
+        IOUtil.OUT().println("Additional revision: " + revision);
+      }
+
+      synchronized (lock)
+      {
+        additionalCounter += additionals.size();
+      }
+    }
+
+    return additionals;
+  }
+}

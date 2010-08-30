@@ -253,6 +253,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       org.eclipse.emf.cdo.net4j.CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
       configuration.setConnector(getConnector());
       configuration.setRepositoryName(repositoryName);
+      configuration.setRevisionManager(new TestRevisionManager());
       return configuration;
     }
 

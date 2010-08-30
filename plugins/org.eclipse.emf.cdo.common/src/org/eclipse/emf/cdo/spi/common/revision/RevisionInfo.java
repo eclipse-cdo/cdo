@@ -371,7 +371,11 @@ public abstract class RevisionInfo
       {
         if (isDirect())
         {
-          return (InternalCDORevision)getAvailableBranchVersion();
+          CDOBranchVersion branchVersion = getAvailableBranchVersion();
+          if (branchVersion instanceof InternalCDORevision)
+          {
+            return (InternalCDORevision)branchVersion;
+          }
         }
 
         return super.getResult();

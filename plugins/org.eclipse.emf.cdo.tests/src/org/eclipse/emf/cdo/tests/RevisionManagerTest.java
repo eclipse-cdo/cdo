@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.internal.common.revision.cache.branch.BranchRevisionCache;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -27,6 +26,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.tests.config.impl.TestRevisionManager;
 
 import org.eclipse.net4j.util.ReflectUtil;
 
@@ -36,7 +36,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.lang.reflect.Field;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Eike Stepper
@@ -77,9 +76,7 @@ public class RevisionManagerTest extends AbstractCDOTest
 
   private InternalCDORevision[] revisions4;
 
-  private CDORevisionManagerImpl revisionManager;
-
-  private static AtomicInteger loadCounter;
+  private TestRevisionManager revisionManager;
 
   @Override
   public synchronized Map<String, Object> getTestProperties()
@@ -123,11 +120,7 @@ public class RevisionManagerTest extends AbstractCDOTest
     branch4 = revisions4[0].getBranch();
 
     BranchingTest.dump("MEMStore", store.getAllRevisions());
-    revisionManager = (CDORevisionManagerImpl)getRevisionManager(repository, session);
-
-    loadCounter = new AtomicInteger();
-    Field loadCounterForTest = ReflectUtil.getField(CDORevisionManagerImpl.class, "loadCounterForTest");
-    ReflectUtil.setValue(loadCounterForTest, revisionManager, loadCounter);
+    revisionManager = (TestRevisionManager)getRevisionManager(repository, session);
   }
 
   @Override
@@ -252,10 +245,10 @@ public class RevisionManagerTest extends AbstractCDOTest
     }
   }
 
-  private static void assertLoads(int expected)
+  private void assertLoads(int expected)
   {
-    assertEquals(expected, loadCounter.get());
-    loadCounter.set(0);
+    assertEquals(expected, revisionManager.getLoadCounter());
+    revisionManager.resetLoadCounter();
   }
 
   public void testBranch0_Initial() throws Exception

@@ -28,13 +28,10 @@ import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
-import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
@@ -319,7 +316,6 @@ public class TransactionCommitContext implements InternalCommitContext
       monitor.worked();
 
       lockObjects();
-      checkXRefs();
 
       // Could throw an exception
       timeStamp = createTimeStamp(monitor.fork());
@@ -328,6 +324,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
       InternalRepository repository = transaction.getRepository();
       computeDirtyObjects(monitor.fork());
+      checkXRefs();
 
       monitor.worked();
 
@@ -1087,28 +1084,57 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     private Map<EClass, List<EReference>> sourceCandidates = new HashMap<EClass, List<EReference>>();
 
-    private Map<CDOID, InternalCDORevisionDelta> revisionDeltas = new HashMap<CDOID, InternalCDORevisionDelta>();
+    private Set<CDOID> detachedIDs = new HashSet<CDOID>();
+
+    private Set<CDOID> dirtyIDs = new HashSet<CDOID>();
 
     private Set<CDOID> xRefs = new HashSet<CDOID>();
 
     public XRefContext()
     {
       XRefsQueryHandler.collectSourceCandidates(transaction, detachedObjectTypes.values(), sourceCandidates);
-      for (InternalCDORevisionDelta revisionDelta : dirtyObjectDeltas)
+
+      for (CDOID id : detachedObjects)
       {
-        revisionDeltas.put(revisionDelta.getID(), revisionDelta);
+        detachedIDs.add(id);
+      }
+
+      for (InternalCDORevision revision : dirtyObjects)
+      {
+        dirtyIDs.add(revision.getID());
       }
     }
 
     public Set<CDOID> getXRefs(IStoreAccessor accessor)
     {
       accessor.queryXRefs(this);
-      for (CDOID id : detachedObjects)
-      {
-        xRefs.remove(id);
-      }
+
+      checkDirtyObjects();
 
       return xRefs;
+    }
+
+    private void checkDirtyObjects()
+    {
+      final CDOID[] dirtyID = { null };
+      CDOReferenceAdjuster dirtyObjectChecker = new CDOReferenceAdjuster()
+      {
+        public Object adjustReference(Object targetID)
+        {
+          if (detachedIDs.contains(targetID))
+          {
+            xRefs.add(dirtyID[0]);
+          }
+
+          return targetID;
+        }
+      };
+
+      for (InternalCDORevision dirtyObject : dirtyObjects)
+      {
+        dirtyID[0] = dirtyObject.getID();
+        dirtyObject.adjustReferences(dirtyObjectChecker);
+      }
     }
 
     public int compareTo(CDOBranchPoint o)
@@ -1150,81 +1176,24 @@ public class TransactionCommitContext implements InternalCommitContext
     {
       if (CDOIDUtil.isNull(targetID))
       {
+        // Compensate issues with the XRef implementation in the store accessor.
         return true;
       }
 
-      InternalCDORevisionDelta revisionDelta = revisionDeltas.get(sourceID);
-      if (revisionDelta != null)
+      if (detachedIDs.contains(sourceID))
       {
-        CDOFeatureDelta featureDelta = revisionDelta.getFeatureDelta(sourceReference);
-        if (featureDelta != null)
-        {
-          XRefExcluder excluder = new XRefExcluder(targetID, sourceIndex);
-          if (excluder.isExcluded(featureDelta))
-          {
-            return true;
-          }
-        }
+        // Ignore XRefs from objects that are about to be detached themselves by this commit.
+        return true;
+      }
+
+      if (dirtyIDs.contains(sourceID))
+      {
+        // Ignore XRefs from objects that are about to be modified by this commit. They're handled later in getXRefs().
+        return true;
       }
 
       xRefs.add(sourceID);
       return true;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class XRefExcluder extends CDOFeatureDeltaVisitorImpl
-  {
-    private CDOID targetID;
-
-    private int sourceIndex;
-
-    private boolean excluded;
-
-    public XRefExcluder(CDOID targetID, int sourceIndex)
-    {
-      this.targetID = targetID;
-      this.sourceIndex = sourceIndex;
-    }
-
-    public boolean isExcluded(CDOFeatureDelta featureDelta)
-    {
-      featureDelta.accept(this);
-      return excluded;
-    }
-
-    @Override
-    public void visit(CDOSetFeatureDelta delta)
-    {
-      if (!targetID.equals(delta.getValue()))
-      {
-        excluded = true;
-      }
-    }
-
-    @Override
-    public void visit(CDOUnsetFeatureDelta delta)
-    {
-      excluded = true;
-    }
-
-    @Override
-    public void visit(CDOClearFeatureDelta delta)
-    {
-      excluded = true;
-      stopVisit();
-    }
-
-    @Override
-    public void visit(CDORemoveFeatureDelta delta)
-    {
-      if (sourceIndex == delta.getIndex())
-      {
-        excluded = true;
-        stopVisit();
-      }
     }
   }
 }

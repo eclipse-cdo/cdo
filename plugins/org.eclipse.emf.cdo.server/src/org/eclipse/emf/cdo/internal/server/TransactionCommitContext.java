@@ -580,18 +580,30 @@ public class TransactionCommitContext implements InternalCommitContext
       CDOFeatureDeltaVisitor deltaTargetLocker = null;
       if (ensuringReferentialIntegrity)
       {
+        final Set<CDOID> newIDs = new HashSet<CDOID>();
+        for (int i = 0; i < newObjects.length; i++)
+        {
+          InternalCDORevision newRevision = newObjects[i];
+          CDOID newID = newRevision.getID();
+          if (newID instanceof CDOIDObject)
+          {
+            // After merges newObjects may contain non-TEMP ids
+            newIDs.add(newID);
+          }
+        }
+
         deltaTargetLocker = new CDOFeatureDeltaVisitorImpl()
         {
           @Override
           public void visit(CDOAddFeatureDelta delta)
           {
-            lockTarget(delta.getValue(), supportingBranches);
+            lockTarget(delta.getValue(), newIDs, supportingBranches);
           }
 
           @Override
           public void visit(CDOSetFeatureDelta delta)
           {
-            lockTarget(delta.getValue(), supportingBranches);
+            lockTarget(delta.getValue(), newIDs, supportingBranches);
           }
         };
 
@@ -599,7 +611,7 @@ public class TransactionCommitContext implements InternalCommitContext
         {
           public Object adjustReference(Object value)
           {
-            lockTarget(value, supportingBranches);
+            lockTarget(value, newIDs, supportingBranches);
             return value;
           }
         };
@@ -741,13 +753,19 @@ public class TransactionCommitContext implements InternalCommitContext
     return false;
   }
 
-  private void lockTarget(Object value, boolean supportingBranches)
+  private void lockTarget(Object value, Set<CDOID> newIDs, boolean supportingBranches)
   {
     if (value instanceof CDOIDObject)
     {
       CDOIDObject id = (CDOIDObject)value;
       if (id.isNull())
       {
+        return;
+      }
+
+      if (newIDs.contains(id))
+      {
+        // After merges newObjects may contain non-TEMP ids
         return;
       }
 

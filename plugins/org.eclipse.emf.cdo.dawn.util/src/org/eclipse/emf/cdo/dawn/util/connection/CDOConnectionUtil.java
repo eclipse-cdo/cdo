@@ -100,6 +100,7 @@ public class CDOConnectionUtil
     {
       CDOUtil.setLegacyModeDefault(true);
     }
+
     currentSession = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo", protocol
         + "://" + host + "?repositoryName=" + repositoryName);
 
@@ -120,10 +121,12 @@ public class CDOConnectionUtil
     {
       throw new DawnInvalidIdException("The identifier '" + id + "' is invalid for openeing a transaction");
     }
+
     if (TRACER.isEnabled())
     {
       TRACER.format("Opening transaction for {0} on {1}", id, resourceSet); //$NON-NLS-1$
     }
+
     id = convert(id);
     CDOTransaction transaction = getCurrentSession().openTransaction(resourceSet);
     getTransactions().put(id, transaction);
@@ -159,6 +162,7 @@ public class CDOConnectionUtil
     {
       transactions = new HashMap<String, CDOTransaction>();
     }
+
     return transactions;
   }
 
@@ -182,17 +186,17 @@ public class CDOConnectionUtil
   public CDOTransaction getOrOpenCurrentTransaction(String id, ResourceSet resourceSet, String repositoryName)
   {
     CDOTransaction transaction = getCurrentTransaction(id);
-
     CDOViewSet viewSet = CDOUtil.getViewSet(resourceSet);
-
     if (viewSet != null)
     {
       return ((InternalCDOView)viewSet.resolveView(repositoryName)).toTransaction();
     }
+
     if (transaction == null)
     {
       transaction = openCurrentTransaction(resourceSet, id);
     }
+
     return transaction;
   }
 

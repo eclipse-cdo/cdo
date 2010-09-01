@@ -358,12 +358,6 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
 
   public boolean eIsSet(EStructuralFeature feature)
   {
-    if (instance.eIsSet(feature) != view.getStore().isSet(this, feature))
-    {
-      // TODO Clarify whether this is always true
-      throw new IllegalStateException("Store isSet should never differ from instance");
-    }
-
     return instance.eIsSet(feature);
   }
 

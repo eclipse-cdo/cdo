@@ -534,7 +534,14 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
             @Override
             public void run()
             {
-              addWork(CommitRunnable.this);
+              try
+              {
+                addWork(CommitRunnable.this);
+              }
+              catch (Exception ex)
+              {
+                OM.LOG.error("CommitRunnableTask failed", ex);
+              }
             }
           }, recommitInterval * 1000L);
         }

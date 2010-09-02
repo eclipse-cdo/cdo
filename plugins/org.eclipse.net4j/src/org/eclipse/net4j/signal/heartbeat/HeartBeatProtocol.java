@@ -28,6 +28,8 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 
+import org.eclipse.internal.net4j.bundle.OM;
+
 import org.eclipse.spi.net4j.ServerProtocolFactory;
 
 import java.util.Timer;
@@ -243,7 +245,7 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
           }
           catch (Exception ex)
           {
-            throw WrappedException.wrap(ex);
+            OM.LOG.error("HeartBeatProtocolTask failed", ex);
           }
         }
       };

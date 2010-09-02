@@ -170,10 +170,17 @@ public abstract class AbstractMonitor implements OMMonitor
     @Override
     public void run()
     {
-      if (!canceled)
+      try
       {
-        double work = 1 - monitor.getWork();
-        monitor.worked(work / TEN);
+        if (!canceled)
+        {
+          double work = 1 - monitor.getWork();
+          monitor.worked(work / TEN);
+        }
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error("AsyncTimerTask failed", ex);
       }
     }
 

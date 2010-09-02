@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_266982_Test;
@@ -31,6 +32,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -175,6 +177,13 @@ public class AllTestsDBHsqldb extends DBConfigs
       }
 
       dataSources.clear();
+    }
+
+    @Override
+    protected void initRepositoryProperties(Map<String, String> props)
+    {
+      super.initRepositoryProperties(props);
+      props.put(Props.SUPPORTING_AUDITS, "true");
     }
   }
 }

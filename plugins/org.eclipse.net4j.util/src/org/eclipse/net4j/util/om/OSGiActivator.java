@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -12,9 +12,16 @@ package org.eclipse.net4j.util.om;
 
 import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * @author Eike Stepper
@@ -167,5 +174,74 @@ public abstract class OSGiActivator implements BundleActivator
     catch (RuntimeException ignore)
     {
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.1
+   */
+  public static abstract class WithConfig extends OSGiActivator
+  {
+    public WithConfig(OMBundle bundle)
+    {
+      super(bundle);
+    }
+
+    @Override
+    protected final void doStart() throws Exception
+    {
+      FileInputStream fis = null;
+
+      try
+      {
+        File configFile = OM.BUNDLE.getConfigFile();
+        if (configFile.exists())
+        {
+          fis = new FileInputStream(configFile);
+          ObjectInputStream ois = new ObjectInputStream(fis);
+
+          Object config = ois.readObject();
+          IOUtil.close(ois);
+          doStartWithConfig(config);
+        }
+      }
+      catch (Exception ex)
+      {
+        getOMBundle().logger().error(ex);
+      }
+      finally
+      {
+        IOUtil.close(fis);
+      }
+    }
+
+    @Override
+    protected final void doStop() throws Exception
+    {
+      FileOutputStream fos = null;
+
+      try
+      {
+        Object config = doStopWithConfig();
+
+        File configFile = OM.BUNDLE.getConfigFile();
+        fos = new FileOutputStream(configFile);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(config);
+        IOUtil.close(oos);
+      }
+      catch (Exception ex)
+      {
+        getOMBundle().logger().error(ex);
+      }
+      finally
+      {
+        IOUtil.close(fos);
+      }
+    }
+
+    protected abstract void doStartWithConfig(Object config) throws Exception;
+
+    protected abstract Object doStopWithConfig() throws Exception;
   }
 }

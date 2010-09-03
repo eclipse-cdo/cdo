@@ -154,7 +154,6 @@ public final class CDOFileStore extends AbstractFileStore
     };
   }
 
-  @SuppressWarnings("restriction")
   @Override
   public InputStream openInputStream(int options, IProgressMonitor monitor) throws CoreException
   {

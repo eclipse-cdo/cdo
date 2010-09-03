@@ -34,6 +34,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 
 /**
  * @author Eike Stepper
@@ -142,7 +143,7 @@ public final class CDOFileStore extends AbstractFileStore
           ByteArrayInputStream bais = new ByteArrayInputStream(toByteArray());
           IProjectDescription description = new org.eclipse.core.internal.resources.ProjectDescriptionReader()
               .read(new InputSource(bais));
-          getFileSystem().putProjectDescription(rootStore, description);
+          OM.associateProjectName(rootStore.toURI(), description.getName());
         }
         catch (RuntimeException ex)
         {
@@ -168,12 +169,21 @@ public final class CDOFileStore extends AbstractFileStore
       if (isProjectDescription())
       {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream out = new PrintStream(baos);
+        out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        out.println("<projectDescription>");
+        out.println("  <name>" + OM.getProjectName(rootStore.toURI()) + "</name>");
+        out.println("  <comment></comment>");
+        out.println("  <projects>");
+        out.println("  </projects>");
+        out.println("  <buildSpec>");
+        out.println("  </buildSpec>");
+        out.println("  <natures>");
+        out.println("  </natures>");
+        out.println("</projectDescription>");
+        out.flush();
 
-        IProjectDescription description = getProjectDescription();
-        new org.eclipse.core.internal.resources.ModelObjectWriter().write(description, baos);
-
-        byte[] buf = baos.toByteArray();
-        return new ByteArrayInputStream(buf);
+        return new ByteArrayInputStream(baos.toByteArray());
       }
 
       return new FileInputStream(path.toPortableString());
@@ -189,9 +199,9 @@ public final class CDOFileStore extends AbstractFileStore
     }
   }
 
-  private IProjectDescription getProjectDescription()
+  private String getProjectDescription()
   {
-    return getFileSystem().getProjectDescription(rootStore);
+    return OM.getProjectName(rootStore.toURI());
   }
 
   private boolean isProjectDescription()

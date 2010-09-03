@@ -20,22 +20,16 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.filesystem.provider.FileSystem;
-import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
-import java.io.IOException;
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
 public abstract class CDOFileSystem extends FileSystem
 {
-  private Map<URI, IProjectDescription> projectDescriptions = new HashMap<URI, IProjectDescription>();
-
   protected CDOFileSystem()
   {
   }
@@ -98,23 +92,6 @@ public abstract class CDOFileSystem extends FileSystem
     }
 
     return rootStore.getFileStore(path);
-  }
-
-  public void putProjectDescription(CDORootStore rootStore, IProjectDescription description) throws IOException
-  {
-    URI uri = rootStore.toURI();
-    // TODO Remove the following. Seems to be checked by workspace and currently prevents projects from re-creation.
-    // if (projectDescriptions.containsKey(uri))
-    // {
-    // throw new IOException("Location " + uri + " is already linked to project " + description.getName());
-    // }
-
-    projectDescriptions.put(uri, description);
-  }
-
-  public IProjectDescription getProjectDescription(CDORootStore rootStore)
-  {
-    return projectDescriptions.get(rootStore.toURI());
   }
 
   /**

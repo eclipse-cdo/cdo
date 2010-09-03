@@ -12,9 +12,12 @@
 package org.eclipse.emf.cdo.internal.efs;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
+
+import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileInfo;
@@ -27,6 +30,8 @@ import org.eclipse.core.runtime.Path;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -120,7 +125,18 @@ public final class CDORootStore extends AbstractFileStore
   @Override
   public String[] childNames(int options, IProgressMonitor monitor) throws CoreException
   {
-    return new String[] { "src", "src-gen", "META-INF" };
+    List<String> result = new ArrayList<String>();
+
+    for (EObject object : getView().getRootResource().getContents())
+    {
+      if (object instanceof CDOResourceNode)
+      {
+        CDOResourceNode node = (CDOResourceNode)object;
+        result.add(node.getName());
+      }
+    }
+
+    return result.toArray(new String[result.size()]);
   }
 
   @Override

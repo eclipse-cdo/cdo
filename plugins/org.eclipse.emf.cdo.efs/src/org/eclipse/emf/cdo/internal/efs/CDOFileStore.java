@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.emf.cdo.internal.efs;
 
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.internal.efs.bundle.OM;
 
 import org.eclipse.core.filesystem.EFS;
@@ -35,6 +37,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -46,6 +50,8 @@ public final class CDOFileStore extends AbstractFileStore
   private CDORootStore rootStore;
 
   private IPath path;
+
+  private transient CDOResourceNode resourceNode;
 
   public CDOFileStore(CDORootStore rootStore, IPath path)
   {
@@ -91,18 +97,28 @@ public final class CDOFileStore extends AbstractFileStore
   {
     FileInfo info = new FileInfo(getName());
     info.setLastModified(EFS.NONE);
+    info.setLength(EFS.NONE);
+    info.setAttribute(EFS.ATTRIBUTE_READ_ONLY, false);
+
     if (isProjectDescription())
     {
       info.setExists(getProjectDescription() != null);
+      info.setDirectory(false);
     }
     else
     {
-      info.setExists(true);
+      try
+      {
+        CDOResourceNode resourceNode = getResourceNode();
+        info.setExists(true);
+        info.setDirectory(resourceNode instanceof CDOResourceFolder);
+      }
+      catch (Exception ex)
+      {
+        info.setExists(false);
+      }
     }
 
-    info.setLength(EFS.NONE);
-    info.setDirectory(!isProjectDescription());
-    info.setAttribute(EFS.ATTRIBUTE_READ_ONLY, false);
     return info;
   }
 
@@ -121,12 +137,28 @@ public final class CDOFileStore extends AbstractFileStore
   @Override
   public String[] childNames(int options, IProgressMonitor monitor) throws CoreException
   {
-    if (path.segmentCount() == 4)
+    List<String> result = new ArrayList<String>();
+    CDOResourceNode resourceNode = getResourceNode();
+    if (resourceNode instanceof CDOResourceFolder)
     {
-      return new String[0];
+      CDOResourceFolder resourceFolder = (CDOResourceFolder)resourceNode;
+      for (CDOResourceNode node : resourceFolder.getNodes())
+      {
+        result.add(node.getName());
+      }
     }
 
-    return new String[] { "a", "b", "c" };
+    return result.toArray(new String[result.size()]);
+  }
+
+  private CDOResourceNode getResourceNode()
+  {
+    if (resourceNode == null)
+    {
+      resourceNode = getRootStore().getView().getResourceNode(path.toPortableString());
+    }
+
+    return resourceNode;
   }
 
   @Override

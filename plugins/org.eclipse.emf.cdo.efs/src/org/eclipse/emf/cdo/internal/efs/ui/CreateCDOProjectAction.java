@@ -1,6 +1,5 @@
 package org.eclipse.emf.cdo.internal.efs.ui;
 
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IWorkspace;
@@ -82,22 +81,22 @@ public class CreateCDOProjectAction implements IWorkbenchWindowActionDelegate
   public static IProject createCDOProject(int suffix) throws CoreException
   {
     IWorkspace workspace = ResourcesPlugin.getWorkspace();
-  
+
     IProject project = workspace.getRoot().getProject("cdo" + suffix);
     if (project.exists())
     {
       return null;
     }
-  
+
     IProjectDescription description = workspace.newProjectDescription("cdo" + suffix);
-    description.setLocationURI(URI.create("cdo.net4j.tcp://localhost/repo1/MAIN/@" + suffix));
-  
+    description.setLocationURI(URI.create("cdo.net4j.tcp://localhost/repo1/MAIN/@"));
+
     project.create(description, new NullProgressMonitor());
     if (!project.isOpen())
     {
       project.open(new NullProgressMonitor());
     }
-  
+
     return project;
   }
 }

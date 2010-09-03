@@ -100,7 +100,7 @@ public final class CDORootStore extends AbstractFileStore
   {
     FileInfo info = new FileInfo(getName());
     info.setLastModified(EFS.NONE);
-    info.setExists(true);
+    info.setExists(true); // Root resource is always present
     info.setLength(EFS.NONE);
     info.setDirectory(true);
     info.setAttribute(EFS.ATTRIBUTE_READ_ONLY, false);

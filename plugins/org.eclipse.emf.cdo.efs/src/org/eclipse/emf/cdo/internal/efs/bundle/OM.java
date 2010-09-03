@@ -16,6 +16,10 @@ import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.ResourcesPlugin;
+
 import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
@@ -51,25 +55,31 @@ public abstract class OM
   /**
    * @author Eike Stepper
    */
-  public static final class Activator extends OSGiActivator.WithConfig
+  public static final class Activator extends OSGiActivator.WithConfig implements IResourceChangeListener
   {
     public Activator()
     {
       super(BUNDLE);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void doStartWithConfig(Object config) throws Exception
     {
-      @SuppressWarnings("unchecked")
-      Map<URI, String> map = (Map<URI, String>)config;
-      projectNames.putAll(map);
+      projectNames.putAll((Map<URI, String>)config);
+      ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
     }
 
     @Override
     protected Object doStopWithConfig() throws Exception
     {
+      ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
       return projectNames;
+    }
+
+    public void resourceChanged(IResourceChangeEvent event)
+    {
+      System.out.println(event);
     }
   }
 }

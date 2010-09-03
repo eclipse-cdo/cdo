@@ -15,7 +15,16 @@
 package org.eclipse.emf.cdo.internal.efs;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.container.IPluginContainer;
 
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
@@ -24,12 +33,18 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
 public abstract class CDOFileSystem extends FileSystem
 {
+  private Map<Pair<String, String>, CDOSession> sessions = new HashMap<Pair<String, String>, CDOSession>();
+
+  private Map<URI, CDOView> views = new HashMap<URI, CDOView>();
+
   protected CDOFileSystem()
   {
   }
@@ -94,13 +109,72 @@ public abstract class CDOFileSystem extends FileSystem
     return rootStore.getFileStore(path);
   }
 
+  public CDOView getView(CDORootStore rootStore)
+  {
+    URI uri = rootStore.toURI();
+    CDOView view = views.get(uri);
+    if (view == null)
+    {
+      String authority = rootStore.getAuthority();
+      String repositoryName = rootStore.getRepositoryName();
+      String branchPath = rootStore.getBranchPath().toPortableString();
+      long timeStamp = rootStore.getTimeStamp();
+
+      CDOSession session = getSession(authority, repositoryName);
+      CDOBranchManager branchManager = session.getBranchManager();
+      CDOBranch branch = branchManager.getBranch(branchPath);
+
+      view = session.openView(branch, timeStamp);
+      views.put(uri, view);
+    }
+
+    return view;
+  }
+
+  protected CDOSession getSession(String authority, String repositoryName)
+  {
+    Pair<String, String> sessionKey = new Pair<String, String>(authority, repositoryName);
+    CDOSession session = sessions.get(sessionKey);
+    if (session == null)
+    {
+      CDOSessionConfiguration configuration = createSessionConfiguration(authority, repositoryName);
+      session = configuration.openSession();
+      sessions.put(sessionKey, session);
+    }
+    return session;
+  }
+
+  protected IPluginContainer getContainer()
+  {
+    return IPluginContainer.INSTANCE;
+  }
+
+  protected abstract CDOSessionConfiguration createSessionConfiguration(String authority, String repositoryName);
+
   /**
    * @author Eike Stepper
    */
   public static abstract class Net4j extends CDOFileSystem
   {
-    protected Net4j()
+    private String connectorType;
+
+    protected Net4j(String connectorType)
     {
+      this.connectorType = connectorType;
+    }
+
+    protected IConnector getConnector(String authority)
+    {
+      return (IConnector)getContainer().getElement("org.eclipse.net4j.connectors", connectorType, authority);
+    }
+
+    @Override
+    protected CDOSessionConfiguration createSessionConfiguration(String authority, String repositoryName)
+    {
+      org.eclipse.emf.cdo.net4j.CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+      configuration.setConnector(getConnector(authority));
+      configuration.setRepositoryName(repositoryName);
+      return configuration;
     }
 
     /**
@@ -113,6 +187,7 @@ public abstract class CDOFileSystem extends FileSystem
        */
       public TCP()
       {
+        super("tcp");
       }
     }
   }

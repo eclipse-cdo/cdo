@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.emf.cdo.internal.efs;
 
-import org.eclipse.net4j.util.container.IPluginContainer;
-
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.filesystem.provider.FileStore;
 import org.eclipse.core.runtime.CoreException;
@@ -71,9 +69,4 @@ public abstract class AbstractFileStore extends FileStore
   }
 
   public abstract void appendURI(StringBuilder builder);
-
-  protected IPluginContainer getContainer()
-  {
-    return IPluginContainer.INSTANCE;
-  }
 }

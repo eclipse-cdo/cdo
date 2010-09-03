@@ -11,9 +11,7 @@
  *******************************************************************************/
 package org.eclipse.emf.cdo.internal.efs;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -188,21 +186,9 @@ public final class CDORootStore extends AbstractFileStore
   {
     if (view == null)
     {
-      view = openView();
+      view = fileSystem.getView(this);
     }
 
     return view;
-  }
-
-  private CDOSession getSession()
-  {
-    return (CDOSession)getContainer().getElement("org.eclipse.emf.cdo.sessions", "net4j", "tcp://localhost/repo1");
-  }
-
-  private CDOView openView()
-  {
-    CDOSession session = getSession();
-    CDOBranch branch = session.getBranchManager().getBranch(branchPath.toPortableString());
-    return session.openView(branch, timeStamp);
   }
 }

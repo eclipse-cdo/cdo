@@ -35,7 +35,7 @@
             </separator>
          </menu>
          <action
-               class="org.eclipse.emf.cdo.efs.actions.CreateCDOProjectAction"
+               class="org.eclipse.emf.cdo.internal.efs.ui.CreateCDOProjectAction"
                icon="icons/sample.gif"
                id="org.eclipse.emf.cdo.efs.actions.CreateCDOProjectAction"
                label="EFS TEST"

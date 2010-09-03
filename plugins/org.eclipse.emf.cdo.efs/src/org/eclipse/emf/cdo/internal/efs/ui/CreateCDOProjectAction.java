@@ -1,4 +1,4 @@
-package org.eclipse.emf.cdo.efs.actions;
+package org.eclipse.emf.cdo.internal.efs.ui;
 
 
 import org.eclipse.core.resources.IProject;

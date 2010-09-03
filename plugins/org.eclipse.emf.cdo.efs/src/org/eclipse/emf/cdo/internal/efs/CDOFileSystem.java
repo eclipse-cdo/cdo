@@ -20,13 +20,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.filesystem.provider.FileSystem;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 
 import java.io.IOException;
@@ -120,28 +115,6 @@ public abstract class CDOFileSystem extends FileSystem
   public IProjectDescription getProjectDescription(CDORootStore rootStore)
   {
     return projectDescriptions.get(rootStore.toURI());
-  }
-
-  public static IProject createCDOProject(int suffix) throws CoreException
-  {
-    IWorkspace workspace = ResourcesPlugin.getWorkspace();
-
-    IProject project = workspace.getRoot().getProject("cdo" + suffix);
-    if (project.exists())
-    {
-      return null;
-    }
-
-    IProjectDescription description = workspace.newProjectDescription("cdo" + suffix);
-    description.setLocationURI(URI.create("cdo.net4j.tcp://localhost/repo1/@" + suffix));
-
-    project.create(description, new NullProgressMonitor());
-    if (!project.isOpen())
-    {
-      project.open(new NullProgressMonitor());
-    }
-
-    return project;
   }
 
   /**

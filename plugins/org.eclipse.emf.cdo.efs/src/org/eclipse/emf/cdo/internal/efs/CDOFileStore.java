@@ -172,20 +172,6 @@ public final class CDOFileStore extends AbstractFileStore
         IProjectDescription description = getProjectDescription();
         new org.eclipse.core.internal.resources.ModelObjectWriter().write(description, baos);
 
-        // PrintStream out = new PrintStream(baos);
-        // out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        // out.println("<projectDescription>");
-        // out.println("  <name>" + "test1" + "</name>");
-        // out.println("  <comment></comment>");
-        // out.println("  <projects>");
-        // out.println("  </projects>");
-        // out.println("  <buildSpec>");
-        // out.println("  </buildSpec>");
-        // out.println("  <natures>");
-        // out.println("  </natures>");
-        // out.println("</projectDescription>");
-        // out.flush();
-
         byte[] buf = baos.toByteArray();
         return new ByteArrayInputStream(buf);
       }

@@ -148,7 +148,7 @@ public final class CDORootStore extends AbstractFileStore
     if (obj.getClass() == CDORootStore.class)
     {
       CDORootStore that = (CDORootStore)obj;
-      if (view == that.view)
+      if (view != null && view == that.view)
       {
         // Optimization
         return true;

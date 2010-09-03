@@ -1,11 +1,18 @@
 package org.eclipse.emf.cdo.efs.actions;
 
-import org.eclipse.emf.cdo.internal.efs.CDOFileSystem;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+
+import java.net.URI;
 
 /**
  * Our sample action implements workbench action delegate. The action proxy will be created by the workbench and shown
@@ -31,7 +38,7 @@ public class CreateCDOProjectAction implements IWorkbenchWindowActionDelegate
     {
       try
       {
-        if (CDOFileSystem.createCDOProject(i) != null)
+        if (CreateCDOProjectAction.createCDOProject(i) != null)
         {
           return;
         }
@@ -70,5 +77,27 @@ public class CreateCDOProjectAction implements IWorkbenchWindowActionDelegate
    */
   public void init(IWorkbenchWindow window)
   {
+  }
+
+  public static IProject createCDOProject(int suffix) throws CoreException
+  {
+    IWorkspace workspace = ResourcesPlugin.getWorkspace();
+  
+    IProject project = workspace.getRoot().getProject("cdo" + suffix);
+    if (project.exists())
+    {
+      return null;
+    }
+  
+    IProjectDescription description = workspace.newProjectDescription("cdo" + suffix);
+    description.setLocationURI(URI.create("cdo.net4j.tcp://localhost/repo1/MAIN/@" + suffix));
+  
+    project.create(description, new NullProgressMonitor());
+    if (!project.isOpen())
+    {
+      project.open(new NullProgressMonitor());
+    }
+  
+    return project;
   }
 }

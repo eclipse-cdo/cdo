@@ -48,31 +48,31 @@ public final class CDOFileStore extends AbstractFileStore
 {
   private static final Path PROJECT_DESCRIPTION_PATH = new Path(IProjectDescription.DESCRIPTION_FILE_NAME);
 
-  private CDORootStore rootStore;
+  private CDOFileRoot root;
 
   private IPath path;
 
-  public CDOFileStore(CDORootStore rootStore, IPath path)
+  public CDOFileStore(CDOFileRoot rootStore, IPath path)
   {
-    this.rootStore = rootStore;
+    this.root = rootStore;
     this.path = path;
   }
 
   @Override
   public CDOFileSystem getFileSystem()
   {
-    return rootStore.getFileSystem();
+    return root.getFileSystem();
   }
 
-  public CDORootStore getRootStore()
+  public CDOFileRoot getRoot()
   {
-    return rootStore;
+    return root;
   }
 
   @Override
   public CDOView getView()
   {
-    return rootStore.getView();
+    return root.getView();
   }
 
   @Override
@@ -92,10 +92,10 @@ public final class CDOFileStore extends AbstractFileStore
   {
     if (path.segmentCount() == 1)
     {
-      return rootStore;
+      return root;
     }
 
-    return new CDOFileStore(rootStore, path.removeLastSegments(1));
+    return new CDOFileStore(root, path.removeLastSegments(1));
   }
 
   @Override
@@ -137,13 +137,13 @@ public final class CDOFileStore extends AbstractFileStore
   @Override
   public IFileStore getChild(IPath path)
   {
-    return new CDOFileStore(rootStore, this.path.append(path));
+    return new CDOFileStore(root, this.path.append(path));
   }
 
   @Override
   public IFileStore getChild(String name)
   {
-    return new CDOFileStore(rootStore, path.append(name));
+    return new CDOFileStore(root, path.append(name));
   }
 
   @Override
@@ -177,7 +177,7 @@ public final class CDOFileStore extends AbstractFileStore
           ByteArrayInputStream bais = new ByteArrayInputStream(toByteArray());
           IProjectDescription description = new org.eclipse.core.internal.resources.ProjectDescriptionReader()
               .read(new InputSource(bais));
-          OM.associateProjectName(rootStore.toURI(), description.getName());
+          OM.associateProjectName(root.toURI(), description.getName());
         }
         catch (RuntimeException ex)
         {
@@ -205,7 +205,7 @@ public final class CDOFileStore extends AbstractFileStore
         PrintStream out = new PrintStream(baos);
         out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         out.println("<projectDescription>");
-        out.println("  <name>" + OM.getProjectName(rootStore.toURI()) + "</name>");
+        out.println("  <name>" + OM.getProjectName(root.toURI()) + "</name>");
         out.println("  <comment></comment>");
         out.println("  <projects>");
         out.println("  </projects>");
@@ -234,7 +234,7 @@ public final class CDOFileStore extends AbstractFileStore
 
   private String getProjectDescription()
   {
-    return OM.getProjectName(rootStore.toURI());
+    return OM.getProjectName(root.toURI());
   }
 
   private boolean isProjectDescription()
@@ -253,7 +253,7 @@ public final class CDOFileStore extends AbstractFileStore
     if (obj.getClass() == CDOFileStore.class)
     {
       CDOFileStore that = (CDOFileStore)obj;
-      return rootStore == that.rootStore && path.equals(that.path);
+      return root == that.root && path.equals(that.path);
     }
 
     return false;
@@ -262,13 +262,13 @@ public final class CDOFileStore extends AbstractFileStore
   @Override
   protected int createHashCode()
   {
-    return rootStore.hashCode() ^ path.hashCode();
+    return root.hashCode() ^ path.hashCode();
   }
 
   @Override
   public void appendURI(StringBuilder builder)
   {
-    rootStore.appendURI(builder);
+    root.appendURI(builder);
     builder.append("/");
     builder.append(path.toPortableString());
   }

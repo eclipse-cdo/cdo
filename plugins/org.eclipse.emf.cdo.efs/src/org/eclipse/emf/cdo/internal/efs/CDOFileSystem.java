@@ -99,17 +99,16 @@ public abstract class CDOFileSystem extends FileSystem
       branchPath = new Path(CDOBranch.MAIN_BRANCH_NAME).append(branchPath);
     }
 
-    CDORootStore rootStore = new CDORootStore(this, authority, repositoryName, branchPath, timeStamp);
-    System.out.println(rootStore);
+    CDOFileRoot root = new CDOFileRoot(this, authority, repositoryName, branchPath, timeStamp);
     if (path.isEmpty())
     {
-      return rootStore;
+      return root;
     }
 
-    return rootStore.getFileStore(path);
+    return root.getFileStore(path);
   }
 
-  public CDOView getView(CDORootStore rootStore)
+  public CDOView getView(CDOFileRoot rootStore)
   {
     URI uri = rootStore.toURI();
     CDOView view = views.get(uri);

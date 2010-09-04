@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.emf.cdo.internal.efs;
 
-import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.internal.efs.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;

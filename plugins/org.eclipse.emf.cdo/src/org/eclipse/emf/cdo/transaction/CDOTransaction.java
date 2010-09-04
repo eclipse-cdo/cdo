@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.options.IOptionsEvent;
@@ -64,6 +65,11 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction, CDOChangeSe
    * @since 3.0
    */
   public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger);
+
+  /**
+   * @since 4.0
+   */
+  public CDOResourceFolder createResourceFolder(String path);
 
   /**
    * @see ResourceSet#createResource(URI)

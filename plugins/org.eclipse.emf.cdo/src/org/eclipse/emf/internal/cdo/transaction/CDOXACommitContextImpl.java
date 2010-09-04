@@ -24,11 +24,11 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.net4j.util.ImplementationError;
 
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
-import org.eclipse.emf.spi.cdo.InternalCDOXATransaction;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
+import org.eclipse.emf.spi.cdo.InternalCDOXATransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import org.eclipse.core.runtime.IProgressMonitor;

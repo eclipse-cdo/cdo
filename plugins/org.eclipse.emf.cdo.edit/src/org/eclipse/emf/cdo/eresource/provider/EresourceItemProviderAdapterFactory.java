@@ -197,7 +197,7 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
+      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
       {
         return adapter;
       }
@@ -280,13 +280,9 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
   public void dispose()
   {
     if (cdoResourceFolderItemProvider != null)
-    {
       cdoResourceFolderItemProvider.dispose();
-    }
     if (cdoResourceItemProvider != null)
-    {
       cdoResourceItemProvider.dispose();
-    }
   }
 
 }

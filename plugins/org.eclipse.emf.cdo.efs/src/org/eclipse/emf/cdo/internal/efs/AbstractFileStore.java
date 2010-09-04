@@ -11,9 +11,17 @@
  *******************************************************************************/
 package org.eclipse.emf.cdo.internal.efs;
 
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.internal.efs.bundle.OM;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOView;
+
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.filesystem.provider.FileStore;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 
@@ -26,13 +34,57 @@ public abstract class AbstractFileStore extends FileStore
 {
   private transient int hashCode;
 
+  private transient CDOResourceNode resourceNode;
+
   public AbstractFileStore()
   {
   }
 
+  public abstract IPath getPath();
+
+  public abstract CDOView getView();
+
+  public final CDOTransaction openTransaction()
+  {
+    CDOSession session = getView().getSession();
+    return session.openTransaction();
+  }
+
+  public final CDOResourceNode getResourceNode()
+  {
+    if (resourceNode == null)
+    {
+      resourceNode = doGetResourceNode();
+    }
+
+    return resourceNode;
+  }
+
+  protected abstract CDOResourceNode doGetResourceNode();
+
   @Override
   public IFileStore mkdir(int options, IProgressMonitor monitor) throws CoreException
   {
+    CDOTransaction transaction = null;
+
+    try
+    {
+      transaction = openTransaction();
+      resourceNode = transaction.createResourceFolder(getPath().toPortableString());
+      transaction.commit(monitor);
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
+    finally
+    {
+      if (transaction != null)
+      {
+        transaction.close();
+      }
+    }
+
     return this;
   }
 

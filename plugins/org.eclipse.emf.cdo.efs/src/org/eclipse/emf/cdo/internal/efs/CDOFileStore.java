@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.efs;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.internal.efs.bundle.OM;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileInfo;
@@ -51,8 +52,6 @@ public final class CDOFileStore extends AbstractFileStore
 
   private IPath path;
 
-  private transient CDOResourceNode resourceNode;
-
   public CDOFileStore(CDORootStore rootStore, IPath path)
   {
     this.rootStore = rootStore;
@@ -70,6 +69,19 @@ public final class CDOFileStore extends AbstractFileStore
     return rootStore;
   }
 
+  @Override
+  public CDOView getView()
+  {
+    return rootStore.getView();
+  }
+
+  @Override
+  protected CDOResourceNode doGetResourceNode()
+  {
+    return getView().getResourceNode(path.toPortableString());
+  }
+
+  @Override
   public IPath getPath()
   {
     return path;
@@ -149,16 +161,6 @@ public final class CDOFileStore extends AbstractFileStore
     }
 
     return result.toArray(new String[result.size()]);
-  }
-
-  private CDOResourceNode getResourceNode()
-  {
-    if (resourceNode == null)
-    {
-      resourceNode = getRootStore().getView().getResourceNode(path.toPortableString());
-    }
-
-    return resourceNode;
   }
 
   @Override

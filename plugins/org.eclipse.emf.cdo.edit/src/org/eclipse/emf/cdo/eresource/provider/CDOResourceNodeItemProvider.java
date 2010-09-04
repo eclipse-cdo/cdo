@@ -77,7 +77,8 @@ public class CDOResourceNodeItemProvider extends ItemProviderAdapter implements 
   protected void addNamePropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        .add(createItemPropertyDescriptor(
+            ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
             getResourceLocator(),
             getString("_UI_CDOResourceNode_name_feature"), //$NON-NLS-1$
             getString(
@@ -94,7 +95,8 @@ public class CDOResourceNodeItemProvider extends ItemProviderAdapter implements 
   protected void addPathPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        .add(createItemPropertyDescriptor(
+            ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
             getResourceLocator(),
             getString("_UI_CDOResourceNode_path_feature"), //$NON-NLS-1$
             getString(

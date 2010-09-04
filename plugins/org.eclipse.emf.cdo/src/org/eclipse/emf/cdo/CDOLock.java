@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.RWLockManager;
 
 import java.util.concurrent.locks.Lock;
 

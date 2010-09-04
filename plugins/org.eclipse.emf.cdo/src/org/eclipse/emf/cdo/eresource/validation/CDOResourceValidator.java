@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.eresource.validation;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * A sample validator interface for {@link org.eclipse.emf.cdo.eresource.CDOResource}. This doesn't really do anything,

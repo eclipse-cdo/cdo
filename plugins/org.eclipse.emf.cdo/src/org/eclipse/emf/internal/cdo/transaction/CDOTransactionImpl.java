@@ -651,6 +651,37 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return CDOIDUtil.createTempObject(lastTemporaryID.incrementAndGet());
   }
 
+  public CDOResourceFolder createResourceFolder(String path)
+  {
+    CDOResourceFolder folder = EresourceFactory.eINSTANCE.createCDOResourceFolder();
+    int pos = path.lastIndexOf(CDOURIUtil.SEGMENT_SEPARATOR_CHAR);
+    if (pos <= 0)
+    {
+      String name = path.substring(pos == 0 ? 1 : 0);
+      folder.setName(name);
+
+      getRootResource().getContents().add(folder);
+    }
+    else
+    {
+      String name = path.substring(pos + 1);
+      folder.setName(name);
+
+      path = path.substring(0, pos);
+      CDOResourceNode parent = getResourceNode(path);
+      if (parent instanceof CDOResourceFolder)
+      {
+        ((CDOResourceFolder)parent).getNodes().add(folder);
+      }
+      else
+      {
+        throw new CDOException("Parent is not a folder: " + parent);
+      }
+    }
+
+    return folder;
+  }
+
   public CDOResource createResource(String path)
   {
     checkActive();

@@ -308,6 +308,11 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.createQuery(language, queryString);
   }
 
+  public CDOResourceFolder createResourceFolder(String path)
+  {
+    return delegate.createResourceFolder(path);
+  }
+
   public CDOResource createResource(String path)
   {
     return delegate.createResource(path);

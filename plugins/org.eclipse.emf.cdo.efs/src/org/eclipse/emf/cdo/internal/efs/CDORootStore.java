@@ -87,6 +87,29 @@ public final class CDORootStore extends AbstractFileStore
   }
 
   @Override
+  public IPath getPath()
+  {
+    return Path.EMPTY;
+  }
+
+  @Override
+  public CDOView getView()
+  {
+    if (view == null)
+    {
+      view = fileSystem.getView(this);
+    }
+
+    return view;
+  }
+
+  @Override
+  protected CDOResourceNode doGetResourceNode()
+  {
+    return getView().getRootResource();
+  }
+
+  @Override
   public IFileStore getParent()
   {
     return null;
@@ -196,15 +219,5 @@ public final class CDORootStore extends AbstractFileStore
     {
       builder.append(timeStamp);
     }
-  }
-
-  public CDOView getView()
-  {
-    if (view == null)
-    {
-      view = fileSystem.getView(this);
-    }
-
-    return view;
   }
 }

@@ -417,12 +417,12 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       registerWrapper(this);
       counter.increment();
       revisionToInstanceContainer();
-     
+
       for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(revision.getEClass()))
       {
         revisionToInstanceFeature(feature);
       }
-      
+
       revisionToInstanceResource();
     }
     catch (RuntimeException ex)

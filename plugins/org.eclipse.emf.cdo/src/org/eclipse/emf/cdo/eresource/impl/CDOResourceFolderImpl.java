@@ -4,15 +4,17 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.eresource.impl;
 
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
@@ -75,6 +77,28 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
   public EList<CDOResourceNode> getNodes()
   {
     return (EList<CDOResourceNode>)eGet(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.0 <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public CDOResourceFolder addResourceFolder(String name)
+  {
+    return cdoView().toTransaction().createResourceFolder(getPath() + CDOURIUtil.SEGMENT_SEPARATOR + name);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.0 <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public CDOResource addResource(String name)
+  {
+    return cdoView().toTransaction().createResource(getPath() + CDOURIUtil.SEGMENT_SEPARATOR + name);
   }
 
   /**

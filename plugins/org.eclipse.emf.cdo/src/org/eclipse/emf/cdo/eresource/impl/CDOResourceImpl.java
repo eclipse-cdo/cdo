@@ -767,25 +767,9 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
    */
   public void save(OutputStream outputStream, Map<?, ?> options) throws IOException
   {
-    final String baseURI;
-    if (options != null)
-    {
-      String uri = (String)options.get(OPTION_SAVE_BASE_URI);
-      if (uri != null)
-      {
-        baseURI = uri;
-      }
-      else
-      {
-        baseURI = "cdo://";
-      }
-    }
-    else
-    {
-      baseURI = "cdo://";
-    }
-
+    final String baseURI = getBaseURIOption(options);
     final Map<CDOResource, Resource> resourceMappings = new HashMap<CDOResource, Resource>();
+
     class ExportResource extends XMIResourceImpl
     {
       private CDOResource delegate;
@@ -881,7 +865,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
             return otherResource.getURI().appendFragment(uriFragment);
           }
-
         };
       }
 
@@ -907,6 +890,20 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     XMIResource xmiResource = new ExportResource(this);
     resourceMappings.put(this, xmiResource);
     xmiResource.save(outputStream, options);
+  }
+
+  private String getBaseURIOption(Map<?, ?> options)
+  {
+    if (options != null)
+    {
+      String uri = (String)options.get(OPTION_SAVE_BASE_URI);
+      if (uri != null)
+      {
+        return uri;
+      }
+    }
+
+    return "cdo://";
   }
 
   /**

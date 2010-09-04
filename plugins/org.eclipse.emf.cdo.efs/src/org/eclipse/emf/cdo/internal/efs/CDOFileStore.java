@@ -203,11 +203,11 @@ public final class CDOFileStore extends AbstractFileStore
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
       if (isProjectDescription())
       {
-        openProjectDescription(baos);
+        writeProjectDescription(baos);
       }
       else
       {
-        openResource(baos);
+        writeResource(baos);
       }
 
       return new ByteArrayInputStream(baos.toByteArray());
@@ -233,7 +233,7 @@ public final class CDOFileStore extends AbstractFileStore
     return path.equals(PROJECT_DESCRIPTION_PATH);
   }
 
-  private void openProjectDescription(ByteArrayOutputStream baos)
+  private void writeProjectDescription(ByteArrayOutputStream baos)
   {
     PrintStream out = new PrintStream(baos);
     out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -250,7 +250,7 @@ public final class CDOFileStore extends AbstractFileStore
     out.flush();
   }
 
-  private void openResource(ByteArrayOutputStream baos) throws IOException
+  private void writeResource(ByteArrayOutputStream baos) throws IOException
   {
     CDOResource resource = (CDOResource)getResourceNode();
     resource.cdoPrefetch(CDORevision.DEPTH_INFINITE);

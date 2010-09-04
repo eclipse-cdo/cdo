@@ -17,6 +17,7 @@
          point="org.eclipse.ui.importWizards">
       <wizard
             class="org.eclipse.emf.cdo.ui.efs.wizards.CDOProjectImportWizard"
+            icon="icons/full/obj16/repository_content.gif"
             id="org.eclipse.emf.cdo.ui.efs.wizard.import"
             name="%wizard.name.0">
       </wizard>

@@ -143,6 +143,7 @@ public class ElementWizardComposite extends Composite
     String factoryType = factoryTypes.get(index);
     wizard.create(this, factoryType, null, validationContext);
     getParent().layout();
+    pack();
   }
 
   protected String getDefaultDescription(String factoryType)

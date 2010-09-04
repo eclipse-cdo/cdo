@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.container.IElementWizard.ValidationContext;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -46,6 +47,8 @@ public class ElementWizardComposite extends Composite
 
   private List<IElementWizard> wizards;
 
+  private ValidationContext validationContext;
+
   public ElementWizardComposite(Composite parent, int style, String productGroup, String label)
   {
     super(parent, style);
@@ -62,6 +65,11 @@ public class ElementWizardComposite extends Composite
   public String getLabel()
   {
     return label;
+  }
+
+  public void setValidationContext(ValidationContext validationContext)
+  {
+    this.validationContext = validationContext;
   }
 
   protected void create()
@@ -133,7 +141,7 @@ public class ElementWizardComposite extends Composite
 
     IElementWizard wizard = wizards.get(index);
     String factoryType = factoryTypes.get(index);
-    wizard.create(this, factoryType, null);
+    wizard.create(this, factoryType, null, validationContext);
     getParent().layout();
   }
 

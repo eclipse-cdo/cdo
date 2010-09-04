@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.ui.container;
 
 import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.container.IElementWizard.ValidationContext;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Combo;
@@ -22,11 +23,15 @@ import org.eclipse.swt.widgets.Text;
  * @author Eike Stepper
  * @since 3.1
  */
-public abstract class ElementWizard implements IElementWizard
+public abstract class ElementWizard implements IElementWizard, ValidationContext
 {
   private String factoryType;
 
   private String defaultDescription;
+
+  private String resultDescription;
+
+  private ValidationContext validationContext;
 
   public ElementWizard()
   {
@@ -44,14 +49,30 @@ public abstract class ElementWizard implements IElementWizard
 
   public String getResultDescription()
   {
-    return null;
+    return resultDescription;
   }
 
-  public final void create(Composite parent, String factoryType, String defaultDescription)
+  public void create(Composite parent, String factoryType, String defaultDescription,
+      ValidationContext validationContext)
   {
     this.factoryType = factoryType;
     this.defaultDescription = defaultDescription;
+    this.validationContext = validationContext;
+
     create(parent);
+  }
+
+  protected void setResultDescription(String resultDescription)
+  {
+    this.resultDescription = resultDescription;
+  }
+
+  public void setErrorMessage(String message)
+  {
+    if (validationContext != null)
+    {
+      validationContext.setErrorMessage(message);
+    }
   }
 
   protected abstract void create(Composite parent);

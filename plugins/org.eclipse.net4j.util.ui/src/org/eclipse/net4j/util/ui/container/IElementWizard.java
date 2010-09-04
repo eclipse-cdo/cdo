@@ -20,5 +20,14 @@ public interface IElementWizard
 {
   public String getResultDescription();
 
-  public void create(Composite parent, String factoryType, String defaultDescription);
+  public void create(Composite parent, String factoryType, String defaultDescription,
+      ValidationContext validationContext);
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface ValidationContext
+  {
+    public void setErrorMessage(String message);
+  }
 }

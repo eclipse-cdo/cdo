@@ -35,4 +35,18 @@
       </view>
    </extension>
    
+   <extension
+         point="org.eclipse.net4j.util.factories">
+      <factory
+            class="org.eclipse.net4j.internal.ui.container.TCPConnectorWizard$Factory"
+            productGroup="org.eclipse.net4j.util.ui.elementWizards"
+            type="org.eclipse.net4j.connectors:tcp">
+      </factory>
+      <factory
+            class="org.eclipse.net4j.internal.ui.container.JVMConnectorWizard$Factory"
+            productGroup="org.eclipse.net4j.util.ui.elementWizards"
+            type="org.eclipse.net4j.connectors:jvm">
+      </factory>
+   </extension>
+   
 </plugin>

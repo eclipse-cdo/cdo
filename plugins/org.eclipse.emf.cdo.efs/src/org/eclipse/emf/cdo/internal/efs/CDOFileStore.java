@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.emf.cdo.internal.efs;
 
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
@@ -253,7 +252,7 @@ public final class CDOFileStore extends AbstractFileStore
   private void writeResource(ByteArrayOutputStream baos) throws IOException
   {
     CDOResource resource = (CDOResource)getResourceNode();
-    resource.cdoPrefetch(CDORevision.DEPTH_INFINITE);
+    // resource.cdoPrefetch(CDORevision.DEPTH_INFINITE);
     resource.save(baos, null);
   }
 

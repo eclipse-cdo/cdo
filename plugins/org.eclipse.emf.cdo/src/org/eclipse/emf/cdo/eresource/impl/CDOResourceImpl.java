@@ -858,11 +858,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
           {
             InternalEObject o = (InternalEObject)obj;
 
-            if (obj instanceof CDOObject)
-            {
-              System.out.println(obj);
-            }
-
             URI objectURI = o.eProxyURI();
             if (objectURI == null)
             {

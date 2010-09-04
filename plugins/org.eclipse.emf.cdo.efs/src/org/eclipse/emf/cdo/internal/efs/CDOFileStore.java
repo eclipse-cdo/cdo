@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.emf.cdo.internal.efs;
 
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.internal.efs.bundle.OM;
@@ -33,7 +35,6 @@ import org.xml.sax.InputSource;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -114,7 +115,7 @@ public final class CDOFileStore extends AbstractFileStore
 
     if (isProjectDescription())
     {
-      info.setExists(getProjectDescription() != null);
+      info.setExists(getProjectName() != null);
       info.setDirectory(false);
     }
     else
@@ -199,27 +200,17 @@ public final class CDOFileStore extends AbstractFileStore
     try
     {
       monitor.beginTask("", 1); //$NON-NLS-1$
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
       if (isProjectDescription())
       {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream out = new PrintStream(baos);
-        out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        out.println("<projectDescription>");
-        out.println("  <name>" + OM.getProjectName(root.toURI()) + "</name>");
-        out.println("  <comment></comment>");
-        out.println("  <projects>");
-        out.println("  </projects>");
-        out.println("  <buildSpec>");
-        out.println("  </buildSpec>");
-        out.println("  <natures>");
-        out.println("  </natures>");
-        out.println("</projectDescription>");
-        out.flush();
-
-        return new ByteArrayInputStream(baos.toByteArray());
+        openProjectDescription(baos);
+      }
+      else
+      {
+        openResource(baos);
       }
 
-      return new FileInputStream(path.toPortableString());
+      return new ByteArrayInputStream(baos.toByteArray());
     }
     catch (Exception ex)
     {
@@ -232,7 +223,7 @@ public final class CDOFileStore extends AbstractFileStore
     }
   }
 
-  private String getProjectDescription()
+  private String getProjectName()
   {
     return OM.getProjectName(root.toURI());
   }
@@ -240,6 +231,30 @@ public final class CDOFileStore extends AbstractFileStore
   private boolean isProjectDescription()
   {
     return path.equals(PROJECT_DESCRIPTION_PATH);
+  }
+
+  private void openProjectDescription(ByteArrayOutputStream baos)
+  {
+    PrintStream out = new PrintStream(baos);
+    out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+    out.println("<projectDescription>");
+    out.println("  <name>" + OM.getProjectName(root.toURI()) + "</name>");
+    out.println("  <comment></comment>");
+    out.println("  <projects>");
+    out.println("  </projects>");
+    out.println("  <buildSpec>");
+    out.println("  </buildSpec>");
+    out.println("  <natures>");
+    out.println("  </natures>");
+    out.println("</projectDescription>");
+    out.flush();
+  }
+
+  private void openResource(ByteArrayOutputStream baos) throws IOException
+  {
+    CDOResource resource = (CDOResource)getResourceNode();
+    resource.cdoPrefetch(CDORevision.DEPTH_INFINITE);
+    resource.save(baos, null);
   }
 
   @Override

@@ -936,7 +936,13 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
       if (object instanceof EObject)
       {
         CDOObject cdoObject = CDOUtil.getCDOObject((EObject)object);
-        return cdoObject.eResource().getURI().toString() + "#" + cdoObject.cdoID().toURIFragment(); //$NON-NLS-1$
+        Resource resource = cdoObject.eResource();
+        if (resource != null)
+        {
+          CDOID id = cdoObject.cdoID();
+          String fragment = id != null ? id.toURIFragment() : resource.getURIFragment(cdoObject);
+          return resource.getURI().appendFragment(fragment).toString();
+        }
       }
 
       return null;

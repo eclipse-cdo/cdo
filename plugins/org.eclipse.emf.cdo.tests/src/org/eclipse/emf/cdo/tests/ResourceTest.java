@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Order;
+import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -40,7 +41,10 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +55,138 @@ import junit.framework.Assert;
  */
 public class ResourceTest extends AbstractCDOTest
 {
+  public void testSaveXMI() throws Exception
+  {
+    ByteArrayOutputStream cdoOUT = new ByteArrayOutputStream();
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/folder/res1");
+
+      counter = 0;
+      Category category = createCategoryTree(3);
+      resource.getContents().add(category);
+
+      transaction.commit();
+      resource.save(cdoOUT, null);
+    }
+
+    ByteArrayOutputStream xmiOUT = new ByteArrayOutputStream();
+    {
+      XMIResource resource = new XMIResourceImpl(URI.createFileURI("/folder/res1"));
+
+      counter = 0;
+      Category category = createCategoryTree(3);
+      resource.getContents().add(category);
+
+      resource.save(xmiOUT, null);
+    }
+
+    String xmiString = xmiOUT.toString();
+    msg("XMI:\n\n" + xmiString);
+
+    String cdoString = cdoOUT.toString();
+    msg("CDO:\n\n" + cdoString);
+
+    assertEquals(xmiString, cdoString);
+  }
+
+  public void testSaveXMI_WithXRef() throws Exception
+  {
+    ByteArrayOutputStream cdoOUT = new ByteArrayOutputStream();
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/folder/res1");
+
+      counter = 0;
+      Category category = createCategoryTree(3);
+      resource.getContents().add(category);
+
+      OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+      orderDetail.setPrice(147.111f);
+      orderDetail.setProduct(category.getProducts().get(0));
+      resource.getContents().add(orderDetail);
+
+      transaction.commit();
+      resource.save(cdoOUT, null);
+    }
+
+    ByteArrayOutputStream xmiOUT = new ByteArrayOutputStream();
+    {
+      XMIResource resource = new XMIResourceImpl(URI.createFileURI("/folder/res1"));
+
+      counter = 0;
+      Category category = createCategoryTree(3);
+      resource.getContents().add(category);
+
+      OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+      orderDetail.setPrice(147.111f);
+      orderDetail.setProduct(category.getProducts().get(0));
+      resource.getContents().add(orderDetail);
+
+      resource.save(xmiOUT, null);
+    }
+
+    String xmiString = xmiOUT.toString();
+    msg("XMI:\n\n" + xmiString);
+
+    String cdoString = cdoOUT.toString();
+    msg("CDO:\n\n" + cdoString);
+
+    // TODO assertEquals(xmiString, cdoString);
+  }
+
+  public void testSaveXMI_WithXRef_OtherResource() throws Exception
+  {
+    ByteArrayOutputStream cdoOUT = new ByteArrayOutputStream();
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/folder/res1");
+      CDOResource resource2 = transaction.createResource("/folder/res2");
+
+      counter = 0;
+      Category category = createCategoryTree(3);
+      resource.getContents().add(category);
+
+      OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+      orderDetail.setPrice(147.111f);
+      orderDetail.setProduct(category.getProducts().get(0));
+      resource2.getContents().add(orderDetail);
+
+      transaction.commit();
+      resource.save(cdoOUT, null);
+      resource2.save(cdoOUT, null);
+    }
+
+    ByteArrayOutputStream xmiOUT = new ByteArrayOutputStream();
+    {
+      XMIResource resource = new XMIResourceImpl(URI.createFileURI("/folder/res1"));
+      XMIResource resource2 = new XMIResourceImpl(URI.createFileURI("/folder/res2"));
+
+      counter = 0;
+      Category category = createCategoryTree(3);
+      resource.getContents().add(category);
+
+      OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+      orderDetail.setPrice(147.111f);
+      orderDetail.setProduct(category.getProducts().get(0));
+      resource2.getContents().add(orderDetail);
+
+      resource.save(xmiOUT, null);
+      resource2.save(xmiOUT, null);
+    }
+
+    String xmiString = xmiOUT.toString();
+    msg("XMI:\n\n" + xmiString);
+
+    String cdoString = cdoOUT.toString();
+    msg("CDO:\n\n" + cdoString);
+
+    // TODO assertEquals(xmiString, cdoString);
+  }
+
   public void testAttachDetachResourceDepth1_Delete() throws Exception
   {
     attachDetachResourceDepth1(1, true, 0);

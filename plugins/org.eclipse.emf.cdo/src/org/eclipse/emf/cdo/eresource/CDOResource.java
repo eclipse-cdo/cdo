@@ -57,6 +57,12 @@ public interface CDOResource extends CDOResourceNode, Resource
   public static final String OPTION_SAVE_OVERRIDE_TRANSACTION = CDOTransaction.class.getName();
 
   /**
+   * @ADDED
+   * @since 4.0
+   */
+  public static final String OPTION_SAVE_BASE_URI = "OPTION_SAVE_BASE_URI";
+
+  /**
    * Returns the value of the '<em><b>Resource Set</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Resource Set</em>' attribute isn't clear, there really should be more of a description

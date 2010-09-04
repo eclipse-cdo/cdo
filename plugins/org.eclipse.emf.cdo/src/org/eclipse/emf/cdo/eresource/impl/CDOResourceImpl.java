@@ -49,7 +49,12 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.ecore.xmi.XMLHelper;
+import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -59,7 +64,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -759,7 +767,151 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
    */
   public void save(OutputStream outputStream, Map<?, ?> options) throws IOException
   {
-    // Do nothing
+    final String baseURI;
+    if (options != null)
+    {
+      String uri = (String)options.get(OPTION_SAVE_BASE_URI);
+      if (uri != null)
+      {
+        baseURI = uri;
+      }
+      else
+      {
+        baseURI = "cdo://";
+      }
+    }
+    else
+    {
+      baseURI = "cdo://";
+    }
+
+    final Map<CDOResource, Resource> resourceMappings = new HashMap<CDOResource, Resource>();
+    class ExportResource extends XMIResourceImpl
+    {
+      private CDOResource delegate;
+
+      public ExportResource(CDOResource delegate)
+      {
+        super(URI.createURI(baseURI + delegate.getPath()));
+        this.delegate = delegate;
+      }
+
+      @Override
+      public EList<EObject> getContents()
+      {
+        return delegate.getContents();
+      }
+
+      @Override
+      public String getURIFragment(EObject eObject)
+      {
+        String id = EcoreUtil.getID(eObject);
+        if (id != null)
+        {
+          return id;
+        }
+
+        InternalEObject internalEObject = (InternalEObject)eObject;
+        if (getMappedResource(internalEObject.eDirectResource()) == this)
+        {
+          return "/" + getURIFragmentRootSegment(eObject);
+        }
+
+        List<String> uriFragmentPath = new ArrayList<String>();
+        boolean isContained = false;
+        for (InternalEObject container = internalEObject.eInternalContainer(); container != null; container = internalEObject
+            .eInternalContainer())
+        {
+          uriFragmentPath.add(container.eURIFragmentSegment(internalEObject.eContainingFeature(), internalEObject));
+          internalEObject = container;
+          if (getMappedResource(container.eDirectResource()) == this)
+          {
+            isContained = true;
+            break;
+          }
+        }
+
+        if (!isContained)
+        {
+          return "/-1";
+        }
+
+        StringBuilder result = new StringBuilder("/");
+        result.append(getURIFragmentRootSegment(internalEObject));
+
+        for (int i = uriFragmentPath.size() - 1; i >= 0; --i)
+        {
+          result.append('/');
+          result.append(uriFragmentPath.get(i));
+        }
+
+        return result.toString();
+      }
+
+      @Override
+      protected XMLHelper createXMLHelper()
+      {
+        return new XMIHelperImpl(this)
+        {
+          @Override
+          public String getHREF(EObject obj)
+          {
+            InternalEObject o = (InternalEObject)obj;
+
+            if (obj instanceof CDOObject)
+            {
+              System.out.println(obj);
+            }
+
+            URI objectURI = o.eProxyURI();
+            if (objectURI == null)
+            {
+              Resource otherResource = obj.eResource();
+              otherResource = getMappedResource(otherResource);
+              objectURI = getHREF(otherResource, obj);
+            }
+
+            objectURI = deresolve(objectURI);
+            return objectURI.toString();
+          }
+
+          @Override
+          protected URI getHREF(Resource otherResource, EObject obj)
+          {
+            String uriFragment = getURIFragment(otherResource, obj);
+            if (otherResource == ExportResource.this)
+            {
+              return URI.createURI(uriFragment);
+            }
+
+            return otherResource.getURI().appendFragment(uriFragment);
+          }
+
+        };
+      }
+
+      private Resource getMappedResource(Resource otherResource)
+      {
+        Resource resource = resourceMappings.get(otherResource);
+        if (resource != null)
+        {
+          return resource;
+        }
+
+        if (otherResource instanceof CDOResource)
+        {
+          CDOResource cdoResource = (CDOResource)otherResource;
+          otherResource = new ExportResource(cdoResource);
+          resourceMappings.put(cdoResource, otherResource);
+        }
+
+        return otherResource;
+      }
+    }
+
+    XMIResource xmiResource = new ExportResource(this);
+    resourceMappings.put(this, xmiResource);
+    xmiResource.save(outputStream, options);
   }
 
   /**

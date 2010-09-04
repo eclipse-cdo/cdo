@@ -52,9 +52,9 @@ public final class CDOFileStore extends AbstractFileStore
 
   private IPath path;
 
-  public CDOFileStore(CDOFileRoot rootStore, IPath path)
+  public CDOFileStore(CDOFileRoot root, IPath path)
   {
-    this.root = rootStore;
+    this.root = root;
     this.path = path;
   }
 

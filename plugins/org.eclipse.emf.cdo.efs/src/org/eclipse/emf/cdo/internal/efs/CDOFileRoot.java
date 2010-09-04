@@ -50,8 +50,7 @@ public final class CDOFileRoot extends AbstractFileStore
 
   private transient CDOView view;
 
-  public CDOFileRoot(CDOFileSystem fileSystem, String authority, String repositoryName, IPath branchPath,
-      long timeStamp)
+  public CDOFileRoot(CDOFileSystem fileSystem, String authority, String repositoryName, IPath branchPath, long timeStamp)
   {
     this.fileSystem = fileSystem;
     this.authority = authority;

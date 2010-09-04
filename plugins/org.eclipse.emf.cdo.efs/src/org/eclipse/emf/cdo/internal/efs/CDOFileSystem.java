@@ -108,16 +108,16 @@ public abstract class CDOFileSystem extends FileSystem
     return root.getFileStore(path);
   }
 
-  public CDOView getView(CDOFileRoot rootStore)
+  public CDOView getView(CDOFileRoot root)
   {
-    URI uri = rootStore.toURI();
+    URI uri = root.toURI();
     CDOView view = views.get(uri);
     if (view == null)
     {
-      String authority = rootStore.getAuthority();
-      String repositoryName = rootStore.getRepositoryName();
-      String branchPath = rootStore.getBranchPath().toPortableString();
-      long timeStamp = rootStore.getTimeStamp();
+      String authority = root.getAuthority();
+      String repositoryName = root.getRepositoryName();
+      String branchPath = root.getBranchPath().toPortableString();
+      long timeStamp = root.getTimeStamp();
 
       CDOSession session = getSession(authority, repositoryName);
       CDOBranchManager branchManager = session.getBranchManager();

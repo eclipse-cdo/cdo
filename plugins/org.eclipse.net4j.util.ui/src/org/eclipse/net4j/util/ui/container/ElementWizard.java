@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.ui.container.IElementWizard.ValidationContext;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -31,7 +32,7 @@ public abstract class ElementWizard implements IElementWizard, ValidationContext
 
   private String resultDescription;
 
-  private ValidationContext validationContext;
+  private ValidationContext context;
 
   public ElementWizard()
   {
@@ -52,12 +53,11 @@ public abstract class ElementWizard implements IElementWizard, ValidationContext
     return resultDescription;
   }
 
-  public void create(Composite parent, String factoryType, String defaultDescription,
-      ValidationContext validationContext)
+  public void create(Composite parent, String factoryType, String defaultDescription, ValidationContext context)
   {
     this.factoryType = factoryType;
     this.defaultDescription = defaultDescription;
-    this.validationContext = validationContext;
+    this.context = context;
 
     create(parent);
   }
@@ -67,11 +67,19 @@ public abstract class ElementWizard implements IElementWizard, ValidationContext
     this.resultDescription = resultDescription;
   }
 
-  public void setErrorMessage(String message)
+  public void setValidationOK()
   {
-    if (validationContext != null)
+    if (context != null)
     {
-      validationContext.setErrorMessage(message);
+      context.setValidationOK();
+    }
+  }
+
+  public void setValidationError(Control control, String message)
+  {
+    if (context != null)
+    {
+      context.setValidationError(control, message);
     }
   }
 

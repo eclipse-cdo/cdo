@@ -10,6 +10,7 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
@@ -58,17 +59,14 @@ public class CDOProjectImportWizard extends Wizard implements IImportWizard
       setControl(group);
     }
 
-    @Override
-    public void setErrorMessage(String message)
+    public void setValidationOK()
     {
-      if (message != null)
-      {
-        setMessage(message, IMessageProvider.ERROR);
-      }
-      else
-      {
-        setMessage(null);
-      }
+      setMessage(null);
+    }
+
+    public void setValidationError(Control control, String message)
+    {
+      setMessage(message, IMessageProvider.ERROR);
     }
   }
 }

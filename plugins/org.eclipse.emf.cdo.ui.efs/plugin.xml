@@ -22,19 +22,5 @@
             name="%wizard.name.0">
       </wizard>
    </extension>
-   
-   <extension
-         point="org.eclipse.net4j.util.factories">
-      <factory
-            class="org.eclipse.emf.cdo.ui.efs.factories.TCPElementWizardFactory"
-            productGroup="test.connectors"
-            type="tcp">
-      </factory>
-      <factory
-            class="org.eclipse.emf.cdo.ui.efs.factories.JVMElementWizardFactory"
-            productGroup="test.connectors"
-            type="tcp">
-      </factory>
-   </extension>
-   
+ 
 </plugin>

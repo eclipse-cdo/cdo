@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.ui.container;
 
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.container.IElementWizard.ValidationContext;
 
@@ -26,6 +27,10 @@ import org.eclipse.swt.widgets.Text;
  */
 public abstract class ElementWizard implements IElementWizard, ValidationContext
 {
+  private IManagedContainer container;
+
+  private String productGroup;
+
   private String factoryType;
 
   private String defaultDescription;
@@ -36,6 +41,16 @@ public abstract class ElementWizard implements IElementWizard, ValidationContext
 
   public ElementWizard()
   {
+  }
+
+  protected IManagedContainer getContainer()
+  {
+    return container;
+  }
+
+  protected String getProductGroup()
+  {
+    return productGroup;
   }
 
   protected String getFactoryType()
@@ -53,8 +68,16 @@ public abstract class ElementWizard implements IElementWizard, ValidationContext
     return resultDescription;
   }
 
-  public void create(Composite parent, String factoryType, String defaultDescription, ValidationContext context)
+  public Object getResultElement()
   {
+    return container.getElement(productGroup, factoryType, resultDescription);
+  }
+
+  public void create(Composite parent, IManagedContainer container, String productGroup, String factoryType,
+      String defaultDescription, ValidationContext context)
+  {
+    this.container = container;
+    this.productGroup = productGroup;
     this.factoryType = factoryType;
     this.defaultDescription = defaultDescription;
     this.context = context;

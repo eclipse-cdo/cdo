@@ -139,7 +139,7 @@ public abstract class ElementWizardComposite extends Composite
     {
       String factoryType = factoryTypes.get(i);
       IElementWizard wizard = wizards.get(i);
-      wizard.create(this, factoryType, null, validationContext);
+      wizard.create(this, getContainer(), productGroup, factoryType, null, validationContext);
       harvestControls(wizard);
     }
 

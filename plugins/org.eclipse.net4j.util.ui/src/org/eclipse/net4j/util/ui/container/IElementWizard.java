@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.ui.container;
 
+import org.eclipse.net4j.util.container.IManagedContainer;
+
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -19,9 +21,12 @@ import org.eclipse.swt.widgets.Control;
  */
 public interface IElementWizard
 {
+  public void create(Composite parent, IManagedContainer container, String productGroup, String factoryType,
+      String defaultDescription, ValidationContext context);
+
   public String getResultDescription();
 
-  public void create(Composite parent, String factoryType, String defaultDescription, ValidationContext context);
+  public Object getResultElement();
 
   /**
    * @author Eike Stepper

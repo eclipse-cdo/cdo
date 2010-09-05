@@ -147,8 +147,7 @@ public abstract class ElementWizardComposite extends Composite
   protected void factoryTypeChanged()
   {
     String newFactoryType = getFactoryType();
-
-    List<Control> refresh = new ArrayList<Control>();
+    List<Control> controlsToRefresh = new ArrayList<Control>();
 
     for (int i = 0; i < wizards.size(); i++)
     {
@@ -165,11 +164,12 @@ public abstract class ElementWizardComposite extends Composite
         {
           control.moveBelow(null);
         }
-        refresh.add(control);
+
+        controlsToRefresh.add(control);
       }
     }
 
-    this.layout(refresh.toArray(new Control[refresh.size()]));
+    layout(controlsToRefresh.toArray(new Control[controlsToRefresh.size()]));
   }
 
   protected void harvestControls(IElementWizard wizard)

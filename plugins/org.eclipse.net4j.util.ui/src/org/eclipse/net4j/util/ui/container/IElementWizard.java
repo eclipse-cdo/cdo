@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.ui.container;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 
 /**
  * @author Eike Stepper
@@ -20,14 +21,15 @@ public interface IElementWizard
 {
   public String getResultDescription();
 
-  public void create(Composite parent, String factoryType, String defaultDescription,
-      ValidationContext validationContext);
+  public void create(Composite parent, String factoryType, String defaultDescription, ValidationContext context);
 
   /**
    * @author Eike Stepper
    */
   public interface ValidationContext
   {
-    public void setErrorMessage(String message);
+    public void setValidationOK();
+
+    public void setValidationError(Control control, String message);
   }
 }

@@ -45,7 +45,7 @@ public class CDOProjectImportWizard extends Wizard implements IImportWizard
    */
   public static class Page extends WizardPage implements ValidationContext
   {
-    protected Page()
+    public Page()
     {
       super("CDOProjectImportWizardPage");
     }

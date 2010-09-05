@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Martin Fluegge - initial API and implementation
@@ -51,7 +51,7 @@ public class TCPConnectorWizard extends ElementWizard implements ModifyListener
     String host = hostText.getText();
     if (host.length() == 0)
     {
-      setErrorMessage("Host name is empty.");
+      setValidationError(hostText, "Host name is empty.");
       return;
     }
 
@@ -62,7 +62,7 @@ public class TCPConnectorWizard extends ElementWizard implements ModifyListener
     }
 
     setResultDescription(host);
-    setErrorMessage(null);
+    setValidationOK();
   }
 
   /**

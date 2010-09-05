@@ -62,10 +62,6 @@ public abstract class ElementWizardComposite extends Composite
 
   private Map<Control, IElementWizard> controlWizards = new HashMap<Control, IElementWizard>();
 
-  // XXX private Map<Control, Point> controlSizes = new HashMap<Control, Point>();
-  //
-  // private Composite invisibleControls;
-
   private ValidationContext validationContext;
 
   public ElementWizardComposite(Composite parent, int style, String productGroup, String label)
@@ -128,10 +124,6 @@ public abstract class ElementWizardComposite extends Composite
     init();
     setLayout(new GridLayout(2, false));
 
-    // XXX new Label(this, SWT.NONE).setVisible(false);
-    // invisibleControls = new Composite(this, SWT.NONE);
-    // invisibleControls.setVisible(false);
-
     {
       Label label = new Label(this, SWT.NONE);
       label.setText(getLabel());
@@ -147,16 +139,7 @@ public abstract class ElementWizardComposite extends Composite
       IElementWizard wizard = wizards.get(i);
       wizard.create(this, factoryType, null, validationContext);
       harvestControls(wizard);
-      // XXX new Composite(invisibleControls, SWT.NONE);
     }
-
-    // XXX getParent().layout();
-    // pack();
-    //
-    // for (Control child : getChildren())
-    // {
-    // controlSizes.put(child, child.getSize());
-    // }
 
     setFactoryType(factoryTypes.get(0));
   }
@@ -164,6 +147,9 @@ public abstract class ElementWizardComposite extends Composite
   protected void factoryTypeChanged()
   {
     String newFactoryType = getFactoryType();
+
+    List<Control> refresh = new ArrayList<Control>();
+
     for (int i = 0; i < wizards.size(); i++)
     {
       IElementWizard wizard = wizards.get(i);
@@ -171,31 +157,19 @@ public abstract class ElementWizardComposite extends Composite
       String factoryType = factoryTypes.get(i);
       boolean visible = factoryType.equals(newFactoryType);
 
-      // XXX Composite invisibleComposite = (Composite)invisibleControls.getChildren()[i];
-
       for (Control control : wizardControls.get(wizard))
       {
         control.setVisible(visible);
 
-        // XXX if (visible)
-        // {
-        // if (control.getParent() == invisibleComposite)
-        // {
-        // control.setParent(this);
-        // control.moveBelow(null);
-        // control.setSize(controlSizes.get(control));
-        // }
-        // }
-        // else
-        // {
-        // if (control.getParent() == this)
-        // {
-        // control.setParent(invisibleComposite);
-        // control.moveBelow(null);
-        // }
-        // }
+        if (!visible)
+        {
+          control.moveBelow(null);
+        }
+        refresh.add(control);
       }
     }
+
+    this.layout(refresh.toArray(new Control[refresh.size()]));
   }
 
   protected void harvestControls(IElementWizard wizard)

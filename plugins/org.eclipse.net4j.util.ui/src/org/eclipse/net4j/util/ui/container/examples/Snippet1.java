@@ -15,8 +15,8 @@ import org.eclipse.net4j.util.factory.Factory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.container.ElementWizard;
-import org.eclipse.net4j.util.ui.container.ElementWizardFactory;
 import org.eclipse.net4j.util.ui.container.ElementWizardComposite;
+import org.eclipse.net4j.util.ui.container.ElementWizardFactory;
 import org.eclipse.net4j.util.ui.container.IElementWizard;
 
 import org.eclipse.swt.SWT;
@@ -104,7 +104,7 @@ public class Snippet1
     Shell shell = new Shell(display);
     shell.setLayout(new GridLayout(1, false));
 
-    new ElementWizardComposite(shell, SWT.NONE, PG, "Type:");
+    new ElementWizardComposite.WithCombo(shell, SWT.NONE, PG, "Type:");
 
     shell.pack();
     shell.open();

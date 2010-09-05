@@ -52,10 +52,11 @@ public class CDOProjectImportWizard extends Wizard implements IImportWizard
 
     public void createControl(Composite parent)
     {
-      Group group = new Group(parent, SWT.BORDER);
+      Group group = new Group(parent, SWT.NONE);
+      group.setText("Connection");
       group.setLayout(new FillLayout());
 
-      new ElementWizardComposite(group, SWT.NONE, "org.eclipse.net4j.connectors", "Type:");
+      new ElementWizardComposite.WithRadios(group, SWT.NONE, "org.eclipse.net4j.connectors", "Type:");
       setControl(group);
     }
 

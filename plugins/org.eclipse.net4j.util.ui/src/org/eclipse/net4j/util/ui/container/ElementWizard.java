@@ -85,7 +85,7 @@ public abstract class ElementWizard implements IElementWizard, ValidationContext
 
   protected abstract void create(Composite parent);
 
-  protected Label addLabel(Composite parent, String label)
+  public static Label addLabel(Composite parent, String label)
   {
     Label control = new Label(parent, SWT.NONE);
     control.setText(label);
@@ -93,7 +93,7 @@ public abstract class ElementWizard implements IElementWizard, ValidationContext
     return control;
   }
 
-  protected Text addText(Composite parent, String label)
+  public static Text addText(Composite parent, String label)
   {
     addLabel(parent, label);
 
@@ -102,7 +102,7 @@ public abstract class ElementWizard implements IElementWizard, ValidationContext
     return control;
   }
 
-  protected Combo addCombo(Composite parent, String label, String... choices)
+  public static Combo addCombo(Composite parent, String label, String... choices)
   {
     addLabel(parent, label);
 

@@ -17,10 +17,12 @@ import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.container.IElementWizard.ValidationContext;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -28,24 +30,41 @@ import org.eclipse.swt.widgets.Label;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  * @since 3.1
  */
-public class ElementWizardComposite extends Composite
+public abstract class ElementWizardComposite extends Composite
 {
-  private final String productGroup;
+  private static final IElementWizard NO_WIZARD = new ElementWizard()
+  {
+    @Override
+    protected void create(Composite parent)
+    {
+      // Do nothing
+    }
+  };
 
-  private final String label;
+  private String productGroup;
 
-  private Control selection;
+  private String label;
 
   private List<String> factoryTypes;
 
   private List<IElementWizard> wizards;
+
+  private Map<IElementWizard, List<Control>> wizardControls = new HashMap<IElementWizard, List<Control>>();
+
+  private Map<Control, IElementWizard> controlWizards = new HashMap<Control, IElementWizard>();
+
+  // XXX private Map<Control, Point> controlSizes = new HashMap<Control, Point>();
+  //
+  // private Composite invisibleControls;
 
   private ValidationContext validationContext;
 
@@ -72,13 +91,15 @@ public class ElementWizardComposite extends Composite
     this.validationContext = validationContext;
   }
 
-  protected void create()
+  protected void init()
   {
     IManagedContainer container = getContainer();
     factoryTypes = new ArrayList<String>(container.getFactoryTypes(getProductGroup()));
     Collections.sort(factoryTypes);
 
     wizards = new ArrayList<IElementWizard>();
+    wizardControls.put(NO_WIZARD, new ArrayList<Control>());
+
     for (Iterator<String> it = factoryTypes.iterator(); it.hasNext();)
     {
       String factoryType = it.next();
@@ -88,62 +109,105 @@ public class ElementWizardComposite extends Composite
         IElementWizard wizard = (IElementWizard)container.getElement(ElementWizardFactory.PRODUCT_GROUP,
             getProductGroup() + ":" + factoryType, null);
         wizards.add(wizard);
+        wizardControls.put(wizard, new ArrayList<Control>());
       }
       catch (FactoryNotFoundException ex)
       {
         it.remove();
       }
     }
+  }
 
+  protected List<String> getFactoryTypes()
+  {
+    return factoryTypes;
+  }
+
+  protected void create()
+  {
+    init();
     setLayout(new GridLayout(2, false));
 
-    Label label2 = new Label(this, SWT.NONE);
-    label2.setText(getLabel());
-    label2.setLayoutData(UIUtil.createGridData(false, false));
+    // XXX new Label(this, SWT.NONE).setVisible(false);
+    // invisibleControls = new Composite(this, SWT.NONE);
+    // invisibleControls.setVisible(false);
 
-    selection = createSelection();
-    selection.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
-  }
-
-  protected Control createSelection()
-  {
-    final Combo combo = new Combo(this, SWT.SINGLE);
-    for (String factoryType : factoryTypes)
     {
-      combo.add(factoryType);
+      Label label = new Label(this, SWT.NONE);
+      label.setText(getLabel());
+      label.setLayoutData(UIUtil.createGridData(false, false));
+
+      createFactoryTypeControl();
+      harvestControls(NO_WIZARD);
     }
 
-    combo.addSelectionListener(new SelectionAdapter()
+    for (int i = 0; i < wizards.size(); i++)
     {
-      @Override
-      public void widgetSelected(SelectionEvent e)
+      String factoryType = factoryTypes.get(i);
+      IElementWizard wizard = wizards.get(i);
+      wizard.create(this, factoryType, null, validationContext);
+      harvestControls(wizard);
+      // XXX new Composite(invisibleControls, SWT.NONE);
+    }
+
+    // XXX getParent().layout();
+    // pack();
+    //
+    // for (Control child : getChildren())
+    // {
+    // controlSizes.put(child, child.getSize());
+    // }
+
+    setFactoryType(factoryTypes.get(0));
+  }
+
+  protected void factoryTypeChanged()
+  {
+    String newFactoryType = getFactoryType();
+    for (int i = 0; i < wizards.size(); i++)
+    {
+      IElementWizard wizard = wizards.get(i);
+
+      String factoryType = factoryTypes.get(i);
+      boolean visible = factoryType.equals(newFactoryType);
+
+      // XXX Composite invisibleComposite = (Composite)invisibleControls.getChildren()[i];
+
+      for (Control control : wizardControls.get(wizard))
       {
-        factoryChosen(combo.getSelectionIndex());
+        control.setVisible(visible);
+
+        // XXX if (visible)
+        // {
+        // if (control.getParent() == invisibleComposite)
+        // {
+        // control.setParent(this);
+        // control.moveBelow(null);
+        // control.setSize(controlSizes.get(control));
+        // }
+        // }
+        // else
+        // {
+        // if (control.getParent() == this)
+        // {
+        // control.setParent(invisibleComposite);
+        // control.moveBelow(null);
+        // }
+        // }
       }
-    });
-
-    return combo;
-  }
-
-  protected void disposeWizardControl()
-  {
-    Control[] children = getChildren();
-    for (int i = 2; i < children.length; i++)
-    {
-      Control child = children[i];
-      child.dispose();
     }
   }
 
-  protected void factoryChosen(int index)
+  protected void harvestControls(IElementWizard wizard)
   {
-    disposeWizardControl();
-
-    IElementWizard wizard = wizards.get(index);
-    String factoryType = factoryTypes.get(index);
-    wizard.create(this, factoryType, null, validationContext);
-    getParent().layout();
-    pack();
+    for (Control child : getChildren())
+    {
+      if (!controlWizards.containsKey(child))
+      {
+        controlWizards.put(child, wizard);
+        wizardControls.get(wizard).add(child);
+      }
+    }
   }
 
   protected String getDefaultDescription(String factoryType)
@@ -154,5 +218,136 @@ public class ElementWizardComposite extends Composite
   protected IManagedContainer getContainer()
   {
     return IPluginContainer.INSTANCE;
+  }
+
+  protected abstract void createFactoryTypeControl();
+
+  protected abstract void setFactoryType(String factoryType);
+
+  protected abstract String getFactoryType();
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class WithCombo extends ElementWizardComposite implements SelectionListener
+  {
+    private Combo combo;
+
+    public WithCombo(Composite parent, int style, String productGroup, String label)
+    {
+      super(parent, style, productGroup, label);
+    }
+
+    public void widgetSelected(SelectionEvent e)
+    {
+      factoryTypeChanged();
+    }
+
+    public void widgetDefaultSelected(SelectionEvent e)
+    {
+    }
+
+    @Override
+    protected String getFactoryType()
+    {
+      return combo.getText();
+    }
+
+    @Override
+    protected void setFactoryType(String factoryType)
+    {
+      int index = getFactoryTypes().indexOf(factoryType);
+      if (index == -1)
+      {
+        combo.setText(factoryType);
+      }
+      else
+      {
+        combo.select(index);
+      }
+
+      factoryTypeChanged();
+    }
+
+    @Override
+    protected void createFactoryTypeControl()
+    {
+      combo = new Combo(this, SWT.SINGLE);
+      for (String factoryType : getFactoryTypes())
+      {
+        combo.add(factoryType);
+      }
+
+      combo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+      combo.addSelectionListener(this);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class WithRadios extends ElementWizardComposite implements SelectionListener
+  {
+    private Composite composite;
+
+    public WithRadios(Composite parent, int style, String productGroup, String label)
+    {
+      super(parent, style, productGroup, label);
+    }
+
+    public void widgetSelected(SelectionEvent e)
+    {
+      factoryTypeChanged();
+    }
+
+    public void widgetDefaultSelected(SelectionEvent e)
+    {
+    }
+
+    @Override
+    protected void createFactoryTypeControl()
+    {
+      composite = new Composite(this, SWT.SINGLE);
+      composite.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+      composite.setLayout(new FillLayout());
+      for (String factoryType : getFactoryTypes())
+      {
+        Button choice = new Button(composite, SWT.RADIO);
+        choice.setText(factoryType);
+        choice.addSelectionListener(this);
+      }
+    }
+
+    @Override
+    protected String getFactoryType()
+    {
+      Control[] choices = composite.getChildren();
+
+      for (int i = 0; i < choices.length; i++)
+      {
+        Button choice = (Button)choices[i];
+        if (choice.getSelection())
+        {
+          return getFactoryTypes().get(i);
+        }
+      }
+
+      return null;
+    }
+
+    @Override
+    protected void setFactoryType(String factoryType)
+    {
+      List<String> factoryTypes = getFactoryTypes();
+      Control[] choices = composite.getChildren();
+
+      for (int i = 0; i < factoryTypes.size(); i++)
+      {
+        Button choice = (Button)choices[i];
+        choice.setSelection(factoryTypes.get(i).equals(factoryType));
+      }
+
+      factoryTypeChanged();
+    }
   }
 }

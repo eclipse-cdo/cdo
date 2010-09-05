@@ -64,6 +64,8 @@ public abstract class ElementWizardComposite extends Composite
 
   private ValidationContext validationContext;
 
+  private boolean firstLayout = true;
+
   public ElementWizardComposite(Composite parent, int style, String productGroup, String label)
   {
     super(parent, style);
@@ -169,7 +171,24 @@ public abstract class ElementWizardComposite extends Composite
       }
     }
 
-    layout(controlsToRefresh.toArray(new Control[controlsToRefresh.size()]));
+    // layout(controlsToRefresh.toArray(new Control[controlsToRefresh.size()]));
+    // layout(getChildren());
+
+    layout();
+  }
+
+  @Override
+  public void layout()
+  {
+    if (firstLayout)
+    {
+      super.layout();
+      firstLayout = false;
+    }
+    else
+    {
+      super.layout(getChildren());
+    }
   }
 
   protected void harvestControls(IElementWizard wizard)

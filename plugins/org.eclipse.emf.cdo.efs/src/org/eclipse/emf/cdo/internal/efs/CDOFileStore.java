@@ -70,15 +70,15 @@ public final class CDOFileStore extends AbstractFileStore
   }
 
   @Override
-  public CDOView getView()
+  public CDOView getView(IProgressMonitor monitor)
   {
-    return root.getView();
+    return root.getView(monitor);
   }
 
   @Override
-  protected CDOResourceNode doGetResourceNode()
+  protected CDOResourceNode doGetResourceNode(IProgressMonitor monitor)
   {
-    return getView().getResourceNode(path.toPortableString());
+    return getView(monitor).getResourceNode(path.toPortableString());
   }
 
   @Override
@@ -121,7 +121,7 @@ public final class CDOFileStore extends AbstractFileStore
     {
       try
       {
-        CDOResourceNode resourceNode = getResourceNode();
+        CDOResourceNode resourceNode = getResourceNode(monitor);
         info.setExists(true);
         info.setDirectory(resourceNode instanceof CDOResourceFolder);
       }
@@ -150,7 +150,7 @@ public final class CDOFileStore extends AbstractFileStore
   public String[] childNames(int options, IProgressMonitor monitor) throws CoreException
   {
     List<String> result = new ArrayList<String>();
-    CDOResourceNode resourceNode = getResourceNode();
+    CDOResourceNode resourceNode = getResourceNode(monitor);
     if (resourceNode instanceof CDOResourceFolder)
     {
       CDOResourceFolder resourceFolder = (CDOResourceFolder)resourceNode;
@@ -202,11 +202,11 @@ public final class CDOFileStore extends AbstractFileStore
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
       if (isProjectDescription())
       {
-        writeProjectDescription(baos);
+        writeProjectDescription(baos, monitor);
       }
       else
       {
-        writeResource(baos);
+        writeResource(baos, monitor);
       }
 
       return new ByteArrayInputStream(baos.toByteArray());
@@ -232,7 +232,7 @@ public final class CDOFileStore extends AbstractFileStore
     return path.equals(PROJECT_DESCRIPTION_PATH);
   }
 
-  private void writeProjectDescription(ByteArrayOutputStream baos)
+  private void writeProjectDescription(ByteArrayOutputStream baos, IProgressMonitor monitor)
   {
     PrintStream out = new PrintStream(baos);
     out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -249,9 +249,9 @@ public final class CDOFileStore extends AbstractFileStore
     out.flush();
   }
 
-  private void writeResource(ByteArrayOutputStream baos) throws IOException
+  private void writeResource(ByteArrayOutputStream baos, IProgressMonitor monitor) throws IOException
   {
-    CDOResource resource = (CDOResource)getResourceNode();
+    CDOResource resource = (CDOResource)getResourceNode(monitor);
     // resource.cdoPrefetch(CDORevision.DEPTH_INFINITE);
     resource.save(baos, null);
   }

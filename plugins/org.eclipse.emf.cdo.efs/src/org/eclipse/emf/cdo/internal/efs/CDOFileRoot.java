@@ -92,20 +92,20 @@ public final class CDOFileRoot extends AbstractFileStore
   }
 
   @Override
-  public CDOView getView()
+  public CDOView getView(IProgressMonitor monitor)
   {
     if (view == null)
     {
-      view = fileSystem.getView(this);
+      view = fileSystem.getView(this, monitor);
     }
 
     return view;
   }
 
   @Override
-  protected CDOResourceNode doGetResourceNode()
+  protected CDOResourceNode doGetResourceNode(IProgressMonitor monitor)
   {
-    return getView().getRootResource();
+    return getView(monitor).getRootResource();
   }
 
   @Override
@@ -149,7 +149,7 @@ public final class CDOFileRoot extends AbstractFileStore
   {
     List<String> result = new ArrayList<String>();
 
-    for (EObject object : getView().getRootResource().getContents())
+    for (EObject object : getView(monitor).getRootResource().getContents())
     {
       if (object instanceof CDOResourceNode)
       {

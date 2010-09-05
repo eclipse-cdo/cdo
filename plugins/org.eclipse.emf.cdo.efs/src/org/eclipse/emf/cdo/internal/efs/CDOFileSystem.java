@@ -30,11 +30,13 @@ import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.filesystem.provider.FileSystem;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 /**
  * @author Eike Stepper
@@ -108,7 +110,7 @@ public abstract class CDOFileSystem extends FileSystem
     return root.getFileStore(path);
   }
 
-  public CDOView getView(CDOFileRoot root)
+  public CDOView getView(CDOFileRoot root, IProgressMonitor monitor)
   {
     URI uri = root.toURI();
     CDOView view = views.get(uri);
@@ -117,29 +119,44 @@ public abstract class CDOFileSystem extends FileSystem
       String authority = root.getAuthority();
       String repositoryName = root.getRepositoryName();
       String branchPath = root.getBranchPath().toPortableString();
-      long timeStamp = root.getTimeStamp();
+      final long timeStamp = root.getTimeStamp();
 
-      CDOSession session = getSession(authority, repositoryName);
-      CDOBranchManager branchManager = session.getBranchManager();
-      CDOBranch branch = branchManager.getBranch(branchPath);
+      final CDOSession session = getSession(authority, repositoryName, monitor);
+      final CDOBranchManager branchManager = session.getBranchManager();
+      final CDOBranch branch = branchManager.getBranch(branchPath);
 
-      view = session.openView(branch, timeStamp);
+      view = InfiniteProgress.call("Open view", new Callable<CDOView>()
+      {
+        public CDOView call() throws Exception
+        {
+          return session.openView(branch, timeStamp);
+        }
+      });
+
       views.put(uri, view);
     }
 
     return view;
   }
 
-  protected CDOSession getSession(String authority, String repositoryName)
+  protected CDOSession getSession(String authority, String repositoryName, IProgressMonitor monitor)
   {
     Pair<String, String> sessionKey = new Pair<String, String>(authority, repositoryName);
     CDOSession session = sessions.get(sessionKey);
     if (session == null)
     {
-      CDOSessionConfiguration configuration = createSessionConfiguration(authority, repositoryName);
-      session = configuration.openSession();
+      final CDOSessionConfiguration configuration = createSessionConfiguration(authority, repositoryName, monitor);
+      session = InfiniteProgress.call("Open session", new Callable<CDOSession>()
+      {
+        public CDOSession call() throws Exception
+        {
+          return configuration.openSession();
+        }
+      });
+
       sessions.put(sessionKey, session);
     }
+
     return session;
   }
 
@@ -148,7 +165,8 @@ public abstract class CDOFileSystem extends FileSystem
     return IPluginContainer.INSTANCE;
   }
 
-  protected abstract CDOSessionConfiguration createSessionConfiguration(String authority, String repositoryName);
+  protected abstract CDOSessionConfiguration createSessionConfiguration(String authority, String repositoryName,
+      IProgressMonitor monitor);
 
   /**
    * @author Eike Stepper
@@ -162,16 +180,23 @@ public abstract class CDOFileSystem extends FileSystem
       this.connectorType = connectorType;
     }
 
-    protected IConnector getConnector(String authority)
+    protected IConnector getConnector(final String authority, IProgressMonitor monitor)
     {
-      return (IConnector)getContainer().getElement("org.eclipse.net4j.connectors", connectorType, authority);
+      return InfiniteProgress.call("Open connection", new Callable<IConnector>()
+      {
+        public IConnector call() throws Exception
+        {
+          return (IConnector)getContainer().getElement("org.eclipse.net4j.connectors", connectorType, authority);
+        }
+      });
     }
 
     @Override
-    protected CDOSessionConfiguration createSessionConfiguration(String authority, String repositoryName)
+    protected CDOSessionConfiguration createSessionConfiguration(String authority, String repositoryName,
+        IProgressMonitor monitor)
     {
       org.eclipse.emf.cdo.net4j.CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
-      configuration.setConnector(getConnector(authority));
+      configuration.setConnector(getConnector(authority, monitor));
       configuration.setRepositoryName(repositoryName);
       return configuration;
     }

@@ -41,25 +41,25 @@ public abstract class AbstractFileStore extends FileStore
 
   public abstract IPath getPath();
 
-  public abstract CDOView getView();
+  public abstract CDOView getView(IProgressMonitor monitor);
 
-  public final CDOTransaction openTransaction()
+  public final CDOTransaction openTransaction(IProgressMonitor monitor)
   {
-    CDOSession session = getView().getSession();
+    CDOSession session = getView(monitor).getSession();
     return session.openTransaction();
   }
 
-  public final CDOResourceNode getResourceNode()
+  public final CDOResourceNode getResourceNode(IProgressMonitor monitor)
   {
     if (resourceNode == null)
     {
-      resourceNode = doGetResourceNode();
+      resourceNode = doGetResourceNode(monitor);
     }
 
     return resourceNode;
   }
 
-  protected abstract CDOResourceNode doGetResourceNode();
+  protected abstract CDOResourceNode doGetResourceNode(IProgressMonitor monitor);
 
   @Override
   public IFileStore mkdir(int options, IProgressMonitor monitor) throws CoreException
@@ -68,7 +68,7 @@ public abstract class AbstractFileStore extends FileStore
 
     try
     {
-      transaction = openTransaction();
+      transaction = openTransaction(monitor);
       resourceNode = transaction.createResourceFolder(getPath().toPortableString());
       transaction.commit(monitor);
     }

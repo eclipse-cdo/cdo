@@ -68,11 +68,4 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/net4j/util/concurrent/RoundRobinList.java" type="org.eclipse.net4j.util.concurrent.RoundRobinList">
-        <filter id="337682486">
-            <message_arguments>
-                <message_argument value="org.eclipse.net4j.util.concurrent.RoundRobinList"/>
-            </message_arguments>
-        </filter>
-    </resource>
 </component>

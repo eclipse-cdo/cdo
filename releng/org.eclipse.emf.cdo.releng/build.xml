@@ -140,7 +140,7 @@
 		<echo message="Sourcing ${properties.file}" />
 		<available file="${tools}/director/director" property="director.exists" />
 		<available file="${tools}/buckminster/buckminster" property="buckminster.exists" />
-		<echoproperties destfile="PROPERTIES.txt" />
+		<echoproperties/>
 	</target>
 
 	<target name="get.director" unless="director.exists">

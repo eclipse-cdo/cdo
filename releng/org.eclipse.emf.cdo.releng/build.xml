@@ -98,9 +98,11 @@
 		<sequential>
 			<eclipse.launch app="buckminster">
 				<args>
+					<!--
 					<jvmarg value="-Dorg.eclipse.update.core.proxy.host=${http.proxyHost}" />
 					<jvmarg value="-Dorg.eclipse.update.core.proxy.port=${http.proxyPort}" />
-					<jvmarg value="-Dorg.eclipse.update.core.proxy.enable=true" />
+					<jvmarg value="-Dorg.eclipse.update.core.proxy.enable" />
+					-->
 					<jvmarg value="-Dbugfix.288796=true" />
 					<jvmarg value="-Xmx4096m" />
 					<arg value="-data" />
@@ -138,7 +140,6 @@
 		<echo message="Sourcing ${properties.file}" />
 		<available file="${tools}/director/director" property="director.exists" />
 		<available file="${tools}/buckminster/buckminster" property="buckminster.exists" />
-		<echoproperties />
 	</target>
 
 	<target name="get.director" unless="director.exists">

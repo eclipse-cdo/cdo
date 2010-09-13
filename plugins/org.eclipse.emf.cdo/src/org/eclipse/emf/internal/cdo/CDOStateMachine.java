@@ -873,8 +873,15 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           CDOBranchVersion target = delta.getTarget();
           if (target != null)
           {
-            newRevision.setBranchPoint(target.getBranch().getPoint(lastUpdateTime));
-            newRevision.setVersion(target.getVersion());
+            CDOBranchPoint branchPoint = target.getBranch().getPoint(lastUpdateTime);
+            int version = target.getVersion();
+            if (version == key.getVersion())
+            {
+              ++version;
+            }
+
+            newRevision.setBranchPoint(branchPoint);
+            newRevision.setVersion(version);
             newRevision.setRevised(CDOBranchPoint.UNSPECIFIED_DATE);
           }
           else

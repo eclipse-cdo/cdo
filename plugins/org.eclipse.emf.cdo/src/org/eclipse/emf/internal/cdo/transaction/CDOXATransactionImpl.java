@@ -34,7 +34,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
@@ -434,16 +433,6 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
       return savepoints;
     }
-  }
-
-  public void setCommittables(Set<EObject> committables)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  public Set<EObject> getCommittables()
-  {
-    throw new UnsupportedOperationException();
   }
 
   /**

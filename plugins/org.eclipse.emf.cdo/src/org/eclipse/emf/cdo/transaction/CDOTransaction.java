@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.options.IOptionsEvent;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.io.IOException;
@@ -141,6 +142,16 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction, CDOChangeSe
    * @since 3.0
    */
   public void setCommitComment(String comment);
+
+  /**
+   * @since 4.0
+   */
+  public void setCommittables(Set<EObject> committables);
+
+  /**
+   * @since 4.0
+   */
+  public Set<EObject> getCommittables();
 
   public Options options();
 

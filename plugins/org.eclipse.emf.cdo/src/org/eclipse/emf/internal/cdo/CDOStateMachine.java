@@ -690,7 +690,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       CDORevisionFactory factory = revisionManager.getFactory();
       InternalCDORevision revision = (InternalCDORevision)factory.createRevision(object.eClass());
       revision.setID(id);
-      revision.setBranchPoint(transaction.getBranch().getHead());
+      revision.setBranchPoint(revKey.getBranch().getHead());
       revision.setVersion(revKey.getVersion());
 
       // Populate the revision based on the values in the CDOObject

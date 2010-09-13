@@ -56,4 +56,9 @@ public interface CDOCommitContext
    * Returns a map of the {@link CDORevisionDelta revision deltas} that are to be committed with this commit context.
    */
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas();
+
+  /**
+   * @since 4.0
+   */
+  public boolean isPartialCommit();
 }

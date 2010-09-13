@@ -597,4 +597,20 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   {
     delegate.setCommitComment(comment);
   }
+
+  /**
+   * @since 4.0
+   */
+  public void setCommittables(Set<EObject> committables)
+  {
+    delegate.setCommittables(committables);
+  }
+
+  /**
+   * @since 4.0
+   */
+  public Set<EObject> getCommittables()
+  {
+    return delegate.getCommittables();
+  }
 }

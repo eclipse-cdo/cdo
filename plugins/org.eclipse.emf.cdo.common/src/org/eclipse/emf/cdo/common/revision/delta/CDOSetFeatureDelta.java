@@ -17,7 +17,17 @@ package org.eclipse.emf.cdo.common.revision.delta;
  */
 public interface CDOSetFeatureDelta extends CDOFeatureDelta
 {
+  /**
+   * @since 4.0
+   */
+  public static final Object UNSPECIFIED = new Object();
+
   public int getIndex();
 
   public Object getValue();
+
+  /**
+   * @since 4.0
+   */
+  public Object getOldValue();
 }

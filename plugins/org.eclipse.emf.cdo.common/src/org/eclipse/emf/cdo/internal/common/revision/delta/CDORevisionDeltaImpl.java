@@ -364,7 +364,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
           }
           else
           {
-            addFeatureDelta(new CDOSetFeatureDeltaImpl(feature, 0, dirtyValue));
+            addFeatureDelta(new CDOSetFeatureDeltaImpl(feature, 0, dirtyValue, originValue));
           }
         }
       }

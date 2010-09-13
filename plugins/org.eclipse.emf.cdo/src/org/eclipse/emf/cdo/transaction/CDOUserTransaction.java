@@ -14,7 +14,11 @@ package org.eclipse.emf.cdo.transaction;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.util.CommitException;
 
+import org.eclipse.emf.ecore.EObject;
+
 import org.eclipse.core.runtime.IProgressMonitor;
+
+import java.util.Set;
 
 /**
  * Only deal with transaction process.
@@ -50,4 +54,14 @@ public interface CDOUserTransaction
    * @since 3.0
    */
   public CDOUserSavepoint getLastSavepoint();
+
+  /**
+   * @since 4.0
+   */
+  public void setCommittables(Set<EObject> committables);
+
+  /**
+   * @since 4.0
+   */
+  public Set<EObject> getCommittables();
 }

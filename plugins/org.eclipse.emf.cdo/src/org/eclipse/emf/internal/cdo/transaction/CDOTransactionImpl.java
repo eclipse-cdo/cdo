@@ -69,6 +69,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
+import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver2;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
@@ -83,6 +84,7 @@ import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.CommitIntegrityCheck;
 import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
@@ -190,6 +192,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return false;
     }
   };
+
+  private Set<EObject> committables;
+
+  private Map<InternalCDOObject, InternalCDORevision> cleanRevisions = new HashMap<InternalCDOObject, InternalCDORevision>();
 
   public CDOTransactionImpl(CDOBranch branch)
   {
@@ -978,7 +984,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     checkActive();
     rollback(firstSavepoint);
-    cleanUp();
+    cleanUp(null);
   }
 
   private void removeObject(CDOID id, CDOObject object)
@@ -1201,6 +1207,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         CDORevisionKey revKey = CDORevisionUtil.createRevisionKey(object.cdoRevision());
         formerRevisionKeys.put(object, revKey);
+      }
+
+      if (!cleanRevisions.containsKey(object))
+      {
+        cleanRevisions.put(object, object.cdoRevision());
       }
 
       // Object may have been reattached previously, in which case it must
@@ -1551,19 +1562,60 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return newPackages;
   }
 
-  private void cleanUp()
+  private void cleanUp(CDOCommitContext commitContext)
   {
-    lastSavepoint = firstSavepoint;
-    firstSavepoint.clear();
-    firstSavepoint.setNextSavepoint(null);
-    firstSavepoint.getSharedDetachedObjects().clear();
+    if (commitContext == null || !commitContext.isPartialCommit())
+    {
+      lastSavepoint = firstSavepoint;
+      firstSavepoint.clear();
+      firstSavepoint.setNextSavepoint(null);
+      firstSavepoint.getSharedDetachedObjects().clear();
 
-    // Bug 283985 (Re-attachment)
-    formerRevisionKeys.clear();
+      // Bug 283985 (Re-attachment)
+      formerRevisionKeys.clear();
 
-    dirty = false;
-    conflict = 0;
-    lastTemporaryID.set(0);
+      cleanRevisions.clear();
+      dirty = false;
+      conflict = 0;
+      lastTemporaryID.set(0);
+    }
+    else
+    {
+      collapseSavepoints(commitContext);
+
+      for (CDOObject object : commitContext.getDetachedObjects().values())
+      {
+        formerRevisionKeys.remove(object);
+      }
+    }
+
+    // Reset partial-commit filter
+    committables = null;
+  }
+
+  private void collapseSavepoints(CDOCommitContext commitContext)
+  {
+    InternalCDOSavepoint newSavepoint = createSavepoint(null);
+    copyUncommitted(lastSavepoint.getAllNewObjects(), commitContext.getNewObjects(), newSavepoint.getNewObjects());
+    copyUncommitted(lastSavepoint.getAllDirtyObjects(), commitContext.getDirtyObjects(), newSavepoint.getDirtyObjects());
+    copyUncommitted(lastSavepoint.getAllRevisionDeltas(), commitContext.getRevisionDeltas(),
+        newSavepoint.getRevisionDeltas());
+    copyUncommitted(lastSavepoint.getAllDetachedObjects(), commitContext.getDetachedObjects(),
+        newSavepoint.getDetachedObjects());
+    lastSavepoint = newSavepoint;
+    firstSavepoint = lastSavepoint;
+  }
+
+  private <T> void copyUncommitted(Map<CDOID, T> oldSavepointMap, Map<CDOID, T> commitContextMap,
+      Map<CDOID, T> newSavepointMap)
+  {
+    for (Entry<CDOID, T> entry : oldSavepointMap.entrySet())
+    {
+      if (!commitContextMap.containsKey(entry.getKey()))
+      {
+        newSavepointMap.put(entry.getKey(), entry.getValue());
+      }
+    }
   }
 
   public CDOSavepoint[] exportChanges(OutputStream stream) throws IOException
@@ -1925,6 +1977,21 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     commitComment = comment;
   }
 
+  public void setCommittables(Set<EObject> committables)
+  {
+    this.committables = committables;
+  }
+
+  public Set<EObject> getCommittables()
+  {
+    return committables;
+  }
+
+  public Map<InternalCDOObject, InternalCDORevision> getCleanRevisions()
+  {
+    return cleanRevisions;
+  }
+
   /**
    * @author Simon McDuff
    */
@@ -1933,6 +2000,21 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     private InternalCDOTransaction transaction;
 
     private CDOCommitData commitData;
+
+    private Map<CDOID, CDOObject> newObjects;
+
+    private Map<CDOID, CDOObject> detachedObjects;
+
+    private Map<CDOID, CDORevisionDelta> revisionDeltas;
+
+    private Map<CDOID, CDOObject> dirtyObjects;
+
+    /**
+     * Tracks whether this commit is *actually* partial or not. (Having tx.committables != null does not in itself mean
+     * that the commit will be partial, because the committables could cover all dirty/new/detached objects. But this
+     * boolean gets set to reflect whether the commit will really commit less than all dirty/new/detached objects.)
+     */
+    private boolean isPartialCommit;
 
     public CDOCommitContextImpl(InternalCDOTransaction transaction)
     {
@@ -1943,27 +2025,57 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     private void calculateCommitData()
     {
       List<CDOPackageUnit> newPackageUnits = analyzeNewPackages();
-      List<CDOIDAndVersion> revisions = new ArrayList<CDOIDAndVersion>(getNewObjects().size());
-      for (CDOObject newObject : getNewObjects().values())
+      newObjects = filterCommittables(transaction.getNewObjects());
+      List<CDOIDAndVersion> revisions = new ArrayList<CDOIDAndVersion>(newObjects.size());
+      for (CDOObject newObject : newObjects.values())
       {
         revisions.add(newObject.cdoRevision());
       }
 
-      List<CDORevisionKey> deltas = new ArrayList<CDORevisionKey>(getRevisionDeltas().size());
-      for (CDORevisionDelta delta : getRevisionDeltas().values())
+      revisionDeltas = filterCommittables(transaction.getRevisionDeltas());
+      List<CDORevisionKey> deltas = new ArrayList<CDORevisionKey>(revisionDeltas.size());
+      for (CDORevisionDelta delta : revisionDeltas.values())
       {
         deltas.add(delta);
       }
 
-      List<CDOIDAndVersion> detached = new ArrayList<CDOIDAndVersion>(getDetachedObjects().size());
-      for (CDOID id : getDetachedObjects().keySet())
+      detachedObjects = filterCommittables(transaction.getDetachedObjects());
+      List<CDOIDAndVersion> detached = new ArrayList<CDOIDAndVersion>(detachedObjects.size());
+      for (CDOID id : detachedObjects.keySet())
       {
         // Add "version-less" key.
         // CDOSessionImpl.reviseRevisions() will call reviseLatest() accordingly.
         detached.add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
       }
 
+      dirtyObjects = filterCommittables(transaction.getDirtyObjects());
+
       commitData = new CDOCommitDataImpl(newPackageUnits, revisions, deltas, detached);
+    }
+
+    private <T> Map<CDOID, T> filterCommittables(Map<CDOID, T> map)
+    {
+      if (committables == null)
+      {
+        // No partial commit filter -- nothing to do
+        return map;
+      }
+
+      Map<CDOID, T> newMap = new HashMap<CDOID, T>();
+      for (CDOID id : map.keySet())
+      {
+        CDOObject o = getObject(id);
+        if (committables.contains(o))
+        {
+          newMap.put(id, map.get(id));
+        }
+        else
+        {
+          isPartialCommit = true;
+        }
+      }
+
+      return newMap;
     }
 
     public InternalCDOTransaction getTransaction()
@@ -1978,12 +2090,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     public Map<CDOID, CDOObject> getDirtyObjects()
     {
-      return transaction.getDirtyObjects();
+      return dirtyObjects;
     }
 
     public Map<CDOID, CDOObject> getNewObjects()
     {
-      return transaction.getNewObjects();
+      return newObjects;
     }
 
     public List<CDOPackageUnit> getNewPackageUnits()
@@ -1993,12 +2105,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     public Map<CDOID, CDOObject> getDetachedObjects()
     {
-      return transaction.getDetachedObjects();
+      return detachedObjects;
     }
 
     public Map<CDOID, CDORevisionDelta> getRevisionDeltas()
     {
-      return transaction.getRevisionDeltas();
+      return revisionDeltas;
     }
 
     public void preCommit()
@@ -2046,6 +2158,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
         try
         {
+          // TODO (CD) It might be better to always do the checks,
+          // instead of only for partial commits
+          if (isPartialCommit)
+          {
+            new CommitIntegrityCheck(this, CommitIntegrityCheck.Style.EXCEPTION_FAST).check();
+          }
+
           preCommit(getNewObjects());
           preCommit(getDirtyObjects());
         }
@@ -2110,7 +2229,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           getChangeSubscriptionManager().committedTransaction(transaction, this);
           getAdapterManager().committedTransaction(transaction, this);
 
-          cleanUp();
+          cleanUp(this);
           Map<CDOID, CDOID> idMappings = result.getIDMappings();
           IListener[] listeners = getListeners();
           if (listeners != null)
@@ -2179,6 +2298,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           CDOStateMachine.INSTANCE.commit((InternalCDOObject)object, result);
         }
       }
+    }
+
+    public boolean isPartialCommit()
+    {
+      return isPartialCommit;
     }
   }
 

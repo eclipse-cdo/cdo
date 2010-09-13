@@ -798,6 +798,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
       InternalCDOTransaction transaction = object.cdoView().toTransaction();
+      InternalCDORevision cleanRevision = object.cdoRevision();
+      transaction.getCleanRevisions().put(object, cleanRevision);
 
       // Copy revision
       InternalCDORevision revision = object.cdoRevision().copy();

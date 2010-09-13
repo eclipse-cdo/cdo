@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 
 /**
  * @author Simon McDuff
@@ -30,9 +31,17 @@ import java.io.IOException;
 public class CDOSetFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl implements CDOSetFeatureDelta,
     ListTargetAdding
 {
+  private Object oldValue = CDOSetFeatureDelta.UNSPECIFIED;
+
   public CDOSetFeatureDeltaImpl(EStructuralFeature feature, int index, Object value)
   {
     super(feature, index, value);
+  }
+
+  public CDOSetFeatureDeltaImpl(EStructuralFeature feature, int index, Object value, Object oldValue)
+  {
+    super(feature, index, value);
+    this.oldValue = oldValue;
   }
 
   public CDOSetFeatureDeltaImpl(CDODataInput in, EClass eClass) throws IOException
@@ -47,7 +56,7 @@ public class CDOSetFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl imple
 
   public CDOFeatureDelta copy()
   {
-    return new CDOSetFeatureDeltaImpl(getFeature(), getIndex(), getValue());
+    return new CDOSetFeatureDeltaImpl(getFeature(), getIndex(), getValue(), getOldValue());
   }
 
   public void apply(CDORevision revision)
@@ -58,5 +67,26 @@ public class CDOSetFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl imple
   public void accept(CDOFeatureDeltaVisitor visitor)
   {
     visitor.visit(this);
+  }
+
+  public Object getOldValue()
+  {
+    return oldValue;
+  }
+
+  @Override
+  protected String toStringAdditional()
+  {
+    String oldValueForMessage;
+    if (oldValue != CDOSetFeatureDelta.UNSPECIFIED)
+    {
+      oldValueForMessage = oldValue == null ? "null" : oldValue.toString();
+    }
+    else
+    {
+      oldValueForMessage = "UNSPECIFIED"; //$NON-NLS-1$
+    }
+
+    return super.toStringAdditional() + MessageFormat.format(", oldValue={0}", oldValueForMessage); //$NON-NLS-1$
   }
 }

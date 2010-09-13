@@ -134,6 +134,11 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
     return delegateCommitContext.getCommitData();
   }
 
+  public boolean isPartialCommit()
+  {
+    return delegateCommitContext.isPartialCommit();
+  }
+
   public Object call() throws Exception
   {
     state.handle(this, progressMonitor);

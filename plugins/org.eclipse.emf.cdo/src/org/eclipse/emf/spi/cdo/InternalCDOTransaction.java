@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -90,6 +91,11 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    * @since 4.0
    */
   public Map<InternalCDOObject, CDORevisionKey> getFormerRevisionKeys();
+
+  /**
+   * @since 4.0
+   */
+  public Map<InternalCDOObject, InternalCDORevision> getCleanRevisions();
 
   /**
    * Provides a context for a commit operation.

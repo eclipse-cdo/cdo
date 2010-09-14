@@ -175,7 +175,7 @@ public class OfflineRawTest extends OfflineTest
    */
   public void testSyncProgressEvents() throws Exception
   {
-    InternalSynchronizableRepository clone = (InternalSynchronizableRepository)getRepository();
+    InternalSynchronizableRepository clone = getRepository();
     waitForOnline(clone);
 
     CDOSession session = openSession();

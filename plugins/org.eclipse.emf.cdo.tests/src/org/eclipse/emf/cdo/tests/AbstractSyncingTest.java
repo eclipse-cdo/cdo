@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
+import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -54,6 +55,18 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
   {
     IRepositoryConfig repositoryConfig = getRepositoryConfig();
     return repositoryConfig instanceof OfflineConfig;
+  }
+
+  @Override
+  public InternalSynchronizableRepository getRepository()
+  {
+    return (InternalSynchronizableRepository)super.getRepository();
+  }
+
+  @Override
+  public InternalSynchronizableRepository getRepository(String name)
+  {
+    return (InternalSynchronizableRepository)super.getRepository(name);
   }
 
   @Override

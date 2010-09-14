@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
-import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -64,18 +63,6 @@ public class FailoverTest extends AbstractSyncingTest
   protected boolean isFailover()
   {
     return true;
-  }
-
-  @Override
-  public InternalSynchronizableRepository getRepository()
-  {
-    return (InternalSynchronizableRepository)super.getRepository();
-  }
-
-  @Override
-  public InternalSynchronizableRepository getRepository(String name)
-  {
-    return (InternalSynchronizableRepository)super.getRepository(name);
   }
 
   public void testMasterCommits_ArrivalInBackup() throws Exception

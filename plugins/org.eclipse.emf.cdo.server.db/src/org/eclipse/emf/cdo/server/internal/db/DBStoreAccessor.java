@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
@@ -101,6 +102,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   private IPreparedStatementCache statementCache;
 
   private Set<CDOID> newObjects = new HashSet<CDOID>();
+
+  private long maxID;
 
   public DBStoreAccessor(DBStore store, ISession session) throws DBException
   {
@@ -302,6 +305,16 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     {
       CDOID id = revision.getID();
       newObjects.add(id);
+
+      // Remember maxID because it may have to be adjusted if the repository is BACKUP or CLONE. See bug 325097.
+      if (!context.getBranchPoint().getBranch().isLocal())
+      {
+        long value = CDOIDUtil.getLong(id);
+        if (value > maxID)
+        {
+          maxID = value;
+        }
+      }
     }
   }
 
@@ -357,7 +370,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
   protected void writeRevisionDelta(InternalCDORevisionDelta delta, long created, OMMonitor monitor)
   {
-    EClass eClass = getObjectType(delta.getID());
+    CDOID id = delta.getID();
+    EClass eClass = getObjectType(id);
     IClassMappingDeltaSupport mapping = (IClassMappingDeltaSupport)getStore().getMappingStrategy().getClassMapping(
         eClass);
     mapping.writeRevisionDelta(this, delta, created, monitor);
@@ -456,6 +470,15 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       {
         async = monitor.forkAsync();
         getConnection().commit();
+
+        DBStore store = getStore();
+        if (maxID > store.getLastObjectID())
+        {
+          // See bug 325097
+          store.setLastObjectID(maxID);
+        }
+
+        maxID = 0L;
       }
       finally
       {
@@ -834,8 +857,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException
   {
-    Connection connection = getConnection();
     DBStore store = getStore();
+    out.writeLong(store.getLastObjectID()); // See bug 325097
 
     String where = " WHERE " + CDODBSchema.BRANCHES_ID + " BETWEEN " + fromBranchID + " AND " + toBranchID;
     DBUtil.serializeTable(out, connection, CDODBSchema.BRANCHES, null, where);
@@ -856,7 +879,10 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
       OMMonitor monitor) throws IOException
   {
-    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    DBStore store = getStore();
+    store.setLastObjectID(in.readLong()); // See bug 325097
+
+    IMappingStrategy mappingStrategy = store.getMappingStrategy();
     int size = mappingStrategy.getClassMappings().size();
     int commitWork = 4;
     monitor.begin(commitWork + size + commitWork);
@@ -871,6 +897,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       mappingStrategy.rawImport(this, in, monitor.fork(size));
 
       Async async = monitor.forkAsync(commitWork);
+
       try
       {
         connection.commit();

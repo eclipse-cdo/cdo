@@ -91,6 +91,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
 
   public RepositorySynchronizer()
   {
+    setDaemon(true);
   }
 
   public int getRetryInterval()

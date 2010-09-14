@@ -68,18 +68,6 @@ public class Bugzilla_312879_Test extends AbstractSyncingTest
     return true;
   }
 
-  @Override
-  public InternalSynchronizableRepository getRepository()
-  {
-    return (InternalSynchronizableRepository)super.getRepository();
-  }
-
-  @Override
-  public InternalSynchronizableRepository getRepository(String name)
-  {
-    return (InternalSynchronizableRepository)super.getRepository(name);
-  }
-
   public void testSwitchMasterAndCommit() throws Exception
   {
 

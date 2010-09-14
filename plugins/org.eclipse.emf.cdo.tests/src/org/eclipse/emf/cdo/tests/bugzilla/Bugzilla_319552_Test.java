@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -18,6 +17,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.AbstractSyncingTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 /**
  * "Attempt to modify historical revision" on raw replication.
@@ -61,7 +61,7 @@ public class Bugzilla_319552_Test extends AbstractSyncingTest
     waitForOffline(clone);
 
     // do some online changes to increase the revision.
-    Company masterCompany = (Company)masterTransaction.getObject(((CDOObject)company).cdoID());
+    Company masterCompany = (Company)masterTransaction.getObject(CDOUtil.getCDOObject(company).cdoID());
 
     masterCompany.setName("revision2");
     masterTransaction.commit();
@@ -84,6 +84,7 @@ public class Bugzilla_319552_Test extends AbstractSyncingTest
     company.getName();
 
     // check revision versions.
-    assertEquals(((CDOObject)masterCompany).cdoRevision().getVersion(), ((CDOObject)company).cdoRevision().getVersion());
+    assertEquals(CDOUtil.getCDOObject(masterCompany).cdoRevision().getVersion(), CDOUtil.getCDOObject(company)
+        .cdoRevision().getVersion());
   }
 }

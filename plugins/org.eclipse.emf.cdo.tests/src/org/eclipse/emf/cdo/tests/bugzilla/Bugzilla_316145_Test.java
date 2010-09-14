@@ -55,7 +55,6 @@ public class Bugzilla_316145_Test extends AbstractCDOTest
     transaction.commit();
 
     id = CDOUtil.getCDOObject(company).cdoID();
-    // id = ((CDOObject)resource).cdoID();
 
     session.close();
 

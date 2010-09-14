@@ -334,11 +334,11 @@ public class XRefTest extends AbstractCDOTest
   // resource.getContents().add(purchaseOrder4);
   // transaction1.commit();
   //
-  // CDOID referenceID = ((CDOObject)supplier1).cdoID();
-  // CDOID queryID1 = ((CDOObject)purchaseOrder1).cdoID();
-  // CDOID queryID2 = ((CDOObject)purchaseOrder2).cdoID();
-  // CDOID queryID3 = ((CDOObject)purchaseOrder3).cdoID();
-  // CDOID queryID4 = ((CDOObject)purchaseOrder4).cdoID();
+  // CDOID referenceID = CDOUtil.getCDOObject(supplier1).cdoID();
+  // CDOID queryID1 = CDOUtil.getCDOObject(purchaseOrder1).cdoID();
+  // CDOID queryID2 = CDOUtil.getCDOObject(purchaseOrder2).cdoID();
+  // CDOID queryID3 = CDOUtil.getCDOObject(purchaseOrder3).cdoID();
+  // CDOID queryID4 = CDOUtil.getCDOObject(purchaseOrder4).cdoID();
   //
   // session1.close();
   //
@@ -427,7 +427,7 @@ public class XRefTest extends AbstractCDOTest
   // resource.getContents().add(purchaseOrder4);
   // transaction1.commit();
   //
-  // CDOID querycdoID = ((CDOObject)supplier1).cdoID();
+  // CDOID querycdoID = CDOUtil.getCDOObject(supplier1).cdoID();
   //
   // session1.close();
   //
@@ -471,7 +471,7 @@ public class XRefTest extends AbstractCDOTest
   //
   // for (EStructuralFeature.Setting setting : settings)
   // {
-  // CDOObject crossReferencedEObject = (CDOObject)setting.get(true);
+  // CDOObject crossReferencedEObject = CDOUtil.getCDOObject(setting.get(true));
   // assertTrue(CDOIDUtil.equals(crossReferencedEObject.cdoID(), querycdoID));
   // }
   // }
@@ -506,7 +506,7 @@ public class XRefTest extends AbstractCDOTest
   // resource.getContents().add(purchaseOrder4);
   // transaction1.commit();
   //
-  // CDOID querycdoID = ((CDOObject)supplier1).cdoID();
+  // CDOID querycdoID = CDOUtil.getCDOObject(supplier1).cdoID();
   //
   // session1.close();
   //
@@ -520,7 +520,7 @@ public class XRefTest extends AbstractCDOTest
   //
   // for (EStructuralFeature.Setting setting : settings)
   // {
-  // CDOObject crossReferencedEObject = (CDOObject)setting.get(true);
+  // CDOObject crossReferencedEObject = CDOUtil.getCDOObject(setting.get(true));
   // assertTrue(CDOIDUtil.equals(crossReferencedEObject.cdoID(), querycdoID));
   // }
   // }
@@ -543,7 +543,7 @@ public class XRefTest extends AbstractCDOTest
   // resource.getContents().add(supplier1);
   // transaction1.commit();
   //
-  // CDOID queryID = ((CDOObject)supplier1).cdoID();
+  // CDOID queryID = CDOUtil.getCDOObject(supplier1).cdoID();
   //
   // session1.close();
   //

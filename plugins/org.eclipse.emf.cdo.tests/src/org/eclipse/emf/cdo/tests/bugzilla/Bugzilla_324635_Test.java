@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -19,6 +18,7 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model4.MultiContainedElement;
 import org.eclipse.emf.cdo.tests.model4.RefMultiContained;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
@@ -87,6 +87,7 @@ public class Bugzilla_324635_Test extends AbstractCDOTest
 
     // check revision versions.
     s1Tr1.waitForUpdate(s1Tr2.getLastCommitTime());
-    assertEquals(((CDOObject)container).cdoRevision().getVersion(), ((CDOObject)container2).cdoRevision().getVersion());
+    assertEquals(CDOUtil.getCDOObject(container).cdoRevision().getVersion(), CDOUtil.getCDOObject(container2)
+        .cdoRevision().getVersion());
   }
 }

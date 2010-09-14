@@ -52,6 +52,7 @@ import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.common.revision.StubCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -93,6 +94,8 @@ public class TransactionCommitContext implements InternalCommitContext
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION, TransactionCommitContext.class);
 
+  private static final InternalCDORevision DETACHED = new StubCDORevision(null);
+
   private InternalTransaction transaction;
 
   private TransactionPackageRegistry packageRegistry;
@@ -116,6 +119,8 @@ public class TransactionCommitContext implements InternalCommitContext
   private InternalCDORevision[] dirtyObjects = new InternalCDORevision[0];
 
   private List<InternalCDORevision> detachedRevisions = new ArrayList<InternalCDORevision>();
+
+  private Map<CDOID, InternalCDORevision> cachedRevisions;
 
   private Set<Object> lockedObjects = new HashSet<Object>();
 
@@ -212,6 +217,61 @@ public class TransactionCommitContext implements InternalCommitContext
   public InternalCDORevisionDelta[] getDirtyObjectDeltas()
   {
     return dirtyObjectDeltas;
+  }
+
+  public CDORevision getRevision(CDOID id)
+  {
+    if (cachedRevisions == null)
+    {
+      cachedRevisions = cacheRevisions();
+    }
+
+    // Try "after state"
+    InternalCDORevision revision = cachedRevisions.get(id);
+    if (revision == DETACHED)
+    {
+      return null;
+    }
+
+    if (revision != null)
+    {
+      return revision;
+    }
+
+    // Fall back to "before state"
+    return transaction.getRevision(id);
+  }
+
+  private Map<CDOID, InternalCDORevision> cacheRevisions()
+  {
+    Map<CDOID, InternalCDORevision> cache = new HashMap<CDOID, InternalCDORevision>();
+    if (newObjects != null)
+    {
+      for (int i = 0; i < newObjects.length; i++)
+      {
+        InternalCDORevision revision = newObjects[i];
+        cache.put(revision.getID(), revision);
+      }
+    }
+
+    if (dirtyObjects != null)
+    {
+      for (int i = 0; i < dirtyObjects.length; i++)
+      {
+        InternalCDORevision revision = dirtyObjects[i];
+        cache.put(revision.getID(), revision);
+      }
+    }
+
+    if (detachedObjects != null)
+    {
+      for (int i = 0; i < detachedObjects.length; i++)
+      {
+        cache.put(detachedObjects[i], DETACHED);
+      }
+    }
+
+    return cache;
   }
 
   public List<CDOIDMetaRange> getMetaIDRanges()

@@ -13,12 +13,15 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+
+import org.eclipse.emf.ecore.EClass;
 
 import java.util.List;
 import java.util.Map;
@@ -83,6 +86,16 @@ public abstract class DelegatingCommitContext implements IStoreAccessor.CommitCo
   public CDOID[] getDetachedObjects()
   {
     return getDelegate().getDetachedObjects();
+  }
+
+  public Map<CDOID, EClass> getDetachedObjectTypes()
+  {
+    return getDelegate().getDetachedObjectTypes();
+  }
+
+  public CDORevision getRevision(CDOID id)
+  {
+    return getDelegate().getRevision(id);
   }
 
   public Map<CDOID, CDOID> getIDMappings()

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.common;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 
 import org.eclipse.net4j.util.collection.Closeable;
 
@@ -18,7 +19,7 @@ import org.eclipse.net4j.util.collection.Closeable;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface CDOCommonView extends CDOBranchPoint, Closeable
+public interface CDOCommonView extends CDOBranchPoint, CDORevisionProvider, Closeable
 {
   public int getViewID();
 

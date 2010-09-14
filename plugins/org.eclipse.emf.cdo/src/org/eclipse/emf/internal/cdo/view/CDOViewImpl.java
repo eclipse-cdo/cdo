@@ -926,6 +926,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     return FSMUtil.adapt(eObject, this);
   }
 
+  public InternalCDORevision getRevision(CDOID id)
+  {
+    return getRevision(id, true);
+  }
+
   public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
   {
     CDORevisionManager revisionManager = session.getRevisionManager();

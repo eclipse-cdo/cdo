@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
@@ -221,7 +222,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * @since 2.0
    * @noimplement This interface is not intended to be implemented by clients.
    */
-  public interface CommitContext
+  public interface CommitContext extends CDORevisionProvider
   {
     /**
      * Returns the ID of the transactional view (<code>ITransaction</code>) which is the scope of the commit operation

@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalView;
@@ -85,6 +87,13 @@ public class View extends Lifecycle implements InternalView
   {
     checkOpen();
     return repository;
+  }
+
+  public InternalCDORevision getRevision(CDOID id)
+  {
+    CDORevisionManager revisionManager = repository.getRevisionManager();
+    return (InternalCDORevision)revisionManager.getRevision(id, this, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE,
+        true);
   }
 
   public boolean[] changeTarget(CDOBranchPoint branchPoint, List<CDOID> invalidObjects)

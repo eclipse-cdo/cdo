@@ -50,7 +50,7 @@ public class Bugzilla_324585_Test extends AbstractCDOTest
     category2.eAdapters().add(new AdapterImpl());
 
     // user1
-    for (int i = 0; i < 10000; i++)
+    for (int i = 0; i < 1000; i++)
     {
       category1.getProducts().add(getModel1Factory().createProduct1());
     }

@@ -186,6 +186,38 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     return super.eDirectResource();
   }
 
+  @Override
+  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == CDOResource.class)
+    {
+      return baseFeatureID;
+    }
+
+    if (baseClass == Resource.class)
+    {
+      return baseFeatureID + EresourcePackage.CDO_RESOURCE_NODE_FEATURE_COUNT;
+    }
+
+    return super.eBaseStructuralFeatureID(baseFeatureID, baseClass);
+  }
+
+  @Override
+  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == CDOResource.class)
+    {
+      return derivedFeatureID;
+    }
+
+    if (baseClass == Resource.class)
+    {
+      return derivedFeatureID - EresourcePackage.CDO_RESOURCE_NODE_FEATURE_COUNT;
+    }
+
+    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+  }
+
   /**
    * @since 2.0
    */

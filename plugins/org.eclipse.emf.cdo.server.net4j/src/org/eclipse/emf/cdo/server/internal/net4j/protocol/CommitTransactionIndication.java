@@ -117,44 +117,66 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
   @Override
   protected final void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
   {
-    indicating(new CDODataInputImpl(in)
+    try
     {
-      @Override
-      protected CDOPackageRegistry getPackageRegistry()
+      indicating(new CDODataInputImpl(in)
       {
-        return commitContext.getPackageRegistry();
-      }
+        @Override
+        protected CDOPackageRegistry getPackageRegistry()
+        {
+          return commitContext.getPackageRegistry();
+        }
 
-      @Override
-      protected StringIO getPackageURICompressor()
-      {
-        return getProtocol().getPackageURICompressor();
-      }
+        @Override
+        protected StringIO getPackageURICompressor()
+        {
+          return getProtocol().getPackageURICompressor();
+        }
 
-      @Override
-      protected CDOBranchManager getBranchManager()
-      {
-        return CommitTransactionIndication.this.getRepository().getBranchManager();
-      }
+        @Override
+        protected CDOBranchManager getBranchManager()
+        {
+          return CommitTransactionIndication.this.getRepository().getBranchManager();
+        }
 
-      @Override
-      protected CDOCommitInfoManager getCommitInfoManager()
-      {
-        return CommitTransactionIndication.this.getRepository().getCommitInfoManager();
-      }
+        @Override
+        protected CDOCommitInfoManager getCommitInfoManager()
+        {
+          return CommitTransactionIndication.this.getRepository().getCommitInfoManager();
+        }
 
-      @Override
-      protected CDORevisionFactory getRevisionFactory()
-      {
-        return CommitTransactionIndication.this.getRepository().getRevisionManager().getFactory();
-      }
+        @Override
+        protected CDORevisionFactory getRevisionFactory()
+        {
+          return CommitTransactionIndication.this.getRepository().getRevisionManager().getFactory();
+        }
 
-      @Override
-      protected CDOListFactory getListFactory()
-      {
-        return CDOListImpl.FACTORY;
-      }
-    }, monitor);
+        @Override
+        protected CDOListFactory getListFactory()
+        {
+          return CDOListImpl.FACTORY;
+        }
+      }, monitor);
+    }
+    catch (Exception ex)
+    {
+      indicatingFailed();
+      throw ex;
+    }
+    catch (Error ex)
+    {
+      indicatingFailed();
+      throw ex;
+    }
+  }
+
+  private void indicatingFailed()
+  {
+    if (commitContext != null)
+    {
+      commitContext.postCommit(false);
+      commitContext = null;
+    }
   }
 
   protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception

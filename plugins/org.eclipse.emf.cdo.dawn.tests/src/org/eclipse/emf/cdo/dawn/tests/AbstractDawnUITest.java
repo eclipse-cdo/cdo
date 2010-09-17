@@ -111,7 +111,6 @@ public abstract class AbstractDawnUITest extends AbstractCDOUITest// AbstractDaw
 
   protected void createEdge(String type, Node nodeFrom, Node nodeTo, SWTBotGefEditor editor)
   {
-
     Bounds boundsA = (Bounds)nodeFrom.getLayoutConstraint();
     Bounds boundsB = (Bounds)nodeTo.getLayoutConstraint();
     createEdge(type, boundsA.getX(), boundsA.getY(), boundsB.getX(), boundsB.getY(), editor);

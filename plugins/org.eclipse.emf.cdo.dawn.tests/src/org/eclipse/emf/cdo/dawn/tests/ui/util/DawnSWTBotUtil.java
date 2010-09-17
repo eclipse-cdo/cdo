@@ -15,6 +15,11 @@ import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassEditPart
 import org.eclipse.emf.cdo.dawn.synchronize.DawnConflictHelper;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
@@ -34,6 +39,8 @@ import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.matchers.AbstractMatcher;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 
 import org.hamcrest.Description;
 
@@ -45,7 +52,6 @@ import java.util.List;
  */
 public class DawnSWTBotUtil
 {
-
   public static void initTest(SWTWorkbenchBot bot)
   {
     closeWelcomePage(bot);
@@ -62,6 +68,27 @@ public class DawnSWTBotUtil
       // We can ignore this because it it thrown when the widget cannot be found which can be the case if another test
       // already closed the welcome screen.
     }
+  }
+
+  public static void setConnectorType(SWTWorkbenchBot bot, String serverName, String serverPort, String repository,
+      String protocol)
+  {
+    bot.menu("Window").menu("Preferences").click();
+    SWTBotShell shell = bot.shell("Preferences");
+    shell.activate();
+
+    bot.tree().select("Dawn Remote Preferences");
+
+    SWTBotText serverNameLabel = bot.textWithLabel("server name:");
+    SWTBotText serverPortLabel = bot.textWithLabel("server port:");
+    SWTBotText repositoryLabel = bot.textWithLabel("repository:");
+    SWTBotText fileNameLabel = bot.textWithLabel("protocol:");
+
+    serverNameLabel.setText(serverName);
+    serverPortLabel.setText(serverPort);
+    repositoryLabel.setText(repository);
+    fileNameLabel.setText(protocol);
+    bot.button("OK").click();
   }
 
   public static List<SWTBotGefEditPart> getAllEditParts(SWTBotGefEditor editor)
@@ -169,7 +196,30 @@ public class DawnSWTBotUtil
     DawnSWTBotUtil.addBendpoints(edge, newBendPoints);
   }
 
-  public static void addBendpoints(Edge edge, List<RelativeBendpoint> bendpoints)
+  public static void addBendpoints(final Edge edge, final List<RelativeBendpoint> bendpoints)
+  {
+    ResourceSet resourceSet = edge.eResource().getResourceSet();
+
+    if (resourceSet instanceof IEditingDomainProvider)
+    {
+      EditingDomain editingDomain = ((IEditingDomainProvider)resourceSet).getEditingDomain();
+
+      editingDomain.getCommandStack().execute(new RecordingCommand((TransactionalEditingDomain)editingDomain)
+      {
+        @Override
+        protected void doExecute()
+        {
+          DawnSWTBotUtil.addBendPointsInternal(edge, bendpoints);
+        }
+      });
+    }
+    else
+    {
+      addBendPointsInternal(edge, bendpoints);
+    }
+  }
+
+  private static void addBendPointsInternal(final Edge edge, final List<RelativeBendpoint> bendpoints)
   {
     RelativeBendpoints exitingBendpoints = (RelativeBendpoints)edge.getBendpoints();
     @SuppressWarnings("unchecked")

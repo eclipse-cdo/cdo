@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.dawn.tests;
 import org.eclipse.emf.cdo.dawn.tests.bugzillas.Bugzilla_321024_Test;
 import org.eclipse.emf.cdo.dawn.tests.ui.ConflictTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.DawnCreationWizardSWTBotTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.DawnPreferencesTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.DawnProjectExplorerTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.MultipleResourcesTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.SimpleDiagramTest;
@@ -30,6 +31,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ 
+  DawnPreferencesTest.class,
   DawnCreationWizardSWTBotTest.class, 
   SimpleDiagramTest.class, 
   MultipleResourcesTest.class,

@@ -18,6 +18,11 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.Node;
@@ -54,13 +59,14 @@ public class ConflictTest extends AbstractDawnUITest
   public void setUp() throws Exception
   {
     super.setUp();
+    bot.viewByTitle("CDO Sessions").close();
   }
 
   @Override
   @After
   public void tearDown() throws Exception
   {
-    closeAllEditors();
+    // closeAllEditors();
     sleep(1000);
     super.tearDown();
   }
@@ -109,8 +115,18 @@ public class ConflictTest extends AbstractDawnUITest
     editor.save();
 
     SWTBotGefEditPart swtBotGefEditPart = DawnAcoreTestUtil.getAClassEditParts(editor).get(0);
-    Node node = (Node)swtBotGefEditPart.part().getModel();
-    ((AClass)node.getElement()).setName("myName");
+    final Node node = (Node)swtBotGefEditPart.part().getModel();
+
+    EditingDomain editingDomain = ((IEditingDomainProvider)node.eResource().getResourceSet()).getEditingDomain();
+
+    editingDomain.getCommandStack().execute(new RecordingCommand((TransactionalEditingDomain)editingDomain)
+    {
+      @Override
+      protected void doExecute()
+      {
+        ((AClass)node.getElement()).setName("myName");
+      }
+    });
 
     {
       CDOSession session = openSession();
@@ -198,6 +214,10 @@ public class ConflictTest extends AbstractDawnUITest
         DawnSWTBotUtil.addBendPoint(edge, 0, 100, -100, 0);
 
         transaction.commit();
+      }
+      catch (Exception ex)
+      {
+        throw new RuntimeException(ex);
       }
       finally
       {

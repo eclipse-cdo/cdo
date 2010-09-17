@@ -59,6 +59,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 
 /**
  * TODO:
@@ -107,8 +110,15 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
   private int lastTransactionID;
 
+  private ReadLock writeThroughCommitLock;
+
+  private WriteLock handleCommitInfoLock;
+
   public SynchronizableRepository()
   {
+    ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
+    writeThroughCommitLock = rwLock.readLock();
+    handleCommitInfoLock = rwLock.writeLock();
   }
 
   public InternalRepositorySynchronizer getSynchronizer()
@@ -205,6 +215,8 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
     try
     {
+      handleCommitInfoLock.lock();
+
       commitContext.write(new Monitor());
       commitContext.commit(new Monitor());
 
@@ -214,6 +226,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
     finally
     {
+      handleCommitInfoLock.unlock();
       commitContext.postCommit(success);
       transaction.close();
     }
@@ -508,10 +521,19 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       addIDMappings(result.getIDMappings());
       applyIDMappings(new Monitor());
 
-      // Commit to the local repository
-      super.preWrite();
-      super.write(new Monitor());
-      super.commit(new Monitor());
+      try
+      {
+        writeThroughCommitLock.lock();
+
+        // Commit to the local repository
+        super.preWrite();
+        super.write(new Monitor());
+        super.commit(new Monitor());
+      }
+      finally
+      {
+        writeThroughCommitLock.unlock();
+      }
 
       // Remember commit time in the local repository
       setLastCommitTimeStamp(timeStamp);

@@ -17,9 +17,8 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.mango.MangoValue;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -37,12 +36,9 @@ public class Bugzilla_314186_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction(resourceSet);
     CDOResource resource = transaction.createResource("/resource");
 
-    resource.eAdapters().add(new Adapter()
+    resource.eAdapters().add(new AdapterImpl()
     {
-      public void setTarget(Notifier newTarget)
-      {
-      }
-
+      @Override
       public void notifyChanged(Notification notification)
       {
         if (notification.getFeature() != null
@@ -50,16 +46,6 @@ public class Bugzilla_314186_Test extends AbstractCDOTest
         {
           assertEquals(Resource.RESOURCE__RESOURCE_SET, notification.getFeatureID(Resource.class));
         }
-      }
-
-      public boolean isAdapterForType(Object type)
-      {
-        return false;
-      }
-
-      public Notifier getTarget()
-      {
-        return null;
       }
     });
 

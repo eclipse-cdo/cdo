@@ -132,6 +132,11 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   /**
    * @ADDED
    */
+  private boolean modified;
+
+  /**
+   * @ADDED
+   */
   private EList<Diagnostic> errors;
 
   /**
@@ -335,11 +340,11 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   public boolean isModified()
   {
-    return (Boolean)eGet(EresourcePackage.Literals.CDO_RESOURCE__MODIFIED, true);
+    return modified;
   }
 
   /**
@@ -349,11 +354,11 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
    */
   public void setModified(boolean newModified)
   {
-    boolean oldIsModified = isModified();
-    eSet(EresourcePackage.Literals.CDO_RESOURCE__MODIFIED, Boolean.valueOf(newModified));
-    if (eNotificationRequired())
+    boolean oldModified = modified;
+    modified = newModified;
+    if (oldModified != newModified && eNotificationRequired())
     {
-      Notification notification = new NotificationImpl(Notification.SET, oldIsModified, newModified)
+      Notification notification = new NotificationImpl(Notification.SET, oldModified, newModified)
       {
         @Override
         public Object getNotifier()

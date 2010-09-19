@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ASCII"?>
+<releng:Server xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:releng="http://releng/1.0" xsi:schemaLocation="http://releng/1.0 Releng.ecore" name="build.eclipse.org">
+  <buildJobs name="emf-cdo-maintenance" sourceBranch="R3_0_maintenance" buckminsterComponent="/cvsroot/modeling/org.eclipse.emf/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng">
+    <types>N</types>
+    <types>M</types>
+    <types>R</types>
+    <result location="builds/{build}/result/site.p2"/>
+    <promotions buildType="M">
+      <target href="download.eclipse.org.xmi#//@repositories.0"/>
+      <criteria description="Weekly after EMF"/>
+      <criteria description="Build successful "/>
+      <criteria description="Stability not considerably reduced"/>
+    </promotions>
+    <promotions buildType="R">
+      <target href="download.eclipse.org.xmi#//@repositories.1"/>
+      <criteria description="Approved by project lead"/>
+    </promotions>
+  </buildJobs>
+  <buildJobs name="emf-cdo-integration" sourceBranch="HEAD" buckminsterComponent="/cvsroot/modeling/org.eclipse.emf/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng">
+    <types>I</types>
+    <types>S</types>
+    <types>R</types>
+    <result location="builds/{build}/result/site.p2"/>
+    <promotions buildType="I">
+      <target href="download.eclipse.org.xmi#//@repositories.4"/>
+      <criteria description="Weekly after EMF"/>
+      <criteria description="Build successful "/>
+      <criteria description="Stability not considerably reduced"/>
+    </promotions>
+    <promotions buildType="S">
+      <target href="download.eclipse.org.xmi#//@repositories.5"/>
+      <criteria description="Approved by project lead"/>
+    </promotions>
+    <promotions buildType="R">
+      <target href="download.eclipse.org.xmi#//@repositories.6"/>
+      <criteria description="Approved by project lead"/>
+    </promotions>
+  </buildJobs>
+</releng:Server>

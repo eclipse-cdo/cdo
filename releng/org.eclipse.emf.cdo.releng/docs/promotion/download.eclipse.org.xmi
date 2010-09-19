@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ASCII"?>
+<releng:Server xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:releng="http://releng/1.0" xsi:schemaLocation="http://releng/1.0 Releng.ecore" name="download.eclipse.org">
+  <repositories location="modeling/emf/cdo/updates/3.0/{build}-M"/>
+  <repositories location="modeling/emf/cdo/updates/3.0/{build}-R"/>
+  <repositories location="modeling/emf/cdo/updates/4.0/{build}-I"/>
+  <repositories location="modeling/emf/cdo/updates/4.0/{build}-S"/>
+  <repositories location="modeling/emf/cdo/updates/4.0/{build}-R"/>
+  <repositories xsi:type="releng:CompositeRepository" location="modeling/emf/cdo/updates/3.0-maintenance" elements="//@repositories.0 //@repositories.1"/>
+  <repositories xsi:type="releng:CompositeRepository" location="modeling/emf/cdo/updates/3.0-releases" elements="//@repositories.1"/>
+  <repositories xsi:type="releng:CompositeRepository" location="modeling/emf/cdo/updates/4.0-integration" elements="//@repositories.2 //@repositories.3 //@repositories.4"/>
+  <repositories xsi:type="releng:CompositeRepository" location="modeling/emf/cdo/updates/4.0-stable" elements="//@repositories.3 //@repositories.4"/>
+</releng:Server>

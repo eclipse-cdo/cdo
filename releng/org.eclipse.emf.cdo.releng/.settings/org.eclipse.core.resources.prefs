@@ -1,6 +1,8 @@
-#Thu Jul 15 11:10:09 CEST 2010
+#Sun Sep 19 18:10:19 CEST 2010
 eclipse.preferences.version=1
 encoding//docs/baseline.target=UTF-8
+encoding//docs/promotion/Releng.ecore=UTF-8
+encoding//docs/promotion/Releng.ecorediag=UTF-8
 encoding//psf/extssh/_bootstrap.psf=UTF-8
 encoding/buckminster.cspec=UTF-8
 encoding/build.cquery=UTF-8

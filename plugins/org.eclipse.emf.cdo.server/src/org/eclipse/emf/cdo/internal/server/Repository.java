@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
@@ -44,7 +45,6 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
@@ -429,7 +429,7 @@ public class Repository extends Container<Object> implements InternalRepository
             PointerCDORevision pointer = new PointerCDORevision(target.getEClass(), id, branch, revised, target);
             info.setSynthetic(pointer);
           }
-          
+
           info.setResult(target);
         }
         else
@@ -1555,7 +1555,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
     protected InternalCDORevisionManager createRevisionManager()
     {
-      return new CDORevisionManagerImpl();
+      return (InternalCDORevisionManager)CDORevisionUtil.createRevisionManager();
     }
 
     protected InternalQueryManager createQueryManager()

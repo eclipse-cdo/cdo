@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.examples.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
-import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.Net4jUtil;
@@ -253,9 +252,7 @@ public abstract class FailOverExample
         CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
         configuration.setConnector(connector);
         configuration.setRepositoryName(peerRepository);
-        InternalCDORevisionManager revisionManager = new CDORevisionManagerImpl();
-        revisionManager.setCache(CDORevisionCache.NOOP);
-        configuration.setRevisionManager(revisionManager);
+        configuration.setRevisionManager(CDORevisionUtil.createRevisionManager(CDORevisionCache.NOOP));
         return configuration;
       }
     };

@@ -12,12 +12,15 @@ package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.CDOFeatureMapEntryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionKeyImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureMapEntry;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMap;
@@ -39,6 +42,24 @@ public final class CDORevisionUtil
 
   private CDORevisionUtil()
   {
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static CDORevisionManager createRevisionManager()
+  {
+    return new CDORevisionManagerImpl();
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static CDORevisionManager createRevisionManager(CDORevisionCache cache)
+  {
+    InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)createRevisionManager();
+    revisionManager.setCache(cache);
+    return revisionManager;
   }
 
   /**

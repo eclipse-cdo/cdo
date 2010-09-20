@@ -18,9 +18,9 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
-import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -230,7 +230,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     if (revisionManager == null)
     {
-      revisionManager = new CDORevisionManagerImpl();
+      revisionManager = (InternalCDORevisionManager)CDORevisionUtil.createRevisionManager();
     }
 
     revisionManager.setSupportingBranches(session.getRepositoryInfo().isSupportingBranches());

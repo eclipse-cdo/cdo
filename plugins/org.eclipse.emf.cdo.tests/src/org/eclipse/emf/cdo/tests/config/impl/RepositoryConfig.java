@@ -12,7 +12,7 @@
 package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
-import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionImpl;
@@ -388,7 +388,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
           IManagedContainer container = getCurrentTest().getServerContainer();
           IConnector connector = (IConnector)container.getElement("org.eclipse.net4j.connectors", "jvm", acceptorName);
 
-          InternalCDORevisionManager revisionManager = new CDORevisionManagerImpl();
+          InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)CDORevisionUtil
+              .createRevisionManager();
           revisionManager.setCache(new NOOPRevisionCache());
 
           CDOSessionConfiguration config = new CDONet4jSessionConfigurationImpl()

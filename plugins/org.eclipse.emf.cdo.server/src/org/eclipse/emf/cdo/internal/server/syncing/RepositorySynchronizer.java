@@ -356,7 +356,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
         {
           if (isActive())
           {
-            OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...");
+            OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...", ex);
             long end = System.currentTimeMillis() + 1000L * retryInterval;
 
             for (;;)

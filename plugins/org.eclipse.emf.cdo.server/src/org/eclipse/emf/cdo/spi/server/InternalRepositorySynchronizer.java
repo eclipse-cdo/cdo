@@ -36,6 +36,4 @@ public interface InternalRepositorySynchronizer extends IRepositorySynchronizer,
 
   @Deprecated
   public void setSqueezeCommitInfos(boolean squeezeCommitInfos);
-
-  public void setRawReplication(boolean rawReplication);
 }

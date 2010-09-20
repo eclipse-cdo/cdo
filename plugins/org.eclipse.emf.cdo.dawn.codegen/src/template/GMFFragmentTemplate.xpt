@@ -17,7 +17,7 @@
 «IMPORT ecore»
 «IMPORT dawngenmodel»
 
-«EXTENSION org::eclipse::emf::cdo::dawn::codegen::util::util»
+«EXTENSION org::eclipse::emf::cdo::dawn::codegen::util::Utils»
 
 «DEFINE main FOR DawnGMFGenerator»
  «setDiagramPackage(this.GMFGenEditorGenerator.packageNamePrefix)»

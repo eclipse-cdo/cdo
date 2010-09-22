@@ -16,7 +16,9 @@ import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.net4j.CDOSession;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.net4j.CDOSessionFailoverEvent;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositorySynchronizer;
@@ -39,7 +41,6 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.tcp.TCPUtil;
-import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
@@ -54,7 +55,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -402,7 +402,7 @@ public abstract class FailoverExample
    */
   public static class Monitored extends FailoverExample
   {
-    public static final String REPOSITORY_MONITOR_GROUP = "ExampleGroup";
+    public static final String REPOSITORY_GROUP = "ExampleGroup";
 
     public static final int REPOSITORY_MONITOR_PORT = 2038;
 
@@ -440,7 +440,7 @@ public abstract class FailoverExample
       agent.setMonitorConnector(createConnector("localhost:" + REPOSITORY_MONITOR_PORT));
       agent.setConnectorDescription(host + ":" + port);
       agent.setRepository(repository);
-      agent.setGroup(REPOSITORY_MONITOR_GROUP);
+      agent.setGroup(REPOSITORY_GROUP);
       agent.setRate(500L);
       agent.setTimeout(2000L);
       agent.activate();
@@ -457,35 +457,30 @@ public abstract class FailoverExample
       {
         IManagedContainer container = createContainer();
         FailoverMonitor monitor = (FailoverMonitor)container.getElement(FailoverMonitor.PRODUCT_GROUP, "net4j",
-            REPOSITORY_MONITOR_GROUP);
+            REPOSITORY_GROUP);
 
-        monitor.addListener(new ContainerEventAdapter<Pair<String, String>>()
+        monitor.addListener(new ContainerEventAdapter<AgentProtocol>()
         {
           @Override
-          protected void onAdded(IContainer<Pair<String, String>> monitor, Pair<String, String> agent)
+          protected void onAdded(IContainer<AgentProtocol> monitor, AgentProtocol agent)
           {
             dump((FailoverMonitor)monitor, "Added", agent);
           }
 
           @Override
-          protected void onRemoved(IContainer<Pair<String, String>> monitor, Pair<String, String> agent)
+          protected void onRemoved(IContainer<AgentProtocol> monitor, AgentProtocol agent)
           {
             dump((FailoverMonitor)monitor, "Removed", agent);
           }
 
-          private void dump(FailoverMonitor monitor, String event, Pair<String, String> agent)
+          private void dump(FailoverMonitor monitor, String event, AgentProtocol agent)
           {
-            System.out.println(event + " agent " + format(agent));
-            for (Entry<AgentProtocol, Pair<String, String>> entry : monitor.getAgents().entrySet())
+            System.out.println(event + " agent " + agent);
+            for (AgentProtocol element : monitor.getElements())
             {
-              String type = entry.getKey() == monitor.getMasterAgent() ? "MASTER: " : "BACKUP: ";
-              System.out.println("   " + type + format(entry.getValue()));
+              String type = element == monitor.getMasterAgent() ? "MASTER: " : "BACKUP: ";
+              System.out.println("   " + type + element);
             }
-          }
-
-          private String format(Pair<String, String> agent)
-          {
-            return agent.getElement1() + "/" + agent.getElement2();
           }
         });
 
@@ -534,6 +529,38 @@ public abstract class FailoverExample
         example.init();
         example.run();
         example.done();
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static final class Client
+    {
+      public static void main(String[] args) throws Exception
+      {
+        IManagedContainer container = createContainer();
+        CDOSessionConfiguration configuration = CDONet4jUtil.createFailoverSessionConfiguration(container, "localhost:"
+            + REPOSITORY_MONITOR_PORT, REPOSITORY_GROUP);
+
+        CDOSession session = configuration.openSession();
+        session.addListener(new IListener()
+        {
+          public void notifyEvent(IEvent event)
+          {
+            if (event instanceof CDOSessionFailoverEvent)
+            {
+              CDOSessionFailoverEvent e = (CDOSessionFailoverEvent)event;
+              System.out.println("Failover " + e.getType() + ": " + e.getSource().getRepositoryInfo());
+            }
+          }
+        });
+
+        System.out.println("Connected");
+        while (!session.isClosed())
+        {
+          Thread.sleep(100);
+        }
       }
     }
   }

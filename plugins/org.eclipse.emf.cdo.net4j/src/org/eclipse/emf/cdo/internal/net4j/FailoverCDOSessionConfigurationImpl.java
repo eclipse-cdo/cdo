@@ -109,6 +109,7 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
   @Override
   public InternalCDOSession createSession()
   {
+    updateConnectorAndRepositoryName();
     return new FailoverCDOSessionImpl(this);
   }
 
@@ -120,12 +121,7 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
       setPassiveUpdateEnabled(session.options().isPassiveUpdateEnabled());
       setPassiveUpdateMode(session.options().getPassiveUpdateMode());
 
-      Pair<String, String> info = queryRepositoryInfoFromMonitor();
-      IConnector connector = getConnector(info.getElement1());
-      String repositoryName = null;
-
-      superSetConnector(connector);
-      superSetRepositoryName(repositoryName);
+      updateConnectorAndRepositoryName();
       initProtocol(session);
 
       reregisterViews(session, targets);
@@ -141,6 +137,18 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
       session.deactivate();
       throw ex;
     }
+  }
+
+  private void updateConnectorAndRepositoryName()
+  {
+    Pair<String, String> info = queryRepositoryInfoFromMonitor();
+    IConnector connector = getConnector(info.getElement1());
+    String repositoryName = info.getElement2();
+
+    System.out.println("Connecting to " + info.getElement1() + "/" + repositoryName);
+
+    superSetConnector(connector);
+    superSetRepositoryName(repositoryName);
   }
 
   protected Pair<String, String> queryRepositoryInfoFromMonitor()

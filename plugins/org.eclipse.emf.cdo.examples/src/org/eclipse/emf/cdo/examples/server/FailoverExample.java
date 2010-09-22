@@ -405,6 +405,10 @@ public abstract class FailoverExample
   {
     public static final String REPOSITORY_GROUP = "ExampleGroup";
 
+    // public static final String REPOSITORY_MONITOR_HOST = "92.231.107.180";
+
+    public static final String REPOSITORY_MONITOR_HOST = "localhost";
+
     public static final int REPOSITORY_MONITOR_PORT = 2038;
 
     protected String host;
@@ -438,12 +442,12 @@ public abstract class FailoverExample
         }
       };
 
-      agent.setMonitorConnector(createConnector("localhost:" + REPOSITORY_MONITOR_PORT));
+      agent.setMonitorConnector(createConnector(REPOSITORY_MONITOR_HOST + ":" + REPOSITORY_MONITOR_PORT));
       agent.setConnectorDescription(host + ":" + port);
       agent.setRepository(repository);
       agent.setGroup(REPOSITORY_GROUP);
-      agent.setRate(60000L);
-      agent.setTimeout(200000L);
+      agent.setRate(200L);
+      agent.setTimeout(2000L);
       agent.activate();
 
       return repository;
@@ -541,8 +545,8 @@ public abstract class FailoverExample
       public static void main(String[] args) throws Exception
       {
         IManagedContainer container = createContainer();
-        CDOSessionConfiguration configuration = CDONet4jUtil.createFailoverSessionConfiguration(container, "localhost:"
-            + REPOSITORY_MONITOR_PORT, REPOSITORY_GROUP);
+        CDOSessionConfiguration configuration = CDONet4jUtil.createFailoverSessionConfiguration(container,
+            REPOSITORY_MONITOR_HOST + ":" + REPOSITORY_MONITOR_PORT, REPOSITORY_GROUP);
 
         CDOSession session = configuration.openSession();
         session.addListener(new IListener()

@@ -110,6 +110,7 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
 
       reregisterViews(session, targets);
       reregisterRemoteSessions(session);
+      System.out.println("Connected");
     }
     catch (RuntimeException ex)
     {

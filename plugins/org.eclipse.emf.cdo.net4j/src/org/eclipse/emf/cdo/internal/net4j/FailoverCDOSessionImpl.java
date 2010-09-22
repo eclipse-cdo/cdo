@@ -10,6 +10,9 @@
  */
 package org.eclipse.emf.cdo.internal.net4j;
 
+import org.eclipse.emf.cdo.net4j.CDOSessionFailoverEvent;
+import org.eclipse.emf.cdo.session.CDOSession;
+
 /**
  * @author Eike Stepper
  */
@@ -29,6 +32,24 @@ public class FailoverCDOSessionImpl extends CDONet4jSessionImpl
   @Override
   protected void sessionProtocolDeactivated()
   {
-    getConfiguration().sessionProtocolDeactivated(this);
+    fireFailoverEvent(CDOSessionFailoverEvent.Type.STARTED);
+    getConfiguration().failover(this);
+    fireFailoverEvent(CDOSessionFailoverEvent.Type.FINISHED);
+  }
+
+  private void fireFailoverEvent(final CDOSessionFailoverEvent.Type type)
+  {
+    fireEvent(new CDOSessionFailoverEvent()
+    {
+      public CDOSession getSource()
+      {
+        return FailoverCDOSessionImpl.this;
+      }
+
+      public Type getType()
+      {
+        return type;
+      }
+    });
   }
 }

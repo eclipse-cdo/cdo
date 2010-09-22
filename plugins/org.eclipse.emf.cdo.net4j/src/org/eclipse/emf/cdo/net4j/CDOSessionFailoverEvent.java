@@ -8,18 +8,23 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.session;
+package org.eclipse.emf.cdo.net4j;
 
-import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.emf.cdo.session.CDOSessionEvent;
 
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @since 4.0
  */
-public interface CDOSessionEvent extends IEvent
+public interface CDOSessionFailoverEvent extends CDOSessionEvent
 {
+  public Type getType();
+
   /**
-   * @since 3.0
+   * @author Eike Stepper
    */
-  public CDOSession getSource();
+  public enum Type
+  {
+    STARTED, FINISHED
+  }
 }

@@ -103,7 +103,7 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
     return new FailoverCDOSessionImpl(this);
   }
 
-  public void sessionProtocolDeactivated(FailoverCDOSessionImpl session)
+  public void failover(FailoverCDOSessionImpl session)
   {
     try
     {
@@ -118,9 +118,15 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
       // TODO Re-register all remote sessions
       // TODO Re-register all views
     }
-    catch (Throwable t)
+    catch (RuntimeException ex)
     {
       session.deactivate();
+      throw ex;
+    }
+    catch (Error ex)
+    {
+      session.deactivate();
+      throw ex;
     }
   }
 

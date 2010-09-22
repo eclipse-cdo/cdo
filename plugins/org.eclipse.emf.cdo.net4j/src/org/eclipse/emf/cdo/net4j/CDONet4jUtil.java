@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.net4j;
 
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionFactory;
+import org.eclipse.emf.cdo.internal.net4j.FailoverCDOSessionConfigurationImpl;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocolFactory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -31,6 +32,15 @@ public final class CDONet4jUtil
   public static CDOSessionConfiguration createSessionConfiguration()
   {
     return new CDONet4jSessionConfigurationImpl();
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static FailoverCDOSessionConfiguration createFailoverSessionConfiguration(String monitorConnectorDescription,
+      String repositoryGroup)
+  {
+    return new FailoverCDOSessionConfigurationImpl(monitorConnectorDescription, repositoryGroup);
   }
 
   public static void prepareContainer(IManagedContainer container)

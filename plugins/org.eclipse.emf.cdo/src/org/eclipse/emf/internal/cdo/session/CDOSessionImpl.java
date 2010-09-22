@@ -146,7 +146,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     @Override
     protected void onDeactivated(ILifecycle lifecycle)
     {
-      CDOSessionImpl.this.deactivate();
+      sessionProtocolDeactivated();
     }
   };
 
@@ -1033,6 +1033,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     EventUtil.removeListener(sessionProtocol, sessionProtocolListener);
     getConfiguration().deactivateSession(this);
     super.doDeactivate();
+  }
+
+  protected void sessionProtocolDeactivated()
+  {
+    deactivate();
   }
 
   public static boolean isInvalidationRunnerActive()

@@ -105,16 +105,23 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
 
   public void sessionProtocolDeactivated(FailoverCDOSessionImpl session)
   {
-    Pair<String, String> info = queryRepositoryInfoFromMonitor();
-    IConnector connector = getConnector(info.getElement1());
-    String repositoryName = null;
+    try
+    {
+      Pair<String, String> info = queryRepositoryInfoFromMonitor();
+      IConnector connector = getConnector(info.getElement1());
+      String repositoryName = null;
 
-    superSetConnector(connector);
-    superSetRepositoryName(repositoryName);
-    initProtocol(session);
+      superSetConnector(connector);
+      superSetRepositoryName(repositoryName);
+      initProtocol(session);
 
-    // TODO Re-register all remote sessions
-    // TODO Re-register all views
+      // TODO Re-register all remote sessions
+      // TODO Re-register all views
+    }
+    catch (Throwable t)
+    {
+      session.deactivate();
+    }
   }
 
   protected Pair<String, String> queryRepositoryInfoFromMonitor()

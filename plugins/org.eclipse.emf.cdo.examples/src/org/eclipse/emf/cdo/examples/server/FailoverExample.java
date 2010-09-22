@@ -27,7 +27,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.server.net4j.FailoverAgent;
 import org.eclipse.emf.cdo.server.net4j.FailoverMonitor;
-import org.eclipse.emf.cdo.server.net4j.FailoverMonitor.Protocol;
+import org.eclipse.emf.cdo.server.net4j.FailoverMonitor.AgentProtocol;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
@@ -476,7 +476,7 @@ public abstract class FailoverExample
           private void dump(FailoverMonitor monitor, String event, Pair<String, String> agent)
           {
             System.out.println(event + " agent " + format(agent));
-            for (Entry<Protocol, Pair<String, String>> entry : monitor.getAgents().entrySet())
+            for (Entry<AgentProtocol, Pair<String, String>> entry : monitor.getAgents().entrySet())
             {
               String type = entry.getKey() == monitor.getMasterAgent() ? "MASTER: " : "BACKUP: ";
               System.out.println("   " + type + format(entry.getValue()));

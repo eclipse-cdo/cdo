@@ -91,7 +91,6 @@ public abstract class FailoverExample
   public static IManagedContainer createContainer()
   {
     IManagedContainer container = ContainerUtil.createContainer();
-    ContainerUtil.prepareContainer(container); // Register general stuff
     Net4jUtil.prepareContainer(container); // Register Net4j factories
     TCPUtil.prepareContainer(container); // Register TCP factories
     CDONet4jUtil.prepareContainer(container); // Register CDO client factories

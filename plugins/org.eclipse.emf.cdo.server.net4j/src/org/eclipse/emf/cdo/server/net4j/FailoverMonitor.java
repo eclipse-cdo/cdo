@@ -353,6 +353,7 @@ public class FailoverMonitor extends Container<AgentProtocol>
           protected void indicating(ExtendedDataInputStream in) throws Exception
           {
             String group = in.readString();
+            System.out.println("group: " + group);
             failoverMonitor = failoverMonitorProvider.getFailoverMonitor(group);
             if (failoverMonitor == null)
             {

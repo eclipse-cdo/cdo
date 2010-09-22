@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.server.net4j;
 
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOServerProtocolFactory;
+import org.eclipse.emf.cdo.server.internal.net4j.syncing.FailoverMonitor;
 import org.eclipse.emf.cdo.spi.server.ContainerRepositoryProvider;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -28,6 +29,8 @@ public final class CDONet4jServerUtil
   public static void prepareContainer(IManagedContainer container, IRepositoryProvider repositoryProvider)
   {
     container.registerFactory(new CDOServerProtocolFactory(repositoryProvider));
+    container.registerFactory(new FailoverMonitor.Factory());
+    container.registerFactory(new FailoverMonitor.Protocol.Factory(container));
   }
 
   public static void prepareContainer(IManagedContainer container)

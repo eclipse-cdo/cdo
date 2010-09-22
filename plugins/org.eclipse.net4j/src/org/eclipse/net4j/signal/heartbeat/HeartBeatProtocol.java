@@ -32,6 +32,7 @@ import org.eclipse.internal.net4j.bundle.OM;
 
 import org.eclipse.spi.net4j.ServerProtocolFactory;
 
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -53,13 +54,21 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
 
   private Timer timer;
 
-  public HeartBeatProtocol(IConnector connector, Timer timer)
+  /**
+   * @since 3.1
+   */
+  protected HeartBeatProtocol(String type, IConnector connector, Timer timer)
   {
-    super(TYPE);
+    super(type);
     checkArg(timer, "timer"); //$NON-NLS-1$
     checkArg(connector, "connector"); //$NON-NLS-1$
     this.timer = timer;
     open(connector);
+  }
+
+  public HeartBeatProtocol(IConnector connector, Timer timer)
+  {
+    this(TYPE, connector, timer);
   }
 
   public HeartBeatProtocol(IConnector connector)
@@ -95,7 +104,7 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
         @Override
         protected void requesting(ExtendedDataOutputStream out) throws Exception
         {
-          out.writeLong(rate);
+          requestingStart(out, rate);
         }
       }.sendAsync();
     }
@@ -159,6 +168,14 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
     super.doDeactivate();
   }
 
+  /**
+   * @since 3.1
+   */
+  protected void requestingStart(ExtendedDataOutputStream out, long rate) throws IOException
+  {
+    out.writeLong(rate);
+  }
+
   public static Timer getDefaultTimer(IManagedContainer container)
   {
     return TimerLifecycle.DaemonFactory.getTimer(container, null);
@@ -175,9 +192,17 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
 
     private TimerTask heartBeatTimerTask;
 
+    /**
+     * @since 3.1
+     */
+    protected Server(String type)
+    {
+      super(type);
+    }
+
     public Server()
     {
-      super(TYPE);
+      this(TYPE);
     }
 
     public Timer getHeartBeatTimer()
@@ -201,9 +226,7 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
           @Override
           protected void indicating(ExtendedDataInputStream in) throws Exception
           {
-            heartBeatRate = in.readLong();
-            cancelHeartBeatTask();
-            scheduleHeartBeatTask();
+            indicatingStart(in);
           }
         };
       }
@@ -223,6 +246,16 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
     {
       cancelHeartBeatTask();
       super.doDeactivate();
+    }
+
+    /**
+     * @since 3.1
+     */
+    protected void indicatingStart(ExtendedDataInputStream in) throws IOException
+    {
+      heartBeatRate = in.readLong();
+      cancelHeartBeatTask();
+      scheduleHeartBeatTask();
     }
 
     private void scheduleHeartBeatTask()

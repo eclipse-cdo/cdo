@@ -124,6 +124,23 @@ public final class CDOServerUtil
     return createFailoverParticipant(name, store, props, synchronizer, master, false);
   }
 
+  /**
+   * @since 4.0
+   */
+  public static ISynchronizableRepository createFailoverParticipant(String name, IStore store,
+      Map<String, String> props, IRepositorySynchronizer synchronizer)
+  {
+    return createFailoverParticipant(name, store, props, synchronizer, false);
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static ISynchronizableRepository createFailoverParticipant(String name, IStore store, Map<String, String> props)
+  {
+    return createFailoverParticipant(name, store, props, null);
+  }
+
   private static void initRepository(Repository repository, String name, IStore store, Map<String, String> props)
   {
     repository.setName(name);

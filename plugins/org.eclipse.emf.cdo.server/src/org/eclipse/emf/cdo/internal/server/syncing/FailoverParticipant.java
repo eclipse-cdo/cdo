@@ -11,12 +11,13 @@
 package org.eclipse.emf.cdo.internal.server.syncing;
 
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
+import org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 /**
  * @author Eike Stepper
  */
-public class FailoverParticipant extends SynchronizableRepository
+public class FailoverParticipant extends SynchronizableRepository implements InternalFailoverParticipant
 {
   private boolean allowBackupCommits;
 

@@ -187,9 +187,11 @@ public class FailoverMonitor extends Container<Pair<String, String>>
    */
   public static class Factory extends org.eclipse.net4j.util.factory.Factory
   {
+    public static final String TYPE = "net4j";
+
     public Factory()
     {
-      super(PRODUCT_GROUP, "net4j");
+      super(PRODUCT_GROUP, TYPE);
     }
 
     public FailoverMonitor create(String description) throws ProductCreationException

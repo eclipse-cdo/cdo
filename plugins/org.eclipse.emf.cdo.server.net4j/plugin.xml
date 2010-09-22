@@ -19,6 +19,14 @@
         	productGroup="org.eclipse.net4j.serverProtocols"
             type="cdo"
             class="org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOPluginProtocolFactory"/>
+		<factory
+        	productGroup="org.eclipse.net4j.serverProtocols"
+            type="failover"
+            class="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$Protocol$Factory"/>
+		<factory
+        	productGroup="org.eclipse.emf.cdo.server.net4j.failoverMonitors"
+            type="net4j"
+            class="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$Factory"/>
    	</extension>
 
 	 <extension

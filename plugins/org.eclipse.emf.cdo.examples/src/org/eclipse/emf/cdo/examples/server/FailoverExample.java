@@ -24,10 +24,10 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.ISynchronizableRepository;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.server.internal.net4j.syncing.FailoverAgent;
-import org.eclipse.emf.cdo.server.internal.net4j.syncing.FailoverMonitor;
-import org.eclipse.emf.cdo.server.internal.net4j.syncing.FailoverMonitor.Protocol;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
+import org.eclipse.emf.cdo.server.net4j.FailoverAgent;
+import org.eclipse.emf.cdo.server.net4j.FailoverMonitor;
+import org.eclipse.emf.cdo.server.net4j.FailoverMonitor.Protocol;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 

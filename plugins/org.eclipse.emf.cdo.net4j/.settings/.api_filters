@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.net4j" version="2">
-    <resource path="src/org/eclipse/emf/cdo/internal/net4j/CDONet4jSessionConfigurationImpl.java" type="org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl$RepositoryInfo">
-        <filter id="574660632">
-            <message_arguments>
-                <message_argument value="CDORepositoryInfo"/>
-                <message_argument value="CDOCommonRepository"/>
-                <message_argument value="RepositoryInfo"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/net4j/protocol/OpenSessionRequest.java" type="org.eclipse.emf.cdo.internal.net4j.protocol.OpenSessionRequest">
         <filter id="572522506">
             <message_arguments>

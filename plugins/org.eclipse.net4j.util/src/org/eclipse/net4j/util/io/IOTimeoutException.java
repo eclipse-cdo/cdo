@@ -44,7 +44,7 @@ public class IOTimeoutException extends IOException
   public TimeoutException createTimeoutException()
   {
     TimeoutException timeoutException = new TimeoutException(getMessage());
-    timeoutException.initCause(getCause());
+    timeoutException.initCause(this);
     return timeoutException;
   }
 }

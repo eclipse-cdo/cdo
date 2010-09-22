@@ -195,29 +195,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   public void activateSession(InternalCDOSession session) throws Exception
   {
     super.activateSession(session);
-
-    CDOClientProtocol protocol = new CDOClientProtocol();
-    protocol.setInfraStructure(session);
-    if (streamWrapper != null)
-    {
-      protocol.setStreamWrapper(streamWrapper);
-    }
-
-    session.setSessionProtocol(protocol);
-    if (connector != null)
-    {
-      protocol.setFailOverStrategy(new NOOPFailOverStrategy(connector));
-    }
-    else if (failOverStrategy != null)
-    {
-      protocol.setFailOverStrategy(failOverStrategy);
-    }
-
-    OpenSessionResult result = protocol.openSession(repositoryName, isPassiveUpdateEnabled(), getPassiveUpdateMode());
-    session.setSessionID(result.getSessionID());
-    session.setUserID(result.getUserID());
-    session.setLastUpdateTime(result.getLastUpdateTime());
-    session.setRepositoryInfo(new RepositoryInfo(repositoryName, result));
+    OpenSessionResult result = initProtocol(session);
 
     if (packageRegistry == null)
     {
@@ -271,6 +249,33 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
       getPackageRegistry().putPackageUnit(packageUnit);
     }
+  }
+
+  protected OpenSessionResult initProtocol(InternalCDOSession session)
+  {
+    CDOClientProtocol protocol = new CDOClientProtocol();
+    protocol.setInfraStructure(session);
+    if (streamWrapper != null)
+    {
+      protocol.setStreamWrapper(streamWrapper);
+    }
+
+    session.setSessionProtocol(protocol);
+    if (connector != null)
+    {
+      protocol.setFailOverStrategy(new NOOPFailOverStrategy(connector));
+    }
+    else if (failOverStrategy != null)
+    {
+      protocol.setFailOverStrategy(failOverStrategy);
+    }
+
+    OpenSessionResult result = protocol.openSession(repositoryName, isPassiveUpdateEnabled(), getPassiveUpdateMode());
+    session.setSessionID(result.getSessionID());
+    session.setUserID(result.getUserID());
+    session.setLastUpdateTime(result.getLastUpdateTime());
+    session.setRepositoryInfo(new RepositoryInfo(repositoryName, result));
+    return result;
   }
 
   @Override

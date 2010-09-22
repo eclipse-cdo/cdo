@@ -29,7 +29,8 @@ public final class CDONet4jServerUtil
   {
     container.registerFactory(new CDOServerProtocolFactory(repositoryProvider));
     container.registerFactory(new FailoverMonitor.Factory());
-    container.registerFactory(new FailoverMonitor.Protocol.Factory(container));
+    container.registerFactory(new FailoverMonitor.AgentProtocol.Factory(container));
+    container.registerFactory(new FailoverMonitor.ClientProtocol.Factory(container));
   }
 
   public static void prepareContainer(IManagedContainer container)

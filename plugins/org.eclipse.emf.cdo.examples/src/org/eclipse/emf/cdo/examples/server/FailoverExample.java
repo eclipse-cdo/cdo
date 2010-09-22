@@ -404,6 +404,8 @@ public abstract class FailoverExample
   {
     public static final String REPOSITORY_MONITOR_GROUP = "ExampleGroup";
 
+    public static final int REPOSITORY_MONITOR_PORT = 2038;
+
     protected String host;
 
     public Monitored(String host, int port, String name)
@@ -435,7 +437,7 @@ public abstract class FailoverExample
         }
       };
 
-      agent.setMonitorConnector(createConnector("localhost:2038"));
+      agent.setMonitorConnector(createConnector("localhost:" + REPOSITORY_MONITOR_PORT));
       agent.setConnectorDescription(host + ":" + port);
       agent.setRepository(repository);
       agent.setGroup(REPOSITORY_MONITOR_GROUP);
@@ -476,8 +478,8 @@ public abstract class FailoverExample
             System.out.println(event + " agent " + format(agent));
             for (Entry<Protocol, Pair<String, String>> entry : monitor.getAgents().entrySet())
             {
-              System.out.println("   " + (entry.getKey() == monitor.getMasterAgent() ? "MASTER: " : "BACKUP: ")
-                  + format(entry.getValue()));
+              String type = entry.getKey() == monitor.getMasterAgent() ? "MASTER: " : "BACKUP: ";
+              System.out.println("   " + type + format(entry.getValue()));
             }
           }
 
@@ -487,7 +489,7 @@ public abstract class FailoverExample
           }
         });
 
-        container.getElement("org.eclipse.net4j.acceptors", TRANSPORT_TYPE, "0.0.0.0:2038");
+        container.getElement("org.eclipse.net4j.acceptors", TRANSPORT_TYPE, "0.0.0.0:" + REPOSITORY_MONITOR_PORT);
         System.out.println("Monitoring...");
 
         for (;;)

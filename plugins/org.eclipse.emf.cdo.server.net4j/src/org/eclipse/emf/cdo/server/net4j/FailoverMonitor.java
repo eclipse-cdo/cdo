@@ -99,8 +99,9 @@ public class FailoverMonitor extends Container<AgentProtocol>
     if (newMasterAgent != null)
     {
       publishNewMaster(newAgents, newMasterAgent);
-      fireElementAddedEvent(agent);
     }
+
+    fireElementAddedEvent(agent);
   }
 
   public void deregisterAgent(AgentProtocol agent)
@@ -134,8 +135,9 @@ public class FailoverMonitor extends Container<AgentProtocol>
     if (newMasterAgent != null)
     {
       publishNewMaster(newAgents, newMasterAgent);
-      fireElementRemovedEvent(agent);
     }
+
+    fireElementRemovedEvent(agent);
   }
 
   @Override
@@ -345,7 +347,7 @@ public class FailoverMonitor extends Container<AgentProtocol>
       switch (signalID)
       {
       case SIGNAL_QUERY_REPOSITORY_INFO:
-        return new IndicationWithResponse(this, SIGNAL_QUERY_REPOSITORY_INFO)
+        return new IndicationWithResponse(this, SIGNAL_QUERY_REPOSITORY_INFO, "QueryRepositoryInfo")
         {
           @Override
           protected void indicating(ExtendedDataInputStream in) throws Exception

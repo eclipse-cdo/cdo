@@ -48,6 +48,8 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.log.PrintLogHandler;
 
 import org.h2.jdbcx.JdbcDataSource;
 
@@ -77,8 +79,8 @@ public abstract class FailoverExample
   static
   {
     // OMPlatform.INSTANCE.setDebugging(true);
-    // OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
     // OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
+    OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
   }
 
   public FailoverExample()
@@ -441,8 +443,8 @@ public abstract class FailoverExample
       agent.setConnectorDescription(host + ":" + port);
       agent.setRepository(repository);
       agent.setGroup(REPOSITORY_GROUP);
-      agent.setRate(500L);
-      agent.setTimeout(2000L);
+      agent.setRate(60000L);
+      agent.setTimeout(200000L);
       agent.activate();
 
       return repository;
@@ -464,13 +466,13 @@ public abstract class FailoverExample
           @Override
           protected void onAdded(IContainer<AgentProtocol> monitor, AgentProtocol agent)
           {
-            dump((FailoverMonitor)monitor, "Added", agent);
+            dump((FailoverMonitor)monitor, "Registered", agent);
           }
 
           @Override
           protected void onRemoved(IContainer<AgentProtocol> monitor, AgentProtocol agent)
           {
-            dump((FailoverMonitor)monitor, "Removed", agent);
+            dump((FailoverMonitor)monitor, "Deregistered", agent);
           }
 
           private void dump(FailoverMonitor monitor, String event, AgentProtocol agent)

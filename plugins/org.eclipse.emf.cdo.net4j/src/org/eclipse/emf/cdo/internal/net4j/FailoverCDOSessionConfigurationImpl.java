@@ -46,6 +46,10 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
 
   private String repositoryGroup;
 
+  private IConnector monitorConnector;
+
+  private SignalProtocol<Object> monitorProtocol;
+
   public FailoverCDOSessionConfigurationImpl(String monitorConnectorDescription, String repositoryGroup)
   {
     this.monitorConnectorDescription = monitorConnectorDescription;
@@ -86,26 +90,6 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
     throw new UnsupportedOperationException();
   }
 
-  public void superSetRepositoryName(String repositoryName)
-  {
-    super.setRepositoryName(repositoryName);
-  }
-
-  public void superSetConnector(IConnector connector)
-  {
-    super.setConnector(connector);
-  }
-
-  public void superSetFailOverStrategy(IFailOverStrategy failOverStrategy)
-  {
-    super.setFailOverStrategy(failOverStrategy);
-  }
-
-  public void superSetExceptionHandler(ExceptionHandler exceptionHandler)
-  {
-    super.setExceptionHandler(exceptionHandler);
-  }
-
   @Override
   public InternalCDOSession createSession()
   {
@@ -118,8 +102,8 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
     try
     {
       List<Object> targets = getViewTargets(session);
-      setPassiveUpdateEnabled(session.options().isPassiveUpdateEnabled());
-      setPassiveUpdateMode(session.options().getPassiveUpdateMode());
+      uncheckedSetPassiveUpdateEnabled(session.options().isPassiveUpdateEnabled());
+      uncheckedSetPassiveUpdateMode(session.options().getPassiveUpdateMode());
 
       updateConnectorAndRepositoryName();
       initProtocol(session);
@@ -147,18 +131,22 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
 
     System.out.println("Connecting to " + info.getElement1() + "/" + repositoryName);
 
-    superSetConnector(connector);
-    superSetRepositoryName(repositoryName);
+    uncheckedSetConnector(connector);
+    uncheckedSetRepositoryName(repositoryName);
   }
 
   protected Pair<String, String> queryRepositoryInfoFromMonitor()
   {
-    SignalProtocol<Object> protocol = new SignalProtocol<Object>("failover-client");
+    if (monitorConnector == null)
+    {
+      monitorConnector = getConnector(monitorConnectorDescription);
+      monitorProtocol = new SignalProtocol<Object>("failover-client");
+      monitorProtocol.open(monitorConnector);
+    }
 
     try
     {
-      protocol.open(getConnector(monitorConnectorDescription));
-      return new RequestWithConfirmation<Pair<String, String>>(protocol, (short)1)
+      return new RequestWithConfirmation<Pair<String, String>>(monitorProtocol, (short)1, "QueryRepositoryInfo")
       {
         @Override
         protected void requesting(ExtendedDataOutputStream out) throws Exception
@@ -181,13 +169,19 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
     }
     finally
     {
-      protocol.close();
+      // protocol.close();
+      // if (connector.getChannels().isEmpty())
+      // {
+      // connector.close();
+      // }
     }
   }
 
   protected IConnector getConnector(String description)
   {
-    return (IConnector)getContainer().getElement("org.eclipse.net4j.connectors", "tcp", description);
+    IManagedContainer container = getContainer();
+    // container.removeElement("org.eclipse.net4j.connectors", "tcp", description);
+    return (IConnector)container.getElement("org.eclipse.net4j.connectors", "tcp", description);
   }
 
   protected IManagedContainer getContainer()

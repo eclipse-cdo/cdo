@@ -80,6 +80,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   public void setRepositoryName(String repositoryName)
   {
     checkNotOpen();
+    uncheckedSetRepositoryName(repositoryName);
+  }
+
+  protected void uncheckedSetRepositoryName(String repositoryName)
+  {
     this.repositoryName = repositoryName;
   }
 
@@ -91,6 +96,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   public void setConnector(IConnector connector)
   {
     checkNotOpen();
+    uncheckedSetConnector(connector);
+  }
+
+  protected void uncheckedSetConnector(IConnector connector)
+  {
     this.connector = connector;
   }
 

@@ -58,6 +58,11 @@ public abstract class CDOSessionConfigurationImpl implements InternalCDOSessionC
   public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
   {
     checkNotOpen();
+    uncheckedSetPassiveUpdateEnabled(passiveUpdateEnabled);
+  }
+
+  protected void uncheckedSetPassiveUpdateEnabled(boolean passiveUpdateEnabled)
+  {
     this.passiveUpdateEnabled = passiveUpdateEnabled;
   }
 
@@ -69,6 +74,11 @@ public abstract class CDOSessionConfigurationImpl implements InternalCDOSessionC
   public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
   {
     checkNotOpen();
+    uncheckedSetPassiveUpdateMode(passiveUpdateMode);
+  }
+
+  protected void uncheckedSetPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
+  {
     this.passiveUpdateMode = passiveUpdateMode;
   }
 

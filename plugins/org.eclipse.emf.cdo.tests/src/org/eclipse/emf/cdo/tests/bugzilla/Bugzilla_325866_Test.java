@@ -89,6 +89,7 @@ public class Bugzilla_325866_Test extends AbstractCDOTest
     assertEquals(false, s1Tr3.isDirty());
 
     // merge the other branch to main.
+    sleep(1000L);
     s1Tr1.merge(s1Tr3.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
 
     s1Tr1.commit();

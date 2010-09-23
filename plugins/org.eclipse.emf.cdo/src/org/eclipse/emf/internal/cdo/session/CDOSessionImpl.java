@@ -1000,12 +1000,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     getConfiguration().activateSession(this);
     checkState(sessionProtocol, "sessionProtocol"); //$NON-NLS-1$
     checkState(remoteSessionManager, "remoteSessionManager"); //$NON-NLS-1$
-    if (exceptionHandler != null)
-    {
-      sessionProtocol = new DelegatingSessionProtocol(sessionProtocol);
-    }
-
-    EventUtil.addListener(sessionProtocol, sessionProtocolListener);
+    hookSessionProtocol();
   }
 
   @Override
@@ -1030,9 +1025,24 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       invalidationRunner = null;
     }
 
-    EventUtil.removeListener(sessionProtocol, sessionProtocolListener);
+    unhookSessionProtocol();
     getConfiguration().deactivateSession(this);
     super.doDeactivate();
+  }
+
+  protected void hookSessionProtocol()
+  {
+    if (exceptionHandler != null)
+    {
+      sessionProtocol = new DelegatingSessionProtocol(sessionProtocol);
+    }
+  
+    EventUtil.addListener(sessionProtocol, sessionProtocolListener);
+  }
+
+  protected void unhookSessionProtocol()
+  {
+    EventUtil.removeListener(sessionProtocol, sessionProtocolListener);
   }
 
   protected void sessionProtocolDeactivated()

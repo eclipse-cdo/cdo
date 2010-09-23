@@ -189,7 +189,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     {
       OM.LOG.error(ex);
       setNegotiationException(ex);
-      deactivate();
+      deactivateAsync();
     }
     catch (ClosedChannelException ex)
     {
@@ -198,14 +198,14 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
         TRACER.trace("Socket channel closed: " + socketChannel); //$NON-NLS-1$
       }
 
-      deactivate();
+      deactivateAsync();
     }
     catch (Exception ex)
     {
       if (isActive())
       {
         OM.LOG.error(ex);
-        deactivate();
+        deactivateAsync();
       }
     }
   }
@@ -279,14 +279,14 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
         TRACER.trace("Socket channel closed: " + socketChannel); //$NON-NLS-1$
       }
 
-      deactivate();
+      deactivateAsync();
     }
     catch (Exception ex)
     {
       if (isActive())
       {
         OM.LOG.error(ex);
-        deactivate();
+        deactivateAsync();
       }
     }
   }
@@ -356,11 +356,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   @Override
   protected void doDeactivate() throws Exception
   {
-    if (selectionKey != null)
-    {
-      selectionKey.cancel();
-      selectionKey = null;
-    }
+    cancelSelectionKey();
 
     LifecycleUtil.deactivate(controlChannel);
     controlChannel = null;
@@ -368,6 +364,30 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     IOUtil.closeSilent(socketChannel);
     socketChannel = null;
     super.doDeactivate();
+  }
+
+  protected void deactivateAsync()
+  {
+    // Cancel the selection immediately
+    cancelSelectionKey();
+
+    // Do the rest of the deactivation asynchronously
+    getConfig().getReceiveExecutor().execute(new Runnable()
+    {
+      public void run()
+      {
+        deactivate();
+      }
+    });
+  }
+
+  private void cancelSelectionKey()
+  {
+    if (selectionKey != null)
+    {
+      selectionKey.cancel();
+      selectionKey = null;
+    }
   }
 
   private void checkSelectionKey()

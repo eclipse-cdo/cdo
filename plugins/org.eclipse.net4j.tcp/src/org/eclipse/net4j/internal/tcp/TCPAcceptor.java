@@ -156,7 +156,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
     catch (Exception ex)
     {
       OM.LOG.error(ex);
-      deactivate();
+      deactivateAsync();
     }
     finally
     {
@@ -192,7 +192,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
     }
     catch (ClosedChannelException ex)
     {
-      deactivate();
+      deactivateAsync();
     }
     catch (Exception ex)
     {
@@ -201,7 +201,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
         OM.LOG.error(ex);
       }
 
-      deactivate();
+      deactivateAsync();
     }
   }
 
@@ -209,6 +209,11 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
   public String toString()
   {
     return MessageFormat.format("TCPAcceptor[{0}:{1}]", address, port); //$NON-NLS-1$
+  }
+
+  protected TCPServerConnector createConnector()
+  {
+    return new TCPServerConnector(this);
   }
 
   @Override
@@ -248,12 +253,34 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
   @Override
   protected void doDeactivate() throws Exception
   {
-    serverSocketChannel.close();
+    cancelSelectionKey();
+
+    IOUtil.closeSilent(serverSocketChannel);
+    serverSocketChannel = null;
     super.doDeactivate();
   }
 
-  protected TCPServerConnector createConnector()
+  protected void deactivateAsync()
   {
-    return new TCPServerConnector(this);
+    // Cancel the selection immediately
+    cancelSelectionKey();
+
+    // Do the rest of the deactivation asynchronously
+    getConfig().getReceiveExecutor().execute(new Runnable()
+    {
+      public void run()
+      {
+        deactivate();
+      }
+    });
+  }
+
+  private void cancelSelectionKey()
+  {
+    if (selectionKey != null)
+    {
+      selectionKey.cancel();
+      selectionKey = null;
+    }
   }
 }

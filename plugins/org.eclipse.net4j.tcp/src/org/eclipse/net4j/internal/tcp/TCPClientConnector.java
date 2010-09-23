@@ -98,7 +98,7 @@ public class TCPClientConnector extends TCPConnector
     catch (Exception ex)
     {
       OM.LOG.error(ex);
-      deactivate();
+      deactivateAsync();
     }
   }
 }

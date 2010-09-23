@@ -61,6 +61,7 @@ public class Bugzilla_325866_Test extends AbstractCDOTest
     container2.getElements().add(container3);
 
     s1Tr1.commit();
+    sleep(1000L);
 
     // setup another branch.
     final CDOBranch otherBranch = s1Tr1.getBranch().createBranch("other");

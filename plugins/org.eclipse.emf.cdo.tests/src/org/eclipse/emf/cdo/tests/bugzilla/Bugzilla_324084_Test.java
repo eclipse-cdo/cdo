@@ -56,7 +56,7 @@ public class Bugzilla_324084_Test extends AbstractCDOTest
     resource.getContents().add(container);
 
     tr1.commit();
-    // sleep(1000);
+    sleep(1000);
 
     final CDOBranch otherBranch = tr1.getBranch().createBranch("other");
     final CDOTransaction tr2 = session.openTransaction(otherBranch);
@@ -93,7 +93,7 @@ public class Bugzilla_324084_Test extends AbstractCDOTest
     resource.getContents().add(container);
 
     tr1.commit();
-    // sleep(1000);
+    sleep(1000);
 
     final CDOBranch otherBranch = tr1.getBranch().createBranch("other");
     final CDOTransaction tr2 = session.openTransaction(otherBranch);

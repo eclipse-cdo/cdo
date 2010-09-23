@@ -461,6 +461,20 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
+    Set<CDOObject> detachedObjects = new HashSet<CDOObject>();
+    for (CDOIDAndVersion key : changeSetData.getDetachedObjects())
+    {
+      CDOID id = key.getID();
+      InternalCDOObject object = getObjectIfExists(id);
+      if (object != null)
+      {
+        result.getDetachedObjects().add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
+        CDOStateMachine.INSTANCE.detach(object);
+        detachedObjects.add(object);
+        dirty = true;
+      }
+    }
+
     Map<CDOID, CDOObject> dirtyObjects = lastSavepoint.getDirtyObjects();
     ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas();
     Map<CDOID, InternalCDORevision> oldRevisions = new HashMap<CDOID, InternalCDORevision>();
@@ -496,6 +510,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         revisionDeltas.put(id, targetGoalDelta);
         result.getChangedObjects().add(targetGoalDelta);
 
+        // handle reattached objects.
+        if (lastSavepoint.getDetachedObjects().containsKey(id))
+        {
+          CDOStateMachine.INSTANCE.attach(object, this);
+        }
+
         object.cdoInternalSetState(CDOState.DIRTY);
         object.cdoInternalSetRevision(goalRevision);
         revisionChanged = true;
@@ -507,20 +527,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       if (revisionChanged)
       {
         object.cdoInternalPostLoad();
-      }
-    }
-
-    Set<CDOObject> detachedObjects = new HashSet<CDOObject>();
-    for (CDOIDAndVersion key : changeSetData.getDetachedObjects())
-    {
-      CDOID id = key.getID();
-      InternalCDOObject object = getObjectIfExists(id);
-      if (object != null)
-      {
-        result.getDetachedObjects().add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
-        CDOStateMachine.INSTANCE.detach(object);
-        detachedObjects.add(object);
-        dirty = true;
       }
     }
 

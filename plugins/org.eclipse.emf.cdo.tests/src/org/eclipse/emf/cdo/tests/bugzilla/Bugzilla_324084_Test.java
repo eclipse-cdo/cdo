@@ -70,7 +70,7 @@ public class Bugzilla_324084_Test extends AbstractCDOTest
     tr2.commit();
 
     // sleep to have the merger see the changes.
-    // sleep(1000);
+    sleep(1000);
 
     // merge the other branch to main.
     tr1.merge(tr2.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
@@ -107,7 +107,7 @@ public class Bugzilla_324084_Test extends AbstractCDOTest
     tr2.commit();
 
     // sleep to have the merger see the changes.
-    // sleep(1000);
+    sleep(1000);
 
     // merge the other branch to main.
     tr1.merge(tr2.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());

@@ -82,8 +82,9 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
     String sqlQuery = "SELECT cdo1." + CDODBSchema.ATTRIBUTES_ID + ", cdo1." + CDODBSchema.ATTRIBUTES_BRANCH
         + ", cdo1." + CDODBSchema.ATTRIBUTES_VERSION + ", cdo2." + CDODBSchema.ATTRIBUTES_CREATED + " FROM " + table
         + " cdo1, " + table + " cdo2 WHERE cdo1." + CDODBSchema.ATTRIBUTES_ID + "=cdo2." + CDODBSchema.ATTRIBUTES_ID
-        + " AND cdo1." + CDODBSchema.ATTRIBUTES_BRANCH + "=cdo2." + CDODBSchema.ATTRIBUTES_BRANCH + " AND cdo1."
-        + CDODBSchema.ATTRIBUTES_VERSION + "=cdo2." + CDODBSchema.ATTRIBUTES_VERSION + "-1 AND cdo1."
+        + " AND cdo1." + CDODBSchema.ATTRIBUTES_BRANCH + "=cdo2." + CDODBSchema.ATTRIBUTES_BRANCH + " AND (cdo1."
+        + CDODBSchema.ATTRIBUTES_VERSION + "=cdo2." + CDODBSchema.ATTRIBUTES_VERSION + "-1 OR cdo1."
+        + CDODBSchema.ATTRIBUTES_VERSION + "+cdo2." + CDODBSchema.ATTRIBUTES_VERSION + "=-1) AND cdo1."
         + CDODBSchema.ATTRIBUTES_REVISED + "=0";
 
     PreparedStatement stmtUpdate = null;

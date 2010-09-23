@@ -13,6 +13,10 @@ package org.eclipse.emf.cdo.internal.net4j;
 import org.eclipse.emf.cdo.net4j.CDOSessionFailoverEvent;
 import org.eclipse.emf.cdo.session.CDOSession;
 
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+
+import java.util.List;
+
 /**
  * @author Eike Stepper
  */
@@ -35,8 +39,13 @@ public class FailoverCDOSessionImpl extends CDONet4jSessionImpl
     fireFailoverEvent(CDOSessionFailoverEvent.Type.STARTED);
 
     unhookSessionProtocol();
-    getConfiguration().failover(FailoverCDOSessionImpl.this);
-    hookSessionProtocol();
+    List<AfterFailoverRunnable> runnables = getConfiguration().failover(FailoverCDOSessionImpl.this);
+    CDOSessionProtocol sessionProtocol = hookSessionProtocol();
+
+    for (AfterFailoverRunnable runnable : runnables)
+    {
+      runnable.run(sessionProtocol);
+    }
 
     fireFailoverEvent(CDOSessionFailoverEvent.Type.FINISHED);
   }
@@ -55,5 +64,13 @@ public class FailoverCDOSessionImpl extends CDONet4jSessionImpl
         return type;
       }
     });
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static interface AfterFailoverRunnable
+  {
+    public void run(CDOSessionProtocol sessionProtocol);
   }
 }

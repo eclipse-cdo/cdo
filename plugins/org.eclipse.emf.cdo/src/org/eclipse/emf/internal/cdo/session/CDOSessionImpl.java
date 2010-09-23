@@ -1030,14 +1030,15 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     super.doDeactivate();
   }
 
-  protected void hookSessionProtocol()
+  protected CDOSessionProtocol hookSessionProtocol()
   {
     if (exceptionHandler != null)
     {
       sessionProtocol = new DelegatingSessionProtocol(sessionProtocol);
     }
-  
+
     EventUtil.addListener(sessionProtocol, sessionProtocolListener);
+    return sessionProtocol;
   }
 
   protected void unhookSessionProtocol()

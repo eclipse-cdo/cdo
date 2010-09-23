@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.internal.net4j;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.internal.net4j.FailoverCDOSessionImpl.AfterFailoverRunnable;
 import org.eclipse.emf.cdo.net4j.FailoverCDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -102,20 +102,22 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
     return new FailoverCDOSessionImpl(this);
   }
 
-  public void failover(FailoverCDOSessionImpl session)
+  public List<AfterFailoverRunnable> failover(FailoverCDOSessionImpl session)
   {
     try
     {
-      List<Object> targets = getViewTargets(session);
+      List<AfterFailoverRunnable> runnables = new ArrayList<AfterFailoverRunnable>();
+      for (InternalCDOView view : session.getViews())
+      {
+        runnables.add(new OpenViewRunnable(view));
+      }
+
       uncheckedSetPassiveUpdateEnabled(session.options().isPassiveUpdateEnabled());
       uncheckedSetPassiveUpdateMode(session.options().getPassiveUpdateMode());
 
       updateConnectorAndRepositoryName();
       initProtocol(session);
-
-      reregisterViews(session, targets);
-      reregisterRemoteSessions(session);
-      System.out.println("Connected");
+      return runnables;
     }
     catch (RuntimeException ex)
     {
@@ -203,47 +205,27 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
     return IPluginContainer.INSTANCE;
   }
 
-  private List<Object> getViewTargets(FailoverCDOSessionImpl session)
+  /**
+   * @author Eike Stepper
+   */
+  private final class OpenViewRunnable implements AfterFailoverRunnable
   {
-    List<Object> targets = new ArrayList<Object>();
-    for (InternalCDOView view : session.getViews())
+    private int viewID;
+
+    private CDOBranchPoint branchPoint;
+
+    private boolean transaction;
+
+    public OpenViewRunnable(InternalCDOView view)
     {
-      if (view instanceof CDOTransaction)
-      {
-        CDOTransaction transaction = (CDOTransaction)view;
-        targets.add(transaction.getBranch());
-      }
-      else
-      {
-        targets.add(CDOBranchUtil.copyBranchPoint(view));
-      }
+      viewID = view.getViewID();
+      branchPoint = CDOBranchUtil.copyBranchPoint(view);
+      transaction = view instanceof CDOTransaction;
     }
 
-    return targets;
-  }
-
-  private void reregisterViews(FailoverCDOSessionImpl session, List<Object> targets)
-  {
-    CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-    int viewID = 0;
-
-    for (Object target : targets)
+    public void run(CDOSessionProtocol sessionProtocol)
     {
-      if (target instanceof CDOBranchPoint)
-      {
-        CDOBranchPoint branchPoint = (CDOBranchPoint)target;
-        sessionProtocol.openView(++viewID, branchPoint, true);
-      }
-      else
-      {
-        CDOBranch branch = (CDOBranch)target;
-        sessionProtocol.openView(++viewID, branch.getHead(), false);
-      }
+      sessionProtocol.openView(viewID, branchPoint, !transaction);
     }
-  }
-
-  private void reregisterRemoteSessions(FailoverCDOSessionImpl session)
-  {
-    // TODO
   }
 }

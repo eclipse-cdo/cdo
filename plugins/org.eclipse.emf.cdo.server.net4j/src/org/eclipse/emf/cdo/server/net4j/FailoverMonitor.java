@@ -82,8 +82,8 @@ public class FailoverMonitor extends Container<AgentProtocol>
 
   public void registerAgent(AgentProtocol agent)
   {
-    AgentProtocol[] newAgents = null;
     AgentProtocol newMasterAgent = null;
+    AgentProtocol[] newAgents = null;
 
     synchronized (agents)
     {
@@ -91,14 +91,15 @@ public class FailoverMonitor extends Container<AgentProtocol>
       if (agents.size() == 1)
       {
         masterAgent = agent;
-        newAgents = getElements();
-        newMasterAgent = masterAgent;
       }
+
+      newMasterAgent = masterAgent;
+      newAgents = getElements();
     }
 
     if (newMasterAgent != null)
     {
-      publishNewMaster(newAgents, newMasterAgent);
+      publishNewMaster(newMasterAgent, newAgents);
     }
 
     fireElementAddedEvent(agent);
@@ -106,8 +107,8 @@ public class FailoverMonitor extends Container<AgentProtocol>
 
   public void deregisterAgent(AgentProtocol agent)
   {
-    AgentProtocol[] newAgents = null;
     AgentProtocol newMasterAgent = null;
+    AgentProtocol[] newAgents = null;
 
     synchronized (agents)
     {
@@ -126,15 +127,15 @@ public class FailoverMonitor extends Container<AgentProtocol>
         {
           masterAgent = electNewMaster(agents);
         }
-
-        newAgents = getElements();
-        newMasterAgent = masterAgent;
       }
+
+      newMasterAgent = masterAgent;
+      newAgents = getElements();
     }
 
     if (newMasterAgent != null)
     {
-      publishNewMaster(newAgents, newMasterAgent);
+      publishNewMaster(newMasterAgent, newAgents);
     }
 
     fireElementRemovedEvent(agent);
@@ -152,7 +153,7 @@ public class FailoverMonitor extends Container<AgentProtocol>
     return agents.iterator().next();
   }
 
-  private void publishNewMaster(AgentProtocol[] agents, final AgentProtocol masterAgent)
+  private void publishNewMaster(final AgentProtocol masterAgent, AgentProtocol[] agents)
   {
     for (final AgentProtocol agent : agents)
     {

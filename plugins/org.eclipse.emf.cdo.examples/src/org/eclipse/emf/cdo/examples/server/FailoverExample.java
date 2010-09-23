@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.server.net4j.FailoverAgent;
 import org.eclipse.emf.cdo.server.net4j.FailoverMonitor;
 import org.eclipse.emf.cdo.server.net4j.FailoverMonitor.AgentProtocol;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
-import org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.Net4jUtil;
@@ -425,7 +424,7 @@ public abstract class FailoverExample
     protected IRepository createRepository(IStore store, Map<String, String> props)
     {
       ISynchronizableRepository repository = CDOServerUtil.createFailoverParticipant(name, store, props);
-      ((InternalFailoverParticipant)repository).setAllowBackupCommits(true); // Load balancing!
+      // ((InternalFailoverParticipant)repository).setAllowBackupCommits(true); // Load balancing!
 
       FailoverAgent agent = new FailoverAgent()
       {
@@ -448,8 +447,8 @@ public abstract class FailoverExample
       agent.setConnectorDescription(host + ":" + port);
       agent.setRepository(repository);
       agent.setGroup(REPOSITORY_GROUP);
-      agent.setRate(200L);
-      agent.setTimeout(2000L);
+      agent.setRate(1000L);
+      agent.setTimeout(4000L);
       agent.activate();
 
       return repository;

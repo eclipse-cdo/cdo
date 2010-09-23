@@ -45,9 +45,9 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
 {
   private String monitorConnectorDescription;
 
-  private IConnector monitorConnector;
-
-  private SignalProtocol<Object> monitorProtocol;
+  // private IConnector monitorConnector;
+  //
+  // private SignalProtocol<Object> monitorProtocol;
 
   private String repositoryGroup;
 
@@ -146,12 +146,9 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
 
   protected void queryRepositoryInfoFromMonitor()
   {
-    if (monitorConnector == null)
-    {
-      monitorConnector = getConnector(monitorConnectorDescription);
-      monitorProtocol = new SignalProtocol<Object>("failover-client");
-      monitorProtocol.open(monitorConnector);
-    }
+    IConnector connector = getConnector(monitorConnectorDescription);
+    SignalProtocol<Object> protocol = new SignalProtocol<Object>("failover-client");
+    protocol.open(connector);
 
     try
     {
@@ -161,7 +158,7 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
       while (ObjectUtil.equals(repositoryConnectorDescription, oldRepositoryConnectorDescription)
           && ObjectUtil.equals(repositoryName, oldRepositoryName))
       {
-        new RequestWithConfirmation<Boolean>(monitorProtocol, (short)1, "QueryRepositoryInfo")
+        new RequestWithConfirmation<Boolean>(protocol, (short)1, "QueryRepositoryInfo")
         {
           @Override
           protected void requesting(ExtendedDataOutputStream out) throws Exception
@@ -185,11 +182,11 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
     }
     finally
     {
-      // protocol.close();
-      // if (connector.getChannels().isEmpty())
-      // {
-      // connector.close();
-      // }
+      protocol.close();
+      if (connector.getChannels().isEmpty())
+      {
+        connector.close();
+      }
     }
   }
 

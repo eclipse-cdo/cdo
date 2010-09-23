@@ -231,8 +231,10 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
 
       if (firstChannel)
       {
-        checkSelectionKey();
-        selector.orderWriteInterest(selectionKey, isClient(), true);
+        if (selectionKey != null)
+        {
+          selector.orderWriteInterest(selectionKey, isClient(), true);
+        }
       }
     }
   }
@@ -264,8 +266,10 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
 
         if (writeQueue.isEmpty())
         {
-          checkSelectionKey();
-          selector.orderWriteInterest(selectionKey, isClient(), false);
+          if (selectionKey != null)
+          {
+            selector.orderWriteInterest(selectionKey, isClient(), false);
+          }
         }
       }
     }
@@ -387,14 +391,6 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     {
       selectionKey.cancel();
       selectionKey = null;
-    }
-  }
-
-  private void checkSelectionKey()
-  {
-    if (selectionKey == null)
-    {
-      throw new IllegalStateException("No selection key for connector " + this); //$NON-NLS-1$
     }
   }
 

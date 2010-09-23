@@ -71,9 +71,17 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
     this(TYPE, connector, timer);
   }
 
+  /**
+   * @since 3.1
+   */
+  public HeartBeatProtocol(IConnector connector, IManagedContainer container)
+  {
+    this(connector, getDefaultTimer(container));
+  }
+
   public HeartBeatProtocol(IConnector connector)
   {
-    this(connector, getDefaultTimer(IPluginContainer.INSTANCE));
+    this(connector, IPluginContainer.INSTANCE);
   }
 
   public Timer getTimer()

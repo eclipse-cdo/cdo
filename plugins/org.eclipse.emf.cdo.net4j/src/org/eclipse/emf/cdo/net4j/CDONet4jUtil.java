@@ -37,8 +37,8 @@ public final class CDONet4jUtil
   /**
    * @since 4.0
    */
-  public static FailoverCDOSessionConfiguration createFailoverSessionConfiguration(final IManagedContainer container,
-      String monitorConnectorDescription, String repositoryGroup)
+  public static FailoverCDOSessionConfiguration createFailoverSessionConfiguration(String monitorConnectorDescription,
+      String repositoryGroup, final IManagedContainer container)
   {
     return new FailoverCDOSessionConfigurationImpl(monitorConnectorDescription, repositoryGroup)
     {

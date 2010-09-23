@@ -21,8 +21,9 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
+import org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -44,11 +45,15 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
 {
   private String monitorConnectorDescription;
 
-  private String repositoryGroup;
-
   private IConnector monitorConnector;
 
   private SignalProtocol<Object> monitorProtocol;
+
+  private String repositoryGroup;
+
+  private String repositoryConnectorDescription;
+
+  private String repositoryName;
 
   public FailoverCDOSessionConfigurationImpl(String monitorConnectorDescription, String repositoryGroup)
   {
@@ -126,17 +131,18 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
 
   private void updateConnectorAndRepositoryName()
   {
-    Pair<String, String> info = queryRepositoryInfoFromMonitor();
-    IConnector connector = getConnector(info.getElement1());
-    String repositoryName = info.getElement2();
+    System.out.println("Querying fail-over monitor...");
+    queryRepositoryInfoFromMonitor();
 
-    System.out.println("Connecting to " + info.getElement1() + "/" + repositoryName);
+    System.out.println("Connecting to " + repositoryConnectorDescription + "/" + repositoryName + "...");
+    IConnector connector = getConnector(repositoryConnectorDescription);
+    new HeartBeatProtocol(connector, getContainer()).start(1000L, 5000L);
 
     uncheckedSetConnector(connector);
     uncheckedSetRepositoryName(repositoryName);
   }
 
-  protected Pair<String, String> queryRepositoryInfoFromMonitor()
+  protected void queryRepositoryInfoFromMonitor()
   {
     if (monitorConnector == null)
     {
@@ -147,22 +153,29 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
 
     try
     {
-      return new RequestWithConfirmation<Pair<String, String>>(monitorProtocol, (short)1, "QueryRepositoryInfo")
-      {
-        @Override
-        protected void requesting(ExtendedDataOutputStream out) throws Exception
-        {
-          out.writeString(repositoryGroup);
-        }
+      String oldRepositoryConnectorDescription = repositoryConnectorDescription;
+      String oldRepositoryName = repositoryName;
 
-        @Override
-        protected Pair<String, String> confirming(ExtendedDataInputStream in) throws Exception
+      while (ObjectUtil.equals(repositoryConnectorDescription, oldRepositoryConnectorDescription)
+          && ObjectUtil.equals(repositoryName, oldRepositoryName))
+      {
+        new RequestWithConfirmation<Boolean>(monitorProtocol, (short)1, "QueryRepositoryInfo")
         {
-          String connectorDescription = in.readString();
-          String repositoryName = in.readString();
-          return new Pair<String, String>(connectorDescription, repositoryName);
-        }
-      }.send();
+          @Override
+          protected void requesting(ExtendedDataOutputStream out) throws Exception
+          {
+            out.writeString(repositoryGroup);
+          }
+
+          @Override
+          protected Boolean confirming(ExtendedDataInputStream in) throws Exception
+          {
+            repositoryConnectorDescription = in.readString();
+            repositoryName = in.readString();
+            return true;
+          }
+        }.send();
+      }
     }
     catch (Exception ex)
     {

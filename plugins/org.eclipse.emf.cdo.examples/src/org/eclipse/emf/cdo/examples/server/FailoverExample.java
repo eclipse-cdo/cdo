@@ -545,8 +545,8 @@ public abstract class FailoverExample
       public static void main(String[] args) throws Exception
       {
         IManagedContainer container = createContainer();
-        CDOSessionConfiguration configuration = CDONet4jUtil.createFailoverSessionConfiguration(container,
-            REPOSITORY_MONITOR_HOST + ":" + REPOSITORY_MONITOR_PORT, REPOSITORY_GROUP);
+        CDOSessionConfiguration configuration = CDONet4jUtil.createFailoverSessionConfiguration(REPOSITORY_MONITOR_HOST
+            + ":" + REPOSITORY_MONITOR_PORT, REPOSITORY_GROUP, container);
 
         CDOSession session = configuration.openSession();
         session.addListener(new IListener()

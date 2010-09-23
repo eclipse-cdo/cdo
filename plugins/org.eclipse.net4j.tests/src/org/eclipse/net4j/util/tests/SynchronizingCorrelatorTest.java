@@ -83,7 +83,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
     }
   }
 
-  public void testPutProducerFirst() throws Exception
+  public void _testPutProducerFirst() throws Exception
   {
     final Boolean[] result = { false };
     final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
@@ -107,11 +107,11 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
     assertEquals(Boolean.TRUE, result[0]);
   }
 
-  public void testPutProducerFirst10() throws Exception
+  public void _testPutProducerFirst10() throws Exception
   {
     for (int i = 0; i < 10; i++)
     {
-      testPutProducerFirst();
+      _testPutProducerFirst();
     }
   }
 

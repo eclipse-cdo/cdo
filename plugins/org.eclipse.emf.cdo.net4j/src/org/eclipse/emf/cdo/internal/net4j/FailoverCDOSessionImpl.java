@@ -33,16 +33,8 @@ public class FailoverCDOSessionImpl extends CDONet4jSessionImpl
   protected void sessionProtocolDeactivated()
   {
     fireFailoverEvent(CDOSessionFailoverEvent.Type.STARTED);
-
-    new Thread()
-    {
-      @Override
-      public void run()
-      {
-        getConfiguration().failover(FailoverCDOSessionImpl.this);
-        fireFailoverEvent(CDOSessionFailoverEvent.Type.FINISHED);
-      }
-    }.start();
+    getConfiguration().failover(FailoverCDOSessionImpl.this);
+    fireFailoverEvent(CDOSessionFailoverEvent.Type.FINISHED);
   }
 
   private void fireFailoverEvent(final CDOSessionFailoverEvent.Type type)

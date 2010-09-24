@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.session;
 import org.eclipse.emf.cdo.CDOInvalidationNotification;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -36,7 +37,15 @@ public interface CDOSessionInvalidationEvent extends CDOSessionEvent, CDOCommitI
   /**
    * Returns the transaction that was committed and thereby caused this event to be emitted if this transaction is
    * local, or <code>null</code> if the transaction was remote.
+   * 
+   * @since 4.0
    */
+  public CDOTransaction getLocalTransaction();
+
+  /**
+   * @deprecated Use {@link #getLocalTransaction()}.
+   */
+  @Deprecated
   public CDOView getView();
 
   /**

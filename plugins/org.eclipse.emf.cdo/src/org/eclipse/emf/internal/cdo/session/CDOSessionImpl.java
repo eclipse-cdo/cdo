@@ -65,6 +65,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -935,9 +936,9 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   /**
    * @since 2.0
    */
-  public void fireInvalidationEvent(InternalCDOView excludedView, CDOCommitInfo commitInfo)
+  public void fireInvalidationEvent(InternalCDOTransaction sender, CDOCommitInfo commitInfo)
   {
-    fireEvent(new InvalidationEvent(excludedView, commitInfo));
+    fireEvent(new InvalidationEvent(sender, commitInfo));
   }
 
   @Override
@@ -1315,14 +1316,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   {
     private static final long serialVersionUID = 1L;
 
-    private InternalCDOView view;
+    private InternalCDOTransaction sender;
 
     private CDOCommitInfo commitInfo;
 
-    public InvalidationEvent(InternalCDOView view, CDOCommitInfo commitInfo)
+    public InvalidationEvent(InternalCDOTransaction sender, CDOCommitInfo commitInfo)
     {
       super(CDOSessionImpl.this);
-      this.view = view;
+      this.sender = sender;
       this.commitInfo = commitInfo;
     }
 
@@ -1337,14 +1338,19 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       return commitInfo.getCommitInfoManager();
     }
 
+    public CDOTransaction getLocalTransaction()
+    {
+      return sender;
+    }
+
     public InternalCDOView getView()
     {
-      return view;
+      return sender;
     }
 
     public boolean isRemote()
     {
-      return view == null;
+      return sender == null;
     }
 
     public CDOBranch getBranch()

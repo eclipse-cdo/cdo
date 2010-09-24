@@ -183,7 +183,7 @@ public class InvalidationTest extends AbstractCDOTest
         if (event instanceof CDOSessionInvalidationEvent)
         {
           CDOSessionInvalidationEvent e = (CDOSessionInvalidationEvent)event;
-          if (e.getView() == transaction)
+          if (e.getLocalTransaction() == transaction)
           {
             msg("CDOSessionInvalidationEvent: " + e);
             latch.countDown();

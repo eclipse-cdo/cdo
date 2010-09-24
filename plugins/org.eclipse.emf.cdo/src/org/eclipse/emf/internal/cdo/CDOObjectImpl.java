@@ -316,8 +316,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       TRACER.format("Populating revision for {0}", this); //$NON-NLS-1$
     }
 
-    InternalCDOView view = cdoView();
-    revision.setContainerID(eContainer == null ? CDOID.NULL : cdoView().convertObjectToID(eContainer, true));
+    revision.setContainerID(eContainer == null ? CDOID.NULL : view.convertObjectToID(eContainer, true));
     revision.setContainingFeatureID(eContainerFeatureID);
 
     Resource directResource = eDirectResource();
@@ -436,7 +435,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
           super.didAdd(index, newObject);
           if (!FSMUtil.isTransient(CDOObjectImpl.this))
           {
-            cdoView().handleAddAdapter(CDOObjectImpl.this, newObject);
+            view.handleAddAdapter(CDOObjectImpl.this, newObject);
           }
         }
 
@@ -446,7 +445,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
           super.didRemove(index, oldObject);
           if (!FSMUtil.isTransient(CDOObjectImpl.this))
           {
-            cdoView().handleRemoveAdapter(CDOObjectImpl.this, oldObject);
+            view.handleRemoveAdapter(CDOObjectImpl.this, oldObject);
           }
         }
       };
@@ -1022,7 +1021,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   private CDOStore cdoStore()
   {
-    return cdoView().getStore();
+    return view.getStore();
   }
 
   private void resetSettings()
@@ -1172,7 +1171,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
     public boolean isLocked()
     {
-      return cdoView().isObjectLocked(CDOObjectImpl.this, getType(), false);
+      return view.isObjectLocked(CDOObjectImpl.this, getType(), false);
     }
 
     /**
@@ -1180,14 +1179,14 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
      */
     public boolean isLockedByOthers()
     {
-      return cdoView().isObjectLocked(CDOObjectImpl.this, getType(), true);
+      return view.isObjectLocked(CDOObjectImpl.this, getType(), true);
     }
 
     public void lock()
     {
       try
       {
-        cdoView().lockObjects(Collections.singletonList(CDOObjectImpl.this), getType(), CDOLock.WAIT);
+        view.lockObjects(Collections.singletonList(CDOObjectImpl.this), getType(), CDOLock.WAIT);
       }
       catch (InterruptedException ex)
       {
@@ -1209,7 +1208,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       try
       {
-        cdoView().lockObjects(Collections.singletonList(CDOObjectImpl.this), getType(), CDOLock.NO_WAIT);
+        view.lockObjects(Collections.singletonList(CDOObjectImpl.this), getType(), CDOLock.NO_WAIT);
         return true;
       }
       catch (TimeoutRuntimeException ex)
@@ -1226,7 +1225,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       try
       {
-        cdoView().lockObjects(Collections.singletonList(CDOObjectImpl.this), getType(), unit.toMillis(time));
+        view.lockObjects(Collections.singletonList(CDOObjectImpl.this), getType(), unit.toMillis(time));
         return true;
       }
       catch (TimeoutRuntimeException ex)
@@ -1237,7 +1236,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
     public void unlock()
     {
-      cdoView().unlockObjects(Collections.singletonList(CDOObjectImpl.this), getType());
+      view.unlockObjects(Collections.singletonList(CDOObjectImpl.this), getType());
     }
 
     @Override

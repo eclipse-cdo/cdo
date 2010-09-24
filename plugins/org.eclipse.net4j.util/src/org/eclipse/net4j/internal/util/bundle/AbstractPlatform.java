@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -12,6 +12,7 @@ package org.eclipse.net4j.internal.util.bundle;
 
 import org.eclipse.net4j.internal.util.om.LegacyPlatform;
 import org.eclipse.net4j.internal.util.om.OSGiPlatform;
+import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -25,6 +26,7 @@ import org.eclipse.net4j.util.om.trace.OMTraceHandlerEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Queue;
@@ -130,7 +132,16 @@ public abstract class AbstractPlatform implements OMPlatform
       }
       else
       {
-        state += ".metadata"; //$NON-NLS-1$
+        try
+        {
+          URI uri = new URI(state);
+          state = new File(new File(uri), ".metadata").getAbsolutePath(); //$NON-NLS-1$;
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error("Property " + SYSTEM_PROPERTY_OSGI_STATE + " is not a proper file URI: " + state); //$NON-NLS-1$ //$NON-NLS-2$
+          state = "state"; //$NON-NLS-1$
+        }
       }
     }
 
@@ -139,15 +150,13 @@ public abstract class AbstractPlatform implements OMPlatform
     {
       if (!stateFolder.mkdirs())
       {
-        OM.LOG.error("State folder " + stateFolder.getAbsolutePath() + " could not be created"); //$NON-NLS-1$ //$NON-NLS-2$
-        return null;
+        throw new IORuntimeException("State folder " + stateFolder.getAbsolutePath() + " could not be created"); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
 
     if (!stateFolder.isDirectory())
     {
-      OM.LOG.error("State folder " + stateFolder.getAbsolutePath() + " is not a directoy"); //$NON-NLS-1$ //$NON-NLS-2$
-      return null;
+      throw new IORuntimeException("State folder " + stateFolder.getAbsolutePath() + " is not a directoy"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     return stateFolder;

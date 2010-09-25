@@ -158,8 +158,6 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
       }
     });
 
-    PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.mftech.examples.ui.rcp.views.viewer");
-
     createResourceInput();
     if (createAutomaticResourceName)
     {

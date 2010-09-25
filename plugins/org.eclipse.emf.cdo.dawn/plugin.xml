@@ -81,24 +81,6 @@
                 menubarPath="org.eclipse.emf.cdo.dawn.menu.locking/locking">
           </action>
        </objectContribution>
-      <!-- <objectContribution
-             adaptable="false"
-             id="org.eclipse.emf.cdo.dawn.diagram.resource.contextmenu"
-             nameFilter="*_diagram"
-             objectClass="org.eclipse.core.resources.IResource">
-          <action
-                class="org.mftech.dawn.runtime.client.diagram.actions.DiagramResourceOpenBrowserAction"
-                definitionId="de.mf.eclipse.plugins.dawn.configure.project"
-                id="de.mf.eclipse.plugins.dawn.diagram.communication.action1"
-                label="Configure Project"
-                menubarPath="de.mf.eclipse.plugins.dawn.context.menu.configure/configure">
-          </action>
-          <menu
-                id="de.mf.eclipse.plugins.dawn.context.menu.configure"
-                label="Dawn"
-                path="additions">
-          </menu>
-       </objectContribution>-->
 	</extension>
     <extension
           point="org.eclipse.ui.preferencePages">

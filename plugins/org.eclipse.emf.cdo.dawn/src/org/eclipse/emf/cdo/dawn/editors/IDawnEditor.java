@@ -12,12 +12,13 @@ package org.eclipse.emf.cdo.dawn.editors;
 
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.ui.IEditorPart;
+
 /**
  * @author Martin Fluegge
  */
-public interface IDawnEditor
+public interface IDawnEditor extends IEditorPart
 {
-
   public String getContributorID();
 
   public CDOView getView();

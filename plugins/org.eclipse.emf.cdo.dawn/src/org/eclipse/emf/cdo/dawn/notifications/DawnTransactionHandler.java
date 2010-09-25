@@ -52,7 +52,6 @@ public class DawnTransactionHandler implements CDOTransactionHandler
     }
     refresh(object);
     editor.setDirty();
-
   }
 
   public void detachingObject(CDOTransaction transaction, CDOObject object)

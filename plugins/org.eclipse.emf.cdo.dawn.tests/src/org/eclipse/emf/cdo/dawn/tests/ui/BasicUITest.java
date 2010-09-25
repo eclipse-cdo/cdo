@@ -71,7 +71,7 @@ public class BasicUITest extends AbstractCDOTest
   {
     final CDOSession session = openSession();
     DawnAcoreDiagramEditorUtil.createDiagram(URI.createURI("dawn://repo1//test.acore_diagram"),
-        URI.createURI("cdo://test.acore"), new NullProgressMonitor());
+        URI.createURI("cdo://repo1/test.acore"), new NullProgressMonitor());
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test.acore_diagram");

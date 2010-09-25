@@ -567,7 +567,7 @@ public class «this.dawnEditorUtilClassName» extends «this.GMFGenEditorGenerator.
 
 
     CreateSemanticResourceRecordingCommand createSemanticResourceCommand = new CreateSemanticResourceRecordingCommand(
-        editingDomain, transaction, modelURI.toString());
+        editingDomain, transaction, modelURI.path());
 
     editingDomain.getCommandStack().execute(createSemanticResourceCommand);
     final Resource modelResource = createSemanticResourceCommand.getResource();

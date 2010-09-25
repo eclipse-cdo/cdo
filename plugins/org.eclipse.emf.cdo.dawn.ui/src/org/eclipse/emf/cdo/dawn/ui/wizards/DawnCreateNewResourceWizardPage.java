@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.ui.wizards;
 
+import org.eclipse.emf.cdo.dawn.preferences.PreferenceConstants;
 import org.eclipse.emf.cdo.dawn.ui.views.DawnWizardPageItemProvider;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
@@ -299,9 +300,31 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
     return IPluginContainer.INSTANCE;
   }
 
+  // public URI getURI()
+  // {
+  // return URI.createURI("cdo://" + resourcePathText.getText() + "/" + resourceText.getText());
+  // }
+
   public URI getURI()
   {
-    return URI.createURI("cdo://" + resourcePathText.getText() + "/" + resourceText.getText());
+    String resourcePath = resourcePathText.getText();
+    if (resourcePath.length() > 0)
+    {
+      if (resourcePath.startsWith("/"))
+      {
+        resourcePath = resourcePath.substring(1, resourcePath.length());
+      }
+      if (!resourcePath.endsWith("/"))
+      {
+        resourcePath = resourcePath + "/";
+      }
+    }
+
+    String resourceName = resourceText.getText();
+    String authority = PreferenceConstants.getRepositoryName();
+    URI uri = URI.createURI("cdo://" + authority + "/" + resourcePath + resourceName);
+
+    return uri;
   }
 
   public void setShowResources(boolean showResources)

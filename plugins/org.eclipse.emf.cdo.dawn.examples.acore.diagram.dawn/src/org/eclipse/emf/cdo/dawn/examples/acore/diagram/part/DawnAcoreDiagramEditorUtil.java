@@ -105,7 +105,7 @@ public class DawnAcoreDiagramEditorUtil extends AcoreDiagramEditorUtil
     AcoreDiagramEditorPlugin.getInstance().logInfo("Diagram Resource: " + diagramResource);
 
     CreateSemanticResourceRecordingCommand createSemanticResourceCommand = new CreateSemanticResourceRecordingCommand(
-        editingDomain, transaction, modelURI.toString());
+        editingDomain, transaction, modelURI.path());
 
     editingDomain.getCommandStack().execute(createSemanticResourceCommand);
     final Resource modelResource = createSemanticResourceCommand.getResource();

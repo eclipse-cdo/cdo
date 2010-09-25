@@ -291,7 +291,7 @@ public class DawnCreationWizardTest extends AbstractCDOTest
     assertNotNull(dawnDomainModelFilePage);
     assertInstanceOf(DawnCreateNewResourceWizardPage.class, dawnDomainModelFilePage);
     assertEquals("default.acore", dawnDomainModelFilePage.getDefaultName());
-    assertEquals("cdo:///folder//default.acore", dawnDomainModelFilePage.getURI().toString());
+    assertEquals("cdo://repo1/folder/default.acore", dawnDomainModelFilePage.getURI().toString());
 
     boolean performFinish = creationWizard.performFinish();
     assertTrue(performFinish);

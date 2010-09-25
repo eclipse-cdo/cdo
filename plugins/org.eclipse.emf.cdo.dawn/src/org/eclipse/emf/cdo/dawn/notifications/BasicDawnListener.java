@@ -21,6 +21,10 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.gmf.runtime.notation.Edge;
@@ -84,24 +88,33 @@ public class BasicDawnListener implements IListener
       {
         for (CDOObject obj : e.getDetachedObjects())
         {
-          EObject view = CDOUtil.getEObject(obj);
+          final EObject view = CDOUtil.getEObject(obj);
           if (view instanceof Edge)
           {
-            try
+            EditingDomain editingDomain = ((IEditingDomainProvider)view.eResource().getResourceSet())
+                .getEditingDomain();
+            editingDomain.getCommandStack().execute(new RecordingCommand((TransactionalEditingDomain)editingDomain)
             {
-              ((Edge)view).setTarget(null);
-            }
-            catch (InvalidObjectException ignore)
-            {
-            }
+              @Override
+              protected void doExecute()
+              {
+                try
+                {
+                  ((Edge)view).setTarget(null);
+                }
+                catch (InvalidObjectException ignore)
+                {
+                }
 
-            try
-            {
-              ((Edge)view).setSource(null);
-            }
-            catch (InvalidObjectException ignore)
-            {
-            }
+                try
+                {
+                  ((Edge)view).setSource(null);
+                }
+                catch (InvalidObjectException ignore)
+                {
+                }
+              }
+            });
           }
         }
       }

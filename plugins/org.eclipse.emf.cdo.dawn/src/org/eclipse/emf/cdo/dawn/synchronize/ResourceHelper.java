@@ -600,8 +600,8 @@ public class ResourceHelper
           View childViewCopy = (View)createCopyAndInsert(rightChild, leftObject);
           if (childViewElement != null)
           {
-            EObject childElementCopy = getSameEObjectFromOtherResource(childViewElement, (XMLResource)leftObject
-                .eResource());
+            EObject childElementCopy = getSameEObjectFromOtherResource(childViewElement,
+                (XMLResource)leftObject.eResource());
 
             updateEObject(childElementCopy, childViewElement);// not shure whether this is needed here
             childViewCopy.setElement(childElementCopy);
@@ -698,8 +698,8 @@ public class ResourceHelper
         for (Object o : rightCollection)
         {
           EObject rightCollectionChild = (EObject)o;
-          EObject leftCollectionChild = getSameEObjectFromOtherResource(rightCollectionChild, (XMLResource)leftParent
-              .eResource());
+          EObject leftCollectionChild = getSameEObjectFromOtherResource(rightCollectionChild,
+              (XMLResource)leftParent.eResource());
 
           if (leftCollectionChild == null)// create
           {

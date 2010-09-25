@@ -23,6 +23,7 @@ import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocument
 /**
  * @author Martin Fluegge
  */
+@Deprecated
 public class DawnTransactionChangeRecorderRemover implements IListener
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnTransactionChangeRecorderRemover.class);

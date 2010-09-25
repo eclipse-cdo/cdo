@@ -99,8 +99,8 @@ public class DawnChangeHelper
    */
   public static EditPart createNode(final Node node, IElementType elementType, DiagramEditPart diagramEP)
   {
-    CreateViewRequest createViewRequest = CreateViewRequestFactory.getCreateShapeRequest(elementType, diagramEP
-        .getDiagramPreferencesHint());
+    CreateViewRequest createViewRequest = CreateViewRequestFactory.getCreateShapeRequest(elementType,
+        diagramEP.getDiagramPreferencesHint());
 
     Bounds bounds = (Bounds)node.getLayoutConstraint();
 
@@ -159,8 +159,8 @@ public class DawnChangeHelper
   {
     DiagramEditPart diagramEP = diagramEditor.getDiagramEditPart();
 
-    CreateViewRequest createViewRequest = CreateViewRequestFactory.getCreateShapeRequest(elementType, diagramEP
-        .getDiagramPreferencesHint());
+    CreateViewRequest createViewRequest = CreateViewRequestFactory.getCreateShapeRequest(elementType,
+        diagramEP.getDiagramPreferencesHint());
 
     createViewRequest.setLocation(p);
     diagramEP.performRequest(createViewRequest);

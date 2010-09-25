@@ -50,8 +50,8 @@ public class DawnBasicConnectionEditPartStylizerImpl implements DawnEditPartStyl
 
   private void setEdge(EditPart editPart, Color color)
   {
-    ChangePropertyValueRequest request = new ChangePropertyValueRequest(StringStatics.BLANK, PackageUtil
-        .getID(NotationPackage.eINSTANCE.getLineStyle_LineColor()), FigureUtilities.colorToInteger(color));
+    ChangePropertyValueRequest request = new ChangePropertyValueRequest(StringStatics.BLANK,
+        PackageUtil.getID(NotationPackage.eINSTANCE.getLineStyle_LineColor()), FigureUtilities.colorToInteger(color));
     final Command command = editPart.getCommand(request);
 
     AbstractEMFOperation operation = new AbstractEMFOperation(((IGraphicalEditPart)editPart).getEditingDomain(),

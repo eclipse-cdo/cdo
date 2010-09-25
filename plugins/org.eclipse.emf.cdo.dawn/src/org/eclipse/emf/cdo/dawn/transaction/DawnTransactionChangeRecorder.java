@@ -12,12 +12,6 @@ public class DawnTransactionChangeRecorder extends TransactionChangeRecorder
     super(domain, rset);
   }
 
-  @Override
-  protected void assertWriting()
-  {
-    // Do nothing because we do not want to react an the assert. Every trnasaction is handle be CDO itself
-  }
-
   /**
    * @since 1.0
    */

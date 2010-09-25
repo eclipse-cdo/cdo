@@ -75,14 +75,20 @@ public class DawnDiagramUpdater
 
   public static void refreshEditPart(final EditPart editPart, DiagramDocumentEditor editor)
   {
-    editor.getEditingDomain().getCommandStack().execute(new RecordingCommand(editor.getEditingDomain())
+    try
     {
-      @Override
-      public void doExecute()
+      editor.getEditingDomain().runExclusive(new Runnable()
       {
-        DawnDiagramUpdater.refreshEditPart(editPart);
-      }
-    });
+        public void run()
+        {
+          DawnDiagramUpdater.refreshEditPart(editPart);
+        }
+      });
+    }
+    catch (InterruptedException ex)
+    {
+      throw new RuntimeException(ex);
+    }
   }
 
   public static void refreshEditCurrentSelected(TransactionalEditingDomain editingDomain)
@@ -365,15 +371,14 @@ public class DawnDiagramUpdater
         .getCrossReferenceAdapter(element);// getCrossReferenceAdapter(element);
     if (crossreferenceAdapter != null)
     {
-      Collection<?> iinverseReferences = crossreferenceAdapter.getInverseReferencers(element, NotationPackage.eINSTANCE
-          .getView_Element(), null);
+      Collection<?> iinverseReferences = crossreferenceAdapter.getInverseReferencers(element,
+          NotationPackage.eINSTANCE.getView_Element(), null);
 
       for (Object f : iinverseReferences)
       {
         if (f instanceof View)
         {
           return (View)f;
-
         }
       }
     }

@@ -381,7 +381,7 @@ public class «this.dawnCreationWizardClassName» extends «this.GMFGenEditorGenera
     {
       if (e.getTargetException() instanceof CoreException)
       {
-        ErrorDialog.openError(getContainer().getShell(), "Error while creating diagram", null,
+        ErrorDialog.openError(getContainer().getShell(), Messages.«this.GMFGenEditorGenerator.diagram.creationWizardClassName»CreationError, null,
             ((CoreException)e.getTargetException()).getStatus());
       }
       else
@@ -404,7 +404,7 @@ public class «this.dawnCreationWizardClassName» extends «this.GMFGenEditorGenera
     dawnDiagramModelFilePage.setCreateAutomaticResourceName(true);
     addPage(dawnDiagramModelFilePage);
 
-    dawnDomainModelFilePage = new DawnCreateNewResourceWizardPage("", true, view)
+    dawnDomainModelFilePage = new DawnCreateNewResourceWizardPage("«this.GMFGenEditorGenerator.domainFileExtension»", true, view)
     {
       @Override
       public void setVisible(boolean visible)

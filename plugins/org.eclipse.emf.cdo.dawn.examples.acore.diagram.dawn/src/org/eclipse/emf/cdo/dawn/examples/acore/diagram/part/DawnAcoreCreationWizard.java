@@ -52,11 +52,6 @@ public class DawnAcoreCreationWizard extends AcoreCreationWizard
   @Override
   public boolean performFinish()
   {
-    AcoreDiagramEditorPlugin.getInstance().logInfo(
-        "Notational Model: " + dawnDiagramModelFilePage.getURI().lastSegment());
-    AcoreDiagramEditorPlugin.getInstance().logInfo("Notational Model URI: " + dawnDiagramModelFilePage.getURI());
-    AcoreDiagramEditorPlugin.getInstance().logInfo("Domain Model: " + dawnDomainModelFilePage.getURI().lastSegment());
-    AcoreDiagramEditorPlugin.getInstance().logInfo("Domain Model URI: " + dawnDomainModelFilePage.getURI());
     IRunnableWithProgress op = new WorkspaceModifyOperation(null)
     {
       @Override
@@ -75,8 +70,8 @@ public class DawnAcoreCreationWizard extends AcoreCreationWizard
           }
           catch (PartInitException e)
           {
-            ErrorDialog.openError(getContainer().getShell(), Messages.AcoreCreationWizardOpenEditorError, null, e
-                .getStatus());
+            ErrorDialog.openError(getContainer().getShell(), Messages.AcoreCreationWizardOpenEditorError, null,
+                e.getStatus());
           }
         }
       }
@@ -114,7 +109,7 @@ public class DawnAcoreCreationWizard extends AcoreCreationWizard
     dawnDiagramModelFilePage.setCreateAutomaticResourceName(true);
     addPage(dawnDiagramModelFilePage);
 
-    dawnDomainModelFilePage = new DawnCreateNewResourceWizardPage("", true, view)
+    dawnDomainModelFilePage = new DawnCreateNewResourceWizardPage("acore", true, view)
     {
       @Override
       public void setVisible(boolean visible)

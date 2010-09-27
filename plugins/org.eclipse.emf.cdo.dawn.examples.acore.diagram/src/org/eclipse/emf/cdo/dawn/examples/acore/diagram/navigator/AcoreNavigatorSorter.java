@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry;
+
 import org.eclipse.jface.viewers.ViewerSorter;
 
 /**

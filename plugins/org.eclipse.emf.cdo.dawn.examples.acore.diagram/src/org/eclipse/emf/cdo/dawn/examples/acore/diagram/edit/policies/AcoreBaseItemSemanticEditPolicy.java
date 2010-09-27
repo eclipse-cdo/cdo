@@ -11,14 +11,14 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies;
 
-import java.util.Iterator;
-
 import org.eclipse.emf.cdo.dawn.examples.acore.AClass;
 import org.eclipse.emf.cdo.dawn.examples.acore.AInterface;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.helpers.AcoreBaseEditHelper;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreElementTypes;
+
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.UnexecutableCommand;
@@ -46,6 +46,8 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.ReorientReferenceRelations
 import org.eclipse.gmf.runtime.emf.type.core.requests.ReorientRelationshipRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.SetRequest;
 import org.eclipse.gmf.runtime.notation.View;
+
+import java.util.Iterator;
 
 /**
  * @generated

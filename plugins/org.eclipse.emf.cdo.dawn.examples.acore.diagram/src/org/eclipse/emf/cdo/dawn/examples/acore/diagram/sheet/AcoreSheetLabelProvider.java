@@ -11,10 +11,11 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.sheet;
 
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreNavigatorGroup;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreElementTypes;
+
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.BaseLabelProvider;

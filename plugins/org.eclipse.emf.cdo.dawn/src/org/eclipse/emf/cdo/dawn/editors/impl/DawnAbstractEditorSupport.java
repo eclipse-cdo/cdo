@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.dawn.editors.impl;
 
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditorSupport;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
 /**
@@ -53,5 +54,18 @@ public abstract class DawnAbstractEditorSupport implements IDawnEditorSupport
   public IDawnEditor getEditor()
   {
     return editor;
+  }
+
+  /**
+   * @since 1.0
+   */
+  public void rollback()
+  {
+    CDOView view = getEditor().getView();
+
+    if (view != null && view instanceof CDOTransaction)
+    {
+      ((CDOTransaction)view).rollback();
+    }
   }
 }

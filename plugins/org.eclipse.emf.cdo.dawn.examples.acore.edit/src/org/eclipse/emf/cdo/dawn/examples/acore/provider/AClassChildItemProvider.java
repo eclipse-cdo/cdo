@@ -11,11 +11,9 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.provider;
 
-import java.util.Collection;
-import java.util.List;
-
 import org.eclipse.emf.cdo.dawn.examples.acore.AClassChild;
 import org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -29,6 +27,9 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.dawn.examples.acore.AClassChild} object. <!--
@@ -82,9 +83,10 @@ public class AClassChildItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_AClassChild_name_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_AClassChild_name_feature", "_UI_AClassChild_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_AClassChild_name_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_AClassChild_name_feature", "_UI_AClassChild_type"),
         AcorePackage.Literals.ACLASS_CHILD__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
         null));
   }
@@ -96,9 +98,10 @@ public class AClassChildItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addAccessrightPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_AClassChild_accessright_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_AClassChild_accessright_feature", "_UI_AClassChild_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_AClassChild_accessright_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_AClassChild_accessright_feature", "_UI_AClassChild_type"),
         AcorePackage.Literals.ACLASS_CHILD__ACCESSRIGHT, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
@@ -110,9 +113,10 @@ public class AClassChildItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addDataTypePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_AClassChild_dataType_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_AClassChild_dataType_feature", "_UI_AClassChild_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_AClassChild_dataType_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_AClassChild_dataType_feature", "_UI_AClassChild_type"),
         AcorePackage.Literals.ACLASS_CHILD__DATA_TYPE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
         null, null));
   }

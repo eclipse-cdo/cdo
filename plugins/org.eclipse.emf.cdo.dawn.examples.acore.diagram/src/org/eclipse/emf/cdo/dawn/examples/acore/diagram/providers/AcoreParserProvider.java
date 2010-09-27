@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers;
 
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AAttribute2EditPart;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AAttributeEditPart;
@@ -21,8 +20,11 @@ import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AOperation2Edi
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AOperationEditPart;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.parsers.MessageFormatParser;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
 import org.eclipse.gmf.runtime.common.ui.services.parser.GetParserOperation;

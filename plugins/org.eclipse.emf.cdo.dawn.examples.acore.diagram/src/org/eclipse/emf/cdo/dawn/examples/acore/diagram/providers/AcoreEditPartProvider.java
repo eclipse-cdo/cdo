@@ -11,11 +11,10 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers;
 
-import java.lang.ref.WeakReference;
-
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.ACoreRootEditPart;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AcoreEditPartFactory;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry;
+
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
@@ -24,6 +23,8 @@ import org.eclipse.gmf.runtime.diagram.ui.services.editpart.AbstractEditPartProv
 import org.eclipse.gmf.runtime.diagram.ui.services.editpart.CreateGraphicEditPartOperation;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpart.IEditPartOperation;
 import org.eclipse.gmf.runtime.notation.View;
+
+import java.lang.ref.WeakReference;
 
 /**
  * @generated

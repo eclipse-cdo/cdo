@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.dawn.notifications.DawnNotificationUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.common.ui.viewer.IViewerProvider;
+
 /**
  * @author Martin Fluegge
  * @since 1.0
@@ -39,5 +41,12 @@ public class DawnEMFEditorSupport extends DawnAbstractEditorSupport
   {
     // DawnNotificationUtil.registerTransactionListeners((CDOTransaction)getView(), getEditor());
     DawnNotificationUtil.setChangeSubscriptionPolicy((CDOTransaction)getView());
+  }
+
+  @Override
+  public void rollback()
+  {
+    super.rollback();
+    ((IViewerProvider)getEditor()).getViewer().refresh();
   }
 }

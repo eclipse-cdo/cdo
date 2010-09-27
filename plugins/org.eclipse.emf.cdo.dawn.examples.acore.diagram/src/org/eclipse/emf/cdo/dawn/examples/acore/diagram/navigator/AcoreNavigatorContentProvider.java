@@ -11,14 +11,6 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-
-import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AAttribute2EditPart;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AAttributeEditPart;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassAAttributeCompartmentEditPart;
@@ -37,12 +29,15 @@ import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AOperation2Edi
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AOperationEditPart;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.Messages;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
+
+import org.eclipse.core.resources.IFile;
 import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.Edge;
@@ -51,6 +46,13 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.navigator.ICommonContentExtensionSite;
 import org.eclipse.ui.navigator.ICommonContentProvider;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * @generated
@@ -274,11 +276,11 @@ public class AcoreNavigatorContentProvider implements ICommonContentProvider
       AcoreNavigatorGroup source = new AcoreNavigatorGroup(Messages.NavigatorGroupName_AClassSubClasses_4001_source,
           "icons/linkSourceNavigatorGroup.gif", parentElement); //$NON-NLS-1$
       Collection<View> connectedViews;
-      connectedViews = getLinksTargetByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassEditPart.VISUAL_ID));
+      connectedViews = getLinksTargetByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassEditPart.VISUAL_ID));
       target.addChildren(createNavigatorItems(connectedViews, target, true));
-      connectedViews = getLinksSourceByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassEditPart.VISUAL_ID));
+      connectedViews = getLinksSourceByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassEditPart.VISUAL_ID));
       source.addChildren(createNavigatorItems(connectedViews, source, true));
       if (!target.isEmpty())
       {
@@ -299,11 +301,11 @@ public class AcoreNavigatorContentProvider implements ICommonContentProvider
       AcoreNavigatorGroup source = new AcoreNavigatorGroup(Messages.NavigatorGroupName_AClassCompositions_4005_source,
           "icons/linkSourceNavigatorGroup.gif", parentElement); //$NON-NLS-1$
       Collection<View> connectedViews;
-      connectedViews = getLinksTargetByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassEditPart.VISUAL_ID));
+      connectedViews = getLinksTargetByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassEditPart.VISUAL_ID));
       target.addChildren(createNavigatorItems(connectedViews, target, true));
-      connectedViews = getLinksSourceByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassEditPart.VISUAL_ID));
+      connectedViews = getLinksSourceByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassEditPart.VISUAL_ID));
       source.addChildren(createNavigatorItems(connectedViews, source, true));
       if (!target.isEmpty())
       {
@@ -323,16 +325,16 @@ public class AcoreNavigatorContentProvider implements ICommonContentProvider
           Messages.NavigatorGroupName_AInterface_2001_incominglinks,
           "icons/incomingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
       Collection<View> connectedViews;
-      connectedViews = getChildrenByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AInterfaceAAttributeInterfaceCompartmentEditPart.VISUAL_ID));
+      connectedViews = getChildrenByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AInterfaceAAttributeInterfaceCompartmentEditPart.VISUAL_ID));
       connectedViews = getChildrenByType(connectedViews, AcoreVisualIDRegistry.getType(AAttributeEditPart.VISUAL_ID));
       result.addAll(createNavigatorItems(connectedViews, parentElement, false));
-      connectedViews = getChildrenByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AInterfaceAOperationInterfaceCompartmentEditPart.VISUAL_ID));
+      connectedViews = getChildrenByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AInterfaceAOperationInterfaceCompartmentEditPart.VISUAL_ID));
       connectedViews = getChildrenByType(connectedViews, AcoreVisualIDRegistry.getType(AOperationEditPart.VISUAL_ID));
       result.addAll(createNavigatorItems(connectedViews, parentElement, false));
-      connectedViews = getIncomingLinksByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassImplementedInterfacesEditPart.VISUAL_ID));
+      connectedViews = getIncomingLinksByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassImplementedInterfacesEditPart.VISUAL_ID));
       incominglinks.addChildren(createNavigatorItems(connectedViews, incominglinks, true));
       if (!incominglinks.isEmpty())
       {
@@ -349,11 +351,11 @@ public class AcoreNavigatorContentProvider implements ICommonContentProvider
       AcoreNavigatorGroup source = new AcoreNavigatorGroup(Messages.NavigatorGroupName_AClassAggregations_4004_source,
           "icons/linkSourceNavigatorGroup.gif", parentElement); //$NON-NLS-1$
       Collection<View> connectedViews;
-      connectedViews = getLinksTargetByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassEditPart.VISUAL_ID));
+      connectedViews = getLinksTargetByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassEditPart.VISUAL_ID));
       target.addChildren(createNavigatorItems(connectedViews, target, true));
-      connectedViews = getLinksSourceByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassEditPart.VISUAL_ID));
+      connectedViews = getLinksSourceByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassEditPart.VISUAL_ID));
       source.addChildren(createNavigatorItems(connectedViews, source, true));
       if (!target.isEmpty())
       {
@@ -376,11 +378,11 @@ public class AcoreNavigatorContentProvider implements ICommonContentProvider
           Messages.NavigatorGroupName_AClassImplementedInterfaces_4002_source,
           "icons/linkSourceNavigatorGroup.gif", parentElement); //$NON-NLS-1$
       Collection<View> connectedViews;
-      connectedViews = getLinksTargetByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AInterfaceEditPart.VISUAL_ID));
+      connectedViews = getLinksTargetByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AInterfaceEditPart.VISUAL_ID));
       target.addChildren(createNavigatorItems(connectedViews, target, true));
-      connectedViews = getLinksSourceByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassEditPart.VISUAL_ID));
+      connectedViews = getLinksSourceByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassEditPart.VISUAL_ID));
       source.addChildren(createNavigatorItems(connectedViews, source, true));
       if (!target.isEmpty())
       {
@@ -401,40 +403,40 @@ public class AcoreNavigatorContentProvider implements ICommonContentProvider
       AcoreNavigatorGroup outgoinglinks = new AcoreNavigatorGroup(
           Messages.NavigatorGroupName_AClass_2002_outgoinglinks, "icons/outgoingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
       Collection<View> connectedViews;
-      connectedViews = getChildrenByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassAAttributeCompartmentEditPart.VISUAL_ID));
+      connectedViews = getChildrenByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassAAttributeCompartmentEditPart.VISUAL_ID));
       connectedViews = getChildrenByType(connectedViews, AcoreVisualIDRegistry.getType(AAttribute2EditPart.VISUAL_ID));
       result.addAll(createNavigatorItems(connectedViews, parentElement, false));
-      connectedViews = getChildrenByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassAOperationClassCompartmentEditPart.VISUAL_ID));
+      connectedViews = getChildrenByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassAOperationClassCompartmentEditPart.VISUAL_ID));
       connectedViews = getChildrenByType(connectedViews, AcoreVisualIDRegistry.getType(AOperation2EditPart.VISUAL_ID));
       result.addAll(createNavigatorItems(connectedViews, parentElement, false));
-      connectedViews = getIncomingLinksByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassSubClassesEditPart.VISUAL_ID));
+      connectedViews = getIncomingLinksByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassSubClassesEditPart.VISUAL_ID));
       incominglinks.addChildren(createNavigatorItems(connectedViews, incominglinks, true));
-      connectedViews = getOutgoingLinksByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassSubClassesEditPart.VISUAL_ID));
+      connectedViews = getOutgoingLinksByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassSubClassesEditPart.VISUAL_ID));
       outgoinglinks.addChildren(createNavigatorItems(connectedViews, outgoinglinks, true));
-      connectedViews = getOutgoingLinksByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassImplementedInterfacesEditPart.VISUAL_ID));
+      connectedViews = getOutgoingLinksByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassImplementedInterfacesEditPart.VISUAL_ID));
       outgoinglinks.addChildren(createNavigatorItems(connectedViews, outgoinglinks, true));
-      connectedViews = getIncomingLinksByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassAssociationsEditPart.VISUAL_ID));
+      connectedViews = getIncomingLinksByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassAssociationsEditPart.VISUAL_ID));
       incominglinks.addChildren(createNavigatorItems(connectedViews, incominglinks, true));
-      connectedViews = getOutgoingLinksByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassAssociationsEditPart.VISUAL_ID));
+      connectedViews = getOutgoingLinksByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassAssociationsEditPart.VISUAL_ID));
       outgoinglinks.addChildren(createNavigatorItems(connectedViews, outgoinglinks, true));
-      connectedViews = getIncomingLinksByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassAggregationsEditPart.VISUAL_ID));
+      connectedViews = getIncomingLinksByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassAggregationsEditPart.VISUAL_ID));
       incominglinks.addChildren(createNavigatorItems(connectedViews, incominglinks, true));
-      connectedViews = getOutgoingLinksByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassAggregationsEditPart.VISUAL_ID));
+      connectedViews = getOutgoingLinksByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassAggregationsEditPart.VISUAL_ID));
       outgoinglinks.addChildren(createNavigatorItems(connectedViews, outgoinglinks, true));
-      connectedViews = getIncomingLinksByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassCompositionsEditPart.VISUAL_ID));
+      connectedViews = getIncomingLinksByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassCompositionsEditPart.VISUAL_ID));
       incominglinks.addChildren(createNavigatorItems(connectedViews, incominglinks, true));
-      connectedViews = getOutgoingLinksByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassCompositionsEditPart.VISUAL_ID));
+      connectedViews = getOutgoingLinksByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassCompositionsEditPart.VISUAL_ID));
       outgoinglinks.addChildren(createNavigatorItems(connectedViews, outgoinglinks, true));
       if (!incominglinks.isEmpty())
       {
@@ -453,26 +455,26 @@ public class AcoreNavigatorContentProvider implements ICommonContentProvider
       AcoreNavigatorGroup links = new AcoreNavigatorGroup(Messages.NavigatorGroupName_ACoreRoot_1000_links,
           "icons/linksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
       Collection<View> connectedViews;
-      connectedViews = getChildrenByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AInterfaceEditPart.VISUAL_ID));
+      connectedViews = getChildrenByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AInterfaceEditPart.VISUAL_ID));
       result.addAll(createNavigatorItems(connectedViews, parentElement, false));
-      connectedViews = getChildrenByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassEditPart.VISUAL_ID));
+      connectedViews = getChildrenByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassEditPart.VISUAL_ID));
       result.addAll(createNavigatorItems(connectedViews, parentElement, false));
-      connectedViews = getDiagramLinksByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassSubClassesEditPart.VISUAL_ID));
+      connectedViews = getDiagramLinksByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassSubClassesEditPart.VISUAL_ID));
       links.addChildren(createNavigatorItems(connectedViews, links, false));
-      connectedViews = getDiagramLinksByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassImplementedInterfacesEditPart.VISUAL_ID));
+      connectedViews = getDiagramLinksByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassImplementedInterfacesEditPart.VISUAL_ID));
       links.addChildren(createNavigatorItems(connectedViews, links, false));
-      connectedViews = getDiagramLinksByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassAssociationsEditPart.VISUAL_ID));
+      connectedViews = getDiagramLinksByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassAssociationsEditPart.VISUAL_ID));
       links.addChildren(createNavigatorItems(connectedViews, links, false));
-      connectedViews = getDiagramLinksByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassAggregationsEditPart.VISUAL_ID));
+      connectedViews = getDiagramLinksByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassAggregationsEditPart.VISUAL_ID));
       links.addChildren(createNavigatorItems(connectedViews, links, false));
-      connectedViews = getDiagramLinksByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassCompositionsEditPart.VISUAL_ID));
+      connectedViews = getDiagramLinksByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassCompositionsEditPart.VISUAL_ID));
       links.addChildren(createNavigatorItems(connectedViews, links, false));
       if (!links.isEmpty())
       {
@@ -489,11 +491,11 @@ public class AcoreNavigatorContentProvider implements ICommonContentProvider
       AcoreNavigatorGroup source = new AcoreNavigatorGroup(Messages.NavigatorGroupName_AClassAssociations_4003_source,
           "icons/linkSourceNavigatorGroup.gif", parentElement); //$NON-NLS-1$
       Collection<View> connectedViews;
-      connectedViews = getLinksTargetByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassEditPart.VISUAL_ID));
+      connectedViews = getLinksTargetByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassEditPart.VISUAL_ID));
       target.addChildren(createNavigatorItems(connectedViews, target, true));
-      connectedViews = getLinksSourceByType(Collections.singleton(view), AcoreVisualIDRegistry
-          .getType(AClassEditPart.VISUAL_ID));
+      connectedViews = getLinksSourceByType(Collections.singleton(view),
+          AcoreVisualIDRegistry.getType(AClassEditPart.VISUAL_ID));
       source.addChildren(createNavigatorItems(connectedViews, source, true));
       if (!target.isEmpty())
       {

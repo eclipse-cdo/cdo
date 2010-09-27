@@ -11,8 +11,9 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
-import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.emf.common.ui.URIEditorInput;
+
+import org.eclipse.core.expressions.PropertyTester;
 
 /**
  * @generated

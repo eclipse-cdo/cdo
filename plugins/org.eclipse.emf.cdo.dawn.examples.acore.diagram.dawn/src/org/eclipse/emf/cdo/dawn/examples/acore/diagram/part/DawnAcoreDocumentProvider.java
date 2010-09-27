@@ -76,9 +76,10 @@ public class DawnAcoreDocumentProvider extends AcoreDocumentProvider
   {
     TransactionalEditingDomain editingDomain = DawnDiagramEditingDomainFactory.getInstance().createEditingDomain();
     editingDomain.setID("org.eclipse.emf.cdo.dawn.examples.acore.diagram.EditingDomain"); //$NON-NLS-1$
-    final NotificationFilter diagramResourceModifiedFilter = NotificationFilter.createNotifierFilter(
-        editingDomain.getResourceSet()).and(NotificationFilter.createEventTypeFilter(Notification.ADD)).and(
-        NotificationFilter.createFeatureFilter(ResourceSet.class, ResourceSet.RESOURCE_SET__RESOURCES));
+    final NotificationFilter diagramResourceModifiedFilter = NotificationFilter
+        .createNotifierFilter(editingDomain.getResourceSet())
+        .and(NotificationFilter.createEventTypeFilter(Notification.ADD))
+        .and(NotificationFilter.createFeatureFilter(ResourceSet.class, ResourceSet.RESOURCE_SET__RESOURCES));
     editingDomain.getResourceSet().eAdapters().add(new Adapter()
     {
       private Notifier myTarger;

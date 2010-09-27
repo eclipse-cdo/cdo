@@ -12,7 +12,9 @@
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreElementTypes;
+
 import org.eclipse.emf.ecore.EAnnotation;
+
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand;
 import org.eclipse.gmf.runtime.emf.commands.core.command.CompositeTransactionalCommand;

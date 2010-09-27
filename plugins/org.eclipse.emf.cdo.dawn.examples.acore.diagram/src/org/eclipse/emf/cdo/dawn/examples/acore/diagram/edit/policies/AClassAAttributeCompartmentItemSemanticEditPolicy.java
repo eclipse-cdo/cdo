@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.commands.AAttribute2CreateCommand;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreElementTypes;
+
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 

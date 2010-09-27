@@ -11,9 +11,10 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies.AInterfaceItemSemanticEditPolicy;
+import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies.AcoreTextSelectionEditPolicy;
+import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry;
+import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreElementTypes;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.RectangleFigure;
@@ -22,10 +23,6 @@ import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies.AInterfaceItemSemanticEditPolicy;
-import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies.AcoreTextSelectionEditPolicy;
-import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry;
-import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreElementTypes;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -45,6 +42,10 @@ import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @generated

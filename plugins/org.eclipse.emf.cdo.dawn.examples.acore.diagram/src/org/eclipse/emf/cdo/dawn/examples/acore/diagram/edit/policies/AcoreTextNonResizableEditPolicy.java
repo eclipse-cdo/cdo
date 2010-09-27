@@ -11,9 +11,6 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.FigureListener;
@@ -27,6 +24,9 @@ import org.eclipse.gef.handles.MoveHandle;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.NonResizableEditPolicyEx;
 import org.eclipse.gmf.runtime.diagram.ui.tools.DragEditPartsTrackerEx;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @generated

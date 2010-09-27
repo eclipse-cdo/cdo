@@ -11,12 +11,10 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.provider;
 
-import java.util.Collection;
-import java.util.List;
-
 import org.eclipse.emf.cdo.dawn.examples.acore.ACoreRoot;
 import org.eclipse.emf.cdo.dawn.examples.acore.AcoreFactory;
 import org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -31,6 +29,9 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.dawn.examples.acore.ACoreRoot} object. <!--
@@ -82,9 +83,10 @@ public class ACoreRootItemProvider extends ItemProviderAdapter implements IEditi
    */
   protected void addTitlePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_ACoreRoot_title_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_ACoreRoot_title_feature", "_UI_ACoreRoot_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ACoreRoot_title_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_ACoreRoot_title_feature", "_UI_ACoreRoot_type"),
         AcorePackage.Literals.ACORE_ROOT__TITLE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
         null));
   }
@@ -182,11 +184,11 @@ public class ACoreRootItemProvider extends ItemProviderAdapter implements IEditi
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(AcorePackage.Literals.ACORE_ROOT__CLASSES, AcoreFactory.eINSTANCE
-        .createAClass()));
+    newChildDescriptors.add(createChildParameter(AcorePackage.Literals.ACORE_ROOT__CLASSES,
+        AcoreFactory.eINSTANCE.createAClass()));
 
-    newChildDescriptors.add(createChildParameter(AcorePackage.Literals.ACORE_ROOT__INTERFACES, AcoreFactory.eINSTANCE
-        .createAInterface()));
+    newChildDescriptors.add(createChildParameter(AcorePackage.Literals.ACORE_ROOT__INTERFACES,
+        AcoreFactory.eINSTANCE.createAInterface()));
   }
 
   /**

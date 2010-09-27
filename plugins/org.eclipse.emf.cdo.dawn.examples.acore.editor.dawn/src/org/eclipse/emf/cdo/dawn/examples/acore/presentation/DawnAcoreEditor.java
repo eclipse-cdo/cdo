@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.dawn.editors.IDawnEditorSupport;
 import org.eclipse.emf.cdo.dawn.editors.impl.DawnEMFEditorSupport;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.dawn.ui.DawnLabelProvider;
+import org.eclipse.emf.cdo.dawn.ui.DawnSelectionViewerAdapterFactoryContentProvider;
 import org.eclipse.emf.cdo.dawn.util.connection.CDOConnectionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -89,6 +90,9 @@ public class DawnAcoreEditor extends AcoreEditor implements IDawnEditor
   public void createPages()
   {
     super.createPages();
+
+    selectionViewer.setContentProvider(new DawnSelectionViewerAdapterFactoryContentProvider(adapterFactory,
+        ((DawnEditorInput)getEditorInput()).getResource()));
     selectionViewer
         .setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
     parentViewer.setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
@@ -99,8 +103,12 @@ public class DawnAcoreEditor extends AcoreEditor implements IDawnEditor
         selectionViewer));
 
     CDOResource resource = ((DawnEditorInput)getEditorInput()).getResource();
-    selectionViewer.setInput(resource);
+
+    selectionViewer.setInput(resource.getResourceSet());
     selectionViewer.setSelection(new StructuredSelection(resource), true);
+
+    parentViewer.setContentProvider(new ReverseAdapterFactoryContentProvider(adapterFactory));
+
   }
 
   @Override
@@ -158,5 +166,10 @@ public class DawnAcoreEditor extends AcoreEditor implements IDawnEditor
   public String getContributorId()
   {
     return null;
+  }
+
+  public IDawnEditorSupport getDawnEditorSupport()
+  {
+    return dawnEditorSupport;
   }
 }

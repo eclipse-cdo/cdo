@@ -11,9 +11,6 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers;
 
-import java.util.ArrayList;
-
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AAttribute2EditPart;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AAttributeEditPart;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassAAttributeCompartmentEditPart;
@@ -33,10 +30,13 @@ import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AInterfaceName
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AOperation2EditPart;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AOperationEditPart;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry;
+
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
@@ -70,6 +70,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.FontData;
+
+import java.util.ArrayList;
 
 /**
  * @generated
@@ -314,8 +316,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
 
     org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter
         .getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-    ViewUtil.setStructuralFeatureValue(node, NotationPackage.eINSTANCE.getLineStyle_LineColor(), FigureUtilities
-        .RGBToInteger(lineRGB));
+    ViewUtil.setStructuralFeatureValue(node, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
+        FigureUtilities.RGBToInteger(lineRGB));
     FontStyle nodeFontStyle = (FontStyle)node.getStyle(NotationPackage.Literals.FONT_STYLE);
     if (nodeFontStyle != null)
     {
@@ -356,8 +358,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
 
     org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter
         .getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-    ViewUtil.setStructuralFeatureValue(node, NotationPackage.eINSTANCE.getLineStyle_LineColor(), FigureUtilities
-        .RGBToInteger(lineRGB));
+    ViewUtil.setStructuralFeatureValue(node, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
+        FigureUtilities.RGBToInteger(lineRGB));
     FontStyle nodeFontStyle = (FontStyle)node.getStyle(NotationPackage.Literals.FONT_STYLE);
     if (nodeFontStyle != null)
     {
@@ -456,8 +458,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
 
     org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter
         .getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(), FigureUtilities
-        .RGBToInteger(lineRGB));
+    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
+        FigureUtilities.RGBToInteger(lineRGB));
     FontStyle edgeFontStyle = (FontStyle)edge.getStyle(NotationPackage.Literals.FONT_STYLE);
     if (edgeFontStyle != null)
     {
@@ -500,8 +502,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
 
     org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter
         .getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(), FigureUtilities
-        .RGBToInteger(lineRGB));
+    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
+        FigureUtilities.RGBToInteger(lineRGB));
     FontStyle edgeFontStyle = (FontStyle)edge.getStyle(NotationPackage.Literals.FONT_STYLE);
     if (edgeFontStyle != null)
     {
@@ -544,8 +546,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
 
     org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter
         .getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(), FigureUtilities
-        .RGBToInteger(lineRGB));
+    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
+        FigureUtilities.RGBToInteger(lineRGB));
     FontStyle edgeFontStyle = (FontStyle)edge.getStyle(NotationPackage.Literals.FONT_STYLE);
     if (edgeFontStyle != null)
     {
@@ -588,8 +590,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
 
     org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter
         .getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(), FigureUtilities
-        .RGBToInteger(lineRGB));
+    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
+        FigureUtilities.RGBToInteger(lineRGB));
     FontStyle edgeFontStyle = (FontStyle)edge.getStyle(NotationPackage.Literals.FONT_STYLE);
     if (edgeFontStyle != null)
     {
@@ -632,8 +634,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
 
     org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter
         .getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(), FigureUtilities
-        .RGBToInteger(lineRGB));
+    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
+        FigureUtilities.RGBToInteger(lineRGB));
     FontStyle edgeFontStyle = (FontStyle)edge.getStyle(NotationPackage.Literals.FONT_STYLE);
     if (edgeFontStyle != null)
     {

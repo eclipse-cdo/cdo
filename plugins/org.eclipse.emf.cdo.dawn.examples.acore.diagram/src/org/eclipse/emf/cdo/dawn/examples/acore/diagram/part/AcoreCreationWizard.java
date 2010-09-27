@@ -11,11 +11,10 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
-import java.lang.reflect.InvocationTargetException;
+import org.eclipse.emf.ecore.resource.Resource;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -24,6 +23,8 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @generated
@@ -161,8 +162,8 @@ public class AcoreCreationWizard extends Wizard implements INewWizard
           }
           catch (PartInitException e)
           {
-            ErrorDialog.openError(getContainer().getShell(), Messages.AcoreCreationWizardOpenEditorError, null, e
-                .getStatus());
+            ErrorDialog.openError(getContainer().getShell(), Messages.AcoreCreationWizardOpenEditorError, null,
+                e.getStatus());
           }
         }
       }

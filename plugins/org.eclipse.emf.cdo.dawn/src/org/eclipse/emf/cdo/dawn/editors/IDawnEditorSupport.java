@@ -28,4 +28,9 @@ public interface IDawnEditorSupport
   public void close();
 
   public void registerListeners();
+
+  /**
+   * @since 1.0
+   */
+  public void rollback();
 }

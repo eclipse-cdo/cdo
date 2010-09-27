@@ -11,11 +11,8 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreElementTypes;
+
 import org.eclipse.gef.Tool;
 import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteDrawer;
@@ -24,6 +21,10 @@ import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeConnectionTool;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeCreationTool;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @generated
@@ -152,8 +153,8 @@ public class AcorePaletteFactory
   private ToolEntry createImplements2CreationTool()
   {
     LinkToolEntry entry = new LinkToolEntry(Messages.Implements2CreationTool_title,
-        Messages.Implements2CreationTool_desc, Collections
-            .singletonList(AcoreElementTypes.AClassImplementedInterfaces_4002));
+        Messages.Implements2CreationTool_desc,
+        Collections.singletonList(AcoreElementTypes.AClassImplementedInterfaces_4002));
     entry.setId("createImplements2CreationTool"); //$NON-NLS-1$
     entry.setSmallIcon(AcoreDiagramEditorPlugin
         .findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/implements.png")); //$NON-NLS-1$

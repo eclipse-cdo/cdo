@@ -11,8 +11,6 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies;
 
-import java.util.Iterator;
-
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.commands.AClassImplementedInterfacesCreateCommand;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.commands.AClassImplementedInterfacesReorientCommand;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AAttributeEditPart;
@@ -22,7 +20,9 @@ import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AInterfaceAOpe
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AOperationEditPart;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreElementTypes;
+
 import org.eclipse.emf.ecore.EAnnotation;
+
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gmf.runtime.common.core.command.ICompositeCommand;
 import org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand;
@@ -36,6 +36,8 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.ReorientReferenceRelations
 import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.View;
+
+import java.util.Iterator;
 
 /**
  * @generated

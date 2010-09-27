@@ -14,7 +14,9 @@ package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.commands.AClassCreateCommand;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.commands.AInterfaceCreateCommand;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreElementTypes;
+
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.emf.commands.core.commands.DuplicateEObjectsCommand;

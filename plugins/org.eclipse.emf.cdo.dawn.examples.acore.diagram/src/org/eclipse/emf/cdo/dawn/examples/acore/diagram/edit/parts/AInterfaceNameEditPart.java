@@ -11,20 +11,18 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.Label;
-import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies.AcoreTextSelectionEditPolicy;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreElementTypes;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreParserProvider;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RunnableWithResult;
+
+import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.AccessibleEditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalEditPart;
@@ -59,6 +57,10 @@ import org.eclipse.swt.accessibility.AccessibleEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @generated
@@ -527,8 +529,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
     if (style != null)
     {
       FontData fontData = new FontData(style.getFontName(), style.getFontHeight(), (style.isBold() ? SWT.BOLD
-          : SWT.NORMAL)
-          | (style.isItalic() ? SWT.ITALIC : SWT.NORMAL));
+          : SWT.NORMAL) | (style.isItalic() ? SWT.ITALIC : SWT.NORMAL));
       setFont(fontData);
     }
   }

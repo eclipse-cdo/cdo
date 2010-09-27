@@ -11,11 +11,9 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.provider;
 
-import java.util.Collection;
-import java.util.List;
-
 import org.eclipse.emf.cdo.dawn.examples.acore.AClass;
 import org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
@@ -25,6 +23,9 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.dawn.examples.acore.AClass} object. <!--
@@ -80,9 +81,10 @@ public class AClassItemProvider extends ABasicClassItemProvider implements IEdit
    */
   protected void addSubClassesPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_AClass_subClasses_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_AClass_subClasses_feature", "_UI_AClass_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_AClass_subClasses_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_AClass_subClasses_feature", "_UI_AClass_type"),
         AcorePackage.Literals.ACLASS__SUB_CLASSES, true, false, true, null, null, null));
   }
 
@@ -94,8 +96,9 @@ public class AClassItemProvider extends ABasicClassItemProvider implements IEdit
    */
   protected void addImplementedInterfacesPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_AClass_implementedInterfaces_feature"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_AClass_implementedInterfaces_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_AClass_implementedInterfaces_feature", "_UI_AClass_type"),
         AcorePackage.Literals.ACLASS__IMPLEMENTED_INTERFACES, true, false, true, null, null, null));
   }
@@ -107,9 +110,10 @@ public class AClassItemProvider extends ABasicClassItemProvider implements IEdit
    */
   protected void addAssociationsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_AClass_associations_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_AClass_associations_feature", "_UI_AClass_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_AClass_associations_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_AClass_associations_feature", "_UI_AClass_type"),
         AcorePackage.Literals.ACLASS__ASSOCIATIONS, true, false, true, null, null, null));
   }
 
@@ -120,9 +124,10 @@ public class AClassItemProvider extends ABasicClassItemProvider implements IEdit
    */
   protected void addCompositionsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_AClass_compositions_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_AClass_compositions_feature", "_UI_AClass_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_AClass_compositions_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_AClass_compositions_feature", "_UI_AClass_type"),
         AcorePackage.Literals.ACLASS__COMPOSITIONS, true, false, true, null, null, null));
   }
 
@@ -133,9 +138,10 @@ public class AClassItemProvider extends ABasicClassItemProvider implements IEdit
    */
   protected void addAggregationsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_AClass_aggregations_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_AClass_aggregations_feature", "_UI_AClass_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_AClass_aggregations_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_AClass_aggregations_feature", "_UI_AClass_type"),
         AcorePackage.Literals.ACLASS__AGGREGATIONS, true, false, true, null, null, null));
   }
 

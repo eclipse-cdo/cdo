@@ -12,13 +12,11 @@ package org.eclipse.emf.cdo.dawn.actions;
 
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.helper.DawnEditorHelper;
-import org.eclipse.emf.cdo.dawn.synchronize.DawnConflictHelper;
 import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -30,9 +28,9 @@ import org.eclipse.ui.IWorkbenchPart;
 /**
  * @author Martin Fluegge
  */
+@Deprecated
 public class HandleConflictsAction implements IObjectActionDelegate
 {
-
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HandleConflictsAction.class);
 
   private Object selectedElement;
@@ -61,7 +59,8 @@ public class HandleConflictsAction implements IObjectActionDelegate
       switch (dialog.open())
       {
       case 0: // yes
-        DawnConflictHelper.rollback((DiagramDocumentEditor)activeEditor);
+        // DawnConflictHelper.rollback((DiagramDocumentEditor)activeEditor);
+        ((IDawnEditor)activeEditor).getDawnEditorSupport().rollback();
         break;
       case 1: // no
         break;

@@ -24,4 +24,9 @@ public interface IDawnEditor extends IEditorPart
   public CDOView getView();
 
   public void setDirty();
+
+  /**
+   * @since 1.0
+   */
+  public IDawnEditorSupport getDawnEditorSupport();
 }

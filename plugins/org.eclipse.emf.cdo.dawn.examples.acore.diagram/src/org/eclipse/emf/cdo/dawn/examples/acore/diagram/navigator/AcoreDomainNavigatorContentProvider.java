@@ -11,13 +11,8 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-
-import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreDiagramEditorPlugin;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -25,11 +20,18 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
+
+import org.eclipse.core.resources.IFile;
 import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.navigator.ICommonContentExtensionSite;
 import org.eclipse.ui.navigator.ICommonContentProvider;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * @generated
@@ -216,8 +218,9 @@ public class AcoreDomainNavigatorContentProvider implements ICommonContentProvid
 
     if (parentElement instanceof AcoreDomainNavigatorItem)
     {
-      return wrapEObjects(myAdapterFctoryContentProvier.getChildren(((AcoreDomainNavigatorItem)parentElement)
-          .getEObject()), parentElement);
+      return wrapEObjects(
+          myAdapterFctoryContentProvier.getChildren(((AcoreDomainNavigatorItem)parentElement).getEObject()),
+          parentElement);
     }
     return EMPTY_ARRAY;
   }

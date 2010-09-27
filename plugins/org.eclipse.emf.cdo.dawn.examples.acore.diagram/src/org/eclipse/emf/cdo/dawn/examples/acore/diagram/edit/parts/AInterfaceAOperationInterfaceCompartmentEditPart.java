@@ -11,11 +11,13 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts;
 
-import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies.AInterfaceAOperationInterfaceCompartmentCanonicalEditPolicy;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies.AInterfaceAOperationInterfaceCompartmentItemSemanticEditPolicy;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.Messages;
+
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ListCompartmentEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CreationEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.DragDropEditPolicy;

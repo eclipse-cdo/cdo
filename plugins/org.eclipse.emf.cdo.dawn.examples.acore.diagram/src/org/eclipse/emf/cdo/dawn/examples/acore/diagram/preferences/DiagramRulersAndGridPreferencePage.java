@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.preferences;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreDiagramEditorPlugin;
+
 import org.eclipse.gmf.runtime.diagram.ui.preferences.RulerGridPreferencePage;
 
 /**

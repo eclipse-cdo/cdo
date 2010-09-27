@@ -11,12 +11,14 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.commands;
 
+import org.eclipse.emf.cdo.dawn.examples.acore.AClass;
+import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies.AcoreBaseItemSemanticEditPolicy;
+
+import org.eclipse.emf.ecore.EObject;
+
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.cdo.dawn.examples.acore.AClass;
-import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies.AcoreBaseItemSemanticEditPolicy;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.emf.type.core.commands.EditElementCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.ReorientReferenceRelationshipRequest;

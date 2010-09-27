@@ -11,19 +11,21 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.parsers;
 
-import java.text.FieldPosition;
-import java.text.MessageFormat;
-import java.text.ParsePosition;
-
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreDiagramEditorPlugin;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.Messages;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.gmf.runtime.common.core.command.ICommand;
 import org.eclipse.gmf.runtime.common.ui.services.parser.IParserEditStatus;
 import org.eclipse.gmf.runtime.common.ui.services.parser.ParserEditStatus;
 import org.eclipse.osgi.util.NLS;
+
+import java.text.FieldPosition;
+import java.text.MessageFormat;
+import java.text.ParsePosition;
 
 /**
  * @generated

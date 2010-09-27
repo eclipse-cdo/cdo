@@ -11,10 +11,11 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator;
 
-import org.eclipse.core.runtime.IAdapterFactory;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+
+import org.eclipse.core.runtime.IAdapterFactory;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.gmf.runtime.notation.View;
 
 /**
@@ -37,8 +38,7 @@ public class AcoreNavigatorItem extends AcoreAbstractNavigatorItem
         if (adaptableObject instanceof org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreNavigatorItem
             && (adapterType == View.class || adapterType == EObject.class))
         {
-          return ((org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreNavigatorItem)adaptableObject)
-              .getView();
+          return ((org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreNavigatorItem)adaptableObject).getView();
         }
         return null;
       }

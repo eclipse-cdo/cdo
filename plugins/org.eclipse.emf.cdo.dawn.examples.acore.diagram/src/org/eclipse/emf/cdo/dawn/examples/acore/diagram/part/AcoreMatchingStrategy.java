@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
 import org.eclipse.emf.common.ui.URIEditorInput;
+
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorMatchingStrategy;
 import org.eclipse.ui.IEditorReference;

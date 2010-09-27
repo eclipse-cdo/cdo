@@ -11,14 +11,19 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.ui.URIEditorInput;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.transaction.NotificationFilter;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
@@ -34,19 +39,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.MultiRule;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.ui.URIEditorInput;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EContentAdapter;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.transaction.NotificationFilter;
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.diagram.core.DiagramEditingDomainFactory;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.AbstractDocumentProvider;
@@ -64,6 +56,15 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @generated
@@ -167,9 +168,10 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   {
     TransactionalEditingDomain editingDomain = DiagramEditingDomainFactory.getInstance().createEditingDomain();
     editingDomain.setID("org.eclipse.emf.cdo.dawn.examples.acore.diagram.EditingDomain"); //$NON-NLS-1$
-    final NotificationFilter diagramResourceModifiedFilter = NotificationFilter.createNotifierFilter(
-        editingDomain.getResourceSet()).and(NotificationFilter.createEventTypeFilter(Notification.ADD)).and(
-        NotificationFilter.createFeatureFilter(ResourceSet.class, ResourceSet.RESOURCE_SET__RESOURCES));
+    final NotificationFilter diagramResourceModifiedFilter = NotificationFilter
+        .createNotifierFilter(editingDomain.getResourceSet())
+        .and(NotificationFilter.createEventTypeFilter(Notification.ADD))
+        .and(NotificationFilter.createFeatureFilter(ResourceSet.class, ResourceSet.RESOURCE_SET__RESOURCES));
     editingDomain.getResourceSet().eAdapters().add(new Adapter()
     {
 
@@ -568,8 +570,8 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           files.add(file);
         }
       }
-      return ResourcesPlugin.getWorkspace().getRuleFactory().validateEditRule(
-          (IFile[])files.toArray(new IFile[files.size()]));
+      return ResourcesPlugin.getWorkspace().getRuleFactory()
+          .validateEditRule((IFile[])files.toArray(new IFile[files.size()]));
     }
     return null;
   }
@@ -778,8 +780,8 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   {
     if (input instanceof FileEditorInput)
     {
-      IFile newFile = ResourcesPlugin.getWorkspace().getRoot().getFile(
-          new Path(URI.decode(uri.path())).removeFirstSegments(1));
+      IFile newFile = ResourcesPlugin.getWorkspace().getRoot()
+          .getFile(new Path(URI.decode(uri.path())).removeFirstSegments(1));
       fireElementMoved(input, newFile == null ? null : new FileEditorInput(newFile));
       return;
     }
@@ -1147,9 +1149,9 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
     public ResourceSetModificationListener(ResourceSetInfo info)
     {
       myInfo = info;
-      myModifiedFilter = NotificationFilter.createEventTypeFilter(Notification.SET).or(
-          NotificationFilter.createEventTypeFilter(Notification.UNSET)).and(
-          NotificationFilter.createFeatureFilter(Resource.class, Resource.RESOURCE__IS_MODIFIED));
+      myModifiedFilter = NotificationFilter.createEventTypeFilter(Notification.SET)
+          .or(NotificationFilter.createEventTypeFilter(Notification.UNSET))
+          .and(NotificationFilter.createFeatureFilter(Resource.class, Resource.RESOURCE__IS_MODIFIED));
     }
 
     /**
@@ -1170,8 +1172,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           {
             boolean modified = false;
             for (Iterator/* <org.eclipse.emf.ecore.resource.Resource> */it = myInfo.getLoadedResourcesIterator(); it
-                .hasNext()
-                && !modified;)
+                .hasNext() && !modified;)
             {
               Resource nextResource = (Resource)it.next();
               if (nextResource.isLoaded())

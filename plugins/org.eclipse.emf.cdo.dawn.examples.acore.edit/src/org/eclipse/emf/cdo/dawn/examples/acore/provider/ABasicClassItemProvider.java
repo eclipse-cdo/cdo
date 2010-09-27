@@ -11,12 +11,10 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.provider;
 
-import java.util.Collection;
-import java.util.List;
-
 import org.eclipse.emf.cdo.dawn.examples.acore.ABasicClass;
 import org.eclipse.emf.cdo.dawn.examples.acore.AcoreFactory;
 import org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -31,6 +29,9 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.dawn.examples.acore.ABasicClass} object. <!--
@@ -82,9 +83,10 @@ public class ABasicClassItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_ABasicClass_name_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_ABasicClass_name_feature", "_UI_ABasicClass_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ABasicClass_name_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_ABasicClass_name_feature", "_UI_ABasicClass_type"),
         AcorePackage.Literals.ABASIC_CLASS__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
         null));
   }
@@ -182,11 +184,11 @@ public class ABasicClassItemProvider extends ItemProviderAdapter implements IEdi
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(AcorePackage.Literals.ABASIC_CLASS__OPERATIONS, AcoreFactory.eINSTANCE
-        .createAOperation()));
+    newChildDescriptors.add(createChildParameter(AcorePackage.Literals.ABASIC_CLASS__OPERATIONS,
+        AcoreFactory.eINSTANCE.createAOperation()));
 
-    newChildDescriptors.add(createChildParameter(AcorePackage.Literals.ABASIC_CLASS__ATTRIBUTES, AcoreFactory.eINSTANCE
-        .createAAttribute()));
+    newChildDescriptors.add(createChildParameter(AcorePackage.Literals.ABASIC_CLASS__ATTRIBUTES,
+        AcoreFactory.eINSTANCE.createAAttribute()));
   }
 
   /**

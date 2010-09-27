@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies.ACoreRootCanonicalEditPolicy;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies.ACoreRootItemSemanticEditPolicy;
+
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.notation.View;

@@ -35,7 +35,7 @@
        </category>
     </extension>
      
-    <extension point="org.eclipse.ui.popupMenus">
+   <!-- <extension point="org.eclipse.ui.popupMenus">
 	      <objectContribution
 	            adaptable="false"
 	            id="org.eclipse.emf.cdo.dawn.handleConflict"
@@ -51,7 +51,7 @@
 	                definitionId="org.eclipse.emf.cdo.dawn.handleConflict"
 	               enablesFor="1"
 	               id="org.eclipse.emf.cdo.dawn.popup.HandleConflictActionID"
-	               label="Solve  Conflict"
+	               label="Solve Conflict"
 	               menubarPath="org.eclipse.emf.cdo.dawn.menu.conflict/group1">
 	         </action>
 	      </objectContribution>
@@ -81,7 +81,7 @@
                 menubarPath="org.eclipse.emf.cdo.dawn.menu.locking/locking">
           </action>
        </objectContribution>
-	</extension>
+	</extension>-->
     <extension
           point="org.eclipse.ui.preferencePages">
        <page
@@ -96,7 +96,7 @@
              class="org.eclipse.emf.cdo.dawn.preferences.PreferenceInitializer">
        </initializer>
     </extension>
-    <extension
+   <!-- <extension
           point="org.eclipse.ui.commands">
        <command
              id="org.eclipse.emf.cdo.dawn.handleConflict"
@@ -110,5 +110,43 @@
              id="org.eclipse.emf.cdo.dawn.unlockObjects"
              name="UnlockObjects">
        </command>
+    </extension>-->
+    <extension
+          point="org.eclipse.ui.menus">
+             <menuContribution
+                   locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <menu
+               label="Conflict">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activePart">
+                  <instanceof
+                        value="org.eclipse.emf.cdo.dawn.editors.IDawnEditor">
+                  </instanceof>
+               </with>
+            </visibleWhen>
+            <command
+                  commandId="org.eclipse.emf.cdo.dawn.commands.solveconflict"
+                  label="Solve Conflict"
+                  mnemonic="%contributions.view.refresh.mnemonic">
+            </command>
+         </menu>
+      </menuContribution>
+
+    </extension>
+    <extension
+          point="org.eclipse.ui.commands">
+       <command
+             id="org.eclipse.emf.cdo.dawn.commands.solveconflict"
+             name="Solve Confilct">
+       </command>
+    </extension>
+    <extension
+          point="org.eclipse.ui.handlers">
+       <handler
+             class="org.eclipse.emf.cdo.dawn.handlers.SolveConflictHandler"
+             commandId="org.eclipse.emf.cdo.dawn.commands.solveconflict">
+       </handler>
     </extension>
 </plugin>

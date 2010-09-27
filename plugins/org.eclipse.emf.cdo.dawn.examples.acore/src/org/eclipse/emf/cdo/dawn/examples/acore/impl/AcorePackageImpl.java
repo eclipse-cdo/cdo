@@ -159,8 +159,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
     // Obtain or create and register package
     AcorePackageImpl theAcorePackage = (AcorePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof AcorePackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI)
-        : new AcorePackageImpl());
+        .get(eNS_URI) : new AcorePackageImpl());
 
     isInited = true;
 

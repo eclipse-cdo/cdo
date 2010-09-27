@@ -11,8 +11,9 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.ecore.EObject;
+
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 

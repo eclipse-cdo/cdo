@@ -105,7 +105,7 @@
 		<sequential>
 			<eclipse.launch app="buckminster">
 				<properties>
-					<sysproperty name="bugfix.288796" value="true" />
+					<sysproperty key="bugfix.288796" value="true" />
 					<sysproperties />
 				</properties>
 				<args>
@@ -149,11 +149,7 @@
 
 	<target name="get.director" unless="director.exists">
 		<echo message="Fetching headless director application" />
-		<tempfile destdir="${java.io.tmpdir}"
-		          prefix="director-"
-		          suffix=".zip"
-		          property="director.zip"
-		          deleteonexit="true" />
+		<tempfile destdir="${java.io.tmpdir}" prefix="director-" suffix=".zip" property="director.zip" deleteonexit="true" />
 		<get src="${eclipse.downloads}/${director.path}" dest="${director.zip}" />
 		<mkdir dir="${tools}" />
 		<unzip src="${director.zip}" dest="${tools}" />
@@ -195,11 +191,7 @@
 
 	<target name="init.build.properties">
 		<!-- Echo relevant properties to a temporary file so that Buckminster can read them -->
-		<tempfile destdir="${java.io.tmpdir}"
-		          prefix="build-"
-		          suffix=".properties"
-		          deleteonexit="true"
-		          property="properties.tmp" />
+		<tempfile destdir="${java.io.tmpdir}" prefix="build-" suffix=".properties" deleteonexit="true" property="properties.tmp" />
 		<echo message="Properties file is: ${properties.tmp}" />
 		<echoproperties destfile="${properties.tmp}">
 			<!-- We don't want these. basedir in particular will cause problems if passed explicitly -->

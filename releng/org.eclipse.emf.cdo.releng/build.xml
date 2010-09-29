@@ -52,6 +52,10 @@
 		<isset property="build.nightly" />
 	</condition>
 
+	<condition property="no.proxy" value="${env.no_proxy}, dev.eclipse.org" else="dev.eclipse.org">
+		<isset property="env.no_proxy" />
+	</condition>
+
 	<!-- Default properties intended to be overridden by entries in the above property file -->
 	<property name="tools" location="${build.root}/tools" />
 	<property name="result" location="${build.root}/result" />
@@ -85,8 +89,7 @@
 
 			<!-- Launch the eclipse application -->
 			<java fork="true" jar="${@{app}.launcher}" dir="${@{app}.deploy.dir}" failonerror="true">
-				<env key="http_proxy" value="" />
-				<env key="https_proxy" value="" />
+				<env key="no_proxy" value="${no.proxy}" />
 				<properties />
 				<!-- Uncomment to debug <jvmarg value="-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y"/> -->
 				<args />

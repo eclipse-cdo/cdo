@@ -85,10 +85,8 @@
 
 			<!-- Launch the eclipse application -->
 			<java fork="true" jar="${@{app}.launcher}" dir="${@{app}.deploy.dir}" failonerror="true">
-				<syspropertyset>
-					<!--propertyref prefix="http." /-->
-					<!--propertyref prefix="https." /-->
-				</syspropertyset>
+				<env key="http_proxy" value="" />
+				<env key="https_proxy" value="" />
 				<properties />
 				<!-- Uncomment to debug <jvmarg value="-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y"/> -->
 				<args />
@@ -212,7 +210,6 @@
 
 	<target name="provision" depends="init.checks,init.workspace,install.buckminster,init.build.properties">
 		<echo message="Importing projects into workspace ${workspace} and binaries into target platform ${targetPlatformPath}" />
-		<echoproperties />
 		<buckminster command="setpref">
 			<cmdargs>
 				<arg value="targetPlatformPath=${targetPlatformPath}" />

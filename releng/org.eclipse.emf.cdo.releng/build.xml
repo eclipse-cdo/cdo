@@ -86,7 +86,7 @@
 			<!-- Launch the eclipse application -->
 			<java fork="true" jar="${@{app}.launcher}" dir="${@{app}.deploy.dir}" failonerror="true">
 				<syspropertyset>
-					<propertyref prefix="http." />
+					<!--propertyref prefix="http." /-->
 					<!--propertyref prefix="https." /-->
 				</syspropertyset>
 				<properties />
@@ -212,6 +212,7 @@
 
 	<target name="provision" depends="init.checks,init.workspace,install.buckminster,init.build.properties">
 		<echo message="Importing projects into workspace ${workspace} and binaries into target platform ${targetPlatformPath}" />
+		<echoproperties />
 		<buckminster command="setpref">
 			<cmdargs>
 				<arg value="targetPlatformPath=${targetPlatformPath}" />

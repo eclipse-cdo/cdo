@@ -10,8 +10,9 @@
  */
 package org.eclipse.emf.cdo.dawn.tests;
 
-import org.eclipse.emf.cdo.dawn.tests.ui.BasicUITest;
-import org.eclipse.emf.cdo.dawn.tests.ui.DawnCreationWizardTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.emf.DawnBasicEMFUITest;
+import org.eclipse.emf.cdo.dawn.tests.ui.gmf.DawnBasicGMFUITest;
+import org.eclipse.emf.cdo.dawn.tests.ui.gmf.DawnCreationWizardTest;
 import org.eclipse.emf.cdo.tests.AllTests;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
@@ -36,7 +37,8 @@ public class AllTestsDawnUI extends AllTests
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
     testClasses.add(DawnCreationWizardTest.class);
-    testClasses.add(BasicUITest.class);
+    testClasses.add(DawnBasicGMFUITest.class);
+    testClasses.add(DawnBasicEMFUITest.class);
   }
 
   @Override

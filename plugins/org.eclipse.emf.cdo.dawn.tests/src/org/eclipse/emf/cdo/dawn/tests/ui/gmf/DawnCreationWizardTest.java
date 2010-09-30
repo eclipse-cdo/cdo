@@ -8,7 +8,7 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.tests.ui;
+package org.eclipse.emf.cdo.dawn.tests.ui.gmf;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.DawnAcoreCreationWizard;
 import org.eclipse.emf.cdo.dawn.helper.DawnEditorHelper;
@@ -45,6 +45,7 @@ public class DawnCreationWizardTest extends AbstractCDOTest
     CDOConnectionUtil.instance.openView(session);
 
     DawnAcoreCreationWizard creationWizard = new DawnAcoreCreationWizard();
+
     WizardDialog dialog = new WizardDialog(DawnEditorHelper.getActiveShell(), creationWizard);
     dialog.create();
 

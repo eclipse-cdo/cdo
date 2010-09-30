@@ -10,7 +10,9 @@
  */
 package org.eclipse.emf.cdo.dawn.tests;
 
-import org.eclipse.emf.cdo.dawn.tests.bugzillas.Bugzilla_321024_Test;
+import org.eclipse.emf.cdo.dawn.tests.ui.emf.DawnEMFCreationWizardTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.emf.DawnEMFHandleEditorTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.emf.EMFEditorRollbackTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -25,12 +27,11 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ 
-  AllTestsDawnUISWTBotGMF.class,
-  AllTestsDawnUISWTBotEMF.class,
-  Bugzilla_321024_Test.class 
+  DawnEMFCreationWizardTest.class,
+  EMFEditorRollbackTest.class,
+  DawnEMFHandleEditorTest.class
    })
    
-   
-public class AllTestsDawnUISWTBot
+public class AllTestsDawnUISWTBotEMF
 {
 }

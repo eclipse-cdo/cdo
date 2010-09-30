@@ -8,7 +8,7 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.tests.ui;
+package org.eclipse.emf.cdo.dawn.tests.ui.gmf;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.AClass;
 import org.eclipse.emf.cdo.dawn.tests.AbstractDawnUITest;
@@ -74,7 +74,7 @@ public class ConflictTest extends AbstractDawnUITest
   @Test
   public void testAClassConflictMove() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
     assertNotNull(editor);
 
     createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
@@ -108,7 +108,7 @@ public class ConflictTest extends AbstractDawnUITest
   @Test
   public void testAClassConflictbyRemoteNameChange() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
     assertNotNull(editor);
 
     createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
@@ -153,7 +153,7 @@ public class ConflictTest extends AbstractDawnUITest
   @Test
   public void testAInterfaceConflictMove() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
     assertNotNull(editor);
 
     createNodeWithLabel(DawnAcoreTestUtil.A_INTERFACE, 100, 100, "A", bot, editor);
@@ -186,7 +186,7 @@ public class ConflictTest extends AbstractDawnUITest
   @Test
   public void testAAssociationConflict() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
 
     createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
     createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", bot, editor);

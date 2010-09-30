@@ -22,6 +22,10 @@ import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AInterfaceEdit
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreElementTypes;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreViewProvider;
+import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
+import org.eclipse.emf.cdo.dawn.ui.helper.EditorDescriptionHelper;
+
+import org.eclipse.emf.common.util.URI;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.LineBorder;
@@ -35,8 +39,14 @@ import org.eclipse.gmf.runtime.notation.datatype.RelativeBendpoint;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
+import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.matchers.AbstractMatcher;
+import org.eclipse.swtbot.swt.finder.results.VoidResult;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotCombo;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 import org.hamcrest.Description;
 
@@ -65,9 +75,13 @@ public class DawnAcoreTestUtil
 
   public static final String CONNECTION_COMPOSITION = "composition";
 
+  public static final String CREATTION_WIZARD_NAME_GMF = "Dawn Acore Diagram";
+
+  public static final String CREATTION_WIZARD_NAME_EMF = "Dawn Acore Model";
+
   private static IViewProvider viewProvider = new AcoreViewProvider();
 
-  public static SWTBotGefEditor openNewAcoreEditor(String diagramResourceName, SWTGefBot bot)
+  public static SWTBotGefEditor openNewAcoreGMFEditor(String diagramResourceName, SWTGefBot bot)
   {
     bot.menu("File").menu("New").menu("Other...").click();
 
@@ -78,6 +92,58 @@ public class DawnAcoreTestUtil
     bot.button("Finish").click();
     SWTBotGefEditor editor = bot.gefEditor(diagramResourceName);
     return editor;
+  }
+
+  public static DawnSWTBotEMFEditor openAcoreEMFEditor(URI resourceURI, DawnEMFEditorBot bot)
+  {
+    String resourceName = resourceURI.lastSegment();
+    final String editorID = EditorDescriptionHelper.getEditorIdForDawnEditor(resourceName);
+
+    final DawnEditorInput editorInput = new DawnEditorInput(resourceURI);
+
+    UIThreadRunnable.asyncExec(new VoidResult()
+    {
+      public void run()
+      {
+        try
+        {
+          PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite().getPage()
+              .openEditor(editorInput, editorID);
+        }
+        catch (PartInitException ex)
+        {
+          throw new RuntimeException(ex);
+        }
+      }
+    });
+
+    return bot.emfEditor(resourceName);
+  }
+
+  public static DawnSWTBotEMFEditor openNewAcoreEMFEditor(String resourceName, DawnEMFEditorBot bot)
+  {
+    bot.menu("File").menu("New").menu("Other...").click();
+
+    SWTBotShell shell = bot.shell("New");
+    shell.activate();
+    bot.tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
+    bot.button("Next >").click();
+
+    shell = bot.shell("New");
+    shell.activate();
+
+    SWTBotText fileSemanticNameLabel = bot.textWithLabel("File name:");
+    fileSemanticNameLabel.setText(resourceName);
+
+    bot.button("Next >").click();
+
+    SWTBotCombo comboBox = bot.comboBox(0);// bot.ccomboBox(0);
+    comboBox.setFocus();
+    comboBox.setSelection("ACore Root");
+
+    bot.button("Finish").click();
+
+    return bot.emfEditor(resourceName);
   }
 
   public static List<SWTBotGefEditPart> getAClassEditParts(SWTBotGefEditor editor)

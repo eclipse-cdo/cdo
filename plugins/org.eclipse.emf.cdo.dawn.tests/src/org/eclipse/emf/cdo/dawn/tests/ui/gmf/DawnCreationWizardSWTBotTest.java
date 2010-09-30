@@ -8,7 +8,7 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.tests.ui;
+package org.eclipse.emf.cdo.dawn.tests.ui.gmf;
 
 import org.eclipse.emf.cdo.dawn.tests.AbstractDawnUITest;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnSWTBotUtil;

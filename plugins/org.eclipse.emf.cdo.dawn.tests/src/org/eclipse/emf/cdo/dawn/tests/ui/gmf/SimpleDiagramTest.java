@@ -8,7 +8,7 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.tests.ui;
+package org.eclipse.emf.cdo.dawn.tests.ui.gmf;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.AAttribute;
 import org.eclipse.emf.cdo.dawn.examples.acore.AClass;
@@ -80,7 +80,7 @@ public class SimpleDiagramTest extends AbstractDawnUITest
   @Test
   public void testCreateNewDawnDiagramAndAddElements() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
     assertNotNull(editor);
 
     createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
@@ -117,7 +117,7 @@ public class SimpleDiagramTest extends AbstractDawnUITest
   @Test
   public void testCreateNewDawnDiagramAndAddElementsWithEdges() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
     assertNotNull(editor);
 
     createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
@@ -176,7 +176,7 @@ public class SimpleDiagramTest extends AbstractDawnUITest
   @Test
   public void testAClassWithAttributes() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
     createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
 
     editor.activateTool(DawnAcoreTestUtil.A_ATTRIBUTE);
@@ -215,7 +215,7 @@ public class SimpleDiagramTest extends AbstractDawnUITest
   @Test
   public void testAClassWithOperations() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
     createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
 
     editor.activateTool(DawnAcoreTestUtil.A_OPERATION);
@@ -252,7 +252,7 @@ public class SimpleDiagramTest extends AbstractDawnUITest
   @Test
   public void testAInterfaceWithOperations() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
     createNodeWithLabel(DawnAcoreTestUtil.A_INTERFACE, 100, 100, "A", bot, editor);
 
     editor.activateTool(DawnAcoreTestUtil.A_OPERATION);
@@ -288,7 +288,7 @@ public class SimpleDiagramTest extends AbstractDawnUITest
   @Test
   public void testConnections() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
     assertNotNull(editor);
 
     createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
@@ -358,7 +358,7 @@ public class SimpleDiagramTest extends AbstractDawnUITest
   @Test
   public void testExceptionOnClose() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
     assertNotNull(editor);
     editor.close();
   }

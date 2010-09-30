@@ -248,6 +248,35 @@ public class DawnSWTBotUtil
     bounds.setWidth(width);
   }
 
+  public static boolean checkNodePosition(Node node, int x, int y)
+  {
+    boolean ret = true;
+    Bounds bounds = (Bounds)node.getLayoutConstraint();
+    ret = bounds.getX() == x && ret;
+    ret = bounds.getY() == y && ret;
+
+    return ret;
+  }
+
+  public static boolean checkNodeSize(Node node, int height, int width)
+  {
+    boolean ret = true;
+    Bounds bounds = (Bounds)node.getLayoutConstraint();
+    ret = bounds.getHeight() == height && ret;
+    ret = bounds.getWidth() == width && ret;
+
+    return ret;
+  }
+
+  public static boolean checkNodePosistionAndSize(Node node, int x, int y, int height, int width)
+  {
+    boolean ret = true;
+    ret = checkNodePosition(node, x, y) && ret;
+    ret = checkNodeSize(node, height, width) && ret;
+
+    return ret;
+  }
+
   // public static Edge createEdgeRemote(Node source, Node target, String type)
   // {
   // Edge newEdge = ViewService.createEdge(source, target, type, PreferencesHint.USE_DEFAULTS);

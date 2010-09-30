@@ -8,20 +8,19 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.tests.ui;
+package org.eclipse.emf.cdo.dawn.tests.ui.emf;
 
-import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.DawnAcoreDiagramEditor;
-import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.DawnAcoreDiagramEditorUtil;
+import org.eclipse.emf.cdo.dawn.examples.acore.ACoreRoot;
+import org.eclipse.emf.cdo.dawn.examples.acore.AcoreFactory;
+import org.eclipse.emf.cdo.dawn.examples.acore.presentation.DawnAcoreEditor;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.dawn.ui.helper.EditorDescriptionHelper;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 
-import org.eclipse.emf.common.util.URI;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -29,7 +28,7 @@ import org.eclipse.ui.PlatformUI;
 /**
  * @author Martin Fluegge
  */
-public class BasicUITest extends AbstractCDOTest
+public class DawnBasicEMFUITest extends AbstractCDOTest
 {
   @Override
   public void doSetUp() throws Exception
@@ -42,10 +41,10 @@ public class BasicUITest extends AbstractCDOTest
   {
     final CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test.acore_diagram"); //$NON-NLS-1$
+    CDOResource resource = transaction.createResource("/test.acore");
 
     String editorID = EditorDescriptionHelper.getEditorIdForDawnEditor(resource.getName());
-    assertEquals(DawnAcoreDiagramEditor.ID, editorID);
+    assertEquals(DawnAcoreEditor.ID, editorID);
   }
 
   public void testEditorInput() throws PartInitException
@@ -53,10 +52,10 @@ public class BasicUITest extends AbstractCDOTest
     final CDOSession session = openSession();
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/sample/test.acore_diagram"); //$NON-NLS-1$
+    CDOResource resource = transaction.createResource("/sample/test.acore");
 
     String editorID = EditorDescriptionHelper.getEditorIdForDawnEditor(resource.getName());
-    assertEquals(DawnAcoreDiagramEditor.ID, editorID);
+    assertEquals(DawnAcoreEditor.ID, editorID);
     DawnEditorInput editorInput = new DawnEditorInput(resource.getURI());
     editorInput.setResource(resource);
 
@@ -70,20 +69,33 @@ public class BasicUITest extends AbstractCDOTest
   public void testOpenEditor() throws PartInitException
   {
     final CDOSession session = openSession();
-    DawnAcoreDiagramEditorUtil.createDiagram(URI.createURI("dawn://repo1//test.acore_diagram"),
-        URI.createURI("cdo://repo1/test.acore"), new NullProgressMonitor());
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test.acore_diagram");
+    CDOResource resource = transaction.createResource("/test.acore");
+
+    ACoreRoot aCoreRoot = AcoreFactory.eINSTANCE.createACoreRoot();
+
+    resource.getContents().add(aCoreRoot);
+    try
+    {
+      transaction.commit();
+    }
+    catch (CommitException ex)
+    {
+      throw new RuntimeException(ex);
+    }
 
     String editorID = EditorDescriptionHelper.getEditorIdForDawnEditor(resource.getName());
-    assertEquals(DawnAcoreDiagramEditor.ID, editorID);
+    assertEquals(DawnAcoreEditor.ID, editorID);
 
     DawnEditorInput editorInput = new DawnEditorInput(resource.getURI());
 
+    // TODO Test case fails because the ConnectionUtil is not initialized. Fake it here or use the DawnExplorer to open
+    // the editor.
     IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite()
         .getPage().openEditor(editorInput, editorID);
 
-    assertInstanceOf(DawnAcoreDiagramEditor.class, editor);
+    sleep(5000);
+    assertInstanceOf(DawnAcoreEditor.class, editor);
   }
 }

@@ -468,9 +468,6 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
      * You can subscribe to temporary objects. Even if you cannot receive notifications from other
      * {@link CDOTransaction} for these because they are only local to you, at commit time these objects will be
      * registered automatically.
-     * <p>
-     * <b>Note:</b> It can be used with <code>CDOSession.options().setPassiveUpdate(false)</code>. In this case, it will
-     * receive changes without having the objects changed.
      * 
      * @see #removeChangeSubscriptionPolicy(CDOAdapterPolicy)
      * @see #getChangeSubscriptionPolicies()

@@ -10,26 +10,26 @@
  */
 package org.eclipse.emf.cdo.examples.hibernate.client;
 
-import junit.framework.TestCase;
-
 import org.eclipse.emf.cdo.examples.company.CompanyPackage;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
+
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
+import junit.framework.TestCase;
+
 /**
  * This class contains code to connect to a CDO server in a standalone manner . So the junit test is not running inside
  * an OSGI container.
- * 
+ *
  * @author Martin Taal
  */
 public class BaseTest extends TestCase
@@ -83,6 +83,7 @@ public class BaseTest extends TestCase
   /**
    * Nullifies the session configuration so that a new test will start with a new one.
    */
+  @Override
   protected void tearDown() throws Exception
   {
     sessionConfiguration = null;

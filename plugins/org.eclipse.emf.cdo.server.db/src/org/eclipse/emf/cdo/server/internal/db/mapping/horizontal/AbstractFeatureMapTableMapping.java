@@ -10,6 +10,7 @@
  *    Stefan Winkler - 271444: [DB] Multiple refactorings bug 271444
  *    Christopher Albert - 254455: [DB] Support FeatureMaps bug 254455
  *    Victor Roldan Betancort - Bug 283998: [DB] Chunk reading for multiple chunks fails
+ *    Stefan Winkler - Bug 285426: [DB] Implement user-defined typeMapping support
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -27,8 +28,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.server.internal.db.mapping.TypeMapping;
-import org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingFactory;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -109,7 +108,13 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
   private void initDBTypes()
   {
     // TODO add annotation processing here ...
-    dbTypes = new ArrayList<DBType>(TypeMappingFactory.getDefaultFeatureMapDBTypes());
+    ITypeMapping.Registry registry = getTypeMappingRegistry();
+    dbTypes = new ArrayList<DBType>(registry.getDefaultFeatureMapDBTypes());
+  }
+
+  protected ITypeMapping.Registry getTypeMappingRegistry()
+  {
+    return ITypeMapping.Registry.INSTANCE;
   }
 
   private void initTable()
@@ -369,7 +374,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
   {
     EStructuralFeature modelFeature = getFeatureByTag(tag);
 
-    TypeMapping typeMapping = (TypeMapping)getMappingStrategy().createValueMapping(modelFeature);
+    ITypeMapping typeMapping = getMappingStrategy().createValueMapping(modelFeature);
     String column = CDODBSchema.FEATUREMAP_VALUE + "_" + typeMapping.getDBType();
 
     tagMap.put(tag, column);

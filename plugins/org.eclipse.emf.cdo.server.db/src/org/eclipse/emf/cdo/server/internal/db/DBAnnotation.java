@@ -10,6 +10,7 @@
  *    Eike Stepper - maintenance
  *    Kai Schlamp - Bug 284680 - [DB] Provide annotation to bypass ClassMapping
  *    Stefan Winkler - maintenance
+ *    Stefan Winkler - Bug 285426: [DB] Implement user-defined typeMapping support
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
@@ -25,7 +26,8 @@ public enum DBAnnotation
   TABLE_NAME("tableName"), //
   COLUMN_NAME("columnName"), //
   COLUMN_TYPE("columnType"), //
-  COLUMN_LENGTH("columnLength");
+  COLUMN_LENGTH("columnLength"), //
+  TYPE_MAPPING("typeMapping");
 
   public final static String SOURCE_URI = "http://www.eclipse.org/CDO/DBStore";
 

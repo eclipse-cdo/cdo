@@ -12,17 +12,22 @@
  */
 package org.eclipse.emf.cdo.server.db.mapping;
 
+import org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingRegistry;
+import org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.util.factory.IFactory;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 
 /**
  * Mapping of single values to and from the database.
@@ -48,6 +53,21 @@ public interface ITypeMapping
    * @since 3.0
    */
   public DBType getDBType();
+
+  /**
+   * @since 4.0
+   */
+  public void setMappingStrategy(IMappingStrategy mappingStrategy);
+
+  /**
+   * @since 4.0
+   */
+  public void setFeature(EStructuralFeature feature);
+
+  /**
+   * @since 4.0
+   */
+  public void setDBType(DBType dbType);
 
   /**
    * Creates the DBField and adds it to the given table. The name of the DBField is derived from the feature.
@@ -149,4 +169,110 @@ public interface ITypeMapping
    * @since 3.0
    */
   public void readValueToRevision(ResultSet resultSet, InternalCDORevision revision) throws SQLException;
+
+  /**
+   * A descriptor which describes one type mapping class. The descriptor is encoded in the factoryType which is used as
+   * a string description for the extension point mechanism. Translations and instantiations can be done using the
+   * methods in {@link TypeMappingUtil}.
+   * 
+   * @author Stefan Winkler
+   * @since 4.0
+   */
+  public interface Descriptor
+  {
+    /**
+     * The factoryType of the factory which can create the type mapping
+     */
+    public String getFactoryType();
+
+    /**
+     * The ID of the described type mapping.
+     */
+    public String getID();
+
+    /**
+     * The source (i.e., model) type that can be mapped by the type mapping.
+     */
+    public EClassifier getEClassifier();
+
+    /**
+     * The target (i.e., db) type that can be mapped by the type mapping.
+     */
+    public DBType getDBType();
+
+  }
+
+  /**
+   * A global (singleton) registry which collects all available type mappings which are either available in the CDO
+   * core, as declared extensions, or registered manually.
+   * 
+   * @author Stefan Winkler
+   * @since 4.0
+   */
+  public interface Registry
+  {
+    /**
+     * The one global (singleton) registry instance.
+     */
+    public static Registry INSTANCE = new TypeMappingRegistry();
+
+    /**
+     * Register a type mapping by descriptor.
+     */
+    public void registerTypeMapping(ITypeMapping.Descriptor descriptor);
+
+    /**
+     * Provides a list of all DBTypes for which type mappings exist in the registry. This is used in feature map tables
+     * to create columns for all of these types.
+     */
+    public Collection<DBType> getDefaultFeatureMapDBTypes();
+  }
+
+  /**
+   * A provider for type mapping information. This provider is used by the {@link TypeMappingRegistry} to create an
+   * {@link ITypeMapping} instance suitable for a given feature and DB field. Usually, one factory is responsible for
+   * one type mapping.
+   * 
+   * @author Stefan Winkler
+   * @since 4.0
+   */
+  public interface Provider
+  {
+    /**
+     * The one global (singleton) provider instance.
+     */
+    public static Provider INSTANCE = (Provider)Registry.INSTANCE;
+
+    /**
+     * Create an {@link ITypeMapping} implementation.
+     * 
+     * @param mappingStrategy
+     *          the mapping strategy
+     * @param feature
+     *          the feature the new type mapping shall be responsible for
+     * @return the newly created {@link ITypeMapping} instance
+     */
+    public ITypeMapping createTypeMapping(IMappingStrategy mappingStrategy, EStructuralFeature feature);
+  }
+
+  /**
+   * A factory for typeMappings. This is a regular Net4j factory registered by the respective extension point. It
+   * enhances the regular factory using a descriptor which is translated from and to the factoryType by the methods in
+   * {@link TypeMappingUtil}.
+   * 
+   * @author Stefan Winkler
+   * @since 4.0
+   */
+  public interface Factory extends IFactory
+  {
+    /**
+     * The Net4j factory product group for type mappings
+     */
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.db.typeMappings";
+
+    /**
+     * Return the descriptor of the kind of type mapping created by this factory.
+     */
+    public ITypeMapping.Descriptor getDescriptor();
+  }
 }

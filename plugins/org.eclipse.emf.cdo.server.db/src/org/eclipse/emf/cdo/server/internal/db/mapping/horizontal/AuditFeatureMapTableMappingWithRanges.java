@@ -11,7 +11,8 @@
  *    Christopher Albert - Bug 254455: [DB] Support FeatureMaps bug 254455
  *    Victor Roldan Betancort - Bug 283998: [DB] Chunk reading for multiple chunks fails
  *    Lothar Werzinger - Bug 296440: [DB] Change RDB schema to improve scalability of to-many references in audit mode
- *    Stefan Winkler - cleanup, merge and maintenance *
+ *    Stefan Winkler - cleanup, merge and maintenance 
+ *    Stefan Winkler - Bug 285426: [DB] Implement user-defined typeMapping support
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -44,8 +45,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.server.internal.db.mapping.TypeMapping;
-import org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingFactory;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -153,7 +152,8 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
   private void initDBTypes()
   {
     // TODO add annotation processing here ...
-    dbTypes = new ArrayList<DBType>(TypeMappingFactory.getDefaultFeatureMapDBTypes());
+    ITypeMapping.Registry registry = ITypeMapping.Registry.INSTANCE;
+    dbTypes = new ArrayList<DBType>(registry.getDefaultFeatureMapDBTypes());
   }
 
   private void initTable()
@@ -488,7 +488,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
   {
     EStructuralFeature modelFeature = getFeatureByTag(tag);
 
-    TypeMapping typeMapping = (TypeMapping)getMappingStrategy().createValueMapping(modelFeature);
+    ITypeMapping typeMapping = getMappingStrategy().createValueMapping(modelFeature);
     String column = CDODBSchema.FEATUREMAP_VALUE + "_" + typeMapping.getDBType(); //$NON-NLS-1$
 
     tagMap.put(tag, column);

@@ -12,6 +12,7 @@
  *    Stefan Winkler - Bug 282976: [DB] Influence Mappings through EAnnotations
  *    Kai Schlamp - Bug 284680 - [DB] Provide annotation to bypass ClassMapping
  *    Stefan Winkler - maintenance
+ *    Stefan Winkler - Bug 285426: [DB] Implement user-defined typeMapping support
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
@@ -550,7 +551,13 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public ITypeMapping createValueMapping(EStructuralFeature feature)
   {
-    return TypeMappingFactory.createTypeMapping(this, feature);
+    ITypeMapping.Provider provider = getTypeMappingProvider();
+    return provider.createTypeMapping(this, feature);
+  }
+
+  protected ITypeMapping.Provider getTypeMappingProvider()
+  {
+    return ITypeMapping.Provider.INSTANCE;
   }
 
   public final IListMapping createListMapping(EClass containingClass, EStructuralFeature feature)

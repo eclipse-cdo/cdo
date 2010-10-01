@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - Bug 285426: [DB] Implement user-defined typeMapping support
  */
 package org.eclipse.emf.cdo.tests.db;
 
@@ -40,6 +41,7 @@ public abstract class DBConfigs extends AllConfigs
     testClasses.add(Net4jDBTest.class);
     testClasses.add(DBAnnotationsTest.class);
     testClasses.add(DBStoreTest.class);
+    testClasses.add(CustomTypeMappingTest.class);
     testClasses.add(SQLQueryTest.class);
 
     super.initTestClasses(testClasses);

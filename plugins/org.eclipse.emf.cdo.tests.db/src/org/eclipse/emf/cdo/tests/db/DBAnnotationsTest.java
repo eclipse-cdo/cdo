@@ -8,6 +8,7 @@
  * Contributors:
  *    Kai Schlamp - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Stefan Winkler - Bug 285426: [DB] Implement user-defined typeMapping support
  */
 package org.eclipse.emf.cdo.tests.db;
 
@@ -58,6 +59,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
     resource.getContents().add(product);
     transaction.commit();
+    transaction.close();
+    session.close();
   }
 
   public void testLengthAnnotationNegative() throws Exception
@@ -96,6 +99,11 @@ public class DBAnnotationsTest extends AbstractCDOTest
     catch (Exception success)
     {
     }
+    finally
+    {
+      transaction.close();
+      session.close();
+    }
   }
 
   public void testLengthAnnotationByMetaData() throws CommitException
@@ -122,6 +130,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
     resource.getContents().add(product);
 
     transaction.commit();
+    transaction.close();
+    session.close();
 
     msg("Check if column size was correctly set.");
     new DBStoreVerifier(getRepository())
@@ -164,6 +174,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
     resource.getContents().add(category);
     transaction.commit();
+    transaction.close();
+    session.close();
 
     msg("Check if column type was correctly set.");
     new DBStoreVerifier(getRepository())
@@ -202,6 +214,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
     resource.getContents().add(category);
     transaction.commit();
+    transaction.close();
+    session.close();
 
     msg("Check if table name was correctly set.");
     new DBStoreVerifier(getRepository())
@@ -240,6 +254,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
     resource.getContents().add(category);
     transaction.commit();
+    transaction.close();
+    session.close();
 
     msg("Check if table name was correctly set.");
     new DBStoreVerifier(getRepository())
@@ -282,6 +298,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
     resource.getContents().add(category);
     transaction.commit();
+    transaction.close();
+    session.close();
 
     msg("Check if table name was correctly set.");
     new DBStoreVerifier(getRepository())
@@ -319,6 +337,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     resource.getContents().add(category);
     transaction.commit();
     transaction.close();
+    session.close();
 
     msg("Check if table name was correctly set.");
     new DBStoreVerifier(getRepository())
@@ -425,6 +444,9 @@ public class DBAnnotationsTest extends AbstractCDOTest
       EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
       annotation.setSource("http://www.eclipse.org/CDO/DBStore");
       annotation.getDetails().put("tableMapping", "NONE");
+      
+      // ID is defined in plugin.xml
+      annotation.getDetails().put("typeMapping", "org.eclipse.emf.cdo.tests.db.EIntToVarchar");
 
       EClass orderDetail = (EClass)model1.getEClassifier(unmappedTable);
       orderDetail.getEAnnotations().add(annotation);

@@ -94,7 +94,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
     setValue(stmt, index, getRevisionValue(revision));
   }
 
-  public void setDefaultValue(PreparedStatement stmt, int index) throws SQLException
+  public final void setDefaultValue(PreparedStatement stmt, int index) throws SQLException
   {
     setValue(stmt, index, getDefaultValue());
   }

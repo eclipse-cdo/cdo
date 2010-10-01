@@ -33,8 +33,10 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.common.util.Enumerator;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 
 import java.math.BigDecimal;
@@ -763,9 +765,11 @@ public class CoreTypeMappings
     }
 
     @Override
-    public void setDefaultValue(PreparedStatement stmt, int index) throws SQLException
+    protected Object getDefaultValue()
     {
-      setValue(stmt, index, getFeature().getDefaultValueLiteral());
+      Object defaultValue = getFeature().getDefaultValue();
+      EFactory factory = getFeature().getEType().getEPackage().getEFactoryInstance();
+      return factory.convertToString((EDataType)getFeature().getEType(), defaultValue);
     }
   }
 }

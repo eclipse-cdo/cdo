@@ -55,6 +55,11 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
 
   public CDOStore getStore();
 
+  /**
+   * @since 4.0
+   */
+  public boolean isSticky();
+
   public InternalCDOTransaction toTransaction();
 
   public void attachResource(CDOResourceImpl resource);

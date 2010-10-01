@@ -531,6 +531,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
       RefreshSessionResult result = sessionProtocol.refresh(lastUpdateTime, viewedRevisions, initialChunkSize,
           enablePassiveUpdates);
+      setLastUpdateTime(result.getLastUpdateTime());
 
       registerPackageUnits(result.getPackageUnits());
 
@@ -538,11 +539,9 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       {
         CDOBranch branch = entry.getKey();
         List<InternalCDOView> branchViews = entry.getValue();
-
         processRefreshSessionResult(result, branch, branchViews, viewedRevisions);
       }
 
-      setLastUpdateTime(result.getLastUpdateTime());
       return result.getLastUpdateTime();
     }
   }
@@ -893,7 +892,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     fireInvalidationEvent(sender, commitInfo);
-    setLastUpdateTime(commitInfo.getTimeStamp());
+
+    if (options.isPassiveUpdateEnabled())
+    {
+      setLastUpdateTime(commitInfo.getTimeStamp());
+    }
   }
 
   public Object getInvalidationLock()

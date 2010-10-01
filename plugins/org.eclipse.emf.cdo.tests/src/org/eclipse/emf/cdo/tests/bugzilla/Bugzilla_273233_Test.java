@@ -45,26 +45,32 @@ public class Bugzilla_273233_Test extends AbstractCDOTest
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
 
-    CDOSession session2 = openSession();
-
     CDOTransaction trans = session.openTransaction();
-    CDOTransaction trans2 = session2.openTransaction();
     CDOResource res = trans.createResource("/test/1");
 
     trans.commit();
-    session2.options().setPassiveUpdateEnabled(false);
 
+    CDOSession session2 = openSession();
+    session2.options().setPassiveUpdateEnabled(false);
+    CDOTransaction trans2 = session2.openTransaction();
     CDOResource res2 = trans2.getResource("/test/1");
+
+    // Add company in sess/tx #1
     Company company = getModel1Factory().createCompany();
     res.getContents().add(company);
+
+    // Add company in sess/tx #2
     Company company2 = getModel1Factory().createCompany();
     res2.getContents().add(company2);
 
+    // Commit tx #1
     trans.commit();
 
     assertFalse(FSMUtil.isConflict(res2));
+
     session2.refresh();
     assertTrue(FSMUtil.isConflict(res2));
+
     try
     {
       trans2.commit();
@@ -84,22 +90,27 @@ public class Bugzilla_273233_Test extends AbstractCDOTest
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
 
-    CDOSession session2 = openSession();
-
     CDOTransaction trans = session.openTransaction();
-    CDOTransaction trans2 = session2.openTransaction();
     CDOResource res = trans.createResource("/test/1");
 
     trans.commit();
-    session2.options().setPassiveUpdateEnabled(false);
 
+    CDOSession session2 = openSession();
+    session2.options().setPassiveUpdateEnabled(false);
+    CDOTransaction trans2 = session2.openTransaction();
     CDOResource res2 = trans2.getResource("/test/1");
+
+    // Add company in sess/tx #1
     Company company = getModel1Factory().createCompany();
     res.getContents().add(company);
+
+    // Add company in sess/tx #2
     Company company2 = getModel1Factory().createCompany();
     res2.getContents().add(company2);
 
+    // Commit tx #1
     trans.commit();
+
     clearCache(session2.getRevisionManager());
     assertFalse(FSMUtil.isConflict(res2));
 

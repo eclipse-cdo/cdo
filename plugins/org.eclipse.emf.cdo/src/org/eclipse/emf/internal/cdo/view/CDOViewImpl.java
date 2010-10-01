@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
@@ -933,10 +934,27 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
   public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
   {
-    CDORevisionManager revisionManager = session.getRevisionManager();
+    InternalCDORevisionManager revisionManager = session.getRevisionManager();
     int initialChunkSize = session.options().getCollectionLoadingPolicy().getInitialChunkSize();
-    return (InternalCDORevision)revisionManager.getRevision(id, this, initialChunkSize, CDORevision.DEPTH_NONE,
-        loadOnDemand);
+    CDOBranchPoint branchPoint = getBranchPointForID(id);
+    return revisionManager.getRevision(id, branchPoint, initialChunkSize, CDORevision.DEPTH_NONE, loadOnDemand);
+  }
+
+  protected CDOBranchPoint getBranchPointForID(CDOID id)
+  {
+    if (isSticky())
+    {
+      return getBranch().getPoint(session.getLastUpdateTime());
+    }
+
+    return this;
+  }
+
+  public boolean isSticky()
+  {
+    boolean passiveUpdate = session.options().isPassiveUpdateEnabled();
+    boolean supportingAudits = session.getRepositoryInfo().isSupportingAudits();
+    return !passiveUpdate && supportingAudits;
   }
 
   public void prefetchRevisions(CDOID id, int depth)

@@ -153,12 +153,12 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
 
   public void adjustAfterRemoval(int index)
   {
-    if (index <= oldPosition && oldPosition > 0)
+    if (index < oldPosition && oldPosition > 0)
     {
       --oldPosition;
     }
 
-    if (index <= newPosition && newPosition > 0)
+    if (index < newPosition && newPosition > 0)
     {
       --newPosition;
     }

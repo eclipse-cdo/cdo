@@ -225,9 +225,20 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   public interface CommitContext extends CDORevisionProvider
   {
     /**
+     * Returns the transactional view (<code>ITransaction</code>) which is the scope of the commit operation represented
+     * by this <code>CommitContext</code>.
+     * 
+     * @since 4.0
+     */
+    public ITransaction getTransaction();
+
+    /**
      * Returns the ID of the transactional view (<code>ITransaction</code>) which is the scope of the commit operation
      * represented by this <code>CommitContext</code>.
+     * 
+     * @deprecated Use {@link #getTransaction()}.{@link ITransaction#getViewID() getViewID()}
      */
+    @Deprecated
     public int getTransactionID();
 
     /**

@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -33,9 +34,9 @@ public abstract class DelegatingCommitContext implements IStoreAccessor.CommitCo
 {
   protected abstract CommitContext getDelegate();
 
-  public int getTransactionID()
+  public ITransaction getTransaction()
   {
-    return getDelegate().getTransactionID();
+    return getDelegate().getTransaction();
   }
 
   public CDOBranchPoint getBranchPoint()

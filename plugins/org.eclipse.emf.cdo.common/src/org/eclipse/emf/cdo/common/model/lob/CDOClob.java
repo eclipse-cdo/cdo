@@ -21,7 +21,7 @@ import java.io.Reader;
  * @author Eike Stepper
  * @since 4.0
  */
-public final class CDOClob extends CDOLob<char[], Reader>
+public final class CDOClob extends CDOLob<Reader>
 {
   public CDOClob(Reader contents) throws IOException
   {

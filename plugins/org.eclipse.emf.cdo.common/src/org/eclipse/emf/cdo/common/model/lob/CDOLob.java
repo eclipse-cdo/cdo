@@ -19,7 +19,7 @@ import java.io.IOException;
  * @author Eike Stepper
  * @since 4.0
  */
-public abstract class CDOLob<ARRAY, IO> extends CDOLobInfo
+public abstract class CDOLob<IO> extends CDOLobInfo
 {
   private CDOLobStore store;
 

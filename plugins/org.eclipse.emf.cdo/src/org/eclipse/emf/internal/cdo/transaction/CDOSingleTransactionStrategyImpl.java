@@ -63,7 +63,7 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
     commitContext.preCommit();
 
     CDOCommitData commitData = commitContext.getCommitData();
-    Collection<CDOLob<?, ?>> lobs = commitContext.getLobs();
+    Collection<CDOLob<?>> lobs = commitContext.getLobs();
     InternalCDOSession session = transaction.getSession();
     CommitTransactionResult result = null;
 

@@ -21,7 +21,7 @@ import java.io.InputStream;
  * @author Eike Stepper
  * @since 4.0
  */
-public final class CDOBlob extends CDOLob<byte[], InputStream>
+public final class CDOBlob extends CDOLob<InputStream>
 {
   public CDOBlob(InputStream contents) throws IOException
   {

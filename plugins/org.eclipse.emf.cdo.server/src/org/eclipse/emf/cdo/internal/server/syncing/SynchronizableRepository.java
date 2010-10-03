@@ -503,7 +503,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       String userID = getUserID();
       String comment = getCommitComment();
       CDOCommitData commitData = new CommitContextData(this);
-      Collection<CDOLob<?, ?>> lobs = Collections.emptySet();
+      Collection<CDOLob<?>> lobs = Collections.emptySet();
 
       // Delegate commit to the master
       CDOSessionProtocol sessionProtocol = getSynchronizer().getRemoteSession().getSessionProtocol();

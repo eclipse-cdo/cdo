@@ -62,7 +62,7 @@ public interface CDOCommitContext
   /**
    * @since 4.0
    */
-  public Collection<CDOLob<?, ?>> getLobs();
+  public Collection<CDOLob<?>> getLobs();
 
   /**
    * @since 4.0

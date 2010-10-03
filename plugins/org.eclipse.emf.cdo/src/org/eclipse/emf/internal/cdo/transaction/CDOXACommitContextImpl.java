@@ -136,7 +136,7 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
     return delegateCommitContext.getCommitData();
   }
 
-  public Collection<CDOLob<?, ?>> getLobs()
+  public Collection<CDOLob<?>> getLobs()
   {
     return delegateCommitContext.getLobs();
   }

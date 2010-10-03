@@ -83,19 +83,19 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
 
   private CDOCommitData commitData;
 
-  private Collection<CDOLob<?, ?>> lobs;
+  private Collection<CDOLob<?>> lobs;
 
   private ExtendedDataOutputStream stream;
 
   public CommitTransactionRequest(CDOClientProtocol protocol, int transactionID, String comment, boolean releaseLocks,
-      CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?, ?>> lobs)
+      CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs)
   {
     this(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION, transactionID, comment, releaseLocks, idProvider,
         commitData, lobs);
   }
 
   public CommitTransactionRequest(CDOClientProtocol protocol, short signalID, int transactionID, String comment,
-      boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?, ?>> lobs)
+      boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs)
   {
     super(protocol, signalID);
     this.transactionID = transactionID;
@@ -226,7 +226,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
   protected void requestingLobs(CDODataOutput out) throws IOException
   {
     out.writeInt(lobs.size());
-    for (CDOLob<?, ?> lob : lobs)
+    for (CDOLob<?> lob : lobs)
     {
       out.writeByteArray(lob.getID());
       long size = lob.getSize();

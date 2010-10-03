@@ -40,7 +40,7 @@ public class CommitDelegationRequest extends CommitTransactionRequest
   private Map<CDOID, EClass> detachedObjectTypes;
 
   public CommitDelegationRequest(CDOClientProtocol protocol, CDOBranch branch, String userID, String comment,
-      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?, ?>> lobs)
+      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_DELEGATION, UNKNOWN_TRANSACTION_ID, comment, false,
         CDOIDProvider.NOOP, commitData, lobs);

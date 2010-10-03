@@ -35,7 +35,7 @@ public final class CDOLobUtil
     return new CDOClob(in);
   }
 
-  public static void write(ExtendedDataOutput out, CDOLob<?, ?> lob) throws IOException
+  public static void write(ExtendedDataOutput out, CDOLob<?> lob) throws IOException
   {
     lob.write(out);
   }
@@ -50,7 +50,7 @@ public final class CDOLobUtil
     return new CDOClob(id, size);
   }
 
-  public static void setStore(CDOLobStore store, CDOLob<?, ?> lob) throws IOException
+  public static void setStore(CDOLobStore store, CDOLob<?> lob) throws IOException
   {
     lob.setStore(store);
   }

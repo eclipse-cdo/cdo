@@ -1699,7 +1699,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
-        CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?, ?>> lobs, OMMonitor monitor)
+        CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs, OMMonitor monitor)
     {
       int attempt = 0;
       for (;;)
@@ -1717,7 +1717,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
-        CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?, ?>> lobs,
+        CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs,
         OMMonitor monitor)
     {
       int attempt = 0;

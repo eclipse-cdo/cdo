@@ -2067,7 +2067,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
      */
     private boolean isPartialCommit;
 
-    private Map<byte[], CDOLob<?, ?>> lobs = new HashMap<byte[], CDOLob<?, ?>>();
+    private Map<byte[], CDOLob<?>> lobs = new HashMap<byte[], CDOLob<?>>();
 
     public CDOCommitContextImpl(InternalCDOTransaction transaction)
     {
@@ -2167,7 +2167,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return revisionDeltas;
     }
 
-    public Collection<CDOLob<?, ?>> getLobs()
+    public Collection<CDOLob<?>> getLobs()
     {
       return lobs.values();
     }
@@ -2363,7 +2363,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return commitInfoManager.createCommitInfo(branch, timeStamp, userID, comment, commitData);
     }
 
-    private void preCommit(Map<CDOID, CDOObject> objects, Map<byte[], CDOLob<?, ?>> lobs)
+    private void preCommit(Map<CDOID, CDOObject> objects, Map<byte[], CDOLob<?>> lobs)
     {
       if (!objects.isEmpty())
       {
@@ -2381,7 +2381,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    private void collectLobs(InternalCDORevision revision, Map<byte[], CDOLob<?, ?>> lobs)
+    private void collectLobs(InternalCDORevision revision, Map<byte[], CDOLob<?>> lobs)
     {
       EStructuralFeature[] features = revision.getClassInfo().getAllPersistentFeatures();
       for (int i = 0; i < features.length; i++)
@@ -2389,7 +2389,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         EStructuralFeature feature = features[i];
         if (CDOModelUtil.isLob(feature.getEType()))
         {
-          CDOLob<?, ?> lob = (CDOLob<?, ?>)revision.getValue(feature);
+          CDOLob<?> lob = (CDOLob<?>)revision.getValue(feature);
           if (lob != null)
           {
             lobs.put(lob.getID(), lob);

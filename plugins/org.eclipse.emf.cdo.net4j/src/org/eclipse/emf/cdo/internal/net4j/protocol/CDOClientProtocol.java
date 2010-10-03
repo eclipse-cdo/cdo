@@ -283,14 +283,14 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   }
 
   public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
-      CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?, ?>> lobs, OMMonitor monitor)
+      CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs, OMMonitor monitor)
   {
     return send(new CommitTransactionRequest(this, transactionID, comment, releaseLocks, idProvider, commitData, lobs),
         monitor);
   }
 
   public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
-      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?, ?>> lobs, OMMonitor monitor)
+      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
   {
     return send(new CommitDelegationRequest(this, branch, userID, comment, commitData, detachedObjectTypes, lobs),
         monitor);

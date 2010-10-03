@@ -443,9 +443,9 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   {
     CDOType type = CDOModelUtil.getType(feature);
     Object value = type.readValue(this);
-    if (value instanceof CDOLob<?, ?>)
+    if (value instanceof CDOLob<?>)
     {
-      CDOLob<?, ?> lob = (CDOLob<?, ?>)value;
+      CDOLob<?> lob = (CDOLob<?>)value;
       CDOLobUtil.setStore(getLobStore(), lob);
     }
 

@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFactory
@@ -51,8 +50,8 @@ public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFac
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public SubpackageFactoryImpl()
@@ -62,7 +61,6 @@ public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -79,7 +77,6 @@ public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Class2 createClass2()
@@ -90,7 +87,6 @@ public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public SubpackagePackage getSubpackagePackage()
@@ -100,7 +96,6 @@ public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

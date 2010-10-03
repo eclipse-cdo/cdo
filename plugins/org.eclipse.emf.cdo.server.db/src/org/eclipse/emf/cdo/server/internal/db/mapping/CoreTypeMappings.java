@@ -17,7 +17,11 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
+import org.eclipse.emf.cdo.common.model.lob.CDOClob;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
+import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
@@ -30,6 +34,7 @@ import org.eclipse.emf.cdo.server.db.mapping.AbstractTypeMappingFactory;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.common.util.Enumerator;
@@ -142,6 +147,92 @@ public class CoreTypeMappings
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
       return resultSet.getString(getField().getName());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class TMBlob extends AbstractTypeMapping
+  {
+    public static final String ID = ID_PREFIX + ".BlobStream";
+
+    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID,
+        EtypesPackage.eINSTANCE.getBlob(), DBType.VARCHAR));
+
+    public static class Factory extends AbstractTypeMappingFactory
+    {
+      public Factory(Descriptor descriptor)
+      {
+        super(descriptor);
+      }
+
+      @Override
+      public ITypeMapping create(String description) throws ProductCreationException
+      {
+        return new TMBlob();
+      }
+    }
+
+    @Override
+    protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
+    {
+      CDOBlob blob = (CDOBlob)value;
+      stmt.setString(index, HexUtil.bytesToHex(blob.getID()) + "-" + blob.getSize());
+    }
+
+    @Override
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
+    {
+      String str = resultSet.getString(getField().getName());
+      int pos = str.indexOf('-');
+
+      byte[] id = HexUtil.hexToBytes(str.substring(0, pos));
+      long size = Long.parseLong(str.substring(pos + 1));
+      return CDOLobUtil.createBlob(id, size);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class TMClob extends AbstractTypeMapping
+  {
+    public static final String ID = ID_PREFIX + ".ClobStream";
+
+    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID,
+        EtypesPackage.eINSTANCE.getClob(), DBType.VARCHAR));
+
+    public static class Factory extends AbstractTypeMappingFactory
+    {
+      public Factory(Descriptor descriptor)
+      {
+        super(descriptor);
+      }
+
+      @Override
+      public ITypeMapping create(String description) throws ProductCreationException
+      {
+        return new TMClob();
+      }
+    }
+
+    @Override
+    protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
+    {
+      CDOClob clob = (CDOClob)value;
+      stmt.setString(index, HexUtil.bytesToHex(clob.getID()) + "-" + clob.getSize());
+    }
+
+    @Override
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
+    {
+      String str = resultSet.getString(getField().getName());
+      int pos = str.indexOf('-');
+
+      byte[] id = HexUtil.hexToBytes(str.substring(0, pos));
+      long size = Long.parseLong(str.substring(pos + 1));
+      return CDOLobUtil.createClob(id, size);
     }
   }
 

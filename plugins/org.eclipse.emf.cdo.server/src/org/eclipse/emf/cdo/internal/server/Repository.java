@@ -98,6 +98,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1236,6 +1237,18 @@ public class Repository extends Container<Object> implements InternalRepository
     // }
 
     return revision;
+  }
+
+  public void queryLobs(List<byte[]> ids)
+  {
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    accessor.queryLobs(ids);
+  }
+
+  public void loadLob(byte[] id, OutputStream out) throws IOException
+  {
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    accessor.loadLob(id, out);
   }
 
   @Override

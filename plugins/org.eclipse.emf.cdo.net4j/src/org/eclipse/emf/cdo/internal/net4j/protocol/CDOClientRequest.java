@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
@@ -55,7 +56,7 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
   }
 
   @Override
-  protected final void requesting(ExtendedDataOutputStream out) throws Exception
+  protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
     requesting(new CDODataOutputImpl(out)
     {
@@ -80,7 +81,7 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
   }
 
   @Override
-  protected final RESULT confirming(ExtendedDataInputStream in) throws Exception
+  protected RESULT confirming(ExtendedDataInputStream in) throws Exception
   {
     return confirming(new CDODataInputImpl(in)
     {
@@ -112,6 +113,12 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
       protected CDORevisionFactory getRevisionFactory()
       {
         return getSession().getRevisionManager().getFactory();
+      }
+
+      @Override
+      protected CDOLobStore getLobStore()
+      {
+        return getSession().getLobStore();
       }
 
       @Override

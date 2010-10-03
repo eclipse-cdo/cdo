@@ -23,7 +23,7 @@ public class CommitXATransactionRequest extends CommitTransactionRequest
   {
     super(protocol, signalID, xaContext.getTransaction().getViewID(), xaContext.getTransaction().getCommitComment(),
         xaContext.getTransaction().options().isAutoReleaseLocksEnabled(), xaContext.getTransaction(), xaContext
-            .getCommitData());
+            .getCommitData(), xaContext.getLobs());
     this.xaContext = xaContext;
   }
 

@@ -32,6 +32,9 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.lob.CDOLob;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobInfo;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -58,6 +61,7 @@ import org.eclipse.emf.cdo.spi.common.CDORawReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
+import org.eclipse.emf.cdo.spi.common.model.CDOLobStoreImpl;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureDeltaVisitorImpl;
@@ -117,6 +121,12 @@ import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -271,6 +281,68 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   public void setSessionProtocol(CDOSessionProtocol sessionProtocol)
   {
     this.sessionProtocol = sessionProtocol;
+  }
+
+  public CDOLobStore getLobStore()
+  {
+    final CDOLobStore cache = options().getLobCache();
+    return new CDOLobStore.Delegating()
+    {
+      @Override
+      public InputStream getBinary(final CDOLobInfo info) throws IOException
+      {
+        for (;;)
+        {
+          try
+          {
+            return super.getBinary(info);
+          }
+          catch (FileNotFoundException couldNotBeRead)
+          {
+            try
+            {
+              loadBinary(info);
+            }
+            catch (FileNotFoundException couldNotBeCreated)
+            {
+              // Try to read again
+            }
+          }
+        }
+      }
+
+      private void loadBinary(final CDOLobInfo info) throws FileNotFoundException
+      {
+        File file = getDelegate().getBinaryFile(info.getID());
+        final FileOutputStream out = new FileOutputStream(file);
+
+        loadLobAsync(info, new Runnable()
+        {
+          public void run()
+          {
+            try
+            {
+              getSessionProtocol().loadLob(info, out);
+            }
+            catch (IOException ex)
+            {
+              OM.LOG.error(ex);
+            }
+          }
+        });
+      }
+
+      @Override
+      protected CDOLobStore getDelegate()
+      {
+        return cache;
+      }
+    };
+  }
+
+  protected void loadLobAsync(CDOLobInfo info, Runnable runnable)
+  {
+    new Thread(runnable, "LobLoader").start();
   }
 
   public void close()
@@ -1074,6 +1146,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     private CDOCollectionLoadingPolicy collectionLoadingPolicy = CDOCollectionLoadingPolicy.DEFAULT;
 
+    private CDOLobStore lobCache = CDOLobStoreImpl.INSTANCE;
+
     public OptionsImpl()
     {
     }
@@ -1191,6 +1265,42 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
+    public CDOLobStore getLobCache()
+    {
+      synchronized (this)
+      {
+        return lobCache;
+      }
+    }
+
+    public void setLobCache(CDOLobStore cache)
+    {
+      if (cache == null)
+      {
+        cache = CDOLobStoreImpl.INSTANCE;
+      }
+
+      IListener[] listeners = getListeners();
+      IEvent event = null;
+
+      synchronized (this)
+      {
+        if (lobCache != cache)
+        {
+          lobCache = cache;
+          if (listeners != null)
+          {
+            event = new LobCacheEventImpl();
+          }
+        }
+      }
+
+      if (event != null)
+      {
+        fireEvent(event, listeners);
+      }
+    }
+
     /**
      * @author Eike Stepper
      */
@@ -1259,6 +1369,19 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       private static final long serialVersionUID = 1L;
 
       public CollectionLoadingPolicyEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class LobCacheEventImpl extends OptionsEvent implements LobCacheEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public LobCacheEventImpl()
       {
         super(OptionsImpl.this);
       }
@@ -1543,15 +1666,48 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
-        CDOIDProvider idProvider, CDOCommitData commitData, OMMonitor monitor)
+    public List<byte[]> queryLobs(Set<byte[]> ids)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          return delegate.commitTransaction(transactionID, comment, releaseLocks, idProvider, commitData, monitor);
+          return delegate.queryLobs(ids);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public void loadLob(CDOLobInfo info, OutputStream out)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          delegate.loadLob(info, out);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
+        CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?, ?>> lobs, OMMonitor monitor)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate
+              .commitTransaction(transactionID, comment, releaseLocks, idProvider, commitData, lobs, monitor);
         }
         catch (Exception ex)
         {
@@ -1561,14 +1717,15 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
-        CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, OMMonitor monitor)
+        CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?, ?>> lobs,
+        OMMonitor monitor)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          return delegate.commitDelegation(branch, userID, comment, commitData, detachedObjectTypes, monitor);
+          return delegate.commitDelegation(branch, userID, comment, commitData, detachedObjectTypes, lobs, monitor);
         }
         catch (Exception ex)
         {

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -65,6 +66,11 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
    * @since 3.0
    */
   public InternalCDORevisionManager getRevisionManager();
+
+  /**
+   * @since 4.0
+   */
+  public CDOLobStore getLobStore();
 
   /**
    * @since 3.0

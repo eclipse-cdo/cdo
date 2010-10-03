@@ -35,6 +35,8 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.model.lob.CDOLob;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
@@ -114,6 +116,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
@@ -1720,6 +1723,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
 
         @Override
+        protected CDOLobStore getLobStore()
+        {
+          return getSession().getLobStore();
+        }
+
+        @Override
         protected CDOListFactory getListFactory()
         {
           return CDOListWithElementProxiesImpl.FACTORY;
@@ -2058,6 +2067,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
      */
     private boolean isPartialCommit;
 
+    private Map<byte[], CDOLob<?, ?>> lobs = new HashMap<byte[], CDOLob<?, ?>>();
+
     public CDOCommitContextImpl(InternalCDOTransaction transaction)
     {
       this.transaction = transaction;
@@ -2104,12 +2115,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       Map<CDOID, T> newMap = new HashMap<CDOID, T>();
-      for (CDOID id : map.keySet())
+      for (Entry<CDOID, T> entry : map.entrySet())
       {
+        CDOID id = entry.getKey();
         CDOObject o = getObject(id);
         if (committables.contains(o))
         {
-          newMap.put(id, map.get(id));
+          newMap.put(id, entry.getValue());
         }
         else
         {
@@ -2153,6 +2165,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     public Map<CDOID, CDORevisionDelta> getRevisionDeltas()
     {
       return revisionDeltas;
+    }
+
+    public Collection<CDOLob<?, ?>> getLobs()
+    {
+      return lobs.values();
     }
 
     public void preCommit()
@@ -2207,8 +2224,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             new CommitIntegrityCheck(this, CommitIntegrityCheck.Style.EXCEPTION_FAST).check();
           }
 
-          preCommit(getNewObjects());
-          preCommit(getDirtyObjects());
+          preCommit(getNewObjects(), lobs);
+          preCommit(getDirtyObjects(), lobs);
+
+          if (!lobs.isEmpty())
+          {
+            CDOSessionProtocol sessionProtocol = getSession().getSessionProtocol();
+            List<byte[]> alreadyKnown = sessionProtocol.queryLobs(lobs.keySet());
+
+            for (byte[] id : alreadyKnown)
+            {
+              lobs.remove(id);
+            }
+          }
         }
         catch (RuntimeException ex)
         {
@@ -2335,7 +2363,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return commitInfoManager.createCommitInfo(branch, timeStamp, userID, comment, commitData);
     }
 
-    private void preCommit(Map<CDOID, CDOObject> objects)
+    private void preCommit(Map<CDOID, CDOObject> objects, Map<byte[], CDOLob<?, ?>> lobs)
     {
       if (!objects.isEmpty())
       {
@@ -2347,7 +2375,25 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             throw new LegacyModeNotEnabledException();
           }
 
+          collectLobs((InternalCDORevision)object.cdoRevision(), lobs);
           ((InternalCDOObject)object).cdoInternalPreCommit();
+        }
+      }
+    }
+
+    private void collectLobs(InternalCDORevision revision, Map<byte[], CDOLob<?, ?>> lobs)
+    {
+      EStructuralFeature[] features = revision.getClassInfo().getAllPersistentFeatures();
+      for (int i = 0; i < features.length; i++)
+      {
+        EStructuralFeature feature = features[i];
+        if (CDOModelUtil.isLob(feature.getEType()))
+        {
+          CDOLob<?, ?> lob = (CDOLob<?, ?>)revision.getValue(feature);
+          if (lob != null)
+          {
+            lobs.put(lob.getID(), lob);
+          }
         }
       }
     }

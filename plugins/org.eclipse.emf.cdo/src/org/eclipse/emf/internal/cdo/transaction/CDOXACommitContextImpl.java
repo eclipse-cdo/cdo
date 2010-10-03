@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.lob.CDOLob;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
@@ -34,6 +35,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitConte
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -132,6 +134,11 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
   public CDOCommitData getCommitData()
   {
     return delegateCommitContext.getCommitData();
+  }
+
+  public Collection<CDOLob<?, ?>> getLobs()
+  {
+    return delegateCommitContext.getLobs();
   }
 
   public boolean isPartialCommit()

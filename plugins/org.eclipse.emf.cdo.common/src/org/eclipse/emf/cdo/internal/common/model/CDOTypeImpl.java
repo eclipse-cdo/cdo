@@ -14,6 +14,9 @@ package org.eclipse.emf.cdo.internal.common.model;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
+import org.eclipse.emf.cdo.common.model.lob.CDOClob;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
@@ -565,6 +568,58 @@ public abstract class CDOTypeImpl implements CDOType
       }
 
       return null;
+    }
+  };
+
+  public static final CDOType BLOB = new CDOTypeImpl("BLOB", 2004, true) //$NON-NLS-1$
+  {
+    public CDOBlob readValue(CDODataInput in) throws IOException
+    {
+      if (in.readBoolean())
+      {
+        return CDOLobUtil.readBlob(in);
+      }
+
+      return null;
+    }
+
+    public void writeValue(CDODataOutput out, Object value) throws IOException
+    {
+      if (value != null)
+      {
+        out.writeBoolean(true);
+        CDOLobUtil.write(out, (CDOBlob)value);
+      }
+      else
+      {
+        out.writeBoolean(false);
+      }
+    }
+  };
+
+  public static final CDOType CLOB = new CDOTypeImpl("CLOB", 2005, true) //$NON-NLS-1$
+  {
+    public CDOClob readValue(CDODataInput in) throws IOException
+    {
+      if (in.readBoolean())
+      {
+        return CDOLobUtil.readClob(in);
+      }
+
+      return null;
+    }
+
+    public void writeValue(CDODataOutput out, Object value) throws IOException
+    {
+      if (value != null)
+      {
+        out.writeBoolean(true);
+        CDOLobUtil.write(out, (CDOClob)value);
+      }
+      else
+      {
+        out.writeBoolean(false);
+      }
     }
   };
 

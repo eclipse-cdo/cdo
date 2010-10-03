@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
@@ -240,6 +241,11 @@ public class ServerCDOView extends AbstractCDOView
     }
 
     public CDOSessionProtocol getSessionProtocol()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOLobStore getLobStore()
     {
       throw new UnsupportedOperationException();
     }

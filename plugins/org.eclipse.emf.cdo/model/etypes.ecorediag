@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmi:id="_7t6E4MhVEd-tiZ-cnTADww" type="EcoreTools" name="etypes" measurementUnit="Pixel">
+  <children xmi:type="notation:Node" xmi:id="_MfUzoMhWEd-tiZ-cnTADww" type="1004">
+    <children xmi:type="notation:Node" xmi:id="_MfWBwMhWEd-tiZ-cnTADww" type="4008"/>
+    <children xmi:type="notation:Node" xmi:id="_MfWBwchWEd-tiZ-cnTADww" type="4009"/>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_MfUzochWEd-tiZ-cnTADww" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EDataType" href="etypes.ecore#//Blob"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_MfUzoshWEd-tiZ-cnTADww" x="45" y="35"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_g2IUsMhWEd-tiZ-cnTADww" type="1004">
+    <children xmi:type="notation:Node" xmi:id="_g2KJ4MhWEd-tiZ-cnTADww" type="4008"/>
+    <children xmi:type="notation:Node" xmi:id="_g2KJ4chWEd-tiZ-cnTADww" type="4009"/>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_g2IUschWEd-tiZ-cnTADww" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EDataType" href="etypes.ecore#//Clob"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_g2IUsshWEd-tiZ-cnTADww" x="46" y="142"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_7t6E4chVEd-tiZ-cnTADww"/>
+  <element xmi:type="ecore:EPackage" href="etypes.ecore#/"/>
+</notation:Diagram>

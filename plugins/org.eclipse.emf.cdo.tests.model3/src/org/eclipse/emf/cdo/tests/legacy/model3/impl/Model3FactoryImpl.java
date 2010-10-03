@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.tests.legacy.model3.impl;
 import org.eclipse.emf.cdo.tests.legacy.model3.Model3Factory;
 import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.Class1;
+import org.eclipse.emf.cdo.tests.model3.File;
+import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
@@ -95,6 +97,10 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
       return createNodeC();
     case Model3Package.NODE_D:
       return createNodeD();
+    case Model3Package.IMAGE:
+      return createImage();
+    case Model3Package.FILE:
+      return createFile();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -220,6 +226,28 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
   {
     NodeDImpl nodeD = new NodeDImpl();
     return nodeD;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Image createImage()
+  {
+    ImageImpl image = new ImageImpl();
+    return image;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public File createFile()
+  {
+    FileImpl file = new FileImpl();
+    return file;
   }
 
   /**

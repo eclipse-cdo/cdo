@@ -38,6 +38,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -114,4 +115,14 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
 
   public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo ancestorInfo, CDORevisionAvailabilityInfo targetInfo,
       CDORevisionAvailabilityInfo sourceInfo);
+
+  /**
+   * @since 4.0
+   */
+  public void queryLobs(List<byte[]> ids);
+
+  /**
+   * @since 4.0
+   */
+  public void loadLob(byte[] id, OutputStream out) throws IOException;
 }

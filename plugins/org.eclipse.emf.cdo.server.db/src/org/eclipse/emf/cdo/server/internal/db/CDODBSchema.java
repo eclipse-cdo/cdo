@@ -182,6 +182,34 @@ public class CDODBSchema extends DBSchema
   EXTERNAL_REFS.addIndex(IDBIndex.Type.NON_UNIQUE, EXTERNAL_URI);
 
   /**
+   * DBTable cdo_lobs
+   */
+  public static final IDBTable LOBS = INSTANCE.addTable("cdo_lobs"); //$NON-NLS-1$
+
+  public static final IDBField LOBS_ID = //
+  LOBS.addField("id", DBType.CHAR, 40); //$NON-NLS-1$
+
+  public static final IDBField LOBS_SIZE = //
+  LOBS.addField("size", DBType.BIGINT); //$NON-NLS-1$
+
+  public static final IDBField LOBS_BDATA = //
+  LOBS.addField("bdata", DBType.BLOB); //$NON-NLS-1$
+
+  public static final IDBField LOBS_CDATA = //
+  LOBS.addField("cdata", DBType.CLOB); //$NON-NLS-1$
+
+  public static final IDBIndex INDEX_LOBS_ID = //
+  LOBS.addIndex(IDBIndex.Type.PRIMARY_KEY, LOBS_ID);
+
+  public static final String SQL_QUERY_LOBS = "SELECT 1 FROM " + CDODBSchema.LOBS + " WHERE " + CDODBSchema.LOBS_ID + "=?"; //$NON-NLS-1$
+
+  public static final String SQL_LOAD_LOB = "SELECT " + CDODBSchema.LOBS_SIZE + ", " + CDODBSchema.LOBS_BDATA + ", " + CDODBSchema.LOBS_CDATA + " FROM " + CDODBSchema.LOBS + " WHERE " + CDODBSchema.LOBS_ID + "=?"; //$NON-NLS-1$
+
+  public static final String SQL_WRITE_BLOB = "INSERT INTO " + CDODBSchema.LOBS + "(" + CDODBSchema.LOBS_ID + ", " + CDODBSchema.LOBS_SIZE + ", " + CDODBSchema.LOBS_BDATA + ") VALUES(?, ?, ?)"; //$NON-NLS-1$
+
+  public static final String SQL_WRITE_CLOB = "INSERT INTO " + CDODBSchema.LOBS + "(" + CDODBSchema.LOBS_ID + ", " + CDODBSchema.LOBS_SIZE + ", " + CDODBSchema.LOBS_CDATA + ") VALUES(?, ?, ?)"; //$NON-NLS-1$
+
+  /**
    * Name of object table
    */
   public static final String CDO_OBJECTS = "cdo_objects"; //$NON-NLS-1$

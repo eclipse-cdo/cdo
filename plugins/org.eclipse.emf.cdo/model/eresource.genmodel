@@ -7,7 +7,9 @@
     editorPluginClass="" updateClasspath="false" nonNLSMarkers="true" rootExtendsInterface="org.eclipse.emf.cdo.CDOObject"
     rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl" reflectiveDelegation="true"
     codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
-    featureDelegation="Reflective" complianceLevel="5.0" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
+    featureDelegation="Reflective" complianceLevel="5.0" copyrightFields="false" testsPluginID="org.eclipse.emf.cdo.editor"
+    optimizedHasChildren="true" tableProviders="true" colorProviders="true" fontProviders="true"
+    usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
   <foreignModel>eresource.ecore</foreignModel>
   <genPackages prefix="Eresource" basePackage="org.eclipse.emf.cdo" disposableProviderFactory="true"
       extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="eresource.ecore#/">
@@ -21,6 +23,12 @@
     </genClasses>
     <genClasses ecoreClass="eresource.ecore#//CDOResourceFolder">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eresource.ecore#//CDOResourceFolder/nodes"/>
+      <genOperations ecoreOperation="eresource.ecore#//CDOResourceFolder/addResourceFolder">
+        <genParameters ecoreParameter="eresource.ecore#//CDOResourceFolder/addResourceFolder/name"/>
+      </genOperations>
+      <genOperations ecoreOperation="eresource.ecore#//CDOResourceFolder/addResource">
+        <genParameters ecoreParameter="eresource.ecore#//CDOResourceFolder/addResource/name"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="eresource.ecore#//CDOResource">
       <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/resourceSet"/>

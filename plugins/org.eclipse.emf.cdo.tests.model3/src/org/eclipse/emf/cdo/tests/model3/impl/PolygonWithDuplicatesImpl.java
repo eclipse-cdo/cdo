@@ -25,17 +25,16 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.PolygonWithDuplicatesImpl#getPoints <em>Points</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.PolygonWithDuplicatesImpl#getPoints <em>Points</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class PolygonWithDuplicatesImpl extends CDOObjectImpl implements PolygonWithDuplicates
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected PolygonWithDuplicatesImpl()
@@ -45,7 +44,6 @@ public class PolygonWithDuplicatesImpl extends CDOObjectImpl implements PolygonW
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -56,7 +54,6 @@ public class PolygonWithDuplicatesImpl extends CDOObjectImpl implements PolygonW
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -67,7 +64,6 @@ public class PolygonWithDuplicatesImpl extends CDOObjectImpl implements PolygonW
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

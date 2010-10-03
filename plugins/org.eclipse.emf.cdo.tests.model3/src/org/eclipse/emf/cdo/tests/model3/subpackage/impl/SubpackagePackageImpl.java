@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.model3.subpackage.impl;
 
+import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl;
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
@@ -24,14 +25,12 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass class2EClass = null;
@@ -56,18 +55,17 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * <p>
-   * This method is used to initialize {@link SubpackagePackage#eINSTANCE} when that field is accessed. Clients should
-   * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
-   * --> <!-- end-user-doc -->
    * 
+   * <p>This method is used to initialize {@link SubpackagePackage#eINSTANCE} when that field is accessed.
+   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+   * <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -86,6 +84,7 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
 
     // Initialize simple dependencies
     EcorePackage.eINSTANCE.eClass();
+    EtypesPackage.eINSTANCE.eClass();
 
     // Obtain or create and register interdependencies
     Model3PackageImpl theModel3Package = (Model3PackageImpl)(EPackage.Registry.INSTANCE
@@ -110,7 +109,6 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getClass2()
@@ -120,7 +118,6 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getClass2_Class1()
@@ -130,7 +127,6 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public SubpackageFactory getSubpackageFactory()
@@ -140,15 +136,14 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
-   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the meta-model objects for the package.  This method is
+   * guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void createPackageContents()
@@ -164,15 +159,14 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
-   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Complete the initialization of the package and its meta-model.  This
+   * method is guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void initializePackageContents()

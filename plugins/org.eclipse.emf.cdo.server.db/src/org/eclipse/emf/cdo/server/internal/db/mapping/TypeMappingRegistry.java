@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBAnnotation;
@@ -36,6 +37,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 
@@ -185,6 +187,12 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEString(), DBType.VARCHAR);
     container.registerFactory(CoreTypeMappings.TMString.FACTORY_VARCHAR);
     container.registerFactory(CoreTypeMappings.TMString.FACTORY_CLOB);
+
+    classifierDefaultMapping.put(EtypesPackage.eINSTANCE.getBlob(), DBType.VARCHAR);
+    container.registerFactory(CoreTypeMappings.TMBlob.FACTORY);
+
+    classifierDefaultMapping.put(EtypesPackage.eINSTANCE.getClob(), DBType.VARCHAR);
+    container.registerFactory(CoreTypeMappings.TMClob.FACTORY);
   }
 
   public void registerTypeMapping(ITypeMapping.Descriptor descriptor)
@@ -284,12 +292,18 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
       return EcorePackage.eINSTANCE.getEClass();
     }
 
-    if (!CDOModelUtil.isCorePackage(classifier.getEPackage()))
+    EPackage ePackage = classifier.getEPackage();
+    if (CDOModelUtil.isCorePackage(ePackage))
     {
-      return EcorePackage.eINSTANCE.getEDataType();
+      return classifier;
     }
 
-    return classifier;
+    if (CDOModelUtil.isTypesPackage(ePackage))
+    {
+      return classifier;
+    }
+
+    return EcorePackage.eINSTANCE.getEDataType();
   }
 
   private DBType getDBType(EStructuralFeature feature, IDBAdapter dbAdapter)

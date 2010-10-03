@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.lob.CDOLob;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -52,6 +53,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -501,11 +503,12 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       String userID = getUserID();
       String comment = getCommitComment();
       CDOCommitData commitData = new CommitContextData(this);
+      Collection<CDOLob<?, ?>> lobs = Collections.emptySet();
 
       // Delegate commit to the master
       CDOSessionProtocol sessionProtocol = getSynchronizer().getRemoteSession().getSessionProtocol();
       CommitTransactionResult result = sessionProtocol.commitDelegation(branch, userID, comment, commitData,
-          getDetachedObjectTypes(), monitor);
+          getDetachedObjectTypes(), lobs, monitor);
 
       // Stop if commit to master failed
       String rollbackMessage = result.getRollbackMessage();

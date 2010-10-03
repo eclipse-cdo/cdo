@@ -65,6 +65,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -137,6 +138,8 @@ public class TransactionCommitContext implements InternalCommitContext
   private boolean ensuringReferentialIntegrity;
 
   private boolean autoReleaseLocksEnabled;
+
+  private ExtendedDataInputStream lobs;
 
   public TransactionCommitContext(InternalTransaction transaction)
   {
@@ -360,6 +363,16 @@ public class TransactionCommitContext implements InternalCommitContext
   public void setCommitComment(String commitComment)
   {
     this.commitComment = commitComment;
+  }
+
+  public ExtendedDataInputStream getLobs()
+  {
+    return lobs;
+  }
+
+  public void setLobs(ExtendedDataInputStream in)
+  {
+    lobs = in;
   }
 
   /**

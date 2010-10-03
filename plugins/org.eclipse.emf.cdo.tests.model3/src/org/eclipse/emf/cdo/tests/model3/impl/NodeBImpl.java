@@ -23,19 +23,18 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeBImpl#getChildren <em>Children</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeBImpl#getParent <em>Parent</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeBImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeBImpl#getChildren <em>Children</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeBImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeBImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class NodeBImpl extends CDOObjectImpl implements NodeB
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected NodeBImpl()
@@ -45,7 +44,6 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -56,7 +54,6 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -67,7 +64,6 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -78,7 +74,6 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public NodeB getParent()
@@ -88,7 +83,6 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setParent(NodeB newParent)
@@ -98,7 +92,6 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -108,7 +101,6 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)

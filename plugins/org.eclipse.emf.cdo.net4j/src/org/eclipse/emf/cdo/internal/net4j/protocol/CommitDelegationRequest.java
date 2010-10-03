@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.model.lob.CDOLob;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.MetaInstanceMapper;
@@ -22,6 +23,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.MetaInsta
 import org.eclipse.emf.ecore.EClass;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -38,10 +40,10 @@ public class CommitDelegationRequest extends CommitTransactionRequest
   private Map<CDOID, EClass> detachedObjectTypes;
 
   public CommitDelegationRequest(CDOClientProtocol protocol, CDOBranch branch, String userID, String comment,
-      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes)
+      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?, ?>> lobs)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_DELEGATION, UNKNOWN_TRANSACTION_ID, comment, false,
-        CDOIDProvider.NOOP, commitData);
+        CDOIDProvider.NOOP, commitData, lobs);
 
     this.branch = branch;
     this.userID = userID;

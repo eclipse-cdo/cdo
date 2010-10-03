@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -71,6 +72,8 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
 
   protected InternalCommitContext commitContext;
 
+  private ExtendedDataInputStream streamForLobs;
+
   public CommitTransactionIndication(CDOServerProtocol protocol)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION);
@@ -117,6 +120,8 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
   @Override
   protected final void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
   {
+    streamForLobs = in;
+
     try
     {
       indicating(new CDODataInputImpl(in)
@@ -149,6 +154,12 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
         protected CDORevisionFactory getRevisionFactory()
         {
           return CommitTransactionIndication.this.getRepository().getRevisionManager().getFactory();
+        }
+
+        @Override
+        protected CDOLobStore getLobStore()
+        {
+          return null; // Not used on server
         }
 
         @Override
@@ -294,6 +305,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       commitContext.setDetachedObjects(detachedObjects);
       commitContext.setDetachedObjectTypes(detachedObjectTypes);
       commitContext.setCommitComment(commitComment);
+      commitContext.setLobs(streamForLobs);
     }
     finally
     {

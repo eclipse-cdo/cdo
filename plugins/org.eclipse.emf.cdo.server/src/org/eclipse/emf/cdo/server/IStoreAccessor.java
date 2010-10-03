@@ -15,6 +15,9 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
+import org.eclipse.emf.cdo.common.model.lob.CDOClob;
+import org.eclipse.emf.cdo.common.model.lob.CDOLob;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -31,6 +34,8 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -39,6 +44,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -151,6 +157,16 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * @since 3.0
    */
   public void queryXRefs(QueryXRefsContext context);
+
+  /**
+   * @since 4.0
+   */
+  public void queryLobs(List<byte[]> ids);
+
+  /**
+   * @since 4.0
+   */
+  public void loadLob(byte[] id, OutputStream out) throws IOException;
 
   /**
    * @since 2.0
@@ -308,6 +324,30 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @since 4.0
      */
     public Map<CDOID, EClass> getDetachedObjectTypes();
+
+    /**
+     * Returns a stream that all {@link CDOLob lobs} can be read from. The format of the data delivered through the
+     * stream is:
+     * <p>
+     * <ol>
+     * <li> {@link ExtendedDataInputStream#readInt() int}: the number of lobs to be read from the stream.
+     * <li>The following data can be read from the stream in a loop with one iteration per lob in the stream:
+     * <ol>
+     * <li> {@link ExtendedDataInputStream#readByteArray() int + byte[]}: the id of the lob (prepended by the size of the
+     * id).
+     * <li> {@link ExtendedDataInputStream#readLong() long}: the size of the lob. The foollowing interpretation applies:
+     * <ul>
+     * <li>A positive size indicates a {@link CDOBlob blob} and means the number of bytes that can be
+     * {@link IOUtil#copyBinary(java.io.InputStream, java.io.OutputStream) read}.
+     * <li>A negative size indicates a {@link CDOClob clob} and means the number of characters that can be
+     * {@link IOUtil#copyCharacter(java.io.Reader, java.io.Writer) read}.
+     * </ul>
+     * </ol>
+     * </ol>
+     * 
+     * @since 4.0
+     */
+    public ExtendedDataInputStream getLobs();
 
     /**
      * Returns an unmodifiable map from all temporary IDs (meta or not) to their persistent counter parts. It is

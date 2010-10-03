@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.lob.CDOLob;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -60,6 +62,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -312,8 +315,20 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
+  public List<byte[]> queryLobs(Set<byte[]> ids)
+  {
+    // TODO: implement EmbeddedClientSessionProtocol.queryLobs(ids)
+    throw new UnsupportedOperationException();
+  }
+
+  public void loadLob(CDOLobInfo info, OutputStream out)
+  {
+    // TODO: implement EmbeddedClientSessionProtocol.loadLob(info, out)
+    throw new UnsupportedOperationException();
+  }
+
   public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
-      CDOIDProvider idProvider, CDOCommitData commitData, OMMonitor monitor)
+      CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?, ?>> lobs, OMMonitor monitor)
   {
     monitor.begin(2);
     boolean success = false;
@@ -380,7 +395,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
   }
 
   public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
-      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, OMMonitor monitor)
+      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?, ?>> lobs, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }

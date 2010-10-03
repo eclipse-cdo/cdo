@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributable;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
@@ -83,6 +84,11 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext
   public void setAutoReleaseLocksEnabled(boolean on);
 
   public void setCommitComment(String comment);
+
+  /**
+   * @since 4.0
+   */
+  public void setLobs(ExtendedDataInputStream in);
 
   public void addIDMapping(CDOID oldID, CDOID newID);
 

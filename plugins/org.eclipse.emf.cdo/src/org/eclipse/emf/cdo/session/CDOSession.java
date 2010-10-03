@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
@@ -250,9 +251,23 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
     public CDOCollectionLoadingPolicy getCollectionLoadingPolicy();
 
     /**
-     * Returns the CDOCollectionLoadingPolicy currently being used by this session.
+     * Sets the {@link CDOCollectionLoadingPolicy collection loading} to be used by this session.
      */
     public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy);
+
+    /**
+     * Returns the {@link CDOLobStore large object cache} currently being used by this session.
+     * 
+     * @since 4.0
+     */
+    public CDOLobStore getLobCache();
+
+    /**
+     * Sets the {@link CDOLobStore large object cache} to be used by this session.
+     * 
+     * @since 4.0
+     */
+    public void setLobCache(CDOLobStore lobCache);
 
     /**
      * @author Eike Stepper
@@ -265,6 +280,14 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
      * @author Eike Stepper
      */
     public interface CollectionLoadingPolicyEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * @author Eike Stepper
+     * @since 4.0
+     */
+    public interface LobCacheEvent extends IOptionsEvent
     {
     }
   }

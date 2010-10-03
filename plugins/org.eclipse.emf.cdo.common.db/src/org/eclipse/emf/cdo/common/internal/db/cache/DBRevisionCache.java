@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.internal.db.AbstractQueryStatement;
 import org.eclipse.emf.cdo.common.internal.db.AbstractUpdateStatement;
 import org.eclipse.emf.cdo.common.internal.db.DBRevisionCacheUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
@@ -761,6 +762,12 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
       protected CDOListFactory getListFactory()
       {
         return listFactory;
+      }
+
+      @Override
+      protected CDOLobStore getLobStore()
+      {
+        return null;
       }
     };
   }

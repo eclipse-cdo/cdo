@@ -31,20 +31,20 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeBImpl#getChildren <em>Children</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeBImpl#getParent <em>Parent</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeBImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeBImpl#getChildren <em>Children</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeBImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeBImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class NodeBImpl extends EObjectImpl implements NodeB
 {
   /**
-   * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list. <!-- begin-user-doc
+   * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see #getChildren()
    * @generated
    * @ordered
@@ -62,8 +62,8 @@ public class NodeBImpl extends EObjectImpl implements NodeB
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getName()
    * @generated
    * @ordered
@@ -72,7 +72,6 @@ public class NodeBImpl extends EObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected NodeBImpl()
@@ -82,7 +81,6 @@ public class NodeBImpl extends EObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -93,7 +91,6 @@ public class NodeBImpl extends EObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<NodeB> getChildren()
@@ -108,7 +105,6 @@ public class NodeBImpl extends EObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public NodeB getParent()
@@ -120,7 +116,6 @@ public class NodeBImpl extends EObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public NotificationChain basicSetParent(NodeB newParent, NotificationChain msgs)
@@ -131,7 +126,6 @@ public class NodeBImpl extends EObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setParent(NodeB newParent)
@@ -156,7 +150,6 @@ public class NodeBImpl extends EObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -166,7 +159,6 @@ public class NodeBImpl extends EObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)
@@ -179,7 +171,6 @@ public class NodeBImpl extends EObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -200,7 +191,6 @@ public class NodeBImpl extends EObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -218,7 +208,6 @@ public class NodeBImpl extends EObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -234,7 +223,6 @@ public class NodeBImpl extends EObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -254,7 +242,6 @@ public class NodeBImpl extends EObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -279,7 +266,6 @@ public class NodeBImpl extends EObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -302,7 +288,6 @@ public class NodeBImpl extends EObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -322,7 +307,6 @@ public class NodeBImpl extends EObjectImpl implements NodeB
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

@@ -31,6 +31,9 @@ import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.common.model.lob.CDOLob;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
@@ -439,7 +442,14 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   public Object readCDOFeatureValue(EStructuralFeature feature) throws IOException
   {
     CDOType type = CDOModelUtil.getType(feature);
-    return type.readValue(this);
+    Object value = type.readValue(this);
+    if (value instanceof CDOLob<?, ?>)
+    {
+      CDOLob<?, ?> lob = (CDOLob<?, ?>)value;
+      CDOLobUtil.setStore(getLobStore(), lob);
+    }
+
+    return value;
   }
 
   public CDORevisionDelta readCDORevisionDelta() throws IOException
@@ -518,4 +528,6 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   protected abstract CDORevisionFactory getRevisionFactory();
 
   protected abstract CDOListFactory getListFactory();
+
+  protected abstract CDOLobStore getLobStore();
 }

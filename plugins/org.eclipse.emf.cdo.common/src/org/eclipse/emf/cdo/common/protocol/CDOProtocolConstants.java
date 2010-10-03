@@ -194,8 +194,19 @@ public interface CDOProtocolConstants
    */
   public static final short SIGNAL_LOAD_MERGE_DATA = 44;
 
+  /**
+   * @since 4.0
+   */
+  public static final short SIGNAL_QUERY_LOBS = 45;
+
+  /**
+   * @since 4.0
+   */
+  public static final short SIGNAL_LOAD_LOB = 46;
+
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh
+
   /**
    * @since 3.0
    */

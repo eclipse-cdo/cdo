@@ -26,18 +26,18 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonImpl#getPoints <em>Points</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonImpl#getPoints <em>Points</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class PolygonImpl extends EObjectImpl implements Polygon
 {
   /**
-   * The cached value of the '{@link #getPoints() <em>Points</em>}' attribute list. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getPoints() <em>Points</em>}' attribute list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getPoints()
    * @generated
    * @ordered
@@ -46,7 +46,6 @@ public class PolygonImpl extends EObjectImpl implements Polygon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected PolygonImpl()
@@ -56,7 +55,6 @@ public class PolygonImpl extends EObjectImpl implements Polygon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -67,7 +65,6 @@ public class PolygonImpl extends EObjectImpl implements Polygon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<Point> getPoints()
@@ -81,7 +78,6 @@ public class PolygonImpl extends EObjectImpl implements Polygon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -97,7 +93,6 @@ public class PolygonImpl extends EObjectImpl implements Polygon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -116,7 +111,6 @@ public class PolygonImpl extends EObjectImpl implements Polygon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -133,7 +127,6 @@ public class PolygonImpl extends EObjectImpl implements Polygon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -149,7 +142,6 @@ public class PolygonImpl extends EObjectImpl implements Polygon
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

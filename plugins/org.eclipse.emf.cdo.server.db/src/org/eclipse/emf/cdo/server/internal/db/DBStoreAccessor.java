@@ -63,9 +63,11 @@ import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -76,6 +78,12 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.sql.Blob;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -84,6 +92,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TimerTask;
@@ -295,6 +304,88 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     return null;
   }
 
+  public void queryLobs(List<byte[]> ids)
+  {
+    PreparedStatement pstmt = null;
+    ResultSet resultSet = null;
+
+    try
+    {
+      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_QUERY_LOBS, ReuseProbability.MEDIUM);
+
+      for (Iterator<byte[]> it = ids.iterator(); it.hasNext();)
+      {
+        byte[] id = it.next();
+        pstmt.setString(1, HexUtil.bytesToHex(id));
+
+        try
+        {
+          resultSet = pstmt.executeQuery();
+          if (!resultSet.next())
+          {
+            it.remove();
+          }
+        }
+        finally
+        {
+          DBUtil.close(resultSet);
+        }
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      statementCache.releasePreparedStatement(pstmt);
+    }
+  }
+
+  public void loadLob(byte[] id, OutputStream out) throws IOException
+  {
+    PreparedStatement pstmt = null;
+    ResultSet resultSet = null;
+
+    try
+    {
+      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_LOAD_LOB, ReuseProbability.MEDIUM);
+      pstmt.setString(1, HexUtil.bytesToHex(id));
+
+      try
+      {
+        resultSet = pstmt.executeQuery();
+        resultSet.next();
+
+        long size = resultSet.getLong(1);
+        Blob blob = resultSet.getBlob(2);
+        if (resultSet.wasNull())
+        {
+          Clob clob = resultSet.getClob(3);
+          Reader in = clob.getCharacterStream();
+          IOUtil.copyCharacter(in, new OutputStreamWriter(out), size);
+        }
+        else
+        {
+          InputStream in = blob.getBinaryStream();
+          IOUtil.copyBinary(in, out, size);
+        }
+      }
+      finally
+      {
+        DBUtil.close(resultSet);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      statementCache.releasePreparedStatement(pstmt);
+    }
+  }
+
   @Override
   protected void applyIDMappings(InternalCommitContext context, OMMonitor monitor)
   {
@@ -451,6 +542,54 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   public Connection getConnection()
   {
     return connection;
+  }
+
+  @Override
+  protected void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
+  {
+    PreparedStatement pstmt = null;
+
+    try
+    {
+      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_WRITE_BLOB, ReuseProbability.MEDIUM);
+      pstmt.setString(1, HexUtil.bytesToHex(id));
+      pstmt.setLong(2, size);
+      pstmt.setBinaryStream(3, inputStream, (int)size);
+
+      CDODBUtil.sqlUpdate(pstmt, true);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      statementCache.releasePreparedStatement(pstmt);
+    }
+  }
+
+  @Override
+  protected void writeClob(byte[] id, long size, Reader reader) throws IOException
+  {
+    PreparedStatement pstmt = null;
+
+    try
+    {
+      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_WRITE_CLOB, ReuseProbability.MEDIUM);
+      pstmt.setString(1, HexUtil.bytesToHex(id));
+      pstmt.setLong(2, size);
+      pstmt.setCharacterStream(3, reader, (int)size);
+
+      CDODBUtil.sqlUpdate(pstmt, true);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      statementCache.releasePreparedStatement(pstmt);
+    }
   }
 
   @Override

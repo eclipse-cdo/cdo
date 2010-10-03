@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.tests.legacy.model3.util;
 
 import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.Class1;
+import org.eclipse.emf.cdo.tests.model3.File;
+import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
@@ -129,6 +131,18 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
     public Adapter caseNodeD(NodeD object)
     {
       return createNodeDAdapter();
+    }
+
+    @Override
+    public Adapter caseImage(Image object)
+    {
+      return createImageAdapter();
+    }
+
+    @Override
+    public Adapter caseFile(File object)
+    {
+      return createFileAdapter();
     }
 
     @Override
@@ -261,6 +275,34 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createNodeDAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.legacy.model3.Image <em>Image</em>}
+   * '. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
+   * to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.Image
+   * @generated
+   */
+  public Adapter createImageAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.legacy.model3.File <em>File</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.File
+   * @generated
+   */
+  public Adapter createFileAdapter()
   {
     return null;
   }

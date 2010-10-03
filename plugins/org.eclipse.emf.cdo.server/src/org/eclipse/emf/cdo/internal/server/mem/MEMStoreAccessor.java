@@ -42,6 +42,9 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -350,6 +353,32 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
       OMMonitor monitor) throws IOException
   {
     // TODO: implement MEMStoreAccessor.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime)
+    throw new UnsupportedOperationException();
+  }
+
+  public void queryLobs(List<byte[]> ids)
+  {
+    // TODO: implement MEMStoreAccessor.queryLobs(ids)
+    throw new UnsupportedOperationException();
+  }
+
+  public void loadLob(byte[] id, OutputStream out) throws IOException
+  {
+    // TODO: implement MEMStoreAccessor.loadLob(id, out)
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
+  {
+    // TODO: implement MEMStoreAccessor.writeBlob(id, size, in)
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected void writeClob(byte[] id, long size, Reader reader) throws IOException
+  {
+    // TODO: implement MEMStoreAccessor.writeClob(id, size, reader)
     throw new UnsupportedOperationException();
   }
 

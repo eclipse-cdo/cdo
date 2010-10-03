@@ -23,6 +23,8 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.lob.CDOLob;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
@@ -57,6 +59,8 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -253,17 +257,43 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new ObjectLockedRequest(this, view, object, lockType, byOthers));
   }
 
-  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
-      CDOIDProvider idProvider, CDOCommitData commitData, OMMonitor monitor)
+  public List<byte[]> queryLobs(Set<byte[]> ids)
   {
-    return send(new CommitTransactionRequest(this, transactionID, comment, releaseLocks, idProvider, commitData),
+    return send(new QueryLobsRequest(this, ids));
+  }
+
+  public void loadLob(CDOLobInfo info, OutputStream out) throws IOException
+  {
+    try
+    {
+      new LoadLobRequest(this, info, out).send();
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (IOException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new TransportException(ex);
+    }
+  }
+
+  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
+      CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?, ?>> lobs, OMMonitor monitor)
+  {
+    return send(new CommitTransactionRequest(this, transactionID, comment, releaseLocks, idProvider, commitData, lobs),
         monitor);
   }
 
   public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
-      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, OMMonitor monitor)
+      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?, ?>> lobs, OMMonitor monitor)
   {
-    return send(new CommitDelegationRequest(this, branch, userID, comment, commitData, detachedObjectTypes), monitor);
+    return send(new CommitDelegationRequest(this, branch, userID, comment, commitData, detachedObjectTypes, lobs),
+        monitor);
   }
 
   public CommitTransactionResult commitXATransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor)

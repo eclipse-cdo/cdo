@@ -14,8 +14,10 @@ package org.eclipse.emf.cdo.transaction;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.lob.CDOLob;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +58,11 @@ public interface CDOCommitContext
    * Returns a map of the {@link CDORevisionDelta revision deltas} that are to be committed with this commit context.
    */
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas();
+
+  /**
+   * @since 4.0
+   */
+  public Collection<CDOLob<?, ?>> getLobs();
 
   /**
    * @since 4.0

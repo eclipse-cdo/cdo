@@ -200,6 +200,12 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_LOAD_CHUNK:
       return new LoadChunkIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_QUERY_LOBS:
+      return new QueryLobsIndication(this);
+
+    case CDOProtocolConstants.SIGNAL_LOAD_LOB:
+      return new LoadLobIndication(this);
+
     case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION:
       return new CommitTransactionIndication(this);
 

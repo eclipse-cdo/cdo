@@ -37,10 +37,16 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
+import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -191,6 +197,32 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
           writeRevisions(context.getDirtyObjects(), branch, monitor.fork(dirtyCount));
         }
       }
+
+      ExtendedDataInputStream in = context.getLobs();
+      if (in != null)
+      {
+        try
+        {
+          int count = in.readInt();
+          for (int i = 0; i < count; i++)
+          {
+            byte[] id = in.readByteArray();
+            long size = in.readLong();
+            if (size > 0)
+            {
+              writeBlob(id, size, in);
+            }
+            else
+            {
+              writeClob(id, -size, new InputStreamReader(in));
+            }
+          }
+        }
+        catch (IOException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
     }
     finally
     {
@@ -294,6 +326,16 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
    * @since 3.0
    */
   protected abstract void detachObjects(CDOID[] detachedObjects, CDOBranch branch, long timeStamp, OMMonitor monitor);
+
+  /**
+   * @since 4.0
+   */
+  protected abstract void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException;
+
+  /**
+   * @since 4.0
+   */
+  protected abstract void writeClob(byte[] id, long size, Reader reader) throws IOException;
 
   @Override
   protected abstract void doActivate() throws Exception;

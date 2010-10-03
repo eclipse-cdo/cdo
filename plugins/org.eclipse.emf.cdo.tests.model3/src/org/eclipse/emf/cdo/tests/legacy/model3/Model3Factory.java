@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.tests.legacy.model3;
 
 import org.eclipse.emf.cdo.tests.model3.Class1;
+import org.eclipse.emf.cdo.tests.model3.File;
+import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
@@ -98,6 +100,22 @@ public interface Model3Factory extends org.eclipse.emf.cdo.tests.model3.Model3Fa
    * @generated
    */
   NodeD createNodeD();
+
+  /**
+   * Returns a new object of class '<em>Image</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Image</em>'.
+   * @generated
+   */
+  Image createImage();
+
+  /**
+   * Returns a new object of class '<em>File</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>File</em>'.
+   * @generated
+   */
+  File createFile();
 
   /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->

@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.BranchingTestSameSession;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 import org.eclipse.emf.cdo.tests.FeatureMapTest;
+import org.eclipse.emf.cdo.tests.LobTest;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
 import org.eclipse.emf.cdo.tests.MergingTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
@@ -38,6 +39,7 @@ public abstract class DBConfigs extends AllConfigs
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
+    testClasses.add(LobTest.class);
     testClasses.add(Net4jDBTest.class);
     testClasses.add(DBAnnotationsTest.class);
     testClasses.add(DBStoreTest.class);

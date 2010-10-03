@@ -55,6 +55,9 @@ import com.db4o.ObjectSet;
 import com.db4o.query.Predicate;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -367,6 +370,28 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
 
   public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
       OMMonitor monitor) throws IOException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void queryLobs(List<byte[]> ids)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void loadLob(byte[] id, OutputStream out) throws IOException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected void writeClob(byte[] id, long size, Reader reader) throws IOException
   {
     throw new UnsupportedOperationException();
   }

@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.internal.server.embedded;
 
+import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
 import org.eclipse.emf.cdo.server.embedded.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -59,5 +60,11 @@ public class EmbeddedClientSession extends CDOSessionImpl implements CDOSession
   public InternalCDOCommitInfoManager getCommitInfoManager()
   {
     return getRepository().getCommitInfoManager();
+  }
+
+  @Override
+  public CDOLobStore getLobStore()
+  {
+    throw new UnsupportedOperationException();
   }
 }

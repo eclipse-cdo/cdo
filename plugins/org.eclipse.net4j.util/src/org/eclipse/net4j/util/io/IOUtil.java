@@ -14,11 +14,16 @@ import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.CharArrayReader;
+import java.io.CharArrayWriter;
 import java.io.Closeable;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,6 +33,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -59,6 +66,8 @@ public final class IOUtil
   private static final char SEP_UNIX = '/';
 
   private static final char SEP_WINDOWS = '\\';
+
+  private static final int EOF = -1;
 
   private IOUtil()
   {
@@ -374,6 +383,120 @@ public final class IOUtil
     {
       throw new IORuntimeException(ex);
     }
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static long copyBinary(InputStream inputStream, OutputStream outputStream) throws IOException
+  {
+    if (!(inputStream instanceof BufferedInputStream) && !(inputStream instanceof ByteArrayInputStream))
+    {
+      inputStream = new BufferedInputStream(inputStream);
+    }
+
+    if (!(outputStream instanceof BufferedOutputStream) && !(outputStream instanceof ByteArrayOutputStream))
+    {
+      outputStream = new BufferedOutputStream(outputStream);
+    }
+
+    long size = 0;
+    int b;
+    while ((b = inputStream.read()) != EOF)
+    {
+      outputStream.write(b);
+      ++size;
+    }
+
+    outputStream.flush();
+    return size;
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static void copyBinary(InputStream inputStream, OutputStream outputStream, long size) throws IOException
+  {
+    if (!(inputStream instanceof BufferedInputStream) && !(inputStream instanceof ByteArrayInputStream))
+    {
+      inputStream = new BufferedInputStream(inputStream);
+    }
+
+    if (!(outputStream instanceof BufferedOutputStream) && !(outputStream instanceof ByteArrayOutputStream))
+    {
+      outputStream = new BufferedOutputStream(outputStream);
+    }
+
+    while (size > 0L)
+    {
+      int b = inputStream.read();
+      if (b == EOF)
+      {
+        throw new EOFException();
+      }
+
+      outputStream.write(b);
+      --size;
+    }
+
+    outputStream.flush();
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static long copyCharacter(Reader reader, Writer writer) throws IOException
+  {
+    if (!(reader instanceof BufferedReader) && !(reader instanceof CharArrayReader))
+    {
+      reader = new BufferedReader(reader);
+    }
+
+    if (!(writer instanceof BufferedWriter) && !(writer instanceof CharArrayWriter))
+    {
+      writer = new BufferedWriter(writer);
+    }
+
+    long size = 0;
+    int c;
+    while ((c = reader.read()) != EOF)
+    {
+      writer.write(c);
+      ++size;
+    }
+
+    writer.flush();
+    return size;
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static void copyCharacter(Reader reader, Writer writer, long size) throws IOException
+  {
+    if (!(reader instanceof BufferedReader) && !(reader instanceof CharArrayReader))
+    {
+      reader = new BufferedReader(reader);
+    }
+
+    if (!(writer instanceof BufferedWriter) && !(writer instanceof CharArrayWriter))
+    {
+      writer = new BufferedWriter(writer);
+    }
+
+    while (size > 0L)
+    {
+      int c = reader.read();
+      if (c == EOF)
+      {
+        throw new EOFException();
+      }
+
+      writer.write(c);
+      --size;
+    }
+
+    writer.flush();
   }
 
   public static int copy(InputStream input, OutputStream output, int size, byte buffer[]) throws IORuntimeException

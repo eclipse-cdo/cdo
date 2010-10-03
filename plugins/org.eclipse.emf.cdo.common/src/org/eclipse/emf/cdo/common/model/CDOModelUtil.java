@@ -58,6 +58,11 @@ public final class CDOModelUtil
   /**
    * @since 2.0
    */
+  public static final String ROOT_CLASS_NAME = "EObject"; //$NON-NLS-1$
+
+  /**
+   * @since 2.0
+   */
   public static final String RESOURCE_PACKAGE_URI = "http://www.eclipse.org/emf/CDO/Eresource/2.0.0"; //$NON-NLS-1$
 
   /**
@@ -76,9 +81,19 @@ public final class CDOModelUtil
   public static final String RESOURCE_CLASS_NAME = "CDOResource"; //$NON-NLS-1$
 
   /**
-   * @since 2.0
+   * @since 4.0
    */
-  public static final String ROOT_CLASS_NAME = "EObject"; //$NON-NLS-1$
+  public static final String TYPES_PACKAGE_URI = "http://www.eclipse.org/emf/CDO/Etypes/4.0.0"; //$NON-NLS-1$
+
+  /**
+   * @since 4.0
+   */
+  public static final String BLOB_CLASS_NAME = "Blob"; //$NON-NLS-1$
+
+  /**
+   * @since 4.0
+   */
+  public static final String CLOB_CLASS_NAME = "Clob"; //$NON-NLS-1$
 
   private static CDOType[] coreTypes;
 
@@ -137,6 +152,14 @@ public final class CDOModelUtil
   /**
    * @since 2.0
    */
+  public static boolean isRoot(EClass eClass)
+  {
+    return isCorePackage(eClass.getEPackage()) && ROOT_CLASS_NAME.equals(eClass.getName());
+  }
+
+  /**
+   * @since 2.0
+   */
   public static boolean isResourcePackage(EPackage ePackage)
   {
     return RESOURCE_PACKAGE_URI.equals(ePackage.getNsURI());
@@ -177,11 +200,20 @@ public final class CDOModelUtil
   }
 
   /**
-   * @since 2.0
+   * @since 4.0
    */
-  public static boolean isRoot(EClass eClass)
+  public static boolean isTypesPackage(EPackage ePackage)
   {
-    return isCorePackage(eClass.getEPackage()) && ROOT_CLASS_NAME.equals(eClass.getName());
+    return TYPES_PACKAGE_URI.equals(ePackage.getNsURI());
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static boolean isLob(EClassifier eClassifier)
+  {
+    return isTypesPackage(eClassifier.getEPackage())
+        && (BLOB_CLASS_NAME.equals(eClassifier.getName()) || CLOB_CLASS_NAME.equals(eClassifier.getName()));
   }
 
   /**
@@ -217,14 +249,31 @@ public final class CDOModelUtil
       return CDOType.ENUM_ORDINAL;
     }
 
-    if (isCorePackage(classifier.getEPackage()))
+    EDataType eDataType = (EDataType)classifier;
+    EPackage ePackage = eDataType.getEPackage();
+
+    if (isCorePackage(ePackage))
     {
-      EDataType eDataType = (EDataType)classifier;
       CDOType type = getCoreType(eDataType);
       if (type != null)
       {
         return type;
       }
+    }
+    else if (isTypesPackage(ePackage))
+    {
+      String name = eDataType.getName();
+      if (BLOB_CLASS_NAME.equals(name))
+      {
+        return CDOType.BLOB;
+      }
+
+      if (CLOB_CLASS_NAME.equals(name))
+      {
+        return CDOType.CLOB;
+      }
+
+      throw new IllegalArgumentException("Illegal data type: " + eDataType);
     }
 
     return CDOType.CUSTOM;

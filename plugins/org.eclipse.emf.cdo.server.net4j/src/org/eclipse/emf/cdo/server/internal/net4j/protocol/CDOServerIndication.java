@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
@@ -78,7 +79,7 @@ public abstract class CDOServerIndication extends IndicationWithResponse
   }
 
   @Override
-  protected final void indicating(ExtendedDataInputStream in) throws Exception
+  protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     indicating(new CDODataInputImpl(in)
     {
@@ -113,6 +114,12 @@ public abstract class CDOServerIndication extends IndicationWithResponse
       }
 
       @Override
+      protected CDOLobStore getLobStore()
+      {
+        return null; // Not used on server
+      }
+
+      @Override
       protected CDOListFactory getListFactory()
       {
         return CDOListImpl.FACTORY;
@@ -121,7 +128,7 @@ public abstract class CDOServerIndication extends IndicationWithResponse
   }
 
   @Override
-  protected final void responding(ExtendedDataOutputStream out) throws Exception
+  protected void responding(ExtendedDataOutputStream out) throws Exception
   {
     responding(new CDODataOutputImpl(out)
     {

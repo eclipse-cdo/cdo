@@ -93,6 +93,7 @@ import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -313,7 +314,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
       private void loadBinary(final CDOLobInfo info) throws FileNotFoundException
       {
-        File file = getDelegate().getBinaryFile(info.getID());
+        final File file = getDelegate().getBinaryFile(info.getID());
         final FileOutputStream out = new FileOutputStream(file);
 
         loadLobAsync(info, new Runnable()
@@ -324,9 +325,10 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
             {
               getSessionProtocol().loadLob(info, out);
             }
-            catch (IOException ex)
+            catch (Throwable t)
             {
-              OM.LOG.error(ex);
+              OM.LOG.error(t);
+              IOUtil.delete(file);
             }
           }
         });
@@ -1717,8 +1719,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
-        CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs,
-        OMMonitor monitor)
+        CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
     {
       int attempt = 0;
       for (;;)

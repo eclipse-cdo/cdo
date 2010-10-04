@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Text;
 /**
  * @author Eike Stepper
  * @author Martin Fluegge
- * @since 3.1
+ * @since 4.0
  */
 public class TCPConnectorWizard extends ElementWizard implements ModifyListener
 {

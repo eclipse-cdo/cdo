@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -44,39 +44,10 @@ public class CDOSessionDefImplTest extends AbstractCDOTest
     }
   }
 
-  public void testConnectorAndFailOverStrategyAreMutuallyExclusive()
-  {
-    try
-    {
-      CDOSessionDef cdoSessionDef = CDODefsFactory.eINSTANCE.createCDOSessionDef();
-      cdoSessionDef.setConnectorDef(Net4jDefsUtil.createTCPConnectorDef(SessionConfig.TCP.CONNECTOR_HOST));
-      cdoSessionDef.setFailOverStrategyDef(CDODefsFactory.eINSTANCE.createRetryFailOverStrategyDef());
-      fail("IllegalStateException expected!");
-    }
-    catch (IllegalStateException e)
-    {
-      // Success
-    }
-
-    try
-    {
-      CDOSessionDef cdoSessionDef = CDODefsFactory.eINSTANCE.createCDOSessionDef();
-      cdoSessionDef.setFailOverStrategyDef(CDODefsFactory.eINSTANCE.createRetryFailOverStrategyDef());
-      cdoSessionDef.setConnectorDef(Net4jDefsUtil.createTCPConnectorDef(SessionConfig.TCP.CONNECTOR_HOST));
-      fail("IllegalStateException expected!");
-    }
-    catch (IllegalStateException e)
-    {
-      // Success
-    }
-  }
-
   public void testConnectorAndFailMayBeUnset()
   {
     {
       CDOSessionDef cdoSessionDef = CDODefsFactory.eINSTANCE.createCDOSessionDef();
-      cdoSessionDef.setFailOverStrategyDef(CDODefsFactory.eINSTANCE.createRetryFailOverStrategyDef());
-      cdoSessionDef.unsetFailOverStrategyDef();
       cdoSessionDef.setConnectorDef(Net4jDefsUtil.createTCPConnectorDef(SessionConfig.TCP.CONNECTOR_HOST));
     }
 
@@ -84,7 +55,6 @@ public class CDOSessionDefImplTest extends AbstractCDOTest
       CDOSessionDef cdoSessionDef = CDODefsFactory.eINSTANCE.createCDOSessionDef();
       cdoSessionDef.setConnectorDef(Net4jDefsUtil.createTCPConnectorDef(SessionConfig.TCP.CONNECTOR_HOST));
       cdoSessionDef.unsetConnectorDef();
-      cdoSessionDef.setFailOverStrategyDef(CDODefsFactory.eINSTANCE.createRetryFailOverStrategyDef());
     }
   }
 

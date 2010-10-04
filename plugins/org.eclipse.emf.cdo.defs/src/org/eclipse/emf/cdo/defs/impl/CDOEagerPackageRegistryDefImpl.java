@@ -21,14 +21,13 @@ import org.eclipse.emf.ecore.EClass;
  * end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class CDOEagerPackageRegistryDefImpl extends CDOPackageRegistryDefImpl implements CDOEagerPackageRegistryDef
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CDOEagerPackageRegistryDefImpl()
@@ -38,7 +37,6 @@ public class CDOEagerPackageRegistryDefImpl extends CDOPackageRegistryDefImpl im
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

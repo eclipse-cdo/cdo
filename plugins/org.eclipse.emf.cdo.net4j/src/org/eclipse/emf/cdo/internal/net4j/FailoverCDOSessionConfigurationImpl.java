@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.SignalProtocol;
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -79,12 +78,6 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
 
   @Override
   public void setConnector(IConnector connector)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public void setFailOverStrategy(IFailOverStrategy failOverStrategy)
   {
     throw new UnsupportedOperationException();
   }

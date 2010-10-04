@@ -59,7 +59,6 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected EPackageDefImpl()
@@ -69,7 +68,6 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -80,7 +78,6 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getNsURI()
@@ -90,7 +87,6 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setNsURI(String newNsURI)
@@ -98,14 +94,11 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
     String oldNsURI = nsURI;
     nsURI = newNsURI;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.EPACKAGE_DEF__NS_URI, oldNsURI, nsURI));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -121,7 +114,6 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -138,7 +130,6 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -155,7 +146,6 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -171,16 +161,13 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (nsURI: ");

@@ -25,9 +25,7 @@ import org.eclipse.emf.cdo.defs.CDOViewDef;
 import org.eclipse.emf.cdo.defs.EDynamicPackageDef;
 import org.eclipse.emf.cdo.defs.EGlobalPackageDef;
 import org.eclipse.emf.cdo.defs.EPackageDef;
-import org.eclipse.emf.cdo.defs.FailOverStrategyDef;
 import org.eclipse.emf.cdo.defs.ResourceMode;
-import org.eclipse.emf.cdo.defs.RetryFailOverStrategyDef;
 
 import org.eclipse.net4j.defs.Net4jDefsPackage;
 import org.eclipse.net4j.util.defs.Net4jUtilDefsPackage;
@@ -41,112 +39,84 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cdoViewDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cdoTransactionDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cdoAuditDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cdoSessionDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  private EClass failOverStrategyDefEClass = null;
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  private EClass retryFailOverStrategyDefEClass = null;
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cdoPackageRegistryDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cdoEagerPackageRegistryDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cdoLazyPackageRegistryDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass ePackageDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass eDynamicPackageDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass eGlobalPackageDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cdoClientProtocolFactoryDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cdoResourceDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EEnum resourceModeEEnum = null;
@@ -171,18 +141,17 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * <p>
-   * This method is used to initialize {@link CDODefsPackage#eINSTANCE} when that field is accessed. Clients should not
-   * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
    * 
+   * <p>This method is used to initialize {@link CDODefsPackage#eINSTANCE} when that field is accessed.
+   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -191,14 +160,11 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
   public static CDODefsPackage init()
   {
     if (isInited)
-    {
       return (CDODefsPackage)EPackage.Registry.INSTANCE.getEPackage(CDODefsPackage.eNS_URI);
-    }
 
     // Obtain or create and register package
     CDODefsPackageImpl theCDODefsPackage = (CDODefsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof CDODefsPackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI)
-        : new CDODefsPackageImpl());
+        .get(eNS_URI) : new CDODefsPackageImpl());
 
     isInited = true;
 
@@ -221,7 +187,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCDOViewDef()
@@ -231,7 +196,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCDOViewDef_CdoSessionDef()
@@ -241,7 +205,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCDOTransactionDef()
@@ -251,7 +214,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCDOAuditDef()
@@ -261,7 +223,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCDOAuditDef_TimeStamp()
@@ -271,7 +232,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCDOSessionDef()
@@ -281,7 +241,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCDOSessionDef_ConnectorDef()
@@ -291,7 +250,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCDOSessionDef_RepositoryName()
@@ -301,7 +259,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCDOSessionDef_CdoPackageRegistryDef()
@@ -311,7 +268,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCDOSessionDef_LegacySupportEnabled()
@@ -321,57 +277,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EReference getCDOSessionDef_FailOverStrategyDef()
-  {
-    return (EReference)cdoSessionDefEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EClass getFailOverStrategyDef()
-  {
-    return failOverStrategyDefEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EReference getFailOverStrategyDef_ConnectorDef()
-  {
-    return (EReference)failOverStrategyDefEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EClass getRetryFailOverStrategyDef()
-  {
-    return retryFailOverStrategyDefEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getRetryFailOverStrategyDef_Retries()
-  {
-    return (EAttribute)retryFailOverStrategyDefEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCDOPackageRegistryDef()
@@ -381,7 +286,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCDOPackageRegistryDef_Packages()
@@ -391,7 +295,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCDOEagerPackageRegistryDef()
@@ -401,7 +304,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCDOLazyPackageRegistryDef()
@@ -411,7 +313,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getEPackageDef()
@@ -421,7 +322,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getEPackageDef_NsURI()
@@ -431,7 +331,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getEDynamicPackageDef()
@@ -441,7 +340,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getEDynamicPackageDef_ResourceURI()
@@ -451,7 +349,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getEGlobalPackageDef()
@@ -461,7 +358,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCDOClientProtocolFactoryDef()
@@ -471,7 +367,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCDOResourceDef()
@@ -481,7 +376,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCDOResourceDef_CdoTransaction()
@@ -491,7 +385,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCDOResourceDef_ResourceMode()
@@ -501,7 +394,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCDOResourceDef_Path()
@@ -511,7 +403,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EEnum getResourceMode()
@@ -521,7 +412,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDODefsFactory getCDODefsFactory()
@@ -531,23 +421,20 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
-   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the meta-model objects for the package.  This method is
+   * guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void createPackageContents()
   {
     if (isCreated)
-    {
       return;
-    }
     isCreated = true;
 
     // Create classes and their features
@@ -564,13 +451,6 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
     createEAttribute(cdoSessionDefEClass, CDO_SESSION_DEF__REPOSITORY_NAME);
     createEReference(cdoSessionDefEClass, CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF);
     createEAttribute(cdoSessionDefEClass, CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED);
-    createEReference(cdoSessionDefEClass, CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF);
-
-    failOverStrategyDefEClass = createEClass(FAIL_OVER_STRATEGY_DEF);
-    createEReference(failOverStrategyDefEClass, FAIL_OVER_STRATEGY_DEF__CONNECTOR_DEF);
-
-    retryFailOverStrategyDefEClass = createEClass(RETRY_FAIL_OVER_STRATEGY_DEF);
-    createEAttribute(retryFailOverStrategyDefEClass, RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES);
 
     cdoPackageRegistryDefEClass = createEClass(CDO_PACKAGE_REGISTRY_DEF);
     createEReference(cdoPackageRegistryDefEClass, CDO_PACKAGE_REGISTRY_DEF__PACKAGES);
@@ -600,23 +480,20 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
-   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Complete the initialization of the package and its meta-model.  This
+   * method is guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void initializePackageContents()
   {
     if (isInitialized)
-    {
       return;
-    }
     isInitialized = true;
 
     // Initialize package
@@ -636,24 +513,22 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
     // Add supertypes to classes
     cdoViewDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    cdoTransactionDefEClass.getESuperTypes().add(getCDOViewDef());
-    cdoAuditDefEClass.getESuperTypes().add(getCDOViewDef());
+    cdoTransactionDefEClass.getESuperTypes().add(this.getCDOViewDef());
+    cdoAuditDefEClass.getESuperTypes().add(this.getCDOViewDef());
     cdoSessionDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    failOverStrategyDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    retryFailOverStrategyDefEClass.getESuperTypes().add(getFailOverStrategyDef());
     cdoPackageRegistryDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    cdoEagerPackageRegistryDefEClass.getESuperTypes().add(getCDOPackageRegistryDef());
-    cdoLazyPackageRegistryDefEClass.getESuperTypes().add(getCDOPackageRegistryDef());
+    cdoEagerPackageRegistryDefEClass.getESuperTypes().add(this.getCDOPackageRegistryDef());
+    cdoLazyPackageRegistryDefEClass.getESuperTypes().add(this.getCDOPackageRegistryDef());
     ePackageDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    eDynamicPackageDefEClass.getESuperTypes().add(getEPackageDef());
-    eGlobalPackageDefEClass.getESuperTypes().add(getEPackageDef());
+    eDynamicPackageDefEClass.getESuperTypes().add(this.getEPackageDef());
+    eGlobalPackageDefEClass.getESuperTypes().add(this.getEPackageDef());
     cdoClientProtocolFactoryDefEClass.getESuperTypes().add(theNet4jDefsPackage.getClientProtocolFactoryDef());
     cdoResourceDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
 
     // Initialize classes and features; add operations and parameters
     initEClass(cdoViewDefEClass, CDOViewDef.class, "CDOViewDef", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCDOViewDef_CdoSessionDef(), getCDOSessionDef(), null, "cdoSessionDef", null, 1, 1,
+    initEReference(getCDOViewDef_CdoSessionDef(), this.getCDOSessionDef(), null, "cdoSessionDef", null, 1, 1,
         CDOViewDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -673,31 +548,16 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
     initEAttribute(getCDOSessionDef_RepositoryName(), ecorePackage.getEString(), "repositoryName", null, 1, 1,
         CDOSessionDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE,
         !IS_DERIVED, !IS_ORDERED);
-    initEReference(getCDOSessionDef_CdoPackageRegistryDef(), getCDOPackageRegistryDef(), null, "cdoPackageRegistryDef",
-        null, 1, 1, CDOSessionDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCDOSessionDef_CdoPackageRegistryDef(), this.getCDOPackageRegistryDef(), null,
+        "cdoPackageRegistryDef", null, 1, 1, CDOSessionDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOSessionDef_LegacySupportEnabled(), ecorePackage.getEBoolean(), "legacySupportEnabled",
         "false", 1, 1, CDOSessionDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getCDOSessionDef_FailOverStrategyDef(), getFailOverStrategyDef(), null, "failOverStrategyDef", null,
-        0, 1, CDOSessionDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(failOverStrategyDefEClass, FailOverStrategyDef.class, "FailOverStrategyDef", IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getFailOverStrategyDef_ConnectorDef(), theNet4jDefsPackage.getConnectorDef(), null, "connectorDef",
-        null, 1, 1, FailOverStrategyDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(retryFailOverStrategyDefEClass, RetryFailOverStrategyDef.class, "RetryFailOverStrategyDef",
-        !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getRetryFailOverStrategyDef_Retries(), ecorePackage.getEInt(), "retries", null, 0, 1,
-        RetryFailOverStrategyDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
 
     initEClass(cdoPackageRegistryDefEClass, CDOPackageRegistryDef.class, "CDOPackageRegistryDef", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCDOPackageRegistryDef_Packages(), getEPackageDef(), null, "packages", null, 0, -1,
+    initEReference(getCDOPackageRegistryDef_Packages(), this.getEPackageDef(), null, "packages", null, 0, -1,
         CDOPackageRegistryDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -726,10 +586,10 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
     initEClass(cdoResourceDefEClass, CDOResourceDef.class, "CDOResourceDef", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCDOResourceDef_CdoTransaction(), getCDOTransactionDef(), null, "cdoTransaction", null, 1, 1,
+    initEReference(getCDOResourceDef_CdoTransaction(), this.getCDOTransactionDef(), null, "cdoTransaction", null, 1, 1,
         CDOResourceDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getCDOResourceDef_ResourceMode(), getResourceMode(), "resourceMode", "null", 1, 1,
+    initEAttribute(getCDOResourceDef_ResourceMode(), this.getResourceMode(), "resourceMode", "null", 1, 1,
         CDOResourceDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOResourceDef_Path(), ecorePackage.getEString(), "path", null, 1, 1, CDOResourceDef.class,

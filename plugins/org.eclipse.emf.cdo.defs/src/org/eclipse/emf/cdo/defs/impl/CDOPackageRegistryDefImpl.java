@@ -34,10 +34,10 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.defs.impl.CDOPackageRegistryDefImpl#getPackages <em>Packages</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.defs.impl.CDOPackageRegistryDefImpl#getPackages <em>Packages</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegistryDef

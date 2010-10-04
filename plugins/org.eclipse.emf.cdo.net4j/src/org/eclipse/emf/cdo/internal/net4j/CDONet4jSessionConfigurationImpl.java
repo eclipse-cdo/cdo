@@ -34,8 +34,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.internal.cdo.session.CDOSessionConfigurationImpl;
 
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
-import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 
@@ -55,8 +53,6 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   private String repositoryName;
 
   private IConnector connector;
-
-  private IFailOverStrategy failOverStrategy;
 
   private IStreamWrapper streamWrapper;
 
@@ -102,17 +98,6 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   protected void uncheckedSetConnector(IConnector connector)
   {
     this.connector = connector;
-  }
-
-  public IFailOverStrategy getFailOverStrategy()
-  {
-    return failOverStrategy;
-  }
-
-  public void setFailOverStrategy(IFailOverStrategy failOverStrategy)
-  {
-    checkNotOpen();
-    this.failOverStrategy = failOverStrategy;
   }
 
   public IStreamWrapper getStreamWrapper()
@@ -194,8 +179,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   {
     if (isActivateOnOpen())
     {
-      CheckUtil.checkState(connector != null ^ failOverStrategy != null,
-          "Specify exactly one of connector or failOverStrategy"); //$NON-NLS-1$
+      CheckUtil.checkState(connector, "connector"); //$NON-NLS-1$
     }
 
     return new CDONet4jSessionImpl(this);
@@ -271,14 +255,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     }
 
     session.setSessionProtocol(protocol);
-    if (connector != null)
-    {
-      protocol.setFailOverStrategy(new NOOPFailOverStrategy(connector));
-    }
-    else if (failOverStrategy != null)
-    {
-      protocol.setFailOverStrategy(failOverStrategy);
-    }
+    protocol.open(connector);
 
     OpenSessionResult result = protocol.openSession(repositoryName, isPassiveUpdateEnabled(), getPassiveUpdateMode());
     session.setSessionID(result.getSessionID());

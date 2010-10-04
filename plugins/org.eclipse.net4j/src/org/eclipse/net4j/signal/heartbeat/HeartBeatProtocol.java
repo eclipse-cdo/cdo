@@ -55,7 +55,7 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
   private Timer timer;
 
   /**
-   * @since 3.1
+   * @since 4.0
    */
   protected HeartBeatProtocol(String type, IConnector connector, Timer timer)
   {
@@ -72,7 +72,7 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
   }
 
   /**
-   * @since 3.1
+   * @since 4.0
    */
   public HeartBeatProtocol(IConnector connector, IManagedContainer container)
   {
@@ -177,7 +177,7 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
   }
 
   /**
-   * @since 3.1
+   * @since 4.0
    */
   protected void requestingStart(ExtendedDataOutputStream out, long rate) throws IOException
   {
@@ -201,7 +201,7 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
     private TimerTask heartBeatTimerTask;
 
     /**
-     * @since 3.1
+     * @since 4.0
      */
     protected Server(String type)
     {
@@ -257,7 +257,7 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
     }
 
     /**
-     * @since 3.1
+     * @since 4.0
      */
     protected void indicatingStart(ExtendedDataInputStream in) throws IOException
     {

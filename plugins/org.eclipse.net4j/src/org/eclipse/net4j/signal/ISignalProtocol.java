@@ -14,7 +14,6 @@ import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.protocol.IProtocol;
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 
@@ -38,15 +37,7 @@ public interface ISignalProtocol<INFRA_STRUCTURE> extends IProtocol<INFRA_STRUCT
 
   public void addStreamWrapper(IStreamWrapper streamWrapper);
 
-  public IFailOverStrategy getFailOverStrategy();
-
-  public void setFailOverStrategy(IFailOverStrategy failOverStrategy);
-
-  public IChannel open(IFailOverStrategy failOverStrategy);
-
   public IChannel open(IConnector connector);
-
-  public IChannel open();
 
   public void close();
 }

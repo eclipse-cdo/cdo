@@ -26,18 +26,18 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.defs.impl.EDynamicPackageDefImpl#getResourceURI <em>Resource URI</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.defs.impl.EDynamicPackageDefImpl#getResourceURI <em>Resource URI</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicPackageDef
 {
   /**
-   * The default value of the '{@link #getResourceURI() <em>Resource URI</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getResourceURI() <em>Resource URI</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getResourceURI()
    * @generated
    * @ordered
@@ -45,9 +45,9 @@ public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicP
   protected static final String RESOURCE_URI_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getResourceURI() <em>Resource URI</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getResourceURI() <em>Resource URI</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getResourceURI()
    * @generated
    * @ordered
@@ -56,7 +56,6 @@ public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicP
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected EDynamicPackageDefImpl()
@@ -66,7 +65,6 @@ public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicP
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -77,7 +75,6 @@ public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicP
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getResourceURI()
@@ -87,7 +84,6 @@ public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicP
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setResourceURI(String newResourceURI)
@@ -95,15 +91,12 @@ public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicP
     String oldResourceURI = resourceURI;
     resourceURI = newResourceURI;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.EDYNAMIC_PACKAGE_DEF__RESOURCE_URI,
           oldResourceURI, resourceURI));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -119,7 +112,6 @@ public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicP
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -136,7 +128,6 @@ public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicP
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -153,7 +144,6 @@ public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicP
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -169,16 +159,13 @@ public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicP
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (resourceURI: ");

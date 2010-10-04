@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.defs.CDOPackageRegistryDef;
 import org.eclipse.emf.cdo.defs.CDOResourceDef;
 import org.eclipse.emf.cdo.defs.CDOSessionDef;
 import org.eclipse.emf.cdo.defs.CDOTransactionDef;
-import org.eclipse.emf.cdo.defs.FailOverStrategyDef;
 
 import org.eclipse.net4j.defs.TCPConnectorDef;
 
@@ -38,11 +37,12 @@ public class CDODefsUtil
     return cdoSessionDef;
   }
 
-  public static CDOSessionDef createSessionDef(String repositoryName, CDOPackageRegistryDef ePackageRegistryDef,
-      FailOverStrategyDef failOverStrategyDef)
+  /**
+   * @since 4.0
+   */
+  public static CDOSessionDef createSessionDef(String repositoryName, CDOPackageRegistryDef ePackageRegistryDef)
   {
     CDOSessionDef cdoSessionDef = CDODefsFactory.eINSTANCE.createCDOSessionDef();
-    cdoSessionDef.setFailOverStrategyDef(failOverStrategyDef);
     cdoSessionDef.setRepositoryName(repositoryName);
     cdoSessionDef.setCdoPackageRegistryDef(ePackageRegistryDef);
     return cdoSessionDef;

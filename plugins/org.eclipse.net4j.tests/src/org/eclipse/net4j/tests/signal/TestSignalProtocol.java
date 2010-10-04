@@ -13,7 +13,6 @@ package org.eclipse.net4j.tests.signal;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.spi.net4j.ServerProtocolFactory;
@@ -46,12 +45,6 @@ public class TestSignalProtocol extends SignalProtocol<Object>
   {
     this();
     open(connector);
-  }
-
-  public TestSignalProtocol(IFailOverStrategy failOverStrategy)
-  {
-    this();
-    open(failOverStrategy);
   }
 
   public TestSignalProtocol()

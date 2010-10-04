@@ -15,14 +15,12 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.defs.CDODefsPackage;
 import org.eclipse.emf.cdo.defs.CDOPackageRegistryDef;
 import org.eclipse.emf.cdo.defs.CDOSessionDef;
-import org.eclipse.emf.cdo.defs.FailOverStrategyDef;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.defs.ConnectorDef;
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.defs.impl.DefImpl;
 
@@ -120,24 +118,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
   protected boolean legacySupportEnabled = LEGACY_SUPPORT_ENABLED_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getFailOverStrategyDef() <em>Fail Over Strategy Def</em>}' reference. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @see #getFailOverStrategyDef()
-   * @generated
-   * @ordered
-   */
-  protected FailOverStrategyDef failOverStrategyDef;
-
-  /**
-   * This is true if the Fail Over Strategy Def reference has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  protected boolean failOverStrategyDefESet;
-
-  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -203,14 +183,7 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
    */
   public void setConnectorDef(ConnectorDef newConnectorDef)
   {
-    if (isSetFailOverStrategyDef())
-    {
-      throw new IllegalStateException("connector and failover strategy are mutually exclusive!");
-    }
-    else
-    {
-      setConnectorDefGen(newConnectorDef);
-    }
+    setConnectorDefGen(newConnectorDef);
   }
 
   /**
@@ -365,106 +338,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
    * 
    * @generated
    */
-  public FailOverStrategyDef getFailOverStrategyDef()
-  {
-    if (failOverStrategyDef != null && failOverStrategyDef.eIsProxy())
-    {
-      InternalEObject oldFailOverStrategyDef = (InternalEObject)failOverStrategyDef;
-      failOverStrategyDef = (FailOverStrategyDef)eResolveProxy(oldFailOverStrategyDef);
-      if (failOverStrategyDef != oldFailOverStrategyDef)
-      {
-        if (eNotificationRequired())
-        {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF, oldFailOverStrategyDef, failOverStrategyDef));
-        }
-      }
-    }
-    return failOverStrategyDef;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public FailOverStrategyDef basicGetFailOverStrategyDef()
-  {
-    return failOverStrategyDef;
-  }
-
-  /**
-   * <!-- begin-user-doc --> Sets the {@link FailOverStrategyDef} for this {@link CDOSessionDef}. If a ConnectorDef was
-   * already set, an <b>IllegalStateException<b> is thrown. ConnectorDef and FailOverStrategyDef are mutually exclusive.
-   * 
-   * @throws IllegalStateException
-   *           if a {@link FailOverStrategyDef} was set before
-   * @see CDOSessionConfigurationImpl#openSession() <!-- end-user-doc -->
-   * @generated NOT
-   */
-  public void setFailOverStrategyDef(FailOverStrategyDef newFailOverStrategyDef)
-  {
-    if (isSetConnectorDef())
-    {
-      throw new IllegalStateException("connector and failover strategy are mutually exclusive!");
-    }
-    else
-    {
-      setFailOverStrategyDefGen(newFailOverStrategyDef);
-    }
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public void setFailOverStrategyDefGen(FailOverStrategyDef newFailOverStrategyDef)
-  {
-    FailOverStrategyDef oldFailOverStrategyDef = failOverStrategyDef;
-    failOverStrategyDef = newFailOverStrategyDef;
-    boolean oldFailOverStrategyDefESet = failOverStrategyDefESet;
-    failOverStrategyDefESet = true;
-    if (eNotificationRequired())
-    {
-      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF,
-          oldFailOverStrategyDef, failOverStrategyDef, !oldFailOverStrategyDefESet));
-    }
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public void unsetFailOverStrategyDef()
-  {
-    FailOverStrategyDef oldFailOverStrategyDef = failOverStrategyDef;
-    boolean oldFailOverStrategyDefESet = failOverStrategyDefESet;
-    failOverStrategyDef = null;
-    failOverStrategyDefESet = false;
-    if (eNotificationRequired())
-    {
-      eNotify(new ENotificationImpl(this, Notification.UNSET, CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF,
-          oldFailOverStrategyDef, null, oldFailOverStrategyDefESet));
-    }
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public boolean isSetFailOverStrategyDef()
-  {
-    return failOverStrategyDefESet;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -486,12 +359,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
       return basicGetCdoPackageRegistryDef();
     case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
       return isLegacySupportEnabled();
-    case CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF:
-      if (resolve)
-      {
-        return getFailOverStrategyDef();
-      }
-      return basicGetFailOverStrategyDef();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -517,9 +384,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
       return;
     case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
       setLegacySupportEnabled((Boolean)newValue);
-      return;
-    case CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF:
-      setFailOverStrategyDef((FailOverStrategyDef)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -547,9 +411,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
       setLegacySupportEnabled(LEGACY_SUPPORT_ENABLED_EDEFAULT);
       return;
-    case CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF:
-      unsetFailOverStrategyDef();
-      return;
     }
     super.eUnset(featureID);
   }
@@ -573,8 +434,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
       return cdoPackageRegistryDef != null;
     case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
       return legacySupportEnabled != LEGACY_SUPPORT_ENABLED_EDEFAULT;
-    case CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF:
-      return isSetFailOverStrategyDef();
     }
     return super.eIsSet(featureID);
   }
@@ -610,10 +469,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     {
       configuration.setConnector((IConnector)getConnectorDef().getInstance());
     }
-    if (isSetFailOverStrategyDef())
-    {
-      configuration.setFailOverStrategy((IFailOverStrategy)getFailOverStrategyDef().getInstance());
-    }
     configuration.setPackageRegistry((CDOPackageRegistry)getCdoPackageRegistryDef().getInstance());
     configuration.setRepositoryName(getRepositoryName());
     return configuration.openSession();
@@ -628,8 +483,7 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
      * failoverStrategy and connector are mutually exclusive
      * @see CDOSessionConfiguration#openSession
      */
-    CheckUtil.checkState(isSetConnectorDef() ^ isSetFailOverStrategyDef(),
-        "fail over strategy and connector are mutually exclusive!");
+    CheckUtil.checkState(isSetConnectorDef(), "connector not set");
     // CheckUtil.checkState(getCdoPackageRegistryDef() != null,
     // "package registry definition is not set!");
     CheckUtil.checkState(eIsSet(CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF),

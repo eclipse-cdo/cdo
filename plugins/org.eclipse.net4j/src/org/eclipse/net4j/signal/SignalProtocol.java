@@ -17,8 +17,6 @@ import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.ChannelOutputStream;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
-import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IStreamWrapper;
@@ -71,8 +69,6 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   private long timeout = DEFAULT_TIMEOUT;
 
   private IStreamWrapper streamWrapper;
-
-  private IFailOverStrategy failOverStrategy;
 
   private Map<Integer, Signal> signals = new HashMap<Integer, Signal>();
 
@@ -129,45 +125,9 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   /**
    * @since 2.0
    */
-  public IFailOverStrategy getFailOverStrategy()
-  {
-    return failOverStrategy;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void setFailOverStrategy(IFailOverStrategy failOverStrategy)
-  {
-    this.failOverStrategy = failOverStrategy;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public IChannel open(IFailOverStrategy failOverStrategy)
-  {
-    setFailOverStrategy(failOverStrategy);
-    return open();
-  }
-
-  /**
-   * @since 2.0
-   */
   public IChannel open(IConnector connector)
   {
-    IFailOverStrategy failOverStrategy = createFailOverStrategy(connector);
-    return open(failOverStrategy);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public IChannel open()
-  {
-    checkState(failOverStrategy, "failOverStrategy"); //$NON-NLS-1$
-    failOverStrategy.handleOpen(this);
-    return getChannel();
+    return connector.openChannel(this);
   }
 
   /**
@@ -302,7 +262,6 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
       signals.clear();
     }
 
-    failOverStrategy = null;
     IChannel channel = getChannel();
     if (channel != null)
     {
@@ -311,14 +270,6 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     }
 
     super.doDeactivate();
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected IFailOverStrategy createFailOverStrategy(IConnector connector)
-  {
-    return new NOOPFailOverStrategy(connector);
   }
 
   @Override
@@ -459,52 +410,6 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     {
       fireEvent(new SignalFinishedEvent<INFRA_STRUCTURE>(this, signal, exception), listeners);
     }
-  }
-
-  boolean handleFailOver(SignalActor signalActor, IChannel originalChannel, Exception reason)
-  {
-    if (failOverStrategy != null)
-    {
-      try
-      {
-        synchronized (failOverStrategy)
-        {
-          failingOver = true;
-          if (originalChannel == getChannel())
-          {
-            failOverStrategy.handleFailOver(this, reason);
-          }
-
-          // Set new OutputStream
-          int correlationID = signalActor.getCorrelationID();
-          short signalID = signalActor.getID();
-          signalActor.setBufferOutputStream(new SignalOutputStream(correlationID, signalID, true));
-
-          // Set new InputStream
-          if (signalActor instanceof RequestWithConfirmation<?>)
-          {
-            long timeout = signalActor.getBufferInputStream().getMillisBeforeTimeout();
-            signalActor.setBufferInputStream(new SignalInputStream(timeout));
-          }
-
-          return true;
-        }
-      }
-      catch (UnsupportedOperationException ex)
-      {
-        // Do nothing
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
-      }
-      finally
-      {
-        failingOver = false;
-      }
-    }
-
-    return false;
   }
 
   void handleRemoteException(int correlationID, Throwable t, boolean responding)

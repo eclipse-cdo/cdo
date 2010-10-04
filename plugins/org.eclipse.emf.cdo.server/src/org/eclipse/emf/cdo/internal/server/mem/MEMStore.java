@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelConstants;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
@@ -43,13 +45,25 @@ import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.spi.server.LongIDStore;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.CharArrayReader;
+import java.io.CharArrayWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,6 +96,8 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
   private List<CommitInfo> commitInfos = new ArrayList<CommitInfo>();
 
   private Map<CDOID, EClass> objectTypes = new HashMap<CDOID, EClass>();
+
+  private Map<String, Object> lobs = new HashMap<String, Object>();
 
   private int listLimit;
 
@@ -612,6 +628,70 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     }
 
     return true;
+  }
+
+  public synchronized void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime,
+      long toCommitTime)
+  {
+    // TODO: implement MEMStore.rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime)
+    throw new UnsupportedOperationException();
+  }
+
+  public synchronized void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime,
+      long toCommitTime, OMMonitor monitor)
+  {
+    // TODO: implement MEMStore.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime, monitor)
+    throw new UnsupportedOperationException();
+  }
+
+  public synchronized void queryLobs(List<byte[]> ids)
+  {
+    for (Iterator<byte[]> it = ids.iterator(); it.hasNext();)
+    {
+      byte[] id = it.next();
+      String key = HexUtil.bytesToHex(id);
+      if (lobs.containsKey(key))
+      {
+        it.remove();
+      }
+    }
+  }
+
+  public synchronized void loadLob(byte[] id, OutputStream out) throws IOException
+  {
+    String key = HexUtil.bytesToHex(id);
+    Object lob = lobs.get(key);
+    if (lob == null)
+    {
+      throw new IOException("Lob not found: " + key);
+    }
+
+    if (lob instanceof byte[])
+    {
+      byte[] blob = (byte[])lob;
+      ByteArrayInputStream in = new ByteArrayInputStream(blob);
+      IOUtil.copyBinary(in, out, blob.length);
+    }
+    else
+    {
+      char[] clob = (char[])lob;
+      CharArrayReader in = new CharArrayReader(clob);
+      IOUtil.copyCharacter(in, new OutputStreamWriter(out), clob.length);
+    }
+  }
+
+  public synchronized void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
+  {
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    IOUtil.copyBinary(inputStream, out, size);
+    lobs.put(HexUtil.bytesToHex(id), out.toByteArray());
+  }
+
+  public synchronized void writeClob(byte[] id, long size, Reader reader) throws IOException
+  {
+    CharArrayWriter out = new CharArrayWriter();
+    IOUtil.copyCharacter(reader, out, size);
+    lobs.put(HexUtil.bytesToHex(id), out.toCharArray());
   }
 
   @Override

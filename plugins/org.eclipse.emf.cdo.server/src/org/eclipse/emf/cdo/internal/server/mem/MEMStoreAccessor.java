@@ -345,41 +345,35 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
   public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException
   {
-    // TODO: implement MEMStoreAccessor.rawExport(out, lastReplicatedBranchID, lastReplicatedCommitTime)
-    throw new UnsupportedOperationException();
+    getStore().rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
   }
 
   public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
       OMMonitor monitor) throws IOException
   {
-    // TODO: implement MEMStoreAccessor.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime)
-    throw new UnsupportedOperationException();
+    getStore().rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime, monitor);
   }
 
   public void queryLobs(List<byte[]> ids)
   {
-    // TODO: implement MEMStoreAccessor.queryLobs(ids)
-    throw new UnsupportedOperationException();
+    getStore().queryLobs(ids);
   }
 
   public void loadLob(byte[] id, OutputStream out) throws IOException
   {
-    // TODO: implement MEMStoreAccessor.loadLob(id, out)
-    throw new UnsupportedOperationException();
+    getStore().loadLob(id, out);
   }
 
   @Override
   protected void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
   {
-    // TODO: implement MEMStoreAccessor.writeBlob(id, size, in)
-    throw new UnsupportedOperationException();
+    getStore().writeBlob(id, size, inputStream);
   }
 
   @Override
   protected void writeClob(byte[] id, long size, Reader reader) throws IOException
   {
-    // TODO: implement MEMStoreAccessor.writeClob(id, size, reader)
-    throw new UnsupportedOperationException();
+    getStore().writeClob(id, size, reader);
   }
 
   @Override

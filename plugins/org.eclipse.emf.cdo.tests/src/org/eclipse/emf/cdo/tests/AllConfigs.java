@@ -169,6 +169,7 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(LegacyTest.class);
     testClasses.add(XRefTest.class);
     testClasses.add(StickyViewsTest.class);
+    testClasses.add(LobTest.class);
 
     // Specific for MEMStore
     testClasses.add(MEMStoreQueryTest.class);

@@ -25,6 +25,8 @@ import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
 
 /**
  * @author Eike Stepper
@@ -84,7 +86,7 @@ public class LobTest extends AbstractCDOTest
     }
   }
 
-  public void _testCommitClob() throws Exception
+  public void testCommitClob() throws Exception
   {
     InputStream inputStream = null;
 
@@ -107,6 +109,31 @@ public class LobTest extends AbstractCDOTest
     finally
     {
       IOUtil.close(inputStream);
+    }
+  }
+
+  public void testReadClob() throws Exception
+  {
+    testCommitClob();
+    new java.io.File(CDOLobStoreImpl.INSTANCE.getFolder(), "5ef5685c7036c7fc8cafac1d54b91b4e06d9de4e.clob").delete();
+
+    CDOSession session = openSession();
+    CDOView view = session.openView();
+    CDOResource resource = view.getResource("res");
+
+    File file = (File)resource.getContents().get(0);
+    assertEquals("copyright.txt", file.getName());
+
+    CDOClob clob = file.getData();
+    Reader reader = clob.getContents();
+
+    try
+    {
+      IOUtil.copyCharacter(reader, new OutputStreamWriter(System.out));
+    }
+    finally
+    {
+      IOUtil.close(reader);
     }
   }
 }

@@ -14,15 +14,16 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.CharBuffer;
 
 /**
  * @author Eike Stepper
  * @since 3.1
  */
-public class ExpectedFileInputStream extends FileInputStream
+public class ExpectedFileReader extends FileReader
 {
   private long timeout = IOUtil.DEFAULT_TIMEOUT;
 
@@ -32,7 +33,7 @@ public class ExpectedFileInputStream extends FileInputStream
 
   private long pos;
 
-  public ExpectedFileInputStream(File file, long expectedSize) throws FileNotFoundException
+  public ExpectedFileReader(File file, long expectedSize) throws FileNotFoundException
   {
     super(file);
     this.file = file;
@@ -64,16 +65,24 @@ public class ExpectedFileInputStream extends FileInputStream
   }
 
   @Override
-  public int read(byte[] b, int off, int len) throws IOException
+  public int read(char[] cbuf, int offset, int length) throws IOException
   {
-    waitForInput(len);
-    return super.read(b, off, len);
+    waitForInput(length);
+    return super.read(cbuf, offset, length);
   }
 
   @Override
-  public int read(byte[] b) throws IOException
+  public int read(CharBuffer target) throws IOException
   {
-    return read(b, 0, b.length);
+    waitForInput(target.remaining());
+    return super.read(target);
+  }
+
+  @Override
+  public int read(char[] cbuf) throws IOException
+  {
+    waitForInput(cbuf.length);
+    return super.read(cbuf);
   }
 
   private void waitForInput(long n) throws IOException

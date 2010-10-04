@@ -125,9 +125,10 @@ import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitConte
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.Reader;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -312,10 +313,55 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         }
       }
 
-      private void loadBinary(final CDOLobInfo info) throws FileNotFoundException
+      @Override
+      public Reader getCharacter(CDOLobInfo info) throws IOException
+      {
+        for (;;)
+        {
+          try
+          {
+            return super.getCharacter(info);
+          }
+          catch (FileNotFoundException couldNotBeRead)
+          {
+            try
+            {
+              loadCharacter(info);
+            }
+            catch (FileNotFoundException couldNotBeCreated)
+            {
+              // Try to read again
+            }
+          }
+        }
+      }
+
+      private void loadBinary(final CDOLobInfo info) throws IOException
       {
         final File file = getDelegate().getBinaryFile(info.getID());
         final FileOutputStream out = new FileOutputStream(file);
+
+        loadLobAsync(info, new Runnable()
+        {
+          public void run()
+          {
+            try
+            {
+              getSessionProtocol().loadLob(info, out);
+            }
+            catch (Throwable t)
+            {
+              OM.LOG.error(t);
+              IOUtil.delete(file);
+            }
+          }
+        });
+      }
+
+      private void loadCharacter(final CDOLobInfo info) throws IOException
+      {
+        final File file = getDelegate().getCharacterFile(info.getID());
+        final FileWriter out = new FileWriter(file);
 
         loadLobAsync(info, new Runnable()
         {
@@ -1684,14 +1730,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public void loadLob(CDOLobInfo info, OutputStream out)
+    public void loadLob(CDOLobInfo info, Object outputStreamOrWriter)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          delegate.loadLob(info, out);
+          delegate.loadLob(info, outputStreamOrWriter);
         }
         catch (Exception ex)
         {

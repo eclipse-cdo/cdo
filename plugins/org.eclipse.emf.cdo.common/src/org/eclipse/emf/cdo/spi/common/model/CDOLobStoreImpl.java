@@ -17,13 +17,13 @@ import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.DigestWriter;
 import org.eclipse.net4j.util.io.ExpectedFileInputStream;
+import org.eclipse.net4j.util.io.ExpectedFileReader;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,18 +47,9 @@ public class CDOLobStoreImpl implements CDOLobStore
   public CDOLobStoreImpl(File folder)
   {
     this.folder = folder;
-    if (!folder.exists())
+    if (folder.exists())
     {
-      folder.mkdirs();
-      if (!folder.exists())
-      {
-        throw new IORuntimeException("Folder could not be created: " + folder);
-      }
-
-      if (!folder.isDirectory())
-      {
-        throw new IORuntimeException("Not a folder: " + folder);
-      }
+      checkDirectory();
     }
   }
 
@@ -69,24 +60,24 @@ public class CDOLobStoreImpl implements CDOLobStore
 
   public File getFolder()
   {
+    if (!folder.exists())
+    {
+      folder.mkdirs();
+    }
+
+    checkDirectory();
     return folder;
   }
 
   public File getBinaryFile(byte[] id)
   {
-    return new File(folder, HexUtil.bytesToHex(id) + ".blob");
+    return new File(getFolder(), HexUtil.bytesToHex(id) + ".blob");
   }
 
   public InputStream getBinary(CDOLobInfo info) throws IOException
   {
     File file = getBinaryFile(info.getID());
     long expectedSize = info.getSize();
-
-    // if (file.length() >= expectedSize)
-    // {
-    // return new FileInputStream(file);
-    // }
-
     return new ExpectedFileInputStream(file, expectedSize);
   }
 
@@ -117,13 +108,15 @@ public class CDOLobStoreImpl implements CDOLobStore
 
   public File getCharacterFile(byte[] id)
   {
-    return new File(folder, HexUtil.bytesToHex(id) + ".clob");
+    return new File(getFolder(), HexUtil.bytesToHex(id) + ".clob");
   }
 
   public Reader getCharacter(CDOLobInfo info) throws IOException
   {
     File file = getCharacterFile(info.getID());
-    return new FileReader(file);
+    long expectedSize = info.getSize();
+    return new ExpectedFileReader(file, expectedSize);
+
   }
 
   public CDOLobInfo putCharacter(Reader contents) throws IOException
@@ -168,7 +161,7 @@ public class CDOLobStoreImpl implements CDOLobStore
     for (;;)
     {
       ++tempID;
-      File file = new File(folder, "contents" + tempID + ".tmp");
+      File file = new File(getFolder(), "contents" + tempID + ".tmp");
       if (!file.exists())
       {
         return file;
@@ -188,9 +181,17 @@ public class CDOLobStoreImpl implements CDOLobStore
     }
   }
 
+  private void checkDirectory()
+  {
+    if (!folder.isDirectory())
+    {
+      throw new IORuntimeException("Not a folder: " + folder.getAbsolutePath());
+    }
+  }
+
   private static File getDefaultFolder()
   {
     String path = OMPlatform.INSTANCE.getProperty("java.io.tmpdir");
-    return new File(new File(path), "cdolobs");
+    return new File(new File(path), "cdo_lobs");
   }
 }

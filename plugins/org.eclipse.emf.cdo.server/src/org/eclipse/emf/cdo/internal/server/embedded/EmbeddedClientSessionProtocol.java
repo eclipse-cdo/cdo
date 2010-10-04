@@ -62,7 +62,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -321,7 +320,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public void loadLob(CDOLobInfo info, OutputStream out)
+  public void loadLob(CDOLobInfo info, Object outputStreamOrWriter)
   {
     // TODO: implement EmbeddedClientSessionProtocol.loadLob(info, out)
     throw new UnsupportedOperationException();

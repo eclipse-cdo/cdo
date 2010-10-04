@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.ui;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -42,7 +43,7 @@ public abstract class AbstractCDOUITest extends AbstractCDOTest
   public void setUp() throws Exception
   {
     SWTBotPreferences.KEYBOARD_LAYOUT = "EN_US";
-    SWTBotPreferences.SCREENSHOTS_DIR = System.getProperty("java.io.tmpdir") + "/cdotests";
+    SWTBotPreferences.SCREENSHOTS_DIR = OMPlatform.INSTANCE.getProperty("java.io.tmpdir") + "/cdotests";
     super.setUp();
   }
 

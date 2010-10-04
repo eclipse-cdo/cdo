@@ -12,6 +12,7 @@ package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.tests.bugzilla.Bugzilla_241463_Test;
 import org.eclipse.net4j.tests.bugzilla.Bugzilla_262875_Test;
+import org.eclipse.net4j.util.tests.ExpectedIOTest;
 import org.eclipse.net4j.util.tests.ExtendedIOTest;
 import org.eclipse.net4j.util.tests.MultiMapTest;
 import org.eclipse.net4j.util.tests.QueueWorkerWorkSerializerTest;
@@ -49,6 +50,7 @@ public class AllTests
     suite.addTestSuite(ExceptionTest.class);
     suite.addTestSuite(SecurityTest.class);
     suite.addTestSuite(QueueWorkerWorkSerializerTest.class);
+    suite.addTestSuite(ExpectedIOTest.class);
 
     // Bugzillas
     suite.addTestSuite(Bugzilla_241463_Test.class);

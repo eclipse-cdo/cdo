@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.dawn.tests;
 
+import org.eclipse.net4j.util.om.OMPlatform;
+
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -28,7 +30,7 @@ public class DawnTestPlatform
 
   public DawnTestPlatform()
   {
-    tempTestFolder = System.getProperty("java.io.tmpdir") + "/dawntests/test_" + new Date().getTime();
+    tempTestFolder = OMPlatform.INSTANCE.getProperty("java.io.tmpdir") + "/dawntests/test_" + new Date().getTime();
   }
 
   public String getTestFolder()

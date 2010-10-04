@@ -187,7 +187,7 @@ public class CDODBSchema extends DBSchema
   public static final IDBTable LOBS = INSTANCE.addTable("cdo_lobs"); //$NON-NLS-1$
 
   public static final IDBField LOBS_ID = //
-  LOBS.addField("id", DBType.CHAR, 40); //$NON-NLS-1$
+  LOBS.addField("id", DBType.VARCHAR, 64); //$NON-NLS-1$
 
   public static final IDBField LOBS_SIZE = //
   LOBS.addField("size", DBType.BIGINT); //$NON-NLS-1$

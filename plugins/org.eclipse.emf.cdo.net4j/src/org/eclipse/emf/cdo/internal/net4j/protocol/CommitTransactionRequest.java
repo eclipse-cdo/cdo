@@ -239,8 +239,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
       else
       {
         CDOClob clob = (CDOClob)lob;
-        size = -size;
-        out.writeLong(size);
+        out.writeLong(-size);
         IOUtil.copyCharacter(clob.getContents(), new OutputStreamWriter(stream), size);
       }
     }

@@ -51,7 +51,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -145,7 +144,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   /**
    * @since 4.0
    */
-  public void loadLob(CDOLobInfo info, OutputStream out) throws IOException;
+  public void loadLob(CDOLobInfo info, Object outputStreamOrWriter) throws IOException;
 
   /**
    * @since 4.0

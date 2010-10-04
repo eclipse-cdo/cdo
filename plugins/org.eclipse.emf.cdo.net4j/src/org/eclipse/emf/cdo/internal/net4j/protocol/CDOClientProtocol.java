@@ -60,7 +60,6 @@ import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -262,11 +261,11 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new QueryLobsRequest(this, ids));
   }
 
-  public void loadLob(CDOLobInfo info, OutputStream out) throws IOException
+  public void loadLob(CDOLobInfo info, Object outputStreamOrWriter) throws IOException
   {
     try
     {
-      new LoadLobRequest(this, info, out).send();
+      new LoadLobRequest(this, info, outputStreamOrWriter).send();
     }
     catch (RuntimeException ex)
     {

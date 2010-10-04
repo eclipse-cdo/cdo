@@ -49,6 +49,11 @@ public final class IOUtil
    */
   public static final int EOF = -1;
 
+  /**
+   * @since 3.1
+   */
+  public static final long DEFAULT_TIMEOUT = 2500;
+
   public static final int DEFAULT_BUFFER_SIZE = 8192;
 
   /**

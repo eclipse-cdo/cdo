@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.spi.common.model.CDOLobStoreImpl;
 import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
@@ -27,6 +28,7 @@ import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.io.TMPUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -35,6 +37,7 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -149,6 +152,17 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   protected void configureSession(CDOSession session)
   {
+    final File lobCache = TMPUtil.createTempFolder();
+    session.options().setLobCache(new CDOLobStoreImpl(lobCache));
+    session.addListener(new LifecycleEventAdapter()
+    {
+      @Override
+      protected void onDeactivated(ILifecycle lifecycle)
+      {
+        IOUtil.delete(lobCache);
+      }
+    });
+
     CDOUtil.setLegacyModeDefault(true);
   }
 

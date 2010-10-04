@@ -17,4 +17,4 @@ Export-Package: org.eclipse.net4j.internal.jms;version="4.0.0",
  org.eclipse.net4j.internal.jms.messages;version="4.0.0";x-internal:=true,
  org.eclipse.net4j.internal.jms.protocol;version="4.0.0",
  org.eclipse.net4j.internal.jms.util;version="4.0.0",
- org.eclipse.net4j.jms;version="3.0.100"
+ org.eclipse.net4j.jms;version="4.0.0"

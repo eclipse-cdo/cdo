@@ -44,6 +44,11 @@ import java.util.List;
  */
 public final class IOUtil
 {
+  /**
+   * @since 3.1
+   */
+  public static final int EOF = -1;
+
   public static final int DEFAULT_BUFFER_SIZE = 8192;
 
   /**
@@ -66,8 +71,6 @@ public final class IOUtil
   private static final char SEP_UNIX = '/';
 
   private static final char SEP_WINDOWS = '\\';
-
-  private static final int EOF = -1;
 
   private IOUtil()
   {

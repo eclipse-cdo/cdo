@@ -92,19 +92,24 @@ public class ExpectedFileInputStream extends FileInputStream
 
       while (restSize < n)
       {
+        long restTime;
         if (endTime == 0)
         {
           endTime = System.currentTimeMillis() + timeout;
+          restTime = timeout;
+        }
+        else
+        {
+          restTime = endTime - System.currentTimeMillis();
+        }
+
+        if (restTime <= 0)
+        {
+          throw new TimeoutRuntimeException("Timeout while reading from " + file.getAbsolutePath());
         }
 
         try
         {
-          long restTime = endTime - System.currentTimeMillis();
-          if (restTime <= 0)
-          {
-            throw new TimeoutRuntimeException("Timeout while reading from " + file.getAbsolutePath());
-          }
-
           wait(Math.max(100L, restTime));
         }
         catch (InterruptedException ex)

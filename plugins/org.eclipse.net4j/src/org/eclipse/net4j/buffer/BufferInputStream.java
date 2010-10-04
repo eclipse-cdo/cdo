@@ -13,12 +13,14 @@ package org.eclipse.net4j.buffer;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOTimeoutException;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -101,24 +103,31 @@ public class BufferInputStream extends InputStream implements IBufferHandler
       if (eos)
       {
         // End of stream
-        return -1;
+        return IOUtil.EOF;
       }
 
       if (!ensureBuffer())
       {
         // Timeout or interrupt
-        return -1;
+        return IOUtil.EOF;
       }
     }
 
-    final int result = currentBuffer.getByteBuffer().get() & 0xFF;
+    ByteBuffer byteBuffer = currentBuffer.getByteBuffer();
+    if (!byteBuffer.hasRemaining())
+    {
+      // End of stream
+      return IOUtil.EOF;
+    }
+
+    final int result = byteBuffer.get() & 0xFF;
     if (TRACER.isEnabled())
     {
       TRACER.trace("<-- " + HexUtil.formatByte(result) //$NON-NLS-1$
           + (result >= 32 ? " " + Character.toString((char)result) : "")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    if (!currentBuffer.getByteBuffer().hasRemaining())
+    if (!byteBuffer.hasRemaining())
     {
       currentBuffer.release();
       currentBuffer = null;

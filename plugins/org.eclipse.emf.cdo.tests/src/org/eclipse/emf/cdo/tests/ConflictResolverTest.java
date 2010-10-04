@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.internal.cdo.transaction.AbstractObjectConflictResolver2;
+
 import org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.MergeLocalChangesPerFeature;
 
 /**
@@ -75,7 +77,7 @@ public class ConflictResolverTest extends AbstractCDOTest
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    transaction2.options().addConflictResolver(new MergeLocalChangesPerFeature());
+    transaction2.options().addConflictResolver(new AbstractObjectConflictResolver2.MergeLocalChangesPerFeature());
     final Address address2 = (Address)transaction2.getOrCreateResource("/res1").getContents().get(0);
 
     address2.setCity("OTTAWA");

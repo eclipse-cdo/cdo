@@ -97,6 +97,7 @@ import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.FastList;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -627,6 +628,75 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       Iterator<CDOState> state = states.iterator();
       Iterator<CDORevision> revision = revisions.iterator();
       for (CDOObject object : conflicts)
+      {
+        ((InternalCDOObject)object).cdoInternalSetState(state.next());
+        ((InternalCDOObject)object).cdoInternalSetRevision(revision.next());
+      }
+
+      throw WrappedException.wrap(ex);
+    }
+
+    conflict -= resolved;
+  }
+
+  public void handleConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
+      List<CDORevisionDelta> deltas)
+  {
+    handleConflicts(conflicts, options().getConflictResolvers(), deltas);
+  }
+
+  private void handleConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
+      CDOConflictResolver[] resolvers, List<CDORevisionDelta> deltas)
+  {
+    if (resolvers.length == 0)
+    {
+      return;
+    }
+
+    // Remember original state to be able to restore it after an exception
+    List<CDOState> states = new ArrayList<CDOState>(conflicts.size());
+    List<CDORevision> revisions = new ArrayList<CDORevision>(conflicts.size());
+    for (CDOObject conflict : conflicts.keySet())
+    {
+      states.add(conflict.cdoState());
+      revisions.add(conflict.cdoRevision());
+    }
+
+    int resolved = 0;
+
+    try
+    {
+      Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> remaining = new HashMap<CDOObject, Pair<CDORevision, CDORevisionDelta>>(
+          conflicts);
+      for (CDOConflictResolver resolver : resolvers)
+      {
+        if (resolver instanceof CDOConflictResolver2)
+        {
+          CDOConflictResolver2 resolver2 = (CDOConflictResolver2)resolver;
+          resolver2.resolveConflicts(Collections.unmodifiableMap(remaining), deltas);
+        }
+        else
+        {
+          resolver.resolveConflicts(Collections.unmodifiableSet(remaining.keySet()));
+        }
+
+        for (Iterator<CDOObject> it = remaining.keySet().iterator(); it.hasNext();)
+        {
+          CDOObject object = it.next();
+          if (!object.cdoConflict())
+          {
+            ++resolved;
+            it.remove();
+          }
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      // Restore original state
+      Iterator<CDOState> state = states.iterator();
+      Iterator<CDORevision> revision = revisions.iterator();
+      for (CDOObject object : conflicts.keySet())
       {
         ((InternalCDOObject)object).cdoInternalSetState(state.next());
         ((InternalCDOObject)object).cdoInternalSetRevision(revision.next());
@@ -1814,9 +1884,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * @since 3.0
    */
   @Override
-  protected Set<CDOObject> invalidate(long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects, List<CDORevisionDelta> deltas, Set<InternalCDOObject> changedObjects,
-      Set<CDOObject> detachedObjects)
+  protected Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> invalidate(long lastUpdateTime,
+      List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects, List<CDORevisionDelta> deltas,
+      Set<InternalCDOObject> changedObjects, Set<CDOObject> detachedObjects)
   {
     if (!allDetachedObjects.isEmpty())
     {

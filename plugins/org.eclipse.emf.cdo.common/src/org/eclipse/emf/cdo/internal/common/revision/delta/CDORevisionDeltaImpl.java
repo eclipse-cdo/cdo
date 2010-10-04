@@ -319,7 +319,8 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
                 int index)
             {
               CDORemoveFeatureDeltaImpl delta = new CDORemoveFeatureDeltaImpl(feature, index);
-              delta.setValue(value);
+              // fix until ListDifferenceAnalyzer delivers the correct value (bug #308618).
+              delta.setValue(oldList.get(index));
               changes.add(delta);
               oldList.remove(index);
             }

@@ -13,21 +13,17 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
-import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.WithIndex;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOMoveFeatureDeltaImpl;
+import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureDeltaVisitorImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -36,7 +32,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
@@ -45,7 +40,7 @@ import java.util.Set;
  * @author Simon McDuff
  * @since 2.0
  */
-public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
+public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
 {
   private CDOView view;
 
@@ -55,17 +50,9 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 
   private CDODeltaNotificationImpl notification;
 
-  private InternalCDORevision revision;
-
-  private boolean revisionLookedUp;
-
   private Set<CDOObject> detachedObjects;
 
   private InternalCDORevision oldRevision;
-
-  private CDOListFeatureDelta patchedListDelta;
-
-  private CDOListFeatureDelta unpatchedListDelta;
 
   /**
    * @since 3.0
@@ -90,10 +77,6 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
       CDORevisionDelta revisionDelta, Set<CDOObject> detachedObjects)
   {
     notification = null;
-    revision = null;
-    revisionLookedUp = false;
-    patchedListDelta = null;
-    unpatchedListDelta = null;
 
     this.object = object;
     this.revisionDelta = revisionDelta;
@@ -103,15 +86,29 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
     return notification;
   }
 
+  @Override
   public void visit(CDOMoveFeatureDelta delta)
   {
     EStructuralFeature feature = delta.getFeature();
     int oldPosition = delta.getOldPosition();
     int newPosition = delta.getNewPosition();
+
+    Object oldValue = ((CDOMoveFeatureDeltaImpl)delta).getValue();
+    if (oldValue instanceof CDOID)
+    {
+      CDOID oldID = (CDOID)oldValue;
+      CDOObject object = findObjectByID(oldID);
+      if (object != null)
+      {
+        oldValue = object;
+      }
+    }
+
     add(new CDODeltaNotificationImpl(object, Notification.MOVE, getEFeatureID(feature), Integer.valueOf(oldPosition),
-        getOldValue(feature), newPosition));
+        oldValue, newPosition));
   }
 
+  @Override
   public void visit(CDOAddFeatureDelta delta)
   {
     EStructuralFeature feature = delta.getFeature();
@@ -119,22 +116,13 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
         delta.getValue(), delta.getIndex()));
   }
 
+  @Override
   public void visit(CDORemoveFeatureDelta delta)
   {
     EStructuralFeature feature = delta.getFeature();
     int index = delta.getIndex();
-    if (!revisionLookedUp)
-    {
-      InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)view.getSession().getRevisionManager();
-      revision = revisionManager.getRevisionByVersion(revisionDelta.getID(), revisionDelta, CDORevision.UNCHUNKED,
-          false);
-    }
 
-    // Use patched index to retrieve object
-    int unpatchedIndex = unpatchedListDelta.getListChanges().indexOf(delta);
-    CDORemoveFeatureDelta unpatchedDelta = (CDORemoveFeatureDelta)patchedListDelta.getListChanges().get(unpatchedIndex);
-    int patchedIndex = unpatchedDelta.getIndex();
-    Object oldValue = revision == null ? null : revision.get(feature, patchedIndex);
+    Object oldValue = delta.getValue();
     if (oldValue instanceof CDOID)
     {
       CDOID oldID = (CDOID)oldValue;
@@ -148,6 +136,7 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
     add(new CDODeltaNotificationImpl(object, Notification.REMOVE, getEFeatureID(feature), oldValue, null, index));
   }
 
+  @Override
   public void visit(CDOSetFeatureDelta delta)
   {
     EStructuralFeature feature = delta.getFeature();
@@ -165,6 +154,7 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
     add(new CDODeltaNotificationImpl(object, Notification.SET, getEFeatureID(feature), oldValue, delta.getValue()));
   }
 
+  @Override
   public void visit(CDOUnsetFeatureDelta delta)
   {
     EStructuralFeature feature = delta.getFeature();
@@ -182,83 +172,7 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
     add(new CDODeltaNotificationImpl(object, Notification.UNSET, getEFeatureID(feature), oldValue, null));
   }
 
-  public void visit(CDOListFeatureDelta deltas)
-  {
-    unpatchedListDelta = deltas;
-    patchedListDelta = (CDOListFeatureDelta)deltas.copy();
-    patchIndices(patchedListDelta);
-    for (CDOFeatureDelta delta : deltas.getListChanges())
-    {
-      delta.accept(this);
-    }
-  }
-
-  private void patchIndices(CDOListFeatureDelta deltas)
-  {
-    List<CDOFeatureDelta> restDeltas = new ArrayList<CDOFeatureDelta>();
-    restDeltas.addAll(deltas.getListChanges());
-    for (CDOFeatureDelta delta : deltas.getListChanges())
-    {
-      restDeltas.remove(delta);
-      if (delta instanceof CDOAddFeatureDelta)
-      {
-        CDOAddFeatureDelta addDelta = (CDOAddFeatureDelta)delta;
-        for (CDOFeatureDelta restDelta : restDeltas)
-        {
-          if (restDelta instanceof CDOClearFeatureDelta)
-          {
-            break;
-          }
-
-          if (restDelta instanceof WithIndex)
-          {
-            WithIndex withIndex = (WithIndex)restDelta;
-            withIndex.adjustAfterRemoval(addDelta.getIndex());
-          }
-        }
-      }
-      else if (delta instanceof CDORemoveFeatureDelta)
-      {
-        CDORemoveFeatureDelta removeDelta = (CDORemoveFeatureDelta)delta;
-        for (CDOFeatureDelta restDelta : restDeltas)
-        {
-          if (restDelta instanceof CDOClearFeatureDelta)
-          {
-            break;
-          }
-
-          if (restDelta instanceof WithIndex)
-          {
-            WithIndex withIndex = (WithIndex)restDelta;
-            withIndex.adjustAfterAddition(removeDelta.getIndex());
-          }
-        }
-      }
-      else if (delta instanceof CDOClearFeatureDelta)
-      {
-        // Do nothing
-      }
-      else if (delta instanceof CDOMoveFeatureDelta)
-      {
-        CDOMoveFeatureDelta moveDelta = (CDOMoveFeatureDelta)delta;
-        for (CDOFeatureDelta restDelta : restDeltas)
-        {
-          if (restDelta instanceof CDOClearFeatureDelta)
-          {
-            break;
-          }
-
-          if (restDelta instanceof WithIndex)
-          {
-            WithIndex withIndex = (WithIndex)restDelta;
-            withIndex.adjustAfterAddition(moveDelta.getOldPosition());
-            withIndex.adjustAfterRemoval(moveDelta.getNewPosition());
-          }
-        }
-      }
-    }
-  }
-
+  @Override
   public void visit(CDOClearFeatureDelta delta)
   {
     EStructuralFeature feature = delta.getFeature();
@@ -315,6 +229,7 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
     return null;
   }
 
+  @Override
   public void visit(CDOContainerFeatureDelta delta)
   {
     Object oldValue = null;

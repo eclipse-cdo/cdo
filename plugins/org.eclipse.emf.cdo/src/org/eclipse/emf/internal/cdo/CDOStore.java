@@ -412,6 +412,8 @@ public final class CDOStore implements EStore
       TRACER.format("remove({0}, {1}, {2})", cdoObject, feature, index); //$NON-NLS-1$
     }
 
+    Object oldValue = null;
+
     // Bugzilla 293283 / 314387
     if (feature.isMany())
     {
@@ -427,7 +429,7 @@ public final class CDOStore implements EStore
     CDOFeatureDelta delta = new CDORemoveFeatureDeltaImpl(feature, index);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
 
-    Object oldValue = revision.remove(feature, index);
+    oldValue = revision.remove(feature, index);
     return convertToEMF(eObject, revision, feature, index, oldValue);
   }
 

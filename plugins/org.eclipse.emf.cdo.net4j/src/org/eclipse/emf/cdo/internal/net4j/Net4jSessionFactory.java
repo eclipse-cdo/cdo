@@ -26,11 +26,11 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 /**
  * @author Eike Stepper
  */
-public class CDONet4jSessionFactory extends CDOSessionFactory
+public class Net4jSessionFactory extends CDOSessionFactory
 {
   public static final String TYPE = "cdo"; //$NON-NLS-1$
 
-  public CDONet4jSessionFactory()
+  public Net4jSessionFactory()
   {
     super(TYPE);
   }

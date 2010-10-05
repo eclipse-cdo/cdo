@@ -20,9 +20,16 @@
             productGroup="org.eclipse.net4j.clientProtocols"
             type="cdo"/>
       <factory
-            class="org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionFactory"
+            class="org.eclipse.emf.cdo.internal.net4j.Net4jSessionFactory"
             productGroup="org.eclipse.emf.cdo.sessions"
             type="cdo"/>
+   </extension>
+
+   <extension
+         point="org.eclipse.net4j.util.elementProcessors">
+      <elementProcessor
+            class="org.eclipse.emf.cdo.internal.net4j.Net4jConnectorInjector">
+      </elementProcessor>
    </extension>
 
 </plugin>

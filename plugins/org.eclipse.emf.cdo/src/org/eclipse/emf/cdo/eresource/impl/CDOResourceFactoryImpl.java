@@ -32,9 +32,17 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
 
   public Resource createResource(URI uri)
   {
-    CDOResourceImpl resource = new CDOResourceImpl(uri);
+    CDOResourceImpl resource = doCreateResource(uri);
     resource.setExisting(isGetResource());
     return resource;
+  }
+
+  /**
+   * @since 4.0
+   */
+  protected CDOResourceImpl doCreateResource(URI uri)
+  {
+    return new CDOResourceImpl(uri);
   }
 
   /**

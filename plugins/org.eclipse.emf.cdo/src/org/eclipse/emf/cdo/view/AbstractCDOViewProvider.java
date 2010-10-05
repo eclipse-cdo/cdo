@@ -65,7 +65,11 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider
 
   public void setRegex(String regex)
   {
-    this.regex = regex;
+    synchronized (regex)
+    {
+      this.regex = regex;
+      pattern = null;
+    }
   }
 
   public boolean matchesRegex(URI uri)

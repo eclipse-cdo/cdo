@@ -22,7 +22,7 @@ import org.eclipse.emf.common.util.URI;
 public class DawnResourceFactoryImpl extends CDOResourceFactoryImpl implements DawnResourceFactory
 {
   @Override
-  protected CDOResourceImpl doCreateResource(URI uri)
+  protected CDOResourceImpl createCDOResource(URI uri)
   {
     uri = URI.createURI(uri.toString().replace("dawn:", "cdo:"));
     return new DawnWrapperResourceImpl(uri);

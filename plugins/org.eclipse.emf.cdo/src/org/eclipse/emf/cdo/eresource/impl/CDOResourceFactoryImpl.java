@@ -32,7 +32,7 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
 
   public Resource createResource(URI uri)
   {
-    CDOResourceImpl resource = doCreateResource(uri);
+    CDOResourceImpl resource = createCDOResource(uri);
     resource.setExisting(isGetResource());
     return resource;
   }
@@ -40,7 +40,7 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
   /**
    * @since 4.0
    */
-  protected CDOResourceImpl doCreateResource(URI uri)
+  protected CDOResourceImpl createCDOResource(URI uri)
   {
     return new CDOResourceImpl(uri);
   }

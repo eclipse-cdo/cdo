@@ -1,17 +1,13 @@
-/*******************************************************************************
- * Copyright (c) 2005, 2010 IBM Corporation and others.
+/**
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     IBM Corporation - initial API and implementation
- * Martin Oberhuber (Wind River) - [170317] add symbolic link support to API
- * Martin Oberhuber (Wind River) - [183137] liblocalfile for solaris-sparc
- * Martin Oberhuber (Wind River) - [184433] liblocalfile for Linux x86_64
- * Martin Oberhuber (Wind River) - [184534] get attributes from native lib
- *******************************************************************************/
+ *    Eike Stepper - initial API and implementation
+ */
 package org.eclipse.emf.cdo.internal.efs;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;

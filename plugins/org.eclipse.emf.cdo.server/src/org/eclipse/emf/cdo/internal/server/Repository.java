@@ -926,7 +926,8 @@ public class Repository extends Container<Object> implements InternalRepository
         }
       }
     }
-    else if (handler instanceof WriteAccessHandler)
+
+    if (handler instanceof WriteAccessHandler)
     {
       synchronized (writeAccessHandlers)
       {
@@ -936,10 +937,7 @@ public class Repository extends Container<Object> implements InternalRepository
         }
       }
     }
-    else
-    {
-      throw new IllegalArgumentException("Invalid handler: " + handler); //$NON-NLS-1$
-    }
+
   }
 
   /**
@@ -954,16 +952,13 @@ public class Repository extends Container<Object> implements InternalRepository
         readAccessHandlers.remove(handler);
       }
     }
-    else if (handler instanceof WriteAccessHandler)
+
+    if (handler instanceof WriteAccessHandler)
     {
       synchronized (writeAccessHandlers)
       {
         writeAccessHandlers.remove(handler);
       }
-    }
-    else
-    {
-      throw new IllegalArgumentException("Invalid handler: " + handler); //$NON-NLS-1$
     }
   }
 

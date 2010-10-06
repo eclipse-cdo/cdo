@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aggregator:Aggregator xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:aggregator="http://www.eclipse.org/b3/2010/aggregator/1.0.0" label="p2 Repository Cache for CDO" buildRoot="${user.home}/p2-cdo">
+  <configurations architecture="x86_64"/>
+  <configurations operatingSystem="linux" windowSystem="gtk"/>
+  <configurations operatingSystem="linux" windowSystem="motif"/>
+  <configurations operatingSystem="linux" windowSystem="gtk" architecture="x86_64"/>
+  <configurations operatingSystem="linux" windowSystem="gtk" architecture="ppc"/>
+  <configurations operatingSystem="linux" windowSystem="gtk" architecture="ppc64"/>
+  <configurations operatingSystem="linux" windowSystem="gtk" architecture="s390"/>
+  <configurations operatingSystem="linux" windowSystem="gtk" architecture="s390x"/>
+  <configurations operatingSystem="solaris" windowSystem="gtk" architecture="sparc"/>
+  <configurations operatingSystem="solaris" windowSystem="gtk"/>
+  <configurations operatingSystem="hpux" windowSystem="motif" architecture="ia64_32"/>
+  <configurations operatingSystem="aix" windowSystem="motif" architecture="ppc"/>
+  <configurations operatingSystem="macosx" windowSystem="cocoa"/>
+  <configurations operatingSystem="macosx" windowSystem="cocoa" architecture="x86_64"/>
+  <configurations operatingSystem="macosx" windowSystem="carbon"/>
+  <contributions label="CDO 4.0 Dependencies">
+  	<!--
+    <repositories location="http://download.eclipse.org/releases/helios"/>
+    <repositories location="http://download.eclipse.org/eclipse/updates/3.6"/>
+    <repositories location="http://download.eclipse.org/modeling/emf/emf/updates/2.6milestones"/>
+    <repositories location="http://download.eclipse.org/modeling/emf/teneo/updates/1.2.0/milestones"/>
+    <repositories location="http://download.eclipse.org/tools/gef/updates/milestones"/>
+    <repositories location="http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site"/>
+    <repositories location="http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/repository"/>
+    -->
+    <repositories location="http://net4j.sourceforge.net/update"/>
+  </contributions>
+</aggregator:Aggregator>

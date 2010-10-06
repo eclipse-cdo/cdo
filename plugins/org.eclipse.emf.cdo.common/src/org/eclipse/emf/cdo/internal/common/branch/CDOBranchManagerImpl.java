@@ -137,6 +137,11 @@ public class CDOBranchManagerImpl extends Lifecycle implements InternalCDOBranch
 
   public InternalCDOBranch getBranch(String path)
   {
+    if (path.startsWith(CDOBranch.PATH_SEPARATOR))
+    {
+      path = path.substring(1);
+    }
+
     int sep = path.indexOf(CDOBranch.PATH_SEPARATOR);
     if (sep == -1)
     {

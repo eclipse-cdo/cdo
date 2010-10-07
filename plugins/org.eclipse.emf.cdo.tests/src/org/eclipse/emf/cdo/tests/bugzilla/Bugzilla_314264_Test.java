@@ -48,7 +48,7 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
     container.getTasks().add(getModel2Factory().createTask());
     tr1.commit();
 
-    sleep(1000);
+    // sleep(1000);
 
     final CDOBranch otherBranch = tr1.getBranch().createBranch("other");
     final CDOTransaction tr2 = session.openTransaction(otherBranch);
@@ -63,10 +63,10 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
     container.getTasks().remove(0);
 
     tr1.commit();
-    tr2.commit();
+    long commitTime = tr2.commit().getTimeStamp();
 
     // sleep to have the merger see the changes.
-    sleep(1000);
+    tr1.getSession().waitForUpdate(commitTime, DEFAULT_TIMEOUT);
 
     // merge the other branch to main.
     tr1.merge(tr2.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());

@@ -44,6 +44,7 @@ import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.io.StringIO;
@@ -115,7 +116,7 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new LoadPackagesRequest(this, (InternalCDOPackageUnit)packageUnit));
   }
 
-  public int createBranch(int branchID, BranchInfo branchInfo)
+  public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     return send(new CreateBranchRequest(this, branchID, branchInfo));
   }

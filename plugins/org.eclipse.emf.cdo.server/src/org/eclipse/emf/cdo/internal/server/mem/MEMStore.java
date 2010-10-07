@@ -48,6 +48,7 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -151,7 +152,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     }
   }
 
-  public synchronized int createBranch(int branchID, BranchInfo branchInfo)
+  public synchronized Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     if (branchID == NEW_BRANCH)
     {
@@ -163,7 +164,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     }
 
     branchInfos.put(branchID, branchInfo);
-    return branchID;
+    return new Pair<Integer, Long>(branchID, branchInfo.getBaseTimeStamp());
   }
 
   public synchronized BranchInfo loadBranch(int branchID)

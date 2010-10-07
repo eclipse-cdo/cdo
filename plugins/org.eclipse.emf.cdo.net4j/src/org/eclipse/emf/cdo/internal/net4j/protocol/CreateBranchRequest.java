@@ -15,12 +15,14 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 
+import org.eclipse.net4j.util.collection.Pair;
+
 import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public class CreateBranchRequest extends CDOClientRequest<Integer>
+public class CreateBranchRequest extends CDOClientRequest<Pair<Integer, Long>>
 {
   private int branchID;
 
@@ -41,8 +43,10 @@ public class CreateBranchRequest extends CDOClientRequest<Integer>
   }
 
   @Override
-  protected Integer confirming(CDODataInput in) throws IOException
+  protected Pair<Integer, Long> confirming(CDODataInput in) throws IOException
   {
-    return in.readInt();
+    branchID = in.readInt();
+    long baseTimeStamp = in.readLong();
+    return new Pair<Integer, Long>(branchID, baseTimeStamp);
   }
 }

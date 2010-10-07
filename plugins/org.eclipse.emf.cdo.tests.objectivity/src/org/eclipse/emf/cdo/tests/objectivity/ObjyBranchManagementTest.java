@@ -184,7 +184,7 @@ public class ObjyBranchManagementTest
     dbStore.commit();
 
     dbStore.begin();
-    int branchId = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA);
+    int branchId = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA).getElement1();
     dbStore.commit();
     assertEquals(branchId, nextBranchId);
   }
@@ -202,7 +202,7 @@ public class ObjyBranchManagementTest
   public void getBranch()
   {
     dbStore.begin();
-    int branchId = dbStore.getBranchManager().createBranch(NEW_LOCAL_BRANCH, branchInfoB);
+    int branchId = dbStore.getBranchManager().createBranch(NEW_LOCAL_BRANCH, branchInfoB).getElement1();
     dbStore.commit();
     // using the branchId we'll get it from the dbStore.
     dbStore.begin();
@@ -218,8 +218,8 @@ public class ObjyBranchManagementTest
   {
     // Create a group of branches (no sub-branches)
     dbStore.begin();
-    int branchIdA = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA);
-    int branchIdB = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoB);
+    int branchIdA = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA).getElement1();
+    int branchIdB = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoB).getElement1();
     dbStore.commit();
 
     dbStore.begin();
@@ -236,8 +236,8 @@ public class ObjyBranchManagementTest
 
     // Create a group of branches (no sub-branches)
     dbStore.begin();
-    int branchIdA = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA);
-    int branchIdB = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoB);
+    int branchIdA = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA).getElement1();
+    int branchIdB = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoB).getElement1();
     dbStore.commit();
 
     // using the branchId we'll get it from the dbStore.
@@ -272,7 +272,7 @@ public class ObjyBranchManagementTest
     {
       dbStore.begin();
       BranchInfo branchInfo = new BranchInfo(prefixString + i, thisBaseBranchId, thisBaseBranchTimeStamp);
-      int id = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfo);
+      int id = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfo).getElement1();
       branchList.add(id);
       dbStore.commit();
     }
@@ -319,7 +319,7 @@ public class ObjyBranchManagementTest
   public void deleteBranch()
   {
     dbStore.begin();
-    int branchId = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA);
+    int branchId = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA).getElement1();
     dbStore.commit();
 
     // delete it.
@@ -332,7 +332,7 @@ public class ObjyBranchManagementTest
   public void createSubBranches()
   {
     dbStore.begin();
-    int thisBaseBranchId = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA);
+    int thisBaseBranchId = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA).getElement1();
     dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoB);
     long thisBaseBranchTimeStamp = System.currentTimeMillis();
     // using the created branch we'll create subBranches.
@@ -344,7 +344,7 @@ public class ObjyBranchManagementTest
     {
       dbStore.begin();
       BranchInfo branchInfo = new BranchInfo(prefixString + i, thisBaseBranchId, thisBaseBranchTimeStamp);
-      int id = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfo);
+      int id = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfo).getElement1();
       subBranchList.add(id);
       dbStore.commit();
     }
@@ -367,7 +367,7 @@ public class ObjyBranchManagementTest
   public void getSubBranches()
   {
     dbStore.begin();
-    int thisBaseBranchId = dbStore.getBranchManager().createBranch(NEW_LOCAL_BRANCH, branchInfoA);
+    int thisBaseBranchId = dbStore.getBranchManager().createBranch(NEW_LOCAL_BRANCH, branchInfoA).getElement1();
     long thisBaseBranchTimeStamp = System.currentTimeMillis();
     // using the created branch we'll create subBranches.
     dbStore.commit();
@@ -378,7 +378,7 @@ public class ObjyBranchManagementTest
     {
       dbStore.begin();
       BranchInfo branchInfo = new BranchInfo(prefixString + i, thisBaseBranchId, thisBaseBranchTimeStamp);
-      int id = dbStore.getBranchManager().createBranch(NEW_LOCAL_BRANCH, branchInfo);
+      int id = dbStore.getBranchManager().createBranch(NEW_LOCAL_BRANCH, branchInfo).getElement1();
       subBranchList.add(id);
       dbStore.commit();
     }
@@ -414,7 +414,7 @@ public class ObjyBranchManagementTest
 
     // create a branch.
     dbStore.begin();
-    int branchId = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA);
+    int branchId = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA).getElement1();
     dbStore.commit();
 
     // version what we collected in the array, and put them into a new branch.
@@ -458,7 +458,7 @@ public class ObjyBranchManagementTest
 
     // create a branch.
     dbStore.begin();
-    int branchId = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA);
+    int branchId = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA).getElement1();
     dbStore.commit();
 
     // version what we collected in the array, and put them into a new branch.
@@ -510,7 +510,7 @@ public class ObjyBranchManagementTest
 
     // create a branch.
     dbStore.begin();
-    int branchId = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA);
+    int branchId = dbStore.getBranchManager().createBranch(NEW_BRANCH, branchInfoA).getElement1();
     dbStore.commit();
 
     // version what we collected in the array, and put them into a new branch.

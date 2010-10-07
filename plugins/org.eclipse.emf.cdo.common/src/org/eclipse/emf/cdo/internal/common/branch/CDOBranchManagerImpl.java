@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
@@ -172,12 +173,12 @@ public class CDOBranchManagerImpl extends Lifecycle implements InternalCDOBranch
   public InternalCDOBranch createBranch(int branchID, String name, InternalCDOBranch baseBranch, long baseTimeStamp)
   {
     checkActive();
-    if (baseTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
-    {
-      baseTimeStamp = timeProvider.getTimeStamp();
-    }
 
-    branchID = branchLoader.createBranch(branchID, new BranchInfo(name, baseBranch.getID(), baseTimeStamp));
+    Pair<Integer, Long> result = branchLoader.createBranch(branchID, new BranchInfo(name, baseBranch.getID(),
+        baseTimeStamp));
+    branchID = result.getElement1();
+    baseTimeStamp = result.getElement2();
+
     CDOBranchPoint base = baseBranch.getPoint(baseTimeStamp);
     InternalCDOBranch branch = new CDOBranchImpl(branchID, name, base);
     synchronized (branches)

@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -196,7 +197,7 @@ public abstract class DelegatingRepository implements InternalRepository
     getDelegate().setBranchManager(branchManager);
   }
 
-  public int createBranch(int branchID, BranchInfo branchInfo)
+  public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     return getDelegate().createBranch(branchID, branchInfo);
   }

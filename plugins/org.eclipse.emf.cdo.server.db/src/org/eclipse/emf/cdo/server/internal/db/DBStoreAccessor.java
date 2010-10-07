@@ -67,6 +67,7 @@ import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -726,7 +727,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
   }
 
-  public int createBranch(int branchID, BranchInfo branchInfo)
+  public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     checkBranchingSupport();
     if (branchID == NEW_BRANCH)
@@ -750,7 +751,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
       CDODBUtil.sqlUpdate(pstmt, true);
       getConnection().commit();
-      return branchID;
+      return new Pair<Integer, Long>(branchID, branchInfo.getBaseTimeStamp());
     }
     catch (SQLException ex)
     {

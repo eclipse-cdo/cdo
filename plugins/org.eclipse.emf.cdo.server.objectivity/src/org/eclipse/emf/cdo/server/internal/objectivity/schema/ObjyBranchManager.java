@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 
+import org.eclipse.net4j.util.collection.Pair;
+
 import com.objy.db.app.ooId;
 import com.objy.db.app.ooObj;
 import com.objy.db.util.ooTreeSetX;
@@ -69,7 +71,7 @@ public class ObjyBranchManager extends ooObj
     return --nextLocalBranchId;
   }
 
-  public int createBranch(int branchId, BranchInfo branchInfo)
+  public Pair<Integer, Long> createBranch(int branchId, BranchInfo branchInfo)
   {
     markModified();
 
@@ -115,7 +117,8 @@ public class ObjyBranchManager extends ooObj
     //
     // objyBranch.addSubBranch(newObjyBranch);
     // }
-    return branchId;
+
+    return new Pair<Integer, Long>(branchId, branchInfo.getBaseTimeStamp());
   }
 
   public ObjyBranch getBranch(int branchId)

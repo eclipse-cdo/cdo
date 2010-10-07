@@ -62,6 +62,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.StoreAccessor;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -1142,7 +1143,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     return null;
   }
 
-  public int createBranch(int branchID, BranchInfo branchInfo)
+  public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     ensureSessionBegin();
     return objySession.getBranchManager(getRepositoryName()).createBranch(branchID, branchInfo);

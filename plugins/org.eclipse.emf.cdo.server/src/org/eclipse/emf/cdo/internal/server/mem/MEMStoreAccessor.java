@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -163,7 +164,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     throw new UnsupportedOperationException();
   }
 
-  public int createBranch(int branchID, BranchInfo branchInfo)
+  public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     return getStore().createBranch(branchID, branchInfo);
   }

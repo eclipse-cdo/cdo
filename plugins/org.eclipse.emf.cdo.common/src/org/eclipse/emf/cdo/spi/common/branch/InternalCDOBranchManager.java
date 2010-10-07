@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import java.io.IOException;
@@ -69,11 +70,13 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
 
     /**
      * Creates a new branch with the given id and branch info. If the id is equal to {@link #NEW_BRANCH} the implementor
-     * of this method will determine a new positive unique branch id.If the id is equal to {@link #NEW_LOCAL_BRANCH} the
-     * implementor of this method will determine a new negative unique branch id, so that the new branch becomes a local
-     * branch. In either case the used branch id is returned to the caller.
+     * of this method will determine a new positive unique branch id. If the id is equal to {@link #NEW_LOCAL_BRANCH}
+     * the implementor of this method will determine a new negative unique branch id, so that the new branch becomes a
+     * local branch. In either case the used branch id is returned to the caller.
+     * 
+     * @since 4.0
      */
-    public int createBranch(int branchID, BranchInfo branchInfo);
+    public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo);
 
     public BranchInfo loadBranch(int branchID);
 

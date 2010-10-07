@@ -1893,7 +1893,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public int createBranch(int branchID, BranchInfo branchInfo)
+    public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
     {
       int attempt = 0;
       for (;;)

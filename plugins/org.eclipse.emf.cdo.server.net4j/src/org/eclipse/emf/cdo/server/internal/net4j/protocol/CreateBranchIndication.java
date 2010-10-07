@@ -46,11 +46,13 @@ public class CreateBranchIndication extends CDOReadIndication
   {
     InternalCDOBranchManager branchManager = getRepository().getBranchManager();
     InternalCDOBranch baseBranch = branchManager.getBranch(branchInfo.getBaseBranchID());
-    InternalCDOBranch branch = branchManager.createBranch(branchID, branchInfo.getName(), baseBranch, branchInfo
-        .getBaseTimeStamp());
-    out.writeInt(branch.getID());
+    InternalCDOBranch branch = branchManager.createBranch(branchID, branchInfo.getName(), baseBranch,
+        branchInfo.getBaseTimeStamp());
 
     InternalSessionManager sessionManager = getRepository().getSessionManager();
     sessionManager.sendBranchNotification(getSession(), branch);
+
+    out.writeInt(branch.getID());
+    out.writeLong(branch.getBase().getTimeStamp());
   }
 }

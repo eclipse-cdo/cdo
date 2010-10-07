@@ -47,6 +47,7 @@ import org.eclipse.emf.cdo.spi.server.StoreChunkReader;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -360,7 +361,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     return revision;
   }
 
-  public int createBranch(int branchID, BranchInfo branchInfo)
+  public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     // TODO: implement HibernateStoreAccessor.createBranch(branchID, branchInfo)
     throw new UnsupportedOperationException();

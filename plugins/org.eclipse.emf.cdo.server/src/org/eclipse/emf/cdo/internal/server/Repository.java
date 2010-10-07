@@ -85,6 +85,7 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.MoveableList;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -318,11 +319,18 @@ public class Repository extends Container<Object> implements InternalRepository
     return accessor.loadPackageUnit((InternalCDOPackageUnit)packageUnit);
   }
 
-  public int createBranch(int branchID, BranchInfo branchInfo)
+  public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     if (!isSupportingBranches())
     {
       throw new IllegalStateException("Branching is not supported by " + this);
+    }
+
+    long baseTimeStamp = branchInfo.getBaseTimeStamp();
+    if (baseTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      baseTimeStamp = getTimeStamp();
+      branchInfo = new BranchInfo(branchInfo.getName(), branchInfo.getBaseBranchID(), baseTimeStamp);
     }
 
     synchronized (createBranchLock)

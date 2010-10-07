@@ -45,10 +45,10 @@ public class ConflictResolverTest extends AbstractCDOTest
 
     address.setName("NAME1");
 
-    transaction.commit();
+    long committed = transaction.commit().getTimeStamp();
 
     // Resolver should be triggered. Should we always use a timer ?
-    sleep(1000);
+    transaction2.waitForUpdate(committed, DEFAULT_TIMEOUT);
 
     assertEquals(false, CDOUtil.getCDOObject(address2).cdoConflict());
     assertEquals(false, transaction2.hasConflict());
@@ -83,7 +83,7 @@ public class ConflictResolverTest extends AbstractCDOTest
 
     address.setCity("NAME1");
 
-    transaction.commit();
+    long committed = transaction.commit().getTimeStamp();
 
     new PollingTimeOuter()
     {
@@ -94,7 +94,7 @@ public class ConflictResolverTest extends AbstractCDOTest
       }
     }.assertNoTimeOut();
 
-    sleep(1000);
+    transaction2.getSession().waitForUpdate(committed, DEFAULT_TIMEOUT);
     assertEquals(true, transaction2.hasConflict());
     assertEquals("OTTAWA", address2.getCity());
   }
@@ -118,7 +118,6 @@ public class ConflictResolverTest extends AbstractCDOTest
     long committed = transaction.commit().getTimeStamp();
 
     // Resolver should be triggered. Should we always use a timer ?
-    // sleep(1000);
     transaction2.waitForUpdate(committed, DEFAULT_TIMEOUT);
 
     assertEquals(false, CDOUtil.getCDOObject(address2).cdoConflict());

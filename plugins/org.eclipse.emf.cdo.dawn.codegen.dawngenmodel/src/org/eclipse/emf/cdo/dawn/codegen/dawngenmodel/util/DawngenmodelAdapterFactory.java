@@ -134,12 +134,12 @@ public class DawngenmodelAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator
    * <em>Dawn Generator</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
-   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator
    * @generated
-   * @since 1.0
    */
   public Adapter createDawnGeneratorAdapter()
   {

@@ -68,91 +68,86 @@ public interface DawngenmodelPackage extends EPackage
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnGeneratorImpl
-   * <em>Dawn Generator</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <em>Dawn Generator</em>}' class. <!-- begin-user-doc -->
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnGeneratorImpl
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawngenmodelPackageImpl#getDawnGenerator()
    * @generated
-   * @since 1.0
    */
   int DAWN_GENERATOR = 0;
 
   /**
-   * The feature id for the '<em><b>Emf Fragmentgenerator</b></em>' containment reference. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * The feature id for the '<em><b>Emf Fragmentgenerator</b></em>' containment reference. <!-- begin-user-doc -->
    * 
+   * @since 1.0<!-- end-user-doc -->
    * @generated
    * @ordered
-   * @since 1.0
    */
   int DAWN_GENERATOR__EMF_FRAGMENTGENERATOR = 0;
 
   /**
-   * The feature id for the '<em><b>Gmf Fragmentgenerator</b></em>' containment reference. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * The feature id for the '<em><b>Gmf Fragmentgenerator</b></em>' containment reference. <!-- begin-user-doc -->
    * 
+   * @since 1.0<!-- end-user-doc -->
    * @generated
    * @ordered
-   * @since 1.0
    */
   int DAWN_GENERATOR__GMF_FRAGMENTGENERATOR = 1;
 
   /**
-   * The number of structural features of the '<em>Dawn Generator</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
+   * The number of structural features of the '<em>Dawn Generator</em>' class. <!-- begin-user-doc -->
    * 
+   * @since 1.0<!-- end-user-doc -->
    * @generated
    * @ordered
-   * @since 1.0
    */
   int DAWN_GENERATOR_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnFragmentGeneratorImpl
-   * <em>Dawn Fragment Generator</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <em>Dawn Fragment Generator</em>}' class. <!-- begin-user-doc -->
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnFragmentGeneratorImpl
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawngenmodelPackageImpl#getDawnFragmentGenerator()
    * @generated
-   * @since 1.0
    */
   int DAWN_FRAGMENT_GENERATOR = 1;
 
   /**
-   * The feature id for the '<em><b>Fragment Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Fragment Name</b></em>' attribute. <!-- begin-user-doc -->
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @generated
    * @ordered
-   * @since 1.0
    */
   int DAWN_FRAGMENT_GENERATOR__FRAGMENT_NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Dawn Editor Class Name</b></em>' attribute. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * The feature id for the '<em><b>Dawn Editor Class Name</b></em>' attribute. <!-- begin-user-doc -->
    * 
+   * @since 1.0<!-- end-user-doc -->
    * @generated
    * @ordered
-   * @since 1.0
    */
   int DAWN_FRAGMENT_GENERATOR__DAWN_EDITOR_CLASS_NAME = 1;
 
   /**
-   * The feature id for the '<em><b>Emf Gen Model</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Emf Gen Model</b></em>' reference. <!-- begin-user-doc -->
    * 
+   * @since 1.0<!-- end-user-doc -->
    * @generated
    * @ordered
-   * @since 1.0
    */
   int DAWN_FRAGMENT_GENERATOR__EMF_GEN_MODEL = 2;
 
   /**
-   * The number of structural features of the '<em>Dawn Fragment Generator</em>' class. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * The number of structural features of the '<em>Dawn Fragment Generator</em>' class. <!-- begin-user-doc -->
    * 
+   * @since 1.0<!-- end-user-doc -->
    * @generated
    * @ordered
-   * @since 1.0
    */
   int DAWN_FRAGMENT_GENERATOR_FEATURE_COUNT = 3;
 
@@ -184,11 +179,11 @@ public interface DawngenmodelPackage extends EPackage
   int DAWN_GMF_GENERATOR__DAWN_EDITOR_CLASS_NAME = DAWN_FRAGMENT_GENERATOR__DAWN_EDITOR_CLASS_NAME;
 
   /**
-   * The feature id for the '<em><b>Emf Gen Model</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Emf Gen Model</b></em>' reference. <!-- begin-user-doc -->
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @generated
    * @ordered
-   * @since 1.0
    */
   int DAWN_GMF_GENERATOR__EMF_GEN_MODEL = DAWN_FRAGMENT_GENERATOR__EMF_GEN_MODEL;
 
@@ -284,137 +279,135 @@ public interface DawngenmodelPackage extends EPackage
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnEMFGeneratorImpl
-   * <em>Dawn EMF Generator</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <em>Dawn EMF Generator</em>}' class. <!-- begin-user-doc -->
    * 
+   * @since 1.0<!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnEMFGeneratorImpl
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawngenmodelPackageImpl#getDawnEMFGenerator()
    * @generated
-   * @since 1.0
    */
   int DAWN_EMF_GENERATOR = 3;
 
   /**
-   * The feature id for the '<em><b>Fragment Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Fragment Name</b></em>' attribute. <!-- begin-user-doc -->
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @generated
    * @ordered
-   * @since 1.0
    */
   int DAWN_EMF_GENERATOR__FRAGMENT_NAME = DAWN_FRAGMENT_GENERATOR__FRAGMENT_NAME;
 
   /**
-   * The feature id for the '<em><b>Dawn Editor Class Name</b></em>' attribute. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * The feature id for the '<em><b>Dawn Editor Class Name</b></em>' attribute. <!-- begin-user-doc -->
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @generated
    * @ordered
-   * @since 1.0
    */
   int DAWN_EMF_GENERATOR__DAWN_EDITOR_CLASS_NAME = DAWN_FRAGMENT_GENERATOR__DAWN_EDITOR_CLASS_NAME;
 
   /**
-   * The feature id for the '<em><b>Emf Gen Model</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Emf Gen Model</b></em>' reference. <!-- begin-user-doc -->
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @generated
    * @ordered
-   * @since 1.0
    */
   int DAWN_EMF_GENERATOR__EMF_GEN_MODEL = DAWN_FRAGMENT_GENERATOR__EMF_GEN_MODEL;
 
   /**
-   * The number of structural features of the '<em>Dawn EMF Generator</em>' class. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * The number of structural features of the '<em>Dawn EMF Generator</em>' class. <!-- begin-user-doc -->
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @generated
    * @ordered
-   * @since 1.0
    */
   int DAWN_EMF_GENERATOR_FEATURE_COUNT = DAWN_FRAGMENT_GENERATOR_FEATURE_COUNT + 0;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator
-   * <em>Dawn Generator</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <em>Dawn Generator</em>}'. <!-- begin-user-doc -->
    * 
+   * @since 1.0<!-- end-user-doc -->
    * @return the meta object for class '<em>Dawn Generator</em>'.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator
    * @generated
-   * @since 1.0
    */
   EClass getDawnGenerator();
 
   /**
    * Returns the meta object for the containment reference '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getEmfFragmentgenerator
-   * <em>Emf Fragmentgenerator</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <em>Emf Fragmentgenerator</em>}'. <!-- begin-user-doc -->
    * 
+   * @since 1.0<!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Emf Fragmentgenerator</em>'.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getEmfFragmentgenerator()
    * @see #getDawnGenerator()
    * @generated
-   * @since 1.0
    */
   EReference getDawnGenerator_EmfFragmentgenerator();
 
   /**
    * Returns the meta object for the containment reference '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getGmfFragmentgenerator
-   * <em>Gmf Fragmentgenerator</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <em>Gmf Fragmentgenerator</em>}'. <!-- begin-user-doc -->
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Gmf Fragmentgenerator</em>'.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getGmfFragmentgenerator()
    * @see #getDawnGenerator()
    * @generated
-   * @since 1.0
    */
   EReference getDawnGenerator_GmfFragmentgenerator();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator
-   * <em>Dawn Fragment Generator</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <em>Dawn Fragment Generator</em>}'. <!-- begin-user-doc -->
    * 
+   * @since 1.0<!-- end-user-doc -->
    * @return the meta object for class '<em>Dawn Fragment Generator</em>'.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator
    * @generated
-   * @since 1.0
    */
   EClass getDawnFragmentGenerator();
 
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getFragmentName <em>Fragment Name</em>}
-   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * '. <!-- begin-user-doc -->
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Fragment Name</em>'.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getFragmentName()
    * @see #getDawnFragmentGenerator()
    * @generated
-   * @since 1.0
    */
   EAttribute getDawnFragmentGenerator_FragmentName();
 
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getDawnEditorClassName
-   * <em>Dawn Editor Class Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <em>Dawn Editor Class Name</em>}'. <!-- begin-user-doc -->
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Dawn Editor Class Name</em>'.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getDawnEditorClassName()
    * @see #getDawnFragmentGenerator()
    * @generated
-   * @since 1.0
    */
   EAttribute getDawnFragmentGenerator_DawnEditorClassName();
 
   /**
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getEmfGenModel <em>Emf Gen Model</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
    * 
+   * @since 1.0<!-- end-user-doc -->
    * @return the meta object for the reference '<em>Emf Gen Model</em>'.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getEmfGenModel()
    * @see #getDawnFragmentGenerator()
    * @generated
-   * @since 1.0
    */
   EReference getDawnFragmentGenerator_EmfGenModel();
 
@@ -538,12 +531,12 @@ public interface DawngenmodelPackage extends EPackage
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator
-   * <em>Dawn EMF Generator</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <em>Dawn EMF Generator</em>}'. <!-- begin-user-doc -->
    * 
+   * @since 1.0<!-- end-user-doc -->
    * @return the meta object for class '<em>Dawn EMF Generator</em>'.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator
    * @generated
-   * @since 1.0
    */
   EClass getDawnEMFGenerator();
 
@@ -571,70 +564,68 @@ public interface DawngenmodelPackage extends EPackage
   {
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnGeneratorImpl
-     * <em>Dawn Generator</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <em>Dawn Generator</em>}' class. <!-- begin-user-doc -->
      * 
+     * @since 1.0 <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnGeneratorImpl
      * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawngenmodelPackageImpl#getDawnGenerator()
      * @generated
-     * @since 1.0
      */
     EClass DAWN_GENERATOR = eINSTANCE.getDawnGenerator();
 
     /**
      * The meta object literal for the '<em><b>Emf Fragmentgenerator</b></em>' containment reference feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
+     * begin-user-doc -->
      * 
+     * @since 1.0<!-- end-user-doc -->
      * @generated
-     * @since 1.0
      */
     EReference DAWN_GENERATOR__EMF_FRAGMENTGENERATOR = eINSTANCE.getDawnGenerator_EmfFragmentgenerator();
 
     /**
      * The meta object literal for the '<em><b>Gmf Fragmentgenerator</b></em>' containment reference feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
+     * begin-user-doc -->
      * 
+     * @since 1.0 <!-- end-user-doc -->
      * @generated
-     * @since 1.0
      */
     EReference DAWN_GENERATOR__GMF_FRAGMENTGENERATOR = eINSTANCE.getDawnGenerator_GmfFragmentgenerator();
 
     /**
      * The meta object literal for the '
      * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnFragmentGeneratorImpl
-     * <em>Dawn Fragment Generator</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <em>Dawn Fragment Generator</em>}' class. <!-- begin-user-doc -->
      * 
+     * @since 1.0<!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnFragmentGeneratorImpl
      * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawngenmodelPackageImpl#getDawnFragmentGenerator()
      * @generated
-     * @since 1.0
      */
     EClass DAWN_FRAGMENT_GENERATOR = eINSTANCE.getDawnFragmentGenerator();
 
     /**
-     * The meta object literal for the '<em><b>Fragment Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
+     * The meta object literal for the '<em><b>Fragment Name</b></em>' attribute feature. <!-- begin-user-doc -->
      * 
+     * @since 1.0 <!-- end-user-doc -->
      * @generated
-     * @since 1.0
      */
     EAttribute DAWN_FRAGMENT_GENERATOR__FRAGMENT_NAME = eINSTANCE.getDawnFragmentGenerator_FragmentName();
 
     /**
      * The meta object literal for the '<em><b>Dawn Editor Class Name</b></em>' attribute feature. <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
+     * -->
      * 
+     * @since 1.0 <!-- end-user-doc -->
      * @generated
-     * @since 1.0
      */
     EAttribute DAWN_FRAGMENT_GENERATOR__DAWN_EDITOR_CLASS_NAME = eINSTANCE
         .getDawnFragmentGenerator_DawnEditorClassName();
 
     /**
-     * The meta object literal for the '<em><b>Emf Gen Model</b></em>' reference feature. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
+     * The meta object literal for the '<em><b>Emf Gen Model</b></em>' reference feature. <!-- begin-user-doc -->
      * 
+     * @since 1.0<!-- end-user-doc -->
      * @generated
-     * @since 1.0
      */
     EReference DAWN_FRAGMENT_GENERATOR__EMF_GEN_MODEL = eINSTANCE.getDawnFragmentGenerator_EmfGenModel();
 
@@ -730,12 +721,12 @@ public interface DawngenmodelPackage extends EPackage
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnEMFGeneratorImpl
-     * <em>Dawn EMF Generator</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <em>Dawn EMF Generator</em>}' class. <!-- begin-user-doc -->
      * 
+     * @since 1.0<!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnEMFGeneratorImpl
      * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawngenmodelPackageImpl#getDawnEMFGenerator()
      * @generated
-     * @since 1.0
      */
     EClass DAWN_EMF_GENERATOR = eINSTANCE.getDawnEMFGenerator();
 

@@ -14,24 +14,23 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>Dawn Fragment Generator</b></em>'. <!--
- * end-user-doc -->
- * <p>
- * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getFragmentName <em>Fragment Name
- * </em>}</li>
- * <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getDawnEditorClassName <em>Dawn Editor
- * Class Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getEmfGenModel <em>Emf Gen Model</em>}
- * </li>
- * </ul>
- * </p>
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Dawn Fragment Generator</b></em>'.
  * 
+ * @since 1.0 <!-- end-user-doc -->
+ *        <p>
+ *        The following features are supported:
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getFragmentName <em>Fragment
+ *        Name </em>}</li>
+ *        <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getDawnEditorClassName <em>Dawn
+ *        Editor Class Name</em>}</li>
+ *        <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getEmfGenModel <em>Emf Gen
+ *        Model</em>}</li>
+ *        </ul>
+ *        </p>
  * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage#getDawnFragmentGenerator()
  * @model
  * @generated
- * @since 1.0
  */
 public interface DawnFragmentGenerator extends EObject
 {

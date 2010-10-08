@@ -154,14 +154,14 @@ public class DawngenmodelSwitch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Dawn Generator</em>'. <!-- begin-user-doc -->
-   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * This implementation returns null; returning a non-null result will terminate the switch.
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Dawn Generator</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
-   * @since 1.0
    */
   public T caseDawnGenerator(DawnGenerator object)
   {
@@ -170,15 +170,14 @@ public class DawngenmodelSwitch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Dawn Fragment Generator</em>'. <!--
-   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
-   * end-user-doc -->
+   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch.
    * 
+   * @since 1.0<!-- end-user-doc -->
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Dawn Fragment Generator</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
-   * @since 1.0
    */
   public T caseDawnFragmentGenerator(DawnFragmentGenerator object)
   {
@@ -202,14 +201,14 @@ public class DawngenmodelSwitch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Dawn EMF Generator</em>'. <!-- begin-user-doc
-   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * --> This implementation returns null; returning a non-null result will terminate the switch.
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Dawn EMF Generator</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
-   * @since 1.0
    */
   public T caseDawnEMFGenerator(DawnEMFGenerator object)
   {

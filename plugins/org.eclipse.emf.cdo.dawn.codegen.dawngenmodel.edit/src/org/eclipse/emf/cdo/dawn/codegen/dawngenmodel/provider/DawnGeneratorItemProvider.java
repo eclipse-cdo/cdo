@@ -31,10 +31,10 @@ import java.util.List;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator} object.
- * <!-- begin-user-doc --> <!-- end-user-doc -->
+ * <!-- begin-user-doc -->
  * 
+ * @since 1.0<!-- end-user-doc -->
  * @generated
- * @since 1.0
  */
 public class DawnGeneratorItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
     ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource

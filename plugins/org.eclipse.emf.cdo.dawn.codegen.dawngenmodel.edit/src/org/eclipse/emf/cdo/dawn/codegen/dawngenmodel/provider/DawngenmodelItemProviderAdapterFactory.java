@@ -88,11 +88,10 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
 
   /**
    * This keeps track of the one adapter used for all
-   * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator} instances. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator} instances. <!-- begin-user-doc -->
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @generated
-   * @since 1.0
    */
   protected DawnGeneratorItemProvider dawnGeneratorItemProvider;
 
@@ -115,11 +114,10 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
 
   /**
    * This keeps track of the one adapter used for all
-   * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator} instances. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator} instances. <!-- begin-user-doc -->
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @generated
-   * @since 1.0
    */
   protected DawnFragmentGeneratorItemProvider dawnFragmentGeneratorItemProvider;
 
@@ -168,11 +166,10 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
 
   /**
    * This keeps track of the one adapter used for all
-   * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator} instances. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator} instances. <!-- begin-user-doc -->
    * 
+   * @since 1.0<!-- end-user-doc -->
    * @generated
-   * @since 1.0
    */
   protected DawnEMFGeneratorItemProvider dawnEMFGeneratorItemProvider;
 

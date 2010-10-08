@@ -13,21 +13,21 @@ package org.eclipse.emf.cdo.dawn.codegen.dawngenmodel;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>Dawn Generator</b></em>'. <!-- end-user-doc -->
- * <p>
- * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getEmfFragmentgenerator <em>Emf
- * Fragmentgenerator</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getGmfFragmentgenerator <em>Gmf
- * Fragmentgenerator</em>}</li>
- * </ul>
- * </p>
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Dawn Generator</b></em>'.
  * 
+ * @since 1.0 <!-- end-user-doc -->
+ *        <p>
+ *        The following features are supported:
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getEmfFragmentgenerator <em>Emf
+ *        Fragmentgenerator</em>}</li>
+ *        <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getGmfFragmentgenerator <em>Gmf
+ *        Fragmentgenerator</em>}</li>
+ *        </ul>
+ *        </p>
  * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage#getDawnGenerator()
  * @model
  * @generated
- * @since 1.0
  */
 public interface DawnGenerator extends EObject
 {

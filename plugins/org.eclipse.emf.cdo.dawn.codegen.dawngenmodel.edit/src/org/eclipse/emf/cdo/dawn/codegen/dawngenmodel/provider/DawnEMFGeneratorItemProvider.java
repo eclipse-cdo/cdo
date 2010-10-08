@@ -21,10 +21,10 @@ import java.util.List;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator}
- * object. <!-- begin-user-doc --> <!-- end-user-doc -->
+ * object. <!-- begin-user-doc -->
  * 
+ * @since 1.0<!-- end-user-doc -->
  * @generated
- * @since 1.0
  */
 public class DawnEMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvider
 {

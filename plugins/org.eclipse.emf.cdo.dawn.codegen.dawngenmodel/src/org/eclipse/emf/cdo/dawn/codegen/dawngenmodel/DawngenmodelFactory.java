@@ -36,20 +36,20 @@ public interface DawngenmodelFactory extends EFactory
   DawngenmodelFactory eINSTANCE = org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawngenmodelFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Dawn Generator</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Dawn Generator</em>'. <!-- begin-user-doc -->
    * 
+   * @since 1.0<!-- end-user-doc -->
    * @return a new object of class '<em>Dawn Generator</em>'.
    * @generated
-   * @since 1.0
    */
   DawnGenerator createDawnGenerator();
 
   /**
-   * Returns a new object of class '<em>Dawn Fragment Generator</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Dawn Fragment Generator</em>'. <!-- begin-user-doc -->
    * 
+   * @since 1.0<!-- end-user-doc -->
    * @return a new object of class '<em>Dawn Fragment Generator</em>'.
    * @generated
-   * @since 1.0
    */
   DawnFragmentGenerator createDawnFragmentGenerator();
 
@@ -62,11 +62,11 @@ public interface DawngenmodelFactory extends EFactory
   DawnGMFGenerator createDawnGMFGenerator();
 
   /**
-   * Returns a new object of class '<em>Dawn EMF Generator</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Dawn EMF Generator</em>'. <!-- begin-user-doc -->
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @return a new object of class '<em>Dawn EMF Generator</em>'.
    * @generated
-   * @since 1.0
    */
   DawnEMFGenerator createDawnEMFGenerator();
 

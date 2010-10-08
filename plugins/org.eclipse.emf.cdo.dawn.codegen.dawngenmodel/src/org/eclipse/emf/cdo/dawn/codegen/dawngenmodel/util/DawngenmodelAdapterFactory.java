@@ -150,12 +150,12 @@ public class DawngenmodelAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator <em>Dawn Fragment Generator</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
-   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * ignore a case when inheritance will catch all the cases anyway.
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator
    * @generated
-   * @since 1.0
    */
   public Adapter createDawnFragmentGeneratorAdapter()
   {
@@ -181,12 +181,12 @@ public class DawngenmodelAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator <em>Dawn EMF Generator</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
-   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * ignore a case when inheritance will catch all the cases anyway.
    * 
+   * @since 1.0 <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator
    * @generated
-   * @since 1.0
    */
   public Adapter createDawnEMFGeneratorAdapter()
   {

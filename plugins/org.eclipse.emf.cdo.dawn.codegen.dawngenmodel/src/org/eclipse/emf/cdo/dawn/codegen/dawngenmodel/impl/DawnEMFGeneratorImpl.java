@@ -16,13 +16,12 @@ import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage;
 import org.eclipse.emf.ecore.EClass;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Dawn EMF Generator</b></em>'. <!-- end-user-doc
- * -->
- * <p>
- * </p>
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Dawn EMF Generator</b></em>'.
  * 
+ * @since 1.0<!-- end-user-doc -->
+ *        <p>
+ *        </p>
  * @generated
- * @since 1.0
  */
 public class DawnEMFGeneratorImpl extends DawnFragmentGeneratorImpl implements DawnEMFGenerator
 {

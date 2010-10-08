@@ -11,13 +11,12 @@
 package org.eclipse.emf.cdo.dawn.codegen.dawngenmodel;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>Dawn EMF Generator</b></em>'. <!-- end-user-doc
- * -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Dawn EMF Generator</b></em>'.
  * 
+ * @since 1.0 <!-- end-user-doc -->
  * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage#getDawnEMFGenerator()
  * @model
  * @generated
- * @since 1.0
  */
 public interface DawnEMFGenerator extends DawnFragmentGenerator
 {

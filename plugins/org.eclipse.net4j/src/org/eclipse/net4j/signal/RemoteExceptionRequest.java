@@ -70,7 +70,6 @@ class RemoteExceptionRequest extends Request
     }
     catch (Exception ex)
     {
-      OM.LOG.error(ex);
       return null;
     }
   }

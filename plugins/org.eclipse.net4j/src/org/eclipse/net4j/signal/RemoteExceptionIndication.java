@@ -73,7 +73,6 @@ class RemoteExceptionIndication extends Indication
     }
     catch (IOException ex)
     {
-      OM.LOG.error(ex);
       return null;
     }
   }

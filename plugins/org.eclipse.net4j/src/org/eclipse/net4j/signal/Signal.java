@@ -135,6 +135,7 @@ public abstract class Signal implements Runnable
   public final void run()
   {
     String threadName = null;
+
     try
     {
       if (OM.SET_SIGNAL_THREAD_NAME)

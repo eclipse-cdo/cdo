@@ -11,9 +11,13 @@
 package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.ExtendedIOUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
+
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 
 /**
  * @author Eike Stepper
@@ -52,7 +56,23 @@ class RemoteExceptionRequest extends Request
     out.writeInt(correlationID);
     out.writeBoolean(responding);
     out.writeString(message);
-    out.writeObject(t);
+    out.writeByteArray(serializeThrowable(t));
+  }
+
+  public static byte[] serializeThrowable(Throwable t)
+  {
+    try
+    {
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      DataOutputStream dos = new DataOutputStream(baos);
+      ExtendedIOUtil.writeObject(dos, t);
+      return baos.toByteArray();
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      return null;
+    }
   }
 
   public static String getFirstLine(String message)

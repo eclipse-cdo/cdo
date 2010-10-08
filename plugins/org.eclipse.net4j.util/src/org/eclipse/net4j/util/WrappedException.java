@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -22,9 +22,22 @@ public class WrappedException extends RuntimeException
     super(exception);
   }
 
+  private WrappedException(String message, Exception exception)
+  {
+    super(message, exception);
+  }
+
   public Exception exception()
   {
     return (Exception)getCause();
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static RuntimeException wrap(Exception exception, String message)
+  {
+    return new WrappedException(message, exception);
   }
 
   public static RuntimeException wrap(Exception exception)

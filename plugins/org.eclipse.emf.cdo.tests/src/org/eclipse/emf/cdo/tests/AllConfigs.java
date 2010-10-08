@@ -143,6 +143,7 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(CrossReferenceTest.class);
     testClasses.add(ChunkingTest.class);
     testClasses.add(ChunkingWithMEMTest.class);
+    testClasses.add(MEMStoreQueryTest.class);
     testClasses.add(PackageRegistryTest.class);
     testClasses.add(PartialCommitTest.class);
     testClasses.add(MetaTest.class);
@@ -171,9 +172,6 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(StickyViewsTest.class);
     testClasses.add(LobTest.class);
     testClasses.add(OCLQueryTest.class);
-
-    // Specific for MEMStore
-    testClasses.add(MEMStoreQueryTest.class);
 
     // Bugzilla verifications
     testClasses.add(Bugzilla_241464_Test.class);

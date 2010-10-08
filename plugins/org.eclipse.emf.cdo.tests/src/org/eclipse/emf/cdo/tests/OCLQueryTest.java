@@ -41,8 +41,6 @@ public class OCLQueryTest extends AbstractCDOTest
 
   private CDOTransaction transaction;
 
-  private CDOResource resource;
-
   private List<Product1> products = new ArrayList<Product1>();
 
   private List<Customer> customers = new ArrayList<Customer>();
@@ -57,13 +55,13 @@ public class OCLQueryTest extends AbstractCDOTest
     super.doSetUp();
     CDOSession session = openSession();
     transaction = session.openTransaction();
-    resource = createTestSet(transaction);
+    createTestSet(transaction);
   }
 
   public void testAllProducts() throws Exception
   {
     CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()");
-    query.setParameter("context", resource.getContents().get(0));
+    query.setParameter("context", getModel1Package().getProduct1());
 
     List<Product1> products = query.getResult(Product1.class);
     assertEquals(NUM_OF_PRODUCTS, products.size());
@@ -72,7 +70,7 @@ public class OCLQueryTest extends AbstractCDOTest
   public void testAllCustomers() throws Exception
   {
     CDOQuery query = transaction.createQuery("ocl", "Customer.allInstances()");
-    query.setParameter("context", resource.getContents().get(0));
+    query.setParameter("context", getModel1Package().getCustomer());
 
     List<Customer> customers = query.getResult(Customer.class);
     assertEquals(NUM_OF_CUSTOMERS, customers.size());
@@ -81,8 +79,17 @@ public class OCLQueryTest extends AbstractCDOTest
   public void testAllProductsWithName() throws Exception
   {
     CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.name='1')");
-    query.setParameter("context", resource.getContents().get(0));
-    // query.setParameter("name", "" + 1);
+    query.setParameter("context", getModel1Package().getProduct1());
+
+    List<Product1> products = query.getResult(Product1.class);
+    assertEquals(1, products.size());
+  }
+
+  public void testAllProductsWithNameParameter() throws Exception
+  {
+    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.name=myname)");
+    query.setParameter("context", getModel1Package().getProduct1());
+    query.setParameter("myname", "1");
 
     List<Product1> products = query.getResult(Product1.class);
     assertEquals(1, products.size());
@@ -91,8 +98,21 @@ public class OCLQueryTest extends AbstractCDOTest
   public void testAllProductsWithVAT() throws Exception
   {
     CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.vat=VAT::vat15)");
-    query.setParameter("context", resource.getContents().get(0));
-    // query.setParameter("vat", VAT.VAT15.getValue());
+    query.setParameter("context", getModel1Package().getProduct1());
+
+    List<Product1> products = query.getResult(Product1.class);
+    assertEquals(10, products.size());
+    for (Product1 p : products)
+    {
+      assertEquals(p.getVat(), VAT.VAT15);
+    }
+  }
+
+  public void testAllProductsWithVATParameter() throws Exception
+  {
+    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.vat=vat)");
+    query.setParameter("context", getModel1Package().getProduct1());
+    query.setParameter("vat", VAT.VAT15);
 
     List<Product1> products = query.getResult(Product1.class);
     assertEquals(10, products.size());
@@ -105,18 +125,18 @@ public class OCLQueryTest extends AbstractCDOTest
   public void testProductIterator() throws Exception
   {
     CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()");
-    query.setParameter("context", resource.getContents().get(0));
+    query.setParameter("context", getModel1Package().getProduct1());
 
     int counter = 0;
     for (CloseableIterator<Product1> it = query.getResultAsync(Product1.class); it.hasNext();)
     {
       Product1 product = it.next();
-      // meaningless but do something
-      assertTrue(product != null);
-      counter++;
-      if (counter == NUM_OF_PRODUCTS / 2)
+      assertTrue(product != null); // meaningless but do something
+
+      if (++counter == NUM_OF_PRODUCTS / 2)
       {
         it.close();
+        break;
       }
     }
   }

@@ -32,15 +32,25 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.OCL;
 import org.eclipse.ocl.Query;
+import org.eclipse.ocl.ecore.BooleanLiteralExp;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreEnvironmentFactory;
+import org.eclipse.ocl.ecore.EcoreFactory;
+import org.eclipse.ocl.ecore.IntegerLiteralExp;
+import org.eclipse.ocl.ecore.RealLiteralExp;
+import org.eclipse.ocl.ecore.StringLiteralExp;
 import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.helper.OCLHelper;
+import org.eclipse.ocl.types.OCLStandardLibrary;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -48,6 +58,8 @@ import java.util.Set;
  */
 public class OCLQueryHandler implements IQueryHandler
 {
+  private static final EcoreFactory FACTORY = EcoreFactory.eINSTANCE;
+
   public static final String LANGUAGE_NAME = "ocl"; //$NON-NLS-1$
 
   public static final String CONTEXT_PARAMETER = "context"; //$NON-NLS-1$
@@ -59,6 +71,7 @@ public class OCLQueryHandler implements IQueryHandler
   public void executeQuery(CDOQueryInfo info, IQueryContext context)
   {
     String queryString = info.getQueryString();
+    Map<String, Object> parameters = new HashMap<String, Object>(info.getParameters());
 
     try
     {
@@ -71,23 +84,41 @@ public class OCLQueryHandler implements IQueryHandler
 
       OCLHelper<EClassifier, ?, ?, Constraint> helper = ocl.createOCLHelper();
 
+      EClassifier classifier;
       CDOObject object = null;
-      Object param = info.getParameters().get(CONTEXT_PARAMETER);
-      if (param instanceof CDOID)
+
+      Object contextParameter = parameters.get(CONTEXT_PARAMETER);
+      parameters.remove(CONTEXT_PARAMETER);
+
+      if (contextParameter instanceof CDOID)
       {
-        CDOID id = (CDOID)param;
+        CDOID id = (CDOID)contextParameter;
         object = view.getObject(id);
-        helper.setContext(object.eClass());
+        classifier = object.eClass();
+      }
+      else if (contextParameter instanceof EClassifier)
+      {
+        classifier = (EClassifier)contextParameter;
       }
       else
       {
-        helper.setContext(getArbitraryContextClassifier(packageRegistry));
+        classifier = getArbitraryContextClassifier(packageRegistry);
       }
+
+      helper.setContext(classifier);
+
+      initEnvironment(ocl.getEnvironment(), parameters);
 
       OCLExpression<EClassifier> expr = helper.createQuery(queryString);
       Query<EClassifier, EClass, EObject> query = ocl.createQuery(expr);
 
-      Collection<?> results = (Collection<?>)query.evaluate(object);
+      Set<Entry<String, Object>> entrySet = parameters.entrySet();
+      for (Entry<String, Object> parameter : entrySet)
+      {
+        query.getEvaluationEnvironment().add(parameter.getKey(), parameter.getValue());
+      }
+
+      Collection<?> results = (Collection<?>)(object == null ? query.evaluate() : query.evaluate(object));
       for (Object result : results)
       {
         if (result instanceof CDOObject)
@@ -102,8 +133,6 @@ public class OCLQueryHandler implements IQueryHandler
     }
     catch (Exception ex)
     {
-      System.err.println(queryString);
-      ex.printStackTrace();
       throw WrappedException.wrap(ex, "Problem executing OCL query: " + queryString);
     }
   }
@@ -114,14 +143,131 @@ public class OCLQueryHandler implements IQueryHandler
     {
       for (CDOPackageInfo packageInfo : packageUnit.getPackageInfos())
       {
-        for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())
+        if (!packageUnit.isSystem())
         {
-          return classifier;
+          for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())
+          {
+            return classifier;
+          }
         }
       }
     }
 
     throw new IllegalStateException("Context parameter missing");
+  }
+
+  protected void initEnvironment(
+      Environment<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> environment,
+      Map<String, Object> parameters)
+  {
+    OCLStandardLibrary<EClassifier> stdLib = environment.getOCLStandardLibrary();
+    for (Entry<String, Object> parameter : parameters.entrySet())
+    {
+      String name = parameter.getKey();
+      Object value = parameter.getValue();
+
+      OCLExpression<EClassifier> initExpression = createInitExpression(stdLib, value);
+
+      Variable<EClassifier, ?> variable = FACTORY.createVariable();
+      variable.setName(name);
+      variable.setType(initExpression.getType());
+      variable.setInitExpression(initExpression);
+
+      addEnvironmentVariable(environment, variable);
+    }
+  }
+
+  protected OCLExpression<EClassifier> createInitExpression(OCLStandardLibrary<EClassifier> stdLib, Object value)
+  {
+    if (value instanceof String)
+    {
+      String v = (String)value;
+      StringLiteralExp literal = FACTORY.createStringLiteralExp();
+      literal.setType(stdLib.getString());
+      literal.setStringSymbol(v);
+      return literal;
+    }
+
+    if (value instanceof Boolean)
+    {
+      Boolean v = (Boolean)value;
+      BooleanLiteralExp literal = FACTORY.createBooleanLiteralExp();
+      literal.setType(stdLib.getBoolean());
+      literal.setBooleanSymbol(v);
+      return literal;
+    }
+
+    Integer integerValue = getInteger(value);
+    if (integerValue != null)
+    {
+      IntegerLiteralExp literal = FACTORY.createIntegerLiteralExp();
+      literal.setType(stdLib.getInteger());
+      literal.setIntegerSymbol(integerValue);
+      return literal;
+    }
+
+    Double doubleValue = getDouble(value);
+    if (doubleValue != null)
+    {
+      RealLiteralExp literal = FACTORY.createRealLiteralExp();
+      literal.setType(stdLib.getReal());
+      literal.setRealSymbol(doubleValue);
+      return literal;
+    }
+
+    // if (value instanceof Enumerator)
+    // {
+    // Enumerator v = (Enumerator)value;
+    // EnumLiteralExp literal = FACTORY.createEnumLiteralExp();
+    // literal.setType(v..getReal());
+    // literal.setReferredEnumLiteral(v);
+    // return literal;
+    // }
+
+    throw new IllegalArgumentException("Unrecognized parameter type: " + value.getClass().getName());
+  }
+
+  private Integer getInteger(Object value)
+  {
+    if (value instanceof Integer)
+    {
+      return (Integer)value;
+    }
+
+    if (value instanceof Short)
+    {
+      return (int)(Short)value;
+    }
+
+    if (value instanceof Byte)
+    {
+      return (int)(Byte)value;
+    }
+
+    return null;
+  }
+
+  private Double getDouble(Object value)
+  {
+    if (value instanceof Double)
+    {
+      return (Double)value;
+    }
+
+    if (value instanceof Float)
+    {
+      return (double)(Float)value;
+    }
+
+    return null;
+  }
+
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  protected void addEnvironmentVariable(
+      Environment<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> environment,
+      Variable<EClassifier, ?> variable)
+  {
+    environment.addElement(variable.getName(), (Variable)variable, true);
   }
 
   protected Map<EClass, ? extends Set<? extends EObject>> createExtentMap(CDOView view, IQueryContext context)

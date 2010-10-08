@@ -58,12 +58,12 @@ public class SQLQueryTest extends AbstractCDOTest
     msg("Opening transaction for querying");
     CDOTransaction transaction = session.openTransaction();
 
-    {
-      msg("Query for products");
-      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM PRODUCT1");
-      final List<Product1> products = cdoQuery.getResult(Product1.class);
-      assertEquals(NUM_OF_PRODUCTS, products.size());
-    }
+    // {
+    // msg("Query for products");
+    // CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM PRODUCT1");
+    // final List<Product1> products = cdoQuery.getResult(Product1.class);
+    // assertEquals(NUM_OF_PRODUCTS, products.size());
+    // }
 
     {
       msg("Query for products with a specific name");

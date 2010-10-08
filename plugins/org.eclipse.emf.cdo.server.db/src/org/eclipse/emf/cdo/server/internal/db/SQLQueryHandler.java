@@ -220,7 +220,8 @@ public class SQLQueryHandler implements IQueryHandler
   private String parse(String query, Map<String, List<Integer>> paramMap)
   {
     int length = query.length();
-    StringBuffer parsedQuery = new StringBuffer(length);
+    StringBuilder builder = new StringBuilder(length);
+
     boolean inSingleQuote = false;
     boolean inDoubleQuote = false;
     int index = 1;
@@ -276,9 +277,9 @@ public class SQLQueryHandler implements IQueryHandler
         }
       }
 
-      parsedQuery.append(c);
+      builder.append(c);
     }
 
-    return parsedQuery.toString();
+    return builder.toString();
   }
 }

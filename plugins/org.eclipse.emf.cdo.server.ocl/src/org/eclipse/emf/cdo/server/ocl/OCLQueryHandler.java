@@ -28,8 +28,10 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.ocl.Environment;
@@ -39,6 +41,7 @@ import org.eclipse.ocl.ecore.BooleanLiteralExp;
 import org.eclipse.ocl.ecore.Constraint;
 import org.eclipse.ocl.ecore.EcoreEnvironmentFactory;
 import org.eclipse.ocl.ecore.EcoreFactory;
+import org.eclipse.ocl.ecore.EnumLiteralExp;
 import org.eclipse.ocl.ecore.IntegerLiteralExp;
 import org.eclipse.ocl.ecore.RealLiteralExp;
 import org.eclipse.ocl.ecore.StringLiteralExp;
@@ -107,7 +110,7 @@ public class OCLQueryHandler implements IQueryHandler
 
       helper.setContext(classifier);
 
-      initEnvironment(ocl.getEnvironment(), parameters);
+      initEnvironment(ocl.getEnvironment(), packageRegistry, parameters);
 
       OCLExpression<EClassifier> expr = helper.createQuery(queryString);
       Query<EClassifier, EClass, EObject> query = ocl.createQuery(expr);
@@ -158,7 +161,7 @@ public class OCLQueryHandler implements IQueryHandler
 
   protected void initEnvironment(
       Environment<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> environment,
-      Map<String, Object> parameters)
+      CDOPackageRegistry packageRegistry, Map<String, Object> parameters)
   {
     OCLStandardLibrary<EClassifier> stdLib = environment.getOCLStandardLibrary();
     for (Entry<String, Object> parameter : parameters.entrySet())
@@ -166,7 +169,7 @@ public class OCLQueryHandler implements IQueryHandler
       String name = parameter.getKey();
       Object value = parameter.getValue();
 
-      OCLExpression<EClassifier> initExpression = createInitExpression(stdLib, value);
+      OCLExpression<EClassifier> initExpression = createInitExpression(stdLib, packageRegistry, value);
 
       Variable<EClassifier, ?> variable = FACTORY.createVariable();
       variable.setName(name);
@@ -177,7 +180,8 @@ public class OCLQueryHandler implements IQueryHandler
     }
   }
 
-  protected OCLExpression<EClassifier> createInitExpression(OCLStandardLibrary<EClassifier> stdLib, Object value)
+  protected OCLExpression<EClassifier> createInitExpression(OCLStandardLibrary<EClassifier> stdLib,
+      CDOPackageRegistry packageRegistry, Object value)
   {
     if (value instanceof String)
     {
@@ -215,14 +219,22 @@ public class OCLQueryHandler implements IQueryHandler
       return literal;
     }
 
-    // if (value instanceof Enumerator)
-    // {
-    // Enumerator v = (Enumerator)value;
-    // EnumLiteralExp literal = FACTORY.createEnumLiteralExp();
-    // literal.setType(v..getReal());
-    // literal.setReferredEnumLiteral(v);
-    // return literal;
-    // }
+    if (value instanceof Enumerator)
+    {
+      Enumerator v = (Enumerator)value;
+      String name = v.getName();
+
+      EEnumLiteral eEnumLiteral = packageRegistry.getEnumLiteralFor(v);
+      if (eEnumLiteral == null)
+      {
+        throw new IllegalArgumentException("Enum literal not found: " + name);
+      }
+
+      EnumLiteralExp literal = FACTORY.createEnumLiteralExp();
+      literal.setType(eEnumLiteral.getEEnum());
+      literal.setReferredEnumLiteral(eEnumLiteral);
+      return literal;
+    }
 
     throw new IllegalArgumentException("Unrecognized parameter type: " + value.getClass().getName());
   }

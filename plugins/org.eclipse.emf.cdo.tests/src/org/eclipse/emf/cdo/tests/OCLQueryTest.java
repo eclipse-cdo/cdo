@@ -110,9 +110,9 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testAllProductsWithVATParameter() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.vat=vat)");
+    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.vat=myvat)");
     query.setParameter("context", getModel1Package().getProduct1());
-    query.setParameter("vat", VAT.VAT15);
+    query.setParameter("myvat", VAT.VAT15);
 
     List<Product1> products = query.getResult(Product1.class);
     assertEquals(10, products.size());

@@ -19,22 +19,22 @@
 
 «EXTENSION org::eclipse::emf::cdo::dawn::codegen::util::Utils»
 
-«DEFINE main FOR DawnGMFGenerator»
- «setDiagramPackage(this.GMFGenEditorGenerator.packageNamePrefix)»
+«DEFINE main FOR DawnGenerator»
+ «setDiagramPackage(this.gmfFragmentgenerator.GMFGenEditorGenerator.packageNamePrefix)»
 
- «EXPAND dawnEditor FOR this»
- «EXPAND dawnEditPart FOR this»
- «EXPAND dawnEditPartFactory FOR this»
- «EXPAND dawnCanonicalEditingPolicy FOR this»
- «EXPAND dawnCreationWizard FOR this»
- «EXPAND dawnEditorUtil FOR this»
- «EXPAND dawnDocumentProvider FOR this»
- «EXPAND dawnEditPartProvider FOR this»
- «EXPAND fragmentXML FOR this»
- «EXPAND dawnEditPolicyProvider FOR this»
- «EXPAND manifestMF FOR this»
- «EXPAND buildPROPERTIES FOR this.GMFGenEditorGenerator»
- «EXPAND classpath FOR this.GMFGenEditorGenerator»
+ «EXPAND dawnEditor FOR this.gmfFragmentgenerator»
+ «EXPAND dawnEditPart FOR this.gmfFragmentgenerator»
+ «EXPAND dawnEditPartFactory FOR this.gmfFragmentgenerator»
+ «EXPAND dawnCanonicalEditingPolicy FOR this.gmfFragmentgenerator»
+ «EXPAND dawnCreationWizard FOR this.gmfFragmentgenerator»
+ «EXPAND dawnEditorUtil FOR this.gmfFragmentgenerator»
+ «EXPAND dawnDocumentProvider FOR this.gmfFragmentgenerator»
+ «EXPAND dawnEditPartProvider FOR this.gmfFragmentgenerator»
+ «EXPAND fragmentXML FOR this.gmfFragmentgenerator»
+ «EXPAND dawnEditPolicyProvider FOR this.gmfFragmentgenerator»
+ «EXPAND manifestMF FOR this.gmfFragmentgenerator»
+ «EXPAND buildPROPERTIES FOR this.gmfFragmentgenerator.GMFGenEditorGenerator»
+ «EXPAND classpath FOR this.gmfFragmentgenerator.GMFGenEditorGenerator»
 
 «ENDDEFINE»
 

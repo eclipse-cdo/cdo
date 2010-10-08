@@ -13,7 +13,7 @@
 <workflow>
 
 	<!--<property name="model" value="file:/D:/Development/CDO/org.eclipse.emf.cdo.dawn.examples.acore/model/classdiagram.gmfgen" />-->
-	<property name="model" value="file:/D:/Development/INSTANCES/Dawn_Instance1/Dawn/model/classdiagram.dawngenmodel" />
+	<property name="model" value="file:/D:/Development/INSTANCES/Dawn_Instance1/org.eclipse.emf.cdo.dawn.examples.acore/model/acore.dawngenmodel" />
 
 	<property name="src-gen" value="d:/temp/source" />
 	<!--<property name="src-gen" /> --> <!--just declare it to make it accessable -->

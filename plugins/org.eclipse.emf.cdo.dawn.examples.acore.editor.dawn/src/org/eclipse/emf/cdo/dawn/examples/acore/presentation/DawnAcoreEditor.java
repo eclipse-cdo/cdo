@@ -45,7 +45,6 @@ public class DawnAcoreEditor extends AcoreEditor implements IDawnEditor
   public DawnAcoreEditor()
   {
     super();
-    System.out.println("Using Dawn Acore Editor");
     dawnEditorSupport = new DawnEMFEditorSupport(this);
   }
 
@@ -53,8 +52,11 @@ public class DawnAcoreEditor extends AcoreEditor implements IDawnEditor
   protected void setInput(IEditorInput input)
   {
     super.setInput(input);
-    dawnEditorSupport.setView(((DawnEditorInput)input).getView());
-    dawnEditorSupport.registerListeners();
+    if (input instanceof DawnEditorInput)
+    {
+      dawnEditorSupport.setView(((DawnEditorInput)input).getView());
+      dawnEditorSupport.registerListeners();
+    }
   }
 
   @Override
@@ -80,10 +82,9 @@ public class DawnAcoreEditor extends AcoreEditor implements IDawnEditor
       }
 
       ((DawnEditorInput)input).setResource(resource);
+      dawnEditorSupport.setView(((DawnEditorInput)input).getView());
+      dawnEditorSupport.registerListeners();
     }
-
-    dawnEditorSupport.setView(((DawnEditorInput)input).getView());
-    dawnEditorSupport.registerListeners();
   }
 
   @Override
@@ -144,12 +145,6 @@ public class DawnAcoreEditor extends AcoreEditor implements IDawnEditor
     dawnEditorSupport.setDirty(true);
   }
 
-  // @Override
-  // public boolean isDirty()
-  // {
-  // return dawnEditorSupport.isDirty() || super.isDirty();
-  // }
-
   @Override
   public void dispose()
   {
@@ -165,7 +160,7 @@ public class DawnAcoreEditor extends AcoreEditor implements IDawnEditor
 
   public String getContributorId()
   {
-    return null;
+    return ID;
   }
 
   public IDawnEditorSupport getDawnEditorSupport()

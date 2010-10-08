@@ -10,10 +10,13 @@
  */
 package org.eclipse.emf.cdo.dawn.codegen.actions;
 
+import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGMFGenerator;
+import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelFactory;
 import org.eclipse.emf.cdo.dawn.codegen.util.ProjectCreationHelper;
 
+import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -63,54 +66,32 @@ public class GenerateDawnGenModelAction implements IObjectActionDelegate
         public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
         {
           monitor.beginTask("Generate Dawn Code", 1000);
-          IFile gmfGen = (IFile)selectedElement;
+          IFile genFile = (IFile)selectedElement;
 
-          String gmfGenModelFile = gmfGen.getRawLocationURI().toString();
-          String path = gmfGenModelFile.replace(gmfGen.getName(), "");
-          String modelname = gmfGen.getName().replace(".gmfgen", "");
+          String genModelFile = genFile.getRawLocationURI().toString();
+          String path = genModelFile.replace(genFile.getName(), "");
 
-          ResourceSet resourceSet = new ResourceSetImpl();
-          resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("gmfgen",
-              new XMIResourceFactoryImpl());
-          resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("genmodel",
-              new XMIResourceFactoryImpl());
-          resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(dawngenmodelFileExtension,
-              new XMIResourceFactoryImpl());
+          ResourceSet resourceSet = createResourceSet();
 
-          URI gmfGenModelResourceUri = URI.createURI(gmfGenModelFile);
-          Resource gmfGenModelResource = resourceSet.getResource(gmfGenModelResourceUri, true);
+          String modelname = "default";
 
-          String dawnGenModelResourcePath = path + "" + modelname + "." + dawngenmodelFileExtension;
-          Resource dawnGenModelResource = resourceSet.createResource(URI.createURI(dawnGenModelResourcePath));
+          modelname = getModelName(genFile);
 
-          GenEditorGenerator editorGenerator = (GenEditorGenerator)gmfGenModelResource.getContents().get(0);
+          Resource dawnGenModelResource = getDawnGenModelResource(path, modelname, resourceSet);
+          DawnGenerator dawnGenerator = getDawngenerator(dawnGenModelResource);
 
-          DawnGMFGenerator dawnGMFGenerator = DawngenmodelFactory.eINSTANCE.createDawnGMFGenerator();
+          if (genFile.getName().endsWith(".gmfgen"))
+          {
+            DawnGMFGenerator dawnGMFGenerator = createDawnGMFGenerator(genModelFile, resourceSet);
+            dawnGenerator.setGmfFragmentgenerator(dawnGMFGenerator);
+          }
+          else if (genFile.getName().endsWith(".genmodel"))
+          {
+            DawnEMFGenerator dawnEMFGenerator = createDawnEMFGenerator(genModelFile, resourceSet);
+            dawnGenerator.setEmfFragmentgenerator(dawnEMFGenerator);
+          }
 
-          String dawnEditorClassName = getDawnEditorClassName(editorGenerator);
-
-          dawnGMFGenerator.setDawnEditorClassName(dawnEditorClassName);
-          dawnGMFGenerator.setFragmentName(editorGenerator.getPlugin().getID() + ".dawn");
-          dawnGMFGenerator.setDawnCanonicalEditingPolicyClassName(generalPrefix
-              + editorGenerator.getDiagram().getCanonicalEditPolicyClassName());
-          dawnGMFGenerator.setDawnCreationWizardClassName(generalPrefix
-              + editorGenerator.getDiagram().getCreationWizardClassName());
-          dawnGMFGenerator.setDawnDiagramEditPartClassName(generalPrefix
-              + editorGenerator.getDiagram().getEditPartClassName());
-          dawnGMFGenerator.setDawnDocumentProviderClassName(generalPrefix
-              + editorGenerator.getDiagram().getDocumentProviderClassName());
-          dawnGMFGenerator.setDawnEditorUtilClassName(generalPrefix
-              + editorGenerator.getDiagram().getDiagramEditorUtilClassName());
-          dawnGMFGenerator.setDawnEditPartFactoryClassName(generalPrefix
-              + editorGenerator.getDiagram().getEditPartFactoryClassName());
-          dawnGMFGenerator.setDawnEditPartProviderClassName(generalPrefix
-              + editorGenerator.getDiagram().getEditPartProviderClassName());
-          dawnGMFGenerator.setDawnEditPolicyProviderClassName(generalPrefix
-              + editorGenerator.getDiagram().getEditPartProviderClassName().replace("EditPart", "EditPolicy"));
-
-          dawnGMFGenerator.setGMFGenEditorGenerator(editorGenerator);
-
-          dawnGenModelResource.getContents().add(dawnGMFGenerator);
+          dawnGenModelResource.getContents().add(dawnGenerator);
 
           try
           {
@@ -123,6 +104,22 @@ public class GenerateDawnGenModelAction implements IObjectActionDelegate
 
           ProjectCreationHelper.refreshProject(null, monitor);
         }
+
+        private DawnGenerator getDawngenerator(Resource dawnGenModelResource)
+        {
+          DawnGenerator dawnGenerator;
+
+          if (dawnGenModelResource.getContents().size() != 0)
+          {
+            dawnGenerator = (DawnGenerator)dawnGenModelResource.getContents().get(0);
+          }
+          else
+          {
+            dawnGenerator = DawngenmodelFactory.eINSTANCE.createDawnGenerator();
+          }
+          return dawnGenerator;
+        }
+
       });
     }
     catch (InvocationTargetException e)
@@ -144,6 +141,84 @@ public class GenerateDawnGenModelAction implements IObjectActionDelegate
     }
     dawnEditorClassName = generalPrefix + dawnEditorClassName;
     return dawnEditorClassName;
+  }
+
+  private DawnEMFGenerator createDawnEMFGenerator(String genModelFile, ResourceSet resourceSet)
+  {
+    DawnEMFGenerator dawnEMFGenerator = DawngenmodelFactory.eINSTANCE.createDawnEMFGenerator();
+
+    URI emfGenModelResourceUri = URI.createURI(genModelFile);
+    Resource emfGenModelResource = resourceSet.getResource(emfGenModelResourceUri, true);
+
+    GenModel genModel = (GenModel)emfGenModelResource.getContents().get(0);
+
+    dawnEMFGenerator.setEmfGenModel(genModel);
+    dawnEMFGenerator.setDawnEditorClassName("Dawn" + genModel.getModelName() + "Editor");
+    dawnEMFGenerator.setFragmentName(genModel.getEditorPluginID() + ".dawn");
+    return dawnEMFGenerator;
+  }
+
+  private String getModelName(IFile genFile)
+  {
+    int lastIndexOf = genFile.getName().lastIndexOf(".");
+    return genFile.getName().substring(0, lastIndexOf);
+  }
+
+  private DawnGMFGenerator createDawnGMFGenerator(String gmfGenModelFile, ResourceSet resourceSet)
+  {
+    URI gmfGenModelResourceUri = URI.createURI(gmfGenModelFile);
+    Resource gmfGenModelResource = resourceSet.getResource(gmfGenModelResourceUri, true);
+
+    GenEditorGenerator editorGenerator = (GenEditorGenerator)gmfGenModelResource.getContents().get(0);
+
+    DawnGMFGenerator dawnGMFGenerator = DawngenmodelFactory.eINSTANCE.createDawnGMFGenerator();
+
+    String dawnEditorClassName = getDawnEditorClassName(editorGenerator);
+
+    dawnGMFGenerator.setDawnEditorClassName(dawnEditorClassName);
+    dawnGMFGenerator.setFragmentName(editorGenerator.getPlugin().getID() + ".dawn");
+    dawnGMFGenerator.setDawnCanonicalEditingPolicyClassName(generalPrefix
+        + editorGenerator.getDiagram().getCanonicalEditPolicyClassName());
+    dawnGMFGenerator.setDawnCreationWizardClassName(generalPrefix
+        + editorGenerator.getDiagram().getCreationWizardClassName());
+    dawnGMFGenerator.setDawnDiagramEditPartClassName(generalPrefix
+        + editorGenerator.getDiagram().getEditPartClassName());
+    dawnGMFGenerator.setDawnDocumentProviderClassName(generalPrefix
+        + editorGenerator.getDiagram().getDocumentProviderClassName());
+    dawnGMFGenerator.setDawnEditorUtilClassName(generalPrefix
+        + editorGenerator.getDiagram().getDiagramEditorUtilClassName());
+    dawnGMFGenerator.setDawnEditPartFactoryClassName(generalPrefix
+        + editorGenerator.getDiagram().getEditPartFactoryClassName());
+    dawnGMFGenerator.setDawnEditPartProviderClassName(generalPrefix
+        + editorGenerator.getDiagram().getEditPartProviderClassName());
+    dawnGMFGenerator.setDawnEditPolicyProviderClassName(generalPrefix
+        + editorGenerator.getDiagram().getEditPartProviderClassName().replace("EditPart", "EditPolicy"));
+
+    dawnGMFGenerator.setGMFGenEditorGenerator(editorGenerator);
+    return dawnGMFGenerator;
+  }
+
+  private Resource getDawnGenModelResource(String path, String modelname, ResourceSet resourceSet)
+  {
+    String dawnGenModelResourcePath = path + "" + modelname + "." + dawngenmodelFileExtension;
+    URI uri = URI.createURI(dawnGenModelResourcePath);
+    Resource dawnGenModelResource = resourceSet.getResource(uri, true);
+
+    if (dawnGenModelResource == null)
+    {
+      dawnGenModelResource = resourceSet.createResource(uri);
+    }
+    return dawnGenModelResource;
+  }
+
+  private ResourceSet createResourceSet()
+  {
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("gmfgen", new XMIResourceFactoryImpl());
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("genmodel", new XMIResourceFactoryImpl());
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
+        .put(dawngenmodelFileExtension, new XMIResourceFactoryImpl());
+    return resourceSet;
   }
 
   public void selectionChanged(IAction action, ISelection selection)

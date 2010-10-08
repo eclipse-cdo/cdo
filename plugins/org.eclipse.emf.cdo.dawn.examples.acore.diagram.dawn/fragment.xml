@@ -56,12 +56,12 @@
              </Priority>
           </editpolicyProvider>
        </extension>
-       <extension
+      <!--<extension
              point="org.eclipse.emf.cdo.dawn.listeners">
           <DawnTransactionListener
                 class="org.eclipse.emf.cdo.dawn.notifications.DawnGMFTransactionListener">
           </DawnTransactionListener>
-       </extension>
+       </extension>-->
        <extension
              point="org.eclipse.emf.cdo.dawn.editpartstylizers">
           <DawnEditPartStylizers

@@ -11,43 +11,45 @@
 package org.eclipse.emf.cdo.dawn.notifications;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.dawn.synchronize.DawnConflictHelper;
-import org.eclipse.emf.cdo.dawn.util.DawnDiagramUpdater;
-import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.util.InvalidObjectException;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
+import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
+import org.eclipse.emf.cdo.transaction.CDOCommitContext;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
 import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.domain.IEditingDomainProvider;
-import org.eclipse.emf.transaction.RecordingCommand;
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
-
-import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
-import org.eclipse.gmf.runtime.notation.Edge;
-import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 /**
  * @author Martin Fluegge
  */
-public class BasicDawnListener implements IListener
+public abstract class BasicDawnListener implements IDawnListener// implements IListener
 {
-  protected DiagramDocumentEditor editor;
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, BasicDawnListener.class);
 
-  public void setEditor(DiagramDocumentEditor editor)
+  protected IDawnEditor editor;
+
+  /**
+   * @since 1.0
+   */
+  public void setEditor(IDawnEditor editor)
   {
     this.editor = editor;
   }
 
+  /**
+   * @since 1.0
+   */
   public BasicDawnListener()
   {
   }
 
-  public BasicDawnListener(DiagramDocumentEditor editor)
+  /**
+   * @since 1.0
+   */
+  public BasicDawnListener(IDawnEditor editor)
   {
     this.editor = editor;
   }
@@ -56,78 +58,78 @@ public class BasicDawnListener implements IListener
   {
     if (event instanceof CDOViewInvalidationEvent)
     {
-      CDOViewInvalidationEvent e = (CDOViewInvalidationEvent)event;
-
-      for (CDOObject object : e.getDirtyObjects())
-      {
-        System.out.println("Dirty: " + object);
-      }
-      for (CDOObject object : e.getDetachedObjects())
-      {
-        System.out.println("Dirty: " + object);
-      }
+      handleViewInvalidationEvent((CDOViewInvalidationEvent)event);
     }
-    else
+    else if (event instanceof CDOTransactionConflictEvent)
     {
-      System.out.println("Unhandeled Event: " + event);
+      handleTransactionConflictEvent((CDOTransactionConflictEvent)event);
     }
   }
 
   /**
-   * Edges must be adjusted because of the transience of the Node source/targetEdges CDO cannot see this because
-   * removing an edges just removes the edge from the diagram. CDO just notices the change in the diagram but not in the
-   * (detached) edge. The other site (node) is transient and will not be part of the notification. So I must adjust this
-   * later. CDOLEgacy Wrapper breakes because it only adjusts the changes in the diagram and not the removed edge. So I
-   * cannot adjust this in the Wrapper. Maybe there is another more generic way.
+   * @since 1.0
    */
-  public static void adjustDeletedEdges(final CDOViewInvalidationEvent e)
+  public void attachingObject(CDOTransaction transaction, CDOObject object)
   {
-    Display.getDefault().asyncExec(new Runnable()
+    if (TRACER.isEnabled())
     {
-      public void run()
-      {
-        for (CDOObject obj : e.getDetachedObjects())
-        {
-          final EObject view = CDOUtil.getEObject(obj);
-          if (view instanceof Edge)
-          {
-            EditingDomain editingDomain = ((IEditingDomainProvider)view.eResource().getResourceSet())
-                .getEditingDomain();
-            editingDomain.getCommandStack().execute(new RecordingCommand((TransactionalEditingDomain)editingDomain)
-            {
-              @Override
-              protected void doExecute()
-              {
-                try
-                {
-                  ((Edge)view).setTarget(null);
-                }
-                catch (InvalidObjectException ignore)
-                {
-                }
-
-                try
-                {
-                  ((Edge)view).setSource(null);
-                }
-                catch (InvalidObjectException ignore)
-                {
-                }
-              }
-            });
-          }
-        }
-      }
-    });
+      TRACER.format("attachingObject {0}", object); //$NON-NLS-1$
+    }
+    editor.setDirty();
   }
 
-  protected void handleConflicts(CDOViewInvalidationEvent e)
+  /**
+   * @since 1.0
+   */
+  public void detachingObject(CDOTransaction transaction, CDOObject object)
   {
-    for (CDOObject obj : e.getDetachedObjects())
+    if (TRACER.isEnabled())
     {
-      EObject element = CDOUtil.getEObject(obj);
-      View view = DawnDiagramUpdater.findViewByContainer(element);
-      DawnConflictHelper.handleConflictedView(CDOUtil.getCDOObject(element), view, editor);
+      TRACER.format("detachingObject {0}", object); //$NON-NLS-1$
     }
+
+    editor.setDirty();
+  }
+
+  /**
+   * @since 1.0
+   */
+  public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
+  { // This method can be overwritten be subclasses
+  }
+
+  /**
+   * @since 1.0
+   */
+  public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+  { // This method can be overwritten be subclasses
+  }
+
+  /**
+   * @since 1.0
+   */
+  public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+  { // This method can be overwritten be subclasses
+  }
+
+  /**
+   * @since 1.0
+   */
+  public void rolledBackTransaction(CDOTransaction transaction)
+  { // This method can be overwritten be subclasses
+  }
+
+  /**
+   * @since 1.0
+   */
+  public void handleViewInvalidationEvent(CDOViewInvalidationEvent event)
+  { // This method can be overwritten be subclasses
+  }
+
+  /**
+   * @since 1.0
+   */
+  public void handleTransactionConflictEvent(CDOTransactionConflictEvent event)
+  { // This method can be overwritten be subclasses
   }
 }

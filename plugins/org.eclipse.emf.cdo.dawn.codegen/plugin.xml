@@ -9,9 +9,14 @@
             nameFilter="*.dawngenmodel"
             objectClass="org.eclipse.core.resources.IFile">
          <action
+               class="org.eclipse.emf.cdo.dawn.codegen.actions.GenerateEMFFragmentAction"
+               id="org.eclipse.emf.cdo.dawn.codegen.generateClientaction"
+               label="%generate.emf.label">
+         </action>
+         <action
                class="org.eclipse.emf.cdo.dawn.codegen.actions.GenerateClientCodeAction"
                id="org.eclipse.emf.cdo.dawn.codegen.generateClientaction"
-               label="Generate Dawn GMF Fragment">
+               label="%generate.gmf.label">
          </action>
       </objectContribution>
       <objectContribution
@@ -22,7 +27,18 @@
          <action
                class="org.eclipse.emf.cdo.dawn.codegen.actions.GenerateDawnGenModelAction"
                id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodelaction"
-               label="Generate Dawn GenModel">
+               label="%generate.genmodel.label">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.eclipse.emf.cdo.dawn.codegen.generate.emf"
+            nameFilter="*.genmodel"
+            objectClass="org.eclipse.core.resources.IFile">
+         <action
+               class="org.eclipse.emf.cdo.dawn.codegen.actions.GenerateDawnGenModelAction"
+               id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodelaction"
+               label="%generate.genmodel.label">
          </action>
       </objectContribution>
    </extension>

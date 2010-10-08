@@ -12,9 +12,11 @@ package org.eclipse.emf.cdo.dawn.editors.impl;
 
 import org.eclipse.emf.cdo.dawn.appearance.DawnAppearancer;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
-import org.eclipse.emf.cdo.dawn.notifications.DawnNotificationUtil;
+import org.eclipse.emf.cdo.dawn.notifications.BasicDawnListener;
+import org.eclipse.emf.cdo.dawn.notifications.impl.DawnGMFHandler;
 import org.eclipse.emf.cdo.dawn.util.DawnDiagramUpdater;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.transaction.RecordingCommand;
@@ -43,9 +45,16 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
 
   public void registerListeners()
   {
-    // DawnNotificationUtil.registerResourceListeners(getEditingDomain().getResourceSet(), this);
-    DawnNotificationUtil.registerTransactionListeners((CDOTransaction)getView(), getEditor());
-    DawnNotificationUtil.setChangeSubscriptionPolicy((CDOTransaction)getView());
+    BasicDawnListener listener = new DawnGMFHandler(getEditor());
+    CDOView view = getView();
+    view.addListener(listener);
+
+    if (view instanceof CDOTransaction)
+    {
+      CDOTransaction transaction = (CDOTransaction)view;
+      transaction.addTransactionHandler(listener);
+      transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.CDO);
+    }
   }
 
   /**

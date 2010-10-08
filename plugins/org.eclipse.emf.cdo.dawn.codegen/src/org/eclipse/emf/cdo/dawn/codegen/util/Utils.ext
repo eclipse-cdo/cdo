@@ -49,4 +49,8 @@ String timestamp() :
  
  String toModelNameFromGetterName(String s ) :
    JAVA org.eclipse.emf.cdo.dawn.codegen.util.Utils.toModelNameFromGetterName(java.lang.String);
+
+ String getEMFFileName(List genPackages) :
+   JAVA org.eclipse.emf.cdo.dawn.codegen.util.Utils.getEMFFileName(java.util.List);   
+   
  

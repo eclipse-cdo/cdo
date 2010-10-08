@@ -88,6 +88,60 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
 
   /**
    * This keeps track of the one adapter used for all
+   * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator} instances. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @since 1.0
+   */
+  protected DawnGeneratorItemProvider dawnGeneratorItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator}. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public Adapter createDawnGeneratorAdapter()
+  {
+    if (dawnGeneratorItemProvider == null)
+    {
+      dawnGeneratorItemProvider = new DawnGeneratorItemProvider(this);
+    }
+
+    return dawnGeneratorItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all
+   * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator} instances. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @since 1.0
+   */
+  protected DawnFragmentGeneratorItemProvider dawnFragmentGeneratorItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator}. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public Adapter createDawnFragmentGeneratorAdapter()
+  {
+    if (dawnFragmentGeneratorItemProvider == null)
+    {
+      dawnFragmentGeneratorItemProvider = new DawnFragmentGeneratorItemProvider(this);
+    }
+
+    return dawnFragmentGeneratorItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGMFGenerator} instances. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 
@@ -110,6 +164,33 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
     }
 
     return dawnGMFGeneratorItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all
+   * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator} instances. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @since 1.0
+   */
+  protected DawnEMFGeneratorItemProvider dawnEMFGeneratorItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator}. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public Adapter createDawnEMFGeneratorAdapter()
+  {
+    if (dawnEMFGeneratorItemProvider == null)
+    {
+      dawnEMFGeneratorItemProvider = new DawnEMFGeneratorItemProvider(this);
+    }
+
+    return dawnEMFGeneratorItemProvider;
   }
 
   /**
@@ -218,9 +299,21 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
    */
   public void dispose()
   {
+    if (dawnGeneratorItemProvider != null)
+    {
+      dawnGeneratorItemProvider.dispose();
+    }
+    if (dawnFragmentGeneratorItemProvider != null)
+    {
+      dawnFragmentGeneratorItemProvider.dispose();
+    }
     if (dawnGMFGeneratorItemProvider != null)
     {
       dawnGMFGeneratorItemProvider.dispose();
+    }
+    if (dawnEMFGeneratorItemProvider != null)
+    {
+      dawnEMFGeneratorItemProvider.dispose();
     }
   }
 

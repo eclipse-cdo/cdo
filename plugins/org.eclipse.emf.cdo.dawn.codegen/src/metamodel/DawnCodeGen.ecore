@@ -3,9 +3,18 @@
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="dawngenmodel"
     nsURI="http://www.eclipse.org/emf/cdo/dawn/2010/GenModel" nsPrefix="dawngenmodel">
-  <eClassifiers xsi:type="ecore:EClass" name="DawnGMFGenerator">
+  <eClassifiers xsi:type="ecore:EClass" name="DawnGenerator">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="emfFragmentgenerator" eType="#//DawnEMFGenerator"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="gmfFragmentgenerator" eType="#//DawnGMFGenerator"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DawnFragmentGenerator">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fragmentName" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dawnEditorClassName" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="emfGenModel" eType="ecore:EClass platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DawnGMFGenerator" eSuperTypes="#//DawnFragmentGenerator">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dawnDocumentProviderClassName"
         eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dawnEditorUtilClassName"
@@ -25,4 +34,5 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="GMFGenEditorGenerator"
         eType="ecore:EClass platform:/plugin/org.eclipse.gmf.codegen/models/gmfgen.ecore#//GenEditorGenerator"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DawnEMFGenerator" eSuperTypes="#//DawnFragmentGenerator"/>
 </ecore:EPackage>

@@ -285,13 +285,13 @@ public class DawngenmodelModelWizard extends Wizard implements INewWizard
       //
       try
       {
-        page.openEditor(new FileEditorInput(modelFile), workbench.getEditorRegistry().getDefaultEditor(
-            modelFile.getFullPath().toString()).getId());
+        page.openEditor(new FileEditorInput(modelFile),
+            workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
       }
       catch (PartInitException exception)
       {
-        MessageDialog.openError(workbenchWindow.getShell(), DawnCodeGenEditorPlugin.INSTANCE
-            .getString("_UI_OpenEditorError_label"), exception.getMessage());
+        MessageDialog.openError(workbenchWindow.getShell(),
+            DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
         return false;
       }
 
@@ -571,8 +571,8 @@ public class DawngenmodelModelWizard extends Wizard implements INewWizard
       if (encodings == null)
       {
         encodings = new ArrayList<String>();
-        for (StringTokenizer stringTokenizer = new StringTokenizer(DawnCodeGenEditorPlugin.INSTANCE
-            .getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens();)
+        for (StringTokenizer stringTokenizer = new StringTokenizer(
+            DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens();)
         {
           encodings.add(stringTokenizer.nextToken());
         }
@@ -596,8 +596,7 @@ public class DawngenmodelModelWizard extends Wizard implements INewWizard
     newFileCreationPage.setDescription(DawnCodeGenEditorPlugin.INSTANCE
         .getString("_UI_DawngenmodelModelWizard_description"));
     newFileCreationPage.setFileName(DawnCodeGenEditorPlugin.INSTANCE
-        .getString("_UI_DawngenmodelEditorFilenameDefaultBase")
-        + "." + FILE_EXTENSIONS.get(0));
+        .getString("_UI_DawngenmodelEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0));
     addPage(newFileCreationPage);
 
     // Try and get the resource selection to determine a current directory for the file dialog.

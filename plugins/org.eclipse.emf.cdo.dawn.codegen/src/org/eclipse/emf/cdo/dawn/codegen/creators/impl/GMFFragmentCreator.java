@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.dawn.codegen.creators.impl;
 import org.eclipse.emf.cdo.dawn.codegen.actions.GenerateDawnGenModelAction;
 import org.eclipse.emf.cdo.dawn.codegen.creators.Creator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGMFGenerator;
+import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.util.ProjectCreationHelper;
 import org.eclipse.emf.cdo.dawn.codegen.util.Utils;
 
@@ -60,14 +61,14 @@ public class GMFFragmentCreator implements Creator
     IFile dawnGenModelFile = (IFile)selectedElement;
 
     ResourceSet resourceSet = new ResourceSetImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-        GenerateDawnGenModelAction.dawngenmodelFileExtension, new XMIResourceFactoryImpl());
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
+        .put(GenerateDawnGenModelAction.dawngenmodelFileExtension, new XMIResourceFactoryImpl());
 
-    Resource dawnGenModelResource = resourceSet.getResource(URI.createURI(dawnGenModelFile.getRawLocationURI()
-        .toString()), true);
+    Resource dawnGenModelResource = resourceSet.getResource(
+        URI.createURI(dawnGenModelFile.getRawLocationURI().toString()), true);
 
-    DawnGMFGenerator dawnGMFGenerator = (DawnGMFGenerator)dawnGenModelResource.getContents().get(0);
-
+    DawnGenerator dawnGenerator = (DawnGenerator)dawnGenModelResource.getContents().get(0);
+    DawnGMFGenerator dawnGMFGenerator = dawnGenerator.getGmfFragmentgenerator();
     monitor.subTask("Create client fragment's basic structure");
 
     // String[] natures = new String[] { JavaCore.NATURE_ID, PDE.PLUGIN_NATURE };
@@ -109,7 +110,6 @@ public class GMFFragmentCreator implements Creator
     }
 
     monitor.worked(100);
-
   }
 
   private void createGenericContent(IProgressMonitor monitor, IPath location)

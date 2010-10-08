@@ -10,7 +10,10 @@
  */
 package org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.util;
 
+import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator;
+import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGMFGenerator;
+import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage;
 
 import org.eclipse.emf.ecore.EClass;
@@ -96,10 +99,48 @@ public class DawngenmodelSwitch<T>
   {
     switch (classifierID)
     {
+    case DawngenmodelPackage.DAWN_GENERATOR:
+    {
+      DawnGenerator dawnGenerator = (DawnGenerator)theEObject;
+      T result = caseDawnGenerator(dawnGenerator);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR:
+    {
+      DawnFragmentGenerator dawnFragmentGenerator = (DawnFragmentGenerator)theEObject;
+      T result = caseDawnFragmentGenerator(dawnFragmentGenerator);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     case DawngenmodelPackage.DAWN_GMF_GENERATOR:
     {
       DawnGMFGenerator dawnGMFGenerator = (DawnGMFGenerator)theEObject;
       T result = caseDawnGMFGenerator(dawnGMFGenerator);
+      if (result == null)
+      {
+        result = caseDawnFragmentGenerator(dawnGMFGenerator);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case DawngenmodelPackage.DAWN_EMF_GENERATOR:
+    {
+      DawnEMFGenerator dawnEMFGenerator = (DawnEMFGenerator)theEObject;
+      T result = caseDawnEMFGenerator(dawnEMFGenerator);
+      if (result == null)
+      {
+        result = caseDawnFragmentGenerator(dawnEMFGenerator);
+      }
       if (result == null)
       {
         result = defaultCase(theEObject);
@@ -109,6 +150,39 @@ public class DawngenmodelSwitch<T>
     default:
       return defaultCase(theEObject);
     }
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Dawn Generator</em>'. <!-- begin-user-doc -->
+   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Dawn Generator</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   * @since 1.0
+   */
+  public T caseDawnGenerator(DawnGenerator object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Dawn Fragment Generator</em>'. <!--
+   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
+   * end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Dawn Fragment Generator</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   * @since 1.0
+   */
+  public T caseDawnFragmentGenerator(DawnFragmentGenerator object)
+  {
+    return null;
   }
 
   /**
@@ -122,6 +196,22 @@ public class DawngenmodelSwitch<T>
    * @generated
    */
   public T caseDawnGMFGenerator(DawnGMFGenerator object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Dawn EMF Generator</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Dawn EMF Generator</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   * @since 1.0
+   */
+  public T caseDawnEMFGenerator(DawnEMFGenerator object)
   {
     return null;
   }

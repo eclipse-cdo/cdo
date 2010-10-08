@@ -10,7 +10,11 @@
  */
 package org.eclipse.emf.cdo.dawn.codegen.util;
 
+import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
+
 import org.eclipse.swt.widgets.Canvas;
+
+import java.util.List;
 
 /**
  * @author Martin Fluegge
@@ -99,5 +103,13 @@ public class Utils
   {
     String ret = uniqueIdentifier.replace("getFigure", "");
     return ret;
+  }
+
+  /**
+   * @since 1.0
+   */
+  public static String getEMFFileName(List<GenPackage> genPackages)
+  {
+    return genPackages.get(0).getFileExtension();
   }
 }

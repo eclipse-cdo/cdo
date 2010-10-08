@@ -11,8 +11,10 @@
 package org.eclipse.emf.cdo.dawn.editors.impl;
 
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
-import org.eclipse.emf.cdo.dawn.notifications.DawnNotificationUtil;
+import org.eclipse.emf.cdo.dawn.notifications.BasicDawnListener;
+import org.eclipse.emf.cdo.dawn.notifications.impl.DawnEMFHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
@@ -39,8 +41,15 @@ public class DawnEMFEditorSupport extends DawnAbstractEditorSupport
 
   public void registerListeners()
   {
-    // DawnNotificationUtil.registerTransactionListeners((CDOTransaction)getView(), getEditor());
-    DawnNotificationUtil.setChangeSubscriptionPolicy((CDOTransaction)getView());
+    BasicDawnListener listener = new DawnEMFHandler(getEditor());
+    CDOView view = getView();
+    view.addListener(listener);
+
+    if (view instanceof CDOTransaction)
+    {
+      CDOTransaction transaction = (CDOTransaction)view;
+      transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.CDO);
+    }
   }
 
   @Override

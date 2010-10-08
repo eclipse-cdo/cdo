@@ -54,6 +54,9 @@ public class DawnCodeGenGMFFragmentTest extends AbstractDawnTest
     String diagramFolder = ouputFolder + "/" + "src/org/eclipse/emf/cdo/dawn/examples/acore/diagram";
 
     assertEquals(true, new File(outputFolder + "/META-INF/Manifest.MF").exists());
+    assertEquals(true, new File(outputFolder + "/fragment.xml").exists());
+    assertEquals(true, new File(outputFolder + "/build.properties").exists());
+
     assertEquals(true, new File(diagramFolder + "/edit/").exists());
     assertEquals(true, new File(diagramFolder + "/edit/parts/DawnAcoreEditPartFactory.java").exists());
     assertEquals(true, new File(diagramFolder + "/edit/parts/DawnACoreRootEditPart.java").exists());
@@ -68,6 +71,7 @@ public class DawnCodeGenGMFFragmentTest extends AbstractDawnTest
     assertEquals(true, new File(diagramFolder + "/providers/").exists());
     assertEquals(true, new File(diagramFolder + "/providers/DawnAcoreEditPartProvider.java").exists());
     assertEquals(true, new File(diagramFolder + "/providers/DawnAcoreEditPolicyProvider.java").exists());
+
     basicCompare(new File(new URI(DawnTestPlatform.instance.getBundlePathForClass(DawnAcoreDiagramEditor.class)
         + ".dawn/src/")), new File(outputFolder + "/src"));
   }
@@ -98,11 +102,6 @@ public class DawnCodeGenGMFFragmentTest extends AbstractDawnTest
     {
       for (File child : reference.listFiles())
       {
-        // TODO: fix the problematic files
-        // if (child.getName().equals("DawnAcoreCreationWizard.java"))
-        // {
-        // continue;
-        // }
         basicCompare(child, new File(expected + "/" + child.getName()));
       }
     }

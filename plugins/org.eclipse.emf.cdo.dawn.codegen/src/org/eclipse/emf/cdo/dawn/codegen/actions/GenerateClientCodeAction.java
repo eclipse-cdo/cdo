@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.dawn.codegen.actions;
 
 import org.eclipse.emf.cdo.dawn.codegen.creators.Creator;
 import org.eclipse.emf.cdo.dawn.codegen.creators.impl.GMFFragmentCreator;
+import org.eclipse.emf.cdo.dawn.codegen.messages.Messages;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -49,7 +50,7 @@ public class GenerateClientCodeAction implements IObjectActionDelegate
 
         public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
         {
-          monitor.beginTask("Generating Dawn Code...", 1000);
+          monitor.beginTask(Messages.GenerateClientCodeAction_0, 1000);
           ArrayList<Creator> creators = new ArrayList<Creator>();
           creators.add(new GMFFragmentCreator(selectedElement));
 

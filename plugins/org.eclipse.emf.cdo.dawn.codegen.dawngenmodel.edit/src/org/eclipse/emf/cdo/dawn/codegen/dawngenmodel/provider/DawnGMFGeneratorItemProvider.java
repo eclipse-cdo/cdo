@@ -15,15 +15,9 @@ import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
@@ -35,8 +29,7 @@ import java.util.List;
  * 
  * @generated
  */
-public class DawnGMFGeneratorItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvider
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -67,8 +60,6 @@ public class DawnGMFGeneratorItemProvider extends ItemProviderAdapter implements
     {
       super.getPropertyDescriptors(object);
 
-      addFragmentNamePropertyDescriptor(object);
-      addDawnEditorClassNamePropertyDescriptor(object);
       addDawnDocumentProviderClassNamePropertyDescriptor(object);
       addDawnEditorUtilClassNamePropertyDescriptor(object);
       addDawnCreationWizardClassNamePropertyDescriptor(object);
@@ -83,35 +74,6 @@ public class DawnGMFGeneratorItemProvider extends ItemProviderAdapter implements
   }
 
   /**
-   * This adds a property descriptor for the Fragment Name feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  protected void addFragmentNamePropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_DawnGMFGenerator_fragmentName_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_fragmentName_feature",
-            "_UI_DawnGMFGenerator_type"), DawngenmodelPackage.Literals.DAWN_GMF_GENERATOR__FRAGMENT_NAME, true, false,
-        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Dawn Editor Class Name feature. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
-   * 
-   * @generated
-   */
-  protected void addDawnEditorClassNamePropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_DawnGMFGenerator_dawnEditorClassName_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnEditorClassName_feature",
-            "_UI_DawnGMFGenerator_type"), DawngenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_EDITOR_CLASS_NAME,
-        true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
    * This adds a property descriptor for the Dawn Document Provider Class Name feature. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 
@@ -119,10 +81,11 @@ public class DawnGMFGeneratorItemProvider extends ItemProviderAdapter implements
    */
   protected void addDawnDocumentProviderClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_DawnGMFGenerator_dawnDocumentProviderClassName_feature"), getString(
-            "_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnDocumentProviderClassName_feature",
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_dawnDocumentProviderClassName_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnDocumentProviderClassName_feature",
             "_UI_DawnGMFGenerator_type"),
         DawngenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_DOCUMENT_PROVIDER_CLASS_NAME, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
@@ -136,10 +99,11 @@ public class DawnGMFGeneratorItemProvider extends ItemProviderAdapter implements
    */
   protected void addDawnEditorUtilClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_DawnGMFGenerator_dawnEditorUtilClassName_feature"), getString(
-            "_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnEditorUtilClassName_feature",
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_dawnEditorUtilClassName_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnEditorUtilClassName_feature",
             "_UI_DawnGMFGenerator_type"), DawngenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_EDITOR_UTIL_CLASS_NAME,
         true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
@@ -152,10 +116,11 @@ public class DawnGMFGeneratorItemProvider extends ItemProviderAdapter implements
    */
   protected void addDawnCreationWizardClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_DawnGMFGenerator_dawnCreationWizardClassName_feature"), getString(
-            "_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnCreationWizardClassName_feature",
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_dawnCreationWizardClassName_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnCreationWizardClassName_feature",
             "_UI_DawnGMFGenerator_type"),
         DawngenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_CREATION_WIZARD_CLASS_NAME, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
@@ -169,11 +134,12 @@ public class DawnGMFGeneratorItemProvider extends ItemProviderAdapter implements
    */
   protected void addDawnCanonicalEditingPolicyClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_DawnGMFGenerator_dawnCanonicalEditingPolicyClassName_feature"), getString(
-            "_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnCanonicalEditingPolicyClassName_feature",
-            "_UI_DawnGMFGenerator_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_dawnCanonicalEditingPolicyClassName_feature"),
+        getString("_UI_PropertyDescriptor_description",
+            "_UI_DawnGMFGenerator_dawnCanonicalEditingPolicyClassName_feature", "_UI_DawnGMFGenerator_type"),
         DawngenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_CANONICAL_EDITING_POLICY_CLASS_NAME, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
@@ -186,10 +152,11 @@ public class DawnGMFGeneratorItemProvider extends ItemProviderAdapter implements
    */
   protected void addDawnDiagramEditPartClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_DawnGMFGenerator_dawnDiagramEditPartClassName_feature"), getString(
-            "_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnDiagramEditPartClassName_feature",
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_dawnDiagramEditPartClassName_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnDiagramEditPartClassName_feature",
             "_UI_DawnGMFGenerator_type"),
         DawngenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_DIAGRAM_EDIT_PART_CLASS_NAME, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
@@ -203,10 +170,11 @@ public class DawnGMFGeneratorItemProvider extends ItemProviderAdapter implements
    */
   protected void addDawnEditPartFactoryClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_DawnGMFGenerator_dawnEditPartFactoryClassName_feature"), getString(
-            "_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnEditPartFactoryClassName_feature",
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_dawnEditPartFactoryClassName_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnEditPartFactoryClassName_feature",
             "_UI_DawnGMFGenerator_type"),
         DawngenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_EDIT_PART_FACTORY_CLASS_NAME, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
@@ -220,10 +188,11 @@ public class DawnGMFGeneratorItemProvider extends ItemProviderAdapter implements
    */
   protected void addDawnEditPartProviderClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_DawnGMFGenerator_dawnEditPartProviderClassName_feature"), getString(
-            "_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnEditPartProviderClassName_feature",
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_dawnEditPartProviderClassName_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnEditPartProviderClassName_feature",
             "_UI_DawnGMFGenerator_type"),
         DawngenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_EDIT_PART_PROVIDER_CLASS_NAME, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
@@ -237,10 +206,11 @@ public class DawnGMFGeneratorItemProvider extends ItemProviderAdapter implements
    */
   protected void addDawnEditPolicyProviderClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_DawnGMFGenerator_dawnEditPolicyProviderClassName_feature"), getString(
-            "_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnEditPolicyProviderClassName_feature",
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_dawnEditPolicyProviderClassName_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnEditPolicyProviderClassName_feature",
             "_UI_DawnGMFGenerator_type"),
         DawngenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_EDIT_POLICY_PROVIDER_CLASS_NAME, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
@@ -254,10 +224,11 @@ public class DawnGMFGeneratorItemProvider extends ItemProviderAdapter implements
    */
   protected void addGMFGenEditorGeneratorPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_DawnGMFGenerator_GMFGenEditorGenerator_feature"), getString(
-            "_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_GMFGenEditorGenerator_feature",
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_GMFGenEditorGenerator_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_GMFGenEditorGenerator_feature",
             "_UI_DawnGMFGenerator_type"), DawngenmodelPackage.Literals.DAWN_GMF_GENERATOR__GMF_GEN_EDITOR_GENERATOR,
         true, false, true, null, null, null));
   }
@@ -299,8 +270,6 @@ public class DawnGMFGeneratorItemProvider extends ItemProviderAdapter implements
 
     switch (notification.getFeatureID(DawnGMFGenerator.class))
     {
-    case DawngenmodelPackage.DAWN_GMF_GENERATOR__FRAGMENT_NAME:
-    case DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDITOR_CLASS_NAME:
     case DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_DOCUMENT_PROVIDER_CLASS_NAME:
     case DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDITOR_UTIL_CLASS_NAME:
     case DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_CREATION_WIZARD_CLASS_NAME:
@@ -325,17 +294,6 @@ public class DawnGMFGeneratorItemProvider extends ItemProviderAdapter implements
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
-  }
-
-  /**
-   * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public ResourceLocator getResourceLocator()
-  {
-    return DawnCodeGenEditPlugin.INSTANCE;
   }
 
 }

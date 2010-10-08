@@ -459,8 +459,8 @@ public class DawngenmodelEditor extends MultiPageEditorPart implements IEditingD
               if (delta.getKind() == IResourceDelta.REMOVED || delta.getKind() == IResourceDelta.CHANGED
                   && delta.getFlags() != IResourceDelta.MARKERS)
               {
-                Resource resource = resourceSet.getResource(URI.createPlatformResourceURI(delta.getFullPath()
-                    .toString(), true), false);
+                Resource resource = resourceSet.getResource(
+                    URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
                 if (resource != null)
                 {
                   if (delta.getKind() == IResourceDelta.REMOVED)
@@ -625,8 +625,8 @@ public class DawngenmodelEditor extends MultiPageEditorPart implements IEditingD
     if (updateProblemIndication)
     {
       BasicDiagnostic diagnostic = new BasicDiagnostic(Diagnostic.OK,
-          "org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor", 0, null, new Object[] { editingDomain
-              .getResourceSet() });
+          "org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor", 0, null,
+          new Object[] { editingDomain.getResourceSet() });
       for (Diagnostic childDiagnostic : resourceToDiagnosticMap.values())
       {
         if (childDiagnostic.getSeverity() != Diagnostic.OK)
@@ -1017,8 +1017,8 @@ public class DawngenmodelEditor extends MultiPageEditorPart implements IEditingD
     if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty())
     {
       BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR,
-          "org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor", 0, getString("_UI_CreateModelError_message", resource
-              .getURI()), new Object[] { exception == null ? (Object)resource : exception });
+          "org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor", 0, getString("_UI_CreateModelError_message",
+              resource.getURI()), new Object[] { exception == null ? (Object)resource : exception });
       basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
       return basicDiagnostic;
     }
@@ -1689,7 +1689,7 @@ public class DawngenmodelEditor extends MultiPageEditorPart implements IEditingD
    */
   protected void doSaveAs(URI uri, IEditorInput editorInput)
   {
-    editingDomain.getResourceSet().getResources().get(0).setURI(uri);
+    (editingDomain.getResourceSet().getResources().get(0)).setURI(uri);
     setInputWithNotify(editorInput);
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()

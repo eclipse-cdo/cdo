@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.dawn.codegen.dawngenmodel;
 
-import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.gmf.codegen.gmfgen.GenEditorGenerator;
 
 /**
@@ -48,7 +46,7 @@ import org.eclipse.gmf.codegen.gmfgen.GenEditorGenerator;
  * @model
  * @generated
  */
-public interface DawnGMFGenerator extends EObject
+public interface DawnGMFGenerator extends DawnFragmentGenerator
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -56,61 +54,6 @@ public interface DawnGMFGenerator extends EObject
    * @generated
    */
   String copyright = "Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
-
-  /**
-   * Returns the value of the '<em><b>Fragment Name</b></em>' attribute. <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Fragment Name</em>' attribute isn't clear, there really should be more of a description
-   * here...
-   * </p>
-   * <!-- end-user-doc -->
-   * 
-   * @return the value of the '<em>Fragment Name</em>' attribute.
-   * @see #setFragmentName(String)
-   * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage#getDawnGMFGenerator_FragmentName()
-   * @model
-   * @generated
-   */
-  String getFragmentName();
-
-  /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGMFGenerator#getFragmentName
-   * <em>Fragment Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Fragment Name</em>' attribute.
-   * @see #getFragmentName()
-   * @generated
-   */
-  void setFragmentName(String value);
-
-  /**
-   * Returns the value of the '<em><b>Dawn Editor Class Name</b></em>' attribute. <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Dawn Editor Class Name</em>' attribute isn't clear, there really should be more of a
-   * description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * 
-   * @return the value of the '<em>Dawn Editor Class Name</em>' attribute.
-   * @see #setDawnEditorClassName(String)
-   * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage#getDawnGMFGenerator_DawnEditorClassName()
-   * @model
-   * @generated
-   */
-  String getDawnEditorClassName();
-
-  /**
-   * Sets the value of the '
-   * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGMFGenerator#getDawnEditorClassName
-   * <em>Dawn Editor Class Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Dawn Editor Class Name</em>' attribute.
-   * @see #getDawnEditorClassName()
-   * @generated
-   */
-  void setDawnEditorClassName(String value);
 
   /**
    * Returns the value of the '<em><b>Dawn Document Provider Class Name</b></em>' attribute. <!-- begin-user-doc -->

@@ -10,7 +10,10 @@
  */
 package org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl;
 
+import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator;
+import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGMFGenerator;
+import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelFactory;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage;
 
@@ -77,11 +80,39 @@ public class DawngenmodelFactoryImpl extends EFactoryImpl implements Dawngenmode
   {
     switch (eClass.getClassifierID())
     {
+    case DawngenmodelPackage.DAWN_GENERATOR:
+      return createDawnGenerator();
+    case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR:
+      return createDawnFragmentGenerator();
     case DawngenmodelPackage.DAWN_GMF_GENERATOR:
       return createDawnGMFGenerator();
+    case DawngenmodelPackage.DAWN_EMF_GENERATOR:
+      return createDawnEMFGenerator();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public DawnGenerator createDawnGenerator()
+  {
+    DawnGeneratorImpl dawnGenerator = new DawnGeneratorImpl();
+    return dawnGenerator;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public DawnFragmentGenerator createDawnFragmentGenerator()
+  {
+    DawnFragmentGeneratorImpl dawnFragmentGenerator = new DawnFragmentGeneratorImpl();
+    return dawnFragmentGenerator;
   }
 
   /**
@@ -93,6 +124,17 @@ public class DawngenmodelFactoryImpl extends EFactoryImpl implements Dawngenmode
   {
     DawnGMFGeneratorImpl dawnGMFGenerator = new DawnGMFGeneratorImpl();
     return dawnGMFGenerator;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public DawnEMFGenerator createDawnEMFGenerator()
+  {
+    DawnEMFGeneratorImpl dawnEMFGenerator = new DawnEMFGeneratorImpl();
+    return dawnEMFGenerator;
   }
 
   /**

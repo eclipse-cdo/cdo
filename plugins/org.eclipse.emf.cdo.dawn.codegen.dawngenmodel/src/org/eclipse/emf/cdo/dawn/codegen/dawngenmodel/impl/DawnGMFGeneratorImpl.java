@@ -17,7 +17,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.gmf.codegen.gmfgen.GenEditorGenerator;
 
@@ -56,7 +55,7 @@ import org.eclipse.gmf.codegen.gmfgen.GenEditorGenerator;
  * 
  * @generated
  */
-public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerator
+public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements DawnGMFGenerator
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -64,46 +63,6 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
-
-  /**
-   * The default value of the '{@link #getFragmentName() <em>Fragment Name</em>}' attribute. <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * 
-   * @see #getFragmentName()
-   * @generated
-   * @ordered
-   */
-  protected static final String FRAGMENT_NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getFragmentName() <em>Fragment Name</em>}' attribute. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
-   * 
-   * @see #getFragmentName()
-   * @generated
-   * @ordered
-   */
-  protected String fragmentName = FRAGMENT_NAME_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getDawnEditorClassName() <em>Dawn Editor Class Name</em>}' attribute. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @see #getDawnEditorClassName()
-   * @generated
-   * @ordered
-   */
-  protected static final String DAWN_EDITOR_CLASS_NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getDawnEditorClassName() <em>Dawn Editor Class Name</em>}' attribute. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @see #getDawnEditorClassName()
-   * @generated
-   * @ordered
-   */
-  protected String dawnEditorClassName = DAWN_EDITOR_CLASS_NAME_EDEFAULT;
 
   /**
    * The default value of the '{@link #getDawnDocumentProviderClassName() <em>Dawn Document Provider Class Name</em>}'
@@ -301,58 +260,6 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
    * 
    * @generated
    */
-  public String getFragmentName()
-  {
-    return fragmentName;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public void setFragmentName(String newFragmentName)
-  {
-    String oldFragmentName = fragmentName;
-    fragmentName = newFragmentName;
-    if (eNotificationRequired())
-    {
-      eNotify(new ENotificationImpl(this, Notification.SET, DawngenmodelPackage.DAWN_GMF_GENERATOR__FRAGMENT_NAME,
-          oldFragmentName, fragmentName));
-    }
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public String getDawnEditorClassName()
-  {
-    return dawnEditorClassName;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public void setDawnEditorClassName(String newDawnEditorClassName)
-  {
-    String oldDawnEditorClassName = dawnEditorClassName;
-    dawnEditorClassName = newDawnEditorClassName;
-    if (eNotificationRequired())
-    {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDITOR_CLASS_NAME, oldDawnEditorClassName, dawnEditorClassName));
-    }
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
   public String getDawnDocumentProviderClassName()
   {
     return dawnDocumentProviderClassName;
@@ -368,11 +275,9 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
     String oldDawnDocumentProviderClassName = dawnDocumentProviderClassName;
     dawnDocumentProviderClassName = newDawnDocumentProviderClassName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_DOCUMENT_PROVIDER_CLASS_NAME, oldDawnDocumentProviderClassName,
           dawnDocumentProviderClassName));
-    }
   }
 
   /**
@@ -395,11 +300,9 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
     String oldDawnEditorUtilClassName = dawnEditorUtilClassName;
     dawnEditorUtilClassName = newDawnEditorUtilClassName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDITOR_UTIL_CLASS_NAME, oldDawnEditorUtilClassName,
           dawnEditorUtilClassName));
-    }
   }
 
   /**
@@ -422,11 +325,9 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
     String oldDawnCreationWizardClassName = dawnCreationWizardClassName;
     dawnCreationWizardClassName = newDawnCreationWizardClassName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_CREATION_WIZARD_CLASS_NAME, oldDawnCreationWizardClassName,
           dawnCreationWizardClassName));
-    }
   }
 
   /**
@@ -449,11 +350,9 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
     String oldDawnCanonicalEditingPolicyClassName = dawnCanonicalEditingPolicyClassName;
     dawnCanonicalEditingPolicyClassName = newDawnCanonicalEditingPolicyClassName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_CANONICAL_EDITING_POLICY_CLASS_NAME,
           oldDawnCanonicalEditingPolicyClassName, dawnCanonicalEditingPolicyClassName));
-    }
   }
 
   /**
@@ -476,11 +375,9 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
     String oldDawnDiagramEditPartClassName = dawnDiagramEditPartClassName;
     dawnDiagramEditPartClassName = newDawnDiagramEditPartClassName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_DIAGRAM_EDIT_PART_CLASS_NAME, oldDawnDiagramEditPartClassName,
           dawnDiagramEditPartClassName));
-    }
   }
 
   /**
@@ -503,11 +400,9 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
     String oldDawnEditPartFactoryClassName = dawnEditPartFactoryClassName;
     dawnEditPartFactoryClassName = newDawnEditPartFactoryClassName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDIT_PART_FACTORY_CLASS_NAME, oldDawnEditPartFactoryClassName,
           dawnEditPartFactoryClassName));
-    }
   }
 
   /**
@@ -530,11 +425,9 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
     String oldDawnEditPartProviderClassName = dawnEditPartProviderClassName;
     dawnEditPartProviderClassName = newDawnEditPartProviderClassName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDIT_PART_PROVIDER_CLASS_NAME, oldDawnEditPartProviderClassName,
           dawnEditPartProviderClassName));
-    }
   }
 
   /**
@@ -557,11 +450,9 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
     String oldDawnEditPolicyProviderClassName = dawnEditPolicyProviderClassName;
     dawnEditPolicyProviderClassName = newDawnEditPolicyProviderClassName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDIT_POLICY_PROVIDER_CLASS_NAME,
           oldDawnEditPolicyProviderClassName, dawnEditPolicyProviderClassName));
-    }
   }
 
   /**
@@ -578,11 +469,9 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
       if (gmfGenEditorGenerator != oldGMFGenEditorGenerator)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               DawngenmodelPackage.DAWN_GMF_GENERATOR__GMF_GEN_EDITOR_GENERATOR, oldGMFGenEditorGenerator,
               gmfGenEditorGenerator));
-        }
       }
     }
     return gmfGenEditorGenerator;
@@ -608,11 +497,9 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
     GenEditorGenerator oldGMFGenEditorGenerator = gmfGenEditorGenerator;
     gmfGenEditorGenerator = newGMFGenEditorGenerator;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           DawngenmodelPackage.DAWN_GMF_GENERATOR__GMF_GEN_EDITOR_GENERATOR, oldGMFGenEditorGenerator,
           gmfGenEditorGenerator));
-    }
   }
 
   /**
@@ -625,10 +512,6 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
   {
     switch (featureID)
     {
-    case DawngenmodelPackage.DAWN_GMF_GENERATOR__FRAGMENT_NAME:
-      return getFragmentName();
-    case DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDITOR_CLASS_NAME:
-      return getDawnEditorClassName();
     case DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_DOCUMENT_PROVIDER_CLASS_NAME:
       return getDawnDocumentProviderClassName();
     case DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDITOR_UTIL_CLASS_NAME:
@@ -647,9 +530,7 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
       return getDawnEditPolicyProviderClassName();
     case DawngenmodelPackage.DAWN_GMF_GENERATOR__GMF_GEN_EDITOR_GENERATOR:
       if (resolve)
-      {
         return getGMFGenEditorGenerator();
-      }
       return basicGetGMFGenEditorGenerator();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -665,12 +546,6 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
   {
     switch (featureID)
     {
-    case DawngenmodelPackage.DAWN_GMF_GENERATOR__FRAGMENT_NAME:
-      setFragmentName((String)newValue);
-      return;
-    case DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDITOR_CLASS_NAME:
-      setDawnEditorClassName((String)newValue);
-      return;
     case DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_DOCUMENT_PROVIDER_CLASS_NAME:
       setDawnDocumentProviderClassName((String)newValue);
       return;
@@ -712,12 +587,6 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
   {
     switch (featureID)
     {
-    case DawngenmodelPackage.DAWN_GMF_GENERATOR__FRAGMENT_NAME:
-      setFragmentName(FRAGMENT_NAME_EDEFAULT);
-      return;
-    case DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDITOR_CLASS_NAME:
-      setDawnEditorClassName(DAWN_EDITOR_CLASS_NAME_EDEFAULT);
-      return;
     case DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_DOCUMENT_PROVIDER_CLASS_NAME:
       setDawnDocumentProviderClassName(DAWN_DOCUMENT_PROVIDER_CLASS_NAME_EDEFAULT);
       return;
@@ -759,11 +628,6 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
   {
     switch (featureID)
     {
-    case DawngenmodelPackage.DAWN_GMF_GENERATOR__FRAGMENT_NAME:
-      return FRAGMENT_NAME_EDEFAULT == null ? fragmentName != null : !FRAGMENT_NAME_EDEFAULT.equals(fragmentName);
-    case DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDITOR_CLASS_NAME:
-      return DAWN_EDITOR_CLASS_NAME_EDEFAULT == null ? dawnEditorClassName != null : !DAWN_EDITOR_CLASS_NAME_EDEFAULT
-          .equals(dawnEditorClassName);
     case DawngenmodelPackage.DAWN_GMF_GENERATOR__DAWN_DOCUMENT_PROVIDER_CLASS_NAME:
       return DAWN_DOCUMENT_PROVIDER_CLASS_NAME_EDEFAULT == null ? dawnDocumentProviderClassName != null
           : !DAWN_DOCUMENT_PROVIDER_CLASS_NAME_EDEFAULT.equals(dawnDocumentProviderClassName);
@@ -803,16 +667,10 @@ public class DawnGMFGeneratorImpl extends EObjectImpl implements DawnGMFGenerato
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (fragmentName: ");
-    result.append(fragmentName);
-    result.append(", dawnEditorClassName: ");
-    result.append(dawnEditorClassName);
-    result.append(", dawnDocumentProviderClassName: ");
+    result.append(" (dawnDocumentProviderClassName: ");
     result.append(dawnDocumentProviderClassName);
     result.append(", dawnEditorUtilClassName: ");
     result.append(dawnEditorUtilClassName);

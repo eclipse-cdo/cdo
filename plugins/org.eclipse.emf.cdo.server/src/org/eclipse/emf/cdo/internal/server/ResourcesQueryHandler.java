@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.server.QueryHandlerFactory;
 
-import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import java.util.HashSet;
@@ -144,14 +143,9 @@ public class ResourcesQueryHandler implements IQueryHandler
     }
 
     @Override
-    public IQueryHandler create(String description) throws ProductCreationException
+    public ResourcesQueryHandler create(String description) throws ProductCreationException
     {
       return new ResourcesQueryHandler();
-    }
-
-    public static IQueryHandler get(IManagedContainer container, String queryLanguage)
-    {
-      return (IQueryHandler)container.getElement(PRODUCT_GROUP, CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES, null);
     }
   }
 }

@@ -28,8 +28,10 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
+import org.eclipse.emf.cdo.server.ocl.OCLQueryHandler;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
@@ -146,7 +148,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
         }
       }
 
+      repository.setQueryHandlerProvider(new ContainerQueryHandlerProvider(getCurrentTest().getServerContainer()));
       repository.addListener(repositoryListener);
+
       repositories.put(name, repository);
       LifecycleUtil.activate(repository);
     }
@@ -183,6 +187,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     };
 
     IManagedContainer serverContainer = getCurrentTest().getServerContainer();
+    OCLQueryHandler.prepareContainer(serverContainer);
     CDONet4jServerUtil.prepareContainer(serverContainer, new IRepositoryProvider()
     {
       public IRepository getRepository(String name)

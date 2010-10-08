@@ -139,6 +139,7 @@ public class DawngenmodelAdapterFactory extends AdapterFactoryImpl
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator
    * @generated
+   * @since 1.0
    */
   public Adapter createDawnGeneratorAdapter()
   {

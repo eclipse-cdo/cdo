@@ -393,6 +393,9 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
       return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);
     }
 
+    /**
+     * @since 4.0
+     */
     public boolean handleRevision(CDORevision rev)
     {
       if (rev.getTimeStamp() != timeStamp)

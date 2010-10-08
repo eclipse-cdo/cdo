@@ -261,11 +261,11 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public void query(int viewID, AbstractQueryIterator<?> query)
+  public void query(CDOView view, AbstractQueryIterator<?> query)
   {
-    InternalView view = serverSessionProtocol.getSession().getView(viewID);
+    InternalView serverView = serverSessionProtocol.getSession().getView(view.getViewID());
     InternalQueryManager queryManager = repository.getQueryManager();
-    InternalQueryResult result = queryManager.execute(view, query.getQueryInfo());
+    InternalQueryResult result = queryManager.execute(serverView, query.getQueryInfo());
 
     query.setQueryID(result.getQueryID());
     CDOQueryQueue<Object> resultQueue = query.getQueue();

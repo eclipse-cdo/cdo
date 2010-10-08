@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.OCL;
@@ -95,7 +96,7 @@ public class OCLQueryHandler implements IQueryHandler
       OCLHelper<EClassifier, ?, ?, Constraint> helper = ocl.createOCLHelper();
 
       EClassifier classifier;
-      CDOObject object = null;
+      EObject object = null;
 
       Object contextParameter = parameters.get(CONTEXT_PARAMETER);
       parameters.remove(CONTEXT_PARAMETER);
@@ -103,7 +104,8 @@ public class OCLQueryHandler implements IQueryHandler
       if (contextParameter instanceof CDOID)
       {
         CDOID id = (CDOID)contextParameter;
-        object = view.getObject(id);
+        InternalCDOObject cdoObject = (InternalCDOObject)view.getObject(id);
+        object = cdoObject.cdoInternalInstance();
         classifier = object.eClass();
       }
       else if (contextParameter instanceof EClassifier)
@@ -172,7 +174,7 @@ public class OCLQueryHandler implements IQueryHandler
     }
   }
 
-  protected Object evaluate(Query<EClassifier, EClass, EObject> query, CDOObject object)
+  protected Object evaluate(Query<EClassifier, EClass, EObject> query, EObject object)
   {
     if (object == null)
     {

@@ -122,7 +122,7 @@ public class OCLQueryTest extends AbstractCDOTest
     }
   }
 
-  public void test() throws Exception
+  public void testSelfNavigation() throws Exception
   {
     SalesOrder salesOrder = salesOrders.get(0);
     CDOQuery query = transaction.createQuery("ocl", "self.orderDetails");

@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -26,6 +27,7 @@ import org.eclipse.emf.internal.cdo.CDOObjectReferenceImpl;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.io.IOException;
 
@@ -36,22 +38,27 @@ public class QueryRequest extends CDOClientRequest<Boolean>
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, QueryRequest.class);
 
-  private int viewID;
+  private CDOView view;
 
   private AbstractQueryIterator<?> queryResult;
 
-  public QueryRequest(CDOClientProtocol protocol, int viewID, AbstractQueryIterator<?> queryResult)
+  public QueryRequest(CDOClientProtocol protocol, CDOView view, AbstractQueryIterator<?> queryResult)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_QUERY);
-    this.viewID = viewID;
+    this.view = view;
     this.queryResult = queryResult;
+  }
+
+  @Override
+  protected CDOIDProvider getIDProvider()
+  {
+    return (InternalCDOView)view;
   }
 
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(viewID);
-    // TODO Simon: Move I/O logic to CDODataInput/OutputStream?!
+    out.writeInt(view.getViewID());
     ((CDOQueryInfoImpl)queryResult.getQueryInfo()).write(out);
   }
 
@@ -62,12 +69,7 @@ public class QueryRequest extends CDOClientRequest<Boolean>
     queryResult.setQueryID(queryID);
     CDOQueryQueue<Object> resultQueue = queryResult.getQueue();
 
-    CDOView view = null;
     boolean xrefs = queryResult.getQueryInfo().getQueryLanguage().equals(CDOProtocolConstants.QUERY_LANGUAGE_XREFS);
-    if (xrefs)
-    {
-      view = getSession().getView(viewID);
-    }
 
     try
     {

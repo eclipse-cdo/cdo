@@ -2058,14 +2058,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public void query(int viewID, AbstractQueryIterator<?> queryResult)
+    public void query(CDOView view, AbstractQueryIterator<?> queryResult)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          delegate.query(viewID, queryResult);
+          delegate.query(view, queryResult);
           return;
         }
         catch (Exception ex)

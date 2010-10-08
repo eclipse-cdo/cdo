@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -81,7 +82,8 @@ public class CDOExtentCreator implements OCLExtentCreator
           revisionCacheAdder.addRevision(revision);
         }
 
-        extent.add(view.getObject(revision.getID()));
+        InternalCDOObject object = (InternalCDOObject)view.getObject(revision.getID());
+        extent.add(object.cdoInternalInstance());
         return !canceled.get();
       }
     });
@@ -239,7 +241,8 @@ public class CDOExtentCreator implements OCLExtentCreator
 
               try
               {
-                return getView().getObject(next);
+                InternalCDOObject object = (InternalCDOObject)getView().getObject(next);
+                return object.cdoInternalInstance();
               }
               finally
               {

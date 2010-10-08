@@ -190,9 +190,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     send(new ChangeSubscriptionRequest(this, viewID, cdoIDs, subscribeMode, clear));
   }
 
-  public void query(int viewID, AbstractQueryIterator<?> queryResult)
+  public void query(CDOView view, AbstractQueryIterator<?> queryResult)
   {
-    send(new QueryRequest(this, viewID, queryResult));
+    send(new QueryRequest(this, view, queryResult));
   }
 
   public boolean cancelQuery(int queryId)

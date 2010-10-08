@@ -55,6 +55,11 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
     return (InternalCDOSession)getProtocol().getSession();
   }
 
+  protected CDOIDProvider getIDProvider()
+  {
+    throw new UnsupportedOperationException();
+  }
+
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
@@ -69,7 +74,7 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
       @Override
       public CDOIDProvider getIDProvider()
       {
-        throw new UnsupportedOperationException();
+        return CDOClientRequest.this.getIDProvider();
       }
 
       @Override

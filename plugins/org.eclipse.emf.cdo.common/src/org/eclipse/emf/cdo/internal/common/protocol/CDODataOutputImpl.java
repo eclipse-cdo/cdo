@@ -52,6 +52,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMap;
@@ -390,6 +391,10 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     if (value == null)
     {
       value = CDOID.NULL;
+    }
+    else if (value instanceof EObject)
+    {
+      value = getIDProvider().provideCDOID(value);
     }
     else if (value instanceof CDORevision)
     {

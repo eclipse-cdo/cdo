@@ -124,11 +124,12 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void test() throws Exception
   {
+    SalesOrder salesOrder = salesOrders.get(0);
     CDOQuery query = transaction.createQuery("ocl", "self.orderDetails");
-    query.setParameter("context", salesOrders.get(0));
+    query.setParameter("context", salesOrder);
 
     List<OrderDetail> orderDetails = query.getResult(OrderDetail.class);
-    assertEquals(NUM_OF_PRODUCTS, orderDetails.size());
+    assertEquals(salesOrder.getOrderDetails().size(), orderDetails.size());
   }
 
   public void testProductIterator() throws Exception

@@ -78,7 +78,7 @@ public class OCLQueryHandler implements IQueryHandler
   {
     String queryString = info.getQueryString();
     Map<String, Object> parameters = new HashMap<String, Object>(info.getParameters());
-    boolean legacyModeEnabled = false; // TODO Add this to CDOQueryInfo!
+    boolean legacyModeEnabled = true; // TODO Add this to CDOQueryInfo!
     CDOExtentMap extentMap = null;
 
     try

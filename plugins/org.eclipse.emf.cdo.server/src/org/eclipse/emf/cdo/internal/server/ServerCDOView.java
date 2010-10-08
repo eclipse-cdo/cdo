@@ -33,8 +33,13 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
+import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
+import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
+import org.eclipse.emf.cdo.view.CDOStaleReferencePolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.session.SessionUtil;
@@ -44,6 +49,8 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleState;
+import org.eclipse.net4j.util.options.IOptionsContainer;
+import org.eclipse.net4j.util.ref.ReferenceType;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -69,8 +76,13 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class ServerCDOView extends AbstractCDOView
+public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cdo.view.CDOView.Options
 {
+  private static final CDOAdapterPolicy[] ADAPTER_POLICIES = new CDOAdapterPolicy[0];
+
+  private static final CDORevisionPrefetchingPolicy REVISION_PREFETCHING = CDOUtil
+      .createRevisionPrefetchingPolicy(NO_REVISION_PREFETCHING);
+
   private InternalCDOSession session;
 
   private CDORevisionProvider revisionProvider;
@@ -83,7 +95,7 @@ public class ServerCDOView extends AbstractCDOView
     this.revisionProvider = revisionProvider;
 
     setViewSet(SessionUtil.prepareResourceSet(new ResourceSetImpl()));
-    setObjects(new ReferenceValueMap.Soft<CDOID, InternalCDOObject>());
+    setObjects(new ReferenceValueMap.Weak<CDOID, InternalCDOObject>());
     activate();
   }
 
@@ -100,6 +112,11 @@ public class ServerCDOView extends AbstractCDOView
   public long getLastUpdateTime()
   {
     return getTimeStamp();
+  }
+
+  public Options options()
+  {
+    return this;
   }
 
   public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
@@ -130,11 +147,6 @@ public class ServerCDOView extends AbstractCDOView
   }
 
   public void unlockObjects()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  public Options options()
   {
     throw new UnsupportedOperationException();
   }
@@ -208,6 +220,86 @@ public class ServerCDOView extends AbstractCDOView
   public boolean hasSubscription(CDOID id)
   {
     return false;
+  }
+
+  public IOptionsContainer getContainer()
+  {
+    return this;
+  }
+
+  public ReferenceType getCacheReferenceType()
+  {
+    return ReferenceType.WEAK;
+  }
+
+  public boolean setCacheReferenceType(ReferenceType referenceType)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CDOInvalidationPolicy getInvalidationPolicy()
+  {
+    return CDOInvalidationPolicy.DEFAULT;
+  }
+
+  public void setInvalidationPolicy(CDOInvalidationPolicy policy)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean isInvalidationNotificationEnabled()
+  {
+    return false;
+  }
+
+  public void setInvalidationNotificationEnabled(boolean enabled)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CDOAdapterPolicy[] getChangeSubscriptionPolicies()
+  {
+    return ADAPTER_POLICIES;
+  }
+
+  public void addChangeSubscriptionPolicy(CDOAdapterPolicy policy)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void removeChangeSubscriptionPolicy(CDOAdapterPolicy policy)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CDOAdapterPolicy getStrongReferencePolicy()
+  {
+    return CDOAdapterPolicy.ALL;
+  }
+
+  public void setStrongReferencePolicy(CDOAdapterPolicy policy)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CDOStaleReferencePolicy getStaleReferenceBehaviour()
+  {
+    return CDOStaleReferencePolicy.EXCEPTION;
+  }
+
+  public void setStaleReferenceBehaviour(CDOStaleReferencePolicy policy)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CDORevisionPrefetchingPolicy getRevisionPrefetchingPolicy()
+  {
+    return REVISION_PREFETCHING;
+  }
+
+  public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy)
+  {
+    throw new UnsupportedOperationException();
   }
 
   /**

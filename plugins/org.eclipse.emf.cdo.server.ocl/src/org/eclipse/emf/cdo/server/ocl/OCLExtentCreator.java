@@ -14,11 +14,12 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Eike Stepper
  */
 public interface OCLExtentCreator
 {
-  public Set<EObject> createExtent(EClass cls);
+  public Set<EObject> createExtent(EClass cls, AtomicBoolean canceled);
 }

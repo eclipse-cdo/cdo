@@ -383,7 +383,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     {
       accessor.handleRevisions(null, null, CDOBranchPoint.UNSPECIFIED_DATE, new CDORevisionHandler()
       {
-        public void handleRevision(CDORevision revision)
+        public boolean handleRevision(CDORevision revision)
         {
           CDOBranch branch = revision.getBranch();
           List<CDORevision> list = result.get(branch);
@@ -394,6 +394,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
           }
 
           list.add(revision);
+          return true;
         }
       });
     }

@@ -17,14 +17,14 @@ public class DBRevisionHandler implements CDORevisionHandler
     this.delegate = delegate;
   }
 
-  public void handleRevision(CDORevision revision)
+  public boolean handleRevision(CDORevision revision)
   {
     if (revision.getVersion() < CDOBranchVersion.FIRST_VERSION - 1)
     {
-      revision = new DetachedCDORevision(revision.getEClass(), revision.getID(), revision.getBranch(), -revision
-          .getVersion(), revision.getTimeStamp());
+      revision = new DetachedCDORevision(revision.getEClass(), revision.getID(), revision.getBranch(),
+          -revision.getVersion(), revision.getTimeStamp());
     }
 
-    delegate.handleRevision(revision);
+    return delegate.handleRevision(revision);
   }
 }

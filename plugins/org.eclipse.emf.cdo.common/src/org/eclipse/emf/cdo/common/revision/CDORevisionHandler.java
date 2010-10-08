@@ -16,5 +16,11 @@ package org.eclipse.emf.cdo.common.revision;
  */
 public interface CDORevisionHandler
 {
-  public void handleRevision(CDORevision revision);
+  /**
+   * Handles a revision.
+   * 
+   * @return <code>true</code> to indicate that the caller may pass more revisions, <code>false</code> otherwise.
+   * @since 4.0
+   */
+  public boolean handleRevision(CDORevision revision);
 }

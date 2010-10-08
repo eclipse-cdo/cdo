@@ -393,7 +393,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
       return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);
     }
 
-    public void handleRevision(CDORevision rev)
+    public boolean handleRevision(CDORevision rev)
     {
       if (rev.getTimeStamp() != timeStamp)
       {
@@ -435,6 +435,8 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
           }
         }
       }
+
+      return true;
     }
 
     private InternalCDORevision getRevisionFromBase(CDOID id, CDOBranch branch)

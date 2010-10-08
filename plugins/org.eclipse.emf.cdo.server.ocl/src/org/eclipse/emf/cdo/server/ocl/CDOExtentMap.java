@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Eike Stepper
@@ -26,9 +27,16 @@ public class CDOExtentMap implements Map<EClass, Set<? extends EObject>>
 
   private final OCLExtentCreator extentCreator;
 
+  private AtomicBoolean canceled = new AtomicBoolean(false);
+
   public CDOExtentMap(OCLExtentCreator extentCreator)
   {
     this.extentCreator = extentCreator;
+  }
+
+  public void cancel()
+  {
+    canceled.set(true);
   }
 
   public Set<? extends EObject> get(Object key)
@@ -41,7 +49,7 @@ public class CDOExtentMap implements Map<EClass, Set<? extends EObject>>
       Set<? extends EObject> result = delegate.get(cls);
       if (result == null)
       {
-        result = extentCreator.createExtent(cls);
+        result = extentCreator.createExtent(cls, canceled);
         delegate.put(cls, result);
       }
 

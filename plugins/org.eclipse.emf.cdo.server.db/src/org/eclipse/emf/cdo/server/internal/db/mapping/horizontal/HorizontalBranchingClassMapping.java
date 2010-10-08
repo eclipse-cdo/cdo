@@ -727,7 +727,10 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
           InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(
               CDOIDUtil.createLong(id), branchVersion, CDORevision.UNCHUNKED, true);
 
-          handler.handleRevision(revision);
+          if (!handler.handleRevision(revision))
+          {
+            break;
+          }
         }
       }
     }

@@ -282,30 +282,33 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     {
       for (InternalCDORevision revision : list)
       {
-        handleRevision(revision, eClass, branch, timeStamp, handler);
+        if (!handleRevision(revision, eClass, branch, timeStamp, handler))
+        {
+          return;
+        }
       }
     }
   }
 
-  private void handleRevision(InternalCDORevision revision, EClass eClass, CDOBranch branch, long timeStamp,
+  private boolean handleRevision(InternalCDORevision revision, EClass eClass, CDOBranch branch, long timeStamp,
       CDORevisionHandler handler)
   {
     if (eClass != null && revision.getEClass() != eClass)
     {
-      return;
+      return true;
     }
 
     if (branch != null && !ObjectUtil.equals(revision.getBranch(), branch))
     {
-      return;
+      return true;
     }
 
     if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE && revision.getTimeStamp() != timeStamp)
     {
-      return;
+      return true;
     }
 
-    handler.handleRevision(revision);
+    return handler.handleRevision(revision);
   }
 
   /**

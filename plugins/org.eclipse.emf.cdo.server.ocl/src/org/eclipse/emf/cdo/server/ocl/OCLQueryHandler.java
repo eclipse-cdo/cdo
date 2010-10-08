@@ -75,15 +75,19 @@ public class OCLQueryHandler implements IQueryHandler
   {
     String queryString = info.getQueryString();
     Map<String, Object> parameters = new HashMap<String, Object>(info.getParameters());
+    boolean legacyModeEnabled = false; // TODO Add this to CDOQueryInfo!
+    CDOExtentMap extentMap = null;
 
     try
     {
-      CDOView view = CDOServerUtil.openView(context.getView(), false);
+      CDOView view = CDOServerUtil.openView(context.getView(), legacyModeEnabled);
       CDOPackageRegistry packageRegistry = view.getSession().getPackageRegistry();
 
       EcoreEnvironmentFactory envFactory = new EcoreEnvironmentFactory(packageRegistry);
       OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl = OCL.newInstance(envFactory);
-      ocl.setExtentMap(createExtentMap(view, context));
+
+      extentMap = createExtentMap(view, context);
+      ocl.setExtentMap(extentMap);
 
       OCLHelper<EClassifier, ?, ?, Constraint> helper = ocl.createOCLHelper();
 
@@ -121,23 +125,56 @@ public class OCLQueryHandler implements IQueryHandler
         query.getEvaluationEnvironment().add(parameter.getKey(), parameter.getValue());
       }
 
-      Collection<?> results = (Collection<?>)(object == null ? query.evaluate() : query.evaluate(object));
-      for (Object result : results)
+      Object evaluated = evaluate(query, object);
+      if (evaluated instanceof Collection<?>)
       {
-        if (result instanceof CDOObject)
+        Collection<?> results = (Collection<?>)evaluated;
+        for (Object result : results)
         {
-          CDORevision revision = ((CDOObject)result).cdoRevision();
-          if (!context.addResult(revision))
+          if (result instanceof CDOObject)
           {
-            break;
+            CDORevision revision = ((CDOObject)result).cdoRevision();
+            if (!context.addResult(revision))
+            {
+              break;
+            }
           }
         }
+      }
+      else
+      {
+
+        throw new IllegalStateException("Invalid result: " + evaluated.toString());
       }
     }
     catch (Exception ex)
     {
       throw WrappedException.wrap(ex, "Problem executing OCL query: " + queryString);
     }
+    finally
+    {
+      if (extentMap != null)
+      {
+        extentMap.cancel();
+      }
+    }
+  }
+
+  protected Object evaluate(Query<EClassifier, EClass, EObject> query, CDOObject object)
+  {
+    if (object == null)
+    {
+      return query.evaluate();
+    }
+
+    return query.evaluate(object);
+  }
+
+  protected CDOExtentMap createExtentMap(CDOView view, IQueryContext context)
+  {
+    CDOExtentCreator creator = new CDOExtentCreator.Lazy(view);
+    creator.setRevisionCacheAdder((CDORevisionCacheAdder)context.getView().getRepository().getRevisionManager());
+    return new CDOExtentMap(creator);
   }
 
   protected EClassifier getArbitraryContextClassifier(CDOPackageRegistry packageRegistry)
@@ -280,13 +317,6 @@ public class OCLQueryHandler implements IQueryHandler
       Variable<EClassifier, ?> variable)
   {
     environment.addElement(variable.getName(), (Variable)variable, true);
-  }
-
-  protected Map<EClass, ? extends Set<? extends EObject>> createExtentMap(CDOView view, IQueryContext context)
-  {
-    CDORevisionCacheAdder cacheAdder = (CDORevisionCacheAdder)context.getView().getRepository().getRevisionManager();
-    OCLExtentCreator extentCreator = new CDOExtentCreator(view, cacheAdder);
-    return new CDOExtentMap(extentCreator);
   }
 
   public static void prepareContainer(IManagedContainer container)

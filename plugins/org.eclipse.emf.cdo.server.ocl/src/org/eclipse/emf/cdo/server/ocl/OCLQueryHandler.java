@@ -28,6 +28,8 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.DiagnosticException;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -49,6 +51,7 @@ import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.helper.OCLHelper;
 import org.eclipse.ocl.types.OCLStandardLibrary;
+import org.eclipse.ocl.util.ProblemAware;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -143,6 +146,15 @@ public class OCLQueryHandler implements IQueryHandler
       }
       else
       {
+        if (query instanceof ProblemAware)
+        {
+          ProblemAware problemAware = (ProblemAware)query;
+          Diagnostic problems = problemAware.getProblems();
+          if (problems != null)
+          {
+            throw new DiagnosticException(problems);
+          }
+        }
 
         throw new IllegalStateException("Invalid result: " + evaluated.toString());
       }

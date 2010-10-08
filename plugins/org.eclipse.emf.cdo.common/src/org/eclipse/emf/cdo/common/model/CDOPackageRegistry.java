@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.common.model;
 
+import org.eclipse.emf.common.util.Enumerator;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EPackage;
 
 /**
@@ -50,4 +52,9 @@ public interface CDOPackageRegistry extends EPackage.Registry
    * Returns all package infos that are registered in this package registry.
    */
   public CDOPackageInfo[] getPackageInfos();
+
+  /**
+   * @since 4.0
+   */
+  public EEnumLiteral getEnumLiteralFor(Enumerator value);
 }

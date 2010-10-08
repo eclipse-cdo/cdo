@@ -38,6 +38,10 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.Enumerator;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -84,6 +88,10 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
 
   @ExcludeFromDump
   private transient InternalCDOPackageUnit[] packageUnits;
+
+  private Map<Enumerator, EEnumLiteral> enumLiterals = new HashMap<Enumerator, EEnumLiteral>();
+
+  private Set<CDOPackageInfo> visitedPackages = new HashSet<CDOPackageInfo>();
 
   public CDOPackageRegistryImpl()
   {
@@ -462,6 +470,55 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     }
 
     return result.toArray(new EPackage[result.size()]);
+  }
+
+  public EEnumLiteral getEnumLiteralFor(Enumerator value)
+  {
+    EEnumLiteral result = enumLiterals.get(value);
+    if (result != null)
+    {
+      return result;
+    }
+
+    for (CDOPackageUnit packageUnit : getPackageUnits())
+    {
+      for (CDOPackageInfo packageInfo : packageUnit.getPackageInfos())
+      {
+        if (visitedPackages.add(packageInfo))
+        {
+          result = visitPackage(packageInfo, value);
+          if (result != null)
+          {
+            return result;
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  private EEnumLiteral visitPackage(CDOPackageInfo packageInfo, Enumerator value)
+  {
+    EEnumLiteral result = null;
+    for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())
+    {
+      if (classifier instanceof EEnum)
+      {
+        EEnum eenum = (EEnum)classifier;
+        for (EEnumLiteral eEnumLiteral : eenum.getELiterals())
+        {
+          Enumerator instance = eEnumLiteral.getInstance();
+          enumLiterals.put(instance, eEnumLiteral);
+          if (instance == value)
+          {
+            result = eEnumLiteral;
+          }
+        }
+      }
+    }
+
+    return result;
   }
 
   @Override

@@ -23,11 +23,11 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
-import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.spi.cdo.FSMUtil;
 
 import java.util.List;
 import java.util.Map;

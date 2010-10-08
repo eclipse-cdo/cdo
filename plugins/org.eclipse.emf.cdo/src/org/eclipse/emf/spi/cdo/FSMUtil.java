@@ -9,7 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - bug 246705
  */
-package org.eclipse.emf.internal.cdo.util;
+package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
@@ -33,14 +33,13 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.spi.cdo.InternalCDOObject;
-import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.Collection;
 import java.util.Iterator;
 
 /**
  * @author Eike Stepper
+ * @since 4.0
  */
 public final class FSMUtil
 {

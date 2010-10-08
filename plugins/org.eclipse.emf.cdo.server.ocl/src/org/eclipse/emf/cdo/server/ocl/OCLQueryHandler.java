@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.server.ocl;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
@@ -35,6 +34,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.ocl.Environment;
@@ -136,9 +136,9 @@ public class OCLQueryHandler implements IQueryHandler
         Collection<?> results = (Collection<?>)evaluated;
         for (Object result : results)
         {
-          if (result instanceof CDOObject)
+          if (result instanceof EObject)
           {
-            CDORevision revision = ((CDOObject)result).cdoRevision();
+            CDORevision revision = getRevision((EObject)result, view);
             if (!context.addResult(revision))
             {
               break;
@@ -172,6 +172,11 @@ public class OCLQueryHandler implements IQueryHandler
         extentMap.cancel();
       }
     }
+  }
+
+  protected CDORevision getRevision(EObject object, CDOView view)
+  {
+    return FSMUtil.adapt(object, view).cdoRevision();
   }
 
   protected Object evaluate(Query<EClassifier, EClass, EObject> query, EObject object)

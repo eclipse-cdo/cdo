@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.util.FSMUtil;
+import org.eclipse.emf.spi.cdo.FSMUtil;
 
 /**
  * @author Simon McDuff

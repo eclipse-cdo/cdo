@@ -198,13 +198,15 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
 
       // Remember the branchPoint because it can change
       InternalView view = getView();
-      long timeStamp = view.getTimeStamp();
-      if (timeStamp == CDOBranchPoint.UNSPECIFIED_DATE && repository.isSupportingAudits())
-      {
-        timeStamp = repository.getTimeStamp();
-      }
 
-      branchPoint = view.getBranch().getPoint(timeStamp);
+      // long timeStamp = view.getTimeStamp();
+      // if (timeStamp == CDOBranchPoint.UNSPECIFIED_DATE && repository.isSupportingAudits())
+      // {
+      // timeStamp = repository.getTimeStamp();
+      // }
+      //
+      // branchPoint = view.getBranch().getPoint(timeStamp);
+
       branchPoint = CDOBranchUtil.copyBranchPoint(view);
     }
 

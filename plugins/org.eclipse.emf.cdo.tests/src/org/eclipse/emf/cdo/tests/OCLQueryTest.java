@@ -147,6 +147,17 @@ public class OCLQueryTest extends AbstractCDOTest
     }
   }
 
+  public void testDirtyState() throws Exception
+  {
+    Product1 product = products.get(2);
+    product.setName("1");
+    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.name='1')",
+        getModel1Package().getProduct1(), true);
+
+    List<Product1> products = query.getResult(Product1.class);
+    assertEquals(2, products.size());
+  }
+
   private CDOResource createTestSet(CDOTransaction transaction) throws CommitException
   {
     disableConsole();

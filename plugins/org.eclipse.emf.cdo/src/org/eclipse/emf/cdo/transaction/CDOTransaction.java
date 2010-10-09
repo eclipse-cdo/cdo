@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.options.IOptionsEvent;
@@ -152,6 +153,16 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction, CDOChangeSe
    * @since 4.0
    */
   public Set<EObject> getCommittables();
+
+  /**
+   * @since 4.0
+   */
+  public CDOQuery createQuery(String language, String queryString, boolean considerDirtyState);
+
+  /**
+   * @since 4.0
+   */
+  public CDOQuery createQuery(String language, String queryString, Object context, boolean considerDirtyState);
 
   public Options options();
 

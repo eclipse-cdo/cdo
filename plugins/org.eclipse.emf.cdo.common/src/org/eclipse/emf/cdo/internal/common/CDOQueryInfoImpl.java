@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.internal.common;
 
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
@@ -38,6 +39,8 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
 
   protected boolean legacyModeEnabled;
 
+  protected CDOChangeSetData changeSet;
+
   public CDOQueryInfoImpl(String queryLanguage, String queryString, Object context)
   {
     this.queryLanguage = queryLanguage;
@@ -52,6 +55,11 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     context = in.readCDORevisionOrPrimitiveOrClassifier();
     maxResults = in.readInt();
     legacyModeEnabled = in.readBoolean();
+
+    if (in.readBoolean())
+    {
+      changeSet = in.readCDOChangeSetData();
+    }
 
     int size = in.readInt();
     for (int i = 0; i < size; i++)
@@ -69,6 +77,16 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     out.writeCDORevisionOrPrimitiveOrClassifier(context);
     out.writeInt(maxResults);
     out.writeBoolean(legacyModeEnabled);
+
+    if (changeSet != null)
+    {
+      out.writeBoolean(true);
+      out.writeCDOChangeSetData(changeSet);
+    }
+    else
+    {
+      out.writeBoolean(false);
+    }
 
     out.writeInt(parameters.size());
     for (Entry<String, Object> entry : parameters.entrySet())
@@ -128,5 +146,15 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
   public void setLegacyModeEnabled(boolean legacyModeEnabled)
   {
     this.legacyModeEnabled = legacyModeEnabled;
+  }
+
+  public CDOChangeSetData getChangeSet()
+  {
+    return changeSet;
+  }
+
+  public void setChangeSet(CDOChangeSetData changeSet)
+  {
+    this.changeSet = changeSet;
   }
 }

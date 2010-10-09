@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.common.util;
 
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+
 import java.util.Map;
 
 /**
@@ -55,4 +57,12 @@ public interface CDOQueryInfo
    * @since 4.0
    */
   public boolean isLegacyModeEnabled();
+
+  /**
+   * Returns the {@link CDOChangeSetData change set} to be considered if this query has been created by a dirty
+   * transaction, <code>null</code> otherwise.
+   * 
+   * @since 4.0
+   */
+  public CDOChangeSetData getChangeSet();
 }

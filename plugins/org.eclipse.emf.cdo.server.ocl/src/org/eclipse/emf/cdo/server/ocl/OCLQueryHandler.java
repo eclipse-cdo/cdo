@@ -10,16 +10,22 @@
  */
 package org.eclipse.emf.cdo.server.ocl;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
+import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.QueryHandlerFactory;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -80,7 +86,17 @@ public class OCLQueryHandler implements IQueryHandler
 
     try
     {
-      CDOView view = CDOServerUtil.openView(context.getView(), info.isLegacyModeEnabled());
+      ISession session = context.getView().getSession();
+      CDOBranchPoint branchPoint = CDOBranchUtil.copyBranchPoint(context);
+
+      CDORevisionProvider revisionProvider = context.getView();
+      CDOChangeSetData changeSet = info.getChangeSet();
+      if (changeSet != null)
+      {
+        revisionProvider = new CDOChangeSetRevisionProvider(revisionProvider, changeSet);
+      }
+
+      CDOView view = CDOServerUtil.openView(session, branchPoint, info.isLegacyModeEnabled(), revisionProvider);
       CDOPackageRegistry packageRegistry = view.getSession().getPackageRegistry();
 
       EcoreEnvironmentFactory envFactory = new EcoreEnvironmentFactory(packageRegistry);

@@ -335,12 +335,12 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     }
   }
 
-  public CDOQuery createQuery(String language, String queryString)
+  public CDOQueryImpl createQuery(String language, String queryString)
   {
     return createQuery(language, queryString, null);
   }
 
-  public CDOQuery createQuery(String language, String queryString, Object context)
+  public CDOQueryImpl createQuery(String language, String queryString, Object context)
   {
     checkActive();
     return new CDOQueryImpl(this, language, queryString, context);
@@ -544,7 +544,7 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
   private CDOQuery createResourcesQuery(CDOResourceFolder folder, String name, boolean exactMatch)
   {
     checkActive();
-    CDOQuery query = createQuery(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES, name);
+    CDOQueryImpl query = createQuery(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES, name);
     query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES_FOLDER_ID, folder == null ? null : folder.cdoID());
     query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES_EXACT_MATCH, exactMatch);
     return query;

@@ -96,6 +96,7 @@ import org.eclipse.emf.internal.cdo.CDOObjectWrapper;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
+import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
 import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
@@ -1906,6 +1907,28 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       providingCDOID.set(false);
     }
+  }
+
+  @Override
+  public CDOQueryImpl createQuery(String language, String queryString, Object context)
+  {
+    return createQuery(language, queryString, context, false);
+  }
+
+  public CDOQueryImpl createQuery(String language, String queryString, boolean considerDirtyState)
+  {
+    return createQuery(language, queryString, null, considerDirtyState);
+  }
+
+  public CDOQueryImpl createQuery(String language, String queryString, Object context, boolean considerDirtyState)
+  {
+    CDOQueryImpl query = super.createQuery(language, queryString, context);
+    if (considerDirtyState && isDirty())
+    {
+      query.setChangeSet(getChangeSetData());
+    }
+
+    return query;
   }
 
   /**

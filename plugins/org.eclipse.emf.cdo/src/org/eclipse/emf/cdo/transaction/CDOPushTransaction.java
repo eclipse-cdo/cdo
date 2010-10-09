@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -321,7 +320,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   /**
    * @since 4.0
    */
-  public CDOQueryImpl createQuery(String language, String queryString, boolean considerDirtyState)
+  public CDOQuery createQuery(String language, String queryString, boolean considerDirtyState)
   {
     return createQuery(language, queryString, null, considerDirtyState);
   }
@@ -329,9 +328,9 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   /**
    * @since 4.0
    */
-  public CDOQueryImpl createQuery(String language, String queryString, Object context, boolean considerDirtyState)
+  public CDOQuery createQuery(String language, String queryString, Object context, boolean considerDirtyState)
   {
-    return (CDOQueryImpl)delegate.createQuery(language, queryString, context, considerDirtyState);
+    return delegate.createQuery(language, queryString, context, considerDirtyState);
   }
 
   /**

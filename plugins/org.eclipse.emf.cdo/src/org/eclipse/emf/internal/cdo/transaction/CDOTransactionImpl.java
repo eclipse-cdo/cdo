@@ -1925,7 +1925,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     CDOQueryImpl query = super.createQuery(language, queryString, context);
     if (considerDirtyState && isDirty())
     {
-      query.setChangeSet(getChangeSetData());
+      query.setChangeSetData(getChangeSetData());
     }
 
     return query;

@@ -39,7 +39,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
 
   protected boolean legacyModeEnabled;
 
-  protected CDOChangeSetData changeSet;
+  protected CDOChangeSetData changeSetData;
 
   public CDOQueryInfoImpl(String queryLanguage, String queryString, Object context)
   {
@@ -58,7 +58,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
 
     if (in.readBoolean())
     {
-      changeSet = in.readCDOChangeSetData();
+      changeSetData = in.readCDOChangeSetData();
     }
 
     int size = in.readInt();
@@ -78,10 +78,10 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     out.writeInt(maxResults);
     out.writeBoolean(legacyModeEnabled);
 
-    if (changeSet != null)
+    if (changeSetData != null)
     {
       out.writeBoolean(true);
-      out.writeCDOChangeSetData(changeSet);
+      out.writeCDOChangeSetData(changeSetData);
     }
     else
     {
@@ -148,13 +148,13 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     this.legacyModeEnabled = legacyModeEnabled;
   }
 
-  public CDOChangeSetData getChangeSet()
+  public CDOChangeSetData getChangeSetData()
   {
-    return changeSet;
+    return changeSetData;
   }
 
-  public void setChangeSet(CDOChangeSetData changeSet)
+  public void setChangeSetData(CDOChangeSetData changeSetData)
   {
-    this.changeSet = changeSet;
+    this.changeSetData = changeSetData;
   }
 }

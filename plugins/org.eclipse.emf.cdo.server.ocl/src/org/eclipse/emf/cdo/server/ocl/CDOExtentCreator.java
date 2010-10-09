@@ -11,12 +11,16 @@
 package org.eclipse.emf.cdo.server.ocl;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.EClass;
@@ -27,6 +31,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
@@ -39,6 +44,8 @@ public class CDOExtentCreator implements OCLExtentCreator
 {
   private CDOView view;
 
+  private CDOChangeSetData changeSetData;
+
   private CDORevisionCacheAdder revisionCacheAdder;
 
   public CDOExtentCreator(CDOView view)
@@ -49,6 +56,16 @@ public class CDOExtentCreator implements OCLExtentCreator
   public CDOView getView()
   {
     return view;
+  }
+
+  public CDOChangeSetData getChangeSetData()
+  {
+    return changeSetData;
+  }
+
+  public void setChangeSetData(CDOChangeSetData changeSetData)
+  {
+    this.changeSetData = changeSetData;
   }
 
   public CDORevisionCacheAdder getRevisionCacheAdder()
@@ -73,6 +90,22 @@ public class CDOExtentCreator implements OCLExtentCreator
       final AtomicBoolean canceled)
   {
     final Set<EObject> extent = new HashSet<EObject>();
+    if (changeSetData != null)
+    {
+      List<CDOIDAndVersion> newObjects = changeSetData.getNewObjects();
+      if (newObjects != null)
+      {
+        for (CDOIDAndVersion key : newObjects)
+        {
+          EObject object = getEObject(key.getID());
+          if (object != null)
+          {
+            extent.add(object);
+          }
+        }
+      }
+    }
+
     accessor.handleRevisions(eClass, branch, timeStamp, new CDORevisionHandler()
     {
       public boolean handleRevision(CDORevision revision)
@@ -82,13 +115,43 @@ public class CDOExtentCreator implements OCLExtentCreator
           revisionCacheAdder.addRevision(revision);
         }
 
-        InternalCDOObject object = (InternalCDOObject)view.getObject(revision.getID());
-        extent.add(object.cdoInternalInstance());
+        CDOID id = revision.getID();
+        if (!isDetached(id))
+        {
+          EObject object = getEObject(id);
+          if (object != null)
+          {
+            extent.add(object);
+          }
+        }
+
         return !canceled.get();
       }
     });
 
     return extent;
+  }
+
+  protected boolean isDetached(CDOID id)
+  {
+    if (changeSetData == null)
+    {
+      return false;
+    }
+
+    CDOChangeKind changeKind = changeSetData.getChangeKind(id);
+    return changeKind == CDOChangeKind.DETACHED;
+  }
+
+  protected EObject getEObject(CDOID id) throws ObjectNotFoundException
+  {
+    InternalCDOObject object = (InternalCDOObject)view.getObject(id);
+    if (object == null)
+    {
+      throw new ObjectNotFoundException(id);
+    }
+
+    return object.cdoInternalInstance();
   }
 
   /**
@@ -151,6 +214,40 @@ public class CDOExtentCreator implements OCLExtentCreator
             @Override
             public void run()
             {
+              handleDirtyState();
+              handlePersistentState();
+
+              synchronized (mutex)
+              {
+                done[0] = true;
+                mutex.notify();
+              }
+
+              if (empty == null)
+              {
+                empty = true;
+                emptyKnown.countDown();
+              }
+            }
+
+            private void handleDirtyState()
+            {
+              CDOChangeSetData changeSetData = getChangeSetData();
+              if (changeSetData != null)
+              {
+                List<CDOIDAndVersion> newObjects = changeSetData.getNewObjects();
+                if (newObjects != null)
+                {
+                  for (CDOIDAndVersion key : newObjects)
+                  {
+                    enqueue(key.getID());
+                  }
+                }
+              }
+            }
+
+            private void handlePersistentState()
+            {
               accessor.handleRevisions(eClass, branch, timeStamp, new CDORevisionHandler()
               {
                 public boolean handleRevision(CDORevision revision)
@@ -164,26 +261,23 @@ public class CDOExtentCreator implements OCLExtentCreator
                     revisionCacheAdder.addRevision(revision);
                   }
 
-                  synchronized (mutex)
+                  CDOID id = revision.getID();
+                  if (!isDetached(id))
                   {
-                    ids.addLast(revision.getID());
-                    mutex.notify();
+                    enqueue(id);
                   }
 
                   return !canceled.get();
                 }
               });
+            }
 
+            private void enqueue(CDOID id)
+            {
               synchronized (mutex)
               {
-                done[0] = true;
+                ids.addLast(id);
                 mutex.notify();
-              }
-
-              if (empty == null)
-              {
-                empty = true;
-                emptyKnown.countDown();
               }
             }
           };
@@ -241,8 +335,7 @@ public class CDOExtentCreator implements OCLExtentCreator
 
               try
               {
-                InternalCDOObject object = (InternalCDOObject)getView().getObject(next);
-                return object.cdoInternalInstance();
+                return getEObject(next);
               }
               finally
               {

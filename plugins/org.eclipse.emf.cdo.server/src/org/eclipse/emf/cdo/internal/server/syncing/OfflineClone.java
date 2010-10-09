@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.server.syncing;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -23,6 +24,7 @@ import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.commit.CDOChangeKindCache;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -103,6 +105,8 @@ public class OfflineClone extends SynchronizableRepository
   protected static final class CommitContextData implements CDOCommitData
   {
     private InternalCommitContext commitContext;
+
+    private CDOChangeKindCache changeKindCache;
 
     public CommitContextData(InternalCommitContext commitContext)
     {
@@ -198,6 +202,16 @@ public class OfflineClone extends SynchronizableRepository
           return detachedObjects.length;
         }
       };
+    }
+
+    public synchronized CDOChangeKind getChangeKind(CDOID id)
+    {
+      if (changeKindCache == null)
+      {
+        changeKindCache = new CDOChangeKindCache(this);
+      }
+
+      return changeKindCache.getChangeKind(id);
     }
   }
 

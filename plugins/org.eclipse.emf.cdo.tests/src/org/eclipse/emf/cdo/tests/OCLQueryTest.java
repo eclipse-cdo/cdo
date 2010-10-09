@@ -41,6 +41,8 @@ public class OCLQueryTest extends AbstractCDOTest
 
   private CDOTransaction transaction;
 
+  private CDOResource resource;
+
   private List<Product1> products = new ArrayList<Product1>();
 
   private List<Customer> customers = new ArrayList<Customer>();
@@ -55,7 +57,7 @@ public class OCLQueryTest extends AbstractCDOTest
     super.doSetUp();
     CDOSession session = openSession();
     transaction = session.openTransaction();
-    createTestSet(transaction);
+    resource = createTestSet(transaction);
   }
 
   public void testAllProducts() throws Exception
@@ -147,15 +149,46 @@ public class OCLQueryTest extends AbstractCDOTest
     }
   }
 
-  public void testDirtyState() throws Exception
+  public void testNewObject() throws Exception
+  {
+    resource.getContents().add(getModel1Factory().createProduct1());
+    assertEquals(true, transaction.isDirty());
+
+    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1(), true);
+
+    List<Product1> products = query.getResult(Product1.class);
+    assertEquals(NUM_OF_PRODUCTS + 1, products.size());
+  }
+
+  public void testDirtyObject() throws Exception
   {
     Product1 product = products.get(2);
     product.setName("1");
+
     CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.name='1')",
         getModel1Package().getProduct1(), true);
 
     List<Product1> products = query.getResult(Product1.class);
     assertEquals(2, products.size());
+  }
+
+  public void testDetachedObject() throws Exception
+  {
+    resource.getContents().add(0, getModel1Factory().createProduct1());
+    transaction.commit();
+
+    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1(), true);
+
+    List<Product1> products = query.getResult(Product1.class);
+    assertEquals(NUM_OF_PRODUCTS + 1, products.size());
+
+    resource.getContents().remove(0);
+    assertEquals(true, transaction.isDirty());
+
+    query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1(), true);
+
+    products = query.getResult(Product1.class);
+    assertEquals(NUM_OF_PRODUCTS, products.size());
   }
 
   private CDOResource createTestSet(CDOTransaction transaction) throws CommitException

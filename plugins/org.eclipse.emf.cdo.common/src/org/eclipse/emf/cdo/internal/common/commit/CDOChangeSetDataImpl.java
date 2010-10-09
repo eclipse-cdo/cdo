@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.common.commit;
 
+import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
@@ -17,6 +18,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.commit.CDOChangeKindCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import java.text.MessageFormat;
@@ -36,6 +38,8 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
   private List<CDORevisionKey> changedObjects;
 
   private List<CDOIDAndVersion> detachedObjects;
+
+  private CDOChangeKindCache changeKindCache;
 
   public CDOChangeSetDataImpl(List<CDOIDAndVersion> newObjects, List<CDORevisionKey> changedObjects,
       List<CDOIDAndVersion> detachedObjects)
@@ -186,6 +190,16 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
   public List<CDOIDAndVersion> getDetachedObjects()
   {
     return detachedObjects;
+  }
+
+  public synchronized CDOChangeKind getChangeKind(CDOID id)
+  {
+    if (changeKindCache == null)
+    {
+      changeKindCache = new CDOChangeKindCache(this);
+    }
+
+    return changeKindCache.getChangeKind(id);
   }
 
   @Override

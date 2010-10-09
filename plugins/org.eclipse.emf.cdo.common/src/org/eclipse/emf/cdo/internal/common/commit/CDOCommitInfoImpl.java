@@ -11,9 +11,11 @@
 package org.eclipse.emf.cdo.internal.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -105,6 +107,12 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
   {
     loadCommitDataIfNeeded();
     return commitData.getDetachedObjects();
+  }
+
+  public CDOChangeKind getChangeKind(CDOID id)
+  {
+    loadCommitDataIfNeeded();
+    return commitData.getChangeKind(id);
   }
 
   @Override

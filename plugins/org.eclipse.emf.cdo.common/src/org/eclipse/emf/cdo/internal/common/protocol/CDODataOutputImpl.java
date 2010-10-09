@@ -404,12 +404,6 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     CDOType type = null;
     if (value instanceof CDOID)
     {
-      CDOID id = (CDOID)value;
-      if (id.isTemporary())
-      {
-        throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDODataOutputImpl.5"), value)); //$NON-NLS-1$
-      }
-
       type = CDOType.OBJECT;
     }
     else

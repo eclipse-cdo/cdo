@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.spi.common.commit;
 
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetDataProvider;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -26,7 +27,7 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 4.0
  */
-public class CDOChangeSetRevisionProvider implements CDORevisionProvider
+public class CDOChangeSetDataRevisionProvider implements CDORevisionProvider, CDOChangeSetDataProvider
 {
   private static final CDOIDAndVersion DETACHED = new CDOIDAndVersion()
   {
@@ -49,7 +50,7 @@ public class CDOChangeSetRevisionProvider implements CDORevisionProvider
 
   private CDORevisionProvider delegate;
 
-  private CDOChangeSetData changeSet;
+  private CDOChangeSetData changeSetData;
 
   private CDORevisionProvider revisionCallback;
 
@@ -57,18 +58,23 @@ public class CDOChangeSetRevisionProvider implements CDORevisionProvider
 
   private Map<CDOID, CDOIDAndVersion> cachedRevisions;
 
-  public CDOChangeSetRevisionProvider(CDORevisionProvider delegate, CDOChangeSetData changeSet,
+  public CDOChangeSetDataRevisionProvider(CDORevisionProvider delegate, CDOChangeSetData changeSetData,
       CDORevisionProvider revisionCallback, CDORevisionDeltaProvider revisionDeltaCallback)
   {
     this.delegate = delegate;
-    this.changeSet = changeSet;
+    this.changeSetData = changeSetData;
     this.revisionCallback = revisionCallback;
     this.revisionDeltaCallback = revisionDeltaCallback;
   }
 
-  public CDOChangeSetRevisionProvider(CDORevisionProvider delegate, CDOChangeSetData changeSet)
+  public CDOChangeSetDataRevisionProvider(CDORevisionProvider delegate, CDOChangeSetData changeSetData)
   {
-    this(delegate, changeSet, null, null);
+    this(delegate, changeSetData, null, null);
+  }
+
+  public CDOChangeSetData getChangeSetData()
+  {
+    return changeSetData;
   }
 
   public synchronized CDORevision getRevision(CDOID id)
@@ -114,32 +120,32 @@ public class CDOChangeSetRevisionProvider implements CDORevisionProvider
   private Map<CDOID, CDOIDAndVersion> cacheRevisions()
   {
     Map<CDOID, CDOIDAndVersion> cache = new HashMap<CDOID, CDOIDAndVersion>();
-  
-    for (CDOIDAndVersion key : changeSet.getNewObjects())
+
+    for (CDOIDAndVersion key : changeSetData.getNewObjects())
     {
       if (revisionCallback == null && !(key instanceof CDORevision))
       {
         throw new IllegalStateException("No callback installed to lazily obtain revision " + key);
       }
-  
+
       cache.put(key.getID(), key);
     }
-  
-    for (CDORevisionKey key : changeSet.getChangedObjects())
+
+    for (CDORevisionKey key : changeSetData.getChangedObjects())
     {
       if (revisionDeltaCallback == null && !(key instanceof CDORevisionDelta))
       {
         throw new IllegalStateException("No callback installed to lazily obtain revision delta " + key);
       }
-  
+
       cache.put(key.getID(), key);
     }
-  
-    for (CDOIDAndVersion key : changeSet.getDetachedObjects())
+
+    for (CDOIDAndVersion key : changeSetData.getDetachedObjects())
     {
       cache.put(key.getID(), DETACHED);
     }
-  
+
     return cache;
   }
 

@@ -12,8 +12,10 @@ package org.eclipse.emf.cdo.internal.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -74,6 +76,11 @@ public abstract class DelegatingCommitInfo implements CDOCommitInfo
   public List<CDOIDAndVersion> getDetachedObjects()
   {
     return getDelegate().getDetachedObjects();
+  }
+
+  public CDOChangeKind getChangeKind(CDOID id)
+  {
+    return getDelegate().getChangeKind(id);
   }
 
   public int compareTo(CDOBranchPoint o)

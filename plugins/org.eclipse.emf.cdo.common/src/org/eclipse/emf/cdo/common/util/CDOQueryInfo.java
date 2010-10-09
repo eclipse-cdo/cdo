@@ -64,5 +64,5 @@ public interface CDOQueryInfo
    * 
    * @since 4.0
    */
-  public CDOChangeSetData getChangeSet();
+  public CDOChangeSetData getChangeSetData();
 }

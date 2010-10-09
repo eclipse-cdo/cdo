@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
-import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetRevisionProvider;
+import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetDataRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.QueryHandlerFactory;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -90,10 +90,10 @@ public class OCLQueryHandler implements IQueryHandler
       CDOBranchPoint branchPoint = CDOBranchUtil.copyBranchPoint(context);
 
       CDORevisionProvider revisionProvider = context.getView();
-      CDOChangeSetData changeSet = info.getChangeSet();
-      if (changeSet != null)
+      CDOChangeSetData changeSetData = info.getChangeSetData();
+      if (changeSetData != null)
       {
-        revisionProvider = new CDOChangeSetRevisionProvider(revisionProvider, changeSet);
+        revisionProvider = new CDOChangeSetDataRevisionProvider(revisionProvider, changeSetData);
       }
 
       CDOView view = CDOServerUtil.openView(session, branchPoint, info.isLegacyModeEnabled(), revisionProvider);
@@ -102,7 +102,7 @@ public class OCLQueryHandler implements IQueryHandler
       EcoreEnvironmentFactory envFactory = new EcoreEnvironmentFactory(packageRegistry);
       OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl = OCL.newInstance(envFactory);
 
-      extentMap = createExtentMap(view, context);
+      extentMap = createExtentMap(view, changeSetData, context);
       ocl.setExtentMap(extentMap);
 
       OCLHelper<EClassifier, ?, ?, Constraint> helper = ocl.createOCLHelper();
@@ -207,11 +207,17 @@ public class OCLQueryHandler implements IQueryHandler
     return query.evaluate(object);
   }
 
-  protected CDOExtentMap createExtentMap(CDOView view, IQueryContext context)
+  protected CDOExtentMap createExtentMap(CDOView view, CDOChangeSetData changeSetData, IQueryContext context)
   {
-    CDOExtentCreator creator = new CDOExtentCreator.Lazy(view);
+    CDOExtentCreator creator = createsLazyExtents() ? new CDOExtentCreator.Lazy(view) : new CDOExtentCreator(view);
+    creator.setChangeSetData(changeSetData);
     creator.setRevisionCacheAdder((CDORevisionCacheAdder)context.getView().getRepository().getRevisionManager());
     return new CDOExtentMap(creator);
+  }
+
+  protected boolean createsLazyExtents()
+  {
+    return false;
   }
 
   protected EClassifier getArbitraryContextClassifier(CDOPackageRegistry packageRegistry)
@@ -230,7 +236,7 @@ public class OCLQueryHandler implements IQueryHandler
       }
     }
 
-    throw new IllegalStateException("Context parameter missing");
+    throw new IllegalStateException("Context missing");
   }
 
   protected void initEnvironment(

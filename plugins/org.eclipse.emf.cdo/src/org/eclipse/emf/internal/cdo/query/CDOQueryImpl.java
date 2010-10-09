@@ -132,7 +132,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     CDOQueryInfoImpl queryInfo = new CDOQueryInfoImpl(getQueryLanguage(), getQueryString(), getContext());
     queryInfo.setMaxResults(getMaxResults());
     queryInfo.setLegacyModeEnabled(isLegacyModeEnabled());
-    queryInfo.setChangeSet(getChangeSet());
+    queryInfo.setChangeSetData(getChangeSetData());
 
     for (Entry<String, Object> entry : getParameters().entrySet())
     {

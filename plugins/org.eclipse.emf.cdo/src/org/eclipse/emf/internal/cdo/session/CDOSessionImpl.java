@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -1585,6 +1586,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     public int compareTo(CDOBranchPoint o)
     {
       return commitInfo.compareTo(o);
+    }
+
+    public CDOChangeKind getChangeKind(CDOID id)
+    {
+      return commitInfo.getChangeKind(id);
     }
 
     @Override

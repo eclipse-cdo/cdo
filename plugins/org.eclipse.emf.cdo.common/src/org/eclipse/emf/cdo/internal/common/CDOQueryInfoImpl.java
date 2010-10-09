@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -30,21 +30,28 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
 
   protected String queryString;
 
+  protected Object context;
+
   protected Map<String, Object> parameters = new HashMap<String, Object>();
 
   protected int maxResults = UNLIMITED_RESULTS;
 
-  public CDOQueryInfoImpl(String queryLanguage, String queryString)
+  protected boolean legacyModeEnabled;
+
+  public CDOQueryInfoImpl(String queryLanguage, String queryString, Object context)
   {
     this.queryLanguage = queryLanguage;
     this.queryString = queryString;
+    this.context = context;
   }
 
   public CDOQueryInfoImpl(CDODataInput in) throws IOException
   {
     queryLanguage = in.readString();
     queryString = in.readString();
+    context = in.readCDORevisionOrPrimitiveOrClassifier();
     maxResults = in.readInt();
+    legacyModeEnabled = in.readBoolean();
 
     int size = in.readInt();
     for (int i = 0; i < size; i++)
@@ -59,7 +66,9 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
   {
     out.writeString(queryLanguage);
     out.writeString(queryString);
+    out.writeCDORevisionOrPrimitiveOrClassifier(context);
     out.writeInt(maxResults);
+    out.writeBoolean(legacyModeEnabled);
 
     out.writeInt(parameters.size());
     for (Entry<String, Object> entry : parameters.entrySet())
@@ -84,6 +93,17 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     return Collections.unmodifiableMap(parameters);
   }
 
+  public Object getContext()
+  {
+    return context;
+  }
+
+  public CDOQueryInfoImpl setContext(Object context)
+  {
+    this.context = context;
+    return this;
+  }
+
   public void addParameter(String key, Object value)
   {
     parameters.put(key, value);
@@ -98,5 +118,15 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
   {
     this.maxResults = maxResults;
     return this;
+  }
+
+  public boolean isLegacyModeEnabled()
+  {
+    return legacyModeEnabled;
+  }
+
+  public void setLegacyModeEnabled(boolean legacyModeEnabled)
+  {
+    this.legacyModeEnabled = legacyModeEnabled;
   }
 }

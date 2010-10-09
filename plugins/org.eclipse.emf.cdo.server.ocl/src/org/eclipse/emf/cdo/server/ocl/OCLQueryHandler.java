@@ -69,8 +69,6 @@ public class OCLQueryHandler implements IQueryHandler
 
   public static final String LANGUAGE_NAME = "ocl"; //$NON-NLS-1$
 
-  public static final String CONTEXT_PARAMETER = "context"; //$NON-NLS-1$
-
   public OCLQueryHandler()
   {
   }
@@ -78,13 +76,11 @@ public class OCLQueryHandler implements IQueryHandler
   public void executeQuery(CDOQueryInfo info, IQueryContext context)
   {
     String queryString = info.getQueryString();
-    Map<String, Object> parameters = new HashMap<String, Object>(info.getParameters());
-    boolean legacyModeEnabled = true; // TODO Add this to CDOQueryInfo!
     CDOExtentMap extentMap = null;
 
     try
     {
-      CDOView view = CDOServerUtil.openView(context.getView(), legacyModeEnabled);
+      CDOView view = CDOServerUtil.openView(context.getView(), info.isLegacyModeEnabled());
       CDOPackageRegistry packageRegistry = view.getSession().getPackageRegistry();
 
       EcoreEnvironmentFactory envFactory = new EcoreEnvironmentFactory(packageRegistry);
@@ -98,15 +94,20 @@ public class OCLQueryHandler implements IQueryHandler
       EClassifier classifier;
       EObject object = null;
 
-      Object contextParameter = parameters.get(CONTEXT_PARAMETER);
-      parameters.remove(CONTEXT_PARAMETER);
-
+      Object contextParameter = info.getContext();
       if (contextParameter instanceof CDOID)
       {
         CDOID id = (CDOID)contextParameter;
-        InternalCDOObject cdoObject = (InternalCDOObject)view.getObject(id);
-        object = cdoObject.cdoInternalInstance();
-        classifier = object.eClass();
+        if (id.isNull())
+        {
+          classifier = getArbitraryContextClassifier(packageRegistry);
+        }
+        else
+        {
+          InternalCDOObject cdoObject = (InternalCDOObject)view.getObject(id);
+          object = cdoObject.cdoInternalInstance();
+          classifier = object.eClass();
+        }
       }
       else if (contextParameter instanceof EClassifier)
       {
@@ -119,6 +120,7 @@ public class OCLQueryHandler implements IQueryHandler
 
       helper.setContext(classifier);
 
+      Map<String, Object> parameters = new HashMap<String, Object>(info.getParameters());
       initEnvironment(ocl.getEnvironment(), packageRegistry, parameters);
 
       OCLExpression<EClassifier> expr = helper.createQuery(queryString);

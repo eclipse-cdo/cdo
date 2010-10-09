@@ -337,8 +337,13 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
   public CDOQuery createQuery(String language, String queryString)
   {
+    return createQuery(language, queryString, null);
+  }
+
+  public CDOQuery createQuery(String language, String queryString, Object context)
+  {
     checkActive();
-    return new CDOQueryImpl(this, language, queryString);
+    return new CDOQueryImpl(this, language, queryString, context);
   }
 
   public CDOResourceNode getResourceNode(String path)

@@ -368,9 +368,17 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
   public CDOObjectHandler[] getObjectHandlers();
 
   /**
+   * Same as <code>createQuery(language, queryString, null)</code>.
+   * 
+   * @see #createQuery(String, String, Object)
    * @since 2.0
    */
   public CDOQuery createQuery(String language, String queryString);
+
+  /**
+   * @since 4.0
+   */
+  public CDOQuery createQuery(String language, String queryString, Object context);
 
   /**
    * @since 2.0

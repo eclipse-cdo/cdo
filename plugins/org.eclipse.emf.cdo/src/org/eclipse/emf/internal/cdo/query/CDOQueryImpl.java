@@ -37,10 +37,11 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
 
   private InternalCDOView view;
 
-  public CDOQueryImpl(InternalCDOView view, String queryLanguage, String queryString)
+  public CDOQueryImpl(InternalCDOView view, String queryLanguage, String queryString, Object context)
   {
-    super(queryLanguage, queryString);
+    super(queryLanguage, queryString, context);
     this.view = view;
+    setLegacyModeEnabled(view.isLegacyModeEnabled());
   }
 
   public InternalCDOView getView()
@@ -49,15 +50,22 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
   }
 
   @Override
-  public CDOQueryImpl setMaxResults(int maxResults)
+  public CDOQueryImpl setContext(Object context)
   {
-    this.maxResults = maxResults;
+    this.context = context;
     return this;
   }
 
-  public CDOQuery setParameter(String name, Object value)
+  public CDOQueryImpl setParameter(String name, Object value)
   {
     parameters.put(name, value);
+    return this;
+  }
+
+  @Override
+  public CDOQueryImpl setMaxResults(int maxResults)
+  {
+    this.maxResults = maxResults;
     return this;
   }
 
@@ -121,8 +129,10 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
 
   protected CDOQueryInfoImpl createQueryInfo()
   {
-    CDOQueryInfoImpl queryInfo = new CDOQueryInfoImpl(getQueryLanguage(), getQueryString());
+    CDOQueryInfoImpl queryInfo = new CDOQueryInfoImpl(getQueryLanguage(), getQueryString(), getContext());
     queryInfo.setMaxResults(getMaxResults());
+    queryInfo.setLegacyModeEnabled(isLegacyModeEnabled());
+
     for (Entry<String, Object> entry : getParameters().entrySet())
     {
       Object value = entry.getValue();

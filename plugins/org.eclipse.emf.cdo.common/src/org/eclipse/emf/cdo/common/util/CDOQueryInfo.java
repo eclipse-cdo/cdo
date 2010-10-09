@@ -21,14 +21,38 @@ public interface CDOQueryInfo
 {
   public static final int UNLIMITED_RESULTS = -1;
 
+  /**
+   * Returns the language identifier of this query, never <code>null</code>.
+   */
   public String getQueryLanguage();
 
+  /**
+   * Returns the query string of this query or <code>null</code> if no query string has been set.
+   */
   public String getQueryString();
 
+  /**
+   * Returns the parameters of this query as a map.
+   */
   public Map<String, Object> getParameters();
+
+  /**
+   * Returns the context object, or <code>null</code> if no context is bound.
+   * 
+   * @since 4.0
+   */
+  public Object getContext();
 
   /**
    * Returns the maximum number of results to retrieve or {@link #UNLIMITED_RESULTS} for no limitation.
    */
   public int getMaxResults();
+
+  /**
+   * Returns <code>true</code> if the view of this query had legacy mode enabled at the time this query was created,
+   * <code>false</code> otherwise.
+   * 
+   * @since 4.0
+   */
+  public boolean isLegacyModeEnabled();
 }

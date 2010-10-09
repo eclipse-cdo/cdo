@@ -60,8 +60,7 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testAllProducts() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()");
-    query.setParameter("context", getModel1Package().getProduct1());
+    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1());
 
     List<Product1> products = query.getResult(Product1.class);
     assertEquals(NUM_OF_PRODUCTS, products.size());
@@ -69,8 +68,7 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testAllCustomers() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Customer.allInstances()");
-    query.setParameter("context", getModel1Package().getCustomer());
+    CDOQuery query = transaction.createQuery("ocl", "Customer.allInstances()", getModel1Package().getCustomer());
 
     List<Customer> customers = query.getResult(Customer.class);
     assertEquals(NUM_OF_CUSTOMERS, customers.size());
@@ -78,8 +76,8 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testAllProductsWithName() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.name='1')");
-    query.setParameter("context", getModel1Package().getProduct1());
+    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.name='1')",
+        getModel1Package().getProduct1());
 
     List<Product1> products = query.getResult(Product1.class);
     assertEquals(1, products.size());
@@ -87,8 +85,8 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testAllProductsWithNameParameter() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.name=myname)");
-    query.setParameter("context", getModel1Package().getProduct1());
+    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.name=myname)",
+        getModel1Package().getProduct1());
     query.setParameter("myname", "1");
 
     List<Product1> products = query.getResult(Product1.class);
@@ -97,8 +95,8 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testAllProductsWithVAT() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.vat=VAT::vat15)");
-    query.setParameter("context", getModel1Package().getProduct1());
+    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.vat=VAT::vat15)",
+        getModel1Package().getProduct1());
 
     List<Product1> products = query.getResult(Product1.class);
     assertEquals(10, products.size());
@@ -110,8 +108,8 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testAllProductsWithVATParameter() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.vat=myvat)");
-    query.setParameter("context", getModel1Package().getProduct1());
+    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.vat=myvat)",
+        getModel1Package().getProduct1());
     query.setParameter("myvat", VAT.VAT15);
 
     List<Product1> products = query.getResult(Product1.class);
@@ -125,8 +123,7 @@ public class OCLQueryTest extends AbstractCDOTest
   public void testSelfNavigation() throws Exception
   {
     SalesOrder salesOrder = salesOrders.get(0);
-    CDOQuery query = transaction.createQuery("ocl", "self.orderDetails");
-    query.setParameter("context", salesOrder);
+    CDOQuery query = transaction.createQuery("ocl", "self.orderDetails", salesOrder);
 
     List<OrderDetail> orderDetails = query.getResult(OrderDetail.class);
     assertEquals(salesOrder.getOrderDetails().size(), orderDetails.size());
@@ -134,8 +131,7 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testProductIterator() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()");
-    query.setParameter("context", getModel1Package().getProduct1());
+    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1());
 
     int counter = 0;
     for (CloseableIterator<Product1> it = query.getResultAsync(Product1.class); it.hasNext();)

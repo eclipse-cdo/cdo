@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.defs.util.CDODefsUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
+import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.InvalidURIException;
 
@@ -39,7 +39,7 @@ public class CDOResourceDefImplTest extends AbstractCDOTest
     CDODefsUtil.createSessionDef( //
         IRepositoryConfig.REPOSITORY_NAME, //
         CDODefsUtil.createEagerPackageRegistryDef(), //
-        Net4jDefsUtil.createTCPConnectorDef(SessionConfig.TCP.CONNECTOR_HOST));
+        Net4jDefsUtil.createTCPConnectorDef(Net4j.TCP.CONNECTOR_HOST));
 
     CDOResourceDef resourceDef = CDODefsUtil.createCDOResourceDef(CDODefsUtil.createCDOTransactionDef(cdoSessionDef));
     resourceDef.setResourceMode(ResourceMode.GET_OR_CREATE);
@@ -59,7 +59,7 @@ public class CDOResourceDefImplTest extends AbstractCDOTest
     CDODefsUtil.createSessionDef( //
         IRepositoryConfig.REPOSITORY_NAME, //
         CDODefsUtil.createEagerPackageRegistryDef(), //
-        Net4jDefsUtil.createTCPConnectorDef(SessionConfig.TCP.CONNECTOR_HOST));
+        Net4jDefsUtil.createTCPConnectorDef(Net4j.TCP.CONNECTOR_HOST));
 
     CDOResourceDef resourceDef = CDODefsUtil.createCDOResourceDef(//
         CDODefsUtil.createCDOTransactionDef(cdoSessionDef));

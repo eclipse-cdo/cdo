@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.view;
 
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.IContainer;
 
 import org.eclipse.emf.common.util.URI;
@@ -28,9 +29,19 @@ public interface CDOViewProviderRegistry extends IContainer<CDOViewProvider>
 
   /**
    * Returns a {@link CDOView view} that serves the given URI in the given {@link CDOViewSet view set}, or
-   * <code>null</code> if no {@link CDOViewProvider view provider} in this registry can provide such a view
+   * <code>null</code> if no {@link CDOViewProvider view provider} in this registry can provide such a view.
    */
   public CDOView provideView(URI uri, ResourceSet viewSet);
+
+  /**
+   * Returns a {@link CDOView view} that serves the given URI in the given {@link CDOViewSet view set}, or
+   * <code>null</code> if no {@link CDOViewProvider view provider} in this registry can provide such a view. The
+   * returned {@link Pair pair} contains the provider that provided the view or null if the view was already present in
+   * the {@link CDOViewSet view set} of the resource set.
+   * 
+   * @since 4.0
+   */
+  public Pair<CDOView, CDOViewProvider> provideViewWithInfo(URI uri, ResourceSet resourceSet);
 
   /**
    * Returns an array of <code>CDOViewProvider</code> instances, determined and ordered by certain criteria based on the
@@ -39,12 +50,20 @@ public interface CDOViewProviderRegistry extends IContainer<CDOViewProvider>
   public CDOViewProvider[] getViewProviders(URI uri);
 
   /**
-   * Registers a new <code>CDOViewProvider</code> instance
+   * Returns <code>true</code> if the given view provider instance is registered with this registry, <code>false</code>
+   * otherwise.
+   * 
+   * @since 4.0
+   */
+  public boolean hasViewProvider(CDOViewProvider viewProvider);
+
+  /**
+   * Registers the given view provider instance with this registry.
    */
   public void addViewProvider(CDOViewProvider viewProvider);
 
   /**
-   * Removes certain <code>CDOViewProvider</code> instance from the registry
+   * Removes the given view provider instance from this registry.
    */
   public void removeViewProvider(CDOViewProvider viewProvider);
 }

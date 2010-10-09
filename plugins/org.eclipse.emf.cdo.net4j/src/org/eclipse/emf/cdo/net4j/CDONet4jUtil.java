@@ -12,12 +12,21 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.net4j;
 
+import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
-import org.eclipse.emf.cdo.internal.net4j.Net4jSessionFactory;
 import org.eclipse.emf.cdo.internal.net4j.FailoverCDOSessionConfigurationImpl;
+import org.eclipse.emf.cdo.internal.net4j.Net4jSessionFactory;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocolFactory;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOViewProvider;
+import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.om.OMPlatform;
+
+import org.eclipse.emf.ecore.resource.Resource;
+
+import java.util.Map;
 
 /**
  * @since 2.0
@@ -25,6 +34,39 @@ import org.eclipse.net4j.util.container.IManagedContainer;
  */
 public final class CDONet4jUtil
 {
+  /**
+   * @since 4.0
+   */
+  public static final String PROTOCOL_TCP = "cdo.net4j.tcp";
+
+  /**
+   * @since 4.0
+   */
+  public static final String PROTOCOL_JVM = "cdo.net4j.jvm";
+
+  static
+  {
+    if (!OMPlatform.INSTANCE.isOSGiRunning())
+    {
+      CDOUtil.registerResourceFactory(null); // Ensure that the normal resource factory is registered
+
+      Map<String, Object> map = Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap();
+      if (!map.containsKey(PROTOCOL_TCP))
+      {
+        map.put(PROTOCOL_TCP, CDOResourceFactory.INSTANCE);
+      }
+
+      if (!map.containsKey(PROTOCOL_JVM))
+      {
+        map.put(PROTOCOL_JVM, CDOResourceFactory.INSTANCE);
+      }
+
+      int priority = CDOViewProvider.DEFAULT_PRIORITY - 100;
+      CDOViewProviderRegistry.INSTANCE.addViewProvider(new CDONet4jViewProvider.TCP(priority));
+      CDOViewProviderRegistry.INSTANCE.addViewProvider(new CDONet4jViewProvider.JVM(priority));
+    }
+  }
+
   private CDONet4jUtil()
   {
   }

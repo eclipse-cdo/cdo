@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.defs.CDOAuditDef;
 import org.eclipse.emf.cdo.defs.util.CDODefsUtil;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
+import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -52,7 +52,7 @@ public class CDOAuditDefImplTest extends AbstractCDOTest
             IRepositoryConfig.REPOSITORY_NAME, //
             CDODefsUtil.createEagerPackageRegistryDef(), //
             Net4jDefsUtil.createTCPConnectorDef( //
-                SessionConfig.TCP.CONNECTOR_HOST)));
+                Net4j.TCP.CONNECTOR_HOST)));
     cdoAuditDef.setTimeStamp(new Date());
 
     CDOView cdoAudit = (CDOView)cdoAuditDef.getInstance();
@@ -67,7 +67,7 @@ public class CDOAuditDefImplTest extends AbstractCDOTest
             IRepositoryConfig.REPOSITORY_NAME, //
             CDODefsUtil.createEagerPackageRegistryDef(), //
             Net4jDefsUtil.createTCPConnectorDef( //
-                SessionConfig.TCP.CONNECTOR_HOST)));
+                Net4j.TCP.CONNECTOR_HOST)));
     cdoAuditDef.setTimeStamp(new Date());
 
     CDOView thisCdoAuditReference = (CDOView)cdoAuditDef.getInstance();

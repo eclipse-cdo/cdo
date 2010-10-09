@@ -249,6 +249,11 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     getSessionConfig().stopTransport();
   }
 
+  public String getURIPrefix()
+  {
+    return getSessionConfig().getURIPrefix();
+  }
+
   /**
    * @category Session
    */

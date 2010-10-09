@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl;
+import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -31,8 +31,8 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class Bugzilla_265114_Test extends AbstractCDOTest
 
     Registry registry = rset.getResourceFactoryRegistry();
     Map<String, Object> map = registry.getProtocolToFactoryMap();
-    map.put(CDOProtocolConstants.PROTOCOL_NAME, new CDOResourceFactoryImpl());
+    map.put(CDOProtocolConstants.PROTOCOL_NAME, CDOResourceFactory.INSTANCE);
     CDOViewProvider viewProvider = new CDOViewProviderNewView(session);
     CDOViewProviderRegistry.INSTANCE.addViewProvider(viewProvider);
 
@@ -92,6 +92,8 @@ public class Bugzilla_265114_Test extends AbstractCDOTest
    */
   public static class CDOViewProviderNewView implements CDOViewProvider
   {
+    public static final int PRIORITY = DEFAULT_PRIORITY - 100;
+
     private final CDOSession session;
 
     public CDOViewProviderNewView(CDOSession session)
@@ -101,7 +103,7 @@ public class Bugzilla_265114_Test extends AbstractCDOTest
 
     public int getPriority()
     {
-      return 400;
+      return PRIORITY;
     }
 
     public String getRegex()
@@ -112,6 +114,11 @@ public class Bugzilla_265114_Test extends AbstractCDOTest
     public CDOView getView(URI uri, ResourceSet resourceSet)
     {
       return session.openTransaction(resourceSet);
+    }
+
+    public URI getResourceURI(CDOView view, String path)
+    {
+      return null;
     }
 
     public boolean matchesRegex(URI uri)

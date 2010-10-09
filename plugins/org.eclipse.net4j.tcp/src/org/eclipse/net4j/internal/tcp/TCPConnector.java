@@ -116,7 +116,16 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   @Override
   public String getURL()
   {
-    return "tcp://" + host + ":" + port; //$NON-NLS-1$ //$NON-NLS-2$
+    StringBuilder builder = new StringBuilder();
+    builder.append("tcp://");
+    builder.append(host);
+    if (port != DEFAULT_PORT)
+    {
+      builder.append(":");
+      builder.append(port);
+    }
+
+    return builder.toString();
   }
 
   public void handleRegistration(ITCPSelector selector, SocketChannel socketChannel)

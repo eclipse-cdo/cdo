@@ -21,6 +21,8 @@ public interface ISessionConfig extends IConfig
 
   public void stopTransport() throws Exception;
 
+  public String getURIPrefix();
+
   public CDOSession openSession();
 
   public CDOSession openSession(String repositoryName);

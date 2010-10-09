@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
+import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -316,7 +317,7 @@ public class Scenario implements IScenario
     {
       setContainerConfig(ContainerConfig.Combined.INSTANCE);
       setRepositoryConfig(RepositoryConfig.MEMBranches.INSTANCE);
-      setSessionConfig(SessionConfig.JVM.INSTANCE);
+      setSessionConfig(Net4j.JVM.INSTANCE);
       setModelConfig(ModelConfig.Native.INSTANCE);
     }
   }

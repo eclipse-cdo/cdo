@@ -24,6 +24,7 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.om.OMPlatform;
 
@@ -59,13 +60,21 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
 
   public CDOViewProviderRegistryImpl()
   {
-    if (OMPlatform.INSTANCE.isOSGiRunning())
-    {
-      addViewProvider(new PluginContainerViewProvider());
-    }
+    addViewProvider(PluginContainerViewProvider.INSTANCE);
   }
 
   public CDOView provideView(URI uri, ResourceSet resourceSet)
+  {
+    Pair<CDOView, CDOViewProvider> pair = provideViewWithInfo(uri, resourceSet);
+    if (pair == null)
+    {
+      return null;
+    }
+
+    return pair.getElement1();
+  }
+
+  public Pair<CDOView, CDOViewProvider> provideViewWithInfo(URI uri, ResourceSet resourceSet)
   {
     if (uri == null)
     {
@@ -81,7 +90,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
         CDOView view = viewSet.resolveView(uuid);
         if (view != null)
         {
-          return view;
+          return new Pair<CDOView, CDOViewProvider>(view, null);
         }
       }
       catch (Exception ignore)
@@ -95,7 +104,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
       CDOView view = viewProvider.getView(uri, resourceSet);
       if (view != null)
       {
-        return view;
+        return new Pair<CDOView, CDOViewProvider>(view, viewProvider);
       }
     }
 
@@ -125,32 +134,13 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
     return result.toArray(new CDOViewProvider[result.size()]);
   }
 
-  // public CDOViewProvider[] getViewProviders(URI uri, CDOViewSet viewSet)
-  // {
-  // List<CDOViewProvider> orderedProviders = new ArrayList<CDOViewProvider>();
-  // for (CDOViewProvider viewProvider : viewProviders)
-  // {
-  // if (viewProvider.matchesRegex(uri))
-  // {
-  // for (int i = orderedProviders.size() - 1; i >= 0; i--)
-  // {
-  // if (viewProvider.getPriority() <= orderedProviders.get(i).getPriority())
-  // {
-  // orderedProviders.add(i + 1, viewProvider);
-  // break;
-  // }
-  // }
-  //
-  // // if not inserted, it has highest priority
-  // if (!orderedProviders.contains(viewProvider))
-  // {
-  // orderedProviders.add(0, viewProvider);
-  // }
-  // }
-  // }
-  //
-  // return orderedProviders.toArray(new CDOViewProvider[orderedProviders.size()]);
-  // }
+  public boolean hasViewProvider(CDOViewProvider viewProvider)
+  {
+    synchronized (viewProviders)
+    {
+      return viewProviders.contains(viewProvider);
+    }
+  }
 
   public void addViewProvider(CDOViewProvider viewProvider)
   {
@@ -216,12 +206,6 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
         OM.LOG.error(t);
       }
     }
-  }
-
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    super.doDeactivate();
   }
 
   public void readExtensions()

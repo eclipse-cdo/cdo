@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.defs.impl.CDOViewDefImpl;
 import org.eclipse.emf.cdo.defs.util.CDODefsUtil;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
+import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -43,7 +43,7 @@ public class CDOViewDefImplTest extends AbstractCDOTest
   {
     super.doSetUp();
     cdoViewDef = CDODefsFactory.eINSTANCE.createCDOViewDef();
-    tcpConnectorDef = Net4jDefsUtil.createTCPConnectorDef(SessionConfig.TCP.CONNECTOR_HOST);
+    tcpConnectorDef = Net4jDefsUtil.createTCPConnectorDef(Net4j.TCP.CONNECTOR_HOST);
     cdoSessionDef = CDODefsUtil.createSessionDef(//
         IRepositoryConfig.REPOSITORY_NAME, //
         CDODefsUtil.createEagerPackageRegistryDef(), //

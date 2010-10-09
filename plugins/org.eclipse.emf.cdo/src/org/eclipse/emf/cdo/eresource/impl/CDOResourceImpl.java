@@ -22,11 +22,14 @@ import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -143,6 +146,11 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
    * @ADDED
    */
   private EList<Diagnostic> warnings;
+
+  /**
+   * @ADDED
+   */
+  private transient CDOViewProvider viewProvider;
 
   /**
    * @ADDED
@@ -281,6 +289,15 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     if (cdoID() == null && initialURI != null)
     {
       return initialURI;
+    }
+
+    if (viewProvider != null)
+    {
+      URI uri = viewProvider.getResourceURI(cdoView(), getPath());
+      if (uri != null)
+      {
+        return uri;
+      }
     }
 
     return super.getURI();
@@ -657,6 +674,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
           }
           catch (Exception ex)
           {
+            OM.LOG.error(ex);
             setExisting(false);
             cdoInternalSetState(CDOState.TRANSIENT);
             throw new IOWrappedException(ex);
@@ -1034,17 +1052,19 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
     setResourceSet(resourceSet);
 
-    // ResourceSet isn't prepared
     if (resourceSet != null)
     {
       InternalCDOView view = cdoView();
       if (view == null)
       {
         URI uri = getURI();
-        view = (InternalCDOView)CDOViewProviderRegistry.INSTANCE.provideView(uri, resourceSet);
-        if (view != null)
+        Pair<CDOView, CDOViewProvider> pair = CDOViewProviderRegistry.INSTANCE.provideViewWithInfo(uri, resourceSet);
+        if (pair != null)
         {
+          view = (InternalCDOView)pair.getElement1();
           view.attachResource(this);
+
+          viewProvider = pair.getElement2();
         }
       }
     }

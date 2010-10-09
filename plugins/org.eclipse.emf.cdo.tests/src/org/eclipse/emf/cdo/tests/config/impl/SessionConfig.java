@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.net4j.CDONet4jViewProvider;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -20,6 +21,8 @@ import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOViewProvider;
+import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
@@ -195,6 +198,11 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       super(NAME);
     }
 
+    public String getURIPrefix()
+    {
+      throw new UnsupportedOperationException();
+    }
+
     @Override
     protected CDOSessionConfiguration createSessionConfiguration(String repositoryName)
     {
@@ -213,6 +221,8 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   public static abstract class Net4j extends SessionConfig
   {
     private static final long serialVersionUID = 1L;
+
+    private transient CDOViewProvider viewProvider;
 
     public Net4j(String name)
     {
@@ -278,99 +288,160 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().getProtocol().setTimeout(-1);
     }
 
+    protected abstract CDOViewProvider createViewProvider(IManagedContainer container);
+
+    @Override
+    public void setUp() throws Exception
+    {
+      super.setUp();
+
+      viewProvider = createViewProvider(getCurrentTest().getClientContainer());
+      if (viewProvider != null)
+      {
+        CDOViewProviderRegistry.INSTANCE.addViewProvider(viewProvider);
+      }
+    }
+
+    @Override
+    public void tearDown() throws Exception
+    {
+      if (viewProvider != null)
+      {
+        CDOViewProviderRegistry.INSTANCE.removeViewProvider(viewProvider);
+      }
+
+      super.tearDown();
+    }
+
     public abstract IAcceptor getAcceptor();
 
     public abstract IConnector getConnector();
-  }
 
-  /**
-   * @author Eike Stepper
-   */
-  public static final class TCP extends Net4j
-  {
-    public static final String NAME = "TCP";
-
-    public static final TCP INSTANCE = new TCP();
-
-    public static final String CONNECTOR_HOST = "localhost";
-
-    private static final long serialVersionUID = 1L;
-
-    public TCP()
+    /**
+     * @author Eike Stepper
+     */
+    public static final class TCP extends SessionConfig.Net4j
     {
-      super(NAME);
-    }
+      public static final String NAME = "TCP";
 
-    @Override
-    public IAcceptor getAcceptor()
-    {
-      return TCPUtil.getAcceptor(getCurrentTest().getServerContainer(), null);
-    }
+      public static final TCP INSTANCE = new TCP();
 
-    @Override
-    public IConnector getConnector()
-    {
-      return TCPUtil.getConnector(getCurrentTest().getClientContainer(), CONNECTOR_HOST);
-    }
+      public static final String CONNECTOR_HOST = "localhost";
 
-    @Override
-    public void setUp() throws Exception
-    {
-      super.setUp();
+      private static final long serialVersionUID = 1L;
 
-      IManagedContainer clientContainer = getCurrentTest().getClientContainer();
-      TCPUtil.prepareContainer(clientContainer);
-
-      IManagedContainer serverContainer = getCurrentTest().getServerContainer();
-      if (serverContainer != clientContainer)
+      public TCP()
       {
-        TCPUtil.prepareContainer(serverContainer);
+        super(NAME);
+      }
+
+      public String getURIPrefix()
+      {
+        return "cdo.net4j.tcp://" + CONNECTOR_HOST;
+      }
+
+      @Override
+      public IAcceptor getAcceptor()
+      {
+        return TCPUtil.getAcceptor(getCurrentTest().getServerContainer(), null);
+      }
+
+      @Override
+      public IConnector getConnector()
+      {
+        return TCPUtil.getConnector(getCurrentTest().getClientContainer(), CONNECTOR_HOST);
+      }
+
+      @Override
+      public void setUp() throws Exception
+      {
+        super.setUp();
+
+        final IManagedContainer clientContainer = getCurrentTest().getClientContainer();
+        TCPUtil.prepareContainer(clientContainer);
+
+        IManagedContainer serverContainer = getCurrentTest().getServerContainer();
+        if (serverContainer != clientContainer)
+        {
+          TCPUtil.prepareContainer(serverContainer);
+        }
+      }
+
+      @Override
+      protected CDOViewProvider createViewProvider(final IManagedContainer container)
+      {
+        return new CDONet4jViewProvider.TCP()
+        {
+          @Override
+          protected IManagedContainer getContainer()
+          {
+            return container;
+          }
+        };
       }
     }
-  }
 
-  /**
-   * @author Eike Stepper
-   */
-  public static final class JVM extends Net4j
-  {
-    public static final String NAME = "JVM";
-
-    public static final JVM INSTANCE = new JVM();
-
-    public static final String ACCEPTOR_NAME = "default";
-
-    private static final long serialVersionUID = 1L;
-
-    public JVM()
+    /**
+     * @author Eike Stepper
+     */
+    public static final class JVM extends SessionConfig.Net4j
     {
-      super(NAME);
-    }
+      public static final String NAME = "JVM";
 
-    @Override
-    public IAcceptor getAcceptor()
-    {
-      return JVMUtil.getAcceptor(getCurrentTest().getServerContainer(), ACCEPTOR_NAME);
-    }
+      public static final JVM INSTANCE = new JVM();
 
-    @Override
-    public IConnector getConnector()
-    {
-      return JVMUtil.getConnector(getCurrentTest().getClientContainer(), ACCEPTOR_NAME);
-    }
+      public static final String ACCEPTOR_NAME = "default";
 
-    @Override
-    public void setUp() throws Exception
-    {
-      super.setUp();
-      JVMUtil.prepareContainer(getCurrentTest().getClientContainer());
-      JVMUtil.prepareContainer(getCurrentTest().getServerContainer());
-    }
+      private static final long serialVersionUID = 1L;
 
-    @Override
-    public boolean isValid(Set<IConfig> configs)
-    {
-      return !configs.contains(ContainerConfig.Separated.INSTANCE);
+      public JVM()
+      {
+        super(NAME);
+      }
+
+      public String getURIPrefix()
+      {
+        return "cdo.net4j.jvm://" + ACCEPTOR_NAME;
+      }
+
+      @Override
+      public IAcceptor getAcceptor()
+      {
+        return JVMUtil.getAcceptor(getCurrentTest().getServerContainer(), ACCEPTOR_NAME);
+      }
+
+      @Override
+      public IConnector getConnector()
+      {
+        return JVMUtil.getConnector(getCurrentTest().getClientContainer(), ACCEPTOR_NAME);
+      }
+
+      @Override
+      public void setUp() throws Exception
+      {
+        super.setUp();
+        JVMUtil.prepareContainer(getCurrentTest().getClientContainer());
+        JVMUtil.prepareContainer(getCurrentTest().getServerContainer());
+      }
+
+      @Override
+      public boolean isValid(Set<IConfig> configs)
+      {
+        return !configs.contains(ContainerConfig.Separated.INSTANCE);
+      }
+
+      @Override
+      protected CDOViewProvider createViewProvider(final IManagedContainer container)
+      {
+        return new CDONet4jViewProvider.JVM()
+        {
+          @Override
+          protected IManagedContainer getContainer()
+          {
+            return container;
+          }
+        };
+      }
     }
   }
 }

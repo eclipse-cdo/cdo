@@ -50,4 +50,9 @@ public interface CDOViewProvider
    * @return a wired-up and opened <code>CDOView</code>
    */
   public CDOView getView(URI uri, ResourceSet resourceSet);
+
+  /**
+   * @since 4.0
+   */
+  public URI getResourceURI(CDOView view, String path);
 }

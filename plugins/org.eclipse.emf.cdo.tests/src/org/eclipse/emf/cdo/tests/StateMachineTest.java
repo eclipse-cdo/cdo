@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
+import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
@@ -551,7 +551,7 @@ public class StateMachineTest extends AbstractCDOTest
   @Override
   protected void doSetUp() throws Exception
   {
-    skipUnlessConfig(SessionConfig.JVM.INSTANCE);
+    skipUnlessConfig(Net4j.JVM.INSTANCE);
     super.doSetUp();
   }
 

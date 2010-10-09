@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
@@ -37,6 +38,7 @@ import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl.CDOXAIntern
 import org.eclipse.emf.internal.cdo.view.CDORevisionPrefetchingPolicyImpl;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.BasicEList;
@@ -55,6 +57,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -70,8 +73,36 @@ public final class CDOUtil
     }
   };
 
+  static
+  {
+    if (!OMPlatform.INSTANCE.isOSGiRunning())
+    {
+      registerResourceFactory(Resource.Factory.Registry.INSTANCE);
+    }
+  }
+
   private CDOUtil()
   {
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static boolean registerResourceFactory(Resource.Factory.Registry registry)
+  {
+    if (registry == null)
+    {
+      return false;
+    }
+
+    Map<String, Object> map = registry.getProtocolToFactoryMap();
+    if (!map.containsKey(CDOURIUtil.PROTOCOL_NAME))
+    {
+      map.put(CDOURIUtil.PROTOCOL_NAME, CDOResourceFactory.INSTANCE);
+      return true;
+    }
+
+    return false;
   }
 
   /**

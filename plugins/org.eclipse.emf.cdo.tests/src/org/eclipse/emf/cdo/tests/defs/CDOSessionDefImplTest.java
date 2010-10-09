@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.defs.util.CDODefsUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
+import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
 
 import org.eclipse.net4j.defs.util.Net4jDefsUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -32,7 +32,7 @@ public class CDOSessionDefImplTest extends AbstractCDOTest
     try
     {
       CDOSessionDef cdoSessionDef = CDODefsFactory.eINSTANCE.createCDOSessionDef();
-      cdoSessionDef.setConnectorDef(Net4jDefsUtil.createTCPConnectorDef(SessionConfig.TCP.CONNECTOR_HOST));
+      cdoSessionDef.setConnectorDef(Net4jDefsUtil.createTCPConnectorDef(Net4j.TCP.CONNECTOR_HOST));
       cdoSessionDef.setLegacySupportEnabled(false);
       cdoSessionDef.setRepositoryName(IRepositoryConfig.REPOSITORY_NAME);
       cdoSessionDef.getInstance();
@@ -48,12 +48,12 @@ public class CDOSessionDefImplTest extends AbstractCDOTest
   {
     {
       CDOSessionDef cdoSessionDef = CDODefsFactory.eINSTANCE.createCDOSessionDef();
-      cdoSessionDef.setConnectorDef(Net4jDefsUtil.createTCPConnectorDef(SessionConfig.TCP.CONNECTOR_HOST));
+      cdoSessionDef.setConnectorDef(Net4jDefsUtil.createTCPConnectorDef(Net4j.TCP.CONNECTOR_HOST));
     }
 
     {
       CDOSessionDef cdoSessionDef = CDODefsFactory.eINSTANCE.createCDOSessionDef();
-      cdoSessionDef.setConnectorDef(Net4jDefsUtil.createTCPConnectorDef(SessionConfig.TCP.CONNECTOR_HOST));
+      cdoSessionDef.setConnectorDef(Net4jDefsUtil.createTCPConnectorDef(Net4j.TCP.CONNECTOR_HOST));
       cdoSessionDef.unsetConnectorDef();
     }
   }
@@ -62,7 +62,7 @@ public class CDOSessionDefImplTest extends AbstractCDOTest
   {
     CDOSessionDef cdoSessionDef = CDODefsFactory.eINSTANCE.createCDOSessionDef();
     cdoSessionDef.setConnectorDef( //
-        Net4jDefsUtil.createTCPConnectorDef(SessionConfig.TCP.CONNECTOR_HOST));
+        Net4jDefsUtil.createTCPConnectorDef(Net4j.TCP.CONNECTOR_HOST));
     cdoSessionDef.setLegacySupportEnabled(false);
     cdoSessionDef.setRepositoryName(IRepositoryConfig.REPOSITORY_NAME);
     cdoSessionDef.setCdoPackageRegistryDef(CDODefsUtil.createEagerPackageRegistryDef());

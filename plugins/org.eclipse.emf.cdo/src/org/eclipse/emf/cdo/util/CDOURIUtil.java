@@ -17,33 +17,51 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import org.eclipse.emf.common.util.URI;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 /**
  * @author Simon McDuff
  * @since 2.0
  */
-public class CDOURIUtil
+public final class CDOURIUtil
 {
+  /**
+   * @since 4.0
+   */
+  public static final String PROTOCOL_NAME = CDOProtocolConstants.PROTOCOL_NAME;
+
   public static final char SEGMENT_SEPARATOR_CHAR = '/';
 
   public static final String SEGMENT_SEPARATOR = new String(new char[] { SEGMENT_SEPARATOR_CHAR });
 
+  static
+  {
+    CDOUtil.registerResourceFactory(null); // Ensure that the normal resource factory is registered
+  }
+
+  private CDOURIUtil()
+  {
+  }
+
   public static void validateURI(URI uri) throws InvalidURIException
   {
-    if (!CDOProtocolConstants.PROTOCOL_NAME.equals(uri.scheme()))
-    {
-      throw new InvalidURIException(uri);
-    }
-
-    if (!uri.isHierarchical())
-    {
-      throw new InvalidURIException(uri);
-    }
+    // if (!CDOProtocolConstants.PROTOCOL_NAME.equals(uri.scheme()))
+    // {
+    // throw new InvalidURIException(uri);
+    // }
+    //
+    // if (!uri.isHierarchical())
+    // {
+    // throw new InvalidURIException(uri);
+    // }
   }
 
   public static String extractRepositoryUUID(URI uri)
@@ -80,6 +98,12 @@ public class CDOURIUtil
 
   public static String extractResourcePath(URI uri) throws InvalidURIException
   {
+    if (!PROTOCOL_NAME.equals(uri.scheme()))
+    {
+      CDOURIData data = new CDOURIData(uri);
+      return data.getResourcePath().toPortableString();
+    }
+
     validateURI(uri);
     String path = uri.path();
     if (path == null)
@@ -103,7 +127,7 @@ public class CDOURIUtil
   public static URI createResourceURI(String repositoryUUID, String path)
   {
     StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append(CDOProtocolConstants.PROTOCOL_NAME);
+    stringBuilder.append(PROTOCOL_NAME);
     stringBuilder.append(":"); //$NON-NLS-1$
 
     if (repositoryUUID != null)
@@ -171,5 +195,35 @@ public class CDOURIUtil
     }
 
     return segments;
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static Map<String, String> getParameters(String query)
+  {
+    Map<String, String> result = new HashMap<String, String>();
+    StringTokenizer tokenizer = new StringTokenizer(query, "&"); //$NON-NLS-1$
+    while (tokenizer.hasMoreTokens())
+    {
+      String parameter = tokenizer.nextToken();
+      if (!StringUtil.isEmpty(parameter))
+      {
+        int pos = parameter.indexOf('=');
+        if (pos == -1)
+        {
+          String key = parameter.trim();
+          result.put(key, ""); //$NON-NLS-1$
+        }
+        else
+        {
+          String key = parameter.substring(0, pos).trim();
+          String value = parameter.substring(pos + 1);
+          result.put(key, value);
+        }
+      }
+    }
+
+    return result;
   }
 }

@@ -26,9 +26,13 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
   private static final String RESOURCE_SET_CLASS_NAME = ResourceSetImpl.class.getName();
 
   /**
-   * @since 2.0
+   * @since 4.0
    */
-  public static final CDOResourceFactory eINSTANCE = new CDOResourceFactoryImpl();
+  public static final CDOResourceFactory INSTANCE = new CDOResourceFactoryImpl();
+
+  public CDOResourceFactoryImpl()
+  {
+  }
 
   public Resource createResource(URI uri)
   {

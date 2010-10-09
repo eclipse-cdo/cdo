@@ -14,6 +14,7 @@ package org.eclipse.emf.internal.cdo.view;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.ManagedContainerViewProvider;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
@@ -31,9 +32,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  */
 public class PluginContainerViewProvider extends ManagedContainerViewProvider
 {
+  public static final CDOViewProvider INSTANCE = new PluginContainerViewProvider();
+
   private final static String REGEX = "cdo:.*"; //$NON-NLS-1$
 
-  private final static int PRIORITY = 400;
+  private final static int PRIORITY = DEFAULT_PRIORITY - 200;
 
   public PluginContainerViewProvider()
   {

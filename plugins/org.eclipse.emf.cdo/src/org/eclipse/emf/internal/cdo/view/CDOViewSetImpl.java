@@ -47,7 +47,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   private Map<String, InternalCDOView> mapOfViews = new HashMap<String, InternalCDOView>();
 
-  private CDOResourceFactory resourceFactory = CDOResourceFactory.eINSTANCE;
+  private CDOResourceFactory resourceFactory = CDOResourceFactory.INSTANCE;
 
   private CDOViewSetPackageRegistryImpl packageRegistry;
 

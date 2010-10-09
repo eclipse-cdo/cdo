@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.defs.util.CDODefsUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
+import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -37,7 +37,7 @@ public class CDOTransactionDefImplTest extends AbstractCDOTest
         CDODefsUtil.createSessionDef( //
             IRepositoryConfig.REPOSITORY_NAME, //
             CDODefsUtil.createEagerPackageRegistryDef(), //
-            Net4jDefsUtil.createTCPConnectorDef(SessionConfig.TCP.CONNECTOR_HOST)));
+            Net4jDefsUtil.createTCPConnectorDef(Net4j.TCP.CONNECTOR_HOST)));
 
     CDOTransaction thisCdoTransactionReference = (CDOTransaction)transactionDef.getInstance();
     CDOTransaction thatCdoTransactionReference = (CDOTransaction)transactionDef.getInstance();
@@ -53,7 +53,7 @@ public class CDOTransactionDefImplTest extends AbstractCDOTest
         CDODefsUtil.createSessionDef( //
             IRepositoryConfig.REPOSITORY_NAME, //
             CDODefsUtil.createEagerPackageRegistryDef(), //
-            Net4jDefsUtil.createTCPConnectorDef(SessionConfig.TCP.CONNECTOR_HOST)));
+            Net4jDefsUtil.createTCPConnectorDef(Net4j.TCP.CONNECTOR_HOST)));
     CDOTransaction transactionInstance = (CDOTransaction)cdoTransactionDef.getInstance();
     transactionInstance.close();
     CDOTransaction newTransactionInstance = (CDOTransaction)cdoTransactionDef.getInstance();
@@ -69,7 +69,7 @@ public class CDOTransactionDefImplTest extends AbstractCDOTest
     CDODefsUtil.createSessionDef( //
         IRepositoryConfig.REPOSITORY_NAME, //
         CDODefsUtil.createEagerPackageRegistryDef(), //
-        Net4jDefsUtil.createTCPConnectorDef(SessionConfig.TCP.CONNECTOR_HOST));
+        Net4jDefsUtil.createTCPConnectorDef(Net4j.TCP.CONNECTOR_HOST));
 
     CDOTransactionDef transactionDef = CDODefsUtil.createCDOTransactionDef(cdoSessionDef);
     CDOTransaction transaction = (CDOTransaction)transactionDef.getInstance();

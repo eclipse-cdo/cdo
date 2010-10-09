@@ -11,6 +11,7 @@
 package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
@@ -22,9 +23,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 /**
  * @author Eike Stepper
@@ -51,7 +50,7 @@ public abstract class CDOSessionFactory extends Factory
         throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOSessionFactory.1"), description)); //$NON-NLS-1$
       }
 
-      Map<String, String> result = getParameters(query);
+      Map<String, String> result = CDOURIUtil.getParameters(query);
       String repositoryName = result.get("repositoryName"); //$NON-NLS-1$
       if (repositoryName == null)
       {
@@ -71,31 +70,4 @@ public abstract class CDOSessionFactory extends Factory
    * @since 2.0
    */
   protected abstract InternalCDOSession createSession(String repositoryName, boolean automaticPackageRegistry);
-
-  private Map<String, String> getParameters(String query)
-  {
-    Map<String, String> result = new HashMap<String, String>();
-    StringTokenizer tokenizer = new StringTokenizer(query, "&"); //$NON-NLS-1$
-    while (tokenizer.hasMoreTokens())
-    {
-      String parameter = tokenizer.nextToken();
-      if (!StringUtil.isEmpty(parameter))
-      {
-        int pos = parameter.indexOf('=');
-        if (pos == -1)
-        {
-          String key = parameter.trim();
-          result.put(key, ""); //$NON-NLS-1$
-        }
-        else
-        {
-          String key = parameter.substring(0, pos).trim();
-          String value = parameter.substring(pos + 1);
-          result.put(key, value);
-        }
-      }
-    }
-
-    return result;
-  }
 }

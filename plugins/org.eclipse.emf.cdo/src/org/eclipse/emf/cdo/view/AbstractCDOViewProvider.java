@@ -85,4 +85,14 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider
     Matcher matcher = pattern.matcher(uri.toString());
     return matcher.matches();
   }
+
+  /**
+   * Must be overwritten for non-canonical URI formats!
+   * 
+   * @since 4.0
+   */
+  public URI getResourceURI(CDOView view, String path)
+  {
+    return null;
+  }
 }

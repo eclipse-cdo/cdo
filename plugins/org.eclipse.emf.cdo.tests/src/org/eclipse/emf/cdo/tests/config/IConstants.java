@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.tests.config.impl.ContainerConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ModelConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
+import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
 
 /**
  * @author Eike Stepper
@@ -34,9 +35,9 @@ public interface IConstants
 
   public static final SessionConfig EMBEDDED = SessionConfig.Embedded.INSTANCE;
 
-  public static final SessionConfig JVM = SessionConfig.JVM.INSTANCE;
+  public static final SessionConfig JVM = Net4j.JVM.INSTANCE;
 
-  public static final SessionConfig TCP = SessionConfig.TCP.INSTANCE;
+  public static final SessionConfig TCP = Net4j.TCP.INSTANCE;
 
   public static final ModelConfig NATIVE = ModelConfig.Native.INSTANCE;
 

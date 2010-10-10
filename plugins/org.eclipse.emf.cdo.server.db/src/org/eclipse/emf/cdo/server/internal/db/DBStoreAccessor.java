@@ -976,22 +976,11 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     return mappingStrategy.readChangeSet(this, segments);
   }
 
-  /**
-   * Passes all revisions of the store to the {@link CDORevisionHandler handler} if <b>all</b> of the following
-   * conditions are met:
-   * <ul>
-   * <li>The <code>eClass</code> parameter is <code>null</code> or equal to <code>revision.getEClass()</code>.
-   * <li>The <code>branch</code> parameter is <code>null</code> or equal to <code>revision.getBranch()</code>.
-   * <li>The <code>timeStamp</code> parameter is {@link CDOBranchPoint#UNSPECIFIED_DATE} or equal to
-   * <code>revision.getTimeStamp()</code>.
-   * </ul>
-   * 
-   * @since 3.0
-   */
-  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    mappingStrategy.handleRevisions(this, eClass, branch, timeStamp, new DBRevisionHandler(handler));
+    mappingStrategy.handleRevisions(this, eClass, branch, timeStamp, true, new DBRevisionHandler(handler));
   }
 
   public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
@@ -1084,6 +1073,36 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     finally
     {
       monitor.done();
+    }
+  }
+
+  public Object rawStore(InternalCDOPackageUnit[] packageUnits, Object context, OMMonitor monitor)
+  {
+    writePackageUnits(packageUnits, monitor);
+    return context;
+  }
+
+  public Object rawStore(InternalCDORevision revision, Object context, OMMonitor monitor)
+  {
+    writeRevision(revision, monitor);
+    return context;
+  }
+
+  public void rawCommit(Object context, OMMonitor monitor)
+  {
+    Async async = monitor.forkAsync();
+
+    try
+    {
+      connection.commit();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      async.stop();
     }
   }
 

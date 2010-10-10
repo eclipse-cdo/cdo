@@ -302,10 +302,10 @@ public interface IMappingStrategy
    * <code>revision.getTimeStamp()</code>.
    * </ul>
    * 
-   * @since 3.0
+   * @since 4.0
    */
   public void handleRevisions(IDBStoreAccessor accessor, EClass eClass, CDOBranch branch, long timeStamp,
-      CDORevisionHandler handler);
+      boolean exactTime, CDORevisionHandler handler);
 
   /**
    * Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.

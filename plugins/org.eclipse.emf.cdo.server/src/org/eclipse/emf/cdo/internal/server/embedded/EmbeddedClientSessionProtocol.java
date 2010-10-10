@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.common.model.lob.CDOLob;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
@@ -324,6 +325,14 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
   public void loadLob(CDOLobInfo info, Object outputStreamOrWriter)
   {
     // TODO: implement EmbeddedClientSessionProtocol.loadLob(info, out)
+    throw new UnsupportedOperationException();
+  }
+
+  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler)
+  {
+    // TODO: implement EmbeddedClientSessionProtocol.handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime,
+    // handler)
     throw new UnsupportedOperationException();
   }
 

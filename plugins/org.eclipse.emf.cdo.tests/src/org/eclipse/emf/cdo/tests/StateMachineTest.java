@@ -44,7 +44,7 @@ public class StateMachineTest extends AbstractCDOTest
 {
   private static final long TIMESTAMP = 12345678;
 
-  private static final CDOBranch BRANCH = new CDOBranchImpl.Main(null, 0L);
+  private static final CDOBranch BRANCH = new CDOBranchImpl.Main(null, false, 0L);
 
   // ///////////////////////////////////////////////////
 

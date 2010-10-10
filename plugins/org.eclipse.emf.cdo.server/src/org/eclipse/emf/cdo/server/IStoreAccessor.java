@@ -124,13 +124,19 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * <ul>
    * <li>The <code>eClass</code> parameter is <code>null</code> or equal to <code>revision.getEClass()</code>.
    * <li>The <code>branch</code> parameter is <code>null</code> or equal to <code>revision.getBranch()</code>.
-   * <li>The <code>timeStamp</code> parameter is {@link CDOBranchPoint#UNSPECIFIED_DATE} or equal to
-   * <code>revision.getTimeStamp()</code>.
+   * <li><b>One</b> of the following conditions is met:
+   * <ul>
+   * <li>The <code>exactTime</code> parameter is <code>true</code> and the <code>timeStamp</code> parameter is
+   * {@link CDOBranchPoint#UNSPECIFIED_DATE UNSPECIFIED} or equal to <code>revision.getTimeStamp()</code>.
+   * <li>The <code>exactTime</code> parameter is <code>false</code> and the <code>timeStamp</code> parameter is between
+   * <code>revision.getTimeStamp()</code> and <code>revision.getRevised()</code>.
+   * </ul>
    * </ul>
    * 
-   * @since 3.0
+   * @since 4.0
    */
-  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler);
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler);
 
   /**
    * Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.
@@ -225,6 +231,21 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    */
   public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
       OMMonitor monitor) throws IOException;
+
+  /**
+   * @since 4.0
+   */
+  public Object rawStore(InternalCDOPackageUnit[] packageUnits, Object context, OMMonitor monitor);
+
+  /**
+   * @since 4.0
+   */
+  public Object rawStore(InternalCDORevision revision, Object context, OMMonitor monitor);
+
+  /**
+   * @since 4.0
+   */
+  public void rawCommit(Object context, OMMonitor monitor);
 
   public void release();
 

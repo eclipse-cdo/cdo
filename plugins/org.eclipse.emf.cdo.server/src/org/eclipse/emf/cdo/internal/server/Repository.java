@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
@@ -1254,6 +1255,48 @@ public class Repository extends Container<Object> implements InternalRepository
     accessor.loadLob(id, out);
   }
 
+  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
+      final CDORevisionHandler handler)
+  {
+    CDORevisionHandler wrapper = handler;
+    if (!exactBranch)
+    {
+      if (exactTime && timeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
+      {
+        throw new IllegalArgumentException("Time stamp must be specified if exactBranch==false and exactTime==true");
+      }
+
+      wrapper = new CDORevisionHandler()
+      {
+        private Set<CDOID> handled = new HashSet<CDOID>();
+
+        public boolean handleRevision(CDORevision revision)
+        {
+          if (handled.add(revision.getID()))
+          {
+            return handler.handleRevision(revision);
+          }
+
+          return true;
+        }
+      };
+    }
+
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    while (branch != null)
+    {
+      accessor.handleRevisions(eClass, branch, timeStamp, exactTime, wrapper);
+      if (exactBranch)
+      {
+        break;
+      }
+
+      CDOBranchPoint base = branch.getBase();
+      branch = base.getBranch();
+      timeStamp = base.getTimeStamp();
+    }
+  }
+
   @Override
   public String toString()
   {
@@ -1341,7 +1384,7 @@ public class Repository extends Container<Object> implements InternalRepository
     LifecycleUtil.activate(lockManager);
 
     lastCommitTimeStamp = Math.max(store.getCreationTime(), store.getLastCommitTime());
-    branchManager.initMainBranch(lastCommitTimeStamp);
+    initMainBranch(branchManager, lastCommitTimeStamp);
     LifecycleUtil.activate(branchManager);
 
     if (store.isFirstTime())
@@ -1405,6 +1448,11 @@ public class Repository extends Container<Object> implements InternalRepository
     packageUnit.setTimeStamp(store.getCreationTime());
     packageUnit.setState(CDOPackageUnit.State.LOADED);
     return packageUnit;
+  }
+
+  protected void initMainBranch(InternalCDOBranchManager branchManager, long lastCommitTimeStamp)
+  {
+    branchManager.initMainBranch(false, lastCommitTimeStamp);
   }
 
   protected void initRootResource()

@@ -206,9 +206,10 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     return getStore().getRevisionByVersion(id, branchVersion);
   }
 
-  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler)
   {
-    getStore().handleRevisions(eClass, branch, timeStamp, handler);
+    getStore().handleRevisions(eClass, branch, timeStamp, exactTime, handler);
   }
 
   /**
@@ -355,6 +356,48 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     getStore().rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime, monitor);
   }
 
+  private RawStoreContext getRawStoreContext(Object object)
+  {
+    RawStoreContext context = (RawStoreContext)object;
+    if (context == null)
+    {
+      context = new RawStoreContext();
+    }
+
+    return context;
+  }
+
+  public Object rawStore(InternalCDOPackageUnit[] packageUnits, Object context, OMMonitor monitor)
+  {
+    RawStoreContext rawStoreContext = getRawStoreContext(context);
+    rawStoreContext.setPackageUnits(packageUnits);
+    return rawStoreContext;
+  }
+
+  public Object rawStore(InternalCDORevision revision, Object context, OMMonitor monitor)
+  {
+    RawStoreContext rawStoreContext = getRawStoreContext(context);
+    rawStoreContext.getRevisions().add(revision);
+    return rawStoreContext;
+  }
+
+  public void rawCommit(Object context, OMMonitor monitor)
+  {
+    RawStoreContext rawStoreContext = (RawStoreContext)context;
+    if (rawStoreContext != null)
+    {
+      MEMStore store = getStore();
+      synchronized (store)
+      {
+        writePackageUnits(rawStoreContext.getPackageUnits(), monitor);
+        for (InternalCDORevision revision : rawStoreContext.getRevisions())
+        {
+          getStore().addRevision(revision);
+        }
+      }
+    }
+  }
+
   public void queryLobs(List<byte[]> ids)
   {
     getStore().queryLobs(ids);
@@ -399,5 +442,34 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
   protected void doUnpassivate() throws Exception
   {
     // Pooling of store accessors not supported
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class RawStoreContext
+  {
+    private InternalCDOPackageUnit[] packageUnits = {};
+
+    private List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
+
+    public RawStoreContext()
+    {
+    }
+
+    public InternalCDOPackageUnit[] getPackageUnits()
+    {
+      return packageUnits;
+    }
+
+    public void setPackageUnits(InternalCDOPackageUnit[] packageUnits)
+    {
+      this.packageUnits = packageUnits;
+    }
+
+    public List<InternalCDORevision> getRevisions()
+    {
+      return revisions;
+    }
   }
 }

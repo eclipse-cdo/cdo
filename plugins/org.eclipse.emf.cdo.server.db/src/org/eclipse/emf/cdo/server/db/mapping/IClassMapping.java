@@ -161,11 +161,12 @@ public interface IClassMapping
    * <code>revision.getTimeStamp()</code>.
    * </ul>
    * 
-   * @see IMappingStrategy#handleRevisions(IDBStoreAccessor, org.eclipse.emf.ecore.EClass, CDOBranch, long,
+   * @see IMappingStrategy#handleRevisions(IDBStoreAccessor, org.eclipse.emf.ecore.EClass, CDOBranch, long, boolean,
    *      CDORevisionHandler)
-   * @since 3.0
+   * @since 4.0
    */
-  public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, CDORevisionHandler handler);
+  public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler);
 
   /**
    * Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.

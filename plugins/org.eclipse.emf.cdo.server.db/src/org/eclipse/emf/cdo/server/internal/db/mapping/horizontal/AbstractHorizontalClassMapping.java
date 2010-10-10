@@ -500,7 +500,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     }
   }
 
-  public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
+  public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler)
   {
     // branch parameter is ignored, because either it is null or main branch.
     // this does not make any difference for non-branching store.
@@ -520,19 +521,47 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
     StringBuilder builder = new StringBuilder(sqlSelectForHandle);
 
-    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+    int timeParameters = 0;
+    if (exactTime)
+    {
+      if (timeStamp != DBStore.UNSPECIFIED_DATE)
+      {
+        builder.append(" WHERE "); //$NON-NLS-1$
+        builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+        builder.append("=?"); //$NON-NLS-1$
+        timeParameters = 1;
+      }
+    }
+    else
     {
       builder.append(" WHERE "); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-      builder.append("=? "); //$NON-NLS-1$
+      if (timeStamp != DBStore.UNSPECIFIED_DATE)
+      {
+        builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+        builder.append(">=?"); //$NON-NLS-1$
+        builder.append(" AND ("); //$NON-NLS-1$
+        builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+        builder.append("<=? OR "); //$NON-NLS-1$
+        builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+        builder.append("="); //$NON-NLS-1$
+        builder.append(DBStore.UNSPECIFIED_DATE);
+        builder.append(")"); //$NON-NLS-1$
+        timeParameters = 2;
+      }
+      else
+      {
+        builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+        builder.append("="); //$NON-NLS-1$
+        builder.append(DBStore.UNSPECIFIED_DATE);
+      }
     }
 
     try
     {
       stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.LOW);
-      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+      for (int i = 0; i < timeParameters; i++)
       {
-        stmt.setLong(1, timeStamp);
+        stmt.setLong(i + 1, timeStamp);
       }
 
       rs = stmt.executeQuery();

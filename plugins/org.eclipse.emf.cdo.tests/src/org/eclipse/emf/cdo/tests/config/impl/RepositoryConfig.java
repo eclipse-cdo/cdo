@@ -149,10 +149,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       }
 
       repository.setQueryHandlerProvider(new ContainerQueryHandlerProvider(getCurrentTest().getServerContainer()));
-      repository.addListener(repositoryListener);
-
-      repositories.put(name, repository);
-      LifecycleUtil.activate(repository);
+      registerRepository(repository);
     }
 
     return repository;
@@ -166,6 +163,13 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     props.put(Props.SUPPORTING_BRANCHES, "false");
     props.put(Props.CURRENT_LRU_CAPACITY, "10000");
     props.put(Props.REVISED_LRU_CAPACITY, "10000");
+  }
+
+  public void registerRepository(InternalRepository repository)
+  {
+    repository.addListener(repositoryListener);
+    repositories.put(repository.getName(), repository);
+    LifecycleUtil.activate(repository);
   }
 
   @Override

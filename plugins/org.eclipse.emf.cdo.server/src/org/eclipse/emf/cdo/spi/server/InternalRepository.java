@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -35,6 +36,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.Revisi
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
@@ -125,4 +127,10 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
    * @since 4.0
    */
   public void loadLob(byte[] id, OutputStream out) throws IOException;
+
+  /**
+   * @since 4.0
+   */
+  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler);
 }

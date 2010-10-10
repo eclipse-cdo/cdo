@@ -204,6 +204,11 @@ public interface CDOProtocolConstants
    */
   public static final short SIGNAL_LOAD_LOB = 46;
 
+  /**
+   * @since 4.0
+   */
+  public static final short SIGNAL_HANDLE_REVISIONS = 47;
+
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh
 

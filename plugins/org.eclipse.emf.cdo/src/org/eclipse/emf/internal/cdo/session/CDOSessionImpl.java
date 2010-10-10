@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.common.model.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
@@ -534,6 +535,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   public InternalCDOView openView(long timeStamp)
   {
     return openView(getBranchManager().getMainBranch(), timeStamp);
+  }
+
+  public InternalCDOView openView(ResourceSet resourceSet)
+  {
+    return openView(getBranchManager().getMainBranch(), CDOBranchPoint.UNSPECIFIED_DATE, resourceSet);
   }
 
   /**
@@ -1744,6 +1750,23 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         try
         {
           delegate.loadLob(info, outputStreamOrWriter);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp,
+        boolean exactTime, CDORevisionHandler handler)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          delegate.handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime, handler);
         }
         catch (Exception ex)
         {

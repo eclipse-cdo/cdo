@@ -668,7 +668,8 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   }
 
   @Override
-  public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
+  public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler)
   {
     StringBuilder builder = new StringBuilder(sqlSelectForHandle);
     boolean whereAppend = false;
@@ -678,17 +679,44 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       // TODO: Prepare this string literal
       builder.append(" WHERE "); //$NON-NLS-1$
       builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
-      builder.append("=? "); //$NON-NLS-1$
+      builder.append("=?"); //$NON-NLS-1$
 
       whereAppend = true;
     }
 
-    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+    int timeParameters = 0;
+    if (exactTime)
     {
-      // TODO: Prepare this string literal
+      if (timeStamp != DBStore.UNSPECIFIED_DATE)
+      {
+        builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
+        builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+        builder.append("=?"); //$NON-NLS-1$
+        timeParameters = 1;
+      }
+    }
+    else
+    {
       builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
-      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-      builder.append("=? "); //$NON-NLS-1$
+      if (timeStamp != DBStore.UNSPECIFIED_DATE)
+      {
+        builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+        builder.append(">=?"); //$NON-NLS-1$
+        builder.append(" AND ("); //$NON-NLS-1$
+        builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+        builder.append("<=? OR "); //$NON-NLS-1$
+        builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+        builder.append("="); //$NON-NLS-1$
+        builder.append(DBStore.UNSPECIFIED_DATE);
+        builder.append(")"); //$NON-NLS-1$
+        timeParameters = 2;
+      }
+      else
+      {
+        builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+        builder.append("="); //$NON-NLS-1$
+        builder.append(DBStore.UNSPECIFIED_DATE);
+      }
     }
 
     IRepository repository = accessor.getStore().getRepository();
@@ -709,9 +737,9 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         stmt.setInt(col++, branch.getID());
       }
 
-      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+      for (int i = 0; i < timeParameters; i++)
       {
-        stmt.setLong(col, timeStamp);
+        stmt.setLong(col++, timeStamp);
       }
 
       rs = stmt.executeQuery();

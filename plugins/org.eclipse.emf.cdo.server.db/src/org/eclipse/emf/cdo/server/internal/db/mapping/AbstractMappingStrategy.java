@@ -175,19 +175,19 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   // -- object id related methods ----------------------------------------
 
   public void handleRevisions(IDBStoreAccessor accessor, EClass eClass, CDOBranch branch, long timeStamp,
-      CDORevisionHandler handler)
+      boolean exactTime, CDORevisionHandler handler)
   {
     if (eClass == null)
     {
       for (IClassMapping mapping : getClassMappings().values())
       {
-        mapping.handleRevisions(accessor, branch, timeStamp, handler);
+        mapping.handleRevisions(accessor, branch, timeStamp, exactTime, handler);
       }
     }
     else
     {
       IClassMapping classMapping = getClassMapping(eClass);
-      classMapping.handleRevisions(accessor, branch, timeStamp, handler);
+      classMapping.handleRevisions(accessor, branch, timeStamp, exactTime, handler);
     }
   }
 

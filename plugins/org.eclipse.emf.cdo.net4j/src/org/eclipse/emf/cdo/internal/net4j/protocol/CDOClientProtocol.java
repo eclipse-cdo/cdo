@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.lob.CDOLob;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -279,6 +280,12 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     {
       throw new TransportException(ex);
     }
+  }
+
+  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler)
+  {
+    send(new HandleRevisionsRequest(this, eClass, branch, exactBranch, timeStamp, exactTime, handler));
   }
 
   public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,

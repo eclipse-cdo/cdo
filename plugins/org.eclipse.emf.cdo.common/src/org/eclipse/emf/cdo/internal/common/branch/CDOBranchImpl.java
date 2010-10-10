@@ -319,11 +319,14 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
    */
   public static class Main extends CDOBranchImpl
   {
+    private boolean local;
+
     private InternalCDOBranchManager branchManager;
 
-    public Main(InternalCDOBranchManager branchManager, long timeStamp)
+    public Main(InternalCDOBranchManager branchManager, boolean local, long timeStamp)
     {
       super(MAIN_BRANCH_ID, MAIN_BRANCH_NAME, new CDOBranchPointImpl(null, timeStamp));
+      this.local = local;
       this.branchManager = branchManager;
     }
 
@@ -331,6 +334,12 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     public boolean isMainBranch()
     {
       return true;
+    }
+
+    @Override
+    public boolean isLocal()
+    {
+      return local;
     }
 
     @Override

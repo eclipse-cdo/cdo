@@ -181,6 +181,14 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
   public CDOView openView(long timeStamp);
 
   /**
+   * Opens and returns a new {@link CDOView view} on the given EMF {@link ResourceSet resource set}.
+   * 
+   * @see #openView(CDOBranch, long, ResourceSet)
+   * @since 4.0
+   */
+  public CDOView openView(ResourceSet resourceSet);
+
+  /**
    * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
    * <p>
    * Same as calling <code>openView(new ResourceSetImpl())</code>.

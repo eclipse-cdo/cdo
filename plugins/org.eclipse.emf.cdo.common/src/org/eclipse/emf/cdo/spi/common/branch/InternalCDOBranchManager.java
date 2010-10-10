@@ -36,7 +36,10 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
 
   public void setTimeProvider(CDOTimeProvider timeProvider);
 
-  public void initMainBranch(long timestamp);
+  /**
+   * @since 4.0
+   */
+  public void initMainBranch(boolean local, long timestamp);
 
   public InternalCDOBranch getMainBranch();
 

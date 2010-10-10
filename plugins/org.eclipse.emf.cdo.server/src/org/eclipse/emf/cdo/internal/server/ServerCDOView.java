@@ -561,6 +561,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
+    public CDOView openView(ResourceSet resourceSet)
+    {
+      throw new UnsupportedOperationException();
+    }
+
     public CDOView openView(long timeStamp)
     {
       throw new UnsupportedOperationException();

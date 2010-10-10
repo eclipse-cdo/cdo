@@ -215,6 +215,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
 
   public IStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature)
   {
+    // TODO: implement DB4OStoreAccessor.createChunkReader(revision, feature)
     throw new UnsupportedOperationException();
   }
 
@@ -271,13 +272,16 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
     return DB4ORevision.getCDORevision(getStore(), revision);
   }
 
-  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler)
   {
+    // TODO: implement DB4OStoreAccessor.handleRevisions(eClass, branch, timeStamp, exactTime, handler)
     throw new UnsupportedOperationException();
   }
 
   public Set<CDOID> readChangeSet(CDOChangeSetSegment... segments)
   {
+    // TODO: implement DB4OStoreAccessor.readChangeSet(segments)
     throw new UnsupportedOperationException();
   }
 
@@ -360,60 +364,89 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
   public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException
   {
+    // TODO: implement DB4OStoreAccessor.rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime)
     throw new UnsupportedOperationException();
   }
 
   public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException
   {
+    // TODO: implement DB4OStoreAccessor.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime)
     throw new UnsupportedOperationException();
   }
 
   public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
       OMMonitor monitor) throws IOException
   {
+    // TODO: implement DB4OStoreAccessor.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime, monitor)
+    throw new UnsupportedOperationException();
+  }
+
+  public Object rawStore(InternalCDOPackageUnit[] packageUnits, Object context, OMMonitor monitor)
+  {
+    // TODO: implement DB4OStoreAccessor.rawStore(packageUnits, context, monitor)
+    throw new UnsupportedOperationException();
+  }
+
+  public Object rawStore(InternalCDORevision revision, Object context, OMMonitor monitor)
+  {
+    // TODO: implement DB4OStoreAccessor.rawStore(revision, context, monitor)
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawCommit(Object context, OMMonitor monitor)
+  {
+    // TODO: implement DB4OStoreAccessor.rawCommit(context, monitor)
     throw new UnsupportedOperationException();
   }
 
   public void queryLobs(List<byte[]> ids)
   {
+    // TODO: implement DB4OStoreAccessor.queryLobs(ids)
     throw new UnsupportedOperationException();
   }
 
   public void loadLob(byte[] id, OutputStream out) throws IOException
   {
+    // TODO: implement DB4OStoreAccessor.loadLob(id, out)
     throw new UnsupportedOperationException();
   }
 
   @Override
   protected void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
   {
+    // TODO: implement DB4OStoreAccessor.writeBlob(id, size, inputStream)
     throw new UnsupportedOperationException();
   }
 
   @Override
   protected void writeClob(byte[] id, long size, Reader reader) throws IOException
   {
+    // TODO: implement DB4OStoreAccessor.writeClob(id, size, reader)
     throw new UnsupportedOperationException();
   }
 
   public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
+    // TODO: implement DB4OStoreAccessor.createBranch(branchID, branchInfo)
     throw new UnsupportedOperationException();
   }
 
   public BranchInfo loadBranch(int branchID)
   {
+    // TODO: implement DB4OStoreAccessor.loadBranch(branchID)
     throw new UnsupportedOperationException();
   }
 
   public SubBranchInfo[] loadSubBranches(int branchID)
   {
+    // TODO: implement DB4OStoreAccessor.loadSubBranches(branchID)
     throw new UnsupportedOperationException();
   }
 
   public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
   {
+    // TODO: implement DB4OStoreAccessor.loadBranches(startID, endID, branchHandler)
     throw new UnsupportedOperationException();
   }
 
@@ -580,6 +613,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
   protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created,
       OMMonitor monitor)
   {
+    // TODO: implement DB4OStoreAccessor.writeRevisionDeltas(revisionDeltas, branch, created, monitor)
     throw new UnsupportedOperationException();
   }
 

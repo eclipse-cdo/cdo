@@ -66,10 +66,10 @@ public class CDOBranchManagerImpl extends Lifecycle implements InternalCDOBranch
     this.timeProvider = timeProvider;
   }
 
-  public void initMainBranch(long repositoryCreationTime)
+  public void initMainBranch(boolean local, long repositoryCreationTime)
   {
     checkInactive();
-    mainBranch = new CDOBranchImpl.Main(this, repositoryCreationTime);
+    mainBranch = new CDOBranchImpl.Main(this, local, repositoryCreationTime);
   }
 
   public void handleBranchCreated(InternalCDOBranch branch)

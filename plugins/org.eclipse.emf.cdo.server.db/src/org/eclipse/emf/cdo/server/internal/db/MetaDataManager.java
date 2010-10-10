@@ -13,7 +13,6 @@
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
@@ -96,7 +95,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   public Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection)
   {
-    return readPackageUnits(connection, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, new Monitor());
+    return readPackageUnits(connection, DBStore.UNSPECIFIED_DATE, DBStore.UNSPECIFIED_DATE, new Monitor());
   }
 
   public final void writePackageUnits(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
@@ -328,7 +327,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     };
 
     String where = null;
-    if (fromCommitTime != CDOBranchPoint.UNSPECIFIED_DATE)
+    if (fromCommitTime != DBStore.UNSPECIFIED_DATE)
     {
       where = CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.CORE_PACKAGE_URI + "' AND "
           + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.RESOURCE_PACKAGE_URI + "' AND "

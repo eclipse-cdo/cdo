@@ -276,13 +276,14 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     }
   }
 
-  public synchronized void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
+  public synchronized void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler)
   {
     for (List<InternalCDORevision> list : revisions.values())
     {
       for (InternalCDORevision revision : list)
       {
-        if (!handleRevision(revision, eClass, branch, timeStamp, handler))
+        if (!handleRevision(revision, eClass, branch, timeStamp, exactTime, handler))
         {
           return;
         }
@@ -291,7 +292,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
   }
 
   private boolean handleRevision(InternalCDORevision revision, EClass eClass, CDOBranch branch, long timeStamp,
-      CDORevisionHandler handler)
+      boolean exactTime, CDORevisionHandler handler)
   {
     if (eClass != null && revision.getEClass() != eClass)
     {
@@ -303,9 +304,19 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
       return true;
     }
 
-    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE && revision.getTimeStamp() != timeStamp)
+    if (exactTime)
     {
-      return true;
+      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE && revision.getTimeStamp() != timeStamp)
+      {
+        return true;
+      }
+    }
+    else
+    {
+      if (revision.isValid(timeStamp))
+      {
+        return true;
+      }
     }
 
     return handler.handleRevision(revision);

@@ -389,7 +389,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
 
     public CDOCommitData getCommitData()
     {
-      storeAccessor.handleRevisions(null, null, timeStamp, this);
+      storeAccessor.handleRevisions(null, null, timeStamp, true, this);
       return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);
     }
 

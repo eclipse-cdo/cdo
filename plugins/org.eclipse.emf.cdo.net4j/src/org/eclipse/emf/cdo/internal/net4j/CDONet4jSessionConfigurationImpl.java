@@ -217,7 +217,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     branchManager.setBranchLoader(session.getSessionProtocol());
     branchManager.setTimeProvider(session.getRepositoryInfo());
-    branchManager.initMainBranch(session.getRepositoryInfo().getCreationTime());
+    branchManager.initMainBranch(false, session.getRepositoryInfo().getCreationTime());
     branchManager.activate();
 
     if (commitInfoManager == null)

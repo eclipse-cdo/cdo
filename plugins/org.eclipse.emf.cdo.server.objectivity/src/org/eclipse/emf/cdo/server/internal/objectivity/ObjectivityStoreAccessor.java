@@ -1189,8 +1189,10 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     return result.toArray(new SubBranchInfo[result.size()]);
   }
 
-  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler)
   {
+    // TODO: implement ObjectivityStoreAccessor.handleRevisions(eClass, branch, timeStamp, exactTime, handler)
     throw new UnsupportedOperationException();
   }
 
@@ -1232,6 +1234,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException
   {
+    // TODO: implement ObjectivityStoreAccessor.rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime)
     throw new UnsupportedOperationException();
   }
 
@@ -1241,28 +1244,52 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
       OMMonitor monitor) throws IOException
   {
+    // TODO: implement ObjectivityStoreAccessor.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime,
+    // monitor)
+    throw new UnsupportedOperationException();
+  }
+
+  public Object rawStore(InternalCDOPackageUnit[] packageUnits, Object context, OMMonitor monitor)
+  {
+    // TODO: implement ObjectivityStoreAccessor.rawStore(packageUnits, context, monitor)
+    throw new UnsupportedOperationException();
+  }
+
+  public Object rawStore(InternalCDORevision revision, Object context, OMMonitor monitor)
+  {
+    // TODO: implement ObjectivityStoreAccessor.rawStore(revision, context, monitor)
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawCommit(Object context, OMMonitor monitor)
+  {
+    // TODO: implement ObjectivityStoreAccessor.rawCommit(context, monitor)
     throw new UnsupportedOperationException();
   }
 
   public void queryLobs(List<byte[]> ids)
   {
+    // TODO: implement ObjectivityStoreAccessor.queryLobs(ids)
     throw new UnsupportedOperationException();
   }
 
   public void loadLob(byte[] id, OutputStream out) throws IOException
   {
+    // TODO: implement ObjectivityStoreAccessor.loadLob(id, out)
     throw new UnsupportedOperationException();
   }
 
   @Override
   protected void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
   {
+    // TODO: implement ObjectivityStoreAccessor.writeBlob(id, size, inputStream)
     throw new UnsupportedOperationException();
   }
 
   @Override
   protected void writeClob(byte[] id, long size, Reader reader) throws IOException
   {
+    // TODO: implement ObjectivityStoreAccessor.writeClob(id, size, reader)
     throw new UnsupportedOperationException();
   }
 }

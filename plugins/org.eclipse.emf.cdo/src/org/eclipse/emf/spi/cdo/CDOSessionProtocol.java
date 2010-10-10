@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.model.lob.CDOLob;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
@@ -210,6 +211,12 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    */
   public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo ancestorInfo, CDORevisionAvailabilityInfo targetInfo,
       CDORevisionAvailabilityInfo sourceInfo);
+
+  /**
+   * @since 4.0
+   */
+  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler);
 
   /**
    * @author Eike Stepper

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.workspace;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -91,7 +92,8 @@ public abstract class AbstractCDOWorkspaceBaseline implements CDOWorkspaceBaseli
 
   protected CDODataOutput createCDODataOutput(ExtendedDataOutputStream edos)
   {
-    return CDOCommonUtil.createCDODataOutput(edos, packageRegistry, null);
+    CDOIDProvider idProvider = CDOIDProvider.NOOP;
+    return CDOCommonUtil.createCDODataOutput(edos, packageRegistry, idProvider);
   }
 
   protected abstract boolean containsRevision(CDOID id);

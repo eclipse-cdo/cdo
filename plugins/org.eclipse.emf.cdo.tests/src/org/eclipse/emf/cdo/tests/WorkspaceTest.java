@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.workspace.FolderCDOWorkspaceBaseline;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -34,13 +35,16 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
+import org.eclipse.emf.cdo.workspace.CDOWorkspaceBaseline;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
 
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.io.TMPUtil;
 
 import org.eclipse.emf.ecore.EObject;
 
+import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -330,7 +334,11 @@ public class WorkspaceTest extends AbstractCDOTest
     disableConsole();
     CDOSessionConfigurationFactory remote = new RemoteSessionConfigurationFactory();
 
-    CDOWorkspace workspace = CDOWorkspaceUtil.checkout(localStore, null, remote, branchPath, timeStamp);
+    File folder = TMPUtil.createTempFolder("cdo-");
+    CDOWorkspaceBaseline baseline = new FolderCDOWorkspaceBaseline(folder);
+    System.err.println("CDOWorkspaceBaseline: " + folder.getAbsolutePath());
+
+    CDOWorkspace workspace = CDOWorkspaceUtil.checkout(localStore, baseline, remote, branchPath, timeStamp);
     registerRepository(workspace.getLocalRepository());
     return workspace;
   }

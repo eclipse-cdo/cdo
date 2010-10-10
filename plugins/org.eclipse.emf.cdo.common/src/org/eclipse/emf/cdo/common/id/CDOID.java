@@ -12,7 +12,10 @@
  */
 package org.eclipse.emf.cdo.common.id;
 
+import org.eclipse.net4j.util.ImplementationError;
+
 import java.io.Serializable;
+import java.lang.reflect.Array;
 
 /**
  * @author Eike Stepper
@@ -52,26 +55,73 @@ public interface CDOID extends Serializable, Comparable<CDOID>
    */
   public enum Type
   {
-    NULL, //
-    OBJECT,
+    NULL('N'), //
+    OBJECT(' '), // Superceded by ObjectType.getID()
 
     /**
      * @since 2.0
      */
-    EXTERNAL_OBJECT,
+    EXTERNAL_OBJECT('E'),
 
     /**
      * @since 3.0
      */
-    DANGLING_OBJECT,
+    DANGLING_OBJECT('D'),
 
     /**
      * @since 2.0
      */
-    EXTERNAL_TEMP_OBJECT, //
-    TEMP_OBJECT, //
-    META, //
-    TEMP_META
+    EXTERNAL_TEMP_OBJECT('e'), //
+    TEMP_OBJECT('t'), //
+    META('M'), //
+    TEMP_META('m');
+
+    private static Enum<?>[] chars;
+
+    private char id;
+
+    private Type(char id)
+    {
+      registerChar(id, this);
+      this.id = id;
+    }
+
+    private static void registerChar(char id, Enum<?> literal)
+    {
+      if (chars == null)
+      {
+        chars = (Enum<?>[])Array.newInstance(Enum.class, id + 1);
+      }
+      else if (chars.length < id)
+      {
+        Enum<?>[] newChars = (Enum<?>[])Array.newInstance(Enum.class, id + 1);
+        System.arraycopy(chars, 0, newChars, 0, chars.length);
+        chars = newChars;
+      }
+
+      if (chars[id] != null)
+      {
+        throw new ImplementationError("Duplicate id: " + id);
+      }
+
+      chars[id] = literal;
+    }
+
+    /**
+     * @since 4.0
+     */
+    public static Enum<?> getLiteral(char id)
+    {
+      return chars[id];
+    }
+
+    /**
+     * @since 4.0
+     */
+    public char getID()
+    {
+      return id;
+    }
   }
 
   /**
@@ -80,6 +130,26 @@ public interface CDOID extends Serializable, Comparable<CDOID>
    */
   public enum ObjectType
   {
-    LONG, STRING, LONG_WITH_CLASSIFIER, STRING_WITH_CLASSIFIER, UUID
+    LONG('L'), //
+    STRING('S'), //
+    LONG_WITH_CLASSIFIER('l'), //
+    STRING_WITH_CLASSIFIER('s'), //
+    UUID('U');
+
+    private char id;
+
+    private ObjectType(char id)
+    {
+      Type.registerChar(id, this);
+      this.id = id;
+    }
+
+    /**
+     * @since 4.0
+     */
+    public char getID()
+    {
+      return id;
+    }
   }
 }

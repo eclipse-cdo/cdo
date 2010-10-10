@@ -14,9 +14,9 @@
 package org.eclipse.emf.cdo.common.id;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
-import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndBranchImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
@@ -37,7 +37,6 @@ import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
 
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.text.MessageFormat;
 
@@ -47,8 +46,6 @@ import java.text.MessageFormat;
  */
 public final class CDOIDUtil
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_MODEL, CDOIDUtil.class);
-
   private CDOIDUtil()
   {
   }
@@ -264,36 +261,15 @@ public final class CDOIDUtil
 
     if (id instanceof InternalCDOIDObject)
     {
-      InternalCDOIDObject internalCDOID = (InternalCDOIDObject)id;
-      int subOrdinal = (internalCDOID.getSubType().ordinal() + 1) * -1;
-      builder.append(subOrdinal);
+      ObjectType subType = ((InternalCDOIDObject)id).getSubType();
+      builder.append(subType.getID());
     }
     else
     {
       Type type = id.getType();
-      int ordinal = type.ordinal();
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Writing CDOID of type {0} ({1})", ordinal, type); //$NON-NLS-1$
-      }
-
-      builder.append(ordinal);
-      switch (type)
-      {
-      case NULL:
-      case TEMP_OBJECT:
-      case TEMP_META:
-      case META:
-      case EXTERNAL_OBJECT:
-      case OBJECT:
-        break;
-
-      default:
-        throw new ImplementationError();
-      }
+      builder.append(type.getID());
     }
 
-    builder.append("/"); //$NON-NLS-1$
     builder.append(id.toURIFragment());
   }
 
@@ -308,28 +284,20 @@ public final class CDOIDUtil
    */
   public static CDOID read(String uriFragment)
   {
-    // An OBJECT subtype has a negative value
-    if (uriFragment.startsWith("-")) //$NON-NLS-1$
+    char typeID = uriFragment.charAt(0);
+    Enum<?> literal = CDOID.Type.getLiteral(typeID);
+    if (literal == null)
     {
-      return readCDOIDObject(uriFragment);
+      throw new ImplementationError("Unknown type ID: " + typeID);
     }
 
-    byte ordinal = Byte.valueOf(uriFragment.substring(0, 1));
-    if (TRACER.isEnabled())
+    String fragment = uriFragment.substring(1);
+    if (literal instanceof ObjectType)
     {
-      try
-      {
-        String type = Type.values()[ordinal].toString();
-        TRACER.format("Reading CDOID of type {0} ({1})", ordinal, type); //$NON-NLS-1$
-      }
-      catch (RuntimeException ex)
-      {
-        TRACER.trace(ex);
-      }
+      return readCDOIDObject((ObjectType)literal, fragment);
     }
 
-    Type type = Type.values()[ordinal];
-    String fragment = uriFragment.substring(2);
+    Type type = (Type)literal;
     switch (type)
     {
     case NULL:
@@ -361,28 +329,9 @@ public final class CDOIDUtil
     }
   }
 
-  private static CDOID readCDOIDObject(String uriFragment)
+  private static CDOID readCDOIDObject(CDOID.ObjectType subType, String fragment)
   {
-    byte negOrdinal = Byte.valueOf(uriFragment.substring(0, 2));
-    int ordinal = -1 * negOrdinal - 1;
-    if (TRACER.isEnabled())
-    {
-      try
-      {
-        String type = CDOID.ObjectType.values()[ordinal].toString();
-        TRACER.format("Reading CDOID Object of subType {0} ({1})", ordinal, type); //$NON-NLS-1$
-      }
-      catch (RuntimeException ex)
-      {
-        TRACER.trace(ex);
-      }
-    }
-
-    CDOID.ObjectType subType = CDOID.ObjectType.values()[ordinal];
     AbstractCDOID id = createCDOIDObject(subType);
-    // note position 2 in the uriFragment is a /
-    // see the write method
-    String fragment = uriFragment.substring(3);
     id.read(fragment);
     return id;
   }

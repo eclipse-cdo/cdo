@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -34,8 +34,6 @@ public abstract class OM
   public static final OMTracer DEBUG_METAID = DEBUG.tracer("metaid"); //$NON-NLS-1$
 
   public static final OMTracer DEBUG_ID = DEBUG.tracer("id"); //$NON-NLS-1$
-
-  public static final OMTracer DEBUG_MODEL = DEBUG.tracer("model"); //$NON-NLS-1$
 
   public static final OMTracer DEBUG_REVISION = DEBUG.tracer("revision"); //$NON-NLS-1$
 

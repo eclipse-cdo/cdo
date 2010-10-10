@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.workspace;
 
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -22,9 +24,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 /**
  * @author Eike Stepper
  */
-public interface CDOWorkspace extends Closeable
+public interface CDOWorkspace extends CDORevisionProvider, Closeable
 {
-  public IRepository getLocalRepository();
+  public CDOWorkspaceBaseline getBaseline();
 
   public CDOView openView();
 
@@ -45,4 +47,8 @@ public interface CDOWorkspace extends Closeable
   public void replace(String branchPath, long timeStamp);
 
   public void commit(String comment);
+
+  public IRepository getLocalRepository();
+
+  public CDOChangeSetData getLocalChanges();
 }

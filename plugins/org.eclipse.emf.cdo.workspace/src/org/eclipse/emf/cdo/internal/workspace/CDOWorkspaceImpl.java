@@ -12,8 +12,12 @@ package org.eclipse.emf.cdo.internal.workspace;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
@@ -53,6 +57,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -67,36 +72,35 @@ public class CDOWorkspaceImpl implements CDOWorkspace
 
   private InternalRepository localRepository;
 
+  private CDORevisionManager localRevisionManager;
+
+  private CDOBranchPoint localHead;
+
   private IJVMAcceptor localAcceptor;
 
   private InternalCDOSession localSession;
 
+  private InternalCDOWorkspaceBaseline baseline;
+
   private CDOSessionConfigurationFactory remoteSessionConfigurationFactory;
-
-  private CDOWorkspaceBaseline baseline;
-
-  private String baselineBranch;
-
-  private long baselineTime;
 
   private CDOWorkspaceImpl(IStore local, CDOWorkspaceBaseline baseline)
   {
     container = createContainer(local);
     localRepository = createLocalRepository(local);
+    localRevisionManager = localRepository.getRevisionManager();
+    localHead = localRepository.getBranchManager().getMainBranch().getHead();
     localAcceptor = getLocalAcceptor();
     localSession = openLocalSession();
-    this.baseline = baseline;
+    this.baseline = (InternalCDOWorkspaceBaseline)baseline;
   }
 
   public CDOWorkspaceImpl(IStore local, CDOWorkspaceBaseline baseline, CDOSessionConfigurationFactory remote,
       String branchPath, long timeStamp)
   {
     this(local, baseline);
+    this.baseline.init(localSession.getPackageRegistry(), branchPath, timeStamp);
     remoteSessionConfigurationFactory = remote;
-    baselineBranch = branchPath;
-    baselineTime = timeStamp;
-
-    baseline.init(localSession.getPackageRegistry(), branchPath, timeStamp);
     checkout();
   }
 
@@ -141,8 +145,8 @@ public class CDOWorkspaceImpl implements CDOWorkspace
           }
         };
 
-        CDOBranch branch = session.getBranchManager().getBranch(baselineBranch);
-        session.getSessionProtocol().handleRevisions(null, branch, false, baselineTime, false, handler);
+        CDOBranch branch = session.getBranchManager().getBranch(baseline.getBranchPath());
+        session.getSessionProtocol().handleRevisions(null, branch, false, baseline.getTimeStamp(), false, handler);
       }
       finally
       {
@@ -150,7 +154,7 @@ public class CDOWorkspaceImpl implements CDOWorkspace
       }
 
       accessor.rawCommit(context[0], monitor);
-      storeBranchPoint(baselineBranch, baselineTime);
+      storeBranchPoint(baseline.getBranchPath(), baseline.getTimeStamp());
     }
     finally
     {
@@ -163,9 +167,9 @@ public class CDOWorkspaceImpl implements CDOWorkspace
   {
   }
 
-  public InternalRepository getLocalRepository()
+  public InternalCDOWorkspaceBaseline getBaseline()
   {
-    return localRepository;
+    return baseline;
   }
 
   public CDOView openView()
@@ -245,6 +249,22 @@ public class CDOWorkspaceImpl implements CDOWorkspace
   public synchronized boolean isClosed()
   {
     return localRepository == null;
+  }
+
+  public InternalRepository getLocalRepository()
+  {
+    return localRepository;
+  }
+
+  public CDORevision getRevision(CDOID id)
+  {
+    return localRevisionManager.getRevision(id, localHead, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+  }
+
+  public CDOChangeSetData getLocalChanges()
+  {
+    Set<CDOID> ids = baseline.getIDs();
+    return CDORevisionDeltaUtil.createChangeSetData(ids, baseline, this);
   }
 
   protected IManagedContainer getContainer()

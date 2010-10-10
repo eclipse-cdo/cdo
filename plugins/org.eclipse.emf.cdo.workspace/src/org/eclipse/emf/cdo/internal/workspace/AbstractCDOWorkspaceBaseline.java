@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.workspace.CDOWorkspaceBaseline;
 
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -33,7 +32,7 @@ import java.util.Collection;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractCDOWorkspaceBaseline implements CDOWorkspaceBaseline
+public abstract class AbstractCDOWorkspaceBaseline implements InternalCDOWorkspaceBaseline
 {
   private CDOPackageRegistry packageRegistry;
 

@@ -10,9 +10,24 @@
  */
 package org.eclipse.emf.cdo.common.util;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
+import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
+import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
 
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutput;
+
+import java.io.IOException;
 import java.text.MessageFormat;
 
 /**
@@ -23,6 +38,76 @@ public final class CDOCommonUtil
 {
   private CDOCommonUtil()
   {
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static CDODataInput createCDODataInput(ExtendedDataInputStream inputStream,
+      final CDOPackageRegistry packageRegistry, final CDOBranchManager branchManager,
+      final CDOCommitInfoManager commitManager, final CDORevisionFactory revisionFactory,
+      final CDOListFactory listFactory, final CDOLobStore lobStore) throws IOException
+  {
+    return new CDODataInputImpl(inputStream)
+    {
+      @Override
+      protected CDOPackageRegistry getPackageRegistry()
+      {
+        return packageRegistry;
+      }
+
+      @Override
+      protected CDOBranchManager getBranchManager()
+      {
+        return branchManager;
+      }
+
+      @Override
+      protected CDOCommitInfoManager getCommitInfoManager()
+      {
+        return commitManager;
+      }
+
+      @Override
+      protected CDORevisionFactory getRevisionFactory()
+      {
+        return revisionFactory;
+      }
+
+      @Override
+      protected CDOListFactory getListFactory()
+      {
+        return listFactory;
+      }
+
+      @Override
+      protected CDOLobStore getLobStore()
+      {
+        return lobStore;
+      }
+    };
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static CDODataOutput createCDODataOutput(ExtendedDataOutput extendedDataOutputStream,
+      final CDOPackageRegistry packageRegistry, final CDOIDProvider idProvider)
+  {
+    return new CDODataOutputImpl(extendedDataOutputStream)
+    {
+      @Override
+      public CDOPackageRegistry getPackageRegistry()
+      {
+        return packageRegistry;
+      }
+
+      @Override
+      public CDOIDProvider getIDProvider()
+      {
+        return idProvider;
+      }
+    };
   }
 
   public static boolean isValidTimeStamp(long timeStamp, long startTime, long endTime)

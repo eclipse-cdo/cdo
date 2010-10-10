@@ -23,14 +23,14 @@ public final class CDOWorkspaceUtil
   {
   }
 
-  public static CDOWorkspace checkout(IStore local, CDOSessionConfigurationFactory remote, String branchPath,
-      long timeStamp)
+  public static CDOWorkspace checkout(IStore local, CDOWorkspaceBaseline baseline,
+      CDOSessionConfigurationFactory remote, String branchPath, long timeStamp)
   {
-    return new CDOWorkspaceImpl(local, remote, branchPath, timeStamp);
+    return new CDOWorkspaceImpl(local, baseline, remote, branchPath, timeStamp);
   }
 
-  public static CDOWorkspace open(IStore local, CDOSessionConfigurationFactory remote)
+  public static CDOWorkspace open(IStore local, CDOWorkspaceBaseline baseline, CDOSessionConfigurationFactory remote)
   {
-    return new CDOWorkspaceImpl(local, remote);
+    return new CDOWorkspaceImpl(local, baseline, remote);
   }
 }

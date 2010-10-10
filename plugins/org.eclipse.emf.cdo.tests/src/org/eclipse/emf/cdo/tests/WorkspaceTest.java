@@ -330,7 +330,7 @@ public class WorkspaceTest extends AbstractCDOTest
     disableConsole();
     CDOSessionConfigurationFactory remote = new RemoteSessionConfigurationFactory();
 
-    CDOWorkspace workspace = CDOWorkspaceUtil.checkout(localStore, remote, branchPath, timeStamp);
+    CDOWorkspace workspace = CDOWorkspaceUtil.checkout(localStore, null, remote, branchPath, timeStamp);
     registerRepository(workspace.getLocalRepository());
     return workspace;
   }

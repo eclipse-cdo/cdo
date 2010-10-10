@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
+import org.eclipse.emf.cdo.workspace.CDOWorkspaceBaseline;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
@@ -48,11 +49,8 @@ import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
-import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,30 +73,36 @@ public class CDOWorkspaceImpl implements CDOWorkspace
 
   private CDOSessionConfigurationFactory remoteSessionConfigurationFactory;
 
+  private CDOWorkspaceBaseline baseline;
+
   private String baselineBranch;
 
   private long baselineTime;
 
-  private CDOWorkspaceImpl(IStore local)
+  private CDOWorkspaceImpl(IStore local, CDOWorkspaceBaseline baseline)
   {
     container = createContainer(local);
     localRepository = createLocalRepository(local);
     localAcceptor = getLocalAcceptor();
     localSession = openLocalSession();
+    this.baseline = baseline;
   }
 
-  public CDOWorkspaceImpl(IStore local, CDOSessionConfigurationFactory remote, String branchPath, long timeStamp)
+  public CDOWorkspaceImpl(IStore local, CDOWorkspaceBaseline baseline, CDOSessionConfigurationFactory remote,
+      String branchPath, long timeStamp)
   {
-    this(local);
+    this(local, baseline);
     remoteSessionConfigurationFactory = remote;
     baselineBranch = branchPath;
     baselineTime = timeStamp;
+
+    baseline.init(localSession.getPackageRegistry(), branchPath, timeStamp);
     checkout();
   }
 
-  public CDOWorkspaceImpl(IStore local, CDOSessionConfigurationFactory remote)
+  public CDOWorkspaceImpl(IStore local, CDOWorkspaceBaseline baseline, CDOSessionConfigurationFactory remote)
   {
-    this(local);
+    this(local, baseline);
     remoteSessionConfigurationFactory = remote;
     open();
   }
@@ -334,9 +338,7 @@ public class CDOWorkspaceImpl implements CDOWorkspace
         @Override
         public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
         {
-          Map<InternalCDOObject, InternalCDORevision> cleanRevisions = ((InternalCDOTransaction)transaction)
-              .getCleanRevisions();
-          addToBaseline(cleanRevisions.values());
+          baseline.updateAfterCommit(transaction);
         }
       });
     }
@@ -359,11 +361,5 @@ public class CDOWorkspaceImpl implements CDOWorkspace
     props.put(PROP_BRANCH_PATH, branchPath);
     props.put(PROP_TIME_STAMP, String.valueOf(timeStamp));
     localRepository.setProperties(props);
-  }
-
-  protected void addToBaseline(Collection<InternalCDORevision> revisions)
-  {
-    // TODO: implement CDOWorkspaceImpl.addToBaseline(revisions)
-    // throw new UnsupportedOperationException();
   }
 }

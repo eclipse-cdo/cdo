@@ -293,6 +293,11 @@ public class HibernateStore extends Store implements IHibernateStore
     }
   }
 
+  public boolean isLocal(CDOID id)
+  {
+    return false;
+  }
+
   public CDOID createObjectID(String val)
   {
     // TODO: implement HibernateStore.createObjectID(val)

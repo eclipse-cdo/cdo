@@ -209,6 +209,11 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     return writerPool;
   }
 
+  public boolean isLocal(CDOID id)
+  {
+    return false;
+  }
+
   /**
    * @since 4.0
    */

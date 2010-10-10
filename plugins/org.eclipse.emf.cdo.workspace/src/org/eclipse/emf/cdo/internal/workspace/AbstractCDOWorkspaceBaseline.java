@@ -10,16 +10,21 @@
  */
 package org.eclipse.emf.cdo.internal.workspace;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -27,33 +32,46 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.io.IOException;
-import java.util.Collection;
 
 /**
  * @author Eike Stepper
  */
 public abstract class AbstractCDOWorkspaceBaseline implements InternalCDOWorkspaceBaseline
 {
-  private CDOPackageRegistry packageRegistry;
+  private CDOWorkspace workspace;
 
   private String branchPath;
 
   private long timeStamp;
 
+  private InternalStore store;
+
+  private InternalCDOPackageRegistry packageRegistry;
+
+  private InternalCDOBranchManager branchManager;
+
   protected AbstractCDOWorkspaceBaseline()
   {
   }
 
-  public void init(CDOPackageRegistry packageRegistry, String branchPath, long timeStamp)
+  public void init(CDOWorkspace workspace)
   {
-    this.packageRegistry = packageRegistry;
+    this.workspace = workspace;
+    InternalRepository localRepository = (InternalRepository)workspace.getLocalRepository();
+    store = localRepository.getStore();
+    packageRegistry = localRepository.getPackageRegistry(false);
+    branchManager = localRepository.getBranchManager();
+  }
+
+  public void setTarget(String branchPath, long timeStamp)
+  {
     this.branchPath = branchPath;
     this.timeStamp = timeStamp;
   }
 
-  public CDOPackageRegistry getPackageRegistry()
+  public CDOWorkspace getWorkspace()
   {
-    return packageRegistry;
+    return workspace;
   }
 
   public String getBranchPath()
@@ -66,27 +84,39 @@ public abstract class AbstractCDOWorkspaceBaseline implements InternalCDOWorkspa
     return timeStamp;
   }
 
-  public int updateAfterCommit(CDOTransaction transaction)
+  public void updateAfterCommit(CDOTransaction transaction)
   {
-    int added = 0;
-    Collection<InternalCDORevision> revisions = ((InternalCDOTransaction)transaction).getCleanRevisions().values();
-    for (InternalCDORevision revision : revisions)
+    for (InternalCDORevision revision : ((InternalCDOTransaction)transaction).getCleanRevisions().values())
     {
-      if (!containsRevision(revision.getID()))
+      CDOID id = revision.getID();
+      if (isAddedObject(id))
       {
-        addRevision(revision);
-        ++added;
+        deregisterObject(id);
+      }
+      else
+      {
+        registerChangedOrDetachedObject(revision);
       }
     }
 
-    return added;
+    // Don't use keySet() because only the values() are ID-mapped!
+    for (CDOObject object : transaction.getNewObjects().values())
+    {
+      registerAddedObject(object.cdoID());
+    }
+  }
+
+  protected boolean isAddedObject(CDOID id)
+  {
+    return store.isLocal(id);
   }
 
   protected CDODataInput createCDODataInput(ExtendedDataInputStream edis) throws IOException
   {
     CDORevisionFactory revisionFactory = CDORevisionFactory.DEFAULT;
     CDOListFactory listFactory = CDOListFactory.DEFAULT;
-    return CDOCommonUtil.createCDODataInput(edis, packageRegistry, null, null, revisionFactory, listFactory, null);
+    return CDOCommonUtil.createCDODataInput(edis, packageRegistry, branchManager, null, revisionFactory, listFactory,
+        null);
   }
 
   protected CDODataOutput createCDODataOutput(ExtendedDataOutputStream edos)
@@ -95,9 +125,9 @@ public abstract class AbstractCDOWorkspaceBaseline implements InternalCDOWorkspa
     return CDOCommonUtil.createCDODataOutput(edos, packageRegistry, idProvider);
   }
 
-  protected abstract boolean containsRevision(CDOID id);
+  protected abstract void registerChangedOrDetachedObject(InternalCDORevision revision);
 
-  protected abstract void removeRevision(CDOID id);
+  protected abstract void registerAddedObject(CDOID id);
 
-  protected abstract void addRevision(InternalCDORevision revision);
+  protected abstract void deregisterObject(CDOID id);
 }

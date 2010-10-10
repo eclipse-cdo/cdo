@@ -96,4 +96,13 @@ public abstract class LongIDStore extends Store
 
     return CDOIDUtil.createLong(lastObjectID.incrementAndGet());
   }
+
+  /**
+   * @since 4.0
+   */
+  public boolean isLocal(CDOID id)
+  {
+    long value = CDOIDUtil.getLong(id);
+    return value > nextLocalObjectID.get();
+  }
 }

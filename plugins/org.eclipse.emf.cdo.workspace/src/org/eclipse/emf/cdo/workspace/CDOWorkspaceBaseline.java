@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.workspace;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 
 import java.util.Set;
@@ -21,11 +20,11 @@ import java.util.Set;
  */
 public interface CDOWorkspaceBaseline extends CDORevisionProvider
 {
+  public CDOWorkspace getWorkspace();
+
   public String getBranchPath();
 
   public long getTimeStamp();
-
-  public CDORevision getRevision(CDOID id);
 
   public Set<CDOID> getIDs();
 }

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
@@ -45,4 +46,9 @@ public interface InternalStore extends IStore, ILifecycle
   public void setLastNonLocalCommitTime(long lastNonLocalCommitTime);
 
   public void setLastMetaID(long lastMetaID);
+
+  /**
+   * @since 4.0
+   */
+  public boolean isLocal(CDOID id);
 }

@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.internal.workspace;
 
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceBaseline;
 
 /**
@@ -19,7 +19,9 @@ import org.eclipse.emf.cdo.workspace.CDOWorkspaceBaseline;
  */
 public interface InternalCDOWorkspaceBaseline extends CDOWorkspaceBaseline
 {
-  public void init(CDOPackageRegistry packageRegistry, String branchPath, long timeStamp);
+  public void init(CDOWorkspace workspace);
 
-  public int updateAfterCommit(CDOTransaction transaction);
+  public void setTarget(String branchPath, long timeStamp);
+
+  public void updateAfterCommit(CDOTransaction transaction);
 }

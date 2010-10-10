@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceBaseline;
@@ -72,10 +73,6 @@ public class CDOWorkspaceImpl implements CDOWorkspace
 
   private InternalRepository localRepository;
 
-  private CDORevisionManager localRevisionManager;
-
-  private CDOBranchPoint localHead;
-
   private IJVMAcceptor localAcceptor;
 
   private InternalCDOSession localSession;
@@ -88,18 +85,17 @@ public class CDOWorkspaceImpl implements CDOWorkspace
   {
     container = createContainer(local);
     localRepository = createLocalRepository(local);
-    localRevisionManager = localRepository.getRevisionManager();
-    localHead = localRepository.getBranchManager().getMainBranch().getHead();
     localAcceptor = getLocalAcceptor();
     localSession = openLocalSession();
     this.baseline = (InternalCDOWorkspaceBaseline)baseline;
+    this.baseline.init(this);
   }
 
   public CDOWorkspaceImpl(IStore local, CDOWorkspaceBaseline baseline, CDOSessionConfigurationFactory remote,
       String branchPath, long timeStamp)
   {
     this(local, baseline);
-    this.baseline.init(localSession.getPackageRegistry(), branchPath, timeStamp);
+    this.baseline.setTarget(branchPath, timeStamp);
     remoteSessionConfigurationFactory = remote;
     checkout();
   }
@@ -258,7 +254,9 @@ public class CDOWorkspaceImpl implements CDOWorkspace
 
   public CDORevision getRevision(CDOID id)
   {
-    return localRevisionManager.getRevision(id, localHead, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+    CDORevisionManager revisionManager = localSession.getRevisionManager();
+    CDOBranchPoint head = localSession.getBranchManager().getMainBranch().getHead();
+    return revisionManager.getRevision(id, head, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
   }
 
   public CDOChangeSetData getLocalChanges()
@@ -352,6 +350,11 @@ public class CDOWorkspaceImpl implements CDOWorkspace
   {
     if (view instanceof CDOTransaction)
     {
+      if (baseline.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE)
+      {
+        throw new ReadOnlyException("Workspace is read-only");
+      }
+
       CDOTransaction transaction = (CDOTransaction)view;
       transaction.addTransactionHandler(new CDODefaultTransactionHandler()
       {

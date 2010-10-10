@@ -44,12 +44,24 @@ public class FolderCDOWorkspaceBaseline extends AbstractCDOWorkspaceBaseline
     return folder;
   }
 
+  public Set<CDOID> getIDs()
+  {
+    Set<CDOID> ids = new HashSet<CDOID>();
+    for (String key : folder.list())
+    {
+      CDOID id = getCDOID(key);
+      ids.add(id);
+    }
+
+    return ids;
+  }
+
   public CDORevision getRevision(CDOID id)
   {
     File file = getFile(id);
-    if (!file.exists())
+    if (!file.exists() || file.length() == 0)
     {
-      throw new IllegalStateException("File not found: " + file.getAbsolutePath());
+      return null;
     }
 
     FileInputStream fis = null;
@@ -71,44 +83,13 @@ public class FolderCDOWorkspaceBaseline extends AbstractCDOWorkspaceBaseline
     }
   }
 
-  public Set<CDOID> getIDs()
-  {
-    Set<CDOID> ids = new HashSet<CDOID>();
-    for (String key : folder.list())
-    {
-      CDOID id = getCDOID(key);
-      ids.add(id);
-    }
-
-    return ids;
-  }
-
   @Override
-  protected boolean containsRevision(CDOID id)
-  {
-    File file = getFile(id);
-    return file.exists();
-  }
-
-  @Override
-  protected void removeRevision(CDOID id)
-  {
-    File file = getFile(id);
-    file.delete();
-
-    if (file.exists())
-    {
-      throw new IllegalStateException("Could not delete " + file.getAbsolutePath());
-    }
-  }
-
-  @Override
-  protected void addRevision(InternalCDORevision revision)
+  protected void registerChangedOrDetachedObject(InternalCDORevision revision)
   {
     File file = getFile(revision.getID());
     if (file.exists())
     {
-      throw new IllegalStateException("File already exists: " + file.getAbsolutePath());
+      return;
     }
 
     FileOutputStream fos = null;
@@ -128,6 +109,43 @@ public class FolderCDOWorkspaceBaseline extends AbstractCDOWorkspaceBaseline
     finally
     {
       IOUtil.close(fos);
+    }
+  }
+
+  @Override
+  protected void registerAddedObject(CDOID id)
+  {
+    File file = getFile(id);
+    if (file.exists())
+    {
+      return;
+    }
+
+    FileOutputStream fos = null;
+
+    try
+    {
+      fos = new FileOutputStream(file); // Just create an empty marker file
+    }
+    catch (Exception ex)
+    {
+      throw new IllegalStateException("Could not create " + file.getAbsolutePath(), ex);
+    }
+    finally
+    {
+      IOUtil.close(fos);
+    }
+  }
+
+  @Override
+  protected void deregisterObject(CDOID id)
+  {
+    File file = getFile(id);
+    file.delete();
+
+    if (file.exists())
+    {
+      throw new IllegalStateException("Could not delete " + file.getAbsolutePath());
     }
   }
 

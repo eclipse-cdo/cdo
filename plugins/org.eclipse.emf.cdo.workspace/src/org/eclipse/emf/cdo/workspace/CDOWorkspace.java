@@ -48,6 +48,8 @@ public interface CDOWorkspace extends CDORevisionProvider, Closeable
 
   public void replace(String branchPath, long timeStamp);
 
+  public CDOCommitInfo commit() throws CommitException;
+
   public CDOCommitInfo commit(String comment) throws CommitException;
 
   public CDOChangeSetData getLocalChanges();

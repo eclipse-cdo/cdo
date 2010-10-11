@@ -15,12 +15,14 @@ import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.workspace.FolderCDOWorkspaceBaseline;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -105,6 +107,14 @@ public class WorkspaceTest extends AbstractCDOTest
 
     workspaces.clear();
     super.doTearDown();
+  }
+
+  @Override
+  public synchronized Map<String, Object> getTestProperties()
+  {
+    Map<String, Object> map = super.getTestProperties();
+    map.put(IRepository.Props.ENSURE_REFERENTIAL_INTEGRITY, "false");
+    return map;
   }
 
   public void testCheckout() throws Exception
@@ -589,6 +599,78 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(0, changes.getNewObjects().size());
     assertEquals(1 + customers.size() + products.size(), changes.getChangedObjects().size());
     assertEquals(orderDetails.size() + salesOrders.size(), changes.getDetachedObjects().size());
+    workspace.close();
+  }
+
+  public void testCommitAfterModify() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof Product1)
+      {
+        Product1 product = (Product1)object;
+        product.setName("MODIFIED_" + product.getName());
+      }
+    }
+
+    transaction.commit();
+
+    CDOCommitInfo info = workspace.commit();
+    assertEquals(0, info.getNewObjects().size());
+    assertEquals(NUM_OF_PRODUCTS, info.getChangedObjects().size());
+    assertEquals(0, info.getDetachedObjects().size());
+    workspace.close();
+  }
+
+  public void testCommitAfterAdd() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (int i = 0; i < NUM_OF_PRODUCTS; i++)
+    {
+      resource.getContents().add(createProduct(i));
+    }
+
+    transaction.commit();
+
+    CDOCommitInfo info = workspace.commit();
+    assertEquals(NUM_OF_PRODUCTS, info.getNewObjects().size());
+    assertEquals(1, info.getChangedObjects().size());
+    assertEquals(0, info.getDetachedObjects().size());
+    workspace.close();
+  }
+
+  public void testCommitAfterDetach() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof SalesOrder)
+      {
+        ((SalesOrder)object).getOrderDetails().clear();
+      }
+
+      if (object instanceof Product1)
+      {
+        ((Product1)object).getOrderDetails().clear();
+      }
+    }
+
+    transaction.commit();
+
+    CDOCommitInfo info = workspace.commit();
+    assertEquals(0, info.getNewObjects().size());
+    assertEquals(salesOrders.size() + products.size(), info.getChangedObjects().size());
+    assertEquals(orderDetails.size(), info.getDetachedObjects().size());
     workspace.close();
   }
 

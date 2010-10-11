@@ -228,6 +228,11 @@ public class CDOWorkspaceImpl implements CDOWorkspace
     throw new UnsupportedOperationException();
   }
 
+  public CDOCommitInfo commit() throws CommitException
+  {
+    return commit(null);
+  }
+
   public CDOCommitInfo commit(String comment) throws CommitException
   {
     InternalCDOSession session = openRemoteSession();

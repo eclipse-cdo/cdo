@@ -21,7 +21,9 @@ public interface InternalCDOWorkspaceBaseline extends CDOWorkspaceBaseline
 {
   public void init(CDOWorkspace workspace);
 
-  public void setTarget(String branchPath, long timeStamp);
+  public void setBranchPath(String branchPath);
+
+  public void setTimeStamp(long timeStamp);
 
   public void updateAfterCommit(CDOTransaction transaction);
 }

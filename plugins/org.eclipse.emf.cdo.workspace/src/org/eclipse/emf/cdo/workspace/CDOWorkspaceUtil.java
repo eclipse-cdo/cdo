@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.workspace;
 
 import org.eclipse.emf.cdo.internal.workspace.CDOWorkspaceImpl;
+import org.eclipse.emf.cdo.internal.workspace.InternalCDOWorkspaceBaseline;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 
@@ -26,11 +27,11 @@ public final class CDOWorkspaceUtil
   public static CDOWorkspace checkout(IStore local, CDOWorkspaceBaseline baseline,
       CDOSessionConfigurationFactory remote, String branchPath, long timeStamp)
   {
-    return new CDOWorkspaceImpl(local, baseline, remote, branchPath, timeStamp);
+    return new CDOWorkspaceImpl(local, (InternalCDOWorkspaceBaseline)baseline, remote, branchPath, timeStamp);
   }
 
   public static CDOWorkspace open(IStore local, CDOWorkspaceBaseline baseline, CDOSessionConfigurationFactory remote)
   {
-    return new CDOWorkspaceImpl(local, baseline, remote);
+    return new CDOWorkspaceImpl(local, (InternalCDOWorkspaceBaseline)baseline, remote);
   }
 }

@@ -44,7 +44,6 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
-import org.eclipse.emf.cdo.workspace.CDOWorkspaceBaseline;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
@@ -85,27 +84,28 @@ public class CDOWorkspaceImpl implements CDOWorkspace
 
   private CDOSessionConfigurationFactory remoteSessionConfigurationFactory;
 
-  private CDOWorkspaceImpl(IStore local, CDOWorkspaceBaseline baseline)
+  private CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceBaseline baseline)
   {
     container = createContainer(local);
     localRepository = createLocalRepository(local);
     localAcceptor = getLocalAcceptor();
     localSession = openLocalSession();
-    this.baseline = (InternalCDOWorkspaceBaseline)baseline;
-    this.baseline.init(this);
+
+    this.baseline = baseline;
+    baseline.init(this);
   }
 
-  public CDOWorkspaceImpl(IStore local, CDOWorkspaceBaseline baseline, CDOSessionConfigurationFactory remote,
+  public CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceBaseline baseline, CDOSessionConfigurationFactory remote,
       String branchPath, long timeStamp)
   {
     this(local, baseline);
-    this.baseline.setBranchPath(branchPath);
-    this.baseline.setTimeStamp(timeStamp);
+    baseline.setBranchPath(branchPath);
+    baseline.setTimeStamp(timeStamp);
     remoteSessionConfigurationFactory = remote;
     checkout();
   }
 
-  public CDOWorkspaceImpl(IStore local, CDOWorkspaceBaseline baseline, CDOSessionConfigurationFactory remote)
+  public CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceBaseline baseline, CDOSessionConfigurationFactory remote)
   {
     this(local, baseline);
     remoteSessionConfigurationFactory = remote;

@@ -39,6 +39,8 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
+import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
+import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceMemory;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler2;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
@@ -46,12 +48,12 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOView;
-import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.jvm.IJVMConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -65,6 +67,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -73,55 +76,63 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOWorkspaceImpl implements CDOWorkspace
+public class CDOWorkspaceImpl implements InternalCDOWorkspace
 {
   private static final String PROP_BRANCH_PATH = "org.eclipse.emf.cdo.workspace.branchPath"; //$NON-NLS-1$
 
   private static final String PROP_TIME_STAMP = "org.eclipse.emf.cdo.workspace.timeStamp"; //$NON-NLS-1$
 
-  private static final String PROP_LAST_UPDATE_TIME = "org.eclipse.emf.cdo.workspace.lastUpdateTime"; //$NON-NLS-1$
+  private static final String PROP_READ_ONLY = "org.eclipse.emf.cdo.workspace.readOnly"; //$NON-NLS-1$
 
   private IManagedContainer container;
 
-  private InternalRepository localRepository;
+  private InternalCDOWorkspaceMemory memory;
 
-  private IJVMAcceptor localAcceptor;
+  private InternalRepository localRepository;
 
   private InternalCDOSession localSession;
 
-  private InternalCDOWorkspaceBaseline baseline;
+  private String branchPath;
+
+  private long timeStamp;
+
+  private boolean readOnly;
 
   private CDOSessionConfigurationFactory remoteSessionConfigurationFactory;
 
   private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
 
-  private CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceBaseline baseline)
-  {
-    container = createContainer(local);
-    localRepository = createLocalRepository(local);
-    localAcceptor = getLocalAcceptor();
-    localSession = openLocalSession();
-
-    this.baseline = baseline;
-    baseline.init(this);
-  }
-
-  public CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceBaseline baseline, CDOSessionConfigurationFactory remote,
+  public CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote,
       String branchPath, long timeStamp)
   {
-    this(local, baseline);
-    baseline.setBranchPath(branchPath);
-    baseline.setTimeStamp(timeStamp);
-    baseline.setLastUpdateTime(timeStamp);
+    init(local, memory, remote);
     remoteSessionConfigurationFactory = remote;
+
+    this.branchPath = StringUtil.isEmpty(branchPath) ? CDOBranch.MAIN_BRANCH_NAME : branchPath;
+    this.timeStamp = timeStamp;
+    readOnly = timeStamp != CDOBranchPoint.UNSPECIFIED_DATE;
+
+    saveProperties();
     checkout();
   }
 
-  public CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceBaseline baseline, CDOSessionConfigurationFactory remote)
+  public CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote)
   {
-    this(local, baseline);
-    remoteSessionConfigurationFactory = remote;
+    init(local, memory, remote);
     open();
+    loadProperties();
+  }
+
+  protected void init(IStore local, InternalCDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote)
+  {
+    container = createContainer(local);
+    remoteSessionConfigurationFactory = remote;
+
+    localRepository = createLocalRepository(local);
+    localSession = openLocalSession();
+
+    this.memory = memory;
+    this.memory.init(this);
   }
 
   protected void checkout()
@@ -158,8 +169,8 @@ public class CDOWorkspaceImpl implements CDOWorkspace
           }
         };
 
-        CDOBranch branch = session.getBranchManager().getBranch(baseline.getBranchPath());
-        session.getSessionProtocol().handleRevisions(null, branch, false, baseline.getTimeStamp(), false, handler);
+        CDOBranch branch = session.getBranchManager().getBranch(branchPath);
+        session.getSessionProtocol().handleRevisions(null, branch, false, timeStamp, false, handler);
       }
       finally
       {
@@ -167,7 +178,6 @@ public class CDOWorkspaceImpl implements CDOWorkspace
       }
 
       accessor.rawCommit(context[0], monitor);
-      storeBranchPoint(baseline.getBranchPath(), baseline.getTimeStamp(), baseline.getLastUpdateTime());
     }
     finally
     {
@@ -180,9 +190,24 @@ public class CDOWorkspaceImpl implements CDOWorkspace
   {
   }
 
-  public InternalCDOWorkspaceBaseline getBaseline()
+  public String getBranchPath()
   {
-    return baseline;
+    return branchPath;
+  }
+
+  public long getTimeStamp()
+  {
+    return timeStamp;
+  }
+
+  public boolean isReadOnly()
+  {
+    return readOnly;
+  }
+
+  public InternalCDOWorkspaceMemory getMemory()
+  {
+    return memory;
   }
 
   public CDOView openView()
@@ -215,39 +240,35 @@ public class CDOWorkspaceImpl implements CDOWorkspace
 
   public CDOTransaction update(CDOMerger merger)
   {
-    return update(merger, baseline.getBranchPath());
+    return merge(merger, branchPath);
   }
 
-  public CDOTransaction update(CDOMerger merger, String branchPath)
+  public CDOTransaction merge(CDOMerger merger, String branchPath)
   {
-    return update(merger, branchPath, CDOBranchPoint.UNSPECIFIED_DATE);
+    return merge(merger, branchPath, CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
-  public CDOTransaction update(CDOMerger merger, String branchPath, long timeStamp)
+  public CDOTransaction merge(CDOMerger merger, String branchPath, long timeStamp)
   {
     InternalCDOSession session = openRemoteSession();
 
     try
     {
       InternalCDOBranchManager branchManager = session.getBranchManager();
-      CDOBranchPoint base = branchManager.getBranch(baseline.getBranchPath()).getPoint(baseline.getTimeStamp());
+      CDOBranchPoint base = branchManager.getBranch(branchPath).getPoint(timeStamp);
       CDOBranchPoint remote = branchManager.getBranch(branchPath).getPoint(timeStamp);
-      CDOBranchPoint local = branchManager.getBranch(branchPath).getPoint(timeStamp);
 
       CDOBranchPointRange range = CDOBranchUtil.createRange(base, remote);
       CDOChangeSetData remoteData = session.getSessionProtocol().loadChangeSets(range)[0];
-      CDOChangeSetData localData = getLocalChanges();
-
-      CDOChangeSet localChanges = CDORevisionDeltaUtil.createChangeSet(base, local, localData);
       CDOChangeSet remoteChanges = CDORevisionDeltaUtil.createChangeSet(base, remote, remoteData);
+
+      CDOChangeSetData localData = getLocalChanges();
+      CDOChangeSet localChanges = CDORevisionDeltaUtil.createChangeSet(base, null, localData);
+
       CDOChangeSetData result = merger.merge(localChanges, remoteChanges);
 
       InternalCDOTransaction transaction = (InternalCDOTransaction)openTransaction();
-      transaction.applyChangeSetData(result, baseline, this, null);
-
-      baseline.clear();
-      baseline.setLastUpdateTime(timeStamp);
-
+      transaction.applyChangeSetData(result, memory, this, null);
       return transaction;
     }
     finally
@@ -279,19 +300,19 @@ public class CDOWorkspaceImpl implements CDOWorkspace
 
     try
     {
-      InternalCDOBranch branch = session.getBranchManager().getBranch(baseline.getBranchPath());
+      InternalCDOBranch branch = session.getBranchManager().getBranch(branchPath);
       InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction(branch);
 
       CDOChangeSetData changes = getLocalChanges();
 
-      transaction.applyChangeSetData(changes, baseline, this, null);
+      transaction.applyChangeSetData(changes, memory, this, null);
       transaction.setCommitComment(comment);
 
       CDOCommitInfo info = transaction.commit();
-      long timeStamp = info.getTimeStamp();
 
-      baseline.clear();
-      baseline.setLastUpdateTime(timeStamp);
+      memory.clear();
+      timeStamp = info.getTimeStamp();
+      saveProperties();
 
       return info;
     }
@@ -301,13 +322,21 @@ public class CDOWorkspaceImpl implements CDOWorkspace
     }
   }
 
+  public CDOChangeSetData compare(String branchPath)
+  {
+    return compare(branchPath, CDOBranchPoint.UNSPECIFIED_DATE);
+  }
+
+  public CDOChangeSetData compare(String branchPath, long timeStamp)
+  {
+    // TODO: implement CDOWorkspaceImpl.compare(branchPath, timeStamp)
+    throw new UnsupportedOperationException();
+  }
+
   public synchronized void close()
   {
     LifecycleUtil.deactivate(localSession);
     localSession = null;
-
-    LifecycleUtil.deactivate(localAcceptor);
-    localAcceptor = null;
 
     LifecycleUtil.deactivate(localRepository);
     localRepository = null;
@@ -318,12 +347,7 @@ public class CDOWorkspaceImpl implements CDOWorkspace
 
   public synchronized boolean isClosed()
   {
-    return localRepository == null;
-  }
-
-  public InternalRepository getLocalRepository()
-  {
-    return localRepository;
+    return container == null;
   }
 
   public CDORevision getRevision(CDOID id)
@@ -333,10 +357,25 @@ public class CDOWorkspaceImpl implements CDOWorkspace
     return revisionManager.getRevision(id, head, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
   }
 
+  public InternalRepository getLocalRepository()
+  {
+    return localRepository;
+  }
+
   public CDOChangeSetData getLocalChanges()
   {
-    Set<CDOID> ids = baseline.getIDs();
-    return CDORevisionDeltaUtil.createChangeSetData(ids, baseline, this);
+    Set<CDOID> ids = memory.getIDs();
+    return CDORevisionDeltaUtil.createChangeSetData(ids, memory, this);
+  }
+
+  protected IManagedContainer createContainer(IStore local)
+  {
+    IManagedContainer container = ContainerUtil.createContainer();
+    Net4jUtil.prepareContainer(container);
+    JVMUtil.prepareContainer(container);
+    CDONet4jServerUtil.prepareContainer(container);
+    container.activate();
+    return container;
   }
 
   protected IManagedContainer getContainer()
@@ -352,8 +391,7 @@ public class CDOWorkspaceImpl implements CDOWorkspace
   protected IJVMAcceptor getLocalAcceptor()
   {
     String localAcceptorName = getLocalAcceptorName();
-    IJVMAcceptor acceptor = JVMUtil.getAcceptor(container, localAcceptorName);
-    return acceptor;
+    return JVMUtil.getAcceptor(container, localAcceptorName);
   }
 
   protected IJVMConnector getLocalConnector()
@@ -365,16 +403,6 @@ public class CDOWorkspaceImpl implements CDOWorkspace
   protected InternalCDOSession getLocalSession()
   {
     return localSession;
-  }
-
-  protected IManagedContainer createContainer(IStore local)
-  {
-    IManagedContainer container = ContainerUtil.createContainer();
-    Net4jUtil.prepareContainer(container);
-    JVMUtil.prepareContainer(container);
-    CDONet4jServerUtil.prepareContainer(container);
-    container.activate();
-    return container;
   }
 
   protected InternalRepository createLocalRepository(IStore store)
@@ -411,6 +439,8 @@ public class CDOWorkspaceImpl implements CDOWorkspace
 
   protected InternalCDOSession openLocalSession()
   {
+    getLocalAcceptor();
+
     IJVMConnector connector = getLocalConnector();
     String repositoryName = localRepository.getName();
 
@@ -449,7 +479,7 @@ public class CDOWorkspaceImpl implements CDOWorkspace
 
     if (view instanceof CDOTransaction)
     {
-      if (baseline.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE)
+      if (readOnly)
       {
         throw new ReadOnlyException("Workspace is read-only");
       }
@@ -460,7 +490,7 @@ public class CDOWorkspaceImpl implements CDOWorkspace
         @Override
         public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
         {
-          baseline.updateAfterCommit(transaction);
+          memory.updateAfterCommit(transaction);
         }
       });
     }
@@ -477,12 +507,21 @@ public class CDOWorkspaceImpl implements CDOWorkspace
     return (InternalCDOSession)configuration.openSession();
   }
 
-  protected void storeBranchPoint(String branchPath, long timeStamp, long lastUpdateTime)
+  protected void saveProperties()
   {
     Map<String, String> props = new HashMap<String, String>();
     props.put(PROP_BRANCH_PATH, branchPath);
     props.put(PROP_TIME_STAMP, String.valueOf(timeStamp));
-    props.put(PROP_LAST_UPDATE_TIME, String.valueOf(lastUpdateTime));
-    localRepository.setProperties(props);
+    props.put(PROP_READ_ONLY, String.valueOf(readOnly));
+    localRepository.getStore().setPropertyValues(props);
+  }
+
+  protected void loadProperties()
+  {
+    Set<String> names = new HashSet<String>(Arrays.asList(PROP_BRANCH_PATH, PROP_TIME_STAMP, PROP_READ_ONLY));
+    Map<String, String> props = localRepository.getStore().getPropertyValues(names);
+    branchPath = props.get(PROP_BRANCH_PATH);
+    timeStamp = Integer.parseInt(props.get(PROP_TIME_STAMP));
+    readOnly = Boolean.parseBoolean(props.get(PROP_READ_ONLY));
   }
 }

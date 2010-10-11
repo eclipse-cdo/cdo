@@ -18,15 +18,9 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public interface CDOWorkspaceBaseline extends CDORevisionProvider
+public interface CDOWorkspaceMemory extends CDORevisionProvider
 {
   public CDOWorkspace getWorkspace();
-
-  public String getBranchPath();
-
-  public long getTimeStamp();
-
-  public long getLastUpdateTime();
 
   public Set<CDOID> getIDs();
 }

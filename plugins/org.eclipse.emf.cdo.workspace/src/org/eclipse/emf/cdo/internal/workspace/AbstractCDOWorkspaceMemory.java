@@ -23,8 +23,9 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
+import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
+import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceMemory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -37,15 +38,9 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractCDOWorkspaceBaseline implements InternalCDOWorkspaceBaseline
+public abstract class AbstractCDOWorkspaceMemory implements InternalCDOWorkspaceMemory
 {
-  private CDOWorkspace workspace;
-
-  private String branchPath;
-
-  private long timeStamp;
-
-  private long lastUpdateTime;
+  private InternalCDOWorkspace workspace;
 
   private InternalStore store;
 
@@ -53,52 +48,22 @@ public abstract class AbstractCDOWorkspaceBaseline implements InternalCDOWorkspa
 
   private InternalCDOBranchManager branchManager;
 
-  protected AbstractCDOWorkspaceBaseline()
+  protected AbstractCDOWorkspaceMemory()
   {
   }
 
-  public void init(CDOWorkspace workspace)
+  public void init(InternalCDOWorkspace workspace)
   {
     this.workspace = workspace;
-    InternalRepository localRepository = (InternalRepository)workspace.getLocalRepository();
+    InternalRepository localRepository = workspace.getLocalRepository();
     store = localRepository.getStore();
     packageRegistry = localRepository.getPackageRegistry(false);
     branchManager = localRepository.getBranchManager();
   }
 
-  public CDOWorkspace getWorkspace()
+  public InternalCDOWorkspace getWorkspace()
   {
     return workspace;
-  }
-
-  public String getBranchPath()
-  {
-    return branchPath;
-  }
-
-  public void setBranchPath(String branchPath)
-  {
-    this.branchPath = branchPath;
-  }
-
-  public long getTimeStamp()
-  {
-    return timeStamp;
-  }
-
-  public void setTimeStamp(long timeStamp)
-  {
-    this.timeStamp = timeStamp;
-  }
-
-  public long getLastUpdateTime()
-  {
-    return lastUpdateTime;
-  }
-
-  public void setLastUpdateTime(long lastUpdateTime)
-  {
-    this.lastUpdateTime = lastUpdateTime;
   }
 
   public void updateAfterCommit(CDOTransaction transaction)

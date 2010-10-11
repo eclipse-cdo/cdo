@@ -30,11 +30,11 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class FolderCDOWorkspaceBaseline extends AbstractCDOWorkspaceBaseline
+public class FolderCDOWorkspaceMemory extends AbstractCDOWorkspaceMemory
 {
   private File folder;
 
-  public FolderCDOWorkspaceBaseline(File folder)
+  public FolderCDOWorkspaceMemory(File folder)
   {
     this.folder = folder;
   }

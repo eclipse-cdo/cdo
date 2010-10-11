@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.workspace;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -28,7 +27,13 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  */
 public interface CDOWorkspace extends CDORevisionProvider, Closeable
 {
-  public CDOWorkspaceBaseline getBaseline();
+  public String getBranchPath();
+
+  public long getTimeStamp();
+
+  public boolean isReadOnly();
+
+  public CDOWorkspaceMemory getMemory();
 
   public CDOView openView();
 
@@ -40,17 +45,17 @@ public interface CDOWorkspace extends CDORevisionProvider, Closeable
 
   public CDOTransaction update(CDOMerger merger);
 
-  public CDOTransaction update(CDOMerger merger, String branchPath);
+  public CDOTransaction merge(CDOMerger merger, String branchPath);
 
-  public CDOTransaction update(CDOMerger merger, String branchPath, long timeStamp);
+  public CDOTransaction merge(CDOMerger merger, String branchPath, long timeStamp);
 
   public CDOCommitInfo commit() throws CommitException;
 
   public CDOCommitInfo commit(String comment) throws CommitException;
 
-  public CDOChangeSetData getLocalChanges();
+  public CDOChangeSetData compare(String branchPath);
 
-  public IRepository getLocalRepository();
+  public CDOChangeSetData compare(String branchPath, long timeStamp);
 
   public void replace(String branchPath, long timeStamp);
 

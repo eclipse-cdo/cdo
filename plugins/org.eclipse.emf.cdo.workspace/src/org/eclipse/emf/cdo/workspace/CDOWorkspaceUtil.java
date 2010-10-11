@@ -10,10 +10,11 @@
  */
 package org.eclipse.emf.cdo.workspace;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.internal.workspace.CDOWorkspaceImpl;
-import org.eclipse.emf.cdo.internal.workspace.InternalCDOWorkspaceBaseline;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
+import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceMemory;
 
 /**
  * @author Eike Stepper
@@ -24,14 +25,31 @@ public final class CDOWorkspaceUtil
   {
   }
 
-  public static CDOWorkspace checkout(IStore local, CDOWorkspaceBaseline baseline,
-      CDOSessionConfigurationFactory remote, String branchPath, long timeStamp)
+  public static CDOWorkspace open(IStore local, CDOWorkspaceMemory baseline, CDOSessionConfigurationFactory remote)
   {
-    return new CDOWorkspaceImpl(local, (InternalCDOWorkspaceBaseline)baseline, remote, branchPath, timeStamp);
+    return new CDOWorkspaceImpl(local, (InternalCDOWorkspaceMemory)baseline, remote);
   }
 
-  public static CDOWorkspace open(IStore local, CDOWorkspaceBaseline baseline, CDOSessionConfigurationFactory remote)
+  public static CDOWorkspace checkout(IStore local, CDOWorkspaceMemory baseline, CDOSessionConfigurationFactory remote)
   {
-    return new CDOWorkspaceImpl(local, (InternalCDOWorkspaceBaseline)baseline, remote);
+    return checkout(local, baseline, remote, null);
+  }
+
+  public static CDOWorkspace checkout(IStore local, CDOWorkspaceMemory baseline, CDOSessionConfigurationFactory remote,
+      String branchPath)
+  {
+    return checkout(local, baseline, remote, branchPath, CDOBranchPoint.UNSPECIFIED_DATE);
+  }
+
+  public static CDOWorkspace checkout(IStore local, CDOWorkspaceMemory baseline, CDOSessionConfigurationFactory remote,
+      long timeStamp)
+  {
+    return checkout(local, baseline, remote, null, timeStamp);
+  }
+
+  public static CDOWorkspace checkout(IStore local, CDOWorkspaceMemory baseline, CDOSessionConfigurationFactory remote,
+      String branchPath, long timeStamp)
+  {
+    return new CDOWorkspaceImpl(local, (InternalCDOWorkspaceMemory)baseline, remote, branchPath, timeStamp);
   }
 }

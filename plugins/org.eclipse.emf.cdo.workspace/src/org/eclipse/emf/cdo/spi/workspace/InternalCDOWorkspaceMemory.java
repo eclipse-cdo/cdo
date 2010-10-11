@@ -8,24 +8,19 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.workspace;
+package org.eclipse.emf.cdo.spi.workspace;
 
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.workspace.CDOWorkspace;
-import org.eclipse.emf.cdo.workspace.CDOWorkspaceBaseline;
+import org.eclipse.emf.cdo.workspace.CDOWorkspaceMemory;
 
 /**
  * @author Eike Stepper
  */
-public interface InternalCDOWorkspaceBaseline extends CDOWorkspaceBaseline
+public interface InternalCDOWorkspaceMemory extends CDOWorkspaceMemory
 {
-  public void init(CDOWorkspace workspace);
+  public InternalCDOWorkspace getWorkspace();
 
-  public void setBranchPath(String branchPath);
-
-  public void setTimeStamp(long timeStamp);
-
-  public void setLastUpdateTime(long lastUpdateTime);
+  public void init(InternalCDOWorkspace workspace);
 
   public void updateAfterCommit(CDOTransaction transaction);
 

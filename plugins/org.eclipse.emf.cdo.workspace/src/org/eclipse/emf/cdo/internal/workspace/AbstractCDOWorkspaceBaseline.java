@@ -45,6 +45,8 @@ public abstract class AbstractCDOWorkspaceBaseline implements InternalCDOWorkspa
 
   private long timeStamp;
 
+  private long lastUpdateTime;
+
   private InternalStore store;
 
   private InternalCDOPackageRegistry packageRegistry;
@@ -87,6 +89,16 @@ public abstract class AbstractCDOWorkspaceBaseline implements InternalCDOWorkspa
   public void setTimeStamp(long timeStamp)
   {
     this.timeStamp = timeStamp;
+  }
+
+  public long getLastUpdateTime()
+  {
+    return lastUpdateTime;
+  }
+
+  public void setLastUpdateTime(long lastUpdateTime)
+  {
+    this.lastUpdateTime = lastUpdateTime;
   }
 
   public void updateAfterCommit(CDOTransaction transaction)

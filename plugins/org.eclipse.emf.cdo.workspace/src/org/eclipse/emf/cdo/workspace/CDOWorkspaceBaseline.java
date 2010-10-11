@@ -26,5 +26,7 @@ public interface CDOWorkspaceBaseline extends CDORevisionProvider
 
   public long getTimeStamp();
 
+  public long getLastUpdateTime();
+
   public Set<CDOID> getIDs();
 }

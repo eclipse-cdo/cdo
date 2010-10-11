@@ -25,6 +25,8 @@ public interface InternalCDOWorkspaceBaseline extends CDOWorkspaceBaseline
 
   public void setTimeStamp(long timeStamp);
 
+  public void setLastUpdateTime(long lastUpdateTime);
+
   public void updateAfterCommit(CDOTransaction transaction);
 
   public void clear();

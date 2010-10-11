@@ -625,7 +625,7 @@ public class WorkspaceTest extends AbstractCDOTest
     CDOWorkspaceBaseline baseline = workspace.getBaseline();
     assertEquals(0, baseline.getIDs().size());
     assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
-    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
+    assertEquals(info.getTimeStamp(), baseline.getLastUpdateTime());
   }
 
   public void testCommitAfterAdd() throws Exception
@@ -649,7 +649,7 @@ public class WorkspaceTest extends AbstractCDOTest
     CDOWorkspaceBaseline baseline = workspace.getBaseline();
     assertEquals(0, baseline.getIDs().size());
     assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
-    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
+    assertEquals(info.getTimeStamp(), baseline.getLastUpdateTime());
   }
 
   public void testCommitAfterDetach() throws Exception
@@ -681,7 +681,7 @@ public class WorkspaceTest extends AbstractCDOTest
     CDOWorkspaceBaseline baseline = workspace.getBaseline();
     assertEquals(0, baseline.getIDs().size());
     assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
-    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
+    assertEquals(info.getTimeStamp(), baseline.getLastUpdateTime());
   }
 
   public void testCommitAfterModify2() throws Exception
@@ -720,7 +720,7 @@ public class WorkspaceTest extends AbstractCDOTest
     CDOWorkspaceBaseline baseline = workspace.getBaseline();
     assertEquals(0, baseline.getIDs().size());
     assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
-    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
+    assertEquals(info.getTimeStamp(), baseline.getLastUpdateTime());
   }
 
   public void testCommitAfterAdd2() throws Exception
@@ -751,7 +751,7 @@ public class WorkspaceTest extends AbstractCDOTest
     CDOWorkspaceBaseline baseline = workspace.getBaseline();
     assertEquals(0, baseline.getIDs().size());
     assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
-    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
+    assertEquals(info.getTimeStamp(), baseline.getLastUpdateTime());
   }
 
   public void testCommitAfterDetach2() throws Exception
@@ -799,7 +799,7 @@ public class WorkspaceTest extends AbstractCDOTest
     CDOWorkspaceBaseline baseline = workspace.getBaseline();
     assertEquals(0, baseline.getIDs().size());
     assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
-    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
+    assertEquals(info.getTimeStamp(), baseline.getLastUpdateTime());
   }
 
   public void testCommit2AfterModify() throws Exception
@@ -827,7 +827,30 @@ public class WorkspaceTest extends AbstractCDOTest
     CDOWorkspaceBaseline baseline = workspace.getBaseline();
     assertEquals(0, baseline.getIDs().size());
     assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
-    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
+    assertEquals(info.getTimeStamp(), baseline.getLastUpdateTime());
+
+    transaction = workspace.openTransaction();
+    resource = transaction.getResource(RESOURCE);
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof Product1)
+      {
+        Product1 product = (Product1)object;
+        product.setName("MODIFIED2_" + product.getName());
+      }
+    }
+
+    transaction.commit();
+
+    info = workspace.commit();
+    assertEquals(0, info.getNewObjects().size());
+    assertEquals(PRODUCTS, info.getChangedObjects().size());
+    assertEquals(0, info.getDetachedObjects().size());
+
+    baseline = workspace.getBaseline();
+    assertEquals(0, baseline.getIDs().size());
+    assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
+    assertEquals(info.getTimeStamp(), baseline.getLastUpdateTime());
   }
 
   public void testCommit2AfterAdd() throws Exception
@@ -851,7 +874,26 @@ public class WorkspaceTest extends AbstractCDOTest
     CDOWorkspaceBaseline baseline = workspace.getBaseline();
     assertEquals(0, baseline.getIDs().size());
     assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
-    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
+    assertEquals(info.getTimeStamp(), baseline.getLastUpdateTime());
+
+    transaction = workspace.openTransaction();
+    resource = transaction.getResource(RESOURCE);
+    for (int i = 0; i < PRODUCTS; i++)
+    {
+      resource.getContents().add(createProduct(i));
+    }
+
+    transaction.commit();
+
+    info = workspace.commit();
+    assertEquals(PRODUCTS, info.getNewObjects().size());
+    assertEquals(1, info.getChangedObjects().size());
+    assertEquals(0, info.getDetachedObjects().size());
+
+    baseline = workspace.getBaseline();
+    assertEquals(0, baseline.getIDs().size());
+    assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
+    assertEquals(info.getTimeStamp(), baseline.getLastUpdateTime());
   }
 
   public void testCommit2AfterDetach() throws Exception
@@ -883,7 +925,35 @@ public class WorkspaceTest extends AbstractCDOTest
     CDOWorkspaceBaseline baseline = workspace.getBaseline();
     assertEquals(0, baseline.getIDs().size());
     assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
-    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
+    assertEquals(info.getTimeStamp(), baseline.getLastUpdateTime());
+
+    transaction = workspace.openTransaction();
+    resource = transaction.getResource(RESOURCE);
+    for (Iterator<EObject> it = resource.getContents().iterator(); it.hasNext();)
+    {
+      EObject object = it.next();
+      if (object instanceof SalesOrder)
+      {
+        it.remove();
+      }
+
+      if (object instanceof Customer)
+      {
+        ((Customer)object).getSalesOrders().clear();
+      }
+    }
+
+    transaction.commit();
+
+    info = workspace.commit();
+    assertEquals(0, info.getNewObjects().size());
+    assertEquals(1 + CUSTOMERS, info.getChangedObjects().size());
+    assertEquals(SALES_ORDERS, info.getDetachedObjects().size());
+
+    baseline = workspace.getBaseline();
+    assertEquals(0, baseline.getIDs().size());
+    assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
+    assertEquals(info.getTimeStamp(), baseline.getLastUpdateTime());
   }
 
   protected IStore createLocalStore()

@@ -101,6 +101,7 @@ public class CDOWorkspaceImpl implements CDOWorkspace
     this(local, baseline);
     baseline.setBranchPath(branchPath);
     baseline.setTimeStamp(timeStamp);
+    baseline.setLastUpdateTime(timeStamp);
     remoteSessionConfigurationFactory = remote;
     checkout();
   }
@@ -249,10 +250,10 @@ public class CDOWorkspaceImpl implements CDOWorkspace
       transaction.setCommitComment(comment);
 
       CDOCommitInfo info = transaction.commit();
+      long timeStamp = info.getTimeStamp();
 
       baseline.clear();
-      baseline.setBranchPath(info.getBranch().getPathName());
-      baseline.setTimeStamp(info.getTimeStamp());
+      baseline.setLastUpdateTime(timeStamp);
 
       return info;
     }

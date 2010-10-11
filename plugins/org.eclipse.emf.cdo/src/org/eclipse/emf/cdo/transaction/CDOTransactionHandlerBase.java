@@ -15,8 +15,8 @@ package org.eclipse.emf.cdo.transaction;
 
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @since 4.0
  */
-public interface CDOTransactionHandler extends CDOTransactionHandler1, CDOTransactionHandler2
+public interface CDOTransactionHandlerBase
 {
 }

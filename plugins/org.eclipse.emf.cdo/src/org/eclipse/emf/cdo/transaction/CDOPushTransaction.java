@@ -288,7 +288,10 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     delegate.addObjectHandler(handler);
   }
 
-  public void addTransactionHandler(CDOTransactionHandler handler)
+  /**
+   * @since 4.0
+   */
+  public void addTransactionHandler(CDOTransactionHandlerBase handler)
   {
     delegate.addTransactionHandler(handler);
   }
@@ -482,6 +485,22 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.getTransactionHandlers();
   }
 
+  /**
+   * @since 4.0
+   */
+  public CDOTransactionHandler1[] getTransactionHandlers1()
+  {
+    return delegate.getTransactionHandlers1();
+  }
+
+  /**
+   * @since 4.0
+   */
+  public CDOTransactionHandler2[] getTransactionHandlers2()
+  {
+    return delegate.getTransactionHandlers2();
+  }
+
   public int getViewID()
   {
     return delegate.getViewID();
@@ -555,7 +574,10 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     delegate.removeObjectHandler(handler);
   }
 
-  public void removeTransactionHandler(CDOTransactionHandler handler)
+  /**
+   * @since 4.0
+   */
+  public void removeTransactionHandler(CDOTransactionHandlerBase handler)
   {
     delegate.removeTransactionHandler(handler);
   }

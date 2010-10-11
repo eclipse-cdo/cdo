@@ -17,12 +17,11 @@ import org.eclipse.emf.cdo.internal.ui.actions.RemoveContainerItemAction;
 import org.eclipse.emf.cdo.internal.ui.dnd.CDOObjectDropAdapter;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
-import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
+import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler2;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
-
 
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.ContainerEvent;
@@ -338,7 +337,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
   /**
    * @author Victor Roldan Betancort
    */
-  private final class TransactionHandler extends CDODefaultTransactionHandler
+  private final class TransactionHandler extends CDODefaultTransactionHandler2
   {
     public TransactionHandler()
     {

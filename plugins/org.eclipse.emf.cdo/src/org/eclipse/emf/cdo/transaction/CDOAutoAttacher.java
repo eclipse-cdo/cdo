@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.spi.cdo.FSMUtil;
@@ -37,7 +36,7 @@ import java.util.List;
  * @author Simon McDuff
  * @since 2.0
  */
-public class CDOAutoAttacher extends CDODefaultTransactionHandler
+public class CDOAutoAttacher extends CDODefaultTransactionHandler1
 {
   private CDOTransaction transaction;
 

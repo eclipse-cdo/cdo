@@ -81,19 +81,29 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction, CDOChangeSe
   public CDOResource getOrCreateResource(String path);
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public void addTransactionHandler(CDOTransactionHandler handler);
+  public void addTransactionHandler(CDOTransactionHandlerBase handler);
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public void removeTransactionHandler(CDOTransactionHandler handler);
+  public void removeTransactionHandler(CDOTransactionHandlerBase handler);
 
   /**
    * @since 3.0
    */
   public CDOTransactionHandler[] getTransactionHandlers();
+
+  /**
+   * @since 4.0
+   */
+  public CDOTransactionHandler1[] getTransactionHandlers1();
+
+  /**
+   * @since 4.0
+   */
+  public CDOTransactionHandler2[] getTransactionHandlers2();
 
   /**
    * @since 3.0

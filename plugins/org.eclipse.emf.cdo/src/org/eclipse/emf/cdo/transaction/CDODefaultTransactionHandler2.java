@@ -12,12 +12,11 @@ package org.eclipse.emf.cdo.transaction;
 
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @since 4.0
  */
-public abstract class CDODefaultTransactionHandler extends CDODefaultTransactionHandler1 implements
-    CDOTransactionHandler
+public abstract class CDODefaultTransactionHandler2 implements CDOTransactionHandler2
 {
-  protected CDODefaultTransactionHandler()
+  protected CDODefaultTransactionHandler2()
   {
   }
 

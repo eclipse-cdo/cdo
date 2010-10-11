@@ -35,7 +35,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
-import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
+import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler2;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
@@ -356,7 +356,7 @@ public class CDOWorkspaceImpl implements CDOWorkspace
       }
 
       CDOTransaction transaction = (CDOTransaction)view;
-      transaction.addTransactionHandler(new CDODefaultTransactionHandler()
+      transaction.addTransactionHandler(new CDODefaultTransactionHandler2()
       {
         @Override
         public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)

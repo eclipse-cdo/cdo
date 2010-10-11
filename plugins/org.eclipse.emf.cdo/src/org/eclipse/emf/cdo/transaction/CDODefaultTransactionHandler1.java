@@ -10,29 +10,23 @@
  */
 package org.eclipse.emf.cdo.transaction;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @since 4.0
  */
-public abstract class CDODefaultTransactionHandler extends CDODefaultTransactionHandler1 implements
-    CDOTransactionHandler
+public abstract class CDODefaultTransactionHandler1 implements CDOTransactionHandler1
 {
-  protected CDODefaultTransactionHandler()
+  protected CDODefaultTransactionHandler1()
   {
   }
 
   /*
    * This implementation does nothing. Clients may override to provide specialized behaviour.
    */
-  public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
-  {
-    // Do nothing
-  }
-
-  /*
-   * This implementation does nothing. Clients may override to provide specialized behaviour.
-   */
-  public void rolledBackTransaction(CDOTransaction transaction)
+  public void attachingObject(CDOTransaction transaction, CDOObject object)
   {
     // Do nothing
   }
@@ -40,7 +34,15 @@ public abstract class CDODefaultTransactionHandler extends CDODefaultTransaction
   /*
    * This implementation does nothing. Clients may override to provide specialized behaviour.
    */
-  public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+  public void detachingObject(CDOTransaction transaction, CDOObject object)
+  {
+    // Do nothing
+  }
+
+  /*
+   * This implementation does nothing. Clients may override to provide specialized behaviour.
+   */
+  public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureChange)
   {
     // Do nothing
   }

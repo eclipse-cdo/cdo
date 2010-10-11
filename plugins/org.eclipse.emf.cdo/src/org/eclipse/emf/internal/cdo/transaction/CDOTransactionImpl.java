@@ -75,13 +75,16 @@ import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver2;
-import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
+import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler1;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
+import org.eclipse.emf.cdo.transaction.CDOTransactionHandler1;
+import org.eclipse.emf.cdo.transaction.CDOTransactionHandler2;
+import org.eclipse.emf.cdo.transaction.CDOTransactionHandlerBase;
 import org.eclipse.emf.cdo.transaction.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
@@ -160,12 +163,21 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION, CDOTransactionImpl.class);
 
-  private FastList<CDOTransactionHandler> transactionHandlers = new FastList<CDOTransactionHandler>()
+  private FastList<CDOTransactionHandler1> transactionHandlers1 = new FastList<CDOTransactionHandler1>()
   {
     @Override
-    protected CDOTransactionHandler[] newArray(int length)
+    protected CDOTransactionHandler1[] newArray(int length)
     {
-      return new CDOTransactionHandler[length];
+      return new CDOTransactionHandler1[length];
+    }
+  };
+
+  private FastList<CDOTransactionHandler2> transactionHandlers2 = new FastList<CDOTransactionHandler2>()
+  {
+    @Override
+    protected CDOTransactionHandler2[] newArray(int length)
+    {
+      return new CDOTransactionHandler2[length];
     }
   };
 
@@ -259,19 +271,68 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return super.setBranchPoint(branchPoint);
   }
 
-  public void addTransactionHandler(CDOTransactionHandler handler)
+  public void addTransactionHandler(CDOTransactionHandlerBase handler)
   {
-    transactionHandlers.add(handler);
+    if (handler instanceof CDOTransactionHandler1)
+    {
+      transactionHandlers1.add((CDOTransactionHandler1)handler);
+    }
+
+    if (handler instanceof CDOTransactionHandler2)
+    {
+      transactionHandlers2.add((CDOTransactionHandler2)handler);
+    }
   }
 
-  public void removeTransactionHandler(CDOTransactionHandler handler)
+  public void removeTransactionHandler(CDOTransactionHandlerBase handler)
   {
-    transactionHandlers.remove(handler);
+    if (handler instanceof CDOTransactionHandler1)
+    {
+      transactionHandlers1.remove((CDOTransactionHandler1)handler);
+    }
+
+    if (handler instanceof CDOTransactionHandler2)
+    {
+      transactionHandlers2.remove((CDOTransactionHandler2)handler);
+    }
   }
 
   public CDOTransactionHandler[] getTransactionHandlers()
   {
-    return transactionHandlers.get();
+    Set<CDOTransactionHandler> result = new HashSet<CDOTransactionHandler>();
+    synchronized (transactionHandlers1)
+    {
+      synchronized (transactionHandlers2)
+      {
+        for (CDOTransactionHandler1 handler : transactionHandlers1.get())
+        {
+          if (handler instanceof CDOTransactionHandler)
+          {
+            result.add((CDOTransactionHandler)handler);
+          }
+        }
+
+        for (CDOTransactionHandler2 handler : transactionHandlers2.get())
+        {
+          if (handler instanceof CDOTransactionHandler)
+          {
+            result.add((CDOTransactionHandler)handler);
+          }
+        }
+      }
+    }
+
+    return result.toArray(new CDOTransactionHandler[result.size()]);
+  }
+
+  public CDOTransactionHandler1[] getTransactionHandlers1()
+  {
+    return transactionHandlers1.get();
+  }
+
+  public CDOTransactionHandler2[] getTransactionHandlers2()
+  {
+    return transactionHandlers2.get();
   }
 
   @Override
@@ -1194,12 +1255,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public void detachObject(InternalCDOObject object)
   {
-    CDOTransactionHandler[] handlers = getTransactionHandlers();
+    CDOTransactionHandler1[] handlers = getTransactionHandlers1();
     if (handlers != null)
     {
       for (int i = 0; i < handlers.length; i++)
       {
-        CDOTransactionHandler handler = handlers[i];
+        CDOTransactionHandler1 handler = handlers[i];
         handler.detachingObject(this, object);
       }
     }
@@ -1328,12 +1389,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.ROLLED_BACK, idMappings), listeners);
       }
 
-      CDOTransactionHandler[] handlers = getTransactionHandlers();
+      CDOTransactionHandler2[] handlers = getTransactionHandlers2();
       if (handlers != null)
       {
         for (int i = 0; i < handlers.length; i++)
         {
-          CDOTransactionHandler handler = handlers[i];
+          CDOTransactionHandler2 handler = handlers[i];
 
           try
           {
@@ -1405,12 +1466,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     registerNewPackage(object.eClass().getEPackage());
 
-    CDOTransactionHandler[] handlers = getTransactionHandlers();
+    CDOTransactionHandler1[] handlers = getTransactionHandlers1();
     if (handlers != null)
     {
       for (int i = 0; i < handlers.length; i++)
       {
-        CDOTransactionHandler handler = handlers[i];
+        CDOTransactionHandler1 handler = handlers[i];
         handler.attachingObject(this, object);
       }
     }
@@ -1462,12 +1523,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       ((InternalCDORevisionDelta)revisionDelta).addFeatureDelta(featureDelta);
     }
 
-    CDOTransactionHandler[] handlers = getTransactionHandlers();
+    CDOTransactionHandler1[] handlers = getTransactionHandlers1();
     if (handlers != null)
     {
       for (int i = 0; i < handlers.length; i++)
       {
-        CDOTransactionHandler handler = handlers[i];
+        CDOTransactionHandler1 handler = handlers[i];
         handler.modifyingObject(this, object, featureDelta);
       }
     }
@@ -2204,11 +2265,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           TRACER.trace("commit()"); //$NON-NLS-1$
         }
 
-        CDOTransactionHandler[] handlers = getTransactionHandlers();
+        CDOTransactionHandler2[] handlers = getTransactionHandlers2();
         if (handlers != null)
         {
           final boolean[] modifiedAgain = { false };
-          CDOTransactionHandler modifiedAgainHandler = new CDODefaultTransactionHandler()
+          CDOTransactionHandler1 modifiedAgainHandler = new CDODefaultTransactionHandler1()
           {
             @Override
             public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureChange)
@@ -2224,7 +2285,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             for (int i = 0; i < handlers.length; i++)
             {
               modifiedAgain[0] = false;
-              CDOTransactionHandler handler = handlers[i];
+              CDOTransactionHandler2 handler = handlers[i];
               handler.committingTransaction(getTransaction(), this);
               if (modifiedAgain[0])
               {
@@ -2330,12 +2391,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             }
           }
 
-          CDOTransactionHandler[] handlers = getTransactionHandlers();
+          CDOTransactionHandler2[] handlers = getTransactionHandlers2();
           if (handlers != null)
           {
             for (int i = 0; i < handlers.length; i++)
             {
-              CDOTransactionHandler handler = handlers[i];
+              CDOTransactionHandler2 handler = handlers[i];
               handler.committedTransaction(transaction, this);
             }
           }

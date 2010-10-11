@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 /**
  * @author Eike Stepper
  */
-public class TransactionMonitoringTest
+public class _TransactionMonitoringTest
 {
   public static void main(String[] args) throws CommitException
   {

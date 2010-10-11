@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
-import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetImpl;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
@@ -76,7 +76,7 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
   public CDOChangeSet getLocalChangeSet()
   {
     CDOTransaction transaction = getTransaction();
-    return new CDOChangeSetImpl(transaction, transaction, getLocalChangeSetData());
+    return CDORevisionDeltaUtil.createChangeSet(transaction, transaction, getLocalChangeSetData());
   }
 
   public CDOChangeSetData getRemoteChangeSetData()
@@ -87,7 +87,7 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
   public CDOChangeSet getRemoteChangeSet()
   {
     CDOTransaction transaction = getTransaction();
-    return new CDOChangeSetImpl(transaction, transaction, getRemoteChangeSetData());
+    return CDORevisionDeltaUtil.createChangeSet(transaction, transaction, getRemoteChangeSetData());
   }
 
   @Override

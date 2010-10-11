@@ -31,11 +31,6 @@ public class CDOChangeSetImpl extends CDOChangeSetDataImpl implements CDOChangeS
     this.endPoint = endPoint;
   }
 
-  public CDOChangeSetImpl(CDOBranchPoint startPoint, CDOBranchPoint endPoint)
-  {
-    this(startPoint, endPoint, new CDOChangeSetDataImpl());
-  }
-
   public CDOBranchPoint getStartPoint()
   {
     return startPoint;

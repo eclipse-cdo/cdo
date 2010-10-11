@@ -57,7 +57,6 @@ import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
-import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
@@ -507,7 +506,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDORevisionAvailabilityInfo endInfo)
   {
     CDOChangeSetData data = CDORevisionDeltaUtil.createChangeSetData(ids, startInfo, endInfo);
-    return new CDOChangeSetImpl(startInfo.getBranchPoint(), endInfo.getBranchPoint(), data);
+    return CDORevisionDeltaUtil.createChangeSet(startInfo.getBranchPoint(), endInfo.getBranchPoint(), data);
   }
 
   public CDOChangeSetData applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionProvider ancestorProvider,

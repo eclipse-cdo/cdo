@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.internal.workspace;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -29,6 +31,7 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -222,8 +225,35 @@ public class CDOWorkspaceImpl implements CDOWorkspace
 
   public CDOTransaction update(CDOMerger merger, String branchPath, long timeStamp)
   {
-    // TODO: implement CDOWorkspaceImpl.update(merger, branchPath, timeStamp)
-    throw new UnsupportedOperationException();
+    InternalCDOSession session = openRemoteSession();
+
+    try
+    {
+      InternalCDOBranchManager branchManager = session.getBranchManager();
+      CDOBranchPoint base = branchManager.getBranch(baseline.getBranchPath()).getPoint(baseline.getTimeStamp());
+      CDOBranchPoint remote = branchManager.getBranch(branchPath).getPoint(timeStamp);
+      CDOBranchPoint local = branchManager.getBranch(branchPath).getPoint(timeStamp);
+
+      CDOBranchPointRange range = CDOBranchUtil.createRange(base, remote);
+      CDOChangeSetData remoteData = session.getSessionProtocol().loadChangeSets(range)[0];
+      CDOChangeSetData localData = getLocalChanges();
+
+      CDOChangeSet localChanges = CDORevisionDeltaUtil.createChangeSet(base, local, localData);
+      CDOChangeSet remoteChanges = CDORevisionDeltaUtil.createChangeSet(base, remote, remoteData);
+      CDOChangeSetData result = merger.merge(localChanges, remoteChanges);
+
+      InternalCDOTransaction transaction = (InternalCDOTransaction)openTransaction();
+      transaction.applyChangeSetData(result, baseline, this, null);
+
+      baseline.clear();
+      baseline.setLastUpdateTime(timeStamp);
+
+      return transaction;
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(session);
+    }
   }
 
   public void revert()

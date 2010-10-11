@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
@@ -22,6 +23,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
+import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 
 import java.util.ArrayList;
@@ -116,5 +118,13 @@ public final class CDORevisionDeltaUtil
     }
 
     return new CDOChangeSetDataImpl(newObjects, changedObjects, detachedObjects);
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static CDOChangeSet createChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint, CDOChangeSetData data)
+  {
+    return new CDOChangeSetImpl(startPoint, endPoint, data);
   }
 }

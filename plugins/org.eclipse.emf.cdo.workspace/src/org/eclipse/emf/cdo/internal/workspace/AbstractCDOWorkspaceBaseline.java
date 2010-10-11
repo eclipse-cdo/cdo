@@ -64,12 +64,6 @@ public abstract class AbstractCDOWorkspaceBaseline implements InternalCDOWorkspa
     branchManager = localRepository.getBranchManager();
   }
 
-  public void setTarget(String branchPath, long timeStamp)
-  {
-    this.branchPath = branchPath;
-    this.timeStamp = timeStamp;
-  }
-
   public CDOWorkspace getWorkspace()
   {
     return workspace;
@@ -80,9 +74,19 @@ public abstract class AbstractCDOWorkspaceBaseline implements InternalCDOWorkspa
     return branchPath;
   }
 
+  public void setBranchPath(String branchPath)
+  {
+    this.branchPath = branchPath;
+  }
+
   public long getTimeStamp()
   {
     return timeStamp;
+  }
+
+  public void setTimeStamp(long timeStamp)
+  {
+    this.timeStamp = timeStamp;
   }
 
   public void updateAfterCommit(CDOTransaction transaction)

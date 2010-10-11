@@ -99,7 +99,8 @@ public class CDOWorkspaceImpl implements CDOWorkspace
       String branchPath, long timeStamp)
   {
     this(local, baseline);
-    this.baseline.setTarget(branchPath, timeStamp);
+    this.baseline.setBranchPath(branchPath);
+    this.baseline.setTimeStamp(timeStamp);
     remoteSessionConfigurationFactory = remote;
     checkout();
   }

@@ -11,10 +11,12 @@
 package org.eclipse.emf.cdo.workspace;
 
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.collection.Closeable;
@@ -46,9 +48,9 @@ public interface CDOWorkspace extends CDORevisionProvider, Closeable
 
   public void replace(String branchPath, long timeStamp);
 
-  public void commit(String comment);
-
-  public IRepository getLocalRepository();
+  public CDOCommitInfo commit(String comment) throws CommitException;
 
   public CDOChangeSetData getLocalChanges();
+
+  public IRepository getLocalRepository();
 }

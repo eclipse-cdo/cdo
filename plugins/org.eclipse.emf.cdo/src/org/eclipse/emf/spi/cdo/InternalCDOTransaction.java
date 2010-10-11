@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.spi.cdo;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
@@ -82,6 +83,10 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   public void setConflict(InternalCDOObject object);
 
   /**
+   * @param source
+   *          May be <code>null</code> if changeSetData does not result from a
+   *          {@link #merge(CDOBranchPoint, org.eclipse.emf.cdo.transaction.CDOMerger) merge} or if the merge was not in
+   *          a {@link CDOBranch#isLocal() local} branch.
    * @since 4.0
    */
   public CDOChangeSetData applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionProvider ancestorProvider,

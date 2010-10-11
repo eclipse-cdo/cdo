@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.workspace;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -28,6 +29,7 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -38,6 +40,7 @@ import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler2;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
@@ -55,6 +58,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -224,10 +228,25 @@ public class CDOWorkspaceImpl implements CDOWorkspace
     throw new UnsupportedOperationException();
   }
 
-  public void commit(String comment)
+  public CDOCommitInfo commit(String comment) throws CommitException
   {
-    // TODO: implement CDOWorkspaceImpl.commit(comment)
-    throw new UnsupportedOperationException();
+    InternalCDOSession session = openRemoteSession();
+
+    try
+    {
+      InternalCDOBranch branch = session.getBranchManager().getBranch(baseline.getBranchPath());
+      InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction(branch);
+
+      CDOChangeSetData changes = getLocalChanges();
+
+      transaction.applyChangeSetData(changes, baseline, this, null);
+      transaction.setCommitComment(comment);
+      return transaction.commit();
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(session);
+    }
   }
 
   public synchronized void close()

@@ -514,7 +514,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDORevisionProvider targetProvider, CDOBranchPoint source)
   {
     CDOChangeSetData result = new CDOChangeSetDataImpl();
-    if (source.getBranch().isLocal())
+    if (source != null && source.getBranch().isLocal())
     {
       mapLocalIDs(changeSetData);
     }

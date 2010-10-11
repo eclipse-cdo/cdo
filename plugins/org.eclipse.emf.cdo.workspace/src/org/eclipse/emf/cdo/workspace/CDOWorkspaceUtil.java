@@ -25,31 +25,31 @@ public final class CDOWorkspaceUtil
   {
   }
 
-  public static CDOWorkspace open(IStore local, CDOWorkspaceMemory baseline, CDOSessionConfigurationFactory remote)
+  public static CDOWorkspace open(IStore local, CDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote)
   {
-    return new CDOWorkspaceImpl(local, (InternalCDOWorkspaceMemory)baseline, remote);
+    return new CDOWorkspaceImpl(local, (InternalCDOWorkspaceMemory)memory, remote);
   }
 
-  public static CDOWorkspace checkout(IStore local, CDOWorkspaceMemory baseline, CDOSessionConfigurationFactory remote)
+  public static CDOWorkspace checkout(IStore local, CDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote)
   {
-    return checkout(local, baseline, remote, null);
+    return checkout(local, memory, remote, null);
   }
 
-  public static CDOWorkspace checkout(IStore local, CDOWorkspaceMemory baseline, CDOSessionConfigurationFactory remote,
+  public static CDOWorkspace checkout(IStore local, CDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote,
       String branchPath)
   {
-    return checkout(local, baseline, remote, branchPath, CDOBranchPoint.UNSPECIFIED_DATE);
+    return checkout(local, memory, remote, branchPath, CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
-  public static CDOWorkspace checkout(IStore local, CDOWorkspaceMemory baseline, CDOSessionConfigurationFactory remote,
+  public static CDOWorkspace checkout(IStore local, CDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote,
       long timeStamp)
   {
-    return checkout(local, baseline, remote, null, timeStamp);
+    return checkout(local, memory, remote, null, timeStamp);
   }
 
-  public static CDOWorkspace checkout(IStore local, CDOWorkspaceMemory baseline, CDOSessionConfigurationFactory remote,
+  public static CDOWorkspace checkout(IStore local, CDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote,
       String branchPath, long timeStamp)
   {
-    return new CDOWorkspaceImpl(local, (InternalCDOWorkspaceMemory)baseline, remote, branchPath, timeStamp);
+    return new CDOWorkspaceImpl(local, (InternalCDOWorkspaceMemory)memory, remote, branchPath, timeStamp);
   }
 }

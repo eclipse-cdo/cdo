@@ -74,7 +74,9 @@ public class CDOWorkspaceImpl implements CDOWorkspace
 {
   private static final String PROP_BRANCH_PATH = "org.eclipse.emf.cdo.workspace.branchPath"; //$NON-NLS-1$
 
-  private static final String PROP_TIME_STAMP = "org.eclipse.emf.cdo.workspace.timeSTamp"; //$NON-NLS-1$
+  private static final String PROP_TIME_STAMP = "org.eclipse.emf.cdo.workspace.timeStamp"; //$NON-NLS-1$
+
+  private static final String PROP_LAST_UPDATE_TIME = "org.eclipse.emf.cdo.workspace.lastUpdateTime"; //$NON-NLS-1$
 
   private IManagedContainer container;
 
@@ -162,7 +164,7 @@ public class CDOWorkspaceImpl implements CDOWorkspace
       }
 
       accessor.rawCommit(context[0], monitor);
-      storeBranchPoint(baseline.getBranchPath(), baseline.getTimeStamp());
+      storeBranchPoint(baseline.getBranchPath(), baseline.getTimeStamp(), baseline.getLastUpdateTime());
     }
     finally
     {
@@ -445,11 +447,12 @@ public class CDOWorkspaceImpl implements CDOWorkspace
     return (InternalCDOSession)configuration.openSession();
   }
 
-  protected void storeBranchPoint(String branchPath, long timeStamp)
+  protected void storeBranchPoint(String branchPath, long timeStamp, long lastUpdateTime)
   {
     Map<String, String> props = new HashMap<String, String>();
     props.put(PROP_BRANCH_PATH, branchPath);
     props.put(PROP_TIME_STAMP, String.valueOf(timeStamp));
+    props.put(PROP_LAST_UPDATE_TIME, String.valueOf(lastUpdateTime));
     localRepository.setProperties(props);
   }
 }

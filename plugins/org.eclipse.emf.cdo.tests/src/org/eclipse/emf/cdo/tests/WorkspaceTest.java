@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -35,6 +34,7 @@ import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
@@ -61,23 +61,27 @@ public class WorkspaceTest extends AbstractCDOTest
 {
   private static final String RESOURCE = "/test1";
 
-  private static final int NUM_OF_PRODUCTS = 100;
+  private static final int PRODUCTS = 8;
 
-  private static final int NUM_OF_CUSTOMERS = 20;
+  private static final int CUSTOMERS = 5;
 
-  private static final int NUM_OF_SALES_ORDERS_PER_CUSTOMER = 50;
+  private static final int SALES_ORDERS_PER_CUSTOMER = 3;
+
+  private static final int SALES_ORDERS = CUSTOMERS * SALES_ORDERS_PER_CUSTOMER;
+
+  private static final int ORDER_DETAILS = SALES_ORDERS * PRODUCTS;
 
   private List<CDOWorkspace> workspaces = new ArrayList<CDOWorkspace>();
 
   private CDOTransaction transaction;
 
-  private List<Product1> products = new ArrayList<Product1>();
+  private List<Product1> products;
 
-  private List<Customer> customers = new ArrayList<Customer>();
+  private List<Customer> customers;
 
-  private List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
+  private List<SalesOrder> salesOrders;
 
-  private List<SalesOrder> salesOrders = new ArrayList<SalesOrder>();
+  private List<OrderDetail> orderDetails;
 
   private int totalObjects;
 
@@ -91,15 +95,28 @@ public class WorkspaceTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     transaction = session.openTransaction();
+
+    products = new ArrayList<Product1>();
+    customers = new ArrayList<Customer>();
+    orderDetails = new ArrayList<OrderDetail>();
+    salesOrders = new ArrayList<SalesOrder>();
+
     createTestSet(transaction);
+    assertEquals(PRODUCTS, products.size());
+    assertEquals(CUSTOMERS, customers.size());
+    assertEquals(SALES_ORDERS, salesOrders.size());
+    assertEquals(ORDER_DETAILS, orderDetails.size());
 
     JVMUtil.prepareContainer(getClientContainer());
     localStore = createLocalStore();
+
+    CDOUtil.setLegacyModeDefault(true);
   }
 
   @Override
   protected void doTearDown() throws Exception
   {
+    CDOUtil.setLegacyModeDefault(false);
     for (CDOWorkspace workspace : workspaces)
     {
       IOUtil.closeSilent(workspace);
@@ -119,10 +136,8 @@ public class WorkspaceTest extends AbstractCDOTest
 
   public void testCheckout() throws Exception
   {
-    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
-
+    checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
     assertEquals(1 + totalObjects, dumpLocalStore(null)); // Root resource + totalObjects
-    workspace.close();
   }
 
   public void testReadObjects() throws Exception
@@ -132,7 +147,6 @@ public class WorkspaceTest extends AbstractCDOTest
     CDOView view = workspace.openView();
     CDOResource resource = view.getResource(RESOURCE);
     assertEquals(totalObjects, dumpObjects(null, resource));
-    workspace.close();
   }
 
   public void testModifyObjects() throws Exception
@@ -151,7 +165,7 @@ public class WorkspaceTest extends AbstractCDOTest
     }
 
     assertEquals(true, transaction.isDirty());
-    assertEquals(NUM_OF_PRODUCTS, transaction.getDirtyObjects().size());
+    assertEquals(PRODUCTS, transaction.getDirtyObjects().size());
 
     transaction.commit();
     assertEquals(false, transaction.isDirty());
@@ -170,63 +184,6 @@ public class WorkspaceTest extends AbstractCDOTest
         assertEquals(true, product.getName().startsWith("MODIFIED_"));
       }
     }
-
-    workspace.close();
-  }
-
-  public void testModifyObjects2() throws Exception
-  {
-    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
-
-    CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
-    for (EObject object : resource.getContents())
-    {
-      if (object instanceof Product1)
-      {
-        Product1 product = (Product1)object;
-        product.setName("MODIFIED_" + product.getName());
-      }
-    }
-
-    assertEquals(true, transaction.isDirty());
-    assertEquals(NUM_OF_PRODUCTS, transaction.getDirtyObjects().size());
-
-    transaction.commit();
-    assertEquals(false, transaction.isDirty());
-    assertEquals(0, transaction.getDirtyObjects().size());
-
-    for (EObject object : resource.getContents())
-    {
-      if (object instanceof Product1)
-      {
-        Product1 product = (Product1)object;
-        product.setName("MODIFIED2_" + product.getName());
-      }
-    }
-
-    assertEquals(true, transaction.isDirty());
-    assertEquals(NUM_OF_PRODUCTS, transaction.getDirtyObjects().size());
-
-    transaction.commit();
-    assertEquals(false, transaction.isDirty());
-    assertEquals(0, transaction.getDirtyObjects().size());
-
-    clearCache(transaction.getSession().getRevisionManager());
-
-    CDOView view = workspace.openView();
-    resource = view.getResource(RESOURCE);
-    assertEquals(totalObjects, dumpObjects(null, resource));
-    for (EObject object : resource.getContents())
-    {
-      if (object instanceof Product1)
-      {
-        Product1 product = (Product1)object;
-        assertEquals(true, product.getName().startsWith("MODIFIED2_"));
-      }
-    }
-
-    workspace.close();
   }
 
   public void testAddObjects() throws Exception
@@ -235,14 +192,14 @@ public class WorkspaceTest extends AbstractCDOTest
 
     CDOTransaction transaction = workspace.openTransaction();
     CDOResource resource = transaction.getResource(RESOURCE);
-    for (int i = 0; i < NUM_OF_PRODUCTS; i++)
+    for (int i = 0; i < PRODUCTS; i++)
     {
       resource.getContents().add(createProduct(i));
     }
 
     assertEquals(true, transaction.isDirty());
     assertEquals(1, transaction.getDirtyObjects().size());
-    assertEquals(NUM_OF_PRODUCTS, transaction.getNewObjects().size());
+    assertEquals(PRODUCTS, transaction.getNewObjects().size());
 
     transaction.commit();
     assertEquals(false, transaction.isDirty());
@@ -253,50 +210,7 @@ public class WorkspaceTest extends AbstractCDOTest
 
     CDOView view = workspace.openView();
     resource = view.getResource(RESOURCE);
-    assertEquals(totalObjects + NUM_OF_PRODUCTS, dumpObjects("--> ", resource));
-    workspace.close();
-  }
-
-  public void testAddObjects2() throws Exception
-  {
-    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
-
-    CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
-    for (int i = 0; i < NUM_OF_PRODUCTS; i++)
-    {
-      resource.getContents().add(createProduct(i));
-    }
-
-    assertEquals(true, transaction.isDirty());
-    assertEquals(1, transaction.getDirtyObjects().size());
-    assertEquals(NUM_OF_PRODUCTS, transaction.getNewObjects().size());
-
-    transaction.commit();
-    assertEquals(false, transaction.isDirty());
-    assertEquals(0, transaction.getDirtyObjects().size());
-    assertEquals(0, transaction.getNewObjects().size());
-
-    for (int i = 0; i < NUM_OF_PRODUCTS; i++)
-    {
-      resource.getContents().add(createProduct(i));
-    }
-
-    assertEquals(true, transaction.isDirty());
-    assertEquals(1, transaction.getDirtyObjects().size());
-    assertEquals(NUM_OF_PRODUCTS, transaction.getNewObjects().size());
-
-    transaction.commit();
-    assertEquals(false, transaction.isDirty());
-    assertEquals(0, transaction.getDirtyObjects().size());
-    assertEquals(0, transaction.getNewObjects().size());
-
-    clearCache(transaction.getSession().getRevisionManager());
-
-    CDOView view = workspace.openView();
-    resource = view.getResource(RESOURCE);
-    assertEquals(totalObjects + 2 * NUM_OF_PRODUCTS, dumpObjects("--> ", resource));
-    workspace.close();
+    assertEquals(totalObjects + PRODUCTS, dumpObjects("--> ", resource));
   }
 
   public void testDetachObjects() throws Exception
@@ -319,8 +233,8 @@ public class WorkspaceTest extends AbstractCDOTest
     }
 
     assertEquals(true, transaction.isDirty());
-    assertEquals(salesOrders.size() + products.size(), transaction.getDirtyObjects().size());
-    assertEquals(orderDetails.size(), transaction.getDetachedObjects().size());
+    assertEquals(SALES_ORDERS + PRODUCTS, transaction.getDirtyObjects().size());
+    assertEquals(ORDER_DETAILS, transaction.getDetachedObjects().size());
 
     transaction.commit();
     assertEquals(false, transaction.isDirty());
@@ -331,7 +245,7 @@ public class WorkspaceTest extends AbstractCDOTest
 
     CDOView view = workspace.openView();
     resource = view.getResource(RESOURCE);
-    assertEquals(totalObjects - orderDetails.size(), dumpObjects(null, resource));
+    assertEquals(totalObjects - ORDER_DETAILS, dumpObjects(null, resource));
     for (EObject object : resource.getContents())
     {
       if (object instanceof SalesOrder)
@@ -342,8 +256,100 @@ public class WorkspaceTest extends AbstractCDOTest
         }
       }
     }
+  }
 
-    workspace.close();
+  public void testModifyObjects2() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof Product1)
+      {
+        Product1 product = (Product1)object;
+        product.setName("MODIFIED_" + product.getName());
+      }
+    }
+
+    assertEquals(true, transaction.isDirty());
+    assertEquals(PRODUCTS, transaction.getDirtyObjects().size());
+
+    transaction.commit();
+    assertEquals(false, transaction.isDirty());
+    assertEquals(0, transaction.getDirtyObjects().size());
+
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof Product1)
+      {
+        Product1 product = (Product1)object;
+        product.setName("MODIFIED2_" + product.getName());
+      }
+    }
+
+    assertEquals(true, transaction.isDirty());
+    assertEquals(PRODUCTS, transaction.getDirtyObjects().size());
+
+    transaction.commit();
+    assertEquals(false, transaction.isDirty());
+    assertEquals(0, transaction.getDirtyObjects().size());
+
+    clearCache(transaction.getSession().getRevisionManager());
+
+    CDOView view = workspace.openView();
+    resource = view.getResource(RESOURCE);
+    assertEquals(totalObjects, dumpObjects(null, resource));
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof Product1)
+      {
+        Product1 product = (Product1)object;
+        assertEquals(true, product.getName().startsWith("MODIFIED2_"));
+      }
+    }
+  }
+
+  public void testAddObjects2() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (int i = 0; i < PRODUCTS; i++)
+    {
+      resource.getContents().add(createProduct(i));
+    }
+
+    assertEquals(true, transaction.isDirty());
+    assertEquals(1, transaction.getDirtyObjects().size());
+    assertEquals(PRODUCTS, transaction.getNewObjects().size());
+
+    transaction.commit();
+    assertEquals(false, transaction.isDirty());
+    assertEquals(0, transaction.getDirtyObjects().size());
+    assertEquals(0, transaction.getNewObjects().size());
+
+    for (int i = 0; i < PRODUCTS; i++)
+    {
+      resource.getContents().add(createProduct(i));
+    }
+
+    assertEquals(true, transaction.isDirty());
+    assertEquals(1, transaction.getDirtyObjects().size());
+    assertEquals(PRODUCTS, transaction.getNewObjects().size());
+
+    transaction.commit();
+    assertEquals(false, transaction.isDirty());
+    assertEquals(0, transaction.getDirtyObjects().size());
+    assertEquals(0, transaction.getNewObjects().size());
+
+    clearCache(transaction.getSession().getRevisionManager());
+
+    CDOView view = workspace.openView();
+    resource = view.getResource(RESOURCE);
+    assertEquals(totalObjects + 2 * PRODUCTS, dumpObjects("--> ", resource));
   }
 
   public void testDetachObjects2() throws Exception
@@ -366,8 +372,8 @@ public class WorkspaceTest extends AbstractCDOTest
     }
 
     assertEquals(true, transaction.isDirty());
-    assertEquals(salesOrders.size() + products.size(), transaction.getDirtyObjects().size());
-    assertEquals(orderDetails.size(), transaction.getDetachedObjects().size());
+    assertEquals(SALES_ORDERS + PRODUCTS, transaction.getDirtyObjects().size());
+    assertEquals(ORDER_DETAILS, transaction.getDetachedObjects().size());
 
     transaction.commit();
     assertEquals(false, transaction.isDirty());
@@ -389,8 +395,8 @@ public class WorkspaceTest extends AbstractCDOTest
     }
 
     assertEquals(true, transaction.isDirty());
-    assertEquals(1 + customers.size(), transaction.getDirtyObjects().size());
-    assertEquals(salesOrders.size(), transaction.getDetachedObjects().size());
+    assertEquals(1 + CUSTOMERS, transaction.getDirtyObjects().size());
+    assertEquals(SALES_ORDERS, transaction.getDetachedObjects().size());
 
     transaction.commit();
     assertEquals(false, transaction.isDirty());
@@ -401,7 +407,7 @@ public class WorkspaceTest extends AbstractCDOTest
 
     CDOView view = workspace.openView();
     resource = view.getResource(RESOURCE);
-    assertEquals(totalObjects - orderDetails.size() - salesOrders.size(), dumpObjects(null, resource));
+    assertEquals(totalObjects - ORDER_DETAILS - SALES_ORDERS, dumpObjects(null, resource));
     for (EObject object : resource.getContents())
     {
       if (object instanceof SalesOrder)
@@ -420,8 +426,6 @@ public class WorkspaceTest extends AbstractCDOTest
         }
       }
     }
-
-    workspace.close();
   }
 
   public void testLocalChangesAfterModify() throws Exception
@@ -443,9 +447,54 @@ public class WorkspaceTest extends AbstractCDOTest
 
     CDOChangeSetData changes = workspace.getLocalChanges();
     assertEquals(0, changes.getNewObjects().size());
-    assertEquals(NUM_OF_PRODUCTS, changes.getChangedObjects().size());
+    assertEquals(PRODUCTS, changes.getChangedObjects().size());
     assertEquals(0, changes.getDetachedObjects().size());
-    workspace.close();
+  }
+
+  public void testLocalChangesAfterAdd() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (int i = 0; i < PRODUCTS; i++)
+    {
+      resource.getContents().add(createProduct(i));
+    }
+
+    transaction.commit();
+
+    CDOChangeSetData changes = workspace.getLocalChanges();
+    assertEquals(PRODUCTS, changes.getNewObjects().size());
+    assertEquals(1, changes.getChangedObjects().size());
+    assertEquals(0, changes.getDetachedObjects().size());
+  }
+
+  public void testLocalChangesAfterDetach() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof SalesOrder)
+      {
+        ((SalesOrder)object).getOrderDetails().clear();
+      }
+
+      if (object instanceof Product1)
+      {
+        ((Product1)object).getOrderDetails().clear();
+      }
+    }
+
+    transaction.commit();
+
+    CDOChangeSetData changes = workspace.getLocalChanges();
+    assertEquals(0, changes.getNewObjects().size());
+    assertEquals(SALES_ORDERS + PRODUCTS, changes.getChangedObjects().size());
+    assertEquals(ORDER_DETAILS, changes.getDetachedObjects().size());
   }
 
   public void testLocalChangesAfterModify2() throws Exception
@@ -478,29 +527,8 @@ public class WorkspaceTest extends AbstractCDOTest
 
     CDOChangeSetData changes = workspace.getLocalChanges();
     assertEquals(0, changes.getNewObjects().size());
-    assertEquals(NUM_OF_PRODUCTS, changes.getChangedObjects().size());
+    assertEquals(PRODUCTS, changes.getChangedObjects().size());
     assertEquals(0, changes.getDetachedObjects().size());
-    workspace.close();
-  }
-
-  public void testLocalChangesAfterAdd() throws Exception
-  {
-    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
-
-    CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
-    for (int i = 0; i < NUM_OF_PRODUCTS; i++)
-    {
-      resource.getContents().add(createProduct(i));
-    }
-
-    transaction.commit();
-
-    CDOChangeSetData changes = workspace.getLocalChanges();
-    assertEquals(NUM_OF_PRODUCTS, changes.getNewObjects().size());
-    assertEquals(1, changes.getChangedObjects().size());
-    assertEquals(0, changes.getDetachedObjects().size());
-    workspace.close();
   }
 
   public void testLocalChangesAfterAdd2() throws Exception
@@ -509,14 +537,14 @@ public class WorkspaceTest extends AbstractCDOTest
 
     CDOTransaction transaction = workspace.openTransaction();
     CDOResource resource = transaction.getResource(RESOURCE);
-    for (int i = 0; i < NUM_OF_PRODUCTS; i++)
+    for (int i = 0; i < PRODUCTS; i++)
     {
       resource.getContents().add(createProduct(i));
     }
 
     transaction.commit();
 
-    for (int i = 0; i < NUM_OF_PRODUCTS; i++)
+    for (int i = 0; i < PRODUCTS; i++)
     {
       resource.getContents().add(createProduct(i));
     }
@@ -524,38 +552,9 @@ public class WorkspaceTest extends AbstractCDOTest
     transaction.commit();
 
     CDOChangeSetData changes = workspace.getLocalChanges();
-    assertEquals(2 * NUM_OF_PRODUCTS, changes.getNewObjects().size());
+    assertEquals(2 * PRODUCTS, changes.getNewObjects().size());
     assertEquals(1, changes.getChangedObjects().size());
     assertEquals(0, changes.getDetachedObjects().size());
-    workspace.close();
-  }
-
-  public void testLocalChangesAfterDetach() throws Exception
-  {
-    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
-
-    CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
-    for (EObject object : resource.getContents())
-    {
-      if (object instanceof SalesOrder)
-      {
-        ((SalesOrder)object).getOrderDetails().clear();
-      }
-
-      if (object instanceof Product1)
-      {
-        ((Product1)object).getOrderDetails().clear();
-      }
-    }
-
-    transaction.commit();
-
-    CDOChangeSetData changes = workspace.getLocalChanges();
-    assertEquals(0, changes.getNewObjects().size());
-    assertEquals(salesOrders.size() + products.size(), changes.getChangedObjects().size());
-    assertEquals(orderDetails.size(), changes.getDetachedObjects().size());
-    workspace.close();
   }
 
   public void testLocalChangesAfterDetach2() throws Exception
@@ -597,9 +596,8 @@ public class WorkspaceTest extends AbstractCDOTest
 
     CDOChangeSetData changes = workspace.getLocalChanges();
     assertEquals(0, changes.getNewObjects().size());
-    assertEquals(1 + customers.size() + products.size(), changes.getChangedObjects().size());
-    assertEquals(orderDetails.size() + salesOrders.size(), changes.getDetachedObjects().size());
-    workspace.close();
+    assertEquals(1 + CUSTOMERS + PRODUCTS, changes.getChangedObjects().size());
+    assertEquals(ORDER_DETAILS + SALES_ORDERS, changes.getDetachedObjects().size());
   }
 
   public void testCommitAfterModify() throws Exception
@@ -621,10 +619,13 @@ public class WorkspaceTest extends AbstractCDOTest
 
     CDOCommitInfo info = workspace.commit();
     assertEquals(0, info.getNewObjects().size());
-    assertEquals(NUM_OF_PRODUCTS, info.getChangedObjects().size());
+    assertEquals(PRODUCTS, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
-    assertEquals(0, workspace.getBaseline().getIDs().size());
-    workspace.close();
+
+    CDOWorkspaceBaseline baseline = workspace.getBaseline();
+    assertEquals(0, baseline.getIDs().size());
+    assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
+    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
   }
 
   public void testCommitAfterAdd() throws Exception
@@ -633,7 +634,7 @@ public class WorkspaceTest extends AbstractCDOTest
 
     CDOTransaction transaction = workspace.openTransaction();
     CDOResource resource = transaction.getResource(RESOURCE);
-    for (int i = 0; i < NUM_OF_PRODUCTS; i++)
+    for (int i = 0; i < PRODUCTS; i++)
     {
       resource.getContents().add(createProduct(i));
     }
@@ -641,11 +642,14 @@ public class WorkspaceTest extends AbstractCDOTest
     transaction.commit();
 
     CDOCommitInfo info = workspace.commit();
-    assertEquals(NUM_OF_PRODUCTS, info.getNewObjects().size());
+    assertEquals(PRODUCTS, info.getNewObjects().size());
     assertEquals(1, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
-    assertEquals(0, workspace.getBaseline().getIDs().size());
-    workspace.close();
+
+    CDOWorkspaceBaseline baseline = workspace.getBaseline();
+    assertEquals(0, baseline.getIDs().size());
+    assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
+    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
   }
 
   public void testCommitAfterDetach() throws Exception
@@ -671,10 +675,235 @@ public class WorkspaceTest extends AbstractCDOTest
 
     CDOCommitInfo info = workspace.commit();
     assertEquals(0, info.getNewObjects().size());
-    assertEquals(salesOrders.size() + products.size(), info.getChangedObjects().size());
-    assertEquals(orderDetails.size(), info.getDetachedObjects().size());
-    assertEquals(0, workspace.getBaseline().getIDs().size());
-    workspace.close();
+    assertEquals(SALES_ORDERS + PRODUCTS, info.getChangedObjects().size());
+    assertEquals(ORDER_DETAILS, info.getDetachedObjects().size());
+
+    CDOWorkspaceBaseline baseline = workspace.getBaseline();
+    assertEquals(0, baseline.getIDs().size());
+    assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
+    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
+  }
+
+  public void testCommitAfterModify2() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof Product1)
+      {
+        Product1 product = (Product1)object;
+        product.setName("MODIFIED_" + product.getName());
+      }
+    }
+
+    transaction.commit();
+
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof Product1)
+      {
+        Product1 product = (Product1)object;
+        product.setName("MODIFIED2_" + product.getName());
+      }
+    }
+
+    transaction.commit();
+
+    CDOCommitInfo info = workspace.commit();
+    assertEquals(0, info.getNewObjects().size());
+    assertEquals(PRODUCTS, info.getChangedObjects().size());
+    assertEquals(0, info.getDetachedObjects().size());
+
+    CDOWorkspaceBaseline baseline = workspace.getBaseline();
+    assertEquals(0, baseline.getIDs().size());
+    assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
+    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
+  }
+
+  public void testCommitAfterAdd2() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (int i = 0; i < PRODUCTS; i++)
+    {
+      resource.getContents().add(createProduct(i));
+    }
+
+    transaction.commit();
+
+    for (int i = 0; i < PRODUCTS; i++)
+    {
+      resource.getContents().add(createProduct(i));
+    }
+
+    transaction.commit();
+
+    CDOCommitInfo info = workspace.commit();
+    assertEquals(2 * PRODUCTS, info.getNewObjects().size());
+    assertEquals(1, info.getChangedObjects().size());
+    assertEquals(0, info.getDetachedObjects().size());
+
+    CDOWorkspaceBaseline baseline = workspace.getBaseline();
+    assertEquals(0, baseline.getIDs().size());
+    assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
+    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
+  }
+
+  public void testCommitAfterDetach2() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof SalesOrder)
+      {
+        ((SalesOrder)object).getOrderDetails().clear();
+      }
+
+      if (object instanceof Product1)
+      {
+        ((Product1)object).getOrderDetails().clear();
+      }
+    }
+
+    transaction.commit();
+
+    for (Iterator<EObject> it = resource.getContents().iterator(); it.hasNext();)
+    {
+      EObject object = it.next();
+      if (object instanceof SalesOrder)
+      {
+        it.remove();
+      }
+
+      if (object instanceof Customer)
+      {
+        ((Customer)object).getSalesOrders().clear();
+      }
+    }
+
+    transaction.commit();
+
+    CDOCommitInfo info = workspace.commit();
+    assertEquals(0, info.getNewObjects().size());
+    assertEquals(1 + CUSTOMERS + PRODUCTS, info.getChangedObjects().size());
+    assertEquals(ORDER_DETAILS + SALES_ORDERS, info.getDetachedObjects().size());
+
+    CDOWorkspaceBaseline baseline = workspace.getBaseline();
+    assertEquals(0, baseline.getIDs().size());
+    assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
+    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
+  }
+
+  public void testCommit2AfterModify() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof Product1)
+      {
+        Product1 product = (Product1)object;
+        product.setName("MODIFIED_" + product.getName());
+      }
+    }
+
+    transaction.commit();
+
+    CDOCommitInfo info = workspace.commit();
+    assertEquals(0, info.getNewObjects().size());
+    assertEquals(PRODUCTS, info.getChangedObjects().size());
+    assertEquals(0, info.getDetachedObjects().size());
+
+    CDOWorkspaceBaseline baseline = workspace.getBaseline();
+    assertEquals(0, baseline.getIDs().size());
+    assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
+    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
+  }
+
+  public void testCommit2AfterAdd() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (int i = 0; i < PRODUCTS; i++)
+    {
+      resource.getContents().add(createProduct(i));
+    }
+
+    transaction.commit();
+
+    CDOCommitInfo info = workspace.commit();
+    assertEquals(PRODUCTS, info.getNewObjects().size());
+    assertEquals(1, info.getChangedObjects().size());
+    assertEquals(0, info.getDetachedObjects().size());
+
+    CDOWorkspaceBaseline baseline = workspace.getBaseline();
+    assertEquals(0, baseline.getIDs().size());
+    assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
+    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
+  }
+
+  public void testCommit2AfterDetach() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof SalesOrder)
+      {
+        ((SalesOrder)object).getOrderDetails().clear();
+      }
+
+      if (object instanceof Product1)
+      {
+        ((Product1)object).getOrderDetails().clear();
+      }
+    }
+
+    transaction.commit();
+
+    CDOCommitInfo info = workspace.commit();
+    assertEquals(0, info.getNewObjects().size());
+    assertEquals(SALES_ORDERS + PRODUCTS, info.getChangedObjects().size());
+    assertEquals(ORDER_DETAILS, info.getDetachedObjects().size());
+
+    CDOWorkspaceBaseline baseline = workspace.getBaseline();
+    assertEquals(0, baseline.getIDs().size());
+    assertEquals(info.getBranch().getPathName(), baseline.getBranchPath());
+    assertEquals(info.getTimeStamp(), baseline.getTimeStamp());
+  }
+
+  protected IStore createLocalStore()
+  {
+    return MEMStoreUtil.createMEMStore();
+  }
+
+  protected CDOWorkspace checkout(String branchPath, long timeStamp)
+  {
+    disableConsole();
+    CDOSessionConfigurationFactory remote = new RemoteSessionConfigurationFactory();
+
+    File folder = TMPUtil.createTempFolder("cdo-");
+    CDOWorkspaceBaseline baseline = new FolderCDOWorkspaceBaseline(folder);
+    System.err.println("CDOWorkspaceBaseline: " + folder.getAbsolutePath());
+
+    CDOWorkspace workspace = CDOWorkspaceUtil.checkout(localStore, baseline, remote, branchPath, timeStamp);
+    registerRepository(workspace.getLocalRepository());
+    workspaces.add(workspace);
+    return workspace;
   }
 
   private int dumpLocalStore(PrintStream out)
@@ -697,7 +926,7 @@ public class WorkspaceTest extends AbstractCDOTest
     return 0;
   }
 
-  private int dumpObjects(String prefix, CDOObject object)
+  private int dumpObjects(String prefix, EObject object)
   {
     if (prefix != null)
     {
@@ -707,7 +936,7 @@ public class WorkspaceTest extends AbstractCDOTest
     int sum = 1;
     for (EObject content : object.eContents())
     {
-      sum += dumpObjects(prefix != null ? prefix + "  " : null, (CDOObject)content);
+      sum += dumpObjects(prefix != null ? prefix + "  " : null, content);
     }
 
     return sum;
@@ -733,66 +962,59 @@ public class WorkspaceTest extends AbstractCDOTest
 
   private void fillResource(CDOResource resource)
   {
-    msg("Creating Testset");
-    List<Product1> products = new ArrayList<Product1>();
-    for (int i = 0; i < NUM_OF_PRODUCTS; i++)
+    for (int i = 0; i < PRODUCTS; i++)
     {
-      products.add(createProduct(i));
+      Product1 product = createProduct(i);
+      products.add(product);
+      resource.getContents().add(product);
     }
 
-    resource.getContents().addAll(products);
-
-    int NUM_OF_PRODUCTS_CUSTOMER = NUM_OF_PRODUCTS / NUM_OF_CUSTOMERS;
-    int productCounter = 0;
-    for (int i = 0; i < NUM_OF_CUSTOMERS; i++)
+    int id = 100;
+    for (int i = 0; i < CUSTOMERS; i++)
     {
       Customer customer = createCustomer(i);
+      customers.add(customer);
       resource.getContents().add(customer);
 
-      List<Product1> customerProducts = products.subList(productCounter, productCounter + NUM_OF_PRODUCTS_CUSTOMER);
-      for (int k = 0; k < NUM_OF_SALES_ORDERS_PER_CUSTOMER; k++)
+      for (int k = 0; k < SALES_ORDERS_PER_CUSTOMER; k++)
       {
-        resource.getContents().add(createSalesOrder(i * 10 + k, customer, customerProducts));
-      }
+        SalesOrder salesOrder = createSalesOrder(id++, customer);
+        salesOrders.add(salesOrder);
+        resource.getContents().add(salesOrder);
 
-      productCounter += NUM_OF_PRODUCTS_CUSTOMER;
+        for (Product1 product : products)
+        {
+          OrderDetail orderDetail = createOrderDetail(product, 55.123f);
+          orderDetails.add(orderDetail);
+          salesOrder.getOrderDetails().add(orderDetail);
+        }
+      }
     }
+  }
+
+  private Product1 createProduct(int index)
+  {
+    Product1 product = getModel1Factory().createProduct1();
+    product.setDescription("Description " + index);
+    product.setVat(VAT.VAT15);
+    return product;
   }
 
   private Customer createCustomer(int i)
   {
     Customer customer = getModel1Factory().createCustomer();
-    customer.setCity(i == 0 ? null : "City " + i); // set first city null for null-test-case
+    customer.setCity("City " + i);
     customer.setName("" + i);
     customer.setStreet("Street " + i);
-
-    customers.add(customer);
     return customer;
   }
 
-  private SalesOrder createSalesOrder(int num, Customer customer, List<Product1> products)
+  private SalesOrder createSalesOrder(int id, Customer customer)
   {
     SalesOrder salesOrder = getModel1Factory().createSalesOrder();
+    salesOrder.setId(id);
     salesOrder.setCustomer(customer);
-    salesOrder.setId(num);
-    salesOrder.getOrderDetails().addAll(createOrderDetails(num, products));
-
-    salesOrders.add(salesOrder);
     return salesOrder;
-  }
-
-  private List<OrderDetail> createOrderDetails(int index, List<Product1> products)
-  {
-    List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
-
-    int count = 0;
-    for (Product1 product : products)
-    {
-      OrderDetail orderDetail = createOrderDetail(product, count++ * index * 1.1f);
-      orderDetails.add(orderDetail);
-    }
-
-    return orderDetails;
   }
 
   private OrderDetail createOrderDetail(Product1 product, float price)
@@ -800,47 +1022,7 @@ public class WorkspaceTest extends AbstractCDOTest
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     orderDetail.setPrice(price);
     orderDetail.setProduct(product);
-
-    orderDetails.add(orderDetail);
     return orderDetail;
-  }
-
-  private Product1 createProduct(int index)
-  {
-    Product1 product = getModel1Factory().createProduct1();
-    product.setDescription("Description " + index);
-    product.setName("" + index);
-    if (index < 10)
-    {
-      product.setVat(VAT.VAT15);
-    }
-    else
-    {
-      product.setVat(VAT.VAT7);
-    }
-
-    products.add(product);
-    return product;
-  }
-
-  protected IStore createLocalStore()
-  {
-    return MEMStoreUtil.createMEMStore();
-  }
-
-  protected CDOWorkspace checkout(String branchPath, long timeStamp)
-  {
-    disableConsole();
-    CDOSessionConfigurationFactory remote = new RemoteSessionConfigurationFactory();
-
-    File folder = TMPUtil.createTempFolder("cdo-");
-    CDOWorkspaceBaseline baseline = new FolderCDOWorkspaceBaseline(folder);
-    System.err.println("CDOWorkspaceBaseline: " + folder.getAbsolutePath());
-
-    CDOWorkspace workspace = CDOWorkspaceUtil.checkout(localStore, baseline, remote, branchPath, timeStamp);
-    registerRepository(workspace.getLocalRepository());
-    workspaces.add(workspace);
-    return workspace;
   }
 
   /**

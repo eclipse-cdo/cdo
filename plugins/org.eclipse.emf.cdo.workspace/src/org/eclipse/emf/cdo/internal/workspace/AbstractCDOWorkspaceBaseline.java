@@ -32,6 +32,7 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -86,21 +87,27 @@ public abstract class AbstractCDOWorkspaceBaseline implements InternalCDOWorkspa
 
   public void updateAfterCommit(CDOTransaction transaction)
   {
-    for (InternalCDORevision revision : ((InternalCDOTransaction)transaction).getCleanRevisions().values())
+    InternalCDOTransaction tx = (InternalCDOTransaction)transaction;
+    Set<CDOID> dirtyObjects = tx.getDirtyObjects().keySet();
+    Set<CDOID> detachedObjects = tx.getDetachedObjects().keySet();
+    for (InternalCDORevision revision : tx.getCleanRevisions().values())
     {
       CDOID id = revision.getID();
-      if (isAddedObject(id))
+      if (dirtyObjects.contains(id) || detachedObjects.contains(id))
       {
-        deregisterObject(id);
-      }
-      else
-      {
-        registerChangedOrDetachedObject(revision);
+        if (isAddedObject(id))
+        {
+          deregisterObject(id);
+        }
+        else
+        {
+          registerChangedOrDetachedObject(revision);
+        }
       }
     }
 
     // Don't use keySet() because only the values() are ID-mapped!
-    for (CDOObject object : transaction.getNewObjects().values())
+    for (CDOObject object : tx.getNewObjects().values())
     {
       registerAddedObject(object.cdoID());
     }

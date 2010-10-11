@@ -259,6 +259,9 @@ public class CDOWorkspaceImpl implements CDOWorkspace
 
     LifecycleUtil.deactivate(localRepository);
     localRepository = null;
+
+    LifecycleUtil.deactivate(container);
+    container = null;
   }
 
   public synchronized boolean isClosed()

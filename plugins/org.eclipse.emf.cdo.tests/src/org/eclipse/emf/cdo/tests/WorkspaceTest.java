@@ -150,6 +150,61 @@ public class WorkspaceTest extends AbstractCDOTest
     workspace.close();
   }
 
+  public void testModifyObjects2() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof Product1)
+      {
+        Product1 product = (Product1)object;
+        product.setName("MODIFIED_" + product.getName());
+      }
+    }
+
+    assertEquals(true, transaction.isDirty());
+    assertEquals(NUM_OF_PRODUCTS, transaction.getDirtyObjects().size());
+
+    transaction.commit();
+    assertEquals(false, transaction.isDirty());
+    assertEquals(0, transaction.getDirtyObjects().size());
+
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof Product1)
+      {
+        Product1 product = (Product1)object;
+        product.setName("MODIFIED2_" + product.getName());
+      }
+    }
+
+    assertEquals(true, transaction.isDirty());
+    assertEquals(NUM_OF_PRODUCTS, transaction.getDirtyObjects().size());
+
+    transaction.commit();
+    assertEquals(false, transaction.isDirty());
+    assertEquals(0, transaction.getDirtyObjects().size());
+
+    clearCache(transaction.getSession().getRevisionManager());
+
+    CDOView view = workspace.openView();
+    resource = view.getResource(RESOURCE);
+    assertEquals(totalObjects, dumpObjects(null, resource));
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof Product1)
+      {
+        Product1 product = (Product1)object;
+        assertEquals(true, product.getName().startsWith("MODIFIED2_"));
+      }
+    }
+
+    workspace.close();
+  }
+
   public void testAddObjects() throws Exception
   {
     CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
@@ -175,6 +230,48 @@ public class WorkspaceTest extends AbstractCDOTest
     CDOView view = workspace.openView();
     resource = view.getResource(RESOURCE);
     assertEquals(totalObjects + NUM_OF_PRODUCTS, dumpObjects("--> ", resource));
+    workspace.close();
+  }
+
+  public void testAddObjects2() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (int i = 0; i < NUM_OF_PRODUCTS; i++)
+    {
+      resource.getContents().add(createProduct(i));
+    }
+
+    assertEquals(true, transaction.isDirty());
+    assertEquals(1, transaction.getDirtyObjects().size());
+    assertEquals(NUM_OF_PRODUCTS, transaction.getNewObjects().size());
+
+    transaction.commit();
+    assertEquals(false, transaction.isDirty());
+    assertEquals(0, transaction.getDirtyObjects().size());
+    assertEquals(0, transaction.getNewObjects().size());
+
+    for (int i = 0; i < NUM_OF_PRODUCTS; i++)
+    {
+      resource.getContents().add(createProduct(i));
+    }
+
+    assertEquals(true, transaction.isDirty());
+    assertEquals(1, transaction.getDirtyObjects().size());
+    assertEquals(NUM_OF_PRODUCTS, transaction.getNewObjects().size());
+
+    transaction.commit();
+    assertEquals(false, transaction.isDirty());
+    assertEquals(0, transaction.getDirtyObjects().size());
+    assertEquals(0, transaction.getNewObjects().size());
+
+    clearCache(transaction.getSession().getRevisionManager());
+
+    CDOView view = workspace.openView();
+    resource = view.getResource(RESOURCE);
+    assertEquals(totalObjects + 2 * NUM_OF_PRODUCTS, dumpObjects("--> ", resource));
     workspace.close();
   }
 
@@ -225,6 +322,84 @@ public class WorkspaceTest extends AbstractCDOTest
     workspace.close();
   }
 
+  public void testDetachObjects2() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof SalesOrder)
+      {
+        ((SalesOrder)object).getOrderDetails().clear();
+      }
+
+      if (object instanceof Product1)
+      {
+        ((Product1)object).getOrderDetails().clear();
+      }
+    }
+
+    assertEquals(true, transaction.isDirty());
+    assertEquals(salesOrders.size() + products.size(), transaction.getDirtyObjects().size());
+    assertEquals(orderDetails.size(), transaction.getDetachedObjects().size());
+
+    transaction.commit();
+    assertEquals(false, transaction.isDirty());
+    assertEquals(0, transaction.getDirtyObjects().size());
+    assertEquals(0, transaction.getDetachedObjects().size());
+
+    for (Iterator<EObject> it = resource.getContents().iterator(); it.hasNext();)
+    {
+      EObject object = it.next();
+      if (object instanceof SalesOrder)
+      {
+        it.remove();
+      }
+
+      if (object instanceof Customer)
+      {
+        ((Customer)object).getSalesOrders().clear();
+      }
+    }
+
+    assertEquals(true, transaction.isDirty());
+    assertEquals(1 + customers.size(), transaction.getDirtyObjects().size());
+    assertEquals(salesOrders.size(), transaction.getDetachedObjects().size());
+
+    transaction.commit();
+    assertEquals(false, transaction.isDirty());
+    assertEquals(0, transaction.getDirtyObjects().size());
+    assertEquals(0, transaction.getDetachedObjects().size());
+
+    clearCache(transaction.getSession().getRevisionManager());
+
+    CDOView view = workspace.openView();
+    resource = view.getResource(RESOURCE);
+    assertEquals(totalObjects - orderDetails.size() - salesOrders.size(), dumpObjects(null, resource));
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof SalesOrder)
+      {
+        if (!((SalesOrder)object).getOrderDetails().isEmpty())
+        {
+          fail("All order details should be detached");
+        }
+      }
+
+      if (object instanceof Customer)
+      {
+        if (!((Customer)object).getSalesOrders().isEmpty())
+        {
+          fail("All sales orders should be detached");
+        }
+      }
+    }
+
+    workspace.close();
+  }
+
   public void testLocalChangesAfterModify() throws Exception
   {
     CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
@@ -237,6 +412,41 @@ public class WorkspaceTest extends AbstractCDOTest
       {
         Product1 product = (Product1)object;
         product.setName("MODIFIED_" + product.getName());
+      }
+    }
+
+    transaction.commit();
+
+    CDOChangeSetData changes = workspace.getLocalChanges();
+    assertEquals(0, changes.getNewObjects().size());
+    assertEquals(NUM_OF_PRODUCTS, changes.getChangedObjects().size());
+    assertEquals(0, changes.getDetachedObjects().size());
+    workspace.close();
+  }
+
+  public void testLocalChangesAfterModify2() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof Product1)
+      {
+        Product1 product = (Product1)object;
+        product.setName("MODIFIED_" + product.getName());
+      }
+    }
+
+    transaction.commit();
+
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof Product1)
+      {
+        Product1 product = (Product1)object;
+        product.setName("MODIFIED2_" + product.getName());
       }
     }
 
@@ -269,6 +479,33 @@ public class WorkspaceTest extends AbstractCDOTest
     workspace.close();
   }
 
+  public void testLocalChangesAfterAdd2() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (int i = 0; i < NUM_OF_PRODUCTS; i++)
+    {
+      resource.getContents().add(createProduct(i));
+    }
+
+    transaction.commit();
+
+    for (int i = 0; i < NUM_OF_PRODUCTS; i++)
+    {
+      resource.getContents().add(createProduct(i));
+    }
+
+    transaction.commit();
+
+    CDOChangeSetData changes = workspace.getLocalChanges();
+    assertEquals(2 * NUM_OF_PRODUCTS, changes.getNewObjects().size());
+    assertEquals(1, changes.getChangedObjects().size());
+    assertEquals(0, changes.getDetachedObjects().size());
+    workspace.close();
+  }
+
   public void testLocalChangesAfterDetach() throws Exception
   {
     CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
@@ -294,6 +531,50 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(0, changes.getNewObjects().size());
     assertEquals(salesOrders.size() + products.size(), changes.getChangedObjects().size());
     assertEquals(orderDetails.size(), changes.getDetachedObjects().size());
+    workspace.close();
+  }
+
+  public void testLocalChangesAfterDetach2() throws Exception
+  {
+    CDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+
+    CDOTransaction transaction = workspace.openTransaction();
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof SalesOrder)
+      {
+        ((SalesOrder)object).getOrderDetails().clear();
+      }
+
+      if (object instanceof Product1)
+      {
+        ((Product1)object).getOrderDetails().clear();
+      }
+    }
+
+    transaction.commit();
+
+    for (Iterator<EObject> it = resource.getContents().iterator(); it.hasNext();)
+    {
+      EObject object = it.next();
+      if (object instanceof SalesOrder)
+      {
+        it.remove();
+      }
+
+      if (object instanceof Customer)
+      {
+        ((Customer)object).getSalesOrders().clear();
+      }
+    }
+
+    transaction.commit();
+
+    CDOChangeSetData changes = workspace.getLocalChanges();
+    assertEquals(0, changes.getNewObjects().size());
+    assertEquals(1 + customers.size() + products.size(), changes.getChangedObjects().size());
+    assertEquals(orderDetails.size() + salesOrders.size(), changes.getDetachedObjects().size());
     workspace.close();
   }
 

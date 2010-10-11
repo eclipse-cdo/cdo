@@ -56,9 +56,12 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<CDOView>
 {
   /**
+   * Returns an instance of {@link CDORepositoryInfo} that describes the model repository this {@link CDOSession
+   * session} is connected to.
+   * 
    * @since 3.0
    */
-  public CDOSessionConfiguration getConfiguration();
+  public CDORepositoryInfo getRepositoryInfo();
 
   /**
    * Returns the EMF {@link EPackage.Registry package registry} that is used by all {@link EObject objects} of all
@@ -221,14 +224,6 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
    * Returns the {@link Options options} of this session.
    */
   public Options options();
-
-  /**
-   * Returns an instance of {@link CDORepositoryInfo} that describes the model repository this {@link CDOSession
-   * session} is connected to.
-   * 
-   * @since 3.0
-   */
-  public CDORepositoryInfo getRepositoryInfo();
 
   /**
    * @author Simon McDuff

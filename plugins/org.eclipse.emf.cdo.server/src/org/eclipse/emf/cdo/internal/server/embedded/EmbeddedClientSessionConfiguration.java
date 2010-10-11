@@ -12,12 +12,8 @@ package org.eclipse.emf.cdo.internal.server.embedded;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
-import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionConfigurationImpl;
@@ -35,8 +31,6 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
 {
   private InternalRepository repository;
 
-  private InternalCDORevisionManager revisionManager;
-
   public EmbeddedClientSessionConfiguration()
   {
     throw new UnsupportedOperationException("Embedded sessions are not yet supported");
@@ -53,17 +47,6 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
     this.repository = (InternalRepository)repository;
   }
 
-  public InternalCDORevisionManager getRevisionManager()
-  {
-    return revisionManager;
-  }
-
-  public void setRevisionManager(CDORevisionManager revisionManager)
-  {
-    checkNotOpen();
-    this.revisionManager = (InternalCDORevisionManager)revisionManager;
-  }
-
   @Override
   public org.eclipse.emf.cdo.server.embedded.CDOSession openSession()
   {
@@ -77,69 +60,46 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
       CheckUtil.checkState(repository, "Specify a repository"); //$NON-NLS-1$
     }
 
-    return new EmbeddedClientSession(this);
-  }
-
-  @Override
-  public void activateSession(InternalCDOSession session) throws Exception
-  {
-    super.activateSession(session);
-    EmbeddedClientSessionProtocol protocol = new EmbeddedClientSessionProtocol((EmbeddedClientSession)session);
-    session.setSessionProtocol(protocol);
-    protocol.activate();
-    protocol.openSession(isPassiveUpdateEnabled());
-
-    session.setLastUpdateTime(repository.getLastCommitTimeStamp());
-    session.setRepositoryInfo(new RepositoryInfo());
-
-    revisionManager = (InternalCDORevisionManager)CDORevisionUtil.createRevisionManager();
-    revisionManager.setSupportingBranches(session.getRepositoryInfo().isSupportingBranches());
-    revisionManager.setCache(CDORevisionCache.NOOP);
-    revisionManager.setRevisionLoader(session.getSessionProtocol());
-    revisionManager.setRevisionLocker(session);
-    revisionManager.activate();
-  }
-
-  @Override
-  public void deactivateSession(InternalCDOSession session) throws Exception
-  {
-    revisionManager.deactivate();
-    revisionManager = null;
-    super.deactivateSession(session);
+    EmbeddedClientSession session = new EmbeddedClientSession();
+    // TODO (CD) Additional config here
+    return session;
   }
 
   /**
    * @author Eike Stepper
    */
-  protected class RepositoryInfo implements org.eclipse.emf.cdo.session.CDORepositoryInfo
+  protected static class RepositoryInfo implements org.eclipse.emf.cdo.session.CDORepositoryInfo
   {
-    public RepositoryInfo()
+    private EmbeddedClientSession session;
+
+    public RepositoryInfo(EmbeddedClientSession session)
     {
+      this.session = session;
     }
 
     public String getName()
     {
-      return repository.getName();
+      return session.getRepository().getName();
     }
 
     public String getUUID()
     {
-      return repository.getUUID();
+      return session.getRepository().getUUID();
     }
 
     public Type getType()
     {
-      return repository.getType();
+      return session.getRepository().getType();
     }
 
     public State getState()
     {
-      return repository.getState();
+      return session.getRepository().getState();
     }
 
     public long getCreationTime()
     {
-      return repository.getCreationTime();
+      return session.getRepository().getCreationTime();
     }
 
     public long getTimeStamp()
@@ -154,32 +114,32 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
 
     public CDOID getRootResourceID()
     {
-      return repository.getRootResourceID();
+      return session.getRepository().getRootResourceID();
     }
 
     public boolean isSupportingAudits()
     {
-      return repository.isSupportingAudits();
+      return session.getRepository().isSupportingAudits();
     }
 
     public boolean isSupportingBranches()
     {
-      return repository.isSupportingBranches();
+      return session.getRepository().isSupportingBranches();
     }
 
     public boolean isEnsuringReferentialIntegrity()
     {
-      return repository.isEnsuringReferentialIntegrity();
+      return session.getRepository().isEnsuringReferentialIntegrity();
     }
 
     public String getStoreType()
     {
-      return repository.getStoreType();
+      return session.getRepository().getStoreType();
     }
 
     public Set<ObjectType> getObjectIDTypes()
     {
-      return repository.getObjectIDTypes();
+      return session.getRepository().getObjectIDTypes();
     }
   }
 }

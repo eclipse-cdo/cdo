@@ -21,8 +21,4 @@ public interface InternalCDOSessionConfiguration extends CDOSessionConfiguration
   public InternalCDOSession getSession();
 
   public InternalCDOSession createSession();
-
-  public void activateSession(InternalCDOSession session) throws Exception;
-
-  public void deactivateSession(InternalCDOSession session) throws Exception;
 }

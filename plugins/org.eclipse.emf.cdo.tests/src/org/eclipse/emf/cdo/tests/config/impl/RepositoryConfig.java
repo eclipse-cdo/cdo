@@ -406,7 +406,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
             @Override
             public InternalCDOSession createSession()
             {
-              return new CDONet4jSessionImpl(this)
+              return new CDONet4jSessionImpl()
               {
                 volatile int counter = 1;
 

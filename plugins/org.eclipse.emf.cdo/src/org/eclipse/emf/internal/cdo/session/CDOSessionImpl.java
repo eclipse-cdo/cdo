@@ -58,11 +58,14 @@ import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.CDORawReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.CDOLobStoreImpl;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -78,6 +81,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
+import org.eclipse.emf.internal.cdo.session.remote.CDORemoteSessionManagerImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
@@ -118,7 +122,6 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
-import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
@@ -149,9 +152,15 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
-  private InternalCDOSessionConfiguration configuration;
-
   private ExceptionHandler exceptionHandler;
+
+  private InternalCDOPackageRegistry packageRegistry;
+
+  private InternalCDOBranchManager branchManager;
+
+  private InternalCDORevisionManager revisionManager;
+
+  private InternalCDOCommitInfoManager commitInfoManager;
 
   private CDOSessionProtocol sessionProtocol;
 
@@ -210,14 +219,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   @ExcludeFromDump
   private int lastViewID;
 
-  public CDOSessionImpl(InternalCDOSessionConfiguration configuration)
+  public CDOSessionImpl()
   {
-    this.configuration = configuration;
-  }
-
-  public InternalCDOSessionConfiguration getConfiguration()
-  {
-    return configuration;
   }
 
   public CDORepositoryInfo getRepositoryInfo()
@@ -261,20 +264,44 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     this.exceptionHandler = exceptionHandler;
   }
 
-  /**
-   * @since 2.0
-   */
-  public CDOSession.Options options()
+  public InternalCDOPackageRegistry getPackageRegistry()
   {
-    return options;
+    return packageRegistry;
   }
 
-  /**
-   * @since 2.0
-   */
-  protected CDOSession.Options createOptions()
+  public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry)
   {
-    return new OptionsImpl();
+    this.packageRegistry = packageRegistry;
+  }
+
+  public InternalCDOBranchManager getBranchManager()
+  {
+    return branchManager;
+  }
+
+  public void setBranchManager(InternalCDOBranchManager branchManager)
+  {
+    this.branchManager = branchManager;
+  }
+
+  public InternalCDORevisionManager getRevisionManager()
+  {
+    return revisionManager;
+  }
+
+  public void setRevisionManager(InternalCDORevisionManager revisionManager)
+  {
+    this.revisionManager = revisionManager;
+  }
+
+  public InternalCDOCommitInfoManager getCommitInfoManager()
+  {
+    return commitInfoManager;
+  }
+
+  public void setCommitInfoManager(InternalCDOCommitInfoManager commitInfoManager)
+  {
+    this.commitInfoManager = commitInfoManager;
   }
 
   public CDOSessionProtocol getSessionProtocol()
@@ -285,163 +312,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   public void setSessionProtocol(CDOSessionProtocol sessionProtocol)
   {
     this.sessionProtocol = sessionProtocol;
-  }
-
-  public CDOLobStore getLobStore()
-  {
-    final CDOLobStore cache = options().getLobCache();
-    return new CDOLobStore.Delegating()
-    {
-      @Override
-      public InputStream getBinary(final CDOLobInfo info) throws IOException
-      {
-        for (;;)
-        {
-          try
-          {
-            return super.getBinary(info);
-          }
-          catch (FileNotFoundException couldNotBeRead)
-          {
-            try
-            {
-              loadBinary(info);
-            }
-            catch (FileNotFoundException couldNotBeCreated)
-            {
-              // Try to read again
-            }
-          }
-        }
-      }
-
-      @Override
-      public Reader getCharacter(CDOLobInfo info) throws IOException
-      {
-        for (;;)
-        {
-          try
-          {
-            return super.getCharacter(info);
-          }
-          catch (FileNotFoundException couldNotBeRead)
-          {
-            try
-            {
-              loadCharacter(info);
-            }
-            catch (FileNotFoundException couldNotBeCreated)
-            {
-              // Try to read again
-            }
-          }
-        }
-      }
-
-      private void loadBinary(final CDOLobInfo info) throws IOException
-      {
-        final File file = getDelegate().getBinaryFile(info.getID());
-        final FileOutputStream out = new FileOutputStream(file);
-
-        loadLobAsync(info, new Runnable()
-        {
-          public void run()
-          {
-            try
-            {
-              getSessionProtocol().loadLob(info, out);
-            }
-            catch (Throwable t)
-            {
-              OM.LOG.error(t);
-              IOUtil.delete(file);
-            }
-          }
-        });
-      }
-
-      private void loadCharacter(final CDOLobInfo info) throws IOException
-      {
-        final File file = getDelegate().getCharacterFile(info.getID());
-        final FileWriter out = new FileWriter(file);
-
-        loadLobAsync(info, new Runnable()
-        {
-          public void run()
-          {
-            try
-            {
-              getSessionProtocol().loadLob(info, out);
-            }
-            catch (Throwable t)
-            {
-              OM.LOG.error(t);
-              IOUtil.delete(file);
-            }
-          }
-        });
-      }
-
-      @Override
-      protected CDOLobStore getDelegate()
-      {
-        return cache;
-      }
-    };
-  }
-
-  protected void loadLobAsync(CDOLobInfo info, Runnable runnable)
-  {
-    new Thread(runnable, "LobLoader").start();
-  }
-
-  public void close()
-  {
-    LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public boolean isClosed()
-  {
-    return !isActive();
-  }
-
-  public Object processPackage(Object value)
-  {
-    CDOFactoryImpl.prepareDynamicEPackage(value);
-    return value;
-  }
-
-  public EPackage[] loadPackages(CDOPackageUnit packageUnit)
-  {
-    if (packageUnit.getOriginalType().isGenerated())
-    {
-      if (!options().isGeneratedPackageEmulationEnabled())
-      {
-        throw new CDOException(MessageFormat.format(Messages.getString("CDOSessionImpl.0"), packageUnit)); //$NON-NLS-1$
-      }
-    }
-
-    return getSessionProtocol().loadPackages(packageUnit);
-  }
-
-  public void acquireAtomicRequestLock(Object key)
-  {
-    try
-    {
-      lockmanager.lock(LockType.WRITE, key, this, RWLockManager.WAIT);
-    }
-    catch (InterruptedException ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
-  }
-
-  public void releaseAtomicRequestLock(Object key)
-  {
-    lockmanager.unlock(LockType.WRITE, key, singletonCollection);
   }
 
   /**
@@ -478,6 +348,179 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   public void setRemoteSessionManager(InternalCDORemoteSessionManager remoteSessionManager)
   {
     this.remoteSessionManager = remoteSessionManager;
+  }
+
+  public CDOLobStore getLobStore()
+  {
+    final CDOLobStore cache = options().getLobCache();
+    return new CDOLobStore.Delegating()
+    {
+      @Override
+      public InputStream getBinary(final CDOLobInfo info) throws IOException
+      {
+        for (;;)
+        {
+          try
+          {
+            return super.getBinary(info);
+          }
+          catch (FileNotFoundException couldNotBeRead)
+          {
+            try
+            {
+              loadBinary(info);
+            }
+            catch (FileNotFoundException couldNotBeCreated)
+            {
+              // Try to read again
+            }
+          }
+        }
+      }
+  
+      @Override
+      public Reader getCharacter(CDOLobInfo info) throws IOException
+      {
+        for (;;)
+        {
+          try
+          {
+            return super.getCharacter(info);
+          }
+          catch (FileNotFoundException couldNotBeRead)
+          {
+            try
+            {
+              loadCharacter(info);
+            }
+            catch (FileNotFoundException couldNotBeCreated)
+            {
+              // Try to read again
+            }
+          }
+        }
+      }
+  
+      private void loadBinary(final CDOLobInfo info) throws IOException
+      {
+        final File file = getDelegate().getBinaryFile(info.getID());
+        final FileOutputStream out = new FileOutputStream(file);
+  
+        loadLobAsync(info, new Runnable()
+        {
+          public void run()
+          {
+            try
+            {
+              getSessionProtocol().loadLob(info, out);
+            }
+            catch (Throwable t)
+            {
+              OM.LOG.error(t);
+              IOUtil.delete(file);
+            }
+          }
+        });
+      }
+  
+      private void loadCharacter(final CDOLobInfo info) throws IOException
+      {
+        final File file = getDelegate().getCharacterFile(info.getID());
+        final FileWriter out = new FileWriter(file);
+  
+        loadLobAsync(info, new Runnable()
+        {
+          public void run()
+          {
+            try
+            {
+              getSessionProtocol().loadLob(info, out);
+            }
+            catch (Throwable t)
+            {
+              OM.LOG.error(t);
+              IOUtil.delete(file);
+            }
+          }
+        });
+      }
+  
+      @Override
+      protected CDOLobStore getDelegate()
+      {
+        return cache;
+      }
+    };
+  }
+
+  protected void loadLobAsync(CDOLobInfo info, Runnable runnable)
+  {
+    new Thread(runnable, "LobLoader").start();
+  }
+
+  public void close()
+  {
+    LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public boolean isClosed()
+  {
+    return !isActive();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOSession.Options options()
+  {
+    return options;
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected CDOSession.Options createOptions()
+  {
+    return new OptionsImpl();
+  }
+
+  public Object processPackage(Object value)
+  {
+    CDOFactoryImpl.prepareDynamicEPackage(value);
+    return value;
+  }
+
+  public EPackage[] loadPackages(CDOPackageUnit packageUnit)
+  {
+    if (packageUnit.getOriginalType().isGenerated())
+    {
+      if (!options().isGeneratedPackageEmulationEnabled())
+      {
+        throw new CDOException(MessageFormat.format(Messages.getString("CDOSessionImpl.0"), packageUnit)); //$NON-NLS-1$
+      }
+    }
+  
+    return getSessionProtocol().loadPackages(packageUnit);
+  }
+
+  public void acquireAtomicRequestLock(Object key)
+  {
+    try
+    {
+      lockmanager.lock(LockType.WRITE, key, this, RWLockManager.WAIT);
+    }
+    catch (InterruptedException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+  }
+
+  public void releaseAtomicRequestLock(Object key)
+  {
+    lockmanager.unlock(LockType.WRITE, key, singletonCollection);
   }
 
   public InternalCDOTransaction openTransaction(CDOBranch branch, ResourceSet resourceSet)
@@ -1128,10 +1171,29 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    getConfiguration().activateSession(this);
+    activateSession();
     checkState(sessionProtocol, "sessionProtocol"); //$NON-NLS-1$
     checkState(remoteSessionManager, "remoteSessionManager"); //$NON-NLS-1$
     hookSessionProtocol();
+  }
+
+  protected void activateSession() throws Exception
+  {
+    InternalCDORemoteSessionManager remoteSessionManager = new CDORemoteSessionManagerImpl();
+    remoteSessionManager.setLocalSession(this);
+    setRemoteSessionManager(remoteSessionManager);
+    remoteSessionManager.activate();
+  }
+
+  protected void deactivateSession() throws Exception
+  {
+    CDORemoteSessionManager remoteSessionManager = getRemoteSessionManager();
+    setRemoteSessionManager(null);
+    LifecycleUtil.deactivate(remoteSessionManager);
+
+    CDOSessionProtocol sessionProtocol = getSessionProtocol();
+    LifecycleUtil.deactivate(sessionProtocol);
+    setSessionProtocol(null);
   }
 
   @Override
@@ -1157,7 +1219,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     unhookSessionProtocol();
-    getConfiguration().deactivateSession(this);
+    deactivateSession();
     super.doDeactivate();
   }
 

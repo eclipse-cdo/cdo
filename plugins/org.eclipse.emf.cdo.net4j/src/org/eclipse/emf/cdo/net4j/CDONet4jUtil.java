@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.ecore.resource.Resource;
@@ -80,25 +81,18 @@ public final class CDONet4jUtil
    * @since 4.0
    */
   public static FailoverCDOSessionConfiguration createFailoverSessionConfiguration(String monitorConnectorDescription,
-      String repositoryGroup, final IManagedContainer container)
+      String repositoryGroup)
   {
-    return new FailoverCDOSessionConfigurationImpl(monitorConnectorDescription, repositoryGroup)
-    {
-      @Override
-      protected IManagedContainer getContainer()
-      {
-        return container;
-      }
-    };
+    return createFailoverSessionConfiguration(monitorConnectorDescription, repositoryGroup, IPluginContainer.INSTANCE);
   }
 
   /**
    * @since 4.0
    */
   public static FailoverCDOSessionConfiguration createFailoverSessionConfiguration(String monitorConnectorDescription,
-      String repositoryGroup)
+      String repositoryGroup, IManagedContainer container)
   {
-    return new FailoverCDOSessionConfigurationImpl(monitorConnectorDescription, repositoryGroup);
+    return new FailoverCDOSessionConfigurationImpl(monitorConnectorDescription, repositoryGroup, container);
   }
 
   public static void prepareContainer(IManagedContainer container)

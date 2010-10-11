@@ -16,53 +16,61 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j;
 
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
+import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl.RepositoryInfo;
+import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest;
 import org.eclipse.emf.cdo.net4j.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.util.io.IStreamWrapper;
 
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 
 /**
  * @author Eike Stepper
  */
 public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.emf.cdo.net4j.CDOSession
 {
-  public CDONet4jSessionImpl(CDONet4jSessionConfigurationImpl configuration)
+  private IStreamWrapper streamWrapper;
+
+  private IConnector connector;
+
+  protected String repositoryName; // TODO (CD) Eliminate? (Duplicates name in repoInfo field)
+
+  public CDONet4jSessionImpl()
   {
-    super(configuration);
   }
 
-  @Override
-  public CDONet4jSessionConfigurationImpl getConfiguration()
+  public void setStreamWrapper(IStreamWrapper streamWrapper)
   {
-    return (CDONet4jSessionConfigurationImpl)super.getConfiguration();
+    this.streamWrapper = streamWrapper;
   }
 
-  public InternalCDOPackageRegistry getPackageRegistry()
+  public void setConnector(IConnector connector)
   {
-    return getConfiguration().getPackageRegistry();
+    this.connector = connector;
   }
 
-  public InternalCDOBranchManager getBranchManager()
+  public void setRepositoryName(String repositoryName)
   {
-    return getConfiguration().getBranchManager();
-  }
-
-  public InternalCDORevisionManager getRevisionManager()
-  {
-    return getConfiguration().getRevisionManager();
-  }
-
-  public InternalCDOCommitInfoManager getCommitInfoManager()
-  {
-    return getConfiguration().getCommitInfoManager();
+    this.repositoryName = repositoryName;
   }
 
   @Override
@@ -75,6 +83,107 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   protected OptionsImpl createOptions()
   {
     return new OptionsImpl();
+  }
+
+  @Override
+  protected void activateSession() throws Exception
+  {
+    super.activateSession();
+    OpenSessionResult result = initProtocol();
+
+    InternalCDOPackageRegistry packageRegistry = getPackageRegistry();
+    if (packageRegistry == null)
+    {
+      packageRegistry = new CDOPackageRegistryImpl();
+      setPackageRegistry(packageRegistry);
+    }
+
+    packageRegistry.setPackageProcessor(this);
+    packageRegistry.setPackageLoader(this);
+    packageRegistry.activate();
+
+    InternalCDORevisionManager revisionManager = getRevisionManager();
+    if (revisionManager == null)
+    {
+      revisionManager = (InternalCDORevisionManager)CDORevisionUtil.createRevisionManager();
+      setRevisionManager(revisionManager);
+    }
+
+    revisionManager.setSupportingBranches(getRepositoryInfo().isSupportingBranches());
+    revisionManager.setRevisionLoader(getSessionProtocol());
+    revisionManager.setRevisionLocker(this);
+    revisionManager.activate();
+
+    InternalCDOBranchManager branchManager = getBranchManager();
+    if (branchManager == null)
+    {
+      branchManager = CDOBranchUtil.createBranchManager();
+      setBranchManager(branchManager);
+    }
+
+    branchManager.setBranchLoader(getSessionProtocol());
+    branchManager.setTimeProvider(getRepositoryInfo());
+    branchManager.initMainBranch(false, getRepositoryInfo().getCreationTime());
+    branchManager.activate();
+
+    InternalCDOCommitInfoManager commitInfoManager = getCommitInfoManager();
+    if (commitInfoManager == null)
+    {
+      commitInfoManager = CDOCommitInfoUtil.createCommitInfoManager();
+      setCommitInfoManager(commitInfoManager);
+    }
+
+    commitInfoManager.setCommitInfoLoader(getSessionProtocol());
+    commitInfoManager.activate();
+
+    for (InternalCDOPackageUnit packageUnit : result.getPackageUnits())
+    {
+      if (EcorePackage.eINSTANCE.getNsURI().equals(packageUnit.getID()))
+      {
+        EMFUtil.addAdapter(EcorePackage.eINSTANCE, packageUnit.getTopLevelPackageInfo());
+        packageUnit.setState(CDOPackageUnit.State.LOADED);
+      }
+      else if (EresourcePackage.eINSTANCE.getNsURI().equals(packageUnit.getID()))
+      {
+        EMFUtil.addAdapter(EresourcePackage.eINSTANCE, packageUnit.getTopLevelPackageInfo());
+        packageUnit.setState(CDOPackageUnit.State.LOADED);
+      }
+
+      getPackageRegistry().putPackageUnit(packageUnit);
+    }
+  }
+
+  protected OpenSessionResult initProtocol()
+  {
+    CDOClientProtocol protocol = new CDOClientProtocol();
+    protocol.setInfraStructure(this);
+    if (streamWrapper != null)
+    {
+      protocol.setStreamWrapper(streamWrapper);
+    }
+
+    setSessionProtocol(protocol);
+    protocol.open(connector);
+
+    OpenSessionResult result = protocol.openSession(repositoryName, options().isPassiveUpdateEnabled(), options()
+        .getPassiveUpdateMode());
+    setSessionID(result.getSessionID());
+    setUserID(result.getUserID());
+    setLastUpdateTime(result.getLastUpdateTime());
+    setRepositoryInfo(new RepositoryInfo(repositoryName, result, this));
+    return result;
+  }
+
+  @Override
+  protected void deactivateSession() throws Exception
+  {
+    getCommitInfoManager().deactivate();
+    getRevisionManager().deactivate();
+
+    // branchManager.deactivate();
+    // packageRegistry.deactivate();
+
+    super.deactivateSession();
   }
 
   /**

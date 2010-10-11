@@ -467,7 +467,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
   public CDOAuthenticationResult handleAuthenticationChallenge(byte[] randomToken) throws Exception
   {
-    CDOAuthenticator authenticator = getSession().getConfiguration().getAuthenticator();
+    CDOAuthenticator authenticator = getSession().getAuthenticator();
     if (authenticator == null)
     {
       throw new IllegalStateException("No authenticator configured"); //$NON-NLS-1$

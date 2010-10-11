@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
+import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
@@ -64,7 +65,6 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
-import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
@@ -697,7 +697,32 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
-    public InternalCDOSessionConfiguration getConfiguration()
+    public CDOAuthenticator getAuthenticator()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setAuthenticator(CDOAuthenticator authenticator)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setRevisionManager(InternalCDORevisionManager revisionManager)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setBranchManager(InternalCDOBranchManager branchManager)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setCommitInfoManager(InternalCDOCommitInfoManager commitInfoManager)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry)
     {
       throw new UnsupportedOperationException();
     }

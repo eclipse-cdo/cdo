@@ -12,6 +12,9 @@
 package org.eclipse.emf.cdo.internal.server.embedded;
 
 import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
+import org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionConfiguration.RepositoryInfo;
 import org.eclipse.emf.cdo.server.embedded.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -26,37 +29,30 @@ import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
  */
 public class EmbeddedClientSession extends CDOSessionImpl implements CDOSession
 {
-  public EmbeddedClientSession(EmbeddedClientSessionConfiguration configuration)
-  {
-    super(configuration);
-  }
+  private InternalRepository repository;
 
-  @Override
-  public EmbeddedClientSessionConfiguration getConfiguration()
+  public EmbeddedClientSession()
   {
-    return (EmbeddedClientSessionConfiguration)super.getConfiguration();
   }
 
   public InternalRepository getRepository()
   {
-    return getConfiguration().getRepository();
+    return repository;
   }
 
+  @Override
   public InternalCDOPackageRegistry getPackageRegistry()
   {
     return getRepository().getPackageRegistry();
   }
 
+  @Override
   public InternalCDOBranchManager getBranchManager()
   {
     return getRepository().getBranchManager();
   }
 
-  public InternalCDORevisionManager getRevisionManager()
-  {
-    return getConfiguration().getRevisionManager();
-  }
-
+  @Override
   public InternalCDOCommitInfoManager getCommitInfoManager()
   {
     return getRepository().getCommitInfoManager();
@@ -66,5 +62,34 @@ public class EmbeddedClientSession extends CDOSessionImpl implements CDOSession
   public CDOLobStore getLobStore()
   {
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected void activateSession() throws Exception
+  {
+    super.activateSession();
+    EmbeddedClientSessionProtocol protocol = new EmbeddedClientSessionProtocol(this);
+    setSessionProtocol(protocol);
+    protocol.activate();
+    protocol.openSession(options().isPassiveUpdateEnabled());
+
+    setLastUpdateTime(repository.getLastCommitTimeStamp());
+    setRepositoryInfo(new RepositoryInfo(this));
+
+    InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)CDORevisionUtil.createRevisionManager();
+    setRevisionManager(revisionManager);
+    revisionManager.setSupportingBranches(getRepositoryInfo().isSupportingBranches());
+    revisionManager.setCache(CDORevisionCache.NOOP);
+    revisionManager.setRevisionLoader(getSessionProtocol());
+    revisionManager.setRevisionLocker(this);
+    revisionManager.activate();
+  }
+
+  @Override
+  protected void deactivateSession() throws Exception
+  {
+    getRevisionManager().deactivate();
+    setRevisionManager(null);
+    super.deactivateSession();
   }
 }

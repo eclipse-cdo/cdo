@@ -10,11 +10,26 @@
  */
 package org.eclipse.emf.cdo.internal.net4j;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.net4j.CDOSessionFailoverEvent;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
+import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.signal.RequestWithConfirmation;
+import org.eclipse.net4j.signal.SignalProtocol;
+import org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol;
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,15 +37,31 @@ import java.util.List;
  */
 public class FailoverCDOSessionImpl extends CDONet4jSessionImpl
 {
-  public FailoverCDOSessionImpl(FailoverCDOSessionConfigurationImpl configuration)
+  private IManagedContainer container;
+
+  private String monitorConnectorDescription;
+
+  private String repositoryGroup;
+
+  private String repositoryConnectorDescription;
+
+  public FailoverCDOSessionImpl()
   {
-    super(configuration);
   }
 
-  @Override
-  public FailoverCDOSessionConfigurationImpl getConfiguration()
+  public void setContainer(IManagedContainer container)
   {
-    return (FailoverCDOSessionConfigurationImpl)super.getConfiguration();
+    this.container = container;
+  }
+
+  public void setMonitorConnectionDescription(String monitorConnectorDescription)
+  {
+    this.monitorConnectorDescription = monitorConnectorDescription;
+  }
+
+  public void setRepositoryGroup(String repositoryGroup)
+  {
+    this.repositoryGroup = repositoryGroup;
   }
 
   @Override
@@ -39,7 +70,7 @@ public class FailoverCDOSessionImpl extends CDONet4jSessionImpl
     fireFailoverEvent(CDOSessionFailoverEvent.Type.STARTED);
 
     unhookSessionProtocol();
-    List<AfterFailoverRunnable> runnables = getConfiguration().failover(FailoverCDOSessionImpl.this);
+    List<AfterFailoverRunnable> runnables = failover();
     CDOSessionProtocol sessionProtocol = hookSessionProtocol();
 
     for (AfterFailoverRunnable runnable : runnables)
@@ -66,11 +97,126 @@ public class FailoverCDOSessionImpl extends CDONet4jSessionImpl
     });
   }
 
+  public List<AfterFailoverRunnable> failover()
+  {
+    try
+    {
+      List<AfterFailoverRunnable> runnables = new ArrayList<AfterFailoverRunnable>();
+      for (InternalCDOView view : getViews())
+      {
+        runnables.add(new OpenViewRunnable(view));
+      }
+
+      updateConnectorAndRepositoryName();
+      initProtocol();
+      return runnables;
+    }
+    catch (RuntimeException ex)
+    {
+      deactivate();
+      throw ex;
+    }
+    catch (Error ex)
+    {
+      deactivate();
+      throw ex;
+    }
+  }
+
+  // TODO (CD) Default access allows config object to call this once. Does this make sense?
+  void updateConnectorAndRepositoryName()
+  {
+    System.out.println("Querying fail-over monitor...");
+    queryRepositoryInfoFromMonitor();
+
+    System.out.println("Connecting to " + repositoryConnectorDescription + "/" + repositoryName + "...");
+    IConnector connector = getConnector(repositoryConnectorDescription);
+    new HeartBeatProtocol(connector, container).start(1000L, 5000L);
+
+    setConnector(connector);
+    setRepositoryName(repositoryName);
+  }
+
+  protected void queryRepositoryInfoFromMonitor()
+  {
+    IConnector connector = getConnector(monitorConnectorDescription);
+    SignalProtocol<Object> protocol = new SignalProtocol<Object>("failover-client");
+    protocol.open(connector);
+
+    try
+    {
+      String oldRepositoryConnectorDescription = repositoryConnectorDescription;
+      String oldRepositoryName = repositoryName;
+
+      while (ObjectUtil.equals(repositoryConnectorDescription, oldRepositoryConnectorDescription)
+          && ObjectUtil.equals(repositoryName, oldRepositoryName))
+      {
+        new RequestWithConfirmation<Boolean>(protocol, (short)1, "QueryRepositoryInfo")
+        {
+          @Override
+          protected void requesting(ExtendedDataOutputStream out) throws Exception
+          {
+            out.writeString(repositoryGroup);
+          }
+
+          @Override
+          protected Boolean confirming(ExtendedDataInputStream in) throws Exception
+          {
+            repositoryConnectorDescription = in.readString();
+            repositoryName = in.readString();
+            return true;
+          }
+        }.send();
+      }
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+    finally
+    {
+      protocol.close();
+      if (connector.getChannels().isEmpty())
+      {
+        connector.close();
+      }
+    }
+  }
+
+  protected IConnector getConnector(String description)
+  {
+    return (IConnector)container.getElement("org.eclipse.net4j.connectors", "tcp", description);
+  }
+
   /**
    * @author Eike Stepper
    */
   public static interface AfterFailoverRunnable
   {
     public void run(CDOSessionProtocol sessionProtocol);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class OpenViewRunnable implements AfterFailoverRunnable
+  {
+    private int viewID;
+
+    private CDOBranchPoint branchPoint;
+
+    private boolean transaction;
+
+    public OpenViewRunnable(InternalCDOView view)
+    {
+      viewID = view.getViewID();
+      branchPoint = CDOBranchUtil.copyBranchPoint(view);
+      transaction = view instanceof CDOTransaction;
+    }
+
+    public void run(CDOSessionProtocol sessionProtocol)
+    {
+      sessionProtocol.openView(viewID, branchPoint, !transaction);
+    }
   }
 }

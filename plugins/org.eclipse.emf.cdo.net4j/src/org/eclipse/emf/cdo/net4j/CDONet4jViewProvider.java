@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.net4j;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.util.CDOURIData;
 import org.eclipse.emf.cdo.view.AbstractCDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -25,6 +26,7 @@ import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -72,8 +74,8 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
 
     CDOSession session = (CDOSession)view.getSession();
 
-    IPasswordCredentialsProvider credentialsProvider = session.getConfiguration().getAuthenticator()
-        .getCredentialsProvider();
+    CDOAuthenticator authenticator = ((InternalCDOSession)session).getAuthenticator();
+    IPasswordCredentialsProvider credentialsProvider = authenticator.getCredentialsProvider();
     if (credentialsProvider != null)
     {
       IPasswordCredentials credentials = credentialsProvider.getCredentials();

@@ -55,7 +55,7 @@ public class AuthenticationIndication extends IndicationWithResponse
   {
     try
     {
-      CDOAuthenticator authenticator = getSession().getConfiguration().getAuthenticator();
+      CDOAuthenticator authenticator = getSession().getAuthenticator();
       if (authenticator == null)
       {
         throw new IllegalStateException("No authenticator configured"); //$NON-NLS-1$

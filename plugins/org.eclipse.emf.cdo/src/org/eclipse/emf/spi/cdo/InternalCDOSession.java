@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
+import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -43,11 +44,6 @@ import java.util.Map;
  */
 public interface InternalCDOSession extends CDOSession, PackageProcessor, PackageLoader, RevisionLocker, ILifecycle
 {
-  /**
-   * @since 3.0
-   */
-  public InternalCDOSessionConfiguration getConfiguration();
-
   public CDOSessionProtocol getSessionProtocol();
 
   /**
@@ -55,12 +51,32 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
    */
   public void setSessionProtocol(CDOSessionProtocol sessionProtocol);
 
+  /**
+   * @since 4.0
+   */
+  public CDOAuthenticator getAuthenticator();
+
+  /**
+   * @since 4.0
+   */
+  public void setAuthenticator(CDOAuthenticator authenticator);
+
   public InternalCDOPackageRegistry getPackageRegistry();
+
+  /**
+   * @since 4.0
+   */
+  public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry);
 
   /**
    * @since 3.0
    */
   public InternalCDOBranchManager getBranchManager();
+
+  /**
+   * @since 4.0
+   */
+  public void setBranchManager(InternalCDOBranchManager branchManager);
 
   /**
    * @since 3.0
@@ -70,12 +86,32 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   /**
    * @since 4.0
    */
-  public CDOLobStore getLobStore();
+  public void setRevisionManager(InternalCDORevisionManager revisionManager);
 
   /**
    * @since 3.0
    */
   public InternalCDOCommitInfoManager getCommitInfoManager();
+
+  /**
+   * @since 4.0
+   */
+  public void setCommitInfoManager(InternalCDOCommitInfoManager commitInfoManager);
+
+  /**
+   * @since 3.0
+   */
+  public InternalCDORemoteSessionManager getRemoteSessionManager();
+
+  /**
+   * @since 3.0
+   */
+  public void setRemoteSessionManager(InternalCDORemoteSessionManager remoteSessionManager);
+
+  /**
+   * @since 4.0
+   */
+  public CDOLobStore getLobStore();
 
   public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler);
 
@@ -88,16 +124,6 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
    * @since 3.0
    */
   public void setRepositoryInfo(CDORepositoryInfo repositoryInfo);
-
-  /**
-   * @since 3.0
-   */
-  public InternalCDORemoteSessionManager getRemoteSessionManager();
-
-  /**
-   * @since 3.0
-   */
-  public void setRemoteSessionManager(InternalCDORemoteSessionManager remoteSessionManager);
 
   /**
    * @since 3.0

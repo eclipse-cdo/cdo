@@ -44,10 +44,6 @@ public interface CDOWorkspace extends CDORevisionProvider, Closeable
 
   public CDOTransaction update(CDOMerger merger, String branchPath, long timeStamp);
 
-  public void revert();
-
-  public void replace(String branchPath, long timeStamp);
-
   public CDOCommitInfo commit() throws CommitException;
 
   public CDOCommitInfo commit(String comment) throws CommitException;
@@ -55,4 +51,8 @@ public interface CDOWorkspace extends CDORevisionProvider, Closeable
   public CDOChangeSetData getLocalChanges();
 
   public IRepository getLocalRepository();
+
+  public void replace(String branchPath, long timeStamp);
+
+  public void revert();
 }

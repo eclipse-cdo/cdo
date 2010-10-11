@@ -623,6 +623,7 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(0, info.getNewObjects().size());
     assertEquals(NUM_OF_PRODUCTS, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
+    assertEquals(0, workspace.getBaseline().getIDs().size());
     workspace.close();
   }
 
@@ -643,6 +644,7 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(NUM_OF_PRODUCTS, info.getNewObjects().size());
     assertEquals(1, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
+    assertEquals(0, workspace.getBaseline().getIDs().size());
     workspace.close();
   }
 
@@ -671,6 +673,7 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(0, info.getNewObjects().size());
     assertEquals(salesOrders.size() + products.size(), info.getChangedObjects().size());
     assertEquals(orderDetails.size(), info.getDetachedObjects().size());
+    assertEquals(0, workspace.getBaseline().getIDs().size());
     workspace.close();
   }
 

@@ -247,7 +247,14 @@ public class CDOWorkspaceImpl implements CDOWorkspace
 
       transaction.applyChangeSetData(changes, baseline, this, null);
       transaction.setCommitComment(comment);
-      return transaction.commit();
+
+      CDOCommitInfo info = transaction.commit();
+
+      baseline.clear();
+      baseline.setBranchPath(info.getBranch().getPathName());
+      baseline.setTimeStamp(info.getTimeStamp());
+
+      return info;
     }
     finally
     {

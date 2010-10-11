@@ -44,6 +44,13 @@ public class FolderCDOWorkspaceBaseline extends AbstractCDOWorkspaceBaseline
     return folder;
   }
 
+  public void clear()
+  {
+    IOUtil.delete(folder);
+    checkExists(folder, false);
+    createFolder();
+  }
+
   public Set<CDOID> getIDs()
   {
     Set<CDOID> ids = new HashSet<CDOID>();
@@ -142,11 +149,7 @@ public class FolderCDOWorkspaceBaseline extends AbstractCDOWorkspaceBaseline
   {
     File file = getFile(id);
     file.delete();
-
-    if (file.exists())
-    {
-      throw new IllegalStateException("Could not delete " + file.getAbsolutePath());
-    }
+    checkExists(file, false);
   }
 
   protected CDOID getCDOID(String filename)
@@ -165,5 +168,29 @@ public class FolderCDOWorkspaceBaseline extends AbstractCDOWorkspaceBaseline
   {
     String key = getKey(id);
     return new File(folder, key);
+  }
+
+  private void createFolder()
+  {
+    IOUtil.mkdirs(folder);
+    checkExists(folder, true);
+  }
+
+  private void checkExists(File file, boolean exists)
+  {
+    if (exists)
+    {
+      if (!file.exists())
+      {
+        throw new IllegalStateException("File does not exist: " + file.getAbsolutePath());
+      }
+    }
+    else
+    {
+      if (file.exists())
+      {
+        throw new IllegalStateException("File does still exist: " + file.getAbsolutePath());
+      }
+    }
   }
 }

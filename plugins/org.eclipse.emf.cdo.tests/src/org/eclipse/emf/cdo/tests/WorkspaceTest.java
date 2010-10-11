@@ -65,6 +65,8 @@ public class WorkspaceTest extends AbstractCDOTest
 
   private static final int NUM_OF_SALES_ORDERS_PER_CUSTOMER = 50;
 
+  private List<CDOWorkspace> workspaces = new ArrayList<CDOWorkspace>();
+
   private CDOTransaction transaction;
 
   private List<Product1> products = new ArrayList<Product1>();
@@ -91,6 +93,18 @@ public class WorkspaceTest extends AbstractCDOTest
 
     JVMUtil.prepareContainer(getClientContainer());
     localStore = createLocalStore();
+  }
+
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    for (CDOWorkspace workspace : workspaces)
+    {
+      IOUtil.closeSilent(workspace);
+    }
+
+    workspaces.clear();
+    super.doTearDown();
   }
 
   public void testCheckout() throws Exception
@@ -740,6 +754,7 @@ public class WorkspaceTest extends AbstractCDOTest
 
     CDOWorkspace workspace = CDOWorkspaceUtil.checkout(localStore, baseline, remote, branchPath, timeStamp);
     registerRepository(workspace.getLocalRepository());
+    workspaces.add(workspace);
     return workspace;
   }
 

@@ -51,6 +51,8 @@ import org.eclipse.net4j.jvm.IJVMConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -58,8 +60,10 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -83,6 +87,8 @@ public class CDOWorkspaceImpl implements CDOWorkspace
   private InternalCDOWorkspaceBaseline baseline;
 
   private CDOSessionConfigurationFactory remoteSessionConfigurationFactory;
+
+  private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
 
   private CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceBaseline baseline)
   {
@@ -204,7 +210,7 @@ public class CDOWorkspaceImpl implements CDOWorkspace
 
   public CDOTransaction update(CDOMerger merger)
   {
-    return update(merger, CDOBranch.MAIN_BRANCH_NAME);
+    return update(merger, baseline.getBranchPath());
   }
 
   public CDOTransaction update(CDOMerger merger, String branchPath)
@@ -382,8 +388,33 @@ public class CDOWorkspaceImpl implements CDOWorkspace
     return (InternalCDOSession)configuration.openSession();
   }
 
+  protected InternalCDOView[] getViews()
+  {
+    synchronized (views)
+    {
+      return views.toArray(new InternalCDOView[views.size()]);
+    }
+  }
+
   protected void initView(CDOView view)
   {
+    synchronized (views)
+    {
+      views.add((InternalCDOView)view);
+    }
+
+    view.addListener(new LifecycleEventAdapter()
+    {
+      @Override
+      protected void onDeactivated(ILifecycle view)
+      {
+        synchronized (views)
+        {
+          views.remove(view);
+        }
+      }
+    });
+
     if (view instanceof CDOTransaction)
     {
       if (baseline.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE)

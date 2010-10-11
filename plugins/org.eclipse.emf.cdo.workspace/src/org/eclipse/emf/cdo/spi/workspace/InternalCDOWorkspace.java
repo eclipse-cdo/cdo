@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.spi.workspace;
 
-import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
@@ -22,6 +21,4 @@ public interface InternalCDOWorkspace extends CDOWorkspace
   public InternalCDOWorkspaceMemory getMemory();
 
   public InternalRepository getLocalRepository();
-
-  public CDOChangeSetData getLocalChanges();
 }

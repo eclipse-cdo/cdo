@@ -623,8 +623,8 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(PRODUCTS, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
 
-    CDOWorkspaceMemory baseline = workspace.getMemory();
-    assertEquals(0, baseline.getIDs().size());
+    CDOWorkspaceMemory memory = workspace.getMemory();
+    assertEquals(0, memory.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
@@ -647,8 +647,8 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(1, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
 
-    CDOWorkspaceMemory baseline = workspace.getMemory();
-    assertEquals(0, baseline.getIDs().size());
+    CDOWorkspaceMemory memory = workspace.getMemory();
+    assertEquals(0, memory.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
@@ -679,8 +679,8 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(SALES_ORDERS + PRODUCTS, info.getChangedObjects().size());
     assertEquals(ORDER_DETAILS, info.getDetachedObjects().size());
 
-    CDOWorkspaceMemory baseline = workspace.getMemory();
-    assertEquals(0, baseline.getIDs().size());
+    CDOWorkspaceMemory memory = workspace.getMemory();
+    assertEquals(0, memory.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
@@ -718,8 +718,8 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(PRODUCTS, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
 
-    CDOWorkspaceMemory baseline = workspace.getMemory();
-    assertEquals(0, baseline.getIDs().size());
+    CDOWorkspaceMemory memory = workspace.getMemory();
+    assertEquals(0, memory.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
@@ -749,8 +749,8 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(1, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
 
-    CDOWorkspaceMemory baseline = workspace.getMemory();
-    assertEquals(0, baseline.getIDs().size());
+    CDOWorkspaceMemory memory = workspace.getMemory();
+    assertEquals(0, memory.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
@@ -797,8 +797,8 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(1 + CUSTOMERS + PRODUCTS, info.getChangedObjects().size());
     assertEquals(ORDER_DETAILS + SALES_ORDERS, info.getDetachedObjects().size());
 
-    CDOWorkspaceMemory baseline = workspace.getMemory();
-    assertEquals(0, baseline.getIDs().size());
+    CDOWorkspaceMemory memory = workspace.getMemory();
+    assertEquals(0, memory.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
@@ -825,8 +825,8 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(PRODUCTS, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
 
-    CDOWorkspaceMemory baseline = workspace.getMemory();
-    assertEquals(0, baseline.getIDs().size());
+    CDOWorkspaceMemory memory = workspace.getMemory();
+    assertEquals(0, memory.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
 
@@ -848,8 +848,8 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(PRODUCTS, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
 
-    baseline = workspace.getMemory();
-    assertEquals(0, baseline.getIDs().size());
+    memory = workspace.getMemory();
+    assertEquals(0, memory.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
@@ -872,8 +872,8 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(1, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
 
-    CDOWorkspaceMemory baseline = workspace.getMemory();
-    assertEquals(0, baseline.getIDs().size());
+    CDOWorkspaceMemory memory = workspace.getMemory();
+    assertEquals(0, memory.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
 
@@ -891,8 +891,8 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(1, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
 
-    baseline = workspace.getMemory();
-    assertEquals(0, baseline.getIDs().size());
+    memory = workspace.getMemory();
+    assertEquals(0, memory.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
@@ -923,8 +923,8 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(SALES_ORDERS + PRODUCTS, info.getChangedObjects().size());
     assertEquals(ORDER_DETAILS, info.getDetachedObjects().size());
 
-    CDOWorkspaceMemory baseline = workspace.getMemory();
-    assertEquals(0, baseline.getIDs().size());
+    CDOWorkspaceMemory memory = workspace.getMemory();
+    assertEquals(0, memory.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
 
@@ -951,8 +951,8 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(1 + CUSTOMERS, info.getChangedObjects().size());
     assertEquals(SALES_ORDERS, info.getDetachedObjects().size());
 
-    baseline = workspace.getMemory();
-    assertEquals(0, baseline.getIDs().size());
+    memory = workspace.getMemory();
+    assertEquals(0, memory.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
@@ -968,10 +968,10 @@ public class WorkspaceTest extends AbstractCDOTest
     CDOSessionConfigurationFactory remote = new RemoteSessionConfigurationFactory();
 
     File folder = TMPUtil.createTempFolder("cdo-");
-    CDOWorkspaceMemory baseline = new FolderCDOWorkspaceMemory(folder);
+    CDOWorkspaceMemory memory = new FolderCDOWorkspaceMemory(folder);
     System.err.println("CDOWorkspaceBaseline: " + folder.getAbsolutePath());
 
-    InternalCDOWorkspace workspace = (InternalCDOWorkspace)CDOWorkspaceUtil.checkout(localStore, baseline, remote,
+    InternalCDOWorkspace workspace = (InternalCDOWorkspace)CDOWorkspaceUtil.checkout(localStore, memory, remote,
         branchPath, timeStamp);
 
     workspaces.add(workspace);

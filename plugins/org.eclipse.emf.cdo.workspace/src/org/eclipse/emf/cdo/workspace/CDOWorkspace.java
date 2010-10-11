@@ -57,6 +57,8 @@ public interface CDOWorkspace extends CDORevisionProvider, Closeable
 
   public CDOChangeSetData compare(String branchPath, long timeStamp);
 
+  public CDOChangeSetData getLocalChanges();
+
   public void replace(String branchPath, long timeStamp);
 
   public void revert();

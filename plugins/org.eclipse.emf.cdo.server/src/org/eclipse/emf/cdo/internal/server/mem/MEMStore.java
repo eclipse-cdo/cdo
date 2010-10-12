@@ -313,7 +313,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     }
     else
     {
-      if (revision.isValid(timeStamp))
+      if (!revision.isValid(timeStamp))
       {
         return true;
       }

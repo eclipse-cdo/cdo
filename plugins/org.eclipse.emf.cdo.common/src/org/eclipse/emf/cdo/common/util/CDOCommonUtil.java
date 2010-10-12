@@ -112,6 +112,11 @@ public final class CDOCommonUtil
 
   public static boolean isValidTimeStamp(long timeStamp, long startTime, long endTime)
   {
+    if (timeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      return endTime == CDOBranchPoint.UNSPECIFIED_DATE;
+    }
+
     return (endTime == CDOBranchPoint.UNSPECIFIED_DATE || endTime >= timeStamp) && timeStamp >= startTime;
   }
 

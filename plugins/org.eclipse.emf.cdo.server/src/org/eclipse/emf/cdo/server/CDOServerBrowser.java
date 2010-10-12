@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -260,7 +261,7 @@ public class CDOServerBrowser extends Worker
     List<String> repoNames = new ArrayList<String>(repositories.keySet());
     Collections.sort(repoNames);
 
-    pout.print("<h3>[<a href=\"/\">Menu</a>]&nbsp;");
+    pout.print("<h3><a href=\"/\">" + page.getLabel() + "</a>:&nbsp;&nbsp;");
     for (String repoName : repoNames)
     {
       InternalRepository repository = repositories.get(repoName);
@@ -276,11 +277,11 @@ public class CDOServerBrowser extends Worker
 
       if (repoName.equals(repo))
       {
-        pout.print("<b>" + escape(repoName) + "</b>&nbsp;");
+        pout.print("<b>" + escape(repoName) + "</b>&nbsp;&nbsp;");
       }
       else
       {
-        pout.print(href(repoName, page.getName(), "repo", repoName) + "&nbsp;");
+        pout.print(href(repoName, page.getName(), "repo", repoName) + "&nbsp;&nbsp;");
       }
     }
 
@@ -494,6 +495,7 @@ public class CDOServerBrowser extends Worker
    */
   public static abstract class RevisionsPage extends AbstractPage
   {
+
     public RevisionsPage(String name, String label)
     {
       super(name, label);
@@ -502,6 +504,7 @@ public class CDOServerBrowser extends Worker
     public void display(final CDOServerBrowser browser, InternalRepository repository, PrintStream out)
     {
       Map<CDOBranch, List<CDORevision>> allRevisions = getAllRevisions(repository);
+      Map<CDOID, List<CDORevision>> ids = getAllIDs(allRevisions);
 
       out.print("<table border=\"0\">\r\n");
       out.print("<tr>\r\n");
@@ -511,22 +514,81 @@ public class CDOServerBrowser extends Worker
       final String[] revision = { browser.getParam("revision") };
       new AllRevisionsDumper.Stream.Html(allRevisions, out)
       {
+        private StringBuilder versionsBuilder;
+
+        private CDORevision lastRevision;
+
         @Override
-        protected void dumpRevision(CDORevision rev, PrintStream out)
+        protected void dumpEnd(List<CDOBranch> branches)
         {
+          dumpLastRevision();
+          super.dumpEnd(branches);
+        }
+
+        @Override
+        protected void dumpBranch(CDOBranch branch)
+        {
+          dumpLastRevision();
+          super.dumpBranch(branch);
+        }
+
+        @Override
+        protected void dumpRevision(CDORevision rev)
+        {
+          CDOID id = rev.getID();
+          if (lastRevision != null && !id.equals(lastRevision.getID()))
+          {
+            dumpLastRevision();
+          }
+          if (versionsBuilder == null)
+          {
+            versionsBuilder = new StringBuilder();
+          }
+          else
+          {
+            versionsBuilder.append(", ");
+            if (versionsBuilder.length() > 64)
+            {
+              versionsBuilder.append("<br>");
+            }
+          }
+
           String key = CDORevisionUtil.formatRevisionKey(rev);
           if (revision[0] == null)
           {
             revision[0] = key;
           }
 
+          String version = "v" + rev.getVersion();
           if (key.equals(revision[0]))
           {
-            out.print("<b>" + rev + "</b>");
+            versionsBuilder.append("<b>" + version + "</b>");
           }
           else
           {
-            out.println(browser.href(rev.toString(), getName(), "revision", key));
+            versionsBuilder.append(browser.href(version, getName(), "revision", key));
+          }
+
+          lastRevision = rev;
+        }
+
+        protected void dumpLastRevision()
+        {
+          if (versionsBuilder != null)
+          {
+            PrintStream out = out();
+            out.println("<tr>");
+            out.println("<td>&nbsp;&nbsp;&nbsp;&nbsp;");
+            out.println(getCDOIDLabel(lastRevision));
+            out.println("&nbsp;&nbsp;&nbsp;&nbsp;</td>");
+
+            out.println("<td>");
+            out.println(versionsBuilder.toString());
+            out.println("</td>");
+            out.println("</tr>");
+
+            lastRevision = null;
+            versionsBuilder = null;
           }
         }
       }.dump();
@@ -537,7 +599,7 @@ public class CDOServerBrowser extends Worker
       if (revision[0] != null)
       {
         out.print("<td valign=\"top\">\r\n");
-        showRevision(out, allRevisions, revision[0], repository);
+        showRevision(out, browser, allRevisions, ids, revision[0], repository);
         out.print("</td>\r\n");
       }
 
@@ -548,7 +610,8 @@ public class CDOServerBrowser extends Worker
     /**
      * @since 4.0
      */
-    protected void showRevision(PrintStream pout, Map<CDOBranch, List<CDORevision>> allRevisions, String key,
+    protected void showRevision(PrintStream pout, CDOServerBrowser browser,
+        Map<CDOBranch, List<CDORevision>> allRevisions, Map<CDOID, List<CDORevision>> ids, String key,
         InternalRepository repository)
     {
       CDORevisionKey revisionKey = CDORevisionUtil.parseRevisionKey(key, repository.getBranchManager());
@@ -556,7 +619,7 @@ public class CDOServerBrowser extends Worker
       {
         if (revision.getVersion() == revisionKey.getVersion() && revision.getID().equals(revisionKey.getID()))
         {
-          showRevision(pout, (InternalCDORevision)revision);
+          showRevision(pout, browser, ids, (InternalCDORevision)revision);
           return;
         }
       }
@@ -565,7 +628,8 @@ public class CDOServerBrowser extends Worker
     /**
      * @since 4.0
      */
-    protected void showRevision(PrintStream pout, InternalCDORevision revision)
+    protected void showRevision(PrintStream pout, CDOServerBrowser browser, Map<CDOID, List<CDORevision>> ids,
+        InternalCDORevision revision)
     {
       String className = revision.getEClass().toString();
       className = className.substring(className.indexOf(' '));
@@ -574,19 +638,19 @@ public class CDOServerBrowser extends Worker
 
       pout.print("<table border=\"1\" cellpadding=\"2\">\r\n");
       showKeyValue(pout, true, "class", className);
-      showKeyValue(pout, true, "id", revision.getID());
+      showKeyValue(pout, true, "id", getRevisionValue(revision.getID(), null, ids));
       showKeyValue(pout, true, "branch", revision.getBranch().getName() + "[" + revision.getBranch().getID() + "]");
       showKeyValue(pout, true, "version", revision.getVersion());
       showKeyValue(pout, true, "created", CDOCommonUtil.formatTimeStamp(revision.getTimeStamp()));
       showKeyValue(pout, true, "revised", CDOCommonUtil.formatTimeStamp(revision.getRevised()));
-      showKeyValue(pout, true, "resource", revision.getResourceID());
-      showKeyValue(pout, true, "container", revision.getContainerID());
+      showKeyValue(pout, true, "resource", getRevisionValue(revision.getResourceID(), browser, ids));
+      showKeyValue(pout, true, "container", getRevisionValue(revision.getContainerID(), browser, ids));
       showKeyValue(pout, true, "feature", revision.getContainingFeatureID());
 
       for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
       {
         Object value = revision.getValue(feature);
-        showKeyValue(pout, false, feature.getName(), getRevisionValue(value));
+        showKeyValue(pout, false, feature.getName(), getRevisionValue(value, browser, ids));
       }
 
       pout.print("</table>\r\n");
@@ -595,15 +659,49 @@ public class CDOServerBrowser extends Worker
     /**
      * @since 4.0
      */
-    protected Object getRevisionValue(Object value)
+    protected Object getRevisionValue(Object value, CDOServerBrowser browser, Map<CDOID, List<CDORevision>> ids)
     {
+      if (value instanceof CDOID)
+      {
+        List<CDORevision> revisions = ids.get(value);
+        if (revisions != null)
+        {
+          StringBuilder builder = new StringBuilder();
+          builder.append(getCDOIDLabel(revisions.get(0)));
+
+          if (browser != null)
+          {
+            builder.append("&nbsp;[");
+            boolean first = true;
+            for (CDORevision revision : revisions)
+            {
+              if (first)
+              {
+                first = false;
+              }
+              else
+              {
+                builder.append(", ");
+              }
+
+              String label = "" + revision.getBranch().getID() + "v" + revision.getVersion();
+              builder.append(browser.href(label, getName(), "revision", CDORevisionUtil.formatRevisionKey(revision)));
+            }
+
+            builder.append("]");
+          }
+
+          return builder.toString();
+        }
+      }
+
       if (value instanceof Collection)
       {
         StringBuilder builder = new StringBuilder();
         for (Object element : (Collection<?>)value)
         {
           builder.append(builder.length() == 0 ? "" : "<br>");
-          builder.append(element);
+          builder.append(getRevisionValue(element, browser, ids));
         }
 
         return builder.toString();
@@ -619,14 +717,42 @@ public class CDOServerBrowser extends Worker
     {
       String color = bg ? "EEEEEE" : "FFFFFF";
       pout.print("<tr bgcolor=\"" + color + "\">\r\n");
-      pout.print("<td><b>" + key + "</b></td>\r\n");
-      pout.print("<td>");
+      pout.print("<td valign=\"top\"><b>" + key + "</b></td>\r\n");
+      pout.print("<td valign=\"top\">");
       pout.print(value);
       pout.print("</td>\r\n");
       pout.print("</tr>\r\n");
     }
 
     protected abstract Map<CDOBranch, List<CDORevision>> getAllRevisions(InternalRepository repository);
+
+    private Map<CDOID, List<CDORevision>> getAllIDs(Map<CDOBranch, List<CDORevision>> allRevisions)
+    {
+      Map<CDOID, List<CDORevision>> ids = new HashMap<CDOID, List<CDORevision>>();
+      for (List<CDORevision> list : allRevisions.values())
+      {
+        for (CDORevision revision : list)
+        {
+          CDOID id = revision.getID();
+          List<CDORevision> revisions = ids.get(id);
+          if (revisions == null)
+          {
+            revisions = new ArrayList<CDORevision>();
+            ids.put(id, revisions);
+          }
+
+          revisions.add(revision);
+        }
+      }
+
+      return ids;
+    }
+
+    protected String getCDOIDLabel(CDORevision revision)
+    {
+      String label = revision.toString();
+      return label.substring(0, label.indexOf(':'));
+    }
 
     /**
      * @author Eike Stepper

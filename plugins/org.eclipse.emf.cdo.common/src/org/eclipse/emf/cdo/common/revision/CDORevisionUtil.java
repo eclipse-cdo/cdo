@@ -31,7 +31,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -199,21 +198,7 @@ public final class CDORevisionUtil
         dumpBranch(branch);
 
         List<CDORevision> revisions = map.get(branch);
-        Collections.sort(revisions, new Comparator<CDORevision>()
-        {
-          public int compare(CDORevision rev1, CDORevision rev2)
-          {
-            int result = rev1.getID().compareTo(rev2.getID());
-            if (result == 0)
-            {
-              int version1 = rev1.getVersion();
-              int version2 = rev2.getVersion();
-              result = version1 < version2 ? -1 : version1 == version2 ? 0 : 1;
-            }
-
-            return result;
-          }
-        });
+        Collections.sort(revisions, new CDORevisionComparator());
 
         for (CDORevision revision : revisions)
         {
@@ -306,8 +291,6 @@ public final class CDORevisionUtil
        */
       public static class Html extends Stream
       {
-        private CDOID lastID;
-
         public Html(Map<CDOBranch, List<CDORevision>> map, PrintStream out)
         {
           super(map, out);
@@ -328,8 +311,6 @@ public final class CDORevisionUtil
         @Override
         protected void dumpBranch(CDOBranch branch)
         {
-          lastID = null;
-
           PrintStream out = out();
           out.println("<tr>");
           out.println("<td>");
@@ -346,17 +327,6 @@ public final class CDORevisionUtil
         protected void dumpRevision(CDORevision revision)
         {
           PrintStream out = out();
-
-          CDOID id = revision.getID();
-          if (lastID != null && !id.equals(lastID))
-          {
-            out.println("<tr>");
-            out.println("<td><hr></td>");
-            out.println("<td><hr></td>");
-            out.println("</tr>");
-          }
-
-          lastID = id;
 
           out.println("<tr>");
           out.println("<td>&nbsp;&nbsp;&nbsp;&nbsp;");

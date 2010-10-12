@@ -1068,6 +1068,7 @@ public class WorkspaceTest extends AbstractCDOTest
   private Product1 createProduct(int index)
   {
     Product1 product = getModel1Factory().createProduct1();
+    product.setName("Product No" + index);
     product.setDescription("Description " + index);
     product.setVat(VAT.VAT15);
     return product;

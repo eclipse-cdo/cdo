@@ -19,6 +19,9 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
@@ -30,6 +33,10 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.BufferedOutputStream;
@@ -303,6 +310,7 @@ public class CDOServerBrowser extends Worker
 
   protected void initPages(List<Page> pages)
   {
+    pages.add(new PackagesPage());
     pages.add(new RevisionsPage.FromCache());
     pages.add(new RevisionsPage.FromStore());
 
@@ -493,9 +501,74 @@ public class CDOServerBrowser extends Worker
   /**
    * @author Eike Stepper
    */
+  public static class PackagesPage extends AbstractPage
+  {
+    public PackagesPage()
+    {
+      super("packages", "Packages and Classes");
+    }
+
+    public boolean canDisplay(InternalRepository repository)
+    {
+      return true;
+    }
+
+    public void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out)
+    {
+      String param = browser.getParam("classifier");
+      InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
+      for (InternalCDOPackageUnit unit : packageRegistry.getPackageUnits())
+      {
+        param = showPackage(unit.getTopLevelPackageInfo(), packageRegistry, browser, param, out, "&nbsp;&nbsp;");
+      }
+    }
+
+    protected String showPackage(InternalCDOPackageInfo info, InternalCDOPackageRegistry packageRegistry,
+        CDOServerBrowser browser, String param, PrintStream out, String prefix)
+    {
+      EPackage ePackage = info.getEPackage();
+      out.println("<h3>" + prefix + ePackage.getName() + "&nbsp;&nbsp;[" + ePackage.getNsURI() + "]</h3>");
+
+      for (EClassifier classifier : ePackage.getEClassifiers())
+      {
+        String name = classifier.getName();
+        if (param == null)
+        {
+          param = name;
+        }
+
+        String label = name.equals(param) ? name : browser.href(name, getName(), "classifier", name);
+        out.print(prefix + "&nbsp;&nbsp;<b>" + label);
+
+        if (classifier instanceof EEnum)
+        {
+          EEnum eenum = (EEnum)classifier;
+          out.print("&nbsp;&nbsp;" + eenum.getELiterals());
+        }
+        else if (classifier instanceof EDataType)
+        {
+          EDataType eDataType = (EDataType)classifier;
+          out.print("&nbsp;&nbsp;" + eDataType.getInstanceClassName());
+        }
+
+        out.println("</b><br>");
+      }
+
+      for (EPackage sub : ePackage.getESubpackages())
+      {
+        InternalCDOPackageInfo subInfo = packageRegistry.getPackageInfo(sub);
+        param = showPackage(subInfo, packageRegistry, browser, param, out, prefix + "&nbsp;&nbsp;");
+      }
+
+      return param;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public static abstract class RevisionsPage extends AbstractPage
   {
-
     public RevisionsPage(String name, String label)
     {
       super(name, label);
@@ -546,7 +619,7 @@ public class CDOServerBrowser extends Worker
           }
           else
           {
-            versionsBuilder.append(", ");
+            versionsBuilder.append(" ");
             if (versionsBuilder.length() > 64)
             {
               versionsBuilder.append("<br>");
@@ -638,19 +711,19 @@ public class CDOServerBrowser extends Worker
 
       pout.print("<table border=\"1\" cellpadding=\"2\">\r\n");
       showKeyValue(pout, true, "class", className);
-      showKeyValue(pout, true, "id", getRevisionValue(revision.getID(), null, ids));
+      showKeyValue(pout, true, "id", getRevisionValue(revision.getID(), browser, ids, revision));
       showKeyValue(pout, true, "branch", revision.getBranch().getName() + "[" + revision.getBranch().getID() + "]");
       showKeyValue(pout, true, "version", revision.getVersion());
       showKeyValue(pout, true, "created", CDOCommonUtil.formatTimeStamp(revision.getTimeStamp()));
       showKeyValue(pout, true, "revised", CDOCommonUtil.formatTimeStamp(revision.getRevised()));
-      showKeyValue(pout, true, "resource", getRevisionValue(revision.getResourceID(), browser, ids));
-      showKeyValue(pout, true, "container", getRevisionValue(revision.getContainerID(), browser, ids));
+      showKeyValue(pout, true, "resource", getRevisionValue(revision.getResourceID(), browser, ids, revision));
+      showKeyValue(pout, true, "container", getRevisionValue(revision.getContainerID(), browser, ids, revision));
       showKeyValue(pout, true, "feature", revision.getContainingFeatureID());
 
       for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
       {
         Object value = revision.getValue(feature);
-        showKeyValue(pout, false, feature.getName(), getRevisionValue(value, browser, ids));
+        showKeyValue(pout, false, feature.getName(), getRevisionValue(value, browser, ids, revision));
       }
 
       pout.print("</table>\r\n");
@@ -659,7 +732,8 @@ public class CDOServerBrowser extends Worker
     /**
      * @since 4.0
      */
-    protected Object getRevisionValue(Object value, CDOServerBrowser browser, Map<CDOID, List<CDORevision>> ids)
+    protected Object getRevisionValue(Object value, CDOServerBrowser browser, Map<CDOID, List<CDORevision>> ids,
+        InternalCDORevision context)
     {
       if (value instanceof CDOID)
       {
@@ -671,24 +745,26 @@ public class CDOServerBrowser extends Worker
 
           if (browser != null)
           {
-            builder.append("&nbsp;[");
-            boolean first = true;
+            builder.append("&nbsp;&nbsp;");
             for (CDORevision revision : revisions)
             {
-              if (first)
+              String label = "v" + revision.getVersion();
+              String branchName = revision.getBranch().getName();
+              if (!CDOBranch.MAIN_BRANCH_NAME.equals(branchName))
               {
-                first = false;
+                label += "[" + branchName + "]";
+              }
+
+              builder.append(" ");
+              if (revision == context)
+              {
+                builder.append(label);
               }
               else
               {
-                builder.append(", ");
+                builder.append(browser.href(label, getName(), "revision", CDORevisionUtil.formatRevisionKey(revision)));
               }
-
-              String label = "" + revision.getBranch().getID() + "v" + revision.getVersion();
-              builder.append(browser.href(label, getName(), "revision", CDORevisionUtil.formatRevisionKey(revision)));
             }
-
-            builder.append("]");
           }
 
           return builder.toString();
@@ -701,7 +777,7 @@ public class CDOServerBrowser extends Worker
         for (Object element : (Collection<?>)value)
         {
           builder.append(builder.length() == 0 ? "" : "<br>");
-          builder.append(getRevisionValue(element, browser, ids));
+          builder.append(getRevisionValue(element, browser, ids, context));
         }
 
         return builder.toString();

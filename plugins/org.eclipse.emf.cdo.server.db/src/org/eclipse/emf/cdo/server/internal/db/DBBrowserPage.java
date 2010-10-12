@@ -35,7 +35,7 @@ public class DBBrowserPage extends AbstractPage
 {
   public DBBrowserPage()
   {
-    super("tables", "DB Tables");
+    super("tables", "Database Tables");
   }
 
   public boolean canDisplay(InternalRepository repository)

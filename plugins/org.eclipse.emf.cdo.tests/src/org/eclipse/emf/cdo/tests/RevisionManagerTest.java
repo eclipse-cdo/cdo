@@ -240,8 +240,8 @@ public class RevisionManagerTest extends AbstractCDOTest
     else
     {
       assertEquals( //
-          CDORevisionUtil.createRevisionKey(expected), //
-          CDORevisionUtil.createRevisionKey(actual));
+          CDORevisionUtil.copyRevisionKey(expected), //
+          CDORevisionUtil.copyRevisionKey(actual));
     }
   }
 

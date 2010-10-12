@@ -18,9 +18,9 @@
    <extension
          point="org.eclipse.net4j.util.factories">
       <factory
-            class="org.eclipse.emf.cdo.server.db.CDODBBrowser$ContainerBased$Factory"
-            productGroup="org.eclipse.emf.cdo.server.db.browsers"
-            type="default">
+            class="org.eclipse.emf.cdo.server.internal.db.DBBrowserPage$Factory"
+            productGroup="org.eclipse.emf.cdo.server.browserPages"
+            type="db">
       </factory>
    </extension>
 

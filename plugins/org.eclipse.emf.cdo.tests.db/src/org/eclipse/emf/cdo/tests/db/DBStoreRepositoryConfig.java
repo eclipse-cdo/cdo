@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.db.CDODBBrowser;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
@@ -28,8 +27,6 @@ public abstract class DBStoreRepositoryConfig extends RepositoryConfig
 {
   private static final long serialVersionUID = 1L;
 
-  private transient CDODBBrowser dbBrowser;
-
   public DBStoreRepositoryConfig(String name)
   {
     super(name);
@@ -42,26 +39,6 @@ public abstract class DBStoreRepositoryConfig extends RepositoryConfig
     IDBAdapter dbAdapter = createDBAdapter();
     DataSource dataSource = createDataSource(repoName);
     return CDODBUtil.createStore(mappingStrategy, dbAdapter, DBUtil.createConnectionProvider(dataSource));
-  }
-
-  @Override
-  public void setUp() throws Exception
-  {
-    super.setUp();
-    dbBrowser = new CDODBBrowser(repositories);
-    dbBrowser.activate();
-  }
-
-  @Override
-  public void tearDown() throws Exception
-  {
-    if (dbBrowser != null)
-    {
-      dbBrowser.deactivate();
-      dbBrowser = null;
-    }
-
-    super.tearDown();
   }
 
   protected abstract IMappingStrategy createMappingStrategy();

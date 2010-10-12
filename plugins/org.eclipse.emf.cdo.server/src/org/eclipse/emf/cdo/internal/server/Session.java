@@ -449,7 +449,7 @@ public class Session extends Container<IView> implements InternalSession
             }
 
             // Prevent sending whole revisions by copying the id and version
-            return CDORevisionUtil.createRevisionKey(changedObject);
+            return CDORevisionUtil.copyRevisionKey(changedObject);
           }
 
           @Override

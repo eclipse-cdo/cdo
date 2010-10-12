@@ -23,6 +23,10 @@
             type="challenge"
             productGroup="org.eclipse.net4j.Negotiators"
             class="org.eclipse.net4j.util.security.ChallengeNegotiatorFactory"/>
+      	<factory
+            type="default"
+            productGroup="org.eclipse.emf.cdo.server.browsers"
+            class="org.eclipse.emf.cdo.server.CDOServerBrowser$ContainerBased$Factory"/>
    	</extension>
 
 	<extension

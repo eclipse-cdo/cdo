@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_326047_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -83,7 +84,7 @@ public class AllTestsDBH2Offline extends DBConfigs
   /**
    * @author Eike Stepper
    */
-  public static class H2Offline extends DBOfflineConfig
+  public static class H2Offline extends OfflineConfig
   {
     public static final H2Offline INSTANCE = new H2Offline("DBStore: H2 (offline)");
 

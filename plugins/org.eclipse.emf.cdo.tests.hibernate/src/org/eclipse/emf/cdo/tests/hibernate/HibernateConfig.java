@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.db.CDODBBrowser;
 import org.eclipse.emf.cdo.server.hibernate.CDOHibernateUtil;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.teneo.TeneoUtil;
@@ -36,8 +35,6 @@ public class HibernateConfig extends RepositoryConfig
   private static final long serialVersionUID = 1L;
 
   private Map<String, String> additionalProperties = new HashMap<String, String>();
-
-  private transient CDODBBrowser dbBrowser;
 
   public HibernateConfig()
   {
@@ -79,21 +76,5 @@ public class HibernateConfig extends RepositoryConfig
   public Map<String, String> getAdditionalProperties()
   {
     return additionalProperties;
-  }
-
-  @Override
-  public void setUp() throws Exception
-  {
-    super.setUp();
-    dbBrowser = new CDODBBrowser(repositories);
-    dbBrowser.setPort(7777);
-    dbBrowser.activate();
-  }
-
-  @Override
-  public void tearDown() throws Exception
-  {
-    dbBrowser.deactivate();
-    super.tearDown();
   }
 }

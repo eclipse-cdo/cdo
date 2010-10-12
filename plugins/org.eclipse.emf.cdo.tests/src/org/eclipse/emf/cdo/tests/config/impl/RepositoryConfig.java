@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionImpl;
 import org.eclipse.emf.cdo.internal.server.syncing.OfflineClone;
 import org.eclipse.emf.cdo.internal.server.syncing.RepositorySynchronizer;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.server.CDOServerBrowser;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -82,6 +83,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   private transient boolean restarting;
 
   private transient IListener repositoryListener;
+
+  private transient CDOServerBrowser serverBrowser;
 
   public RepositoryConfig(String name)
   {
@@ -202,11 +205,20 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     // Start default repository
     getRepository(REPOSITORY_NAME);
+
+    serverBrowser = new CDOServerBrowser(repositories);
+    serverBrowser.activate();
   }
 
   @Override
   public void tearDown() throws Exception
   {
+    if (serverBrowser != null)
+    {
+      serverBrowser.deactivate();
+      serverBrowser = null;
+    }
+
     Object[] array;
     synchronized (repositories)
     {

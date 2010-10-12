@@ -99,7 +99,7 @@ public class LoadMergeDataIndication extends CDOReadIndication
     out.writeInt(revisions.size());
     for (CDORevisionKey revision : revisions)
     {
-      CDORevisionKey key = CDORevisionUtil.createRevisionKey(revision);
+      CDORevisionKey key = CDORevisionUtil.copyRevisionKey(revision);
       if (writtenRevisions.add(key))
       {
         out.writeBoolean(true);

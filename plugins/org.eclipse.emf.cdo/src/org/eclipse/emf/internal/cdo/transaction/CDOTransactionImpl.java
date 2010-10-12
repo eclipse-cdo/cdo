@@ -1288,7 +1288,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       getLastSavepoint().getDetachedObjects().put(id, object);
       if (!formerRevisionKeys.containsKey(object))
       {
-        CDORevisionKey revKey = CDORevisionUtil.createRevisionKey(object.cdoRevision());
+        CDORevisionKey revKey = CDORevisionUtil.copyRevisionKey(object.cdoRevision());
         formerRevisionKeys.put(object, revKey);
       }
 

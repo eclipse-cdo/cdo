@@ -62,11 +62,11 @@ public class WorkspaceTest extends AbstractCDOTest
 {
   private static final String RESOURCE = "/test1";
 
-  private static final int PRODUCTS = 8;
+  private static final int PRODUCTS = 5;
 
-  private static final int CUSTOMERS = 5;
+  private static final int CUSTOMERS = 2;
 
-  private static final int SALES_ORDERS_PER_CUSTOMER = 3;
+  private static final int SALES_ORDERS_PER_CUSTOMER = 1;
 
   private static final int SALES_ORDERS = CUSTOMERS * SALES_ORDERS_PER_CUSTOMER;
 
@@ -91,8 +91,8 @@ public class WorkspaceTest extends AbstractCDOTest
   @Override
   protected void doSetUp() throws Exception
   {
-    super.doSetUp();
     disableConsole();
+    super.doSetUp();
 
     CDOSession session = openSession();
     transaction = session.openTransaction();
@@ -117,6 +117,7 @@ public class WorkspaceTest extends AbstractCDOTest
   @Override
   protected void doTearDown() throws Exception
   {
+    disableConsole();
     CDOUtil.setLegacyModeDefault(false);
     for (CDOWorkspace workspace : workspaces)
     {
@@ -632,6 +633,7 @@ public class WorkspaceTest extends AbstractCDOTest
   public void testCommitAfterAdd() throws Exception
   {
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+    System.err.println("Checkout done");
 
     CDOTransaction transaction = workspace.openTransaction();
     CDOResource resource = transaction.getResource(RESOURCE);
@@ -986,7 +988,6 @@ public class WorkspaceTest extends AbstractCDOTest
       CDOAllRevisionsProvider provider = (CDOAllRevisionsProvider)localStore;
       Map<CDOBranch, List<CDORevision>> allRevisions = provider.getAllRevisions();
       int size = allRevisions.values().iterator().next().size();
-      System.out.println("Local Store: " + size);
 
       if (out != null)
       {

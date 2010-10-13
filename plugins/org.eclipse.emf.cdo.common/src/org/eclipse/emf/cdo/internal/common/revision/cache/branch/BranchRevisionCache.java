@@ -185,15 +185,21 @@ public class BranchRevisionCache extends ReferenceQueueWorker<InternalCDORevisio
   @Override
   public String toString()
   {
-    return revisionLists.toString();
+    synchronized (revisionLists)
+    {
+      return revisionLists.toString();
+    }
   }
 
   public Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
     Map<CDOBranch, List<CDORevision>> result = new HashMap<CDOBranch, List<CDORevision>>();
-    for (RevisionList list : revisionLists.values())
+    synchronized (revisionLists)
     {
-      list.getAllRevisions(result);
+      for (RevisionList list : revisionLists.values())
+      {
+        list.getAllRevisions(result);
+      }
     }
 
     return result;
@@ -203,15 +209,18 @@ public class BranchRevisionCache extends ReferenceQueueWorker<InternalCDORevisio
   {
     List<CDORevision> result = new ArrayList<CDORevision>();
     CDOBranch branch = branchPoint.getBranch();
-    for (Map.Entry<CDOIDAndBranch, RevisionList> entry : revisionLists.entrySet())
+    synchronized (revisionLists)
     {
-      if (ObjectUtil.equals(entry.getKey().getBranch(), branch))
+      for (Map.Entry<CDOIDAndBranch, RevisionList> entry : revisionLists.entrySet())
       {
-        RevisionList list = entry.getValue();
-        InternalCDORevision revision = list.getRevision(branchPoint.getTimeStamp());
-        if (revision != null)
+        if (ObjectUtil.equals(entry.getKey().getBranch(), branch))
         {
-          result.add(revision);
+          RevisionList list = entry.getValue();
+          InternalCDORevision revision = list.getRevision(branchPoint.getTimeStamp());
+          if (revision != null)
+          {
+            result.add(revision);
+          }
         }
       }
     }

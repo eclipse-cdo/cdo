@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -32,6 +33,8 @@ public final class CDOURIData
   public static final String TIME_PARAMETER = "time";
 
   public static final String TRANSACTIONAL_PARAMETER = "transactional";
+
+  private static final SimpleDateFormat FORMATTER = new SimpleDateFormat();
 
   private String scheme;
 
@@ -96,7 +99,7 @@ public final class CDOURIData
         {
           if (!"HEAD".equalsIgnoreCase(time))
           {
-            timeStamp = new SimpleDateFormat().parse(time).getTime();
+            timeStamp = FORMATTER.parse(time).getTime();
           }
         }
 
@@ -249,19 +252,49 @@ public final class CDOURIData
     StringBuilder builder = new StringBuilder();
     builder.append(scheme);
     builder.append("://");
+    if (userName != null)
+    {
+      builder.append(userName);
+      if (passWord != null)
+      {
+        builder.append(":");
+        builder.append(passWord);
+      }
+
+      builder.append("@");
+    }
+
     builder.append(authority);
     builder.append("/");
     builder.append(repositoryName);
     builder.append("/");
-    builder.append(branchPath.toPortableString());
-    builder.append("/@");
-    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+    builder.append(resourcePath);
+
+    int params = 0;
+    if (branchPath != null)
     {
-      builder.append(timeStamp);
+      builder.append(params++ == 0 ? "?" : "&");
+      builder.append(BRANCH_PARAMETER);
+      builder.append("=");
+      builder.append(branchPath.toPortableString());
     }
 
-    builder.append("/");
-    builder.append(resourcePath);
+    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      builder.append(params++ == 0 ? "?" : "&");
+      builder.append(TIME_PARAMETER);
+      builder.append("=");
+      builder.append(FORMATTER.format(new Date(timeStamp)));
+    }
+
+    if (!transactional && timeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      builder.append(params++ == 0 ? "?" : "&");
+      builder.append(TRANSACTIONAL_PARAMETER);
+      builder.append("=");
+      builder.append(false);
+    }
+
     return builder.toString();
   }
 }

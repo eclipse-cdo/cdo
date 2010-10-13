@@ -18,8 +18,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -33,8 +31,6 @@ public final class CDOURIData
   public static final String TIME_PARAMETER = "time";
 
   public static final String TRANSACTIONAL_PARAMETER = "transactional";
-
-  private static final SimpleDateFormat FORMATTER = new SimpleDateFormat();
 
   private String scheme;
 
@@ -58,6 +54,11 @@ public final class CDOURIData
   {
   }
 
+  public CDOURIData(String uri) throws InvalidURIException
+  {
+    this(URI.createURI(uri));
+  }
+
   public CDOURIData(URI uri) throws InvalidURIException
   {
     try
@@ -67,7 +68,7 @@ public final class CDOURIData
       String userInfo = uri.userInfo();
       if (userInfo != null)
       {
-        authority = authority.substring(userInfo.length());
+        authority = authority.substring(userInfo.length() + 1);
         int colon = userInfo.indexOf(':');
         if (colon != -1)
         {
@@ -91,7 +92,7 @@ public final class CDOURIData
         String branch = parameters.get(BRANCH_PARAMETER);
         if (branch != null)
         {
-          branchPath = new Path(branch).makeAbsolute();
+          branchPath = new Path(branch).makeRelative();
         }
 
         String time = parameters.get(TIME_PARAMETER);
@@ -99,7 +100,7 @@ public final class CDOURIData
         {
           if (!"HEAD".equalsIgnoreCase(time))
           {
-            timeStamp = FORMATTER.parse(time).getTime();
+            timeStamp = Long.parseLong(time);
           }
         }
 
@@ -271,7 +272,7 @@ public final class CDOURIData
     builder.append(resourcePath);
 
     int params = 0;
-    if (branchPath != null)
+    if (branchPath != null && !branchPath.equals(new Path(CDOBranch.MAIN_BRANCH_NAME)))
     {
       builder.append(params++ == 0 ? "?" : "&");
       builder.append(BRANCH_PARAMETER);
@@ -284,17 +285,28 @@ public final class CDOURIData
       builder.append(params++ == 0 ? "?" : "&");
       builder.append(TIME_PARAMETER);
       builder.append("=");
-      builder.append(FORMATTER.format(new Date(timeStamp)));
+      builder.append(timeStamp);
     }
 
-    if (!transactional && timeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
+    if (transactional)
     {
       builder.append(params++ == 0 ? "?" : "&");
       builder.append(TRANSACTIONAL_PARAMETER);
       builder.append("=");
-      builder.append(false);
+      builder.append(transactional);
     }
 
     return builder.toString();
+  }
+
+  public static void main(String[] args)
+  {
+    URI uri = URI.createURI("cdo.net4j.tcp://lothar:passw@127.0.0.1:2042/ts_marketplace1/participants");
+    System.out.println(uri);
+
+    CDOURIData data = new CDOURIData(uri);
+
+    URI uri2 = data.toURI();
+    System.out.println(uri2);
   }
 }

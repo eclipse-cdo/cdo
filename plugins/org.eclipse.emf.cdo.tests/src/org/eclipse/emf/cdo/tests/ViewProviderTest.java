@@ -16,7 +16,9 @@ import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOURIData;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 
@@ -42,11 +44,44 @@ public class ViewProviderTest extends AbstractCDOTest
 
   private URI uri;
 
-  @Override
-  protected void doSetUp() throws Exception
+  private void checkURI(String uri, boolean valid)
   {
-    super.doSetUp();
+    URI uri1 = URI.createURI(uri);
+    CDOURIData data = new CDOURIData(uri1);
+    URI uri2 = data.toURI();
+    if (valid)
+    {
+      assertEquals(uri1, uri2);
+    }
+    else
+    {
+      assertNotSame(uri1, uri2);
+    }
+  }
 
+  public void testURIs() throws Exception
+  {
+    checkURI("cdo.net4j.tcp://eike:passw@127.0.0.1:2042/repo/folder/resource", true);
+    checkURI("cdo.net4j.tcp://eike@127.0.0.1:2042/repo/folder/resource", true);
+    checkURI("cdo.net4j.tcp://127.0.0.1:2042/repo/folder/resource", true);
+    checkURI("cdo.net4j.tcp://127.0.0.1:2042/repo/resource", true);
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource", true);
+    checkURI("cdo.net4j.xyz://127.0.0.1/repo/resource", true);
+
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1", true);
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&time=12345678987", true);
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&transactional=true", true);
+
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&time=12345&transactional=false", false);
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&transactional=false", false);
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&time=HEAD", false);
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN", false);
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN&time=HEAD", false);
+
+  }
+
+  private void init() throws CommitException
+  {
     Product1 product = getModel1Factory().createProduct1();
     product.setName("ESC");
 
@@ -62,6 +97,7 @@ public class ViewProviderTest extends AbstractCDOTest
 
   public void testNormal() throws Exception
   {
+    init();
     URI uri = CDOURIUtil.createResourceURI(REPO, PATH);
     IPluginContainer.INSTANCE.putElement(CDOSessionFactory.PRODUCT_GROUP, "my-type", "my-description", openSession());
 
@@ -77,6 +113,7 @@ public class ViewProviderTest extends AbstractCDOTest
 
   public void testConnectionAware() throws Exception
   {
+    init();
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOResource resource = (CDOResource)resourceSet.getResource(uri, true);
 
@@ -89,6 +126,7 @@ public class ViewProviderTest extends AbstractCDOTest
 
   public void testSerialize() throws Exception
   {
+    init();
     ResourceSet resourceSet = new ResourceSetImpl();
     Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
     map.put("xmi", new XMIResourceFactoryImpl());

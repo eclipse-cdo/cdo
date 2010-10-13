@@ -70,11 +70,18 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
   @Override
   public InternalCDOSession createSession()
   {
-    FailoverCDOSessionImpl session = new FailoverCDOSessionImpl();
-    session.setMonitorConnectionDescription(monitorConnectorDescription);
-    session.setRepositoryGroup(repositoryGroup);
-    session.setContainer(container);
-    session.updateConnectorAndRepositoryName(); // TODO (CD) Can't we leave it to the session to call this?
-    return session;
+    return new FailoverCDOSessionImpl();
+  }
+
+  @Override
+  protected void configureSession(InternalCDOSession session)
+  {
+    super.configureSession(session);
+
+    FailoverCDOSessionImpl sessionImpl = (FailoverCDOSessionImpl)session;
+    sessionImpl.setMonitorConnectionDescription(monitorConnectorDescription);
+    sessionImpl.setRepositoryGroup(repositoryGroup);
+    sessionImpl.setContainer(container);
+    sessionImpl.updateConnectorAndRepositoryName(); // TODO (CD) Can't we leave it to the session to call this?
   }
 }

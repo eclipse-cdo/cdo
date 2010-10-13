@@ -14,6 +14,9 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.net4j.CDOSessionFailoverEvent;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.connector.IConnector;
@@ -109,6 +112,25 @@ public class FailoverCDOSessionImpl extends CDONet4jSessionImpl
 
       updateConnectorAndRepositoryName();
       initProtocol();
+
+      // The revisionManager, branchManager, and commitInfoManager, hold their own
+      // references to the sessionProtocol. We need to update those:
+
+      InternalCDORevisionManager revisionManager = getRevisionManager();
+      revisionManager.deactivate();
+      revisionManager.setRevisionLoader(getSessionProtocol());
+      revisionManager.activate();
+
+      InternalCDOBranchManager branchManager = getBranchManager();
+      branchManager.deactivate();
+      branchManager.setBranchLoader(getSessionProtocol());
+      branchManager.activate();
+
+      InternalCDOCommitInfoManager commitInfoManager = getCommitInfoManager();
+      commitInfoManager.deactivate();
+      commitInfoManager.setCommitInfoLoader(getSessionProtocol());
+      commitInfoManager.activate();
+
       return runnables;
     }
     catch (RuntimeException ex)
@@ -126,10 +148,10 @@ public class FailoverCDOSessionImpl extends CDONet4jSessionImpl
   // TODO (CD) Default access allows config object to call this once. Does this make sense?
   void updateConnectorAndRepositoryName()
   {
-    System.out.println("Querying fail-over monitor...");
+    // System.out.println("Querying fail-over monitor...");
     queryRepositoryInfoFromMonitor();
 
-    System.out.println("Connecting to " + repositoryConnectorDescription + "/" + repositoryName + "...");
+    // System.out.println("Connecting to " + repositoryConnectorDescription + "/" + repositoryName + "...");
     IConnector connector = getConnector(repositoryConnectorDescription);
     new HeartBeatProtocol(connector, container).start(1000L, 5000L);
 

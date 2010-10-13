@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
+import org.eclipse.emf.cdo.examples.company.CompanyFactory;
+import org.eclipse.emf.cdo.examples.company.Customer;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSession;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
@@ -33,6 +35,8 @@ import org.eclipse.emf.cdo.server.net4j.FailoverMonitor.AgentProtocol;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
@@ -550,7 +554,13 @@ public abstract class FailoverExample
         CDOSessionConfiguration configuration = CDONet4jUtil.createFailoverSessionConfiguration(REPOSITORY_MONITOR_HOST
             + ":" + REPOSITORY_MONITOR_PORT, REPOSITORY_GROUP, container);
 
-        CDOSession session = configuration.openSession();
+        final CDOSession session = configuration.openSession();
+        System.out.println("Connected");
+
+        final CDOTransaction tx = session.openTransaction();
+        addObject(tx);
+        System.out.println("Succesfully committed an object to the original tx/session");
+
         session.addListener(new IListener()
         {
           public void notifyEvent(IEvent event)
@@ -559,14 +569,35 @@ public abstract class FailoverExample
             {
               CDOSessionFailoverEvent e = (CDOSessionFailoverEvent)event;
               System.out.println("Failover " + e.getType() + ": " + e.getSource().getRepositoryInfo());
+
+              if (e.getType() == CDOSessionFailoverEvent.Type.FINISHED)
+              {
+                // Let's see if the TX in the failed-over session is usable:
+                //
+                addObject(tx);
+                System.out.println("Succesfully committed an object to the failed-over tx/session");
+              }
             }
           }
         });
 
-        System.out.println("Connected");
         while (!session.isClosed())
         {
           Thread.sleep(100);
+        }
+      }
+
+      private static void addObject(CDOTransaction tx)
+      {
+        try
+        {
+          Customer customer = CompanyFactory.eINSTANCE.createCustomer();
+          tx.getOrCreateResource("/r1").getContents().add(customer);
+          tx.commit();
+        }
+        catch (CommitException x)
+        {
+          throw new RuntimeException(x);
         }
       }
     }

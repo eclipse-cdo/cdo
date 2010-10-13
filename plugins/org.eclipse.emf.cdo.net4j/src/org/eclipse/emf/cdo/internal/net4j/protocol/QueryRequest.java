@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.internal.common.CDOQueryInfoImpl;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.CDOObjectReferenceImpl;
+import org.eclipse.emf.internal.cdo.util.CDOObjectReferenceImpl;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -66,7 +66,7 @@ public class QueryRequest extends CDOClientRequest<Boolean>
     boolean xrefs = queryResult.getQueryInfo().getQueryLanguage().equals(CDOProtocolConstants.QUERY_LANGUAGE_XREFS);
     if (xrefs)
     {
-      view = getSession().getView(viewID);
+      view = (CDOView)getSession().getView(viewID);
     }
 
     try

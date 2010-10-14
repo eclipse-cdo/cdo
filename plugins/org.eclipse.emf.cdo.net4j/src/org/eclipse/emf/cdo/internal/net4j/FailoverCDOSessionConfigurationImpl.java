@@ -82,6 +82,5 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
     sessionImpl.setMonitorConnectionDescription(monitorConnectorDescription);
     sessionImpl.setRepositoryGroup(repositoryGroup);
     sessionImpl.setContainer(container);
-    sessionImpl.updateConnectorAndRepositoryName(); // TODO (CD) Can't we leave it to the session to call this?
   }
 }

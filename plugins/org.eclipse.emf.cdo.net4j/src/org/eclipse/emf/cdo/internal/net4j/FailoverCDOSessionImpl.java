@@ -145,8 +145,14 @@ public class FailoverCDOSessionImpl extends CDONet4jSessionImpl
     }
   }
 
-  // TODO (CD) Default access allows config object to call this once. Does this make sense?
-  void updateConnectorAndRepositoryName()
+  @Override
+  protected void activateSession() throws Exception
+  {
+    updateConnectorAndRepositoryName();
+    super.activateSession();
+  }
+
+  private void updateConnectorAndRepositoryName()
   {
     // System.out.println("Querying fail-over monitor...");
     queryRepositoryInfoFromMonitor();

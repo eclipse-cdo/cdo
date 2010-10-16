@@ -554,21 +554,25 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         Class<? extends Object> baseClass = object == null ? null : object.getClass();
         EStructuralFeature.Internal internalFeature = (EStructuralFeature.Internal)feature;
         EReference oppositeReference = internalFeature.getEOpposite();
-
+        
         if (oppositeReference != null)
         {
-          // If you have a containment reference but the container is not set, but the object is attached to a resource
-          // do not set the feature to null. Otherwise the object will be removed from the container which is the
-          // resource instead of the original container. As a result the object will be detached. See
-          // MapTest.testEObjectToEObjectValueContainedMap for more information
           if (object != null)
           {
-            instance.eInverseAdd((InternalEObject)object, featureID, baseClass, null);
-          }
+            // If you have a containment reference but the container is not set, but the object is attached to a
+            // resource
+            // do not set the feature to null. Otherwise the object will be removed from the container which is the
+            // resource instead of the original container. As a result the object will be detached. See
+            // MapTest.testEObjectToEObjectValueContainedMap for more information
+            if (object != instance.eContainer())
+            {
+              instance.eInverseAdd((InternalEObject)object, featureID, baseClass, null);
+            }
 
-          if (object != null && !EMFUtil.isPersistent(oppositeReference))
-          {
-            adjustOppositeReference(instance, (InternalEObject)object, oppositeReference);
+            if (!EMFUtil.isPersistent(oppositeReference))
+            {
+              adjustOppositeReference(instance, (InternalEObject)object, oppositeReference);
+            }
           }
         }
         else

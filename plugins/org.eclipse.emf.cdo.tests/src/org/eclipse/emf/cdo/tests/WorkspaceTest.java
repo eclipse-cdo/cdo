@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -48,6 +49,8 @@ import org.eclipse.net4j.util.io.TMPUtil;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
+import org.eclipse.emf.spi.cdo.DefaultCDOMerger.Conflict;
+import org.eclipse.emf.spi.cdo.DefaultCDOMerger.ConflictException;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -1065,11 +1068,11 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
     assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
 
-    assertEquals(1, modifyProduct(transaction, 1));
+    assertEquals(1, modifyProduct(transaction, 1, "MODIFIED_"));
     transaction.commit();
 
     CDOTransaction local = workspace.openTransaction();
-    assertEquals(1, modifyProduct(transaction, 2));
+    assertEquals(1, modifyProduct(local, 2, "MODIFIED_"));
     local.commit();
     local.close();
 
@@ -1125,6 +1128,64 @@ public class WorkspaceTest extends AbstractCDOTest
     CDOView view = workspace.openView();
     resource = view.getResource(RESOURCE);
     assertEquals(totalObjects + 1 + PRODUCTS, dumpObjects(null, resource));
+  }
+
+  public void testNoConflictMasterAndLocalModify() throws Exception
+  {
+    InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+    assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
+
+    assertEquals(1, modifyProduct(transaction, 1, "MODIFIED_"));
+    transaction.commit();
+
+    CDOTransaction local = workspace.openTransaction();
+    assertEquals(1, modifyProduct(local, 1, "MODIFIED_"));
+    local.commit();
+    local.close();
+
+    DefaultCDOMerger.PerFeature.ManyValued merger = new DefaultCDOMerger.PerFeature.ManyValued();
+    local = workspace.update(merger);
+    assertEquals(0, merger.getConflicts().size());
+    assertEquals(false, local.isDirty());
+    assertEquals(0, local.getNewObjects().size());
+    assertEquals(0, local.getDirtyObjects().size());
+    assertEquals(0, local.getDetachedObjects().size());
+
+    CDOView view = workspace.openView();
+    assertEquals(1, countModifiedProduct(view));
+  }
+
+  public void testConflictMasterAndLocalModify() throws Exception
+  {
+    InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+    assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
+
+    assertEquals(1, modifyProduct(transaction, 1, "MODIFIED_1_"));
+    transaction.commit();
+
+    CDOTransaction local = workspace.openTransaction();
+    assertEquals(1, modifyProduct(local, 1, "MODIFIED_2_"));
+    local.commit();
+    local.close();
+
+    DefaultCDOMerger.PerFeature.ManyValued merger = new DefaultCDOMerger.PerFeature.ManyValued();
+
+    try
+    {
+      local = workspace.update(merger);
+      fail("ConflictException expected");
+    }
+    catch (ConflictException expected)
+    {
+      // SUCCESS
+    }
+
+    Map<CDOID, Conflict> conflicts = merger.getConflicts();
+    assertEquals(1, conflicts.size());
+    assertInactive(local);
+
+    CDOView view = workspace.openView();
+    assertEquals(1, countModifiedProduct(view));
   }
 
   protected IStore createLocalStore()
@@ -1238,7 +1299,6 @@ public class WorkspaceTest extends AbstractCDOTest
   {
     Product1 product = getModel1Factory().createProduct1();
     product.setName(getProductName(index));
-    product.setDescription("Description " + index);
     product.setVat(VAT.VAT15);
     return product;
   }
@@ -1273,7 +1333,7 @@ public class WorkspaceTest extends AbstractCDOTest
     return "Product No" + index;
   }
 
-  private int modifyProduct(CDOTransaction transaction, int i)
+  private int modifyProduct(CDOTransaction transaction, int i, String prefix)
   {
     int count = 0;
     for (EObject object : transaction.getResource(RESOURCE).getContents())
@@ -1284,7 +1344,7 @@ public class WorkspaceTest extends AbstractCDOTest
         String name = product.getName();
         if (getProductName(i).equals(name))
         {
-          product.setName("MODIFIED_" + name);
+          product.setName(prefix + name);
           ++count;
         }
       }
@@ -1296,13 +1356,15 @@ public class WorkspaceTest extends AbstractCDOTest
   private int countModifiedProduct(CDOView view)
   {
     int count = 0;
-    for (EObject object : transaction.getResource(RESOURCE).getContents())
+    for (EObject object : view.getResource(RESOURCE).getContents())
     {
       if (object instanceof Product1)
       {
         Product1 product = (Product1)object;
-        if (product.getName().startsWith("MODIFIED_"))
+        String name = product.getName();
+        if (name.startsWith("MODIFIED"))
         {
+          IOUtil.ERR().println(name);
           ++count;
         }
       }

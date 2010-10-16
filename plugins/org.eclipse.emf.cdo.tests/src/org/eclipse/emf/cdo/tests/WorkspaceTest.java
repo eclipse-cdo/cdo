@@ -95,6 +95,7 @@ public class WorkspaceTest extends AbstractCDOTest
   @Override
   protected void doSetUp() throws Exception
   {
+    skipUnlessAuditing();
     disableConsole();
     super.doSetUp();
 

@@ -899,7 +899,14 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
       InternalCDORevision oldRevision = getRevisionByVersion(list, oldVersion);
       if (oldRevision != null)
       {
-        oldRevision.setRevised(revision.getTimeStamp() - 1);
+        if (getRepository().isSupportingAudits())
+        {
+          oldRevision.setRevised(revision.getTimeStamp() - 1);
+        }
+        else
+        {
+          list.remove(oldRevision);
+        }
       }
     }
 

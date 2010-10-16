@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
 import org.eclipse.emf.ecore.EModelElement;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -120,6 +121,9 @@ public interface IStore
   public long getLastMetaID();
 
   /**
+   * Returns a map filled with the property entries for the requested property <code>names</code> if names is not
+   * <code>null</code> and not {@link Collection#isEmpty() empty}, all existing property entries otherwise.
+   * 
    * @since 3.0
    */
   public Map<String, String> getPropertyValues(Set<String> names);

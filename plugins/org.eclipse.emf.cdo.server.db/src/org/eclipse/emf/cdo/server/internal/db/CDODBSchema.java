@@ -49,6 +49,9 @@ public class CDODBSchema extends DBSchema
   public static final String SQL_SELECT_PROPERTIES = "SELECT " + PROPERTIES_VALUE + " FROM " + PROPERTIES + " WHERE " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       + PROPERTIES_NAME + "=?"; //$NON-NLS-1$
 
+  public static final String SQL_SELECT_ALL_PROPERTIES = "SELECT " + PROPERTIES_NAME + ", " + PROPERTIES_VALUE //$NON-NLS-1$ //$NON-NLS-2$
+      + " FROM " + PROPERTIES; //$NON-NLS-1$
+
   /**
    * DBTable cdo_package_units
    */
@@ -201,13 +204,13 @@ public class CDODBSchema extends DBSchema
   public static final IDBIndex INDEX_LOBS_ID = //
   LOBS.addIndex(IDBIndex.Type.PRIMARY_KEY, LOBS_ID);
 
-  public static final String SQL_QUERY_LOBS = "SELECT 1 FROM " + CDODBSchema.LOBS + " WHERE " + CDODBSchema.LOBS_ID + "=?"; //$NON-NLS-1$
+  public static final String SQL_QUERY_LOBS = "SELECT 1 FROM " + CDODBSchema.LOBS + " WHERE " + CDODBSchema.LOBS_ID + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-  public static final String SQL_LOAD_LOB = "SELECT " + CDODBSchema.LOBS_SIZE + ", " + CDODBSchema.LOBS_BDATA + ", " + CDODBSchema.LOBS_CDATA + " FROM " + CDODBSchema.LOBS + " WHERE " + CDODBSchema.LOBS_ID + "=?"; //$NON-NLS-1$
+  public static final String SQL_LOAD_LOB = "SELECT " + CDODBSchema.LOBS_SIZE + ", " + CDODBSchema.LOBS_BDATA + ", " + CDODBSchema.LOBS_CDATA + " FROM " + CDODBSchema.LOBS + " WHERE " + CDODBSchema.LOBS_ID + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 
-  public static final String SQL_WRITE_BLOB = "INSERT INTO " + CDODBSchema.LOBS + "(" + CDODBSchema.LOBS_ID + ", " + CDODBSchema.LOBS_SIZE + ", " + CDODBSchema.LOBS_BDATA + ") VALUES(?, ?, ?)"; //$NON-NLS-1$
+  public static final String SQL_WRITE_BLOB = "INSERT INTO " + CDODBSchema.LOBS + "(" + CDODBSchema.LOBS_ID + ", " + CDODBSchema.LOBS_SIZE + ", " + CDODBSchema.LOBS_BDATA + ") VALUES(?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
-  public static final String SQL_WRITE_CLOB = "INSERT INTO " + CDODBSchema.LOBS + "(" + CDODBSchema.LOBS_ID + ", " + CDODBSchema.LOBS_SIZE + ", " + CDODBSchema.LOBS_CDATA + ") VALUES(?, ?, ?)"; //$NON-NLS-1$
+  public static final String SQL_WRITE_CLOB = "INSERT INTO " + CDODBSchema.LOBS + "(" + CDODBSchema.LOBS_ID + ", " + CDODBSchema.LOBS_SIZE + ", " + CDODBSchema.LOBS_CDATA + ") VALUES(?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
   /**
    * Name of object table

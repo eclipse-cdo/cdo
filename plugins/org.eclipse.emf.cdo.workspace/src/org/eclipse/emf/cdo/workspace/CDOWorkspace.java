@@ -31,7 +31,7 @@ public interface CDOWorkspace extends CDORevisionProvider, Closeable
 
   public long getTimeStamp();
 
-  public boolean isReadOnly();
+  public boolean isFixed();
 
   public CDOWorkspaceMemory getMemory();
 

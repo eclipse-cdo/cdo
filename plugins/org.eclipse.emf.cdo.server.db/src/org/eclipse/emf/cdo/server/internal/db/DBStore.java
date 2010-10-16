@@ -232,26 +232,49 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     try
     {
       connection = getConnection();
-      selectStmt = connection.prepareStatement(CDODBSchema.SQL_SELECT_PROPERTIES);
-
       Map<String, String> result = new HashMap<String, String>();
-      for (String name : names)
+      boolean allProperties = names == null || names.isEmpty();
+      if (allProperties)
       {
-        selectStmt.setString(1, name);
+        selectStmt = connection.prepareStatement(CDODBSchema.SQL_SELECT_ALL_PROPERTIES);
         ResultSet resultSet = null;
 
         try
         {
           resultSet = selectStmt.executeQuery();
-          if (resultSet.next())
+          while (resultSet.next())
           {
-            String value = resultSet.getString(1);
-            result.put(name, value);
+            String key = resultSet.getString(1);
+            String value = resultSet.getString(2);
+            result.put(key, value);
           }
         }
         finally
         {
           DBUtil.close(resultSet);
+        }
+      }
+      else
+      {
+        selectStmt = connection.prepareStatement(CDODBSchema.SQL_SELECT_PROPERTIES);
+        for (String name : names)
+        {
+          selectStmt.setString(1, name);
+          ResultSet resultSet = null;
+
+          try
+          {
+            resultSet = selectStmt.executeQuery();
+            if (resultSet.next())
+            {
+              String value = resultSet.getString(1);
+              result.put(name, value);
+            }
+          }
+          finally
+          {
+            DBUtil.close(resultSet);
+          }
         }
       }
 

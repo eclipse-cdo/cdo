@@ -323,6 +323,12 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
   public Map<String, String> getPropertyValues(Set<String> names)
   {
+    if (names == null || names.isEmpty())
+    {
+      // TODO: implement ObjectivityStore.getPropertyValues(names)
+      throw new UnsupportedOperationException();
+    }
+
     ObjySession objySession = objyConnection.getReadSessionFromPool("Main");
     objySession.begin();
     Map<String, String> properties = objyPropertyMapHandler.getPropertyValues(names);

@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
@@ -82,7 +83,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
   private static final String PROP_TIME_STAMP = "org.eclipse.emf.cdo.workspace.timeStamp"; //$NON-NLS-1$
 
-  private static final String PROP_READ_ONLY = "org.eclipse.emf.cdo.workspace.readOnly"; //$NON-NLS-1$
+  private static final String PROP_FIXED = "org.eclipse.emf.cdo.workspace.fixed"; //$NON-NLS-1$
 
   private IManagedContainer container;
 
@@ -96,7 +97,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
   private long timeStamp;
 
-  private boolean readOnly;
+  private boolean fixed;
 
   private CDOSessionConfigurationFactory remoteSessionConfigurationFactory;
 
@@ -110,10 +111,10 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
     this.branchPath = StringUtil.isEmpty(branchPath) ? CDOBranch.MAIN_BRANCH_NAME : branchPath;
     this.timeStamp = timeStamp;
-    readOnly = timeStamp != CDOBranchPoint.UNSPECIFIED_DATE;
+    fixed = timeStamp != CDOBranchPoint.UNSPECIFIED_DATE;
 
-    saveProperties();
     checkout();
+    saveProperties();
   }
 
   public CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote)
@@ -165,6 +166,12 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
           public boolean handleRevision(CDORevision revision)
           {
             context[0] = accessor.rawStore((InternalCDORevision)revision, context[0], monitor);
+            long commitTime = revision.getTimeStamp();
+            if (commitTime > timeStamp)
+            {
+              timeStamp = commitTime;
+            }
+
             return true;
           }
         };
@@ -200,9 +207,9 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     return timeStamp;
   }
 
-  public boolean isReadOnly()
+  public boolean isFixed()
   {
-    return readOnly;
+    return fixed;
   }
 
   public InternalCDOWorkspaceMemory getMemory()
@@ -255,20 +262,34 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     try
     {
       InternalCDOBranchManager branchManager = session.getBranchManager();
-      CDOBranchPoint base = branchManager.getBranch(branchPath).getPoint(timeStamp);
+      CDOBranchPoint base = branchManager.getBranch(branchPath).getPoint(this.timeStamp);
       CDOBranchPoint remote = branchManager.getBranch(branchPath).getPoint(timeStamp);
 
       CDOBranchPointRange range = CDOBranchUtil.createRange(base, remote);
       CDOChangeSetData remoteData = session.getSessionProtocol().loadChangeSets(range)[0];
-      CDOChangeSet remoteChanges = CDORevisionDeltaUtil.createChangeSet(base, remote, remoteData);
 
       CDOChangeSetData localData = getLocalChanges();
-      CDOChangeSet localChanges = CDORevisionDeltaUtil.createChangeSet(base, null, localData);
-
-      CDOChangeSetData result = merger.merge(localChanges, remoteChanges);
+      if (!localData.isEmpty())
+      {
+        CDOChangeSet localChanges = CDORevisionDeltaUtil.createChangeSet(base, null, localData);
+        CDOChangeSet remoteChanges = CDORevisionDeltaUtil.createChangeSet(base, remote, remoteData);
+        remoteData = merger.merge(localChanges, remoteChanges);
+      }
 
       InternalCDOTransaction transaction = (InternalCDOTransaction)openTransaction();
-      transaction.applyChangeSetData(result, memory, this, null);
+      transaction.applyChangeSetData(remoteData, new CDORevisionProvider()
+      {
+        public CDORevision getRevision(CDOID id)
+        {
+          CDORevision revision = memory.getRevision(id);
+          if (revision == null)
+          {
+            revision = CDOWorkspaceImpl.this.getRevision(id);
+          }
+
+          return revision;
+        }
+      }, this, null);
       return transaction;
     }
     finally
@@ -479,9 +500,9 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
     if (view instanceof CDOTransaction)
     {
-      if (readOnly)
+      if (fixed)
       {
-        throw new ReadOnlyException("Workspace is read-only");
+        throw new ReadOnlyException("Workspace is fixed");
       }
 
       CDOTransaction transaction = (CDOTransaction)view;
@@ -512,16 +533,16 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     Map<String, String> props = new HashMap<String, String>();
     props.put(PROP_BRANCH_PATH, branchPath);
     props.put(PROP_TIME_STAMP, String.valueOf(timeStamp));
-    props.put(PROP_READ_ONLY, String.valueOf(readOnly));
+    props.put(PROP_FIXED, String.valueOf(fixed));
     localRepository.getStore().setPropertyValues(props);
   }
 
   protected void loadProperties()
   {
-    Set<String> names = new HashSet<String>(Arrays.asList(PROP_BRANCH_PATH, PROP_TIME_STAMP, PROP_READ_ONLY));
+    Set<String> names = new HashSet<String>(Arrays.asList(PROP_BRANCH_PATH, PROP_TIME_STAMP, PROP_FIXED));
     Map<String, String> props = localRepository.getStore().getPropertyValues(names);
     branchPath = props.get(PROP_BRANCH_PATH);
     timeStamp = Integer.parseInt(props.get(PROP_TIME_STAMP));
-    readOnly = Boolean.parseBoolean(props.get(PROP_READ_ONLY));
+    fixed = Boolean.parseBoolean(props.get(PROP_FIXED));
   }
 }

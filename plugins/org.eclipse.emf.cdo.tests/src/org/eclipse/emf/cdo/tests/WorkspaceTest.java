@@ -959,6 +959,103 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
 
+  public void testUpdateAfterMasterModify() throws Exception
+  {
+    InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+    assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
+
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof Product1)
+      {
+        Product1 product = (Product1)object;
+        product.setName("MODIFIED_" + product.getName());
+      }
+    }
+
+    transaction.commit();
+
+    CDOTransaction local = workspace.update(null);
+    assertEquals(true, local.isDirty());
+    assertEquals(0, local.getNewObjects().size());
+    assertEquals(PRODUCTS, local.getDirtyObjects().size());
+    assertEquals(0, local.getDetachedObjects().size());
+
+    local.commit();
+    assertEquals(false, local.isDirty());
+    assertEquals(0, local.getNewObjects().size());
+    assertEquals(0, local.getDirtyObjects().size());
+    assertEquals(0, local.getDetachedObjects().size());
+
+    CDOView view = workspace.openView();
+    resource = view.getResource(RESOURCE);
+    assertEquals(totalObjects, dumpObjects(null, resource));
+  }
+
+  public void testUpdateAfterMasterAdd() throws Exception
+  {
+    InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+    assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
+
+    CDOResource resource = transaction.getResource(RESOURCE);
+    resource.getContents().add(createProduct(9999));
+    transaction.commit();
+
+    CDOTransaction local = workspace.update(null);
+    assertEquals(true, local.isDirty());
+    assertEquals(1, local.getNewObjects().size());
+    assertEquals(1, local.getDirtyObjects().size());
+    assertEquals(0, local.getDetachedObjects().size());
+
+    local.commit();
+    assertEquals(false, local.isDirty());
+    assertEquals(0, local.getNewObjects().size());
+    assertEquals(0, local.getDirtyObjects().size());
+    assertEquals(0, local.getDetachedObjects().size());
+
+    CDOView view = workspace.openView();
+    resource = view.getResource(RESOURCE);
+    assertEquals(totalObjects + 1, dumpObjects(null, resource));
+  }
+
+  public void testUpdateAfterMasterDetach() throws Exception
+  {
+    InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+    assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
+
+    CDOResource resource = transaction.getResource(RESOURCE);
+    for (EObject object : resource.getContents())
+    {
+      if (object instanceof SalesOrder)
+      {
+        ((SalesOrder)object).getOrderDetails().clear();
+      }
+
+      if (object instanceof Product1)
+      {
+        ((Product1)object).getOrderDetails().clear();
+      }
+    }
+
+    transaction.commit();
+
+    CDOTransaction local = workspace.update(null);
+    assertEquals(true, local.isDirty());
+    assertEquals(SALES_ORDERS + PRODUCTS, local.getDirtyObjects().size());
+    assertEquals(ORDER_DETAILS, local.getDetachedObjects().size());
+
+    local.commit();
+    assertEquals(false, local.isDirty());
+    assertEquals(0, local.getNewObjects().size());
+    assertEquals(0, local.getDirtyObjects().size());
+    assertEquals(0, local.getDetachedObjects().size());
+
+    CDOView view = workspace.openView();
+    resource = view.getResource(RESOURCE);
+    assertEquals(totalObjects - ORDER_DETAILS, dumpObjects(null, resource));
+  }
+
   protected IStore createLocalStore()
   {
     return MEMStoreUtil.createMEMStore();

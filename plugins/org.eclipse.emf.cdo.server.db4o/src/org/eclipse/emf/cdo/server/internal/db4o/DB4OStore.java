@@ -92,6 +92,11 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
 
   public Map<String, String> getPropertyValues(Set<String> names)
   {
+    if (names == null || names.isEmpty())
+    {
+      return new HashMap<String, String>(getServerInfo().getProperties());
+    }
+
     Map<String, String> result = new HashMap<String, String>();
     for (String key : names)
     {

@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
-import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -46,10 +45,11 @@ public class LoadChangeSetsRequest extends CDOClientRequest<CDOChangeSetData[]>
   @Override
   protected CDOChangeSetData[] confirming(CDODataInput in) throws IOException
   {
-    CDOChangeSetData[] result = new CDOChangeSet[ranges.length];
+    CDOChangeSetData[] result = new CDOChangeSetData[ranges.length];
     for (int i = 0; i < result.length; i++)
     {
-      result[i] = in.readCDOChangeSetData();
+      CDOChangeSetData changeSetData = in.readCDOChangeSetData();
+      result[i] = changeSetData;
     }
 
     return result;

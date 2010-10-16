@@ -76,6 +76,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       orders[i] = getModel1Factory().createSalesOrder();
       orders[i].setId(i);
     }
+
     return orders;
   }
 
@@ -86,6 +87,76 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
 
     // Adds our handler.
     // getRepository().addHandler(printHandler);
+  }
+
+  public void testRemoveFromContainerThenFromReferenceList() throws Exception
+  {
+    // Creates a customer and commits.
+    Customer customer = getModel1Factory().createCustomer();
+    customer.setName("customer");
+    Company company = getModel1Factory().createCompany();
+
+    // Creates a new order and adds/removes it several times before committing.
+    SalesOrder order[] = createSalesOrders(7);
+    int[] positions;
+
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/test1");
+      resource.getContents().add(customer);
+      resource.getContents().add(company);
+
+      company.getSalesOrders().clear();
+      customer.getSalesOrders().clear();
+
+      for (int i = 0; i < order.length; i++)
+      {
+        company.getSalesOrders().add(order[i]);
+        customer.getSalesOrders().add(order[i]);
+      }
+
+      transaction.commit();
+
+      company.getSalesOrders().remove(5);
+      company.getSalesOrders().remove(3);
+
+      customer.getSalesOrders().remove(5);
+      customer.getSalesOrders().remove(3);
+
+      positions = new int[customer.getSalesOrders().size()];
+      for (int i = 0; i < customer.getSalesOrders().size(); i++)
+      {
+        positions[i] = customer.getSalesOrders().get(i).getId();
+      }
+
+      transaction.commit();
+
+      session.close();
+    }
+
+    // Checks that the other transaction got the right invalidation.
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getResource("/test1");
+
+      Customer testCustomer = (Customer)resource.getContents().get(0);
+      EList<SalesOrder> orders = testCustomer.getSalesOrders();
+
+      for (SalesOrder o : orders)
+      {
+        System.out.println("b: " + o.getId());
+      }
+
+      for (int i = 0; i < orders.size(); i++)
+      {
+        assertEquals(positions[i], orders.get(i).getId());
+      }
+
+      transaction.close();
+      session.close();
+    }
   }
 
   /**
@@ -311,7 +382,6 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       transaction.close();
       session.close();
     }
-
   }
 
   public void testListChanges06() throws Exception
@@ -376,7 +446,6 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       transaction.close();
       session.close();
     }
-
   }
 
   public void testListChanges05() throws Exception
@@ -440,7 +509,6 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       transaction.close();
       session.close();
     }
-
   }
 
   public void testListChanges04() throws Exception
@@ -501,7 +569,6 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       transaction.close();
       session.close();
     }
-
   }
 
   public void testListChanges03() throws Exception
@@ -561,7 +628,6 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       transaction.close();
       session.close();
     }
-
   }
 
   public void testListChanges02() throws Exception
@@ -623,7 +689,6 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       transaction.close();
       session.close();
     }
-
   }
 
   public void testListChanges01() throws Exception
@@ -684,7 +749,6 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       transaction.close();
       session.close();
     }
-
   }
 
   public void testAddMoveMoveRemove() throws Exception
@@ -746,7 +810,6 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       transaction.close();
       session.close();
     }
-
   }
 
   public void testMultipleMove() throws Exception
@@ -817,7 +880,6 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       transaction.close();
       session.close();
     }
-
   }
 
   public void testRemoveAdd() throws Exception
@@ -877,7 +939,6 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       transaction.close();
       session.close();
     }
-
   }
 
   public void testAddRemoveWithAdditionalMoves() throws Exception
@@ -936,7 +997,6 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       transaction.close();
       session.close();
     }
-
   }
 
   public void testAddRemoveWithAdditionalAdds() throws Exception
@@ -989,7 +1049,6 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       transaction.close();
       session.close();
     }
-
   }
 
   public void testOptimizeAddRemove() throws Exception
@@ -1145,7 +1204,6 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       transaction.close();
       session.close();
     }
-
   }
 
   /**
@@ -1203,6 +1261,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
           orders.add(order[i]);
         }
       }
+
       System.out.println("]");
       transaction.commit();
 
@@ -1293,6 +1352,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       {
         System.out.println(positions[i] + " => " + orders.get(i).getId());
       }
+
       for (int i = 0; i < positions.length && positions[i] != -1; i++)
       {
         assertEquals(positions[i], orders.get(i).getId());
@@ -1301,7 +1361,5 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       transaction.close();
       session.close();
     }
-
   }
-
 }

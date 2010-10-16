@@ -229,7 +229,20 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         CDOStore store = view.getStore();
         if (store != null)
         {
-          store.set(wrapper, oppositeReference, 0, this);
+          int index;
+          if (oppositeReference.isMany())
+          {
+            EObject eObject = wrapper.cdoInternalInstance();
+            @SuppressWarnings("unchecked")
+            EList<Object> list = (EList<Object>)eObject.eGet(oppositeReference);
+            index = list.indexOf(instance);
+          }
+          else
+          {
+            index = 0;
+          }
+
+          store.set(wrapper, oppositeReference, index, this);
         }
       }
     }

@@ -259,13 +259,18 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
                 // processing the next feature deltas.
                 skip = false;
                 iterator.remove();
+
+                // SET
+                if (fd instanceof CDOSetFeatureDelta)
+                {
+                  // If the removed delta is SET we add the REMOVE to the feature deltas. We do not need to adjust the
+                  // other feature deltas because SET do not modify the list.
+                  return true;
+                }
               }
 
               continue;
             }
-
-            // SET
-            // Should we take care of it?
 
             // ADD
             if (fd instanceof CDOAddFeatureDelta)
@@ -360,10 +365,8 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
             }
           }
 
-          // If the removed delta was SET we add the REMOVE to the feature deltas.
-          // If the removed delta was ADD we do not add the REMOVE to the feature deltas.
-          boolean addRemoveDelta = delta instanceof CDOSetFeatureDelta;
-          return addRemoveDelta;
+          // If the removed delta was ADD so we do not add the REMOVE to the feature deltas.
+          return false;
         }
       }
     }

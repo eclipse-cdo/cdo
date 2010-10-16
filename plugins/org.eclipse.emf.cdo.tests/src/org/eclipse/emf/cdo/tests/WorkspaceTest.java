@@ -1158,6 +1158,8 @@ public class WorkspaceTest extends AbstractCDOTest
 
   public void testConflictMasterAndLocalModify() throws Exception
   {
+    CDOID id = CDOUtil.getCDOObject(products.get(1)).cdoID();
+
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
     assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
 
@@ -1183,6 +1185,7 @@ public class WorkspaceTest extends AbstractCDOTest
 
     Map<CDOID, Conflict> conflicts = merger.getConflicts();
     assertEquals(1, conflicts.size());
+    assertEquals(id, conflicts.values().iterator().next().getID());
     assertInactive(local);
 
     CDOView view = workspace.openView();

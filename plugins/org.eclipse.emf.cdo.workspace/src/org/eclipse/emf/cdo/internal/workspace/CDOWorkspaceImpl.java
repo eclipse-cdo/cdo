@@ -535,7 +535,14 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
   protected InternalCDOSession openRemoteSession()
   {
     CDOSessionConfiguration configuration = remoteSessionConfigurationFactory.createSessionConfiguration();
-    return (InternalCDOSession)configuration.openSession();
+    InternalCDOSession session = (InternalCDOSession)configuration.openSession();
+    if (!session.getRepositoryInfo().isSupportingAudits())
+    {
+      session.close();
+      throw new IllegalStateException("Remoter repository does not support auditing");
+    }
+
+    return session;
   }
 
   protected void saveProperties()

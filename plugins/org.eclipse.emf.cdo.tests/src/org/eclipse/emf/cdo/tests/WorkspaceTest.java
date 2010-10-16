@@ -987,6 +987,7 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(0, local.getNewObjects().size());
     assertEquals(0, local.getDirtyObjects().size());
     assertEquals(0, local.getDetachedObjects().size());
+    assertEquals(0, workspace.getMemory().getIDs().size());
 
     CDOView view = workspace.openView();
     resource = view.getResource(RESOURCE);
@@ -1013,6 +1014,7 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(0, local.getNewObjects().size());
     assertEquals(0, local.getDirtyObjects().size());
     assertEquals(0, local.getDetachedObjects().size());
+    assertEquals(0, workspace.getMemory().getIDs().size());
 
     CDOView view = workspace.openView();
     resource = view.getResource(RESOURCE);
@@ -1050,6 +1052,7 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(0, local.getNewObjects().size());
     assertEquals(0, local.getDirtyObjects().size());
     assertEquals(0, local.getDetachedObjects().size());
+    assertEquals(0, workspace.getMemory().getIDs().size());
 
     CDOView view = workspace.openView();
     resource = view.getResource(RESOURCE);

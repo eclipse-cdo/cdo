@@ -277,6 +277,15 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
       }
 
       InternalCDOTransaction transaction = (InternalCDOTransaction)openTransaction();
+      transaction.addTransactionHandler(new CDODefaultTransactionHandler2()
+      {
+        @Override
+        public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+        {
+          memory.clear();
+        }
+      });
+
       transaction.applyChangeSetData(remoteData, new CDORevisionProvider()
       {
         public CDORevision getRevision(CDOID id)
@@ -290,6 +299,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
           return revision;
         }
       }, this, null);
+
       return transaction;
     }
     finally

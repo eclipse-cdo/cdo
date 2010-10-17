@@ -56,23 +56,6 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     CDOChangeSet source = getRemoteChangeSet();
     CDOChangeSetData result = merger.merge(target, source);
 
-    // Map<CDOID, InternalCDORevisionDelta> deltas = new HashMap<CDOID, InternalCDORevisionDelta>();
-    // for (CDORevisionKey key : result.getChangedObjects())
-    // {
-    // deltas.put(key.getID(), (InternalCDORevisionDelta)key);
-    // }
-    //
-    // for (CDORevisionKey key : source.getChangedObjects())
-    // {
-    // CDOID id = key.getID();
-    // InternalCDORevisionDelta delta = deltas.get(id);
-    // if (delta != null)
-    // {
-    // CDOBranchVersion branchVersion = ((CDORevisionDelta)key).getTarget();
-    // delta.setTarget(branchVersion.getBranch().getVersion(branchVersion.getVersion()));
-    // }
-    // }
-
     final InternalCDOTransaction transaction = (InternalCDOTransaction)getTransaction();
     final InternalCDOSession session = transaction.getSession();
     final InternalCDORevisionManager revisionManager = session.getRevisionManager();
@@ -81,7 +64,33 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     {
       public CDORevision getRevision(CDOID id)
       {
-        return revisionManager.getRevision(id, transaction, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+        CDORevision revision = getCleanRevision(transaction, id);
+        if (revision == null)
+        {
+          revision = revisionManager.getRevision(id, transaction, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+        }
+
+        return revision;
+      }
+
+      private CDORevision getCleanRevision(InternalCDOTransaction transaction, CDOID id)
+      {
+        CDOObject object = transaction.getDirtyObjects().get(id);
+        if (object == null)
+        {
+          object = transaction.getDetachedObjects().get(id);
+        }
+
+        if (object != null)
+        {
+          InternalCDORevision revision = transaction.getCleanRevisions().get(object);
+          if (revision != null)
+          {
+            return revision;
+          }
+        }
+
+        return null;
       }
     };
 

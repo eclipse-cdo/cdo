@@ -169,7 +169,7 @@ public class SessionTest extends AbstractCDOTest
 
     final CountDownLatch startLatch = new CountDownLatch(1);
     final CountDownLatch stopLatch = new CountDownLatch(1);
-
+    final long[] commitTime = { 0 };
     new Thread()
     {
       @Override
@@ -180,7 +180,7 @@ public class SessionTest extends AbstractCDOTest
           startLatch.await();
 
           msg("Committing NOW!");
-          transaction.commit();
+          commitTime[0] = transaction.commit().getTimeStamp();
 
           stopLatch.countDown();
         }
@@ -194,8 +194,8 @@ public class SessionTest extends AbstractCDOTest
     CDOSession session2 = openSession();
 
     startLatch.countDown();
-    assertEquals(true, session2.waitForUpdate(System.currentTimeMillis(), DEFAULT_TIMEOUT));
     stopLatch.await();
+    assertEquals(true, session2.waitForUpdate(commitTime[0], DEFAULT_TIMEOUT));
 
     transaction.getSession().close();
     session2.close();

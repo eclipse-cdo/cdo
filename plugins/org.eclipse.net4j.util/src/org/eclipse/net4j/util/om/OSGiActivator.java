@@ -180,8 +180,76 @@ public abstract class OSGiActivator implements BundleActivator
    * @author Eike Stepper
    * @since 3.1
    */
+  public static abstract class ConfigHandler
+  {
+    public ConfigHandler()
+    {
+    }
+
+    public final void start(File configFile) throws Exception
+    {
+      FileInputStream fis = null;
+
+      try
+      {
+        fis = new FileInputStream(configFile);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+
+        Object config = ois.readObject();
+        IOUtil.close(ois);
+        startWithConfig(config);
+      }
+      finally
+      {
+        IOUtil.close(fis);
+      }
+    }
+
+    public final void stop(File configFile) throws Exception
+    {
+      FileOutputStream fos = null;
+
+      try
+      {
+        Object config = stopWithConfig();
+
+        fos = new FileOutputStream(configFile);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(config);
+        IOUtil.close(oos);
+      }
+      finally
+      {
+        IOUtil.close(fos);
+      }
+    }
+
+    protected abstract void startWithConfig(Object config) throws Exception;
+
+    protected abstract Object stopWithConfig() throws Exception;
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.1
+   */
   public static abstract class WithConfig extends OSGiActivator
   {
+    private ConfigHandler handler = new ConfigHandler()
+    {
+      @Override
+      protected void startWithConfig(Object config) throws Exception
+      {
+        doStartWithConfig(config);
+      }
+
+      @Override
+      protected Object stopWithConfig() throws Exception
+      {
+        return doStopWithConfig();
+      }
+    };
+
     public WithConfig(OMBundle bundle)
     {
       super(bundle);
@@ -190,54 +258,18 @@ public abstract class OSGiActivator implements BundleActivator
     @Override
     protected final void doStart() throws Exception
     {
-      FileInputStream fis = null;
-
-      try
+      File configFile = getOMBundle().getConfigFile();
+      if (configFile.exists())
       {
-        File configFile = OM.BUNDLE.getConfigFile();
-        if (configFile.exists())
-        {
-          fis = new FileInputStream(configFile);
-          ObjectInputStream ois = new ObjectInputStream(fis);
-
-          Object config = ois.readObject();
-          IOUtil.close(ois);
-          doStartWithConfig(config);
-        }
-      }
-      catch (Exception ex)
-      {
-        getOMBundle().logger().error(ex);
-      }
-      finally
-      {
-        IOUtil.close(fis);
+        handler.start(configFile);
       }
     }
 
     @Override
     protected final void doStop() throws Exception
     {
-      FileOutputStream fos = null;
-
-      try
-      {
-        Object config = doStopWithConfig();
-
-        File configFile = OM.BUNDLE.getConfigFile();
-        fos = new FileOutputStream(configFile);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(config);
-        IOUtil.close(oos);
-      }
-      catch (Exception ex)
-      {
-        getOMBundle().logger().error(ex);
-      }
-      finally
-      {
-        IOUtil.close(fos);
-      }
+      File configFile = getOMBundle().getConfigFile();
+      handler.stop(configFile);
     }
 
     protected abstract void doStartWithConfig(Object config) throws Exception;

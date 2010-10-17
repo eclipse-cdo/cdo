@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -12,10 +12,13 @@ package org.eclipse.net4j.util.ui;
 
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OSGiActivator;
+import org.eclipse.net4j.util.om.OSGiActivator.ConfigHandler;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.osgi.framework.BundleContext;
+
+import java.io.File;
 
 /**
  * @author Eike Stepper
@@ -106,5 +109,53 @@ public class UIActivator extends AbstractUIPlugin
    */
   protected void doStop() throws Exception
   {
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.1
+   */
+  public static abstract class WithConfig extends UIActivator
+  {
+    private ConfigHandler handler = new ConfigHandler()
+    {
+      @Override
+      protected void startWithConfig(Object config) throws Exception
+      {
+        doStartWithConfig(config);
+      }
+
+      @Override
+      protected Object stopWithConfig() throws Exception
+      {
+        return doStopWithConfig();
+      }
+    };
+
+    public WithConfig(OMBundle bundle)
+    {
+      super(bundle);
+    }
+
+    @Override
+    protected final void doStart() throws Exception
+    {
+      File configFile = getOMBundle().getConfigFile();
+      if (configFile.exists())
+      {
+        handler.start(configFile);
+      }
+    }
+
+    @Override
+    protected final void doStop() throws Exception
+    {
+      File configFile = getOMBundle().getConfigFile();
+      handler.stop(configFile);
+    }
+
+    protected abstract void doStartWithConfig(Object config) throws Exception;
+
+    protected abstract Object doStopWithConfig() throws Exception;
   }
 }

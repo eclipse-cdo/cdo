@@ -16,7 +16,9 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceMemory;
 
+import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -191,6 +193,29 @@ public class FolderCDOWorkspaceMemory extends AbstractCDOWorkspaceMemory
       {
         throw new IllegalStateException("File does still exist: " + file.getAbsolutePath());
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class Factory extends org.eclipse.net4j.util.factory.Factory
+  {
+    public static final String TYPE = "folder";
+
+    public Factory()
+    {
+      super(InternalCDOWorkspaceMemory.PRODUCT_GROUP, TYPE);
+    }
+
+    public Factory(String productGroup, String type)
+    {
+      super(productGroup, type);
+    }
+
+    public FolderCDOWorkspaceMemory create(String description) throws ProductCreationException
+    {
+      return new FolderCDOWorkspaceMemory(new File(description));
     }
   }
 }

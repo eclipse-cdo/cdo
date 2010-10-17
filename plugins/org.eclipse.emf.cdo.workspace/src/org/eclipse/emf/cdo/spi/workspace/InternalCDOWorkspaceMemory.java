@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.workspace.CDOWorkspaceMemory;
  */
 public interface InternalCDOWorkspaceMemory extends CDOWorkspaceMemory
 {
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.workspace.memories";
+
   public InternalCDOWorkspace getWorkspace();
 
   public void init(InternalCDOWorkspace workspace);

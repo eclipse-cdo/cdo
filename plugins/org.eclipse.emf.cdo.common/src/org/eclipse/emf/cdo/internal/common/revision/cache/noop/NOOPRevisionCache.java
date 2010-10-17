@@ -78,7 +78,7 @@ public class NOOPRevisionCache extends Lifecycle implements InternalCDORevisionC
   public boolean addRevision(CDORevision revision)
   {
     CheckUtil.checkArg(revision, "revision");
-    return false;
+    return true;
   }
 
   public InternalCDORevision removeRevision(CDOID id, CDOBranchVersion branchVersion)

@@ -12,6 +12,7 @@
 -->
 
 <plugin>
+
    <extension
          point="org.eclipse.team.ui.configurationWizards">
       <wizard
@@ -229,6 +230,22 @@
             preferredPerspectives="org.eclipse.ui.resourcePerspective"
             project="true">
       </wizard>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="org.eclipse.emf.cdo.ui.ide"
+            name="CDO">
+      </category>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.emf.cdo.ui.ide"
+            class="org.eclipse.emf.cdo.ui.internal.ide.views.RepositoriesView"
+            icon="icons/sample.gif"
+            id="org.eclipse.emf.cdo.ui.ide.RepositoriesView"
+            name="CDO Repositories">
+      </view>
    </extension>
 
 </plugin>

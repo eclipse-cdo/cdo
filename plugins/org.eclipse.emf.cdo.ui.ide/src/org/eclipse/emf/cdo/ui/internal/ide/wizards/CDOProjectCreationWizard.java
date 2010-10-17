@@ -50,7 +50,6 @@ import java.net.URI;
 /**
  * @author Victor Roldan Betancort
  */
-
 public class CDOProjectCreationWizard extends Wizard implements IWorkbenchWizard
 {
   private WizardNewProjectCreationPage projectCreationPage;
@@ -148,8 +147,8 @@ public class CDOProjectCreationWizard extends Wizard implements IWorkbenchWizard
     {
       public void run(IProgressMonitor monitor) throws InvocationTargetException
       {
-        CreateProjectOperation op = new CreateProjectOperation(description, Messages
-            .getString("CDOProjectCreationWizard.0")); //$NON-NLS-1$
+        CreateProjectOperation op = new CreateProjectOperation(description,
+            Messages.getString("CDOProjectCreationWizard.0")); //$NON-NLS-1$
         try
         {
           op.execute(monitor, WorkspaceUndoUtil.getUIInfoAdapter(getShell()));

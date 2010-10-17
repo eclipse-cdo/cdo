@@ -16,8 +16,8 @@
    <extension
          point="org.eclipse.net4j.util.factories">
       <factory
-            class="org.eclipse.emf.cdo.internal.workspace.FolderCDOWorkspaceMemory$Factory"
-            productGroup="org.eclipse.emf.cdo.workspace.memories"
+            class="org.eclipse.emf.cdo.internal.workspace.FolderCDOWorkspaceBase$Factory"
+            productGroup="org.eclipse.emf.cdo.workspace.bases"
             type="folder"/>
    </extension>
 

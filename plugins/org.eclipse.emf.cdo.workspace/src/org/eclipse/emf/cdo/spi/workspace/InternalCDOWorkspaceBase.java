@@ -11,14 +11,14 @@
 package org.eclipse.emf.cdo.spi.workspace;
 
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.workspace.CDOWorkspaceMemory;
+import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase;
 
 /**
  * @author Eike Stepper
  */
-public interface InternalCDOWorkspaceMemory extends CDOWorkspaceMemory
+public interface InternalCDOWorkspaceBase extends CDOWorkspaceBase
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.workspace.memories";
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.workspace.bases";
 
   public InternalCDOWorkspace getWorkspace();
 

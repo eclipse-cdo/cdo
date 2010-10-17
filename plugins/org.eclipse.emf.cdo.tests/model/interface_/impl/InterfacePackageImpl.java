@@ -79,8 +79,7 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
 
     // Obtain or create and register package
     InterfacePackageImpl theInterfacePackage = (InterfacePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof InterfacePackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI)
-        : new InterfacePackageImpl());
+        .get(eNS_URI) : new InterfacePackageImpl());
 
     isInited = true;
 

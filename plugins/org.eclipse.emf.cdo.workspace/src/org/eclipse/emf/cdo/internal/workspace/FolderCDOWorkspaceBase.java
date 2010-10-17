@@ -16,7 +16,9 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceMemory;
+import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase;
+import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase;
+import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -32,11 +34,11 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class FolderCDOWorkspaceMemory extends AbstractCDOWorkspaceMemory
+public class FolderCDOWorkspaceBase extends AbstractCDOWorkspaceBase
 {
   private File folder;
 
-  public FolderCDOWorkspaceMemory(File folder)
+  public FolderCDOWorkspaceBase(File folder)
   {
     this.folder = folder;
   }
@@ -205,7 +207,7 @@ public class FolderCDOWorkspaceMemory extends AbstractCDOWorkspaceMemory
 
     public Factory()
     {
-      super(InternalCDOWorkspaceMemory.PRODUCT_GROUP, TYPE);
+      super(InternalCDOWorkspaceBase.PRODUCT_GROUP, TYPE);
     }
 
     public Factory(String productGroup, String type)
@@ -213,9 +215,9 @@ public class FolderCDOWorkspaceMemory extends AbstractCDOWorkspaceMemory
       super(productGroup, type);
     }
 
-    public FolderCDOWorkspaceMemory create(String description) throws ProductCreationException
+    public CDOWorkspaceBase create(String description) throws ProductCreationException
     {
-      return new FolderCDOWorkspaceMemory(new File(description));
+      return CDOWorkspaceUtil.createFolderWorkspaceBase(new File(description));
     }
   }
 }

@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.workspace.CDOWorkspace;
  */
 public interface InternalCDOWorkspace extends CDOWorkspace
 {
-  public InternalCDOWorkspaceMemory getMemory();
+  public InternalCDOWorkspaceBase getBase();
 
   public InternalRepository getLocalRepository();
 }

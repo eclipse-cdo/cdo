@@ -33,7 +33,7 @@ public interface CDOWorkspace extends CDORevisionProvider, Closeable
 
   public boolean isFixed();
 
-  public CDOWorkspaceMemory getMemory();
+  public CDOWorkspaceBase getBase();
 
   public CDOView openView();
 

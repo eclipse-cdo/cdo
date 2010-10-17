@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
-
 import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.common.util.URI;

@@ -40,7 +40,7 @@ import junit.framework.TestSuite;
  * 
  * @author Martin Fluegge
  */
-@SuppressWarnings( { "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class MapDynamicTest extends MapTest
 {
   private EPackage dynamicPackage;

@@ -43,7 +43,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
-import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceMemory;
+import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler2;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
@@ -89,7 +89,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
   private IManagedContainer container;
 
-  private InternalCDOWorkspaceMemory memory;
+  private InternalCDOWorkspaceBase base;
 
   private InternalRepository localRepository;
 
@@ -105,10 +105,10 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
   private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
 
-  public CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote,
+  public CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote,
       String branchPath, long timeStamp)
   {
-    init(local, memory, remote);
+    init(local, base, remote);
     remoteSessionConfigurationFactory = remote;
 
     this.branchPath = StringUtil.isEmpty(branchPath) ? CDOBranch.MAIN_BRANCH_NAME : branchPath;
@@ -119,14 +119,14 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     saveProperties();
   }
 
-  public CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote)
+  public CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
   {
-    init(local, memory, remote);
+    init(local, base, remote);
     open();
     loadProperties();
   }
 
-  protected void init(IStore local, InternalCDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote)
+  protected void init(IStore local, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
   {
     container = createContainer(local);
     remoteSessionConfigurationFactory = remote;
@@ -134,8 +134,8 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     localRepository = createLocalRepository(local);
     localSession = openLocalSession();
 
-    this.memory = memory;
-    this.memory.init(this);
+    this.base = base;
+    this.base.init(this);
   }
 
   protected void checkout()
@@ -214,9 +214,9 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     return fixed;
   }
 
-  public InternalCDOWorkspaceMemory getMemory()
+  public InternalCDOWorkspaceBase getBase()
   {
-    return memory;
+    return base;
   }
 
   public CDOView openView()
@@ -264,17 +264,17 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     try
     {
       InternalCDOBranchManager branchManager = session.getBranchManager();
-      CDOBranchPoint base = branchManager.getBranch(branchPath).getPoint(this.timeStamp);
-      CDOBranchPoint remote = branchManager.getBranch(branchPath).getPoint(timeStamp);
+      CDOBranchPoint basePoint = branchManager.getBranch(branchPath).getPoint(this.timeStamp);
+      CDOBranchPoint remotePoint = branchManager.getBranch(branchPath).getPoint(timeStamp);
 
-      CDOBranchPointRange range = CDOBranchUtil.createRange(base, remote);
+      CDOBranchPointRange range = CDOBranchUtil.createRange(basePoint, remotePoint);
       CDOChangeSetData remoteData = session.getSessionProtocol().loadChangeSets(range)[0];
 
       CDOChangeSetData localData = getLocalChanges();
       if (!localData.isEmpty())
       {
-        CDOChangeSet localChanges = CDORevisionDeltaUtil.createChangeSet(base, null, localData);
-        CDOChangeSet remoteChanges = CDORevisionDeltaUtil.createChangeSet(base, remote, remoteData);
+        CDOChangeSet localChanges = CDORevisionDeltaUtil.createChangeSet(basePoint, null, localData);
+        CDOChangeSet remoteChanges = CDORevisionDeltaUtil.createChangeSet(basePoint, remotePoint, remoteData);
         remoteData = merger.merge(localChanges, remoteChanges);
       }
 
@@ -284,7 +284,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
         @Override
         public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
         {
-          memory.clear();
+          base.clear();
         }
       });
 
@@ -292,7 +292,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
       {
         public CDORevision getRevision(CDOID id)
         {
-          CDORevision revision = memory.getRevision(id);
+          CDORevision revision = base.getRevision(id);
           if (revision == null)
           {
             revision = CDOWorkspaceImpl.this.getRevision(id);
@@ -338,12 +338,12 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
       CDOChangeSetData changes = getLocalChanges();
 
-      transaction.applyChangeSetData(changes, memory, this, null);
+      transaction.applyChangeSetData(changes, base, this, null);
       transaction.setCommitComment(comment);
 
       CDOCommitInfo info = transaction.commit();
 
-      memory.clear();
+      base.clear();
       timeStamp = info.getTimeStamp();
       saveProperties();
 
@@ -397,8 +397,8 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
   public CDOChangeSetData getLocalChanges()
   {
-    Set<CDOID> ids = memory.getIDs();
-    return CDORevisionDeltaUtil.createChangeSetData(ids, memory, this);
+    Set<CDOID> ids = base.getIDs();
+    return CDORevisionDeltaUtil.createChangeSetData(ids, base, this);
   }
 
   protected IManagedContainer createContainer(IStore local)
@@ -524,7 +524,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
         @Override
         public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
         {
-          memory.updateAfterCommit(transaction);
+          base.updateAfterCommit(transaction);
         }
       });
     }

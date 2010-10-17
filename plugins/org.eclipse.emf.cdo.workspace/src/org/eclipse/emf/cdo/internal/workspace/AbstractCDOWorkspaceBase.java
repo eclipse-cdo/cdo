@@ -24,7 +24,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
-import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceMemory;
+import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -38,7 +38,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractCDOWorkspaceMemory implements InternalCDOWorkspaceMemory
+public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBase
 {
   private InternalCDOWorkspace workspace;
 
@@ -48,7 +48,7 @@ public abstract class AbstractCDOWorkspaceMemory implements InternalCDOWorkspace
 
   private InternalCDOBranchManager branchManager;
 
-  protected AbstractCDOWorkspaceMemory()
+  protected AbstractCDOWorkspaceBase()
   {
   }
 

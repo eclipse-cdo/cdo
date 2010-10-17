@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public interface CDOWorkspaceMemory extends CDORevisionProvider
+public interface CDOWorkspaceBase extends CDORevisionProvider
 {
   public CDOWorkspace getWorkspace();
 

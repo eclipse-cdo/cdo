@@ -48,7 +48,7 @@ import java.util.Map;
  * 
  * @author Martin Fluegge
  */
-@SuppressWarnings( { "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class MapTest extends AbstractCDOTest
 {
   protected static EClass mapContainerEClass;

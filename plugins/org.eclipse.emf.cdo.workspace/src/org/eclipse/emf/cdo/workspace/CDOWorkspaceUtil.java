@@ -12,9 +12,12 @@ package org.eclipse.emf.cdo.workspace;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.internal.workspace.CDOWorkspaceImpl;
+import org.eclipse.emf.cdo.internal.workspace.FolderCDOWorkspaceBase;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
-import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceMemory;
+import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase;
+
+import java.io.File;
 
 /**
  * @author Eike Stepper
@@ -25,31 +28,36 @@ public final class CDOWorkspaceUtil
   {
   }
 
-  public static CDOWorkspace open(IStore local, CDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote)
+  public static CDOWorkspaceBase createFolderWorkspaceBase(File folder)
   {
-    return new CDOWorkspaceImpl(local, (InternalCDOWorkspaceMemory)memory, remote);
+    return new FolderCDOWorkspaceBase(folder);
   }
 
-  public static CDOWorkspace checkout(IStore local, CDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote)
+  public static CDOWorkspace open(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
   {
-    return checkout(local, memory, remote, null);
+    return new CDOWorkspaceImpl(local, (InternalCDOWorkspaceBase)base, remote);
   }
 
-  public static CDOWorkspace checkout(IStore local, CDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote,
+  public static CDOWorkspace checkout(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
+  {
+    return checkout(local, base, remote, null);
+  }
+
+  public static CDOWorkspace checkout(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote,
       String branchPath)
   {
-    return checkout(local, memory, remote, branchPath, CDOBranchPoint.UNSPECIFIED_DATE);
+    return checkout(local, base, remote, branchPath, CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
-  public static CDOWorkspace checkout(IStore local, CDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote,
+  public static CDOWorkspace checkout(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote,
       long timeStamp)
   {
-    return checkout(local, memory, remote, null, timeStamp);
+    return checkout(local, base, remote, null, timeStamp);
   }
 
-  public static CDOWorkspace checkout(IStore local, CDOWorkspaceMemory memory, CDOSessionConfigurationFactory remote,
+  public static CDOWorkspace checkout(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote,
       String branchPath, long timeStamp)
   {
-    return new CDOWorkspaceImpl(local, (InternalCDOWorkspaceMemory)memory, remote, branchPath, timeStamp);
+    return new CDOWorkspaceImpl(local, (InternalCDOWorkspaceBase)base, remote, branchPath, timeStamp);
   }
 }

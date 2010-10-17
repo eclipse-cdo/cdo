@@ -704,8 +704,8 @@ public class SetFeatureTest extends AbstractCDOTest
         assertEquals(true, object.eIsSet(feature));
       }
 
-      assertEquals(((InternalCDOTransaction)transaction).getStore().isSet((InternalEObject)object, feature), object
-          .eIsSet(feature));
+      assertEquals(((InternalCDOTransaction)transaction).getStore().isSet((InternalEObject)object, feature),
+          object.eIsSet(feature));
 
       session.close();
 
@@ -730,14 +730,14 @@ public class SetFeatureTest extends AbstractCDOTest
 
       assertEquals(false, object.eIsSet(feature));
       assertEquals(true, ObjectUtil.equals(object.eGet(feature), feature.getDefaultValue()));
-      assertEquals(((InternalCDOTransaction)transaction).getStore().isSet((InternalEObject)object, feature), object
-          .eIsSet(feature));
+      assertEquals(((InternalCDOTransaction)transaction).getStore().isSet((InternalEObject)object, feature),
+          object.eIsSet(feature));
 
       transaction.commit();
 
       assertEquals(false, object.eIsSet(feature));
-      assertEquals(((InternalCDOTransaction)transaction).getStore().isSet((InternalEObject)object, feature), object
-          .eIsSet(feature));
+      assertEquals(((InternalCDOTransaction)transaction).getStore().isSet((InternalEObject)object, feature),
+          object.eIsSet(feature));
 
       session.close();
 

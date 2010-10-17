@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.workspace.FolderCDOWorkspaceMemory;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
@@ -34,7 +33,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
-import org.eclipse.emf.cdo.workspace.CDOWorkspaceMemory;
+import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
 
 import org.eclipse.net4j.jvm.JVMUtil;
@@ -150,10 +149,10 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
     CDOSessionConfigurationFactory remote = new RemoteSessionConfigurationFactory();
 
     File folder = TMPUtil.createTempFolder("cdo-");
-    CDOWorkspaceMemory memory = new FolderCDOWorkspaceMemory(folder);
+    CDOWorkspaceBase base = CDOWorkspaceUtil.createFolderWorkspaceBase(folder);
     System.err.println("CDOWorkspaceBaseline: " + folder.getAbsolutePath());
 
-    InternalCDOWorkspace workspace = (InternalCDOWorkspace)CDOWorkspaceUtil.checkout(localStore, memory, remote,
+    InternalCDOWorkspace workspace = (InternalCDOWorkspace)CDOWorkspaceUtil.checkout(localStore, base, remote,
         branchPath, timeStamp);
 
     workspaces.add(workspace);

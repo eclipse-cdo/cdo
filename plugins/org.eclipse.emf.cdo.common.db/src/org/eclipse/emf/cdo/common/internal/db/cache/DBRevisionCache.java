@@ -27,8 +27,8 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -85,11 +85,6 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   {
     // TODO: Support branches directly
     throw new UnsupportedOperationException();
-  }
-
-  public boolean isSupportingBranches()
-  {
-    return false;
   }
 
   public CDOIDProvider getIDProvider()
@@ -419,9 +414,8 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
    * 
    * @param revision
    *          the revision to add to this cache
-   * @return true, if successful
    */
-  public boolean addRevision(CDORevision revision)
+  public void addRevision(CDORevision revision)
   {
     CheckUtil.checkArg(revision, "revision");
     Connection connection = null;
@@ -438,8 +432,6 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
         update = createUpdateRevisedStatement((InternalCDORevision)revision);
         update.update(connection);
       }
-
-      return true;
     }
     catch (DBException e)
     {

@@ -1063,10 +1063,7 @@ public class TransactionCommitContext implements InternalCommitContext
       {
         if (revision != null)
         {
-          if (!revisionManager.addRevision(revision))
-          {
-            throw new IllegalStateException("Failed to register revision: " + revision);
-          }
+          revisionManager.addRevision(revision);
         }
 
         monitor.worked();

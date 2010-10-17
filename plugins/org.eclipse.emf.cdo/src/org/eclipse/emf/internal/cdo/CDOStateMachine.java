@@ -770,10 +770,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       revision.adjustReferences(data.getReferenceAdjuster());
 
       InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
-      if (!revisionManager.addRevision(revision))
-      {
-        throw new IllegalStateException("Revision was not registered: " + revision);
-      }
+      revisionManager.addRevision(revision);
 
       changeState(object, CDOState.CLEAN);
     }

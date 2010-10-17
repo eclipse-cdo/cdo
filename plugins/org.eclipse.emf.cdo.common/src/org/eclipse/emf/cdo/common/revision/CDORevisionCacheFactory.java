@@ -8,14 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.common.revision.cache;
+package org.eclipse.emf.cdo.common.revision;
 
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 
 /**
  * @author Eike Stepper
- * @since 3.0
+ * @since 4.0
  */
 public interface CDORevisionCacheFactory
 {

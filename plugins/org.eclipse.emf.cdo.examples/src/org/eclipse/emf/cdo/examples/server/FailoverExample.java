@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.examples.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
+import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.examples.company.CompanyFactory;

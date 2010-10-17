@@ -8,13 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.common.revision.cache;
+package org.eclipse.emf.cdo.internal.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache.EvictionEvent;
+import org.eclipse.emf.cdo.common.revision.CDORevisionCache.EvictionEvent;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.event.Event;

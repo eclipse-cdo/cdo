@@ -8,15 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.common.revision.cache;
+package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
-import org.eclipse.emf.cdo.internal.common.revision.cache.mem.MEMRevisionCache;
-import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
+import org.eclipse.emf.cdo.internal.common.revision.NOOPRevisionCache;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
@@ -27,19 +24,14 @@ import java.util.List;
 
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @since 4.0
  */
-public interface CDORevisionCache extends INotifier
+public interface CDORevisionCache extends CDORevisionCacheAdder, INotifier
 {
   /**
    * @since 3.0
    */
   public static final CDORevisionCache NOOP = NOOPRevisionCache.INSTANCE;
-
-  /**
-   * @since 3.0
-   */
-  public boolean isSupportingBranches();
 
   public EClass getObjectType(CDOID id);
 
@@ -71,7 +63,7 @@ public interface CDORevisionCache extends INotifier
     public CDORevisionCache getSource();
 
     /**
-     * May be <code>null</code> for certain cache implementations, e.g. {@link MEMRevisionCache}.
+     * May be <code>null</code> for certain cache implementations.
      * 
      * @since 3.0
      */

@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
+import org.eclipse.emf.cdo.internal.common.revision.NOOPRevisionCache;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionImpl;
 import org.eclipse.emf.cdo.internal.server.syncing.OfflineClone;
@@ -158,14 +158,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return repository;
   }
 
-  @SuppressWarnings("deprecation")
   protected void initRepositoryProperties(Map<String, String> props)
   {
     props.put(Props.OVERRIDE_UUID, ""); // UUID := name !!!
     props.put(Props.SUPPORTING_AUDITS, "false");
     props.put(Props.SUPPORTING_BRANCHES, "false");
-    props.put(Props.CURRENT_LRU_CAPACITY, "10000");
-    props.put(Props.REVISED_LRU_CAPACITY, "10000");
   }
 
   public void registerRepository(InternalRepository repository)

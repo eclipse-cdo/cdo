@@ -12,8 +12,8 @@
 package org.eclipse.emf.cdo.internal.server.embedded;
 
 import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
+import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionConfiguration.RepositoryInfo;
 import org.eclipse.emf.cdo.server.embedded.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;

@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
@@ -79,12 +78,9 @@ public class ImportXML
     connector.close();
   }
 
-  @SuppressWarnings("deprecation")
   private static IRepository createRepository()
   {
     Map<String, String> props = new HashMap<String, String>();
-    props.put(Props.CURRENT_LRU_CAPACITY, "10000");
-    props.put(Props.REVISED_LRU_CAPACITY, "10000");
     return CDOServerUtil.createRepository(REPOSITORY_NAME, createStore(), props);
   }
 

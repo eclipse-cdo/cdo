@@ -15,8 +15,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
@@ -39,6 +39,9 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
     return getDelegate().getCache();
   }
 
+  /**
+   * @since 4.0
+   */
   public void setCache(CDORevisionCache cache)
   {
     getDelegate().setCache(cache);
@@ -84,9 +87,12 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
     getDelegate().setSupportingBranches(on);
   }
 
-  public boolean addRevision(CDORevision revision)
+  /**
+   * @since 4.0
+   */
+  public void addRevision(CDORevision revision)
   {
-    return getDelegate().addRevision(revision);
+    getDelegate().addRevision(revision);
   }
 
   public boolean containsRevision(CDOID id, CDOBranchPoint branchPoint)

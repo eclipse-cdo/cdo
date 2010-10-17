@@ -26,8 +26,6 @@ public class AllTestsCDORevisionCache
     // $JUnit-BEGIN$
     suite.addTestSuite(DerbyDBRevisionCacheTest.class);
     suite.addTestSuite(H2DBRevisionCacheTest.class);
-    suite.addTestSuite(MEMRevisionCacheTest.class);
-    suite.addTestSuite(LRURevisionCacheTest.class);
     suite.addTestSuite(DefaultRevisionCacheTest.class);
     // $JUnit-END$
 

@@ -204,17 +204,5 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
      * @since 3.0
      */
     public static final String ENSURE_REFERENTIAL_INTEGRITY = "ensureReferentialIntegrity"; //$NON-NLS-1$
-
-    /**
-     * @since 2.0
-     */
-    @Deprecated
-    public static final String CURRENT_LRU_CAPACITY = "currentLRUCapacity"; //$NON-NLS-1$
-
-    /**
-     * @since 2.0
-     */
-    @Deprecated
-    public static final String REVISED_LRU_CAPACITY = "revisedLRUCapacity"; //$NON-NLS-1$
   }
 }

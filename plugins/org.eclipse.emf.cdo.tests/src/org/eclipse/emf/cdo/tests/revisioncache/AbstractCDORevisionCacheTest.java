@@ -18,10 +18,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.internal.db.cache.DBRevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
+import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
-import org.eclipse.emf.cdo.internal.common.revision.cache.mem.MEMRevisionCache;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
@@ -47,12 +45,8 @@ import java.util.List;
  * @author Andre Dietisheim
  * @see CDORevisionCache
  * @see DBRevisionCache
- * @see LRURevisionCache
- * @see MEMRevisionCache
  * @see DerbyDBRevisionCacheTest
  * @see H2DBRevisionCacheTest
- * @see LRURevisionCacheTest
- * @see MEMRevisionCacheTest
  * @see DefaultRevisionCacheTest
  */
 public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest

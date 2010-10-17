@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.common.revision.cache.noop;
+package org.eclipse.emf.cdo.internal.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 
-import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import org.eclipse.emf.ecore.EClass;
@@ -75,10 +74,9 @@ public class NOOPRevisionCache extends Lifecycle implements InternalCDORevisionC
     return null;
   }
 
-  public boolean addRevision(CDORevision revision)
+  public void addRevision(CDORevision revision)
   {
-    CheckUtil.checkArg(revision, "revision");
-    return true;
+    // Do nothing
   }
 
   public InternalCDORevision removeRevision(CDOID id, CDOBranchVersion branchVersion)

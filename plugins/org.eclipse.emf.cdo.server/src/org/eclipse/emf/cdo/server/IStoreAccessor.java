@@ -20,9 +20,9 @@ import org.eclipse.emf.cdo.common.model.lob.CDOClob;
 import org.eclipse.emf.cdo.common.model.lob.CDOLob;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -105,7 +105,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   /**
    * Reads a revision from the back-end that was valid at the given timeStamp in the given branch.
    * 
-   * @since 3.0
+   * @since 4.0
    */
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
       CDORevisionCacheAdder cache);
@@ -113,7 +113,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   /**
    * Reads a revision with the given version in the given branch from the back-end.
    * 
-   * @since 3.0
+   * @since 4.0
    */
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
       CDORevisionCacheAdder cache);

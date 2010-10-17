@@ -10,7 +10,7 @@
  *    Simon McDuff - bug 201266
  *    Simon McDuff - bug 230832
  */
-package org.eclipse.emf.cdo.internal.common.revision.cache.branch;
+package org.eclipse.emf.cdo.internal.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
-import org.eclipse.emf.cdo.internal.common.revision.cache.EvictionEventImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 
@@ -50,26 +49,21 @@ import java.util.Map.Entry;
 /**
  * @author Eike Stepper
  */
-public class BranchRevisionCache extends ReferenceQueueWorker<InternalCDORevision> implements InternalCDORevisionCache
+public class CDORevisionCacheImpl extends ReferenceQueueWorker<InternalCDORevision> implements InternalCDORevisionCache
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, BranchRevisionCache.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, CDORevisionCacheImpl.class);
 
   private static boolean disableGC;
 
   private Map<CDOIDAndBranch, RevisionList> revisionLists = new HashMap<CDOIDAndBranch, RevisionList>();
 
-  public BranchRevisionCache()
+  public CDORevisionCacheImpl()
   {
   }
 
   public InternalCDORevisionCache instantiate(CDORevision revision)
   {
-    return new BranchRevisionCache();
-  }
-
-  public boolean isSupportingBranches()
-  {
-    return true;
+    return new CDORevisionCacheImpl();
   }
 
   public EClass getObjectType(CDOID id)
@@ -133,7 +127,7 @@ public class BranchRevisionCache extends ReferenceQueueWorker<InternalCDORevisio
     return currentRevisions;
   }
 
-  public boolean addRevision(CDORevision revision)
+  public void addRevision(CDORevision revision)
   {
     CheckUtil.checkArg(revision, "revision");
     CDOIDAndBranch key = CDOIDUtil.createIDAndBranch(revision.getID(), revision.getBranch());
@@ -147,7 +141,7 @@ public class BranchRevisionCache extends ReferenceQueueWorker<InternalCDORevisio
       }
 
       InternalCDORevision rev = (InternalCDORevision)revision;
-      return list.addRevision(rev, createReference(key, rev));
+      list.addRevision(rev, createReference(key, rev));
     }
   }
 

@@ -16,8 +16,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionCacheImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.internal.common.revision.cache.branch.BranchRevisionCache;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
@@ -93,7 +93,7 @@ public class RevisionManagerTest extends AbstractCDOTest
     skipUnlessConfig(MEM);
     super.doSetUp();
 
-    Field disableGC = ReflectUtil.getField(BranchRevisionCache.class, "disableGC");
+    Field disableGC = ReflectUtil.getField(CDORevisionCacheImpl.class, "disableGC");
     ReflectUtil.setValue(disableGC, null, true);
 
     repository = getRepository();
@@ -129,7 +129,7 @@ public class RevisionManagerTest extends AbstractCDOTest
     StoreThreadLocal.release();
     session.close();
 
-    Field disableGC = ReflectUtil.getField(BranchRevisionCache.class, "disableGC");
+    Field disableGC = ReflectUtil.getField(CDORevisionCacheImpl.class, "disableGC");
     ReflectUtil.setValue(disableGC, null, false);
 
     super.doTearDown();

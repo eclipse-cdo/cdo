@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.tests.revisioncache;
 
 import org.eclipse.emf.cdo.common.db.CDOCommonDBUtil;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
+import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 

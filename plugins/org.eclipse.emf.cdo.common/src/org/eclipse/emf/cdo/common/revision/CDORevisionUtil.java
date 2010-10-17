@@ -14,10 +14,10 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.CDOFeatureMapEntryImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionCacheImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionKeyImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
@@ -44,6 +44,16 @@ public final class CDORevisionUtil
 
   private CDORevisionUtil()
   {
+  }
+
+  /**
+   * Creates and returns a new memory sensitive revision cache that supports branches.
+   * 
+   * @since 4.0
+   */
+  public static CDORevisionCache createRevisionCache()
+  {
+    return new CDORevisionCacheImpl();
   }
 
   /**

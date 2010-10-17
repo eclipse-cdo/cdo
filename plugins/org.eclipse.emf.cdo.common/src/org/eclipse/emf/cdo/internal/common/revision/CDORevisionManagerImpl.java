@@ -17,9 +17,9 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheUtil;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
@@ -379,7 +379,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return results;
   }
 
-  public boolean addRevision(CDORevision revision)
+  public void addRevision(CDORevision revision)
   {
     if (revision != null)
     {
@@ -394,11 +394,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
         }
       }
 
-      boolean added = cache.addRevision(revision);
-      if (!added)
-      {
-        return false;
-      }
+      cache.addRevision(revision);
 
       int oldVersion = revision.getVersion() - 1;
       if (oldVersion >= CDORevision.UNSPECIFIED_VERSION)
@@ -411,8 +407,6 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
         }
       }
     }
-
-    return true;
   }
 
   @Override
@@ -426,12 +420,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
     if (cache == null)
     {
-      cache = (InternalCDORevisionCache)CDORevisionCacheUtil.createDefaultCache(supportingBranches);
-    }
-
-    if (supportingBranches && !cache.isSupportingBranches())
-    {
-      throw new IllegalStateException("Revision cache does not support branches");
+      cache = (InternalCDORevisionCache)CDORevisionUtil.createRevisionCache();
     }
   }
 

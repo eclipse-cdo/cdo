@@ -268,8 +268,12 @@ public final class CDOURIData
     builder.append(authority);
     builder.append("/");
     builder.append(repositoryName);
-    builder.append("/");
-    builder.append(resourcePath);
+
+    if (resourcePath != null)
+    {
+      builder.append("/");
+      builder.append(resourcePath);
+    }
 
     int params = 0;
     if (branchPath != null && !branchPath.equals(new Path(CDOBranch.MAIN_BRANCH_NAME)))
@@ -297,16 +301,5 @@ public final class CDOURIData
     }
 
     return builder.toString();
-  }
-
-  public static void main(String[] args)
-  {
-    URI uri = URI.createURI("cdo.net4j.tcp://lothar:passw@127.0.0.1:2042/ts_marketplace1/participants");
-    System.out.println(uri);
-
-    CDOURIData data = new CDOURIData(uri);
-
-    URI uri2 = data.toURI();
-    System.out.println(uri2);
   }
 }

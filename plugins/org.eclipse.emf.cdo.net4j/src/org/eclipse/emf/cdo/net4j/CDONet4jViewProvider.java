@@ -12,21 +12,19 @@ package org.eclipse.emf.cdo.net4j;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.util.CDOURIData;
 import org.eclipse.emf.cdo.view.AbstractCDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
-import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -74,29 +72,26 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
 
     CDOSession session = (CDOSession)view.getSession();
 
-    CDOAuthenticator authenticator = ((InternalCDOSession)session).getAuthenticator();
-    IPasswordCredentialsProvider credentialsProvider = authenticator.getCredentialsProvider();
-    if (credentialsProvider != null)
-    {
-      IPasswordCredentials credentials = credentialsProvider.getCredentials();
-      builder.append(credentials.getUserID());
-
-      char[] password = credentials.getPassword();
-      if (password != null)
-      {
-        builder.append(":");
-        builder.append(password);
-      }
-
-      builder.append("@");
-    }
+    // CDOAuthenticator authenticator = ((InternalCDOSession)session).getAuthenticator();
+    // IPasswordCredentialsProvider credentialsProvider = authenticator.getCredentialsProvider();
+    // if (credentialsProvider != null)
+    // {
+    // IPasswordCredentials credentials = credentialsProvider.getCredentials();
+    // builder.append(credentials.getUserID());
+    //
+    // char[] password = credentials.getPassword();
+    // if (password != null)
+    // {
+    // builder.append(":");
+    // builder.append(password);
+    // }
+    //
+    // builder.append("@");
+    // }
 
     IConnector connector = (IConnector)session.options().getProtocol().getChannel().getMultiplexer();
-    String authority = getURIAuthority(connector);
-    builder.append(authority);
-
-    builder.append("/");
-    builder.append(session.getRepositoryInfo().getName());
+    String repositoryName = session.getRepositoryInfo().getName();
+    append(builder, connector, repositoryName);
 
     if (!path.startsWith("/"))
     {
@@ -154,18 +149,30 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     configuration.setConnector(connector);
     configuration.setRepositoryName(repositoryName);
 
+    IPasswordCredentialsProvider credentialsProvider = null;
     if (userName != null && passWord != null)
     {
-      IPasswordCredentialsProvider credentialsProvider = getCredentialsProvider(userName, passWord);
-      configuration.getAuthenticator().setCredentialsProvider(credentialsProvider);
+      credentialsProvider = new PasswordCredentialsProvider(userName, passWord);
+    }
+    else
+    {
+      StringBuilder builder = new StringBuilder();
+      append(builder, connector, repositoryName);
+      String resource = builder.toString();
+
+      try
+      {
+        credentialsProvider = (IPasswordCredentialsProvider)getContainer().getElement(
+            "org.eclipse.net4j.util.credentialsProviders", "password", resource);
+      }
+      catch (FactoryNotFoundException ex)
+      {
+        // Ignore
+      }
     }
 
+    configuration.getAuthenticator().setCredentialsProvider(credentialsProvider);
     return configuration;
-  }
-
-  protected IPasswordCredentialsProvider getCredentialsProvider(String userName, String passWord)
-  {
-    return new PasswordCredentialsProvider(userName, passWord);
   }
 
   protected IManagedContainer getContainer()
@@ -183,6 +190,15 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   protected String getConnectorDescription(String authority)
   {
     return authority;
+  }
+
+  private void append(StringBuilder builder, IConnector connector, String repositoryName)
+  {
+    String authority = getURIAuthority(connector);
+    builder.append(authority);
+
+    builder.append("/");
+    builder.append(repositoryName);
   }
 
   /**

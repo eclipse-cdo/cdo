@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
@@ -38,11 +39,14 @@ import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl.CDOXAIntern
 import org.eclipse.emf.internal.cdo.view.CDORevisionPrefetchingPolicyImpl;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
@@ -464,5 +468,22 @@ public final class CDOUtil
   public static void setLegacyModeDefault(boolean on)
   {
     legacyModeDefault.set(on);
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static void setCredentialsProvider(URI uri, IPasswordCredentialsProvider provider)
+  {
+    CDOURIData data = new CDOURIData(uri);
+    data.setUserName(null);
+    data.setPassWord(null);
+    data.setResourcePath(null);
+    data.setBranchPath(null);
+    data.setTimeStamp(CDOBranchPoint.UNSPECIFIED_DATE);
+    data.setTransactional(false);
+
+    String resource = data.toString();
+    IPluginContainer.INSTANCE.putElement("org.eclipse.net4j.util.credentialsProviders", "password", resource, provider);
   }
 }

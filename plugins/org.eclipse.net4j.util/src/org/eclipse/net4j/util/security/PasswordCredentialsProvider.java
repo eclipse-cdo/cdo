@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -16,6 +16,13 @@ package org.eclipse.net4j.util.security;
 public class PasswordCredentialsProvider implements IPasswordCredentialsProvider
 {
   private IPasswordCredentials credentials;
+
+  /**
+   * @since 3.1
+   */
+  public PasswordCredentialsProvider()
+  {
+  }
 
   public PasswordCredentialsProvider(IPasswordCredentials credentials)
   {
@@ -46,5 +53,51 @@ public class PasswordCredentialsProvider implements IPasswordCredentialsProvider
   public IPasswordCredentials getCredentials()
   {
     return credentials;
+  }
+
+  /**
+   * @since 3.1
+   */
+  public void setCredentials(IPasswordCredentials credentials)
+  {
+    this.credentials = credentials;
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.1
+   */
+  public static class Delegating extends PasswordCredentialsProvider
+  {
+    private IPasswordCredentialsProvider delegate;
+
+    public Delegating(IPasswordCredentialsProvider delegate)
+    {
+      this.delegate = delegate;
+    }
+
+    public IPasswordCredentialsProvider getDelegate()
+    {
+      return delegate;
+    }
+
+    @Override
+    public boolean isInteractive()
+    {
+      return delegate.isInteractive();
+    }
+
+    @Override
+    public IPasswordCredentials getCredentials()
+    {
+      IPasswordCredentials credentials = super.getCredentials();
+      if (credentials == null)
+      {
+        credentials = delegate.getCredentials();
+        setCredentials(credentials);
+      }
+
+      return credentials;
+    }
   }
 }

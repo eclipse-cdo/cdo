@@ -18,8 +18,6 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.osgi.framework.BundleContext;
 
-import java.io.File;
-
 /**
  * @author Eike Stepper
  */
@@ -117,7 +115,7 @@ public class UIActivator extends AbstractUIPlugin
    */
   public static abstract class WithConfig extends UIActivator
   {
-    private ConfigHandler handler = new ConfigHandler()
+    private ConfigHandler handler = new ConfigHandler(getOMBundle())
     {
       @Override
       protected void startWithConfig(Object config) throws Exception
@@ -140,18 +138,13 @@ public class UIActivator extends AbstractUIPlugin
     @Override
     protected final void doStart() throws Exception
     {
-      File configFile = getOMBundle().getConfigFile();
-      if (configFile.exists())
-      {
-        handler.start(configFile);
-      }
+      handler.start();
     }
 
     @Override
     protected final void doStop() throws Exception
     {
-      File configFile = getOMBundle().getConfigFile();
-      handler.stop(configFile);
+      handler.stop();
     }
 
     protected abstract void doStartWithConfig(Object config) throws Exception;

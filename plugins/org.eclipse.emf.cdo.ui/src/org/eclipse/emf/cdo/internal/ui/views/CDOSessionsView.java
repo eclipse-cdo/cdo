@@ -29,9 +29,9 @@ import org.eclipse.swt.widgets.Control;
 
 public class CDOSessionsView extends ContainerView
 {
-  private OpenSessionAction openSessionAction;
-
   public final static String ID = "org.eclipse.emf.cdo.ui.CDOSessionsView"; //$NON-NLS-1$
+
+  private OpenSessionAction openSessionAction;
 
   public CDOSessionsView()
   {

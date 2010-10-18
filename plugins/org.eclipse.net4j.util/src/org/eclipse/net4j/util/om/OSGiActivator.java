@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.om;
 
 import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.internal.util.om.OSGiBundle;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.osgi.framework.BundleActivator;
@@ -20,8 +21,10 @@ import org.osgi.framework.BundleContext;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.ObjectStreamClass;
 
 /**
  * @author Eike Stepper
@@ -182,18 +185,36 @@ public abstract class OSGiActivator implements BundleActivator
    */
   public static abstract class ConfigHandler
   {
-    public ConfigHandler()
+    private OSGiBundle bundle;
+
+    public ConfigHandler(OMBundle bundle)
     {
+      this.bundle = (OSGiBundle)bundle;
     }
 
-    public final void start(File configFile) throws Exception
+    public final void start() throws Exception
     {
+      File configFile = bundle.getConfigFile();
+      if (!configFile.exists())
+      {
+        startWithConfig(null);
+        return;
+      }
+
       FileInputStream fis = null;
 
       try
       {
         fis = new FileInputStream(configFile);
-        ObjectInputStream ois = new ObjectInputStream(fis);
+        ObjectInputStream ois = new ObjectInputStream(fis)
+        {
+          @Override
+          protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException, ClassNotFoundException
+          {
+            String className = desc.getName();
+            return bundle.getAccessor().getClassLoader().loadClass(className);
+          }
+        };
 
         Object config = ois.readObject();
         IOUtil.close(ois);
@@ -205,7 +226,7 @@ public abstract class OSGiActivator implements BundleActivator
       }
     }
 
-    public final void stop(File configFile) throws Exception
+    public final void stop() throws Exception
     {
       FileOutputStream fos = null;
 
@@ -213,6 +234,7 @@ public abstract class OSGiActivator implements BundleActivator
       {
         Object config = stopWithConfig();
 
+        File configFile = bundle.getConfigFile();
         fos = new FileOutputStream(configFile);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(config);
@@ -235,7 +257,7 @@ public abstract class OSGiActivator implements BundleActivator
    */
   public static abstract class WithConfig extends OSGiActivator
   {
-    private ConfigHandler handler = new ConfigHandler()
+    private ConfigHandler handler = new ConfigHandler(getOMBundle())
     {
       @Override
       protected void startWithConfig(Object config) throws Exception
@@ -258,18 +280,13 @@ public abstract class OSGiActivator implements BundleActivator
     @Override
     protected final void doStart() throws Exception
     {
-      File configFile = getOMBundle().getConfigFile();
-      if (configFile.exists())
-      {
-        handler.start(configFile);
-      }
+      handler.start();
     }
 
     @Override
     protected final void doStop() throws Exception
     {
-      File configFile = getOMBundle().getConfigFile();
-      handler.stop(configFile);
+      handler.stop();
     }
 
     protected abstract void doStartWithConfig(Object config) throws Exception;

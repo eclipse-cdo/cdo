@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.location.bundle;
 
 import org.eclipse.emf.cdo.internal.location.RepositoryLocationManager;
+import org.eclipse.emf.cdo.location.IRepositoryLocation;
 import org.eclipse.emf.cdo.location.IRepositoryLocationManager;
 
 import org.eclipse.net4j.util.om.OMBundle;
@@ -18,6 +19,9 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
@@ -44,7 +48,7 @@ public abstract class OM
   /**
    * @author Eike Stepper
    */
-  public static final class Activator extends OSGiActivator.WithConfig
+  public static final class Activator extends OSGiActivator.WithState
   {
     public Activator()
     {
@@ -52,15 +56,33 @@ public abstract class OM
     }
 
     @Override
-    protected void doStartWithConfig(Object config) throws Exception
+    protected void doStartWithState(Object state) throws Exception
     {
-      repositoryLocationManager = (RepositoryLocationManager)config;
+      @SuppressWarnings("unchecked")
+      List<List<String>> locations = (List<List<String>>)state;
+      if (locations != null)
+      {
+        for (List<String> location : locations)
+        {
+          repositoryLocationManager.addRepositoryLocation(location.get(0), location.get(1), location.get(2));
+        }
+      }
     }
 
     @Override
-    protected Object doStopWithConfig() throws Exception
+    protected Object doStopWithState() throws Exception
     {
-      return repositoryLocationManager;
+      List<List<String>> locations = new ArrayList<List<String>>();
+      for (IRepositoryLocation location : repositoryLocationManager.getRepositoryLocations())
+      {
+        List<String> list = new ArrayList<String>();
+        list.add(location.getConnectorType());
+        list.add(location.getConnectorDescription());
+        list.add(location.getRepositoryName());
+        locations.add(list);
+      }
+
+      return locations;
     }
   }
 }

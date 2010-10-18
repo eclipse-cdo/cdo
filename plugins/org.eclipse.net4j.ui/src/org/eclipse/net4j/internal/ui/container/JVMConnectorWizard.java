@@ -16,15 +16,20 @@ import org.eclipse.net4j.util.ui.container.ElementWizard;
 import org.eclipse.net4j.util.ui.container.ElementWizardFactory;
 
 import org.eclipse.spi.net4j.ConnectorFactory;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
 
 /**
  * @author Eike Stepper
  * @author Martin Fluegge
  * @since 4.0
  */
-public class JVMConnectorWizard extends ElementWizard
+public class JVMConnectorWizard extends ElementWizard implements ModifyListener
 {
+  private Text acceptorNameText;
+
   public JVMConnectorWizard()
   {
   }
@@ -32,7 +37,21 @@ public class JVMConnectorWizard extends ElementWizard
   @Override
   protected void create(Composite parent)
   {
-    addText(parent, "Acceptor Name:");
+    acceptorNameText = addText(parent, "Acceptor Name:");
+    acceptorNameText.addModifyListener(this);
+  }
+
+  public void modifyText(ModifyEvent e)
+  {
+    String acceptorName = acceptorNameText.getText();
+    if (acceptorName.length() == 0)
+    {
+      setValidationError(acceptorNameText, "Acceptor name is empty.");
+      return;
+    }
+
+    setResultDescription(acceptorName);
+    setValidationOK();
   }
 
   /**

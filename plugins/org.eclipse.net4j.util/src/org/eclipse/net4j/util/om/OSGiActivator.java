@@ -183,47 +183,53 @@ public abstract class OSGiActivator implements BundleActivator
    * @author Eike Stepper
    * @since 3.1
    */
-  public static abstract class ConfigHandler
+  public static abstract class StateHandler
   {
     private OSGiBundle bundle;
 
-    public ConfigHandler(OMBundle bundle)
+    public StateHandler(OMBundle bundle)
     {
       this.bundle = (OSGiBundle)bundle;
     }
 
     public final void start() throws Exception
     {
-      File configFile = bundle.getConfigFile();
-      if (!configFile.exists())
+      Object state = null;
+      File stateFile = getStateFile();
+      if (stateFile.exists())
       {
-        startWithConfig(null);
-        return;
-      }
+        FileInputStream fis = null;
 
-      FileInputStream fis = null;
-
-      try
-      {
-        fis = new FileInputStream(configFile);
-        ObjectInputStream ois = new ObjectInputStream(fis)
+        try
         {
-          @Override
-          protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException, ClassNotFoundException
+          fis = new FileInputStream(stateFile);
+          ObjectInputStream ois = new ObjectInputStream(fis)
           {
-            String className = desc.getName();
-            return bundle.getAccessor().getClassLoader().loadClass(className);
-          }
-        };
+            @Override
+            protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException, ClassNotFoundException
+            {
+              String className = desc.getName();
+              return bundle.getAccessor().getClassLoader().loadClass(className);
+            }
+          };
 
-        Object config = ois.readObject();
-        IOUtil.close(ois);
-        startWithConfig(config);
+          state = ois.readObject();
+          IOUtil.close(ois);
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+          IOUtil.close(fis);
+          fis = null;
+          stateFile.delete();
+        }
+        finally
+        {
+          IOUtil.close(fis);
+        }
       }
-      finally
-      {
-        IOUtil.close(fis);
-      }
+
+      startWithState(state);
     }
 
     public final void stop() throws Exception
@@ -232,12 +238,12 @@ public abstract class OSGiActivator implements BundleActivator
 
       try
       {
-        Object config = stopWithConfig();
+        Object state = stopWithState();
 
-        File configFile = bundle.getConfigFile();
-        fos = new FileOutputStream(configFile);
+        File stateFile = getStateFile();
+        fos = new FileOutputStream(stateFile);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(config);
+        oos.writeObject(state);
         IOUtil.close(oos);
       }
       finally
@@ -246,33 +252,38 @@ public abstract class OSGiActivator implements BundleActivator
       }
     }
 
-    protected abstract void startWithConfig(Object config) throws Exception;
+    private File getStateFile()
+    {
+      return new File(bundle.getStateLocation(), "state.bin");
+    }
 
-    protected abstract Object stopWithConfig() throws Exception;
+    protected abstract void startWithState(Object state) throws Exception;
+
+    protected abstract Object stopWithState() throws Exception;
   }
 
   /**
    * @author Eike Stepper
    * @since 3.1
    */
-  public static abstract class WithConfig extends OSGiActivator
+  public static abstract class WithState extends OSGiActivator
   {
-    private ConfigHandler handler = new ConfigHandler(getOMBundle())
+    private StateHandler handler = new StateHandler(getOMBundle())
     {
       @Override
-      protected void startWithConfig(Object config) throws Exception
+      protected void startWithState(Object state) throws Exception
       {
-        doStartWithConfig(config);
+        doStartWithState(state);
       }
 
       @Override
-      protected Object stopWithConfig() throws Exception
+      protected Object stopWithState() throws Exception
       {
-        return doStopWithConfig();
+        return doStopWithState();
       }
     };
 
-    public WithConfig(OMBundle bundle)
+    public WithState(OMBundle bundle)
     {
       super(bundle);
     }
@@ -289,8 +300,8 @@ public abstract class OSGiActivator implements BundleActivator
       handler.stop();
     }
 
-    protected abstract void doStartWithConfig(Object config) throws Exception;
+    protected abstract void doStartWithState(Object state) throws Exception;
 
-    protected abstract Object doStopWithConfig() throws Exception;
+    protected abstract Object doStopWithState() throws Exception;
   }
 }

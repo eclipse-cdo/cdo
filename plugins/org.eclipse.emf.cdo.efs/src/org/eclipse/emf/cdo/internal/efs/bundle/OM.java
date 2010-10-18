@@ -55,7 +55,7 @@ public abstract class OM
   /**
    * @author Eike Stepper
    */
-  public static final class Activator extends OSGiActivator.WithConfig implements IResourceChangeListener
+  public static final class Activator extends OSGiActivator.WithState implements IResourceChangeListener
   {
     public Activator()
     {
@@ -64,14 +64,19 @@ public abstract class OM
 
     @SuppressWarnings("unchecked")
     @Override
-    protected void doStartWithConfig(Object config) throws Exception
+    protected void doStartWithState(Object state) throws Exception
     {
-      projectNames.putAll((Map<URI, String>)config);
+      Map<URI, String> names = (Map<URI, String>)state;
+      if (names != null)
+      {
+        projectNames.putAll(names);
+      }
+
       ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
     }
 
     @Override
-    protected Object doStopWithConfig() throws Exception
+    protected Object doStopWithState() throws Exception
     {
       ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
       return projectNames;

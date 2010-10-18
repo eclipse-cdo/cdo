@@ -15,15 +15,13 @@ import org.eclipse.emf.cdo.location.IRepositoryLocationManager;
 
 import org.eclipse.net4j.util.container.Container;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Eike Stepper
  */
-public class RepositoryLocationManager extends Container<IRepositoryLocation> implements IRepositoryLocationManager,
-    Serializable
+public class RepositoryLocationManager extends Container<IRepositoryLocation> implements IRepositoryLocationManager
 {
   private static final long serialVersionUID = 1L;
 
@@ -51,8 +49,8 @@ public class RepositoryLocationManager extends Container<IRepositoryLocation> im
       String repositoryName)
   {
     RepositoryLocation location = new RepositoryLocation(this, connectorType, connectorDescription, repositoryName);
-    boolean added;
 
+    boolean added;
     synchronized (repositoryLocations)
     {
       added = repositoryLocations.add(location);
@@ -79,4 +77,25 @@ public class RepositoryLocationManager extends Container<IRepositoryLocation> im
       fireElementRemovedEvent(location);
     }
   }
+
+  // @Override
+  // protected void doActivate() throws Exception
+  // {
+  // super.doActivate();
+  // for (IRepositoryLocation location : repositoryLocations)
+  // {
+  // LifecycleUtil.activate(location);
+  // }
+  // }
+  //
+  // @Override
+  // protected void doDeactivate() throws Exception
+  // {
+  // for (IRepositoryLocation location : repositoryLocations)
+  // {
+  // LifecycleUtil.deactivate(location);
+  // }
+  //
+  // super.doDeactivate();
+  // }
 }

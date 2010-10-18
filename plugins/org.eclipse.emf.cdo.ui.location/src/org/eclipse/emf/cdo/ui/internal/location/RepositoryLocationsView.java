@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.ui.internal.location;
 
 import org.eclipse.emf.cdo.location.IRepositoryLocationManager;
+import org.eclipse.emf.cdo.ui.internal.location.bundle.OM;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
@@ -76,11 +77,23 @@ public class RepositoryLocationsView extends ContainerView
     @Override
     public void run()
     {
-      NewRepositoryLocationDialog dialog = new NewRepositoryLocationDialog(getSite().getShell());
-      if (dialog.open() == NewRepositoryLocationDialog.OK)
+      try
       {
-        IRepositoryLocationManager.INSTANCE.addRepositoryLocation(dialog.getConnectorType(),
-            dialog.getConnectorDescription(), dialog.getRepositoryName());
+        NewRepositoryLocationDialog dialog = new NewRepositoryLocationDialog(getSite().getShell());
+        if (dialog.open() == NewRepositoryLocationDialog.OK)
+        {
+          String connectorType = dialog.getConnectorType();
+          String connectorDescription = dialog.getConnectorDescription();
+          String repositoryName = dialog.getRepositoryName();
+
+          IRepositoryLocationManager.INSTANCE
+              .addRepositoryLocation(connectorType, connectorDescription, repositoryName);
+        }
+      }
+      catch (RuntimeException ex)
+      {
+        OM.LOG.error(ex);
+        throw ex;
       }
     }
   }

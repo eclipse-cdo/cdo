@@ -10,21 +10,14 @@
  */
 package org.eclipse.emf.cdo.location;
 
-import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
-
-import org.eclipse.net4j.util.container.IContainer;
-
 /**
  * @author Eike Stepper
- * @since 4.0
  */
-public interface IRepositoryLocation extends IContainer<ICheckoutSource>, CDOSessionConfigurationFactory
+public interface ICheckoutSource
 {
-  public String getConnectorType();
+  public IRepositoryLocation getRepositoryLocation();
 
-  public String getConnectorDescription();
+  public String getBranchPath();
 
-  public String getRepositoryName();
-
-  public void delete();
+  public long getTimeStamp();
 }

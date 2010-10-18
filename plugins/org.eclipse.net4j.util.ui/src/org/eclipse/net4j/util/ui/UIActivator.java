@@ -12,7 +12,7 @@ package org.eclipse.net4j.util.ui;
 
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OSGiActivator;
-import org.eclipse.net4j.util.om.OSGiActivator.ConfigHandler;
+import org.eclipse.net4j.util.om.OSGiActivator.StateHandler;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
@@ -113,24 +113,24 @@ public class UIActivator extends AbstractUIPlugin
    * @author Eike Stepper
    * @since 3.1
    */
-  public static abstract class WithConfig extends UIActivator
+  public static abstract class WithState extends UIActivator
   {
-    private ConfigHandler handler = new ConfigHandler(getOMBundle())
+    private StateHandler handler = new StateHandler(getOMBundle())
     {
       @Override
-      protected void startWithConfig(Object config) throws Exception
+      protected void startWithState(Object state) throws Exception
       {
-        doStartWithConfig(config);
+        doStartWithState(state);
       }
 
       @Override
-      protected Object stopWithConfig() throws Exception
+      protected Object stopWithState() throws Exception
       {
-        return doStopWithConfig();
+        return doStopWithState();
       }
     };
 
-    public WithConfig(OMBundle bundle)
+    public WithState(OMBundle bundle)
     {
       super(bundle);
     }
@@ -147,8 +147,8 @@ public class UIActivator extends AbstractUIPlugin
       handler.stop();
     }
 
-    protected abstract void doStartWithConfig(Object config) throws Exception;
+    protected abstract void doStartWithState(Object state) throws Exception;
 
-    protected abstract Object doStopWithConfig() throws Exception;
+    protected abstract Object doStopWithState() throws Exception;
   }
 }

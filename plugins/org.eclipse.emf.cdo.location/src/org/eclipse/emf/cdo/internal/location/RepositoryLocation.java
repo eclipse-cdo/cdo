@@ -10,20 +10,20 @@
  */
 package org.eclipse.emf.cdo.internal.location;
 
+import org.eclipse.emf.cdo.location.ICheckoutSource;
 import org.eclipse.emf.cdo.location.IRepositoryLocation;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IPluginContainer;
-
-import java.io.Serializable;
 
 /**
  * @author Eike Stepper
  */
-public class RepositoryLocation implements IRepositoryLocation, Serializable
+public class RepositoryLocation extends Container<ICheckoutSource> implements IRepositoryLocation
 {
   private static final long serialVersionUID = 1L;
 
@@ -34,6 +34,8 @@ public class RepositoryLocation implements IRepositoryLocation, Serializable
   private String connectorDescription;
 
   private String repositoryName;
+
+  private ICheckoutSource[] elements = { new BranchCheckoutSource.Main(this) };
 
   public RepositoryLocation()
   {
@@ -46,6 +48,7 @@ public class RepositoryLocation implements IRepositoryLocation, Serializable
     this.connectorType = connectorType;
     this.connectorDescription = connectorDescription;
     this.repositoryName = repositoryName;
+    activate();
   }
 
   public RepositoryLocationManager getManager()
@@ -66,6 +69,11 @@ public class RepositoryLocation implements IRepositoryLocation, Serializable
   public String getRepositoryName()
   {
     return repositoryName;
+  }
+
+  public ICheckoutSource[] getElements()
+  {
+    return elements;
   }
 
   public CDOSessionConfiguration createSessionConfiguration()

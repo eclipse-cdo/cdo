@@ -79,6 +79,8 @@ public class RepositoryLocationsView extends ContainerView
       NewRepositoryLocationDialog dialog = new NewRepositoryLocationDialog(getSite().getShell());
       if (dialog.open() == NewRepositoryLocationDialog.OK)
       {
+        IRepositoryLocationManager.INSTANCE.addRepositoryLocation(dialog.getConnectorType(),
+            dialog.getConnectorDescription(), dialog.getRepositoryName());
       }
     }
   }

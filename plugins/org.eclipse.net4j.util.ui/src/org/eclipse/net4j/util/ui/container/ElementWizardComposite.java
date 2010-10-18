@@ -56,6 +56,8 @@ public abstract class ElementWizardComposite extends Composite
 
   private List<String> factoryTypes;
 
+  private Map<String, String> defaultDescriptions = new HashMap<String, String>();
+
   private List<IElementWizard> wizards;
 
   private Map<IElementWizard, List<Control>> wizardControls = new HashMap<IElementWizard, List<Control>>();
@@ -89,6 +91,16 @@ public abstract class ElementWizardComposite extends Composite
     this.validationContext = validationContext;
   }
 
+  public String getDefaultDescription(String factoryType)
+  {
+    return defaultDescriptions.get(factoryType);
+  }
+
+  public void setDefaultDescription(String factoryType, String value)
+  {
+    defaultDescriptions.put(factoryType, value);
+  }
+
   protected void init()
   {
     IManagedContainer container = getContainer();
@@ -104,8 +116,10 @@ public abstract class ElementWizardComposite extends Composite
 
       try
       {
+        String description = getDefaultDescription(factoryType);
+
         IElementWizard wizard = (IElementWizard)container.getElement(ElementWizardFactory.PRODUCT_GROUP,
-            getProductGroup() + ":" + factoryType, null);
+            getProductGroup() + ":" + factoryType, description);
         wizards.add(wizard);
         wizardControls.put(wizard, new ArrayList<Control>());
       }
@@ -203,21 +217,31 @@ public abstract class ElementWizardComposite extends Composite
     }
   }
 
-  protected String getDefaultDescription(String factoryType)
-  {
-    return null;
-  }
-
   protected IManagedContainer getContainer()
   {
     return IPluginContainer.INSTANCE;
   }
 
-  protected abstract void createFactoryTypeControl();
+  public String getDescription()
+  {
+    String resultType = getFactoryType();
+    for (int i = 0; i < wizards.size(); i++)
+    {
+      String factoryType = factoryTypes.get(i);
+      if (resultType.equals(factoryType))
+      {
+        return wizards.get(i).getResultDescription();
+      }
+    }
+
+    return null;
+  }
+
+  public abstract String getFactoryType();
 
   protected abstract void setFactoryType(String factoryType);
 
-  protected abstract String getFactoryType();
+  protected abstract void createFactoryTypeControl();
 
   /**
    * @author Eike Stepper
@@ -241,7 +265,7 @@ public abstract class ElementWizardComposite extends Composite
     }
 
     @Override
-    protected String getFactoryType()
+    public String getFactoryType()
     {
       return combo.getText();
     }
@@ -298,21 +322,7 @@ public abstract class ElementWizardComposite extends Composite
     }
 
     @Override
-    protected void createFactoryTypeControl()
-    {
-      composite = new Composite(this, SWT.SINGLE);
-      composite.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
-      composite.setLayout(new FillLayout());
-      for (String factoryType : getFactoryTypes())
-      {
-        Button choice = new Button(composite, SWT.RADIO);
-        choice.setText(factoryType);
-        choice.addSelectionListener(this);
-      }
-    }
-
-    @Override
-    protected String getFactoryType()
+    public String getFactoryType()
     {
       Control[] choices = composite.getChildren();
 
@@ -341,6 +351,20 @@ public abstract class ElementWizardComposite extends Composite
       }
 
       factoryTypeChanged();
+    }
+
+    @Override
+    protected void createFactoryTypeControl()
+    {
+      composite = new Composite(this, SWT.SINGLE);
+      composite.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+      composite.setLayout(new FillLayout());
+      for (String factoryType : getFactoryTypes())
+      {
+        Button choice = new Button(composite, SWT.RADIO);
+        choice.setText(factoryType);
+        choice.addSelectionListener(this);
+      }
     }
   }
 }

@@ -43,9 +43,9 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class RepositoriesView extends ViewPart
+public class RepositoryLocationsView extends ViewPart
 {
-  public static final String ID = "org.eclipse.emf.cdo.ui.ide.RepositoriesView";
+  public static final String ID = "org.eclipse.emf.cdo.ui.location.RepositoryLocationsView";
 
   private TreeViewer viewer;
 
@@ -57,7 +57,7 @@ public class RepositoriesView extends ViewPart
 
   private Action doubleClickAction;
 
-  public RepositoriesView()
+  public RepositoryLocationsView()
   {
   }
 
@@ -91,7 +91,7 @@ public class RepositoriesView extends ViewPart
     {
       public void menuAboutToShow(IMenuManager manager)
       {
-        RepositoriesView.this.fillContextMenu(manager);
+        RepositoryLocationsView.this.fillContextMenu(manager);
       }
     });
 

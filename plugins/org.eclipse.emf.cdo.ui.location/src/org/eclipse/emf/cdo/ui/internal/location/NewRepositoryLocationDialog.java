@@ -10,9 +10,9 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public class NewRepositoryDialog extends TitleAreaDialog
+public class NewRepositoryLocationDialog extends TitleAreaDialog
 {
-  public NewRepositoryDialog(IWorkbenchPage page)
+  public NewRepositoryLocationDialog(IWorkbenchPage page)
   {
     super(page.getWorkbenchWindow().getShell());
     setShellStyle(getShellStyle() | SWT.APPLICATION_MODAL | SWT.MAX | SWT.TITLE | SWT.RESIZE);
@@ -22,14 +22,15 @@ public class NewRepositoryDialog extends TitleAreaDialog
   protected void configureShell(Shell newShell)
   {
     super.configureShell(newShell);
-    newShell.setText("New Repository");
+    newShell.setText("New Repository Location");
   }
 
   @Override
   protected Control createDialogArea(Composite parent)
   {
-    setTitle("New Repository");
+    setTitle("New Repository Location");
     // setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PACKAGE_MANAGER));
+
     return null;
   }
 }

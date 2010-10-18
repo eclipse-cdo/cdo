@@ -146,13 +146,5 @@ public class ViewProviderTest extends AbstractCDOTest
     msg("CHECK FOR: " + uri);
     msg(xmi);
     assertEquals(true, xmi.indexOf(uri.toString()) != -1);
-
-    // resource.unload();
-    // resourceSet.getResources().remove(resource);
-    //
-    // InternalEObject proxy = (InternalEObject)((InternalEObject)orderDetail).eGet(getModel1Package()
-    // .getOrderDetail_Product(), false);
-    // System.out.println(proxy.eProxyURI());
-    // assertNotNull(eProxyURI);
   }
 }

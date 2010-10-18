@@ -8,9 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.ui.internal.ide.views;
-
-import org.eclipse.emf.cdo.internal.ui.SharedIcons;
+package org.eclipse.emf.cdo.ui.internal.location;
 
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.jface.action.Action;
@@ -20,7 +18,6 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -32,13 +29,10 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
@@ -354,33 +348,6 @@ public class RepositoriesView extends ViewPart
       }
 
       return PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static class NewRepositoryDialog extends TitleAreaDialog
-  {
-    public NewRepositoryDialog(IWorkbenchPage page)
-    {
-      super(page.getWorkbenchWindow().getShell());
-      setShellStyle(getShellStyle() | SWT.APPLICATION_MODAL | SWT.MAX | SWT.TITLE | SWT.RESIZE);
-    }
-
-    @Override
-    protected void configureShell(Shell newShell)
-    {
-      super.configureShell(newShell);
-      newShell.setText("New Repository");
-    }
-
-    @Override
-    protected Control createDialogArea(Composite parent)
-    {
-      setTitle("New Repository");
-      setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PACKAGE_MANAGER));
-      return null;
     }
   }
 }

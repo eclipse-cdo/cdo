@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
-import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -25,9 +24,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
-import org.eclipse.net4j.util.security.IPasswordCredentials;
-import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
-import org.eclipse.net4j.util.security.SecurityUtil;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
@@ -41,7 +37,7 @@ public abstract class CDOSessionConfigurationImpl implements InternalCDOSessionC
 
   private PassiveUpdateMode passiveUpdateMode = PassiveUpdateMode.INVALIDATIONS;
 
-  private CDOAuthenticator authenticator = new AuthenticatorImpl();
+  private CDOAuthenticator authenticator = new CDOAuthenticatorImpl();
 
   private CDOSession.ExceptionHandler exceptionHandler;
 
@@ -252,106 +248,6 @@ public abstract class CDOSessionConfigurationImpl implements InternalCDOSessionC
     if (isSessionOpen())
     {
       throw new IllegalStateException(Messages.getString("CDOSessionConfigurationImpl.0")); //$NON-NLS-1$
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  protected class AuthenticatorImpl implements CDOAuthenticator
-  {
-    private String encryptionAlgorithmName = SecurityUtil.PBE_WITH_MD5_AND_DES;
-
-    private byte[] encryptionSaltBytes = SecurityUtil.DEFAULT_SALT;
-
-    private int encryptionIterationCount = SecurityUtil.DEFAULT_ITERATION_COUNT;
-
-    private IPasswordCredentialsProvider credentialsProvider;
-
-    public AuthenticatorImpl()
-    {
-    }
-
-    public String getEncryptionAlgorithmName()
-    {
-      return encryptionAlgorithmName;
-    }
-
-    public void setEncryptionAlgorithmName(String encryptionAlgorithmName)
-    {
-      checkSessionNotOpened();
-      this.encryptionAlgorithmName = encryptionAlgorithmName;
-    }
-
-    public byte[] getEncryptionSaltBytes()
-    {
-      return encryptionSaltBytes;
-    }
-
-    public void setEncryptionSaltBytes(byte[] encryptionSaltBytes)
-    {
-      checkSessionNotOpened();
-      this.encryptionSaltBytes = encryptionSaltBytes;
-    }
-
-    public int getEncryptionIterationCount()
-    {
-      return encryptionIterationCount;
-    }
-
-    public void setEncryptionIterationCount(int encryptionIterationCount)
-    {
-      checkSessionNotOpened();
-      this.encryptionIterationCount = encryptionIterationCount;
-    }
-
-    public IPasswordCredentialsProvider getCredentialsProvider()
-    {
-      return credentialsProvider;
-    }
-
-    public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
-    {
-      checkSessionNotOpened();
-      this.credentialsProvider = credentialsProvider;
-    }
-
-    public CDOAuthenticationResult authenticate(byte[] randomToken)
-    {
-      if (credentialsProvider == null)
-      {
-        throw new IllegalStateException("No credentials provider configured"); //$NON-NLS-1$
-      }
-
-      IPasswordCredentials credentials = credentialsProvider.getCredentials();
-      String userID = credentials.getUserID();
-      byte[] cryptedToken = encryptToken(credentials.getPassword(), randomToken);
-      return new CDOAuthenticationResult(userID, cryptedToken);
-    }
-
-    protected byte[] encryptToken(char[] password, byte[] token)
-    {
-      try
-      {
-        return SecurityUtil.encrypt(token, password, encryptionAlgorithmName, encryptionSaltBytes,
-            encryptionIterationCount);
-      }
-      catch (RuntimeException ex)
-      {
-        throw ex;
-      }
-      catch (Exception ex)
-      {
-        throw new SecurityException(ex);
-      }
-    }
-
-    private void checkSessionNotOpened()
-    {
-      if (session != null)
-      {
-        throw new IllegalStateException("Not allowed after the session has been opened"); //$NON-NLS-1$
-      }
     }
   }
 }

@@ -30,6 +30,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
@@ -139,12 +140,16 @@ public class RepositoryLocationsView extends ViewPart
       @Override
       public void run()
       {
-        showMessage("Action 1 executed");
+        Shell shell = RepositoryLocationsView.this.getSite().getShell();
+        NewRepositoryLocationDialog dialog = new NewRepositoryLocationDialog(shell);
+        if (dialog.open() == NewRepositoryLocationDialog.OK)
+        {
+        }
       }
     };
 
-    newAction.setText("Action 1");
-    newAction.setToolTipText("Action 1 tooltip");
+    newAction.setText("New Location");
+    newAction.setToolTipText("Add a new repository location");
     newAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
         .getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 

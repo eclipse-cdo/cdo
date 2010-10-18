@@ -1,20 +1,24 @@
 package org.eclipse.emf.cdo.ui.internal.location;
 
+import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.ui.container.ElementWizardComposite;
+
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbenchPage;
 
 /**
  * @author Eike Stepper
  */
 public class NewRepositoryLocationDialog extends TitleAreaDialog
 {
-  public NewRepositoryLocationDialog(IWorkbenchPage page)
+  private ElementWizardComposite connectorWizard;
+
+  public NewRepositoryLocationDialog(Shell parentShell)
   {
-    super(page.getWorkbenchWindow().getShell());
+    super(parentShell);
     setShellStyle(getShellStyle() | SWT.APPLICATION_MODAL | SWT.MAX | SWT.TITLE | SWT.RESIZE);
   }
 
@@ -31,6 +35,18 @@ public class NewRepositoryLocationDialog extends TitleAreaDialog
     setTitle("New Repository Location");
     // setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PACKAGE_MANAGER));
 
-    return null;
+    connectorWizard = new ElementWizardComposite.WithRadios(parent, SWT.NONE, "org.eclipse.net4j.connectors",
+        "Connector:");
+    // IPluginContainer container = getContainer();
+    // connectorWizard = (IElementWizard)container.getElement("org.eclipse.net4j.util.ui.elementWizards",
+    // "org.eclipse.net4j.connectors", null);
+    //
+    // connectorWizard.create(parent, container, "org.eclipse.net4j.connectors", "", "", null);
+    return connectorWizard;
+  }
+
+  protected IPluginContainer getContainer()
+  {
+    return IPluginContainer.INSTANCE;
   }
 }

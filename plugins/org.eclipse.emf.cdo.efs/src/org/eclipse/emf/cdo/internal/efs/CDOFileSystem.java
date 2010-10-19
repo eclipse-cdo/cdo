@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.internal.efs;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
@@ -134,8 +133,7 @@ public abstract class CDOFileSystem extends FileSystem
     final long timeStamp = root.getTimeStamp();
 
     final CDOSession session = getSession(authority, repositoryName, monitor);
-    final CDOBranchManager branchManager = session.getBranchManager();
-    final CDOBranch branch = branchManager.getBranch(branchPath);
+    final CDOBranch branch = session.getBranchManager().getBranch(branchPath);
 
     return InfiniteProgress.call("Open view", new Callable<CDOView>()
     {

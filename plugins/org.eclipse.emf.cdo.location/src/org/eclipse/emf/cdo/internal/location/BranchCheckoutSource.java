@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.container.ISlow;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class BranchCheckoutSource extends Container<BranchCheckoutSource> implements ICheckoutSource
+public class BranchCheckoutSource extends Container<BranchCheckoutSource> implements ICheckoutSource, ISlow
 {
   private BranchCheckoutSource parent;
 
@@ -61,7 +62,7 @@ public class BranchCheckoutSource extends Container<BranchCheckoutSource> implem
     return CDOBranchPoint.UNSPECIFIED_DATE;
   }
 
-  public BranchCheckoutSource[] getElements()
+  public synchronized BranchCheckoutSource[] getElements()
   {
     if (subBranches == null)
     {

@@ -24,9 +24,11 @@ import org.eclipse.ui.PartInitException;
 /**
  * @author Victor Roldan Betancort
  */
-public class CommonNavigatorUtils
+public final class CommonNavigatorUtils
 {
-  private static final String ERROR_LOG_ID = "org.eclipse.pde.runtime.LogView"; //$NON-NLS-1$
+  private CommonNavigatorUtils()
+  {
+  }
 
   public static Object createMessageProvider(final String message, final MessageType type)
   {
@@ -71,7 +73,7 @@ public class CommonNavigatorUtils
             {
               try
               {
-                UIUtil.getActiveWorkbenchPage().showView(ERROR_LOG_ID);
+                UIUtil.getActiveWorkbenchPage().showView(UIUtil.ERROR_LOG_ID);
               }
               catch (PartInitException ex)
               {

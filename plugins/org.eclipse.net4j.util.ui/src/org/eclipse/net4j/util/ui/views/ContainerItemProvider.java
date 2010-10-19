@@ -10,15 +10,22 @@
  */
 package org.eclipse.net4j.util.ui.views;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.ISlow;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.internal.ui.SharedIcons;
 import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.jface.viewers.TreePath;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Image;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -229,6 +236,68 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   }
 
   /**
+   * @since 3.1
+   */
+  protected boolean isSlow(IContainer<Object> container)
+  {
+    return container instanceof ISlow;
+  }
+
+  /**
+   * @since 3.1
+   */
+  protected String getSlowText(IContainer<Object> container)
+  {
+    return "Pending...";
+  }
+
+  /**
+   * @since 3.1
+   */
+  protected String getErrorText(IContainer<Object> container)
+  {
+    return "Error";
+  }
+
+  @Override
+  public Font getFont(Object obj)
+  {
+    if (obj instanceof ContainerItemProvider.LazyElement)
+    {
+      return getItalicFont();
+    }
+
+    return super.getFont(obj);
+  }
+
+  @Override
+  public Color getForeground(Object obj)
+  {
+    if (obj instanceof ContainerItemProvider.LazyElement)
+    {
+      return getDisplay().getSystemColor(SWT.COLOR_GRAY);
+    }
+
+    return super.getForeground(obj);
+  }
+
+  @Override
+  public Image getImage(Object obj)
+  {
+    if (obj instanceof ContainerItemProvider.LazyElement)
+    {
+      return null;
+    }
+
+    if (obj instanceof ContainerItemProvider.ErrorElement)
+    {
+      return SharedIcons.getImage(SharedIcons.OBJ_ERROR);
+    }
+
+    return super.getImage(obj);
+  }
+
+  /**
    * @author Eike Stepper
    */
   public interface Node
@@ -396,16 +465,60 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
     protected List<Node> createChildren()
     {
-      Object[] elements = getContainer().getElements();
-      List<Node> children = new ArrayList<Node>(elements.length);
+      final List<Node> children = new ArrayList<Node>();
+      final IContainer<Object> container = getContainer();
+
+      if (isSlow(container))
+      {
+        final LazyElement lazyElement = new LazyElement(container);
+        addChild(children, lazyElement);
+
+        Thread thread = new Thread()
+        {
+          @Override
+          public void run()
+          {
+            try
+            {
+              fillChildren(children, container);
+            }
+            catch (Exception ex)
+            {
+              OM.LOG.error(ex);
+              addChild(children, new ErrorElement(container));
+            }
+            finally
+            {
+              Node node = removeNode(lazyElement);
+              children.remove(node);
+              refreshElement(container, false);
+            }
+          }
+        };
+
+        thread.setDaemon(true);
+        thread.start();
+      }
+      else
+      {
+        fillChildren(children, container);
+      }
+
+      container.addListener(containerListener);
+      return children;
+    }
+
+    /**
+     * @since 3.1
+     */
+    protected void fillChildren(List<Node> children, IContainer<Object> container)
+    {
+      Object[] elements = container.getElements();
       for (int i = 0; i < elements.length; i++)
       {
         Object element = elements[i];
         addChild(children, element);
       }
-
-      getContainer().addListener(containerListener);
-      return children;
     }
 
     protected void onAdded(IContainer<Object> container, Object element)
@@ -509,6 +622,56 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     public void notifyEvent(IEvent event)
     {
       updateLabels(event.getSource());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.1
+   */
+  public class LazyElement
+  {
+    private IContainer<Object> container;
+
+    public LazyElement(IContainer<Object> container)
+    {
+      this.container = container;
+    }
+
+    public IContainer<Object> getContainer()
+    {
+      return container;
+    }
+
+    @Override
+    public String toString()
+    {
+      return getSlowText(container);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.1
+   */
+  public class ErrorElement
+  {
+    private IContainer<Object> container;
+
+    public ErrorElement(IContainer<Object> container)
+    {
+      this.container = container;
+    }
+
+    public IContainer<Object> getContainer()
+    {
+      return container;
+    }
+
+    @Override
+    public String toString()
+    {
+      return getErrorText(container);
     }
   }
 }

@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.internal.ui.SharedIcons;
 import org.eclipse.net4j.util.internal.ui.actions.IntrospectAction;
+import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
@@ -50,6 +51,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
@@ -403,7 +405,18 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
   protected void doubleClicked(Object object)
   {
-    if (object != null && viewer.isExpandable(object))
+    if (object instanceof ContainerItemProvider.ErrorElement)
+    {
+      try
+      {
+        UIUtil.getActiveWorkbenchPage().showView(UIUtil.ERROR_LOG_ID);
+      }
+      catch (PartInitException ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
+    else if (object != null && viewer.isExpandable(object))
     {
       if (viewer.getExpandedState(object))
       {

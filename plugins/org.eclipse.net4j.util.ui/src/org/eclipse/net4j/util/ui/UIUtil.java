@@ -44,6 +44,11 @@ import java.util.List;
  */
 public final class UIUtil
 {
+  /**
+   * @since 3.1
+   */
+  public static final String ERROR_LOG_ID = "org.eclipse.pde.runtime.LogView"; //$NON-NLS-1$
+
   private UIUtil()
   {
   }

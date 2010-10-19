@@ -17,6 +17,10 @@ import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
 /**
@@ -28,6 +32,8 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
 
   private INPUT input;
 
+  private Font italicFont;
+
   public StructuredContentProvider()
   {
   }
@@ -38,6 +44,12 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
     {
       disconnectInput(input);
       input = null;
+    }
+
+    if (italicFont != null)
+    {
+      italicFont.dispose();
+      italicFont = null;
     }
   }
 
@@ -192,5 +204,21 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
     }
 
     return display;
+  }
+
+  /**
+   * @since 3.1
+   */
+  protected synchronized Font getItalicFont()
+  {
+    if (italicFont == null && viewer != null)
+    {
+      Control control = viewer.getControl();
+      FontData data = control.getFont().getFontData()[0];
+
+      italicFont = new Font(control.getDisplay(), data.getName(), data.getHeight(), data.getStyle() | SWT.ITALIC);
+    }
+
+    return italicFont;
   }
 }

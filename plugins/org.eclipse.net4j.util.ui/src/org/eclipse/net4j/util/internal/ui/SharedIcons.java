@@ -41,6 +41,8 @@ public class SharedIcons
 
   public static final String OBJ_ERROR = OBJ + "error"; //$NON-NLS-1$
 
+  public static final String OBJ_PENDING = OBJ + "pending"; //$NON-NLS-1$
+
   public static final String VIEW_CONTAINER = VIEW + "container"; //$NON-NLS-1$
 
   public static final String TOOL_ADD = TOOL + "add"; //$NON-NLS-1$

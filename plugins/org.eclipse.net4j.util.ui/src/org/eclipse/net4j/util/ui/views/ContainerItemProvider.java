@@ -286,7 +286,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   {
     if (obj instanceof ContainerItemProvider.LazyElement)
     {
-      return null;
+      return SharedIcons.getImage(SharedIcons.OBJ_PENDING);
     }
 
     if (obj instanceof ContainerItemProvider.ErrorElement)

@@ -20,7 +20,6 @@ import org.eclipse.net4j.util.ui.views.IElementFilter;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.swt.graphics.Image;
 
 /**
  * @author Eike Stepper
@@ -34,17 +33,6 @@ public class RepositoryLocationItemProvider extends ContainerItemProvider<IConta
   public RepositoryLocationItemProvider(IElementFilter rootElementFilter)
   {
     super(rootElementFilter);
-  }
-
-  @Override
-  public Image getImage(Object obj)
-  {
-    // if (obj instanceof IChannel)
-    // {
-    // return SharedIcons.getImage(SharedIcons.OBJ_CHANNEL);
-    // }
-
-    return super.getImage(obj);
   }
 
   @Override

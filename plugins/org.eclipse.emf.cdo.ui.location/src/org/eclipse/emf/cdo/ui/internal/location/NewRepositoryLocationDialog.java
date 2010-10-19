@@ -1,5 +1,6 @@
 package org.eclipse.emf.cdo.ui.internal.location;
 
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.container.ElementWizardComposite;
 
@@ -81,7 +82,7 @@ public class NewRepositoryLocationDialog extends TitleAreaDialog
     return composite;
   }
 
-  protected IPluginContainer getContainer()
+  protected IManagedContainer getContainer()
   {
     return IPluginContainer.INSTANCE;
   }

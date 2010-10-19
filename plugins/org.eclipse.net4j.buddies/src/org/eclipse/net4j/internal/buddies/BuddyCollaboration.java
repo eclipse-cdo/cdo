@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -25,6 +25,7 @@ import org.eclipse.net4j.internal.buddies.protocol.BuddiesClientProtocol;
 import org.eclipse.net4j.internal.buddies.protocol.InstallFacilityRequest;
 import org.eclipse.net4j.internal.buddies.protocol.InviteBuddiesNotification;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
 import java.util.ArrayList;
@@ -159,7 +160,7 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
     deactivate();
   }
 
-  protected IPluginContainer getContainer()
+  protected IManagedContainer getContainer()
   {
     return IPluginContainer.INSTANCE;
   }

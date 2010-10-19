@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
 import org.eclipse.core.filesystem.EFS;
@@ -157,7 +158,7 @@ public abstract class CDOFileSystem extends FileSystem
     return session;
   }
 
-  protected IPluginContainer getContainer()
+  protected IManagedContainer getContainer()
   {
     return IPluginContainer.INSTANCE;
   }

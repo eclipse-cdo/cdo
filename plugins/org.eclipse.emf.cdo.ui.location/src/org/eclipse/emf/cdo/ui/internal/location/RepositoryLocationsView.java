@@ -18,9 +18,12 @@ import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IWorkbenchActionConstants;
 
 /**
  * @author Eike Stepper
@@ -53,9 +56,16 @@ public class RepositoryLocationsView extends ContainerView
   }
 
   @Override
+  protected void fillLocalPullDown(IMenuManager manager)
+  {
+    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+  }
+
+  @Override
   protected void fillLocalToolBar(IToolBarManager manager)
   {
     manager.add(newAction);
+    manager.add(getRefreshAction());
     super.fillLocalToolBar(manager);
   }
 

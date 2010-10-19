@@ -200,15 +200,24 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
   protected Control createUI(Composite parent)
   {
-    itemProvider = createContainerItemProvider();
     viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+    initViewer();
+
+    viewer.addSelectionChangedListener(selectionListener);
+    getSite().setSelectionProvider(this);
+    return viewer.getControl();
+  }
+
+  /**
+   * @since 3.1
+   */
+  protected void initViewer()
+  {
+    itemProvider = createContainerItemProvider();
     viewer.setContentProvider(createContentProvider());
     viewer.setLabelProvider(createLabelProvider());
     viewer.setSorter(new ContainerNameSorter());
     resetInput();
-    viewer.addSelectionChangedListener(selectionListener);
-    getSite().setSelectionProvider(this);
-    return viewer.getControl();
   }
 
   /**
@@ -429,6 +438,15 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     }
   }
 
+  /**
+   * @since 3.1
+   */
+  protected void refreshPressed()
+  {
+    itemProvider.dispose();
+    initViewer();
+  }
+
   protected void closeView()
   {
     try
@@ -483,6 +501,14 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     default:
       return true;
     }
+  }
+
+  /**
+   * @since 3.1
+   */
+  protected Action getRefreshAction()
+  {
+    return refreshAction;
   }
 
   protected Display getDisplay()
@@ -610,7 +636,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     @Override
     protected void safeRun() throws Exception
     {
-      viewer.refresh(false);
+      refreshPressed();
     }
   }
 

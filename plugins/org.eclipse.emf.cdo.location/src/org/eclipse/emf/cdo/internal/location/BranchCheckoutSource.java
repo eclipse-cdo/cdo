@@ -66,13 +66,13 @@ public class BranchCheckoutSource extends Container<BranchCheckoutSource> implem
   {
     if (subBranches == null)
     {
-      subBranches = new ArrayList<BranchCheckoutSource>();
       CDOSessionConfiguration config = getRepositoryLocation().createSessionConfiguration();
       CDOSession session = config.openSession();
 
       try
       {
         CDOBranch[] branches = session.getBranchManager().getBranch(getBranchPath()).getBranches();
+        subBranches = new ArrayList<BranchCheckoutSource>();
         for (CDOBranch branch : branches)
         {
           subBranches.add(new BranchCheckoutSource(this, branch.getName()));

@@ -238,6 +238,16 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   /**
    * @since 3.1
    */
+  protected void executeLazyRunnable(Runnable runnable)
+  {
+    Thread thread = new Thread(runnable);
+    thread.setDaemon(true);
+    thread.start();
+  }
+
+  /**
+   * @since 3.1
+   */
   protected boolean isSlow(IContainer<Object> container)
   {
     return container instanceof ISlow;
@@ -473,9 +483,8 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
         final LazyElement lazyElement = new LazyElement(container);
         addChild(children, lazyElement);
 
-        Thread thread = new Thread()
+        Runnable runnable = new Runnable()
         {
-          @Override
           public void run()
           {
             try
@@ -496,8 +505,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
           }
         };
 
-        thread.setDaemon(true);
-        thread.start();
+        executeLazyRunnable(runnable);
       }
       else
       {

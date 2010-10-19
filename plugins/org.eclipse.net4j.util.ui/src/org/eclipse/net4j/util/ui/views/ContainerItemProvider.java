@@ -20,12 +20,17 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.internal.ui.SharedIcons;
 import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.ui.UIUtil;
 
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.PartInitException;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -267,6 +272,34 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   protected String getErrorText(IContainer<Object> container)
   {
     return "Error";
+  }
+
+  @Override
+  protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
+  {
+    super.fillContextMenu(manager, selection);
+    if (selection.size() == 1)
+    {
+      Object element = selection.getFirstElement();
+      if (element instanceof ContainerItemProvider.ErrorElement)
+      {
+        manager.add(new Action("Open Error Log")
+        {
+          @Override
+          public void run()
+          {
+            try
+            {
+              UIUtil.getActiveWorkbenchPage().showView(UIUtil.ERROR_LOG_ID);
+            }
+            catch (PartInitException ex)
+            {
+              OM.LOG.error(ex);
+            }
+          }
+        });
+      }
+    }
   }
 
   @Override

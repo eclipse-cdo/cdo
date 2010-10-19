@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.http.tests;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.http.HTTPUtil;
 import org.eclipse.net4j.internal.http.HTTPClientConnector;
 import org.eclipse.net4j.tests.AbstractTransportTest;
@@ -127,7 +128,7 @@ public class HTTPTest extends AbstractTransportTest
 
   private HTTPClientConnector getHTTPConnector()
   {
-    return (HTTPClientConnector)container.getElement("org.eclipse.net4j.connectors", "http", //$NON-NLS-1$ //$NON-NLS-2$
+    return (HTTPClientConnector)Net4jUtil.getConnector(container, "http", //$NON-NLS-1$ 
         "http://eike@localhost:8080/net4j"); //$NON-NLS-1$
   }
 }

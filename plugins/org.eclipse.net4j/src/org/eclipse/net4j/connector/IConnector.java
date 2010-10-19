@@ -67,9 +67,10 @@ public interface IConnector extends IChannelMultiplexer, IUserAware, Closeable
   /**
    * Synchronous connect with infinite timeout value. Same as {@link #connect() connect(NO_TIMEOUT)}.
    * 
-   * @since 2.0
+   * @throws ConnectorException
+   * @since 4.0
    */
-  public boolean connect() throws ConnectorException;
+  public void connect() throws ConnectorException;
 
   /**
    * Synchronous connect. Blocks until <code>{@link #isConnected()} == true</code> or the given timeout expired.
@@ -77,13 +78,16 @@ public interface IConnector extends IChannelMultiplexer, IUserAware, Closeable
    * @param timeout
    *          The maximum number of milli seconds to block or {@link #NO_TIMEOUT} to block indefinetely in case no
    *          connection occurs.
+   * @throws ConnectorException
+   * @since 4.0
    */
-  public boolean connect(long timeout) throws ConnectorException;
+  public void connect(long timeout) throws ConnectorException;
 
   /**
    * Asynchronous connect. May leave this {@link IConnector} in a state where <code>{@link #isConnected()} == false
    * </code>.
    * 
+   * @throws ConnectorException
    * @see #waitForConnection(long)
    * @see #connect(long)
    */
@@ -96,6 +100,7 @@ public interface IConnector extends IChannelMultiplexer, IUserAware, Closeable
    *          The maximum number of milli seconds to block or {@link #NO_TIMEOUT} to block indefinetely in case no
    *          connection occurs.
    * @throws ConnectorException
+   * @since 4.0
    */
-  public boolean waitForConnection(long timeout) throws ConnectorException;
+  public void waitForConnection(long timeout) throws ConnectorException;
 }

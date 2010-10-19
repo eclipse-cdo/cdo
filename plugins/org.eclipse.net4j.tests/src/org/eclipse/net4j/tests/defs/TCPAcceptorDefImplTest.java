@@ -62,9 +62,7 @@ public class TCPAcceptorDefImplTest extends AbstractOMTest
     assertTrue(LifecycleUtil.isActive(tcpAcceptor));
 
     LifecycleUtil.activate(tcpConnector);
-    boolean connected = tcpConnector.waitForConnection(DELAY + TIMEOUT);
-
-    assertTrue(connected);
+    tcpConnector.waitForConnection(DELAY + TIMEOUT);
     assertTrue(LifecycleUtil.isActive(tcpConnector));
 
     LifecycleUtil.deactivate(tcpAcceptor);
@@ -95,9 +93,7 @@ public class TCPAcceptorDefImplTest extends AbstractOMTest
     Util.addNegotiator(USERID, PASSWORD, tcpConnector);
     LifecycleUtil.activate(tcpConnector);
 
-    boolean connected = tcpConnector.waitForConnection(DELAY + TIMEOUT);
-    assertTrue(connected);
-
+    tcpConnector.waitForConnection(DELAY + TIMEOUT);
     LifecycleUtil.deactivate(tcpConnector);
 
     Util.removeNegotiator(tcpConnector);

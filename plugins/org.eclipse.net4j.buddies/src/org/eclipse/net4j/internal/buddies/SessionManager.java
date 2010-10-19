@@ -119,28 +119,20 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
               throw new IllegalStateException("connector == null"); //$NON-NLS-1$
             }
 
-            boolean connected = connector.waitForConnection(5000L);
-            if (connected)
+            session = BuddiesUtil.openSession(connector, getUserID(), getPassword(), 5000L);
+            if (session != null)
             {
-              session = BuddiesUtil.openSession(connector, getUserID(), getPassword(), 5000L);
-              if (session != null)
+              if (connecting)
               {
-                if (connecting)
-                {
-                  session.addListener(SessionManager.this);
-                  setState(ISessionManager.State.CONNECTED);
-                }
-                else
-                {
-                  session.close();
-                  session = null;
-                  setState(ISessionManager.State.DISCONNECTED);
-                }
+                session.addListener(SessionManager.this);
+                setState(ISessionManager.State.CONNECTED);
               }
-            }
-            else
-            {
-              connector.close();
+              else
+              {
+                session.close();
+                session = null;
+                setState(ISessionManager.State.DISCONNECTED);
+              }
             }
           }
         }

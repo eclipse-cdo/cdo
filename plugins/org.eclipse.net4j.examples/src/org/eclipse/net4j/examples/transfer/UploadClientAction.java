@@ -4,12 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http:www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.examples.transfer;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.examples.bundle.OM;
 import org.eclipse.net4j.signal.RequestWithMonitoring;
@@ -102,8 +103,7 @@ public class UploadClientAction implements IWorkbenchWindowActionDelegate, Uploa
     try
     {
       // Start a connector that represents the client side of a physical connection
-      IConnector connector = (IConnector)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.connectors", "tcp", //$NON-NLS-1$ //$NON-NLS-2$
-          "localhost:2036"); //$NON-NLS-1$
+      IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", "localhost:2036");
 
       // Open a virtual channel with the ECHO protocol, send an ECHO request and close the channel
       protocol = new SignalProtocol<Object>(PROTOCOL_NAME);

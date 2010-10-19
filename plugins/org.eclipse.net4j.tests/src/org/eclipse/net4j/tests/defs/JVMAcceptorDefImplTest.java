@@ -62,9 +62,8 @@ public class JVMAcceptorDefImplTest extends AbstractOMTest
     assertTrue(LifecycleUtil.isActive(jvmAcceptor));
 
     LifecycleUtil.activate(jvmConnector);
-    boolean connected = jvmConnector.waitForConnection(DELAY + TIMEOUT);
+    jvmConnector.waitForConnection(DELAY + TIMEOUT);
 
-    assertTrue(connected);
     assertTrue(LifecycleUtil.isActive(jvmConnector));
 
     LifecycleUtil.deactivate(jvmAcceptor);

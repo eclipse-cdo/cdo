@@ -12,12 +12,11 @@ package org.eclipse.emf.cdo.internal.net4j;
 
 import org.eclipse.emf.cdo.internal.net4j.messages.Messages;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
-
-import org.eclipse.spi.net4j.ConnectorFactory;
 
 import java.text.MessageFormat;
 
@@ -76,6 +75,6 @@ public class Net4jConnectorInjector implements IElementProcessor
       connectorDescription = connectorDescription.substring(0, pos);
     }
 
-    return (IConnector)container.getElement(ConnectorFactory.PRODUCT_GROUP, factoryType, connectorDescription);
+    return Net4jUtil.getConnector(container, factoryType, connectorDescription);
   }
 }

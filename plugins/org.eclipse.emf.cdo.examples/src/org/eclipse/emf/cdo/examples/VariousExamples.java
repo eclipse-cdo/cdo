@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
@@ -31,8 +32,7 @@ public class VariousExamples
   public static void openSessionAndUseTransaction() throws CommitException
   {
     ResourceSet resourceSet = new ResourceSetImpl();
-    IConnector connector = (IConnector)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.connectors", "tcp",
-        "repos.foo.org:2036");
+    IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", "repos.foo.org:2036");
 
     CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
     configuration.setConnector(connector);

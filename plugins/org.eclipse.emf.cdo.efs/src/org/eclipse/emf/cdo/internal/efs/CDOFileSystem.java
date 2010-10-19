@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -182,7 +183,7 @@ public abstract class CDOFileSystem extends FileSystem
       {
         public IConnector call() throws Exception
         {
-          return (IConnector)getContainer().getElement("org.eclipse.net4j.connectors", connectorType, authority);
+          return Net4jUtil.getConnector(getContainer(), connectorType, authority);
         }
       });
     }

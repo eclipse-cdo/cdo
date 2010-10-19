@@ -38,6 +38,7 @@ public class RepositoryLocationItemProvider extends ContainerItemProvider<IConta
   @Override
   protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
   {
+    super.fillContextMenu(manager, selection);
     if (selection.size() == 1)
     {
       Object obj = selection.getFirstElement();

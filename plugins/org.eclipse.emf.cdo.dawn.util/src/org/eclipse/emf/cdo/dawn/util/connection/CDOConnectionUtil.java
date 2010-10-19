@@ -75,7 +75,7 @@ public class CDOConnectionUtil
     this.repositoryName = repositoryName;
     this.protocol = protocol;
     this.host = host;
-    setConnector((IConnector)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.connectors", protocol, host));
+    setConnector(Net4jUtil.getConnector(IPluginContainer.INSTANCE, protocol, host));
   }
 
   public void registerPackages(List<EPackage> packages)

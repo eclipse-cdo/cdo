@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
@@ -404,7 +405,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
         public org.eclipse.emf.cdo.session.CDOSessionConfiguration createSessionConfiguration()
         {
           IManagedContainer container = getCurrentTest().getServerContainer();
-          IConnector connector = (IConnector)container.getElement("org.eclipse.net4j.connectors", "jvm", acceptorName);
+          IConnector connector = Net4jUtil.getConnector(container, "jvm", acceptorName);
 
           InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)CDORevisionUtil
               .createRevisionManager();

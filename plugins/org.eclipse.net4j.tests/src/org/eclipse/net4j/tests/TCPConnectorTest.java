@@ -190,8 +190,7 @@ public class TCPConnectorTest extends AbstractOMTest
     connector.activate();
     // Can fail due to timing variations: assertEquals(false, connector.isActive());
 
-    boolean connected = connector.waitForConnection(DEFAULT_TIMEOUT);
-    assertEquals(true, connected);
+    connector.waitForConnection(DEFAULT_TIMEOUT);
     assertEquals(true, connector.isActive());
   }
 
@@ -263,8 +262,7 @@ public class TCPConnectorTest extends AbstractOMTest
     connector.setPort(2036);
     connector.activate();
 
-    boolean connected = connector.waitForConnection(DEFAULT_TIMEOUT);
-    assertEquals(true, connected);
+    connector.waitForConnection(DEFAULT_TIMEOUT);
 
     InternalChannel clientChannel = connector.openChannel();
     assertEquals(USER_ID, clientChannel.getUserID());

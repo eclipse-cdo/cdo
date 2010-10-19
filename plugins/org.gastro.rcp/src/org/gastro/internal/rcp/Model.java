@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -208,8 +209,7 @@ public class Model extends Lifecycle implements IModel
     String server = IConfiguration.INSTANCE.getServer();
     String repository = IConfiguration.INSTANCE.getRepository();
 
-    IConnector connector = (IConnector)IPluginContainer.INSTANCE.getElement( //
-        "org.eclipse.net4j.connectors", "tcp", server);
+    IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", server);
 
     CDOSessionConfiguration config = CDONet4jUtil.createSessionConfiguration();
     config.setConnector(connector);

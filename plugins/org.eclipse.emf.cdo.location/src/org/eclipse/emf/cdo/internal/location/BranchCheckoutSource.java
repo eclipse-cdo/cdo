@@ -71,11 +71,12 @@ public class BranchCheckoutSource extends Container<BranchCheckoutSource> implem
 
       try
       {
-        CDOBranch[] branches = session.getBranchManager().getBranch(getBranchPath()).getBranches();
+        CDOBranch branch = session.getBranchManager().getBranch(getBranchPath());
+        CDOBranch[] branches = branch.getBranches();
         subBranches = new ArrayList<BranchCheckoutSource>();
-        for (CDOBranch branch : branches)
+        for (CDOBranch subBranch : branches)
         {
-          subBranches.add(new BranchCheckoutSource(this, branch.getName()));
+          subBranches.add(new BranchCheckoutSource(this, subBranch.getName()));
         }
       }
       finally

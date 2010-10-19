@@ -19,10 +19,16 @@
             id="org.eclipse.emf.cdo.ui.workspace.CheckoutSourceContribution"
             objectClass="org.eclipse.emf.cdo.location.ICheckoutSource">
          <action
+               class="org.eclipse.emf.cdo.ui.internal.workspace.CheckoutAsAction"
+               enablesFor="1"
+               id="org.eclipse.emf.cdo.ui.workspace.CheckoutAsAction"
+               label="Check Out As...">
+         </action>
+         <action
                class="org.eclipse.emf.cdo.ui.internal.workspace.CheckoutAction"
                enablesFor="1"
                id="org.eclipse.emf.cdo.ui.workspace.CheckoutAction"
-               label="Checkout...">
+               label="Check Out">
          </action>
       </objectContribution>
    </extension>

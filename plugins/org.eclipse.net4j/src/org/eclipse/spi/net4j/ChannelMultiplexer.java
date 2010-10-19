@@ -18,8 +18,8 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.protocol.IProtocolProvider;
-import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.factory.FactoryKey;
@@ -158,7 +158,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
       catch (TimeoutRuntimeException ex)
       {
         // Adjust the message for the complete timeout time
-        String message = "Registration timeout  after " + getOpenChannelTimeout() + " milliseconds"; //$NON-NLS-1$ //$NON-NLS-2$
+        String message = "Channel registration timeout after " + getOpenChannelTimeout() + " milliseconds";
         throw new TimeoutRuntimeException(message, ex);
       }
     }

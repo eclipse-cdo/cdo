@@ -199,8 +199,12 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
     }
   }
 
-  public boolean waitForConnection(long timeout) throws ConnectorException
+  /**
+   * @since 4.0
+   */
+  public void waitForConnection(long timeout) throws ConnectorException
   {
+    String message = "Connection timeout after " + timeout + " milliseconds";
     final long MAX_POLL_INTERVAL = 100L;
     boolean withTimeout = timeout != NO_TIMEOUT;
 
@@ -236,23 +240,38 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
         }
       }
 
-      return isConnected();
+      if (!isConnected())
+      {
+        throw new ConnectorException(message);
+      }
     }
-    catch (InterruptedException ex)
+    catch (ConnectorException ex)
     {
-      return false;
+      setState(ConnectorState.DISCONNECTED);
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      setState(ConnectorState.DISCONNECTED);
+      throw new ConnectorException(ex);
     }
   }
 
-  public boolean connect(long timeout) throws ConnectorException
+  /**
+   * @since 4.0
+   */
+  public void connect(long timeout) throws ConnectorException
   {
     connectAsync();
-    return waitForConnection(timeout);
+    waitForConnection(timeout);
   }
 
-  public boolean connect() throws ConnectorException
+  /**
+   * @since 4.0
+   */
+  public void connect() throws ConnectorException
   {
-    return connect(NO_TIMEOUT);
+    connect(NO_TIMEOUT);
   }
 
   public void close()
@@ -337,7 +356,8 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
   protected void doBeforeOpenChannel(IProtocol<?> protocol)
   {
     super.doBeforeOpenChannel(protocol);
-    waitForConnection(getOpenChannelTimeout());
+    long timeout = getOpenChannelTimeout();
+    waitForConnection(timeout);
   }
 
   @Override

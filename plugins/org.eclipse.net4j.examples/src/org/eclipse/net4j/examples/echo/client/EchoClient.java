@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -42,7 +42,7 @@ public class EchoClient
     try
     {
       // Start a connector that represents the client side of a physical connection
-      IConnector connector = (IConnector)container.getElement("org.eclipse.net4j.connectors", "tcp", "localhost:2036"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      IConnector connector = Net4jUtil.getConnector(container, "tcp", "localhost:2036"); //$NON-NLS-1$ //$NON-NLS-2$ 
 
       // Open a virtual channel with the ECHO protocol, send an ECHO request and close the channel
       EchoClientProtocol protocol = new EchoClientProtocol(connector);

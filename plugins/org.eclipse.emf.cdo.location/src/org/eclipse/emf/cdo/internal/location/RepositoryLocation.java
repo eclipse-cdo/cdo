@@ -15,9 +15,11 @@ import org.eclipse.emf.cdo.location.IRepositoryLocation;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
 /**
@@ -78,8 +80,10 @@ public class RepositoryLocation extends Container<ICheckoutSource> implements IR
 
   public CDOSessionConfiguration createSessionConfiguration()
   {
+    IConnector connector = getConnector();
+
     org.eclipse.emf.cdo.net4j.CDOSessionConfiguration config = CDONet4jUtil.createSessionConfiguration();
-    config.setConnector(getConnector());
+    config.setConnector(connector);
     config.setRepositoryName(getRepositoryName());
     return config;
   }
@@ -129,13 +133,14 @@ public class RepositoryLocation extends Container<ICheckoutSource> implements IR
     return connectorType + "://" + connectorDescription + "/" + repositoryName;
   }
 
-  protected IPluginContainer getContainer()
+  protected IManagedContainer getContainer()
   {
     return IPluginContainer.INSTANCE;
   }
 
   private IConnector getConnector()
   {
-    return (IConnector)getContainer().getElement("org.eclipse.net4j.connectors", connectorType, connectorDescription);
+    IManagedContainer container = getContainer();
+    return Net4jUtil.getConnector(container, connectorType, connectorDescription);
   }
 }

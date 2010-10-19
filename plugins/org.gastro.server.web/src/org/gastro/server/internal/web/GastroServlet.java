@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.net4j.CDOSession;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.StringUtil;
@@ -77,7 +78,7 @@ public class GastroServlet extends HttpServlet
     restaurantName = getRestaurantName();
 
     acceptor = (IAcceptor)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "jvm", repositoryName);
-    connector = (IConnector)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.connectors", "jvm", repositoryName);
+    connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "jvm", repositoryName);
 
     CDOSessionConfiguration config = CDONet4jUtil.createSessionConfiguration();
     config.setConnector(connector);

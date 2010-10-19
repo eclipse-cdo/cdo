@@ -251,8 +251,7 @@ public abstract class FailoverExample
 
   protected IConnector createConnector(String description)
   {
-    container.removeElement("org.eclipse.net4j.connectors", TRANSPORT_TYPE, description);
-    return (IConnector)container.getElement("org.eclipse.net4j.connectors", TRANSPORT_TYPE, description);
+    return Net4jUtil.getConnector(container, TRANSPORT_TYPE, description);
   }
 
   protected IRepositorySynchronizer createRepositorySynchronizer(IConnector connector, String repositoryName)

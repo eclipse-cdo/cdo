@@ -62,8 +62,7 @@ public class TCPConnectorDefImplTest extends AbstractProtocolTest
 
     ITCPConnector tcpConnector = (ITCPConnector)tcpConnectorDef.getInstance();
 
-    boolean connected = tcpConnector.waitForConnection(DELAY + TIMEOUT);
-    assertTrue(connected);
+    tcpConnector.waitForConnection(DELAY + TIMEOUT);
     assertTrue(LifecycleUtil.isActive(tcpConnector));
 
     LifecycleUtil.deactivate(tcpConnector);
@@ -117,8 +116,7 @@ public class TCPConnectorDefImplTest extends AbstractProtocolTest
 
     ITCPConnector tcpConnector = (ITCPConnector)tcpConnectorDef.getInstance();
 
-    boolean connected = tcpConnector.waitForConnection(DELAY + TIMEOUT);
-    assertTrue(connected);
+    tcpConnector.waitForConnection(DELAY + TIMEOUT);
     assertTrue(LifecycleUtil.isActive(tcpConnector));
 
     LifecycleUtil.deactivate(tcpConnector);

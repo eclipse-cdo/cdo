@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.SignalProtocol;
@@ -213,7 +214,7 @@ public class FailoverCDOSessionImpl extends CDONet4jSessionImpl
 
   protected IConnector getConnector(String description)
   {
-    return (IConnector)container.getElement("org.eclipse.net4j.connectors", "tcp", description);
+    return Net4jUtil.getConnector(container, "tcp", description);
   }
 
   /**

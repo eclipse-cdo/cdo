@@ -13,6 +13,7 @@ package org.eclipse.net4j;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.buffer.IBufferPool;
 import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol;
 import org.eclipse.net4j.util.StringUtil;
@@ -68,9 +69,29 @@ public final class Net4jUtil
     return (IAcceptor)container.getElement(AcceptorFactory.PRODUCT_GROUP, type, description);
   }
 
+  /**
+   * @since 4.0
+   */
+  public static IConnector getConnector(IManagedContainer container, String type, String description, long timeout)
+  {
+    IConnector connector = (IConnector)container.getElement(ConnectorFactory.PRODUCT_GROUP, type, description);
+
+    try
+    {
+      connector.waitForConnection(timeout);
+    }
+    catch (ConnectorException ex)
+    {
+      container.removeElement("org.eclipse.net4j.connectors", type, description);
+      throw ex;
+    }
+
+    return connector;
+  }
+
   public static IConnector getConnector(IManagedContainer container, String type, String description)
   {
-    return (IConnector)container.getElement(ConnectorFactory.PRODUCT_GROUP, type, description);
+    return getConnector(container, type, description, 10000L);
   }
 
   public static IConnector getConnector(IManagedContainer container, String description)
@@ -89,7 +110,7 @@ public final class Net4jUtil
       throw new IllegalArgumentException("Illegal connector description: " + description); //$NON-NLS-1$
     }
 
-    return (IConnector)container.getElement(ConnectorFactory.PRODUCT_GROUP, factoryType, connectorDescription);
+    return getConnector(container, factoryType, connectorDescription);
   }
 
   public static IBufferProvider createBufferFactory(short bufferCapacity)

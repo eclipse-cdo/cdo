@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.util.CDOURIData;
 import org.eclipse.emf.cdo.view.AbstractCDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -184,7 +185,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   {
     IManagedContainer container = getContainer();
     String description = getConnectorDescription(authority);
-    return (IConnector)container.getElement("org.eclipse.net4j.connectors", transport, description);
+    return Net4jUtil.getConnector(container, transport, description);
   }
 
   protected String getConnectorDescription(String authority)

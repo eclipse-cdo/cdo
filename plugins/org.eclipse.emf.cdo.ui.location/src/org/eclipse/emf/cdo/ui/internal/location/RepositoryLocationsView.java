@@ -21,8 +21,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * @author Eike Stepper
@@ -70,8 +68,7 @@ public class RepositoryLocationsView extends ContainerView
     {
       setText("New Location");
       setToolTipText("Add a new repository location");
-      setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
-          .getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+      setImageDescriptor(OM.getImageDescriptor("icons/add.gif"));
     }
 
     @Override

@@ -19,7 +19,7 @@
             allowMultiple="false"
             category="org.eclipse.emf.cdo"
             class="org.eclipse.emf.cdo.ui.internal.location.RepositoryLocationsView"
-            icon="icons/sample.gif"
+            icon="icons/repos.gif"
             id="org.eclipse.emf.cdo.ui.location.RepositoryLocationsView"
             name="CDO Repositories">
       </view>

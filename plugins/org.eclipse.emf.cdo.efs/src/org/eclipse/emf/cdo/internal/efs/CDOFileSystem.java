@@ -12,10 +12,10 @@ package org.eclipse.emf.cdo.internal.efs;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.util.CDOURIData;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.Net4jUtil;
@@ -29,7 +29,6 @@ import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.filesystem.provider.FileSystem;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
 
 import java.net.URI;
 import java.util.HashMap;
@@ -64,41 +63,47 @@ public abstract class CDOFileSystem extends FileSystem
   @Override
   public IFileStore getStore(URI uri)
   {
-    String authority = uri.getAuthority();
-    IPath path = new Path(uri.getPath());
-    String repositoryName = path.segment(0);
-    path = path.removeFirstSegments(1);
+    CDOURIData data = new CDOURIData(uri.toString());
+    // String authority = uri.getAuthority();
+    // IPath path = new Path(uri.getPath());
+    // String repositoryName = path.segment(0);
+    // path = path.removeFirstSegments(1);
+    //
+    // IPath branchPath = Path.EMPTY;
+    // long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
+    //
+    // while (path.segmentCount() != 0)
+    // {
+    // String segment = path.segment(0);
+    // path = path.removeFirstSegments(1);
+    //
+    // if (segment.startsWith("@"))
+    // {
+    // if (segment.length() != 1)
+    // {
+    // if (!segment.equals("@HEAD"))
+    // {
+    // timeStamp = Long.parseLong(segment.substring(1));
+    // }
+    // }
+    //
+    // break;
+    // }
+    //
+    // branchPath = branchPath.append(segment);
+    // }
+    //
+    // int segments = branchPath.segmentCount();
+    // if (segments == 0 || segments == 1 && !branchPath.segment(0).equals(CDOBranch.MAIN_BRANCH_NAME))
+    // {
+    // branchPath = new Path(CDOBranch.MAIN_BRANCH_NAME).append(branchPath);
+    // }
 
-    IPath branchPath = Path.EMPTY;
-    long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
-
-    while (path.segmentCount() != 0)
-    {
-      String segment = path.segment(0);
-      path = path.removeFirstSegments(1);
-
-      if (segment.startsWith("@"))
-      {
-        if (segment.length() != 1)
-        {
-          if (!segment.equals("@HEAD"))
-          {
-            timeStamp = Long.parseLong(segment.substring(1));
-          }
-        }
-
-        break;
-      }
-
-      branchPath = branchPath.append(segment);
-    }
-
-    int segments = branchPath.segmentCount();
-    if (segments == 0 || segments == 1 && !branchPath.segment(0).equals(CDOBranch.MAIN_BRANCH_NAME))
-    {
-      branchPath = new Path(CDOBranch.MAIN_BRANCH_NAME).append(branchPath);
-    }
-
+    String authority = data.getAuthority();
+    String repositoryName = data.getRepositoryName();
+    IPath path = data.getResourcePath();
+    IPath branchPath = data.getBranchPath();
+    long timeStamp = data.getTimeStamp();
     CDOFileRoot root = new CDOFileRoot(this, authority, repositoryName, branchPath, timeStamp);
     if (path.isEmpty())
     {
@@ -114,27 +119,31 @@ public abstract class CDOFileSystem extends FileSystem
     CDOView view = views.get(uri);
     if (view == null)
     {
-      String authority = root.getAuthority();
-      String repositoryName = root.getRepositoryName();
-      String branchPath = root.getBranchPath().toPortableString();
-      final long timeStamp = root.getTimeStamp();
-
-      final CDOSession session = getSession(authority, repositoryName, monitor);
-      final CDOBranchManager branchManager = session.getBranchManager();
-      final CDOBranch branch = branchManager.getBranch(branchPath);
-
-      view = InfiniteProgress.call("Open view", new Callable<CDOView>()
-      {
-        public CDOView call() throws Exception
-        {
-          return session.openView(branch, timeStamp);
-        }
-      });
-
+      view = openView(root, monitor);
       views.put(uri, view);
     }
 
     return view;
+  }
+
+  protected CDOView openView(CDOFileRoot root, IProgressMonitor monitor)
+  {
+    String authority = root.getAuthority();
+    String repositoryName = root.getRepositoryName();
+    String branchPath = root.getBranchPath().toPortableString();
+    final long timeStamp = root.getTimeStamp();
+
+    final CDOSession session = getSession(authority, repositoryName, monitor);
+    final CDOBranchManager branchManager = session.getBranchManager();
+    final CDOBranch branch = branchManager.getBranch(branchPath);
+
+    return InfiniteProgress.call("Open view", new Callable<CDOView>()
+    {
+      public CDOView call() throws Exception
+      {
+        return session.openView(branch, timeStamp);
+      }
+    });
   }
 
   protected CDOSession getSession(String authority, String repositoryName, IProgressMonitor monitor)

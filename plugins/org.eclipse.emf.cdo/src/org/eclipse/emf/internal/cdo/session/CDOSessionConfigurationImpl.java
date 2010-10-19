@@ -24,7 +24,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
-
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
 
@@ -216,6 +215,8 @@ public abstract class CDOSessionConfigurationImpl implements InternalCDOSessionC
 
   protected void configureSession(InternalCDOSession session)
   {
+    session.options().setPassiveUpdateEnabled(passiveUpdateEnabled);
+    session.options().setPassiveUpdateMode(passiveUpdateMode);
     session.setExceptionHandler(exceptionHandler);
     session.setAuthenticator(authenticator);
     session.setRevisionManager(revisionManager);

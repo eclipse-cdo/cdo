@@ -75,7 +75,8 @@ public class Bugzilla_325097_Test extends AbstractSyncingTest
 
   public void testNewObjectAfterSwitch() throws Exception
   {
-    InternalSynchronizableRepository repo1_master = getRepository(getRepository().getName() + "_master");
+    InternalSynchronizableRepository repo1_master = (InternalSynchronizableRepository)getRepository(getRepository()
+        .getName() + "_master");
     InternalSynchronizableRepository repo1 = getRepository();
 
     InternalSynchronizableRepository master = repo1_master;

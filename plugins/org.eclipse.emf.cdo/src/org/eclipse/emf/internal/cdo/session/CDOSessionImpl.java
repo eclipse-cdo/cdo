@@ -377,7 +377,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
           }
         }
       }
-  
+
       @Override
       public Reader getCharacter(CDOLobInfo info) throws IOException
       {
@@ -400,12 +400,12 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
           }
         }
       }
-  
+
       private void loadBinary(final CDOLobInfo info) throws IOException
       {
         final File file = getDelegate().getBinaryFile(info.getID());
         final FileOutputStream out = new FileOutputStream(file);
-  
+
         loadLobAsync(info, new Runnable()
         {
           public void run()
@@ -422,12 +422,12 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
           }
         });
       }
-  
+
       private void loadCharacter(final CDOLobInfo info) throws IOException
       {
         final File file = getDelegate().getCharacterFile(info.getID());
         final FileWriter out = new FileWriter(file);
-  
+
         loadLobAsync(info, new Runnable()
         {
           public void run()
@@ -444,7 +444,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
           }
         });
       }
-  
+
       @Override
       protected CDOLobStore getDelegate()
       {
@@ -502,7 +502,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         throw new CDOException(MessageFormat.format(Messages.getString("CDOSessionImpl.0"), packageUnit)); //$NON-NLS-1$
       }
     }
-  
+
     return getSessionProtocol().loadPackages(packageUnit);
   }
 
@@ -1305,20 +1305,24 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       if (this.passiveUpdateEnabled != passiveUpdateEnabled)
       {
         this.passiveUpdateEnabled = passiveUpdateEnabled;
-        if (passiveUpdateEnabled)
+        CDOSessionProtocol protocol = getSessionProtocol();
+        if (protocol != null)
         {
-          refresh(true);
-        }
-        else
-        {
-          getSessionProtocol().disablePassiveUpdate();
-        }
+          if (passiveUpdateEnabled)
+          {
+            refresh(true);
+          }
+          else
+          {
+            protocol.disablePassiveUpdate();
+          }
 
-        IListener[] listeners = getListeners();
-        if (listeners != null)
-        {
-          fireEvent(new PassiveUpdateEventImpl(!passiveUpdateEnabled, passiveUpdateEnabled, passiveUpdateMode,
-              passiveUpdateMode), listeners);
+          IListener[] listeners = getListeners();
+          if (listeners != null)
+          {
+            fireEvent(new PassiveUpdateEventImpl(!passiveUpdateEnabled, passiveUpdateEnabled, passiveUpdateMode,
+                passiveUpdateMode), listeners);
+          }
         }
       }
     }
@@ -1335,13 +1339,18 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       {
         PassiveUpdateMode oldMode = this.passiveUpdateMode;
         this.passiveUpdateMode = passiveUpdateMode;
-        getSessionProtocol().setPassiveUpdateMode(passiveUpdateMode);
-
-        IListener[] listeners = getListeners();
-        if (listeners != null)
+        CDOSessionProtocol protocol = getSessionProtocol();
+        if (protocol != null)
         {
-          fireEvent(new PassiveUpdateEventImpl(passiveUpdateEnabled, passiveUpdateEnabled, oldMode, passiveUpdateMode),
-              listeners);
+          protocol.setPassiveUpdateMode(passiveUpdateMode);
+
+          IListener[] listeners = getListeners();
+          if (listeners != null)
+          {
+            fireEvent(
+                new PassiveUpdateEventImpl(passiveUpdateEnabled, passiveUpdateEnabled, oldMode, passiveUpdateMode),
+                listeners);
+          }
         }
       }
     }

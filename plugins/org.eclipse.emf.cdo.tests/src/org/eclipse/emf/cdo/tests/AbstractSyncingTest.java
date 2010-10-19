@@ -64,12 +64,6 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
   }
 
   @Override
-  public InternalSynchronizableRepository getRepository(String name)
-  {
-    return (InternalSynchronizableRepository)super.getRepository(name);
-  }
-
-  @Override
   public synchronized Map<String, Object> getTestProperties()
   {
     Map<String, Object> testProperties = super.getTestProperties();

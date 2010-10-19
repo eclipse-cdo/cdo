@@ -238,7 +238,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   /**
    * @since 3.1
    */
-  protected void executeLazyRunnable(Runnable runnable)
+  protected void executeRunnable(Runnable runnable)
   {
     Thread thread = new Thread(runnable);
     thread.setDaemon(true);
@@ -505,7 +505,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
           }
         };
 
-        executeLazyRunnable(runnable);
+        executeRunnable(runnable);
       }
       else
       {

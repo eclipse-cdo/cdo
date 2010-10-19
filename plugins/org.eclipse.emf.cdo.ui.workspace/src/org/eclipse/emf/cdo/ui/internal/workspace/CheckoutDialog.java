@@ -3,8 +3,13 @@ package org.eclipse.emf.cdo.ui.internal.workspace;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -12,6 +17,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+
+import java.io.File;
 
 /**
  * @author Eike Stepper
@@ -22,10 +29,11 @@ public class CheckoutDialog extends TitleAreaDialog
 
   private String projectName;
 
-  public CheckoutDialog(Shell parentShell)
+  public CheckoutDialog(Shell parentShell, String projectName)
   {
     super(parentShell);
     setShellStyle(getShellStyle() | SWT.APPLICATION_MODAL | SWT.MAX | SWT.TITLE | SWT.RESIZE);
+    this.projectName = projectName;
   }
 
   public String getProjectName()
@@ -62,7 +70,36 @@ public class CheckoutDialog extends TitleAreaDialog
     group2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
     group2.setText("Repository");
     projectNameText = new Text(group2, SWT.BORDER);
+    projectNameText.setText(projectName == null ? "" : projectName);
     projectNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+    projectNameText.addModifyListener(new ModifyListener()
+    {
+      public void modifyText(ModifyEvent e)
+      {
+        String projectName = projectNameText.getText();
+        if (!Path.EMPTY.isValidSegment(projectName))
+        {
+          setErrorMessage("Invalid project name.");
+          return;
+        }
+
+        IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
+        if (project.exists())
+        {
+          setErrorMessage("Project name exists.");
+          return;
+        }
+
+        if (new File(project.getLocation().toString()).exists())
+        {
+          setErrorMessage("Project location exists.");
+          return;
+        }
+
+        setErrorMessage(null);
+      }
+    });
+
     return composite;
   }
 

@@ -388,36 +388,6 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return null;
   }
 
-  public synchronized InternalCDOPackageUnit[] getPackageUnits()
-  {
-    LifecycleUtil.checkActive(this);
-    if (packageUnits == null)
-    {
-      Set<InternalCDOPackageUnit> result = new HashSet<InternalCDOPackageUnit>();
-      for (Object value : values())
-      {
-        if (value instanceof InternalCDOPackageInfo)
-        {
-          result.add(((InternalCDOPackageInfo)value).getPackageUnit());
-        }
-        else if (value instanceof EPackage)
-        {
-          InternalCDOPackageInfo packageInfo = getPackageInfo((EPackage)value);
-          if (packageInfo != null)
-          {
-            InternalCDOPackageUnit packageUnit = packageInfo.getPackageUnit();
-            result.add(packageUnit);
-          }
-        }
-      }
-
-      packageUnits = result.toArray(new InternalCDOPackageUnit[result.size()]);
-      Arrays.sort(packageUnits);
-    }
-
-    return packageUnits;
-  }
-
   public InternalCDOPackageUnit[] getPackageUnits(long startTime, long endTime)
   {
     LifecycleUtil.checkActive(this);
@@ -454,6 +424,59 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     }
 
     return result.toArray(new InternalCDOPackageUnit[result.size()]);
+  }
+
+  public InternalCDOPackageUnit[] getPackageUnits(boolean withSystemPackages)
+  {
+    LifecycleUtil.checkActive(this);
+    return collectPackageUnits(withSystemPackages);
+  }
+
+  public synchronized InternalCDOPackageUnit[] getPackageUnits()
+  {
+    LifecycleUtil.checkActive(this);
+    if (packageUnits == null)
+    {
+      packageUnits = collectPackageUnits(true);
+      Arrays.sort(packageUnits);
+    }
+
+    return packageUnits;
+  }
+
+  private InternalCDOPackageUnit[] collectPackageUnits(boolean withSystemPackages)
+  {
+    Set<InternalCDOPackageUnit> result = new HashSet<InternalCDOPackageUnit>();
+    for (Object value : values())
+    {
+      InternalCDOPackageUnit packageUnit = collectPackageUnit(value);
+      if (packageUnit != null && (withSystemPackages || !packageUnit.isSystem()))
+      {
+        result.add(packageUnit);
+      }
+    }
+
+    return result.toArray(new InternalCDOPackageUnit[result.size()]);
+  }
+
+  private InternalCDOPackageUnit collectPackageUnit(Object value)
+  {
+    if (value instanceof InternalCDOPackageInfo)
+    {
+      return ((InternalCDOPackageInfo)value).getPackageUnit();
+    }
+
+    if (value instanceof EPackage)
+    {
+      InternalCDOPackageInfo packageInfo = getPackageInfo((EPackage)value);
+      if (packageInfo != null)
+      {
+        InternalCDOPackageUnit packageUnit = packageInfo.getPackageUnit();
+        return packageUnit;
+      }
+    }
+
+    return null;
   }
 
   public synchronized EPackage[] getEPackages()

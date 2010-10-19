@@ -25,13 +25,20 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
 
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -71,10 +78,17 @@ public class CheckoutAction implements IObjectActionDelegate
       final Object element = ((IStructuredSelection)selection).getFirstElement();
       if (element instanceof ICheckoutSource)
       {
-        CheckoutDialog dialog = new CheckoutDialog(part.getSite().getShell());
+        final ICheckoutSource checkoutSource = (ICheckoutSource)element;
+        String projectNameDefault = checkoutSource.getRepositoryLocation().getRepositoryName();
+
+        Shell shell = part.getSite().getShell();
+        CheckoutDialog dialog = new CheckoutDialog(shell, projectNameDefault);
+
         if (dialog.open() == CheckoutDialog.OK)
         {
-          final String projectName = dialog.getProjectName();
+          IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+          final IProject project = root.getProject(dialog.getProjectName());
+
           new Job("Checking out...")
           {
             @Override
@@ -82,13 +96,18 @@ public class CheckoutAction implements IObjectActionDelegate
             {
               try
               {
-                CheckoutAction.this.run((ICheckoutSource)element, projectName, monitor);
+                CheckoutAction.this.run(checkoutSource, project, monitor);
                 return Status.OK_STATUS;
+              }
+              catch (CoreException ex)
+              {
+                ex.printStackTrace();
+                return ex.getStatus();
               }
               catch (Exception ex)
               {
-                return new Status(IStatus.ERROR, OM.BUNDLE_ID, "Problem during check out: " + ex.getLocalizedMessage(),
-                    ex);
+                ex.printStackTrace();
+                return new Status(IStatus.ERROR, OM.BUNDLE_ID, ex.getLocalizedMessage(), ex);
               }
             }
           }.schedule();
@@ -97,32 +116,45 @@ public class CheckoutAction implements IObjectActionDelegate
     }
   }
 
-  protected void run(ICheckoutSource checkoutSource, String projectName, IProgressMonitor monitor)
+  protected void run(ICheckoutSource checkoutSource, IProject project, IProgressMonitor monitor) throws Exception
   {
+    project.create(new NullProgressMonitor());
+    project.open(new NullProgressMonitor());
+
+    IFolder cdoFolder = project.getFolder(".cdo");
+    cdoFolder.create(true, true, new NullProgressMonitor());
+    cdoFolder.setTeamPrivateMember(true);
+
+    IFolder baseFolder = cdoFolder.getFolder("base");
+    baseFolder.create(true, true, new NullProgressMonitor());
+
+    IFolder localFolder = cdoFolder.getFolder("local");
+    localFolder.create(true, true, new NullProgressMonitor());
+
     IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(false);
-    IDBAdapter dbAdapter = createLocalAdapter(projectName);
-    IDBConnectionProvider dbConnectionProvider = DBUtil.createConnectionProvider(createLocalDataSource(projectName));
+    IDBAdapter dbAdapter = createLocalAdapter();
+    IDBConnectionProvider dbConnectionProvider = DBUtil.createConnectionProvider(createLocalDataSource(localFolder));
     IDBStore local = CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
 
-    CDOWorkspaceBase base = createWorkspaceBase(projectName);
+    CDOWorkspaceBase base = createWorkspaceBase(baseFolder);
     CDOSessionConfigurationFactory remote = checkoutSource.getRepositoryLocation();
     CDOWorkspaceUtil.checkout(local, base, remote, checkoutSource.getBranchPath(), checkoutSource.getTimeStamp());
   }
 
-  protected IDBAdapter createLocalAdapter(String projectName)
+  protected IDBAdapter createLocalAdapter()
   {
     return new H2Adapter();
   }
 
-  protected DataSource createLocalDataSource(String projectName)
+  protected DataSource createLocalDataSource(IFolder folder)
   {
     JdbcDataSource dataSource = new JdbcDataSource();
-    dataSource.setURL("jdbc:h2:_database/repo1");
+    dataSource.setURL("jdbc:h2:" + folder.getLocation().toString().replace('\\', '/'));
     return dataSource;
   }
 
-  protected CDOWorkspaceBase createWorkspaceBase(String projectName)
+  protected CDOWorkspaceBase createWorkspaceBase(IFolder folder)
   {
-    return CDOWorkspaceUtil.createFolderWorkspaceBase(new File(projectName));
+    return CDOWorkspaceUtil.createFolderWorkspaceBase(new File(folder.getLocation().toString()));
   }
 }

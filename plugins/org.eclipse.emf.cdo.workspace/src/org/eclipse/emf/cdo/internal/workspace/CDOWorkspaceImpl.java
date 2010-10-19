@@ -152,7 +152,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
       try
       {
-        InternalCDOPackageUnit[] packageUnits = session.getPackageRegistry().getPackageUnits();
+        InternalCDOPackageUnit[] packageUnits = session.getPackageRegistry().getPackageUnits(false);
         context[0] = accessor.rawStore(packageUnits, context[0], monitor);
 
         InternalCDOPackageRegistry repositoryPackageRegistry = localRepository.getPackageRegistry(false);

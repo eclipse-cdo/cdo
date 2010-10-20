@@ -980,7 +980,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       CDORevisionHandler handler)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    mappingStrategy.handleRevisions(this, eClass, branch, timeStamp, true, new DBRevisionHandler(handler));
+    mappingStrategy.handleRevisions(this, eClass, branch, timeStamp, exactTime, new DBRevisionHandler(handler));
   }
 
   public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)

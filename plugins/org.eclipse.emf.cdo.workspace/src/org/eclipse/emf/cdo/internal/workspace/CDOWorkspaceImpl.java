@@ -134,8 +134,15 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
     localRepository = createLocalRepository(local);
 
-    CDOServerUtil.addRepository(IPluginContainer.INSTANCE, localRepository); // --> CDOServerBrowser
-    IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.server.browsers", "default", "7778");
+    try
+    {
+      CDOServerUtil.addRepository(IPluginContainer.INSTANCE, localRepository); // --> CDOServerBrowser
+      IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.server.browsers", "default", "7778");
+    }
+    catch (Exception ex)
+    {
+      ex.printStackTrace();
+    }
 
     this.base = base;
     this.base.init(this);

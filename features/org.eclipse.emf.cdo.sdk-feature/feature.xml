@@ -35,6 +35,8 @@
 
    <plugin id="org.eclipse.emf.cdo.efs" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    <plugin id="org.eclipse.emf.cdo.workspace" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.eclipse.emf.cdo.workspace.efs" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.eclipse.emf.cdo.ui.workspace" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    <plugin id="org.eclipse.emf.cdo.migrator" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    <plugin id="org.eclipse.emf.cdo.sdk" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
@@ -49,9 +51,5 @@
    <includes id="org.eclipse.emf.cdo.tests.source" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.server.hibernate.source" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.server.db4o.source" version="0.0.0"/>
-
-   <plugin id="org.eclipse.emf.cdo.efs.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   <plugin id="org.eclipse.emf.cdo.workspace.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   <plugin id="org.eclipse.emf.cdo.migrator.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
 </feature>

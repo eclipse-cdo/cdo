@@ -16,6 +16,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.model.lob.CDOClob;
@@ -315,7 +316,8 @@ public class CoreTypeMappings
       IDBStore store = getMappingStrategy().getStore();
       IExternalReferenceManager externalReferenceManager = store.getExternalReferenceManager();
       CommitContext commitContext = StoreThreadLocal.getCommitContext();
-      long commitTime = commitContext.getBranchPoint().getTimeStamp();
+      long commitTime = commitContext != null ? commitContext.getBranchPoint().getTimeStamp()
+          : CDOBranchPoint.UNSPECIFIED_DATE; // Happens on rawStore for workspace checkouts
       long id = CDODBUtil.convertCDOIDToLong(externalReferenceManager, getAccessor(), (CDOID)value, commitTime);
       super.doSetValue(stmt, index, id);
     }

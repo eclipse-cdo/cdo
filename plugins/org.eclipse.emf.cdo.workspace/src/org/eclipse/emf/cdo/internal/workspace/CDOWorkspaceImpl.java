@@ -59,6 +59,7 @@ import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -132,7 +133,9 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     remoteSessionConfigurationFactory = remote;
 
     localRepository = createLocalRepository(local);
-    localSession = openLocalSession();
+
+    CDOServerUtil.addRepository(IPluginContainer.INSTANCE, localRepository); // --> CDOServerBrowser
+    IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.server.browsers", "default", "7778");
 
     this.base = base;
     this.base.init(this);
@@ -152,11 +155,13 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
       try
       {
+        localRepository.setRootResourceID(session.getRepositoryInfo().getRootResourceID());
+
         InternalCDOPackageUnit[] packageUnits = session.getPackageRegistry().getPackageUnits(false);
         context[0] = accessor.rawStore(packageUnits, context[0], monitor);
 
         InternalCDOPackageRegistry repositoryPackageRegistry = localRepository.getPackageRegistry(false);
-        InternalCDOPackageRegistry sessionPackageRegistry = localSession.getPackageRegistry();
+        InternalCDOPackageRegistry sessionPackageRegistry = getLocalSession().getPackageRegistry();
         for (InternalCDOPackageUnit packageUnit : packageUnits)
         {
           repositoryPackageRegistry.putPackageUnit(packageUnit);
@@ -167,7 +172,11 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
         {
           public boolean handleRevision(CDORevision revision)
           {
-            context[0] = accessor.rawStore((InternalCDORevision)revision, context[0], monitor);
+            InternalCDORevision rev = (InternalCDORevision)revision;
+            rev.setVersion(1);
+
+            context[0] = accessor.rawStore(rev, context[0], monitor);
+
             long commitTime = revision.getTimeStamp();
             if (commitTime > timeStamp)
             {
@@ -221,28 +230,28 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
   public CDOView openView()
   {
-    CDOView view = localSession.openView();
+    CDOView view = getLocalSession().openView();
     initView(view);
     return view;
   }
 
   public CDOView openView(ResourceSet resourceSet)
   {
-    CDOView view = localSession.openView(resourceSet);
+    CDOView view = getLocalSession().openView(resourceSet);
     initView(view);
     return view;
   }
 
   public CDOTransaction openTransaction()
   {
-    CDOTransaction transaction = localSession.openTransaction();
+    CDOTransaction transaction = getLocalSession().openTransaction();
     initView(transaction);
     return transaction;
   }
 
   public CDOTransaction openTransaction(ResourceSet resourceSet)
   {
-    CDOTransaction transaction = localSession.openTransaction(resourceSet);
+    CDOTransaction transaction = getLocalSession().openTransaction(resourceSet);
     initView(transaction);
     return transaction;
   }
@@ -385,8 +394,9 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
   public CDORevision getRevision(CDOID id)
   {
-    CDORevisionManager revisionManager = localSession.getRevisionManager();
-    CDOBranchPoint head = localSession.getBranchManager().getMainBranch().getHead();
+    InternalCDOSession session = getLocalSession();
+    CDORevisionManager revisionManager = session.getRevisionManager();
+    CDOBranchPoint head = session.getBranchManager().getMainBranch().getHead();
     return revisionManager.getRevision(id, head, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
   }
 
@@ -433,8 +443,13 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     return JVMUtil.getConnector(container, localAcceptorName);
   }
 
-  protected InternalCDOSession getLocalSession()
+  protected synchronized InternalCDOSession getLocalSession()
   {
+    if (localSession == null)
+    {
+      localSession = openLocalSession();
+    }
+
     return localSession;
   }
 

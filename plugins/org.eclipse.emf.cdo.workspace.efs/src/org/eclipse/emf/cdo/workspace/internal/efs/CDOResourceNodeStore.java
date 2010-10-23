@@ -32,7 +32,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Eike Stepper
@@ -45,7 +44,7 @@ public final class CDOResourceNodeStore extends AbstractFileStore
 
   private String name;
 
-  private AtomicReference<CDOID> resourceNodeID = new AtomicReference<CDOID>();
+  private CDOID resourceNodeID;
 
   public CDOResourceNodeStore(CDOWorkspaceStore workspaceStore, IFileStore parent, String name)
   {
@@ -174,8 +173,18 @@ public final class CDOResourceNodeStore extends AbstractFileStore
       try
       {
         view = workspaceStore.getWorkspace().openView();
-        CDOResourceNode node = view.getResourceNode(getPath());
-        resourceNodeID.compareAndSet(null, node.cdoID());
+
+        CDOResourceNode node;
+        if (resourceNodeID == null)
+        {
+          node = view.getResourceNode(getPath());
+          resourceNodeID = node.cdoID();
+        }
+        else
+        {
+          node = (CDOResourceNode)view.getObject(resourceNodeID);
+        }
+
         return run(node);
       }
       finally

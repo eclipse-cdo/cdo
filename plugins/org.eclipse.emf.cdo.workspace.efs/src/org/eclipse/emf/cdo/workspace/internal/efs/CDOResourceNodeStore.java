@@ -99,6 +99,7 @@ public final class CDOResourceNodeStore extends AbstractFileStore
             childNames.add(child.getName());
           }
         }
+
         return childNames.toArray(new String[childNames.size()]);
       }
     }.run();

@@ -67,6 +67,9 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
 
   public void setBranchManager(InternalCDOBranchManager branchManager);
 
+  /**
+   * Same as calling {@link #getPackageRegistry(boolean) getPackageRegistry(true)}.
+   */
   public InternalCDOPackageRegistry getPackageRegistry();
 
   public InternalCDOPackageRegistry getPackageRegistry(boolean considerCommitContext);

@@ -723,7 +723,10 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
         }
         catch (RuntimeException ex)
         {
-          // Fall-through
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace(ex);
+          }
         }
       }
 

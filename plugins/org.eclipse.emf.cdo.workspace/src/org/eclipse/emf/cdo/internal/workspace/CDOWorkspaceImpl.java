@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -165,15 +166,8 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
         localRepository.setRootResourceID(session.getRepositoryInfo().getRootResourceID());
 
         InternalCDOPackageUnit[] packageUnits = session.getPackageRegistry().getPackageUnits(false);
+        registerPackageUnits(packageUnits);
         context[0] = accessor.rawStore(packageUnits, context[0], monitor);
-
-        InternalCDOPackageRegistry repositoryPackageRegistry = localRepository.getPackageRegistry(false);
-        InternalCDOPackageRegistry sessionPackageRegistry = getLocalSession().getPackageRegistry();
-        for (InternalCDOPackageUnit packageUnit : packageUnits)
-        {
-          repositoryPackageRegistry.putPackageUnit(packageUnit);
-          sessionPackageRegistry.putPackageUnit(packageUnit);
-        }
 
         CDORevisionHandler handler = new CDORevisionHandler()
         {
@@ -206,6 +200,16 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     {
       StoreThreadLocal.release();
       monitor.done();
+    }
+  }
+
+  private void registerPackageUnits(InternalCDOPackageUnit[] packageUnits)
+  {
+    InternalCDOPackageRegistry repositoryPackageRegistry = localRepository.getPackageRegistry(false);
+    for (InternalCDOPackageUnit packageUnit : packageUnits)
+    {
+      packageUnit.setState(CDOPackageUnit.State.LOADED);
+      repositoryPackageRegistry.putPackageUnit(packageUnit);
     }
   }
 
@@ -501,7 +505,10 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     configuration.setConnector(connector);
     configuration.setRepositoryName(repositoryName);
     configuration.setRevisionManager(CDORevisionUtil.createRevisionManager(CDORevisionCache.NOOP)); // Use repo's cache
-    return (InternalCDOSession)configuration.openSession();
+
+    InternalCDOSession session = (InternalCDOSession)configuration.openSession();
+    session.setPackageRegistry(localRepository.getPackageRegistry(false)); // Use repo's registry
+    return session;
   }
 
   protected InternalCDOView[] getViews()

@@ -95,10 +95,14 @@ public interface IClassMapping
    *          the accessor to use.
    * @param revision
    *          the revision to write.
+   * @param newRevision
+   *          <code>true</code> if the type of the object is supposed to be mapped, <code>false</code> otherwise.
    * @param monitor
    *          the monitor to indicate progress.
+   * @since 4.0
    */
-  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, OMMonitor monitor);
+  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean newRevision,
+      OMMonitor monitor);
 
   /**
    * Detaches (deletes) a CDO object leaving a "ghost" revision behind.

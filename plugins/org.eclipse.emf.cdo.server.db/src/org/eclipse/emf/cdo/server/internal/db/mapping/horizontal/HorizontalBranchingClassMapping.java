@@ -577,7 +577,8 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   }
 
   @Override
-  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, OMMonitor monitor)
+  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean newRevision,
+      OMMonitor monitor)
   {
     Async async = null;
     monitor.begin(10);
@@ -588,7 +589,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       {
         async = monitor.forkAsync();
         CDOID id = revision.getID();
-        if (accessor.isNewObject(id))
+        if (newRevision)
         {
           // put new objects into objectTypeMapper
           long timeStamp = revision.getTimeStamp();

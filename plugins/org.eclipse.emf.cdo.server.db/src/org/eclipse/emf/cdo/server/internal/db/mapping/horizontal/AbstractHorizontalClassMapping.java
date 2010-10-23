@@ -409,7 +409,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     }
   }
 
-  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, OMMonitor monitor)
+  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean newRevision,
+      OMMonitor monitor)
   {
     Async async = null;
     monitor.begin(10);
@@ -420,7 +421,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       {
         async = monitor.forkAsync();
         CDOID id = revision.getID();
-        if (revision.getVersion() == CDORevision.FIRST_VERSION)
+        if (newRevision)
         {
           long timeStamp = revision.getTimeStamp();
           mappingStrategy.putObjectType(accessor, timeStamp, id, eClass);

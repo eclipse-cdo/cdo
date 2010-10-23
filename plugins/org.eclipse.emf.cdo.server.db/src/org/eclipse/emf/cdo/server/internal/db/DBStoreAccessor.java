@@ -194,11 +194,6 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     throw new IllegalStateException("No type found for " + id);
   }
 
-  public boolean isNewObject(CDOID id)
-  {
-    return newObjects.contains(id);
-  }
-
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
       CDORevisionCacheAdder cache)
   {
@@ -477,7 +472,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       monitor.begin(revisions.length);
       for (InternalCDORevision revision : revisions)
       {
-        writeRevision(revision, monitor.fork());
+        writeRevision(revision, newObjects.contains(revision.getID()), monitor.fork());
       }
     }
     finally
@@ -487,7 +482,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
   }
 
-  protected void writeRevision(InternalCDORevision revision, OMMonitor monitor)
+  protected void writeRevision(InternalCDORevision revision, boolean newRevision, OMMonitor monitor)
   {
     if (TRACER.isEnabled())
     {
@@ -496,7 +491,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
     EClass eClass = revision.getEClass();
     IClassMapping mapping = getStore().getMappingStrategy().getClassMapping(eClass);
-    mapping.writeRevision(this, revision, monitor);
+    mapping.writeRevision(this, revision, newRevision, monitor);
   }
 
   /*
@@ -1084,7 +1079,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
   public Object rawStore(InternalCDORevision revision, Object context, OMMonitor monitor)
   {
-    writeRevision(revision, monitor);
+    writeRevision(revision, true, monitor);
     return context;
   }
 

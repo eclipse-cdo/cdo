@@ -180,8 +180,6 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
           public boolean handleRevision(CDORevision revision)
           {
             InternalCDORevision rev = (InternalCDORevision)revision;
-            rev.setVersion(1);
-
             context[0] = accessor.rawStore(rev, context[0], monitor);
 
             long commitTime = revision.getTimeStamp();

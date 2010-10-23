@@ -160,7 +160,6 @@ public final class CDOWorkspaceStore extends AbstractFileStore
   @Override
   public InputStream openInputStream(int options, IProgressMonitor monitor) throws CoreException
   {
-    // TODO: implement CDOWorkspaceStore.openInputStream(options, monitor)
     throw new UnsupportedOperationException();
   }
 

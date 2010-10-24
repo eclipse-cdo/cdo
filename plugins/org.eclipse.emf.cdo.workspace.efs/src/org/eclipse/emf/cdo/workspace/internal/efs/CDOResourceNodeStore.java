@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -121,8 +122,30 @@ public final class CDOResourceNodeStore extends AbstractResourceNodeStore
   // }
 
   @Override
+  public void delete(int options, IProgressMonitor monitor) throws CoreException
+  {
+    new ResourceNodeRunnable<Boolean>()
+    {
+      @Override
+      protected Boolean run(CDOResourceNode node)
+      {
+        try
+        {
+          node.delete(null);
+          return true;
+        }
+        catch (IOException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+    }.run(true);
+  }
+
+  @Override
   public IFileStore mkdir(int options, IProgressMonitor monitor) throws CoreException
   {
+    // TODO Respect the SHALLOW option
     new ResourceNodeRunnable<CDOResourceFolder>()
     {
       @Override

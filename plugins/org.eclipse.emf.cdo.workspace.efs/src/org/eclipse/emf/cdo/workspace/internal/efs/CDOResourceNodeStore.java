@@ -124,6 +124,7 @@ public final class CDOResourceNodeStore extends AbstractResourceNodeStore
   @Override
   public void delete(int options, IProgressMonitor monitor) throws CoreException
   {
+    // Options can only contain EFS.NONE
     new ResourceNodeRunnable<Boolean>()
     {
       @Override

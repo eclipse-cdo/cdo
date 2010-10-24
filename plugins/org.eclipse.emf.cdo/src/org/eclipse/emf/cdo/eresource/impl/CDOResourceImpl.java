@@ -623,23 +623,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   }
 
   /**
-   * @ADDED
-   */
-  public void load(InputStream inputStream, Map<?, ?> options) throws IOException
-  {
-    throw new UnsupportedOperationException();
-    // if (inputStream instanceof CDOResourceInputStream)
-    // {
-    // CDOResourceInputStream stream = (CDOResourceInputStream)inputStream;
-    // URI uri = stream.getURI();
-    // }
-    // else
-    // {
-    // throw new IOException("Stream not supported: " + inputStream);
-    // }
-  }
-
-  /**
    * @since 2.0
    */
   @Override
@@ -653,6 +636,139 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     {
       throw WrappedException.wrap(ex);
     }
+  }
+
+  /**
+   * @ADDED
+   */
+  public void load(InputStream inputStream, Map<?, ?> options) throws IOException
+  {
+    // final String baseURI = getBaseURIOption(options);
+    // final Map<Resource, CDOResource> resourceMappings = new HashMap<Resource, CDOResource>();
+    //
+    // class ImportResource extends XMIResourceImpl
+    // {
+    // private CDOResource delegate;
+    //
+    // public ImportResource(CDOResource delegate)
+    // {
+    // super(URI.createURI(baseURI + delegate.getPath()));
+    // this.delegate = delegate;
+    // }
+    //
+    // @Override
+    // public EList<EObject> getContents()
+    // {
+    // return delegate.getContents();
+    // }
+    //
+    // @Override
+    // public String getURIFragment(EObject eObject)
+    // {
+    // String id = EcoreUtil.getID(eObject);
+    // if (id != null)
+    // {
+    // return id;
+    // }
+    //
+    // InternalEObject internalEObject = (InternalEObject)eObject;
+    // if (getMappedResource(internalEObject.eDirectResource()) == this)
+    // {
+    // return "/" + getURIFragmentRootSegment(eObject);
+    // }
+    //
+    // List<String> uriFragmentPath = new ArrayList<String>();
+    // boolean isContained = false;
+    // for (InternalEObject container = internalEObject.eInternalContainer(); container != null; container =
+    // internalEObject
+    // .eInternalContainer())
+    // {
+    // uriFragmentPath.add(container.eURIFragmentSegment(internalEObject.eContainingFeature(), internalEObject));
+    // internalEObject = container;
+    // if (getMappedResource(container.eDirectResource()) == this)
+    // {
+    // isContained = true;
+    // break;
+    // }
+    // }
+    //
+    // if (!isContained)
+    // {
+    // return "/-1";
+    // }
+    //
+    // StringBuilder result = new StringBuilder("/");
+    // result.append(getURIFragmentRootSegment(internalEObject));
+    //
+    // for (int i = uriFragmentPath.size() - 1; i >= 0; --i)
+    // {
+    // result.append('/');
+    // result.append(uriFragmentPath.get(i));
+    // }
+    //
+    // return result.toString();
+    // }
+    //
+    // @Override
+    // protected XMLHelper createXMLHelper()
+    // {
+    // return new XMIHelperImpl(this)
+    // {
+    // @Override
+    // public String getHREF(EObject obj)
+    // {
+    // InternalEObject o = (InternalEObject)obj;
+    //
+    // URI objectURI = o.eProxyURI();
+    // if (objectURI == null)
+    // {
+    // Resource otherResource = obj.eResource();
+    // otherResource = getMappedResource(otherResource);
+    // objectURI = getHREF(otherResource, obj);
+    // }
+    //
+    // objectURI = deresolve(objectURI);
+    // return objectURI.toString();
+    // }
+    //
+    // @Override
+    // protected URI getHREF(Resource otherResource, EObject obj)
+    // {
+    // String uriFragment = getURIFragment(otherResource, obj);
+    // if (otherResource == ImportResource.this)
+    // {
+    // return URI.createURI(uriFragment);
+    // }
+    //
+    // return otherResource.getURI().appendFragment(uriFragment);
+    // }
+    // };
+    // }
+    //
+    // private Resource getMappedResource(Resource otherResource)
+    // {
+    // Resource resource = resourceMappings.get(otherResource);
+    // if (resource != null)
+    // {
+    // return resource;
+    // }
+    //
+    // if (otherResource instanceof CDOResource)
+    // {
+    // CDOResource cdoResource = (CDOResource)otherResource;
+    // otherResource = new ImportResource(cdoResource);
+    // resourceMappings.put(cdoResource, otherResource);
+    // }
+    //
+    // return otherResource;
+    // }
+    // }
+    //
+    // XMIResource xmiResource = new ImportResource(this);
+    // resourceMappings.put(this, xmiResource);
+    // xmiResource.save(outputStream, options);
+
+    throw new UnsupportedOperationException();
   }
 
   /**

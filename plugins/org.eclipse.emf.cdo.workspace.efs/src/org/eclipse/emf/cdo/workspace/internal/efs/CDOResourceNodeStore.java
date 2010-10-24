@@ -78,7 +78,6 @@ public final class CDOResourceNodeStore extends AbstractResourceNodeStore
       {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         CDOResource resource = (CDOResource)node;
-        // resource.cdoPrefetch(CDORevision.DEPTH_INFINITE);
 
         try
         {
@@ -94,6 +93,32 @@ public final class CDOResourceNodeStore extends AbstractResourceNodeStore
       }
     }.run();
   }
+
+  // @Override
+  // public OutputStream openOutputStream(int options, IProgressMonitor monitor) throws CoreException
+  // {
+  // return new ResourceNodeRunnable<OutputStream>()
+  // {
+  // @Override
+  // protected OutputStream run(CDOResourceNode node)
+  // {
+  // ByteArrayOutputStream baos = new ByteArrayOutputStream();
+  // CDOResource resource = (CDOResource)node;
+  //
+  // try
+  // {
+  // resource.save(baos, null);
+  // }
+  // catch (Exception ex)
+  // {
+  // OM.LOG.error(ex);
+  // throw WrappedException.wrap(ex);
+  // }
+  //
+  // return new ByteArrayInputStream(baos.toByteArray());
+  // }
+  // }.run();
+  // }
 
   @Override
   public IFileStore mkdir(int options, IProgressMonitor monitor) throws CoreException

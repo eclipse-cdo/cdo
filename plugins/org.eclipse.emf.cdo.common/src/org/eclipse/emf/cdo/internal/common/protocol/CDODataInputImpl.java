@@ -242,12 +242,13 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   {
     CDOBranch branch = readCDOBranch();
     long timeStamp = readLong();
+    long previousTimeStamp = readLong();
     String userID = readString();
     String comment = readString();
     CDOCommitData commitData = readCDOCommitData();
 
     InternalCDOCommitInfoManager commitInfoManager = (InternalCDOCommitInfoManager)getCommitInfoManager();
-    return commitInfoManager.createCommitInfo(branch, timeStamp, userID, comment, commitData);
+    return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, commitData);
   }
 
   public CDOID readCDOID() throws IOException

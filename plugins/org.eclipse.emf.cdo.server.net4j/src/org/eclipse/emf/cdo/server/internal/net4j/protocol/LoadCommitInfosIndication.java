@@ -59,6 +59,7 @@ public class LoadCommitInfosIndication extends CDOReadIndication
           try
           {
             out.writeBoolean(true);
+            out.writeLong(commitInfo.getPreviousTimeStamp());
             if (branch == null)
             {
               out.writeCDOBranch(commitInfo.getBranch());

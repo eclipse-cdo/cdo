@@ -27,9 +27,6 @@ public interface InternalSynchronizableRepository extends ISynchronizableReposit
 
   public InternalSession getReplicatorSession();
 
-  @Deprecated
-  public boolean isSqueezeCommitInfos();
-
   public void setLastReplicatedBranchID(int lastReplicatedBranchID);
 
   public void setLastReplicatedCommitTime(long lastReplicatedCommitTime);

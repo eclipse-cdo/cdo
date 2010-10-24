@@ -296,8 +296,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     public static final String PROP_TEST_RAW_REPLICATION = "test.raw.replication";
 
-    public static final String PROP_TEST_SQUEEZE_COMMIT_INFOS = "test.squeeze.commit.infos";
-
     public static final String PROP_TEST_DELAYED_COMMIT_HANDLING = "test.delayed.commit.handling";
 
     public static final String PROP_TEST_DELAYED2_COMMIT_HANDLING = "test.delayed2.commit.handling";
@@ -446,7 +444,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       synchronizer.setRemoteSessionConfigurationFactory(masterFactory);
       synchronizer.setRetryInterval(1);
       synchronizer.setRawReplication(getTestRawReplication());
-      // synchronizer.setSqueezeCommitInfos(getTestSqueezeCommitInfos());
       return synchronizer;
     }
 
@@ -464,17 +461,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     protected boolean getTestRawReplication()
     {
       Boolean result = (Boolean)getTestProperty(PROP_TEST_RAW_REPLICATION);
-      if (result == null)
-      {
-        result = false;
-      }
-
-      return result;
-    }
-
-    protected boolean getTestSqueezeCommitInfos()
-    {
-      Boolean result = (Boolean)getTestProperty(PROP_TEST_SQUEEZE_COMMIT_INFOS);
       if (result == null)
       {
         result = false;

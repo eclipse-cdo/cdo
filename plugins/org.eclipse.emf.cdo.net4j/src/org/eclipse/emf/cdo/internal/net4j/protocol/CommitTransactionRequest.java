@@ -331,7 +331,8 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
   protected CommitTransactionResult confirmingResult(CDODataInput in) throws IOException
   {
     CDOBranchPoint branchPoint = in.readCDOBranchPoint();
-    return new CommitTransactionResult(idProvider, branchPoint);
+    long previousTimeStamp = in.readLong();
+    return new CommitTransactionResult(idProvider, branchPoint, previousTimeStamp);
   }
 
   protected void confirmingMappingNewPackages(CDODataInput in, CommitTransactionResult result) throws IOException

@@ -49,9 +49,9 @@ public class ObjyCommitInfoHandler
    * This function assume we are in an Objy trnasaction.
    */
 
-  public void writeCommitInfo(int id, long timeStamp, String userID, String comment)
+  public void writeCommitInfo(int id, long timeStamp, long previousTimeStamp, String userID, String comment)
   {
-    ObjyCommitInfo commitInfo = new ObjyCommitInfo(id, timeStamp, userID, comment);
+    ObjyCommitInfo commitInfo = new ObjyCommitInfo(id, timeStamp, previousTimeStamp, userID, comment);
     getTreeSet().add(commitInfo);
   }
 

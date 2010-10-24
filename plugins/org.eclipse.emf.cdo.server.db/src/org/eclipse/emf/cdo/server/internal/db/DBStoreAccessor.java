@@ -406,7 +406,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   }
 
   @Override
-  protected void writeCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment, OMMonitor monitor)
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
+      String comment, OMMonitor monitor)
   {
     PreparedStatement pstmt = null;
 
@@ -414,9 +415,10 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     {
       pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_CREATE_COMMIT_INFO, ReuseProbability.HIGH);
       pstmt.setLong(1, timeStamp);
-      pstmt.setInt(2, branch.getID());
-      pstmt.setString(3, userID);
-      pstmt.setString(4, comment);
+      pstmt.setLong(2, previousTimeStamp);
+      pstmt.setInt(3, branch.getID());
+      pstmt.setString(4, userID);
+      pstmt.setString(5, comment);
 
       CDODBUtil.sqlUpdate(pstmt, true);
     }
@@ -880,6 +882,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     builder.append("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
     builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.COMMIT_INFOS_PREVIOUS_TIMESTAMP);
+    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.COMMIT_INFOS_USER);
     builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.COMMIT_INFOS_COMMENT);
@@ -941,16 +945,18 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       while (resultSet.next())
       {
         long timeStamp = resultSet.getLong(1);
-        String userID = resultSet.getString(2);
-        String comment = resultSet.getString(3);
+        long previousTimeStamp = resultSet.getLong(2);
+        String userID = resultSet.getString(3);
+        String comment = resultSet.getString(4);
         CDOBranch infoBranch = branch;
         if (infoBranch == null)
         {
-          int id = resultSet.getInt(4);
+          int id = resultSet.getInt(5);
           infoBranch = branchManager.getBranch(id);
         }
 
-        CDOCommitInfo commitInfo = commitInfoManager.createCommitInfo(infoBranch, timeStamp, userID, comment, null);
+        CDOCommitInfo commitInfo = commitInfoManager.createCommitInfo(infoBranch, timeStamp, previousTimeStamp, userID,
+            comment, null);
         handler.handleCommitInfo(commitInfo);
       }
     }

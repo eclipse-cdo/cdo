@@ -562,6 +562,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private CDOBranchPoint branchPoint;
 
+    private long previousTimeStamp;
+
     private Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
 
     private CDOReferenceAdjuster referenceAdjuster;
@@ -576,12 +578,13 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     }
 
     /**
-     * @since 3.0
+     * @since 4.0
      */
-    public CommitTransactionResult(CDOIDProvider idProvider, CDOBranchPoint branchPoint)
+    public CommitTransactionResult(CDOIDProvider idProvider, CDOBranchPoint branchPoint, long previousTimeStamp)
     {
       this.idProvider = idProvider;
       this.branchPoint = branchPoint;
+      this.previousTimeStamp = previousTimeStamp;
     }
 
     public CDOReferenceAdjuster getReferenceAdjuster()
@@ -615,6 +618,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public long getTimeStamp()
     {
       return branchPoint.getTimeStamp();
+    }
+
+    /**
+     * @since 4.0
+     */
+    public long getPreviousTimeStamp()
+    {
+      return previousTimeStamp;
     }
 
     /**

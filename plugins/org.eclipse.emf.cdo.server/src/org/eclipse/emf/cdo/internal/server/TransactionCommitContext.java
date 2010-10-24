@@ -105,6 +105,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private long timeStamp = CDORevision.UNSPECIFIED_DATE;
 
+  private long previousTimeStamp = CDORevision.UNSPECIFIED_DATE;
+
   private String commitComment;
 
   private InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[0];
@@ -150,11 +152,6 @@ public class TransactionCommitContext implements InternalCommitContext
 
     packageRegistry = new TransactionPackageRegistry(repository.getPackageRegistry(false));
     packageRegistry.activate();
-  }
-
-  public int getTransactionID()
-  {
-    return transaction.getViewID();
   }
 
   public InternalTransaction getTransaction()
@@ -391,7 +388,10 @@ public class TransactionCommitContext implements InternalCommitContext
       lockObjects();
 
       // Could throw an exception
-      timeStamp = createTimeStamp(monitor.fork());
+      long[] times = createTimeStamp(monitor.fork());
+      timeStamp = times[0];
+      previousTimeStamp = times[1];
+
       adjustForCommit();
       monitor.worked();
 
@@ -457,10 +457,10 @@ public class TransactionCommitContext implements InternalCommitContext
     throw WrappedException.wrap((Exception)ex);
   }
 
-  protected long createTimeStamp(OMMonitor monitor)
+  protected long[] createTimeStamp(OMMonitor monitor)
   {
     InternalRepository repository = transaction.getSession().getManager().getRepository();
-    return repository.createCommitTimeStamp(getBranchPoint().getBranch(), monitor);
+    return repository.createCommitTimeStamp(monitor);
   }
 
   protected long getTimeStamp()
@@ -471,6 +471,16 @@ public class TransactionCommitContext implements InternalCommitContext
   protected void setTimeStamp(long timeStamp)
   {
     this.timeStamp = timeStamp;
+  }
+
+  public long getPreviousTimeStamp()
+  {
+    return previousTimeStamp;
+  }
+
+  public void setPreviousTimeStamp(long previousTimeStamp)
+  {
+    this.previousTimeStamp = previousTimeStamp;
   }
 
   public void postCommit(boolean success)
@@ -530,7 +540,7 @@ public class TransactionCommitContext implements InternalCommitContext
     CDOBranch branch = transaction.getBranch();
     String userID = transaction.getSession().getUserID();
     CDOCommitData commitData = createCommitData();
-    return commitInfoManager.createCommitInfo(branch, timeStamp, userID, commitComment, commitData);
+    return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, commitData);
   }
 
   private CDOCommitData createCommitData()

@@ -35,6 +35,8 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
 {
   private InternalCDOCommitInfoManager commitInfoManager;
 
+  private long previousTimeStamp;
+
   private String userID;
 
   private String comment;
@@ -42,11 +44,12 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
   private CDOCommitData commitData;
 
   public CDOCommitInfoImpl(InternalCDOCommitInfoManager commitInfoManager, CDOBranch branch, long timeStamp,
-      String userID, String comment, CDOCommitData commitData)
+      long previousTimeStamp, String userID, String comment, CDOCommitData commitData)
   {
     super(branch, timeStamp);
     CheckUtil.checkArg(commitInfoManager, "commitInfoManager"); //$NON-NLS-1$
     this.commitInfoManager = commitInfoManager;
+    this.previousTimeStamp = previousTimeStamp;
     this.userID = userID;
     this.comment = comment;
     this.commitData = commitData;
@@ -55,6 +58,11 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
   public InternalCDOCommitInfoManager getCommitInfoManager()
   {
     return commitInfoManager;
+  }
+
+  public long getPreviousTimeStamp()
+  {
+    return previousTimeStamp;
   }
 
   public String getUserID()
@@ -125,8 +133,9 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
     }
 
     String timeStamp = CDOCommonUtil.formatTimeStamp(getTimeStamp());
-    return MessageFormat.format(
-        "CommitInfo[{0}, {1}, {2}, {3}, {4}]", getBranch(), timeStamp, getUserID(), getComment(), data); //$NON-NLS-1$
+    return MessageFormat
+        .format(
+            "CommitInfo[{0}, {1}, {2}, {3}, {4}, {5}]", getPreviousTimeStamp(), getBranch(), timeStamp, getUserID(), getComment(), data); //$NON-NLS-1$
   }
 
   private void loadCommitDataIfNeeded()

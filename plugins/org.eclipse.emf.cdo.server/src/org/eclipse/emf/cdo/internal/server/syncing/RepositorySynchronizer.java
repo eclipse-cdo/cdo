@@ -80,9 +80,6 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
 
   private boolean rawReplication;
 
-  @Deprecated
-  private boolean squeezeCommitInfos;
-
   private int maxRecommits = DEFAULT_MAX_RECOMMITS;
 
   private int recommitInterval = DEFAULT_RECOMMIT_INTERVAL;
@@ -140,19 +137,6 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
   {
     checkInactive();
     this.rawReplication = rawReplication;
-  }
-
-  @Deprecated
-  public boolean isSqueezeCommitInfos()
-  {
-    return squeezeCommitInfos;
-  }
-
-  @Deprecated
-  public void setSqueezeCommitInfos(boolean squeezeCommitInfos)
-  {
-    checkInactive();
-    this.squeezeCommitInfos = squeezeCommitInfos;
   }
 
   public int getMaxRecommits()

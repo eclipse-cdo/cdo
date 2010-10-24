@@ -524,9 +524,10 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
   }
 
   @Override
-  protected void writeCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment, OMMonitor monitor)
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
+      String comment, OMMonitor monitor)
   {
-    DB4OCommitInfo commitInfo = new DB4OCommitInfo(branch.getID(), timeStamp, userID, comment);
+    DB4OCommitInfo commitInfo = new DB4OCommitInfo(branch.getID(), timeStamp, previousTimeStamp, userID, comment);
     writeObject(commitInfo, monitor);
   }
 

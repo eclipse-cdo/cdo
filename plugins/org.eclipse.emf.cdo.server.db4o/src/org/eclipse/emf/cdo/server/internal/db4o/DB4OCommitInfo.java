@@ -26,14 +26,17 @@ public class DB4OCommitInfo
 
   private long timeStamp;
 
+  private long previousTimeStamp;
+
   private String userID;
 
   private String comment;
 
-  public DB4OCommitInfo(int branchID, long timeStamp, String userID, String comment)
+  public DB4OCommitInfo(int branchID, long timeStamp, long previousTimeStamp, String userID, String comment)
   {
     this.branchID = branchID;
     this.timeStamp = timeStamp;
+    this.previousTimeStamp = previousTimeStamp;
     this.userID = userID;
     this.comment = comment;
   }
@@ -52,7 +55,7 @@ public class DB4OCommitInfo
       CDOCommitInfoHandler handler)
   {
     InternalCDOBranch branch = branchManager.getBranch(branchID);
-    CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, userID, comment, null);
+    CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null);
     handler.handleCommitInfo(commitInfo);
   }
 }

@@ -5,7 +5,6 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -28,25 +27,20 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
 {
   private final CDOCommitInfo commitInfo;
 
-  private final boolean squeezed;
+  private long[] times;
 
-  private long commitTimeStamp;
-
-  private CDOBranchPoint oldBranchPoint;
-
-  public ReplicatorCommitContext(InternalTransaction transaction, CDOCommitInfo commitInfo, boolean squeezed)
+  public ReplicatorCommitContext(InternalTransaction transaction, CDOCommitInfo commitInfo)
   {
     super(transaction);
     this.commitInfo = commitInfo;
-    this.squeezed = squeezed;
 
-    commitTimeStamp = commitInfo.getTimeStamp();
+    long commitTimeStamp = commitInfo.getTimeStamp();
     if (commitTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
     {
       commitTimeStamp = transaction.getSession().getManager().getRepository().getTimeStamp();
     }
 
-    oldBranchPoint = transaction.getBranch().getPoint(commitTimeStamp - 1L);
+    times = new long[] { commitTimeStamp, commitInfo.getPreviousTimeStamp() };
     setCommitComment(commitInfo.getComment());
 
     InternalCDOPackageUnit[] newPackageUnits = getNewPackageUnits(commitInfo, getPackageRegistry());
@@ -69,9 +63,9 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
   }
 
   @Override
-  protected long createTimeStamp(OMMonitor monitor)
+  protected long[] createTimeStamp(OMMonitor monitor)
   {
-    return commitTimeStamp;
+    return times;
   }
 
   @Override
@@ -108,12 +102,6 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
   protected InternalCDORevision getOldRevision(InternalCDORevisionManager revisionManager,
       InternalCDORevisionDelta delta)
   {
-    if (squeezed)
-    {
-      return revisionManager.getRevision(delta.getID(), oldBranchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE,
-          true);
-    }
-
     return super.getOldRevision(revisionManager, delta);
   }
 

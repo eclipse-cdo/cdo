@@ -173,12 +173,6 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
   }
 
-  @Deprecated
-  public boolean isSqueezeCommitInfos()
-  {
-    return synchronizer.isSqueezeCommitInfos();
-  }
-
   public void handleBranch(CDOBranch branch)
   {
     if (branch.isLocal())
@@ -210,8 +204,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     CDOBranchPoint head = branch.getHead();
 
     InternalTransaction transaction = replicatorSession.openTransaction(++lastTransactionID, head);
-    boolean squeezed = isSqueezeCommitInfos() && lastReplicatedCommitTime != CDOBranchPoint.UNSPECIFIED_DATE;
-    ReplicatorCommitContext commitContext = new ReplicatorCommitContext(transaction, commitInfo, squeezed);
+    ReplicatorCommitContext commitContext = new ReplicatorCommitContext(transaction, commitInfo);
     commitContext.preWrite();
     boolean success = false;
 
@@ -293,7 +286,8 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       CDOCommitData data = new CDOCommitDataImpl(newPackages, newObjects, changedObjects, detachedObjects);
 
       String comment = "<replicate raw commits>"; //$NON-NLS-1$
-      CDOCommitInfo commitInfo = manager.createCommitInfo(branch, toCommitTime, SYSTEM_USER_ID, comment, data);
+      CDOCommitInfo commitInfo = manager.createCommitInfo(branch, toCommitTime, fromCommitTime, SYSTEM_USER_ID,
+          comment, data);
       sessionManager.sendCommitNotification(replicatorSession, commitInfo);
     }
   }
@@ -544,10 +538,12 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
 
     @Override
-    protected long createTimeStamp(OMMonitor monitor)
+    protected long[] createTimeStamp(OMMonitor monitor)
     {
-      // Already set after commit to the master
-      return WriteThroughCommitContext.this.getTimeStamp(); // Do not call getTimeStamp() of the enclosing Repo class!!!
+      // Already set after commit to the master.
+      // Do not call getTimeStamp() of the enclosing Repo class!!!
+      return new long[] { WriteThroughCommitContext.this.getTimeStamp(),
+          WriteThroughCommitContext.this.getPreviousTimeStamp() };
     }
 
     @Override

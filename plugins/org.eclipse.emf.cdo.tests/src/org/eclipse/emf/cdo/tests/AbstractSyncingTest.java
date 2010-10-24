@@ -68,7 +68,6 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
   {
     Map<String, Object> testProperties = super.getTestProperties();
     testProperties.put(OfflineConfig.PROP_TEST_RAW_REPLICATION, isRawReplication());
-    testProperties.put(OfflineConfig.PROP_TEST_SQUEEZE_COMMIT_INFOS, isSqueezedCommitInfos());
     testProperties.put(OfflineConfig.PROP_TEST_DELAYED_COMMIT_HANDLING, getTestDelayedCommitHandling());
     testProperties.put(OfflineConfig.PROP_TEST_DELAYED2_COMMIT_HANDLING, getTestDelayed2CommitHandling());
     testProperties.put(OfflineConfig.PROP_TEST_FAILOVER, isFailover());
@@ -81,11 +80,6 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
   }
 
   protected boolean isRawReplication()
-  {
-    return false;
-  }
-
-  protected boolean isSqueezedCommitInfos()
   {
     return false;
   }

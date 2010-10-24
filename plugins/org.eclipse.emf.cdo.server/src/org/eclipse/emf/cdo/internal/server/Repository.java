@@ -21,10 +21,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -35,7 +33,6 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
-import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
@@ -43,7 +40,6 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
-import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -103,10 +99,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -779,19 +772,13 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  public long createCommitTimeStamp(CDOBranch branch, OMMonitor monitor)
+  public long[] createCommitTimeStamp(OMMonitor monitor)
   {
     monitor.begin();
 
     try
     {
       long now = getTimeStamp();
-      if (branch == null)
-      {
-        // Must be unique in a new branch
-        return now;
-      }
-
       synchronized (lastCommitTimeStampLock)
       {
         if (lastCommitTimeStamp != 0)
@@ -804,8 +791,9 @@ public class Repository extends Container<Object> implements InternalRepository
           }
         }
 
+        long previousTimeStamp = lastCommitTimeStamp;
         lastCommitTimeStamp = now;
-        return now;
+        return new long[] { now, previousTimeStamp };
       }
     }
     finally
@@ -1082,101 +1070,7 @@ public class Repository extends Container<Object> implements InternalRepository
     branchManager.getBranches(startID, 0, context);
 
     long startTime = context.getLastReplicatedCommitTime();
-    if (context.isSqueezeCommitInfos() && startTime != CDOBranchPoint.UNSPECIFIED_DATE)
-    {
-      replicateSqueezed(startTime, context);
-    }
-    else
-    {
-      commitInfoManager.getCommitInfos(startTime + 1L, CDOBranchPoint.UNSPECIFIED_DATE, context);
-    }
-  }
-
-  private void replicateSqueezed(long startTime, CDOCommitInfoHandler handler)
-  {
-    Set<CDOPackageUnit> replicatedPackageUnits = new HashSet<CDOPackageUnit>();
-    InternalCDOCommitInfoManager manager = getCommitInfoManager();
-
-    List<CDOChangeSetSegment> segments = getBaselineSegments(startTime, getBranchManager().getMainBranch());
-    for (CDOChangeSetSegment segment : segments)
-    {
-      List<CDOPackageUnit> newPackages = getPackageUnitsToReplicate(segment, replicatedPackageUnits);
-      CDOChangeSetData changeSet = getChangeSet(segment, segment.getEndPoint());
-
-      if (!newPackages.isEmpty() || !changeSet.isEmpty())
-      {
-        List<CDOIDAndVersion> newObjects = changeSet.getNewObjects();
-        List<CDORevisionKey> changedObjects = changeSet.getChangedObjects();
-        List<CDOIDAndVersion> detachedObjects = changeSet.getDetachedObjects();
-        CDOCommitData data = new CDOCommitDataImpl(newPackages, newObjects, changedObjects, detachedObjects);
-
-        CDOBranch branch = segment.getBranch();
-        long timeStamp = segment.getEndTime();
-        String comment = "<replicate squeezed commits>"; //$NON-NLS-1$
-        CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, SYSTEM_USER_ID, comment, data);
-
-        handler.handleCommitInfo(commitInfo);
-      }
-    }
-  }
-
-  private List<CDOChangeSetSegment> getBaselineSegments(long startTime, CDOBranch branch)
-  {
-    List<CDOChangeSetSegment> segments = new ArrayList<CDOChangeSetSegment>();
-    getBaselineSegments(startTime, branch, segments);
-    Collections.sort(segments);
-    return segments;
-  }
-
-  private void getBaselineSegments(long startTime, CDOBranch branch, List<CDOChangeSetSegment> segments)
-  {
-    if (startTime == CDOBranchPoint.UNSPECIFIED_DATE)
-    {
-      startTime = branch.getBase().getTimeStamp();
-    }
-
-    CDOBranch[] branches = branch.getBranches();
-    Arrays.sort(branches, new Comparator<CDOBranch>()
-    {
-      public int compare(CDOBranch o1, CDOBranch o2)
-      {
-        return CDOCommonUtil.compareTimeStamps(o1.getBase().getTimeStamp(), o2.getBase().getTimeStamp());
-      }
-    });
-
-    for (CDOBranch subBranch : branches)
-    {
-      long baseTimeStamp = subBranch.getBase().getTimeStamp();
-      if (baseTimeStamp > startTime)
-      {
-        segments.add(new CDOChangeSetSegment(branch, startTime, baseTimeStamp));
-      }
-
-      getBaselineSegments(baseTimeStamp, subBranch, segments);
-      startTime = baseTimeStamp;
-    }
-
-    segments.add(new CDOChangeSetSegment(branch, startTime, CDOBranchPoint.UNSPECIFIED_DATE));
-  }
-
-  private List<CDOPackageUnit> getPackageUnitsToReplicate(CDOChangeSetSegment segment, Set<CDOPackageUnit> replicated)
-  {
-    List<CDOPackageUnit> result = new ArrayList<CDOPackageUnit>();
-    InternalCDOPackageRegistry packageRegistry = getPackageRegistry(false);
-
-    long startTime = segment.getTimeStamp();
-    long endTime = segment.getEndTime();
-
-    InternalCDOPackageUnit[] packageUnits = packageRegistry.getPackageUnits(startTime, endTime);
-    for (InternalCDOPackageUnit packageUnit : packageUnits)
-    {
-      if (!packageUnit.isSystem() && replicated.add(packageUnit))
-      {
-        result.add(packageUnit);
-      }
-    }
-
-    return result;
+    commitInfoManager.getCommitInfos(startTime + 1L, CDOBranchPoint.UNSPECIFIED_DATE, context);
   }
 
   public CDOChangeSetData getChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint)
@@ -1472,9 +1366,9 @@ public class Repository extends Container<Object> implements InternalRepository
     InternalCommitContext commitContext = new TransactionCommitContext(transaction)
     {
       @Override
-      protected long createTimeStamp(OMMonitor monitor)
+      protected long[] createTimeStamp(OMMonitor monitor)
       {
-        return store.getCreationTime();
+        return new long[] { store.getCreationTime(), CDOBranchPoint.UNSPECIFIED_DATE };
       }
 
       @Override

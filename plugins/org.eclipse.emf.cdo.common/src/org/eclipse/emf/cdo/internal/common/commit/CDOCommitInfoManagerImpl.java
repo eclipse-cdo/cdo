@@ -42,11 +42,11 @@ public class CDOCommitInfoManagerImpl extends Lifecycle implements InternalCDOCo
     this.commitInfoLoader = commitInfoLoader;
   }
 
-  public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment,
+  public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
       CDOCommitData commitData)
   {
     checkActive();
-    return new CDOCommitInfoImpl(this, branch, timeStamp, userID, comment, commitData);
+    return new CDOCommitInfoImpl(this, branch, timeStamp, previousTimeStamp, userID, comment, commitData);
   }
 
   public CDOCommitInfo getCommitInfo(CDOBranch branch, long timeStamp)

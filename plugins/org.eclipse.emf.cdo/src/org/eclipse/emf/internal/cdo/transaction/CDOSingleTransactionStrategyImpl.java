@@ -97,12 +97,13 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
       return null;
     }
 
+    long previousTimeStamp = result.getPreviousTimeStamp();
     CDOBranch branch = transaction.getBranch();
     long timeStamp = result.getTimeStamp();
     String userID = session.getUserID();
 
     InternalCDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
-    return commitInfoManager.createCommitInfo(branch, timeStamp, userID, comment, commitData);
+    return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, commitData);
   }
 
   public void rollback(InternalCDOTransaction transaction, InternalCDOUserSavepoint savepoint)

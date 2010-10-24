@@ -232,9 +232,10 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
   }
 
   @Override
-  protected void writeCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment, OMMonitor monitor)
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
+      String comment, OMMonitor monitor)
   {
-    getStore().addCommitInfo(branch, timeStamp, userID, comment);
+    getStore().addCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment);
   }
 
   @Override

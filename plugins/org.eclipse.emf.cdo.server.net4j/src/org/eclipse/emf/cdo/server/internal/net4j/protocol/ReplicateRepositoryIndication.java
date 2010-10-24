@@ -30,8 +30,6 @@ public class ReplicateRepositoryIndication extends CDOReadIndication
 
   private long lastReplicatedCommitTime;
 
-  private boolean squeezeCommitInfos;
-
   public ReplicateRepositoryIndication(CDOServerProtocol protocol)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY);
@@ -42,7 +40,6 @@ public class ReplicateRepositoryIndication extends CDOReadIndication
   {
     lastReplicatedBranchID = in.readInt();
     lastReplicatedCommitTime = in.readLong();
-    squeezeCommitInfos = in.readBoolean();
   }
 
   @Override
@@ -58,11 +55,6 @@ public class ReplicateRepositoryIndication extends CDOReadIndication
       public long getLastReplicatedCommitTime()
       {
         return lastReplicatedCommitTime;
-      }
-
-      public boolean isSqueezeCommitInfos()
-      {
-        return squeezeCommitInfos;
       }
 
       public void handleBranch(CDOBranch branch)

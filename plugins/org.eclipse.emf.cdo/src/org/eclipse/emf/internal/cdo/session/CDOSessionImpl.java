@@ -1615,6 +1615,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       return commitInfo.getTimeStamp();
     }
 
+    public long getPreviousTimeStamp()
+    {
+      return commitInfo.getPreviousTimeStamp();
+    }
+
     public String getUserID()
     {
       return commitInfo.getUserID();

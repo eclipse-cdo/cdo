@@ -200,6 +200,7 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
   {
     writeCDOBranch(commitInfo.getBranch());
     writeLong(commitInfo.getTimeStamp());
+    writeLong(commitInfo.getPreviousTimeStamp());
     writeString(commitInfo.getUserID());
     writeString(commitInfo.getComment());
     writeCDOCommitData(commitInfo);
@@ -264,16 +265,6 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
       writeCDOID(metaRange.getLowerBound());
       writeInt(metaRange.size());
     }
-  }
-
-  public CDOPackageRegistry getPackageRegistry()
-  {
-    return null;
-  }
-
-  public CDOIDProvider getIDProvider()
-  {
-    return null;
   }
 
   public void writeCDORevisionKey(CDORevisionKey revisionKey) throws IOException
@@ -437,6 +428,16 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
   public void writeCDOLockType(LockType lockType) throws IOException
   {
     writeBoolean(lockType == LockType.WRITE ? true : false);
+  }
+
+  public CDOPackageRegistry getPackageRegistry()
+  {
+    return null;
+  }
+
+  public CDOIDProvider getIDProvider()
+  {
+    return null;
   }
 
   protected StringIO getPackageURICompressor()

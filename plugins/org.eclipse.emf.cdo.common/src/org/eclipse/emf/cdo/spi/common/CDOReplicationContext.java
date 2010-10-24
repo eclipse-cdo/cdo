@@ -19,5 +19,4 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
  */
 public interface CDOReplicationContext extends CDOReplicationInfo, CDOBranchHandler, CDOCommitInfoHandler
 {
-  public boolean isSqueezeCommitInfos();
 }

@@ -30,10 +30,4 @@ public interface InternalRepositorySynchronizer extends IRepositorySynchronizer,
   public void setRemoteSessionConfigurationFactory(CDOSessionConfigurationFactory remoteSessionConfigurationFactory);
 
   public InternalCDOSession getRemoteSession();
-
-  @Deprecated
-  public boolean isSqueezeCommitInfos();
-
-  @Deprecated
-  public void setSqueezeCommitInfos(boolean squeezeCommitInfos);
 }

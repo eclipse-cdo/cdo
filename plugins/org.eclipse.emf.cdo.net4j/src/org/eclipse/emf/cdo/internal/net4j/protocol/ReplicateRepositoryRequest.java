@@ -26,14 +26,10 @@ public class ReplicateRepositoryRequest extends CDOClientRequest<Boolean>
 {
   private CDOReplicationContext context;
 
-  @SuppressWarnings("unused")
-  private OMMonitor monitor;
-
   public ReplicateRepositoryRequest(CDOClientProtocol protocol, CDOReplicationContext context, OMMonitor monitor)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY);
     this.context = context;
-    this.monitor = monitor;
   }
 
   @Override
@@ -41,7 +37,6 @@ public class ReplicateRepositoryRequest extends CDOClientRequest<Boolean>
   {
     out.writeInt(context.getLastReplicatedBranchID());
     out.writeLong(context.getLastReplicatedCommitTime());
-    out.writeBoolean(context.isSqueezeCommitInfos());
   }
 
   @Override

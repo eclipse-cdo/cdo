@@ -43,6 +43,11 @@ public abstract class DelegatingCommitInfo implements CDOCommitInfo
     return getDelegate().getCommitInfoManager();
   }
 
+  public long getPreviousTimeStamp()
+  {
+    return getDelegate().getPreviousTimeStamp();
+  }
+
   public long getTimeStamp()
   {
     return getDelegate().getTimeStamp();

@@ -397,13 +397,6 @@ public class OfflineTest extends AbstractSyncingTest
       System.out.println("-----> " + commitInfo);
     }
 
-    if (isSqueezedCommitInfos())
-    {
-      assertEquals(2, result.size());
-    }
-    else
-    {
-      assertEquals(12, result.size());
-    }
+    assertEquals(12, result.size());
   }
 }

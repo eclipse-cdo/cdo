@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ibrahim Sallam - initial API and implementation
  */
@@ -18,6 +18,8 @@ public class ObjyCommitInfo extends ooObj
 
   protected long timeStamp;
 
+  protected long previousTimeStamp;
+
   protected String userId;
 
   protected String comment;
@@ -25,10 +27,11 @@ public class ObjyCommitInfo extends ooObj
   /***
    * OoCommitInfo will be a readonly object.
    */
-  public ObjyCommitInfo(int branchId, long timeStamp, String userId, String comment)
+  public ObjyCommitInfo(int branchId, long timeStamp, long previousTimeStamp, String userId, String comment)
   {
     this.branchId = branchId;
     this.timeStamp = timeStamp;
+    this.previousTimeStamp = previousTimeStamp;
     this.userId = userId;
     this.comment = comment;
   }
@@ -43,6 +46,12 @@ public class ObjyCommitInfo extends ooObj
   {
     fetch();
     return timeStamp;
+  }
+
+  public long getPreviousTimeStamp()
+  {
+    fetch();
+    return previousTimeStamp;
   }
 
   public String getUserId()

@@ -153,6 +153,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     commitContexts.add(context);
     CDOBranch branch = context.getBranchPoint().getBranch();
     long timeStamp = context.getBranchPoint().getTimeStamp();
+    long previousTimeStamp = context.getPreviousTimeStamp();
     String userID = context.getUserID();
     String commitComment = context.getCommitComment();
 
@@ -166,7 +167,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     try
     {
       monitor.begin(1 + newPackageUnits.length + 2 + newObjects.length + detachedObjects.length + dirtyCount);
-      writeCommitInfo(branch, timeStamp, userID, commitComment, monitor.fork());
+      writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, monitor.fork());
 
       if (newPackageUnits.length != 0)
       {
@@ -306,10 +307,10 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   }
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  protected abstract void writeCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment,
-      OMMonitor monitor);
+  protected abstract void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
+      String comment, OMMonitor monitor);
 
   /**
    * @since 3.0

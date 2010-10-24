@@ -97,10 +97,12 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
   public void setRootResourceID(CDOID rootResourceID);
 
   /**
-   * Returns a commit time stamp that is guaranteed to be unique in the given branch. If <code>null</code> is passed the
-   * time stamp is expected to e used with a new branch, hence will be unique by definition.
+   * Returns a commit time stamp that is guaranteed to be unique in this repository. At index 1 of the returned
+   * <code>long</code> array is the previous commit time.
+   * 
+   * @since 4.0
    */
-  public long createCommitTimeStamp(CDOBranch branch, OMMonitor monitor);
+  public long[] createCommitTimeStamp(OMMonitor monitor);
 
   public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart,
       int chunkEnd);

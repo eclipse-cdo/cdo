@@ -1108,6 +1108,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     for (ObjyCommitInfo ooCommitInfo : commitInfoList)
     {
       long timeStamp = ooCommitInfo.getTimeStamp();
+      long previousTimeStamp = ooCommitInfo.getPreviousTimeStamp();
       String userID = ooCommitInfo.getUserId();
       String comment = ooCommitInfo.getComment();
       CDOBranch infoBranch = branch;
@@ -1117,20 +1118,22 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
         infoBranch = branchManager.getBranch(id);
       }
 
-      CDOCommitInfo commitInfo = commitInfoManager.createCommitInfo(infoBranch, timeStamp, userID, comment, null);
+      CDOCommitInfo commitInfo = commitInfoManager.createCommitInfo(infoBranch, timeStamp, previousTimeStamp, userID,
+          comment, null);
       handler.handleCommitInfo(commitInfo);
     }
 
   }
 
   @Override
-  protected void writeCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment, OMMonitor monitor)
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
+      String comment, OMMonitor monitor)
   {
     ensureSessionBegin();
     // we need to write the following...
     // ...branch.getID(), timeStamp, userID, comment.
     ObjyCommitInfoHandler commitInfoHandler = getStore().getCommitInfoHandler();
-    commitInfoHandler.writeCommitInfo(branch.getID(), timeStamp, userID, comment);
+    commitInfoHandler.writeCommitInfo(branch.getID(), timeStamp, previousTimeStamp, userID, comment);
   }
 
   public IQueryHandler getQueryHandler(org.eclipse.emf.cdo.common.util.CDOQueryInfo info)

@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -66,9 +65,9 @@ public abstract class DelegatingRepository implements InternalRepository
     getDelegate().addListener(listener);
   }
 
-  public long createCommitTimeStamp(CDOBranch branch, OMMonitor monitor)
+  public long[] createCommitTimeStamp(OMMonitor monitor)
   {
-    return getDelegate().createCommitTimeStamp(branch, monitor);
+    return getDelegate().createCommitTimeStamp(monitor);
   }
 
   public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart,

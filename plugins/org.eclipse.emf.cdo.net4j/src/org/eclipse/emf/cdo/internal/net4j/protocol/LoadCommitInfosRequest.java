@@ -67,6 +67,7 @@ public class LoadCommitInfosRequest extends CDOClientRequest<Boolean>
     InternalCDOCommitInfoManager manager = getSession().getCommitInfoManager();
     while (in.readBoolean())
     {
+      long id = in.readLong();
       CDOBranch branch = this.branch == null ? in.readCDOBranch() : this.branch;
       long timeStamp = in.readLong();
       String userID = in.readString();
@@ -74,7 +75,7 @@ public class LoadCommitInfosRequest extends CDOClientRequest<Boolean>
 
       try
       {
-        CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, userID, comment, null);
+        CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, id, userID, comment, null);
         handler.handleCommitInfo(commitInfo);
       }
       catch (Exception ex)

@@ -2338,7 +2338,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         try
         {
-          long timeStamp = result.getTimeStamp();
           CDOBranch branch = result.getBranch();
           boolean branchChanged = !ObjectUtil.equals(branch, getBranch());
           if (branchChanged)
@@ -2364,7 +2363,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             removeObject(id);
           }
 
-          CDOCommitInfo commitInfo = makeCommitInfo(timeStamp);
+          CDOCommitInfo commitInfo = makeCommitInfo(result.getTimeStamp(), result.getPreviousTimeStamp());
 
           InternalCDOSession session = getSession();
           session.invalidate(commitInfo, transaction);
@@ -2435,7 +2434,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    private CDOCommitInfo makeCommitInfo(long timeStamp)
+    private CDOCommitInfo makeCommitInfo(long timeStamp, long previousTimeStamp)
     {
       InternalCDOSession session = getSession();
       CDOBranch branch = getBranch();
@@ -2443,7 +2442,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       String comment = getCommitComment();
 
       InternalCDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
-      return commitInfoManager.createCommitInfo(branch, timeStamp, userID, comment, commitData);
+      return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, commitData);
     }
 
     private void preCommit(Map<CDOID, CDOObject> objects, Map<byte[], CDOLob<?>> lobs)

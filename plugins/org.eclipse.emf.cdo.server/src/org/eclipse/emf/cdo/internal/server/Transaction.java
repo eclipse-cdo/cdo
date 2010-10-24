@@ -62,9 +62,9 @@ public class Transaction extends View implements InternalTransaction
     return new TransactionCommitContext(this)
     {
       @Override
-      protected long createTimeStamp(OMMonitor monitor)
+      protected long[] createTimeStamp(OMMonitor monitor)
       {
-        return timeStamp;
+        return new long[] { timeStamp, CDOBranchPoint.UNSPECIFIED_DATE };
       }
     };
   }

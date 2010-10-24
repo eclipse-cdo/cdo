@@ -142,6 +142,9 @@ public class CDODBSchema extends DBSchema
   public static final IDBField COMMIT_INFOS_TIMESTAMP = //
   COMMIT_INFOS.addField("commit_time", DBType.BIGINT); //$NON-NLS-1$
 
+  public static final IDBField COMMIT_INFOS_PREVIOUS_TIMESTAMP = //
+  COMMIT_INFOS.addField("previous_time", DBType.BIGINT); //$NON-NLS-1$
+
   public static final IDBField COMMIT_INFOS_BRANCH = //
   COMMIT_INFOS.addField("branch_id", DBType.INTEGER); //$NON-NLS-1$
 
@@ -161,8 +164,8 @@ public class CDODBSchema extends DBSchema
   COMMIT_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, COMMIT_INFOS_USER);
 
   public static final String SQL_CREATE_COMMIT_INFO = "INSERT INTO " + COMMIT_INFOS + "(" + COMMIT_INFOS_TIMESTAMP //$NON-NLS-1$ //$NON-NLS-2$
-      + ", " + COMMIT_INFOS_BRANCH + ", " + COMMIT_INFOS_USER + ", " + COMMIT_INFOS_COMMENT + ") " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-      + "VALUES (?, ?, ?, ?)"; //$NON-NLS-1$
+      + ", " + COMMIT_INFOS_PREVIOUS_TIMESTAMP + ", " + COMMIT_INFOS_BRANCH + ", " + COMMIT_INFOS_USER + ", " + COMMIT_INFOS_COMMENT + ") " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+      + "VALUES (?, ?, ?, ?, ?)"; //$NON-NLS-1$
 
   /**
    * DBTable cdo_external_refs

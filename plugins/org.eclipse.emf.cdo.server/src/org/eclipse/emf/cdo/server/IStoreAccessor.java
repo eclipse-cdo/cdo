@@ -270,20 +270,16 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public ITransaction getTransaction();
 
     /**
-     * Returns the ID of the transactional view (<code>ITransaction</code>) which is the scope of the commit operation
-     * represented by this <code>CommitContext</code>.
-     * 
-     * @deprecated Use {@link #getTransaction()}.{@link ITransaction#getViewID() getViewID()}
-     */
-    @Deprecated
-    public int getTransactionID();
-
-    /**
      * Returns the branch ID and timestamp of this commit operation.
      * 
      * @since 3.0
      */
     public CDOBranchPoint getBranchPoint();
+
+    /**
+     * @since 4.0
+     */
+    public long getPreviousTimeStamp();
 
     /**
      * @since 3.0

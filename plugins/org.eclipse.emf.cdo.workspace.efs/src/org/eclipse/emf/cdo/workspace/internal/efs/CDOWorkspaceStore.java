@@ -16,14 +16,10 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EObject;
 
-import org.eclipse.core.filesystem.EFS;
-import org.eclipse.core.filesystem.IFileInfo;
 import org.eclipse.core.filesystem.IFileStore;
-import org.eclipse.core.filesystem.provider.FileInfo;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -31,15 +27,14 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Eike Stepper
  */
-public final class CDOWorkspaceStore extends AbstractFileStore
+public final class CDOWorkspaceStore extends AbstractResourceNodeStore
 {
-  private static final IFileStore NO_PARENT = null;
+  private static final AbstractResourceNodeStore NO_PARENT = null;
 
   private String name;
 
@@ -74,7 +69,7 @@ public final class CDOWorkspaceStore extends AbstractFileStore
   }
 
   @Override
-  public IFileStore getParent()
+  public AbstractResourceNodeStore getParent()
   {
     return NO_PARENT;
   }
@@ -99,35 +94,6 @@ public final class CDOWorkspaceStore extends AbstractFileStore
   }
 
   @Override
-  public String[] childNames(int options, IProgressMonitor monitor) throws CoreException
-  {
-    List<String> childNames = new ArrayList<String>();
-    childNames.add(CDOProjectDescriptionStore.DESCRIPTION_FILE_NAME);
-
-    CDOView view = null;
-
-    try
-    {
-      view = getWorkspace().openView();
-      CDOResource rootResource = view.getRootResource();
-      for (EObject content : rootResource.getContents())
-      {
-        if (content instanceof CDOResourceNode)
-        {
-          CDOResourceNode node = (CDOResourceNode)content;
-          childNames.add(node.getName());
-        }
-      }
-    }
-    finally
-    {
-      IOUtil.close(view);
-    }
-
-    return childNames.toArray(new String[childNames.size()]);
-  }
-
-  @Override
   public IFileStore getChild(String name)
   {
     if (CDOProjectDescriptionStore.DESCRIPTION_FILE_NAME.equals(name))
@@ -135,20 +101,7 @@ public final class CDOWorkspaceStore extends AbstractFileStore
       return new CDOProjectDescriptionStore(this);
     }
 
-    return new CDOResourceNodeStore(this, this, name);
-  }
-
-  @Override
-  public IFileInfo fetchInfo(int options, IProgressMonitor monitor) throws CoreException
-  {
-    FileInfo info = new FileInfo(getName());
-    info.setExists(true);
-    info.setLength(EFS.NONE);
-    info.setLastModified(EFS.NONE);
-    info.setDirectory(true);
-    info.setAttribute(EFS.ATTRIBUTE_READ_ONLY, false);
-    info.setAttribute(EFS.ATTRIBUTE_HIDDEN, false);
-    return info;
+    return super.getChild(name);
   }
 
   @Override
@@ -167,6 +120,40 @@ public final class CDOWorkspaceStore extends AbstractFileStore
   {
     // TODO: implement CDOWorkspaceStore.dispose()
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public CDOWorkspaceStore getWorkspaceStore()
+  {
+    return this;
+  }
+
+  @Override
+  protected CDOResourceNode getResourceNode(CDOView view)
+  {
+    return view.getRootResource();
+  }
+
+  @Override
+  protected boolean isDirectory(CDOResourceNode node)
+  {
+    return true;
+  }
+
+  @Override
+  protected void collectChildNames(CDOResourceNode node, List<String> childNames)
+  {
+    childNames.add(CDOProjectDescriptionStore.DESCRIPTION_FILE_NAME);
+
+    CDOResource rootResource = (CDOResource)node;
+    for (EObject content : rootResource.getContents())
+    {
+      if (content instanceof CDOResourceNode)
+      {
+        CDOResourceNode child = (CDOResourceNode)content;
+        childNames.add(child.getName());
+      }
+    }
   }
 
   private CDOWorkspace openWorkspace()

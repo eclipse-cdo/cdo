@@ -11,10 +11,11 @@
 package org.eclipse.emf.cdo.workspace.efs;
 
 import org.eclipse.emf.cdo.location.ICheckoutSource;
+import org.eclipse.emf.cdo.location.IRepositoryLocation;
+import org.eclipse.emf.cdo.location.IRepositoryLocationManager;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
@@ -25,6 +26,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.resources.IProject;
@@ -41,6 +43,8 @@ import org.h2.jdbcx.JdbcDataSource;
 import javax.sql.DataSource;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 
@@ -51,6 +55,17 @@ public final class CDOWorkspaceFSUtil
 {
   private CDOWorkspaceFSUtil()
   {
+  }
+
+  public static CDOWorkspace open(String projectName, File projectFolder) throws Exception
+  {
+    IDBStore local = creatLocalStore(projectFolder);
+    CDOWorkspaceBase base = createWorkspaceBase(new File(projectFolder, "base"));
+
+    IRepositoryLocation remote = readRepositoryLocation(projectFolder);
+
+    CDOWorkspace workspace = CDOWorkspaceUtil.open(local, base, remote);
+    return workspace;
   }
 
   public static void checkout(ICheckoutSource checkoutSource, String projectName, IProgressMonitor monitor)
@@ -79,27 +94,33 @@ public final class CDOWorkspaceFSUtil
 
   private static URI checkout(ICheckoutSource checkoutSource, String projectName, File projectFolder) throws Exception
   {
-    IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(false);
-    IDBAdapter dbAdapter = createLocalAdapter();
-    IDBConnectionProvider dbConnectionProvider = DBUtil.createConnectionProvider(createLocalDataSource(new File(
-        projectFolder, "local")));
-    IDBStore local = CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
-
+    IDBStore local = creatLocalStore(projectFolder);
     CDOWorkspaceBase base = createWorkspaceBase(new File(projectFolder, "base"));
 
-    CDOSessionConfigurationFactory remote = checkoutSource.getRepositoryLocation();
+    IRepositoryLocation remote = checkoutSource.getRepositoryLocation();
+    writeRepositoryLocation(projectFolder, remote);
+
     String branchPath = checkoutSource.getBranchPath();
     long timeStamp = checkoutSource.getTimeStamp();
 
     CDOWorkspace workspace = CDOWorkspaceUtil.checkout(local, base, remote, branchPath, timeStamp);
     CDOWorkspaceStore store = getFileSystem().addWorkspaceStore(projectName, workspace);
-
     return store.toURI();
   }
 
   private static CDOWorkspaceFileSystem getFileSystem() throws CoreException
   {
     return (CDOWorkspaceFileSystem)EFS.getFileSystem(CDOWorkspaceFileSystem.SCHEME);
+  }
+
+  private static IDBStore creatLocalStore(File projectFolder)
+  {
+    IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(false);
+    IDBAdapter dbAdapter = createLocalAdapter();
+    IDBConnectionProvider dbConnectionProvider = DBUtil.createConnectionProvider(createLocalDataSource(new File(
+        projectFolder, "local")));
+    IDBStore local = CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
+    return local;
   }
 
   private static IDBAdapter createLocalAdapter()
@@ -109,10 +130,11 @@ public final class CDOWorkspaceFSUtil
 
   private static DataSource createLocalDataSource(File folder)
   {
+    folder.mkdirs();
     String path = folder.getAbsolutePath().replace('\\', '/');
 
     JdbcDataSource dataSource = new JdbcDataSource();
-    dataSource.setURL("jdbc:h2:" + path);
+    dataSource.setURL("jdbc:h2:" + path + "/db");
     return dataSource;
   }
 
@@ -120,5 +142,40 @@ public final class CDOWorkspaceFSUtil
   {
     folder.mkdirs();
     return CDOWorkspaceUtil.createFolderWorkspaceBase(folder);
+  }
+
+  private static File getRemotePropertiesFile(File projectFolder)
+  {
+    return new File(projectFolder, "remote.properties");
+  }
+
+  private static void writeRepositoryLocation(File projectFolder, IRepositoryLocation remote) throws IOException
+  {
+    FileOutputStream out = null;
+
+    try
+    {
+      out = new FileOutputStream(getRemotePropertiesFile(projectFolder));
+      remote.write(out);
+    }
+    finally
+    {
+      IOUtil.close(out);
+    }
+  }
+
+  private static IRepositoryLocation readRepositoryLocation(File projectFolder) throws IOException
+  {
+    FileInputStream in = null;
+
+    try
+    {
+      in = new FileInputStream(getRemotePropertiesFile(projectFolder));
+      return IRepositoryLocationManager.INSTANCE.addRepositoryLocation(in);
+    }
+    finally
+    {
+      IOUtil.close(in);
+    }
   }
 }

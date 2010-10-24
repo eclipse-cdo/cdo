@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.location.IRepositoryLocationManager;
 
 import org.eclipse.net4j.util.container.Container;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,42 +27,53 @@ public class RepositoryLocationManager extends Container<IRepositoryLocation> im
 {
   private static final long serialVersionUID = 1L;
 
-  private List<IRepositoryLocation> repositoryLocations = new ArrayList<IRepositoryLocation>();
+  private List<RepositoryLocation> repositoryLocations = new ArrayList<RepositoryLocation>();
 
   public RepositoryLocationManager()
   {
     activate();
   }
 
-  public IRepositoryLocation[] getElements()
+  public RepositoryLocation[] getElements()
   {
     return getRepositoryLocations();
   }
 
-  public IRepositoryLocation[] getRepositoryLocations()
+  public RepositoryLocation[] getRepositoryLocations()
   {
     synchronized (repositoryLocations)
     {
-      return repositoryLocations.toArray(new IRepositoryLocation[repositoryLocations.size()]);
+      return repositoryLocations.toArray(new RepositoryLocation[repositoryLocations.size()]);
     }
   }
 
-  public IRepositoryLocation addRepositoryLocation(String connectorType, String connectorDescription,
+  public RepositoryLocation addRepositoryLocation(String connectorType, String connectorDescription,
       String repositoryName)
   {
     RepositoryLocation location = new RepositoryLocation(this, connectorType, connectorDescription, repositoryName);
+    return addRepositoryLocation(location);
+  }
 
-    boolean added;
+  public RepositoryLocation addRepositoryLocation(InputStream in) throws IOException
+  {
+    RepositoryLocation location = new RepositoryLocation(this, in);
+    return addRepositoryLocation(location);
+  }
+
+  private RepositoryLocation addRepositoryLocation(RepositoryLocation location)
+  {
     synchronized (repositoryLocations)
     {
-      added = repositoryLocations.add(location);
+      int pos = repositoryLocations.indexOf(location);
+      if (pos != -1)
+      {
+        return repositoryLocations.get(pos);
+      }
+
+      repositoryLocations.add(location);
     }
 
-    if (added)
-    {
-      fireElementAddedEvent(location);
-    }
-
+    fireElementAddedEvent(location);
     return location;
   }
 
@@ -77,25 +90,4 @@ public class RepositoryLocationManager extends Container<IRepositoryLocation> im
       fireElementRemovedEvent(location);
     }
   }
-
-  // @Override
-  // protected void doActivate() throws Exception
-  // {
-  // super.doActivate();
-  // for (IRepositoryLocation location : repositoryLocations)
-  // {
-  // LifecycleUtil.activate(location);
-  // }
-  // }
-  //
-  // @Override
-  // protected void doDeactivate() throws Exception
-  // {
-  // for (IRepositoryLocation location : repositoryLocations)
-  // {
-  // LifecycleUtil.deactivate(location);
-  // }
-  //
-  // super.doDeactivate();
-  // }
 }

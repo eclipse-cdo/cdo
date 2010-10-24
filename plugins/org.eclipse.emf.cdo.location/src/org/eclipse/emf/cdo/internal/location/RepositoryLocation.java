@@ -22,12 +22,21 @@ import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Properties;
+
 /**
  * @author Eike Stepper
  */
 public class RepositoryLocation extends Container<ICheckoutSource> implements IRepositoryLocation
 {
-  private static final long serialVersionUID = 1L;
+  private static final String PROP_CONNECTOR_TYPE = "connector.type";
+
+  private static final String PROP_CONNECTOR_DESCRIPTION = "connector.description";
+
+  private static final String PROP_REPOSITORY_NAME = "repository.name";
 
   private RepositoryLocationManager manager;
 
@@ -39,10 +48,6 @@ public class RepositoryLocation extends Container<ICheckoutSource> implements IR
 
   private ICheckoutSource[] elements = { new BranchCheckoutSource.Main(this) };
 
-  public RepositoryLocation()
-  {
-  }
-
   public RepositoryLocation(RepositoryLocationManager manager, String connectorType, String connectorDescription,
       String repositoryName)
   {
@@ -51,6 +56,27 @@ public class RepositoryLocation extends Container<ICheckoutSource> implements IR
     this.connectorDescription = connectorDescription;
     this.repositoryName = repositoryName;
     activate();
+  }
+
+  public RepositoryLocation(RepositoryLocationManager manager, InputStream in) throws IOException
+  {
+    Properties properties = new Properties();
+    properties.load(in);
+
+    this.manager = manager;
+    connectorType = properties.getProperty(PROP_CONNECTOR_TYPE);
+    connectorDescription = properties.getProperty(PROP_CONNECTOR_DESCRIPTION);
+    repositoryName = properties.getProperty(PROP_REPOSITORY_NAME);
+    activate();
+  }
+
+  public void write(OutputStream out) throws IOException
+  {
+    Properties properties = new Properties();
+    properties.put(PROP_CONNECTOR_TYPE, connectorType);
+    properties.put(PROP_CONNECTOR_DESCRIPTION, connectorDescription);
+    properties.put(PROP_REPOSITORY_NAME, repositoryName);
+    properties.store(out, "Repository Location");
   }
 
   public RepositoryLocationManager getManager()

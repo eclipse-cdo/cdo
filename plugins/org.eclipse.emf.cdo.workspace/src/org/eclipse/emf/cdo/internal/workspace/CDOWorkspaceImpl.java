@@ -589,7 +589,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     Set<String> names = new HashSet<String>(Arrays.asList(PROP_BRANCH_PATH, PROP_TIME_STAMP, PROP_FIXED));
     Map<String, String> props = localRepository.getStore().getPropertyValues(names);
     branchPath = props.get(PROP_BRANCH_PATH);
-    timeStamp = Integer.parseInt(props.get(PROP_TIME_STAMP));
+    timeStamp = Long.parseLong(props.get(PROP_TIME_STAMP));
     fixed = Boolean.parseBoolean(props.get(PROP_FIXED));
   }
 }

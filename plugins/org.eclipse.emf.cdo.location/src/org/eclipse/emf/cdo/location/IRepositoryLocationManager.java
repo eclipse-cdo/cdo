@@ -14,6 +14,9 @@ import org.eclipse.emf.cdo.internal.location.bundle.OM;
 
 import org.eclipse.net4j.util.container.IContainer;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
  * @author Eike Stepper
  * @since 4.0
@@ -26,4 +29,6 @@ public interface IRepositoryLocationManager extends IContainer<IRepositoryLocati
 
   public IRepositoryLocation addRepositoryLocation(String connectorType, String connectorDescription,
       String repositoryName);
+
+  public IRepositoryLocation addRepositoryLocation(InputStream in) throws IOException;
 }

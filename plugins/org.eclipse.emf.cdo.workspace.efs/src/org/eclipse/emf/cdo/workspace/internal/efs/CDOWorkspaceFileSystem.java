@@ -15,11 +15,14 @@ import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.filesystem.provider.FileSystem;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
 
 import java.io.File;
@@ -39,10 +42,20 @@ public class CDOWorkspaceFileSystem extends FileSystem implements IResourceChang
 
   private static CDOWorkspaceFileSystem instance;
 
+  /**
+   * Maps {@link IProject} name to {@link IFileStore}.
+   */
   private Map<String, CDOWorkspaceStore> workspaceStores = new HashMap<String, CDOWorkspaceStore>();
 
+  /**
+   * <code>true</code> if this {@link CDOWorkspaceFileSystem} is registered as an {@link IResourceChangeListener} with
+   * the {@link IWorkspace}, <code>false</code> otherwise.
+   */
   private boolean workspaceListenerRegistered;
 
+  /**
+   * Called once by the {@link IExtensionRegistry}.
+   */
   public CDOWorkspaceFileSystem()
   {
     instance = this;
@@ -88,28 +101,46 @@ public class CDOWorkspaceFileSystem extends FileSystem implements IResourceChang
     IResourceDelta delta = event.getDelta();
     if (delta != null)
     {
-      for (IResourceDelta projectDelta : delta.getAffectedChildren())
+      IResourceDelta[] deltas = delta.getAffectedChildren();
+      projectsChanged(deltas);
+    }
+  }
+
+  private void projectsChanged(IResourceDelta[] deltas)
+  {
+    for (IResourceDelta delta : deltas)
+    {
+      int kind = delta.getKind();
+      boolean removed = kind == IResourceDelta.REMOVED;
+      if (!removed)
       {
-        if (projectDelta.getKind() == IResourceDelta.REMOVED)
+        int flags = delta.getFlags();
+        if ((flags & IResourceDelta.OPEN) != 0)
         {
-          String name = projectDelta.getFullPath().segment(0);
+          IProject project = (IProject)delta.getResource();
+          removed = !project.isOpen();
+        }
+      }
 
-          CDOWorkspaceStore store;
-          synchronized (workspaceStores)
+      if (removed)
+      {
+        String name = delta.getFullPath().segment(0);
+
+        CDOWorkspaceStore store;
+        synchronized (workspaceStores)
+        {
+          store = workspaceStores.remove(name);
+
+          if (workspaceStores.isEmpty())
           {
-            store = workspaceStores.remove(name);
-
-            if (workspaceStores.isEmpty())
-            {
-              ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
-              workspaceListenerRegistered = false;
-            }
+            ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
+            workspaceListenerRegistered = false;
           }
+        }
 
-          if (store != null)
-          {
-            store.dispose();
-          }
+        if (store != null)
+        {
+          store.dispose();
         }
       }
     }

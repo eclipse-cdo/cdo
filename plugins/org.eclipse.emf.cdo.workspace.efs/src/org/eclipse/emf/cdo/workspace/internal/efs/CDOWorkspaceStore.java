@@ -14,8 +14,10 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
+import org.eclipse.emf.cdo.workspace.efs.CDOWorkspaceFSUtil;
 
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -42,6 +44,8 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
 
   private CDOWorkspace workspace;
 
+  private CDOView view;
+
   public CDOWorkspaceStore(String name, File location)
   {
     this.name = name;
@@ -66,6 +70,18 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
   public synchronized void setWorkspace(CDOWorkspace workspace)
   {
     this.workspace = workspace;
+  }
+
+  private CDOWorkspace openWorkspace()
+  {
+    try
+    {
+      return CDOWorkspaceFSUtil.open(name, location);
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
   }
 
   @Override
@@ -118,14 +134,28 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
 
   public void dispose()
   {
-    // TODO: implement CDOWorkspaceStore.dispose()
-    throw new UnsupportedOperationException();
+    if (view != null)
+    {
+      IOUtil.close(view);
+      view = null;
+    }
   }
 
   @Override
   public CDOWorkspaceStore getWorkspaceStore()
   {
     return this;
+  }
+
+  @Override
+  protected synchronized CDOView getView()
+  {
+    if (view == null)
+    {
+      view = workspace.openView();
+    }
+
+    return view;
   }
 
   @Override
@@ -154,11 +184,5 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
         childNames.add(child.getName());
       }
     }
-  }
-
-  private CDOWorkspace openWorkspace()
-  {
-    // TODO: implement CDOWorkspaceStore.openWorkspace()
-    throw new UnsupportedOperationException();
   }
 }

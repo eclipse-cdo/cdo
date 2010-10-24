@@ -14,17 +14,24 @@ import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 
 import org.eclipse.net4j.util.container.IContainer;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 /**
  * @author Eike Stepper
  * @since 4.0
  */
 public interface IRepositoryLocation extends IContainer<ICheckoutSource>, CDOSessionConfigurationFactory
 {
+  public IRepositoryLocationManager getManager();
+
   public String getConnectorType();
 
   public String getConnectorDescription();
 
   public String getRepositoryName();
+
+  public void write(OutputStream out) throws IOException;
 
   public void delete();
 }

@@ -89,6 +89,11 @@ public abstract class AbstractResourceNodeStore extends AbstractFileStore
   @Override
   public abstract AbstractResourceNodeStore getParent();
 
+  protected CDOView getView()
+  {
+    return getWorkspaceStore().getView();
+  }
+
   protected abstract CDOResourceNode getResourceNode(CDOView view);
 
   protected abstract boolean isDirectory(CDOResourceNode node);
@@ -117,7 +122,7 @@ public abstract class AbstractResourceNodeStore extends AbstractFileStore
       {
         view = openView(transactional);
         RESULT result = run(view);
-        if (view instanceof CDOTransaction)
+        if (transactional)
         {
           CDOTransaction transaction = (CDOTransaction)view;
           transaction.commit();
@@ -131,7 +136,10 @@ public abstract class AbstractResourceNodeStore extends AbstractFileStore
       }
       finally
       {
-        IOUtil.close(view);
+        if (transactional)
+        {
+          IOUtil.close(view);
+        }
       }
     }
 
@@ -149,10 +157,8 @@ public abstract class AbstractResourceNodeStore extends AbstractFileStore
 
     private CDOView openView(boolean transactional)
     {
-      CDOView view;
       CDOWorkspace workspace = getWorkspaceStore().getWorkspace();
-      view = transactional ? workspace.openTransaction() : workspace.openView();
-      return view;
+      return transactional ? workspace.openTransaction() : getView();
     }
 
     private CDOResourceNode getResourceNode(CDOView view)

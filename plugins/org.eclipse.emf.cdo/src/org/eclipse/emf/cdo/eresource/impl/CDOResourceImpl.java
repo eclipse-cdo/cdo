@@ -51,7 +51,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
@@ -67,10 +66,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -957,50 +954,72 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
         return delegate.getContents();
       }
 
+      // @Override
+      // public String getURIFragment(EObject eObject)
+      // {
+      // String id = EcoreUtil.getID(eObject);
+      // if (id != null)
+      // {
+      // return id;
+      // }
+      //
+      // InternalEObject internalEObject = (InternalEObject)eObject;
+      // if (getMappedResource(internalEObject.eDirectResource()) == this)
+      // {
+      // return "/" + getURIFragmentRootSegment(eObject);
+      // }
+      //
+      // List<String> uriFragmentPath = new ArrayList<String>();
+      // boolean isContained = false;
+      // for (InternalEObject container = internalEObject.eInternalContainer(); container != null; container =
+      // internalEObject
+      // .eInternalContainer())
+      // {
+      // uriFragmentPath.add(container.eURIFragmentSegment(internalEObject.eContainingFeature(), internalEObject));
+      // internalEObject = container;
+      // if (getMappedResource(container.eDirectResource()) == this)
+      // {
+      // isContained = true;
+      // break;
+      // }
+      // }
+      //
+      // if (!isContained)
+      // {
+      // return "/-1";
+      // }
+      //
+      // StringBuilder result = new StringBuilder("/");
+      // result.append(getURIFragmentRootSegment(internalEObject));
+      //
+      // for (int i = uriFragmentPath.size() - 1; i >= 0; --i)
+      // {
+      // result.append('/');
+      // result.append(uriFragmentPath.get(i));
+      // }
+      //
+      // return result.toString();
+      // }
+
       @Override
-      public String getURIFragment(EObject eObject)
+      protected boolean useUUIDs()
       {
-        String id = EcoreUtil.getID(eObject);
-        if (id != null)
-        {
-          return id;
-        }
+        return true;
+      }
 
-        InternalEObject internalEObject = (InternalEObject)eObject;
-        if (getMappedResource(internalEObject.eDirectResource()) == this)
-        {
-          return "/" + getURIFragmentRootSegment(eObject);
-        }
+      @Override
+      protected boolean useIDAttributes()
+      {
+        return false;
+      }
 
-        List<String> uriFragmentPath = new ArrayList<String>();
-        boolean isContained = false;
-        for (InternalEObject container = internalEObject.eInternalContainer(); container != null; container = internalEObject
-            .eInternalContainer())
-        {
-          uriFragmentPath.add(container.eURIFragmentSegment(internalEObject.eContainingFeature(), internalEObject));
-          internalEObject = container;
-          if (getMappedResource(container.eDirectResource()) == this)
-          {
-            isContained = true;
-            break;
-          }
-        }
-
-        if (!isContained)
-        {
-          return "/-1";
-        }
-
-        StringBuilder result = new StringBuilder("/");
-        result.append(getURIFragmentRootSegment(internalEObject));
-
-        for (int i = uriFragmentPath.size() - 1; i >= 0; --i)
-        {
-          result.append('/');
-          result.append(uriFragmentPath.get(i));
-        }
-
-        return result.toString();
+      @Override
+      public String getID(EObject eObject)
+      {
+        CDOObject cdoObject = CDOUtil.getCDOObject(eObject);
+        StringBuilder builder = new StringBuilder();
+        CDOIDUtil.write(builder, cdoObject.cdoID());
+        return builder.toString();
       }
 
       @Override

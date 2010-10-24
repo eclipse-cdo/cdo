@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.workspace.internal.efs;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 import org.eclipse.emf.cdo.workspace.efs.CDOWorkspaceFSUtil;
@@ -20,6 +22,7 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.runtime.CoreException;
@@ -29,7 +32,9 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -45,6 +50,8 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
   private CDOWorkspace workspace;
 
   private CDOView view;
+
+  private SaveContext saveContext;
 
   public CDOWorkspaceStore(String name, File location)
   {
@@ -147,6 +154,16 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
     return this;
   }
 
+  public SaveContext getSaveContext()
+  {
+    if (saveContext == null)
+    {
+      saveContext = new SaveContext();
+    }
+
+    return saveContext;
+  }
+
   @Override
   protected synchronized CDOView getView()
   {
@@ -183,6 +200,54 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
         CDOResourceNode child = (CDOResourceNode)content;
         childNames.add(child.getName());
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public final class SaveContext
+  {
+    private CDOTransaction transaction;
+
+    private Map<String, InternalCDOObject> newObjects = new HashMap<String, InternalCDOObject>();
+
+    public SaveContext()
+    {
+      transaction = workspace.openTransaction();
+    }
+
+    public CDOTransaction getTransaction()
+    {
+      return transaction;
+    }
+
+    public void save()
+    {
+      try
+      {
+        transaction.commit();
+      }
+      catch (CommitException ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+      finally
+      {
+        saveContext = null;
+        newObjects = null;
+        IOUtil.closeSilent(transaction);
+      }
+    }
+
+    public void registerNewObject(String fragment, InternalCDOObject object)
+    {
+      newObjects.put(fragment, object);
+    }
+
+    public InternalCDOObject getNewObject(String fragment)
+    {
+      return newObjects.get(fragment);
     }
   }
 }

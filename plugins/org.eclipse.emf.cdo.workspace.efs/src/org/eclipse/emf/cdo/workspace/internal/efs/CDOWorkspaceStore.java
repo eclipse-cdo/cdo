@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.workspace.internal.efs;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -196,6 +195,12 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
   }
 
   @Override
+  public String getPath()
+  {
+    return "";
+  }
+
+  @Override
   protected synchronized CDOView getView()
   {
     if (view == null)
@@ -300,8 +305,8 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
 
     private void saveObject(InternalEObject xmiObject, InternalCDOObject cdoObject)
     {
-      CDOClassInfo classInfo = cdoObject.cdoRevision().getClassInfo();
-      for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
+      // CDOClassInfo classInfo = cdoObject.cdoRevision().getClassInfo();
+      for (EStructuralFeature feature : xmiObject.eClass().getEAllStructuralFeatures())
       {
         Object xmiValue = xmiObject.eGet(feature);
         if (feature instanceof EReference)
@@ -323,14 +328,21 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
             else
             {
               // Single-valued containment reference
-              InternalCDOObject cdoValue = getCDOObjectByXMIID((EObject)xmiValue);
-              if (cdoValue == null)
+              if (xmiValue != null)
               {
-                cdoValue = createNewCDOObject((EObject)xmiValue);
-              }
+                InternalCDOObject cdoValue = getCDOObjectByXMIID((EObject)xmiValue);
+                if (cdoValue == null)
+                {
+                  cdoValue = createNewCDOObject((EObject)xmiValue);
+                }
 
-              cdoObject.eSet(reference, cdoValue);
-              saveObject((InternalEObject)xmiValue, cdoValue);
+                cdoObject.eSet(reference, cdoValue);
+                saveObject((InternalEObject)xmiValue, cdoValue);
+              }
+              else
+              {
+                cdoObject.eSet(reference, null);
+              }
             }
           }
           else
@@ -348,26 +360,35 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
               for (int i = 0; i < size; i++)
               {
                 InternalEObject xmiElement = (InternalEObject)xmiElements.get(i);
-                String href = xmiResource.getURIFragment(xmiElement);
-                InternalCDOObject cdoElement = getCDOObjectByHREF(href);
-                if (cdoElement == null)
-                {
-                  registerForwardReference(cdoObject, reference, i, href);
+                InternalCDOObject cdoElement;
 
-                  InternalCDOObject dummy = createNewCDOObject(xmiElement);
-                  cdoElements.add(i, dummy);
+                org.eclipse.emf.common.util.URI eProxyURI = xmiElement.eProxyURI();
+                if (eProxyURI != null)
+                {
+                  String href = eProxyURI.fragment();
+                  cdoElement = getCDOObjectByHREF(href);
+                  if (cdoElement == null)
+                  {
+                    registerForwardReference(cdoObject, reference, i, href);
+
+                    InternalCDOObject dummy = createNewCDOObject(xmiElement);
+                    cdoElements.add(i, dummy);
+                    continue;
+                  }
                 }
                 else
                 {
-                  int index = cdoElements.indexOf(cdoElement);
-                  if (index != -1)
-                  {
-                    cdoElements.move(i, index);
-                  }
-                  else
-                  {
-                    cdoElements.add(i, cdoElement);
-                  }
+                  cdoElement = getCDOObjectByXMIID(xmiElement);
+                }
+
+                int index = cdoElements.indexOf(cdoElement);
+                if (index != -1)
+                {
+                  cdoElements.move(i, index);
+                }
+                else
+                {
+                  cdoElements.add(i, cdoElement);
                 }
               }
 
@@ -376,11 +397,21 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
             else
             {
               // Single-valued cross reference
-              String href = xmiResource.getURIFragment((EObject)xmiValue);
-              CDOObject cdoValue = getCDOObjectByHREF(href);
-              if (cdoValue == null)
+              CDOObject cdoValue;
+
+              org.eclipse.emf.common.util.URI eProxyURI = ((InternalEObject)xmiValue).eProxyURI();
+              if (eProxyURI != null)
               {
-                registerForwardReference(cdoObject, reference, -1, href);
+                String href = eProxyURI.fragment();
+                cdoValue = getCDOObjectByHREF(href);
+                if (cdoValue == null)
+                {
+                  registerForwardReference(cdoObject, reference, -1, href);
+                }
+              }
+              else
+              {
+                cdoValue = getCDOObjectByXMIID((EObject)xmiValue);
               }
 
               cdoObject.eSet(reference, cdoValue);

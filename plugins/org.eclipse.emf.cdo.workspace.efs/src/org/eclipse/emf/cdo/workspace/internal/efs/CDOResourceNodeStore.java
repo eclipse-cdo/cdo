@@ -64,14 +64,10 @@ public final class CDOResourceNodeStore extends AbstractResourceNodeStore
     return name;
   }
 
+  @Override
   public String getPath()
   {
-    if (parent instanceof CDOResourceNodeStore)
-    {
-      return ((CDOResourceNodeStore)parent).getPath() + "/" + name;
-    }
-
-    return name;
+    return parent.getPath() + "/" + name;
   }
 
   @Override
@@ -109,6 +105,7 @@ public final class CDOResourceNodeStore extends AbstractResourceNodeStore
       public void close() throws IOException
       {
         byte[] bytes = toByteArray();
+        System.err.println(new String(bytes));
         InputStream in = new ByteArrayInputStream(bytes);
 
         XMIResource xmiResource = new XMIResourceImpl();

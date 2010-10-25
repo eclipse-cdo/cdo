@@ -75,7 +75,7 @@ public abstract class AbstractResourceNodeStore extends AbstractFileStore
         boolean directory = exists && isDirectory(node);
         if (!directory)
         {
-          lastModified = getWorkspaceStore().getLastModified(node.getPath());
+          lastModified = getWorkspaceStore().getLastModified(getPath());
         }
 
         FileInfo info = new FileInfo(getName());
@@ -94,6 +94,8 @@ public abstract class AbstractResourceNodeStore extends AbstractFileStore
 
   @Override
   public abstract AbstractResourceNodeStore getParent();
+
+  public abstract String getPath();
 
   protected CDOView getView()
   {

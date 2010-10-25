@@ -397,21 +397,23 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
             else
             {
               // Single-valued cross reference
-              CDOObject cdoValue;
-
-              org.eclipse.emf.common.util.URI eProxyURI = ((InternalEObject)xmiValue).eProxyURI();
-              if (eProxyURI != null)
+              CDOObject cdoValue = null;
+              if (xmiValue != null)
               {
-                String href = eProxyURI.fragment();
-                cdoValue = getCDOObjectByHREF(href);
-                if (cdoValue == null)
+                org.eclipse.emf.common.util.URI eProxyURI = ((InternalEObject)xmiValue).eProxyURI();
+                if (eProxyURI != null)
                 {
-                  registerForwardReference(cdoObject, reference, -1, href);
+                  String href = eProxyURI.fragment();
+                  cdoValue = getCDOObjectByHREF(href);
+                  if (cdoValue == null)
+                  {
+                    registerForwardReference(cdoObject, reference, -1, href);
+                  }
                 }
-              }
-              else
-              {
-                cdoValue = getCDOObjectByXMIID((EObject)xmiValue);
+                else
+                {
+                  cdoValue = getCDOObjectByXMIID((EObject)xmiValue);
+                }
               }
 
               cdoObject.eSet(reference, cdoValue);

@@ -32,7 +32,6 @@ import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -45,6 +44,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
 import java.util.List;
 
@@ -408,17 +408,39 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   private long getMinLocalID(Connection connection)
   {
     long min = Long.MAX_VALUE;
-    if (getStore().getRepository().isSupportingBranches())
+
+    String dbName = getStore().getRepository().getName();
+    List<String> names = DBUtil.getAllTableNames(connection, dbName);
+    for (String name : names)
     {
-      for (IClassMapping classMapping : getClassMappings().values())
+      String sql = "SELECT MIN(" + CDODBSchema.ATTRIBUTES_ID + ") FROM " + dbName + "." + name + " WHERE 0>"
+          + CDODBSchema.ATTRIBUTES_BRANCH;
+
+      Statement stmt = null;
+      ResultSet resultSet = null;
+
+      try
       {
-        IDBTable table = classMapping.getDBTables().get(0);
-        IDBField field = table.getField(CDODBSchema.ATTRIBUTES_ID);
-        long id = DBUtil.selectMinimumLong(connection, field, "0>" + CDODBSchema.ATTRIBUTES_BRANCH); //$NON-NLS-1$
-        if (id < min)
+        stmt = connection.createStatement();
+        resultSet = stmt.executeQuery(sql);
+
+        if (resultSet.next())
         {
-          min = id;
+          long id = resultSet.getLong(1);
+          if (id < min)
+          {
+            min = id;
+          }
         }
+      }
+      catch (SQLException ex)
+      {
+        //$FALL-THROUGH$
+      }
+      finally
+      {
+        DBUtil.close(resultSet);
+        DBUtil.close(stmt);
       }
     }
 

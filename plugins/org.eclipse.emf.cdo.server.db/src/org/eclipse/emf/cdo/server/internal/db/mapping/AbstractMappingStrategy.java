@@ -179,7 +179,8 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   {
     if (eClass == null)
     {
-      for (IClassMapping mapping : getClassMappings().values())
+      Collection<IClassMapping> values = getClassMappings().values();
+      for (IClassMapping mapping : values)
       {
         mapping.handleRevisions(accessor, branch, timeStamp, exactTime, handler);
       }

@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.net4j.CDOSession;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.IStore;
@@ -174,6 +175,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
           public boolean handleRevision(CDORevision revision)
           {
             InternalCDORevision rev = (InternalCDORevision)revision;
+            System.err.println(rev);
             context[0] = accessor.rawStore(rev, context[0], monitor);
 
             long commitTime = revision.getTimeStamp();
@@ -566,6 +568,10 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
   {
     CDOSessionConfiguration configuration = remoteSessionConfigurationFactory.createSessionConfiguration();
     InternalCDOSession session = (InternalCDOSession)configuration.openSession();
+
+    ((CDOSession)session).options().getProtocol().setTimeout(10000000);
+    int removeme;
+
     if (!session.getRepositoryInfo().isSupportingAudits())
     {
       session.close();

@@ -8,8 +8,7 @@
     <promotions buildType="M">
       <target href="download.eclipse.org.xmi#//@repositories.0"/>
       <criteria description="Weekly after EMF"/>
-      <criteria description="Build successful "/>
-      <criteria description="Stability not considerably reduced"/>
+      <criteria description="Build stable"/>
     </promotions>
     <promotions buildType="R">
       <target href="download.eclipse.org.xmi#//@repositories.1"/>
@@ -24,8 +23,7 @@
     <promotions buildType="I">
       <target href="download.eclipse.org.xmi#//@repositories.4"/>
       <criteria description="Weekly after EMF"/>
-      <criteria description="Build successful "/>
-      <criteria description="Stability not considerably reduced"/>
+      <criteria description="Build stable"/>
     </promotions>
     <promotions buildType="S">
       <target href="download.eclipse.org.xmi#//@repositories.5"/>

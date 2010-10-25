@@ -71,12 +71,13 @@ public abstract class AbstractResourceNodeStore extends AbstractFileStore
       protected IFileInfo run(CDOResourceNode node)
       {
         boolean exists = node != null;
+        boolean directory = exists && isDirectory(node);
 
         FileInfo info = new FileInfo(getName());
         info.setExists(exists);
         info.setLength(EFS.NONE);
         info.setLastModified(EFS.NONE);
-        info.setDirectory(exists && isDirectory(node));
+        info.setDirectory(directory);
         info.setAttribute(EFS.ATTRIBUTE_READ_ONLY, false);
         info.setAttribute(EFS.ATTRIBUTE_HIDDEN, false);
         return info;

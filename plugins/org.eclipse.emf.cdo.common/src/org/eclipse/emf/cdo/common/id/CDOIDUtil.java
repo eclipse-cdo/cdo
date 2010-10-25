@@ -35,7 +35,6 @@ import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
 import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
 
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import java.text.MessageFormat;
@@ -288,7 +287,7 @@ public final class CDOIDUtil
     Enum<?> literal = CDOID.Type.getLiteral(typeID);
     if (literal == null)
     {
-      throw new ImplementationError("Unknown type ID: " + typeID);
+      throw new IllegalArgumentException("Unknown type ID: " + typeID);
     }
 
     String fragment = uriFragment.substring(1);
@@ -321,7 +320,7 @@ public final class CDOIDUtil
     case OBJECT:
     {
       // Normally this case should not occur (is an OBJECT subtype).
-      throw new ImplementationError();
+      throw new IllegalArgumentException();
     }
 
     default:

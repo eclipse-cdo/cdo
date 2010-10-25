@@ -10,9 +10,14 @@
  */
 package org.eclipse.emf.cdo.workspace.internal.efs;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
@@ -21,7 +26,14 @@ import org.eclipse.emf.cdo.workspace.efs.CDOWorkspaceFSUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.core.filesystem.IFileStore;
@@ -32,9 +44,13 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -208,21 +224,295 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
    */
   public final class SaveContext
   {
-    private CDOTransaction transaction;
+    private CDOTransaction transaction = workspace.openTransaction();
 
     private Map<String, InternalCDOObject> newObjects = new HashMap<String, InternalCDOObject>();
 
+    private Map<String, List<ForwardReference>> forwardReferences = new HashMap<String, List<ForwardReference>>();
+
+    private XMIResource xmiResource;
+
     public SaveContext()
     {
-      transaction = workspace.openTransaction();
     }
 
-    public CDOTransaction getTransaction()
+    public void save(XMIResource xmiResource, String cdoPath)
     {
-      return transaction;
+      this.xmiResource = xmiResource;
+
+      try
+      {
+        CDOResource cdoResource = transaction.getResource(cdoPath);
+        saveContents(xmiResource.getContents(), cdoResource.getContents());
+      }
+      finally
+      {
+        this.xmiResource = null;
+        done();
+      }
     }
 
-    public void save()
+    private void saveContents(EList<EObject> xmiContents, EList<EObject> cdoContents)
+    {
+      int size = xmiContents.size();
+      for (int i = 0; i < size; i++)
+      {
+        EObject xmiObject = xmiContents.get(i);
+        CDOObject cdoObject = getCDOObjectByXMIID(xmiObject);
+        if (cdoObject == null)
+        {
+          cdoObject = createNewCDOObject(xmiObject);
+          cdoContents.add(i, cdoObject);
+        }
+        else
+        {
+          int index = cdoContents.indexOf(cdoObject);
+          if (index != -1)
+          {
+            cdoContents.move(i, index);
+          }
+          else
+          {
+            cdoContents.add(i, cdoObject);
+          }
+        }
+
+        saveObject((InternalEObject)xmiObject, (InternalCDOObject)cdoObject);
+      }
+
+      shortenList(cdoContents, size);
+    }
+
+    private void saveObject(InternalEObject xmiObject, InternalCDOObject cdoObject)
+    {
+      CDOClassInfo classInfo = cdoObject.cdoRevision().getClassInfo();
+      for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
+      {
+        Object xmiValue = xmiObject.eGet(feature);
+        if (feature instanceof EReference)
+        {
+          EReference reference = (EReference)feature;
+          if (reference.isContainment())
+          {
+            if (reference.isMany())
+            {
+              // Many-valued containment reference
+              @SuppressWarnings("unchecked")
+              EList<EObject> xmiContents = (EList<EObject>)xmiValue;
+
+              @SuppressWarnings("unchecked")
+              EList<EObject> cdoContents = (EList<EObject>)cdoObject.eGet(reference);
+
+              saveContents(xmiContents, cdoContents);
+            }
+            else
+            {
+              // Single-valued containment reference
+              InternalCDOObject cdoValue = getCDOObjectByXMIID((EObject)xmiValue);
+              if (cdoValue == null)
+              {
+                cdoValue = createNewCDOObject((EObject)xmiValue);
+              }
+
+              cdoObject.eSet(reference, cdoValue);
+              saveObject((InternalEObject)xmiValue, cdoValue);
+            }
+          }
+          else
+          {
+            if (reference.isMany())
+            {
+              // Many-valued cross reference
+              @SuppressWarnings("unchecked")
+              EList<EObject> xmiElements = (EList<EObject>)xmiValue;
+
+              @SuppressWarnings("unchecked")
+              EList<EObject> cdoElements = (EList<EObject>)cdoObject.eGet(reference);
+
+              int size = xmiElements.size();
+              for (int i = 0; i < size; i++)
+              {
+                InternalEObject xmiElement = (InternalEObject)xmiElements.get(i);
+                String href = xmiResource.getURIFragment(xmiElement);
+                InternalCDOObject cdoElement = getCDOObjectByHREF(href);
+                if (cdoElement == null)
+                {
+                  registerForwardReference(cdoObject, reference, i, href);
+
+                  InternalCDOObject dummy = createNewCDOObject(xmiElement);
+                  cdoElements.add(i, dummy);
+                }
+                else
+                {
+                  int index = cdoElements.indexOf(cdoElement);
+                  if (index != -1)
+                  {
+                    cdoElements.move(i, index);
+                  }
+                  else
+                  {
+                    cdoElements.add(i, cdoElement);
+                  }
+                }
+              }
+
+              shortenList(cdoElements, size);
+            }
+            else
+            {
+              // Single-valued cross reference
+              String href = xmiResource.getURIFragment((EObject)xmiValue);
+              CDOObject cdoValue = getCDOObjectByHREF(href);
+              if (cdoValue == null)
+              {
+                registerForwardReference(cdoObject, reference, -1, href);
+              }
+
+              cdoObject.eSet(reference, cdoValue);
+            }
+          }
+        }
+        else
+        {
+          EAttribute attribute = (EAttribute)feature;
+          if (attribute.isMany())
+          {
+            // Many-valued attribute
+            @SuppressWarnings("unchecked")
+            EList<Object> xmiElements = (EList<Object>)xmiValue;
+
+            @SuppressWarnings("unchecked")
+            EList<Object> cdoElements = (EList<Object>)cdoObject.eGet(attribute);
+            cdoElements.clear();
+
+            int size = xmiElements.size();
+            for (int i = 0; i < size; i++)
+            {
+              Object xmiElement = xmiElements.get(i);
+              cdoElements.add(xmiElement);
+            }
+          }
+          else
+          {
+            // Single-valued attribute
+            cdoObject.eSet(attribute, xmiValue);
+          }
+        }
+      }
+    }
+
+    private InternalCDOObject getCDOObjectByXMIID(EObject xmiObject)
+    {
+      String xmiID = xmiResource.getID(xmiObject);
+      if (xmiID != null)
+      {
+        try
+        {
+          CDOID id = CDOIDUtil.read(xmiID);
+          if (!CDOIDUtil.isNull(id))
+          {
+            return (InternalCDOObject)transaction.getObject(id);
+          }
+        }
+        catch (Exception ex)
+        {
+          ex.printStackTrace();
+          //$FALL-THROUGH$
+        }
+      }
+
+      return null;
+    }
+
+    private InternalCDOObject createNewCDOObject(EObject xmiObject)
+    {
+      // Create new object
+      EObject newInstance = EcoreUtil.create(xmiObject.eClass());
+      InternalCDOObject cdoObject = (InternalCDOObject)CDOUtil.getCDOObject(newInstance);
+
+      // Remember new object
+      String fragment = xmiResource.getURIFragment(xmiObject);
+      newObjects.put(fragment, cdoObject);
+
+      return cdoObject;
+    }
+
+    private void shortenList(EList<EObject> list, int size)
+    {
+      int remove = list.size() - size;
+      while (remove-- != 0)
+      {
+        list.remove(list.size() - 1);
+      }
+    }
+
+    private InternalCDOObject getCDOObjectByHREF(String href)
+    {
+      InternalCDOObject cdoObject = null;
+
+      try
+      {
+        CDOID id = CDOIDUtil.read(href);
+        cdoObject = (InternalCDOObject)transaction.getObject(id);
+      }
+      catch (Exception ex)
+      {
+        //$FALL-THROUGH$
+      }
+
+      if (cdoObject == null)
+      {
+        cdoObject = newObjects.get(href);
+      }
+
+      return cdoObject;
+    }
+
+    private void done()
+    {
+      if (resolveForwardReferences())
+      {
+        commit();
+      }
+    }
+
+    private void registerForwardReference(InternalCDOObject cdoObject, EReference reference, int index, String href)
+    {
+      List<ForwardReference> list = forwardReferences.get(href);
+      if (list == null)
+      {
+        list = new ArrayList<ForwardReference>();
+        forwardReferences.put(href, list);
+      }
+
+      list.add(new ForwardReference(cdoObject, reference, index));
+    }
+
+    private boolean resolveForwardReferences()
+    {
+      Set<Entry<String, List<ForwardReference>>> entrySet = forwardReferences.entrySet();
+      for (Iterator<Entry<String, List<ForwardReference>>> it = entrySet.iterator(); it.hasNext();)
+      {
+        Entry<String, List<ForwardReference>> entry = it.next();
+        String href = entry.getKey();
+
+        InternalCDOObject target = getCDOObjectByHREF(href);
+        if (target != null)
+        {
+          List<ForwardReference> list = entry.getValue();
+          for (ForwardReference forwardReference : list)
+          {
+            forwardReference.resolve(target);
+          }
+
+          it.remove();
+        }
+      }
+
+      return forwardReferences.isEmpty();
+    }
+
+    private void commit()
     {
       try
       {
@@ -234,20 +524,45 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
       }
       finally
       {
-        saveContext = null;
-        newObjects = null;
         IOUtil.closeSilent(transaction);
+        transaction = null;
+        forwardReferences = null;
+        newObjects = null;
+        saveContext = null;
       }
     }
 
-    public void registerNewObject(String fragment, InternalCDOObject object)
+    /**
+     * @author Eike Stepper
+     */
+    public final class ForwardReference
     {
-      newObjects.put(fragment, object);
-    }
+      private final InternalCDOObject cdoObject;
 
-    public InternalCDOObject getNewObject(String fragment)
-    {
-      return newObjects.get(fragment);
+      private final EReference reference;
+
+      private final int index;
+
+      public ForwardReference(InternalCDOObject cdoObject, EReference reference, int index)
+      {
+        this.cdoObject = cdoObject;
+        this.reference = reference;
+        this.index = index;
+      }
+
+      public void resolve(InternalCDOObject target)
+      {
+        if (reference.isMany())
+        {
+          @SuppressWarnings("unchecked")
+          EList<EObject> list = (EList<EObject>)cdoObject.eGet(reference);
+          list.set(index, target);
+        }
+        else
+        {
+          cdoObject.eSet(reference, target);
+        }
+      }
     }
   }
 }

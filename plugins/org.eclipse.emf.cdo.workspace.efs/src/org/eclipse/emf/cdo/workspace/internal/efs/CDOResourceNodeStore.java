@@ -114,8 +114,11 @@ public final class CDOResourceNodeStore extends AbstractResourceNodeStore
         XMIResource xmiResource = new XMIResourceImpl();
         xmiResource.load(in, null);
 
+        String path = getPath();
+        getWorkspaceStore().setLastModified(path, System.currentTimeMillis());
+
         SaveContext saveContext = getWorkspaceStore().getSaveContext();
-        saveContext.save(xmiResource, getPath());
+        saveContext.save(xmiResource, path);
       }
     };
   }

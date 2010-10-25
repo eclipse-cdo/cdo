@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
+import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -64,6 +65,8 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
   private File location;
 
   private CDOWorkspace workspace;
+
+  private Map<String, Long> lastModifiedTimes = new HashMap<String, Long>();
 
   private CDOView view;
 
@@ -168,6 +171,18 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
   public CDOWorkspaceStore getWorkspaceStore()
   {
     return this;
+  }
+
+  public long getLastModified(String path)
+  {
+    Long time = lastModifiedTimes.get(path);
+    return time == null ? EFS.NONE : time;
+  }
+
+  public void setLastModified(String path, long time)
+  {
+    lastModifiedTimes.put(path, time);
+    // TODO Save lastModifiedTimes
   }
 
   public SaveContext getSaveContext()

@@ -84,11 +84,11 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
   public CDOList getList(EStructuralFeature feature);
 
   /**
-   * @param size
-   *          the size of a new list to be created if this revision has no list so far, or -1 to skip list creation and
-   *          return <code>null</code> in this case.
+   * @param initialCapacity
+   *          the initialCapacity of a new list to be created if this revision has no list so far (its size will always
+   *          be 0), or -1 to skip list creation and return <code>null</code> in this case.
    */
-  public CDOList getList(EStructuralFeature feature, int size);
+  public CDOList getList(EStructuralFeature feature, int initialCapacity);
 
   /**
    * @since 3.0

@@ -124,7 +124,6 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
   public CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
   {
     init(local, base, remote);
-    open();
     loadProperties();
   }
 
@@ -212,10 +211,6 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
       packageUnit.setState(CDOPackageUnit.State.LOADED);
       repositoryPackageRegistry.putPackageUnit(packageUnit);
     }
-  }
-
-  protected void open()
-  {
   }
 
   public String getBranchPath()

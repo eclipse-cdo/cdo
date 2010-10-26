@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.ui.internal.workspace;
 
 import org.eclipse.emf.cdo.location.ICheckoutSource;
 import org.eclipse.emf.cdo.ui.internal.workspace.bundle.OM;
-import org.eclipse.emf.cdo.workspace.efs.CDOWorkspaceFSUtil;
+import org.eclipse.emf.cdo.workspace.efs.CDOFS;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -74,7 +74,7 @@ public class CheckoutAction implements IObjectActionDelegate
             {
               try
               {
-                CDOWorkspaceFSUtil.checkout(checkoutSource, projectName, monitor);
+                CDOFS.checkout(checkoutSource, projectName, monitor);
                 return Status.OK_STATUS;
               }
               catch (CoreException ex)

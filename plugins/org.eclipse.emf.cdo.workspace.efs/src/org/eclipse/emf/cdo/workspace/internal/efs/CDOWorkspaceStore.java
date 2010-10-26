@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
-import org.eclipse.emf.cdo.workspace.efs.CDOWorkspaceFSUtil;
+import org.eclipse.emf.cdo.workspace.efs.CDOFS;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -101,7 +101,7 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
   {
     try
     {
-      return CDOWorkspaceFSUtil.open(name, location);
+      return CDOFS.open(name, location);
     }
     catch (Exception ex)
     {

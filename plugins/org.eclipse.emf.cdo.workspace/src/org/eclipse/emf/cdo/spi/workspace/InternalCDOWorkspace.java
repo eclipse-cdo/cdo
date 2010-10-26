@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.spi.workspace;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
+
 /**
  * @author Eike Stepper
  */
@@ -21,4 +23,6 @@ public interface InternalCDOWorkspace extends CDOWorkspace
   public InternalCDOWorkspaceBase getBase();
 
   public InternalRepository getLocalRepository();
+
+  public InternalCDOSession getLocalSession();
 }

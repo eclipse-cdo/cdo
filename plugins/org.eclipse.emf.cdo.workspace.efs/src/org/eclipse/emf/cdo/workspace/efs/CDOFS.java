@@ -51,9 +51,9 @@ import java.net.URI;
 /**
  * @author Eike Stepper
  */
-public final class CDOWorkspaceFSUtil
+public final class CDOFS
 {
-  private CDOWorkspaceFSUtil()
+  private CDOFS()
   {
   }
 

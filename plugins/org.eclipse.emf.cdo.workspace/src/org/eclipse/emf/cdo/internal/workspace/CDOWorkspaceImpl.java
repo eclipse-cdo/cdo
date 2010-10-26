@@ -453,7 +453,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     return JVMUtil.getConnector(container, localAcceptorName);
   }
 
-  protected synchronized InternalCDOSession getLocalSession()
+  public synchronized InternalCDOSession getLocalSession()
   {
     if (localSession == null)
     {

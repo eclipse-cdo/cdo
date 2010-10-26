@@ -22,21 +22,20 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
  * @author Eike Stepper
  * @since 4.0
  */
-public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigurationImpl implements
+public class FailoverCDOSessionConfigurationImpl extends RecoveringCDOSessionConfigurationImpl implements
     FailoverCDOSessionConfiguration
 {
   private String monitorConnectorDescription;
 
   private String repositoryGroup;
 
-  private IManagedContainer container;
-
   public FailoverCDOSessionConfigurationImpl(String monitorConnectorDescription, String repositoryGroup,
       IManagedContainer container)
   {
+    super(container);
+
     this.monitorConnectorDescription = monitorConnectorDescription;
     this.repositoryGroup = repositoryGroup;
-    this.container = container;
   }
 
   public String getMonitorConnectorDescription()
@@ -81,6 +80,5 @@ public class FailoverCDOSessionConfigurationImpl extends CDONet4jSessionConfigur
     FailoverCDOSessionImpl sessionImpl = (FailoverCDOSessionImpl)session;
     sessionImpl.setMonitorConnectionDescription(monitorConnectorDescription);
     sessionImpl.setRepositoryGroup(repositoryGroup);
-    sessionImpl.setContainer(container);
   }
 }

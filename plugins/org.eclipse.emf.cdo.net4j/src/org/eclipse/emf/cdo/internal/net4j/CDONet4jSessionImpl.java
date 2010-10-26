@@ -34,9 +34,11 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
+import org.eclipse.emf.internal.cdo.session.DelegatingSessionProtocol;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 
 import org.eclipse.emf.ecore.EcorePackage;
@@ -52,10 +54,17 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
 
   private IConnector connector;
 
-  protected String repositoryName; // TODO (CD) Eliminate? (Duplicates name in repoInfo field)
+  private String repositoryName;
+
+  private long signalTimeout = SignalProtocol.DEFAULT_TIMEOUT;
 
   public CDONet4jSessionImpl()
   {
+  }
+
+  public IStreamWrapper getStreamWrapper()
+  {
+    return streamWrapper;
   }
 
   public void setStreamWrapper(IStreamWrapper streamWrapper)
@@ -63,14 +72,41 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     this.streamWrapper = streamWrapper;
   }
 
+  public IConnector getConnector()
+  {
+    return connector;
+  }
+
   public void setConnector(IConnector connector)
   {
     this.connector = connector;
   }
 
+  public String getRepositoryName()
+  {
+    return repositoryName;
+  }
+
   public void setRepositoryName(String repositoryName)
   {
     this.repositoryName = repositoryName;
+  }
+
+  public long getSignalTimeout()
+  {
+    return signalTimeout;
+  }
+
+  public void setSignalTimeout(long signalTimeout)
+  {
+    this.signalTimeout = signalTimeout;
+
+    // Deal with the possibility that the sessionProtocol has already been created.
+    CDOClientProtocol clientProtocol = getClientProtocol();
+    if (clientProtocol != null)
+    {
+      clientProtocol.setTimeout(this.signalTimeout);
+    }
   }
 
   @Override
@@ -86,10 +122,11 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   }
 
   @Override
-  protected void activateSession() throws Exception
+  protected void doActivate() throws Exception
   {
-    super.activateSession();
-    OpenSessionResult result = initProtocol();
+    OpenSessionResult result = openSession();
+
+    super.doActivate();
 
     InternalCDOPackageRegistry packageRegistry = getPackageRegistry();
     if (packageRegistry == null)
@@ -153,18 +190,45 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     }
   }
 
-  protected OpenSessionResult initProtocol()
+  private CDOClientProtocol createProtocol()
   {
     CDOClientProtocol protocol = new CDOClientProtocol();
+    protocol.setTimeout(signalTimeout);
     protocol.setInfraStructure(this);
     if (streamWrapper != null)
     {
       protocol.setStreamWrapper(streamWrapper);
     }
-
-    setSessionProtocol(protocol);
     protocol.open(connector);
+    return protocol;
+  }
 
+  /**
+   * Gets the CDOClientProtocol instance, which may be wrapped inside a DelegatingSessionProtocol
+   */
+  private CDOClientProtocol getClientProtocol()
+  {
+    CDOSessionProtocol protocol = getSessionProtocol();
+    CDOClientProtocol clientProtocol;
+    if (protocol instanceof DelegatingSessionProtocol)
+    {
+      clientProtocol = (CDOClientProtocol)((DelegatingSessionProtocol)protocol).getDelegate();
+    }
+    else
+    {
+      clientProtocol = (CDOClientProtocol)protocol;
+    }
+
+    return clientProtocol;
+  }
+
+  protected OpenSessionResult openSession()
+  {
+    CDOClientProtocol protocol = createProtocol();
+    setSessionProtocol(protocol);
+    hookSessionProtocol();
+
+    // TODO (CD) The next call is on the CDOClientProtocol; shouldn't it be on the DelegatingSessionProtocol instead?
     OpenSessionResult result = protocol.openSession(repositoryName, options().isPassiveUpdateEnabled(), options()
         .getPassiveUpdateMode());
     setSessionID(result.getSessionID());
@@ -175,15 +239,12 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   }
 
   @Override
-  protected void deactivateSession() throws Exception
+  protected void doDeactivate() throws Exception
   {
+    super.doDeactivate();
+
     getCommitInfoManager().deactivate();
     getRevisionManager().deactivate();
-
-    // branchManager.deactivate();
-    // packageRegistry.deactivate();
-
-    super.deactivateSession();
   }
 
   /**

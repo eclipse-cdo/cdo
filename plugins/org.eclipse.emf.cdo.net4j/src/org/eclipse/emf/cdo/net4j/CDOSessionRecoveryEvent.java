@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Caspar De Groot - maintenance
  */
 package org.eclipse.emf.cdo.net4j;
 
@@ -16,7 +17,7 @@ import org.eclipse.emf.cdo.session.CDOSessionEvent;
  * @author Eike Stepper
  * @since 4.0
  */
-public interface CDOSessionFailoverEvent extends CDOSessionEvent
+public interface CDOSessionRecoveryEvent extends CDOSessionEvent
 {
   public Type getType();
 

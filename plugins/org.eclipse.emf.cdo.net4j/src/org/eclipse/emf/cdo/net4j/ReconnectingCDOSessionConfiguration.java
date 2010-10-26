@@ -6,17 +6,21 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ *    Caspar De Groot - initial API and implementation
  */
 package org.eclipse.emf.cdo.net4j;
 
 /**
- * @author Eike Stepper
+ * @author Caspar De Groot
  * @since 4.0
  */
-public interface FailoverCDOSessionConfiguration extends RecoveringCDOSessionConfiguration
+public interface ReconnectingCDOSessionConfiguration extends RecoveringCDOSessionConfiguration
 {
-  public String getMonitorConnectorDescription();
+  public long getReconnectInterval();
 
-  public String getRepositoryGroup();
+  public void setReconnectInterval(long interval);
+
+  public int getMaxReconnectAttempts();
+
+  public void setMaxReconnectAttempts(int attempts);
 }

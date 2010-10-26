@@ -82,7 +82,7 @@ public final class Net4jUtil
     }
     catch (ConnectorException ex)
     {
-      container.removeElement("org.eclipse.net4j.connectors", type, description);
+      container.removeElement(ConnectorFactory.PRODUCT_GROUP, type, description);
       throw ex;
     }
 

@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.examples.company.Customer;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSession;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
-import org.eclipse.emf.cdo.net4j.CDOSessionFailoverEvent;
+import org.eclipse.emf.cdo.net4j.CDOSessionRecoveryEvent;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositorySynchronizer;
@@ -564,12 +564,12 @@ public abstract class FailoverExample
         {
           public void notifyEvent(IEvent event)
           {
-            if (event instanceof CDOSessionFailoverEvent)
+            if (event instanceof CDOSessionRecoveryEvent)
             {
-              CDOSessionFailoverEvent e = (CDOSessionFailoverEvent)event;
+              CDOSessionRecoveryEvent e = (CDOSessionRecoveryEvent)event;
               System.out.println("Failover " + e.getType() + ": " + e.getSource().getRepositoryInfo());
 
-              if (e.getType() == CDOSessionFailoverEvent.Type.FINISHED)
+              if (e.getType() == CDOSessionRecoveryEvent.Type.FINISHED)
               {
                 // Let's see if the TX in the failed-over session is usable:
                 //

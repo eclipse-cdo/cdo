@@ -60,9 +60,7 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
       CheckUtil.checkState(repository, "Specify a repository"); //$NON-NLS-1$
     }
 
-    EmbeddedClientSession session = new EmbeddedClientSession();
-    // TODO (CD) Additional config here
-    return session;
+    return new EmbeddedClientSession();
   }
 
   /**

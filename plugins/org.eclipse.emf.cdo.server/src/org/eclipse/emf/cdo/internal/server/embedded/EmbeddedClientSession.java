@@ -65,9 +65,10 @@ public class EmbeddedClientSession extends CDOSessionImpl implements CDOSession
   }
 
   @Override
-  protected void activateSession() throws Exception
+  protected void doActivate() throws Exception
   {
-    super.activateSession();
+    super.doActivate();
+
     EmbeddedClientSessionProtocol protocol = new EmbeddedClientSessionProtocol(this);
     setSessionProtocol(protocol);
     protocol.activate();
@@ -86,10 +87,11 @@ public class EmbeddedClientSession extends CDOSessionImpl implements CDOSession
   }
 
   @Override
-  protected void deactivateSession() throws Exception
+  protected void doDeactivate() throws Exception
   {
+    super.doDeactivate();
+
     getRevisionManager().deactivate();
     setRevisionManager(null);
-    super.deactivateSession();
   }
 }

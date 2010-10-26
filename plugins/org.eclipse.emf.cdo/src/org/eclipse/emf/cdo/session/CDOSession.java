@@ -108,7 +108,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
    */
   public CDOCommitInfoManager getCommitInfoManager();
 
-  public ExceptionHandler getExceptionHandler();
+  public CDOSession.ExceptionHandler getExceptionHandler();
 
   /**
    * Opens and returns a new {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set}.

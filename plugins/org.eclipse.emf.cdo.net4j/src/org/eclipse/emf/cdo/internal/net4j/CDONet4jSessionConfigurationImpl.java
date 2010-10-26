@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.internal.cdo.session.CDOSessionConfigurationImpl;
 
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 
@@ -38,6 +39,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
   private IStreamWrapper streamWrapper;
 
+  private long signalTimeout = SignalProtocol.DEFAULT_TIMEOUT;
+
   public CDONet4jSessionConfigurationImpl()
   {
   }
@@ -48,12 +51,6 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   }
 
   public void setRepositoryName(String repositoryName)
-  {
-    checkNotOpen();
-    uncheckedSetRepositoryName(repositoryName);
-  }
-
-  protected void uncheckedSetRepositoryName(String repositoryName)
   {
     this.repositoryName = repositoryName;
   }
@@ -85,6 +82,16 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     this.streamWrapper = streamWrapper;
   }
 
+  public long getSignalTimeout()
+  {
+    return signalTimeout;
+  }
+
+  public void setSignalTimeout(long signalTimeout)
+  {
+    this.signalTimeout = signalTimeout;
+  }
+
   @Override
   public org.eclipse.emf.cdo.net4j.CDOSession openSession()
   {
@@ -110,6 +117,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     sessionImpl.setStreamWrapper(streamWrapper);
     sessionImpl.setConnector(connector);
     sessionImpl.setRepositoryName(repositoryName);
+    sessionImpl.setSignalTimeout(signalTimeout);
   }
 
   /**

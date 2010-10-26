@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
@@ -285,7 +284,7 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
           throw new UnsupportedOperationException();
         }
 
-        public void setExceptionHandler(ExceptionHandler exceptionHandler)
+        public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler)
         {
           throw new UnsupportedOperationException();
         }
@@ -315,7 +314,7 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
           throw new UnsupportedOperationException();
         }
 
-        public ExceptionHandler getExceptionHandler()
+        public CDOSession.ExceptionHandler getExceptionHandler()
         {
           throw new UnsupportedOperationException();
         }

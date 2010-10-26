@@ -42,6 +42,9 @@ public class CDORetryExceptionHandler implements CDOSession.ExceptionHandler
     return retries < 0;
   }
 
+  /**
+   * @since 4.0
+   */
   public void handleException(CDOSession session, int attempt, Exception exception) throws Exception
   {
     int max = isRetryingForever() ? Integer.MAX_VALUE : retries;

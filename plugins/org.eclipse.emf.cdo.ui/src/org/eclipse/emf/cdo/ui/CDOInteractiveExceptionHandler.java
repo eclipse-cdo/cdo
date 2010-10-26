@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.ui;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler;
 
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -39,12 +38,15 @@ import java.text.MessageFormat;
  * @author Eike Stepper
  * @since 2.0
  */
-public class CDOInteractiveExceptionHandler implements ExceptionHandler, IElementProcessor
+public class CDOInteractiveExceptionHandler implements CDOSession.ExceptionHandler, IElementProcessor
 {
   public CDOInteractiveExceptionHandler()
   {
   }
 
+  /**
+   * @since 4.0
+   */
   public void handleException(final CDOSession session, final int attempt, Exception exception) throws Exception
   {
     final Exception[] result = { exception };

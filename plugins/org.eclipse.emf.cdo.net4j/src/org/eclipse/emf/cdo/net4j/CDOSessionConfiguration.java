@@ -37,6 +37,16 @@ public interface CDOSessionConfiguration extends org.eclipse.emf.cdo.session.CDO
   public void setStreamWrapper(IStreamWrapper streamWrapper);
 
   /**
+   * @since 4.0
+   */
+  public long getSignalTimeout();
+
+  /**
+   * @since 4.0
+   */
+  public void setSignalTimeout(long timeout);
+
+  /**
    * @see CDOSession#getPackageRegistry()
    */
   public CDOPackageRegistry getPackageRegistry();

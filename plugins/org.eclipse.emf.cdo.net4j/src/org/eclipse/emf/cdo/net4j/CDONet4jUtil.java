@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
 import org.eclipse.emf.cdo.internal.net4j.FailoverCDOSessionConfigurationImpl;
 import org.eclipse.emf.cdo.internal.net4j.Net4jSessionFactory;
+import org.eclipse.emf.cdo.internal.net4j.ReconnectingCDOSessionConfigurationImpl;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocolFactory;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
@@ -75,6 +76,15 @@ public final class CDONet4jUtil
   public static CDOSessionConfiguration createSessionConfiguration()
   {
     return new CDONet4jSessionConfigurationImpl();
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static ReconnectingCDOSessionConfiguration createReconnectingSessionConfiguration(String hostAndPort,
+      String repoName, IManagedContainer container)
+  {
+    return new ReconnectingCDOSessionConfigurationImpl(hostAndPort, repoName, container);
   }
 
   /**

@@ -571,7 +571,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     if (!session.getRepositoryInfo().isSupportingAudits())
     {
       session.close();
-      throw new IllegalStateException("Remoter repository does not support auditing");
+      throw new IllegalStateException("Remote repository does not support auditing");
     }
 
     return session;

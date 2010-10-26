@@ -410,6 +410,16 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     return localRepository;
   }
 
+  public synchronized InternalCDOSession getLocalSession()
+  {
+    if (localSession == null)
+    {
+      localSession = openLocalSession();
+    }
+  
+    return localSession;
+  }
+
   public CDOChangeSetData getLocalChanges()
   {
     Set<CDOID> ids = base.getIDs();
@@ -446,16 +456,6 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
   {
     String localAcceptorName = getLocalAcceptorName();
     return JVMUtil.getConnector(container, localAcceptorName);
-  }
-
-  public synchronized InternalCDOSession getLocalSession()
-  {
-    if (localSession == null)
-    {
-      localSession = openLocalSession();
-    }
-
-    return localSession;
   }
 
   protected InternalRepository createLocalRepository(IStore store)

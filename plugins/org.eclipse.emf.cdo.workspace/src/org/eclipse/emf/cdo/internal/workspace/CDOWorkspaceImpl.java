@@ -547,10 +547,15 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
         @Override
         public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
         {
-          base.updateAfterCommit(transaction);
+          CDOWorkspaceImpl.this.committedTransaction(transaction, commitContext);
         }
       });
     }
+  }
+
+  protected void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+  {
+    base.updateAfterCommit(transaction);
   }
 
   protected CDOSessionConfigurationFactory getRemoteSessionConfigurationFactory()

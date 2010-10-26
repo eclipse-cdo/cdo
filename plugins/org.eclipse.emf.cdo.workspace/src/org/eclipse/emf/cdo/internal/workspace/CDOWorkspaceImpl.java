@@ -233,45 +233,45 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     return base;
   }
 
-  public CDOView openView()
+  public InternalCDOView openView()
   {
     CDOView view = getLocalSession().openView();
     initView(view);
-    return view;
+    return (InternalCDOView)view;
   }
 
-  public CDOView openView(ResourceSet resourceSet)
+  public InternalCDOView openView(ResourceSet resourceSet)
   {
     CDOView view = getLocalSession().openView(resourceSet);
     initView(view);
-    return view;
+    return (InternalCDOView)view;
   }
 
-  public CDOTransaction openTransaction()
+  public InternalCDOTransaction openTransaction()
   {
     CDOTransaction transaction = getLocalSession().openTransaction();
     initView(transaction);
-    return transaction;
+    return (InternalCDOTransaction)transaction;
   }
 
-  public CDOTransaction openTransaction(ResourceSet resourceSet)
+  public InternalCDOTransaction openTransaction(ResourceSet resourceSet)
   {
     CDOTransaction transaction = getLocalSession().openTransaction(resourceSet);
     initView(transaction);
-    return transaction;
+    return (InternalCDOTransaction)transaction;
   }
 
-  public CDOTransaction update(CDOMerger merger)
+  public InternalCDOTransaction update(CDOMerger merger)
   {
     return merge(merger, branchPath);
   }
 
-  public CDOTransaction merge(CDOMerger merger, String branchPath)
+  public InternalCDOTransaction merge(CDOMerger merger, String branchPath)
   {
     return merge(merger, branchPath, CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
-  public CDOTransaction merge(CDOMerger merger, String branchPath, long timeStamp)
+  public InternalCDOTransaction merge(CDOMerger merger, String branchPath, long timeStamp)
   {
     InternalCDOSession session = openRemoteSession();
 
@@ -292,7 +292,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
         remoteData = merger.merge(localChanges, remoteChanges);
       }
 
-      InternalCDOTransaction transaction = (InternalCDOTransaction)openTransaction();
+      InternalCDOTransaction transaction = openTransaction();
       transaction.addTransactionHandler(new CDODefaultTransactionHandler2()
       {
         @Override
@@ -416,7 +416,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     {
       localSession = openLocalSession();
     }
-  
+
     return localSession;
   }
 

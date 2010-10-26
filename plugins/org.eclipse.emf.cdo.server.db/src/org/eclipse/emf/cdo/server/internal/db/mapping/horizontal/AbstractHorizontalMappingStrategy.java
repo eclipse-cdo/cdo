@@ -409,20 +409,22 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   {
     long min = Long.MAX_VALUE;
 
+    // Do not call getClassMappings() at this point, as the package registry is not yet initialized!
     String dbName = getStore().getRepository().getName();
     List<String> names = DBUtil.getAllTableNames(connection, dbName);
+
+    String prefix = "SELECT MIN(" + CDODBSchema.ATTRIBUTES_ID + ") FROM " + dbName + ".";
+    String suffix = " WHERE 0>" + CDODBSchema.ATTRIBUTES_BRANCH;
+
     for (String name : names)
     {
-      String sql = "SELECT MIN(" + CDODBSchema.ATTRIBUTES_ID + ") FROM " + dbName + "." + name + " WHERE 0>"
-          + CDODBSchema.ATTRIBUTES_BRANCH;
-
       Statement stmt = null;
       ResultSet resultSet = null;
 
       try
       {
         stmt = connection.createStatement();
-        resultSet = stmt.executeQuery(sql);
+        resultSet = stmt.executeQuery(prefix + name + suffix);
 
         if (resultSet.next())
         {

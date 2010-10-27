@@ -585,15 +585,15 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
      */
     private final class ForwardReference
     {
-      private InternalCDOObject cdoObject;
+      private InternalCDOObject source;
 
       private EReference reference;
 
       private int index;
 
-      public ForwardReference(InternalCDOObject cdoObject, EReference reference, int index)
+      public ForwardReference(InternalCDOObject source, EReference reference, int index)
       {
-        this.cdoObject = cdoObject;
+        this.source = source;
         this.reference = reference;
         this.index = index;
       }
@@ -603,12 +603,12 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
         if (reference.isMany())
         {
           @SuppressWarnings("unchecked")
-          EList<EObject> list = (EList<EObject>)cdoObject.eGet(reference);
+          EList<EObject> list = (EList<EObject>)source.eGet(reference);
           list.set(index, target);
         }
         else
         {
-          cdoObject.eSet(reference, target);
+          source.eSet(reference, target);
         }
       }
     }

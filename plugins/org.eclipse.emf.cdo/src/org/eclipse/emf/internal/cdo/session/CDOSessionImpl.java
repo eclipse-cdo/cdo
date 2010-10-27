@@ -1045,11 +1045,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
    */
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
   {
-    scheduleInvalidation(commitInfo, sender);
-  }
-
-  private void scheduleInvalidation(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
-  {
     long previousTimeStamp = commitInfo.getPreviousTimeStamp();
     long lastUpdateTime = getLastUpdateTime();
 

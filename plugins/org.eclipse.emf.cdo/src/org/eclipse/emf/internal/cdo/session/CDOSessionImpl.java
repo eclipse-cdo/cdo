@@ -122,6 +122,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @author Eike Stepper
@@ -162,6 +163,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   private Object lastUpdateTimeLock = new Object();
 
   private CDOSession.Options options = createOptions();
+
+  private Map<Long, Pair<CDOCommitInfo, InternalCDOTransaction>> outOfSequenceInvalidations = new HashMap<Long, Pair<CDOCommitInfo, InternalCDOTransaction>>();
 
   private CDORepositoryInfo repositoryInfo;
 
@@ -1042,22 +1045,56 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
    */
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
   {
-    Map<CDOID, InternalCDORevision> oldRevisions = reviseRevisions(commitInfo);
+    scheduleInvalidation(commitInfo, sender);
+  }
 
-    for (InternalCDOView view : getViews())
+  private void scheduleInvalidation(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
+  {
+    long previousTimeStamp = commitInfo.getPreviousTimeStamp();
+    long lastUpdateTime = getLastUpdateTime();
+
+    if (previousTimeStamp < lastUpdateTime)
     {
-      if (view != sender && ObjectUtil.equals(view.getBranch(), commitInfo.getBranch()))
-      {
-        QueueRunner runner = getInvalidationRunner();
-        runner.addWork(new InvalidationRunnable(view, commitInfo, oldRevisions));
-      }
+      previousTimeStamp = lastUpdateTime;
     }
 
-    fireInvalidationEvent(sender, commitInfo);
+    outOfSequenceInvalidations.put(previousTimeStamp, new Pair<CDOCommitInfo, InternalCDOTransaction>(commitInfo,
+        sender));
 
-    if (options.isPassiveUpdateEnabled())
+    long nextPreviousTimeStamp = lastUpdateTime;
+    while (!outOfSequenceInvalidations.isEmpty())
     {
-      setLastUpdateTime(commitInfo.getTimeStamp());
+      Pair<CDOCommitInfo, InternalCDOTransaction> currentPair = outOfSequenceInvalidations
+          .remove(nextPreviousTimeStamp);
+      if (currentPair == null)
+      {
+        break;
+      }
+
+      CDOCommitInfo currentCommitInfo = currentPair.getElement1();
+      InternalCDOTransaction currentSender = currentPair.getElement2();
+      nextPreviousTimeStamp = currentCommitInfo.getTimeStamp();
+
+      CountDownLatch latch = null;
+      if (currentSender != null)
+      {
+        latch = new CountDownLatch(1);
+      }
+
+      QueueRunner runner = getInvalidationRunner();
+      runner.addWork(new InvalidationRunnable(currentCommitInfo, currentSender, latch));
+
+      if (latch != null)
+      {
+        try
+        {
+          latch.await();
+        }
+        catch (InterruptedException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
     }
   }
 
@@ -1503,20 +1540,19 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   /**
    * @author Eike Stepper
    */
-  private static final class InvalidationRunnable implements Runnable
+  private final class InvalidationRunnable implements Runnable
   {
-    private InternalCDOView view;
+    protected CDOCommitInfo commitInfo;
 
-    private CDOCommitInfo commitInfo;
+    private InternalCDOTransaction sender;
 
-    private Map<CDOID, InternalCDORevision> oldRevisions;
+    private CountDownLatch latch;
 
-    private InvalidationRunnable(InternalCDOView view, CDOCommitInfo commitInfo,
-        Map<CDOID, InternalCDORevision> oldRevisions)
+    protected InvalidationRunnable(CDOCommitInfo commitInfo, InternalCDOTransaction sender, CountDownLatch latch)
     {
-      this.view = view;
       this.commitInfo = commitInfo;
-      this.oldRevisions = oldRevisions;
+      this.sender = sender;
+      this.latch = latch;
     }
 
     public void run()
@@ -1524,6 +1560,43 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       try
       {
         invalidationRunnerActive.set(true);
+
+        Map<CDOID, InternalCDORevision> oldRevisions = reviseRevisions(commitInfo);
+        if (options.isPassiveUpdateEnabled())
+        {
+          setLastUpdateTime(commitInfo.getTimeStamp());
+        }
+
+        senderMayProceed();
+        fireInvalidationEvent(sender, commitInfo);
+
+        for (InternalCDOView view : getViews())
+        {
+          if (view != sender && ObjectUtil.equals(view.getBranch(), commitInfo.getBranch()))
+          {
+            invalidateView(view, oldRevisions);
+          }
+        }
+      }
+      finally
+      {
+        invalidationRunnerActive.set(false);
+        senderMayProceed();
+      }
+    }
+
+    private void senderMayProceed()
+    {
+      if (latch != null)
+      {
+        latch.countDown();
+      }
+    }
+
+    private void invalidateView(InternalCDOView view, Map<CDOID, InternalCDORevision> oldRevisions)
+    {
+      try
+      {
         long lastUpdateTime = commitInfo.getTimeStamp();
         List<CDORevisionKey> allChangedObjects = commitInfo.getChangedObjects();
         List<CDOIDAndVersion> allDetachedObjects = commitInfo.getDetachedObjects();
@@ -1539,10 +1612,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         {
           OM.LOG.info(Messages.getString("CDOSessionImpl.1")); //$NON-NLS-1$
         }
-      }
-      finally
-      {
-        invalidationRunnerActive.set(false);
       }
     }
   }

@@ -92,7 +92,7 @@
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(|(build.type=M)(build.type=S)(build.type=R))">
+			resolutionFilter="(|(build.type=S)(build.type=R))">
 			<rm:uri format="{0}/releases/staging">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>

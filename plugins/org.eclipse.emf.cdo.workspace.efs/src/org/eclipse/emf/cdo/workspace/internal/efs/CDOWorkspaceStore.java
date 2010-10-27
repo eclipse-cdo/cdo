@@ -583,13 +583,13 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
     /**
      * @author Eike Stepper
      */
-    public final class ForwardReference
+    private final class ForwardReference
     {
-      private final InternalCDOObject cdoObject;
+      private InternalCDOObject cdoObject;
 
-      private final EReference reference;
+      private EReference reference;
 
-      private final int index;
+      private int index;
 
       public ForwardReference(InternalCDOObject cdoObject, EReference reference, int index)
       {

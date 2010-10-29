@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -42,6 +44,21 @@ public interface CDOLock extends Lock
    * @since 3.0
    */
   public LockType getType();
+
+  /**
+   * @since 4.0
+   */
+  public void lock(long time, TimeUnit unit) throws TimeoutException;
+
+  /**
+   * @since 4.0
+   */
+  public void lock(long millis) throws TimeoutException;
+
+  /**
+   * @since 4.0
+   */
+  public boolean tryLock(long millis) throws InterruptedException;
 
   /**
    * Returns <code>true</code> if this lock is currently held by the requesting {@link CDOView view}, <code>false</code>

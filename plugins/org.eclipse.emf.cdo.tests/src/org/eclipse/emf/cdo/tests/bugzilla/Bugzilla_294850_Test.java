@@ -76,7 +76,7 @@ public class Bugzilla_294850_Test extends AbstractCDOTest
     }.assertNoTimeOut();
 
     // Lock company to trigger a refresh
-    CDOUtil.getCDOObject(company).cdoWriteLock().lock();
+    CDOUtil.getCDOObject(company).cdoWriteLock().lock(DEFAULT_TIMEOUT);
 
     // Object should be in conflict state now
     assertSame(CDOState.CONFLICT, CDOUtil.getCDOObject(company).cdoState());

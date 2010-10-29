@@ -27,9 +27,7 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -61,14 +59,10 @@ import org.eclipse.emf.spi.cdo.InternalCDOLoadable;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
-import java.text.MessageFormat;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Condition;
 
 /**
  * @author Eike Stepper
@@ -187,11 +181,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
     {
-      return NOOPLockImpl.INSTANCE;
+      return CDOLockImpl.NOOP;
     }
 
-    // Should we cache the locks ?
-    return new CDOReadLock();
+    return new CDOLockImpl(this, LockType.READ);
   }
 
   /**
@@ -201,11 +194,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
     {
-      return NOOPLockImpl.INSTANCE;
+      return CDOLockImpl.NOOP;
     }
 
-    // Should we cache the locks ?
-    return new CDOWriteLock();
+    return new CDOLockImpl(this, LockType.WRITE);
   }
 
   public void cdoInternalSetID(CDOID id)
@@ -1156,125 +1148,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       setting = cdoStore.convertToCDO(object, feature, setting);
       revision.set(feature, 0, setting);
-    }
-  }
-
-  /**
-   * @author Simon McDuff
-   * @since 3.0
-   */
-  public abstract class AbstractCDOLock implements CDOLock
-  {
-    public AbstractCDOLock()
-    {
-    }
-
-    public boolean isLocked()
-    {
-      return view.isObjectLocked(CDOObjectImpl.this, getType(), false);
-    }
-
-    /**
-     * @see org.eclipse.emf.cdo.CDOLock#isLockedByOthers()
-     */
-    public boolean isLockedByOthers()
-    {
-      return view.isObjectLocked(CDOObjectImpl.this, getType(), true);
-    }
-
-    public void lock()
-    {
-      try
-      {
-        view.lockObjects(Collections.singletonList(CDOObjectImpl.this), getType(), CDOLock.WAIT);
-      }
-      catch (InterruptedException ex)
-      {
-        throw WrappedException.wrap(ex);
-      }
-    }
-
-    public void lockInterruptibly() throws InterruptedException
-    {
-      lock();
-    }
-
-    public Condition newCondition()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean tryLock()
-    {
-      try
-      {
-        view.lockObjects(Collections.singletonList(CDOObjectImpl.this), getType(), CDOLock.NO_WAIT);
-        return true;
-      }
-      catch (TimeoutRuntimeException ex)
-      {
-        return false;
-      }
-      catch (InterruptedException ex)
-      {
-        throw WrappedException.wrap(ex);
-      }
-    }
-
-    public boolean tryLock(long time, TimeUnit unit) throws InterruptedException
-    {
-      try
-      {
-        view.lockObjects(Collections.singletonList(CDOObjectImpl.this), getType(), unit.toMillis(time));
-        return true;
-      }
-      catch (TimeoutRuntimeException ex)
-      {
-        return false;
-      }
-    }
-
-    public void unlock()
-    {
-      view.unlockObjects(Collections.singletonList(CDOObjectImpl.this), getType());
-    }
-
-    @Override
-    public String toString()
-    {
-      return MessageFormat.format("CDOLock[object={0}, type={1}]", CDOObjectImpl.this, getType());
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   * @since 3.0
-   */
-  public final class CDOReadLock extends AbstractCDOLock
-  {
-    public CDOReadLock()
-    {
-    }
-
-    public LockType getType()
-    {
-      return LockType.READ;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   * @since 3.0
-   */
-  public final class CDOWriteLock extends AbstractCDOLock
-  {
-    public CDOWriteLock()
-    {
-    }
-
-    public LockType getType()
-    {
-      return LockType.WRITE;
     }
   }
 

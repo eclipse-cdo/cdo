@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.spi.cdo.FSMUtil;
@@ -277,7 +276,7 @@ public class SavePointTest extends AbstractCDOTest
    * client2: same as repository
    * </pre>
    */
-  public void _testScenario1() throws CommitException
+  public void _testScenario1() throws Exception
   {
     CDOSession client1 = openSession();
     CDOTransaction transaction1 = client1.openTransaction();
@@ -289,7 +288,7 @@ public class SavePointTest extends AbstractCDOTest
     CDOUserSavepoint savepoint = transaction1.setSavepoint();
 
     // client1 write locks object1
-    object1X.cdoWriteLock().lock();
+    object1X.cdoWriteLock().lock(DEFAULT_TIMEOUT);
 
     // client1 modifies object1
     object1X.getContents().add(getModel1Factory().createCompany());

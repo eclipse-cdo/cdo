@@ -152,7 +152,7 @@ public class LockingManagerTest extends AbstractCDOTest
     transaction.commit();
 
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
-    cdoCompany.cdoWriteLock().lock();
+    writeLock(cdoCompany);
 
     CDOTransaction transaction2 = session.openTransaction();
     CDOObject company2 = transaction2.getObject(cdoCompany.cdoID());
@@ -177,7 +177,7 @@ public class LockingManagerTest extends AbstractCDOTest
     transaction.commit();
 
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
-    cdoCompany.cdoReadLock().lock();
+    readLock(cdoCompany);
 
     CDOTransaction transaction2 = session.openTransaction();
     Company company2 = (Company)transaction2.getResource("/res1").getContents().get(0);
@@ -206,7 +206,7 @@ public class LockingManagerTest extends AbstractCDOTest
 
     try
     {
-      cdoCompany2.cdoReadLock().lock();
+      readLock(cdoCompany2);
       fail("IllegalArgumentException expected");
     }
     catch (IllegalArgumentException expected)
@@ -228,7 +228,7 @@ public class LockingManagerTest extends AbstractCDOTest
     transaction.commit();
 
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
-    cdoCompany.cdoWriteLock().lock();
+    writeLock(cdoCompany);
 
     CDOTransaction transaction2 = session.openTransaction();
     Company company2 = (Company)transaction2.getResource("/res1").getContents().get(0);
@@ -293,7 +293,7 @@ public class LockingManagerTest extends AbstractCDOTest
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
     CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
 
-    cdoCompany.cdoWriteLock().lock();
+    writeLock(cdoCompany);
 
     boolean acquired = cdoCompany2.cdoWriteLock().tryLock(1000L, TimeUnit.MILLISECONDS);
     assertEquals(false, acquired);
@@ -404,7 +404,7 @@ public class LockingManagerTest extends AbstractCDOTest
     transaction.commit();
 
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
-    cdoCompany.cdoReadLock().lock();
+    readLock(cdoCompany);
 
     company.setCity("Ottawa");
     transaction.commit();
@@ -421,7 +421,7 @@ public class LockingManagerTest extends AbstractCDOTest
     transaction.commit();
 
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
-    cdoCompany.cdoWriteLock().lock();
+    writeLock(cdoCompany);
 
     company.setCity("Ottawa");
     assertEquals(true, cdoCompany.cdoWriteLock().isLocked());
@@ -444,7 +444,7 @@ public class LockingManagerTest extends AbstractCDOTest
     transaction.commit();
 
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
-    cdoCompany.cdoWriteLock().lock();
+    writeLock(cdoCompany);
     company.setCity("Ottawa");
 
     transaction.rollback();
@@ -462,19 +462,19 @@ public class LockingManagerTest extends AbstractCDOTest
     transaction.commit();
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
 
-    cdoCompany.cdoReadLock().lock();
+    readLock(cdoCompany);
     assertEquals(true, cdoCompany.cdoReadLock().isLocked());
     assertEquals(false, cdoCompany.cdoWriteLock().isLocked());
 
-    cdoCompany.cdoWriteLock().lock();
+    writeLock(cdoCompany);
     assertEquals(true, cdoCompany.cdoReadLock().isLocked());
     assertEquals(true, cdoCompany.cdoWriteLock().isLocked());
 
-    cdoCompany.cdoReadLock().lock();
+    readLock(cdoCompany);
     assertEquals(true, cdoCompany.cdoReadLock().isLocked());
     assertEquals(true, cdoCompany.cdoWriteLock().isLocked());
 
-    cdoCompany.cdoWriteLock().lock();
+    writeLock(cdoCompany);
     assertEquals(true, cdoCompany.cdoReadLock().isLocked());
     assertEquals(true, cdoCompany.cdoWriteLock().isLocked());
 
@@ -496,19 +496,19 @@ public class LockingManagerTest extends AbstractCDOTest
 
     /********************/
 
-    cdoCompany.cdoReadLock().lock();
+    readLock(cdoCompany);
     assertEquals(true, cdoCompany.cdoReadLock().isLocked());
     assertEquals(false, cdoCompany.cdoWriteLock().isLocked());
 
-    cdoCompany.cdoWriteLock().lock();
+    writeLock(cdoCompany);
     assertEquals(true, cdoCompany.cdoReadLock().isLocked());
     assertEquals(true, cdoCompany.cdoWriteLock().isLocked());
 
-    cdoCompany.cdoReadLock().lock();
+    readLock(cdoCompany);
     assertEquals(true, cdoCompany.cdoReadLock().isLocked());
     assertEquals(true, cdoCompany.cdoWriteLock().isLocked());
 
-    cdoCompany.cdoWriteLock().lock();
+    writeLock(cdoCompany);
     assertEquals(true, cdoCompany.cdoReadLock().isLocked());
     assertEquals(true, cdoCompany.cdoWriteLock().isLocked());
 
@@ -543,7 +543,7 @@ public class LockingManagerTest extends AbstractCDOTest
     transaction.commit();
 
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
-    cdoCompany.cdoReadLock().lock();
+    readLock(cdoCompany);
     transaction.close();
     assertEquals(false, repo.getLockManager().hasLock(LockType.READ, view, cdoCompany.cdoID()));
   }
@@ -562,7 +562,7 @@ public class LockingManagerTest extends AbstractCDOTest
     transaction.commit();
 
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
-    cdoCompany.cdoReadLock().lock();
+    readLock(cdoCompany);
     session.close();
 
     sleep(100);
@@ -584,7 +584,7 @@ public class LockingManagerTest extends AbstractCDOTest
     CDOObject cdoCompany1 = CDOUtil.getCDOObject(company1);
     CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
 
-    cdoCompany1.cdoWriteLock().lock();
+    writeLock(cdoCompany1);
     assertEquals(true, cdoCompany1.cdoWriteLock().isLocked());
     Company companyFrom2 = (Company)CDOUtil.getEObject(transaction2.getObject(cdoCompany2.cdoID()));
     companyFrom2.setCity("sss");
@@ -604,8 +604,8 @@ public class LockingManagerTest extends AbstractCDOTest
     transaction.options().setAutoReleaseLocksEnabled(false);
 
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
-    cdoCompany.cdoWriteLock().lock();
-    cdoCompany.cdoReadLock().lock();
+    writeLock(cdoCompany);
+    readLock(cdoCompany);
 
     msg("Test with read/write lock");
     assertEquals(true, cdoCompany.cdoWriteLock().isLocked());
@@ -620,7 +620,7 @@ public class LockingManagerTest extends AbstractCDOTest
     transaction.unlockObjects(null, null);
 
     msg("Test with read lock");
-    cdoCompany.cdoReadLock().lock();
+    readLock(cdoCompany);
     assertEquals(true, cdoCompany.cdoReadLock().isLocked());
 
     company.setCity("Toronto");
@@ -644,8 +644,8 @@ public class LockingManagerTest extends AbstractCDOTest
     transaction.options().setAutoReleaseLocksEnabled(false);
 
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
-    cdoCompany.cdoWriteLock().lock();
-    cdoCompany.cdoReadLock().lock();
+    writeLock(cdoCompany);
+    readLock(cdoCompany);
 
     msg("Test with read/write lock");
     assertEquals(true, cdoCompany.cdoWriteLock().isLocked());
@@ -660,7 +660,7 @@ public class LockingManagerTest extends AbstractCDOTest
     transaction.unlockObjects(null, null);
 
     msg("Test with read lock");
-    cdoCompany.cdoReadLock().lock();
+    readLock(cdoCompany);
     assertEquals(true, cdoCompany.cdoReadLock().isLocked());
 
     company.setCity("Toronto");
@@ -689,9 +689,19 @@ public class LockingManagerTest extends AbstractCDOTest
     // 335-418 locks/sec
     for (int i = 0; i < ITERATION; i++)
     {
-      cdoCompany.cdoWriteLock().lock();
+      writeLock(cdoCompany);
     }
 
     msg("Lock " + ITERATION / ((double)(System.currentTimeMillis() - start) / 1000) + " objects/sec");
+  }
+
+  private static void readLock(CDOObject object) throws InterruptedException
+  {
+    assertEquals(true, object.cdoReadLock().tryLock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
+  }
+
+  private static void writeLock(CDOObject object) throws InterruptedException
+  {
+    assertEquals(true, object.cdoWriteLock().tryLock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
   }
 }

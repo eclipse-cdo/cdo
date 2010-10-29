@@ -17,9 +17,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -43,9 +41,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Condition;
 
 /**
  * @author Eike Stepper
@@ -185,11 +180,10 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
   {
     if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
     {
-      return NOOPLockImpl.INSTANCE;
+      return CDOLockImpl.NOOP;
     }
 
-    // Should we cache the locks ?
-    return new Lock(LockType.READ);
+    return new CDOLockImpl(this, LockType.READ);
   }
 
   /**
@@ -199,11 +193,10 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
   {
     if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
     {
-      return NOOPLockImpl.INSTANCE;
+      return CDOLockImpl.NOOP;
     }
 
-    // Should we cache the locks ?
-    return new Lock(LockType.WRITE);
+    return new CDOLockImpl(this, LockType.WRITE);
   }
 
   public EList<Adapter> eAdapters()
@@ -463,6 +456,13 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
   protected class AdapterListListener implements
       org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EObservableAdapterList.Listener
   {
+    /**
+     * @since 4.0
+     */
+    public AdapterListListener()
+    {
+    }
+
     public void added(Notifier notifier, Adapter adapter)
     {
       if (TRACER.isEnabled())
@@ -487,99 +487,6 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
       {
         cdoView().handleRemoveAdapter(CDOObjectWrapper.this, adapter);
       }
-    }
-  }
-
-  /**
-   * @author Martin Fluegge
-   * @since 3.0
-   */
-  private final class Lock implements CDOLock
-  {
-    private LockType type;
-
-    public Lock(LockType type)
-    {
-      this.type = type;
-    }
-
-    public LockType getType()
-    {
-      return type;
-    }
-
-    public boolean isLocked()
-    {
-      return cdoView().isObjectLocked(CDOObjectWrapper.this, type, false);
-    }
-
-    /**
-     * @see org.eclipse.emf.cdo.CDOLock#isLockedByOthers()
-     */
-    public boolean isLockedByOthers()
-    {
-      return cdoView().isObjectLocked(CDOObjectWrapper.this, type, true);
-    }
-
-    public void lock()
-    {
-      try
-      {
-        cdoView().lockObjects(Collections.singletonList(CDOObjectWrapper.this), type, CDOLock.WAIT);
-      }
-      catch (InterruptedException ex)
-      {
-        throw WrappedException.wrap(ex);
-      }
-    }
-
-    public void lockInterruptibly() throws InterruptedException
-    {
-      lock();
-    }
-
-    public Condition newCondition()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean tryLock()
-    {
-      try
-      {
-        cdoView().lockObjects(Collections.singletonList(CDOObjectWrapper.this), type, CDOLock.NO_WAIT);
-        return true;
-      }
-      catch (TimeoutRuntimeException ex)
-      {
-        return false;
-      }
-      catch (InterruptedException ex)
-      {
-        throw WrappedException.wrap(ex);
-      }
-    }
-
-    /**
-     * @throws InterruptedException
-     *           if timeout is reached.
-     */
-    public boolean tryLock(long time, TimeUnit unit) throws InterruptedException
-    {
-      try
-      {
-        cdoView().lockObjects(Collections.singletonList(CDOObjectWrapper.this), type, unit.toMillis(time));
-        return true;
-      }
-      catch (TimeoutRuntimeException ex)
-      {
-        return false;
-      }
-    }
-
-    public void unlock()
-    {
-      cdoView().unlockObjects(Collections.singletonList(CDOObjectWrapper.this), type);
     }
   }
 }

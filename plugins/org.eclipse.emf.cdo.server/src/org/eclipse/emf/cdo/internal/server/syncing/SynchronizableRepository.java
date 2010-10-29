@@ -535,6 +535,9 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       // Remember commit time in the local repository
       setLastCommitTimeStamp(timeStamp);
       setLastReplicatedCommitTime(timeStamp);
+
+      // Remember commit time in the replicator session.
+      getSynchronizer().getRemoteSession().setLastUpdateTime(timeStamp);
     }
 
     @Override

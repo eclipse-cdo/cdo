@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_319552_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_325097_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_326047_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_328352_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_329014_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
 
@@ -78,6 +79,7 @@ public class AllTestsDBH2Offline extends DBConfigs
   {
     // super.initTestClasses(testClasses);
 
+    testClasses.add(Bugzilla_329014_Test.class);
     testClasses.add(Bugzilla_328352_Test.class);
     testClasses.add(Bugzilla_326047_Test.class);
     testClasses.add(Bugzilla_325097_Test.class);

@@ -1,0 +1,294 @@
+/**
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Pascal Lehmann - initial API and implementation
+ */
+package org.eclipse.emf.cdo.tests.bugzilla;
+
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.tests.AbstractSyncingTest;
+import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
+
+/**
+ * LastUpdateTimestamp of ReplicatorSession not set on local commits.
+ * <p>
+ * See bug 329014
+ * 
+ * @author Pascal Lehmann
+ * @since 4.0
+ */
+public class Bugzilla_329014_Test extends AbstractSyncingTest
+{
+  private static final String RESOURCE_NAME = "/my/resource";
+
+  private CDOID id;
+
+  private InternalRepository master;
+
+  private InternalRepository clone;
+
+  private CDOSession masterSession;
+
+  private CDOSession cloneSession;
+
+  @Override
+  protected boolean isRawReplication()
+  {
+    return true;
+  }
+
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    super.doSetUp();
+
+    clone = getRepository();
+    cloneSession = openSession();
+    cloneSession.options().setPassiveUpdateMode(PassiveUpdateMode.CHANGES);
+    waitForOnline(clone);
+
+    master = getRepository(clone.getName() + "_master");
+    masterSession = openSession(master.getName());
+    masterSession.options().setPassiveUpdateMode(PassiveUpdateMode.CHANGES);
+
+    // initial model.
+    CDOTransaction transaction = masterSession.openTransaction();
+    CDOResource resource = transaction.createResource(RESOURCE_NAME);
+    Company company = getModel1Factory().createCompany();
+    company.setName("Company1");
+    resource.getContents().add(company);
+    transaction.commit();
+    id = CDOUtil.getCDOObject(company).cdoID();
+
+    transaction.close();
+  }
+
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    if (cloneSession != null)
+    {
+      cloneSession.close();
+      cloneSession = null;
+    }
+    if (masterSession != null)
+    {
+      masterSession.close();
+      masterSession = null;
+    }
+
+    super.doTearDown();
+  }
+
+  public void testSynchronizationMasterCloneWithoutReplication() throws Exception
+  {
+    skipUnlessConfig(getOfflineConfig());
+
+    // open transactions.
+    CDOTransaction masterTransaction = masterSession.openTransaction();
+    CDOTransaction cloneTransaction = cloneSession.openTransaction();
+    sleep(1000);
+
+    // grab and touch the company on master.
+    Company masterCompany = (Company)masterTransaction.getObject(id);
+    assertNotNull(masterCompany);
+    masterCompany.getName();
+
+    // grab and touch the company on clone.
+    Company cloneCompany = (Company)cloneTransaction.getObject(id);
+    assertNotNull(cloneCompany);
+    cloneCompany.getName();
+
+    // do changes: master / clone / master
+
+    masterCompany.setName("Company2");
+    masterTransaction.commit();
+    masterCompany.setName("Company3");
+    masterTransaction.commit();
+
+    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), 1000);
+
+    cloneCompany.setName("Company4");
+    cloneTransaction.commit();
+    cloneCompany.setName("Company5");
+    cloneTransaction.commit();
+
+    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), 1000);
+
+    masterCompany.setName("Company6");
+    masterTransaction.commit();
+    masterCompany.setName("Company7");
+    masterTransaction.commit();
+
+    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), 1000);
+
+    // check.
+    assertEquals(masterCompany.getName(), cloneCompany.getName());
+  }
+
+  public void testSynchronizationCloneMasterWithoutReplication() throws Exception
+  {
+    skipUnlessConfig(getOfflineConfig());
+
+    // open transactions.
+    CDOTransaction masterTransaction = masterSession.openTransaction();
+    CDOTransaction cloneTransaction = cloneSession.openTransaction();
+    sleep(1000);
+
+    // grab and touch the company on master.
+    Company masterCompany = (Company)masterTransaction.getObject(id);
+    assertNotNull(masterCompany);
+    masterCompany.getName();
+
+    // grab and touch the company on clone.
+    Company cloneCompany = (Company)cloneTransaction.getObject(id);
+    assertNotNull(cloneCompany);
+    cloneCompany.getName();
+
+    // do changes: clone / master / clone
+
+    cloneCompany.setName("Company2");
+    cloneTransaction.commit();
+    cloneCompany.setName("Company3");
+    cloneTransaction.commit();
+
+    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), 1000);
+
+    masterCompany.setName("Company4");
+    masterTransaction.commit();
+    masterCompany.setName("Company5");
+    masterTransaction.commit();
+
+    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), 1000);
+
+    cloneCompany.setName("Company6");
+    cloneTransaction.commit();
+    cloneCompany.setName("Company7");
+    cloneTransaction.commit();
+
+    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), 1000);
+
+    // check.
+    assertEquals(cloneCompany.getName(), masterCompany.getName());
+  }
+
+  public void testSynchronizationMasterCloneWithReplication() throws Exception
+  {
+    skipUnlessConfig(getOfflineConfig());
+
+    // open transactions.
+    CDOTransaction masterTransaction = masterSession.openTransaction();
+    CDOTransaction cloneTransaction = cloneSession.openTransaction();
+    sleep(1000);
+
+    // grab and touch the company on master.
+    Company masterCompany = (Company)masterTransaction.getObject(id);
+    assertNotNull(masterCompany);
+    masterCompany.getName();
+
+    // grab and touch the company on clone.
+    Company cloneCompany = (Company)cloneTransaction.getObject(id);
+    assertNotNull(cloneCompany);
+    cloneCompany.getName();
+
+    // do changes: master / clone / master
+
+    // go offline.
+    getOfflineConfig().stopMasterTransport();
+    waitForOffline(clone);
+
+    masterCompany.setName("Company2");
+    masterTransaction.commit();
+    masterCompany.setName("Company3");
+    masterTransaction.commit();
+
+    // go online.
+    getOfflineConfig().startMasterTransport();
+    waitForOnline(clone);
+
+    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), 1000);
+
+    cloneCompany.setName("Company4");
+    cloneTransaction.commit();
+    cloneCompany.setName("Company5");
+    cloneTransaction.commit();
+
+    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), 1000);
+
+    masterCompany.setName("Company6");
+    masterTransaction.commit();
+    masterCompany.setName("Company7");
+    masterTransaction.commit();
+
+    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), 1000);
+
+    // check.
+    assertEquals(masterCompany.getName(), cloneCompany.getName());
+  }
+
+  public void testSynchronizationCloneMasterWithReplication() throws Exception
+  {
+    skipUnlessConfig(getOfflineConfig());
+
+    // open transactions.
+    CDOTransaction masterTransaction = masterSession.openTransaction();
+    CDOTransaction cloneTransaction = cloneSession.openTransaction();
+    sleep(1000);
+
+    // grab and touch the company on master.
+    Company masterCompany = (Company)masterTransaction.getObject(id);
+    assertNotNull(masterCompany);
+    masterCompany.getName();
+
+    // grab and touch the company on clone.
+    Company cloneCompany = (Company)cloneTransaction.getObject(id);
+    assertNotNull(cloneCompany);
+    cloneCompany.getName();
+
+    // do changes: clone / master / clone
+
+    cloneCompany.setName("Company2");
+    cloneTransaction.commit();
+    cloneCompany.setName("Company3");
+    cloneTransaction.commit();
+
+    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), 1000);
+
+    // go offline.
+    getOfflineConfig().stopMasterTransport();
+    waitForOffline(clone);
+
+    masterCompany.setName("Company4");
+    masterTransaction.commit();
+    masterCompany.setName("Company5");
+    masterTransaction.commit();
+
+    // go online.
+    getOfflineConfig().startMasterTransport();
+    waitForOnline(clone);
+
+    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), 1000);
+
+    cloneCompany.setName("Company6");
+    cloneTransaction.commit();
+    cloneCompany.setName("Company7");
+    cloneTransaction.commit();
+
+    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), 1000);
+
+    // check.
+    assertEquals(cloneCompany.getName(), masterCompany.getName());
+  }
+
+}

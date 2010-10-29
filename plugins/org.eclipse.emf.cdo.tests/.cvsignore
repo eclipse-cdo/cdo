@@ -1,5 +1,5 @@
 bin
-doc
+tmp
 model1X.ecore
 state
 *.log

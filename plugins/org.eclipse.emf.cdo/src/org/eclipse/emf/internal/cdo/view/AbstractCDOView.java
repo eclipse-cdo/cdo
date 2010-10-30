@@ -920,6 +920,7 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
       Resource eResource = eObject.eResource();
       if (eResource != null)
       {
+        // Check if eObject is contained by a deleted resource
         if (!(eResource instanceof CDOResource) || ((CDOResource)eResource).cdoState() != CDOState.TRANSIENT)
         {
           String uri = EcoreUtil.getURI(eObject).toString();

@@ -106,6 +106,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
@@ -1197,19 +1198,25 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     else if (idOrObject instanceof InternalEObject)
     {
       InternalEObject eObject = (InternalEObject)idOrObject;
-      String uri = EcoreUtil.getURI(eObject).toString();
       if (eObject instanceof InternalCDOObject)
       {
         InternalCDOObject object = (InternalCDOObject)idOrObject;
         if (object.cdoView() != null && FSMUtil.isNew(object))
         {
+          String uri = EcoreUtil.getURI(eObject).toString();
           return CDOIDUtil.createTempObjectExternal(uri);
         }
       }
 
-      if (eObject.eResource() != null)
+      Resource eResource = eObject.eResource();
+      if (eResource != null)
       {
-        return CDOIDUtil.createExternal(uri);
+        // Check if eObject is contained by a deleted resource
+        if (!(eResource instanceof CDOResource) || ((CDOResource)eResource).cdoState() != CDOState.TRANSIENT)
+        {
+          String uri = EcoreUtil.getURI(eObject).toString();
+          return CDOIDUtil.createExternal(uri);
+        }
       }
 
       throw new DanglingReferenceException(eObject);

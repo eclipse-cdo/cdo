@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.util.container.IPluginContainer;
 
 import javax.sql.DataSource;
 
@@ -30,6 +31,13 @@ public abstract class DBStoreRepositoryConfig extends RepositoryConfig
   public DBStoreRepositoryConfig(String name)
   {
     super(name);
+  }
+
+  @Override
+  public void setUp() throws Exception
+  {
+    CDODBUtil.prepareContainer(IPluginContainer.INSTANCE);
+    super.setUp();
   }
 
   @Override

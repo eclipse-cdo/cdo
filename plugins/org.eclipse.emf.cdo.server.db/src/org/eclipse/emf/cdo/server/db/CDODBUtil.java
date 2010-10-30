@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.DBBrowserPage;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.SmartPreparedStatementCache;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
@@ -28,6 +29,7 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -55,6 +57,14 @@ public final class CDODBUtil
 
   private CDODBUtil()
   {
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static void prepareContainer(IManagedContainer container)
+  {
+    container.registerFactory(new DBBrowserPage.Factory());
   }
 
   /**

@@ -8,10 +8,11 @@
  * Contributors:
  *     Martin Flüuege - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.cdo.dawn.exceptions;
+package org.eclipse.emf.cdo.dawn.util.exceptions;
 
 /**
  * @author Martin Fluegge
+ * @since 1.0
  */
 public class EClassIncompatibleException extends Exception
 {

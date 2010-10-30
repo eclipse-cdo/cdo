@@ -10,8 +10,9 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.synchronize;
 
-import org.eclipse.emf.cdo.dawn.exceptions.EClassIncompatibleException;
 import org.eclipse.emf.cdo.dawn.util.DawnDiagramUpdater;
+import org.eclipse.emf.cdo.dawn.util.DawnResourceHelper;
+import org.eclipse.emf.cdo.dawn.util.exceptions.EClassIncompatibleException;
 import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -414,14 +415,14 @@ public class DawnChangeHelper
       {
         Edge edge = (Edge)edgeEditpart.getModel();
 
-        edge.setBendpoints((Bendpoints)ResourceHelper.createCopy(oldEdge.getBendpoints()));
+        edge.setBendpoints((Bendpoints)DawnResourceHelper.createCopy(oldEdge.getBendpoints()));
         if (oldEdge.getSourceAnchor() != null)
         {
-          edge.setSourceAnchor((Anchor)ResourceHelper.createCopy(oldEdge.getSourceAnchor()));
+          edge.setSourceAnchor((Anchor)DawnResourceHelper.createCopy(oldEdge.getSourceAnchor()));
         }
         if (oldEdge.getTargetAnchor() != null)
         {
-          edge.setTargetAnchor((Anchor)ResourceHelper.createCopy(oldEdge.getTargetAnchor()));
+          edge.setTargetAnchor((Anchor)DawnResourceHelper.createCopy(oldEdge.getTargetAnchor()));
         }
 
         edgeEditpart.refresh();
@@ -603,7 +604,7 @@ public class DawnChangeHelper
         {
           try
           {
-            ResourceHelper.updateEObject(element, model);
+            DawnResourceHelper.updateEObject(element, model);
           }
           catch (EClassIncompatibleException e)
           {

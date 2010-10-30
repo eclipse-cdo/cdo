@@ -1,5 +1,7 @@
 package org.eclipse.emf.cdo.dawn.transaction;
 
+import org.eclipse.emf.cdo.CDODeltaNotification;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.transaction.impl.InternalTransactionalEditingDomain;
@@ -21,7 +23,10 @@ public class DawnTransactionChangeRecorder extends TransactionChangeRecorder
     if (!(notification.getOldValue() instanceof ResourceSet && notification.getNewValue() == null && notification
         .getEventType() == Notification.SET))
     {
-      super.notifyChanged(notification);
+      if (!(notification instanceof CDODeltaNotification))
+      {
+        super.notifyChanged(notification);
+      }
     }
   }
 }

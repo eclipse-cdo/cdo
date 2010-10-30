@@ -8,14 +8,17 @@
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.cdo.dawn.synchronize;
+package org.eclipse.emf.cdo.dawn.util;
 
 /**
  * 
  * @author Martin Fluegge
  */
-import org.eclipse.emf.cdo.dawn.exceptions.EClassIncompatibleException;
-import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
+
+//import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
+
+import org.eclipse.emf.cdo.dawn.internal.util.bundle.OM;
+import org.eclipse.emf.cdo.dawn.util.exceptions.EClassIncompatibleException;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -67,11 +70,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class ResourceHelper
+/**
+ * @since 1.0
+ */
+public class DawnResourceHelper
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, ResourceHelper.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnResourceHelper.class);
 
   public static String getXmiId(EObject eObject)
   {
@@ -86,7 +93,6 @@ public class ResourceHelper
 
   public static String getXmiId(EObject eObject, Resource xmiResource)
   {
-
     if (xmiResource == null)
     {
       return null;
@@ -273,7 +279,7 @@ public class ResourceHelper
    */
   public static EObject getSameEObjectFromOtherResource(EObject e, XMLResource resource)
   {
-    String xmiId = ResourceHelper.getXmiId(e);
+    String xmiId = DawnResourceHelper.getXmiId(e);
     // EObject ret = resource.getIDToEObjectMap().get(xmiId);
     EObject ret = resource.getEObject(xmiId);
     return ret;
@@ -425,7 +431,7 @@ public class ResourceHelper
         buff.append(s + System.getProperty("line.separator"));
       }
       Ein.close();
-      Resource resource = ResourceHelper.loadFromXML(buff.toString(), rsSet);
+      Resource resource = DawnResourceHelper.loadFromXML(buff.toString(), rsSet);
       return resource;
     }
     catch (FileNotFoundException e)
@@ -467,7 +473,7 @@ public class ResourceHelper
    */
   public static void copyXmiId(EObject oldElement, EObject newElement)
   {
-    ResourceHelper.setXmiId(newElement, ResourceHelper.getXmiId(oldElement));
+    DawnResourceHelper.setXmiId(newElement, DawnResourceHelper.getXmiId(oldElement));
   }
 
   /**
@@ -478,7 +484,7 @@ public class ResourceHelper
    */
   public static void setXmiId(EObject v, XMLResource oldResource)
   {
-    ResourceHelper.setXmiId(v, getXmiId(v, oldResource));
+    DawnResourceHelper.setXmiId(v, getXmiId(v, oldResource));
   }
 
   /**
@@ -519,7 +525,7 @@ public class ResourceHelper
 
   private static int setXmiIdForChildren(EObject oldChild, EObject newChild)
   {
-    ResourceHelper.setXmiId(newChild, ResourceHelper.getXmiId(oldChild));
+    DawnResourceHelper.setXmiId(newChild, DawnResourceHelper.getXmiId(oldChild));
     int i = 0;
     for (EObject oldC : oldChild.eContents())
     {
@@ -575,8 +581,9 @@ public class ResourceHelper
 
     if (!leftObject.eClass().equals(rightObject.eClass()))
     {
-      throw new EClassIncompatibleException(leftObject.eClass().getName() + "(" + ResourceHelper.getXmiId(leftObject)
-          + ")" + "/" + rightObject.eClass().getName() + "(" + ResourceHelper.getXmiId(leftObject) + ")");
+      throw new EClassIncompatibleException(leftObject.eClass().getName() + "("
+          + DawnResourceHelper.getXmiId(leftObject) + ")" + "/" + rightObject.eClass().getName() + "("
+          + DawnResourceHelper.getXmiId(leftObject) + ")");
     }
 
     updateEAttributes(leftObject, rightObject);
@@ -703,7 +710,7 @@ public class ResourceHelper
 
           if (leftCollectionChild == null)// create
           {
-            leftCollectionChild = ResourceHelper.createCopy(rightCollectionChild);
+            leftCollectionChild = DawnResourceHelper.createCopy(rightCollectionChild);
             leftCollection.add(leftCollectionChild);
           }
           else
@@ -741,9 +748,12 @@ public class ResourceHelper
     }
   }
 
-  public static void deleteViewInResource(XMLResource projectResource, EObject e)
+  /**
+   * @since 1.0
+   */
+  public static void deleteViewInResource(Resource resource, EObject e)
   {
-    Diagram diagram = ResourceHelper.getDiagramFromResource(projectResource);
+    Diagram diagram = DawnResourceHelper.getDiagramFromResource(resource);
     EObject element = ((View)e).getElement();
 
     if (element != null)
@@ -753,11 +763,22 @@ public class ResourceHelper
 
     if (e instanceof Node)
     {
-      diagram.removeChild((View)e);// ..getChildren().add(v);
+      View node = (View)e;
+      diagram.removeChild(node);// ..getChildren().add(v);
+      @SuppressWarnings("unchecked")
+      List<Edge> toBeDeleted = new ArrayList<Edge>(node.getSourceEdges());
+      for (Object obj : toBeDeleted)
+      {
+        Edge edge = (Edge)obj;
+        deleteViewInResource(resource, edge);
+      }
     }
     else if (e instanceof Edge)
     {
-      diagram.removeEdge((Edge)e);// ..getChildren().add(v);
+      Edge edge = (Edge)e;
+      diagram.removeEdge(edge);// ..getChildren().add(v);
+      edge.setSource(null);
+      edge.setTarget(null);
     }
   }
 
@@ -765,15 +786,18 @@ public class ResourceHelper
   {
     EStructuralFeature containingFeature = element.eContainingFeature();
     EObject container = element.eContainer();
-    Object get = container.eGet(containingFeature);
-    if (get instanceof Collection<?>)
+    if (container != null)
     {
-      Collection<?> list = (Collection<?>)get;
-      list.remove(element);
-    }
-    else
-    {
-      container.eSet(containingFeature, null);
+      Object get = container.eGet(containingFeature);
+      if (get instanceof Collection<?>)
+      {
+        Collection<?> list = (Collection<?>)get;
+        list.remove(element);
+      }
+      else
+      {
+        container.eSet(containingFeature, null);
+      }
     }
   }
 
@@ -802,7 +826,7 @@ public class ResourceHelper
    */
   public static boolean isObjectInResource(Resource res, EObject element)
   {
-    EObject object = res.getEObject(ResourceHelper.getXmiId(element));
+    EObject object = res.getEObject(DawnResourceHelper.getXmiId(element));
     if (object == null)
     {
       return false;
@@ -1021,7 +1045,7 @@ public class ResourceHelper
     for (Object e : diagramEditPart.getChildren())
     {
       EditPart ep = (EditPart)e;
-      if (ResourceHelper.getXmiId((EObject)ep.getModel()).equals(ResourceHelper.getXmiId(view)))
+      if (DawnResourceHelper.getXmiId((EObject)ep.getModel()).equals(DawnResourceHelper.getXmiId(view)))
       {
         return ep;
       }
@@ -1030,7 +1054,7 @@ public class ResourceHelper
     for (Object e : diagramEditPart.getConnections())
     {
       EditPart ep = (EditPart)e;
-      if (ResourceHelper.getXmiId((EObject)ep.getModel()).equals(ResourceHelper.getXmiId(view)))
+      if (DawnResourceHelper.getXmiId((EObject)ep.getModel()).equals(DawnResourceHelper.getXmiId(view)))
       {
         return ep;
       }

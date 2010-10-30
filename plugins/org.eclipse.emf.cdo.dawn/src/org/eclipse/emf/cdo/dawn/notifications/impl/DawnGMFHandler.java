@@ -209,7 +209,13 @@ public class DawnGMFHandler extends BasicDawnListener
 
   private void handleObject(CDOObject dirtyObject)
   {
+
+    if (dirtyObject.cdoInvalid())
+    {
+      return;
+    }
     EObject element = CDOUtil.getEObject(dirtyObject); // either sementic object or notational
+
     View view = DawnDiagramUpdater.findView(element);
 
     if (DawnConflictHelper.isConflicted(dirtyObject))

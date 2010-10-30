@@ -13,7 +13,11 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.model1.OrderDetail;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.DanglingReferenceException;
 
 /**
  * Bug 322754 - NullPointerException after deleting a resource
@@ -48,6 +52,36 @@ public class Bugzilla_322754_Test extends AbstractCDOTest
     msg("Delete and commit the resource");
     resource.delete(null);
     transaction.commit();
-    session.close();
+  }
+
+  public void testResourceDeleteWithDanglingReferences() throws Exception
+  {
+    Product1 product = getModel1Factory().createProduct1();
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+    orderDetail.setProduct(product);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOResource resource1 = transaction.createResource("/r1");
+    resource1.getContents().add(product);
+
+    CDOResource resource2 = transaction.createResource("/r2");
+    resource2.getContents().add(orderDetail);
+
+    transaction.commit();
+
+    msg("Delete and commit the resource");
+    resource1.delete(null);
+
+    try
+    {
+      transaction.commit();
+      fail("CommitException expected");
+    }
+    catch (CommitException expected)
+    {
+      assertInstanceOf(DanglingReferenceException.class, expected.getCause());
+    }
   }
 }

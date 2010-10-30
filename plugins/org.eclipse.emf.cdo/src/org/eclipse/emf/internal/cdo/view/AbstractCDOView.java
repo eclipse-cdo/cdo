@@ -907,12 +907,12 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     else if (idOrObject instanceof InternalEObject)
     {
       InternalEObject eObject = (InternalEObject)idOrObject;
-      String uri = EcoreUtil.getURI(eObject).toString();
       if (eObject instanceof InternalCDOObject)
       {
         InternalCDOObject object = (InternalCDOObject)idOrObject;
         if (object.cdoView() != null && FSMUtil.isNew(object))
         {
+          String uri = EcoreUtil.getURI(eObject).toString();
           return CDOIDUtil.createTempObjectExternal(uri);
         }
       }
@@ -920,7 +920,11 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
       Resource eResource = eObject.eResource();
       if (eResource != null)
       {
-        return CDOIDUtil.createExternal(uri);
+        if (!(eResource instanceof CDOResource) || ((CDOResource)eResource).cdoState() != CDOState.TRANSIENT)
+        {
+          String uri = EcoreUtil.getURI(eObject).toString();
+          return CDOIDUtil.createExternal(uri);
+        }
       }
 
       throw new DanglingReferenceException(eObject);

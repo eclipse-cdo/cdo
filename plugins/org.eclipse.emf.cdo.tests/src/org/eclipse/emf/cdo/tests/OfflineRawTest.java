@@ -118,11 +118,11 @@ public class OfflineRawTest extends OfflineTest
     transaction.setCommitComment("resource with one company created on clone");
     transaction.commit();
 
-    getOfflineConfig().stopMasterTransport();
-    waitForOffline(clone);
-
     TestListener sessionListener = new TestListener();
     session.addListener(sessionListener);
+
+    getOfflineConfig().stopMasterTransport();
+    waitForOffline(clone);
 
     TestListener transactionListener = new TestListener();
     transaction.addListener(transactionListener);

@@ -51,4 +51,5 @@
             type="horizontalAuditWithRanges">
       </mappingStrategy>
    </extension>
+   
 </plugin>

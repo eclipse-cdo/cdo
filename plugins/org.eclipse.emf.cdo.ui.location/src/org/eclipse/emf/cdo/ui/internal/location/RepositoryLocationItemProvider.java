@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.ui.internal.location;
 
+import org.eclipse.emf.cdo.internal.location.BranchCheckoutSource;
 import org.eclipse.emf.cdo.location.IRepositoryLocation;
 
 import org.eclipse.net4j.util.container.IContainer;
@@ -20,6 +21,7 @@ import org.eclipse.net4j.util.ui.views.IElementFilter;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ITreeSelection;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * @author Eike Stepper
@@ -33,6 +35,22 @@ public class RepositoryLocationItemProvider extends ContainerItemProvider<IConta
   public RepositoryLocationItemProvider(IElementFilter rootElementFilter)
   {
     super(rootElementFilter);
+  }
+
+  @Override
+  public Image getImage(Object obj)
+  {
+    if (obj instanceof IRepositoryLocation)
+    {
+      return SharedIcons.getImage(SharedIcons.REPO);
+    }
+
+    if (obj instanceof BranchCheckoutSource)
+    {
+      return SharedIcons.getImage(SharedIcons.BRANCH);
+    }
+
+    return super.getImage(obj);
   }
 
   @Override

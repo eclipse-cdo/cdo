@@ -39,6 +39,23 @@ public class LockManager extends RWLockManager<Object, IView> implements Interna
     {
       unlock(view);
     }
+
+    // @Override
+    // protected void notifyOtherEvent(IEvent event)
+    // {
+    // if (event instanceof ILifecycleEvent)
+    // {
+    // ILifecycleEvent e = (ILifecycleEvent)event;
+    // if (e.getKind() == ILifecycleEvent.Kind.ABOUT_TO_DEACTIVATE)
+    // {
+    // ISession session = (ISession)e.getSource();
+    // for (IView view : session.getElements())
+    // {
+    // unlock(view);
+    // }
+    // }
+    // }
+    // }
   };
 
   @ExcludeFromDump

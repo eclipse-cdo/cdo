@@ -1425,13 +1425,10 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
      */
     protected void loaded()
     {
-      if (!isLoaded())
+      Notification notification = setLoaded(true);
+      if (notification != null)
       {
-        Notification notification = setLoaded(true);
-        if (notification != null)
-        {
-          eNotify(notification);
-        }
+        eNotify(notification);
       }
     }
 
@@ -1471,6 +1468,34 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     protected boolean isUnique()
     {
       return true;
+    }
+
+    /**
+     * @since 4.0
+     */
+    @Override
+    protected void didAdd(int index, Object newObject)
+    {
+      super.didAdd(index, newObject);
+
+      if (!isExisting() && !isLoaded())
+      {
+        loaded();
+      }
+    }
+
+    /**
+     * @since 4.0
+     */
+    @Override
+    protected void didClear(int size, Object[] oldObjects)
+    {
+      super.didClear(size, oldObjects);
+
+      if (!isExisting() && !isLoaded())
+      {
+        loaded();
+      }
     }
   }
 } // CDOResourceImpl

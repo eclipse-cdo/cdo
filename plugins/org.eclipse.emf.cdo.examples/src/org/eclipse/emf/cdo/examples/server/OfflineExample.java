@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.examples.company.CompanyFactory;
+import org.eclipse.emf.cdo.examples.company.CompanyPackage;
 import org.eclipse.emf.cdo.examples.company.Customer;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSession;
@@ -48,8 +49,6 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.log.PrintLogHandler;
 
 import org.h2.jdbcx.JdbcDataSource;
 
@@ -80,7 +79,9 @@ public abstract class OfflineExample
   {
     // OMPlatform.INSTANCE.setDebugging(true);
     // OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
-    OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
+    // OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
+
+    CompanyPackage.eINSTANCE.getClass(); // Register EPackage in standalone
   }
 
   public OfflineExample()
@@ -131,10 +132,10 @@ public abstract class OfflineExample
   {
     for (;;)
     {
-      System.out.println();
-      System.out.println("Enter a command:");
-      showMenu();
-      System.out.println();
+      // System.out.println();
+      // System.out.println("Enter a command:");
+      // showMenu();
+      // System.out.println();
 
       String command = new BufferedReader(new InputStreamReader(System.in)).readLine();
       if (handleCommand(command))
@@ -305,6 +306,7 @@ public abstract class OfflineExample
 
     public static void main(String[] args) throws Exception
     {
+      System.out.println("Master repository starting...");
       OfflineExample example = new Master();
       example.init();
       example.run();
@@ -337,6 +339,7 @@ public abstract class OfflineExample
 
     public static void main(String[] args) throws Exception
     {
+      System.out.println("Clone repository starting...");
       OfflineExample example = new Clone();
       example.init();
       example.run();
@@ -351,6 +354,7 @@ public abstract class OfflineExample
   {
     public static void main(String[] args) throws Exception
     {
+      System.out.println("Client starting...");
       IManagedContainer container = createContainer();
       IConnector connector = Net4jUtil.getConnector(container, TRANSPORT_TYPE, "localhost:" + Clone.PORT);
 
@@ -375,11 +379,11 @@ public abstract class OfflineExample
       });
 
       CDOTransaction tx = session.openTransaction();
-      addObject(tx);
 
-      while (!session.isClosed())
+      for (;;)
       {
-        Thread.sleep(100);
+        new BufferedReader(new InputStreamReader(System.in)).readLine();
+        addObject(tx);
       }
     }
 
@@ -394,6 +398,7 @@ public abstract class OfflineExample
         CDOCommitInfo commitInfo = tx.commit();
         CDOBranch branch = commitInfo.getBranch();
         System.out.println("Committed an object to  " + branch.getPathName());
+        tx.setBranch(branch);
       }
       catch (CommitException x)
       {

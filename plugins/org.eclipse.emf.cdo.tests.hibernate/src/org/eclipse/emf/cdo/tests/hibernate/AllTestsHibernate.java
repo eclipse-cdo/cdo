@@ -62,7 +62,8 @@ public class AllTestsHibernate extends AllConfigs
     // if (true)
     // {
     // testClasses.clear();
-    // testClasses.add(SetFeatureTest.class);
+    // testClasses.add(HibernateQueryTest.class);
+    // testClasses.add(HibernateQueryNoCachingTest.class);
     // return;
     // }
 
@@ -120,6 +121,7 @@ public class AllTestsHibernate extends AllConfigs
 
     // add the hibernate query test
     testClasses.add(HibernateQueryTest.class);
+    testClasses.add(HibernateQueryNoCachingTest.class);
 
     // override a testcase because the hibernate store
     // has a different meaning of unset

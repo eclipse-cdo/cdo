@@ -16,7 +16,13 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.WrappedHibernateList;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -32,6 +38,10 @@ public class HibernateQueryHandler implements IQueryHandler
   public static final String QUERY_LANGUAGE = "hql"; //$NON-NLS-1$
 
   public static final String FIRST_RESULT = "firstResult"; //$NON-NLS-1$
+
+  // if results should be cached in the query cache, only needed if they
+  // are accessed directly as part of the query.
+  public static final String CACHE_RESULTS = "cacheResults"; //$NON-NLS-1$
 
   private HibernateStoreAccessor hibernateStoreAccessor;
 
@@ -57,9 +67,14 @@ public class HibernateQueryHandler implements IQueryHandler
 
     // get the parameters with some parameter conversion
     int firstResult = -1;
+    boolean cacheResults = true;
     for (String key : info.getParameters().keySet())
     {
-      if (key.toLowerCase().equals(FIRST_RESULT.toLowerCase()))
+      if (key.compareToIgnoreCase(CACHE_RESULTS) == 0)
+      {
+        cacheResults = Boolean.valueOf((String)info.getParameters().get(key));
+      }
+      else if (key.compareToIgnoreCase(FIRST_RESULT) == 0)
       {
         final Object o = info.getParameters().get(key);
         if (o != null)
@@ -86,7 +101,10 @@ public class HibernateQueryHandler implements IQueryHandler
           final Serializable idValue = HibernateUtil.getInstance().getIdValue(cdoID);
           final CDORevision revision = (CDORevision)session.get(entityName, idValue);
           query.setEntity(key, revision);
-          hibernateStoreAccessor.addToRevisionCache(revision);
+          if (cacheResults)
+          {
+            addToRevisionCache(revision);
+          }
         }
         else
         {
@@ -112,12 +130,38 @@ public class HibernateQueryHandler implements IQueryHandler
     for (Object o : query.list())
     {
       final boolean addOneMore = context.addResult(o);
-      hibernateStoreAccessor.addToRevisionCache(o);
+      if (cacheResults && o instanceof CDORevision)
+      {
+        addToRevisionCache((CDORevision)o);
+      }
+      
       if (!addOneMore)
       {
         return;
       }
     }
+  }
+
+  private void addToRevisionCache(CDORevision revision)
+  {
+    final InternalCDORevision internalRevision = (InternalCDORevision)revision;
+    for (EStructuralFeature feature : revision.getEClass().getEAllStructuralFeatures())
+    {
+      if (feature.isMany() || feature instanceof EReference)
+      {
+        final Object value = internalRevision.getValue(feature);
+        if (value instanceof WrappedHibernateList)
+        {
+          Hibernate.initialize(((WrappedHibernateList)value).getDelegate());
+        }
+        else
+        {
+          Hibernate.initialize(value);
+        }
+      }
+    }
+    
+    hibernateStoreAccessor.addToRevisionCache(revision);
   }
 
   public HibernateStoreAccessor getHibernateStoreAccessor()

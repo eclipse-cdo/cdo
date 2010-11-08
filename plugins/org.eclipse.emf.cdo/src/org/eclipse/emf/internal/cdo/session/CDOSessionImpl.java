@@ -1070,25 +1070,18 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       InternalCDOTransaction currentSender = currentPair.getElement2();
       nextPreviousTimeStamp = currentCommitInfo.getTimeStamp();
 
-      CountDownLatch latch = null;
-      if (currentSender != null)
-      {
-        latch = new CountDownLatch(1);
-      }
+      CountDownLatch latch = new CountDownLatch(1);
 
       QueueRunner runner = getInvalidationRunner();
       runner.addWork(new InvalidationRunnable(currentCommitInfo, currentSender, latch));
 
-      if (latch != null)
+      try
       {
-        try
-        {
-          latch.await();
-        }
-        catch (InterruptedException ex)
-        {
-          throw WrappedException.wrap(ex);
-        }
+        latch.await();
+      }
+      catch (InterruptedException ex)
+      {
+        throw WrappedException.wrap(ex);
       }
     }
   }
@@ -1562,7 +1555,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
           setLastUpdateTime(commitInfo.getTimeStamp());
         }
 
-        senderMayProceed();
         fireInvalidationEvent(sender, commitInfo);
 
         for (InternalCDOView view : getViews())
@@ -1576,14 +1568,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       finally
       {
         invalidationRunnerActive.set(false);
-        senderMayProceed();
-      }
-    }
-
-    private void senderMayProceed()
-    {
-      if (latch != null)
-      {
         latch.countDown();
       }
     }

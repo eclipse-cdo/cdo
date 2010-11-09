@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
+import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.WrappedHibernateList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -35,20 +36,24 @@ import java.io.Serializable;
  */
 public class HibernateQueryHandler implements IQueryHandler
 {
-  public static final String QUERY_LANGUAGE = "hql"; //$NON-NLS-1$
+  /**
+   * @deprecated use {@link IHibernateStore#QUERY_LANGUAGE}
+   */
+  @Deprecated
+  public static final String QUERY_LANGUAGE = IHibernateStore.QUERY_LANGUAGE;
 
-  public static final String FIRST_RESULT = "firstResult"; //$NON-NLS-1$
-
-  // if results should be cached in the query cache, only needed if they
-  // are accessed directly as part of the query.
-  public static final String CACHE_RESULTS = "cacheResults"; //$NON-NLS-1$
+  /**
+   * @deprecated use {@link IHibernateStore#FIRST_RESULT}
+   */
+  @Deprecated
+  public static final String FIRST_RESULT = IHibernateStore.FIRST_RESULT;
 
   private HibernateStoreAccessor hibernateStoreAccessor;
 
   /**
    * Executes hql queries. Gets the session from the {@link HibernateStoreAccessor} creates a hibernate query and sets
    * the parameters taken from the {@link CDOQueryInfo#getParameters()}. Takes into account the
-   * {@link CDOQueryInfo#getMaxResults()} and the {@link HibernateQueryHandler#FIRST_RESULT} values for paging.
+   * {@link CDOQueryInfo#getMaxResults()} and the {@link IHibernateStore#FIRST_RESULT} values for paging.
    * 
    * @param info
    *          the object containing the query and parameters
@@ -70,11 +75,19 @@ public class HibernateQueryHandler implements IQueryHandler
     boolean cacheResults = true;
     for (String key : info.getParameters().keySet())
     {
-      if (key.compareToIgnoreCase(CACHE_RESULTS) == 0)
+      if (key.compareToIgnoreCase(IHibernateStore.CACHE_RESULTS) == 0)
       {
-        cacheResults = Boolean.valueOf((String)info.getParameters().get(key));
+        try
+        {
+          cacheResults = (Boolean)info.getParameters().get(key);
+        }
+        catch (ClassCastException e)
+        {
+          throw new IllegalArgumentException(
+              "Parameter " + IHibernateStore.CACHE_RESULTS + " must be a boolean. errorMessage " + e.getMessage()); //$NON-NLS-1$
+        }
       }
-      else if (key.compareToIgnoreCase(FIRST_RESULT) == 0)
+      else if (key.compareToIgnoreCase(IHibernateStore.FIRST_RESULT) == 0)
       {
         final Object o = info.getParameters().get(key);
         if (o != null)
@@ -134,7 +147,7 @@ public class HibernateQueryHandler implements IQueryHandler
       {
         addToRevisionCache((CDORevision)o);
       }
-      
+
       if (!addOneMore)
       {
         return;
@@ -147,6 +160,11 @@ public class HibernateQueryHandler implements IQueryHandler
     final InternalCDORevision internalRevision = (InternalCDORevision)revision;
     for (EStructuralFeature feature : revision.getEClass().getEAllStructuralFeatures())
     {
+      if (!isMappedFeature(internalRevision, feature))
+      {
+        continue;
+      }
+
       if (feature.isMany() || feature instanceof EReference)
       {
         final Object value = internalRevision.getValue(feature);
@@ -160,8 +178,22 @@ public class HibernateQueryHandler implements IQueryHandler
         }
       }
     }
-    
+
     hibernateStoreAccessor.addToRevisionCache(revision);
+  }
+
+  private boolean isMappedFeature(InternalCDORevision revision, EStructuralFeature feature)
+  {
+    try
+    {
+      int featureID = revision.getClassInfo().getEClass().getFeatureID(feature);
+      revision.getClassInfo().getFeatureIndex(featureID);
+      return true;
+    }
+    catch (ArrayIndexOutOfBoundsException ex)
+    {
+      return false;
+    }
   }
 
   public HibernateStoreAccessor getHibernateStoreAccessor()

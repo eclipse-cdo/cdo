@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate;
 
-import org.eclipse.emf.cdo.server.internal.hibernate.HibernateQueryHandler;
+import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.view.CDOQuery;
 
 /**
@@ -23,7 +23,6 @@ public class HibernateQueryNoCachingTest extends HibernateQueryTest
   @Override
   protected void addCacheParameter(CDOQuery query)
   {
-    query.setParameter(HibernateQueryHandler.CACHE_RESULTS, "false");
+    query.setParameter(IHibernateStore.CACHE_RESULTS, false);
   }
-
 }

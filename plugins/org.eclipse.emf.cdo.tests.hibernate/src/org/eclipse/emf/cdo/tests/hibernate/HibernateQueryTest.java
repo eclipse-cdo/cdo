@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.tests.hibernate;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.server.internal.hibernate.HibernateQueryHandler;
+import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -342,7 +342,7 @@ public class HibernateQueryTest extends AbstractCDOTest
       {
         CDOQuery productQuery = transaction.createQuery("hql", "from Product1");
         productQuery.setMaxResults(pageSize);
-        productQuery.setParameter(HibernateQueryHandler.FIRST_RESULT, page * pageSize);
+        productQuery.setParameter(IHibernateStore.FIRST_RESULT, page * pageSize);
         addCacheParameter(productQuery);
         final List<Product1> queriedProducts = productQuery.getResult(Product1.class);
         assertTrue(queriedProducts.size() <= pageSize);
@@ -493,6 +493,6 @@ public class HibernateQueryTest extends AbstractCDOTest
 
   protected void addCacheParameter(CDOQuery query)
   {
-    query.setParameter(HibernateQueryHandler.CACHE_RESULTS, "true");
+    query.setParameter(IHibernateStore.CACHE_RESULTS, true);
   }
 }

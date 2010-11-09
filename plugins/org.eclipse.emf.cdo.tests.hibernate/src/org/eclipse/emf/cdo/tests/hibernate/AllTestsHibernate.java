@@ -57,18 +57,20 @@ public class AllTestsHibernate extends AllConfigs
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
+    testClasses.add(Hibernate_Bugzilla_308895_Test.class);
+    testClasses.add(HibernateExternalAnnotationTest.class);
+    testClasses.add(HibernateMultiValuedOfAttributeTest.class);
+    testClasses.add(HibernateXATransactionTest.class);
+    testClasses.add(HibernateExternalReferenceTest.class);
+    testClasses.add(HibernateQueryTest.class);
+    testClasses.add(HibernateQueryNoCachingTest.class);
+    testClasses.add(HibernateBugzilla_258933_Test.class);
+    testClasses.add(HibernateUnsetTest.class);
+    testClasses.add(HibernateBugzilla_301104_Test.class);
+
     super.initTestClasses(testClasses);
 
-    // if (true)
-    // {
-    // testClasses.clear();
-    // testClasses.add(HibernateQueryTest.class);
-    // testClasses.add(HibernateQueryNoCachingTest.class);
-    // return;
-    // }
-
     testClasses.remove(Bugzilla_308895_Test.class);
-    testClasses.add(Hibernate_Bugzilla_308895_Test.class);
 
     // Branching not supported
     testClasses.remove(BranchingTest.class);
@@ -85,9 +87,6 @@ public class AllTestsHibernate extends AllConfigs
     // runs okay when run standalone
     testClasses.remove(Bugzilla_273565_Test.class);
 
-    // add a testcase which has an annotation file
-    testClasses.add(HibernateExternalAnnotationTest.class);
-
     // audit support to do
     // bug 244141
     testClasses.remove(AuditTest.class);
@@ -100,44 +99,37 @@ public class AllTestsHibernate extends AllConfigs
     // this is not nicely supported by Hibernate
     // therefore this step is removed
     testClasses.remove(MultiValuedOfAttributeTest.class);
-    testClasses.add(HibernateMultiValuedOfAttributeTest.class);
 
     // MemStore is not relevant
     testClasses.remove(MEMStoreQueryTest.class);
 
     // replace test case to do external mapping
     testClasses.remove(XATransactionTest.class);
-    testClasses.add(HibernateXATransactionTest.class);
 
     // replace test case with one, disabling some non working testcases
     // see the HibernateExternalReferenceTest for a description
     testClasses.remove(ExternalReferenceTest.class);
-    testClasses.add(HibernateExternalReferenceTest.class);
 
     // this testcases removes and creates a resource with the
     // same path in one transaction, that's not supported
     // by hibernate.. because of unique key constraints
     testClasses.remove(Bugzilla_272861_Test.class);
 
-    // add the hibernate query test
-    testClasses.add(HibernateQueryTest.class);
-    testClasses.add(HibernateQueryNoCachingTest.class);
-
     // override a testcase because the hibernate store
     // has a different meaning of unset
     testClasses.remove(Bugzilla_258933_Test.class);
-    testClasses.add(HibernateBugzilla_258933_Test.class);
 
     // remove as unsettable has to be re-visited for the hb store
     // see bugzilla 298579
     testClasses.remove(UnsetTest.class);
-    testClasses.add(HibernateUnsetTest.class);
-
-    testClasses.add(HibernateBugzilla_301104_Test.class);
   }
 
-  // overridden because one testcase does not pass as Hibernate currently
-  // does not store the isset boolean values in the database
+  /**
+   * Overridden because one testcase does not pass as Hibernate currently does not store the isset boolean values in the
+   * database.
+   * 
+   * @author Eike Stepper
+   */
   public static class HibernateUnsetTest extends UnsetTest
   {
     @Override
@@ -146,6 +138,9 @@ public class AllTestsHibernate extends AllConfigs
     }
   }
 
+  /**
+   * @author Eike Stepper
+   */
   public static class Hibernate_Bugzilla_308895_Test extends Bugzilla_308895_Test
   {
     @Override

@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
@@ -497,7 +498,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
     String queryLanguage = info.getQueryLanguage();
-    if (StringUtil.equalsUpperOrLowerCase(queryLanguage, HibernateQueryHandler.QUERY_LANGUAGE))
+    if (StringUtil.equalsUpperOrLowerCase(queryLanguage, IHibernateStore.QUERY_LANGUAGE))
     {
       final HibernateQueryHandler queryHandler = new HibernateQueryHandler();
       queryHandler.setHibernateStoreAccessor(this);

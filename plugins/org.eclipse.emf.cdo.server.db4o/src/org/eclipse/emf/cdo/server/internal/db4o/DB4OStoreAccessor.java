@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.db4o.IDB4OIdentifiableObject;
 import org.eclipse.emf.cdo.server.internal.db4o.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -40,9 +41,12 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
@@ -55,14 +59,20 @@ import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Predicate;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.CharArrayReader;
+import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -402,28 +412,56 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
 
   public void queryLobs(List<byte[]> ids)
   {
-    // TODO: implement DB4OStoreAccessor.queryLobs(ids)
-    throw new UnsupportedOperationException();
+    for (Iterator<byte[]> it = ids.iterator(); it.hasNext();)
+    {
+      byte[] id = it.next();
+      String key = HexUtil.bytesToHex(id);
+      if (DB4OStore.getIdentifiableObject(getObjectContainer(), key) != null)
+      {
+        it.remove();
+      }
+    }
   }
 
   public void loadLob(byte[] id, OutputStream out) throws IOException
   {
-    // TODO: implement DB4OStoreAccessor.loadLob(id, out)
-    throw new UnsupportedOperationException();
+    String key = HexUtil.bytesToHex(id);
+    IDB4OIdentifiableObject identifiableObject = DB4OStore.getIdentifiableObject(getObjectContainer(), key);
+    if (identifiableObject == null)
+    {
+      throw new IOException("Lob not found: " + key);
+    }
+
+    if (identifiableObject instanceof DB4OBlob)
+    {
+      DB4OBlob blob = (DB4OBlob)identifiableObject;
+      byte[] byteArray = blob.getValue();
+      ByteArrayInputStream in = new ByteArrayInputStream(byteArray);
+      IOUtil.copyBinary(in, out, byteArray.length);
+    }
+    else
+    {
+      DB4OClob clob = (DB4OClob)identifiableObject;
+      char[] charArray = clob.getValue();
+      CharArrayReader in = new CharArrayReader(charArray);
+      IOUtil.copyCharacter(in, new OutputStreamWriter(out), charArray.length);
+    }
   }
 
   @Override
   protected void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
   {
-    // TODO: implement DB4OStoreAccessor.writeBlob(id, size, inputStream)
-    throw new UnsupportedOperationException();
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    IOUtil.copyBinary(inputStream, out, size);
+    writeObject(new DB4OBlob(HexUtil.bytesToHex(id), out.toByteArray()), new Monitor());
   }
 
   @Override
   protected void writeClob(byte[] id, long size, Reader reader) throws IOException
   {
-    // TODO: implement DB4OStoreAccessor.writeClob(id, size, reader)
-    throw new UnsupportedOperationException();
+    CharArrayWriter out = new CharArrayWriter();
+    IOUtil.copyCharacter(reader, out, size);
+    writeObject(new DB4OClob(HexUtil.bytesToHex(id), out.toCharArray()), new Monitor());
   }
 
   public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.db4o.IDB4OIdentifiableObject;
 import org.eclipse.emf.cdo.server.db4o.IDB4OStore;
 import org.eclipse.emf.cdo.spi.server.LongIDStore;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
@@ -39,6 +40,8 @@ import java.util.Set;
  */
 public class DB4OStore extends LongIDStore implements IDB4OStore
 {
+  private static final String ID_ATTRIBUTE = "id";
+
   private transient String storeLocation;
 
   private transient int port;
@@ -263,7 +266,7 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
   {
     Query query = container.query();
     query.constrain(DB4ORevision.class);
-    query.descend("id").constrain(CDOIDUtil.getLong(id));
+    query.descend(ID_ATTRIBUTE).constrain(CDOIDUtil.getLong(id));
 
     ObjectSet<?> revisions = query.execute();
     if (revisions.isEmpty())
@@ -272,6 +275,21 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     }
 
     return (DB4ORevision)revisions.get(0);
+  }
+
+  public static IDB4OIdentifiableObject getIdentifiableObject(ObjectContainer container, String id)
+  {
+    Query query = container.query();
+    query.constrain(IDB4OIdentifiableObject.class);
+    query.descend(ID_ATTRIBUTE).constrain(id);
+
+    ObjectSet<?> revisions = query.execute();
+    if (revisions.isEmpty())
+    {
+      return null;
+    }
+
+    return (IDB4OIdentifiableObject)revisions.get(0);
   }
 
   public static void removeRevision(ObjectContainer container, CDOID id)

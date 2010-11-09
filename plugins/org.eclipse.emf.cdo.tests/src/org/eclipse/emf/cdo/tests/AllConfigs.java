@@ -128,6 +128,7 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(RevisionManagerTestClientSide.class);
     testClasses.add(BranchingTest.class);
     testClasses.add(BranchingTestSameSession.class);
+    testClasses.add(BranchingTestWithCacheClear.class);
     testClasses.add(MergingTest.class);
     testClasses.add(ViewTest.class);
     testClasses.add(TransactionTest.class);
@@ -147,6 +148,8 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(PartialCommitTest.class);
     testClasses.add(MetaTest.class);
     testClasses.add(RevisionDeltaTest.class);
+    testClasses.add(RevisionDeltaInBranchTest.class);
+    testClasses.add(RevisionDeltaCascadingBranchesTest.class);
     testClasses.add(IndexReconstructionTest.class);
     testClasses.add(AutoAttacherTest.class);
     testClasses.add(SavePointTest.class);

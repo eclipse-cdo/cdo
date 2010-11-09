@@ -11,6 +11,7 @@
  *    Christopher Albert - 254455: [DB] Support FeatureMaps bug 254455
  *    Victor Roldan Betancort - Bug 283998: [DB] Chunk reading for multiple chunks fails
  *    Stefan Winkler - Bug 285426: [DB] Implement user-defined typeMapping support
+ *    Stefan Winkler - Bug 329025: [DB] Support branching for range-based mapping strategy
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -28,7 +29,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
@@ -92,8 +92,6 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
   private String sqlOrderByIndex;
 
   protected String sqlInsert;
-
-  private String sqlGetListLastIndex;
 
   private List<DBType> dbTypes;
 
@@ -208,31 +206,6 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
 
     sqlOrderByIndex = " ORDER BY " + CDODBSchema.FEATUREMAP_IDX; //$NON-NLS-1$
 
-    // ----------------- count list size --------------------------
-
-    builder = new StringBuilder("SELECT max(");
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
-    builder.append(") FROM ");
-    builder.append(tableName);
-    builder.append(" WHERE ");
-
-    for (int i = 0; i < fields.length; i++)
-    {
-      builder.append(fields[i].getName());
-      if (i + 1 < fields.length)
-      {
-        // more to come
-        builder.append("=? AND ");
-      }
-      else
-      {
-        // last one
-        builder.append("=? ");
-      }
-    }
-
-    sqlGetListLastIndex = builder.toString();
-
     // INSERT with dynamic field name
     // TODO: Better: universal INSERT-Statement, because of stmt caching!
 
@@ -293,19 +266,10 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     MoveableList<Object> list = revision.getList(getFeature());
-    int listSize = -1;
-
-    if (listChunk != CDORevision.UNCHUNKED)
+    if (listChunk == 0 || list.size() == 0)
     {
-      listSize = getListLastIndex(accessor, revision);
-      if (listSize == -1)
-      {
-        // list is empty - take shortcut
-        return;
-      }
-
-      // subtract amount of items we are going to read now
-      listSize -= listChunk;
+      // nothing to read take shortcut
+      return;
     }
 
     if (TRACER.isEnabled())
@@ -330,6 +294,8 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
       }
 
       resultSet = pstmt.executeQuery();
+      int currentIndex = 0;
+
       while ((listChunk == CDORevision.UNCHUNKED || --listChunk >= 0) && resultSet.next())
       {
         Long tag = resultSet.getLong(1);
@@ -340,17 +306,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
           TRACER.format("Read value for index {0} from result set: {1}", list.size(), value);
         }
 
-        list.add(CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(tag), value));
-      }
-
-      while (listSize-- >= 0)
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Adding UNINITIALIZED for index {0} ", list.size());
-        }
-
-        list.add(InternalCDOList.UNINITIALIZED);
+        list.set(currentIndex++, CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(tag), value));
       }
     }
     catch (SQLException ex)
@@ -380,56 +336,6 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
     tagMap.put(tag, column);
     typeMapping.setDBField(table, column);
     typeMappings.put(tag, typeMapping);
-  }
-
-  /**
-   * Return the last (maximum) list index. (euals to size-1)
-   * 
-   * @param accessor
-   *          the accessor to use
-   * @param revision
-   *          the revision to which the feature list belongs
-   * @return the last index or <code>-1</code> if the list is empty.
-   */
-  private int getListLastIndex(IDBStoreAccessor accessor, InternalCDORevision revision)
-  {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
-    ResultSet resultSet = null;
-
-    try
-    {
-      pstmt = statementCache.getPreparedStatement(sqlGetListLastIndex, ReuseProbability.HIGH);
-      setKeyFields(pstmt, revision);
-
-      resultSet = pstmt.executeQuery();
-      if (!resultSet.next())
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("No last index found -> list is empty. ");
-        }
-
-        return -1;
-      }
-
-      int result = resultSet.getInt(1);
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Read list last index = " + result);
-      }
-
-      return result;
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(pstmt);
-    }
   }
 
   public final void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String where)

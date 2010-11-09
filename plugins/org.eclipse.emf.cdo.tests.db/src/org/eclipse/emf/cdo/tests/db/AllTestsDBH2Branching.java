@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.BranchingTestSameSession;
@@ -33,6 +32,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +53,8 @@ public class AllTestsDBH2Branching extends DBConfigs
   protected void initConfigSuites(TestSuite parent)
   {
     addScenario(parent, COMBINED, H2Branching.ReusableFolder.INSTANCE, JVM, NATIVE);
+    addScenario(parent, COMBINED, H2Branching.ReusableFolder.RANGE_INSTANCE, JVM, NATIVE);
+    addScenario(parent, COMBINED, H2Branching.ReusableFolder.CopyOnBranch.INSTANCE, JVM, NATIVE);
   }
 
   @Override
@@ -85,13 +87,17 @@ public class AllTestsDBH2Branching extends DBConfigs
   {
     private static final long serialVersionUID = 1L;
 
-    public static final H2Branching INSTANCE = new H2Branching("DBStore: H2 (branching)");
+    public static final H2Branching INSTANCE = new H2Branching("DBStore: H2 (branching)",
+        "org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalBranchingMappingStrategy");
 
     protected transient File dbFolder;
 
-    public H2Branching(String name)
+    private String mappingStrategy;
+
+    public H2Branching(String name, String mappingStrategy)
     {
       super(name);
+      this.mappingStrategy = mappingStrategy;
     }
 
     @Override
@@ -102,10 +108,19 @@ public class AllTestsDBH2Branching extends DBConfigs
       props.put(IRepository.Props.SUPPORTING_BRANCHES, "true");
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected IMappingStrategy createMappingStrategy()
     {
-      return CDODBUtil.createHorizontalMappingStrategy(true, true);
+      try
+      {
+        Class<IMappingStrategy> clazz = (Class<IMappingStrategy>)Class.forName(mappingStrategy);
+        return clazz.newInstance();
+      }
+      catch (Exception ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
     }
 
     @Override
@@ -125,6 +140,7 @@ public class AllTestsDBH2Branching extends DBConfigs
 
       JdbcDataSource dataSource = new JdbcDataSource();
       dataSource.setURL("jdbc:h2:" + dbFolder.getAbsolutePath() + "/h2test;SCHEMA=" + repoName);
+
       return dataSource;
     }
 
@@ -145,7 +161,12 @@ public class AllTestsDBH2Branching extends DBConfigs
     {
       private static final long serialVersionUID = 1L;
 
-      public static final ReusableFolder INSTANCE = new ReusableFolder("DBStore: H2 (branching)");
+      public static final ReusableFolder INSTANCE = new ReusableFolder("DBStore: H2 (branching)",
+          "org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalBranchingMappingStrategy");
+
+      public static final ReusableFolder RANGE_INSTANCE = new ReusableFolder(
+          "DBStore: H2 (Reusable Folder, branching, range-based mapping strategy)",
+          "org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalBranchingMappingStrategyWithRanges");
 
       private static File reusableFolder;
 
@@ -153,9 +174,9 @@ public class AllTestsDBH2Branching extends DBConfigs
 
       private transient ArrayList<String> repoNames = new ArrayList<String>();
 
-      public ReusableFolder(String name)
+      public ReusableFolder(String name, String mappingStrategy)
       {
-        super(name);
+        super(name, mappingStrategy);
       }
 
       @Override
@@ -188,6 +209,15 @@ public class AllTestsDBH2Branching extends DBConfigs
           }
 
           stmt.execute("CREATE SCHEMA IF NOT EXISTS " + repoName);
+
+          /*
+           * final WebServer webServer = new WebServer(); webServer.init(new String[] { "-webPort", "7778" });
+           * webServer.start(); System.out.println("----------------------------------");
+           * System.out.println("----------------------------------"); System.out.println(webServer.addSession(conn));
+           * System.out.println("----------------------------------");
+           * System.out.println("----------------------------------"); new Thread() {
+           * @Override public void run() { webServer.listen(); } }.start();
+           */
         }
         catch (Exception ex)
         {
@@ -195,7 +225,6 @@ public class AllTestsDBH2Branching extends DBConfigs
         }
         finally
         {
-          DBUtil.close(conn);
           DBUtil.close(stmt);
         }
 
@@ -233,6 +262,32 @@ public class AllTestsDBH2Branching extends DBConfigs
         {
           DBUtil.close(stmt);
           DBUtil.close(connection);
+        }
+      }
+
+      public static class CopyOnBranch extends ReusableFolder
+      {
+        private static final long serialVersionUID = 1L;
+
+        public static final ReusableFolder INSTANCE = new CopyOnBranch(
+            "DBStore: H2 (Reusable Folder, branching, range-based mapping strategy copyOnBranch)",
+            "org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalBranchingMappingStrategyWithRanges");
+
+        public CopyOnBranch(String name, String ms)
+        {
+          super(name, ms);
+        }
+
+        @Override
+        protected IMappingStrategy createMappingStrategy()
+        {
+          IMappingStrategy ms = super.createMappingStrategy();
+
+          Map<String, String> properties = new HashMap<String, String>();
+          properties.put("copyOnBranch", "true");
+          ms.setProperties(properties);
+
+          return ms;
         }
       }
     }

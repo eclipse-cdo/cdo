@@ -9,7 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - 271444: [DB] Multiple refactorings bug 271444
  *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
- *
+ *    Stefan Winkler - Bug 329025: [DB] Support branching for range-based mapping strategy
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
@@ -40,6 +41,7 @@ import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
@@ -56,6 +58,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
+
+import org.eclipse.core.runtime.Assert;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -86,6 +90,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
   private List<ITypeMapping> valueMappings;
 
   private List<IListMapping> listMappings;
+
+  private Map<EStructuralFeature, String> listSizeFields;
 
   private Map<EStructuralFeature, String> unsettableFields;
 
@@ -216,18 +222,40 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     {
       if (feature.isMany())
       {
+        IListMapping mapping = null;
         if (FeatureMapUtil.isFeatureMap(feature))
         {
-          listMappings.add(mappingStrategy.createFeatureMapMapping(eClass, feature));
+          mapping = mappingStrategy.createFeatureMapMapping(eClass, feature);
         }
         else
         {
-          listMappings.add(mappingStrategy.createListMapping(eClass, feature));
+          mapping = mappingStrategy.createListMapping(eClass, feature);
         }
+
+        listMappings.add(mapping);
+
+        // add field for list sizes
+        createListSizeField(feature);
       }
     }
 
     return listMappings;
+  }
+
+  /**
+   * Create an integer field in the attribute tabel for the list size of the associated list mapping.
+   */
+  private void createListSizeField(EStructuralFeature feature)
+  {
+    if (listSizeFields == null)
+    {
+      listSizeFields = new LinkedHashMap<EStructuralFeature, String>();
+    }
+
+    String fieldName = mappingStrategy.getFieldName(feature);
+    table.addField(fieldName, DBType.INTEGER);
+
+    listSizeFields.put(feature, fieldName);
   }
 
   /**
@@ -291,6 +319,29 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
         mapping.readValueToRevision(resultSet, revision);
       }
 
+      if (listSizeFields != null)
+      {
+        for (Map.Entry<EStructuralFeature, String> listSizeEntry : listSizeFields.entrySet())
+        {
+          EStructuralFeature feature = listSizeEntry.getKey();
+          String fieldName = listSizeEntry.getValue();
+          int size = resultSet.getInt(fieldName);
+
+          // ensure the listSize (TODO: remove assertion)
+          CDOList list = revision.getList(feature, size);
+
+          for (int i = 0; i < size; i++)
+          {
+            list.add(InternalCDOList.UNINITIALIZED);
+          }
+
+          if (list.size() != size)
+          {
+            Assert.isTrue(false);
+          }
+        }
+      }
+
       return true;
     }
     catch (SQLException ex)
@@ -334,6 +385,11 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
   protected final Map<EStructuralFeature, String> getUnsettableFields()
   {
     return unsettableFields;
+  }
+
+  protected final Map<EStructuralFeature, String> getListSizeFields()
+  {
+    return listSizeFields;
   }
 
   public final List<ITypeMapping> getValueMappings()

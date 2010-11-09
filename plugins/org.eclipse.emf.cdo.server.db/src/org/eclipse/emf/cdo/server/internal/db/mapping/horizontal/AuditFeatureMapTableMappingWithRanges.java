@@ -13,6 +13,7 @@
  *    Lothar Werzinger - Bug 296440: [DB] Change RDB schema to improve scalability of to-many references in audit mode
  *    Stefan Winkler - cleanup, merge and maintenance 
  *    Stefan Winkler - Bug 285426: [DB] Implement user-defined typeMapping support
+ *    Stefan Winkler - Bug 329025: [DB] Support branching for range-based mapping strategy
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -45,7 +46,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
@@ -123,8 +123,6 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
   private String sqlOrderByIndex;
 
   protected String sqlInsert;
-
-  private String sqlGetListLastIndex;
 
   private List<DBType> dbTypes;
 
@@ -234,21 +232,6 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     sqlSelectChunksPrefix = builder.toString();
 
     sqlOrderByIndex = " ORDER BY " + CDODBSchema.FEATUREMAP_IDX; //$NON-NLS-1$
-
-    // ----------------- count list size --------------------------
-
-    builder = new StringBuilder("SELECT count(1) FROM "); //$NON-NLS-1$
-    builder.append(tableName);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_ADDED);
-    builder.append("<=? AND ("); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
-    builder.append(" IS NULL OR "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
-    builder.append(">?)"); //$NON-NLS-1$
-    sqlGetListLastIndex = builder.toString();
 
     // ----------------- INSERT - prefix -----------------
     builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
@@ -403,19 +386,11 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     MoveableList<Object> list = revision.getList(getFeature());
-    int listSize = -1;
 
-    if (listChunk != CDORevision.UNCHUNKED)
+    if (listChunk == 0 || list.size() == 0)
     {
-      listSize = getListLastIndex(accessor, revision);
-      if (listSize == -1)
-      {
-        // list is empty - take shortcut
-        return;
-      }
-
-      // subtract amount of items we are going to read now
-      listSize -= listChunk;
+      // nothing to read take shortcut
+      return;
     }
 
     if (TRACER.isEnabled())
@@ -444,6 +419,8 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       }
 
       resultSet = pstmt.executeQuery();
+
+      int currentIndex = 0;
       while ((listChunk == CDORevision.UNCHUNKED || --listChunk >= 0) && resultSet.next())
       {
         Long tag = resultSet.getLong(1);
@@ -454,17 +431,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
           TRACER.format("Read value for index {0} from result set: {1}", list.size(), value); //$NON-NLS-1$
         }
 
-        list.add(CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(tag), value));
-      }
-
-      while (listSize-- >= 0)
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Adding UNINITIALIZED for index {0} ", list.size()); //$NON-NLS-1$
-        }
-
-        list.add(InternalCDOList.UNINITIALIZED);
+        list.set(currentIndex++, CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(tag), value));
       }
     }
     catch (SQLException ex)
@@ -494,54 +461,6 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     tagMap.put(tag, column);
     typeMapping.setDBField(table, column);
     typeMappings.put(tag, typeMapping);
-  }
-
-  /**
-   * Return the last (maximum) list index. (euals to size-1)
-   * 
-   * @param accessor
-   *          the accessor to use
-   * @param revision
-   *          the revision to which the feature list belongs
-   * @return the last index or <code>-1</code> if the list is empty.
-   */
-  private int getListLastIndex(IDBStoreAccessor accessor, InternalCDORevision revision)
-  {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
-    ResultSet resultSet = null;
-
-    try
-    {
-      pstmt = statementCache.getPreparedStatement(sqlGetListLastIndex, ReuseProbability.HIGH);
-
-      pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
-      pstmt.setInt(2, revision.getVersion());
-      pstmt.setInt(3, revision.getVersion());
-
-      resultSet = pstmt.executeQuery();
-      if (!resultSet.next())
-      {
-        throw new DBException("Count expects exactly one result");
-      }
-
-      int result = resultSet.getInt(1) - 1;
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Read list last index = " + result); //$NON-NLS-1$
-      }
-
-      return result;
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(pstmt);
-    }
   }
 
   public final void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String where)
@@ -783,8 +702,8 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     clearList(accessor, id, revision.getVersion(), FINAL_VERSION);
   }
 
-  public void processDelta(final IDBStoreAccessor accessor, final CDOID id, int oldVersion, final int newVersion,
-      long created, CDOListFeatureDelta delta)
+  public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion,
+      final int newVersion, long created, CDOListFeatureDelta delta)
   {
     IRepository repo = accessor.getStore().getRepository();
     InternalCDORevision originalRevision = (InternalCDORevision)repo.getRevisionManager().getRevision(id,

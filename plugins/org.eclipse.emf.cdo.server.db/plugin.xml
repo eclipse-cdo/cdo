@@ -50,6 +50,10 @@
             class="org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategyWithRanges"
             type="horizontalAuditWithRanges">
       </mappingStrategy>
+      <mappingStrategy
+            class="org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalBranchingMappingStrategyWithRanges"
+            type="horizontalBranchingWithRanges">
+      </mappingStrategy>
    </extension>
    
 </plugin>

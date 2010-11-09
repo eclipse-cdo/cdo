@@ -11,6 +11,7 @@
  *    Eike Stepper - initial API and implementation
  *    Lothar Werzinger - Bug 296440: [DB] Change RDB schema to improve scalability of to-many references in audit mode
  *    Stefan Winkler - cleanup, merge and maintenance
+ *    Stefan Winkler - Bug 329025: [DB] Support branching for range-based mapping strategy
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -42,7 +43,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
@@ -56,11 +56,13 @@ import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -109,8 +111,6 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
   private String sqlUpdateIndex;
 
   private String sqlGetValue;
-
-  private String sqlGetListLastIndex;
 
   private String sqlClearList;
 
@@ -171,20 +171,6 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     sqlSelectChunksPrefix = builder.toString();
 
     sqlOrderByIndex = " ORDER BY " + CDODBSchema.LIST_IDX; //$NON-NLS-1$
-
-    // ----------------- count list size --------------------------
-    builder = new StringBuilder("SELECT count(1) FROM "); //$NON-NLS-1$
-    builder.append(tableName);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
-    builder.append("<=? AND ("); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
-    builder.append(" IS NULL OR "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
-    builder.append(">?)"); //$NON-NLS-1$
-    sqlGetListLastIndex = builder.toString();
 
     // ----------------- insert entry -----------------
     builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
@@ -296,19 +282,10 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     MoveableList<Object> list = revision.getList(getFeature());
-    int listSize = -1;
-
-    if (listChunk != CDORevision.UNCHUNKED)
+    if (listChunk == 0 || list.size() == 0)
     {
-      listSize = getListLastIndex(accessor, revision.getID(), revision.getVersion());
-      if (listSize == -1)
-      {
-        // list is empty - take shortcut
-        return;
-      }
-
-      // subtract amount of items we are going to read now
-      listSize -= listChunk;
+      // nothing to read take shortcut
+      return;
     }
 
     if (TRACER.isEnabled())
@@ -335,6 +312,8 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
       }
 
       resultSet = pstmt.executeQuery();
+
+      int currentIndex = 0;
       while ((listChunk == CDORevision.UNCHUNKED || --listChunk >= 0) && resultSet.next())
       {
         Object value = typeMapping.readValue(resultSet);
@@ -343,17 +322,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
           TRACER.format("Read value for index {0} from result set: {1}", list.size(), value); //$NON-NLS-1$
         }
 
-        list.add(value);
-      }
-
-      while (listSize-- >= 0)
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Adding UNINITIALIZED for index {0} ", list.size()); //$NON-NLS-1$
-        }
-
-        list.add(InternalCDOList.UNINITIALIZED);
+        list.set(currentIndex++, value);
       }
     }
     catch (SQLException ex)
@@ -370,55 +339,6 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     {
       TRACER.format("Reading {4} list values done for feature {0}.{1} of {2}v{3}", //$NON-NLS-1$
           getContainingClass().getName(), getFeature().getName(), revision.getID(), revision.getVersion(), list.size());
-    }
-  }
-
-  /**
-   * Return the last (maximum) list index. (equals to size-1)
-   * 
-   * @param accessor
-   *          the accessor to use
-   * @param id
-   *          the CDOID of the revision to which the getFeature() list belongs
-   * @param version
-   *          the revision to which the getFeature() list belongs
-   * @return the last index or <code>-1</code> if the list is empty.
-   */
-  private int getListLastIndex(IDBStoreAccessor accessor, CDOID id, int version)
-  {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
-    ResultSet resultSet = null;
-
-    try
-    {
-      pstmt = statementCache.getPreparedStatement(sqlGetListLastIndex, ReuseProbability.HIGH);
-      pstmt.setLong(1, CDOIDUtil.getLong(id));
-      pstmt.setInt(2, version);
-      pstmt.setInt(3, version);
-
-      resultSet = pstmt.executeQuery();
-      if (!resultSet.next())
-      {
-        throw new DBException("Count expects exactly one result");
-      }
-
-      int result = resultSet.getInt(1) - 1;
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Read list last index = " + result); //$NON-NLS-1$
-      }
-
-      return result;
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(pstmt);
     }
   }
 
@@ -606,8 +526,8 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     clearList(accessor, id, revision.getVersion(), FINAL_VERSION);
   }
 
-  public void processDelta(final IDBStoreAccessor accessor, final CDOID id, int oldVersion, final int newVersion,
-      long created, CDOListFeatureDelta delta)
+  public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion,
+      final int newVersion, long created, CDOListFeatureDelta delta)
   {
     IRepository repo = accessor.getStore().getRepository();
     InternalCDORevision originalRevision = (InternalCDORevision)repo.getRevisionManager().getRevision(id,
@@ -1080,6 +1000,77 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
   public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere,
       QueryXRefsContext context, String idString)
   {
-    throw new UnsupportedOperationException("This mapping strategy does not support cross-reference querying.");
+
+    String tableName = getTable().getName();
+    String listJoin = getMappingStrategy().getListJoin("a_t", "l_t");
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT l_t."); //$NON-NLS-1$
+    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(", l_t."); //$NON-NLS-1$
+    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(", l_t."); //$NON-NLS-1$
+    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(tableName);
+    builder.append(" AS l_t, ");//$NON-NLS-1$
+    builder.append(mainTableName);
+    builder.append(" AS a_t WHERE ");//$NON-NLS-1$
+    builder.append("a_t." + mainTableWhere);//$NON-NLS-1$
+    builder.append(listJoin);
+    builder.append(" AND "); //$NON-NLS-1$
+    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(" IN "); //$NON-NLS-1$
+    builder.append(idString);
+    String sql = builder.toString();
+
+    ResultSet resultSet = null;
+    Statement stmt = null;
+
+    try
+    {
+      stmt = accessor.getConnection().createStatement();
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Query XRefs (list): {0}", sql);
+      }
+
+      resultSet = stmt.executeQuery(sql);
+      while (resultSet.next())
+      {
+        long idLong = resultSet.getLong(1);
+        CDOID srcId = CDOIDUtil.createLong(idLong);
+        idLong = resultSet.getLong(2);
+        CDOID targetId = CDOIDUtil.createLong(idLong);
+        int idx = resultSet.getInt(3);
+
+        boolean more = context.addXRef(targetId, srcId, (EReference)getFeature(), idx);
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("  add XRef to context: src={0}, tgt={1}, idx={2}", srcId, targetId, idx);
+        }
+
+        if (!more)
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("  result limit reached. Ignoring further results.");
+          }
+
+          return false;
+        }
+      }
+
+      return true;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+      DBUtil.close(stmt);
+    }
   }
 }

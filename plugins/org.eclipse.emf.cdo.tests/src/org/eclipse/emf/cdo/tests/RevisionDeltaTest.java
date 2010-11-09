@@ -538,7 +538,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     return (InternalCDORevision)CDOUtil.getCDOObject((EObject)object).cdoRevision().copy();
   }
 
-  private void testStoreDelta(ListManipulator manipulator)
+  protected void testStoreDelta(ListManipulator manipulator)
   {
     BasicEList<Company> reference = new BasicEList<Company>();
 
@@ -617,7 +617,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   /**
    * @author Simon McDuff
    */
-  private static interface ListManipulator
+  protected static interface ListManipulator
   {
     public void doManipulations(EList<?> list);
   }

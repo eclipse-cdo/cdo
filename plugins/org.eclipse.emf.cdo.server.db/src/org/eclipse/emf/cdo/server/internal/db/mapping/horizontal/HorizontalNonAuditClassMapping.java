@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - major refactoring
  *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
+ *    Stefan Winkler - Bug 329025: [DB] Support branching for range-based mapping strategy
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -16,6 +17,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
@@ -97,6 +99,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   private void initSQLStrings()
   {
     Map<EStructuralFeature, String> unsettableFields = getUnsettableFields();
+    Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
 
     // ----------- Select Revision ---------------------------
     StringBuilder builder = new StringBuilder();
@@ -123,6 +126,15 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     if (unsettableFields != null)
     {
       for (String fieldName : unsettableFields.values())
+      {
+        builder.append(", "); //$NON-NLS-1$
+        builder.append(fieldName);
+      }
+    }
+
+    if (listSizeFields != null)
+    {
+      for (String fieldName : listSizeFields.values())
       {
         builder.append(", "); //$NON-NLS-1$
         builder.append(fieldName);
@@ -174,6 +186,15 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       }
     }
 
+    if (listSizeFields != null)
+    {
+      for (String fieldName : listSizeFields.values())
+      {
+        builder.append(", "); //$NON-NLS-1$
+        builder.append(fieldName);
+      }
+    }
+
     builder.append(") VALUES (?, ?, "); //$NON-NLS-1$
     builder.append("?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
     for (int i = 0; i < getValueMappings().size(); i++)
@@ -184,6 +205,14 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     if (unsettableFields != null)
     {
       for (int i = 0; i < unsettableFields.size(); i++)
+      {
+        builder.append(", ?"); //$NON-NLS-1$
+      }
+    }
+
+    if (listSizeFields != null)
+    {
+      for (int i = 0; i < listSizeFields.size(); i++)
       {
         builder.append(", ?"); //$NON-NLS-1$
       }
@@ -266,6 +295,19 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
         }
 
         mapping.setValueFromRevision(stmt, col++, revision);
+      }
+
+      Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
+      if (listSizeFields != null)
+      {
+        // isSetCol now points to the first listTableSize-column
+        col = isSetCol;
+
+        for (EStructuralFeature feature : listSizeFields.keySet())
+        {
+          CDOList list = revision.getList(feature);
+          stmt.setInt(col++, list.size());
+        }
       }
 
       CDODBUtil.sqlUpdate(stmt, true);
@@ -466,47 +508,55 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     private List<Pair<ITypeMapping, Object>> attributeChanges;
 
+    private List<Pair<EStructuralFeature, Integer>> listSizeChanges;
+
     private int newContainingFeatureID;
 
     private CDOID newContainerID;
 
     private CDOID newResourceID;
 
+    private int branchId;
+
+    private int newVersion;
+
+    /*
+     * this is a temporary copy of the revision to track list size changes...
+     */
+    private InternalCDORevision tempRevision;
+
     public FeatureDeltaWriter()
     {
       attributeChanges = new ArrayList<Pair<ITypeMapping, Object>>();
+      listSizeChanges = new ArrayList<Pair<EStructuralFeature, Integer>>();
     }
 
     protected void reset()
     {
       attributeChanges.clear();
+      listSizeChanges.clear();
       updateContainer = false;
     }
 
     public void process(IDBStoreAccessor a, CDORevisionDelta d, long c)
     {
       // set context
-
-      reset();
       id = d.getID();
+
+      branchId = d.getBranch().getID();
       oldVersion = d.getVersion();
-      int newVersion = oldVersion + 1;
+      newVersion = oldVersion + 1;
       created = c;
       accessor = a;
+
+      tempRevision = (InternalCDORevision)accessor.getTransaction().getRevision(id).copy();
 
       // process revision delta tree
       d.accept(this);
 
-      // update attributes
-      if (updateContainer)
-      {
-        updateAttributes(accessor, id, newVersion, created, newContainerID, newContainingFeatureID, newResourceID,
-            attributeChanges);
-      }
-      else
-      {
-        updateAttributes(accessor, id, newVersion, created, attributeChanges);
-      }
+      updateAttributes();
+      // clean up
+      reset();
     }
 
     public void visit(CDOMoveFeatureDelta delta)
@@ -540,8 +590,19 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     public void visit(CDOListFeatureDelta delta)
     {
-      IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(delta.getFeature());
-      listMapping.processDelta(accessor, id, oldVersion, oldVersion + 1, created, delta);
+      EStructuralFeature feature = delta.getFeature();
+
+      IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(feature);
+      listMapping.processDelta(accessor, id, branchId, oldVersion, oldVersion + 1, created, delta);
+
+      int oldSize = tempRevision.getList(feature).size();
+      delta.apply(tempRevision);
+      int newSize = tempRevision.getList(feature).size();
+
+      if (oldSize != newSize)
+      {
+        listSizeChanges.add(new Pair<EStructuralFeature, Integer>(feature, newSize));
+      }
     }
 
     public void visit(CDOClearFeatureDelta delta)
@@ -566,130 +627,122 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       newResourceID = delta.getResourceID();
       updateContainer = true;
     }
-  }
 
-  public void updateAttributes(IDBStoreAccessor accessor, CDOID id, int newVersion, long created, CDOID newContainerId,
-      int newContainingFeatureId, CDOID newResourceId, List<Pair<ITypeMapping, Object>> attributeChanges)
-  {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
-
-    try
+    private void updateAttributes()
     {
-      int col = 1;
-      stmt = statementCache.getPreparedStatement(buildUpdateStatement(attributeChanges, true), ReuseProbability.MEDIUM);
-      stmt.setInt(col++, newVersion);
-      stmt.setLong(col++, created);
-      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, newResourceId, created));
-      stmt.setLong(col++,
-          CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, newContainerId, created));
-      stmt.setInt(col++, newContainingFeatureId);
+      IPreparedStatementCache statementCache = accessor.getStatementCache();
+      PreparedStatement stmt = null;
 
-      col = setUpdateAttributeValues(attributeChanges, stmt, col);
-
-      stmt.setLong(col++, CDOIDUtil.getLong(id));
-
-      CDODBUtil.sqlUpdate(stmt, true);
-    }
-    catch (SQLException e)
-    {
-      throw new DBException(e);
-    }
-    finally
-    {
-      statementCache.releasePreparedStatement(stmt);
-    }
-  }
-
-  private int setUpdateAttributeValues(List<Pair<ITypeMapping, Object>> attributeChanges, PreparedStatement stmt,
-      int col) throws SQLException
-  {
-    for (Pair<ITypeMapping, Object> change : attributeChanges)
-    {
-      ITypeMapping typeMapping = change.getElement1();
-      Object value = change.getElement2();
-      if (typeMapping.getFeature().isUnsettable())
+      try
       {
-        // feature is unsettable
-        if (value == null)
+        int col = 1;
+
+        stmt = statementCache.getPreparedStatement(buildUpdateStatement(), ReuseProbability.MEDIUM);
+        stmt.setInt(col++, newVersion);
+        stmt.setLong(col++, created);
+        if (updateContainer)
         {
-          // feature is unset
-          typeMapping.setDefaultValue(stmt, col++);
-          stmt.setBoolean(col++, false);
+          stmt.setLong(col++,
+              CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, newResourceID, created));
+          stmt.setLong(col++,
+              CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, newContainerID, created));
+          stmt.setInt(col++, newContainingFeatureID);
+        }
+
+        col = setUpdateAttributeValues(attributeChanges, stmt, col);
+        col = setUpdateListSizeChanges(listSizeChanges, stmt, col);
+
+        stmt.setLong(col++, CDOIDUtil.getLong(id));
+
+        CDODBUtil.sqlUpdate(stmt, true);
+      }
+      catch (SQLException e)
+      {
+        throw new DBException(e);
+      }
+      finally
+      {
+        statementCache.releasePreparedStatement(stmt);
+      }
+    }
+
+    private String buildUpdateStatement()
+    {
+      StringBuilder builder = new StringBuilder(sqlUpdatePrefix);
+      if (updateContainer)
+      {
+        builder.append(sqlUpdateContainerPart);
+      }
+
+      for (Pair<ITypeMapping, Object> change : attributeChanges)
+      {
+        builder.append(", "); //$NON-NLS-1$
+        ITypeMapping typeMapping = change.getElement1();
+        builder.append(typeMapping.getField());
+        builder.append("=?"); //$NON-NLS-1$
+
+        if (typeMapping.getFeature().isUnsettable())
+        {
+          builder.append(", "); //$NON-NLS-1$
+          builder.append(getUnsettableFields().get(typeMapping.getFeature()));
+          builder.append("=?"); //$NON-NLS-1$
+        }
+      }
+
+      for (Pair<EStructuralFeature, Integer> change : listSizeChanges)
+      {
+        builder.append(", "); //$NON-NLS-1$
+        EStructuralFeature feature = change.getElement1();
+        builder.append(getListSizeFields().get(feature));
+        builder.append("=?"); //$NON-NLS-1$
+      }
+
+      builder.append(sqlUpdateAffix);
+      return builder.toString();
+    }
+
+    private int setUpdateAttributeValues(List<Pair<ITypeMapping, Object>> attributeChanges, PreparedStatement stmt,
+        int col) throws SQLException
+    {
+      for (Pair<ITypeMapping, Object> change : attributeChanges)
+      {
+        ITypeMapping typeMapping = change.getElement1();
+        Object value = change.getElement2();
+        if (typeMapping.getFeature().isUnsettable())
+        {
+          // feature is unsettable
+          if (value == null)
+          {
+            // feature is unset
+            typeMapping.setDefaultValue(stmt, col++);
+            stmt.setBoolean(col++, false);
+          }
+          else
+          {
+            // feature is set
+            typeMapping.setValue(stmt, col++, value);
+            stmt.setBoolean(col++, true);
+          }
         }
         else
         {
-          // feature is set
-          typeMapping.setValue(stmt, col++, value);
-          stmt.setBoolean(col++, true);
+          typeMapping.setValue(stmt, col++, change.getElement2());
         }
       }
-      else
+
+      return col;
+    }
+
+    private int setUpdateListSizeChanges(List<Pair<EStructuralFeature, Integer>> attributeChanges,
+        PreparedStatement stmt, int col) throws SQLException
+    {
+      for (Pair<EStructuralFeature, Integer> change : listSizeChanges)
       {
-        typeMapping.setValue(stmt, col++, change.getElement2());
+        stmt.setInt(col++, change.getElement2());
       }
+
+      return col;
     }
-
-    return col;
-  }
-
-  public void updateAttributes(IDBStoreAccessor accessor, CDOID id, int newVersion, long created,
-      List<Pair<ITypeMapping, Object>> attributeChanges)
-  {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
-
-    try
-    {
-      stmt = statementCache
-          .getPreparedStatement(buildUpdateStatement(attributeChanges, false), ReuseProbability.MEDIUM);
-
-      int col = 1;
-
-      stmt.setInt(col++, newVersion);
-      stmt.setLong(col++, created);
-
-      col = setUpdateAttributeValues(attributeChanges, stmt, col);
-
-      stmt.setLong(col++, CDOIDUtil.getLong(id));
-
-      CDODBUtil.sqlUpdate(stmt, true);
-    }
-    catch (SQLException e)
-    {
-      throw new DBException(e);
-    }
-    finally
-    {
-      statementCache.releasePreparedStatement(stmt);
-    }
-  }
-
-  private String buildUpdateStatement(List<Pair<ITypeMapping, Object>> attributeChanges, boolean withContainment)
-  {
-    StringBuilder builder = new StringBuilder(sqlUpdatePrefix);
-    if (withContainment)
-    {
-      builder.append(sqlUpdateContainerPart);
-    }
-
-    for (Pair<ITypeMapping, Object> change : attributeChanges)
-    {
-      builder.append(", "); //$NON-NLS-1$
-      ITypeMapping typeMapping = change.getElement1();
-      builder.append(typeMapping.getField());
-      builder.append("=?"); //$NON-NLS-1$
-
-      if (typeMapping.getFeature().isUnsettable())
-      {
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(getUnsettableFields().get(typeMapping.getFeature()));
-        builder.append("=?"); //$NON-NLS-1$
-      }
-    }
-
-    builder.append(sqlUpdateAffix);
-    return builder.toString();
   }
 
   @Override

@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - Bug 271444: [DB] Multiple refactorings
  *    Stefan Winkler - Bug 283998: [DB] Chunk reading for multiple chunks fails
+ *    Stefan Winkler - Bug 329025: [DB] Support branching for range-based mapping strategy
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -27,7 +28,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
@@ -77,8 +77,6 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
   private String sqlOrderByIndex;
 
   private String sqlInsertEntry;
-
-  private String sqlGetListLastIndex;
 
   public AbstractListTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
@@ -154,31 +152,6 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
 
     sqlOrderByIndex = " ORDER BY " + CDODBSchema.LIST_IDX; //$NON-NLS-1$
 
-    // ----------------- count list size --------------------------
-
-    builder = new StringBuilder("SELECT MAX("); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
-    builder.append(") FROM "); //$NON-NLS-1$
-    builder.append(tableName);
-    builder.append(" WHERE "); //$NON-NLS-1$
-
-    for (int i = 0; i < fields.length; i++)
-    {
-      builder.append(fields[i].getName());
-      if (i + 1 < fields.length)
-      {
-        // more to come
-        builder.append("=? AND "); //$NON-NLS-1$
-      }
-      else
-      {
-        // last one
-        builder.append("=? "); //$NON-NLS-1$
-      }
-    }
-
-    sqlGetListLastIndex = builder.toString();
-
     // ----------------- INSERT - reference entry -----------------
     builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
     builder.append(tableName);
@@ -216,19 +189,11 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     MoveableList<Object> list = revision.getList(getFeature());
-    int listSize = -1;
 
-    if (listChunk != CDORevision.UNCHUNKED)
+    if (listChunk == 0 || list.size() == 0)
     {
-      listSize = getListLastIndex(accessor, revision);
-      if (listSize == -1)
-      {
-        // list is empty - take shortcut
-        return;
-      }
-
-      // subtract amount of items we are going to read now
-      listSize -= listChunk;
+      // nothing to read take shortcut
+      return;
     }
 
     if (TRACER.isEnabled())
@@ -258,6 +223,8 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
       }
 
       resultSet = pstmt.executeQuery();
+
+      int currentIndex = 0;
       while ((listChunk == CDORevision.UNCHUNKED || --listChunk >= 0) && resultSet.next())
       {
         Object value = typeMapping.readValue(resultSet);
@@ -266,17 +233,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
           TRACER.format("Read value for index {0} from result set: {1}", list.size(), value); //$NON-NLS-1$
         }
 
-        list.add(value);
-      }
-
-      while (listSize-- >= 0)
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Adding UNINITIALIZED for index {0} ", list.size()); //$NON-NLS-1$
-        }
-
-        list.add(InternalCDOList.UNINITIALIZED);
+        list.set(currentIndex++, value);
       }
     }
     catch (SQLException ex)
@@ -293,71 +250,6 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
     {
       TRACER.format("Reading list values done for feature {0}.{1} of {2}v{3}", getContainingClass().getName(), //$NON-NLS-1$
           getFeature().getName(), revision.getID(), revision.getVersion());
-    }
-  }
-
-  /**
-   * Return the last (maximum) list index. (euals to size-1)
-   * 
-   * @param accessor
-   *          the accessor to use
-   * @param revision
-   *          the revision to which the feature list belongs
-   * @return the last index or <code>-1</code> if the list is empty.
-   */
-  private int getListLastIndex(IDBStoreAccessor accessor, InternalCDORevision revision)
-  {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
-    ResultSet resultSet = null;
-
-    try
-    {
-      pstmt = statementCache.getPreparedStatement(sqlGetListLastIndex, ReuseProbability.HIGH);
-      setKeyFields(pstmt, revision);
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace(pstmt.toString());
-      }
-
-      resultSet = pstmt.executeQuery();
-      if (!resultSet.next())
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("No last index found -> list is empty. "); //$NON-NLS-1$
-        }
-
-        return -1;
-      }
-
-      int result = resultSet.getInt(1);
-      if (resultSet.wasNull())
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("No last index found -> list is empty. NULL "); //$NON-NLS-1$
-        }
-
-        return -1;
-      }
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Read list last index = " + result); //$NON-NLS-1$
-      }
-
-      return result;
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(pstmt);
     }
   }
 
@@ -494,7 +386,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
   {
     String tableName = getTable().getName();
     String listJoin = getMappingStrategy().getListJoin("a_t", "l_t");
-  
+
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT l_t."); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
@@ -514,10 +406,10 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
     builder.append(" IN "); //$NON-NLS-1$
     builder.append(idString);
     String sql = builder.toString();
-  
+
     ResultSet resultSet = null;
     Statement stmt = null;
-  
+
     try
     {
       stmt = accessor.getConnection().createStatement();
@@ -525,7 +417,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
       {
         TRACER.format("Query XRefs (list): {0}", sql);
       }
-  
+
       resultSet = stmt.executeQuery(sql);
       while (resultSet.next())
       {
@@ -534,24 +426,24 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
         idLong = resultSet.getLong(2);
         CDOID targetId = CDOIDUtil.createLong(idLong);
         int idx = resultSet.getInt(3);
-  
+
         boolean more = context.addXRef(targetId, srcId, (EReference)getFeature(), idx);
         if (TRACER.isEnabled())
         {
           TRACER.format("  add XRef to context: src={0}, tgt={1}, idx={2}", srcId, targetId, idx);
         }
-  
+
         if (!more)
         {
           if (TRACER.isEnabled())
           {
             TRACER.format("  result limit reached. Ignoring further results.");
           }
-  
+
           return false;
         }
       }
-  
+
       return true;
     }
     catch (SQLException ex)

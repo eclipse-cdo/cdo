@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - 271444: [DB] Multiple refactorings bug 271444
  *    Christopher Albert - 254455: [DB] Support FeatureMaps bug 254455
+ *    Stefan Winkler - Bug 329025: [DB] Support branching for range-based mapping strategy 
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -513,8 +514,8 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     }
   }
 
-  public void processDelta(final IDBStoreAccessor accessor, final CDOID id, int oldVersion, final int newVersion,
-      long created, CDOListFeatureDelta listDelta)
+  public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion,
+      final int newVersion, long created, CDOListFeatureDelta listDelta)
   {
     CDOFeatureDeltaVisitor visitor = new CDOFeatureDeltaVisitor()
     {

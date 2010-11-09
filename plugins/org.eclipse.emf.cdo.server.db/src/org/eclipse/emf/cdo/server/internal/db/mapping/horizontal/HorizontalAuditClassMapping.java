@@ -10,6 +10,7 @@
  *    Stefan Winkler - major refactoring
  *    Stefan Winkler - Bug 249610: [DB] Support external references (Implementation)
  *    Lothar Werzinger - Bug 296440: [DB] Change RDB schema to improve scalability of to-many references in audit mode
+ *    Stefan Winkler - Bug 329025: [DB] Support branching for range-based mapping strategy
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -17,6 +18,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
@@ -96,6 +98,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
   private void initSQLStrings()
   {
     Map<EStructuralFeature, String> unsettableFields = getUnsettableFields();
+    Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
 
     // ----------- Select Revision ---------------------------
     StringBuilder builder = new StringBuilder();
@@ -122,6 +125,15 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     if (unsettableFields != null)
     {
       for (String fieldName : unsettableFields.values())
+      {
+        builder.append(", "); //$NON-NLS-1$
+        builder.append(fieldName);
+      }
+    }
+
+    if (listSizeFields != null)
+    {
+      for (String fieldName : listSizeFields.values())
       {
         builder.append(", "); //$NON-NLS-1$
         builder.append(fieldName);
@@ -196,6 +208,15 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
       }
     }
 
+    if (listSizeFields != null)
+    {
+      for (String fieldName : listSizeFields.values())
+      {
+        builder.append(", "); //$NON-NLS-1$
+        builder.append(fieldName);
+      }
+    }
+
     builder.append(") VALUES (?, ?, ?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
 
     for (int i = 0; i < getValueMappings().size(); i++)
@@ -206,6 +227,14 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     if (unsettableFields != null)
     {
       for (int i = 0; i < unsettableFields.size(); i++)
+      {
+        builder.append(", ?"); //$NON-NLS-1$
+      }
+    }
+
+    if (listSizeFields != null)
+    {
+      for (int i = 0; i < listSizeFields.size(); i++)
       {
         builder.append(", ?"); //$NON-NLS-1$
       }
@@ -452,6 +481,19 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
         mapping.setValueFromRevision(stmt, col++, revision);
       }
 
+      Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
+      if (listSizeFields != null)
+      {
+        // isSetCol now points to the first listTableSize-column
+        col = isSetCol;
+
+        for (EStructuralFeature feature : listSizeFields.keySet())
+        {
+          CDOList list = revision.getList(feature);
+          stmt.setInt(col++, list.size());
+        }
+      }
+
       CDODBUtil.sqlUpdate(stmt, true);
     }
     catch (SQLException e)
@@ -611,11 +653,14 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
 
     private InternalCDORevision newRevision;
 
+    private int branchId;
+
     public void process(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created)
     {
       this.accessor = accessor;
       this.created = created;
       id = delta.getID();
+      branchId = delta.getBranch().getID();
       oldVersion = delta.getVersion();
 
       if (TRACER.isEnabled())
@@ -667,8 +712,9 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
 
     public void visit(CDOListFeatureDelta delta)
     {
+      delta.apply(newRevision);
       IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(delta.getFeature());
-      listMapping.processDelta(accessor, id, oldVersion, oldVersion + 1, created, delta);
+      listMapping.processDelta(accessor, id, branchId, oldVersion, oldVersion + 1, created, delta);
     }
 
     public void visit(CDOClearFeatureDelta delta)

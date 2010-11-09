@@ -385,6 +385,148 @@ public class BranchingTest extends AbstractCDOTest
     session.close();
   }
 
+  public void testCommitAddOrderDetail() throws Exception
+  {
+    CDOSession session = openSession1();
+    CDOBranchManager branchManager = session.getBranchManager();
+
+    // Commit to main branch
+    CDOBranch mainBranch = branchManager.getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+    assertEquals(mainBranch, transaction.getBranch());
+    assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
+
+    Product1 product = getModel1Factory().createProduct1();
+    product.setName("CDO");
+
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+    orderDetail.setProduct(product);
+    orderDetail.setPrice(5);
+
+    CDOResource resource = transaction.createResource("/res");
+    resource.getContents().add(product);
+    resource.getContents().add(orderDetail);
+
+    CDOCommitInfo commitInfo = transaction.commit();
+    dumpAll(session);
+    assertEquals(mainBranch, commitInfo.getBranch());
+    long commitTime1 = commitInfo.getTimeStamp();
+    transaction.close();
+
+    // Commit to sub branch
+    CDOBranch subBranch = mainBranch.createBranch("subBranch", commitTime1);
+    transaction = session.openTransaction(subBranch);
+    assertEquals(subBranch, transaction.getBranch());
+    assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
+
+    resource = transaction.getResource("/res");
+    orderDetail = (OrderDetail)resource.getContents().get(1);
+    assertEquals(5.0f, orderDetail.getPrice());
+    product = orderDetail.getProduct();
+    assertEquals("CDO", product.getName());
+
+    // Modify
+    OrderDetail orderDetail2 = getModel1Factory().createOrderDetail();
+    orderDetail2.setProduct(product);
+    orderDetail2.setPrice(10);
+    resource.getContents().add(0, orderDetail2);
+
+    commitInfo = transaction.commit();
+    dumpAll(session);
+    assertEquals(subBranch, commitInfo.getBranch());
+    long commitTime2 = commitInfo.getTimeStamp();
+
+    transaction.close();
+    closeSession1();
+
+    session = openSession2();
+    branchManager = session.getBranchManager();
+    mainBranch = branchManager.getMainBranch();
+    subBranch = mainBranch.getBranch("subBranch");
+
+    check(session, mainBranch, commitTime1, 5, "CDO");
+    check(session, mainBranch, commitTime2, 5, "CDO");
+    check(session, mainBranch, CDOBranchPoint.UNSPECIFIED_DATE, 5, "CDO");
+
+    check(session, subBranch, commitTime1, 5, "CDO");
+    check(session, subBranch, commitTime2, 5, 10, "CDO");
+    check(session, subBranch, CDOBranchPoint.UNSPECIFIED_DATE, 5, 10, "CDO");
+
+    session.close();
+  }
+
+  public void testCommitRemoveOrderDetail() throws Exception
+  {
+    CDOSession session = openSession1();
+    CDOBranchManager branchManager = session.getBranchManager();
+
+    // Commit to main branch
+    CDOBranch mainBranch = branchManager.getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+    assertEquals(mainBranch, transaction.getBranch());
+    assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
+
+    Product1 product = getModel1Factory().createProduct1();
+    product.setName("CDO");
+
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+    orderDetail.setProduct(product);
+    orderDetail.setPrice(5);
+
+    OrderDetail orderDetail2 = getModel1Factory().createOrderDetail();
+    orderDetail2.setProduct(product);
+    orderDetail2.setPrice(10);
+
+    CDOResource resource = transaction.createResource("/res");
+    resource.getContents().add(orderDetail2);
+    resource.getContents().add(product);
+    resource.getContents().add(orderDetail);
+
+    CDOCommitInfo commitInfo = transaction.commit();
+    dumpAll(session);
+    assertEquals(mainBranch, commitInfo.getBranch());
+    long commitTime1 = commitInfo.getTimeStamp();
+    transaction.close();
+
+    // Commit to sub branch
+    CDOBranch subBranch = mainBranch.createBranch("subBranch", commitTime1);
+    transaction = session.openTransaction(subBranch);
+    assertEquals(subBranch, transaction.getBranch());
+    assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
+
+    resource = transaction.getResource("/res");
+    orderDetail = (OrderDetail)resource.getContents().get(2);
+    assertEquals(5.0f, orderDetail.getPrice());
+    product = orderDetail.getProduct();
+    assertEquals("CDO", product.getName());
+
+    // Modify
+    resource.getContents().remove(product.getOrderDetails().remove(1));
+
+    commitInfo = transaction.commit();
+    dumpAll(session);
+    assertEquals(subBranch, commitInfo.getBranch());
+    long commitTime2 = commitInfo.getTimeStamp();
+
+    transaction.close();
+    closeSession1();
+
+    session = openSession2();
+    branchManager = session.getBranchManager();
+    mainBranch = branchManager.getMainBranch();
+    subBranch = mainBranch.getBranch("subBranch");
+
+    check(session, mainBranch, commitTime1, 5, 10, "CDO");
+    check(session, mainBranch, commitTime2, 5, 10, "CDO");
+    check(session, mainBranch, CDOBranchPoint.UNSPECIFIED_DATE, 5, 10, "CDO");
+
+    check(session, subBranch, commitTime1, 5, 10, "CDO");
+    check(session, subBranch, commitTime2, 5, "CDO");
+    check(session, subBranch, CDOBranchPoint.UNSPECIFIED_DATE, 5, "CDO");
+
+    session.close();
+  }
+
   public void _testDetachExisting() throws Exception
   {
     CDOSession session = openSession1();
@@ -519,6 +661,7 @@ public class BranchingTest extends AbstractCDOTest
   {
     CDOView view = session.openView(branch, timeStamp);
     CDOResource resource = view.getResource("/res");
+    assertEquals(2, resource.getContents().size());
 
     dumpAll(session);
     OrderDetail orderDetail = (OrderDetail)resource.getContents().get(1);
@@ -529,6 +672,29 @@ public class BranchingTest extends AbstractCDOTest
     Product1 product = orderDetail.getProduct();
     dumpAll(session);
     assertEquals(name, product.getName());
+
+    view.close();
+  }
+
+  private void check(CDOSession session, CDOBranch branch, long timeStamp, float price, float price2, String name)
+  {
+    CDOView view = session.openView(branch, timeStamp);
+    CDOResource resource = view.getResource("/res");
+    assertEquals(3, resource.getContents().size());
+
+    dumpAll(session);
+    OrderDetail orderDetail2 = (OrderDetail)resource.getContents().get(0);
+    OrderDetail orderDetail = (OrderDetail)resource.getContents().get(2);
+
+    dumpAll(session);
+    assertEquals(price, orderDetail.getPrice());
+    assertEquals(price2, orderDetail2.getPrice());
+
+    Product1 product = orderDetail.getProduct();
+    Product1 product2 = orderDetail2.getProduct();
+    dumpAll(session);
+    assertEquals(name, product.getName());
+    assertEquals(name, product2.getName());
 
     view.close();
   }

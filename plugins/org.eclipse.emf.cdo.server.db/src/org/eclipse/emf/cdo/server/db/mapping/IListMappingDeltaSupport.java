@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - 271444: [DB] Multiple refactorings bug 271444
+ *    Stefan Winkler - Bug 329025: [DB] Support branching for range-based mapping strategy
  */
 package org.eclipse.emf.cdo.server.db.mapping;
 
@@ -39,7 +40,8 @@ public interface IListMappingDeltaSupport
    *          the creation date for the new revision
    * @param delta
    *          the {@link CDOListFeatureDelta} which contains the list deltas.
+   * @since 4.0
    */
-  public void processDelta(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, long created,
-      CDOListFeatureDelta delta);
+  public void processDelta(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion,
+      long created, CDOListFeatureDelta delta);
 }

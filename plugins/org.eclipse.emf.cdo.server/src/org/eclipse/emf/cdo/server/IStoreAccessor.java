@@ -13,15 +13,21 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.model.lob.CDOClob;
 import org.eclipse.emf.cdo.common.model.lob.CDOLob;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
@@ -165,11 +171,30 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   public void queryXRefs(QueryXRefsContext context);
 
   /**
+   * Determines which of the large objects identified by the given {@link CDOLob#getID() IDs} are known in the backend
+   * represented by this {@link IStoreAccessor} by removing the unknown IDs from the passed collection.
+   * <p>
+   * The identifier of a {@link CDOLob large object} is the SHA-1 digest of the content of this large object.
+   * <p>
+   * <b>Usage context:</b> This method is only called in the context of a commit operation of a client transaction if
+   * that transaction contains additions of or changes to large objects.
+   * 
+   * @param ids
+   *          the collection of large object IDs that the unknown IDs are supposed to be removed from.
    * @since 4.0
    */
   public void queryLobs(List<byte[]> ids);
 
   /**
+   * Serializes the content of the large object identified by the given {@link CDOLob#getID() ID} to the given
+   * <i>stream</i>.
+   * <p>
+   * The identifier of a {@link CDOLob large object} is the SHA-1 digest of the content of this large object.
+   * 
+   * @param id
+   *          the ID of the large object whose content is to be written to the <i>stream</i>.
+   * @throws IOException
+   *           if the <i>stream</i> could not be written to.
    * @since 4.0
    */
   public void loadLob(byte[] id, OutputStream out) throws IOException;
@@ -221,29 +246,154 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   public void rollback();
 
   /**
+   * Serializes all backend data within the given ranges such that it can be deserialized by the
+   * {@link #rawImport(CDODataInput, int, int, long, long, OMMonitor) rawImport()} method of a different instance of the
+   * same implementation of {@link IStoreAccessor}.
+   * <p>
+   * <b>Implementation note:</b> The implementor of this method is free to choose a serialization format as it only
+   * needs to be understood by different instances of the same implementation of {@link IStoreAccessor}.
+   * <p>
+   * <b>Usage context:</b> This method is only called in the context of a
+   * {@link CDOProtocolConstants#SIGNAL_REPLICATE_REPOSITORY_RAW REPLICATE_REPOSITORY_RAW} signal that is triggered from
+   * {@link IRepositorySynchronizer}.
+   * 
+   * @param out
+   *          the <i>stream</i> to serialize the data to.
+   * @param fromBranchID
+   *          the {@link CDOBranch#getID() ID} of the first branch to be exported.
+   * @param toBranchID
+   *          the {@link CDOBranch#getID() ID} of the last branch to be exported.
+   * @param fromCommitTime
+   *          the first {@link CDOBranchPoint#getTimeStamp() time stamp} of all non-branch data (e.g.
+   *          {@link CDORevision revisions}, {@link CDOCommitInfo commit infos}, {@link CDOPackageUnit package units},
+   *          etc...) to be exported.
+   * @param toCommitTime
+   *          the last {@link CDOBranchPoint#getTimeStamp() time stamp} of all non-branch data (e.g. {@link CDORevision
+   *          revisions}, {@link CDOCommitInfo commit infos}, {@link CDOPackageUnit package units}, etc...) to be
+   *          exported.
+   * @throws IOException
+   *           if the <i>stream</i> could not be written to.
+   * @throws UnsupportedOperationException
+   *           if this {@link IStoreAccessor} does not support branching.
    * @since 3.0
    */
   public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException;
 
   /**
+   * Deserializes backend data that has been serialized by the {@link #rawExport(CDODataOutput, int, int, long, long)
+   * rawExport()} method of a different instance of the same implementation of {@link IStoreAccessor}.
+   * <p>
+   * <b>Implementation note:</b> The implementor of this method is free to choose a serialization format as it only
+   * needs to be understood by different instances of the same implementation of {@link IStoreAccessor}.
+   * <p>
+   * <b>Usage context:</b> This method is only called in the context of a
+   * {@link CDOProtocolConstants#SIGNAL_REPLICATE_REPOSITORY_RAW REPLICATE_REPOSITORY_RAW} signal that is triggered from
+   * {@link IRepositorySynchronizer}.
+   * 
+   * @param in
+   *          the <i>stream</i> to deserialize the data from.
+   * @param fromBranchID
+   *          the {@link CDOBranch#getID() ID} of the first branch to be imported.
+   * @param toBranchID
+   *          the {@link CDOBranch#getID() ID} of the last branch to be imported.
+   * @param fromCommitTime
+   *          the first {@link CDOBranchPoint#getTimeStamp() time stamp} of all non-branch data (e.g.
+   *          {@link CDORevision revisions}, {@link CDOCommitInfo commit infos}, {@link CDOPackageUnit package units},
+   *          etc...) to be imported.
+   * @param toCommitTime
+   *          the last {@link CDOBranchPoint#getTimeStamp() time stamp} of all non-branch data (e.g. {@link CDORevision
+   *          revisions}, {@link CDOCommitInfo commit infos}, {@link CDOPackageUnit package units}, etc...) to be
+   *          imported.
+   * @throws IOException
+   *           if the <i>stream</i> could not be read from.
+   * @throws UnsupportedOperationException
+   *           if this {@link IStoreAccessor} does not support branching.
    * @since 4.0
    */
   public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
       OMMonitor monitor) throws IOException;
 
   /**
+   * Stores the given {@link CDOPackageUnit package units} in the backend represented by this {@link IStoreAccessor}
+   * without going through a regular {@link #commit(OMMonitor) commit}. A regular commit operation would assign new
+   * {@link CDOPackageInfo#getMetaIDRange() meta IDs} and {@link CDOPackageUnit#getTimeStamp() time stamps}, which is
+   * not desired in the context of a replication operation.
+   * <p>
+   * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
+   * this method are followed by a single final call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method
+   * where the accumulated backend changes can be committed atomically.
+   * <p>
+   * <b>Usage context:</b> This method is only called in the context of CDOWorkspace operations like e.g. checkout().
+   * 
+   * @param packageUnits
+   *          the package units to be stored in the backend represented by this {@link IStoreAccessor}.
+   * @param context
+   *          an object of an arbitrary class that has been created during previous calls to this method (but after the
+   *          last call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method. This context object may be used
+   *          to remember implementation specific state between calls to the two rawStore() methods and the rawCommit()
+   *          method. Its type and value are opaque to the caller, which maintains the context object between these
+   *          calls. A new object may be created by the implementor of this method at any time and should be returned by
+   *          this method to preserve it for later calls. Can be <code>null</code>.
+   * @param monitor
+   *          a progress monitor that <b>may be</b> used to report proper progress of this operation to the caller and
+   *          <b>may be</b> used to react to cancelation requests of the caller and <b>must be</b> touched regularly to
+   *          prevent timeouts from expiring in the caller.
+   * @return the context object (see above) to be preserved by the caller of this method for later calls.
    * @since 4.0
+   * @see #rawCommit(Object, OMMonitor)
    */
   public Object rawStore(InternalCDOPackageUnit[] packageUnits, Object context, OMMonitor monitor);
 
   /**
+   * Stores the given {@link CDORevision revision} in the backend represented by this {@link IStoreAccessor} without
+   * going through a regular {@link #commit(OMMonitor) commit}. A regular commit operation would assign new
+   * {@link CDORevisionKey#getID() IDs} and {@link CDOBranchPoint#getTimeStamp() time stamps}, which is not desired in
+   * the context of a replication operation.
+   * <p>
+   * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
+   * this method are followed by a single final call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method
+   * where the accumulated backend changes can be committed atomically.
+   * <p>
+   * <b>Usage context:</b> This method is only called in the context of CDOWorkspace operations like e.g. checkout().
+   * 
+   * @param revision
+   *          the revision to be stored in the backend represented by this {@link IStoreAccessor}.
+   * @param context
+   *          an object of an arbitrary class that has been created during previous calls to this method (but after the
+   *          last call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method. This context object may be used
+   *          to remember implementation specific state between calls to the two rawStore() methods and the rawCommit()
+   *          method. Its type and value are opaque to the caller, which maintains the context object between these
+   *          calls. A new object may be created by the implementor of this method at any time and should be returned by
+   *          this method to preserve it for later calls. Can be <code>null</code>.
+   * @param monitor
+   *          a progress monitor that <b>may be</b> used to report proper progress of this operation to the caller and
+   *          <b>may be</b> used to react to cancelation requests of the caller and <b>must be</b> touched regularly to
+   *          prevent timeouts from expiring in the caller.
+   * @return the context object (see above) to be preserved by the caller of this method for later calls.
    * @since 4.0
+   * @see #rawCommit(Object, OMMonitor)
    */
   public Object rawStore(InternalCDORevision revision, Object context, OMMonitor monitor);
 
   /**
+   * Atomically commits the accumulated backend changes resulting from previous calls to one or both of the two
+   * rawStore() methods.
+   * <p>
+   * <b>Usage context:</b> This method is only called in the context of CDOWorkspace operations like e.g. checkout().
+   * 
+   * @param context
+   *          an object of an arbitrary class that has been created during previous calls to one or both of the two
+   *          rawStore() methods. This context object may be used to remember implementation specific state between
+   *          calls to the two rawStore() methods and the rawCommit() method. Its type and value are opaque to the
+   *          caller, which maintains the context object between these calls.Can be <code>null</code>.
+   * @param monitor
+   *          a progress monitor that <b>may be</b> used to report proper progress of this operation to the caller and
+   *          <b>may be</b> used to react to cancelation requests of the caller and <b>must be</b> touched regularly to
+   *          prevent timeouts from expiring in the caller.
    * @since 4.0
+   * @see #rawStore(InternalCDOPackageUnit[], Object, OMMonitor)
+   * @see #rawStore(InternalCDORevision, Object, OMMonitor)
    */
   public void rawCommit(Object context, OMMonitor monitor);
 

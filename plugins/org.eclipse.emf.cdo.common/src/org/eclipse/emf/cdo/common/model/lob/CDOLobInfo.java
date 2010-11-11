@@ -30,6 +30,9 @@ public class CDOLobInfo
     this.size = size;
   }
 
+  /**
+   * The identifier of this large object. A SHA-1 digest of the content of this large object.
+   */
   public final byte[] getID()
   {
     return id;

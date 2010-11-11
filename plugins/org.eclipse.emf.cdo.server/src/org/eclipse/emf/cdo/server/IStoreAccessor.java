@@ -325,6 +325,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * where the accumulated backend changes can be committed atomically.
    * <p>
    * <b>Usage context:</b> This method is only called in the context of CDOWorkspace operations like e.g. checkout().
+   * The associated repository will in any cases be in non-auditing mode.
    * 
    * @param packageUnits
    *          the package units to be stored in the backend represented by this {@link IStoreAccessor}.
@@ -356,6 +357,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * where the accumulated backend changes can be committed atomically.
    * <p>
    * <b>Usage context:</b> This method is only called in the context of CDOWorkspace operations like e.g. checkout().
+   * The associated repository will in any cases be in non-auditing mode.
    * 
    * @param revision
    *          the revision to be stored in the backend represented by this {@link IStoreAccessor}.
@@ -381,6 +383,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * rawStore() methods.
    * <p>
    * <b>Usage context:</b> This method is only called in the context of CDOWorkspace operations like e.g. checkout().
+   * The associated repository will in any cases be in non-auditing mode.
    * 
    * @param context
    *          an object of an arbitrary class that has been created during previous calls to one or both of the two

@@ -93,7 +93,7 @@ public interface CDOResourceNode extends CDOObject
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResourceNode_Name()
-   * @model
+   * @model annotation="http://www.eclipse.org/CDO/DBStore columnType='VARCHAR' columnLength='255'"
    * @generated
    */
   String getName();

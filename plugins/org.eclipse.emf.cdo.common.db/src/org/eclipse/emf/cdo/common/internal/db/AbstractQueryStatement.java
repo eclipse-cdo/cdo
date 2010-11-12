@@ -29,6 +29,7 @@ public abstract class AbstractQueryStatement<Result> extends AbstractDBAccessor
   public Result query(Connection connection) throws Exception
   {
     PreparedStatement preparedStatement = null;
+
     try
     {
       preparedStatement = getPreparedStatement(connection);

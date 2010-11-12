@@ -4,11 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.db;
+
+import org.eclipse.net4j.util.StringUtil;
 
 /**
  * TODO Provide consistent exception hierarchy
@@ -36,5 +38,41 @@ public class DBException extends RuntimeException
   public DBException(String message, Throwable cause)
   {
     super(message, cause);
+  }
+
+  /**
+   * @since 4.0
+   */
+  public DBException(Throwable cause, String sql)
+  {
+    super(format(null, sql), cause);
+  }
+
+  /**
+   * @since 4.0
+   */
+  public DBException(String message, Throwable cause, String sql)
+  {
+    super(format(message, sql), cause);
+  }
+
+  private static String format(String message, String sql)
+  {
+    if (StringUtil.isEmpty(message))
+    {
+      if (StringUtil.isEmpty(sql))
+      {
+        return "";
+      }
+
+      return sql;
+    }
+
+    if (StringUtil.isEmpty(sql))
+    {
+      return message;
+    }
+
+    return message + ": " + sql;
   }
 }

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: EtypesPackageImpl.java,v 1.2 2010-10-03 17:43:22 estepper Exp $
+ * $Id: EtypesPackageImpl.java,v 1.3 2010-11-12 17:37:25 estepper Exp $
  */
 package org.eclipse.emf.cdo.etypes.impl;
 
@@ -25,12 +25,14 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EDataType blobEDataType = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EDataType clobEDataType = null;
@@ -55,17 +57,18 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
-   * <p>This method is used to initialize {@link EtypesPackage#eINSTANCE} when that field is accessed.
-   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
-   * <!-- begin-user-doc -->
+   * <p>
+   * This method is used to initialize {@link EtypesPackage#eINSTANCE} when that field is accessed. Clients should not
+   * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -98,6 +101,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EDataType getBlob()
@@ -107,6 +111,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EDataType getClob()
@@ -116,6 +121,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EtypesFactory getEtypesFactory()
@@ -125,14 +131,15 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package.  This method is
-   * guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
+   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void createPackageContents()
@@ -148,14 +155,15 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model.  This
-   * method is guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
+   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void initializePackageContents()

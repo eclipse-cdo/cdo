@@ -6,7 +6,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="CDOResourceNode" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="folder" eType="#//CDOResourceFolder"
         eOpposite="#//CDOResourceFolder/nodes"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/CDO/DBStore">
+        <details key="columnType" value="VARCHAR"/>
+        <details key="columnLength" value="255"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         volatile="true" transient="true" derived="true"/>
   </eClassifiers>

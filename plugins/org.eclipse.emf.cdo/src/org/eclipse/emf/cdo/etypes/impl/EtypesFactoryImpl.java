@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: EtypesFactoryImpl.java,v 1.2 2010-10-03 17:43:22 estepper Exp $
+ * $Id: EtypesFactoryImpl.java,v 1.3 2010-11-12 17:37:25 estepper Exp $
  */
 package org.eclipse.emf.cdo.etypes.impl;
 
@@ -27,8 +27,8 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static EtypesFactory init()
@@ -50,8 +50,8 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EtypesFactoryImpl()
@@ -61,6 +61,7 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -75,6 +76,7 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -93,6 +95,7 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -111,6 +114,7 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOBlob createBlobFromString(EDataType eDataType, String initialValue)
@@ -120,6 +124,7 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String convertBlobToString(EDataType eDataType, Object instanceValue)
@@ -129,6 +134,7 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOClob createClobFromString(EDataType eDataType, String initialValue)
@@ -138,6 +144,7 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String convertClobToString(EDataType eDataType, Object instanceValue)
@@ -147,6 +154,7 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EtypesPackage getEtypesPackage()
@@ -156,6 +164,7 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @deprecated
    * @generated
    */

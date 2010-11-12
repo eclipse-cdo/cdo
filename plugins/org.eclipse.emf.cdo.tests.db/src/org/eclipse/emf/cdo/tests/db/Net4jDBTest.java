@@ -43,8 +43,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class Net4jDBTest extends AbstractCDOTest
 {
-  private static final String TABLE_NAME = "testTable";
-
   private static final String FIELD_NAME = "testField";
 
   private DBStore store;
@@ -59,7 +57,7 @@ public class Net4jDBTest extends AbstractCDOTest
     registerColumn(DBType.BIGINT, Long.MIN_VALUE);
     registerColumn(DBType.BIGINT, 0L);
     registerColumn(DBType.BIGINT, 42L);
-    doTest(TABLE_NAME);
+    doTest(getName());
   }
 
   public void testBinary() throws Exception
@@ -73,7 +71,7 @@ public class Net4jDBTest extends AbstractCDOTest
     }
 
     registerColumn(DBType.BINARY, data);
-    doTest(TABLE_NAME);
+    doTest(getName());
   }
 
   public void testVarBinary() throws Exception
@@ -87,7 +85,7 @@ public class Net4jDBTest extends AbstractCDOTest
     }
 
     registerColumn(DBType.VARBINARY, data);
-    doTest(TABLE_NAME);
+    doTest(getName());
   }
 
   public void testLongVarBinary() throws Exception
@@ -101,20 +99,18 @@ public class Net4jDBTest extends AbstractCDOTest
     }
 
     registerColumn(DBType.LONGVARBINARY, data);
-    doTest(TABLE_NAME);
+    doTest(getName());
   }
 
   public void testBit() throws Exception
   {
     registerColumn(DBType.BIT, true);
     registerColumn(DBType.BIT, false);
-    doTest(TABLE_NAME);
+    doTest(getName());
   }
 
   public void testBlob() throws Exception
   {
-    registerColumn(DBType.BLOB, new byte[0]);
-
     byte[] data = new byte[1000000];
     for (int i = 0; i < data.length; i++)
     {
@@ -122,28 +118,33 @@ public class Net4jDBTest extends AbstractCDOTest
     }
 
     registerColumn(DBType.BLOB, data);
-    doTest(TABLE_NAME);
+    doTest(getName());
+  }
+
+  public void testBlobLength0() throws Exception
+  {
+    registerColumn(DBType.BLOB, new byte[0]);
+    doTest(getName());
   }
 
   public void testBoolean() throws Exception
   {
     registerColumn(DBType.BOOLEAN, true);
     registerColumn(DBType.BOOLEAN, false);
-    doTest(TABLE_NAME);
+    doTest(getName());
   }
 
   public void testChar() throws Exception
   {
     registerColumn(DBType.CHAR, "0");
     registerColumn(DBType.CHAR, "a");
-    registerColumn(DBType.CHAR, "\255");
-    registerColumn(DBType.CHAR, "\u1234");
-    doTest(TABLE_NAME);
+    registerColumn(DBType.CHAR, "\255"); // Fails for DB2
+    registerColumn(DBType.CHAR, "\u1234"); // Fails for DB2
+    doTest(getName());
   }
 
   public void testClob() throws Exception
   {
-    registerColumn(DBType.CLOB, "");
     registerColumn(DBType.CLOB, "Test");
 
     StringBuffer b = new StringBuffer();
@@ -153,7 +154,13 @@ public class Net4jDBTest extends AbstractCDOTest
     }
 
     registerColumn(DBType.CLOB, b.toString());
-    doTest(TABLE_NAME);
+    doTest(getName());
+  }
+
+  public void testClobLength0() throws Exception
+  {
+    registerColumn(DBType.CLOB, "");
+    doTest(getName());
   }
 
   public void testTinyInt() throws Exception
@@ -162,7 +169,7 @@ public class Net4jDBTest extends AbstractCDOTest
     registerColumn(DBType.TINYINT, Byte.MIN_VALUE);
     registerColumn(DBType.TINYINT, new Byte("0"));
     registerColumn(DBType.TINYINT, new Integer(42).byteValue());
-    doTest(TABLE_NAME);
+    doTest(getName());
   }
 
   public void testSmallInt() throws Exception
@@ -171,7 +178,7 @@ public class Net4jDBTest extends AbstractCDOTest
     registerColumn(DBType.SMALLINT, Short.MIN_VALUE);
     registerColumn(DBType.SMALLINT, (short)-1);
     registerColumn(DBType.SMALLINT, (short)5);
-    doTest(TABLE_NAME);
+    doTest(getName());
   }
 
   public void testInteger() throws Exception
@@ -180,34 +187,34 @@ public class Net4jDBTest extends AbstractCDOTest
     registerColumn(DBType.INTEGER, Integer.MIN_VALUE);
     registerColumn(DBType.INTEGER, -1);
     registerColumn(DBType.INTEGER, 5);
-    doTest(TABLE_NAME);
+    doTest(getName());
   }
 
   public void testFloat() throws Exception
   {
     registerColumn(DBType.FLOAT, Float.MAX_VALUE);
-    registerColumn(DBType.FLOAT, Float.MIN_VALUE);
+    registerColumn(DBType.FLOAT, Float.MIN_VALUE); // Fails for DB2
     registerColumn(DBType.FLOAT, -.1f);
     registerColumn(DBType.FLOAT, 3.33333f);
-    doTest(TABLE_NAME);
+    doTest(getName());
   }
 
   public void testReal() throws Exception
   {
     registerColumn(DBType.REAL, Float.MAX_VALUE);
-    registerColumn(DBType.REAL, Float.MIN_VALUE);
+    registerColumn(DBType.REAL, Float.MIN_VALUE); // Fails for DB2
     registerColumn(DBType.REAL, -.1f);
     registerColumn(DBType.REAL, 3.33333f);
-    doTest(TABLE_NAME);
+    doTest(getName());
   }
 
   public void testDouble() throws Exception
   {
     registerColumn(DBType.DOUBLE, new Double(Double.MAX_VALUE));
-    registerColumn(DBType.DOUBLE, new Double(Double.MIN_VALUE));
+    // registerColumn(DBType.DOUBLE, new Double(Double.MIN_VALUE));
     registerColumn(DBType.DOUBLE, -.1d);
     registerColumn(DBType.DOUBLE, 3.33333d);
-    doTest(TABLE_NAME);
+    doTest(getName());
   }
 
   public void _testNumeric() throws Exception
@@ -228,7 +235,7 @@ public class Net4jDBTest extends AbstractCDOTest
         registerColumn(DBType.NUMERIC, numberDecimal1);
         registerColumn(DBType.NUMERIC, numberDecimal2);
 
-        doTest(TABLE_NAME + precision + "_" + scale);
+        doTest(getName() + precision + "_" + scale);
         columns.clear();
       }
     }
@@ -252,7 +259,7 @@ public class Net4jDBTest extends AbstractCDOTest
         registerColumn(DBType.DECIMAL, numberDecimal1);
         registerColumn(DBType.DECIMAL, numberDecimal2);
 
-        doTest(TABLE_NAME + precision + "_" + scale);
+        doTest(getName() + precision + "_" + scale);
         columns.clear();
       }
     }
@@ -268,7 +275,7 @@ public class Net4jDBTest extends AbstractCDOTest
     registerColumn(DBType.VARCHAR, "The quick brown fox jumps over the lazy dog.");
     registerColumn(DBType.VARCHAR, "\\,:\",\'");
 
-    doTest(TABLE_NAME);
+    doTest(getName());
   }
 
   public void testLongVarChar() throws Exception
@@ -281,7 +288,7 @@ public class Net4jDBTest extends AbstractCDOTest
     registerColumn(DBType.LONGVARCHAR, "The quick brown fox jumps over the lazy dog.");
     registerColumn(DBType.LONGVARCHAR, "\\,:\",\'");
 
-    doTest(TABLE_NAME);
+    doTest(getName());
   }
 
   public void testDate() throws Exception
@@ -289,9 +296,9 @@ public class Net4jDBTest extends AbstractCDOTest
     registerColumn(DBType.DATE, new GregorianCalendar(2010, 04, 21).getTimeInMillis());
     registerColumn(DBType.DATE, new GregorianCalendar(1950, 04, 21).getTimeInMillis());
     registerColumn(DBType.DATE, new GregorianCalendar(2030, 12, 31).getTimeInMillis());
-    registerColumn(DBType.DATE, new GregorianCalendar(0, 0, 0).getTimeInMillis());
+    registerColumn(DBType.DATE, new GregorianCalendar(0, 0, 0).getTimeInMillis()); // Fails for DB2
 
-    doTest(TABLE_NAME);
+    doTest(getName());
   }
 
   public void testTime() throws Exception
@@ -304,17 +311,7 @@ public class Net4jDBTest extends AbstractCDOTest
     //
     // registerColumn(DBType.TIME, HOURS_toMillis(24));
 
-    doTest(TABLE_NAME);
-  }
-
-  private long HOURS_toMillis(int hours)
-  {
-    return 1000L * 60L * 60L * hours;
-  }
-
-  private long MINUTES_toMillis(int minutes)
-  {
-    return 1000L * 60L * minutes;
+    doTest(getName());
   }
 
   public void testTimestamp() throws Exception
@@ -327,7 +324,7 @@ public class Net4jDBTest extends AbstractCDOTest
     //
     // registerColumn(DBType.TIME, HOURS_toMillis(24));
 
-    doTest(TABLE_NAME);
+    doTest(getName());
   }
 
   private void registerColumn(DBType type, Object value)
@@ -434,6 +431,7 @@ public class Net4jDBTest extends AbstractCDOTest
     ByteArrayInputStream input = new ByteArrayInputStream(buffer);
     ExtendedDataInputStream ins = new ExtendedDataInputStream(input);
 
+    c = 1;
     for (Pair<DBType, Object> column : columns)
     {
       Object actual = readTypeValue(ins, column.getElement1());
@@ -443,12 +441,12 @@ public class Net4jDBTest extends AbstractCDOTest
         Class<?> componentType = type.getComponentType();
         if (componentType == byte.class)
         {
-          assertEquals("Error with type " + column.getElement1(), true,
+          assertEquals("Error in column " + c + " of type " + column.getElement1(), true,
               Arrays.equals((byte[])column.getElement2(), (byte[])actual));
         }
         else if (componentType == char.class)
         {
-          assertEquals("Error with type " + column.getElement1(), true,
+          assertEquals("Error in column " + c + " with type " + column.getElement1(), true,
               Arrays.equals((char[])column.getElement2(), (char[])actual));
         }
         else
@@ -458,8 +456,10 @@ public class Net4jDBTest extends AbstractCDOTest
       }
       else
       {
-        assertEquals("Error with type " + column.getElement1(), column.getElement2(), actual);
+        assertEquals("Error in column " + c + " with type " + column.getElement1(), column.getElement2(), actual);
       }
+
+      ++c;
     }
   }
 
@@ -473,7 +473,6 @@ public class Net4jDBTest extends AbstractCDOTest
       prepareTable(tableName);
       writeValues(tableName);
       checkValues(tableName);
-
     }
     finally
     {
@@ -700,5 +699,15 @@ public class Net4jDBTest extends AbstractCDOTest
     default:
       throw new UnsupportedOperationException("not implemented");
     }
+  }
+
+  private long HOURS_toMillis(int hours)
+  {
+    return 1000L * 60L * 60L * hours;
+  }
+
+  private long MINUTES_toMillis(int minutes)
+  {
+    return 1000L * 60L * minutes;
   }
 }

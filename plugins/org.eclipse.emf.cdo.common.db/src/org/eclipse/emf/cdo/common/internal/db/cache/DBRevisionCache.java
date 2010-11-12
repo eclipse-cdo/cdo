@@ -162,16 +162,18 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   public InternalCDORevision getRevision(final CDOID id)
   {
     Connection connection = null;
+    String sql = null;
 
     try
     {
       connection = getConnection();
       AbstractQueryStatement<InternalCDORevision> query = createGetRevisionByIDStatement(id);
+      sql = query.getSQL();
       return query.query(connection);
     }
     catch (Exception e)
     {
-      throw new DBException("Error while retrieving the revision from the database", e); //$NON-NLS-1$
+      throw new DBException("Error while retrieving the revision from the database", e, sql); //$NON-NLS-1$
     }
     finally
     {
@@ -184,7 +186,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
     return new AbstractQueryStatement<InternalCDORevision>()
     {
       @Override
-      protected String getSQL()
+      public String getSQL()
       {
         StringBuilder builder = new StringBuilder();
         builder.append("SELECT "); //$NON-NLS-1$
@@ -229,6 +231,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   public InternalCDORevision getRevision(final CDOID id, final CDOBranchPoint branchPoint)
   {
     Connection connection = null;
+    String sql = null;
 
     try
     {
@@ -236,7 +239,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
       AbstractQueryStatement<InternalCDORevision> statement = new AbstractQueryStatement<InternalCDORevision>()
       {
         @Override
-        protected String getSQL()
+        public String getSQL()
         {
           StringBuilder builder = new StringBuilder();
           builder.append("SELECT "); //$NON-NLS-1$
@@ -270,11 +273,12 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
         }
       };
 
+      sql = statement.getSQL();
       return statement.query(connection);
     }
     catch (Exception e)
     {
-      throw new DBException("Error while retrieving a revision by timestamp from the database", e); //$NON-NLS-1$
+      throw new DBException("Error while retrieving a revision by timestamp from the database", e, sql); //$NON-NLS-1$
     }
     finally
     {
@@ -292,6 +296,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   public InternalCDORevision getRevisionByVersion(final CDOID id, final CDOBranchVersion branchVersion)
   {
     Connection connection = null;
+    String sql = null;
 
     try
     {
@@ -299,7 +304,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
       AbstractQueryStatement<InternalCDORevision> statement = new AbstractQueryStatement<InternalCDORevision>()
       {
         @Override
-        protected String getSQL()
+        public String getSQL()
         {
           StringBuilder builder = new StringBuilder();
           builder.append("SELECT "); //$NON-NLS-1$
@@ -332,11 +337,12 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
         }
       };
 
+      sql = statement.getSQL();
       return statement.query(connection);
     }
     catch (Exception e)
     {
-      throw new DBException("Error while retrieving a revision by version from the database", e); //$NON-NLS-1$
+      throw new DBException("Error while retrieving a revision by version from the database", e, sql); //$NON-NLS-1$
     }
     finally
     {
@@ -352,6 +358,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   public List<CDORevision> getCurrentRevisions()
   {
     Connection connection = null;
+    String sql = null;
 
     try
     {
@@ -359,7 +366,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
       AbstractQueryStatement<List<CDORevision>> query = new AbstractQueryStatement<List<CDORevision>>()
       {
         @Override
-        protected String getSQL()
+        public String getSQL()
         {
           StringBuilder builder = new StringBuilder();
           builder.append("SELECT "); //$NON-NLS-1$
@@ -396,11 +403,12 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
         }
       };
 
+      sql = query.getSQL();
       return query.query(connection);
     }
     catch (Exception e)
     {
-      throw new DBException("Error while retrieving a revision by version from the database", e); //$NON-NLS-1$
+      throw new DBException("Error while retrieving a revision by version from the database", e, sql); //$NON-NLS-1$
     }
     finally
     {
@@ -419,11 +427,13 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   {
     CheckUtil.checkArg(revision, "revision");
     Connection connection = null;
+    String sql = null;
 
     try
     {
       connection = getConnection();
       AbstractUpdateStatement update = createAddRevisionStatement((InternalCDORevision)revision);
+      sql = update.getSQL();
       update.update(connection);
 
       if (revision.getVersion() > CDORevision.FIRST_VERSION)
@@ -439,7 +449,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
     }
     catch (Exception e)
     {
-      throw new DBException("Error while retrieving the revision from the database", e); //$NON-NLS-1$
+      throw new DBException("Error while retrieving the revision from the database", e, sql); //$NON-NLS-1$
     }
     finally
     {
@@ -452,7 +462,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
     return new AbstractUpdateStatement()
     {
       @Override
-      protected String getSQL()
+      public String getSQL()
       {
         StringBuilder builder = new StringBuilder();
         builder.append("UPDATE "); //$NON-NLS-1$
@@ -482,7 +492,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
     return new AbstractUpdateStatement()
     {
       @Override
-      protected String getSQL()
+      public String getSQL()
       {
         StringBuilder builder = new StringBuilder();
         builder.append("INSERT INTO "); //$NON-NLS-1$
@@ -557,6 +567,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   public InternalCDORevision removeRevision(CDOID id, CDOBranchVersion branchVersion)
   {
     Connection connection = null;
+    String sql = null;
 
     try
     {
@@ -567,7 +578,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
         AbstractUpdateStatement statement = new AbstractUpdateStatement()
         {
           @Override
-          protected String getSQL()
+          public String getSQL()
           {
             StringBuilder builder = new StringBuilder();
             builder.append("DELETE FROM "); //$NON-NLS-1$
@@ -584,6 +595,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
           }
         };
 
+        sql = statement.getSQL();
         statement.update(connection);
       }
 
@@ -591,7 +603,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
     }
     catch (Exception e)
     {
-      throw new DBException("Error while removing a revision from the database", e); //$NON-NLS-1$
+      throw new DBException("Error while removing a revision from the database", e, sql); //$NON-NLS-1$
     }
     finally
     {
@@ -605,6 +617,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   public void clear()
   {
     Connection connection = null;
+    String sql = null;
 
     try
     {
@@ -612,7 +625,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
       AbstractUpdateStatement update = new AbstractUpdateStatement()
       {
         @Override
-        protected String getSQL()
+        public String getSQL()
         {
           StringBuilder builder = new StringBuilder();
           builder.append("DELETE FROM  "); //$NON-NLS-1$
@@ -621,11 +634,12 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
         }
       };
 
+      sql = update.getSQL();
       update.update(connection);
     }
     catch (Exception e)
     {
-      throw new DBException("Error while clearing the database", e);
+      throw new DBException("Error while clearing the database", e, sql);
     }
     finally
     {

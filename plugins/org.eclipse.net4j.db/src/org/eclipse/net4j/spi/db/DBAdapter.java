@@ -400,6 +400,8 @@ public abstract class DBAdapter implements IDBAdapter
    */
   protected void validateTable(IDBTable table, Statement statement) throws DBException
   {
+    String sql = null;
+
     try
     {
       StringBuilder builder = new StringBuilder();
@@ -407,7 +409,12 @@ public abstract class DBAdapter implements IDBAdapter
       appendFieldNames(builder, table);
       builder.append(" FROM "); //$NON-NLS-1$
       builder.append(table);
-      String sql = builder.toString();
+      sql = builder.toString();
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("{0}", sql); //$NON-NLS-1$
+      }
 
       ResultSet resultSet = statement.executeQuery(sql);
       ResultSetMetaData metaData = resultSet.getMetaData();
@@ -420,7 +427,7 @@ public abstract class DBAdapter implements IDBAdapter
     }
     catch (SQLException ex)
     {
-      throw new DBException(ex.getMessage());
+      throw new DBException("Problem with table " + table, ex, sql);
     }
   }
 

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: EtypesPackage.java,v 1.2 2010-10-03 17:43:22 estepper Exp $
+ * $Id: EtypesPackage.java,v 1.3 2010-11-12 17:37:25 estepper Exp $
  */
 package org.eclipse.emf.cdo.etypes;
 
@@ -26,36 +26,36 @@ import org.eclipse.emf.ecore.EPackage;
 public interface EtypesPackage extends EPackage
 {
   /**
-   * The package name.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNAME = "etypes"; //$NON-NLS-1$
 
   /**
-   * The package namespace URI.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNS_URI = "http://www.eclipse.org/emf/CDO/Etypes/4.0.0"; //$NON-NLS-1$
 
   /**
-   * The package namespace name.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNS_PREFIX = "etypes"; //$NON-NLS-1$
 
   /**
-   * The singleton instance of the package.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   EtypesPackage eINSTANCE = org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl.init();
 
   /**
-   * The meta object id for the '<em>Blob</em>' data type.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '<em>Blob</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.common.model.lob.CDOBlob
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBlob()
    * @generated
@@ -63,8 +63,8 @@ public interface EtypesPackage extends EPackage
   int BLOB = 0;
 
   /**
-   * The meta object id for the '<em>Clob</em>' data type.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '<em>Clob</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.common.model.lob.CDOClob
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getClob()
    * @generated
@@ -94,8 +94,8 @@ public interface EtypesPackage extends EPackage
   EDataType getClob();
 
   /**
-   * Returns the factory that creates the instances of the model.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -110,13 +110,14 @@ public interface EtypesPackage extends EPackage
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
+   * 
    * @generated
    */
   interface Literals
   {
     /**
-     * The meta object literal for the '<em>Blob</em>' data type.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '<em>Blob</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.common.model.lob.CDOBlob
      * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBlob()
      * @generated
@@ -124,8 +125,8 @@ public interface EtypesPackage extends EPackage
     EDataType BLOB = eINSTANCE.getBlob();
 
     /**
-     * The meta object literal for the '<em>Clob</em>' data type.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '<em>Clob</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.common.model.lob.CDOClob
      * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getClob()
      * @generated

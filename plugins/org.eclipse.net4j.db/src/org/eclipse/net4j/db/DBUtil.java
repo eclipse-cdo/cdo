@@ -216,14 +216,14 @@ public final class DBUtil
       try
       {
         Statement statement = resultSet.getStatement();
-        if (statement != null)
+        if (statement != null && statement.getMaxRows() != 0)
         {
           statement.setMaxRows(0);
         }
       }
       catch (Exception ex)
       {
-        OM.LOG.error(ex);
+        // OM.LOG.error(ex);
       }
 
       try

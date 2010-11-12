@@ -34,7 +34,7 @@ public abstract class AbstractDBAccessor
     return preparedStatement;
   }
 
-  protected abstract String getSQL();
+  public abstract String getSQL();
 
   protected abstract void setParameters(PreparedStatement statement) throws SQLException, Exception;
 }

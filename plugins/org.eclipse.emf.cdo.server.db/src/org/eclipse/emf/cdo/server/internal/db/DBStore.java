@@ -172,7 +172,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     }
     catch (SQLException ex)
     {
-      throw new DBException(ex);
+      throw new DBException(ex, "SET AUTO COMMIT = false");
     }
 
     return connection;
@@ -228,6 +228,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
   {
     Connection connection = null;
     PreparedStatement selectStmt = null;
+    String sql = null;
 
     try
     {
@@ -236,7 +237,8 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
       boolean allProperties = names == null || names.isEmpty();
       if (allProperties)
       {
-        selectStmt = connection.prepareStatement(CDODBSchema.SQL_SELECT_ALL_PROPERTIES);
+        sql = CDODBSchema.SQL_SELECT_ALL_PROPERTIES;
+        selectStmt = connection.prepareStatement(sql);
         ResultSet resultSet = null;
 
         try
@@ -256,7 +258,8 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
       }
       else
       {
-        selectStmt = connection.prepareStatement(CDODBSchema.SQL_SELECT_PROPERTIES);
+        sql = CDODBSchema.SQL_SELECT_PROPERTIES;
+        selectStmt = connection.prepareStatement(sql);
         for (String name : names)
         {
           selectStmt.setString(1, name);
@@ -282,7 +285,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     }
     catch (SQLException ex)
     {
-      throw new DBException(ex);
+      throw new DBException(ex, sql);
     }
     finally
     {
@@ -296,6 +299,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     Connection connection = null;
     PreparedStatement deleteStmt = null;
     PreparedStatement insertStmt = null;
+    String sql = null;
 
     try
     {
@@ -308,19 +312,22 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
         String name = entry.getKey();
         String value = entry.getValue();
 
+        sql = CDODBSchema.SQL_DELETE_PROPERTIES;
         deleteStmt.setString(1, name);
         deleteStmt.executeUpdate();
 
+        sql = CDODBSchema.SQL_INSERT_PROPERTIES;
         insertStmt.setString(1, name);
         insertStmt.setString(2, value);
         insertStmt.executeUpdate();
       }
 
+      sql = null;
       connection.commit();
     }
     catch (SQLException ex)
     {
-      throw new DBException(ex);
+      throw new DBException(ex, sql);
     }
     finally
     {
@@ -350,7 +357,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     }
     catch (SQLException ex)
     {
-      throw new DBException(ex);
+      throw new DBException(ex, CDODBSchema.SQL_DELETE_PROPERTIES);
     }
     finally
     {
@@ -477,7 +484,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
       DBUtil.close(connection);
     }
 
-    if (createdTables.contains(CDODBSchema.PROPERTIES))
+    if (isFirstStart(createdTables))
     {
       firstStart();
     }
@@ -522,6 +529,20 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     connectionKeepAliveTimer = null;
 
     super.doDeactivate();
+  }
+
+  protected boolean isFirstStart(Set<IDBTable> createdTables)
+  {
+    if (createdTables.contains(CDODBSchema.PROPERTIES))
+    {
+      return true;
+    }
+
+    Set<String> names = new HashSet<String>();
+    names.add(PROP_REPOSITORY_CREATED);
+
+    Map<String, String> map = getPropertyValues(names);
+    return map.get(PROP_REPOSITORY_CREATED) == null;
   }
 
   protected void firstStart()

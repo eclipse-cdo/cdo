@@ -109,90 +109,79 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
    */
   private void registerCoreTypeMappings()
   {
-    // initialize default source and target type pairs
-    IManagedContainer container = IPluginContainer.INSTANCE;
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEBigDecimal(), DBType.VARCHAR);
+    IManagedContainer container = getContainer();
     container.registerFactory(CoreTypeMappings.TMBigDecimal.FACTORY);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEBigInteger(), DBType.VARCHAR);
+    container.registerFactory(CoreTypeMappings.TMBigDecimal.FACTORY_LONG_VARCHAR);
     container.registerFactory(CoreTypeMappings.TMBigInteger.FACTORY);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEBoolean(), DBType.BOOLEAN);
+    container.registerFactory(CoreTypeMappings.TMBigInteger.FACTORY_LONG_VARCHAR);
     container.registerFactory(CoreTypeMappings.TMBoolean.FACTORY);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEBooleanObject(), DBType.BOOLEAN);
+    container.registerFactory(CoreTypeMappings.TMBoolean.FACTORY_SMALLINT);
     container.registerFactory(CoreTypeMappings.TMBoolean.FACTORY_OBJECT);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEByte(), DBType.SMALLINT);
+    container.registerFactory(CoreTypeMappings.TMBoolean.FACTORY_OBJECT_SMALLINT);
     container.registerFactory(CoreTypeMappings.TMByte.FACTORY);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEByteObject(), DBType.SMALLINT);
     container.registerFactory(CoreTypeMappings.TMByte.FACTORY_OBJECT);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEByteArray(), DBType.BLOB);
     container.registerFactory(CoreTypeMappings.TMBytes.FACTORY);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEChar(), DBType.CHAR);
     container.registerFactory(CoreTypeMappings.TMCharacter.FACTORY);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getECharacterObject(), DBType.CHAR);
     container.registerFactory(CoreTypeMappings.TMCharacter.FACTORY_OBJECT);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEDataType(), DBType.VARCHAR);
     container.registerFactory(CoreTypeMappings.TMCustom.FACTORY_VARCHAR);
     container.registerFactory(CoreTypeMappings.TMCustom.FACTORY_CLOB);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEDate(), DBType.TIMESTAMP);
+    container.registerFactory(CoreTypeMappings.TMCustom.FACTORY_LONG_VARCHAR);
     container.registerFactory(CoreTypeMappings.TMDate2Date.FACTORY);
     container.registerFactory(CoreTypeMappings.TMDate2Time.FACTORY);
     container.registerFactory(CoreTypeMappings.TMDate2Timestamp.FACTORY);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEDouble(), DBType.DOUBLE);
     container.registerFactory(CoreTypeMappings.TMDouble.FACTORY);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEDoubleObject(), DBType.DOUBLE);
     container.registerFactory(CoreTypeMappings.TMDouble.FACTORY_OBJECT);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEEnum(), DBType.INTEGER);
     container.registerFactory(CoreTypeMappings.TMEnum.FACTORY);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEFloat(), DBType.FLOAT);
     container.registerFactory(CoreTypeMappings.TMFloat.FACTORY);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEFloatObject(), DBType.FLOAT);
     container.registerFactory(CoreTypeMappings.TMFloat.FACTORY_OBJECT);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEInt(), DBType.INTEGER);
     container.registerFactory(CoreTypeMappings.TMInteger.FACTORY);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEIntegerObject(), DBType.INTEGER);
     container.registerFactory(CoreTypeMappings.TMInteger.FACTORY_OBJECT);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getELong(), DBType.BIGINT);
     container.registerFactory(CoreTypeMappings.TMLong.FACTORY);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getELongObject(), DBType.BIGINT);
     container.registerFactory(CoreTypeMappings.TMLong.FACTORY_OBJECT);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEClass(), DBType.BIGINT);
     container.registerFactory(CoreTypeMappings.TMObject.FACTORY);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEShort(), DBType.SMALLINT);
     container.registerFactory(CoreTypeMappings.TMShort.FACTORY);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEShortObject(), DBType.SMALLINT);
     container.registerFactory(CoreTypeMappings.TMShort.FACTORY_OBJECT);
-
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEString(), DBType.VARCHAR);
     container.registerFactory(CoreTypeMappings.TMString.FACTORY_VARCHAR);
     container.registerFactory(CoreTypeMappings.TMString.FACTORY_CLOB);
+    container.registerFactory(CoreTypeMappings.TMString.FACTORY_LONG_VARCHAR);
+    container.registerFactory(CoreTypeMappings.TMBlob.FACTORY_VARCHAR);
+    container.registerFactory(CoreTypeMappings.TMBlob.FACTORY_LONG_VARCHAR);
+    container.registerFactory(CoreTypeMappings.TMClob.FACTORY_VARCHAR);
+    container.registerFactory(CoreTypeMappings.TMClob.FACTORY_LONG_VARCHAR);
 
-    classifierDefaultMapping.put(EtypesPackage.eINSTANCE.getBlob(), DBType.VARCHAR);
-    container.registerFactory(CoreTypeMappings.TMBlob.FACTORY);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEClass(), DBType.BIGINT);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEDataType(), DBType.VARCHAR);
 
-    classifierDefaultMapping.put(EtypesPackage.eINSTANCE.getClob(), DBType.VARCHAR);
-    container.registerFactory(CoreTypeMappings.TMClob.FACTORY);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEBigDecimal(), DBType.VARCHAR);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEBigInteger(), DBType.VARCHAR);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEBoolean(), DBType.BOOLEAN);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEBooleanObject(), DBType.BOOLEAN);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEByte(), DBType.SMALLINT);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEByteObject(), DBType.SMALLINT);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEByteArray(), DBType.BLOB);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEChar(), DBType.CHAR);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getECharacterObject(), DBType.CHAR);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEDate(), DBType.TIMESTAMP);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEDouble(), DBType.DOUBLE);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEDoubleObject(), DBType.DOUBLE);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEEnum(), DBType.INTEGER);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEFloat(), DBType.FLOAT);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEFloatObject(), DBType.FLOAT);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEInt(), DBType.INTEGER);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEIntegerObject(), DBType.INTEGER);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getELong(), DBType.BIGINT);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getELongObject(), DBType.BIGINT);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEShort(), DBType.SMALLINT);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEShortObject(), DBType.SMALLINT);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEString(), DBType.VARCHAR);
+
+    classifierDefaultMapping.put(EtypesPackage.eINSTANCE.getBlob(), DBType.VARCHAR); // TODO Should be DBType.BLOB?
+    classifierDefaultMapping.put(EtypesPackage.eINSTANCE.getClob(), DBType.VARCHAR); // TODO Should be DBType.CLOB?
+  }
+
+  protected IPluginContainer getContainer()
+  {
+    return IPluginContainer.INSTANCE;
   }
 
   public void registerTypeMapping(ITypeMapping.Descriptor descriptor)
@@ -234,13 +223,12 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
 
   public ITypeMapping createTypeMapping(IMappingStrategy mappingStrategy, EStructuralFeature feature)
   {
-    EClassifier classifier = getEClassifier(feature);
-    DBType dbType = getDBType(feature, mappingStrategy.getStore().getDBAdapter());
-
-    String typeMappingID = DBAnnotation.TYPE_MAPPING.getValue(feature);
+    IDBAdapter dbAdapter = mappingStrategy.getStore().getDBAdapter();
+    DBType dbType = getDBType(feature, dbAdapter);
 
     ITypeMapping.Descriptor descriptor = null;
 
+    String typeMappingID = DBAnnotation.TYPE_MAPPING.getValue(feature);
     if (typeMappingID != null)
     {
       // lookup annotated mapping
@@ -261,12 +249,15 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
 
     if (descriptor == null)
     {
-      throw new IllegalStateException(MessageFormat.format(Messages.getString("TypeMappingRegistry.1"),
-          feature.getName(), classifier.getName(), dbType.getKeyword()));
+      EClassifier type = getEType(feature);
+      throw new IllegalStateException(MessageFormat.format(Messages.getString("TypeMappingRegistry.1"), feature
+          .getEContainingClass().getName() + "." + feature.getName(),
+          type.getEPackage().getName() + "." + type.getName(), dbType.getKeyword()));
     }
 
     IFactory factory = getManagedContainer()
         .getFactory(ITypeMapping.Factory.PRODUCT_GROUP, descriptor.getFactoryType());
+
     ITypeMapping typeMapping = (ITypeMapping)factory.create(null);
     typeMapping.setMappingStrategy(mappingStrategy);
     typeMapping.setFeature(feature);
@@ -276,10 +267,10 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
 
   private IManagedContainer getManagedContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return getContainer();
   }
 
-  private EClassifier getEClassifier(EStructuralFeature feature)
+  private EClassifier getEType(EStructuralFeature feature)
   {
     EClassifier classifier = feature.getEType();
     if (classifier instanceof EEnum)
@@ -322,7 +313,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     }
 
     // No annotation present - lookup default DB type.
-    return getDefaultDBType(getEClassifier(feature), dbAdapter);
+    return getDefaultDBType(getEType(feature), dbAdapter);
   }
 
   private DBType getDefaultDBType(EClassifier type, IDBAdapter dbAdapter)
@@ -347,7 +338,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     if (descriptor == null)
     {
       // Second try: lookup general mapping
-      descriptor = typeMappingByTypes.get(new Pair<EClassifier, DBType>(getEClassifier(feature), dbType));
+      descriptor = typeMappingByTypes.get(new Pair<EClassifier, DBType>(getEType(feature), dbType));
       if (descriptor == null)
       {
         // Lookup failed. Give up

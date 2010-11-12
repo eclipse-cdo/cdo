@@ -85,5 +85,4 @@ public abstract class DerbyAdapter extends DBAdapter
       return super.isValidFirstChar(ch);
     }
   }
-
 }

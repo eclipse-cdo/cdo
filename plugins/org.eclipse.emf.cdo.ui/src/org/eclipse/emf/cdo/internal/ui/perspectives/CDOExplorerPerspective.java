@@ -84,8 +84,8 @@ public class CDOExplorerPerspective implements IPerspectiveFactory
 
   static public boolean isCurrent()
   {
-    return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective().getId().equals(
-        CDOExplorerPerspective.ID);
+    return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective().getId()
+        .equals(CDOExplorerPerspective.ID);
   }
 
 }

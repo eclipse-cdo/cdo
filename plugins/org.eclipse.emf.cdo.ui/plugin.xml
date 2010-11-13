@@ -27,21 +27,21 @@
       <view
             category="org.eclipse.emf.cdo"
             class="org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView"
-            icon="icons/full/view16/cdo_sessions.gif"
+            icon="platform:/plugin/org.eclipse.emf.cdo.ui.shared/icons/full/view16/cdo_sessions.gif"
             id="org.eclipse.emf.cdo.ui.CDOSessionsView"
             name="%view.name.0">
       </view>
       <view
             category="org.eclipse.emf.cdo"
             class="org.eclipse.emf.cdo.internal.ui.views.CDOWatchListView"
-            icon="icons/full/view16/watch_list.gif"
+            icon="platform:/plugin/org.eclipse.emf.cdo.ui.shared/icons/full/view16/watch_list.gif"
             id="org.eclipse.emf.cdo.ui.CDOWatchListView"
             name="%view.name.1">
       </view>
       <view
             category="org.eclipse.emf.cdo"
             class="org.eclipse.emf.cdo.internal.ui.views.CDORemoteSessionsView"
-            icon="icons/full/view16/watch_list.gif"
+            icon="platform:/plugin/org.eclipse.emf.cdo.ui.shared/icons/full/view16/watch_list.gif"
             id="org.eclipse.emf.cdo.ui.CDORemoteSessionsView"
             name="%view.name.2">
       </view>
@@ -64,7 +64,7 @@
     <editor
         id = "org.eclipse.emf.cdo.ui.CDOEditor"
         name = "%editor.name.0"
-        icon = "icons/full/obj16/cdo_editor.gif"
+        icon = "platform:/plugin/org.eclipse.emf.cdo.ui.shared/icons/full/obj16/cdo_editor.gif"
         extensions = "*"
         class = "org.eclipse.emf.cdo.internal.ui.editor.CDOEditor"
         contributorClass="org.eclipse.emf.cdo.internal.ui.editor.CDOActionBarContributor" >
@@ -125,7 +125,7 @@
         point="org.eclipse.ui.perspectives">
      <perspective
            class="org.eclipse.emf.cdo.internal.ui.perspectives.CDOExplorerPerspective"
-           icon="icons/full/view16/cdo_sessions.gif"
+           icon="platform:/plugin/org.eclipse.emf.cdo.ui.shared/icons/full/view16/cdo_sessions.gif"
            id="org.eclipse.emf.cdo.ui.CDOExplorerPerspective"
            name="%perspective.name">
      </perspective>

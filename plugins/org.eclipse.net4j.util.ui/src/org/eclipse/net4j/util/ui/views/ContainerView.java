@@ -10,9 +10,9 @@
  */
 package org.eclipse.net4j.util.ui.views;
 
+import org.eclipse.net4j.ui.internal.icons.SharedIcons;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.internal.ui.SharedIcons;
 import org.eclipse.net4j.util.internal.ui.actions.IntrospectAction;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.internal.ui.messages.Messages;

@@ -32,13 +32,13 @@
       <view
             category="org.eclipse.net4j.buddies"
             class="org.eclipse.net4j.buddies.internal.ui.views.BuddiesView"
-            icon="icons/full/view16/buddies_view.gif"
+            icon="platform:/plugin/org.eclipse.net4j.ui.shared/icons/full/view16/buddies_view.gif"
             id="org.eclipse.net4j.BuddiesView"
             name="%view.name"/>
       <view
             category="org.eclipse.net4j.buddies"
             class="org.eclipse.net4j.buddies.internal.ui.views.CollaborationsView"
-            icon="icons/full/view16/collaborations_view.gif"
+            icon="platform:/plugin/org.eclipse.net4j.ui.shared/icons/full/view16/collaborations_view.gif"
             id="org.eclipse.net4j.CollaborationsView"
             name="%view.name.0"/>
    </extension>

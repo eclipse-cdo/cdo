@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.ui;
 
 import org.eclipse.emf.cdo.view.CDOView;
 
-
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.common.notify.AdapterFactory;

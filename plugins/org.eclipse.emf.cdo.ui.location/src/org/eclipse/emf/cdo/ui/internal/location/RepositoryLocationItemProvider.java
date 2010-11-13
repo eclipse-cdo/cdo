@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.ui.internal.location;
 
 import org.eclipse.emf.cdo.internal.location.BranchCheckoutSource;
 import org.eclipse.emf.cdo.location.IRepositoryLocation;
+import org.eclipse.emf.cdo.ui.internal.icons.SharedIcons;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;

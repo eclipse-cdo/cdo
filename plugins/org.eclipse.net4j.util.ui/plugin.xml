@@ -24,13 +24,13 @@
             id="org.eclipse.net4j.util.Net4jContainerView"
             class="org.eclipse.net4j.util.internal.ui.views.Net4jContainerView"
             name="%view.name"
-            icon="icons/full/view16/container.gif"/>
+            icon="platform:/plugin/org.eclipse.net4j.ui.shared/icons/full/view16/container.gif"/>
       <view
             category="org.eclipse.net4j.debug"
             id="org.eclipse.net4j.util.Net4jIntrospectorView"
             class="org.eclipse.net4j.util.internal.ui.views.Net4jIntrospectorView"
             name="%view.name.0"
-            icon="icons/full/view16/javabean.gif"/>
+            icon="platform:/plugin/org.eclipse.net4j.ui.shared/icons/full/view16/javabean.gif"/>
    </extension>
    
    <extension

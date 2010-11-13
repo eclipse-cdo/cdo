@@ -9,7 +9,6 @@
 	Contributors:
 	  Eike Stepper - initial API and implementation
 -->
-
 <feature
       id="org.eclipse.net4j"
       label="%featureName"
@@ -99,6 +98,13 @@
 
    <plugin
          id="org.apache.commons.httpclient"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.net4j.ui.shared"
          download-size="0"
          install-size="0"
          version="0.0.0"

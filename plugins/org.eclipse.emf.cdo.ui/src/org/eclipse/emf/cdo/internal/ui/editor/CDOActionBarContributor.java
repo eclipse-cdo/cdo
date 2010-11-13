@@ -120,8 +120,8 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * 
    * @generated
    */
-  protected IAction showPropertiesViewAction = new Action(PluginDelegator.INSTANCE
-      .getString("_UI_ShowPropertiesView_menu_item")) //$NON-NLS-1$
+  protected IAction showPropertiesViewAction = new Action(
+      PluginDelegator.INSTANCE.getString("_UI_ShowPropertiesView_menu_item")) //$NON-NLS-1$
   {
     @Override
     public void run()

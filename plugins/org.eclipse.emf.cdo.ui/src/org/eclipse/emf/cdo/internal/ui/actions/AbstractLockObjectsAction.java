@@ -89,10 +89,9 @@ public abstract class AbstractLockObjectsAction extends EditingDomainAction
             {
               public void run()
               {
-                MessageDialog
-                    .openError(
-                        getShell(),
-                        Messages.getString("AbstractLockObjectsAction.0"), Messages.getString("AbstractLockObjectsAction.1")); //$NON-NLS-1$ //$NON-NLS-2$
+                MessageDialog.openError(
+                    getShell(),
+                    Messages.getString("AbstractLockObjectsAction.0"), Messages.getString("AbstractLockObjectsAction.1")); //$NON-NLS-1$ //$NON-NLS-2$
               }
             });
           }

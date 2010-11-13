@@ -10,8 +10,8 @@
  */
 package org.eclipse.net4j.util.internal.ui.views;
 
+import org.eclipse.net4j.ui.internal.icons.SharedIcons;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.internal.ui.SharedIcons;
 import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;

@@ -87,8 +87,8 @@ public class RegisterGeneratedPackagesAction extends RegisterPackagesAction
         return ""; //$NON-NLS-1$
       }
 
-      return registry.containsKey(uri) ? null : MessageFormat.format(Messages
-          .getString("RegisterGeneratedPackagesAction.5"), uri); //$NON-NLS-1$
+      return registry.containsKey(uri) ? null : MessageFormat.format(
+          Messages.getString("RegisterGeneratedPackagesAction.5"), uri); //$NON-NLS-1$
     }
   }
 }

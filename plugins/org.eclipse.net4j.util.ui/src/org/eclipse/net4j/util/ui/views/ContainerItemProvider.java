@@ -11,13 +11,13 @@
 package org.eclipse.net4j.util.ui.views;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.ui.internal.icons.SharedIcons;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.ISlow;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.internal.ui.SharedIcons;
 import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.UIUtil;

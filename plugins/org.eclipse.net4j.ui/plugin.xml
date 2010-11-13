@@ -22,14 +22,14 @@
       <view
             category="org.eclipse.net4j"
             class="org.eclipse.net4j.internal.ui.views.AcceptorsView"
-            icon="icons/full/view16/acceptors.gif"
+            icon="platform:/plugin/org.eclipse.net4j.ui.shared/icons/full/view16/acceptors.gif"
             id="org.eclipse.net4j.AcceptorsView"
             name="%view.name">
       </view>
       <view
             category="org.eclipse.net4j"
             class="org.eclipse.net4j.internal.ui.views.ConnectorsView"
-            icon="icons/full/view16/connectors.gif"
+            icon="platform:/plugin/org.eclipse.net4j.ui.shared/icons/full/view16/connectors.gif"
             id="org.eclipse.net4j.ConnectorsView"
             name="%view.name.0">
       </view>

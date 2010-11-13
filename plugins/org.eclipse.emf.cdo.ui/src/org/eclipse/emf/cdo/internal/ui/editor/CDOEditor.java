@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.BulkAddDialog;
 import org.eclipse.emf.cdo.internal.ui.dialogs.RollbackTransactionDialog;
@@ -26,6 +25,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.ui.CDOEventHandler;
 import org.eclipse.emf.cdo.ui.CDOLabelProvider;
+import org.eclipse.emf.cdo.ui.internal.icons.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -482,8 +482,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
               if (delta.getKind() == IResourceDelta.REMOVED || delta.getKind() == IResourceDelta.CHANGED
                   && delta.getFlags() != IResourceDelta.MARKERS)
               {
-                Resource resource = resourceSet.getResource(URI.createPlatformResourceURI(delta.getFullPath()
-                    .toString(), true), false);
+                Resource resource = resourceSet.getResource(
+                    URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
                 if (resource != null)
                 {
                   if (delta.getKind() == IResourceDelta.REMOVED)
@@ -1551,8 +1551,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           {
             // Select the root object in the view.
             //
-            contentOutlineViewer.setSelection(new StructuredSelection(CDOUtil.getResources(
-                editingDomain.getResourceSet()).get(0)), true);
+            contentOutlineViewer.setSelection(
+                new StructuredSelection(CDOUtil.getResources(editingDomain.getResourceSet()).get(0)), true);
           }
         }
 

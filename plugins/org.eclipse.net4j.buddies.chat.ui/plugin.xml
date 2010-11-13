@@ -17,7 +17,7 @@
     	point="org.eclipse.net4j.buddies.ui.facilityPaneCreators">
       	<facilityPaneCreator
              class="org.eclipse.net4j.buddies.chat.internal.ui.ChatPaneCreator"
-             icon="icons/full/obj16/chat.gif"
+             icon="platform:/plugin/org.eclipse.net4j.ui.shared/icons/full/obj16/chat.gif"
              type="chat"/>
    	</extension>
 

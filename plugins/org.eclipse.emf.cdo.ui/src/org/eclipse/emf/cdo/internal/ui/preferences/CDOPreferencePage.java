@@ -84,8 +84,8 @@ public class CDOPreferencePage extends OMPreferencePage
     viewGroup.setLayoutData(UIUtil.createGridData(true, false));
 
     new Label(viewGroup, SWT.NONE).setText(Messages.getString("CDOPreferencePage.6")); //$NON-NLS-1$
-    preloadChunkSize = new TextAndDisable(viewGroup, SWT.BORDER, String
-        .valueOf(CDOView.Options.NO_REVISION_PREFETCHING));
+    preloadChunkSize = new TextAndDisable(viewGroup, SWT.BORDER,
+        String.valueOf(CDOView.Options.NO_REVISION_PREFETCHING));
     preloadChunkSize.setLayoutData(UIUtil.createGridData(true, false));
 
     new Label(viewGroup, SWT.NONE).setText(Messages.getString("CDOPreferencePage.7")); //$NON-NLS-1$

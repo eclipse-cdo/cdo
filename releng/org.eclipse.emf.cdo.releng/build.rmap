@@ -3,6 +3,9 @@
 	xmlns:psf="http://www.eclipse.org/buckminster/PSFProvider-1.0"
 	xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0">
 
+	<rm:property key="cvs.repository" mutable="true" value=":pserver:anonymous@dev.eclipse.org:/cvsroot/modeling"/>
+	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org"/>
+
 	<rm:property key="build.type" mutable="true" value="N"/>
 
 	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.releng.*" searchPathRef="releng"/>
@@ -81,13 +84,13 @@
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="{0}/eclipse/updates/3.6">
+			<rm:uri format="{0}/eclipse/updates/3.7milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(|(build.type=N)(build.type=I))">
-			<rm:uri format="{0}/releases/helios">
+			<rm:uri format="{0}/releases/indigo">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>

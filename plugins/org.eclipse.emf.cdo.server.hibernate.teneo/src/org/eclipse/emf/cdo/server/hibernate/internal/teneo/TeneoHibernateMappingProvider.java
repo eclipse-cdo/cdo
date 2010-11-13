@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.hibernate.internal.teneo;
 
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle.OM;
 import org.eclipse.emf.cdo.server.hibernate.teneo.CDOMappingGenerator;
@@ -24,12 +25,12 @@ import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.teneo.PackageRegistryProvider;
 import org.eclipse.emf.teneo.PersistenceOptions;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Properties;
 
@@ -99,8 +100,15 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     // translate the list of EPackages to an array
     final List<EPackage> epacks = getHibernateStore().getPackageHandler().getEPackages();
     // remove the ecore and resource package
-    epacks.remove(EcorePackage.eINSTANCE);
-    epacks.remove(EresourcePackage.eINSTANCE);
+    final ListIterator<EPackage> iterator = epacks.listIterator();
+    while (iterator.hasNext())
+    {
+      final EPackage epack = iterator.next();
+      if (CDOModelUtil.isSystemPackage(epack))
+      {
+        iterator.remove();
+      }
+    }
 
     addUniqueConstraintAnnotation();
 

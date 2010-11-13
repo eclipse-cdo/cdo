@@ -38,7 +38,8 @@
 
 	<rm:locator pattern="^com\.db4o$" searchPathRef="net4j.plus" />
 	<rm:locator pattern="^com\.mysql\.jdbc$" searchPathRef="net4j.plus" />
-	<rm:locator pattern="^org\.hibernate$" searchPathRef="net4j.plus" />
+	<!-- consuming an older hibernate from an alternative location per Martin Taal's request -->
+	<rm:locator pattern="^org\.hibernate$" searchPathRef="alternative.net4j.plus" />
 	<rm:locator pattern="^org\.hsqldb$" searchPathRef="net4j.plus" />
 	<rm:locator pattern="^org\.postgresql\.jdbc3$" searchPathRef="net4j.plus" />
 
@@ -98,7 +99,9 @@
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)"
 		>
-			<rm:uri format="{0}/modeling/emf/teneo/updates/1.2.0/milestones">
+			<!-- rm:uri format="{0}/modeling/emf/teneo/updates/1.2.0/milestones" -->
+			<!-- consume temporarily an older version of teneo per Martin Taal's request -->
+			<rm:uri format="{0}/modeling/emf/teneo/updates/1.1.2/interim">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
@@ -181,6 +184,14 @@
 			<rm:uri format="{0}/tools/orbit/downloads/drops/R20100519200754/repository">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
+		</rm:provider>
+	</rm:searchPath>
+
+	<rm:searchPath name="alternative.net4j.plus">
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
+			resolutionFilter="(resolve.target.platform=true)"
+		>
+			<rm:uri format="http://www.elver.org/eclipse/update_1.1.2" />
 		</rm:provider>
 	</rm:searchPath>
 

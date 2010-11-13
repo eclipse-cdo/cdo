@@ -41,6 +41,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import java.io.File;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -155,7 +156,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   protected void configureSession(CDOSession session)
   {
-    final File lobCache = TMPUtil.createTempFolder();
+    final File lobCache = TMPUtil.createTempFolder("tmp_" + new Date().getTime());
     session.options().setLobCache(new CDOLobStoreImpl(lobCache));
     session.addListener(new LifecycleEventAdapter()
     {

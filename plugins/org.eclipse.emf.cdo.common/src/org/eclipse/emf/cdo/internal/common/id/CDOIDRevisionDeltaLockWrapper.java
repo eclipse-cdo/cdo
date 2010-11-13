@@ -20,14 +20,24 @@ public class CDOIDRevisionDeltaLockWrapper implements CDOIDAndBranch
     this.delta = delta;
   }
 
-  public void setKey(Object key)
-  {
-    this.key = key;
-  }
-
   public Object getKey()
   {
     return key;
+  }
+
+  public InternalCDORevisionDelta getDelta()
+  {
+    return delta;
+  }
+
+  public CDOID getID()
+  {
+    return key instanceof CDOIDAndBranch ? ((CDOIDAndBranch)key).getID() : (CDOID)key;
+  }
+
+  public CDOBranch getBranch()
+  {
+    return key instanceof CDOIDAndBranch ? ((CDOIDAndBranch)key).getBranch() : null;
   }
 
   @Override
@@ -48,23 +58,9 @@ public class CDOIDRevisionDeltaLockWrapper implements CDOIDAndBranch
     return key.hashCode();
   }
 
-  public void setDelta(InternalCDORevisionDelta delta)
+  @Override
+  public String toString()
   {
-    this.delta = delta;
-  }
-
-  public InternalCDORevisionDelta getDelta()
-  {
-    return delta;
-  }
-
-  public CDOID getID()
-  {
-    return key instanceof CDOIDAndBranch ? ((CDOIDAndBranch)key).getID() : (CDOID)key;
-  }
-
-  public CDOBranch getBranch()
-  {
-    return key instanceof CDOIDAndBranch ? ((CDOIDAndBranch)key).getBranch() : null;
+    return key.toString();
   }
 }

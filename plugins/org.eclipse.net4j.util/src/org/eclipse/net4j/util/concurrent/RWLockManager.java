@@ -12,7 +12,6 @@
 package org.eclipse.net4j.util.concurrent;
 
 import org.eclipse.net4j.util.collection.HashBag;
-import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import java.text.MessageFormat;
@@ -27,8 +26,8 @@ import java.util.Set;
 
 /**
  * Support Multiple reads/no write and upgrade lock from read to write. Many context could request
- * {@link LockType#WRITE write} lock at the same time. It will privileges first context that has already a
- * {@link LockType#READ read} lock. If no one has any read lock, it's "first come first serve".
+ * {@link IRWLockManager.LockType#WRITE write} lock at the same time. It will privileges first context that has already
+ * a {@link IRWLockManager.LockType#READ read} lock. If no one has any read lock, it's "first come first serve".
  * 
  * @author Simon McDuff
  * @since 2.0
@@ -301,7 +300,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
         long elapsedTime = System.currentTimeMillis() - startTime;
         if (timeout != WAIT && elapsedTime > timeout)
         {
-          throw new TimeoutRuntimeException("Conflict with " + conflict); //$NON-NLS-1$
+          throw new TimeoutRuntimeException("Could not lock " + conflict + " within " + timeout + " milli seconds"); //$NON-NLS-1$
         }
 
         if (timeout == WAIT)

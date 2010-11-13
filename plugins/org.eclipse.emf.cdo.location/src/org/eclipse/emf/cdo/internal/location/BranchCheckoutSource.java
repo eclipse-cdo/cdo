@@ -66,22 +66,25 @@ public class BranchCheckoutSource extends Container<BranchCheckoutSource> implem
   {
     if (subBranches == null)
     {
+      subBranches = new ArrayList<BranchCheckoutSource>();
+
       CDOSessionConfiguration config = getRepositoryLocation().createSessionConfiguration();
       CDOSession session = config.openSession();
-
-      try
+      if (session.getRepositoryInfo().isSupportingBranches())
       {
-        CDOBranch branch = session.getBranchManager().getBranch(getBranchPath());
-        CDOBranch[] branches = branch.getBranches();
-        subBranches = new ArrayList<BranchCheckoutSource>();
-        for (CDOBranch subBranch : branches)
+        try
         {
-          subBranches.add(new BranchCheckoutSource(this, subBranch.getName()));
+          CDOBranch branch = session.getBranchManager().getBranch(getBranchPath());
+          CDOBranch[] branches = branch.getBranches();
+          for (CDOBranch subBranch : branches)
+          {
+            subBranches.add(new BranchCheckoutSource(this, subBranch.getName()));
+          }
         }
-      }
-      finally
-      {
-        IOUtil.close(session);
+        finally
+        {
+          IOUtil.close(session);
+        }
       }
     }
 

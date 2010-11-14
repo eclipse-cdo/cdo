@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Category;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
@@ -52,7 +53,9 @@ public class Bugzilla_324585_Test extends AbstractCDOTest
     // user1
     for (int i = 0; i < 1000; i++)
     {
-      category1.getProducts().add(getModel1Factory().createProduct1());
+      final Product1 product = getModel1Factory().createProduct1();
+      product.setName("product" + i);
+      category1.getProducts().add(product);
     }
 
     transaction1.commit();

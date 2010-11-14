@@ -11,25 +11,31 @@
  */
 package org.eclipse.emf.cdo.server.hibernate.internal.teneo;
 
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle.OM;
 import org.eclipse.emf.cdo.server.hibernate.teneo.CDOMappingGenerator;
 import org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateConstants;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateMappingProvider;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOBlobUserType;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOClobUserType;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.teneo.Constants;
 import org.eclipse.emf.teneo.PackageRegistryProvider;
 import org.eclipse.emf.teneo.PersistenceOptions;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Properties;
 
@@ -98,9 +104,15 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
 
     // translate the list of EPackages to an array
     final List<EPackage> epacks = getHibernateStore().getPackageHandler().getEPackages();
-    // remove the ecore and resource package
-    epacks.remove(EcorePackage.eINSTANCE);
-    epacks.remove(EresourcePackage.eINSTANCE);
+    final ListIterator<EPackage> iterator = epacks.listIterator();
+    while (iterator.hasNext())
+    {
+      final EPackage epack = iterator.next();
+      if (CDOModelUtil.isSystemPackage(epack))
+      {
+        iterator.remove();
+      }
+    }
 
     addUniqueConstraintAnnotation();
 
@@ -112,13 +124,33 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
       properties.remove(PersistenceOptions.PERSISTENCE_XML);
     }
 
+    // add some annotations to the CDO model so that the mapping gets generated correctly
+    addTypeAnnotationToEDataType(EtypesPackage.eINSTANCE.getBlob(), CDOBlobUserType.class.getName());
+    addTypeAnnotationToEDataType(EtypesPackage.eINSTANCE.getClob(), CDOClobUserType.class.getName());
+
     final CDOMappingGenerator mappingGenerator = new CDOMappingGenerator();
     mappingGenerator.getExtensions().putAll(extensions);
     String hbm = mappingGenerator.generateMapping(ePackageArray, properties);
     // to solve an issue with older versions of teneo
     hbm = hbm.replaceAll("_cont", "cont"); //$NON-NLS-1$ //$NON-NLS-2$
 
+    // System.err.println(hbm);
+
     return hbm;
+  }
+
+  private void addTypeAnnotationToEDataType(EDataType eDataType, String type)
+  {
+    if (eDataType.getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA) != null)
+    {
+      return;
+    }
+
+    final EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+    eAnnotation.setSource(Constants.ANNOTATION_SOURCE_TENEO_JPA);
+    final String typeAnnotation = "@Type(type=\"" + type + "\")";
+    eAnnotation.getDetails().put("value", typeAnnotation);
+    eDataType.getEAnnotations().add(eAnnotation);
   }
 
   // see the CDOEntityMapper, there an explicit unique-key is added to

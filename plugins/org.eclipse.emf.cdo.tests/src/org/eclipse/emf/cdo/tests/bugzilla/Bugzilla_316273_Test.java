@@ -58,6 +58,7 @@ public class Bugzilla_316273_Test extends AbstractCDOTest
     CDOResource resource = transaction.createResource("/test1");
 
     Product1 product1 = getModel1Factory().createProduct1();
+    product1.setName("product1");
     resource.getContents().add(product1);
 
     OrderDetail orderDetail1 = getModel1Factory().createOrderDetail();

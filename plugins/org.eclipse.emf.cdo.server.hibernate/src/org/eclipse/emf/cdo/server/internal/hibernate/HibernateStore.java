@@ -32,8 +32,10 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
@@ -59,6 +61,10 @@ import java.util.Set;
 public class HibernateStore extends Store implements IHibernateStore
 {
   public static final String TYPE = "hibernate"; //$NON-NLS-1$
+
+  public static final String ID_TYPE_EANNOTATION_SOURCE = "teneo.cdo";
+
+  public static final String ID_TYPE_EANNOTATION_KEY = "id_type";
 
   public static final Set<ObjectType> OBJECT_ID_TYPES = new HashSet<ObjectType>(Arrays.asList(
       CDOID.ObjectType.STRING_WITH_CLASSIFIER, CDOID.ObjectType.LONG_WITH_CLASSIFIER));
@@ -300,12 +306,36 @@ public class HibernateStore extends Store implements IHibernateStore
 
   public CDOID createObjectID(String val)
   {
-    // TODO: implement HibernateStore.createObjectID(val)
-    throw new UnsupportedOperationException();
+    final int index = val.lastIndexOf(CDOClassifierRef.URI_SEPARATOR);
+    if (index == -1)
+    {
+      throw new IllegalArgumentException("Id string " + val + " is not a valid id");
+    }
 
-    // CDOClassifierRef classifierRef = null;
-    // Object id = null;
-    // return HibernateUtil.getInstance().createCDOID(classifierRef, id);
+    final String uriPart = val.substring(0, index);
+    final String idPart = val.substring(index + 1);
+    final CDOClassifierRef classifierRef = new CDOClassifierRef(uriPart);
+    final String entityName = getEntityName(classifierRef);
+    final EClass eClass = getEClass(entityName);
+    final EAnnotation typeEAnnotation = eClass.getEAnnotation(ID_TYPE_EANNOTATION_SOURCE);
+    if (typeEAnnotation == null)
+    {
+      throw new IllegalStateException("EClass " + eClass + " does not have a type annotation");
+    }
+
+    final String idTypeStr = typeEAnnotation.getDetails().get(ID_TYPE_EANNOTATION_KEY);
+    if (Hibernate.STRING.getName().equals(idTypeStr))
+    {
+      return HibernateUtil.getInstance().createCDOID(classifierRef, idPart);
+    }
+    else if (Hibernate.LONG.getName().equals(idTypeStr))
+    {
+      return HibernateUtil.getInstance().createCDOID(classifierRef, new Long(idPart));
+    }
+    else
+    {
+      throw new IllegalArgumentException("ID type " + idTypeStr + " not supported ");
+    }
   }
 
   @Override
@@ -322,14 +352,12 @@ public class HibernateStore extends Store implements IHibernateStore
 
   public Map<String, String> getPropertyValues(Set<String> names)
   {
-    // TODO: implement HibernateStore.getPropertyValues(names)
-    throw new UnsupportedOperationException();
+    return packageHandler.getSystemProperties();
   }
 
   public void setPropertyValues(Map<String, String> properties)
   {
-    // TODO: implement HibernateStore.setPropertyValues(properties)
-    throw new UnsupportedOperationException();
+    packageHandler.setSystemProperties(properties);
   }
 
   public void removePropertyValues(Set<String> names)

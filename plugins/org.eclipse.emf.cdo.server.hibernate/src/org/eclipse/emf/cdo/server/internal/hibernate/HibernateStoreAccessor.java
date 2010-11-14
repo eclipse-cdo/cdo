@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.WrappedHibernateList;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
@@ -45,30 +46,42 @@ import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessor;
 import org.eclipse.emf.cdo.spi.server.StoreChunkReader;
 
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.ScrollMode;
+import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.sql.Clob;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -467,8 +480,54 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   public void queryXRefs(QueryXRefsContext context)
   {
-    // TODO: implement HibernateStoreAccessor.queryXRefs(context)
-    throw new UnsupportedOperationException();
+    final Session session = getHibernateSession();
+    for (CDOID targetCdoId : context.getTargetObjects().keySet())
+    {
+      final CDORevision revision = HibernateUtil.getInstance().getCDORevision(targetCdoId);
+      final EClass targetEClass = context.getTargetObjects().get(targetCdoId);
+      final String targetEntityName = getStore().getEntityName(targetEClass);
+      final Map<EClass, List<EReference>> sourceReferences = getStore().getPackageHandler().getSourceCandidates(
+          targetEClass);
+      for (EClass sourceEClass : sourceReferences.keySet())
+      {
+        final String sourceEntityName = getStore().getEntityName(sourceEClass);
+        for (EReference eref : sourceReferences.get(sourceEClass))
+        {
+          final String hql;
+          if (eref.isMany())
+          {
+            hql = "select ref from " + sourceEntityName + " as ref, " + targetEntityName
+                + " as refTo where refTo = :to and refTo in elements(ref." + eref.getName() + ")";
+          }
+          else
+          {
+            hql = "select ref from " + sourceEntityName + " as ref where :to = ref." + eref.getName();
+          }
+
+          final Query qry = session.createQuery(hql);
+          qry.setEntity("to", revision);
+          ScrollableResults result = qry.scroll(ScrollMode.FORWARD_ONLY);
+          while (result.next())
+          {
+            final InternalCDORevision sourceRevision = (InternalCDORevision)result.get()[0];
+            int sourceIndex = 0;
+            if (eref.isMany())
+            {
+              // note this takes performance for sure as the list is read,
+              // consider not supporting sourceIndex, or doing it differently
+              final WrappedHibernateList cdoList = (WrappedHibernateList)sourceRevision.getList(eref);
+              sourceIndex = cdoList.getDelegate().indexOf(revision);
+            }
+
+            boolean more = context.addXRef(targetCdoId, sourceRevision.getID(), eref, sourceIndex);
+            if (!more)
+            {
+              return;
+            }
+          }
+        }
+      }
+    }
   }
 
   private CDOID getHibernateID(CDOID id)
@@ -533,6 +592,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   @Override
   public void write(InternalCommitContext context, OMMonitor monitor)
   {
+    // NOTE: the same flow is also present in the super class (StoreAccessor)
+
     HibernateThreadContext.setCommitContext(context);
     if (context.getNewPackageUnits().length > 0)
     {
@@ -608,6 +669,36 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       repairResourceIDs(repairResourceIDs, session);
 
       session.flush();
+
+      // write the blobs
+      ExtendedDataInputStream in = context.getLobs();
+      if (in != null)
+      {
+        try
+        {
+          int count = in.readInt();
+          for (int i = 0; i < count; i++)
+          {
+            byte[] id = in.readByteArray();
+            long size = in.readLong();
+            if (size > 0)
+            {
+              writeBlob(id, size, in);
+            }
+            else
+            {
+              writeClob(id, -size, new InputStreamReader(in));
+            }
+          }
+        }
+        catch (IOException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+
+      session.flush();
+
     }
     catch (Exception e)
     {
@@ -750,28 +841,95 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   public void queryLobs(List<byte[]> ids)
   {
-    // TODO: implement HibernateStoreAccessor.queryLobs(ids)
-    throw new UnsupportedOperationException();
+    for (Iterator<byte[]> it = ids.iterator(); it.hasNext();)
+    {
+      byte[] id = it.next();
+      final HibernateStoreLob lob = getCreateHibernateStoreLob(id);
+      if (lob.isNew())
+      {
+        it.remove();
+      }
+    }
   }
 
   public void loadLob(byte[] id, OutputStream out) throws IOException
   {
-    // TODO: implement HibernateStoreAccessor.loadLob(id, out)
-    throw new UnsupportedOperationException();
+    final HibernateStoreLob lob = getCreateHibernateStoreLob(id);
+    // can this ever occur?
+    // TODO: how should non-existence be handled? Currently results in a timeout
+    // on the client.
+    if (lob.isNew())
+    {
+      throw new IllegalStateException("Lob with id " + HexUtil.bytesToHex(id) + " does not exist");
+    }
+
+    final long size = lob.getSize();
+    try
+    {
+      if (lob.getBlob() != null)
+      {
+        InputStream in = lob.getBlob().getBinaryStream();
+        IOUtil.copyBinary(in, out, size);
+      }
+      else
+      {
+        Clob clob = lob.getClob();
+        Reader in = clob.getCharacterStream();
+        IOUtil.copyCharacter(in, new OutputStreamWriter(out), size);
+      }
+    }
+    catch (Exception e)
+    {
+      throw new IllegalStateException(e);
+    }
   }
 
   @Override
   protected void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
   {
-    // TODO: implement HibernateStoreAccessor.writeBlob(id, size, inputStream)
-    throw new UnsupportedOperationException();
+    final HibernateStoreLob lob = getCreateHibernateStoreLob(id);
+    if ((inputStream == null || size == 0) && !lob.isNew())
+    {
+      getHibernateSession().delete(lob);
+    }
+    else
+    {
+      lob.setBlob(Hibernate.createBlob(inputStream, (int)size));
+      lob.setSize((int)size);
+      lob.setClob(null);
+      getHibernateSession().saveOrUpdate(lob);
+    }
   }
 
   @Override
   protected void writeClob(byte[] id, long size, Reader reader) throws IOException
   {
-    // TODO: implement HibernateStoreAccessor.writeClob(id, size, reader)
-    throw new UnsupportedOperationException();
+    final HibernateStoreLob lob = getCreateHibernateStoreLob(id);
+    if ((reader == null || size == 0) && !lob.isNew())
+    {
+      getHibernateSession().delete(lob);
+    }
+    else
+    {
+      lob.setClob(Hibernate.createClob(reader, (int)size));
+      lob.setSize((int)size);
+      lob.setBlob(null);
+      getHibernateSession().saveOrUpdate(lob);
+    }
+  }
+
+  private HibernateStoreLob getCreateHibernateStoreLob(byte[] idBytes)
+  {
+    final String id = HexUtil.bytesToHex(idBytes);
+    final Session session = getHibernateSession();
+    HibernateStoreLob lob = (HibernateStoreLob)session.get(HibernateStoreLob.class, id);
+    if (lob == null)
+    {
+      lob = new HibernateStoreLob();
+      lob.setId(id);
+    }
+
+    return lob;
   }
 
   @Override

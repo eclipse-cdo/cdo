@@ -20,11 +20,13 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
 
 import org.hibernate.EntityMode;
 import org.hibernate.EntityNameResolver;
@@ -242,6 +244,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
 
     if (mappedProperty == mappedEntity.getIdentifierProperty())
     {
+      setIdentifierTypeAsAnnotation(mappedProperty);
       return new CDOIDPropertySetter(this, mappedProperty.getName());
     }
 
@@ -321,5 +324,21 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
   public boolean isInstrumented()
   {
     return false;
+  }
+
+  private void setIdentifierTypeAsAnnotation(Property prop)
+  {
+    EAnnotation eAnnotation = getEClass().getEAnnotation(HibernateStore.ID_TYPE_EANNOTATION_SOURCE);
+    if (eAnnotation == null)
+    {
+      eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+      eAnnotation.setSource(HibernateStore.ID_TYPE_EANNOTATION_SOURCE);
+      eAnnotation.getDetails().put(HibernateStore.ID_TYPE_EANNOTATION_KEY, prop.getType().getName());
+      getEClass().getEAnnotations().add(eAnnotation);
+    }
+    else if (!eAnnotation.getDetails().containsKey(HibernateStore.ID_TYPE_EANNOTATION_KEY))
+    {
+      eAnnotation.getDetails().put(HibernateStore.ID_TYPE_EANNOTATION_KEY, prop.getType().getName());
+    }
   }
 }

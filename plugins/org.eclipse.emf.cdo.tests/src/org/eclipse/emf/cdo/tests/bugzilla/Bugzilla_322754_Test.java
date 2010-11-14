@@ -58,6 +58,7 @@ public class Bugzilla_322754_Test extends AbstractCDOTest
   {
     Product1 product = getModel1Factory().createProduct1();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+    product.setName("product1");
     orderDetail.setProduct(product);
 
     CDOSession session = openSession();

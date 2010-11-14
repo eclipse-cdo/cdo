@@ -41,4 +41,9 @@
 		</id>
 		<property name="creationTime"/>
 	</class>
+	
+	<class name="org.eclipse.emf.cdo.server.internal.hibernate.SystemProperty" table="cdo_system_property" lazy="false">
+		<id name="name" type="string" length="255"/>
+		<property name="value" type="text" length="2000"/>
+	</class>
 	</hibernate-mapping>

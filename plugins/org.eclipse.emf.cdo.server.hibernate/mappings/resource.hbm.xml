@@ -69,4 +69,12 @@
 			</many-to-any>
 		</list>
 	</subclass>
+		
+	<class name="org.eclipse.emf.cdo.server.internal.hibernate.HibernateStoreLob" table="cdo_lob" lazy="false">
+		<id name="id"/>
+		<property name="clob"/>
+		<property name="blob"/>
+		<property name="size"/>
+	</class>
+
 </hibernate-mapping>

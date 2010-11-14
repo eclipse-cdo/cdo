@@ -188,6 +188,7 @@ public class PartialCommitTest extends AbstractCDOTest
     PurchaseOrder po = Model1Factory.eINSTANCE.createPurchaseOrder();
     company2.getPurchaseOrders().add(po);
     Product1 product = Model1Factory.eINSTANCE.createProduct1();
+    product.setName("product1");
     cat.getProducts().add(product);
 
     tx.setCommittables(createSet(company4, resource1));
@@ -231,6 +232,7 @@ public class PartialCommitTest extends AbstractCDOTest
     PurchaseOrder po = Model1Factory.eINSTANCE.createPurchaseOrder();
     company2.getPurchaseOrders().add(po);
     Product1 product = Model1Factory.eINSTANCE.createProduct1();
+    product.setName("product1");
     cat.getProducts().add(product);
     tx.commit();
 

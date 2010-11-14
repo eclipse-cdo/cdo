@@ -177,6 +177,11 @@ public class WrappedHibernateList implements InternalCDOList
 
   protected CDOID getCDOID(Object o)
   {
+    if (o instanceof CDOID)
+    {
+      return (CDOID)o;
+    }
+
     return HibernateUtil.getInstance().getCDOID(o);
   }
 
@@ -228,7 +233,13 @@ public class WrappedHibernateList implements InternalCDOList
 
   public Object get(int index)
   {
-    final Object value = getObject(getDelegate().get(index));
+    final Object delegateValue = getDelegate().get(index);
+    if (delegateValue instanceof CDOID)
+    {
+      return delegateValue;
+    }
+
+    final Object value = getObject(delegateValue);
     if (value instanceof CDORevision || value instanceof HibernateProxy)
     {
       return HibernateUtil.getInstance().getCDOID(value);

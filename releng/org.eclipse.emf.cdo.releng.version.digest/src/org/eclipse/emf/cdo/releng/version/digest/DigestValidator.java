@@ -29,6 +29,7 @@ import org.eclipse.pde.core.build.IBuild;
 import org.eclipse.pde.core.build.IBuildEntry;
 import org.eclipse.pde.core.build.IBuildModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
+import org.eclipse.pde.core.plugin.PluginRegistry;
 
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -441,7 +442,7 @@ public class DigestValidator extends VersionValidator
     @SuppressWarnings("restriction")
     private IBuild getBuild(IPluginModelBase pluginModel) throws CoreException
     {
-      IBuildModel buildModel = pluginModel.getBuildModel();
+      IBuildModel buildModel = PluginRegistry.createBuildModel(pluginModel);
       if (buildModel == null)
       {
         IProject project = pluginModel.getUnderlyingResource().getProject();

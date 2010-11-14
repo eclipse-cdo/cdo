@@ -45,7 +45,6 @@ import java.util.Collections;
  */
 public class GenerateDawnGenModelAction implements IObjectActionDelegate
 {
-
   private IResource selectedElement;
 
   public static final String dawngenmodelFileExtension = "dawngenmodel";
@@ -202,7 +201,15 @@ public class GenerateDawnGenModelAction implements IObjectActionDelegate
   {
     String dawnGenModelResourcePath = path + "" + modelname + "." + dawngenmodelFileExtension;
     URI uri = URI.createURI(dawnGenModelResourcePath);
-    Resource dawnGenModelResource = resourceSet.getResource(uri, true);
+    Resource dawnGenModelResource = null;
+    try
+    {
+      dawnGenModelResource = resourceSet.getResource(uri, true);
+    }
+    catch (Exception ignore)
+    {
+      // ignore
+    }
 
     if (dawnGenModelResource == null)
     {

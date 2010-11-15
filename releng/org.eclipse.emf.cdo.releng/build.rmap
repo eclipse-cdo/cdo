@@ -181,7 +181,7 @@
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)"
 		>
-			<rm:uri format="{0}/tools/orbit/downloads/drops/R20100519200754/repository">
+			<rm:uri format="{0}/tools/orbit/downloads/drops/S20101014084557/repository">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>

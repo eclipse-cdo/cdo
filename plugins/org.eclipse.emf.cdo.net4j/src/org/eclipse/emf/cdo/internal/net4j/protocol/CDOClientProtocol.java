@@ -208,16 +208,15 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     }
   }
 
-  public RefreshSessionResult lockObjects(long lastUpdateTime,
-      Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int viewID, LockType lockType, long timeout)
-      throws InterruptedException
+  public boolean lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
+      LockType lockType, long timeout) throws InterruptedException
   {
     InterruptedException interruptedException = null;
     RuntimeException runtimeException = null;
 
     try
     {
-      return new LockObjectsRequest(this, lastUpdateTime, viewedRevisions, viewID, lockType, timeout).send();
+      return new LockObjectsRequest(this, viewedRevisions, viewID, viewedBranch, lockType, timeout).send();
     }
     catch (RemoteException ex)
     {

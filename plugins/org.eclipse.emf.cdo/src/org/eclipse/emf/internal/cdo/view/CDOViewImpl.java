@@ -18,15 +18,12 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
@@ -67,12 +64,10 @@ import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
-import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -80,6 +75,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -227,7 +223,7 @@ public class CDOViewImpl extends AbstractCDOView
 
       try
       {
-        Map<CDOID, InternalCDORevision> revisions = new HashMap<CDOID, InternalCDORevision>();
+        List<InternalCDORevision> revisions = new LinkedList<InternalCDORevision>();
         for (CDOObject object : objects)
         {
           if (!FSMUtil.isNew(object))
@@ -238,37 +234,17 @@ public class CDOViewImpl extends AbstractCDOView
               revision = CDOStateMachine.INSTANCE.read((InternalCDOObject)object);
             }
 
-            revisions.put(revision.getID(), revision);
+            revisions.add(revision);
           }
         }
 
-        Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions = new HashMap<CDOBranch, Map<CDOID, InternalCDORevision>>();
-        viewedRevisions.put(getBranch(), revisions);
-
         CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-        long lastUpdateTime = session.getLastUpdateTime();
-        RefreshSessionResult result = sessionProtocol.lockObjects(lastUpdateTime, viewedRevisions, viewID, lockType,
-            timeout);
-
-        registerPackageUnits(result.getPackageUnits());
-
-        InternalCDOView view = this;
-        List<InternalCDOView> views = Collections.singletonList(view);
-        session.processRefreshSessionResult(result, getBranch(), views, viewedRevisions);
+        sessionProtocol.lockObjects(revisions, viewID, getBranch(), lockType, timeout);
       }
       finally
       {
         getLock().unlock();
       }
-    }
-  }
-
-  private void registerPackageUnits(List<CDOPackageUnit> packageUnits)
-  {
-    InternalCDOPackageRegistry packageRegistry = session.getPackageRegistry();
-    for (CDOPackageUnit newPackageUnit : packageUnits)
-    {
-      packageRegistry.putPackageUnit((InternalCDOPackageUnit)newPackageUnit);
     }
   }
 

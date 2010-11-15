@@ -80,15 +80,9 @@ public class RefreshSessionIndication extends CDOReadIndication
       for (int j = 0; j < size; j++)
       {
         CDORevisionKey revision = in.readCDORevisionKey();
-        revision = handleViewedRevision(branch, revision);
         revisions.add(revision);
       }
     }
-  }
-
-  protected CDORevisionKey handleViewedRevision(CDOBranch branch, CDORevisionKey revision)
-  {
-    return revision;
   }
 
   @Override

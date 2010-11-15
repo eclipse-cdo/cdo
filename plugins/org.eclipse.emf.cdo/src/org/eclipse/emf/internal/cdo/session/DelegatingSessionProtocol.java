@@ -543,16 +543,15 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public RefreshSessionResult lockObjects(long lastUpdateTime,
-      Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int viewID, LockType lockType, long timeout)
-      throws InterruptedException
+  public boolean lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
+      LockType lockType, long timeout) throws InterruptedException
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.lockObjects(lastUpdateTime, viewedRevisions, viewID, lockType, timeout);
+        return delegate.lockObjects(viewedRevisions, viewID, viewedBranch, lockType, timeout);
       }
       catch (Exception ex)
       {

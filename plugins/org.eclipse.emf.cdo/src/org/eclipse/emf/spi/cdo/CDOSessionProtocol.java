@@ -121,11 +121,10 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public boolean cancelQuery(int queryId);
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public RefreshSessionResult lockObjects(long lastUpdateTime,
-      Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int viewID, LockType lockType, long timeout)
-      throws InterruptedException;
+  public boolean lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
+      LockType lockType, long timeout) throws InterruptedException;
 
   /**
    * @since 3.0

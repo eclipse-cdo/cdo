@@ -304,9 +304,8 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public RefreshSessionResult lockObjects(long lastUpdateTime,
-      Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int viewID, LockType lockType, long timeout)
-      throws InterruptedException
+  public boolean lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
+      LockType lockType, long timeout) throws InterruptedException
   {
     throw new UnsupportedOperationException();
   }

@@ -338,7 +338,7 @@ public class LockingManagerTest extends AbstractCDOTest
     }
   }
 
-  public void testReadLockAndCommitFromDifferenceTransaction() throws Exception
+  public void testReadLockAndCommitFromDifferentTransaction() throws Exception
   {
     Company company = getModel1Factory().createCompany();
 
@@ -365,7 +365,7 @@ public class LockingManagerTest extends AbstractCDOTest
     }
   }
 
-  public void testWriteLockAndCommitFromDifferenceTransaction() throws Exception
+  public void testWriteLockAndCommitFromDifferentTransaction() throws Exception
   {
     Company company = getModel1Factory().createCompany();
 
@@ -703,5 +703,61 @@ public class LockingManagerTest extends AbstractCDOTest
   private static void writeLock(CDOObject object) throws InterruptedException
   {
     assertEquals(true, object.cdoWriteLock().tryLock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
+  }
+
+  public void testReadLockStaleRevision() throws CommitException
+  {
+    testLockStaleRevision(LockType.READ);
+  }
+
+  public void testWriteLockStaleRevision() throws CommitException
+  {
+    testLockStaleRevision(LockType.WRITE);
+  }
+
+  private void testLockStaleRevision(LockType type) throws CommitException
+  {
+    CDOSession session = openSession();
+    session.options().setPassiveUpdateEnabled(false);
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.createResource("/res1");
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("AAA");
+    res.getContents().add(company);
+    transaction.commit();
+
+    updateInOtherSession();
+
+    try
+    {
+      if (type == LockType.WRITE)
+      {
+        CDOUtil.getCDOObject(company).cdoWriteLock().lock();
+      }
+      else if (type == LockType.READ)
+      {
+        CDOUtil.getCDOObject(company).cdoReadLock().lock();
+      }
+      fail("Should have thrown IllegalArgumentException");
+    }
+    catch (IllegalArgumentException e)
+    {
+    }
+
+    session.close();
+  }
+
+  private void updateInOtherSession() throws CommitException
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.getResource("/res1");
+
+    Company company = (Company)res.getContents().get(0);
+    company.setName("BBB");
+    transaction.commit();
+
+    session.close();
   }
 }

@@ -13,40 +13,22 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
-import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.revision.CDOListFactory;
-import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
-import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
-import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
-import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
-import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
-import org.eclipse.emf.cdo.spi.server.InternalRepository;
-import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
-import org.eclipse.net4j.signal.IndicationWithMonitoring;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.io.StringIO;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -66,13 +48,11 @@ import java.util.Map.Entry;
 /**
  * @author Eike Stepper
  */
-public class CommitTransactionIndication extends IndicationWithMonitoring
+public class CommitTransactionIndication extends CDOServerIndicationWithMonitoring
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CommitTransactionIndication.class);
 
   protected InternalCommitContext commitContext;
-
-  private ExtendedDataInputStream streamForLobs;
 
   public CommitTransactionIndication(CDOServerProtocol protocol)
   {
@@ -85,103 +65,13 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
   }
 
   @Override
-  public CDOServerProtocol getProtocol()
+  protected InternalCDOPackageRegistry getPackageRegistry()
   {
-    return (CDOServerProtocol)super.getProtocol();
-  }
-
-  protected InternalSession getSession()
-  {
-    return getProtocol().getSession();
-  }
-
-  protected InternalRepository getRepository()
-  {
-    InternalRepository repository = getSession().getManager().getRepository();
-    if (!LifecycleUtil.isActive(repository))
-    {
-      throw new IllegalStateException("CDORepositoryInfo has been deactivated"); //$NON-NLS-1$
-    }
-
-    return repository;
-  }
-
-  protected IStore getStore()
-  {
-    IStore store = getRepository().getStore();
-    if (!LifecycleUtil.isActive(store))
-    {
-      throw new IllegalStateException("Store has been deactivated"); //$NON-NLS-1$
-    }
-
-    return store;
+    return commitContext.getPackageRegistry();
   }
 
   @Override
-  protected final void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
-  {
-    streamForLobs = in;
-
-    try
-    {
-      indicating(new CDODataInputImpl(in)
-      {
-        @Override
-        protected CDOPackageRegistry getPackageRegistry()
-        {
-          return commitContext.getPackageRegistry();
-        }
-
-        @Override
-        protected StringIO getPackageURICompressor()
-        {
-          return getProtocol().getPackageURICompressor();
-        }
-
-        @Override
-        protected CDOBranchManager getBranchManager()
-        {
-          return CommitTransactionIndication.this.getRepository().getBranchManager();
-        }
-
-        @Override
-        protected CDOCommitInfoManager getCommitInfoManager()
-        {
-          return CommitTransactionIndication.this.getRepository().getCommitInfoManager();
-        }
-
-        @Override
-        protected CDORevisionFactory getRevisionFactory()
-        {
-          return CommitTransactionIndication.this.getRepository().getRevisionManager().getFactory();
-        }
-
-        @Override
-        protected CDOLobStore getLobStore()
-        {
-          return null; // Not used on server
-        }
-
-        @Override
-        protected CDOListFactory getListFactory()
-        {
-          return CDOListImpl.FACTORY;
-        }
-      }, monitor);
-    }
-    catch (Exception ex)
-    {
-      indicatingFailed();
-      throw ex;
-    }
-    catch (Error ex)
-    {
-      indicatingFailed();
-      throw ex;
-    }
-  }
-
-  private void indicatingFailed()
+  protected void indicatingFailed()
   {
     if (commitContext != null)
     {
@@ -190,6 +80,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     }
   }
 
+  @Override
   protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
     try
@@ -305,7 +196,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       commitContext.setDetachedObjects(detachedObjects);
       commitContext.setDetachedObjectTypes(detachedObjectTypes);
       commitContext.setCommitComment(commitComment);
-      commitContext.setLobs(streamForLobs);
+      commitContext.setLobs(getIndicationStream());
     }
     finally
     {
@@ -343,30 +234,6 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
   }
 
   @Override
-  protected final void responding(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
-  {
-    responding(new CDODataOutputImpl(out)
-    {
-      @Override
-      public CDOPackageRegistry getPackageRegistry()
-      {
-        return commitContext.getPackageRegistry();
-      }
-
-      @Override
-      public CDOIDProvider getIDProvider()
-      {
-        return CommitTransactionIndication.this.getSession();
-      }
-
-      @Override
-      protected StringIO getPackageURICompressor()
-      {
-        return getProtocol().getPackageURICompressor();
-      }
-    }, monitor);
-  }
-
   protected void responding(CDODataOutput out, OMMonitor monitor) throws Exception
   {
     boolean success = false;

@@ -13,13 +13,20 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
+
+import org.eclipse.net4j.buffer.BufferInputStream;
+import org.eclipse.net4j.buffer.BufferOutputStream;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
 import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public class ReplicateRepositoryRawIndication extends CDOReadIndication
+public class ReplicateRepositoryRawIndication extends CDOServerIndicationWithMonitoring
 {
   private int lastReplicatedBranchID;
 
@@ -31,15 +38,56 @@ public class ReplicateRepositoryRawIndication extends CDOReadIndication
   }
 
   @Override
-  protected void indicating(CDODataInput in) throws IOException
+  protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
-    lastReplicatedBranchID = in.readInt();
-    lastReplicatedCommitTime = in.readLong();
+    try
+    {
+      InternalSession session = getSession();
+      StoreThreadLocal.setSession(session);
+      super.execute(in, out);
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @Override
-  protected void responding(CDODataOutput out) throws IOException
+  protected void indicating(CDODataInput in, OMMonitor monitor) throws IOException
   {
-    getRepository().replicateRaw(out, lastReplicatedBranchID, lastReplicatedCommitTime);
+    try
+    {
+      monitor.begin();
+
+      lastReplicatedBranchID = in.readInt();
+      lastReplicatedCommitTime = in.readLong();
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  @Override
+  protected void responding(CDODataOutput out, OMMonitor monitor) throws IOException
+  {
+    try
+    {
+      monitor.begin();
+      Async async = monitor.forkAsync();
+
+      try
+      {
+        getRepository().replicateRaw(out, lastReplicatedBranchID, lastReplicatedCommitTime);
+      }
+      finally
+      {
+        async.stop();
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
   }
 }

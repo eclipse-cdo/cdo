@@ -15,10 +15,8 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
@@ -26,40 +24,28 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.model.lob.CDOClob;
 import org.eclipse.emf.cdo.common.model.lob.CDOLob;
-import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
-import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.MetaInstanceMapper;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
-import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
-
-import org.eclipse.net4j.signal.RequestWithMonitoring;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -69,7 +55,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransactionResult>
+public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<CommitTransactionResult>
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CommitTransactionRequest.class);
 
@@ -84,8 +70,6 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
   private CDOCommitData commitData;
 
   private Collection<CDOLob<?>> lobs;
-
-  private ExtendedDataOutputStream stream;
 
   public CommitTransactionRequest(CDOClientProtocol protocol, int transactionID, String comment, boolean releaseLocks,
       CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs)
@@ -107,47 +91,19 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
   }
 
   @Override
-  public CDOClientProtocol getProtocol()
+  protected int getMonitorTimeoutSeconds()
   {
-    return (CDOClientProtocol)super.getProtocol();
+    org.eclipse.emf.cdo.net4j.CDOSession session = (org.eclipse.emf.cdo.net4j.CDOSession)getSession();
+    return session.options().getCommitTimeout();
   }
 
-  protected InternalCDOSession getSession()
-  {
-    return (InternalCDOSession)getProtocol().getSession();
-  }
-
+  @Override
   protected CDOIDProvider getIDProvider()
   {
     return idProvider;
   }
 
   @Override
-  protected final void requesting(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
-  {
-    stream = out;
-    requesting(new CDODataOutputImpl(out)
-    {
-      @Override
-      public CDOPackageRegistry getPackageRegistry()
-      {
-        return getSession().getPackageRegistry();
-      }
-
-      @Override
-      public CDOIDProvider getIDProvider()
-      {
-        return CommitTransactionRequest.this.getIDProvider();
-      }
-
-      @Override
-      protected StringIO getPackageURICompressor()
-      {
-        return getProtocol().getPackageURICompressor();
-      }
-    }, monitor);
-  }
-
   protected void requesting(CDODataOutput out, OMMonitor monitor) throws IOException
   {
     requestingTransactionInfo(out);
@@ -220,11 +176,12 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
       }
     }
 
-    requestingLobs(out);
+    requestingLobs();
   }
 
-  protected void requestingLobs(CDODataOutput out) throws IOException
+  protected void requestingLobs() throws IOException
   {
+    ExtendedDataOutputStream out = getRequestStream();
     out.writeInt(lobs.size());
     for (CDOLob<?> lob : lobs)
     {
@@ -234,13 +191,13 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
       {
         CDOBlob blob = (CDOBlob)lob;
         out.writeLong(size);
-        IOUtil.copyBinary(blob.getContents(), stream, size);
+        IOUtil.copyBinary(blob.getContents(), out, size);
       }
       else
       {
         CDOClob clob = (CDOClob)lob;
         out.writeLong(-size);
-        IOUtil.copyCharacter(clob.getContents(), new OutputStreamWriter(stream), size);
+        IOUtil.copyCharacter(clob.getContents(), new OutputStreamWriter(out), size);
       }
     }
   }
@@ -253,54 +210,6 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
   }
 
   @Override
-  protected final CommitTransactionResult confirming(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
-  {
-    return confirming(new CDODataInputImpl(in)
-    {
-      @Override
-      protected StringIO getPackageURICompressor()
-      {
-        return getProtocol().getPackageURICompressor();
-      }
-
-      @Override
-      protected CDOPackageRegistry getPackageRegistry()
-      {
-        return getSession().getPackageRegistry();
-      }
-
-      @Override
-      protected CDOBranchManager getBranchManager()
-      {
-        return getSession().getBranchManager();
-      }
-
-      @Override
-      protected CDOCommitInfoManager getCommitInfoManager()
-      {
-        return getSession().getCommitInfoManager();
-      }
-
-      @Override
-      protected CDORevisionFactory getRevisionFactory()
-      {
-        return getSession().getRevisionManager().getFactory();
-      }
-
-      @Override
-      protected CDOLobStore getLobStore()
-      {
-        return getSession().getLobStore();
-      }
-
-      @Override
-      protected CDOListFactory getListFactory()
-      {
-        return CDOListWithElementProxiesImpl.FACTORY;
-      }
-    }, monitor);
-  }
-
   protected CommitTransactionResult confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
     CommitTransactionResult result = confirmingCheckError(in);
@@ -382,19 +291,5 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
         throw new ClassCastException("Not a temporary ID: " + id);
       }
     }
-  }
-
-  @Override
-  protected int getMonitorProgressSeconds()
-  {
-    org.eclipse.emf.cdo.net4j.CDOSession session = (org.eclipse.emf.cdo.net4j.CDOSession)getSession();
-    return session.options().getProgressInterval();
-  }
-
-  @Override
-  protected int getMonitorTimeoutSeconds()
-  {
-    org.eclipse.emf.cdo.net4j.CDOSession session = (org.eclipse.emf.cdo.net4j.CDOSession)getSession();
-    return session.options().getCommitTimeout();
   }
 }

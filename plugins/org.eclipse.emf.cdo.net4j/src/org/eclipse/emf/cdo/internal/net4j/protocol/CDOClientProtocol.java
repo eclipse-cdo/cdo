@@ -343,7 +343,7 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
 
   public void replicateRepositoryRaw(CDORawReplicationContext context, OMMonitor monitor)
   {
-    send(new ReplicateRepositoryRawRequest(this, context, monitor));
+    send(new ReplicateRepositoryRawRequest(this, context), monitor);
   }
 
   public CDOChangeSetData[] loadChangeSets(CDOBranchPointRange... ranges)
@@ -393,6 +393,22 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     try
     {
       return request.send();
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new TransportException(ex);
+    }
+  }
+
+  private Boolean send(ReplicateRepositoryRawRequest request, OMMonitor monitor)
+  {
+    try
+    {
+      return request.send(monitor);
     }
     catch (RuntimeException ex)
     {

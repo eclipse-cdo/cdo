@@ -22,28 +22,25 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class ReplicateRepositoryRawRequest extends CDOClientRequest<Boolean>
+public class ReplicateRepositoryRawRequest extends CDOClientRequestWithMonitoring<Boolean>
 {
   private CDORawReplicationContext context;
 
-  private OMMonitor monitor;
-
-  public ReplicateRepositoryRawRequest(CDOClientProtocol protocol, CDORawReplicationContext context, OMMonitor monitor)
+  public ReplicateRepositoryRawRequest(CDOClientProtocol protocol, CDORawReplicationContext context)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY_RAW);
     this.context = context;
-    this.monitor = monitor;
   }
 
   @Override
-  protected void requesting(CDODataOutput out) throws IOException
+  protected void requesting(CDODataOutput out, OMMonitor monitor) throws IOException
   {
     out.writeInt(context.getLastReplicatedBranchID());
     out.writeLong(context.getLastReplicatedCommitTime());
   }
 
   @Override
-  protected Boolean confirming(CDODataInput in) throws IOException
+  protected Boolean confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
     context.replicateRaw(in, monitor);
     return true;

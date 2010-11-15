@@ -41,6 +41,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
@@ -62,7 +63,7 @@ public abstract class CDOServerBackup<IN, OUT>
     return repository;
   }
 
-  public final void export(OutputStream out) throws Exception
+  public final void exportRepository(OutputStream out) throws Exception
   {
     boolean wasActive = LifecycleUtil.isActive(repository);
     if (!wasActive)
@@ -76,7 +77,7 @@ public abstract class CDOServerBackup<IN, OUT>
     try
     {
       OUT output = createOutput(out);
-      exportRepository(output);
+      exportAll(output);
     }
     finally
     {
@@ -93,7 +94,7 @@ public abstract class CDOServerBackup<IN, OUT>
 
   protected abstract OUT createOutput(OutputStream out) throws Exception;
 
-  protected void exportRepository(final OUT out) throws Exception
+  protected void exportAll(final OUT out) throws Exception
   {
     try
     {
@@ -207,6 +208,10 @@ public abstract class CDOServerBackup<IN, OUT>
 
   protected abstract void exportCommit(OUT out, CDOCommitInfo commitInfo) throws Exception;
 
+  public void importRepository(InputStream in)
+  {
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -231,14 +236,14 @@ public abstract class CDOServerBackup<IN, OUT>
     }
 
     @Override
-    protected void exportRepository(XMLStack out) throws Exception
+    protected void exportAll(XMLStack out) throws Exception
     {
       out.element("repository");
       out.attribute("name", getRepository().getName());
       out.attribute("uuid", getRepository().getUUID());
 
       out.push();
-      super.exportRepository(out);
+      super.exportAll(out);
       out.done();
     }
 

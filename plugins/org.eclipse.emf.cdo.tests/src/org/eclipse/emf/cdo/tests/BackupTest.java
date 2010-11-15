@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 /**
@@ -49,8 +50,28 @@ public class BackupTest extends AbstractCDOTest
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     XML backup = new CDOServerBackup.XML(getRepository());
-    backup.export(baos);
+    backup.exportRepository(baos);
     System.out.println(baos.toString());
+  }
+
+  public void testBackupImport() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/res1");
+    resource.getContents().add(createCustomer("Eike"));
+    transaction.commit();
+    session.close();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    XML backup = new CDOServerBackup.XML(getRepository());
+    backup.exportRepository(baos);
+    System.out.println(baos.toString());
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    backup = new CDOServerBackup.XML(getRepository("repo2"));
+    backup.importRepository(bais);
+    sleep(10000000);
   }
 
   private Customer createCustomer(String name)

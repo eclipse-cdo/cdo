@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.BranchingTestSameSession;
 import org.eclipse.emf.cdo.tests.CommitInfoTest;
 import org.eclipse.emf.cdo.tests.ComplexTest;
+import org.eclipse.emf.cdo.tests.ContainmentTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 import org.eclipse.emf.cdo.tests.LobTest;
 import org.eclipse.emf.cdo.tests.LockingManagerTest;
@@ -35,11 +36,13 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_272861_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_273565_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_279982_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_283985_CDOTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_283985_CDOTest2;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_308895_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_316444_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_319836_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_322804_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -70,24 +73,13 @@ public class AllTestsHibernate extends AllConfigs
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
-    // if (true)
-    // {
-    // testClasses.clear();
-    // testClasses.add(XRefTest.class);
-    // return;
-    // }
-    // // current failing testcases
-    // testClasses.add(ContainmentTest.class);
-    // testClasses.add(Bugzilla_279982_Test.class);
-    // testClasses.add(Bugzilla_316273_Test.class);
-    // testClasses.add(Bugzilla_320690_Test.class);
-    // testClasses.add(Bugzilla_322804_Test.class);
-    // testClasses.add(Bugzilla_323930_Test.class);
-
     testClasses.add(XRefTest.class);
     testClasses.add(LobTest.class);
     testClasses.add(RepositoryTest.class);
 
+    testClasses.add(Hibernate_Bugzilla_279982_Test.class);
+    testClasses.add(Hibernate_ContainmentTest.class);
+    testClasses.add(HibernateXATransactionTest.class);
     testClasses.add(Hibernate_Bugzilla_308895_Test.class);
     testClasses.add(HibernateExternalAnnotationTest.class);
     testClasses.add(HibernateMultiValuedOfAttributeTest.class);
@@ -106,8 +98,15 @@ public class AllTestsHibernate extends AllConfigs
 
     super.initTestClasses(testClasses);
 
+    // Teneo does not yet support lists of int arrays:
+    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=330212
+    testClasses.remove(Bugzilla_322804_Test.class);
+
+    testClasses.remove(Bugzilla_279982_Test.class);
+
     // are replaced by Hibernate specific ones, mostly
     // to prevent tests doing move from one container to another
+    testClasses.remove(ContainmentTest.class);
     testClasses.remove(ComplexTest.class);
     testClasses.remove(ResourceTest.class);
     testClasses.remove(SetFeatureTest.class);
@@ -277,5 +276,62 @@ public class AllTestsHibernate extends AllConfigs
     {
     }
 
+  }
+
+  public static class Hibernate_ContainmentTest extends ContainmentTest
+  {
+    // this testcase is overridden because it uses an ereference which should be
+    // annotated with @External, but which can't be mapped like that because it is
+    // also used non-externally by other testcases
+    @Override
+    public void testObjectNotSameResourceThanItsContainerCDOANDXMI() throws Exception
+    {
+    }
+
+    // see:
+    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=330207#c1
+    @Override
+    public void testModeledBackPointer_Transient() throws Exception
+    {
+    }
+
+    // see:
+    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=330207#c1
+    @Override
+    public void testModeledBackPointer_Transient_Load() throws Exception
+    {
+    }
+  }
+
+  // overridden because Hibernate will treat all stale references as an exception
+  public static class Hibernate_Bugzilla_279982_Test extends Bugzilla_279982_Test
+  {
+    @Override
+    public void testBugzilla_279982_Single() throws Exception
+    {
+      try
+      {
+        super.testBugzilla_279982_Single();
+      }
+      catch (Exception e)
+      {
+        assertTrue(e instanceof CommitException);
+        assertTrue(e.getMessage().contains("org.hibernate.ObjectNotFoundException"));
+      }
+    }
+
+    @Override
+    public void testBugzilla_279982_Multi_RevisionPrefetchingPolicy() throws Exception
+    {
+      try
+      {
+        super.testBugzilla_279982_Multi_RevisionPrefetchingPolicy();
+      }
+      catch (Exception e)
+      {
+        assertTrue(e instanceof CommitException);
+        assertTrue(e.getMessage().contains("org.hibernate.ObjectNotFoundException"));
+      }
+    }
   }
 }

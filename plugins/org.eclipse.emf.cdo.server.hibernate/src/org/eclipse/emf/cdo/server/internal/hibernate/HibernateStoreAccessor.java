@@ -593,6 +593,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public void write(InternalCommitContext context, OMMonitor monitor)
   {
     // NOTE: the same flow is also present in the super class (StoreAccessor)
+    // changes in flow can mean that the flow here also has to change
 
     HibernateThreadContext.setCommitContext(context);
     if (context.getNewPackageUnits().length > 0)

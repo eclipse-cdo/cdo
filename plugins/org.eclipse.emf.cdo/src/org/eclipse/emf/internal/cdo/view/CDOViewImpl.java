@@ -316,9 +316,26 @@ public class CDOViewImpl extends AbstractCDOView
 
   protected CDOBranchPoint getBranchPointForID(CDOID id)
   {
-    if (isSticky())
+    // If this view's timestamp is something other than UNSPECIFIED_DATE,
+    // then this is an 'audit' view, and so this timestamp must always be
+    // used without any concern for possible sticky-view behavior
+    //
+    CDOBranchPoint branchPoint = getBranchPoint();
+    if (branchPoint.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE)
     {
-      return getBranch().getPoint(session.getLastUpdateTime());
+      return branchPoint;
+    }
+
+    InternalCDOSession session = getSession();
+    if (session.isSticky())
+    {
+      branchPoint = session.getCommittedSinceLastRefresh(id);
+      if (branchPoint == null)
+      {
+        branchPoint = getBranch().getPoint(session.getLastUpdateTime());
+      }
+      
+      return branchPoint;
     }
 
     return this;

@@ -302,14 +302,6 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     return stateLock;
   }
 
-  public boolean isSticky()
-  {
-    InternalCDOSession session = getSession();
-    boolean passiveUpdate = session.options().isPassiveUpdateEnabled();
-    boolean supportingAudits = session.getRepositoryInfo().isSupportingAudits();
-    return !passiveUpdate && supportingAudits;
-  }
-
   public boolean isDirty()
   {
     return false;

@@ -182,6 +182,12 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
 
   /**
+   * A map to track for every object that was committed since this session's last refresh, onto what CDOBranchPoint it
+   * was committed. (Used only for sticky transactions, see bug 290032 - Sticky views.)
+   */
+  private Map<CDOID, CDOBranchPoint> committedSinceLastRefresh = new HashMap<CDOID, CDOBranchPoint>();
+
+  /**
    * Fixes threading problems between a committing thread and the Net4j thread that delivers incoming commit
    * notifications. The same applies to lock requests and invalidations
    */
@@ -1138,6 +1144,32 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return MessageFormat.format("CDOSession[{0}, {1}]", name, sessionID); //$NON-NLS-1$
   }
 
+  public CDOBranchPoint getCommittedSinceLastRefresh(CDOID id)
+  {
+    if (isSticky())
+    {
+      return committedSinceLastRefresh.get(id);
+    }
+
+    return null;
+  }
+
+  public void setCommittedSinceLastRefresh(CDOID id, CDOBranchPoint branchPoint)
+  {
+    if (isSticky())
+    {
+      committedSinceLastRefresh.put(id, branchPoint);
+    }
+  }
+
+  public void clearCommittedSinceLastRefresh()
+  {
+    if (isSticky())
+    {
+      committedSinceLastRefresh.clear();
+    }
+  }
+
   protected ResourceSet createResourceSet()
   {
     return new ResourceSetImpl();
@@ -1258,6 +1290,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   public static boolean isInvalidationRunnerActive()
   {
     return invalidationRunnerActive.get();
+  }
+
+  public boolean isSticky()
+  {
+    return !options().isPassiveUpdateEnabled() && getRepositoryInfo().isSupportingAudits();
   }
 
   /**

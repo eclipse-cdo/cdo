@@ -726,5 +726,25 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     {
       throw new UnsupportedOperationException();
     }
+
+    public boolean isSticky()
+    {
+      return false;
+    }
+
+    public CDOBranchPoint getCommittedSinceLastRefresh(CDOID id)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setCommittedSinceLastRefresh(CDOID id, CDOBranchPoint branchPoint)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void clearCommittedSinceLastRefresh()
+    {
+      throw new UnsupportedOperationException();
+    }
   }
 }

@@ -1,0 +1,80 @@
+/**
+ * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Egidijus Vaisnora - initial API and implementation
+ *    Caspar De Groot - maintenance
+ */
+package org.eclipse.emf.cdo.tests.bugzilla;
+
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.model1.Address;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.view.CDOView;
+
+import org.junit.Assert;
+
+/**
+ * Bug 330052 - Breakage related to sticky views
+ * 
+ * @author Egidijus Vaisnora, Caspar De Groot
+ */
+public class Bugzilla_330052_Test extends AbstractCDOTest
+{
+  /**
+   * Tests whether another view in the same session can retrieve the newly committed object
+   */
+  public void test_otherView() throws CommitException
+  {
+    CDOSession session = openSession();
+    session.options().setPassiveUpdateEnabled(false);
+    CDOTransaction tx = session.openTransaction();
+    CDOView view = session.openView();
+
+    CDOResource resource = tx.createResource("test");
+    Address address = getModel1Factory().createAddress();
+    resource.getContents().add(address);
+    tx.commit();
+
+    CDOObject object = view.getObject(CDOUtil.getCDOObject(address).cdoID());
+    Assert.assertNotNull(object);
+    session.close();
+  }
+
+  /**
+   * Tests whether an audit view in the same session fetches the correct historical version
+   */
+  public void test_auditView() throws CommitException
+  {
+    CDOSession session = openSession();
+    session.options().setPassiveUpdateEnabled(false);
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOResource resource = transaction.createResource("test");
+    Address address = getModel1Factory().createAddress();
+    final String testName1 = "name1";
+    address.setName(testName1);
+    resource.getContents().add(address);
+    long commitTime = transaction.commit().getTimeStamp();
+
+    final String testName2 = "name2";
+    address.setName(testName2);
+    transaction.commit();
+
+    CDOView view = session.openView(commitTime);
+    Address historicalAddress = (Address)view.getObject(CDOUtil.getCDOObject(address).cdoID());
+
+    Assert.assertEquals(testName1, historicalAddress.getName());
+
+    session.close();
+  }
+}

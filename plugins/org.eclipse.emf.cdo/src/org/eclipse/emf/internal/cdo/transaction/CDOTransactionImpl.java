@@ -215,12 +215,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private Set<EObject> committables;
 
   /**
-   * A map to track for every object that was committed since this TX's last refresh, onto what CDOBranchPoint it was
-   * committed. (Used only for sticky transactions, see bug 290032 - Sticky views.)
-   */
-  private Map<CDOID, CDOBranchPoint> committedSinceLastRefresh = new HashMap<CDOID, CDOBranchPoint>();
-
-  /**
    * A map to hold a clean (i.e. unmodified) revision for objects that have been modified or detached.
    */
   private Map<InternalCDOObject, InternalCDORevision> cleanRevisions = new HashMap<InternalCDOObject, InternalCDORevision>();
@@ -2004,23 +1998,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     super.doDeactivate();
   }
 
-  @Override
-  protected CDOBranchPoint getBranchPointForID(CDOID id)
-  {
-    if (isSticky())
-    {
-      CDOBranchPoint branchPoint = committedSinceLastRefresh.get(id);
-      if (branchPoint == null)
-      {
-        branchPoint = getBranch().getPoint(getSession().getLastUpdateTime());
-      }
-
-      return branchPoint;
-    }
-
-    return this;
-  }
-
   /**
    * Bug 298561: This override removes references to remotely detached objects that are present in any DIRTY or NEW
    * objects.
@@ -2048,9 +2025,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     // Bug 290032 - Sticky views
-    if (isSticky())
+    InternalCDOSession session = getSession();
+    if (session.isSticky())
     {
-      committedSinceLastRefresh.clear();
+      session.clearCommittedSinceLastRefresh();
     }
 
     return super.invalidate(lastUpdateTime, allChangedObjects, allDetachedObjects, deltas, revisionDeltas,
@@ -2369,23 +2347,23 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           session.invalidate(commitInfo, transaction);
 
           // Bug 290032 - Sticky views
-          if (isSticky())
+          if (session.isSticky())
           {
             CDOBranchPoint commitBranchPoint = CDOBranchUtil.copyBranchPoint(result);
             for (CDOObject object : getNewObjects().values()) // Note: keyset() does not work because ID mappings are
                                                               // not applied there!
             {
-              committedSinceLastRefresh.put(object.cdoID(), commitBranchPoint);
+              session.setCommittedSinceLastRefresh(object.cdoID(), commitBranchPoint);
             }
 
             for (CDOID id : getDirtyObjects().keySet())
             {
-              committedSinceLastRefresh.put(id, commitBranchPoint);
+              session.setCommittedSinceLastRefresh(id, commitBranchPoint);
             }
 
             for (CDOID id : getDetachedObjects().keySet())
             {
-              committedSinceLastRefresh.put(id, commitBranchPoint);
+              session.setCommittedSinceLastRefresh(id, commitBranchPoint);
             }
           }
 

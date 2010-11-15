@@ -12,6 +12,7 @@ package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobStore;
@@ -179,4 +180,24 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
    */
   public void processRefreshSessionResult(RefreshSessionResult result, CDOBranch branch,
       List<InternalCDOView> branchViews, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions);
+
+  /**
+   * @since 4.0
+   */
+  public boolean isSticky();
+
+  /**
+   * @since 4.0
+   */
+  public CDOBranchPoint getCommittedSinceLastRefresh(CDOID id);
+
+  /**
+   * @since 4.0
+   */
+  public void setCommittedSinceLastRefresh(CDOID id, CDOBranchPoint branchPoint);
+
+  /**
+   * @since 4.0
+   */
+  public void clearCommittedSinceLastRefresh();
 }

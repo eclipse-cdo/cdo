@@ -40,8 +40,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
@@ -49,11 +47,11 @@ import java.util.List;
  * @author Eike Stepper
  * @since 4.0
  */
-public abstract class CDOServerBackup<IN, OUT>
+public abstract class CDOServerExporter<OUT>
 {
   private InternalRepository repository;
 
-  public CDOServerBackup(IRepository repository)
+  public CDOServerExporter(IRepository repository)
   {
     this.repository = (InternalRepository)repository;
   }
@@ -208,14 +206,80 @@ public abstract class CDOServerBackup<IN, OUT>
 
   protected abstract void exportCommit(OUT out, CDOCommitInfo commitInfo) throws Exception;
 
-  public void importRepository(InputStream in)
+  /**
+   * @author Eike Stepper
+   */
+  public static interface XMLConstants
   {
+    public static final String REPOSITORY = "repository";
+
+    public static final String REPOSITORY_NAME = "name";
+
+    public static final String REPOSITORY_UUID = "uuid";
+
+    public static final String PACKAGE_UNIT = "packageUnit";
+
+    public static final String PACKAGE_UNIT_TYPE = "type";
+
+    public static final String PACKAGE_UNIT_TIME = "time";
+
+    public static final String PACKAGE_UNIT_DATA = "data";
+
+    public static final String PACKAGE_INFO = "packageInfo";
+
+    public static final String PACKAGE_INFO_URI = "uri";
+
+    public static final String PACKAGE_INFO_LOWER = "lower";
+
+    public static final String PACKAGE_INFO_UPPER = "upper";
+
+    public static final String BRANCH = "branch";
+
+    public static final String BRANCH_ID = "id";
+
+    public static final String BRANCH_NAME = "name";
+
+    public static final String BRANCH_LOCAL = "local";
+
+    public static final String BRANCH_TIME = "time";
+
+    public static final String BRANCH_PARENT = "parent";
+
+    public static final String REVISION = "revision";
+
+    public static final String REVISION_ID = "id";
+
+    public static final String REVISION_CLASS = "class";
+
+    public static final String REVISION_VERSION = "version";
+
+    public static final String REVISION_TIME = "time";
+
+    public static final String REVISION_REVISED = "revised";
+
+    public static final String FEATURE = "feature";
+
+    public static final String FEATURE_NAME = "name";
+
+    public static final String FEATURE_VALUE = "value";
+
+    public static final String COMMIT = "commit";
+
+    public static final String COMMIT_TIME = "time";
+
+    public static final String COMMIT_PREVIOUS = "previous";
+
+    public static final String COMMIT_BRANCH = "branch";
+
+    public static final String COMMIT_USER = "user";
+
+    public static final String COMMIT_COMMENT = "comment";
   }
 
   /**
    * @author Eike Stepper
    */
-  public static class XML extends CDOServerBackup<BufferedReader, XMLStack>
+  public static class XML extends CDOServerExporter<XMLStack> implements XMLConstants
   {
     public XML(IRepository repository)
     {
@@ -238,9 +302,9 @@ public abstract class CDOServerBackup<IN, OUT>
     @Override
     protected void exportAll(XMLStack out) throws Exception
     {
-      out.element("repository");
-      out.attribute("name", getRepository().getName());
-      out.attribute("uuid", getRepository().getUUID());
+      out.element(REPOSITORY);
+      out.attribute(REPOSITORY_NAME, getRepository().getName());
+      out.attribute(REPOSITORY_UUID, getRepository().getUUID());
 
       out.push();
       super.exportAll(out);
@@ -250,10 +314,10 @@ public abstract class CDOServerBackup<IN, OUT>
     @Override
     protected void startPackageUnit(XMLStack out, Type type, long time, String data) throws Exception
     {
-      out.element("packageUnit");
-      out.attribute("type", type);
-      out.attribute("time", time);
-      out.attribute("data", data);
+      out.element(PACKAGE_UNIT);
+      out.attribute(PACKAGE_UNIT_TYPE, type);
+      out.attribute(PACKAGE_UNIT_TIME, time);
+      out.attribute(PACKAGE_UNIT_DATA, data);
       out.push();
     }
 
@@ -266,23 +330,23 @@ public abstract class CDOServerBackup<IN, OUT>
     @Override
     protected void startPackageInfo(XMLStack out, String uri, CDOIDMetaRange metaIDRange) throws Exception
     {
-      out.element("packageInfo");
-      out.attribute("uri", uri);
-      out.attribute("lower", str(metaIDRange.getLowerBound()));
-      out.attribute("upper", str(metaIDRange.getUpperBound()));
+      out.element(PACKAGE_INFO);
+      out.attribute(PACKAGE_INFO_URI, uri);
+      out.attribute(PACKAGE_INFO_LOWER, str(metaIDRange.getLowerBound()));
+      out.attribute(PACKAGE_INFO_UPPER, str(metaIDRange.getUpperBound()));
     }
 
     @Override
     protected void exportBranch(XMLStack out, CDOBranch branch) throws Exception
     {
-      out.element("branch");
-      out.attribute("id", branch.getID());
-      out.attribute("name", branch.getName());
-      out.attribute("local", branch.isLocal());
-      out.attribute("time", branch.getBase().getTimeStamp());
+      out.element(BRANCH);
+      out.attribute(BRANCH_ID, branch.getID());
+      out.attribute(BRANCH_NAME, branch.getName());
+      out.attribute(BRANCH_LOCAL, branch.isLocal());
+      out.attribute(BRANCH_TIME, branch.getBase().getTimeStamp());
       if (!branch.isMainBranch())
       {
-        out.attribute("parent", branch.getBase().getBranch().getID());
+        out.attribute(BRANCH_PARENT, branch.getBase().getBranch().getID());
       }
 
       out.push();
@@ -296,16 +360,16 @@ public abstract class CDOServerBackup<IN, OUT>
     {
       InternalCDORevision rev = (InternalCDORevision)revision;
 
-      out.element("revision");
-      out.attribute("id", str(rev.getID()));
-      out.attribute("class", new CDOClassifierRef(rev.getEClass()).getURI());
-      out.attribute("version", rev.getVersion());
-      out.attribute("time", rev.getTimeStamp());
+      out.element(REVISION);
+      out.attribute(REVISION_ID, str(rev.getID()));
+      out.attribute(REVISION_CLASS, new CDOClassifierRef(rev.getEClass()).getURI());
+      out.attribute(REVISION_VERSION, rev.getVersion());
+      out.attribute(REVISION_TIME, rev.getTimeStamp());
 
       long revised = rev.getRevised();
       if (revised != CDOBranchPoint.UNSPECIFIED_DATE)
       {
-        out.attribute("revised", revised);
+        out.attribute(REVISION_REVISED, revised);
       }
 
       out.push();
@@ -339,37 +403,37 @@ public abstract class CDOServerBackup<IN, OUT>
 
     protected void exportFeature(XMLStack out, EStructuralFeature feature, Object value) throws Exception
     {
-      out.element("feature");
-      out.attribute("name", feature.getName());
+      out.element(FEATURE);
+      out.attribute(FEATURE_NAME, feature.getName());
       if (value instanceof CDOID)
       {
-        out.attribute("value", str((CDOID)value));
+        out.attribute(FEATURE_VALUE, str((CDOID)value));
       }
       else
       {
-        out.attributeOrNull("value", value);
+        out.attributeOrNull(FEATURE_VALUE, value);
       }
     }
 
     @Override
     protected void exportCommit(XMLStack out, CDOCommitInfo commitInfo) throws Exception
     {
-      out.element("commit");
-      out.attribute("time", commitInfo.getTimeStamp());
+      out.element(COMMIT);
+      out.attribute(COMMIT_TIME, commitInfo.getTimeStamp());
       long previous = commitInfo.getPreviousTimeStamp();
       if (previous != CDOBranchPoint.UNSPECIFIED_DATE)
       {
-        out.attribute("previous", previous);
+        out.attribute(COMMIT_PREVIOUS, previous);
       }
 
       int branch = commitInfo.getBranch().getID();
       if (branch != CDOBranch.MAIN_BRANCH_ID)
       {
-        out.attribute("branch", branch);
+        out.attribute(COMMIT_BRANCH, branch);
       }
 
-      out.attribute("user", commitInfo.getUserID());
-      out.attribute("comment", commitInfo.getComment());
+      out.attribute(COMMIT_USER, commitInfo.getUserID());
+      out.attribute(COMMIT_COMMENT, commitInfo.getComment());
     }
   }
 }

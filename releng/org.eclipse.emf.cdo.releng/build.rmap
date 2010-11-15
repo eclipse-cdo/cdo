@@ -100,8 +100,8 @@
 			resolutionFilter="(resolve.target.platform=true)"
 		>
 			<!-- rm:uri format="{0}/modeling/emf/teneo/updates/1.2.0/milestones" -->
-			<!-- consume temporarily an older version of teneo per Martin Taal's request -->
-			<rm:uri format="{0}/modeling/emf/teneo/updates/1.1.2/interim">
+			<!-- consume temporarily an interim version of teneo per Martin Taal's request -->
+			<rm:uri format="{0}/modeling/emf/teneo/updates/1.2.0/interim">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>

@@ -11,10 +11,11 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.server.CDOServerBackup;
-import org.eclipse.emf.cdo.server.CDOServerBackup.XML;
+import org.eclipse.emf.cdo.server.CDOServerExporter;
+import org.eclipse.emf.cdo.server.CDOServerImporter;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import java.io.ByteArrayInputStream;
@@ -49,8 +50,8 @@ public class BackupTest extends AbstractCDOTest
     session.close();
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    XML backup = new CDOServerBackup.XML(getRepository());
-    backup.exportRepository(baos);
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(getRepository());
+    exporter.exportRepository(baos);
     System.out.println(baos.toString());
   }
 
@@ -59,18 +60,23 @@ public class BackupTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/res1");
-    resource.getContents().add(createCustomer("Eike"));
+    Customer eike = createCustomer("Eike");
+    resource.getContents().add(eike);
+    resource.getContents().add(createCustomer("Jos"));
+    resource.getContents().add(createCustomer("Simon"));
+    transaction.commit();
+    resource.getContents().add(createSalesOrder(eike));
     transaction.commit();
     session.close();
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    XML backup = new CDOServerBackup.XML(getRepository());
-    backup.exportRepository(baos);
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(getRepository());
+    exporter.exportRepository(baos);
     System.out.println(baos.toString());
 
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    backup = new CDOServerBackup.XML(getRepository("repo2"));
-    backup.importRepository(bais);
+    CDOServerImporter.XML importer = new CDOServerImporter.XML(getRepository("repo2"));
+    importer.importRepository(bais);
     sleep(10000000);
   }
 
@@ -79,5 +85,13 @@ public class BackupTest extends AbstractCDOTest
     Customer customer = getModel1Factory().createCustomer();
     customer.setName(name);
     return customer;
+  }
+
+  private SalesOrder createSalesOrder(Customer customer)
+  {
+    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
+    salesOrder.setId(4711);
+    salesOrder.setCustomer(customer);
+    return salesOrder;
   }
 }

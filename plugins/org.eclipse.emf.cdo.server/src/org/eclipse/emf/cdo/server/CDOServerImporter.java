@@ -58,16 +58,18 @@ public abstract class CDOServerImporter
       LifecycleUtil.activate(repository);
     }
 
-    final IStoreAccessor accessor = repository.getStore().getWriter(null);
-    final Object[] context = { null };
-    final OMMonitor monitor = new Monitor();
-
-    Handler importer = new Handler()
+    class FlushHandler implements Handler
     {
+      private IStoreAccessor accessor = repository.getStore().getWriter(null);
+
+      private OMMonitor monitor = new Monitor();
+
+      private Object context;
+
       public void importPackageUnit(CDOPackageUnit packageUnit)
       {
         InternalCDOPackageUnit[] packageUnits = { (InternalCDOPackageUnit)packageUnit };
-        context[0] = accessor.rawStore(packageUnits, context[0], monitor);
+        context = accessor.rawStore(packageUnits, context, monitor);
       }
 
       public void importBranch(CDOBranch branch)
@@ -84,15 +86,16 @@ public abstract class CDOServerImporter
 
       public void flush()
       {
-        accessor.rawCommit(context[0], new Monitor());
-        context[0] = null;
+        accessor.rawCommit(context, new Monitor());
+        context = null;
       }
-    };
+    }
 
     try
     {
-      importAll(in, importer);
-      importer.flush();
+      FlushHandler handler = new FlushHandler();
+      importAll(in, handler);
+      handler.flush();
     }
     finally
     {
@@ -105,7 +108,7 @@ public abstract class CDOServerImporter
     }
   }
 
-  protected abstract void importAll(InputStream in, Handler context) throws Exception;
+  protected abstract void importAll(InputStream in, Handler handler) throws Exception;
 
   /**
    * @author Eike Stepper
@@ -141,9 +144,9 @@ public abstract class CDOServerImporter
     }
 
     @Override
-    protected void importAll(InputStream in, Handler context) throws Exception
+    protected void importAll(InputStream in, Handler handler) throws Exception
     {
-      DefaultHandler handler = new DefaultHandler()
+      DefaultHandler xmlHandler = new DefaultHandler()
       {
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
@@ -161,7 +164,7 @@ public abstract class CDOServerImporter
 
       SAXParserFactory factory = SAXParserFactory.newInstance();
       SAXParser saxParser = factory.newSAXParser();
-      saxParser.parse(in, handler);
+      saxParser.parse(in, xmlHandler);
     }
   }
 }

@@ -71,7 +71,7 @@ public class Bugzilla_330052_Test extends AbstractCDOTest
     transaction.commit();
 
     CDOView view = session.openView(commitTime);
-    Address historicalAddress = (Address)view.getObject(CDOUtil.getCDOObject(address).cdoID());
+    Address historicalAddress = (Address)CDOUtil.getEObject(view.getObject(CDOUtil.getCDOObject(address).cdoID()));
 
     Assert.assertEquals(testName1, historicalAddress.getName());
 

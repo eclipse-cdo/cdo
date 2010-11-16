@@ -50,8 +50,10 @@ public class BackupTest extends AbstractCDOTest
     transaction.commit();
     session.close();
 
+    InternalRepository repo1 = getRepository();
+
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(getRepository());
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
     System.out.println(baos.toString());
   }
@@ -71,8 +73,10 @@ public class BackupTest extends AbstractCDOTest
     transaction.commit();
     session.close();
 
+    InternalRepository repo1 = getRepository();
+
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(getRepository());
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
     System.out.println(baos.toString());
 
@@ -81,7 +85,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
     importer.importRepository(bais);
-    sleep(10000000);
   }
 
   private Customer createCustomer(String name)

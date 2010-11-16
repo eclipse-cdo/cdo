@@ -34,7 +34,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.XMLStack;
+import org.eclipse.net4j.util.io.XMLOutput;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -284,7 +284,7 @@ public abstract class CDOServerExporter<OUT>
   /**
    * @author Eike Stepper
    */
-  public static class XML extends CDOServerExporter<XMLStack> implements XMLConstants
+  public static class XML extends CDOServerExporter<XMLOutput> implements XMLConstants
   {
     public XML(IRepository repository)
     {
@@ -292,13 +292,13 @@ public abstract class CDOServerExporter<OUT>
     }
 
     @Override
-    protected final XMLStack createOutput(OutputStream out) throws Exception
+    protected final XMLOutput createOutput(OutputStream out) throws Exception
     {
-      return new XMLStack(out);
+      return new XMLOutput(out);
     }
 
     @Override
-    protected void exportAll(XMLStack out) throws Exception
+    protected void exportAll(XMLOutput out) throws Exception
     {
       out.element(REPOSITORY);
       out.attribute(REPOSITORY_NAME, getRepository().getName());
@@ -310,7 +310,7 @@ public abstract class CDOServerExporter<OUT>
     }
 
     @Override
-    protected void exportPackages(XMLStack out) throws Exception
+    protected void exportPackages(XMLOutput out) throws Exception
     {
       out.element(MODELS);
 
@@ -320,7 +320,7 @@ public abstract class CDOServerExporter<OUT>
     }
 
     @Override
-    protected void startPackageUnit(XMLStack out, CDOPackageUnit.Type type, long time, String data) throws Exception
+    protected void startPackageUnit(XMLOutput out, CDOPackageUnit.Type type, long time, String data) throws Exception
     {
       out.element(PACKAGE_UNIT);
       out.attribute(PACKAGE_UNIT_TYPE, type);
@@ -330,13 +330,13 @@ public abstract class CDOServerExporter<OUT>
     }
 
     @Override
-    protected void endPackageUnit(XMLStack out) throws Exception
+    protected void endPackageUnit(XMLOutput out) throws Exception
     {
       out.pop();
     }
 
     @Override
-    protected void exportPackageInfo(XMLStack out, String uri, CDOIDMetaRange metaIDRange) throws Exception
+    protected void exportPackageInfo(XMLOutput out, String uri, CDOIDMetaRange metaIDRange) throws Exception
     {
       out.element(PACKAGE_INFO);
       out.attribute(PACKAGE_INFO_URI, uri);
@@ -345,7 +345,7 @@ public abstract class CDOServerExporter<OUT>
     }
 
     @Override
-    protected void exportBranches(XMLStack out) throws Exception
+    protected void exportBranches(XMLOutput out) throws Exception
     {
       out.element(INSTANCES);
 
@@ -355,7 +355,7 @@ public abstract class CDOServerExporter<OUT>
     }
 
     @Override
-    protected void exportBranch(XMLStack out, CDOBranch branch) throws Exception
+    protected void exportBranch(XMLOutput out, CDOBranch branch) throws Exception
     {
       out.element(BRANCH);
       out.attribute(BRANCH_ID, branch.getID());
@@ -373,7 +373,7 @@ public abstract class CDOServerExporter<OUT>
     }
 
     @Override
-    protected void exportRevision(XMLStack out, CDORevision revision) throws Exception
+    protected void exportRevision(XMLOutput out, CDORevision revision) throws Exception
     {
       InternalCDORevision rev = (InternalCDORevision)revision;
 
@@ -418,7 +418,7 @@ public abstract class CDOServerExporter<OUT>
       out.pop();
     }
 
-    protected void exportFeature(XMLStack out, EStructuralFeature feature, Object value) throws Exception
+    protected void exportFeature(XMLOutput out, EStructuralFeature feature, Object value) throws Exception
     {
       out.element(FEATURE);
       out.attribute(FEATURE_NAME, feature.getName());
@@ -435,7 +435,7 @@ public abstract class CDOServerExporter<OUT>
     }
 
     @Override
-    protected void exportCommits(XMLStack out) throws Exception
+    protected void exportCommits(XMLOutput out) throws Exception
     {
       out.element(COMMITS);
 
@@ -445,7 +445,7 @@ public abstract class CDOServerExporter<OUT>
     }
 
     @Override
-    protected void exportCommit(XMLStack out, CDOCommitInfo commitInfo) throws Exception
+    protected void exportCommit(XMLOutput out, CDOCommitInfo commitInfo) throws Exception
     {
       out.element(COMMIT);
       out.attribute(COMMIT_TIME, commitInfo.getTimeStamp());

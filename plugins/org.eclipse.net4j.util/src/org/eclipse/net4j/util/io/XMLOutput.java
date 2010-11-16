@@ -1,4 +1,4 @@
-package org.eclipse.net4j.util;
+package org.eclipse.net4j.util.io;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -17,7 +17,7 @@ import java.util.LinkedList;
  * @author Eike Stepper
  * @since 3.1
  */
-public class XMLStack
+public class XMLOutput
 {
   private static final AttributesImpl NO_ATTRIBUTES = new AttributesImpl();
 
@@ -31,7 +31,7 @@ public class XMLStack
 
   private Element element;
 
-  public XMLStack(OutputStream out) throws TransformerConfigurationException, SAXException
+  public XMLOutput(OutputStream out) throws TransformerConfigurationException, SAXException
   {
     setNewLine("\n");
     setIndentation("  ");
@@ -58,14 +58,14 @@ public class XMLStack
     this.indentation = indentation.toCharArray();
   }
 
-  public XMLStack element(String name) throws SAXException
+  public XMLOutput element(String name) throws SAXException
   {
     flush();
     element = new Element(name);
     return this;
   }
 
-  public XMLStack attribute(String name, Object value) throws SAXException
+  public XMLOutput attribute(String name, Object value) throws SAXException
   {
     if (value != null)
     {
@@ -75,14 +75,14 @@ public class XMLStack
     return this;
   }
 
-  public XMLStack attributeOrNull(String name, Object value) throws SAXException
+  public XMLOutput attributeOrNull(String name, Object value) throws SAXException
   {
     checkElement();
     element.addAttribute(name, value);
     return this;
   }
 
-  public XMLStack push() throws SAXException
+  public XMLOutput push() throws SAXException
   {
     newLine();
     element.start();
@@ -92,7 +92,7 @@ public class XMLStack
     return this;
   }
 
-  public XMLStack pop() throws SAXException
+  public XMLOutput pop() throws SAXException
   {
     flush();
     Element element = stack.removeLast();

@@ -48,6 +48,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -87,11 +88,14 @@ public abstract class CDOServerImporter
 
       private Object context;
 
-      public void handlePackageUnit(CDOPackageUnit packageUnit)
+      public void handlePackageUnits(InternalCDOPackageUnit[] packageUnits)
       {
-        InternalCDOPackageUnit[] packageUnits = { (InternalCDOPackageUnit)packageUnit };
         InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
-        packageRegistry.putPackageUnit(packageUnits[0]);
+        for (InternalCDOPackageUnit packageUnit : packageUnits)
+        {
+          packageRegistry.putPackageUnit(packageUnit);
+        }
+
         context = accessor.rawStore(packageUnits, context, monitor);
       }
 
@@ -144,7 +148,7 @@ public abstract class CDOServerImporter
    */
   public static interface Handler extends CDORevisionHandler, CDOCommitInfoHandler
   {
-    public void handlePackageUnit(CDOPackageUnit packageUnit);
+    public void handlePackageUnits(InternalCDOPackageUnit[] packageUnits);
 
     public CDOBranch handleBranch(int id, String name, long time, int parentID);
 
@@ -166,7 +170,7 @@ public abstract class CDOServerImporter
     {
       DefaultHandler xmlHandler = new DefaultHandler()
       {
-        private InternalCDOPackageUnit packageUnit;
+        private LinkedList<InternalCDOPackageUnit> packageUnits = new LinkedList<InternalCDOPackageUnit>();
 
         private List<InternalCDOPackageInfo> packageInfos;
 
@@ -179,11 +183,13 @@ public abstract class CDOServerImporter
         {
           if (PACKAGE_UNIT.equals(qName))
           {
-            packageUnit = (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
+            InternalCDOPackageUnit packageUnit = (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
             packageUnit.setOriginalType(CDOPackageUnit.Type.valueOf(attributes.getValue(PACKAGE_UNIT_TYPE)));
             packageUnit.setTimeStamp(Long.parseLong(attributes.getValue(PACKAGE_UNIT_TIME)));
             // packageUnit.s
             packageUnit.setState(CDOPackageUnit.State.LOADED);
+
+            packageUnits.add(packageUnit);
             packageInfos = new ArrayList<InternalCDOPackageInfo>();
           }
           else if (PACKAGE_INFO.equals(qName))
@@ -253,10 +259,14 @@ public abstract class CDOServerImporter
         {
           if (PACKAGE_UNIT.equals(qName))
           {
+            InternalCDOPackageUnit packageUnit = packageUnits.getLast();
             packageUnit.setPackageInfos(packageInfos.toArray(new InternalCDOPackageInfo[packageInfos.size()]));
-            handler.handlePackageUnit(packageUnit);
             packageInfos = null;
-            packageUnit = null;
+          }
+          else if (MODELS.equals(qName))
+          {
+            handler.handlePackageUnits(packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]));
+            packageUnits = null;
           }
           else if (BRANCH.equals(qName))
           {

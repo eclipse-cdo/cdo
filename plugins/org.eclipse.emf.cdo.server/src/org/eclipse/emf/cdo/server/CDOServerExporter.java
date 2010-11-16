@@ -121,7 +121,7 @@ public abstract class CDOServerExporter<OUT>
       {
         String packageURI = packageInfo.getPackageURI();
         CDOIDMetaRange metaIDRange = packageInfo.getMetaIDRange();
-        startPackageInfo(out, packageURI, metaIDRange);
+        exportPackageInfo(out, packageURI, metaIDRange);
       }
 
       endPackageUnit(out);
@@ -132,7 +132,7 @@ public abstract class CDOServerExporter<OUT>
 
   protected abstract void endPackageUnit(OUT out) throws Exception;
 
-  protected abstract void startPackageInfo(OUT out, String packageURI, CDOIDMetaRange metaIDRange) throws Exception;
+  protected abstract void exportPackageInfo(OUT out, String packageURI, CDOIDMetaRange metaIDRange) throws Exception;
 
   protected void exportBranches(final OUT out) throws Exception
   {
@@ -216,6 +216,8 @@ public abstract class CDOServerExporter<OUT>
 
     public static final String REPOSITORY_UUID = "uuid";
 
+    public static final String MODELS = "models";
+
     public static final String PACKAGE_UNIT = "packageUnit";
 
     public static final String PACKAGE_UNIT_TYPE = "type";
@@ -231,6 +233,8 @@ public abstract class CDOServerExporter<OUT>
     public static final String PACKAGE_INFO_FIRST = "first";
 
     public static final String PACKAGE_INFO_COUNT = "count";
+
+    public static final String INSTANCES = "instances";
 
     public static final String BRANCH = "branch";
 
@@ -261,6 +265,8 @@ public abstract class CDOServerExporter<OUT>
     public static final String FEATURE_TYPE = "name";
 
     public static final String FEATURE_VALUE = "value";
+
+    public static final String COMMITS = "commits";
 
     public static final String COMMIT = "commit";
 
@@ -304,6 +310,16 @@ public abstract class CDOServerExporter<OUT>
     }
 
     @Override
+    protected void exportPackages(XMLStack out) throws Exception
+    {
+      out.element(MODELS);
+
+      out.push();
+      super.exportPackages(out);
+      out.pop();
+    }
+
+    @Override
     protected void startPackageUnit(XMLStack out, CDOPackageUnit.Type type, long time, String data) throws Exception
     {
       out.element(PACKAGE_UNIT);
@@ -320,12 +336,22 @@ public abstract class CDOServerExporter<OUT>
     }
 
     @Override
-    protected void startPackageInfo(XMLStack out, String uri, CDOIDMetaRange metaIDRange) throws Exception
+    protected void exportPackageInfo(XMLStack out, String uri, CDOIDMetaRange metaIDRange) throws Exception
     {
       out.element(PACKAGE_INFO);
       out.attribute(PACKAGE_INFO_URI, uri);
       out.attribute(PACKAGE_INFO_FIRST, str(metaIDRange.getLowerBound()));
       out.attribute(PACKAGE_INFO_COUNT, metaIDRange.size());
+    }
+
+    @Override
+    protected void exportBranches(XMLStack out) throws Exception
+    {
+      out.element(INSTANCES);
+
+      out.push();
+      super.exportBranches(out);
+      out.pop();
     }
 
     @Override
@@ -409,6 +435,16 @@ public abstract class CDOServerExporter<OUT>
     }
 
     @Override
+    protected void exportCommits(XMLStack out) throws Exception
+    {
+      out.element(COMMITS);
+
+      out.push();
+      super.exportCommits(out);
+      out.pop();
+    }
+
+    @Override
     protected void exportCommit(XMLStack out, CDOCommitInfo commitInfo) throws Exception
     {
       out.element(COMMIT);
@@ -442,47 +478,47 @@ public abstract class CDOServerExporter<OUT>
       {
         return Boolean.class.getSimpleName();
       }
-    
+
       if (value instanceof Character)
       {
         return Character.class.getSimpleName();
       }
-    
+
       if (value instanceof Byte)
       {
         return Byte.class.getSimpleName();
       }
-    
+
       if (value instanceof Short)
       {
         return Short.class.getSimpleName();
       }
-    
+
       if (value instanceof Integer)
       {
         return Integer.class.getSimpleName();
       }
-    
+
       if (value instanceof Long)
       {
         return Long.class.getSimpleName();
       }
-    
+
       if (value instanceof Float)
       {
         return Float.class.getSimpleName();
       }
-    
+
       if (value instanceof Double)
       {
         return Double.class.getSimpleName();
       }
-    
+
       if (value instanceof String)
       {
         return String.class.getSimpleName();
       }
-    
+
       throw new IllegalArgumentException("Invalid type: " + value.getClass().getName());
     }
   }

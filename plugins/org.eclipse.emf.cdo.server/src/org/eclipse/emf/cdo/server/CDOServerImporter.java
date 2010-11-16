@@ -190,14 +190,6 @@ public abstract class CDOServerImporter
         return true;
       }
 
-      public void handleInstances()
-      {
-        // IStoreAccessor accessor = repository.getStore().getReader(null);
-        // CDOBranchPoint head = repository.getBranchManager().getMainBranch().getHead();
-        // CDOID rootResourceID = accessor.readResourceID(CDOID.NULL, null, head);
-        // repository.setRootResourceID(rootResourceID);
-      }
-
       public void handleCommitInfo(CDOCommitInfo commitInfo)
       {
       }
@@ -248,8 +240,6 @@ public abstract class CDOServerImporter
     public InternalCDOPackageRegistry handleModels();
 
     public InternalCDOBranch handleBranch(int id, String name, long time, int parentID);
-
-    public void handleInstances();
 
     public void flush();
 
@@ -395,10 +385,6 @@ public abstract class CDOServerImporter
           {
             handler.handleRevision(revision);
             revision = null;
-          }
-          else if (INSTANCES.equals(qName))
-          {
-            handler.handleInstances();
           }
         }
       };

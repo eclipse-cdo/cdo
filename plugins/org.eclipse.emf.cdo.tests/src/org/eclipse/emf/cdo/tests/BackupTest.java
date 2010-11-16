@@ -69,6 +69,7 @@ public class BackupTest extends AbstractCDOTest
     resource.getContents().add(createCustomer("Simon"));
     transaction.commit();
     SalesOrder salesOrder = createSalesOrder(eike);
+    salesOrder.getOrderDetails().add(getModel1Factory().createOrderDetail());
     resource.getContents().add(salesOrder);
     transaction.commit();
     session.close();
@@ -85,6 +86,8 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
     importer.importRepository(bais);
+
+    sleep(10000000);
   }
 
   private Customer createCustomer(String name)

@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Martin Taal - contributions
  */
 package org.eclipse.emf.cdo.server.hibernate;
 
@@ -19,6 +20,7 @@ import org.hibernate.cfg.Configuration;
 
 /**
  * @author Eike Stepper
+ * @since 4.0
  */
 public interface IHibernateStore extends IStore, IDBConnectionProvider
 {

@@ -99,7 +99,6 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
 
     // translate the list of EPackages to an array
     final List<EPackage> epacks = getHibernateStore().getPackageHandler().getEPackages();
-    // remove the ecore and resource package
     final ListIterator<EPackage> iterator = epacks.listIterator();
     while (iterator.hasNext())
     {
@@ -123,9 +122,9 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     final CDOMappingGenerator mappingGenerator = new CDOMappingGenerator();
     mappingGenerator.getExtensions().putAll(extensions);
     String hbm = mappingGenerator.generateMapping(ePackageArray, properties);
+
     // to solve an issue with older versions of teneo
     hbm = hbm.replaceAll("_cont", "cont"); //$NON-NLS-1$ //$NON-NLS-2$
-
     return hbm;
   }
 

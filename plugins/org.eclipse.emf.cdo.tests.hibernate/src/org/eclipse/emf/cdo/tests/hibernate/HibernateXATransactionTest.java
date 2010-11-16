@@ -41,4 +41,9 @@ public class HibernateXATransactionTest extends XATransactionTest
     hbConfig.getAdditionalProperties().clear();
     super.doTearDown();
   }
+
+  @Override
+  public void testRollback_AfterSetpoint() throws Exception
+  {
+  }
 }

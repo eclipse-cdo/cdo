@@ -57,6 +57,7 @@ public class Bugzilla_322754_Test extends AbstractCDOTest
   public void testResourceDeleteWithDanglingReferences() throws Exception
   {
     Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     orderDetail.setProduct(product);
 

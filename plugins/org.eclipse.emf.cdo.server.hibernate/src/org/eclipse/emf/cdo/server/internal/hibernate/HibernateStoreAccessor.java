@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.WrappedHibernateList;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
@@ -51,11 +52,14 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
 import org.hibernate.Query;
+import org.hibernate.ScrollMode;
+import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -63,6 +67,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -392,12 +397,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     throw new UnsupportedOperationException();
   }
 
-  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
-  {
-    // TODO: implement HibernateStoreAccessor.handleRevisions(eClass, branch, timeStamp, handler)
-    throw new UnsupportedOperationException();
-  }
-
   /**
    * Not supported by the Hibernate Store, auditing is not supported. Currently ignores the branchVersion and calls the
    * {@readRevision(CDOID, CDOBranchPoint, int, CDORevisionCacheAdder)} .
@@ -460,8 +459,54 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   public void queryXRefs(QueryXRefsContext context)
   {
-    // TODO: implement HibernateStoreAccessor.queryXRefs(context)
-    throw new UnsupportedOperationException();
+    final Session session = getHibernateSession();
+    for (CDOID targetCdoId : context.getTargetObjects().keySet())
+    {
+      final CDORevision revision = HibernateUtil.getInstance().getCDORevision(targetCdoId);
+      final EClass targetEClass = context.getTargetObjects().get(targetCdoId);
+      final String targetEntityName = getStore().getEntityName(targetEClass);
+      final Map<EClass, List<EReference>> sourceReferences = getStore().getPackageHandler().getSourceCandidates(
+          targetEClass);
+      for (EClass sourceEClass : sourceReferences.keySet())
+      {
+        final String sourceEntityName = getStore().getEntityName(sourceEClass);
+        for (EReference eref : sourceReferences.get(sourceEClass))
+        {
+          final String hql;
+          if (eref.isMany())
+          {
+            hql = "select ref from " + sourceEntityName + " as ref, " + targetEntityName
+                + " as refTo where refTo = :to and refTo in elements(ref." + eref.getName() + ")";
+          }
+          else
+          {
+            hql = "select ref from " + sourceEntityName + " as ref where :to = ref." + eref.getName();
+          }
+
+          final Query qry = session.createQuery(hql);
+          qry.setEntity("to", revision);
+          ScrollableResults result = qry.scroll(ScrollMode.FORWARD_ONLY);
+          while (result.next())
+          {
+            final InternalCDORevision sourceRevision = (InternalCDORevision)result.get()[0];
+            int sourceIndex = 0;
+            if (eref.isMany())
+            {
+              // note this takes performance for sure as the list is read,
+              // consider not supporting sourceIndex, or doing it differently
+              final WrappedHibernateList cdoList = (WrappedHibernateList)sourceRevision.getList(eref);
+              sourceIndex = cdoList.getDelegate().indexOf(revision);
+            }
+
+            boolean more = context.addXRef(targetCdoId, sourceRevision.getID(), eref, sourceIndex);
+            if (!more)
+            {
+              return;
+            }
+          }
+        }
+      }
+    }
   }
 
   private CDOID getHibernateID(CDOID id)
@@ -490,9 +535,15 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
    */
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
-    final HibernateQueryHandler queryHandler = new HibernateQueryHandler();
-    queryHandler.setHibernateStoreAccessor(this);
-    return queryHandler;
+    String queryLanguage = info.getQueryLanguage();
+    if (queryLanguage != null && queryLanguage.equalsIgnoreCase(HibernateQueryHandler.QUERY_LANGUAGE))
+    {
+      final HibernateQueryHandler queryHandler = new HibernateQueryHandler();
+      queryHandler.setHibernateStoreAccessor(this);
+      return queryHandler;
+    }
+
+    return null;
   }
 
   /**
@@ -520,6 +571,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   @Override
   public void write(InternalCommitContext context, OMMonitor monitor)
   {
+    // NOTE: the same flow is also present in the super class (StoreAccessor)
+    // changes in flow can mean that the flow here also has to change
+
     HibernateThreadContext.setCommitContext(context);
     if (context.getNewPackageUnits().length > 0)
     {
@@ -676,12 +730,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   @Override
-  protected void writeCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment, OMMonitor monitor)
-  {
-    // Do nothing
-  }
-
-  @Override
   protected void writeRevisions(InternalCDORevision[] revisions, CDOBranch branch, OMMonitor monitor)
   {
     // Doesn't do anything. It is done in commit().
@@ -697,18 +745,32 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created,
       OMMonitor monitor)
   {
+    // TODO: implement HibernateStoreAccessor.writeRevisionDeltas(revisionDeltas, branch, created, monitor)
     throw new UnsupportedOperationException();
   }
 
   public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException
   {
+    // TODO: implement HibernateStoreAccessor.rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime)
     throw new UnsupportedOperationException();
   }
 
-  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
-      throws IOException
+  public Object rawStore(InternalCDOPackageUnit[] packageUnits, Object context, OMMonitor monitor)
   {
+    // TODO: implement HibernateStoreAccessor.rawStore(packageUnits, context, monitor)
+    throw new UnsupportedOperationException();
+  }
+
+  public Object rawStore(InternalCDORevision revision, Object context, OMMonitor monitor)
+  {
+    // TODO: implement HibernateStoreAccessor.rawStore(revision, context, monitor)
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawCommit(Object context, OMMonitor monitor)
+  {
+    // TODO: implement HibernateStoreAccessor.rawCommit(context, monitor)
     throw new UnsupportedOperationException();
   }
 
@@ -750,6 +812,22 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   @Override
   protected void doUnpassivate() throws Exception
+  {
+  }
+
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, CDORevisionHandler handler)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
+      throws IOException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, String userID, String comment, OMMonitor monitor)
   {
   }
 }

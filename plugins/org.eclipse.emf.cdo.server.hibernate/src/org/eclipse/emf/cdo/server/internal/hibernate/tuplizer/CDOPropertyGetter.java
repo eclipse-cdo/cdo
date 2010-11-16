@@ -100,7 +100,7 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
       {
         return value;
       }
-      
+
       return eEnum.getEEnumLiteral((Integer)value);
     }
 

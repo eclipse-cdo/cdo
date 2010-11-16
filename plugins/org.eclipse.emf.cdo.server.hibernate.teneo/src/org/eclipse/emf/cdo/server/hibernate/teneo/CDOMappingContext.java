@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.hibernate.teneo;
 
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOCustomTypeUserType;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOENumIntegerType;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOENumStringType;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDExternalUserType;
@@ -138,7 +139,7 @@ public class CDOMappingContext extends MappingContext
   @Override
   public String getDefaultUserType()
   {
-    return "string"; //$NON-NLS-1$
+    return CDOCustomTypeUserType.class.getName();
   }
 
   @Override

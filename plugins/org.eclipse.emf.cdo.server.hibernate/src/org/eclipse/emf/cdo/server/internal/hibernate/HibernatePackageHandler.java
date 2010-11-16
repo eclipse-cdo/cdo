@@ -12,7 +12,9 @@
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.internal.server.XRefsQueryHandler;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -24,7 +26,10 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import org.hibernate.Criteria;
@@ -36,10 +41,10 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -145,6 +150,8 @@ public class HibernatePackageHandler extends Lifecycle
 
   private boolean doDropSchema;
 
+  private Map<EClass, Map<EClass, List<EReference>>> sourceCandidates = new HashMap<EClass, Map<EClass, List<EReference>>>();
+
   /**
    * TODO Necessary to pass/store/dump the properties from the store?
    */
@@ -202,6 +209,7 @@ public class HibernatePackageHandler extends Lifecycle
     {
       reset();
       hibernateStore.reInitialize();
+      sourceCandidates = null;
     }
   }
 
@@ -209,6 +217,55 @@ public class HibernatePackageHandler extends Lifecycle
   {
     readPackageUnits();
     return packageUnits;
+  }
+
+  public Map<EClass, List<EReference>> getSourceCandidates(EClass targetEClass)
+  {
+    if (sourceCandidates == null)
+    {
+      computeSourceCandidates();
+    }
+
+    final Map<EClass, List<EReference>> sourceCandidateList = sourceCandidates.get(targetEClass);
+    if (sourceCandidateList == null)
+    {
+      return new HashMap<EClass, List<EReference>>();
+    }
+
+    return sourceCandidateList;
+  }
+
+  private synchronized void computeSourceCandidates()
+  {
+    if (sourceCandidates != null)
+    {
+      return;
+    }
+
+    sourceCandidates = new HashMap<EClass, Map<EClass, List<EReference>>>();
+
+    for (EPackage ePackage : getEPackages())
+    {
+      for (EClassifier eClassifier : ePackage.getEClassifiers())
+      {
+        if (eClassifier instanceof EClass)
+        {
+          sourceCandidates.put((EClass)eClassifier, computeSourceCandidatesByEClass((EClass)eClassifier));
+        }
+      }
+    }
+  }
+
+  private Map<EClass, List<EReference>> computeSourceCandidatesByEClass(EClass targetType)
+  {
+    final Map<EClass, List<EReference>> localSourceCandidates = new HashMap<EClass, List<EReference>>();
+    final Collection<EClass> targetTypes = Collections.singletonList(targetType);
+    for (CDOPackageInfo packageInfo : hibernateStore.getRepository().getPackageRegistry(false).getPackageInfos())
+    {
+      XRefsQueryHandler.collectSourceCandidates(packageInfo, targetTypes, localSourceCandidates);
+    }
+
+    return localSourceCandidates;
   }
 
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
@@ -388,7 +445,6 @@ public class HibernatePackageHandler extends Lifecycle
     session.beginTransaction();
     try
     {
-      System.out.println(new File(".").getAbsolutePath());
       final Criteria c = session.createCriteria(SystemInformation.class);
       List<?> l = c.list();
       int records = l.size();
@@ -399,7 +455,7 @@ public class HibernatePackageHandler extends Lifecycle
         systemInformation = new SystemInformation();
         systemInformation.setFirstTime(true);
         systemInformation.setCreationTime(System.currentTimeMillis());
-        session.saveOrUpdate(systemInformation);
+        session.save(systemInformation);
       }
       else if (records == 1)
       {
@@ -412,6 +468,84 @@ public class HibernatePackageHandler extends Lifecycle
       }
 
       return systemInformation;
+    }
+    finally
+    {
+      session.getTransaction().commit();
+      session.close();
+    }
+  }
+
+  Map<String, String> getSystemProperties()
+  {
+    Session session = getSessionFactory().openSession();
+    session.beginTransaction();
+
+    try
+    {
+      final Map<String, String> result = new HashMap<String, String>();
+      final Criteria c = session.createCriteria(SystemProperty.class);
+      for (Object o : c.list())
+      {
+        final SystemProperty systemProperty = (SystemProperty)o;
+        result.put(systemProperty.getName(), systemProperty.getValue());
+      }
+
+      return result;
+    }
+    finally
+    {
+      session.getTransaction().commit();
+      session.close();
+    }
+  }
+
+  void setSystemProperties(Map<String, String> properties)
+  {
+    Session session = getSessionFactory().openSession();
+    session.beginTransaction();
+
+    try
+    {
+      final Map<String, SystemProperty> currentValues = new HashMap<String, SystemProperty>();
+      final Criteria c = session.createCriteria(SystemProperty.class);
+      for (Object o : c.list())
+      {
+        final SystemProperty systemProperty = (SystemProperty)o;
+        currentValues.put(systemProperty.getName(), systemProperty);
+      }
+
+      // update remove currentones
+      final Map<String, String> newValues = new HashMap<String, String>();
+      for (String key : properties.keySet())
+      {
+        if (currentValues.containsKey(key))
+        {
+          final SystemProperty systemProperty = currentValues.get(key);
+          if (properties.get(key) == null)
+          {
+            session.delete(systemProperty);
+          }
+          else
+          {
+            systemProperty.setValue(properties.get(key));
+            session.update(systemProperty);
+          }
+        }
+        else
+        {
+          newValues.put(key, properties.get(key));
+        }
+      }
+
+      // store the new ones
+      for (String key : newValues.keySet())
+      {
+        final SystemProperty systemProperty = new SystemProperty();
+        systemProperty.setName(key);
+        systemProperty.setValue(newValues.get(key));
+        session.save(systemProperty);
+      }
     }
     finally
     {

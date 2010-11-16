@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.server.hibernate.teneo;
 
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOCustomTypeUserType;
+
 import org.eclipse.emf.teneo.hibernate.annotations.HbEDataTypeAnnotator;
 
 /**
@@ -28,6 +30,6 @@ public class CDOEDataTypeAnnotator extends HbEDataTypeAnnotator
   @Override
   public String getDefaultUserType()
   {
-    return "string"; //$NON-NLS-1$
+    return CDOCustomTypeUserType.class.getName();
   }
 }

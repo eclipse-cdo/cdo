@@ -69,4 +69,5 @@
 			</many-to-any>
 		</list>
 	</subclass>
+
 </hibernate-mapping>

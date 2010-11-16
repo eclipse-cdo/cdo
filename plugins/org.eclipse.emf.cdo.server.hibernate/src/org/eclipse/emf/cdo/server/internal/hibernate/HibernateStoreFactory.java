@@ -52,8 +52,8 @@ public class HibernateStoreFactory implements IStoreFactory
     for (int i = 0; i < propertyNodes.getLength(); i++)
     {
       final Element propertyElement = (Element)propertyNodes.item(i);
-      properties.setProperty(propertyElement.getAttribute(NAME_ATTRIBUTE), propertyElement
-          .getAttribute(VALUE_ATTRIBUTE));
+      properties.setProperty(propertyElement.getAttribute(NAME_ATTRIBUTE),
+          propertyElement.getAttribute(VALUE_ATTRIBUTE));
     }
 
     return HibernateUtil.getInstance().createStore(mappingProvider, properties);

@@ -16,20 +16,32 @@ import org.eclipse.emf.cdo.tests.AuditTestSameSession;
 import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.BranchingTestSameSession;
 import org.eclipse.emf.cdo.tests.CommitInfoTest;
+import org.eclipse.emf.cdo.tests.ComplexTest;
+import org.eclipse.emf.cdo.tests.ContainmentTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 import org.eclipse.emf.cdo.tests.LockingManagerTest;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
 import org.eclipse.emf.cdo.tests.MergingTest;
 import org.eclipse.emf.cdo.tests.MultiValuedOfAttributeTest;
+import org.eclipse.emf.cdo.tests.RepositoryTest;
+import org.eclipse.emf.cdo.tests.ResourceTest;
+import org.eclipse.emf.cdo.tests.SetFeatureTest;
 import org.eclipse.emf.cdo.tests.UnsetTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
+import org.eclipse.emf.cdo.tests.XRefTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_272861_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_273565_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_279982_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_283985_CDOTest;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_283985_CDOTest2;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_308895_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_319836_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_322218_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import java.util.List;
 
@@ -57,17 +69,46 @@ public class AllTestsHibernate extends AllConfigs
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
+    testClasses.add(XRefTest.class);
+    testClasses.add(RepositoryTest.class);
+
+    testClasses.add(Hibernate_Bugzilla_279982_Test.class);
+    testClasses.add(Hibernate_ContainmentTest.class);
+    testClasses.add(HibernateXATransactionTest.class);
+    testClasses.add(Hibernate_Bugzilla_308895_Test.class);
+    testClasses.add(HibernateExternalAnnotationTest.class);
+    testClasses.add(HibernateMultiValuedOfAttributeTest.class);
+    testClasses.add(HibernateXATransactionTest.class);
+    testClasses.add(HibernateExternalReferenceTest.class);
+    testClasses.add(HibernateQueryTest.class);
+    testClasses.add(HibernateQueryNoCachingTest.class);
+    testClasses.add(HibernateBugzilla_258933_Test.class);
+    testClasses.add(HibernateUnsetTest.class);
+    testClasses.add(HibernateBugzilla_301104_Test.class);
+    testClasses.add(Hibernate_SetFeatureTest.class);
+    testClasses.add(Hibernate_ResourceTest.class);
+    testClasses.add(Hibernate_ComplexTest.class);
+
     super.initTestClasses(testClasses);
 
-    // if (true)
-    // {
-    // testClasses.clear();
-    // testClasses.add(SetFeatureTest.class);
-    // return;
-    // }
+    testClasses.remove(Bugzilla_279982_Test.class);
 
+    // Teneo does not yet support lists of int arrays:
+    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=330212
+    testClasses.remove(Bugzilla_322218_Test.class);
+
+    // are replaced by Hibernate specific ones, mostly
+    // to prevent tests doing move from one container to another
+    testClasses.remove(ContainmentTest.class);
+    testClasses.remove(ComplexTest.class);
+    testClasses.remove(ResourceTest.class);
+    testClasses.remove(SetFeatureTest.class);
     testClasses.remove(Bugzilla_308895_Test.class);
-    testClasses.add(Hibernate_Bugzilla_308895_Test.class);
+
+    // contains a lot of containment move, which is not supported by Hibernate
+    testClasses.remove(Bugzilla_283985_CDOTest.class);
+    testClasses.remove(Bugzilla_283985_CDOTest2.class);
+    testClasses.remove(Bugzilla_319836_Test.class);
 
     // Branching not supported
     testClasses.remove(BranchingTest.class);
@@ -84,9 +125,6 @@ public class AllTestsHibernate extends AllConfigs
     // runs okay when run standalone
     testClasses.remove(Bugzilla_273565_Test.class);
 
-    // add a testcase which has an annotation file
-    testClasses.add(HibernateExternalAnnotationTest.class);
-
     // audit support to do
     // bug 244141
     testClasses.remove(AuditTest.class);
@@ -99,43 +137,37 @@ public class AllTestsHibernate extends AllConfigs
     // this is not nicely supported by Hibernate
     // therefore this step is removed
     testClasses.remove(MultiValuedOfAttributeTest.class);
-    testClasses.add(HibernateMultiValuedOfAttributeTest.class);
 
     // MemStore is not relevant
     testClasses.remove(MEMStoreQueryTest.class);
 
     // replace test case to do external mapping
     testClasses.remove(XATransactionTest.class);
-    testClasses.add(HibernateXATransactionTest.class);
 
     // replace test case with one, disabling some non working testcases
     // see the HibernateExternalReferenceTest for a description
     testClasses.remove(ExternalReferenceTest.class);
-    testClasses.add(HibernateExternalReferenceTest.class);
 
     // this testcases removes and creates a resource with the
     // same path in one transaction, that's not supported
     // by hibernate.. because of unique key constraints
     testClasses.remove(Bugzilla_272861_Test.class);
 
-    // add the hibernate query test
-    testClasses.add(HibernateQueryTest.class);
-
     // override a testcase because the hibernate store
     // has a different meaning of unset
     testClasses.remove(Bugzilla_258933_Test.class);
-    testClasses.add(HibernateBugzilla_258933_Test.class);
 
     // remove as unsettable has to be re-visited for the hb store
     // see bugzilla 298579
     testClasses.remove(UnsetTest.class);
-    testClasses.add(HibernateUnsetTest.class);
-
-    testClasses.add(HibernateBugzilla_301104_Test.class);
   }
 
-  // overridden because one testcase does not pass as Hibernate currently
-  // does not store the isset boolean values in the database
+  /**
+   * Overridden because one testcase does not pass as Hibernate currently does not store the isset boolean values in the
+   * database.
+   * 
+   * @author Martin Taal
+   */
   public static class HibernateUnsetTest extends UnsetTest
   {
     @Override
@@ -144,6 +176,9 @@ public class AllTestsHibernate extends AllConfigs
     }
   }
 
+  /**
+   * @author Martin Taal
+   */
   public static class Hibernate_Bugzilla_308895_Test extends Bugzilla_308895_Test
   {
     @Override
@@ -158,6 +193,127 @@ public class AllTestsHibernate extends AllConfigs
       // eAnnotation.getDetails().put("value", value)
       //
       // att.getEAnnotations().add(eAnnotation);
+    }
+  }
+
+  /**
+   * unsettable is hardly supported by the Hibernate Store.
+   * 
+   * @author Martin Taal
+   */
+  public static class Hibernate_SetFeatureTest extends SetFeatureTest
+  {
+    @Override
+    public void testUnsettableDateNoDefault_SetDefault() throws Exception
+    {
+    }
+
+    @Override
+    public void testUnsettableStringNoDefault_SetDefault() throws Exception
+    {
+    }
+  }
+
+  /**
+   * disable some container move tests, containment move is not supported by hibernate.
+   * 
+   * @author Martin Taal
+   */
+  public static class Hibernate_ResourceTest extends ResourceTest
+  {
+    @Override
+    public void testChangePathFromDepth3ToDepth0() throws Exception
+    {
+    }
+
+    @Override
+    public void testChangeResourceURI() throws Exception
+    {
+    }
+
+    @Override
+    public void testChangeResourceFolderURI() throws Exception
+    {
+    }
+  }
+
+  /**
+   * @author Martin Taal
+   */
+  public static class Hibernate_ComplexTest extends ComplexTest
+  {
+    @Override
+    public void testMultipleTransactions2() throws CommitException
+    {
+    }
+
+    @Override
+    public void testMigrateContainmentMulti()
+    {
+    }
+  }
+
+  /**
+   * @author Martin Taal
+   */
+  public static class Hibernate_ContainmentTest extends ContainmentTest
+  {
+    // this testcase is overridden because it uses an ereference which should be
+    // annotated with @External, but which can't be mapped like that because it is
+    // also used non-externally by other testcases
+    @Override
+    public void testObjectNotSameResourceThanItsContainerCDOANDXMI() throws Exception
+    {
+    }
+
+    // see:
+    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=330207#c1
+    @Override
+    public void testModeledBackPointer_Transient() throws Exception
+    {
+    }
+
+    // see:
+    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=330207#c1
+    @Override
+    public void testModeledBackPointer_Transient_Load() throws Exception
+    {
+    }
+  }
+
+  /**
+   * overridden because Hibernate will treat all stale references as an exception
+   * 
+   * @author Martin Taal
+   */
+  public static class Hibernate_Bugzilla_279982_Test extends Bugzilla_279982_Test
+  {
+    @Override
+    public void testBugzilla_279982_Single() throws Exception
+    {
+      try
+      {
+        super.testBugzilla_279982_Single();
+      }
+      catch (Exception e)
+      {
+        assertTrue(e instanceof CommitException);
+        assertTrue(e.getMessage().contains("org.hibernate.ObjectNotFoundException"));
+      }
+    }
+
+    @Override
+    public void testBugzilla_279982_Multi_RevisionPrefetchingPolicy() throws Exception
+    {
+      try
+      {
+        super.testBugzilla_279982_Multi_RevisionPrefetchingPolicy();
+      }
+      catch (Exception e)
+      {
+        assertTrue(e instanceof CommitException);
+        assertTrue(e.getMessage().contains("org.hibernate.ObjectNotFoundException"));
+      }
     }
   }
 }

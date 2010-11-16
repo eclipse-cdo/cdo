@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.security.PasswordCredentials;
@@ -47,7 +48,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
     long timeStamp = commitInfo.getTimeStamp();
@@ -59,7 +62,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
     assertEquals(transaction.getBranch(), commitInfo.getBranch());
@@ -73,7 +78,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
     assertEquals(transaction.getBranch(), commitInfo.getBranch());
@@ -94,7 +101,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession(REPO_NAME);
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
     assertEquals(USER_ID, commitInfo.getUserID());
@@ -105,7 +114,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     String comment = "Andre";
     transaction.setCommitComment(comment);
@@ -122,7 +133,9 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
 
@@ -142,7 +155,9 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
 
@@ -165,7 +180,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
 
@@ -195,7 +212,9 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
 
@@ -215,7 +234,9 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     String comment = "Andre";
     transaction.setCommitComment(comment);
@@ -238,7 +259,9 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
 
@@ -259,7 +282,9 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
 
@@ -283,7 +308,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
 
@@ -314,7 +341,9 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
 
@@ -335,7 +364,9 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     String comment = "Andre";
     transaction.setCommitComment(comment);
@@ -362,7 +393,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     transaction.commit();
 
@@ -384,7 +417,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     transaction.commit();
 
@@ -407,7 +442,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     transaction.commit();
 
@@ -439,7 +476,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch wrong = getRepository(REPO_NAME).getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     transaction.commit();
 
@@ -461,7 +500,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     String comment = "Andre";
     transaction.setCommitComment(comment);
@@ -481,7 +522,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
 
@@ -499,7 +542,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
 
@@ -520,7 +565,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
 
@@ -548,7 +595,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession(REPO_NAME);
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
 
@@ -566,7 +615,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     String comment = "Andre";
     transaction.setCommitComment(comment);
@@ -587,7 +638,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
 
@@ -605,7 +658,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
 
@@ -626,7 +681,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
 
@@ -654,7 +711,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession(REPO_NAME);
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
 
@@ -672,7 +731,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     String comment = "Andre";
     transaction.setCommitComment(comment);
@@ -696,7 +757,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     transaction.commit();
 
@@ -716,7 +779,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     transaction.commit();
 
@@ -737,7 +802,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     transaction.commit();
 
@@ -767,7 +834,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     transaction.commit();
 
@@ -787,7 +856,9 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
-    resource.getContents().add(getModel1Factory().createProduct1());
+    final Product1 product = getModel1Factory().createProduct1();
+    product.setName("cdo");
+    resource.getContents().add(product);
 
     String comment = "Andre";
     transaction.setCommitComment(comment);

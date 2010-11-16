@@ -35,6 +35,13 @@ public interface CDOBranchPoint extends Comparable<CDOBranchPoint>
   public static final long UNSPECIFIED_DATE = 0;
 
   /**
+   * The fixed special time stamp <i>invalid</i>.
+   * 
+   * @since 4.0
+   */
+  public static final long INVALID_DATE = -1;
+
+  /**
    * Returns the branch of this branch point, or <code>null</code> if this branch point is the
    * {@link CDOBranch#getBase() base} of the {@link CDOBranchManager#getMainBranch() main branch}.
    */

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit.State;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
@@ -43,6 +44,16 @@ public interface InternalCDOPackageRegistry extends CDOPackageRegistry, ILifecyc
   public Object basicPut(String nsURI, Object value);
 
   public void putPackageUnit(InternalCDOPackageUnit packageUnit);
+
+  /**
+   * @since 4.0
+   */
+  public void putPackageUnits(InternalCDOPackageUnit[] packageUnits, State state);
+
+  /**
+   * @since 4.0
+   */
+  public InternalCDOPackageUnit createPackageUnit();
 
   /**
    * @since 3.0

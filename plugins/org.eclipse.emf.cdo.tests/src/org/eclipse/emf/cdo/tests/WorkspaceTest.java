@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
@@ -45,6 +46,7 @@ import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
@@ -1209,7 +1211,9 @@ public class WorkspaceTest extends AbstractCDOTest
         branchPath, timeStamp);
 
     workspaces.add(workspace);
-    registerRepository(workspace.getLocalRepository());
+    InternalRepository localRepository = workspace.getLocalRepository();
+    registerRepository(localRepository);
+    LifecycleUtil.activate(localRepository);
     return workspace;
   }
 

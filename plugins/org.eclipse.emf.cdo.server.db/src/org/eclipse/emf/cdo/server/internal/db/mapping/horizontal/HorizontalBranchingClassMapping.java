@@ -855,37 +855,40 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
 
     int timeParameters = 0;
-    if (exactTime)
+    if (timeStamp != CDOBranchPoint.INVALID_DATE)
     {
-      if (timeStamp != DBStore.UNSPECIFIED_DATE)
+      if (exactTime)
       {
-        builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
-        builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-        builder.append("=?"); //$NON-NLS-1$
-        timeParameters = 1;
-      }
-    }
-    else
-    {
-      builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
-      if (timeStamp != DBStore.UNSPECIFIED_DATE)
-      {
-        builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-        builder.append(">=?"); //$NON-NLS-1$
-        builder.append(" AND ("); //$NON-NLS-1$
-        builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-        builder.append("<=? OR "); //$NON-NLS-1$
-        builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-        builder.append("="); //$NON-NLS-1$
-        builder.append(DBStore.UNSPECIFIED_DATE);
-        builder.append(")"); //$NON-NLS-1$
-        timeParameters = 2;
+        if (timeStamp != DBStore.UNSPECIFIED_DATE)
+        {
+          builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
+          builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+          builder.append("=?"); //$NON-NLS-1$
+          timeParameters = 1;
+        }
       }
       else
       {
-        builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-        builder.append("="); //$NON-NLS-1$
-        builder.append(DBStore.UNSPECIFIED_DATE);
+        builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
+        if (timeStamp != DBStore.UNSPECIFIED_DATE)
+        {
+          builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+          builder.append(">=?"); //$NON-NLS-1$
+          builder.append(" AND ("); //$NON-NLS-1$
+          builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+          builder.append("<=? OR "); //$NON-NLS-1$
+          builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+          builder.append("="); //$NON-NLS-1$
+          builder.append(DBStore.UNSPECIFIED_DATE);
+          builder.append(")"); //$NON-NLS-1$
+          timeParameters = 2;
+        }
+        else
+        {
+          builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+          builder.append("="); //$NON-NLS-1$
+          builder.append(DBStore.UNSPECIFIED_DATE);
+        }
       }
     }
 

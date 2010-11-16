@@ -110,13 +110,14 @@ public abstract class CDOServerExporter<OUT>
     InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
     for (InternalCDOPackageUnit packageUnit : packageRegistry.getPackageUnits(false))
     {
+      String id = packageUnit.getID();
       CDOPackageUnit.Type type = packageUnit.getOriginalType();
       long time = packageUnit.getTimeStamp();
 
       EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
       String data = new String(EMFUtil.getEPackageBytes(ePackage, false, packageRegistry));
 
-      startPackageUnit(out, type, time, data);
+      startPackageUnit(out, id, type, time, data);
       for (InternalCDOPackageInfo packageInfo : packageUnit.getPackageInfos())
       {
         String packageURI = packageInfo.getPackageURI();
@@ -128,7 +129,8 @@ public abstract class CDOServerExporter<OUT>
     }
   }
 
-  protected abstract void startPackageUnit(OUT out, CDOPackageUnit.Type type, long time, String data) throws Exception;
+  protected abstract void startPackageUnit(OUT out, String id, CDOPackageUnit.Type type, long time, String data)
+      throws Exception;
 
   protected abstract void endPackageUnit(OUT out) throws Exception;
 
@@ -165,7 +167,7 @@ public abstract class CDOServerExporter<OUT>
 
   protected void exportRevisions(final OUT out, CDOBranch branch) throws Exception
   {
-    repository.handleRevisions(null, branch, true, CDOBranchPoint.UNSPECIFIED_DATE, false, new CDORevisionHandler()
+    repository.handleRevisions(null, branch, true, CDOBranchPoint.INVALID_DATE, false, new CDORevisionHandler()
     {
       public boolean handleRevision(CDORevision revision)
       {
@@ -216,9 +218,15 @@ public abstract class CDOServerExporter<OUT>
 
     public static final String REPOSITORY_UUID = "uuid";
 
+    public static final String REPOSITORY_CREATED = "created";
+
+    public static final String REPOSITORY_COMMITTED = "committed";
+
     public static final String MODELS = "models";
 
     public static final String PACKAGE_UNIT = "packageUnit";
+
+    public static final String PACKAGE_UNIT_ID = "id";
 
     public static final String PACKAGE_UNIT_TYPE = "type";
 
@@ -258,11 +266,17 @@ public abstract class CDOServerExporter<OUT>
 
     public static final String REVISION_REVISED = "revised";
 
+    public static final String REVISION_RESOURCE = "resource";
+
+    public static final String REVISION_CONTAINER = "container";
+
+    public static final String REVISION_FEATURE = "feature";
+
     public static final String FEATURE = "feature";
 
     public static final String FEATURE_NAME = "name";
 
-    public static final String FEATURE_TYPE = "name";
+    public static final String FEATURE_TYPE = "type";
 
     public static final String FEATURE_VALUE = "value";
 
@@ -303,6 +317,8 @@ public abstract class CDOServerExporter<OUT>
       out.element(REPOSITORY);
       out.attribute(REPOSITORY_NAME, getRepository().getName());
       out.attribute(REPOSITORY_UUID, getRepository().getUUID());
+      out.attribute(REPOSITORY_CREATED, getRepository().getStore().getCreationTime());
+      out.attribute(REPOSITORY_COMMITTED, getRepository().getLastCommitTimeStamp());
 
       out.push();
       super.exportAll(out);
@@ -320,9 +336,11 @@ public abstract class CDOServerExporter<OUT>
     }
 
     @Override
-    protected void startPackageUnit(XMLOutput out, CDOPackageUnit.Type type, long time, String data) throws Exception
+    protected void startPackageUnit(XMLOutput out, String id, CDOPackageUnit.Type type, long time, String data)
+        throws Exception
     {
       out.element(PACKAGE_UNIT);
+      out.attribute(PACKAGE_UNIT_ID, id);
       out.attribute(PACKAGE_UNIT_TYPE, type);
       out.attribute(PACKAGE_UNIT_TIME, time);
       out.attribute(PACKAGE_UNIT_DATA, data);
@@ -387,6 +405,24 @@ public abstract class CDOServerExporter<OUT>
       if (revised != CDOBranchPoint.UNSPECIFIED_DATE)
       {
         out.attribute(REVISION_REVISED, revised);
+      }
+
+      CDOID resourceID = rev.getResourceID();
+      if (!CDOIDUtil.isNull(resourceID))
+      {
+        out.attribute(REVISION_RESOURCE, str(resourceID));
+      }
+
+      CDOID containerID = (CDOID)rev.getContainerID();
+      if (!CDOIDUtil.isNull(containerID))
+      {
+        out.attribute(REVISION_CONTAINER, str(containerID));
+      }
+
+      int containingFeatureID = rev.getContainingFeatureID();
+      if (containingFeatureID != 0)
+      {
+        out.attribute(REVISION_FEATURE, containingFeatureID);
       }
 
       out.push();

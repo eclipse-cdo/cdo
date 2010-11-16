@@ -168,7 +168,7 @@ public class RevisionManagerTest extends AbstractCDOTest
         revisions[i].setBranchPoint(branchPoint);
         revisions[i].setRevised(timeStamp - 1);
         revisions[i].setVersion(i + 1);
-        store.addRevision(revisions[i]);
+        store.addRevision(revisions[i], false);
       }
       else
       {

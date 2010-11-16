@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.spi.common.model;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -44,6 +45,11 @@ public interface InternalCDOPackageUnit extends CDOPackageUnit
   public void setPackageInfos(InternalCDOPackageInfo[] packageInfos);
 
   public void load();
+
+  /**
+   * @since 4.0
+   */
+  public void load(PackageLoader packageLoader);
 
   /**
    * @since 3.0

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.CDOServerExporter;
 import org.eclipse.emf.cdo.server.CDOServerImporter;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -75,8 +76,10 @@ public class BackupTest extends AbstractCDOTest
     exporter.exportRepository(baos);
     System.out.println(baos.toString());
 
+    InternalRepository repo2 = getRepository("repo2", false);
+
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    CDOServerImporter.XML importer = new CDOServerImporter.XML(getRepository("repo2"));
+    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
     importer.importRepository(bais);
     sleep(10000000);
   }

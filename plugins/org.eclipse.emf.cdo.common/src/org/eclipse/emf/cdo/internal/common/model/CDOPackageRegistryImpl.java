@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit.State;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
@@ -277,6 +278,19 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     }
 
     resetInternalCaches();
+  }
+
+  public synchronized void putPackageUnits(InternalCDOPackageUnit[] packageUnits, State state)
+  {
+    for (InternalCDOPackageUnit packageUnit : packageUnits)
+    {
+      if (state != null)
+      {
+        packageUnit.setState(state);
+      }
+
+      putPackageUnit(packageUnit);
+    }
   }
 
   public synchronized InternalCDOPackageInfo getPackageInfo(EPackage ePackage)
@@ -625,7 +639,6 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
   protected void initPackageUnit(EPackage ePackage)
   {
     InternalCDOPackageUnit packageUnit = createPackageUnit();
-    packageUnit.setPackageRegistry(this);
     packageUnit.init(ePackage);
     resetInternalCaches();
   }
@@ -641,9 +654,11 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     }
   }
 
-  protected InternalCDOPackageUnit createPackageUnit()
+  public InternalCDOPackageUnit createPackageUnit()
   {
-    return (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
+    InternalCDOPackageUnit packageUnit = (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
+    packageUnit.setPackageRegistry(this);
+    return packageUnit;
   }
 
   /**

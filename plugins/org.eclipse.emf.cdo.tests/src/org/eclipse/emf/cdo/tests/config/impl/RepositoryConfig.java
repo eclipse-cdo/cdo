@@ -124,6 +124,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   public synchronized InternalRepository getRepository(String name)
   {
+    return getRepository(name, true);
+  }
+
+  public synchronized InternalRepository getRepository(String name, boolean activate)
+  {
     InternalRepository repository = repositories.get(name);
     if (repository == null)
     {
@@ -154,6 +159,10 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
       repository.setQueryHandlerProvider(new ContainerQueryHandlerProvider(getCurrentTest().getServerContainer()));
       registerRepository(repository);
+      if (activate)
+      {
+        LifecycleUtil.activate(repository);
+      }
     }
 
     return repository;
@@ -170,7 +179,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   {
     repository.addListener(repositoryListener);
     repositories.put(repository.getName(), repository);
-    LifecycleUtil.activate(repository);
   }
 
   @Override

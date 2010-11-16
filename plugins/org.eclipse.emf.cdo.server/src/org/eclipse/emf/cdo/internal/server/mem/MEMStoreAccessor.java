@@ -268,7 +268,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
   protected void writeRevision(InternalCDORevision revision)
   {
     newRevisions.add(revision);
-    getStore().addRevision(revision);
+    getStore().addRevision(revision, false);
   }
 
   /**
@@ -393,7 +393,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
         writePackageUnits(rawStoreContext.getPackageUnits(), monitor);
         for (InternalCDORevision revision : rawStoreContext.getRevisions())
         {
-          getStore().addRevision(revision);
+          getStore().addRevision(revision, true);
         }
       }
     }

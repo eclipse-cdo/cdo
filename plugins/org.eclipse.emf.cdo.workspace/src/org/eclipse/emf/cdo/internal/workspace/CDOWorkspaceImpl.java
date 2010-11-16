@@ -38,7 +38,6 @@ import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -165,7 +164,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
         localRepository.setRootResourceID(session.getRepositoryInfo().getRootResourceID());
 
         InternalCDOPackageUnit[] packageUnits = session.getPackageRegistry().getPackageUnits(false);
-        registerPackageUnits(packageUnits);
+        localRepository.getPackageRegistry(false).putPackageUnits(packageUnits, CDOPackageUnit.State.LOADED);
         context[0] = accessor.rawStore(packageUnits, context[0], monitor);
 
         CDORevisionHandler handler = new CDORevisionHandler()
@@ -200,16 +199,6 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     {
       StoreThreadLocal.release();
       monitor.done();
-    }
-  }
-
-  private void registerPackageUnits(InternalCDOPackageUnit[] packageUnits)
-  {
-    InternalCDOPackageRegistry repositoryPackageRegistry = localRepository.getPackageRegistry(false);
-    for (InternalCDOPackageUnit packageUnit : packageUnits)
-    {
-      packageUnit.setState(CDOPackageUnit.State.LOADED);
-      repositoryPackageRegistry.putPackageUnit(packageUnit);
     }
   }
 
@@ -468,14 +457,14 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     Repository repository = new Repository.Default()
     {
       @Override
-      protected void initMainBranch(InternalCDOBranchManager branchManager, long lastCommitTimeStamp)
+      public void initMainBranch(InternalCDOBranchManager branchManager, long lastCommitTimeStamp)
       {
         // Mark the main branch local so that new objects get local IDs
         branchManager.initMainBranch(true, lastCommitTimeStamp);
       }
 
       @Override
-      protected void initRootResource()
+      public void initRootResource()
       {
         // Don't create the root resource as it will be checked out
         setState(State.INITIAL);

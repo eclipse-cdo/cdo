@@ -162,6 +162,8 @@ public class Repository extends Container<Object> implements InternalRepository
   @ExcludeFromDump
   private transient Object createBranchLock = new Object();
 
+  private boolean skipInitialization;
+
   private CDOID rootResourceID;
 
   public Repository()
@@ -1197,119 +1199,17 @@ public class Repository extends Container<Object> implements InternalRepository
     return MessageFormat.format("CDORepositoryInfo[{0}]", name); //$NON-NLS-1$
   }
 
-  @Override
-  protected void doBeforeActivate() throws Exception
+  public boolean isSkipInitialization()
   {
-    super.doBeforeActivate();
-    checkState(!StringUtil.isEmpty(name), "name is empty"); //$NON-NLS-1$
-    checkState(packageRegistry, "packageRegistry"); //$NON-NLS-1$
-    checkState(sessionManager, "sessionManager"); //$NON-NLS-1$
-    checkState(branchManager, "branchManager"); //$NON-NLS-1$
-    checkState(revisionManager, "revisionManager"); //$NON-NLS-1$
-    checkState(queryManager, "queryManager"); //$NON-NLS-1$
-    checkState(commitInfoManager, "commitInfoManager"); //$NON-NLS-1$
-    checkState(commitManager, "commitManager"); //$NON-NLS-1$
-    checkState(lockManager, "lockingManager"); //$NON-NLS-1$
-
-    packageRegistry.setReplacingDescriptors(true);
-    packageRegistry.setPackageLoader(this);
-    branchManager.setBranchLoader(this);
-    branchManager.setTimeProvider(this);
-    revisionManager.setRevisionLoader(this);
-    sessionManager.setRepository(this);
-    queryManager.setRepository(this);
-    commitInfoManager.setCommitInfoLoader(this);
-    commitManager.setRepository(this);
-    lockManager.setRepository(this);
-
-    checkState(store, "store"); //$NON-NLS-1$
-
-    {
-      String value = getProperties().get(Props.SUPPORTING_AUDITS);
-      if (value != null)
-      {
-        supportingAudits = Boolean.valueOf(value);
-        store.setRevisionTemporality(supportingAudits ? IStore.RevisionTemporality.AUDITING
-            : IStore.RevisionTemporality.NONE);
-      }
-      else
-      {
-        supportingAudits = store.getRevisionTemporality() == IStore.RevisionTemporality.AUDITING;
-      }
-    }
-
-    {
-      String value = getProperties().get(Props.SUPPORTING_BRANCHES);
-      if (value != null)
-      {
-        supportingBranches = Boolean.valueOf(value);
-        store.setRevisionParallelism(supportingBranches ? IStore.RevisionParallelism.BRANCHING
-            : IStore.RevisionParallelism.NONE);
-      }
-      else
-      {
-        supportingBranches = store.getRevisionParallelism() == IStore.RevisionParallelism.BRANCHING;
-      }
-    }
-
-    revisionManager.setSupportingBranches(supportingBranches);
-
-    {
-      String value = getProperties().get(Props.ENSURE_REFERENTIAL_INTEGRITY);
-      if (value != null)
-      {
-        ensuringReferentialIntegrity = Boolean.valueOf(value);
-      }
-    }
+    return skipInitialization;
   }
 
-  @Override
-  protected void doActivate() throws Exception
+  public void setSkipInitialization(boolean skipInitialization)
   {
-    super.doActivate();
-    LifecycleUtil.activate(packageRegistry);
-    LifecycleUtil.activate(store);
-    LifecycleUtil.activate(sessionManager);
-    LifecycleUtil.activate(revisionManager);
-    LifecycleUtil.activate(queryManager);
-    LifecycleUtil.activate(commitInfoManager);
-    LifecycleUtil.activate(commitManager);
-    LifecycleUtil.activate(queryHandlerProvider);
-    LifecycleUtil.activate(lockManager);
-
-    lastCommitTimeStamp = Math.max(store.getCreationTime(), store.getLastCommitTime());
-    initMainBranch(branchManager, lastCommitTimeStamp);
-    LifecycleUtil.activate(branchManager);
-
-    if (store.isFirstTime())
-    {
-      initSystemPackages();
-      initRootResource();
-    }
-    else
-    {
-      readPackageUnits();
-      loadRootResource();
-    }
+    this.skipInitialization = skipInitialization;
   }
 
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    LifecycleUtil.deactivate(lockManager);
-    LifecycleUtil.deactivate(queryHandlerProvider);
-    LifecycleUtil.deactivate(commitManager);
-    LifecycleUtil.deactivate(commitInfoManager);
-    LifecycleUtil.deactivate(queryManager);
-    LifecycleUtil.deactivate(revisionManager);
-    LifecycleUtil.deactivate(sessionManager);
-    LifecycleUtil.deactivate(store);
-    LifecycleUtil.deactivate(branchManager);
-    LifecycleUtil.deactivate(packageRegistry);
-    super.doDeactivate();
-  }
-
-  protected void initSystemPackages()
+  public void initSystemPackages()
   {
     IStoreAccessor writer = store.getWriter(null);
     StoreThreadLocal.setAccessor(writer);
@@ -1330,7 +1230,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  protected InternalCDOPackageUnit initSystemPackage(EPackage ePackage)
+  public InternalCDOPackageUnit initSystemPackage(EPackage ePackage)
   {
     EMFUtil.registerPackage(ePackage, packageRegistry);
     InternalCDOPackageInfo packageInfo = packageRegistry.getPackageInfo(ePackage);
@@ -1344,12 +1244,12 @@ public class Repository extends Container<Object> implements InternalRepository
     return packageUnit;
   }
 
-  protected void initMainBranch(InternalCDOBranchManager branchManager, long lastCommitTimeStamp)
+  public void initMainBranch(InternalCDOBranchManager branchManager, long timeStamp)
   {
-    branchManager.initMainBranch(false, lastCommitTimeStamp);
+    branchManager.initMainBranch(false, timeStamp);
   }
 
-  protected void initRootResource()
+  public void initRootResource()
   {
     CDOBranchPoint head = branchManager.getMainBranch().getHead();
     CDOIDTemp tempID = CDOIDUtil.createTempObject(1);
@@ -1403,7 +1303,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  protected void loadRootResource()
+  public void loadRootResource()
   {
     IStoreAccessor reader = store.getReader(null);
     StoreThreadLocal.setAccessor(reader);
@@ -1420,7 +1320,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  protected void readPackageUnits()
+  public void readPackageUnits()
   {
     IStoreAccessor reader = store.getReader(null);
     StoreThreadLocal.setAccessor(reader);
@@ -1438,6 +1338,121 @@ public class Repository extends Container<Object> implements InternalRepository
       LifecycleUtil.deactivate(reader); // Don't let the null-context accessor go to the pool!
       StoreThreadLocal.release();
     }
+  }
+
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+    checkState(!StringUtil.isEmpty(name), "name is empty"); //$NON-NLS-1$
+    checkState(packageRegistry, "packageRegistry"); //$NON-NLS-1$
+    checkState(sessionManager, "sessionManager"); //$NON-NLS-1$
+    checkState(branchManager, "branchManager"); //$NON-NLS-1$
+    checkState(revisionManager, "revisionManager"); //$NON-NLS-1$
+    checkState(queryManager, "queryManager"); //$NON-NLS-1$
+    checkState(commitInfoManager, "commitInfoManager"); //$NON-NLS-1$
+    checkState(commitManager, "commitManager"); //$NON-NLS-1$
+    checkState(lockManager, "lockingManager"); //$NON-NLS-1$
+  
+    packageRegistry.setReplacingDescriptors(true);
+    packageRegistry.setPackageLoader(this);
+    branchManager.setBranchLoader(this);
+    branchManager.setTimeProvider(this);
+    revisionManager.setRevisionLoader(this);
+    sessionManager.setRepository(this);
+    queryManager.setRepository(this);
+    commitInfoManager.setCommitInfoLoader(this);
+    commitManager.setRepository(this);
+    lockManager.setRepository(this);
+  
+    checkState(store, "store"); //$NON-NLS-1$
+  
+    {
+      String value = getProperties().get(Props.SUPPORTING_AUDITS);
+      if (value != null)
+      {
+        supportingAudits = Boolean.valueOf(value);
+        store.setRevisionTemporality(supportingAudits ? IStore.RevisionTemporality.AUDITING
+            : IStore.RevisionTemporality.NONE);
+      }
+      else
+      {
+        supportingAudits = store.getRevisionTemporality() == IStore.RevisionTemporality.AUDITING;
+      }
+    }
+  
+    {
+      String value = getProperties().get(Props.SUPPORTING_BRANCHES);
+      if (value != null)
+      {
+        supportingBranches = Boolean.valueOf(value);
+        store.setRevisionParallelism(supportingBranches ? IStore.RevisionParallelism.BRANCHING
+            : IStore.RevisionParallelism.NONE);
+      }
+      else
+      {
+        supportingBranches = store.getRevisionParallelism() == IStore.RevisionParallelism.BRANCHING;
+      }
+    }
+  
+    revisionManager.setSupportingBranches(supportingBranches);
+  
+    {
+      String value = getProperties().get(Props.ENSURE_REFERENTIAL_INTEGRITY);
+      if (value != null)
+      {
+        ensuringReferentialIntegrity = Boolean.valueOf(value);
+      }
+    }
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    LifecycleUtil.activate(packageRegistry);
+    LifecycleUtil.activate(store);
+    LifecycleUtil.activate(sessionManager);
+    LifecycleUtil.activate(revisionManager);
+    LifecycleUtil.activate(queryManager);
+    LifecycleUtil.activate(commitInfoManager);
+    LifecycleUtil.activate(commitManager);
+    LifecycleUtil.activate(queryHandlerProvider);
+    LifecycleUtil.activate(lockManager);
+  
+    if (!skipInitialization)
+    {
+      lastCommitTimeStamp = Math.max(store.getCreationTime(), store.getLastCommitTime());
+      initMainBranch(branchManager, lastCommitTimeStamp);
+      LifecycleUtil.activate(branchManager);
+  
+      if (store.isFirstTime())
+      {
+        initSystemPackages();
+        initRootResource();
+      }
+      else
+      {
+        readPackageUnits();
+        loadRootResource();
+      }
+    }
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    LifecycleUtil.deactivate(lockManager);
+    LifecycleUtil.deactivate(queryHandlerProvider);
+    LifecycleUtil.deactivate(commitManager);
+    LifecycleUtil.deactivate(commitInfoManager);
+    LifecycleUtil.deactivate(queryManager);
+    LifecycleUtil.deactivate(revisionManager);
+    LifecycleUtil.deactivate(sessionManager);
+    LifecycleUtil.deactivate(store);
+    LifecycleUtil.deactivate(branchManager);
+    LifecycleUtil.deactivate(packageRegistry);
+    super.doDeactivate();
   }
 
   /**

@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.util.CheckUtil;
@@ -230,13 +231,18 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
 
   public synchronized void load()
   {
+    load(packageRegistry.getPackageLoader());
+  }
+
+  public synchronized void load(PackageLoader packageLoader)
+  {
     if (state == State.PROXY)
     {
       EPackage[] ePackages = null;
       ePackages = loadPackagesFromGlobalRegistry();
       if (ePackages == null)
       {
-        ePackages = packageRegistry.getPackageLoader().loadPackages(this);
+        ePackages = packageLoader.loadPackages(this);
       }
 
       for (EPackage ePackage : ePackages)

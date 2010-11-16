@@ -132,6 +132,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * <li>The <code>branch</code> parameter is <code>null</code> or equal to <code>revision.getBranch()</code>.
    * <li><b>One</b> of the following conditions is met:
    * <ul>
+   * <li>The <code>timeStamp</code> parameter is {@link CDOBranchPoint#INVALID_DATE INVALID}.
    * <li>The <code>exactTime</code> parameter is <code>true</code> and the <code>timeStamp</code> parameter is
    * {@link CDOBranchPoint#UNSPECIFIED_DATE UNSPECIFIED} or equal to <code>revision.getTimeStamp()</code>.
    * <li>The <code>exactTime</code> parameter is <code>false</code> and the <code>timeStamp</code> parameter is between

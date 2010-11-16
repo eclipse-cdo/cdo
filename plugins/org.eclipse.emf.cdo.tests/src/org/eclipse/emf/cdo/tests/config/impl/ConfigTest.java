@@ -190,6 +190,14 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   /**
    * @category CDORepositoryInfo
    */
+  public InternalRepository getRepository(String name, boolean activate)
+  {
+    return getRepositoryConfig().getRepository(name, activate);
+  }
+
+  /**
+   * @category CDORepositoryInfo
+   */
   public InternalRepository getRepository(String name)
   {
     return getRepositoryConfig().getRepository(name);

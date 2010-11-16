@@ -23,6 +23,8 @@ public interface IRepositoryConfig extends IConfig
 
   public Map<String, String> getRepositoryProperties();
 
+  public InternalRepository getRepository(String name, boolean activate);
+
   public InternalRepository getRepository(String name);
 
   public void registerRepository(InternalRepository repository);

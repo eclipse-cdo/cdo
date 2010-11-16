@@ -161,7 +161,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
   private void initSQLStrings()
   {
-    // ----------- Select all revisions (for handleRevision) ---
+    // ----------- Select all revisions (for handleRevisions) ---
     StringBuilder builder = new StringBuilder("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append(", "); //$NON-NLS-1$
@@ -170,7 +170,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     builder.append(getTable());
     sqlSelectForHandle = builder.toString();
 
-    // ----------- Select all revisions (for handleRevision) ---
+    // ----------- Select all revisions (for readChangeSet) ---
     builder = new StringBuilder("SELECT DISTINCT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
@@ -579,37 +579,40 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     StringBuilder builder = new StringBuilder(sqlSelectForHandle);
 
     int timeParameters = 0;
-    if (exactTime)
+    if (timeStamp != CDOBranchPoint.INVALID_DATE)
     {
-      if (timeStamp != DBStore.UNSPECIFIED_DATE)
+      if (exactTime)
       {
-        builder.append(" WHERE "); //$NON-NLS-1$
-        builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-        builder.append("=?"); //$NON-NLS-1$
-        timeParameters = 1;
-      }
-    }
-    else
-    {
-      builder.append(" WHERE "); //$NON-NLS-1$
-      if (timeStamp != DBStore.UNSPECIFIED_DATE)
-      {
-        builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-        builder.append(">=?"); //$NON-NLS-1$
-        builder.append(" AND ("); //$NON-NLS-1$
-        builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-        builder.append("<=? OR "); //$NON-NLS-1$
-        builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-        builder.append("="); //$NON-NLS-1$
-        builder.append(DBStore.UNSPECIFIED_DATE);
-        builder.append(")"); //$NON-NLS-1$
-        timeParameters = 2;
+        if (timeStamp != DBStore.UNSPECIFIED_DATE)
+        {
+          builder.append(" WHERE "); //$NON-NLS-1$
+          builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+          builder.append("=?"); //$NON-NLS-1$
+          timeParameters = 1;
+        }
       }
       else
       {
-        builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-        builder.append("="); //$NON-NLS-1$
-        builder.append(DBStore.UNSPECIFIED_DATE);
+        builder.append(" WHERE "); //$NON-NLS-1$
+        if (timeStamp != DBStore.UNSPECIFIED_DATE)
+        {
+          builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+          builder.append(">=?"); //$NON-NLS-1$
+          builder.append(" AND ("); //$NON-NLS-1$
+          builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+          builder.append("<=? OR "); //$NON-NLS-1$
+          builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+          builder.append("="); //$NON-NLS-1$
+          builder.append(DBStore.UNSPECIFIED_DATE);
+          builder.append(")"); //$NON-NLS-1$
+          timeParameters = 2;
+        }
+        else
+        {
+          builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+          builder.append("="); //$NON-NLS-1$
+          builder.append(DBStore.UNSPECIFIED_DATE);
+        }
       }
     }
 

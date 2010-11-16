@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -103,7 +104,7 @@ public abstract class CDOServerImporter
       {
       }
 
-      public void handleRepository(String name, String uuid, long created, long committed)
+      public void handleRepository(String name, String uuid, CDOID root, long created, long committed)
       {
         // lastCommitTimeStamp = Math.max(store.getCreationTime(), store.getLastCommitTime());
         InternalCDOBranchManager branchManager = repository.getBranchManager();
@@ -111,6 +112,7 @@ public abstract class CDOServerImporter
         LifecycleUtil.activate(branchManager);
 
         repository.initSystemPackages();
+        repository.setRootResourceID(root);
 
         InternalSession session = repository.getSessionManager().openSession(null);
         StoreThreadLocal.setSession(session);
@@ -173,6 +175,11 @@ public abstract class CDOServerImporter
       public InternalCDOBranch handleBranch(int id, String name, long time, int parentID)
       {
         InternalCDOBranchManager branchManager = repository.getBranchManager();
+        if (id == CDOBranch.MAIN_BRANCH_ID)
+        {
+          return branchManager.getMainBranch();
+        }
+
         InternalCDOBranch parent = branchManager.getBranch(parentID);
         return branchManager.createBranch(id, name, parent, time);
       }
@@ -185,7 +192,10 @@ public abstract class CDOServerImporter
 
       public void handleInstances()
       {
-        repository.loadRootResource();
+        // IStoreAccessor accessor = repository.getStore().getReader(null);
+        // CDOBranchPoint head = repository.getBranchManager().getMainBranch().getHead();
+        // CDOID rootResourceID = accessor.readResourceID(CDOID.NULL, null, head);
+        // repository.setRootResourceID(rootResourceID);
       }
 
       public void handleCommitInfo(CDOCommitInfo commitInfo)
@@ -229,7 +239,7 @@ public abstract class CDOServerImporter
    */
   public static interface Handler extends CDORevisionHandler, CDOCommitInfoHandler
   {
-    public void handleRepository(String name, String uuid, long created, long committed);
+    public void handleRepository(String name, String uuid, CDOID root, long created, long committed);
 
     public InternalCDOPackageUnit handlePackageUnit(String id, Type type, long time, String data);
 
@@ -273,9 +283,10 @@ public abstract class CDOServerImporter
           {
             String name = attributes.getValue(REPOSITORY_NAME);
             String uuid = attributes.getValue(REPOSITORY_UUID);
+            CDOID root = id(attributes.getValue(REPOSITORY_ROOT));
             long created = Long.parseLong(attributes.getValue(REPOSITORY_CREATED));
             long committed = Long.parseLong(attributes.getValue(REPOSITORY_COMMITTED));
-            handler.handleRepository(name, uuid, created, committed);
+            handler.handleRepository(name, uuid, root, created, committed);
           }
           else if (PACKAGE_UNIT.equals(qName))
           {

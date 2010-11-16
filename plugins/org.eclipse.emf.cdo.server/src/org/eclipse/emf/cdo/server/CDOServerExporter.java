@@ -218,6 +218,8 @@ public abstract class CDOServerExporter<OUT>
 
     public static final String REPOSITORY_UUID = "uuid";
 
+    public static final String REPOSITORY_ROOT = "root";
+
     public static final String REPOSITORY_CREATED = "created";
 
     public static final String REPOSITORY_COMMITTED = "committed";
@@ -317,6 +319,7 @@ public abstract class CDOServerExporter<OUT>
       out.element(REPOSITORY);
       out.attribute(REPOSITORY_NAME, getRepository().getName());
       out.attribute(REPOSITORY_UUID, getRepository().getUUID());
+      out.attribute(REPOSITORY_ROOT, str(getRepository().getRootResourceID()));
       out.attribute(REPOSITORY_CREATED, getRepository().getStore().getCreationTime());
       out.attribute(REPOSITORY_COMMITTED, getRepository().getLastCommitTimeStamp());
 

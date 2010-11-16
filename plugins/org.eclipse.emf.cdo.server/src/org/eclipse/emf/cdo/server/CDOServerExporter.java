@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
-import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -80,7 +80,6 @@ public abstract class CDOServerExporter<OUT>
     finally
     {
       StoreThreadLocal.release();
-
       if (!wasActive)
       {
         LifecycleUtil.deactivate(repository);
@@ -111,7 +110,7 @@ public abstract class CDOServerExporter<OUT>
     InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
     for (InternalCDOPackageUnit packageUnit : packageRegistry.getPackageUnits(false))
     {
-      Type type = packageUnit.getType();
+      CDOPackageUnit.Type type = packageUnit.getOriginalType();
       long time = packageUnit.getTimeStamp();
 
       EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
@@ -129,7 +128,7 @@ public abstract class CDOServerExporter<OUT>
     }
   }
 
-  protected abstract void startPackageUnit(OUT out, Type type, long time, String data) throws Exception;
+  protected abstract void startPackageUnit(OUT out, CDOPackageUnit.Type type, long time, String data) throws Exception;
 
   protected abstract void endPackageUnit(OUT out) throws Exception;
 
@@ -229,17 +228,15 @@ public abstract class CDOServerExporter<OUT>
 
     public static final String PACKAGE_INFO_URI = "uri";
 
-    public static final String PACKAGE_INFO_LOWER = "lower";
+    public static final String PACKAGE_INFO_FIRST = "first";
 
-    public static final String PACKAGE_INFO_UPPER = "upper";
+    public static final String PACKAGE_INFO_COUNT = "count";
 
     public static final String BRANCH = "branch";
 
     public static final String BRANCH_ID = "id";
 
     public static final String BRANCH_NAME = "name";
-
-    public static final String BRANCH_LOCAL = "local";
 
     public static final String BRANCH_TIME = "time";
 
@@ -260,6 +257,8 @@ public abstract class CDOServerExporter<OUT>
     public static final String FEATURE = "feature";
 
     public static final String FEATURE_NAME = "name";
+
+    public static final String FEATURE_TYPE = "name";
 
     public static final String FEATURE_VALUE = "value";
 
@@ -286,13 +285,6 @@ public abstract class CDOServerExporter<OUT>
       super(repository);
     }
 
-    protected final String str(CDOID id)
-    {
-      StringBuilder builder = new StringBuilder();
-      CDOIDUtil.write(builder, id);
-      return builder.toString();
-    }
-
     @Override
     protected final XMLStack createOutput(OutputStream out) throws Exception
     {
@@ -312,7 +304,7 @@ public abstract class CDOServerExporter<OUT>
     }
 
     @Override
-    protected void startPackageUnit(XMLStack out, Type type, long time, String data) throws Exception
+    protected void startPackageUnit(XMLStack out, CDOPackageUnit.Type type, long time, String data) throws Exception
     {
       out.element(PACKAGE_UNIT);
       out.attribute(PACKAGE_UNIT_TYPE, type);
@@ -332,8 +324,8 @@ public abstract class CDOServerExporter<OUT>
     {
       out.element(PACKAGE_INFO);
       out.attribute(PACKAGE_INFO_URI, uri);
-      out.attribute(PACKAGE_INFO_LOWER, str(metaIDRange.getLowerBound()));
-      out.attribute(PACKAGE_INFO_UPPER, str(metaIDRange.getUpperBound()));
+      out.attribute(PACKAGE_INFO_FIRST, str(metaIDRange.getLowerBound()));
+      out.attribute(PACKAGE_INFO_COUNT, metaIDRange.size());
     }
 
     @Override
@@ -342,7 +334,6 @@ public abstract class CDOServerExporter<OUT>
       out.element(BRANCH);
       out.attribute(BRANCH_ID, branch.getID());
       out.attribute(BRANCH_NAME, branch.getName());
-      out.attribute(BRANCH_LOCAL, branch.isLocal());
       out.attribute(BRANCH_TIME, branch.getBase().getTimeStamp());
       if (!branch.isMainBranch())
       {
@@ -407,10 +398,12 @@ public abstract class CDOServerExporter<OUT>
       out.attribute(FEATURE_NAME, feature.getName());
       if (value instanceof CDOID)
       {
+        out.attribute(FEATURE_TYPE, Object.class.getSimpleName());
         out.attribute(FEATURE_VALUE, str((CDOID)value));
       }
       else
       {
+        out.attribute(FEATURE_TYPE, type(value));
         out.attributeOrNull(FEATURE_VALUE, value);
       }
     }
@@ -434,6 +427,63 @@ public abstract class CDOServerExporter<OUT>
 
       out.attribute(COMMIT_USER, commitInfo.getUserID());
       out.attribute(COMMIT_COMMENT, commitInfo.getComment());
+    }
+
+    protected final String str(CDOID id)
+    {
+      StringBuilder builder = new StringBuilder();
+      CDOIDUtil.write(builder, id);
+      return builder.toString();
+    }
+
+    protected String type(Object value)
+    {
+      if (value instanceof Boolean)
+      {
+        return Boolean.class.getSimpleName();
+      }
+    
+      if (value instanceof Character)
+      {
+        return Character.class.getSimpleName();
+      }
+    
+      if (value instanceof Byte)
+      {
+        return Byte.class.getSimpleName();
+      }
+    
+      if (value instanceof Short)
+      {
+        return Short.class.getSimpleName();
+      }
+    
+      if (value instanceof Integer)
+      {
+        return Integer.class.getSimpleName();
+      }
+    
+      if (value instanceof Long)
+      {
+        return Long.class.getSimpleName();
+      }
+    
+      if (value instanceof Float)
+      {
+        return Float.class.getSimpleName();
+      }
+    
+      if (value instanceof Double)
+      {
+        return Double.class.getSimpleName();
+      }
+    
+      if (value instanceof String)
+      {
+        return String.class.getSimpleName();
+      }
+    
+      throw new IllegalArgumentException("Invalid type: " + value.getClass().getName());
     }
   }
 }

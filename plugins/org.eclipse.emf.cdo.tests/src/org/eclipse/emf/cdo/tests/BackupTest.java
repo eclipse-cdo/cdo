@@ -65,7 +65,8 @@ public class BackupTest extends AbstractCDOTest
     resource.getContents().add(createCustomer("Jos"));
     resource.getContents().add(createCustomer("Simon"));
     transaction.commit();
-    resource.getContents().add(createSalesOrder(eike));
+    SalesOrder salesOrder = createSalesOrder(eike);
+    resource.getContents().add(salesOrder);
     transaction.commit();
     session.close();
 

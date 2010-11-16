@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rm:rmap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bc="http://www.eclipse.org/buckminster/Common-1.0"
-	xmlns:psf="http://www.eclipse.org/buckminster/PSFProvider-1.0" xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0"
->
+	xmlns:psf="http://www.eclipse.org/buckminster/PSFProvider-1.0" xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0">
+
 	<rm:property key="cvs.repository" mutable="true" value=":pserver:anonymous@dev.eclipse.org:/cvsroot/modeling" />
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org" />
-
 	<rm:property key="resolve.target.platform" mutable="true" value="true" />
-
 	<rm:property key="build.type" mutable="true" value="N" />
 
 	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.releng(?:\..+)?$" searchPathRef="releng" />
@@ -77,8 +75,7 @@
 
 	<rm:searchPath name="modeling">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)"
-		>
+			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emf/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
@@ -87,8 +84,7 @@
 
 	<rm:searchPath name="mwe">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)"
-		>
+			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emft/mwe/updates">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
@@ -97,8 +93,7 @@
 
 	<rm:searchPath name="teneo">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)"
-		>
+			resolutionFilter="(resolve.target.platform=true)">
 			<!-- rm:uri format="{0}/modeling/emf/teneo/updates/1.2.0/milestones" -->
 			<!-- consume temporarily an interim version of teneo per Martin Taal's request -->
 			<rm:uri format="{0}/modeling/emf/teneo/updates/1.2.0/interim">
@@ -109,8 +104,7 @@
 
 	<rm:searchPath name="emf">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)"
-		>
+			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emf/emf/updates/2.7milestones">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
@@ -119,8 +113,7 @@
 
 	<rm:searchPath name="gef">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)"
-		>
+			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/tools/gef/updates/releases">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
@@ -129,8 +122,7 @@
 
 	<rm:searchPath name="gmf">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)"
-		>
+			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/gmp/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
@@ -139,8 +131,7 @@
 
 	<rm:searchPath name="ocl">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)"
-		>
+			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/mdt/ocl/updates/milestones/3.1.0">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
@@ -149,8 +140,7 @@
 
 	<rm:searchPath name="qvtoml">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)"
-		>
+			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/m2m/qvtoml/updates/releases">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
@@ -159,8 +149,7 @@
 
 	<rm:searchPath name="xpand">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)"
-		>
+			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/m2t/xpand/updates">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
@@ -169,8 +158,7 @@
 
 	<rm:searchPath name="swtbot">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)"
-		>
+			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/technology/swtbot/helios/dev-build/update-site">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
@@ -179,8 +167,7 @@
 
 	<rm:searchPath name="orbit">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)"
-		>
+			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/tools/orbit/downloads/drops/S20101014084557/repository">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
@@ -189,27 +176,25 @@
 
 	<rm:searchPath name="alternative.net4j.plus">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)"
-		>
+			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="http://www.elver.org/eclipse/update_1.1.2" />
 		</rm:provider>
 	</rm:searchPath>
 
 	<rm:searchPath name="net4j.plus">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)"
-		>
+			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="http://net4j.sourceforge.net/update" />
 		</rm:provider>
 	</rm:searchPath>
 
 	<rm:searchPath name="platform">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)"
-		>
+			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/eclipse/updates/3.7milestones">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>
+
 </rm:rmap>

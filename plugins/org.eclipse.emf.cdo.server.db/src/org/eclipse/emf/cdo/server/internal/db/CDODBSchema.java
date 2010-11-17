@@ -209,6 +209,8 @@ public class CDODBSchema extends DBSchema
 
   public static final String SQL_QUERY_LOBS = "SELECT 1 FROM " + CDODBSchema.LOBS + " WHERE " + CDODBSchema.LOBS_ID + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
+  public static final String SQL_HANDLE_LOBS = "SELECT " + CDODBSchema.LOBS_ID + ", " + CDODBSchema.LOBS_SIZE + ", " + CDODBSchema.LOBS_BDATA + ", " + CDODBSchema.LOBS_CDATA + " FROM " + CDODBSchema.LOBS; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ 
+
   public static final String SQL_LOAD_LOB = "SELECT " + CDODBSchema.LOBS_SIZE + ", " + CDODBSchema.LOBS_BDATA + ", " + CDODBSchema.LOBS_CDATA + " FROM " + CDODBSchema.LOBS + " WHERE " + CDODBSchema.LOBS_ID + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 
   public static final String SQL_WRITE_BLOB = "INSERT INTO " + CDODBSchema.LOBS + "(" + CDODBSchema.LOBS_ID + ", " + CDODBSchema.LOBS_SIZE + ", " + CDODBSchema.LOBS_BDATA + ") VALUES(?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$

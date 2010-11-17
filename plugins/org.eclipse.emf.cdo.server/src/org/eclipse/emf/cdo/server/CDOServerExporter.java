@@ -22,6 +22,9 @@ import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
+import org.eclipse.emf.cdo.common.model.lob.CDOClob;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
@@ -33,6 +36,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.XMLOutput;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -41,6 +45,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.OutputStream;
+import java.io.Writer;
 import java.util.List;
 
 /**
@@ -97,6 +102,7 @@ public abstract class CDOServerExporter<OUT>
     {
       exportPackages(out);
       exportBranches(out);
+      exportLobs(out);
       exportCommits(out);
     }
     catch (WrappedException ex)
@@ -108,7 +114,8 @@ public abstract class CDOServerExporter<OUT>
   protected void exportPackages(OUT out) throws Exception
   {
     InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
-    for (InternalCDOPackageUnit packageUnit : packageRegistry.getPackageUnits(false))
+    InternalCDOPackageUnit[] packageUnits = packageRegistry.getPackageUnits(false);
+    for (InternalCDOPackageUnit packageUnit : packageUnits)
     {
       String id = packageUnit.getID();
       CDOPackageUnit.Type type = packageUnit.getOriginalType();
@@ -185,6 +192,41 @@ public abstract class CDOServerExporter<OUT>
   }
 
   protected abstract void exportRevision(OUT out, CDORevision revision) throws Exception;
+
+  protected void exportLobs(final OUT out) throws Exception
+  {
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    accessor.handleLobs(0, 0, new CDOLobHandler()
+    {
+      public OutputStream handleBlob(byte[] id, long size)
+      {
+        try
+        {
+          return startBlob(out, id, size);
+        }
+        catch (Exception ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+
+      public Writer handleClob(byte[] id, long size)
+      {
+        try
+        {
+          return startClob(out, id, size);
+        }
+        catch (Exception ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+    });
+  }
+
+  protected abstract OutputStream startBlob(OUT out, byte[] id, long size) throws Exception;
+
+  protected abstract Writer startClob(OUT out, byte[] id, long size) throws Exception;
 
   protected void exportCommits(final OUT out) throws Exception
   {
@@ -281,6 +323,20 @@ public abstract class CDOServerExporter<OUT>
     public static final String FEATURE_TYPE = "type";
 
     public static final String FEATURE_VALUE = "value";
+
+    public static final String FEATURE_ID = "id";
+
+    public static final String FEATURE_SIZE = "size";
+
+    public static final String LOBS = "lobs";
+
+    public static final String LOB_ID = "id";
+
+    public static final String LOB_SIZE = "size";
+
+    public static final String BLOB = "blob";
+
+    public static final String CLOB = "clob";
 
     public static final String COMMITS = "commits";
 
@@ -466,11 +522,53 @@ public abstract class CDOServerExporter<OUT>
         out.attribute(FEATURE_TYPE, Object.class.getSimpleName());
         out.attribute(FEATURE_VALUE, str((CDOID)value));
       }
+      else if (value instanceof CDOBlob)
+      {
+        CDOBlob blob = (CDOBlob)value;
+        out.attribute(FEATURE_TYPE, "Blob");
+        out.attribute(FEATURE_ID, HexUtil.bytesToHex(blob.getID()));
+        out.attribute(FEATURE_SIZE, blob.getSize());
+      }
+      else if (value instanceof CDOClob)
+      {
+        CDOClob clob = (CDOClob)value;
+        out.attribute(FEATURE_TYPE, "Clob");
+        out.attribute(FEATURE_ID, HexUtil.bytesToHex(clob.getID()));
+        out.attribute(FEATURE_SIZE, clob.getSize());
+      }
       else
       {
         out.attribute(FEATURE_TYPE, type(value));
         out.attributeOrNull(FEATURE_VALUE, value);
       }
+    }
+
+    @Override
+    protected void exportLobs(XMLOutput out) throws Exception
+    {
+      out.element(LOBS);
+
+      out.push();
+      super.exportLobs(out);
+      out.pop();
+    }
+
+    @Override
+    protected OutputStream startBlob(XMLOutput out, byte[] id, long size) throws Exception
+    {
+      out.element(BLOB);
+      out.attribute(LOB_ID, HexUtil.bytesToHex(id));
+      out.attribute(LOB_SIZE, size);
+      return out.bytes();
+    }
+
+    @Override
+    protected Writer startClob(XMLOutput out, byte[] id, long size) throws Exception
+    {
+      out.element(BLOB);
+      out.attribute(LOB_ID, HexUtil.bytesToHex(id));
+      out.attribute(LOB_SIZE, size);
+      return out.characters();
     }
 
     @Override

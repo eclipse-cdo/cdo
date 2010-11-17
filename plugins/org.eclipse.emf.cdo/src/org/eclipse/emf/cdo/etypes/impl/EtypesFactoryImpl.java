@@ -2,12 +2,13 @@
  * <copyright>
  * </copyright>
  *
- * $Id: EtypesFactoryImpl.java,v 1.3 2010-11-12 17:37:25 estepper Exp $
+ * $Id: EtypesFactoryImpl.java,v 1.4 2010-11-17 06:17:27 estepper Exp $
  */
 package org.eclipse.emf.cdo.etypes.impl;
 
 import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.model.lob.CDOClob;
+import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.EtypesFactory;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
 
@@ -36,7 +37,7 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
     try
     {
       EtypesFactory theEtypesFactory = (EtypesFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/Etypes/4.0.0"); //$NON-NLS-1$ 
+          .getEFactory("http://www.eclipse.org/emf/CDO/Etypes/4.0.0"); //$NON-NLS-1$
       if (theEtypesFactory != null)
       {
         return theEtypesFactory;
@@ -69,6 +70,8 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   {
     switch (eClass.getClassifierID())
     {
+    case EtypesPackage.ANNOTATION:
+      return createAnnotation();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -110,6 +113,17 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Annotation createAnnotation()
+  {
+    AnnotationImpl annotation = new AnnotationImpl();
+    return annotation;
   }
 
   /**

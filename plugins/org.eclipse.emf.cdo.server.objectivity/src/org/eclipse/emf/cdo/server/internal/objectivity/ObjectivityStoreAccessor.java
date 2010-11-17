@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.model.lob.CDOLob;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -92,15 +94,8 @@ import java.util.Set;
  * @author Simon McDuff
  * @author Ibrahim Sallam
  */
-/**
- * @author Simon McDuff
- */
-/**
- * @author Simon McDuff
- */
 public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectivityStoreAccessor
 {
-
   private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjectivityStoreAccessor.class);
 
   private static final ContextTracer TRACER_ERROR = new ContextTracer(OM.ERROR, ObjectivityStoreAccessor.class);
@@ -1264,6 +1259,12 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     throw new UnsupportedOperationException();
   }
 
+  public Object rawStore(CDOLob<?> lob, Object context, OMMonitor monitor)
+  {
+    // TODO: implement ObjectivityStoreAccessor.rawStore(lob, context, monitor)
+    throw new UnsupportedOperationException();
+  }
+
   public void rawCommit(Object context, OMMonitor monitor)
   {
     // TODO: implement ObjectivityStoreAccessor.rawCommit(context, monitor)
@@ -1273,6 +1274,12 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   public void queryLobs(List<byte[]> ids)
   {
     // TODO: implement ObjectivityStoreAccessor.queryLobs(ids)
+    throw new UnsupportedOperationException();
+  }
+
+  public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
+  {
+    // TODO: implement ObjectivityStoreAccessor.handleLobs(fromTime, toTime, handler)
     throw new UnsupportedOperationException();
   }
 

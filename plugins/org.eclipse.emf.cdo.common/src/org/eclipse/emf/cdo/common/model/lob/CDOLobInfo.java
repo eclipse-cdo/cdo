@@ -10,6 +10,10 @@
  */
 package org.eclipse.emf.cdo.common.model.lob;
 
+import org.eclipse.net4j.util.HexUtil;
+
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  * @since 4.0
@@ -41,5 +45,11 @@ public class CDOLobInfo
   public final long getSize()
   {
     return size;
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("{0}[id={1}, size={2}]", getClass().getSimpleName(), HexUtil.bytesToHex(id), size);
   }
 }

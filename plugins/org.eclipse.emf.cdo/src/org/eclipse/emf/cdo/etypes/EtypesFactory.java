@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: EtypesFactory.java,v 1.3 2010-11-12 17:37:25 estepper Exp $
+ * $Id: EtypesFactory.java,v 1.4 2010-11-17 06:17:26 estepper Exp $
  */
 package org.eclipse.emf.cdo.etypes;
 
@@ -19,15 +19,24 @@ import org.eclipse.emf.ecore.EFactory;
 public interface EtypesFactory extends EFactory
 {
   /**
-   * The singleton instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The singleton instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   EtypesFactory eINSTANCE = org.eclipse.emf.cdo.etypes.impl.EtypesFactoryImpl.init();
 
   /**
-   * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns a new object of class '<em>Annotation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Annotation</em>'.
+   * @generated
+   */
+  Annotation createAnnotation();
+
+  /**
+   * Returns the package supported by this factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the package supported by this factory.
    * @generated
    */

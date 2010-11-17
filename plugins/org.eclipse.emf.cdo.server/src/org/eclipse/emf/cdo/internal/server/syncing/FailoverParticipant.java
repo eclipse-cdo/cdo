@@ -67,7 +67,7 @@ public class FailoverParticipant extends SynchronizableRepository implements Int
   }
 
   @Override
-  public void initRootResource()
+  protected void initRootResource()
   {
     if (getType() == BACKUP)
     {

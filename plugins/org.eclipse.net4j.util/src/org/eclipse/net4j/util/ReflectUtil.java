@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -29,8 +29,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.WeakHashMap;
 import java.util.Map.Entry;
+import java.util.WeakHashMap;
 
 /**
  * @author Eike Stepper
@@ -515,7 +515,7 @@ public final class ReflectUtil
     // Recurse
     toString(segment.getSuperclass(), object, prefix, builder);
 
-    String segmentPrefix = segment == object.getClass() ? "" : getSimpleName(segment) + NAMESPACE_SEPARATOR; //$NON-NLS-1$ 
+    String segmentPrefix = segment == object.getClass() ? "" : getSimpleName(segment) + NAMESPACE_SEPARATOR; //$NON-NLS-1$
     for (Field field : segment.getDeclaredFields())
     {
       if (field.isSynthetic())
@@ -547,7 +547,9 @@ public final class ReflectUtil
       if (value instanceof Collection<?>)
       {
         builder.append(StringUtil.NL);
-        for (Object element : (Collection<?>)value)
+        Collection<?> collection = (Collection<?>)value;
+        Object[] array = collection.toArray(new Object[collection.size()]);
+        for (Object element : array)
         {
           builder.append("    "); //$NON-NLS-1$
           builder.append(element);

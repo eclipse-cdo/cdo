@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.lob.CDOLob;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -404,6 +406,12 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
     throw new UnsupportedOperationException();
   }
 
+  public Object rawStore(CDOLob<?> lob, Object context, OMMonitor monitor)
+  {
+    // TODO: implement DB4OStoreAccessor.rawStore(lob, context, monitor)
+    throw new UnsupportedOperationException();
+  }
+
   public void rawCommit(Object context, OMMonitor monitor)
   {
     // TODO: implement DB4OStoreAccessor.rawCommit(context, monitor)
@@ -421,6 +429,12 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
         it.remove();
       }
     }
+  }
+
+  public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
+  {
+    // TODO: implement DB4OStoreAccessor.handleLobs(fromTime, toTime, handler)
+    throw new UnsupportedOperationException();
   }
 
   public void loadLob(byte[] id, OutputStream out) throws IOException

@@ -5,4 +5,19 @@
     nsURI="http://www.eclipse.org/emf/CDO/Etypes/4.0.0" nsPrefix="etypes">
   <eClassifiers xsi:type="ecore:EDataType" name="Blob" instanceClassName="org.eclipse.emf.cdo.common.model.lob.CDOBlob"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Clob" instanceClassName="org.eclipse.emf.cdo.common.model.lob.CDOClob"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ModelElement" abstract="true">
+    <eOperations name="getAnnotation" eType="#//Annotation">
+      <eParameters name="source" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="annotations" upperBound="-1"
+        eType="#//Annotation" containment="true" eOpposite="#//Annotation/modelElement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Annotation" eSuperTypes="#//ModelElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="source" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="details" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStringToStringMapEntry"
+        containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="modelElement" eType="#//ModelElement"
+        eOpposite="#//ModelElement/annotations"/>
+  </eClassifiers>
 </ecore:EPackage>

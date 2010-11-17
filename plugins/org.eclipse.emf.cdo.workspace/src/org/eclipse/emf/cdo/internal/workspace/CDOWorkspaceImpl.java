@@ -464,7 +464,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
       }
 
       @Override
-      public void initRootResource()
+      protected void initRootResource()
       {
         // Don't create the root resource as it will be checked out
         setState(State.INITIAL);

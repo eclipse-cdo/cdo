@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
@@ -36,6 +37,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -338,8 +340,7 @@ public abstract class CDOServerImporter
           else if (FEATURE.equals(qName))
           {
             String name = attributes.getValue(FEATURE_NAME);
-            String type = attributes.getValue(FEATURE_TYPE);
-            String value = attributes.getValue(FEATURE_VALUE);
+            Object value = value(attributes);
 
             EClass eClass = revision.getEClass();
             EStructuralFeature feature = eClass.getEStructuralFeature(name);
@@ -351,20 +352,13 @@ public abstract class CDOServerImporter
             if (feature.isMany())
             {
               CDOList list = revision.getList(feature);
-              if (value == null)
-              {
-                list.add(null);
-              }
-              else
-              {
-                list.add(value(type, value));
-              }
+              list.add(value);
             }
             else
             {
               if (value != null)
               {
-                revision.setValue(feature, value(type, value));
+                revision.setValue(feature, value);
               }
             }
           }
@@ -399,8 +393,30 @@ public abstract class CDOServerImporter
       return CDOIDUtil.read(str);
     }
 
-    protected Object value(String type, String str)
+    protected Object value(Attributes attributes)
     {
+      String type = attributes.getValue(FEATURE_TYPE);
+
+      if ("Blob".equals(type))
+      {
+        byte[] id = HexUtil.hexToBytes(attributes.getValue(FEATURE_ID));
+        long size = Long.parseLong(attributes.getValue(FEATURE_SIZE));
+        return CDOLobUtil.createBlob(id, size);
+      }
+
+      if ("Clob".equals(type))
+      {
+        byte[] id = HexUtil.hexToBytes(attributes.getValue(FEATURE_ID));
+        long size = Long.parseLong(attributes.getValue(FEATURE_SIZE));
+        return CDOLobUtil.createClob(id, size);
+      }
+
+      String str = attributes.getValue(FEATURE_VALUE);
+      if (str == null)
+      {
+        return null;
+      }
+
       if (Object.class.getSimpleName().equals(type))
       {
         return id(str);
@@ -447,6 +463,11 @@ public abstract class CDOServerImporter
       }
 
       if (String.class.getSimpleName().equals(type))
+      {
+        return str;
+      }
+
+      if ("Blob".equals(type))
       {
         return str;
       }

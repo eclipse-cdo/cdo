@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelConstants;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -65,6 +66,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.Writer;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -677,6 +679,45 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
       if (lobs.containsKey(key))
       {
         it.remove();
+      }
+    }
+  }
+
+  public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
+  {
+    for (Entry<String, Object> entry : lobs.entrySet())
+    {
+      byte[] id = HexUtil.hexToBytes(entry.getKey());
+      Object lob = entry.getValue();
+      if (lob instanceof byte[])
+      {
+        byte[] blob = (byte[])lob;
+        ByteArrayInputStream in = new ByteArrayInputStream(blob);
+        OutputStream out = handler.handleBlob(id, blob.length);
+
+        try
+        {
+          IOUtil.copyBinary(in, out, blob.length);
+        }
+        finally
+        {
+          IOUtil.close(out);
+        }
+      }
+      else
+      {
+        char[] clob = (char[])lob;
+        CharArrayReader in = new CharArrayReader(clob);
+        Writer out = handler.handleClob(id, clob.length);
+
+        try
+        {
+          IOUtil.copyCharacter(in, out, clob.length);
+        }
+        finally
+        {
+          IOUtil.close(out);
+        }
       }
     }
   }

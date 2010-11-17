@@ -208,7 +208,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     packageInfos = result.toArray(new InternalCDOPackageInfo[result.size()]);
 
     setState(State.NEW);
-    originalType = getType();
+    setOriginalType(getType());
   }
 
   public void dispose()

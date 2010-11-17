@@ -40,6 +40,7 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -1218,7 +1219,8 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       InternalCDOPackageUnit ecoreUnit = initSystemPackage(EcorePackage.eINSTANCE);
       InternalCDOPackageUnit eresourceUnit = initSystemPackage(EresourcePackage.eINSTANCE);
-      InternalCDOPackageUnit[] systemUnits = { ecoreUnit, eresourceUnit };
+      InternalCDOPackageUnit etypesUnit = initSystemPackage(EtypesPackage.eINSTANCE);
+      InternalCDOPackageUnit[] systemUnits = { ecoreUnit, eresourceUnit, etypesUnit };
 
       writer.writePackageUnits(systemUnits, new Monitor());
       writer.commit(new Monitor());
@@ -1230,7 +1232,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  public InternalCDOPackageUnit initSystemPackage(EPackage ePackage)
+  protected InternalCDOPackageUnit initSystemPackage(EPackage ePackage)
   {
     EMFUtil.registerPackage(ePackage, packageRegistry);
     InternalCDOPackageInfo packageInfo = packageRegistry.getPackageInfo(ePackage);
@@ -1249,7 +1251,7 @@ public class Repository extends Container<Object> implements InternalRepository
     branchManager.initMainBranch(false, timeStamp);
   }
 
-  public void initRootResource()
+  protected void initRootResource()
   {
     CDOBranchPoint head = branchManager.getMainBranch().getHead();
     CDOIDTemp tempID = CDOIDUtil.createTempObject(1);
@@ -1303,7 +1305,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  public void loadRootResource()
+  protected void loadRootResource()
   {
     IStoreAccessor reader = store.getReader(null);
     StoreThreadLocal.setAccessor(reader);
@@ -1320,7 +1322,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  public void readPackageUnits()
+  protected void readPackageUnits()
   {
     IStoreAccessor reader = store.getReader(null);
     StoreThreadLocal.setAccessor(reader);
@@ -1353,7 +1355,7 @@ public class Repository extends Container<Object> implements InternalRepository
     checkState(commitInfoManager, "commitInfoManager"); //$NON-NLS-1$
     checkState(commitManager, "commitManager"); //$NON-NLS-1$
     checkState(lockManager, "lockingManager"); //$NON-NLS-1$
-  
+
     packageRegistry.setReplacingDescriptors(true);
     packageRegistry.setPackageLoader(this);
     branchManager.setBranchLoader(this);
@@ -1364,9 +1366,9 @@ public class Repository extends Container<Object> implements InternalRepository
     commitInfoManager.setCommitInfoLoader(this);
     commitManager.setRepository(this);
     lockManager.setRepository(this);
-  
+
     checkState(store, "store"); //$NON-NLS-1$
-  
+
     {
       String value = getProperties().get(Props.SUPPORTING_AUDITS);
       if (value != null)
@@ -1380,7 +1382,7 @@ public class Repository extends Container<Object> implements InternalRepository
         supportingAudits = store.getRevisionTemporality() == IStore.RevisionTemporality.AUDITING;
       }
     }
-  
+
     {
       String value = getProperties().get(Props.SUPPORTING_BRANCHES);
       if (value != null)
@@ -1394,9 +1396,9 @@ public class Repository extends Container<Object> implements InternalRepository
         supportingBranches = store.getRevisionParallelism() == IStore.RevisionParallelism.BRANCHING;
       }
     }
-  
+
     revisionManager.setSupportingBranches(supportingBranches);
-  
+
     {
       String value = getProperties().get(Props.ENSURE_REFERENTIAL_INTEGRITY);
       if (value != null)
@@ -1419,13 +1421,13 @@ public class Repository extends Container<Object> implements InternalRepository
     LifecycleUtil.activate(commitManager);
     LifecycleUtil.activate(queryHandlerProvider);
     LifecycleUtil.activate(lockManager);
-  
+
     if (!skipInitialization)
     {
       lastCommitTimeStamp = Math.max(store.getCreationTime(), store.getLastCommitTime());
       initMainBranch(branchManager, lastCommitTimeStamp);
       LifecycleUtil.activate(branchManager);
-  
+
       if (store.isFirstTime())
       {
         initSystemPackages();

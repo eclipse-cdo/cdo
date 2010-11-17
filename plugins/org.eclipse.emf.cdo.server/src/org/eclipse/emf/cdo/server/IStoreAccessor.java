@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.model.lob.CDOClob;
 import org.eclipse.emf.cdo.common.model.lob.CDOLob;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -201,6 +202,11 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   public void loadLob(byte[] id, OutputStream out) throws IOException;
 
   /**
+   * @since 4.0
+   */
+  public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException;
+
+  /**
    * @since 2.0
    */
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor);
@@ -324,16 +330,13 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
    * this method are followed by a single final call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method
    * where the accumulated backend changes can be committed atomically.
-   * <p>
-   * <b>Usage context:</b> This method is only called in the context of CDOWorkspace operations like e.g. checkout().
-   * The associated repository will in any cases be in non-auditing mode.
    * 
    * @param packageUnits
    *          the package units to be stored in the backend represented by this {@link IStoreAccessor}.
    * @param context
    *          an object of an arbitrary class that has been created during previous calls to this method (but after the
    *          last call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method. This context object may be used
-   *          to remember implementation specific state between calls to the two rawStore() methods and the rawCommit()
+   *          to remember implementation specific state between calls to the rawStore() methods and the rawCommit()
    *          method. Its type and value are opaque to the caller, which maintains the context object between these
    *          calls. A new object may be created by the implementor of this method at any time and should be returned by
    *          this method to preserve it for later calls. Can be <code>null</code>.
@@ -356,16 +359,13 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
    * this method are followed by a single final call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method
    * where the accumulated backend changes can be committed atomically.
-   * <p>
-   * <b>Usage context:</b> This method is only called in the context of CDOWorkspace operations like e.g. checkout().
-   * The associated repository will in any cases be in non-auditing mode.
    * 
    * @param revision
    *          the revision to be stored in the backend represented by this {@link IStoreAccessor}.
    * @param context
    *          an object of an arbitrary class that has been created during previous calls to this method (but after the
    *          last call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method. This context object may be used
-   *          to remember implementation specific state between calls to the two rawStore() methods and the rawCommit()
+   *          to remember implementation specific state between calls to the rawStore() methods and the rawCommit()
    *          method. Its type and value are opaque to the caller, which maintains the context object between these
    *          calls. A new object may be created by the implementor of this method at any time and should be returned by
    *          this method to preserve it for later calls. Can be <code>null</code>.
@@ -380,17 +380,40 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   public Object rawStore(InternalCDORevision revision, Object context, OMMonitor monitor);
 
   /**
-   * Atomically commits the accumulated backend changes resulting from previous calls to one or both of the two
-   * rawStore() methods.
+   * Stores the given {@link CDOLob large object} in the backend represented by this {@link IStoreAccessor} without
+   * going through a regular {@link #commit(OMMonitor) commit}.
    * <p>
-   * <b>Usage context:</b> This method is only called in the context of CDOWorkspace operations like e.g. checkout().
-   * The associated repository will in any cases be in non-auditing mode.
+   * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
+   * this method are followed by a single final call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method
+   * where the accumulated backend changes can be committed atomically.
+   * 
+   * @param lob
+   *          the large object to be stored in the backend represented by this {@link IStoreAccessor}.
+   * @param context
+   *          an object of an arbitrary class that has been created during previous calls to this method (but after the
+   *          last call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method. This context object may be used
+   *          to remember implementation specific state between calls to the rawStore() methods and the rawCommit()
+   *          method. Its type and value are opaque to the caller, which maintains the context object between these
+   *          calls. A new object may be created by the implementor of this method at any time and should be returned by
+   *          this method to preserve it for later calls. Can be <code>null</code>.
+   * @param monitor
+   *          a progress monitor that <b>may be</b> used to report proper progress of this operation to the caller and
+   *          <b>may be</b> used to react to cancelation requests of the caller and <b>must be</b> touched regularly to
+   *          prevent timeouts from expiring in the caller.
+   * @return the context object (see above) to be preserved by the caller of this method for later calls.
+   * @since 4.0
+   * @see #rawCommit(Object, OMMonitor)
+   */
+  public Object rawStore(CDOLob<?> lob, Object context, OMMonitor monitor);
+
+  /**
+   * Atomically commits the accumulated backend changes resulting from previous calls to the rawStore() methods.
    * 
    * @param context
-   *          an object of an arbitrary class that has been created during previous calls to one or both of the two
-   *          rawStore() methods. This context object may be used to remember implementation specific state between
-   *          calls to the two rawStore() methods and the rawCommit() method. Its type and value are opaque to the
-   *          caller, which maintains the context object between these calls.Can be <code>null</code>.
+   *          an object of an arbitrary class that has been created during previous calls to the rawStore() methods.
+   *          This context object may be used to remember implementation specific state between calls to the rawStore()
+   *          methods and the rawCommit() method. Its type and value are opaque to the caller, which maintains the
+   *          context object between these calls.Can be <code>null</code>.
    * @param monitor
    *          a progress monitor that <b>may be</b> used to report proper progress of this operation to the caller and
    *          <b>may be</b> used to react to cancelation requests of the caller and <b>must be</b> touched regularly to

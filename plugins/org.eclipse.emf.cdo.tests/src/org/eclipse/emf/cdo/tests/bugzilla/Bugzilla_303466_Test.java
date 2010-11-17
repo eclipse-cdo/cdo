@@ -48,7 +48,7 @@ public class Bugzilla_303466_Test extends AbstractCDOTest
     resource.load(null);
 
     session.getPackageRegistry().putEPackage(derivedPkg);
-    assertEquals(3, session.getPackageRegistry().size());
+    assertEquals(4, session.getPackageRegistry().size());
 
     EClass derivedClass = (EClass)derivedPkg.getEClassifier("DerivedClass");
     EObject derived = derivedPkg.getEFactoryInstance().create(derivedClass);

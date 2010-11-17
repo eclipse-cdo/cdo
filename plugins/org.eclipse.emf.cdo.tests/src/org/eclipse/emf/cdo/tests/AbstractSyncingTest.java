@@ -95,10 +95,17 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
   }
 
   protected static void checkEvent(TestListener listener, int newPackageUnits, int newObjects, int changedObjects,
-      int detachedObjects)
+      int detachedObjects) throws InterruptedException
   {
-    IEvent[] events = listener.getEvents();
-    assertEquals(1, events.length);
+    final IEvent[] events = listener.getEvents();
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return events.length == 1;
+      }
+    }.assertNoTimeOut();
 
     IEvent event = events[0];
     if (event instanceof CDOSessionInvalidationEvent)

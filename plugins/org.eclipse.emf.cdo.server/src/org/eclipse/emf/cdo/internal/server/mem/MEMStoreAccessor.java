@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.lob.CDOLob;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
@@ -382,6 +384,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     return rawStoreContext;
   }
 
+  public Object rawStore(CDOLob<?> lob, Object context, OMMonitor monitor)
+  {
+    // TODO: implement MEMStoreAccessor.rawStore(lob, context, monitor)
+    throw new UnsupportedOperationException();
+  }
+
   public void rawCommit(Object context, OMMonitor monitor)
   {
     RawStoreContext rawStoreContext = (RawStoreContext)context;
@@ -393,7 +401,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
         writePackageUnits(rawStoreContext.getPackageUnits(), monitor);
         for (InternalCDORevision revision : rawStoreContext.getRevisions())
         {
-          getStore().addRevision(revision, true);
+          store.addRevision(revision, true);
         }
       }
     }
@@ -402,6 +410,11 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
   public void queryLobs(List<byte[]> ids)
   {
     getStore().queryLobs(ids);
+  }
+
+  public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
+  {
+    getStore().handleLobs(fromTime, toTime, handler);
   }
 
   public void loadLob(byte[] id, OutputStream out) throws IOException
@@ -465,6 +478,11 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
 
     public void setPackageUnits(InternalCDOPackageUnit[] packageUnits)
     {
+      if (this.packageUnits.length != 0)
+      {
+        throw new IllegalStateException("Multiple calls to setPackageUnits() are forbidden");
+      }
+
       this.packageUnits = packageUnits;
     }
 

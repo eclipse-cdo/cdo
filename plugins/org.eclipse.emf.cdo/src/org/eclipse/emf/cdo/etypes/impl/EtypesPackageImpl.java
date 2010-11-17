@@ -2,17 +2,24 @@
  * <copyright>
  * </copyright>
  *
- * $Id: EtypesPackageImpl.java,v 1.3 2010-11-12 17:37:25 estepper Exp $
+ * $Id: EtypesPackageImpl.java,v 1.4 2010-11-17 06:17:27 estepper Exp $
  */
 package org.eclipse.emf.cdo.etypes.impl;
 
 import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.model.lob.CDOClob;
+import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.EtypesFactory;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
+import org.eclipse.emf.cdo.etypes.ModelElement;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -25,14 +32,24 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * @generated
+   */
+  private EClass modelElementEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass annotationEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   private EDataType blobEDataType = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EDataType clobEDataType = null;
@@ -57,18 +74,17 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * <p>
-   * This method is used to initialize {@link EtypesPackage#eINSTANCE} when that field is accessed. Clients should not
-   * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
    * 
+   * <p>This method is used to initialize {@link EtypesPackage#eINSTANCE} when that field is accessed.
+   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -84,6 +100,9 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
         .get(eNS_URI) : new EtypesPackageImpl());
 
     isInited = true;
+
+    // Initialize simple dependencies
+    EcorePackage.eINSTANCE.eClass();
 
     // Create package meta-data objects
     theEtypesPackage.createPackageContents();
@@ -101,7 +120,60 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * @generated
+   */
+  public EClass getModelElement()
+  {
+    return modelElementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getModelElement_Annotations()
+  {
+    return (EReference)modelElementEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAnnotation()
+  {
+    return annotationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAnnotation_Source()
+  {
+    return (EAttribute)annotationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAnnotation_Details()
+  {
+    return (EReference)annotationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAnnotation_ModelElement()
+  {
+    return (EReference)annotationEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public EDataType getBlob()
@@ -111,7 +183,6 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EDataType getClob()
@@ -121,7 +192,6 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EtypesFactory getEtypesFactory()
@@ -131,15 +201,14 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
-   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the meta-model objects for the package.  This method is
+   * guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void createPackageContents()
@@ -148,6 +217,15 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
       return;
     isCreated = true;
 
+    // Create classes and their features
+    modelElementEClass = createEClass(MODEL_ELEMENT);
+    createEReference(modelElementEClass, MODEL_ELEMENT__ANNOTATIONS);
+
+    annotationEClass = createEClass(ANNOTATION);
+    createEAttribute(annotationEClass, ANNOTATION__SOURCE);
+    createEReference(annotationEClass, ANNOTATION__DETAILS);
+    createEReference(annotationEClass, ANNOTATION__MODEL_ELEMENT);
+
     // Create data types
     blobEDataType = createEDataType(BLOB);
     clobEDataType = createEDataType(CLOB);
@@ -155,15 +233,14 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
-   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Complete the initialization of the package and its meta-model.  This
+   * method is guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void initializePackageContents()
@@ -176,6 +253,46 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
     setName(eNAME);
     setNsPrefix(eNS_PREFIX);
     setNsURI(eNS_URI);
+
+    // Obtain other dependent packages
+    EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
+
+    // Create type parameters
+
+    // Set bounds for type parameters
+
+    // Add supertypes to classes
+    annotationEClass.getESuperTypes().add(this.getModelElement());
+
+    // Initialize classes and features; add operations and parameters
+    initEClass(modelElementEClass, ModelElement.class,
+        "ModelElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(
+        getModelElement_Annotations(),
+        this.getAnnotation(),
+        this.getAnnotation_ModelElement(),
+        "annotations", null, 0, -1, ModelElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+    EOperation op = addEOperation(modelElementEClass, this.getAnnotation(),
+        "getAnnotation", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+    addEParameter(op, theEcorePackage.getEString(), "source", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+    initEClass(annotationEClass, Annotation.class,
+        "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEAttribute(
+        getAnnotation_Source(),
+        theEcorePackage.getEString(),
+        "source", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEReference(
+        getAnnotation_Details(),
+        theEcorePackage.getEStringToStringMapEntry(),
+        null,
+        "details", null, 0, -1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEReference(
+        getAnnotation_ModelElement(),
+        this.getModelElement(),
+        this.getModelElement_Annotations(),
+        "modelElement", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
     // Initialize data types
     initEDataType(blobEDataType, CDOBlob.class, "Blob", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

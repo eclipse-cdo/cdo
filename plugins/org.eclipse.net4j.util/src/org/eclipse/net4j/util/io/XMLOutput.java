@@ -1,5 +1,8 @@
 package org.eclipse.net4j.util.io;
 
+import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.net4j.util.WrappedException;
+
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
@@ -10,7 +13,9 @@ import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.sax.TransformerHandler;
 import javax.xml.transform.stream.StreamResult;
 
+import java.io.IOException;
 import java.io.OutputStream;
+import java.io.Writer;
 import java.util.LinkedList;
 
 /**
@@ -80,6 +85,105 @@ public class XMLOutput
     checkElement();
     element.addAttribute(name, value);
     return this;
+  }
+
+  public Writer characters() throws SAXException
+  {
+    checkElement();
+    newLine();
+    element.start();
+    xmlHandler.startCDATA();
+
+    return new Writer()
+    {
+      @Override
+      public void write(char[] cbuf, int off, int len) throws IOException
+      {
+        try
+        {
+          xmlHandler.characters(cbuf, off, len);
+        }
+        catch (SAXException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+
+      @Override
+      public void flush() throws IOException
+      {
+        // Do nothing
+      }
+
+      @Override
+      public void close() throws IOException
+      {
+        try
+        {
+          xmlHandler.endCDATA();
+          element.end();
+        }
+        catch (SAXException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+        finally
+        {
+          element = null;
+        }
+      }
+    };
+  }
+
+  public OutputStream bytes() throws SAXException
+  {
+    checkElement();
+    newLine();
+    element.start();
+    xmlHandler.startCDATA();
+
+    return new OutputStream()
+    {
+      @Override
+      public void write(byte[] b, int off, int len) throws IOException
+      {
+        try
+        {
+          char[] cbuf = HexUtil.bytesToHex(b, off, len).toCharArray();
+          xmlHandler.characters(cbuf, 0, cbuf.length);
+        }
+        catch (SAXException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+
+      @Override
+      public void write(int i) throws IOException
+      {
+        byte b = (byte)((i & 0xff) + Byte.MIN_VALUE);
+        byte[] bs = { b };
+        write(bs, 0, 1);
+      }
+
+      @Override
+      public void close() throws IOException
+      {
+        try
+        {
+          xmlHandler.endCDATA();
+          element.end();
+        }
+        catch (SAXException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+        finally
+        {
+          element = null;
+        }
+      }
+    };
   }
 
   public XMLOutput push() throws SAXException

@@ -415,7 +415,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   }
 
   @Override
-  public void initRootResource()
+  protected void initRootResource()
   {
     setState(INITIAL);
   }

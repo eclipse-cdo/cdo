@@ -23,6 +23,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.lob.CDOLob;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -83,6 +85,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.Writer;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
@@ -380,6 +383,75 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     {
       statementCache.releasePreparedStatement(pstmt);
     }
+  }
+
+  public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
+  {
+    PreparedStatement pstmt = null;
+    ResultSet resultSet = null;
+
+    try
+    {
+      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_HANDLE_LOBS, ReuseProbability.LOW);
+
+      try
+      {
+        resultSet = pstmt.executeQuery();
+        while (resultSet.next())
+        {
+          byte[] id = HexUtil.hexToBytes(resultSet.getString(1));
+          long size = resultSet.getLong(2);
+          Blob blob = resultSet.getBlob(3);
+          if (resultSet.wasNull())
+          {
+            Clob clob = resultSet.getClob(4);
+            Reader in = clob.getCharacterStream();
+            Writer out = handler.handleClob(id, size);
+
+            try
+            {
+              IOUtil.copyCharacter(in, out, size);
+            }
+            finally
+            {
+              IOUtil.close(out);
+            }
+          }
+          else
+          {
+            InputStream in = blob.getBinaryStream();
+            OutputStream out = handler.handleBlob(id, size);
+
+            try
+            {
+              IOUtil.copyBinary(in, out, size);
+            }
+            finally
+            {
+              IOUtil.close(out);
+            }
+          }
+        }
+      }
+      finally
+      {
+        DBUtil.close(resultSet);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      statementCache.releasePreparedStatement(pstmt);
+    }
+  }
+
+  public Object rawStore(CDOLob<?> lob, Object context, OMMonitor monitor)
+  {
+    // TODO: implement DBStoreAccessor.rawStore(lob, context, monitor)
+    throw new UnsupportedOperationException();
   }
 
   @Override

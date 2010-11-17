@@ -30,7 +30,6 @@ import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader;
@@ -38,7 +37,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.Revisi
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
@@ -159,25 +157,5 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
   /**
    * @since 4.0
    */
-  public InternalCDOPackageUnit initSystemPackage(EPackage ePackage);
-
-  /**
-   * @since 4.0
-   */
   public void initMainBranch(InternalCDOBranchManager branchManager, long timeStamp);
-
-  /**
-   * @since 4.0
-   */
-  public void initRootResource();
-
-  /**
-   * @since 4.0
-   */
-  public void loadRootResource();
-
-  /**
-   * @since 4.0
-   */
-  public void readPackageUnits();
 }

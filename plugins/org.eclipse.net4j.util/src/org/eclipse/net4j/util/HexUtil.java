@@ -36,7 +36,7 @@ public final class HexUtil
    *          The number of bytes to read.
    * @return the string of hex chars.
    */
-  public static final String bytesToHex(byte[] bs, int off, int length)
+  public static String bytesToHex(byte[] bs, int off, int length)
   {
     if (bs == null)
     {
@@ -53,7 +53,7 @@ public final class HexUtil
     return sb.toString();
   }
 
-  public static final void bytesToHexAppend(byte[] bs, int off, int length, Appendable appendable)
+  public static void bytesToHexAppend(byte[] bs, int off, int length, Appendable appendable)
   {
     if (bs.length <= off || bs.length < off + length)
     {
@@ -80,7 +80,7 @@ public final class HexUtil
     }
   }
 
-  public static final String bytesToHex(byte[] bs)
+  public static String bytesToHex(byte[] bs)
   {
     if (bs == null)
     {
@@ -90,12 +90,12 @@ public final class HexUtil
     return bytesToHex(bs, 0, bs.length);
   }
 
-  public static final byte[] hexToBytes(String s)
+  public static byte[] hexToBytes(String s)
   {
     return hexToBytes(s, 0);
   }
 
-  public static final byte[] hexToBytes(String s, int off)
+  public static byte[] hexToBytes(String s, int off)
   {
     byte[] bs = new byte[off + (1 + s.length()) / 2];
     hexToBytes(s, bs, off);
@@ -112,8 +112,7 @@ public final class HexUtil
    * @param off
    *          The first byte to write of the array
    */
-  public static final void hexToBytes(String s, byte[] out, int off) throws NumberFormatException,
-      IndexOutOfBoundsException
+  public static void hexToBytes(String s, byte[] out, int off) throws NumberFormatException, IndexOutOfBoundsException
   {
     int slen = s.length();
     if (slen % 2 != 0)

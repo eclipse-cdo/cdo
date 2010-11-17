@@ -168,14 +168,6 @@ public final class CDOModelUtil
   /**
    * @since 2.0
    */
-  public static boolean isSystemPackage(EPackage ePackage)
-  {
-    return isCorePackage(ePackage) || isResourcePackage(ePackage);
-  }
-
-  /**
-   * @since 2.0
-   */
   public static boolean isResource(EClass eClass)
   {
     return isResourcePackage(eClass.getEPackage()) && RESOURCE_CLASS_NAME.equals(eClass.getName());
@@ -205,6 +197,14 @@ public final class CDOModelUtil
   public static boolean isTypesPackage(EPackage ePackage)
   {
     return TYPES_PACKAGE_URI.equals(ePackage.getNsURI());
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static boolean isSystemPackage(EPackage ePackage)
+  {
+    return isCorePackage(ePackage) || isResourcePackage(ePackage) || isTypesPackage(ePackage);
   }
 
   /**

@@ -10,17 +10,26 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
+import org.eclipse.emf.cdo.common.model.lob.CDOClob;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.CDOServerExporter;
 import org.eclipse.emf.cdo.server.CDOServerImporter;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
+import org.eclipse.emf.cdo.tests.model3.File;
+import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
+import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * @author Eike Stepper
@@ -41,7 +50,7 @@ public class BackupTest extends AbstractCDOTest
     super.doTearDown();
   }
 
-  public void testBackupExport() throws Exception
+  public void testExport() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
@@ -58,7 +67,72 @@ public class BackupTest extends AbstractCDOTest
     System.out.println(baos.toString());
   }
 
-  public void testBackupImport() throws Exception
+  public void testExportBlob() throws Exception
+  {
+    InputStream blobStream = null;
+
+    try
+    {
+      blobStream = OM.BUNDLE.getInputStream("copyright.txt");
+      CDOBlob blob = new CDOBlob(blobStream);
+
+      Image image = getModel3Factory().createImage();
+      image.setWidth(320);
+      image.setHeight(200);
+      image.setData(blob);
+
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/res1");
+      resource.getContents().add(image);
+      transaction.commit();
+    }
+    finally
+    {
+      IOUtil.close(blobStream);
+    }
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+    System.out.println(baos.toString());
+  }
+
+  public void testExportClob() throws Exception
+  {
+    InputStream clobStream = null;
+
+    try
+    {
+      clobStream = OM.BUNDLE.getInputStream("copyright.txt");
+      CDOClob clob = new CDOClob(new InputStreamReader(clobStream));
+
+      File file = getModel3Factory().createFile();
+      file.setName("copyright.txt");
+      file.setData(clob);
+
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/res1");
+      resource.getContents().add(file);
+      transaction.commit();
+    }
+    finally
+    {
+      IOUtil.close(clobStream);
+    }
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+    System.out.println(baos.toString());
+  }
+
+  public void testImport() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
@@ -73,6 +147,47 @@ public class BackupTest extends AbstractCDOTest
     resource.getContents().add(salesOrder);
     transaction.commit();
     session.close();
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+    System.out.println(baos.toString());
+
+    InternalRepository repo2 = getRepository("repo2", false);
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
+    importer.importRepository(bais);
+
+    sleep(10000000);
+  }
+
+  public void testImportBlob() throws Exception
+  {
+    InputStream blobStream = null;
+
+    try
+    {
+      blobStream = OM.BUNDLE.getInputStream("copyright.txt");
+      CDOBlob blob = new CDOBlob(blobStream);
+
+      Image image = getModel3Factory().createImage();
+      image.setWidth(320);
+      image.setHeight(200);
+      image.setData(blob);
+
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/res1");
+      resource.getContents().add(image);
+      transaction.commit();
+    }
+    finally
+    {
+      IOUtil.close(blobStream);
+    }
 
     InternalRepository repo1 = getRepository();
 

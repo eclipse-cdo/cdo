@@ -117,6 +117,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     // Export package units
     String where = " WHERE p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.CORE_PACKAGE_URI + //
         "' AND p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.RESOURCE_PACKAGE_URI + //
+        "' AND p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.TYPES_PACKAGE_URI + //
         "' AND p_u." + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, CDODBSchema.PACKAGE_UNITS, "p_u", where);
 
@@ -331,6 +332,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     {
       where = CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.CORE_PACKAGE_URI + "' AND "
           + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.RESOURCE_PACKAGE_URI + "' AND "
+          + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.TYPES_PACKAGE_URI + "' AND "
           + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     }
 

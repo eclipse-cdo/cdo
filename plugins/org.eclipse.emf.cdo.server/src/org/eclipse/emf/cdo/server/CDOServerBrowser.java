@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -25,7 +26,9 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.Worker;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
@@ -41,9 +44,13 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.CharArrayWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -313,6 +320,7 @@ public class CDOServerBrowser extends Worker
     pages.add(new PackagesPage());
     pages.add(new RevisionsPage.FromCache());
     pages.add(new RevisionsPage.FromStore());
+    pages.add(new LobsPage());
 
     IPluginContainer container = IPluginContainer.INSTANCE;
     for (String factoryType : container.getFactoryTypes(Page.PRODUCT_GROUP))
@@ -872,6 +880,131 @@ public class CDOServerBrowser extends Worker
       {
         return ((CDOAllRevisionsProvider)repository.getStore()).getAllRevisions();
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class LobsPage extends AbstractPage
+  {
+    public LobsPage()
+    {
+      super("lobs", "Large Objects");
+    }
+
+    public boolean canDisplay(InternalRepository repository)
+    {
+      return true;
+    }
+
+    public void display(final CDOServerBrowser browser, InternalRepository repository, final PrintStream out)
+    {
+      out.print("<table border=\"0\">\r\n");
+      out.print("<tr>\r\n");
+      out.print("<td valign=\"top\">\r\n");
+
+      IStoreAccessor accessor = repository.getStore().getReader(null);
+      StoreThreadLocal.setAccessor(accessor);
+
+      final String param = browser.getParam("id");
+      final Object[] details = { null, null, null };
+
+      try
+      {
+        repository.handleLobs(0, 0, new CDOLobHandler()
+        {
+          public OutputStream handleBlob(byte[] id, long size)
+          {
+            if (showLob(out, "Blob", id, size, browser, param))
+            {
+              ByteArrayOutputStream result = new ByteArrayOutputStream();
+              details[0] = result;
+              details[1] = param;
+              details[2] = size;
+              return result;
+            }
+
+            return null;
+          }
+
+          public Writer handleClob(byte[] id, long size)
+          {
+            if (showLob(out, "Clob", id, size, browser, param))
+            {
+              CharArrayWriter result = new CharArrayWriter();
+              details[0] = result;
+              details[1] = param;
+              details[2] = size;
+              return result;
+            }
+
+            return null;
+          }
+        });
+      }
+      catch (IOException ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+      finally
+      {
+        StoreThreadLocal.release();
+      }
+
+      out.print("</td>\r\n");
+
+      if (details[0] != null)
+      {
+        out.print("<td>&nbsp;&nbsp;&nbsp;</td>\r\n");
+        out.print("<td valign=\"top\">\r\n");
+        if (details[0] instanceof ByteArrayOutputStream)
+        {
+          ByteArrayOutputStream baos = (ByteArrayOutputStream)details[0];
+          String hex = HexUtil.bytesToHex(baos.toByteArray());
+
+          out.println("<h3>Blob " + details[1] + " (" + details[2] + ")</h3>");
+          out.println("<pre>\r\n");
+          for (int i = 0; i < hex.length(); i++)
+          {
+            out.print(hex.charAt(i));
+            if ((i + 1) % 32 == 0)
+            {
+              out.print("\r\n");
+            }
+            else if ((i + 1) % 16 == 0)
+            {
+              out.print("  ");
+            }
+            else if ((i + 1) % 2 == 0)
+            {
+              out.print(" ");
+            }
+          }
+
+          out.println("</pre>\r\n");
+        }
+        else
+        {
+          CharArrayWriter caw = (CharArrayWriter)details[0];
+          out.println("<h3>Clob " + details[1] + " (" + details[2] + ")</h3>");
+          out.println("<pre>" + caw + "</pre>");
+        }
+
+        out.print("</td>\r\n");
+      }
+
+      out.print("</tr>\r\n");
+      out.print("</table>\r\n");
+    }
+
+    protected boolean showLob(PrintStream out, String type, byte[] id, long size, CDOServerBrowser browser, String param)
+    {
+      String hex = HexUtil.bytesToHex(id);
+      boolean selected = hex.equals(param);
+      String label = selected ? hex : browser.href(hex, getName(), "id", hex);
+      out.println(type + " " + label + " (" + size + ")");
+      return selected;
     }
   }
 }

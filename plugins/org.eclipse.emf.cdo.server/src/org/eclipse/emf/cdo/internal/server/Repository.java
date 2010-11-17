@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -1144,6 +1145,12 @@ public class Repository extends Container<Object> implements InternalRepository
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     accessor.queryLobs(ids);
+  }
+
+  public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
+  {
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    accessor.handleLobs(fromTime, toTime, handler);
   }
 
   public void loadLob(byte[] id, OutputStream out) throws IOException

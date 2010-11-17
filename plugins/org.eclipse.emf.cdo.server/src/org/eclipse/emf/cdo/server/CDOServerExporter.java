@@ -195,8 +195,7 @@ public abstract class CDOServerExporter<OUT>
 
   protected void exportLobs(final OUT out) throws Exception
   {
-    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-    accessor.handleLobs(0, 0, new CDOLobHandler()
+    repository.handleLobs(0, 0, new CDOLobHandler()
     {
       public OutputStream handleBlob(byte[] id, long size)
       {

@@ -407,28 +407,32 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
             Clob clob = resultSet.getClob(4);
             Reader in = clob.getCharacterStream();
             Writer out = handler.handleClob(id, size);
-
-            try
+            if (out != null)
             {
-              IOUtil.copyCharacter(in, out, size);
-            }
-            finally
-            {
-              IOUtil.close(out);
+              try
+              {
+                IOUtil.copyCharacter(in, out, size);
+              }
+              finally
+              {
+                IOUtil.close(out);
+              }
             }
           }
           else
           {
             InputStream in = blob.getBinaryStream();
             OutputStream out = handler.handleBlob(id, size);
-
-            try
+            if (out != null)
             {
-              IOUtil.copyBinary(in, out, size);
-            }
-            finally
-            {
-              IOUtil.close(out);
+              try
+              {
+                IOUtil.copyBinary(in, out, size);
+              }
+              finally
+              {
+                IOUtil.close(out);
+              }
             }
           }
         }

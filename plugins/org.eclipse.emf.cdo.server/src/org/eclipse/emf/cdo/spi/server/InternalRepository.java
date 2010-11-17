@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -127,6 +128,11 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
    * @since 4.0
    */
   public void queryLobs(List<byte[]> ids);
+
+  /**
+   * @since 4.0
+   */
+  public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException;
 
   /**
    * @since 4.0

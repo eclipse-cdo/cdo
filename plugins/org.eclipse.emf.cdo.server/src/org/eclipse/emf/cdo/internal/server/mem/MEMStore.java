@@ -694,14 +694,16 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
         byte[] blob = (byte[])lob;
         ByteArrayInputStream in = new ByteArrayInputStream(blob);
         OutputStream out = handler.handleBlob(id, blob.length);
-
-        try
+        if (out != null)
         {
-          IOUtil.copyBinary(in, out, blob.length);
-        }
-        finally
-        {
-          IOUtil.close(out);
+          try
+          {
+            IOUtil.copyBinary(in, out, blob.length);
+          }
+          finally
+          {
+            IOUtil.close(out);
+          }
         }
       }
       else
@@ -709,14 +711,16 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
         char[] clob = (char[])lob;
         CharArrayReader in = new CharArrayReader(clob);
         Writer out = handler.handleClob(id, clob.length);
-
-        try
+        if (out != null)
         {
-          IOUtil.copyCharacter(in, out, clob.length);
-        }
-        finally
-        {
-          IOUtil.close(out);
+          try
+          {
+            IOUtil.copyCharacter(in, out, clob.length);
+          }
+          finally
+          {
+            IOUtil.close(out);
+          }
         }
       }
     }

@@ -327,6 +327,10 @@ public abstract class CDOServerExporter<OUT>
 
     public static final String FEATURE_SIZE = "size";
 
+    public static final String TYPE_BLOB = "Blob";
+
+    public static final String TYPE_CLOB = "Clob";
+
     public static final String LOBS = "lobs";
 
     public static final String LOB_ID = "id";
@@ -524,14 +528,14 @@ public abstract class CDOServerExporter<OUT>
       else if (value instanceof CDOBlob)
       {
         CDOBlob blob = (CDOBlob)value;
-        out.attribute(FEATURE_TYPE, "Blob");
+        out.attribute(FEATURE_TYPE, TYPE_BLOB);
         out.attribute(FEATURE_ID, HexUtil.bytesToHex(blob.getID()));
         out.attribute(FEATURE_SIZE, blob.getSize());
       }
       else if (value instanceof CDOClob)
       {
         CDOClob clob = (CDOClob)value;
-        out.attribute(FEATURE_TYPE, "Clob");
+        out.attribute(FEATURE_TYPE, TYPE_CLOB);
         out.attribute(FEATURE_ID, HexUtil.bytesToHex(clob.getID()));
         out.attribute(FEATURE_SIZE, clob.getSize());
       }

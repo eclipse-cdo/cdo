@@ -9,13 +9,13 @@ import java.sql.Statement;
 /**
  * @author Eike Stepper
  */
-public final class DB2SchemaDatasource extends com.ibm.db2.jcc.DB2SimpleDataSource
+public final class DB2SchemaDataSource extends com.ibm.db2.jcc.DB2SimpleDataSource
 {
   private static final long serialVersionUID = 1L;
 
   private String schemaName;
 
-  public DB2SchemaDatasource(String schemaName)
+  public DB2SchemaDataSource(String schemaName)
   {
     this.schemaName = schemaName;
   }

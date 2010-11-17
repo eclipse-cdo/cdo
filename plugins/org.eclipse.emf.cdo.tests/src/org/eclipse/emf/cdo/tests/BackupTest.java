@@ -160,8 +160,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
     importer.importRepository(bais);
-
-    sleep(10000000);
   }
 
   public void testImportBlob() throws Exception
@@ -201,8 +199,44 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
     importer.importRepository(bais);
+  }
 
-    sleep(10000000);
+  public void testImportClob() throws Exception
+  {
+    InputStream clobStream = null;
+
+    try
+    {
+      clobStream = OM.BUNDLE.getInputStream("copyright.txt");
+      CDOClob clob = new CDOClob(new InputStreamReader(clobStream));
+
+      File file = getModel3Factory().createFile();
+      file.setName("copyright.txt");
+      file.setData(clob);
+
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/res1");
+      resource.getContents().add(file);
+      transaction.commit();
+    }
+    finally
+    {
+      IOUtil.close(clobStream);
+    }
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+    System.out.println(baos.toString());
+
+    InternalRepository repo2 = getRepository("repo2", false);
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
+    importer.importRepository(bais);
   }
 
   private Customer createCustomer(String name)

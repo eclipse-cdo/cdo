@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.lob.CDOLob;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -28,6 +27,7 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -58,7 +58,7 @@ import java.util.Set;
 /**
  * @author Simon McDuff
  */
-public class MEMStoreAccessor extends LongIDStoreAccessor
+public class MEMStoreAccessor extends LongIDStoreAccessor implements IStoreAccessor.Raw
 {
   private final IQueryHandler testQueryHandler = new IQueryHandler()
   {
@@ -384,10 +384,16 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     return rawStoreContext;
   }
 
-  public Object rawStore(CDOLob<?> lob, Object context, OMMonitor monitor)
+  public Object rawStore(byte[] id, long size, InputStream inputStream, Object context) throws IOException
   {
-    // TODO: implement MEMStoreAccessor.rawStore(lob, context, monitor)
-    throw new UnsupportedOperationException();
+    writeBlob(id, size, inputStream);
+    return context;
+  }
+
+  public Object rawStore(byte[] id, long size, Reader reader, Object context) throws IOException
+  {
+    writeClob(id, size, reader);
+    return context;
   }
 
   public void rawCommit(Object context, OMMonitor monitor)

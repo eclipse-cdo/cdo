@@ -17,7 +17,7 @@ import java.sql.Connection;
 /**
  * @author Eike Stepper
  */
-public interface IDBStoreAccessor extends IStoreAccessor
+public interface IDBStoreAccessor extends IStoreAccessor.Raw
 {
   public IDBStore getStore();
 

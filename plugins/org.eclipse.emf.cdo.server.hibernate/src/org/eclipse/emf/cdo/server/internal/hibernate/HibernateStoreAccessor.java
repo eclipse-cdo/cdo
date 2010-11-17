@@ -20,10 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
-import org.eclipse.emf.cdo.common.model.lob.CDOLob;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
-import org.eclipse.emf.cdo.common.protocol.CDODataInput;
-import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
@@ -806,45 +803,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       OMMonitor monitor)
   {
     // TODO: implement HibernateStoreAccessor.writeRevisionDeltas(revisionDeltas, branch, created, monitor)
-    throw new UnsupportedOperationException();
-  }
-
-  public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
-      throws IOException
-  {
-    // TODO: implement HibernateStoreAccessor.rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime)
-    throw new UnsupportedOperationException();
-  }
-
-  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
-      OMMonitor monitor) throws IOException
-  {
-    // TODO: implement HibernateStoreAccessor.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime,
-    // monitor)
-    throw new UnsupportedOperationException();
-  }
-
-  public Object rawStore(InternalCDOPackageUnit[] packageUnits, Object context, OMMonitor monitor)
-  {
-    // TODO: implement HibernateStoreAccessor.rawStore(packageUnits, context, monitor)
-    throw new UnsupportedOperationException();
-  }
-
-  public Object rawStore(InternalCDORevision revision, Object context, OMMonitor monitor)
-  {
-    // TODO: implement HibernateStoreAccessor.rawStore(revision, context, monitor)
-    throw new UnsupportedOperationException();
-  }
-
-  public Object rawStore(CDOLob<?> lob, Object context, OMMonitor monitor)
-  {
-    // TODO: implement HibernateStoreAccessor.rawStore(lob, context, monitor)
-    throw new UnsupportedOperationException();
-  }
-
-  public void rawCommit(Object context, OMMonitor monitor)
-  {
-    // TODO: implement HibernateStoreAccessor.rawCommit(context, monitor)
     throw new UnsupportedOperationException();
   }
 

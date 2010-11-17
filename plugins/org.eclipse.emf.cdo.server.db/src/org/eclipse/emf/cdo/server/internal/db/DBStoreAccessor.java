@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
-import org.eclipse.emf.cdo.common.model.lob.CDOLob;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -450,12 +449,6 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     {
       statementCache.releasePreparedStatement(pstmt);
     }
-  }
-
-  public Object rawStore(CDOLob<?> lob, Object context, OMMonitor monitor)
-  {
-    // TODO: implement DBStoreAccessor.rawStore(lob, context, monitor)
-    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -1162,6 +1155,18 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   public Object rawStore(InternalCDORevision revision, Object context, OMMonitor monitor)
   {
     writeRevision(revision, true, monitor);
+    return context;
+  }
+
+  public Object rawStore(byte[] id, long size, InputStream inputStream, Object context) throws IOException
+  {
+    writeBlob(id, size, inputStream);
+    return context;
+  }
+
+  public Object rawStore(byte[] id, long size, Reader reader, Object context) throws IOException
+  {
+    writeClob(id, size, reader);
     return context;
   }
 

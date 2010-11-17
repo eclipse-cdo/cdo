@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.common.model.lob;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 
@@ -27,7 +28,7 @@ public interface CDOLobHandler
    * {@link OutputStream stream} that the blob content will be written to by the caller of this method, or
    * <code>null</code> to indicate that the content is not needed.
    */
-  public OutputStream handleBlob(byte[] id, long size);
+  public OutputStream handleBlob(byte[] id, long size) throws IOException;
 
   /**
    * A callback method for handling a {@link CDOClob character large object}. The {@link CDOLob#getID() ID} and
@@ -35,5 +36,5 @@ public interface CDOLobHandler
    * writer} that the blob content will be written to by the caller of this method, or <code>null</code> to indicate
    * that the content is not needed.
    */
-  public Writer handleClob(byte[] id, long size);
+  public Writer handleClob(byte[] id, long size) throws IOException;
 }

@@ -22,10 +22,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
-import org.eclipse.emf.cdo.common.model.lob.CDOLob;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
-import org.eclipse.emf.cdo.common.protocol.CDODataInput;
-import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -1227,48 +1224,6 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       TRACER_DEBUG.trace("ChangeSet " + results.toString());
     }
     return results;
-  }
-
-  public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
-      throws IOException
-  {
-    // TODO: implement ObjectivityStoreAccessor.rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime)
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * @since 4.0
-   */
-  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
-      OMMonitor monitor) throws IOException
-  {
-    // TODO: implement ObjectivityStoreAccessor.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime,
-    // monitor)
-    throw new UnsupportedOperationException();
-  }
-
-  public Object rawStore(InternalCDOPackageUnit[] packageUnits, Object context, OMMonitor monitor)
-  {
-    // TODO: implement ObjectivityStoreAccessor.rawStore(packageUnits, context, monitor)
-    throw new UnsupportedOperationException();
-  }
-
-  public Object rawStore(InternalCDORevision revision, Object context, OMMonitor monitor)
-  {
-    // TODO: implement ObjectivityStoreAccessor.rawStore(revision, context, monitor)
-    throw new UnsupportedOperationException();
-  }
-
-  public Object rawStore(CDOLob<?> lob, Object context, OMMonitor monitor)
-  {
-    // TODO: implement ObjectivityStoreAccessor.rawStore(lob, context, monitor)
-    throw new UnsupportedOperationException();
-  }
-
-  public void rawCommit(Object context, OMMonitor monitor)
-  {
-    // TODO: implement ObjectivityStoreAccessor.rawCommit(context, monitor)
-    throw new UnsupportedOperationException();
   }
 
   public void queryLobs(List<byte[]> ids)

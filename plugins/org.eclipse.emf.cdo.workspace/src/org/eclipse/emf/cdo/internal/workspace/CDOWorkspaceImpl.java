@@ -152,7 +152,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     final OMMonitor monitor = new Monitor();
     final Object[] context = { null };
 
-    final IStoreAccessor accessor = localRepository.getStore().getWriter(null);
+    final IStoreAccessor.Raw accessor = (IStoreAccessor.Raw)localRepository.getStore().getWriter(null);
     StoreThreadLocal.setAccessor(accessor);
 
     try

@@ -564,7 +564,7 @@ public abstract class CDOServerExporter<OUT>
     @Override
     protected Writer startClob(XMLOutput out, byte[] id, long size) throws Exception
     {
-      out.element(BLOB);
+      out.element(CLOB);
       out.attribute(LOB_ID, HexUtil.bytesToHex(id));
       out.attribute(LOB_SIZE, size);
       return out.characters();

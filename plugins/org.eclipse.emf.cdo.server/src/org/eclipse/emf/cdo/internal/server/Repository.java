@@ -1051,7 +1051,7 @@ public class Repository extends Container<Object> implements InternalRepository
     out.writeInt(toBranchID);
     out.writeLong(toCommitTime);
 
-    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    IStoreAccessor.Raw accessor = (IStoreAccessor.Raw)StoreThreadLocal.getAccessor();
     accessor.rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
 
     return new CDOReplicationInfo()

@@ -237,7 +237,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       long toCommitTime = in.readLong();
 
       StoreThreadLocal.setSession(replicatorSession);
-      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+      IStoreAccessor.Raw accessor = (IStoreAccessor.Raw)StoreThreadLocal.getAccessor();
       accessor.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime, monitor);
 
       replicateRawReviseRevisions();

@@ -115,14 +115,14 @@ public final class HexUtil
   public static void hexToBytes(String s, byte[] out, int off) throws NumberFormatException, IndexOutOfBoundsException
   {
     int slen = s.length();
-    if (slen % 2 != 0)
+    if ((slen & 1) == 1)
     {
       s = '0' + s;
     }
 
-    if (out.length < off + slen / 2)
+    if (out.length < off + (slen >> 1))
     {
-      throw new IndexOutOfBoundsException("Output buffer too small for input (" + out.length + '<' + off + slen / 2 //$NON-NLS-1$
+      throw new IndexOutOfBoundsException("Output buffer too small for input (" + out.length + '<' + off + (slen >> 1) //$NON-NLS-1$
           + ')');
     }
 

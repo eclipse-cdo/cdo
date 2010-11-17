@@ -58,8 +58,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
-import org.eclipse.emf.cdo.spi.server.InternalSession;
-import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 
 import org.eclipse.net4j.db.DBException;
@@ -1000,9 +998,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     PreparedStatement pstmt = null;
     ResultSet resultSet = null;
 
-    InternalSession session = getSession();
-    InternalSessionManager manager = session.getManager();
-    InternalRepository repository = manager.getRepository();
+    InternalRepository repository = getStore().getRepository();
     InternalCDOBranchManager branchManager = repository.getBranchManager();
     InternalCDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
 
@@ -1146,31 +1142,33 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
   }
 
-  public Object rawStore(InternalCDOPackageUnit[] packageUnits, Object context, OMMonitor monitor)
+  public void rawStore(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
     writePackageUnits(packageUnits, monitor);
-    return context;
   }
 
-  public Object rawStore(InternalCDORevision revision, Object context, OMMonitor monitor)
+  public void rawStore(InternalCDORevision revision, OMMonitor monitor)
   {
     writeRevision(revision, true, monitor);
-    return context;
   }
 
-  public Object rawStore(byte[] id, long size, InputStream inputStream, Object context) throws IOException
+  public void rawStore(byte[] id, long size, InputStream inputStream) throws IOException
   {
     writeBlob(id, size, inputStream);
-    return context;
   }
 
-  public Object rawStore(byte[] id, long size, Reader reader, Object context) throws IOException
+  public void rawStore(byte[] id, long size, Reader reader) throws IOException
   {
     writeClob(id, size, reader);
-    return context;
   }
 
-  public void rawCommit(Object context, OMMonitor monitor)
+  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
+      OMMonitor monitor)
+  {
+    writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, monitor);
+  }
+
+  public void rawCommit(OMMonitor monitor)
   {
     Async async = monitor.forkAsync();
 

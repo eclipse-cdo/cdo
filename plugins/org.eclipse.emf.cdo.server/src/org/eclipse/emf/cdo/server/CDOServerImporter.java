@@ -11,8 +11,7 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -113,7 +112,7 @@ public abstract class CDOServerImporter
   /**
    * @author Eike Stepper
    */
-  public static interface Handler extends CDORevisionHandler, CDOLobHandler, CDOCommitInfoHandler
+  public static interface Handler extends CDORevisionHandler, CDOLobHandler
   {
     public void handleRepository(String name, String uuid, CDOID root, long created, long committed);
 
@@ -124,6 +123,8 @@ public abstract class CDOServerImporter
     public InternalCDOPackageRegistry handleModels();
 
     public InternalCDOBranch handleBranch(int id, String name, long time, int parentID);
+
+    public void handleCommitInfo(long time, long previous, int branch, String user, String comment);
 
     public void flush();
 
@@ -137,8 +138,6 @@ public abstract class CDOServerImporter
     private OMMonitor monitor = new Monitor();
 
     private IStoreAccessor.Raw accessor;
-
-    private Object context;
 
     private Map<String, String> models = new HashMap<String, String>();
 
@@ -216,7 +215,7 @@ public abstract class CDOServerImporter
         packageUnit.load(loader);
       }
 
-      context = accessor.rawStore(array, context, monitor);
+      accessor.rawStore(array, monitor);
 
       return packageRegistry;
     }
@@ -235,7 +234,7 @@ public abstract class CDOServerImporter
 
     public boolean handleRevision(CDORevision revision)
     {
-      context = accessor.rawStore((InternalCDORevision)revision, context, monitor);
+      accessor.rawStore((InternalCDORevision)revision, monitor);
       return true;
     }
 
@@ -246,7 +245,7 @@ public abstract class CDOServerImporter
         @Override
         protected void asyncWrite(InputStream in) throws IOException
         {
-          accessor.rawStore(id, size, in, context);
+          accessor.rawStore(id, size, in);
         }
       };
     }
@@ -258,19 +257,20 @@ public abstract class CDOServerImporter
         @Override
         protected void asyncWrite(Reader in) throws IOException
         {
-          accessor.rawStore(id, size, in, context);
+          accessor.rawStore(id, size, in);
         }
       };
     }
 
-    public void handleCommitInfo(CDOCommitInfo commitInfo)
+    public void handleCommitInfo(long time, long previous, int branchID, String user, String comment)
     {
+      CDOBranch branch = repository.getBranchManager().getBranch(branchID);
+      accessor.rawStore(branch, time, previous, user, comment, monitor);
     }
 
     public void flush()
     {
-      accessor.rawCommit(context, monitor);
-      context = null;
+      accessor.rawCommit(monitor);
     }
 
     private void collectPackageInfos()
@@ -447,6 +447,21 @@ public abstract class CDOServerImporter
           {
             throw WrappedException.wrap(ex);
           }
+        }
+        else if (COMMIT.equals(qName))
+        {
+          long time = Long.parseLong(attributes.getValue(COMMIT_TIME));
+
+          String value = attributes.getValue(COMMIT_PREVIOUS);
+          long previous = value == null ? CDOBranchPoint.UNSPECIFIED_DATE : Long.parseLong(value);
+
+          value = attributes.getValue(COMMIT_BRANCH);
+          int branch = value == null ? CDOBranch.MAIN_BRANCH_ID : Integer.parseInt(value);
+
+          String user = attributes.getValue(COMMIT_USER);
+          String comment = attributes.getValue(COMMIT_COMMENT);
+
+          handler.handleCommitInfo(time, previous, branch, user, comment);
         }
       }
 

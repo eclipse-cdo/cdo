@@ -11,13 +11,17 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil.AllRevisionsDumper;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -321,6 +325,7 @@ public class CDOServerBrowser extends Worker
     pages.add(new RevisionsPage.FromCache());
     pages.add(new RevisionsPage.FromStore());
     pages.add(new LobsPage());
+    pages.add(new HistoryPage());
 
     IPluginContainer container = IPluginContainer.INSTANCE;
     for (String factoryType : container.getFactoryTypes(Page.PRODUCT_GROUP))
@@ -511,9 +516,11 @@ public class CDOServerBrowser extends Worker
    */
   public static class PackagesPage extends AbstractPage
   {
+    public static final String NAME = "packages";
+
     public PackagesPage()
     {
-      super("packages", "Packages and Classes");
+      super(NAME, "Packages and Classes");
     }
 
     public boolean canDisplay(InternalRepository repository)
@@ -659,7 +666,7 @@ public class CDOServerBrowser extends Worker
           {
             PrintStream out = out();
             out.println("<tr>");
-            out.println("<td>&nbsp;&nbsp;&nbsp;&nbsp;");
+            out.println("<td valign=\"top\">&nbsp;&nbsp;&nbsp;&nbsp;");
             out.println(getCDOIDLabel(lastRevision));
             out.println("&nbsp;&nbsp;&nbsp;&nbsp;</td>");
 
@@ -717,12 +724,15 @@ public class CDOServerBrowser extends Worker
       className = StringUtil.replace(className, new String[] { "(", ")", "," }, new String[] { "<br>", "", "<br>" });
       className = className.substring("<br>".length() + 1);
 
+      String created = CDOCommonUtil.formatTimeStamp(revision.getTimeStamp());
+      String commitInfo = browser.href(created, HistoryPage.NAME, "time", String.valueOf(revision.getTimeStamp()));
+
       pout.print("<table border=\"1\" cellpadding=\"2\">\r\n");
       showKeyValue(pout, true, "class", className);
       showKeyValue(pout, true, "id", getRevisionValue(revision.getID(), browser, ids, revision));
       showKeyValue(pout, true, "branch", revision.getBranch().getName() + "[" + revision.getBranch().getID() + "]");
       showKeyValue(pout, true, "version", revision.getVersion());
-      showKeyValue(pout, true, "created", CDOCommonUtil.formatTimeStamp(revision.getTimeStamp()));
+      showKeyValue(pout, true, "created", commitInfo);
       showKeyValue(pout, true, "revised", CDOCommonUtil.formatTimeStamp(revision.getRevised()));
       showKeyValue(pout, true, "resource", getRevisionValue(revision.getResourceID(), browser, ids, revision));
       showKeyValue(pout, true, "container", getRevisionValue(revision.getContainerID(), browser, ids, revision));
@@ -843,9 +853,11 @@ public class CDOServerBrowser extends Worker
      */
     public static class FromCache extends RevisionsPage
     {
+      public static final String NAME = "crevisions";
+
       public FromCache()
       {
-        super("crevisions", "Revisions From Cache");
+        super(NAME, "Revisions From Cache");
       }
 
       public boolean canDisplay(InternalRepository repository)
@@ -865,9 +877,11 @@ public class CDOServerBrowser extends Worker
      */
     public static class FromStore extends RevisionsPage
     {
+      public static final String NAME = "srevisions";
+
       public FromStore()
       {
-        super("srevisions", "Revisions From Store");
+        super(NAME, "Revisions From Store");
       }
 
       public boolean canDisplay(InternalRepository repository)
@@ -888,9 +902,11 @@ public class CDOServerBrowser extends Worker
    */
   public static class LobsPage extends AbstractPage
   {
+    public static final String NAME = "lobs";
+
     public LobsPage()
     {
-      super("lobs", "Large Objects");
+      super(NAME, "Large Objects");
     }
 
     public boolean canDisplay(InternalRepository repository)
@@ -1005,6 +1021,137 @@ public class CDOServerBrowser extends Worker
       String label = selected ? hex : browser.href(hex, getName(), "id", hex);
       out.println(type + " " + label + " (" + size + ")");
       return selected;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class HistoryPage extends AbstractPage
+  {
+    public static final String NAME = "history";
+
+    public HistoryPage()
+    {
+      super(NAME, "Commit Infos");
+    }
+
+    public boolean canDisplay(InternalRepository repository)
+    {
+      return true;
+    }
+
+    public void display(final CDOServerBrowser browser, InternalRepository repository, final PrintStream out)
+    {
+      out.print("<table border=\"0\">\r\n");
+      out.print("<tr>\r\n");
+      out.print("<td valign=\"top\">\r\n");
+
+      IStoreAccessor accessor = repository.getStore().getReader(null);
+      StoreThreadLocal.setAccessor(accessor);
+
+      final String param = browser.getParam("time");
+
+      out.print("<table border=\"1\" cellpadding=\"2\">\r\n");
+      out.print("<tr>\r\n");
+      out.print("<td valign=\"top\">Time</td>\r\n");
+      out.print("<td valign=\"top\">Branch</td>\r\n");
+      out.print("<td valign=\"top\">User</td>\r\n");
+      out.print("<td valign=\"top\">Comment</td>\r\n");
+      out.print("</tr>\r\n");
+
+      final CDOCommitInfo[] details = { null };
+
+      try
+      {
+        repository.getCommitInfoManager().getCommitInfos(0, 0, new CDOCommitInfoHandler()
+        {
+          public void handleCommitInfo(CDOCommitInfo commitInfo)
+          {
+            if (showCommitInfo(out, commitInfo, browser, param))
+            {
+              details[0] = commitInfo;
+            }
+          }
+        });
+
+        out.print("</table>\r\n");
+        out.print("</td>\r\n");
+
+        CDOCommitInfo commitInfo = details[0];
+        if (commitInfo != null)
+        {
+          out.print("<td>&nbsp;&nbsp;&nbsp;</td>\r\n");
+          out.print("<td valign=\"top\">\r\n");
+          out.print("<h3>Commit Info " + commitInfo.getTimeStamp() + "</h3>\r\n");
+          showCommitData(out, commitInfo, browser);
+          out.print("</td>\r\n");
+        }
+
+        out.print("</tr>\r\n");
+        out.print("</table>\r\n");
+      }
+      finally
+      {
+        StoreThreadLocal.release();
+      }
+    }
+
+    protected boolean showCommitInfo(PrintStream out, CDOCommitInfo commitInfo, CDOServerBrowser browser, String param)
+    {
+      String timeStamp = String.valueOf(commitInfo.getTimeStamp());
+      boolean selected = timeStamp.equals(param);
+
+      String formatted = CDOCommonUtil.formatTimeStamp(commitInfo.getTimeStamp());
+      String label = selected ? formatted : browser.href(formatted, getName(), "time", timeStamp);
+
+      out.print("<tr>\r\n");
+      out.print("<td valign=\"top\">\r\n");
+      out.print(label);
+      out.print("</td>\r\n");
+
+      CDOBranch branch = commitInfo.getBranch();
+      out.print("<td valign=\"top\">\r\n");
+      out.print(branch.getName() + "[" + branch.getID() + "]");
+      out.print("</td>\r\n");
+
+      String userID = commitInfo.getUserID();
+      out.print("<td valign=\"top\">\r\n");
+      out.print(StringUtil.isEmpty(userID) ? "&nbsp;" : userID);
+      out.print("</td>\r\n");
+
+      String comment = commitInfo.getComment();
+      out.print("<td valign=\"top\">\r\n");
+      out.print(StringUtil.isEmpty(comment) ? "&nbsp;" : comment);
+      out.print("</td>\r\n");
+      out.print("</tr>\r\n");
+
+      return selected;
+    }
+
+    protected void showCommitData(PrintStream out, CDOCommitInfo commitInfo, CDOServerBrowser browser)
+    {
+      out.print("<h4>New Objects:</h4>\r\n");
+      for (CDOIDAndVersion key : commitInfo.getNewObjects())
+      {
+        CDORevision newObject = (CDORevision)key;
+        out.print(browser.href(newObject.toString(), RevisionsPage.FromStore.NAME, "revision",
+            CDORevisionUtil.formatRevisionKey(newObject))
+            + "<br>\r\n");
+      }
+
+      out.print("<h4>Changed Objects:</h4>\r\n");
+      for (CDORevisionKey key : commitInfo.getChangedObjects())
+      {
+        CDORevisionDelta changedObject = (CDORevisionDelta)key;
+        out.print(changedObject.toString() + "<br>\r\n");
+      }
+
+      out.print("<h4>Detached Objects:</h4>\r\n");
+      for (CDOIDAndVersion key : commitInfo.getDetachedObjects())
+      {
+        out.print(key.toString() + "<br>\r\n");
+      }
     }
   }
 }

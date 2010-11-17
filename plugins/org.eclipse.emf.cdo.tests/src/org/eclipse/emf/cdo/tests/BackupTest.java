@@ -204,16 +204,16 @@ public class BackupTest extends AbstractCDOTest
   public void testImportClob() throws Exception
   {
     InputStream clobStream = null;
-
+  
     try
     {
       clobStream = OM.BUNDLE.getInputStream("copyright.txt");
       CDOClob clob = new CDOClob(new InputStreamReader(clobStream));
-
+  
       File file = getModel3Factory().createFile();
       file.setName("copyright.txt");
       file.setData(clob);
-
+  
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/res1");
@@ -224,19 +224,21 @@ public class BackupTest extends AbstractCDOTest
     {
       IOUtil.close(clobStream);
     }
-
+  
     InternalRepository repo1 = getRepository();
-
+  
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
     System.out.println(baos.toString());
-
+  
     InternalRepository repo2 = getRepository("repo2", false);
-
+  
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
     importer.importRepository(bais);
+  
+    sleep(1000000);
   }
 
   private Customer createCustomer(String name)

@@ -498,7 +498,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      *           if the <i>stream</i> could not be written to.
      * @throws UnsupportedOperationException
      *           if this {@link IStoreAccessor.Raw raw store accessor} does not support branching.
-     * @since 3.0
      */
     public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
         throws IOException;
@@ -534,7 +533,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      *           if the <i>stream</i> could not be read from.
      * @throws UnsupportedOperationException
      *           if this {@link IStoreAccessor.Raw raw store accessor} does not support branching.
-     * @since 4.0
      */
     public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
         OMMonitor monitor) throws IOException;
@@ -547,28 +545,19 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * not desired in the context of a replication operation.
      * <p>
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
-     * this method are followed by a single final call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method
-     * where the accumulated backend changes can be committed atomically.
+     * this method are followed by a single final call to the {@link #rawCommit(OMMonitor) rawCommit()} method where the
+     * accumulated backend changes can be committed atomically.
      * 
      * @param packageUnits
      *          the package units to be stored in the backend represented by this {@link IStoreAccessor.Raw raw store
      *          accessor}.
-     * @param context
-     *          an object of an arbitrary class that has been created during previous calls to this method (but after
-     *          the last call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method. This context object may
-     *          be used to remember implementation specific state between calls to the rawStore() methods and the
-     *          rawCommit() method. Its type and value are opaque to the caller, which maintains the context object
-     *          between these calls. A new object may be created by the implementor of this method at any time and
-     *          should be returned by this method to preserve it for later calls. Can be <code>null</code>.
      * @param monitor
      *          a progress monitor that <b>may be</b> used to report proper progress of this operation to the caller and
      *          <b>may be</b> used to react to cancelation requests of the caller and <b>must be</b> touched regularly
      *          to prevent timeouts from expiring in the caller.
-     * @return the context object (see above) to be preserved by the caller of this method for later calls.
-     * @since 4.0
-     * @see #rawCommit(Object, OMMonitor)
+     * @see #rawCommit(OMMonitor)
      */
-    public Object rawStore(InternalCDOPackageUnit[] packageUnits, Object context, OMMonitor monitor);
+    public void rawStore(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor);
 
     /**
      * Stores the given {@link CDORevision revision} in the backend represented by this {@link IStoreAccessor.Raw raw
@@ -577,36 +566,27 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * stamps}, which is not desired in the context of a replication operation.
      * <p>
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
-     * this method are followed by a single final call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method
-     * where the accumulated backend changes can be committed atomically.
+     * this method are followed by a single final call to the {@link #rawCommit(OMMonitor) rawCommit()} method where the
+     * accumulated backend changes can be committed atomically.
      * 
      * @param revision
      *          the revision to be stored in the backend represented by this {@link IStoreAccessor.Raw raw store
      *          accessor}.
-     * @param context
-     *          an object of an arbitrary class that has been created during previous calls to this method (but after
-     *          the last call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method. This context object may
-     *          be used to remember implementation specific state between calls to the rawStore() methods and the
-     *          rawCommit() method. Its type and value are opaque to the caller, which maintains the context object
-     *          between these calls. A new object may be created by the implementor of this method at any time and
-     *          should be returned by this method to preserve it for later calls. Can be <code>null</code>.
      * @param monitor
      *          a progress monitor that <b>may be</b> used to report proper progress of this operation to the caller and
      *          <b>may be</b> used to react to cancelation requests of the caller and <b>must be</b> touched regularly
      *          to prevent timeouts from expiring in the caller.
-     * @return the context object (see above) to be preserved by the caller of this method for later calls.
-     * @since 4.0
-     * @see #rawCommit(Object, OMMonitor)
+     * @see #rawCommit(OMMonitor)
      */
-    public Object rawStore(InternalCDORevision revision, Object context, OMMonitor monitor);
+    public void rawStore(InternalCDORevision revision, OMMonitor monitor);
 
     /**
      * Stores the given {@link CDOBlob blob} in the backend represented by this {@link IStoreAccessor.Raw raw store
      * accessor} without going through a regular {@link IStoreAccessor#commit(OMMonitor) commit}.
      * <p>
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
-     * this method are followed by a single final call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method
-     * where the accumulated backend changes can be committed atomically.
+     * this method are followed by a single final call to the {@link #rawCommit(OMMonitor) rawCommit()} method where the
+     * accumulated backend changes can be committed atomically.
      * 
      * @param id
      *          the {@link CDOBlob#getID() ID} of the blob to be stored in the backend represented by this
@@ -617,26 +597,17 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @param inputStream
      *          the {@link CDOBlob#getContents() contents} of the blob to be stored in the backend represented by this
      *          {@link IStoreAccessor.Raw raw store accessor}.
-     * @param context
-     *          an object of an arbitrary class that has been created during previous calls to this method (but after
-     *          the last call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method. This context object may
-     *          be used to remember implementation specific state between calls to the rawStore() methods and the
-     *          rawCommit() method. Its type and value are opaque to the caller, which maintains the context object
-     *          between these calls. A new object may be created by the implementor of this method at any time and
-     *          should be returned by this method to preserve it for later calls. Can be <code>null</code>.
-     * @return the context object (see above) to be preserved by the caller of this method for later calls.
-     * @since 4.0
-     * @see #rawCommit(Object, OMMonitor)
+     * @see #rawCommit(OMMonitor)
      */
-    public Object rawStore(byte[] id, long size, InputStream inputStream, Object context) throws IOException;
+    public void rawStore(byte[] id, long size, InputStream inputStream) throws IOException;
 
     /**
      * Stores the given {@link CDOClob clob} in the backend represented by this {@link IStoreAccessor.Raw raw store
      * accessor} without going through a regular {@link IStoreAccessor#commit(OMMonitor) commit}.
      * <p>
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
-     * this method are followed by a single final call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method
-     * where the accumulated backend changes can be committed atomically.
+     * this method are followed by a single final call to the {@link #rawCommit(OMMonitor) rawCommit()} method where the
+     * accumulated backend changes can be committed atomically.
      * 
      * @param id
      *          the {@link CDOClob#getID() ID} of the clob to be stored in the backend represented by this
@@ -647,35 +618,51 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @param reader
      *          the {@link CDOClob#getContents() contents} of the clob to be stored in the backend represented by this
      *          {@link IStoreAccessor.Raw raw store accessor}.
-     * @param context
-     *          an object of an arbitrary class that has been created during previous calls to this method (but after
-     *          the last call to the {@link #rawCommit(Object, OMMonitor) rawCommit()} method. This context object may
-     *          be used to remember implementation specific state between calls to the rawStore() methods and the
-     *          rawCommit() method. Its type and value are opaque to the caller, which maintains the context object
-     *          between these calls. A new object may be created by the implementor of this method at any time and
-     *          should be returned by this method to preserve it for later calls. Can be <code>null</code>.
-     * @return the context object (see above) to be preserved by the caller of this method for later calls.
-     * @since 4.0
-     * @see #rawCommit(Object, OMMonitor)
+     * @see #rawCommit(OMMonitor)
      */
-    public Object rawStore(byte[] id, long size, Reader reader, Object context) throws IOException;
+    public void rawStore(byte[] id, long size, Reader reader) throws IOException;
+
+    /**
+     * Stores the given {@link CDOCommitInfo commit} in the backend represented by this {@link IStoreAccessor.Raw raw
+     * store accessor} without going through a regular {@link IStoreAccessor#commit(OMMonitor) commit}.
+     * <p>
+     * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
+     * this method are followed by a single final call to the {@link #rawCommit(OMMonitor) rawCommit()} method where the
+     * accumulated backend changes can be committed atomically.
+     * 
+     * @param branch
+     *          the {@link CDOCommitInfo#getBranch() branch} of the commit info to be stored in the backend represented
+     *          by this {@link IStoreAccessor.Raw raw store accessor}.
+     * @param timeStamp
+     *          the {@link CDOCommitInfo#getTimeStamp() time stamp} of the commit info to be stored in the backend
+     *          represented by this {@link IStoreAccessor.Raw raw store accessor}.
+     * @param previousTimeStamp
+     *          the {@link CDOCommitInfo#getPreviousTimeStamp() previous time stamp} of the commit info to be stored in
+     *          the backend represented by this {@link IStoreAccessor.Raw raw store accessor}.
+     * @param userID
+     *          the {@link CDOCommitInfo#getUserID() user ID} of the commit info to be stored in the backend represented
+     *          by this {@link IStoreAccessor.Raw raw store accessor}.
+     * @param comment
+     *          the {@link CDOCommitInfo#getComment() comment} of the commit info to be stored in the backend
+     *          represented by this {@link IStoreAccessor.Raw raw store accessor}.
+     * @see #rawCommit(OMMonitor)
+     */
+    public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
+        OMMonitor monitor);
 
     /**
      * Atomically commits the accumulated backend changes resulting from previous calls to the rawStore() methods.
      * 
-     * @param context
-     *          an object of an arbitrary class that has been created during previous calls to the rawStore() methods.
-     *          This context object may be used to remember implementation specific state between calls to the
-     *          rawStore() methods and the rawCommit() method. Its type and value are opaque to the caller, which
-     *          maintains the context object between these calls.Can be <code>null</code>.
      * @param monitor
      *          a progress monitor that <b>may be</b> used to report proper progress of this operation to the caller and
      *          <b>may be</b> used to react to cancelation requests of the caller and <b>must be</b> touched regularly
      *          to prevent timeouts from expiring in the caller.
-     * @since 4.0
-     * @see #rawStore(InternalCDOPackageUnit[], Object, OMMonitor)
-     * @see #rawStore(InternalCDORevision, Object, OMMonitor)
+     * @see #rawStore(InternalCDOPackageUnit[], OMMonitor)
+     * @see #rawStore(InternalCDORevision, OMMonitor)
+     * @see #rawStore(byte[], long, InputStream)
+     * @see #rawStore(byte[], long, Reader)
+     * @see #rawStore(CDOBranch, long, long, String, String, OMMonitor)
      */
-    public void rawCommit(Object context, OMMonitor monitor);
+    public void rawCommit(OMMonitor monitor);
   }
 }

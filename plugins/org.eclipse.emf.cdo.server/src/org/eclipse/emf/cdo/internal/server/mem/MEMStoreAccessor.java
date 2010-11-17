@@ -359,58 +359,35 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements IStoreAcces
     getStore().rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime, monitor);
   }
 
-  private RawStoreContext getRawStoreContext(Object object)
+  public void rawStore(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
-    RawStoreContext context = (RawStoreContext)object;
-    if (context == null)
-    {
-      context = new RawStoreContext();
-    }
-
-    return context;
+    writePackageUnits(packageUnits, monitor);
   }
 
-  public Object rawStore(InternalCDOPackageUnit[] packageUnits, Object context, OMMonitor monitor)
+  public void rawStore(InternalCDORevision revision, OMMonitor monitor)
   {
-    RawStoreContext rawStoreContext = getRawStoreContext(context);
-    rawStoreContext.setPackageUnits(packageUnits);
-    return rawStoreContext;
+    getStore().addRevision(revision, true);
   }
 
-  public Object rawStore(InternalCDORevision revision, Object context, OMMonitor monitor)
-  {
-    RawStoreContext rawStoreContext = getRawStoreContext(context);
-    rawStoreContext.getRevisions().add(revision);
-    return rawStoreContext;
-  }
-
-  public Object rawStore(byte[] id, long size, InputStream inputStream, Object context) throws IOException
+  public void rawStore(byte[] id, long size, InputStream inputStream) throws IOException
   {
     writeBlob(id, size, inputStream);
-    return context;
   }
 
-  public Object rawStore(byte[] id, long size, Reader reader, Object context) throws IOException
+  public void rawStore(byte[] id, long size, Reader reader) throws IOException
   {
     writeClob(id, size, reader);
-    return context;
   }
 
-  public void rawCommit(Object context, OMMonitor monitor)
+  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
+      OMMonitor monitor)
   {
-    RawStoreContext rawStoreContext = (RawStoreContext)context;
-    if (rawStoreContext != null)
-    {
-      MEMStore store = getStore();
-      synchronized (store)
-      {
-        writePackageUnits(rawStoreContext.getPackageUnits(), monitor);
-        for (InternalCDORevision revision : rawStoreContext.getRevisions())
-        {
-          store.addRevision(revision, true);
-        }
-      }
-    }
+    writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, monitor);
+  }
+
+  public void rawCommit(OMMonitor monitor)
+  {
+    // Do nothing
   }
 
   public void queryLobs(List<byte[]> ids)
@@ -462,39 +439,5 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements IStoreAcces
   protected void doUnpassivate() throws Exception
   {
     // Pooling of store accessors not supported
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class RawStoreContext
-  {
-    private InternalCDOPackageUnit[] packageUnits = {};
-
-    private List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
-
-    public RawStoreContext()
-    {
-    }
-
-    public InternalCDOPackageUnit[] getPackageUnits()
-    {
-      return packageUnits;
-    }
-
-    public void setPackageUnits(InternalCDOPackageUnit[] packageUnits)
-    {
-      if (this.packageUnits.length != 0)
-      {
-        throw new IllegalStateException("Multiple calls to setPackageUnits() are forbidden");
-      }
-
-      this.packageUnits = packageUnits;
-    }
-
-    public List<InternalCDORevision> getRevisions()
-    {
-      return revisions;
-    }
   }
 }

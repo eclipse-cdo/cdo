@@ -150,8 +150,6 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
   protected void checkout()
   {
     final OMMonitor monitor = new Monitor();
-    final Object[] context = { null };
-
     final IStoreAccessor.Raw accessor = (IStoreAccessor.Raw)localRepository.getStore().getWriter(null);
     StoreThreadLocal.setAccessor(accessor);
 
@@ -165,7 +163,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
         InternalCDOPackageUnit[] packageUnits = session.getPackageRegistry().getPackageUnits(false);
         localRepository.getPackageRegistry(false).putPackageUnits(packageUnits, CDOPackageUnit.State.LOADED);
-        context[0] = accessor.rawStore(packageUnits, context[0], monitor);
+        accessor.rawStore(packageUnits, monitor);
 
         CDORevisionHandler handler = new CDORevisionHandler()
         {
@@ -173,7 +171,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
           {
             InternalCDORevision rev = (InternalCDORevision)revision;
             System.err.println(rev);
-            context[0] = accessor.rawStore(rev, context[0], monitor);
+            accessor.rawStore(rev, monitor);
 
             long commitTime = revision.getTimeStamp();
             if (commitTime > timeStamp)
@@ -193,7 +191,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
         LifecycleUtil.deactivate(session);
       }
 
-      accessor.rawCommit(context[0], monitor);
+      accessor.rawCommit(monitor);
     }
     finally
     {

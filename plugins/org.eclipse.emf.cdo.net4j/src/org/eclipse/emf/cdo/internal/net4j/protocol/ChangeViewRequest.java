@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import java.io.IOException;
@@ -23,7 +25,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class ChangeViewRequest extends CDOClientRequest<boolean[]>
+public class ChangeViewRequest extends CDOClientRequestWithMonitoring<boolean[]>
 {
   private int viewID;
 
@@ -41,7 +43,7 @@ public class ChangeViewRequest extends CDOClientRequest<boolean[]>
   }
 
   @Override
-  protected void requesting(CDODataOutput out) throws IOException
+  protected void requesting(CDODataOutput out, OMMonitor monitor) throws IOException
   {
     out.writeInt(viewID);
     out.writeCDOBranchPoint(branchPoint);
@@ -54,7 +56,7 @@ public class ChangeViewRequest extends CDOClientRequest<boolean[]>
   }
 
   @Override
-  protected boolean[] confirming(CDODataInput in) throws IOException
+  protected boolean[] confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
     int size = in.readInt();
     boolean[] existanceFlags = new boolean[size];

@@ -13,11 +13,7 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.server.StoreThreadLocal;
-import org.eclipse.emf.cdo.spi.server.InternalSession;
 
-import org.eclipse.net4j.buffer.BufferInputStream;
-import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
@@ -26,7 +22,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class ReplicateRepositoryRawIndication extends CDOServerIndicationWithMonitoring
+public class ReplicateRepositoryRawIndication extends CDOServerReadIndicationWithMonitoring
 {
   private int lastReplicatedBranchID;
 
@@ -35,21 +31,6 @@ public class ReplicateRepositoryRawIndication extends CDOServerIndicationWithMon
   public ReplicateRepositoryRawIndication(CDOServerProtocol protocol)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY_RAW);
-  }
-
-  @Override
-  protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
-  {
-    try
-    {
-      InternalSession session = getSession();
-      StoreThreadLocal.setSession(session);
-      super.execute(in, out);
-    }
-    finally
-    {
-      StoreThreadLocal.release();
-    }
   }
 
   @Override

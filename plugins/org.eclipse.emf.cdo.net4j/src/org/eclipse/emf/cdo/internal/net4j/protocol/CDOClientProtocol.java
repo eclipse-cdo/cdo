@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
+import org.eclipse.net4j.signal.RequestWithMonitoring;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.util.WrappedException;
@@ -176,9 +177,10 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     send(new OpenViewRequest(this, viewID, branchPoint, readOnly));
   }
 
-  public boolean[] changeView(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects)
+  public boolean[] changeView(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects,
+      OMMonitor monitor)
   {
-    return send(new ChangeViewRequest(this, viewID, branchPoint, invalidObjects));
+    return send(new ChangeViewRequest(this, viewID, branchPoint, invalidObjects), monitor);
   }
 
   public void closeView(int viewID)
@@ -404,23 +406,7 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     }
   }
 
-  private Boolean send(ReplicateRepositoryRawRequest request, OMMonitor monitor)
-  {
-    try
-    {
-      return request.send(monitor);
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new TransportException(ex);
-    }
-  }
-
-  private CommitTransactionResult send(CommitTransactionRequest request, OMMonitor monitor)
+  private <RESULT> RESULT send(RequestWithMonitoring<RESULT> request, OMMonitor monitor)
   {
     try
     {

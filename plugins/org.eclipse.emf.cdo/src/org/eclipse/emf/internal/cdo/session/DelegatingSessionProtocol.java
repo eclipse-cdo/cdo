@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -164,14 +164,15 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public boolean[] changeView(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects)
+  public boolean[] changeView(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects,
+      OMMonitor monitor)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.changeView(viewID, branchPoint, invalidObjects);
+        return delegate.changeView(viewID, branchPoint, invalidObjects, monitor);
       }
       catch (Exception ex)
       {

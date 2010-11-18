@@ -54,6 +54,7 @@ import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -231,18 +232,37 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     }
   }
 
-  public boolean[] changeView(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects)
+  public boolean[] changeView(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects,
+      OMMonitor monitor)
   {
-    InternalView view = serverSessionProtocol.getSession().getView(viewID);
-    if (view != null)
+    try
     {
-      List<CDOID> ids = new ArrayList<CDOID>(invalidObjects.size());
-      for (InternalCDOObject object : invalidObjects)
-      {
-        ids.add(object.cdoID());
-      }
+      monitor.begin();
+      Async async = monitor.forkAsync();
 
-      return view.changeTarget(branchPoint, ids);
+      try
+      {
+        InternalView view = serverSessionProtocol.getSession().getView(viewID);
+        if (view != null)
+        {
+          List<CDOID> ids = new ArrayList<CDOID>(invalidObjects.size());
+          for (InternalCDOObject object : invalidObjects)
+          {
+            ids.add(object.cdoID());
+          }
+
+          return view.changeTarget(branchPoint, ids);
+        }
+
+      }
+      finally
+      {
+        async.stop();
+      }
+    }
+    finally
+    {
+      monitor.done();
     }
 
     return null;

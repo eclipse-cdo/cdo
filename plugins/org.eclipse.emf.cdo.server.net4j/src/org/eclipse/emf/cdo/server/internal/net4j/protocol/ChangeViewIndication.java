@@ -17,6 +17,9 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +27,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class ChangeViewIndication extends CDOReadIndication
+public class ChangeViewIndication extends CDOServerReadIndicationWithMonitoring
 {
   private boolean[] existanceFlags;
 
@@ -34,25 +37,43 @@ public class ChangeViewIndication extends CDOReadIndication
   }
 
   @Override
-  protected void indicating(CDODataInput in) throws IOException
+  protected void indicating(CDODataInput in, OMMonitor monitor) throws IOException
   {
-    int viewID = in.readInt();
-    CDOBranchPoint branchPoint = in.readCDOBranchPoint();
-
-    int size = in.readInt();
-    List<CDOID> invalidObjects = new ArrayList<CDOID>(size);
-    for (int i = 0; i < size; i++)
+    try
     {
-      CDOID id = in.readCDOID();
-      invalidObjects.add(id);
-    }
+      monitor.begin();
+      Async async = monitor.forkAsync();
 
-    InternalView view = getSession().getView(viewID);
-    existanceFlags = view.changeTarget(branchPoint, invalidObjects);
+      try
+      {
+        int viewID = in.readInt();
+        CDOBranchPoint branchPoint = in.readCDOBranchPoint();
+
+        int size = in.readInt();
+        List<CDOID> invalidObjects = new ArrayList<CDOID>(size);
+        for (int i = 0; i < size; i++)
+        {
+          CDOID id = in.readCDOID();
+          invalidObjects.add(id);
+        }
+
+        InternalView view = getSession().getView(viewID);
+        existanceFlags = view.changeTarget(branchPoint, invalidObjects);
+      }
+      finally
+      {
+        async.stop();
+      }
+
+    }
+    finally
+    {
+      monitor.done();
+    }
   }
 
   @Override
-  protected void responding(CDODataOutput out) throws IOException
+  protected void responding(CDODataOutput out, OMMonitor monitor) throws IOException
   {
     out.writeInt(existanceFlags.length);
     for (int i = 0; i < existanceFlags.length; i++)

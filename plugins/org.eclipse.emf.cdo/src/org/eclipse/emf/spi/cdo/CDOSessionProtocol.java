@@ -105,9 +105,10 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public void openView(int viewID, CDOBranchPoint branchPoint, boolean readOnly);
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public boolean[] changeView(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects);
+  public boolean[] changeView(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects,
+      OMMonitor monitor);
 
   public void closeView(int viewID);
 

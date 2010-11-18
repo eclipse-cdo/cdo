@@ -52,6 +52,8 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.OptionsEvent;
 import org.eclipse.net4j.util.ref.ReferenceType;
@@ -68,6 +70,8 @@ import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+
+import org.eclipse.core.runtime.NullProgressMonitor;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -176,7 +180,8 @@ public class CDOViewImpl extends AbstractCDOView
 
     List<InternalCDOObject> invalidObjects = getInvalidObjects(timeStamp);
     CDOSessionProtocol sessionProtocol = getSession().getSessionProtocol();
-    boolean[] existanceFlags = sessionProtocol.changeView(viewID, branchPoint, invalidObjects);
+    OMMonitor monitor = new EclipseMonitor(new NullProgressMonitor());
+    boolean[] existanceFlags = sessionProtocol.changeView(viewID, branchPoint, invalidObjects, monitor);
 
     basicSetBranchPoint(branchPoint);
 
@@ -334,7 +339,7 @@ public class CDOViewImpl extends AbstractCDOView
       {
         branchPoint = getBranch().getPoint(session.getLastUpdateTime());
       }
-      
+
       return branchPoint;
     }
 

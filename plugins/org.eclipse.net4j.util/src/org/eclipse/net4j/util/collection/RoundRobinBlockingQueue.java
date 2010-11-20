@@ -263,6 +263,22 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
     return false;
   }
 
+  public Object[] toArray()
+  {
+    synchronized (list)
+    {
+      return list.toArray();
+    }
+  }
+
+  public <T> T[] toArray(T[] array)
+  {
+    synchronized (list)
+    {
+      return list.toArray(array);
+    }
+  }
+
   public boolean containsAll(Collection<?> c)
   {
     // TODO: implement RoundRobinBlockingQueue.containsAll(c)
@@ -272,18 +288,6 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
   public boolean addAll(Collection<? extends E> c)
   {
     // TODO: implement RoundRobinBlockingQueue.addAll(c)
-    throw new UnsupportedOperationException();
-  }
-
-  public Object[] toArray()
-  {
-    // TODO: implement RoundRobinBlockingQueue.toArray()
-    throw new UnsupportedOperationException();
-  }
-
-  public <T> T[] toArray(T[] a)
-  {
-    // TODO: implement RoundRobinBlockingQueue.toArray(a)
     throw new UnsupportedOperationException();
   }
 

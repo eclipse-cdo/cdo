@@ -202,17 +202,17 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  private CDOView view;
+  protected CDOView view;
 
   /**
    * @ADDED
    */
-  private Object viewerInput;
+  protected Object viewerInput;
 
   /**
    * @ADDED
    */
-  private CDOEventHandler eventHandler;
+  protected CDOEventHandler eventHandler;
 
   /**
    * This keeps track of the editing domain that is used to track all changes to the model. <!-- begin-user-doc --> <!--

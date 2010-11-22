@@ -89,6 +89,8 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
 
   private IAction containerAction = new ContainerAction();
 
+  private IAction refreshAction = new RefreshAction();
+
   private StackLayout stackLayout;
 
   private Composite stacked;
@@ -411,6 +413,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   {
     manager.add(backAction);
     manager.add(containerAction);
+    manager.add(refreshAction);
   }
 
   /**
@@ -455,6 +458,24 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
     public void run()
     {
       setObject(IPluginContainer.INSTANCE);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  class RefreshAction extends Action
+  {
+    private RefreshAction()
+    {
+      super("Refresh"); //$NON-NLS-1$
+      setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.ETOOL_REFRESH));
+    }
+
+    @Override
+    public void run()
+    {
+      refreshViewer();
     }
   }
 

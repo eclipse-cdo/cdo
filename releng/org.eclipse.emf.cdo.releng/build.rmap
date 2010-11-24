@@ -4,6 +4,7 @@
 
 	<rm:property key="cvs.repository" mutable="true" value=":pserver:anonymous@dev.eclipse.org:/cvsroot/modeling" />
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org" />
+	<rm:property key="orbit.version" mutable="true" value="S20101014084557" />
 	<rm:property key="resolve.target.platform" mutable="true" value="true" />
 	<rm:property key="build.type" mutable="true" value="N" />
 
@@ -168,8 +169,9 @@
 	<rm:searchPath name="orbit">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/tools/orbit/downloads/drops/S20101014084557/repository">
+			<rm:uri format="{0}/tools/orbit/downloads/drops/{1}/repository">
 				<bc:propertyRef key="eclipse.downloads" />
+				<bc:propertyRef key="orbit.version" />
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>

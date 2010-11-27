@@ -182,4 +182,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EnumListHolder">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="enumList" upperBound="-1"
+        eType="ecore:EEnum ../../org.eclipse.emf.cdo.tests.model1/model/model1.ecore#//VAT"/>
+  </eClassifiers>
 </ecore:EPackage>

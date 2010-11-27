@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.VAT;
+import org.eclipse.emf.cdo.tests.model2.EnumListHolder;
 import org.eclipse.emf.cdo.tests.model2.MapHolder;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettable;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault;
@@ -203,6 +204,12 @@ public class Model2AdapterFactory extends AdapterFactoryImpl
     public Adapter caseEObjectToEObjectValueContainedMap(Map.Entry<EObject, EObject> object)
     {
       return createEObjectToEObjectValueContainedMapAdapter();
+    }
+
+    @Override
+    public Adapter caseEnumListHolder(EnumListHolder object)
+    {
+      return createEnumListHolderAdapter();
     }
 
     @Override
@@ -509,6 +516,20 @@ public class Model2AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createEObjectToEObjectValueContainedMapAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.legacy.model2.EnumListHolder
+   * <em>Enum List Holder</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.legacy.model2.EnumListHolder
+   * @generated
+   */
+  public Adapter createEnumListHolderAdapter()
   {
     return null;
   }

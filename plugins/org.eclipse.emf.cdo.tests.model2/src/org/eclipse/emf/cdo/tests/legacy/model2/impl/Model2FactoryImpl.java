@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.tests.legacy.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.VAT;
+import org.eclipse.emf.cdo.tests.model2.EnumListHolder;
 import org.eclipse.emf.cdo.tests.model2.MapHolder;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettable;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault;
@@ -121,6 +122,8 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
       return (EObject)createEObjectToEObjectBothContainedMap();
     case Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP:
       return (EObject)createEObjectToEObjectValueContainedMap();
+    case Model2Package.ENUM_LIST_HOLDER:
+      return createEnumListHolder();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -333,6 +336,17 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
   {
     EObjectToEObjectValueContainedMapImpl eObjectToEObjectValueContainedMap = new EObjectToEObjectValueContainedMapImpl();
     return eObjectToEObjectValueContainedMap;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EnumListHolder createEnumListHolder()
+  {
+    EnumListHolderImpl enumListHolder = new EnumListHolderImpl();
+    return enumListHolder;
   }
 
   /**

@@ -634,9 +634,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   {
     for (int i = list.size() - 1; i >= 0; --i)
     {
-      InternalEObject obj = (InternalEObject)list.get(i);
-
-      // TODO Clarify obj.getClass()/baseclass
+      Object obj = list.get(i);
       ((InternalEList<?>)list).basicRemove(obj, null);
     }
   }

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.legacy.model2;
 
+import org.eclipse.emf.cdo.tests.model2.EnumListHolder;
 import org.eclipse.emf.cdo.tests.model2.MapHolder;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettable;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault;
@@ -116,6 +117,14 @@ public interface Model2Factory extends org.eclipse.emf.cdo.tests.model2.Model2Fa
    * @generated
    */
   MapHolder createMapHolder();
+
+  /**
+   * Returns a new object of class '<em>Enum List Holder</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Enum List Holder</em>'.
+   * @generated
+   */
+  EnumListHolder createEnumListHolder();
 
   /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->

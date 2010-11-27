@@ -1145,6 +1145,33 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   int EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.EnumListHolderImpl
+   * <em>Enum List Holder</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.EnumListHolderImpl
+   * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl#getEnumListHolder()
+   * @generated
+   */
+  int ENUM_LIST_HOLDER = 19;
+
+  /**
+   * The feature id for the '<em><b>Enum List</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ENUM_LIST_HOLDER__ENUM_LIST = 0;
+
+  /**
+   * The number of structural features of the '<em>Enum List Holder</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ENUM_LIST_HOLDER_FEATURE_COUNT = 1;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model2.SpecialPurchaseOrder
    * <em>Special Purchase Order</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -2320,6 +2347,28 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
   EReference getEObjectToEObjectValueContainedMap_Value();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model2.EnumListHolder
+   * <em>Enum List Holder</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Enum List Holder</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model2.EnumListHolder
+   * @generated
+   */
+  EClass getEnumListHolder();
+
+  /**
+   * Returns the meta object for the attribute list '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model2.EnumListHolder#getEnumList <em>Enum List</em>}'. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute list '<em>Enum List</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model2.EnumListHolder#getEnumList()
+   * @see #getEnumListHolder()
+   * @generated
+   */
+  EAttribute getEnumListHolder_EnumList();
+
+  /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the factory that creates the instances of the model.
@@ -3214,6 +3263,24 @@ public interface Model2Package extends org.eclipse.emf.cdo.tests.model2.Model2Pa
      * @generated
      */
     EReference EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__VALUE = eINSTANCE.getEObjectToEObjectValueContainedMap_Value();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.EnumListHolderImpl
+     * <em>Enum List Holder</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.EnumListHolderImpl
+     * @see org.eclipse.emf.cdo.tests.legacy.model2.impl.Model2PackageImpl#getEnumListHolder()
+     * @generated
+     */
+    EClass ENUM_LIST_HOLDER = eINSTANCE.getEnumListHolder();
+
+    /**
+     * The meta object literal for the '<em><b>Enum List</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute ENUM_LIST_HOLDER__ENUM_LIST = eINSTANCE.getEnumListHolder_EnumList();
 
   }
 

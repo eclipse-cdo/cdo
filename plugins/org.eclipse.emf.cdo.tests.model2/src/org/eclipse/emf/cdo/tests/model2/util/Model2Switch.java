@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.VAT;
+import org.eclipse.emf.cdo.tests.model2.EnumListHolder;
 import org.eclipse.emf.cdo.tests.model2.MapHolder;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettable;
@@ -267,6 +268,14 @@ public class Model2Switch<T>
       @SuppressWarnings("unchecked")
       Map.Entry<EObject, EObject> eObjectToEObjectValueContainedMap = (Map.Entry<EObject, EObject>)theEObject;
       T result = caseEObjectToEObjectValueContainedMap(eObjectToEObjectValueContainedMap);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model2Package.ENUM_LIST_HOLDER:
+    {
+      EnumListHolder enumListHolder = (EnumListHolder)theEObject;
+      T result = caseEnumListHolder(enumListHolder);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -569,6 +578,21 @@ public class Model2Switch<T>
    * @generated
    */
   public T caseEObjectToEObjectValueContainedMap(Map.Entry<EObject, EObject> object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Enum List Holder</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Enum List Holder</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEnumListHolder(EnumListHolder object)
   {
     return null;
   }

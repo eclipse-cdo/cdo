@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.legacy.model2.impl;
 import org.eclipse.emf.cdo.tests.legacy.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.legacy.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model2.EnumListHolder;
 import org.eclipse.emf.cdo.tests.model2.MapHolder;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettable;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault;
@@ -173,6 +174,13 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
   private EClass eObjectToEObjectValueContainedMapEClass = null;
 
   /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass enumListHolderEClass = null;
+
+  /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
    * EPackage.Registry} by the package package URI value.
    * <p>
@@ -216,8 +224,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
     // Obtain or create and register package
     Model2PackageImpl theModel2Package = (Model2PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model2PackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI)
-        : new Model2PackageImpl());
+        .get(eNS_URI) : new Model2PackageImpl());
 
     isInited = true;
 
@@ -1263,6 +1270,26 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * 
    * @generated
    */
+  public EClass getEnumListHolder()
+  {
+    return enumListHolderEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getEnumListHolder_EnumList()
+  {
+    return (EAttribute)enumListHolderEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public Model2Factory getModel2Factory()
   {
     return (Model2Factory)getEFactoryInstance();
@@ -1408,6 +1435,9 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     eObjectToEObjectValueContainedMapEClass = createEClass(EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP);
     createEReference(eObjectToEObjectValueContainedMapEClass, EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__KEY);
     createEReference(eObjectToEObjectValueContainedMapEClass, EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__VALUE);
+
+    enumListHolderEClass = createEClass(ENUM_LIST_HOLDER);
+    createEAttribute(enumListHolderEClass, ENUM_LIST_HOLDER__ENUM_LIST);
   }
 
   /**
@@ -1546,8 +1576,8 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     initEAttribute(getPersistentContainment_AttrBefore(), ecorePackage.getEString(), "attrBefore", null, 0, 1,
         PersistentContainment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getPersistentContainment_Children(), this.getTransientContainer(), this
-        .getTransientContainer_Parent(), "children", null, 0, -1, PersistentContainment.class, !IS_TRANSIENT,
+    initEReference(getPersistentContainment_Children(), this.getTransientContainer(),
+        this.getTransientContainer_Parent(), "children", null, 0, -1, PersistentContainment.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         !IS_ORDERED);
     initEAttribute(getPersistentContainment_AttrAfter(), ecorePackage.getEString(), "attrAfter", null, 0, 1,
@@ -1559,8 +1589,8 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     initEAttribute(getTransientContainer_AttrBefore(), ecorePackage.getEString(), "attrBefore", null, 0, 1,
         TransientContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getTransientContainer_Parent(), this.getPersistentContainment(), this
-        .getPersistentContainment_Children(), "parent", null, 0, 1, TransientContainer.class, IS_TRANSIENT,
+    initEReference(getTransientContainer_Parent(), this.getPersistentContainment(),
+        this.getPersistentContainment_Children(), "parent", null, 0, 1, TransientContainer.class, IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
     initEAttribute(getTransientContainer_AttrAfter(), ecorePackage.getEString(), "attrAfter", null, 0, 1,
@@ -1741,6 +1771,12 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     initEReference(getEObjectToEObjectValueContainedMap_Value(), ecorePackage.getEObject(), null, "value", null, 0, 1,
         Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(enumListHolderEClass, EnumListHolder.class, "EnumListHolder", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEnumListHolder_EnumList(), theModel1Package.getVAT(), "enumList", null, 0, -1,
+        EnumListHolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: MapHolder.java,v 1.1 2010-03-11 20:34:56 mfluegge Exp $
+ * $Id: MapHolder.java,v 1.2 2010-11-27 16:36:39 mfluegge Exp $
  */
 package org.eclipse.emf.cdo.tests.model2;
 
@@ -57,7 +57,8 @@ public interface MapHolder extends EObject
    * 
    * @return the value of the '<em>Integer To String Map</em>' map.
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_IntegerToStringMap()
-   * @model mapType="org.eclipse.emf.cdo.tests.model2.IntegerToStringMap<org.eclipse.emf.ecore.EIntegerObject, org.eclipse.emf.ecore.EString>"
+   * @model mapType=
+   *        "org.eclipse.emf.cdo.tests.model2.IntegerToStringMap<org.eclipse.emf.ecore.EIntegerObject, org.eclipse.emf.ecore.EString>"
    * @generated
    */
   EMap<Integer, String> getIntegerToStringMap();
@@ -108,7 +109,8 @@ public interface MapHolder extends EObject
    * 
    * @return the value of the '<em>String To Address Containment Map</em>' map.
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_StringToAddressContainmentMap()
-   * @model mapType="org.eclipse.emf.cdo.tests.model2.StringToAddressContainmentMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.cdo.tests.model1.Address>"
+   * @model mapType=
+   *        "org.eclipse.emf.cdo.tests.model2.StringToAddressContainmentMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.cdo.tests.model1.Address>"
    * @generated
    */
   EMap<String, Address> getStringToAddressContainmentMap();
@@ -125,7 +127,8 @@ public interface MapHolder extends EObject
    * 
    * @return the value of the '<em>String To Address Reference Map</em>' map.
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_StringToAddressReferenceMap()
-   * @model mapType="org.eclipse.emf.cdo.tests.model2.StringToAddressReferenceMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.cdo.tests.model1.Address>"
+   * @model mapType=
+   *        "org.eclipse.emf.cdo.tests.model2.StringToAddressReferenceMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.cdo.tests.model1.Address>"
    * @generated
    */
   EMap<String, Address> getStringToAddressReferenceMap();
@@ -160,7 +163,8 @@ public interface MapHolder extends EObject
    * 
    * @return the value of the '<em>EObject To EObject Key Contained Map</em>' map.
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_EObjectToEObjectKeyContainedMap()
-   * @model mapType="org.eclipse.emf.cdo.tests.model2.EObjectToEObjectKeyContainedMap<org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EObject>"
+   * @model mapType=
+   *        "org.eclipse.emf.cdo.tests.model2.EObjectToEObjectKeyContainedMap<org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EObject>"
    * @generated
    */
   EMap<EObject, EObject> getEObjectToEObjectKeyContainedMap();
@@ -177,7 +181,8 @@ public interface MapHolder extends EObject
    * 
    * @return the value of the '<em>EObject To EObject Both Contained Map</em>' map.
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_EObjectToEObjectBothContainedMap()
-   * @model mapType="org.eclipse.emf.cdo.tests.model2.EObjectToEObjectBothContainedMap<org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EObject>"
+   * @model mapType=
+   *        "org.eclipse.emf.cdo.tests.model2.EObjectToEObjectBothContainedMap<org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EObject>"
    * @generated
    */
   EMap<EObject, EObject> getEObjectToEObjectBothContainedMap();
@@ -194,7 +199,8 @@ public interface MapHolder extends EObject
    * 
    * @return the value of the '<em>EObject To EObject Value Contained Map</em>' map.
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_EObjectToEObjectValueContainedMap()
-   * @model mapType="org.eclipse.emf.cdo.tests.model2.EObjectToEObjectValueContainedMap<org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EObject>"
+   * @model mapType=
+   *        "org.eclipse.emf.cdo.tests.model2.EObjectToEObjectValueContainedMap<org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EObject>"
    * @generated
    */
   EMap<EObject, EObject> getEObjectToEObjectValueContainedMap();

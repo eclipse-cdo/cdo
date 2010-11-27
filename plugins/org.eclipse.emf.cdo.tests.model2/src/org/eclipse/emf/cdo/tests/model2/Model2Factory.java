@@ -109,6 +109,14 @@ public interface Model2Factory extends EFactory
   MapHolder createMapHolder();
 
   /**
+   * Returns a new object of class '<em>Enum List Holder</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Enum List Holder</em>'.
+   * @generated
+   */
+  EnumListHolder createEnumListHolder();
+
+  /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the package supported by this factory.

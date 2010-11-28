@@ -429,6 +429,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     {
       registerWrapper(this);
       counter.increment();
+      view.registerObject(this);
       revisionToInstanceContainer();
 
       for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(revision.getEClass()))

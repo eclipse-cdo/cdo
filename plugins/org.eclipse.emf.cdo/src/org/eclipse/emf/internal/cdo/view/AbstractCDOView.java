@@ -1095,6 +1095,11 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     {
       if (CDOUtil.isLegacyObject(object))
       {
+        if (old != object)
+        {
+          throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOViewImpl.30"), object.cdoID())); //$NON-NLS-1$
+        }
+
         OM.LOG.warn("Legacy object has been registered multiple times: " + object);
       }
       else

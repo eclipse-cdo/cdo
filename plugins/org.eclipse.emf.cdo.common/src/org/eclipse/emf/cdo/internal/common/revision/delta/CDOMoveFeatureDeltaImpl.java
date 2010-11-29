@@ -89,6 +89,16 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     this.value = value;
   }
 
+  public void setOldPosition(int oldPosition)
+  {
+    this.oldPosition = oldPosition;
+  }
+
+  public void setNewPosition(int newPosition)
+  {
+    this.newPosition = newPosition;
+  }
+
   public CDOFeatureDelta copy()
   {
     CDOFeatureDelta copy = new CDOMoveFeatureDeltaImpl(getFeature(), newPosition, oldPosition);

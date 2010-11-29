@@ -355,11 +355,8 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
                 }
                 else
                 {
-                  // It is not possible to modify the positions of a CDOMoveFeatureDeltaImpl so we create a new instance
-                  // that will replace the old one.
-                  CDOMoveFeatureDelta move = new CDOMoveFeatureDeltaImpl(fd.getFeature(), patchedTo, patchedFrom);
-                  ((CDOMoveFeatureDeltaImpl)move).setValue(((CDOMoveFeatureDelta)fd).getValue());
-                  iterator.set(move);
+                  ((CDOMoveFeatureDeltaImpl)fd).setOldPosition(patchedFrom);
+                  ((CDOMoveFeatureDeltaImpl)fd).setNewPosition(patchedTo);
                 }
               }
             }

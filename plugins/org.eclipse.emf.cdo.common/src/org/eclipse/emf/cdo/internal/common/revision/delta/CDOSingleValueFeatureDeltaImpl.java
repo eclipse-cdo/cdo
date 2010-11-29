@@ -154,15 +154,9 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   }
 
   @Override
-  public int hashCode()
+  public boolean isStructurallyEqual(Object obj)
   {
-    return super.hashCode() ^ index ^ ObjectUtil.hashCode(value);
-  }
-
-  @Override
-  public boolean equals(Object obj)
-  {
-    if (!super.equals(obj))
+    if (!super.isStructurallyEqual(obj))
     {
       return false;
     }

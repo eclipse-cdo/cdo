@@ -181,15 +181,9 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
   }
 
   @Override
-  public int hashCode()
+  public boolean isStructurallyEqual(Object obj)
   {
-    return super.hashCode() ^ oldPosition ^ newPosition;
-  }
-
-  @Override
-  public boolean equals(Object obj)
-  {
-    if (!super.equals(obj))
+    if (!super.isStructurallyEqual(obj))
     {
       return false;
     }

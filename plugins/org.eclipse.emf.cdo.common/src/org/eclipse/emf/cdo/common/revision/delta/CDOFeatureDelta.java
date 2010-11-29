@@ -50,6 +50,11 @@ public interface CDOFeatureDelta
   public CDOFeatureDelta copy();
 
   /**
+   * @since 4.0
+   */
+  public boolean isStructurallyEqual(Object obj);
+
+  /**
    * @author Simon McDuff
    */
   public enum Type

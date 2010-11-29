@@ -58,14 +58,7 @@ public abstract class CDOFeatureDeltaImpl implements InternalCDOFeatureDelta
     return feature;
   }
 
-  @Override
-  public int hashCode()
-  {
-    return feature.hashCode() ^ getType().hashCode() << 16;
-  }
-
-  @Override
-  public boolean equals(Object obj)
+  public boolean isStructurallyEqual(Object obj)
   {
     if (obj == this)
     {

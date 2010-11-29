@@ -552,7 +552,7 @@ public class DefaultCDOMerger implements CDOMerger
     protected CDOFeatureDelta changedInSourceAndTargetSingleValued(EStructuralFeature feature,
         CDOFeatureDelta targetFeatureDelta, CDOFeatureDelta sourceFeatureDelta)
     {
-      if (targetFeatureDelta.equals(sourceFeatureDelta))
+      if (targetFeatureDelta.isStructurallyEqual(sourceFeatureDelta))
       {
         return targetFeatureDelta;
       }

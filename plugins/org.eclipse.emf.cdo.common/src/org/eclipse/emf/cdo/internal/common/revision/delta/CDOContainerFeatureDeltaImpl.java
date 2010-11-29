@@ -112,16 +112,9 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   }
 
   @Override
-  public int hashCode()
+  public boolean isStructurallyEqual(Object obj)
   {
-    return super.hashCode() ^ ObjectUtil.hashCode(newResourceID) ^ ObjectUtil.hashCode(newContainerID)
-        ^ newContainerFeatureID;
-  }
-
-  @Override
-  public boolean equals(Object obj)
-  {
-    if (!super.equals(obj))
+    if (!super.isStructurallyEqual(obj))
     {
       return false;
     }

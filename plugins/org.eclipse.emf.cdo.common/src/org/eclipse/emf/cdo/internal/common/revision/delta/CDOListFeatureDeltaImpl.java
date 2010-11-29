@@ -413,15 +413,9 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   }
 
   @Override
-  public int hashCode()
+  public boolean isStructurallyEqual(Object obj)
   {
-    return super.hashCode() ^ ObjectUtil.hashCode(featureDeltas);
-  }
-
-  @Override
-  public boolean equals(Object obj)
-  {
-    if (!super.equals(obj))
+    if (!super.isStructurallyEqual(obj))
     {
       return false;
     }

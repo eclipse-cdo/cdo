@@ -325,7 +325,8 @@ public interface IMappingStrategy
   /**
    * @since 4.0
    */
-  public void rawImport(IDBStoreAccessor accessor, CDODataInput in, OMMonitor monitor) throws IOException;
+  public void rawImport(IDBStoreAccessor accessor, CDODataInput in, long fromCommitTime, long toCommitTime,
+      OMMonitor monitor) throws IOException;
 
   /**
    * @since 4.0

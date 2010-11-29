@@ -144,6 +144,43 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
   }
 
   @Override
+  protected void rawImportUnreviseNewRevisions(Connection connection, IDBTable table, long fromCommitTime,
+      long toCommitTime, OMMonitor monitor)
+  {
+    String sqlUpdate = "UPDATE " + table + " SET " + CDODBSchema.ATTRIBUTES_REVISED + "=0 WHERE "
+        + CDODBSchema.ATTRIBUTES_BRANCH + ">=0 AND " + CDODBSchema.ATTRIBUTES_CREATED + "<=" + toCommitTime + " AND "
+        + CDODBSchema.ATTRIBUTES_REVISED + ">" + toCommitTime + " AND " + CDODBSchema.ATTRIBUTES_VERSION + ">0";
+
+    PreparedStatement stmtUpdate = null;
+
+    try
+    {
+      stmtUpdate = connection.prepareStatement(sqlUpdate);
+
+      monitor.begin();
+      Async async = monitor.forkAsync();
+
+      try
+      {
+        stmtUpdate.executeUpdate();
+      }
+      finally
+      {
+        async.stop();
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(stmtUpdate);
+      monitor.done();
+    }
+  }
+
+  @Override
   public String getListJoin(String attrTable, String listTable)
   {
     String join = super.getListJoin(attrTable, listTable);

@@ -1089,7 +1089,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       DBUtil.deserializeTable(in, connection, CDODBSchema.EXTERNAL_REFS, monitor.fork());
       rawImportPackageUnits(in, fromCommitTime, toCommitTime, monitor.fork());
 
-      mappingStrategy.rawImport(this, in, monitor.fork(size));
+      mappingStrategy.rawImport(this, in, fromCommitTime, toCommitTime, monitor.fork(size));
 
       Async async = monitor.forkAsync(commitWork);
 

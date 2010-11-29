@@ -361,10 +361,10 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
         }
 
         OM.LOG.info("Connected to master.");
+        scheduleReplicate();
+
         remoteSession.addListener(remoteSessionListener);
         remoteSession.getBranchManager().addListener(remoteSessionListener);
-
-        scheduleReplicate();
       }
     }
 

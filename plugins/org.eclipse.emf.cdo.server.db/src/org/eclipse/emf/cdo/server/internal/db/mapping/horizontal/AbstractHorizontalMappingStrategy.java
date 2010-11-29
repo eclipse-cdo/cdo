@@ -195,7 +195,8 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
   }
 
-  public void rawImport(IDBStoreAccessor accessor, CDODataInput in, OMMonitor monitor) throws IOException
+  public void rawImport(IDBStoreAccessor accessor, CDODataInput in, long fromCommitTime, long toCommitTime,
+      OMMonitor monitor) throws IOException
   {
     int size = in.readInt();
     if (size == 0)
@@ -217,6 +218,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
         IDBTable table = classMapping.getDBTables().get(0);
         DBUtil.deserializeTable(in, connection, table, monitor.fork());
         rawImportReviseOldRevisions(connection, table, monitor.fork());
+        rawImportUnreviseNewRevisions(connection, table, fromCommitTime, toCommitTime, monitor.fork());
 
         List<IListMapping> listMappings = classMapping.getListMappings();
         int listSize = listMappings.size();
@@ -249,6 +251,12 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     {
       monitor.done();
     }
+  }
+
+  protected void rawImportUnreviseNewRevisions(Connection connection, IDBTable table, long fromCommitTime,
+      long toCommitTime, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException("Must be overridden");
   }
 
   protected void rawImportReviseOldRevisions(Connection connection, IDBTable table, OMMonitor monitor)

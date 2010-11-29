@@ -57,6 +57,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Predicate;
+import com.db4o.query.Query;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -284,8 +285,22 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
       CDORevisionHandler handler)
   {
-    // TODO: implement DB4OStoreAccessor.handleRevisions(eClass, branch, timeStamp, exactTime, handler)
-    throw new UnsupportedOperationException();
+    Query query = getObjectContainer().query();
+    query.constrain(DB4ORevision.class);
+    query.descend(DB4ORevision.ATTRIBUTE_PACKAGE_NS_URI).constrain(eClass.getEPackage().getNsURI());
+    query.descend(DB4ORevision.ATTRIBUTE_CLASS_NAME).constrain(eClass.getName());
+
+    ObjectSet<?> revisions = query.execute();
+    if (revisions.isEmpty())
+    {
+      return;
+    }
+
+    for (Object revision : revisions.toArray())
+    {
+      CDORevision cdoRevision = DB4ORevision.getCDORevision(getStore(), (DB4ORevision)revision);
+      handler.handleRevision(cdoRevision);
+    }
   }
 
   public Set<CDOID> readChangeSet(CDOChangeSetSegment... segments)

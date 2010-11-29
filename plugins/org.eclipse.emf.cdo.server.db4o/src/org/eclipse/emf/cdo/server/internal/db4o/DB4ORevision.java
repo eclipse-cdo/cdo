@@ -38,7 +38,11 @@ import java.util.List;
  */
 public class DB4ORevision
 {
-  private String packageURI;
+  public final static String ATTRIBUTE_CLASS_NAME = "className";
+
+  public final static String ATTRIBUTE_PACKAGE_NS_URI = "packageNsURI";
+
+  private String packageNsURI;
 
   private String className;
 
@@ -82,12 +86,12 @@ public class DB4ORevision
 
   public void setPackageURI(String packageURI)
   {
-    this.packageURI = packageURI;
+    packageNsURI = packageURI;
   }
 
   public String getPackageURI()
   {
-    return packageURI;
+    return packageNsURI;
   }
 
   public void setClassName(String className)

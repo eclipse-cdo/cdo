@@ -132,6 +132,24 @@ public abstract class Worker extends Lifecycle
     return null;
   }
 
+  /**
+   * @since 3.1
+   */
+  protected void handleError(Exception ex)
+  {
+    try
+    {
+      if (globalErrorHandler != null)
+      {
+        globalErrorHandler.handleError(ex);
+      }
+    }
+    catch (Exception ex1)
+    {
+      OM.LOG.error(ex1);
+    }
+  }
+
   protected abstract void work(WorkContext context) throws Exception;
 
   /**
@@ -208,12 +226,7 @@ public abstract class Worker extends Lifecycle
         }
         catch (Exception ex)
         {
-          if (globalErrorHandler != null)
-          {
-            globalErrorHandler.handleError(ex);
-          }
-
-          break;
+          handleError(ex);
         }
       }
 

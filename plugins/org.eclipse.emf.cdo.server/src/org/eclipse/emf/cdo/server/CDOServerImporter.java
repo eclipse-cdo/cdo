@@ -309,7 +309,7 @@ public abstract class CDOServerImporter
      */
     private static final class XMLHandler extends DefaultHandler
     {
-      private final Handler handler;
+      private Handler handler;
 
       private InternalCDOPackageRegistry packageRegistry;
 

@@ -188,7 +188,7 @@
 		</condition>
 	</target>
 
-	<target name="set.build.type.default.if.not.in.Hudson" unless="build.type">
+	<target name="set.build.type.default.if.not.in.Hudson" depends="set.build.type.from.environment" unless="build.type">
 		<!--
 		Set the build type to the default value of "N" if not running in Hudson
 		-->

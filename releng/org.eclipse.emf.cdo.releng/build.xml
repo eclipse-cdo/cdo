@@ -217,7 +217,9 @@
 			<url url="${env.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
 		</xmlproperty>
 		<echoproperties>
-			<propertyref prefix="action." />
+			<propertyset>
+				<propertyref prefix="action." />
+			</propertyset>
 		</echoproperties>
 		<loadresource property="build.trigger">
 			<propertyresource name="action.cause.shortDescription" />

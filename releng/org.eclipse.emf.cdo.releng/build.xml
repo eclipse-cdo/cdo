@@ -197,10 +197,10 @@
 
 	<target name="check.build.type" depends="set.build.type" unless="build.type.set">
 		<!--
-			Check if it is meaningful to try to infer the build type from the Hudson build data
-			it is only meaningful if:
-				- the build.type is not known yet
-				- the build actually runs in Hudson (the environment variable BUILD_URL is set)   
+		Check if it is meaningful to try to infer the build type from the Hudson build data
+		it is only meaningful if:
+			- the build.type is not known yet
+			- the build actually runs in Hudson (the environment variable BUILD_URL is set)   
 		-->
 		<condition property="build.type.set">
 			<or>

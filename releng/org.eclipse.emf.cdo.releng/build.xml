@@ -213,12 +213,14 @@
 	</target>
 
 	<target name="infer.build.type" depends="check.build.type" unless="build.type.set">
-		<xmlproperty keeproot="flase">
+		<xmlproperty keeproot="false">
 			<url url="${env.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
 		</xmlproperty>
 		<loadresource property="build.trigger">
 			<propertyresource name="action.cause.shortDescription" />
-			<globmapper from="Started by *" to="*" />
+			<filterchain>
+				<replaceregex pattern="^Started by " replace="" />
+			</filterchain>
 		</loadresource>
 		<condition property="inferred.build.type" value="I" else="N">
 			<equals arg1="${build.trigger}" arg2="timer" />

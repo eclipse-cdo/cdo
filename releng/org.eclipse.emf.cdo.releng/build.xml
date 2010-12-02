@@ -216,12 +216,16 @@
 		<xmlproperty keeproot="false">
 			<url url="${env.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
 		</xmlproperty>
+		<echoproperties>
+			<propertyref prefix="action." />
+		</echoproperties>
 		<loadresource property="build.trigger">
 			<propertyresource name="action.cause.shortDescription" />
 			<filterchain>
 				<replaceregex pattern="^Started by " replace="" />
 			</filterchain>
 		</loadresource>
+		<echo message="${build.trigger}" />
 		<condition property="inferred.build.type" value="I" else="N">
 			<equals arg1="${build.trigger}" arg2="timer" />
 		</condition>

@@ -233,7 +233,7 @@
 	</target>
 
 	<target name="init.build.properties">
-		<property name="build.type.file.name" value="build.type" />
+		<property name="build.type.file.name" value="${build.root}/build.type" />
 		<antcall target="store.build.type" />
 		<loadfile property="build.type" srcfile="${build.type.file.name}" />
 		<echo message="Build type is: ${build.type}" />

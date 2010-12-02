@@ -63,7 +63,7 @@
 			<!-- We assume that the eclipse installation is beneath ${buildtools} -->
 			<property name="@{app}.deploy.dir" value="${tools}/@{app}" />
 
-			<!-- Find the Eclipse launcher and assing its location to the @{app}.launcher property -->
+			<!-- Find the Eclipse launcher and assign its location to the @{app}.launcher property -->
 			<pathconvert property="@{app}.launcher">
 				<first count="1">
 					<sort>
@@ -179,7 +179,7 @@
 	</target>
 
 	<target name="check.if.build.type.set">
-		<!-- check if the build.type property is already set -->
+		<!-- Check if the build.type property is already set -->
 		<condition property="build.type.set">
 			<isset property="build.type" />
 		</condition>
@@ -187,8 +187,8 @@
 
 	<target name="set.build.type" depends="check.if.build.type.set" unless="build.type">
 		<!--
-			set the build type to the value of the BUILD_TYPE evironment variable (if that is set)
-			or to the default value of "N"
+		Set the build type to the value of the BUILD_TYPE environment variable (if that is set)
+		or to the default value of "N"
 		-->
 		<condition property="build.type" value="${env.BUILD_TYPE}" else="N">
 			<isset property="env.BUILD_TYPE" />
@@ -197,8 +197,8 @@
 
 	<target name="check.build.type" depends="set.build.type" unless="build.type.set">
 		<!--
-			check if it is meaningful to try to infer the build type from the Hudson build data
-			it is only meanigful if:
+			Check if it is meaningful to try to infer the build type from the Hudson build data
+			it is only meaningful if:
 				- the build.type is not known yet
 				- the build actually runs in Hudson (the environment variable BUILD_URL is set)   
 		-->
@@ -206,7 +206,7 @@
 			<or>
 				<length string="${build.type}" trim="true" when="greater" length="0" />
 				<not>
-					<isset property="${env.BUILD_URL}" />
+					<isset property="env.BUILD_URL" />
 				</not>
 			</or>
 		</condition>

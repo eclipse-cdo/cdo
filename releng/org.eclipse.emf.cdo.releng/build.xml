@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <project name="CDO">
-
 	<condition property="properties.file" value="build.properties" else="local.properties">
 		<isset property="server.build" />
 	</condition>
@@ -219,14 +218,28 @@
 		</condition>
 	</target>
 
-	<target name="store.build.type" depends="infer.build.type.from.Hudson.build.cause">
-		<echo message="${build.type}" file="${build.type.file.name}" />
+	<target name="set.build.timestamp.from.environment" unless="build.timestamp">
+		<condition property="build.timestamp" value="${env.BUILD_ID}">
+			<isset property="env.BUILD_ID" />
+		</condition>
+	</target>
+
+	<target name="set.build.timestamp" depends="set.build.timestamp.from.environment" unless="build.timestamp">
+		<tstamp>
+			<format property="build.timestamp" pattern="yyyy-MM-dd_HH-mm-ss" locale="en,US" />
+		</tstamp>
+	</target>
+
+	<target name="store.build.info" depends="infer.build.type.from.Hudson.build.cause,set.build.timestamp">
+		<echoxml file="${build.type.file.name}">
+			<build type="${build.type}" timestamp="${build.timestamp}" />
+		</echoxml>
 	</target>
 
 	<target name="init.build.properties">
-		<property name="build.type.file.name" location="${build.root}/build.type" />
-		<antcall target="store.build.type" />
-		<loadfile property="build.type" srcfile="${build.type.file.name}" />
+		<property name="build.type.file.name" location="${build.root}/build-info.xml" />
+		<antcall target="store.build.info" />
+		<xmlproperty file="${build.type.file.name}" collapseattributes="true" />
 		<echo message="Build type is: ${build.type}" />
 
 		<condition property="build.nightly" value="true">

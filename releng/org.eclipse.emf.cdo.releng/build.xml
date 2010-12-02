@@ -178,64 +178,48 @@
 		<mkdir dir="${workspace}" />
 	</target>
 
-	<target name="check.if.build.type.set">
-		<!-- Check if the build.type property is already set -->
-		<condition property="build.type.set">
-			<isset property="build.type" />
-		</condition>
-	</target>
-
-	<target name="set.build.type" depends="check.if.build.type.set" unless="build.type">
+	<target name="set.build.type.from.environment" unless="build.type">
 		<!--
-		Set the build type to the value of the BUILD_TYPE environment variable (if that is set)
-		or to the default value of "N"
+		Set the build type to the value of the BUILD_TYPE environment variable if not empty
 		-->
-		<condition property="build.type" value="${env.BUILD_TYPE}" else="N">
-			<isset property="env.BUILD_TYPE" />
+		<property name="env.BUILD_TYPE" value="" />
+		<condition property="build.type" value="${env.BUILD_TYPE}">
+			<length string="${env.BUILD_TYPE}" trim="true" when="greater" length="0" />
 		</condition>
 	</target>
 
-	<target name="check.build.type" depends="set.build.type" unless="build.type.set">
+	<target name="set.build.type.default.if.not.in.Hudson" unless="build.type">
 		<!--
-		Check if it is meaningful to try to infer the build type from the Hudson build data
-		it is only meaningful if:
-			- the build.type is not known yet
-			- the build actually runs in Hudson (the environment variable BUILD_URL is set)   
+		Set the build type to the default value of "N" if not running in Hudson
 		-->
-		<condition property="build.type.set">
-			<or>
-				<length string="${build.type}" trim="true" when="greater" length="0" />
-				<not>
-					<isset property="env.BUILD_URL" />
-				</not>
-			</or>
+		<condition property="build.type" value="N">
+			<not>
+				<isset property="env.BUILD_URL" />
+			</not>
 		</condition>
-		<echoproperties />
 	</target>
 
-	<target name="infer.build.type" depends="check.build.type" unless="build.type.set">
+	<target name="infer.build.type.from.Hudson.build.cause" depends="set.build.type.default.if.not.in.Hudson" unless="build.type">
+		<!--
+		Infer the build type from the cause/trigger of the build as filed by Hudson:
+			build triggered by timer/schedule => I build
+			any other cause => N build
+		-->
 		<xmlproperty keeproot="false">
 			<url url="${env.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
 		</xmlproperty>
-		<echoproperties>
-			<propertyset>
-				<propertyref prefix="action." />
-			</propertyset>
-		</echoproperties>
 		<loadresource property="build.trigger">
 			<propertyresource name="action.cause.shortDescription" />
 			<filterchain>
 				<replaceregex pattern="^Started by " replace="" />
 			</filterchain>
 		</loadresource>
-		<echo message="${build.trigger}" />
-		<condition property="inferred.build.type" value="I" else="N">
+		<condition property="build.type" value="I" else="N">
 			<equals arg1="${build.trigger}" arg2="timer" />
 		</condition>
-		<echo message="${inferred.build.type}" file="${build.type.file.name}" />
 	</target>
 
-	<target name="store.build.type" depends="infer.build.type" if="build.type.set">
+	<target name="store.build.type" depends="infer.build.type.from.Hudson.build.cause">
 		<echo message="${build.type}" file="${build.type.file.name}" />
 	</target>
 

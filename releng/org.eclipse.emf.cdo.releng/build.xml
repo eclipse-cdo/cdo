@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <project name="CDO">
+
 	<condition property="properties.file" value="build.properties" else="local.properties">
 		<isset property="server.build" />
 	</condition>

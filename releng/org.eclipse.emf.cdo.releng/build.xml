@@ -237,7 +237,7 @@
 	</target>
 
 	<target name="init.build.properties">
-		<property name="build.type.file.name" location="${build.root}/build-info.xml" />
+		<property name="build.type.file.name" location="${result}/build-info.xml" />
 		<antcall target="store.build.info" />
 		<xmlproperty file="${build.type.file.name}" collapseattributes="true" />
 		<echo message="Build type is: ${build.type}" />

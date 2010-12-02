@@ -36,20 +36,8 @@
 		<equals arg1="${env.CLEAN_OUTPUT}" arg2="true" />
 	</condition>
 
-	<condition property="build.type" value="${env.BUILD_TYPE}" else="N">
-		<isset property="env.BUILD_TYPE" />
-	</condition>
-
-	<condition property="build.nightly" value="true">
-		<equals arg1="${build.type}" arg2="N" />
-	</condition>
-
 	<condition property="site.pack200" value="${env.SITE_PACK200}" else="true">
 		<isset property="env.SITE_PACK200" />
-	</condition>
-
-	<condition property="site.signing" value="false" else="true">
-		<isset property="build.nightly" />
 	</condition>
 
 	<condition property="no.proxy" value="${env.no_proxy}, dev.eclipse.org" else="dev.eclipse.org">
@@ -190,7 +178,72 @@
 		<mkdir dir="${workspace}" />
 	</target>
 
+	<target name="check.if.build.type.set">
+		<!-- check if the build.type property is already set -->
+		<condition property="build.type.set">
+			<isset property="build.type" />
+		</condition>
+	</target>
+
+	<target name="set.build.type" depends="check.if.build.type.set" unless="build.type">
+		<!--
+			set the build type to the value of the BUILD_TYPE evironment variable (if that is set)
+			or to the default value of "N"
+		-->
+		<condition property="build.type" value="${env.BUILD_TYPE}" else="N">
+			<isset property="env.BUILD_TYPE" />
+		</condition>
+	</target>
+
+	<target name="check.build.type" depends="set.build.type" unless="build.type.set">
+		<!--
+			check if it is meaningful to try to infer the build type from the Hudson build data
+			it is only meanigful if:
+				- the build.type is not known yet
+				- the build actually runs in Hudson (the environment variable BUILD_URL is set)   
+		-->
+		<condition property="build.type.set">
+			<or>
+				<length string="${build.type}" trim="true" when="greater" length="0" />
+				<not>
+					<isset property="${env.BUILD_URL}" />
+				</not>
+			</or>
+		</condition>
+	</target>
+
+	<target name="infer.build.type" depends="check.build.type" unless="build.type.set">
+		<xmlproperty keeproot="flase">
+			<url url="${env.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
+		</xmlproperty>
+		<loadresource property="build.trigger">
+			<propertyresource name="action.cause.shortDescription" />
+			<globmapper from="Started by *" to="*" />
+		</loadresource>
+		<condition property="inferred.build.type" value="I" else="N">
+			<equals arg1="${build.trigger}" arg2="timer" />
+		</condition>
+		<echo message="${inferred.build.type}" file="${build.type.file.name}" />
+	</target>
+
+	<target name="store.build.type" depends="infer.build.type" if="build.type.set">
+		<echo message="${build.type}" file="${build.type.file.name}" />
+	</target>
+
 	<target name="init.build.properties">
+		<property name="build.type.file.name" value="build.type" />
+		<antcall target="store.build.type" />
+		<loadfile property="build.type" srcfile="${build.type.file.name}" />
+		<echo message="Build type is: ${build.type}" />
+
+		<condition property="build.nightly" value="true">
+			<equals arg1="${build.type}" arg2="N" />
+		</condition>
+
+		<condition property="site.signing" value="false" else="true">
+			<isset property="build.nightly" />
+		</condition>
+
 		<!-- Echo relevant properties to a temporary file so that Buckminster can read them -->
 		<tempfile destdir="${java.io.tmpdir}" prefix="build-" suffix=".properties" deleteonexit="true" property="properties.tmp" />
 		<echo message="Properties file is: ${properties.tmp}" />

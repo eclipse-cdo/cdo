@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -126,6 +127,10 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
         if (revisionDelta != null)
         {
           revisionDelta.setVersion(version);
+          if (revisionDelta.getTarget() != null)
+          {
+            revisionDelta.setTarget(CDOBranchUtil.copyBranchVersion(revision));
+          }
         }
       }
     }

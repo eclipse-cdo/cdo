@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.MergeLocalChangesPerFeature;
 import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
@@ -47,7 +49,7 @@ public class ConflictResolverTest extends AbstractCDOTest
 
     long committed = transaction.commit().getTimeStamp();
 
-    // Resolver should be triggered. Should we always use a timer ?
+    // Resolver should be triggered.
     transaction2.waitForUpdate(committed, DEFAULT_TIMEOUT);
 
     assertEquals(false, CDOUtil.getCDOObject(address2).cdoConflict());
@@ -57,6 +59,77 @@ public class ConflictResolverTest extends AbstractCDOTest
     assertEquals("OTTAWA", address2.getCity());
 
     transaction2.commit();
+  }
+
+  public void testMergeLocalChangesPerFeature_Bug1() throws Exception
+  {
+    msg("Opening session");
+    CDOSession session = openSession();
+
+    CDOTransaction transaction1 = session.openTransaction();
+    EList<EObject> contents1 = transaction1.getOrCreateResource("/res1").getContents();
+
+    contents1.add(getModel1Factory().createAddress());
+    transaction1.commit();
+
+    CDOTransaction transaction2 = session.openTransaction();
+    transaction2.options().addConflictResolver(new CDOMergingConflictResolver());
+    EList<EObject> contents2 = transaction2.getOrCreateResource("/res1").getContents();
+
+    // ----------------------------
+    contents1.add(getModel1Factory().createAddress());
+    contents2.add(getModel1Factory().createAddress());
+
+    // Resolver should be triggered.
+    transaction2.waitForUpdate(transaction1.commit().getTimeStamp(), DEFAULT_TIMEOUT);
+    transaction2.commit();
+
+    // ----------------------------
+    contents1.add(getModel1Factory().createAddress());
+    contents2.add(getModel1Factory().createAddress());
+
+    // Resolver should be triggered.
+    transaction2.waitForUpdate(transaction1.commit().getTimeStamp(), DEFAULT_TIMEOUT);
+    transaction2.commit();
+
+    // ----------------------------
+    contents1.add(getModel1Factory().createAddress());
+    contents2.add(getModel1Factory().createAddress());
+
+    // Resolver should be triggered.
+    transaction2.waitForUpdate(transaction1.commit().getTimeStamp(), DEFAULT_TIMEOUT);
+    transaction2.commit();
+  }
+
+  public void testMergeLocalChangesPerFeature_Bug2() throws Exception
+  {
+    msg("Opening session");
+    CDOSession session = openSession();
+
+    CDOTransaction transaction1 = session.openTransaction();
+    transaction1.options().addConflictResolver(new CDOMergingConflictResolver());
+    EList<EObject> contents1 = transaction1.getOrCreateResource("/res1").getContents();
+
+    contents1.add(getModel1Factory().createAddress());
+    transaction1.commit();
+
+    CDOTransaction transaction2 = session.openTransaction();
+    transaction2.options().addConflictResolver(new CDOMergingConflictResolver());
+    EList<EObject> contents2 = transaction2.getOrCreateResource("/res1").getContents();
+
+    contents1.add(getModel1Factory().createAddress());
+    contents2.add(getModel1Factory().createAddress());
+
+    // Resolver should be triggered.
+    transaction2.waitForUpdate(transaction1.commit().getTimeStamp(), DEFAULT_TIMEOUT);
+    transaction2.commit();
+
+    contents1.add(getModel1Factory().createAddress());
+    contents2.add(getModel1Factory().createAddress());
+
+    // Resolver should be triggered.
+    transaction1.waitForUpdate(transaction2.commit().getTimeStamp(), DEFAULT_TIMEOUT);
+    transaction1.commit();
   }
 
   public void testMergeLocalChangesPerFeature_BasicException() throws Exception
@@ -120,7 +193,7 @@ public class ConflictResolverTest extends AbstractCDOTest
     address.setName("NAME1");
     long committed = transaction.commit().getTimeStamp();
 
-    // Resolver should be triggered. Should we always use a timer ?
+    // Resolver should be triggered.
     transaction2.waitForUpdate(committed, DEFAULT_TIMEOUT);
 
     assertEquals(false, CDOUtil.getCDOObject(address2).cdoConflict());

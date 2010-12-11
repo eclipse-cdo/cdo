@@ -611,7 +611,6 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
       {
         disposePackageUnits();
         metaInstanceMapper.clear();
-        metaInstanceMapper = null;
 
         clear();
         active = false;

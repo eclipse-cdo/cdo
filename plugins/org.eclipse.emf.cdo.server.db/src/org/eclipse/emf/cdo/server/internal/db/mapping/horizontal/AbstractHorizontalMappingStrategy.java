@@ -307,15 +307,15 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     if (objectTypeMapper == null)
     {
       objectTypeMapper = createObjectTypeMapper();
-      LifecycleUtil.activate(objectTypeMapper);
     }
+
+    LifecycleUtil.activate(objectTypeMapper);
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
     LifecycleUtil.deactivate(objectTypeMapper);
-    objectTypeMapper = null;
     super.doDeactivate();
   }
 

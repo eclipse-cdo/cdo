@@ -147,6 +147,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
           // flag as first time.
           firstTime = true;
         }
+
         creationTime = objyStoreInfo.getCreationTime();
       }
 
@@ -226,6 +227,12 @@ public class ObjectivityStore extends Store implements IObjectivityStore
   public long getCreationTime()
   {
     return creationTime;
+  }
+
+  public void setCreationTime(long creationTime)
+  {
+    // TODO: implement ObjectivityStore.setCreationTime(creationTime)
+    throw new UnsupportedOperationException();
   }
 
   public boolean isFirstTime()
@@ -325,6 +332,8 @@ public class ObjectivityStore extends Store implements IObjectivityStore
   {
     if (names == null || names.isEmpty())
     {
+      // Return *all* property values
+
       // TODO: implement ObjectivityStore.getPropertyValues(names)
       throw new UnsupportedOperationException();
     }

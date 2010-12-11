@@ -440,6 +440,15 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     return creationTime;
   }
 
+  public void setCreationTime(long creationTime)
+  {
+    this.creationTime = creationTime;
+
+    Map<String, String> map = new HashMap<String, String>();
+    map.put(PROP_REPOSITORY_CREATED, Long.toString(creationTime));
+    setPropertyValues(map);
+  }
+
   public boolean isFirstTime()
   {
     return firstTime;
@@ -466,16 +475,24 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     super.doActivate();
     connectionKeepAliveTimer = new Timer("Connection-Keep-Alive-" + this); //$NON-NLS-1$
 
-    dbSchema = createSchema();
-    metaDataManager = new MetaDataManager(this);
-    LifecycleUtil.activate(metaDataManager);
-
-    Connection connection = getConnection();
-    LifecycleUtil.activate(mappingStrategy);
-
     Set<IDBTable> createdTables = null;
+    Connection connection = getConnection();
+
     try
     {
+      if (isDropAllDataOnActivate())
+      {
+        OM.LOG.info("Dropping all tables from repository " + getRepository().getName() + "...");
+        DBUtil.dropAllTables(connection, null);
+        connection.commit();
+      }
+
+      dbSchema = createSchema();
+      metaDataManager = new MetaDataManager(this);
+      LifecycleUtil.activate(metaDataManager);
+
+      LifecycleUtil.activate(mappingStrategy);
+
       createdTables = CDODBSchema.INSTANCE.create(dbAdapter, connection);
       connection.commit();
     }
@@ -502,13 +519,8 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
   protected void doDeactivate() throws Exception
   {
     LifecycleUtil.deactivate(metaDataManager);
-    metaDataManager = null;
-
     LifecycleUtil.deactivate(externalReferenceManager);
-    externalReferenceManager = null;
-
     LifecycleUtil.deactivate(mappingStrategy);
-    mappingStrategy = null;
 
     Map<String, String> map = new HashMap<String, String>();
     map.put(PROP_GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
@@ -547,12 +559,8 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
 
   protected void firstStart()
   {
-    creationTime = getRepository().getTimeStamp();
+    setCreationTime(getRepository().getTimeStamp());
     firstTime = true;
-
-    Map<String, String> map = new HashMap<String, String>();
-    map.put(PROP_REPOSITORY_CREATED, Long.toString(creationTime));
-    setPropertyValues(map);
 
     OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.8"), creationTime)); //$NON-NLS-1$
   }

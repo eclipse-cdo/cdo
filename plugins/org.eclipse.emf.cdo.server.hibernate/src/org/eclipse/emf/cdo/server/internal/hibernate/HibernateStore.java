@@ -386,6 +386,11 @@ public class HibernateStore extends Store implements IHibernateStore
     return getSystemInformation().getCreationTime();
   }
 
+  public void setCreationTime(long creationTime)
+  {
+    getSystemInformation().setCreationTime(creationTime);
+  }
+
   public HibernatePackageHandler getPackageHandler()
   {
     return packageHandler;

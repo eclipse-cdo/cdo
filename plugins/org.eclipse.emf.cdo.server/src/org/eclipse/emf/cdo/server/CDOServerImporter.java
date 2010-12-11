@@ -36,7 +36,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
-import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.AsyncOutputStream;
@@ -80,11 +79,15 @@ public abstract class CDOServerImporter
   public CDOServerImporter(IRepository repository)
   {
     this.repository = (InternalRepository)repository;
-    LifecycleUtil.checkInactive(repository);
-    this.repository.setSkipInitialization(true);
+    init();
+  }
 
+  private void init()
+  {
+    LifecycleUtil.checkInactive(repository);
+    repository.setSkipInitialization(true);
+    repository.getStore().setDropAllDataOnActivate(true);
     LifecycleUtil.activate(repository);
-    CheckUtil.checkState(repository.getStore().isFirstTime(), "Store has been used before");
   }
 
   protected final InternalRepository getRepository()
@@ -154,7 +157,9 @@ public abstract class CDOServerImporter
 
     public void handleRepository(String name, String uuid, CDOID root, long created, long committed)
     {
-      // lastCommitTimeStamp = Math.max(store.getCreationTime(), store.getLastCommitTime());
+      repository.getStore().setCreationTime(created);
+      repository.getStore().setLastCommitTime(committed);
+
       InternalCDOBranchManager branchManager = repository.getBranchManager();
       repository.initMainBranch(branchManager, created);
       LifecycleUtil.activate(branchManager);

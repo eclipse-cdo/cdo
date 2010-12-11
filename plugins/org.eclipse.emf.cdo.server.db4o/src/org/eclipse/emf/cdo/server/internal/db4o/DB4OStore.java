@@ -88,6 +88,11 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     return getServerInfo().getCreationTime();
   }
 
+  public void setCreationTime(long creationTime)
+  {
+    getServerInfo().setCreationTime(creationTime);
+  }
+
   public boolean isFirstTime()
   {
     return getServerInfo().isFirstTime();

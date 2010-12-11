@@ -50,11 +50,13 @@ public class CDOServerApplication extends OSGiApplication
   protected void doStart() throws Exception
   {
     super.doStart();
+    IPluginContainer container = getContainer();
+
     OM.LOG.info(Messages.getString("CDOServerApplication.1")); //$NON-NLS-1$
     File configFile = OMPlatform.INSTANCE.getConfigFile("cdo-server.xml"); //$NON-NLS-1$
     if (configFile != null && configFile.exists())
     {
-      RepositoryConfigurator repositoryConfigurator = new RepositoryConfigurator(IPluginContainer.INSTANCE);
+      RepositoryConfigurator repositoryConfigurator = new RepositoryConfigurator(container);
       repositories = repositoryConfigurator.configure(configFile);
       if (repositories == null || repositories.length == 0)
       {
@@ -64,7 +66,7 @@ public class CDOServerApplication extends OSGiApplication
       String port = OMPlatform.INSTANCE.getProperty(PROP_BROWSER_PORT);
       if (port != null)
       {
-        IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.server.browsers", "default", port); //$NON-NLS-1$ //$NON-NLS-2$
+        getContainer().getElement("org.eclipse.emf.cdo.server.browsers", "default", port); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
       startExtensions(configFile);
@@ -125,5 +127,10 @@ public class CDOServerApplication extends OSGiApplication
         }
       }
     }
+  }
+
+  public static IPluginContainer getContainer()
+  {
+    return IPluginContainer.INSTANCE;
   }
 }

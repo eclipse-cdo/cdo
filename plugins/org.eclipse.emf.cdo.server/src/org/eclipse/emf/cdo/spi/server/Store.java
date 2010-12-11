@@ -73,6 +73,8 @@ public abstract class Store extends Lifecycle implements InternalStore
 
   private InternalRepository repository;
 
+  private boolean dropAllDataOnActivate;
+
   /**
    * Is protected against concurrent thread access through {@link Repository#createBranchLock}.
    */
@@ -209,6 +211,22 @@ public abstract class Store extends Lifecycle implements InternalStore
   public void setRepository(IRepository repository)
   {
     this.repository = (InternalRepository)repository;
+  }
+
+  /**
+   * @since 4.0
+   */
+  public boolean isDropAllDataOnActivate()
+  {
+    return dropAllDataOnActivate;
+  }
+
+  /**
+   * @since 4.0
+   */
+  public void setDropAllDataOnActivate(boolean dropAllDataOnActivate)
+  {
+    this.dropAllDataOnActivate = dropAllDataOnActivate;
   }
 
   /**

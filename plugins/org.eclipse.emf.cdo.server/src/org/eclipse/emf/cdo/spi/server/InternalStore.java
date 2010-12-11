@@ -51,4 +51,19 @@ public interface InternalStore extends IStore, ILifecycle
    * @since 4.0
    */
   public boolean isLocal(CDOID id);
+
+  /**
+   * @since 4.0
+   */
+  public boolean isDropAllDataOnActivate();
+
+  /**
+   * @since 4.0
+   */
+  public void setDropAllDataOnActivate(boolean dropAllDataOnActivate);
+
+  /**
+   * @since 4.0
+   */
+  public void setCreationTime(long creationTime);
 }

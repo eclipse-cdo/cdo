@@ -786,6 +786,11 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     return creationTime;
   }
 
+  public void setCreationTime(long creationTime)
+  {
+    this.creationTime = creationTime;
+  }
+
   public boolean isFirstTime()
   {
     return true;

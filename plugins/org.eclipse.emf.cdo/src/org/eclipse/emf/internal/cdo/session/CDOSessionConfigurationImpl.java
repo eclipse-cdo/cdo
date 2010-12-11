@@ -48,6 +48,8 @@ public abstract class CDOSessionConfigurationImpl implements InternalCDOSessionC
 
   private InternalCDOCommitInfoManager commitInfoManager;
 
+  private boolean mainBranchLocal;
+
   private boolean activateOnOpen = true;
 
   private InternalCDOSession session;
@@ -168,6 +170,16 @@ public abstract class CDOSessionConfigurationImpl implements InternalCDOSessionC
     this.commitInfoManager = (InternalCDOCommitInfoManager)commitInfoManager;
   }
 
+  public boolean isMainBranchLocal()
+  {
+    return mainBranchLocal;
+  }
+
+  public void setMainBranchLocal(boolean mainBranchLocal)
+  {
+    this.mainBranchLocal = mainBranchLocal;
+  }
+
   public boolean isActivateOnOpen()
   {
     return activateOnOpen;
@@ -217,6 +229,7 @@ public abstract class CDOSessionConfigurationImpl implements InternalCDOSessionC
   {
     session.options().setPassiveUpdateEnabled(passiveUpdateEnabled);
     session.options().setPassiveUpdateMode(passiveUpdateMode);
+    session.setMainBranchLocal(mainBranchLocal);
     session.setExceptionHandler(exceptionHandler);
     session.setAuthenticator(authenticator);
     session.setRevisionManager(revisionManager);

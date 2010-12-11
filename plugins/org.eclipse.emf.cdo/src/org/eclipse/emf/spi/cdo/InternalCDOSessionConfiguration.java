@@ -21,4 +21,14 @@ public interface InternalCDOSessionConfiguration extends CDOSessionConfiguration
   public InternalCDOSession getSession();
 
   public InternalCDOSession createSession();
+
+  /**
+   * @since 4.0
+   */
+  public boolean isMainBranchLocal();
+
+  /**
+   * @since 4.0
+   */
+  public void setMainBranchLocal(boolean local);
 }

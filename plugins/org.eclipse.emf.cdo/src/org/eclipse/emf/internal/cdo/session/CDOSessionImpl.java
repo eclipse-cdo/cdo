@@ -175,6 +175,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   @ExcludeFromDump
   private Set<CDOSessionImpl> singletonCollection = Collections.singleton(this);
 
+  private boolean mainBranchLocal;
+
   private CDOAuthenticator authenticator;
 
   private InternalCDORemoteSessionManager remoteSessionManager;
@@ -339,6 +341,16 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   public void setAuthenticator(CDOAuthenticator authenticator)
   {
     this.authenticator = authenticator;
+  }
+
+  public boolean isMainBranchLocal()
+  {
+    return mainBranchLocal;
+  }
+
+  public void setMainBranchLocal(boolean mainBranchLocal)
+  {
+    this.mainBranchLocal = mainBranchLocal;
   }
 
   public InternalCDORemoteSessionManager getRemoteSessionManager()

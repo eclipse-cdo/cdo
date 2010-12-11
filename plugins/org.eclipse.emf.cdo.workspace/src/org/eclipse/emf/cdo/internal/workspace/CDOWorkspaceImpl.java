@@ -59,7 +59,6 @@ import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -68,6 +67,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
@@ -133,15 +133,11 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
     localRepository = createLocalRepository(local);
 
-    try
-    {
-      CDOServerUtil.addRepository(IPluginContainer.INSTANCE, localRepository); // --> CDOServerBrowser
-      IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.server.browsers", "default", "7778");
-    }
-    catch (Exception ex)
-    {
-      ex.printStackTrace();
-    }
+    // Map<String, InternalRepository> repositories = new HashMap<String, InternalRepository>();
+    // repositories.put(localRepository.getName(), localRepository);
+    // CDOServerBrowser browser = new CDOServerBrowser(repositories);
+    // browser.setPort(7778);
+    // browser.activate();
 
     this.base = base;
     this.base.init(this);
@@ -338,8 +334,9 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
       InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction(branch);
 
       CDOChangeSetData changes = getLocalChanges();
+      CDOBranchPoint head = localRepository.getBranchManager().getMainBranch().getHead();
 
-      transaction.applyChangeSetData(changes, base, this, null);
+      transaction.applyChangeSetData(changes, base, this, head);
       transaction.setCommitComment(comment);
 
       CDOCommitInfo info = transaction.commit();
@@ -488,6 +485,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     configuration.setConnector(connector);
     configuration.setRepositoryName(repositoryName);
     configuration.setRevisionManager(CDORevisionUtil.createRevisionManager(CDORevisionCache.NOOP)); // Use repo's cache
+    ((InternalCDOSessionConfiguration)configuration).setMainBranchLocal(true);
 
     InternalCDOSession session = (InternalCDOSession)configuration.openSession();
     session.setPackageRegistry(localRepository.getPackageRegistry(false)); // Use repo's registry

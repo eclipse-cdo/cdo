@@ -200,4 +200,9 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
    * @since 4.0
    */
   public void clearCommittedSinceLastRefresh();
+
+  /**
+   * @since 4.0
+   */
+  public void setMainBranchLocal(boolean mainBranchLocal);
 }

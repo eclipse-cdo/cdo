@@ -164,8 +164,7 @@ public class AllTestsDBH2Branching extends DBConfigs
       public static final ReusableFolder INSTANCE = new ReusableFolder("DBStore: H2 (branching)",
           "org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalBranchingMappingStrategy");
 
-      public static final ReusableFolder RANGE_INSTANCE = new ReusableFolder(
-          "DBStore: H2 (Reusable Folder, branching, range-based mapping strategy)",
+      public static final ReusableFolder RANGE_INSTANCE = new ReusableFolder("DBStore: H2 (branching, range-based)",
           "org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalBranchingMappingStrategyWithRanges");
 
       private static File reusableFolder;
@@ -270,7 +269,7 @@ public class AllTestsDBH2Branching extends DBConfigs
         private static final long serialVersionUID = 1L;
 
         public static final ReusableFolder INSTANCE = new CopyOnBranch(
-            "DBStore: H2 (Reusable Folder, branching, range-based mapping strategy copyOnBranch)",
+            "DBStore: H2 (branching, range-based, copyOnBranch)",
             "org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalBranchingMappingStrategyWithRanges");
 
         public CopyOnBranch(String name, String ms)

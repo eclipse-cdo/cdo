@@ -610,7 +610,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return result;
   }
 
-  private Map<CDOID, CDOID> mapLocalIDs(CDOChangeSetData changeSetData)
+  private Pair<Map<CDOID, CDOID>, List<CDOID>> mapLocalIDs(CDOChangeSetData changeSetData)
   {
     // Collect needed ID mappings
     Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
@@ -639,13 +639,18 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         revision.adjustReferences(idMapper);
       }
 
+      List<CDOID> adjustedObjects = new ArrayList<CDOID>();
       for (CDORevisionKey key : changeSetData.getChangedObjects())
       {
         InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)key;
-        revisionDelta.adjustReferences(idMapper);
+        boolean adjusted = revisionDelta.adjustReferences(idMapper);
+        if (adjusted)
+        {
+          adjustedObjects.add(revisionDelta.getID());
+        }
       }
 
-      return idMappings;
+      return new Pair<Map<CDOID, CDOID>, List<CDOID>>(idMappings, adjustedObjects);
     }
 
     return null;

@@ -103,8 +103,10 @@ public class WrappedHibernateList implements InternalCDOList
   /**
    * There's a duplicate of this method in CDOListImpl!!!
    */
-  public void adjustReferences(CDOReferenceAdjuster adjuster, EStructuralFeature feature)
+  public boolean adjustReferences(CDOReferenceAdjuster adjuster, EStructuralFeature feature)
   {
+    boolean changed = false;
+
     CDOType type = CDOModelUtil.getType(feature);
     int size = size();
     for (int i = 0; i < size; i++)
@@ -114,8 +116,11 @@ public class WrappedHibernateList implements InternalCDOList
       if (newID != element)
       {
         set(i, newID);
+        changed = true;
       }
     }
+
+    return changed;
   }
 
   public InternalCDOList clone(EClassifier classifier)

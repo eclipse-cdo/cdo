@@ -86,7 +86,7 @@ public abstract class CDOFeatureDeltaImpl implements InternalCDOFeatureDelta
     return MessageFormat.format("CDOFeatureDelta[{0}, {1}, {2}]", feature.getName(), getType(), additional);
   }
 
-  public abstract void adjustReferences(CDOReferenceAdjuster referenceAdjuster);
+  public abstract boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster);
 
   protected abstract String toStringAdditional();
 }

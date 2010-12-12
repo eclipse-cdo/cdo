@@ -145,12 +145,19 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   }
 
   @Override
-  public void adjustReferences(CDOReferenceAdjuster referenceAdjuster)
+  public boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster)
   {
     if (value != UNKNOWN_VALUE)
     {
-      value = referenceAdjuster.adjustReference(value);
+      Object adjustedValue = referenceAdjuster.adjustReference(value);
+      if (adjustedValue != value)
+      {
+        value = adjustedValue;
+        return true;
+      }
     }
+
+    return false;
   }
 
   @Override

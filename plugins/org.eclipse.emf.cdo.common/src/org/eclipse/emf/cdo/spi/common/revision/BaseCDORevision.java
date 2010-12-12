@@ -492,15 +492,31 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     setValue(feature, null);
   }
 
-  public void adjustReferences(CDOReferenceAdjuster revisionAdjuster)
+  /**
+   * @since 4.0
+   */
+  public boolean adjustReferences(CDOReferenceAdjuster revisionAdjuster)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Adjusting references for revision {0}", this);
     }
 
-    resourceID = (CDOID)revisionAdjuster.adjustReference(resourceID);
-    containerID = revisionAdjuster.adjustReference(containerID);
+    boolean changed = false;
+
+    CDOID id1 = (CDOID)revisionAdjuster.adjustReference(resourceID);
+    if (id1 != resourceID)
+    {
+      resourceID = id1;
+      changed = true;
+    }
+
+    Object id2 = revisionAdjuster.adjustReference(containerID);
+    if (id2 != containerID)
+    {
+      containerID = id2;
+      changed = true;
+    }
 
     EStructuralFeature[] features = getAllPersistentFeatures();
     for (int i = 0; i < features.length; i++)
@@ -513,7 +529,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
           InternalCDOList list = (InternalCDOList)getValueAsList(i);
           if (list != null)
           {
-            list.adjustReferences(revisionAdjuster, feature);
+            changed |= list.adjustReferences(revisionAdjuster, feature);
           }
         }
         else
@@ -524,10 +540,13 @@ public abstract class BaseCDORevision extends AbstractCDORevision
           if (oldValue != newValue) // Just an optimization for NOOP adjusters
           {
             setValue(i, newValue);
+            changed = true;
           }
         }
       }
     }
+
+    return changed;
   }
 
   public Object getValue(EStructuralFeature feature)

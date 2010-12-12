@@ -60,9 +60,9 @@ public class CDOUnsetFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDO
   }
 
   @Override
-  public void adjustReferences(CDOReferenceAdjuster idMappings)
+  public boolean adjustReferences(CDOReferenceAdjuster adjuster)
   {
-    // Do nothing
+    return false;
   }
 
   @Override

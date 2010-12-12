@@ -34,7 +34,10 @@ public interface InternalCDORevisionDelta extends CDORevisionDelta
 
   public void addFeatureDelta(CDOFeatureDelta delta);
 
-  public void adjustReferences(CDOReferenceAdjuster idMappings);
+  /**
+   * @since 4.0
+   */
+  public boolean adjustReferences(CDOReferenceAdjuster idMappings);
 
   /**
    * @since 3.0

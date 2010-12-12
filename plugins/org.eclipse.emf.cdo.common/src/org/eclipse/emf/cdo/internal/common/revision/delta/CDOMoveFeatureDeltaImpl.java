@@ -175,9 +175,9 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
   }
 
   @Override
-  public void adjustReferences(CDOReferenceAdjuster adjuster)
+  public boolean adjustReferences(CDOReferenceAdjuster adjuster)
   {
-    // Do nothing
+    return false;
   }
 
   @Override

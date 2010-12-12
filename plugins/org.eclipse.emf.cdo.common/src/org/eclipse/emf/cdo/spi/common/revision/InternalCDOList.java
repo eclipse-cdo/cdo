@@ -28,8 +28,10 @@ public interface InternalCDOList extends CDOList
 
   /**
    * Adjusts references according to the passed adjuster and resynchronizes indexes.
+   * 
+   * @since 4.0
    */
-  public void adjustReferences(CDOReferenceAdjuster adjuster, EStructuralFeature feature);
+  public boolean adjustReferences(CDOReferenceAdjuster adjuster, EStructuralFeature feature);
 
   /**
    * Clones the list.

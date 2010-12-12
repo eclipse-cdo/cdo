@@ -91,10 +91,25 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   }
 
   @Override
-  public void adjustReferences(CDOReferenceAdjuster referenceAdjuster)
+  public boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster)
   {
-    newResourceID = (CDOID)referenceAdjuster.adjustReference(newResourceID);
-    newContainerID = referenceAdjuster.adjustReference(newContainerID);
+    boolean changed = false;
+
+    CDOID id1 = (CDOID)referenceAdjuster.adjustReference(newResourceID);
+    if (id1 != newResourceID)
+    {
+      newResourceID = id1;
+      changed = true;
+    }
+
+    Object id2 = referenceAdjuster.adjustReference(newContainerID);
+    if (id2 != newContainerID)
+    {
+      newContainerID = id2;
+      changed = true;
+    }
+
+    return changed;
   }
 
   @Override

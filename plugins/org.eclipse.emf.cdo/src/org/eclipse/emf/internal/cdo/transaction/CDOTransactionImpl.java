@@ -610,7 +610,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return result;
   }
 
-  private void mapLocalIDs(CDOChangeSetData changeSetData)
+  private Map<CDOID, CDOID> mapLocalIDs(CDOChangeSetData changeSetData)
   {
     // Collect needed ID mappings
     Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
@@ -624,7 +624,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         idMappings.put(oldID, newID);
 
         revision.setID(newID);
-
       }
     }
 
@@ -645,7 +644,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)key;
         revisionDelta.adjustReferences(idMapper);
       }
+
+      return idMappings;
     }
+
+    return null;
   }
 
   private InternalCDOObject getObjectIfExists(CDOID id)

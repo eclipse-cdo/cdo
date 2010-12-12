@@ -69,8 +69,9 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
   /**
    * There's a duplicate of this method in WrappedHibernateList!!!
    */
-  public void adjustReferences(CDOReferenceAdjuster revisionAdjuster, EStructuralFeature feature)
+  public boolean adjustReferences(CDOReferenceAdjuster revisionAdjuster, EStructuralFeature feature)
   {
+    boolean changed = false;
     CDOType type = CDOModelUtil.getType(feature);
     int size = size();
     for (int i = 0; i < size; i++)
@@ -81,8 +82,11 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
       if (newID != element) // Just an optimization for NOOP adjusters
       {
         super.set(i, newID);
+        changed = true;
       }
     }
+
+    return changed;
   }
 
   protected void handleAdjustReference(int index, Object element)

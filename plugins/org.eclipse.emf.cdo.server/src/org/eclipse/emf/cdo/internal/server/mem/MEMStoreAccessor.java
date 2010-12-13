@@ -385,6 +385,11 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements IStoreAcces
     writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, monitor);
   }
 
+  public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor)
+  {
+    getStore().rawDelete(id, version, branch);
+  }
+
   public void rawCommit(OMMonitor monitor)
   {
     // Do nothing

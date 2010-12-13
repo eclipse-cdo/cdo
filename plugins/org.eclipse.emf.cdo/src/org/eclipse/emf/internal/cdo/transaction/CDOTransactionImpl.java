@@ -434,7 +434,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         return null;
       }
 
-      return applyChangeSetData(result, ancestorInfo, targetInfo, source);
+      return applyChangeSetData(result, ancestorInfo, targetInfo, source).getElement1();
     }
   }
 
@@ -503,13 +503,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return CDORevisionDeltaUtil.createChangeSet(startInfo.getBranchPoint(), endInfo.getBranchPoint(), data);
   }
 
-  public CDOChangeSetData applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionProvider ancestorProvider,
-      CDORevisionProvider targetProvider, CDOBranchPoint source)
+  public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(
+      CDOChangeSetData changeSetData, CDORevisionProvider ancestorProvider, CDORevisionProvider targetProvider,
+      CDOBranchPoint source)
   {
     CDOChangeSetData result = new CDOChangeSetDataImpl();
+    Pair<Map<CDOID, CDOID>, List<CDOID>> mappedLocalIDs = null;
+
     if (source != null && source.getBranch().isLocal())
     {
-      mapLocalIDs(changeSetData);
+      mappedLocalIDs = mapLocalIDs(changeSetData);
     }
 
     for (CDOIDAndVersion key : changeSetData.getNewObjects())
@@ -607,7 +610,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       sendDeltaNotifications(deltas, detachedObjects, oldRevisions);
     }
 
-    return result;
+    return new Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>>(result, mappedLocalIDs);
   }
 
   private Pair<Map<CDOID, CDOID>, List<CDOID>> mapLocalIDs(CDOChangeSetData changeSetData)
@@ -624,6 +627,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         idMappings.put(oldID, newID);
 
         revision.setID(newID);
+        revision.setVersion(0);
       }
     }
 

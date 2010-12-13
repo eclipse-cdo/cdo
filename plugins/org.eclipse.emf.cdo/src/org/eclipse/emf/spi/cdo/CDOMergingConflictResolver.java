@@ -109,7 +109,8 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
       }
     };
 
-    CDOChangeSetData applied = transaction.applyChangeSetData(result, ancestorProvider, targetProvider, transaction);
+    CDOChangeSetData applied = transaction.applyChangeSetData(result, ancestorProvider, targetProvider, transaction)
+        .getElement1();
 
     ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = transaction.getLastSavepoint().getRevisionDeltas();
     for (CDORevisionKey key : applied.getChangedObjects())

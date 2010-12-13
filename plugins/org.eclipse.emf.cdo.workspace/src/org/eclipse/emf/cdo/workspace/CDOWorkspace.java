@@ -49,9 +49,9 @@ public interface CDOWorkspace extends CDORevisionProvider, Closeable
 
   public CDOTransaction merge(CDOMerger merger, String branchPath, long timeStamp);
 
-  public CDOCommitInfo commit() throws CommitException;
+  public CDOCommitInfo checkin() throws CommitException;
 
-  public CDOCommitInfo commit(String comment) throws CommitException;
+  public CDOCommitInfo checkin(String comment) throws CommitException;
 
   public CDOChangeSetData compare(String branchPath);
 

@@ -608,7 +608,7 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(ORDER_DETAILS + SALES_ORDERS, changes.getDetachedObjects().size());
   }
 
-  public void testCommitAfterModify() throws Exception
+  public void testCheckinAfterModify() throws Exception
   {
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
@@ -625,18 +625,18 @@ public class WorkspaceTest extends AbstractCDOTest
 
     transaction.commit();
 
-    CDOCommitInfo info = workspace.commit();
+    CDOCommitInfo info = workspace.checkin();
     assertEquals(0, info.getNewObjects().size());
     assertEquals(PRODUCTS, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
 
-    CDOWorkspaceBase memory = workspace.getBase();
-    assertEquals(0, memory.getIDs().size());
+    CDOWorkspaceBase base = workspace.getBase();
+    assertEquals(0, base.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
 
-  public void testCommitAfterAdd() throws Exception
+  public void testCheckinAfterAdd() throws Exception
   {
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
     System.err.println("Checkout done");
@@ -650,18 +650,18 @@ public class WorkspaceTest extends AbstractCDOTest
 
     transaction.commit();
 
-    CDOCommitInfo info = workspace.commit();
+    CDOCommitInfo info = workspace.checkin();
     assertEquals(PRODUCTS, info.getNewObjects().size());
     assertEquals(1, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
 
-    CDOWorkspaceBase memory = workspace.getBase();
-    assertEquals(0, memory.getIDs().size());
+    CDOWorkspaceBase base = workspace.getBase();
+    assertEquals(0, base.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
 
-  public void testCommitAfterDetach() throws Exception
+  public void testCheckinAfterDetach() throws Exception
   {
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
@@ -682,18 +682,18 @@ public class WorkspaceTest extends AbstractCDOTest
 
     transaction.commit();
 
-    CDOCommitInfo info = workspace.commit();
+    CDOCommitInfo info = workspace.checkin();
     assertEquals(0, info.getNewObjects().size());
     assertEquals(SALES_ORDERS + PRODUCTS, info.getChangedObjects().size());
     assertEquals(ORDER_DETAILS, info.getDetachedObjects().size());
 
-    CDOWorkspaceBase memory = workspace.getBase();
-    assertEquals(0, memory.getIDs().size());
+    CDOWorkspaceBase base = workspace.getBase();
+    assertEquals(0, base.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
 
-  public void testCommitAfterModify2() throws Exception
+  public void testCheckinAfterModify2() throws Exception
   {
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
@@ -721,18 +721,18 @@ public class WorkspaceTest extends AbstractCDOTest
 
     transaction.commit();
 
-    CDOCommitInfo info = workspace.commit();
+    CDOCommitInfo info = workspace.checkin();
     assertEquals(0, info.getNewObjects().size());
     assertEquals(PRODUCTS, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
 
-    CDOWorkspaceBase memory = workspace.getBase();
-    assertEquals(0, memory.getIDs().size());
+    CDOWorkspaceBase base = workspace.getBase();
+    assertEquals(0, base.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
 
-  public void testCommitAfterAdd2() throws Exception
+  public void testCheckinAfterAdd2() throws Exception
   {
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
@@ -752,18 +752,18 @@ public class WorkspaceTest extends AbstractCDOTest
 
     transaction.commit();
 
-    CDOCommitInfo info = workspace.commit();
+    CDOCommitInfo info = workspace.checkin();
     assertEquals(2 * PRODUCTS, info.getNewObjects().size());
     assertEquals(1, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
 
-    CDOWorkspaceBase memory = workspace.getBase();
-    assertEquals(0, memory.getIDs().size());
+    CDOWorkspaceBase base = workspace.getBase();
+    assertEquals(0, base.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
 
-  public void testCommitAfterDetach2() throws Exception
+  public void testCheckinAfterDetach2() throws Exception
   {
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
@@ -800,18 +800,18 @@ public class WorkspaceTest extends AbstractCDOTest
 
     transaction.commit();
 
-    CDOCommitInfo info = workspace.commit();
+    CDOCommitInfo info = workspace.checkin();
     assertEquals(0, info.getNewObjects().size());
     assertEquals(1 + CUSTOMERS + PRODUCTS, info.getChangedObjects().size());
     assertEquals(ORDER_DETAILS + SALES_ORDERS, info.getDetachedObjects().size());
 
-    CDOWorkspaceBase memory = workspace.getBase();
-    assertEquals(0, memory.getIDs().size());
+    CDOWorkspaceBase base = workspace.getBase();
+    assertEquals(0, base.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
 
-  public void testCommit2AfterModify() throws Exception
+  public void testCheckin2AfterModify() throws Exception
   {
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
@@ -828,13 +828,13 @@ public class WorkspaceTest extends AbstractCDOTest
 
     transaction.commit();
 
-    CDOCommitInfo info = workspace.commit();
+    CDOCommitInfo info = workspace.checkin();
     assertEquals(0, info.getNewObjects().size());
     assertEquals(PRODUCTS, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
 
-    CDOWorkspaceBase memory = workspace.getBase();
-    assertEquals(0, memory.getIDs().size());
+    CDOWorkspaceBase base = workspace.getBase();
+    assertEquals(0, base.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
 
@@ -851,18 +851,18 @@ public class WorkspaceTest extends AbstractCDOTest
 
     transaction.commit();
 
-    info = workspace.commit();
+    info = workspace.checkin();
     assertEquals(0, info.getNewObjects().size());
     assertEquals(PRODUCTS, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
 
-    memory = workspace.getBase();
-    assertEquals(0, memory.getIDs().size());
+    base = workspace.getBase();
+    assertEquals(0, base.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
 
-  public void testCommit2AfterAdd() throws Exception
+  public void testCheckin2AfterAdd() throws Exception
   {
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
@@ -875,13 +875,13 @@ public class WorkspaceTest extends AbstractCDOTest
 
     transaction.commit();
 
-    CDOCommitInfo info = workspace.commit();
+    CDOCommitInfo info = workspace.checkin();
     assertEquals(PRODUCTS, info.getNewObjects().size());
     assertEquals(1, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
 
-    CDOWorkspaceBase memory = workspace.getBase();
-    assertEquals(0, memory.getIDs().size());
+    CDOWorkspaceBase base = workspace.getBase();
+    assertEquals(0, base.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
 
@@ -894,18 +894,18 @@ public class WorkspaceTest extends AbstractCDOTest
 
     transaction.commit();
 
-    info = workspace.commit();
+    info = workspace.checkin();
     assertEquals(PRODUCTS, info.getNewObjects().size());
     assertEquals(1, info.getChangedObjects().size());
     assertEquals(0, info.getDetachedObjects().size());
 
-    memory = workspace.getBase();
-    assertEquals(0, memory.getIDs().size());
+    base = workspace.getBase();
+    assertEquals(0, base.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
 
-  public void testCommit2AfterDetach() throws Exception
+  public void testCheckin2AfterDetach() throws Exception
   {
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
@@ -926,13 +926,13 @@ public class WorkspaceTest extends AbstractCDOTest
 
     transaction.commit();
 
-    CDOCommitInfo info = workspace.commit();
+    CDOCommitInfo info = workspace.checkin();
     assertEquals(0, info.getNewObjects().size());
     assertEquals(SALES_ORDERS + PRODUCTS, info.getChangedObjects().size());
     assertEquals(ORDER_DETAILS, info.getDetachedObjects().size());
 
-    CDOWorkspaceBase memory = workspace.getBase();
-    assertEquals(0, memory.getIDs().size());
+    CDOWorkspaceBase base = workspace.getBase();
+    assertEquals(0, base.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
 
@@ -954,13 +954,13 @@ public class WorkspaceTest extends AbstractCDOTest
 
     transaction.commit();
 
-    info = workspace.commit();
+    info = workspace.checkin();
     assertEquals(0, info.getNewObjects().size());
     assertEquals(1 + CUSTOMERS, info.getChangedObjects().size());
     assertEquals(SALES_ORDERS, info.getDetachedObjects().size());
 
-    memory = workspace.getBase();
-    assertEquals(0, memory.getIDs().size());
+    base = workspace.getBase();
+    assertEquals(0, base.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
@@ -1204,10 +1204,10 @@ public class WorkspaceTest extends AbstractCDOTest
     CDOSessionConfigurationFactory remote = new RemoteSessionConfigurationFactory();
 
     File folder = TMPUtil.createTempFolder("cdo-");
-    CDOWorkspaceBase memory = CDOWorkspaceUtil.createFolderWorkspaceBase(folder);
+    CDOWorkspaceBase base = CDOWorkspaceUtil.createFolderWorkspaceBase(folder);
     System.err.println("CDOWorkspaceBaseline: " + folder.getAbsolutePath());
 
-    InternalCDOWorkspace workspace = (InternalCDOWorkspace)CDOWorkspaceUtil.checkout(localStore, memory, remote,
+    InternalCDOWorkspace workspace = (InternalCDOWorkspace)CDOWorkspaceUtil.checkout(localStore, base, remote,
         branchPath, timeStamp);
 
     workspaces.add(workspace);

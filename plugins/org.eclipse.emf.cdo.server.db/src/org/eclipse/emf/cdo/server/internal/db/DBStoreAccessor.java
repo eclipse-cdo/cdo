@@ -1168,6 +1168,18 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, monitor);
   }
 
+  public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor)
+  {
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    if (eClass == null)
+    {
+      eClass = getObjectType(id);
+    }
+
+    IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
+    mapping.detachObject(this, id, version, branch, CDOBranchPoint.UNSPECIFIED_DATE, monitor.fork());
+  }
+
   public void rawCommit(OMMonitor monitor)
   {
     Async async = monitor.forkAsync();

@@ -670,6 +670,24 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     throw new UnsupportedOperationException();
   }
 
+  public synchronized void rawDelete(CDOID id, int version, CDOBranch branch)
+  {
+    Object listKey = getListKey(id, branch);
+    List<InternalCDORevision> list = revisions.get(listKey);
+    if (list != null)
+    {
+      for (Iterator<InternalCDORevision> it = list.iterator(); it.hasNext();)
+      {
+        InternalCDORevision rev = it.next();
+        if (rev.getVersion() == version)
+        {
+          it.remove();
+          break;
+        }
+      }
+    }
+  }
+
   public synchronized void queryLobs(List<byte[]> ids)
   {
     for (Iterator<byte[]> it = ids.iterator(); it.hasNext();)

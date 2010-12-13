@@ -651,6 +651,19 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
         OMMonitor monitor);
 
     /**
+     * Deletes the revision identified by the given {@link CDORevisionKey key} from the backend represented by this
+     * {@link IStoreAccessor.Raw raw store accessor} without going through a regular
+     * {@link IStoreAccessor#commit(OMMonitor) commit}.
+     * <p>
+     * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
+     * this method are followed by a single final call to the {@link #rawCommit(OMMonitor) rawCommit()} method where the
+     * accumulated backend changes can be committed atomically.
+     * 
+     * @see #rawCommit(OMMonitor)
+     */
+    public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor);
+
+    /**
      * Atomically commits the accumulated backend changes resulting from previous calls to the rawStore() methods.
      * 
      * @param monitor

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
@@ -24,6 +25,8 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
+import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
@@ -89,8 +92,9 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    *          a {@link CDOBranch#isLocal() local} branch.
    * @since 4.0
    */
-  public CDOChangeSetData applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionProvider ancestorProvider,
-      CDORevisionProvider targetProvider, CDOBranchPoint source);
+  public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(
+      CDOChangeSetData changeSetData, CDORevisionProvider ancestorProvider, CDORevisionProvider targetProvider,
+      CDOBranchPoint source);
 
   /**
    * @since 4.0

@@ -148,12 +148,16 @@
 	<target name="install.buckminster" unless="buckminster.exists" depends="get.director">
 		<echo message="Configuring headless buckminster with needed features" />
 		<eclipse.launch app="director">
-			<args>
-				<jvmarg value="-Declipse.p2.mirrors=false" />
+			<properties>
+				<sysproperty key="eclipse.p2.mirrors" value="false" />
 				<!--
-				Hudson Ant property: org.eclipse.update.jarprocessor.pack200=/shared/common/ibm-java2-ppc-50/jre/bin
-				<jvmarg value="-Dorg.eclipse.update.jarprocessor.pack200=${org.eclipse.update.jarprocessor.pack200}" />
+				propagate the pack200 setting if defined
+				<syspropertyset>
+					<propertyref name="org.eclipse.update.jarprocessor.pack200" />
+				</syspropertyset>
 				-->
+			</properties>
+			<args>
 				<arg value="-r" />
 				<arg value="${eclipse.downloads}/${bm.headless.path}" />
 				<arg value="-d" />
@@ -298,6 +302,12 @@
 
 		<echo message="Performing org.eclipse.emf.cdo.site#site.p2" />
 		<buckminster command="perform">
+			<sysproperties>
+				<!-- propagate the pack200 setting if defined -->
+				<syspropertyset>
+					<propertyref name="org.eclipse.update.jarprocessor.pack200" />
+				</syspropertyset>
+			</sysproperties>
 			<cmdargs>
 				<arg value="org.eclipse.emf.cdo.site#site.p2" />
 			</cmdargs>

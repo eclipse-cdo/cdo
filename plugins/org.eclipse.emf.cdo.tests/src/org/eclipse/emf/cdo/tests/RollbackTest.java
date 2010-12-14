@@ -50,21 +50,18 @@ public class RollbackTest extends AbstractCDOTest
 
   protected void flow1(CDOTransaction transaction1, CDOTransaction transaction2) throws CommitException
   {
-    EStructuralFeature category_Products1 = getModel1Package().getCategory_Products();
-
-    EStructuralFeature category_Products2 = getModel1Package().getCategory_Products();
-
     // Client1
     CDOResource resource1 = transaction1.createResource("/test1");
     Company company1 = getModel1Factory().createCompany();
     resource1.getContents().add(company1);
     Category category1 = getModel1Factory().createCategory();
     company1.getCategories().add(category1);
-    transaction1.commit();
+    long commitTime = transaction1.commit().getTimeStamp();
 
     // Client2
+    transaction2.waitForUpdate(commitTime, DEFAULT_TIMEOUT);
     CDOResource resource2 = transaction2.getResource("/test1");
-    Company company2 = (Company)resource2.getContents().get(0);
+    Company company2 = (Company)resource2.getContents().get(0); // Infrequent exceptions in legacy mode
     Category category2 = company2.getCategories().get(0);
     category2.setName("client2");
     Product1 product2 = getModel1Factory().createProduct1();
@@ -81,17 +78,18 @@ public class RollbackTest extends AbstractCDOTest
     CDOObject cdoObjectCategory1 = CDOUtil.getCDOObject(category1);
     CDOObject cdoObjectProduct1 = CDOUtil.getCDOObject(product1);
 
-    msg("Object should contains internalEObject");
+    msg("Object should contain internalEObject");
+    EStructuralFeature category_Products1 = getModel1Package().getCategory_Products();
     Object testObject = cdoObjectCategory1.cdoRevision().data().get(category_Products1, 0);
     assertEquals(product1, testObject);
 
-    transaction1.commit();
+    commitTime = transaction1.commit().getTimeStamp();
 
-    msg("Object should contains CDOID");
+    msg("Object should contain CDOID");
     testObject = cdoObjectCategory1.cdoRevision().data().get(category_Products1, 0);
     assertEquals(cdoObjectProduct1.cdoID(), testObject);
 
-    sleep(500);
+    transaction2.waitForUpdate(commitTime, DEFAULT_TIMEOUT);
 
     // Client2
     assertEquals(true, transaction2.isDirty());
@@ -99,13 +97,14 @@ public class RollbackTest extends AbstractCDOTest
 
     try
     {
-      transaction2.commit();
+      commitTime = transaction2.commit().getTimeStamp();
       fail("CommitException expected");
     }
     catch (CommitException ex)
     {
       // Commit process should no have changed state of the object
       CDOObject cdoObjectCategory2 = CDOUtil.getCDOObject(category2);
+      EStructuralFeature category_Products2 = getModel1Package().getCategory_Products();
       testObject = cdoObjectCategory2.cdoRevision().data().get(category_Products2, 0);
       assertEquals(product2, testObject);
       transaction2.rollback();
@@ -117,13 +116,13 @@ public class RollbackTest extends AbstractCDOTest
     assertEquals("client1", category2.getName());
     category2.setName("client2");
 
-    transaction2.commit();
+    commitTime = transaction2.commit().getTimeStamp();
 
     assertEquals(false, transaction2.isDirty());
     assertEquals(false, transaction2.hasConflict());
     assertEquals("client2", category2.getName());
 
-    sleep(500);
+    transaction1.waitForUpdate(commitTime, DEFAULT_TIMEOUT);
 
     // Client1
     assertEquals(false, transaction1.isDirty());

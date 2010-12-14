@@ -421,8 +421,12 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     String dbName = getStore().getRepository().getName();
     List<String> names = DBUtil.getAllTableNames(connection, dbName);
 
-    String prefix = "SELECT MIN(" + CDODBSchema.ATTRIBUTES_ID + ") FROM " + dbName + ".";
-    String suffix = " WHERE 0>" + CDODBSchema.ATTRIBUTES_BRANCH;
+    String prefix = "SELECT MIN(t." + CDODBSchema.ATTRIBUTES_ID + ") FROM " + dbName + "." + CDODBSchema.CDO_OBJECTS
+        + " AS o, " + dbName + ".";
+
+    String suffix = " AS t WHERE t." + CDODBSchema.ATTRIBUTES_BRANCH + "<0 AND t." + CDODBSchema.ATTRIBUTES_ID + "=o."
+        + CDODBSchema.ATTRIBUTES_ID + " AND t." + CDODBSchema.ATTRIBUTES_CREATED + "=o."
+        + CDODBSchema.ATTRIBUTES_CREATED;
 
     for (String name : names)
     {
@@ -436,10 +440,14 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
         if (resultSet.next())
         {
-          long id = resultSet.getLong(1);
-          if (id < min)
+          Object result = resultSet.getObject(1);
+          if (result instanceof Long)
           {
-            min = id;
+            long id = ((Long)result).longValue();
+            if (id < min)
+            {
+              min = id;
+            }
           }
         }
       }

@@ -62,7 +62,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
   public void notifyChanged(Notification msg)
   {
-    if (msg instanceof CDONotification)
+    if (msg.isTouch() || msg instanceof CDONotification)
     {
       return;
     }

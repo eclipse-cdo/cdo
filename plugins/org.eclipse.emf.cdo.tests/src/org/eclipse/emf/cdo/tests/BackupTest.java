@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model3.File;
 import org.eclipse.emf.cdo.tests.model3.Image;
+import org.eclipse.emf.cdo.tests.model3.Point;
+import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.io.IOUtil;
@@ -132,6 +134,23 @@ public class BackupTest extends AbstractCDOTest
     System.out.println(baos.toString());
   }
 
+  public void testExportCustomDataType() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/res1");
+    resource.getContents().add(createPoligon(new Point(1, 2), new Point(3, 1), new Point(4, 5)));
+    transaction.commit();
+    session.close();
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+    System.out.println(baos.toString());
+  }
+
   public void testImport() throws Exception
   {
     CDOSession session = openSession();
@@ -204,16 +223,16 @@ public class BackupTest extends AbstractCDOTest
   public void testImportClob() throws Exception
   {
     InputStream clobStream = null;
-  
+
     try
     {
       clobStream = OM.BUNDLE.getInputStream("copyright.txt");
       CDOClob clob = new CDOClob(new InputStreamReader(clobStream));
-  
+
       File file = getModel3Factory().createFile();
       file.setName("copyright.txt");
       file.setData(clob);
-  
+
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/res1");
@@ -224,20 +243,20 @@ public class BackupTest extends AbstractCDOTest
     {
       IOUtil.close(clobStream);
     }
-  
+
     InternalRepository repo1 = getRepository();
-  
+
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
     System.out.println(baos.toString());
-  
+
     InternalRepository repo2 = getRepository("repo2", false);
-  
+
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
     importer.importRepository(bais);
-  
+
     sleep(1000000);
   }
 
@@ -254,5 +273,16 @@ public class BackupTest extends AbstractCDOTest
     salesOrder.setId(4711);
     salesOrder.setCustomer(customer);
     return salesOrder;
+  }
+
+  private Polygon createPoligon(Point... points)
+  {
+    Polygon polygon = getModel3Factory().createPolygon();
+    for (Point point : points)
+    {
+      polygon.getPoints().add(point);
+    }
+
+    return polygon;
   }
 }

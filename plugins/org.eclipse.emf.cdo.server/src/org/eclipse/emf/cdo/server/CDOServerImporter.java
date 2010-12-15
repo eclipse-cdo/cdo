@@ -63,6 +63,7 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -580,6 +581,11 @@ public abstract class CDOServerImporter
           return null;
         }
 
+        if (type == null || String.class.getSimpleName().equals(type))
+        {
+          return str;
+        }
+
         if (Object.class.getSimpleName().equals(type))
         {
           return id(str);
@@ -625,9 +631,9 @@ public abstract class CDOServerImporter
           return Double.valueOf(str);
         }
 
-        if (String.class.getSimpleName().equals(type))
+        if (Date.class.getSimpleName().equals(type))
         {
-          return str;
+          return new Date(Long.valueOf(str));
         }
 
         throw new IllegalArgumentException("Invalid type: " + type);

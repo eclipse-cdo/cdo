@@ -46,6 +46,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.OutputStream;
 import java.io.Writer;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -539,9 +540,19 @@ public abstract class CDOServerExporter<OUT>
         out.attribute(FEATURE_ID, HexUtil.bytesToHex(clob.getID()));
         out.attribute(FEATURE_SIZE, clob.getSize());
       }
+      else if (value instanceof Date)
+      {
+        Date date = (Date)value;
+        out.attribute(FEATURE_TYPE, Date.class.getSimpleName());
+        out.attribute(FEATURE_VALUE, date.getTime());
+      }
       else
       {
-        out.attribute(FEATURE_TYPE, type(value));
+        if (!(value instanceof String))
+        {
+          out.attribute(FEATURE_TYPE, type(value));
+        }
+
         out.attributeOrNull(FEATURE_VALUE, value);
       }
     }

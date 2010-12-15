@@ -19,11 +19,14 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model3.File;
 import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
+import org.eclipse.emf.cdo.tests.model5.Doctor;
+import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.io.IOUtil;
@@ -32,6 +35,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Date;
 
 /**
  * @author Eike Stepper
@@ -58,6 +62,25 @@ public class BackupTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/res1");
     resource.getContents().add(createCustomer("Eike"));
+    transaction.commit();
+    session.close();
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+    System.out.println(baos.toString());
+  }
+
+  public void testExportDate() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/res1");
+    PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
+    purchaseOrder.setDate(new Date(1234567));
+    resource.getContents().add(purchaseOrder);
     transaction.commit();
     session.close();
 
@@ -151,6 +174,24 @@ public class BackupTest extends AbstractCDOTest
     System.out.println(baos.toString());
   }
 
+  public void _testExportFeatureMap() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/res1");
+    addFeatureMap(resource);
+
+    transaction.commit();
+    session.close();
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+    System.out.println(baos.toString());
+  }
+
   public void testImport() throws Exception
   {
     CDOSession session = openSession();
@@ -164,6 +205,31 @@ public class BackupTest extends AbstractCDOTest
     SalesOrder salesOrder = createSalesOrder(eike);
     salesOrder.getOrderDetails().add(getModel1Factory().createOrderDetail());
     resource.getContents().add(salesOrder);
+    transaction.commit();
+    session.close();
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+    System.out.println(baos.toString());
+
+    InternalRepository repo2 = getRepository("repo2", false);
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
+    importer.importRepository(bais);
+  }
+
+  public void testImportDate() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/res1");
+    PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
+    purchaseOrder.setDate(new Date(1234567));
+    resource.getContents().add(purchaseOrder);
     transaction.commit();
     session.close();
 
@@ -260,6 +326,29 @@ public class BackupTest extends AbstractCDOTest
     sleep(1000000);
   }
 
+  public void testImportCustomDataType() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/res1");
+    resource.getContents().add(createPoligon(new Point(1, 2), new Point(3, 1), new Point(4, 5)));
+    transaction.commit();
+    session.close();
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+    System.out.println(baos.toString());
+
+    InternalRepository repo2 = getRepository("repo2", false);
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
+    importer.importRepository(bais);
+  }
+
   private Customer createCustomer(String name)
   {
     Customer customer = getModel1Factory().createCustomer();
@@ -284,5 +373,19 @@ public class BackupTest extends AbstractCDOTest
     }
 
     return polygon;
+  }
+
+  private void addFeatureMap(CDOResource resource)
+  {
+    TestFeatureMap featureMap = getModel5Factory().createTestFeatureMap();
+
+    Doctor doctor1 = getModel5Factory().createDoctor();
+    Doctor doctor2 = getModel5Factory().createDoctor();
+    resource.getContents().add(doctor1);
+    resource.getContents().add(doctor2);
+
+    featureMap.getPeople().add(getModel5Package().getTestFeatureMap_Doctors(), doctor1);
+    featureMap.getPeople().add(getModel5Package().getTestFeatureMap_Doctors(), doctor2);
+    resource.getContents().add(featureMap);
   }
 }

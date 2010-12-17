@@ -23,7 +23,7 @@
 	<rm:locator pattern="^org\.eclipse\.m2m\.qvt\.oml(?:\..+)?$" searchPathRef="qvtoml" />
 	<rm:locator pattern="^org\.eclipse\.(?:xpand|xtend)(?:\..+)?$" searchPathRef="xpand" />
 	<rm:locator pattern="^org\.eclipse\.swtbot(?:\..+)?$" searchPathRef="swtbot" />
-	<rm:locator pattern="^org\.apache\.batik(?:\..+)?$" searchPathRef="orbit" failOnError="gmf" />
+	<rm:locator pattern="^org\.apache\.batik(?:\..+)?$" searchPathRef="gmf" />
 	<rm:locator pattern="^org\.apache(?:\..+)?$" searchPathRef="orbit" failOnError="false" />
 	<rm:locator pattern="^org\.w3c(?:\..+)?$" searchPathRef="orbit" />
 	<rm:locator pattern="^com\.google(?:\..+)?$" searchPathRef="orbit" />

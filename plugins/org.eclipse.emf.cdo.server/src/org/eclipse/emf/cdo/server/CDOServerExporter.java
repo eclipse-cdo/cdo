@@ -43,6 +43,10 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
+
+import org.xml.sax.SAXException;
 
 import java.io.OutputStream;
 import java.io.Writer;
@@ -322,6 +326,10 @@ public abstract class CDOServerExporter<OUT>
 
     public static final String FEATURE_TYPE = "type";
 
+    public static final String FEATURE_INNER_FEATURE = "innerFeature";
+
+    public static final String FEATURE_INNER_TYPE = "innerType";
+
     public static final String FEATURE_VALUE = "value";
 
     public static final String FEATURE_ID = "id";
@@ -331,6 +339,8 @@ public abstract class CDOServerExporter<OUT>
     public static final String TYPE_BLOB = "Blob";
 
     public static final String TYPE_CLOB = "Clob";
+
+    public static final String TYPE_FEATURE_MAP = "FeatureMap";
 
     public static final String LOBS = "lobs";
 
@@ -521,36 +531,52 @@ public abstract class CDOServerExporter<OUT>
     {
       out.element(FEATURE);
       out.attribute(FEATURE_NAME, feature.getName());
+      exportFeature(out, feature, FEATURE_TYPE, value);
+    }
+
+    protected void exportFeature(XMLOutput out, EStructuralFeature feature, String featureType, Object value)
+        throws SAXException
+    {
       if (value instanceof CDOID)
       {
-        out.attribute(FEATURE_TYPE, Object.class.getSimpleName());
+        out.attribute(featureType, Object.class.getSimpleName());
         out.attribute(FEATURE_VALUE, str((CDOID)value));
       }
       else if (value instanceof CDOBlob)
       {
         CDOBlob blob = (CDOBlob)value;
-        out.attribute(FEATURE_TYPE, TYPE_BLOB);
+        out.attribute(featureType, TYPE_BLOB);
         out.attribute(FEATURE_ID, HexUtil.bytesToHex(blob.getID()));
         out.attribute(FEATURE_SIZE, blob.getSize());
       }
       else if (value instanceof CDOClob)
       {
         CDOClob clob = (CDOClob)value;
-        out.attribute(FEATURE_TYPE, TYPE_CLOB);
+        out.attribute(featureType, TYPE_CLOB);
         out.attribute(FEATURE_ID, HexUtil.bytesToHex(clob.getID()));
         out.attribute(FEATURE_SIZE, clob.getSize());
       }
       else if (value instanceof Date)
       {
         Date date = (Date)value;
-        out.attribute(FEATURE_TYPE, Date.class.getSimpleName());
+        out.attribute(featureType, Date.class.getSimpleName());
         out.attribute(FEATURE_VALUE, date.getTime());
+      }
+      else if (FeatureMapUtil.isFeatureMap(feature))
+      {
+        FeatureMap.Entry entry = (FeatureMap.Entry)value;
+        EStructuralFeature innerFeature = entry.getEStructuralFeature();
+        Object innerValue = entry.getValue();
+
+        out.attribute(featureType, TYPE_FEATURE_MAP);
+        out.attribute(FEATURE_INNER_FEATURE, innerFeature.getName());
+        exportFeature(out, innerFeature, FEATURE_INNER_TYPE, innerValue);
       }
       else
       {
         if (!(value instanceof String))
         {
-          out.attribute(FEATURE_TYPE, type(value));
+          out.attribute(featureType, type(value));
         }
 
         out.attributeOrNull(FEATURE_VALUE, value);

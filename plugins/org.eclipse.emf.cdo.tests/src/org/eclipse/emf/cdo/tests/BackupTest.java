@@ -174,11 +174,12 @@ public class BackupTest extends AbstractCDOTest
     System.out.println(baos.toString());
   }
 
-  public void _testExportFeatureMap() throws Exception
+  public void testExportFeatureMap() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/res1");
+
     addFeatureMap(resource);
 
     transaction.commit();
@@ -349,6 +350,31 @@ public class BackupTest extends AbstractCDOTest
     importer.importRepository(bais);
   }
 
+  public void testImportFeatureMap() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/res1");
+
+    addFeatureMap(resource);
+
+    transaction.commit();
+    session.close();
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+    System.out.println(baos.toString());
+
+    InternalRepository repo2 = getRepository("repo2", false);
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
+    importer.importRepository(bais);
+  }
+
   private Customer createCustomer(String name)
   {
     Customer customer = getModel1Factory().createCustomer();
@@ -377,15 +403,16 @@ public class BackupTest extends AbstractCDOTest
 
   private void addFeatureMap(CDOResource resource)
   {
-    TestFeatureMap featureMap = getModel5Factory().createTestFeatureMap();
-
     Doctor doctor1 = getModel5Factory().createDoctor();
     Doctor doctor2 = getModel5Factory().createDoctor();
+
     resource.getContents().add(doctor1);
     resource.getContents().add(doctor2);
 
+    TestFeatureMap featureMap = getModel5Factory().createTestFeatureMap();
     featureMap.getPeople().add(getModel5Package().getTestFeatureMap_Doctors(), doctor1);
     featureMap.getPeople().add(getModel5Package().getTestFeatureMap_Doctors(), doctor2);
+
     resource.getContents().add(featureMap);
   }
 }

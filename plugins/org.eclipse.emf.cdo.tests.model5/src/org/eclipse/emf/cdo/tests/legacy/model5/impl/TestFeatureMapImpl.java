@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.BasicFeatureMap;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -62,8 +61,8 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
   protected EList<Manager> managers;
 
   /**
-   * The cached value of the '{@link #getDoctors() <em>Doctors</em>}' containment reference list. <!-- begin-user-doc
-   * --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getDoctors() <em>Doctors</em>}' reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
    * 
    * @see #getDoctors()
    * @generated
@@ -125,7 +124,7 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
   {
     if (doctors == null)
     {
-      doctors = new EObjectContainmentEList<Doctor>(Doctor.class, this, Model5Package.TEST_FEATURE_MAP__DOCTORS);
+      doctors = new EObjectResolvingEList<Doctor>(Doctor.class, this, Model5Package.TEST_FEATURE_MAP__DOCTORS);
     }
     return doctors;
   }
@@ -154,8 +153,6 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
   {
     switch (featureID)
     {
-    case Model5Package.TEST_FEATURE_MAP__DOCTORS:
-      return ((InternalEList<?>)getDoctors()).basicRemove(otherEnd, msgs);
     case Model5Package.TEST_FEATURE_MAP__PEOPLE:
       return ((InternalEList<?>)getPeople()).basicRemove(otherEnd, msgs);
     }

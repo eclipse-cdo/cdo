@@ -19,9 +19,9 @@ public class DISABLE_FeatureMapTest extends FeatureMapTest
 {
   // underscore-disabled because parent is also disabled because of Bug 293405
   @Override
-  public void _testFeatureMaps() throws Exception
+  public void testFeatureMaps() throws Exception
   {
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
-    super._testFeatureMaps();
+    super.testFeatureMaps();
   }
 }

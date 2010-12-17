@@ -56,7 +56,7 @@ public interface TestFeatureMap extends EObject
   EList<Manager> getManagers();
 
   /**
-   * Returns the value of the '<em><b>Doctors</b></em>' containment reference list. The list contents are of type
+   * Returns the value of the '<em><b>Doctors</b></em>' reference list. The list contents are of type
    * {@link org.eclipse.emf.cdo.tests.model5.Doctor}. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Doctors</em>' containment reference list isn't clear, there really should be more of a
@@ -64,9 +64,9 @@ public interface TestFeatureMap extends EObject
    * </p>
    * <!-- end-user-doc -->
    * 
-   * @return the value of the '<em>Doctors</em>' containment reference list.
+   * @return the value of the '<em>Doctors</em>' reference list.
    * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getTestFeatureMap_Doctors()
-   * @model containment="true" transient="true" extendedMetaData="group='#people'"
+   * @model transient="true" extendedMetaData="group='#people'"
    * @generated
    */
   EList<Doctor> getDoctors();

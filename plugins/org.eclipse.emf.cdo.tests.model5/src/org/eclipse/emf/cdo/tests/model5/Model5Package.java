@@ -86,8 +86,7 @@ public interface Model5Package extends EPackage
   int TEST_FEATURE_MAP__MANAGERS = 0;
 
   /**
-   * The feature id for the '<em><b>Doctors</b></em>' containment reference list. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * The feature id for the '<em><b>Doctors</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
@@ -474,11 +473,10 @@ public interface Model5Package extends EPackage
   EReference getTestFeatureMap_Managers();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap#getDoctors <em>Doctors</em>}'. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap#getDoctors
+   * <em>Doctors</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @return the meta object for the containment reference list '<em>Doctors</em>'.
+   * @return the meta object for the reference list '<em>Doctors</em>'.
    * @see org.eclipse.emf.cdo.tests.model5.TestFeatureMap#getDoctors()
    * @see #getTestFeatureMap()
    * @generated
@@ -802,8 +800,8 @@ public interface Model5Package extends EPackage
     EReference TEST_FEATURE_MAP__MANAGERS = eINSTANCE.getTestFeatureMap_Managers();
 
     /**
-     * The meta object literal for the '<em><b>Doctors</b></em>' containment reference list feature. <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>Doctors</b></em>' reference list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
      * 
      * @generated
      */

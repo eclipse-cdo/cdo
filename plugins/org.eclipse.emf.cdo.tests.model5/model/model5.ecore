@@ -11,7 +11,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="doctors" upperBound="-1"
-        eType="#//Doctor" transient="true" containment="true">
+        eType="#//Doctor" transient="true">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="group" value="#people"/>
       </eAnnotations>

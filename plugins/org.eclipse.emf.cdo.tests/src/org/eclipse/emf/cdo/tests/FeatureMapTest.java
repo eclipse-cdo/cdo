@@ -186,44 +186,45 @@ public class FeatureMapTest extends AbstractCDOTest
   {
   }
 
-  public void _testFeatureMaps() throws Exception
+  public void testFeatureMaps() throws Exception
   {
-    {
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
-
-      TestFeatureMap featureMap = getModel5Factory().createTestFeatureMap();
-
-      Doctor doctor1 = getModel5Factory().createDoctor();
-      Doctor doctor2 = getModel5Factory().createDoctor();
-      resource.getContents().add(doctor1);
-      resource.getContents().add(doctor2);
-
-      featureMap.getPeople().add(getModel5Package().getTestFeatureMap_Doctors(), doctor1);
-      featureMap.getPeople().add(getModel5Package().getTestFeatureMap_Doctors(), doctor2);
-
-      resource.getContents().add(featureMap);
-
-      assertEquals(doctor1, featureMap.getPeople().get(0).getValue());
-      List<?> listForFeatureCustomers = (List<?>)featureMap.getPeople().get(
-          getModel5Package().getTestFeatureMap_Doctors(), true);
-      assertEquals(doctor1, listForFeatureCustomers.get(0));
-      assertEquals(doctor2, listForFeatureCustomers.get(1));
-      transaction.commit();
-    }
-
-    clearCache(getRepository().getRevisionManager());
+    EReference feature = getModel5Package().getTestFeatureMap_Doctors();
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/res1");
+    CDOResource resource = transaction.createResource("/res1");
 
-    TestFeatureMap featureMap = (TestFeatureMap)resource.getContents().get(0);
-    List<?> listForFeatureCustomers = (List<?>)featureMap.getPeople().get(
-        getModel5Package().getTestFeatureMap_Doctors(), true);
-    assertTrue(listForFeatureCustomers.get(0) instanceof Doctor);
-    assertTrue(listForFeatureCustomers.get(1) instanceof Doctor);
+    TestFeatureMap featureMap = getModel5Factory().createTestFeatureMap();
+    FeatureMap people = featureMap.getPeople();
+
+    Doctor doctor1 = getModel5Factory().createDoctor();
+    Doctor doctor2 = getModel5Factory().createDoctor();
+
+    resource.getContents().add(doctor1);
+    resource.getContents().add(doctor2);
+
+    people.add(feature, doctor1);
+    people.add(feature, doctor2);
+
+    int featureMapIndex = resource.getContents().size();
+    resource.getContents().add(featureMap);
+
+    assertEquals(doctor1, people.get(0).getValue());
+    List<?> doctors = (List<?>)people.get(feature, true);
+    assertEquals(doctor1, doctors.get(0));
+    assertEquals(doctor2, doctors.get(1));
+    transaction.commit();
+
+    clearCache(getRepository().getRevisionManager());
+
+    session = openSession();
+    transaction = session.openTransaction();
+    resource = transaction.getResource("/res1");
+
+    featureMap = (TestFeatureMap)resource.getContents().get(featureMapIndex);
+    doctors = (List<?>)featureMap.getPeople().get(feature, true);
+    assertInstanceOf(Doctor.class, doctors.get(0));
+    assertInstanceOf(Doctor.class, doctors.get(1));
   }
 
   private void purgeCaches()

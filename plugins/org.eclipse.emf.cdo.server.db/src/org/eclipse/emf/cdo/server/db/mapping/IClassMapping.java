@@ -176,7 +176,7 @@ public interface IClassMapping
    * Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.
    * DetachedCDORevisions must also be considered!
    * 
-   * @see IStoreAccessor#readChangeSet(CDOChangeSetSegment...)
+   * @see IStoreAccessor#readChangeSet(OMMonitor, CDOChangeSetSegment...)
    * @since 3.0
    */
   public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, CDOChangeSetSegment[] segments);

@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoad
 import com.objy.db.app.ooObj;
 import com.objy.db.util.ooTreeSetX;
 
-import java.util.Iterator;
+import java.util.SortedSet;
 
 /**
  * @author Ibrahim Sallam
@@ -113,7 +113,7 @@ public class ObjyBranch extends ooObj
     return revisions.size();
   }
 
-  public Iterator<?> getRevisions()
+  public SortedSet<?> getRevisions()
   {
     fetch();
     // // we don't want to allocate the ooTreeSetX object if the branch is empty.
@@ -122,7 +122,7 @@ public class ObjyBranch extends ooObj
     // return new ArrayList<Object>().iterator();
     // }
 
-    return revisions.iterator();
+    return revisions;
   }
 
   public BranchInfo getBranchInfo()

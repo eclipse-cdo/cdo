@@ -404,7 +404,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     throw new UnsupportedOperationException();
   }
 
-  public Set<CDOID> readChangeSet(CDOChangeSetSegment... segments)
+  public Set<CDOID> readChangeSet(OMMonitor monitor, CDOChangeSetSegment... segments)
   {
     // TODO: implement HibernateStoreAccessor.readChangeSet(segments)
     throw new UnsupportedOperationException();

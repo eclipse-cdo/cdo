@@ -303,7 +303,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
     }
   }
 
-  public Set<CDOID> readChangeSet(CDOChangeSetSegment... segments)
+  public Set<CDOID> readChangeSet(OMMonitor monitor, CDOChangeSetSegment... segments)
   {
     // TODO: implement DB4OStoreAccessor.readChangeSet(segments)
     throw new UnsupportedOperationException();

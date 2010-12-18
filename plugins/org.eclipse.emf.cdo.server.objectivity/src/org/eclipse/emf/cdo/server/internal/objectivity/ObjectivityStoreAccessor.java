@@ -86,6 +86,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 
 /**
  * @author Simon McDuff
@@ -1191,22 +1192,50 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     throw new UnsupportedOperationException();
   }
 
-  public Set<CDOID> readChangeSet(CDOChangeSetSegment... segments)
+  public Set<CDOID> readChangeSet(OMMonitor monitor, CDOChangeSetSegment... segments)
   {
-    ensureSessionBegin();
+    monitor.begin(segments.length);
 
-    ObjyBranchManager objyBranchManager = objySession.getBranchManager(getRepositoryName());
-    ObjyObjectManager objyObjectManager = objySession.getObjectManager();
-
-    Set<CDOID> results = new HashSet<CDOID>();
-
-    // get all revisions that has branchId, and creation timestamp, and perhaps revised before
-    // end timestamp or haven't been revised.
-    for (CDOChangeSetSegment segment : segments)
+    try
     {
-      ObjyBranch objyBranch = objyBranchManager.getBranch(segment.getBranch().getID());
-      // query the branch revisions for the time range.
-      Iterator<?> objItr = objyBranch.getRevisions();
+      ensureSessionBegin();
+
+      ObjyBranchManager objyBranchManager = objySession.getBranchManager(getRepositoryName());
+      ObjyObjectManager objyObjectManager = objySession.getObjectManager();
+      Set<CDOID> results = new HashSet<CDOID>();
+
+      // get all revisions that has branchId, and creation timestamp, and perhaps revised before
+      // end timestamp or haven't been revised.
+      for (CDOChangeSetSegment segment : segments)
+      {
+        ObjyBranch objyBranch = objyBranchManager.getBranch(segment.getBranch().getID());
+        // query the branch revisions for the time range.
+        SortedSet<?> revisions = objyBranch.getRevisions();
+        readChangeSet(monitor.fork(), segment, objyObjectManager, revisions, results);
+      }
+
+      if (TRACER_DEBUG.isEnabled())
+      {
+        TRACER_DEBUG.trace("ChangeSet " + results.toString());
+      }
+
+      return results;
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  protected void readChangeSet(OMMonitor monitor, CDOChangeSetSegment segment, ObjyObjectManager objyObjectManager,
+      SortedSet<?> revisions, Set<CDOID> results)
+  {
+    int size = revisions.size();
+    monitor.begin(size);
+
+    try
+    {
+      Iterator<?> objItr = revisions.iterator();
       while (objItr.hasNext())
       {
         ooObj anObj = (ooObj)objItr.next();
@@ -1217,13 +1246,14 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
         {
           results.add(objyObject.getRevisionId());
         }
+
+        monitor.worked();
       }
     }
-    if (TRACER_DEBUG.isEnabled())
+    finally
     {
-      TRACER_DEBUG.trace("ChangeSet " + results.toString());
+      monitor.done();
     }
-    return results;
   }
 
   public void queryLobs(List<byte[]> ids)

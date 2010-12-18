@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
@@ -30,7 +32,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class LoadMergeDataIndication extends CDOReadIndication
+public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitoring
 {
   private CDORevisionAvailabilityInfo ancestorInfo;
 
@@ -44,47 +46,79 @@ public class LoadMergeDataIndication extends CDOReadIndication
   }
 
   @Override
-  protected void indicating(CDODataInput in) throws IOException
+  protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
-    ancestorInfo = readRevisionAvailabilityInfo(in);
-    targetInfo = readRevisionAvailabilityInfo(in);
-    sourceInfo = readRevisionAvailabilityInfo(in);
+    monitor.begin(3);
+
+    try
+    {
+      ancestorInfo = readRevisionAvailabilityInfo(in, monitor.fork());
+      targetInfo = readRevisionAvailabilityInfo(in, monitor.fork());
+      sourceInfo = readRevisionAvailabilityInfo(in, monitor.fork());
+    }
+    finally
+    {
+      monitor.done();
+    }
   }
 
-  private CDORevisionAvailabilityInfo readRevisionAvailabilityInfo(CDODataInput in) throws IOException
+  private CDORevisionAvailabilityInfo readRevisionAvailabilityInfo(CDODataInput in, OMMonitor monitor)
+      throws IOException
   {
     CDOBranchPoint branchPoint = in.readCDOBranchPoint();
     CDORevisionAvailabilityInfo info = new CDORevisionAvailabilityInfo(branchPoint);
-    int size = in.readInt();
-    for (int i = 0; i < size; i++)
-    {
-      CDOID id = in.readCDOID();
-      info.getAvailableRevisions().put(id, null);
-    }
 
-    return info;
+    int size = in.readInt();
+    monitor.begin(size);
+
+    try
+    {
+      for (int i = 0; i < size; i++)
+      {
+        CDOID id = in.readCDOID();
+        info.getAvailableRevisions().put(id, null);
+        monitor.worked();
+      }
+
+      return info;
+    }
+    finally
+    {
+      monitor.done();
+    }
   }
 
   @Override
-  protected void responding(final CDODataOutput out) throws IOException
+  protected void responding(CDODataOutput out, OMMonitor monitor) throws Exception
   {
-    InternalRepository repository = getRepository();
-    Set<CDOID> ids = repository.getMergeData(ancestorInfo, targetInfo, sourceInfo);
+    monitor.begin(5);
 
-    out.writeInt(ids.size());
-    for (CDOID id : ids)
+    try
     {
-      out.writeCDOID(id);
-    }
+      InternalRepository repository = getRepository();
+      Set<CDOID> ids = repository.getMergeData(ancestorInfo, targetInfo, sourceInfo, monitor.fork());
 
-    Set<CDORevisionKey> writtenRevisions = new HashSet<CDORevisionKey>();
-    writeRevisionAvailabilityInfo(out, ancestorInfo, writtenRevisions);
-    writeRevisionAvailabilityInfo(out, targetInfo, writtenRevisions);
-    writeRevisionAvailabilityInfo(out, sourceInfo, writtenRevisions);
+      out.writeInt(ids.size());
+      for (CDOID id : ids)
+      {
+        out.writeCDOID(id);
+      }
+
+      monitor.worked();
+
+      Set<CDORevisionKey> writtenRevisions = new HashSet<CDORevisionKey>();
+      writeRevisionAvailabilityInfo(out, ancestorInfo, writtenRevisions, monitor.fork());
+      writeRevisionAvailabilityInfo(out, targetInfo, writtenRevisions, monitor.fork());
+      writeRevisionAvailabilityInfo(out, sourceInfo, writtenRevisions, monitor.fork());
+    }
+    finally
+    {
+      monitor.done();
+    }
   }
 
   private void writeRevisionAvailabilityInfo(final CDODataOutput out, CDORevisionAvailabilityInfo info,
-      Set<CDORevisionKey> writtenRevisions) throws IOException
+      Set<CDORevisionKey> writtenRevisions, OMMonitor monitor) throws IOException
   {
     Collection<CDORevisionKey> revisions = info.getAvailableRevisions().values();
     for (Iterator<CDORevisionKey> it = revisions.iterator(); it.hasNext();)
@@ -96,20 +130,32 @@ public class LoadMergeDataIndication extends CDOReadIndication
       }
     }
 
-    out.writeInt(revisions.size());
-    for (CDORevisionKey revision : revisions)
+    int size = revisions.size();
+    out.writeInt(size);
+    monitor.begin(size);
+
+    try
     {
-      CDORevisionKey key = CDORevisionUtil.copyRevisionKey(revision);
-      if (writtenRevisions.add(key))
+      for (CDORevisionKey revision : revisions)
       {
-        out.writeBoolean(true);
-        out.writeCDORevision((CDORevision)revision, CDORevision.UNCHUNKED);
+        CDORevisionKey key = CDORevisionUtil.copyRevisionKey(revision);
+        if (writtenRevisions.add(key))
+        {
+          out.writeBoolean(true);
+          out.writeCDORevision((CDORevision)revision, CDORevision.UNCHUNKED);
+        }
+        else
+        {
+          out.writeBoolean(false);
+          out.writeCDORevisionKey(key);
+        }
+
+        monitor.worked();
       }
-      else
-      {
-        out.writeBoolean(false);
-        out.writeCDORevisionKey(key);
-      }
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 }

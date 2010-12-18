@@ -1036,10 +1036,10 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
   }
 
-  public Set<CDOID> readChangeSet(CDOChangeSetSegment... segments)
+  public Set<CDOID> readChangeSet(OMMonitor monitor, CDOChangeSetSegment... segments)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    return mappingStrategy.readChangeSet(this, segments);
+    return mappingStrategy.readChangeSet(this, monitor, segments);
   }
 
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,

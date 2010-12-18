@@ -121,8 +121,11 @@ public interface InternalRepository extends IRepository, PackageLoader, BranchLo
 
   public CDOChangeSetData getChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint);
 
+  /**
+   * @since 4.0
+   */
   public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo ancestorInfo, CDORevisionAvailabilityInfo targetInfo,
-      CDORevisionAvailabilityInfo sourceInfo);
+      CDORevisionAvailabilityInfo sourceInfo, OMMonitor monitor);
 
   /**
    * @since 4.0

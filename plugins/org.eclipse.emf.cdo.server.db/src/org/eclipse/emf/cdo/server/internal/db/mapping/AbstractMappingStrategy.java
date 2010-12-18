@@ -194,16 +194,36 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     }
   }
 
-  public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, CDOChangeSetSegment[] segments)
+  public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, OMMonitor monitor, CDOChangeSetSegment[] segments)
   {
     Set<CDOID> result = new HashSet<CDOID>();
-    for (IClassMapping mapping : getClassMappings().values())
-    {
-      Set<CDOID> ids = mapping.readChangeSet(accessor, segments);
-      result.addAll(ids);
-    }
+    Collection<IClassMapping> classMappings = getClassMappings().values();
 
-    return result;
+    monitor.begin(classMappings.size());
+
+    try
+    {
+      for (IClassMapping mapping : classMappings)
+      {
+        Async async = monitor.forkAsync();
+
+        try
+        {
+          Set<CDOID> ids = mapping.readChangeSet(accessor, segments);
+          result.addAll(ids);
+        }
+        finally
+        {
+          async.stop();
+        }
+      }
+
+      return result;
+    }
+    finally
+    {
+      monitor.done();
+    }
   }
 
   public CloseableIterator<CDOID> readObjectIDs(IDBStoreAccessor accessor)

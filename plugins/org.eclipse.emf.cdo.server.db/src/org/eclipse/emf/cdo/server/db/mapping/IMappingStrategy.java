@@ -311,10 +311,10 @@ public interface IMappingStrategy
    * Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.
    * DetachedCDORevisions must also be considered!
    * 
-   * @see IStoreAccessor#readChangeSet(CDOChangeSetSegment...)
-   * @since 3.0
+   * @see IStoreAccessor#readChangeSet(OMMonitor, CDOChangeSetSegment...)
+   * @since 4.0
    */
-  public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, CDOChangeSetSegment[] segments);
+  public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, OMMonitor monitor, CDOChangeSetSegment[] segments);
 
   /**
    * @since 3.0

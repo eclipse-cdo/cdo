@@ -152,9 +152,9 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.
    * DetachedCDORevisions must also be considered!
    * 
-   * @since 3.0
+   * @since 4.0
    */
-  public Set<CDOID> readChangeSet(CDOChangeSetSegment... segments);
+  public Set<CDOID> readChangeSet(OMMonitor monitor, CDOChangeSetSegment... segments);
 
   /**
    * Returns the <code>CDOID</code> of the resource node with the given folderID and name if a resource with this

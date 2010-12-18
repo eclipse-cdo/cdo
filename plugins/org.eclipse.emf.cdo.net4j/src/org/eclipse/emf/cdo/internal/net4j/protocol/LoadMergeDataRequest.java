@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -27,7 +29,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class LoadMergeDataRequest extends CDOClientRequest<Set<CDOID>>
+public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<Set<CDOID>>
 {
   private CDORevisionAvailabilityInfo ancestorInfo;
 
@@ -45,73 +47,119 @@ public class LoadMergeDataRequest extends CDOClientRequest<Set<CDOID>>
   }
 
   @Override
-  protected void requesting(CDODataOutput out) throws IOException
+  protected void requesting(CDODataOutput out, OMMonitor monitor) throws IOException
   {
-    writeRevisionAvailabilityInfo(out, ancestorInfo);
-    writeRevisionAvailabilityInfo(out, targetInfo);
-    writeRevisionAvailabilityInfo(out, sourceInfo);
+    monitor.begin(3);
+
+    try
+    {
+      writeRevisionAvailabilityInfo(out, ancestorInfo, monitor.fork());
+      writeRevisionAvailabilityInfo(out, targetInfo, monitor.fork());
+      writeRevisionAvailabilityInfo(out, sourceInfo, monitor.fork());
+    }
+    finally
+    {
+      monitor.done();
+    }
   }
 
-  private void writeRevisionAvailabilityInfo(CDODataOutput out, CDORevisionAvailabilityInfo info) throws IOException
+  private void writeRevisionAvailabilityInfo(CDODataOutput out, CDORevisionAvailabilityInfo info, OMMonitor monitor)
+      throws IOException
   {
-    out.writeCDOBranchPoint(info.getBranchPoint());
     Set<CDOID> availableRevisions = info.getAvailableRevisions().keySet();
-    out.writeInt(availableRevisions.size());
-    for (CDOID id : availableRevisions)
+    int size = availableRevisions.size();
+
+    out.writeCDOBranchPoint(info.getBranchPoint());
+    out.writeInt(size);
+
+    monitor.begin(size);
+
+    try
     {
-      out.writeCDOID(id);
+      for (CDOID id : availableRevisions)
+      {
+        out.writeCDOID(id);
+        monitor.worked();
+      }
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 
   @Override
-  protected Set<CDOID> confirming(CDODataInput in) throws IOException
+  protected Set<CDOID> confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
     Set<CDOID> result = new HashSet<CDOID>();
     int size = in.readInt();
-    for (int i = 0; i < size; i++)
-    {
-      CDOID id = in.readCDOID();
-      result.add(id);
-    }
 
-    readRevisionAvailabilityInfo(in, ancestorInfo, result);
-    readRevisionAvailabilityInfo(in, targetInfo, result);
-    readRevisionAvailabilityInfo(in, sourceInfo, result);
-    return result;
+    monitor.begin(size + 3);
+
+    try
+    {
+      for (int i = 0; i < size; i++)
+      {
+        CDOID id = in.readCDOID();
+        result.add(id);
+        monitor.worked();
+      }
+
+      readRevisionAvailabilityInfo(in, ancestorInfo, result, monitor.fork());
+      readRevisionAvailabilityInfo(in, targetInfo, result, monitor.fork());
+      readRevisionAvailabilityInfo(in, sourceInfo, result, monitor.fork());
+      return result;
+    }
+    finally
+    {
+      monitor.done();
+    }
   }
 
-  private void readRevisionAvailabilityInfo(CDODataInput in, CDORevisionAvailabilityInfo info, Set<CDOID> result)
-      throws IOException
+  private void readRevisionAvailabilityInfo(CDODataInput in, CDORevisionAvailabilityInfo info, Set<CDOID> result,
+      OMMonitor monitor) throws IOException
   {
     int size = in.readInt();
-    for (int i = 0; i < size; i++)
+    monitor.begin(size + 1);
+
+    try
     {
-      CDORevision revision;
-      if (in.readBoolean())
+      for (int i = 0; i < size; i++)
       {
-        revision = in.readCDORevision();
-      }
-      else
-      {
-        CDORevisionKey key = in.readCDORevisionKey();
-        revision = getRevision(key, ancestorInfo);
-        if (revision == null)
+        CDORevision revision;
+        if (in.readBoolean())
         {
-          revision = getRevision(key, targetInfo);
+          revision = in.readCDORevision();
+        }
+        else
+        {
+          CDORevisionKey key = in.readCDORevisionKey();
+          revision = getRevision(key, ancestorInfo);
+          if (revision == null)
+          {
+            revision = getRevision(key, targetInfo);
+          }
+        }
+
+        info.addRevision(revision);
+        monitor.worked();
+      }
+
+      Set<Map.Entry<CDOID, CDORevisionKey>> entrySet = info.getAvailableRevisions().entrySet();
+      for (Iterator<Map.Entry<CDOID, CDORevisionKey>> it = entrySet.iterator(); it.hasNext();)
+      {
+        Map.Entry<CDOID, CDORevisionKey> entry = it.next();
+        if (!result.contains(entry.getKey()))
+        {
+          it.remove();
         }
       }
 
-      info.addRevision(revision);
+      monitor.worked();
     }
-
-    Set<Map.Entry<CDOID, CDORevisionKey>> entrySet = info.getAvailableRevisions().entrySet();
-    for (Iterator<Map.Entry<CDOID, CDORevisionKey>> it = entrySet.iterator(); it.hasNext();)
+    finally
     {
-      Map.Entry<CDOID, CDORevisionKey> entry = it.next();
-      if (!result.contains(entry.getKey()))
-      {
-        it.remove();
-      }
+      monitor.done();
     }
   }
 

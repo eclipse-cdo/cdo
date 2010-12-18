@@ -478,7 +478,7 @@ public class ObjyBranchManagementTest
     {
       dbStore.begin();
       ObjyBranch objyBranch = dbStore.getBranchManager().getBranch(branchId);
-      Iterator<?> itr = objyBranch.getRevisions();
+      Iterator<?> itr = objyBranch.getRevisions().iterator();
       List<Temp> actualList = new ArrayList<Temp>();
       while (itr.hasNext())
       {

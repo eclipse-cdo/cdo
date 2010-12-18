@@ -191,7 +191,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements IStoreAcces
     getStore().loadCommitInfos(branch, startTime, endTime, handler);
   }
 
-  public Set<CDOID> readChangeSet(CDOChangeSetSegment... segments)
+  public Set<CDOID> readChangeSet(OMMonitor monitor, CDOChangeSetSegment... segments)
   {
     return getStore().readChangeSet(segments);
   }

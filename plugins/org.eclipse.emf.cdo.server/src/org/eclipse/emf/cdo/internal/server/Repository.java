@@ -1082,50 +1082,71 @@ public class Repository extends Container<Object> implements InternalRepository
     CDOChangeSetSegment[] segments = CDOChangeSetSegment.createFrom(startPoint, endPoint);
 
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-    Set<CDOID> ids = accessor.readChangeSet(segments);
+    Set<CDOID> ids = accessor.readChangeSet(new Monitor(), segments);
 
     return CDORevisionDeltaUtil.createChangeSetData(ids, startPoint, endPoint, revisionManager);
   }
 
   public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo ancestorInfo, CDORevisionAvailabilityInfo targetInfo,
-      CDORevisionAvailabilityInfo sourceInfo)
+      CDORevisionAvailabilityInfo sourceInfo, OMMonitor monitor)
   {
     CDOBranchPoint ancestor = ancestorInfo.getBranchPoint();
     CDOBranchPoint target = targetInfo.getBranchPoint();
     CDOBranchPoint source = sourceInfo.getBranchPoint();
 
-    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-    Set<CDOID> ids = accessor.readChangeSet(CDOChangeSetSegment.createFrom(ancestor, target));
-    ids.addAll(accessor.readChangeSet(CDOChangeSetSegment.createFrom(ancestor, source)));
+    monitor.begin(5);
 
-    loadMergeData(ids, ancestorInfo);
-    loadMergeData(ids, targetInfo);
-    loadMergeData(ids, sourceInfo);
+    try
+    {
+      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+      Set<CDOID> ids = accessor.readChangeSet(monitor.fork(), CDOChangeSetSegment.createFrom(ancestor, target));
+      ids.addAll(accessor.readChangeSet(monitor.fork(), CDOChangeSetSegment.createFrom(ancestor, source)));
 
-    return ids;
+      loadMergeData(ids, ancestorInfo, monitor.fork());
+      loadMergeData(ids, targetInfo, monitor.fork());
+      loadMergeData(ids, sourceInfo, monitor.fork());
+
+      return ids;
+    }
+    finally
+    {
+      monitor.done();
+    }
   }
 
-  private void loadMergeData(Set<CDOID> ids, CDORevisionAvailabilityInfo info)
+  private void loadMergeData(Set<CDOID> ids, CDORevisionAvailabilityInfo info, OMMonitor monitor)
   {
-    CDOBranchPoint branchPoint = info.getBranchPoint();
-    for (CDOID id : ids)
+    int size = ids.size();
+    monitor.begin(size);
+
+    try
     {
-      if (info.containsRevision(id))
+      CDOBranchPoint branchPoint = info.getBranchPoint();
+      for (CDOID id : ids)
       {
-        info.removeRevision(id);
-      }
-      else
-      {
-        InternalCDORevision revision = getRevisionFromBranch(id, branchPoint);
-        if (revision != null)
-        {
-          info.addRevision(revision);
-        }
-        else
+        if (info.containsRevision(id))
         {
           info.removeRevision(id);
         }
+        else
+        {
+          InternalCDORevision revision = getRevisionFromBranch(id, branchPoint);
+          if (revision != null)
+          {
+            info.addRevision(revision);
+          }
+          else
+          {
+            info.removeRevision(id);
+          }
+        }
+
+        monitor.worked();
       }
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 

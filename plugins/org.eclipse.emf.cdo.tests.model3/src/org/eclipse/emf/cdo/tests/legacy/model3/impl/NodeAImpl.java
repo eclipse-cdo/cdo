@@ -31,20 +31,20 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl#getChildren <em>Children</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl#getOtherNodes <em>Other Nodes</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl#getChildren <em>Children</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl#getOtherNodes <em>Other Nodes</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class NodeAImpl extends EObjectImpl implements NodeA
 {
   /**
-   * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
-   * <!-- begin-user-doc
+   * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
+   * 
    * @see #getChildren()
    * @generated
    * @ordered
@@ -62,8 +62,8 @@ public class NodeAImpl extends EObjectImpl implements NodeA
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -71,9 +71,9 @@ public class NodeAImpl extends EObjectImpl implements NodeA
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getOtherNodes() <em>Other Nodes</em>}' reference list.
-   * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getOtherNodes() <em>Other Nodes</em>}' reference list. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #getOtherNodes()
    * @generated
    * @ordered
@@ -82,6 +82,7 @@ public class NodeAImpl extends EObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected NodeAImpl()
@@ -91,6 +92,7 @@ public class NodeAImpl extends EObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -101,6 +103,7 @@ public class NodeAImpl extends EObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EList<NodeA> getChildren()
@@ -114,6 +117,7 @@ public class NodeAImpl extends EObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -123,6 +127,7 @@ public class NodeAImpl extends EObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -135,6 +140,7 @@ public class NodeAImpl extends EObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EList<NodeA> getOtherNodes()
@@ -148,6 +154,7 @@ public class NodeAImpl extends EObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -163,6 +170,7 @@ public class NodeAImpl extends EObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -182,6 +190,7 @@ public class NodeAImpl extends EObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -207,6 +216,7 @@ public class NodeAImpl extends EObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -229,6 +239,7 @@ public class NodeAImpl extends EObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -248,6 +259,7 @@ public class NodeAImpl extends EObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

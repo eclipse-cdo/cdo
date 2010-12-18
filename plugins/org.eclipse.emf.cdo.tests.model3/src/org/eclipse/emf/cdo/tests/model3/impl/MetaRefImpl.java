@@ -17,6 +17,7 @@ import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 
 /**
  * <!-- import org.eclipse.emf.ecore.EClass; import org.eclipse.emf.ecore.EPackage; begin-user-doc --> An implementation
@@ -34,6 +35,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected MetaRefImpl()
@@ -43,6 +45,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -53,6 +56,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -63,6 +67,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EPackage getEPackageRef()
@@ -72,11 +77,52 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setEPackageRef(EPackage newEPackageRef)
   {
     eSet(Model3Package.Literals.META_REF__EPACKAGE_REF, newEPackageRef);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getEClassRef()
+  {
+    return (EClass)eGet(Model3Package.Literals.META_REF__ECLASS_REF, true);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public void setEClassRef(EClass newEClassRef)
+  {
+    eSet(Model3Package.Literals.META_REF__ECLASS_REF, newEClassRef);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getEReferenceRef()
+  {
+    return (EReference)eGet(Model3Package.Literals.META_REF__EREFERENCE_REF, true);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public void setEReferenceRef(EReference newEReferenceRef)
+  {
+    eSet(Model3Package.Literals.META_REF__EREFERENCE_REF, newEReferenceRef);
   }
 
 } // MetaRefImpl

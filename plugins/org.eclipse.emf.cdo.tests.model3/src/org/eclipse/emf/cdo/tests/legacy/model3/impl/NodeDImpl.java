@@ -32,22 +32,22 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl#getChildren <em>Children</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl#getParent <em>Parent</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl#getOtherNodes <em>Other Nodes</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl#getOppositeNode <em>Opposite Node</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl#getChildren <em>Children</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl#getParent <em>Parent</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl#getOtherNodes <em>Other Nodes</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl#getOppositeNode <em>Opposite Node</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class NodeDImpl extends EObjectImpl implements NodeD
 {
   /**
-   * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
-   * <!-- begin-user-doc
+   * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
+   * 
    * @see #getChildren()
    * @generated
    * @ordered
@@ -65,8 +65,8 @@ public class NodeDImpl extends EObjectImpl implements NodeD
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -74,9 +74,9 @@ public class NodeDImpl extends EObjectImpl implements NodeD
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getOtherNodes() <em>Other Nodes</em>}' reference list.
-   * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getOtherNodes() <em>Other Nodes</em>}' reference list. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #getOtherNodes()
    * @generated
    * @ordered
@@ -84,9 +84,9 @@ public class NodeDImpl extends EObjectImpl implements NodeD
   protected EList<NodeD> otherNodes;
 
   /**
-   * The cached value of the '{@link #getOppositeNode() <em>Opposite Node</em>}' reference.
-   * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getOppositeNode() <em>Opposite Node</em>}' reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getOppositeNode()
    * @generated
    * @ordered
@@ -95,6 +95,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected NodeDImpl()
@@ -104,6 +105,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -114,6 +116,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EList<NodeD> getChildren()
@@ -128,6 +131,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public NodeD getParent()
@@ -139,6 +143,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public NotificationChain basicSetParent(NodeD newParent, NotificationChain msgs)
@@ -149,6 +154,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setParent(NodeD newParent)
@@ -173,6 +179,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -182,6 +189,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -194,6 +202,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EList<NodeD> getOtherNodes()
@@ -208,6 +217,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public NodeD getOppositeNode()
@@ -228,6 +238,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public NodeD basicGetOppositeNode()
@@ -237,6 +248,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public NotificationChain basicSetOppositeNode(NodeD newOppositeNode, NotificationChain msgs)
@@ -257,6 +269,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setOppositeNode(NodeD newOppositeNode)
@@ -281,6 +294,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -308,6 +322,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -329,6 +344,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -344,6 +360,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -369,6 +386,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -400,6 +418,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -428,6 +447,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -451,6 +471,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

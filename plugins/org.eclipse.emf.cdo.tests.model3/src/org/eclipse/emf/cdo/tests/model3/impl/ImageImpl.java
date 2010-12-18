@@ -19,25 +19,23 @@ import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.ecore.EClass;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Image</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Image</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.ImageImpl#getWidth <em>Width</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.ImageImpl#getHeight <em>Height</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.ImageImpl#getData <em>Data</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.ImageImpl#getWidth <em>Width</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.ImageImpl#getHeight <em>Height</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.ImageImpl#getData <em>Data</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ImageImpl extends CDOObjectImpl implements Image
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ImageImpl()
@@ -46,8 +44,8 @@ public class ImageImpl extends CDOObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -57,8 +55,8 @@ public class ImageImpl extends CDOObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -68,8 +66,8 @@ public class ImageImpl extends CDOObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getWidth()
@@ -78,8 +76,8 @@ public class ImageImpl extends CDOObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setWidth(int newWidth)
@@ -88,8 +86,8 @@ public class ImageImpl extends CDOObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getHeight()
@@ -98,8 +96,8 @@ public class ImageImpl extends CDOObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setHeight(int newHeight)
@@ -108,8 +106,8 @@ public class ImageImpl extends CDOObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOBlob getData()
@@ -118,8 +116,8 @@ public class ImageImpl extends CDOObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setData(CDOBlob newData)
@@ -127,4 +125,4 @@ public class ImageImpl extends CDOObjectImpl implements Image
     eSet(Model3Package.Literals.IMAGE__DATA, newData);
   }
 
-} //ImageImpl
+} // ImageImpl

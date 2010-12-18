@@ -15,18 +15,17 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Node D</b></em>'. <!-- end-user-doc -->
- *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.NodeD#getChildren <em>Children</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.NodeD#getParent <em>Parent</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.NodeD#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.NodeD#getOtherNodes <em>Other Nodes</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.NodeD#getOppositeNode <em>Opposite Node</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.NodeD#getChildren <em>Children</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.NodeD#getParent <em>Parent</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.NodeD#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.NodeD#getOtherNodes <em>Other Nodes</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.NodeD#getOppositeNode <em>Opposite Node</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeD()
  * @model
  * @generated
@@ -34,15 +33,15 @@ import org.eclipse.emf.ecore.EObject;
 public interface NodeD extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Children</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.tests.model3.NodeD}.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model3.NodeD#getParent <em>Parent</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Children</b></em>' containment reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.tests.model3.NodeD}. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.tests.model3.NodeD#getParent <em>Parent</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Children</em>' containment reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Children</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeD_Children()
    * @see org.eclipse.emf.cdo.tests.model3.NodeD#getParent
@@ -52,14 +51,14 @@ public interface NodeD extends EObject
   EList<NodeD> getChildren();
 
   /**
-   * Returns the value of the '<em><b>Parent</b></em>' container reference.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model3.NodeD#getChildren <em>Children</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Parent</b></em>' container reference. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.tests.model3.NodeD#getChildren <em>Children</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Parent</em>' container reference isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Parent</em>' container reference.
    * @see #setParent(NodeD)
    * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeD_Parent()
@@ -70,21 +69,23 @@ public interface NodeD extends EObject
   NodeD getParent();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model3.NodeD#getParent <em>Parent</em>}' container reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @param value the new value of the '<em>Parent</em>' container reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model3.NodeD#getParent <em>Parent</em>}' container
+   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Parent</em>' container reference.
    * @see #getParent()
    * @generated
    */
   void setParent(NodeD value);
 
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeD_Name()
@@ -105,15 +106,15 @@ public interface NodeD extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Other Nodes</b></em>' reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.tests.model3.NodeD}.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model3.NodeD#getOppositeNode <em>Opposite Node</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Other Nodes</b></em>' reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.tests.model3.NodeD}. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.tests.model3.NodeD#getOppositeNode <em>Opposite Node</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Other Nodes</em>' reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Other Nodes</em>' reference list.
    * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeD_OtherNodes()
    * @see org.eclipse.emf.cdo.tests.model3.NodeD#getOppositeNode
@@ -123,14 +124,14 @@ public interface NodeD extends EObject
   EList<NodeD> getOtherNodes();
 
   /**
-   * Returns the value of the '<em><b>Opposite Node</b></em>' reference.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model3.NodeD#getOtherNodes <em>Other Nodes</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Opposite Node</b></em>' reference. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.tests.model3.NodeD#getOtherNodes <em>Other Nodes</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Opposite Node</em>' reference isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Opposite Node</em>' reference.
    * @see #setOppositeNode(NodeD)
    * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeD_OppositeNode()
@@ -141,9 +142,11 @@ public interface NodeD extends EObject
   NodeD getOppositeNode();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model3.NodeD#getOppositeNode <em>Opposite Node</em>}' reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @param value the new value of the '<em>Opposite Node</em>' reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model3.NodeD#getOppositeNode <em>Opposite Node</em>}'
+   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Opposite Node</em>' reference.
    * @see #getOppositeNode()
    * @generated
    */

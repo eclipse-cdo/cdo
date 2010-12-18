@@ -9,6 +9,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MetaRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ePackageRef" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eClassRef" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eReferenceRef" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Point" instanceClassName="org.eclipse.emf.cdo.tests.model3.Point"/>
   <eClassifiers xsi:type="ecore:EClass" name="Polygon">

@@ -106,9 +106,7 @@ public class Model3Switch<T>
       Class1 class1 = (Class1)theEObject;
       T result = caseClass1(class1);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model3Package.META_REF:
@@ -116,9 +114,7 @@ public class Model3Switch<T>
       MetaRef metaRef = (MetaRef)theEObject;
       T result = caseMetaRef(metaRef);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model3Package.POLYGON:
@@ -126,9 +122,7 @@ public class Model3Switch<T>
       Polygon polygon = (Polygon)theEObject;
       T result = casePolygon(polygon);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model3Package.POLYGON_WITH_DUPLICATES:
@@ -136,9 +130,7 @@ public class Model3Switch<T>
       PolygonWithDuplicates polygonWithDuplicates = (PolygonWithDuplicates)theEObject;
       T result = casePolygonWithDuplicates(polygonWithDuplicates);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model3Package.NODE_A:
@@ -146,9 +138,7 @@ public class Model3Switch<T>
       NodeA nodeA = (NodeA)theEObject;
       T result = caseNodeA(nodeA);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model3Package.NODE_B:
@@ -156,9 +146,7 @@ public class Model3Switch<T>
       NodeB nodeB = (NodeB)theEObject;
       T result = caseNodeB(nodeB);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model3Package.NODE_C:
@@ -166,9 +154,7 @@ public class Model3Switch<T>
       NodeC nodeC = (NodeC)theEObject;
       T result = caseNodeC(nodeC);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model3Package.NODE_D:
@@ -176,9 +162,7 @@ public class Model3Switch<T>
       NodeD nodeD = (NodeD)theEObject;
       T result = caseNodeD(nodeD);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model3Package.IMAGE:
@@ -186,9 +170,7 @@ public class Model3Switch<T>
       Image image = (Image)theEObject;
       T result = caseImage(image);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case Model3Package.FILE:
@@ -196,9 +178,7 @@ public class Model3Switch<T>
       File file = (File)theEObject;
       T result = caseFile(file);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     default:

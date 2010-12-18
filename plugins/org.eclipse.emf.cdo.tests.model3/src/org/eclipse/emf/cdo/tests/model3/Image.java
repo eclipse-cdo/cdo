@@ -15,19 +15,16 @@ import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Image</b></em>'.
- * <!-- end-user-doc -->
- *
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Image</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.Image#getWidth <em>Width</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.Image#getHeight <em>Height</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.Image#getData <em>Data</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.Image#getWidth <em>Width</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.Image#getHeight <em>Height</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.Image#getData <em>Data</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getImage()
  * @model
  * @generated
@@ -35,13 +32,12 @@ import org.eclipse.emf.ecore.EObject;
 public interface Image extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Width</b></em>' attribute.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Width</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Width</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Width</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Width</em>' attribute.
    * @see #setWidth(int)
    * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getImage_Width()
@@ -51,23 +47,23 @@ public interface Image extends EObject
   int getWidth();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model3.Image#getWidth <em>Width</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Width</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model3.Image#getWidth <em>Width</em>}' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Width</em>' attribute.
    * @see #getWidth()
    * @generated
    */
   void setWidth(int value);
 
   /**
-   * Returns the value of the '<em><b>Height</b></em>' attribute.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Height</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Height</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Height</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Height</em>' attribute.
    * @see #setHeight(int)
    * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getImage_Height()
@@ -77,23 +73,23 @@ public interface Image extends EObject
   int getHeight();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model3.Image#getHeight <em>Height</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Height</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model3.Image#getHeight <em>Height</em>}' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Height</em>' attribute.
    * @see #getHeight()
    * @generated
    */
   void setHeight(int value);
 
   /**
-   * Returns the value of the '<em><b>Data</b></em>' attribute.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Data</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Data</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Data</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Data</em>' attribute.
    * @see #setData(CDOBlob)
    * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getImage_Data()
@@ -103,10 +99,11 @@ public interface Image extends EObject
   CDOBlob getData();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model3.Image#getData <em>Data</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Data</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model3.Image#getData <em>Data</em>}' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Data</em>' attribute.
    * @see #getData()
    * @generated
    */

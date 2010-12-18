@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
@@ -25,18 +26,20 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl#getEPackageRef <em>EPackage Ref</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl#getEPackageRef <em>EPackage Ref</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl#getEClassRef <em>EClass Ref</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl#getEReferenceRef <em>EReference Ref</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class MetaRefImpl extends EObjectImpl implements MetaRef
 {
   /**
-   * The cached value of the '{@link #getEPackageRef() <em>EPackage Ref</em>}' reference.
-   * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getEPackageRef() <em>EPackage Ref</em>}' reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getEPackageRef()
    * @generated
    * @ordered
@@ -44,7 +47,28 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
   protected EPackage ePackageRef;
 
   /**
+   * The cached value of the '{@link #getEClassRef() <em>EClass Ref</em>}' reference. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @see #getEClassRef()
+   * @generated
+   * @ordered
+   */
+  protected EClass eClassRef;
+
+  /**
+   * The cached value of the '{@link #getEReferenceRef() <em>EReference Ref</em>}' reference. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @see #getEReferenceRef()
+   * @generated
+   * @ordered
+   */
+  protected EReference eReferenceRef;
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected MetaRefImpl()
@@ -54,6 +78,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -64,6 +89,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EPackage getEPackageRef()
@@ -84,6 +110,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EPackage basicGetEPackageRef()
@@ -93,6 +120,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setEPackageRef(EPackage newEPackageRef)
@@ -106,6 +134,96 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getEClassRef()
+  {
+    if (eClassRef != null && eClassRef.eIsProxy())
+    {
+      InternalEObject oldEClassRef = (InternalEObject)eClassRef;
+      eClassRef = (EClass)eResolveProxy(oldEClassRef);
+      if (eClassRef != oldEClassRef)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model3Package.META_REF__ECLASS_REF, oldEClassRef,
+              eClassRef));
+      }
+    }
+    return eClassRef;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass basicGetEClassRef()
+  {
+    return eClassRef;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public void setEClassRef(EClass newEClassRef)
+  {
+    EClass oldEClassRef = eClassRef;
+    eClassRef = newEClassRef;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.META_REF__ECLASS_REF, oldEClassRef, eClassRef));
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getEReferenceRef()
+  {
+    if (eReferenceRef != null && eReferenceRef.eIsProxy())
+    {
+      InternalEObject oldEReferenceRef = (InternalEObject)eReferenceRef;
+      eReferenceRef = (EReference)eResolveProxy(oldEReferenceRef);
+      if (eReferenceRef != oldEReferenceRef)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model3Package.META_REF__EREFERENCE_REF,
+              oldEReferenceRef, eReferenceRef));
+      }
+    }
+    return eReferenceRef;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference basicGetEReferenceRef()
+  {
+    return eReferenceRef;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public void setEReferenceRef(EReference newEReferenceRef)
+  {
+    EReference oldEReferenceRef = eReferenceRef;
+    eReferenceRef = newEReferenceRef;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.META_REF__EREFERENCE_REF, oldEReferenceRef,
+          eReferenceRef));
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -117,12 +235,21 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
       if (resolve)
         return getEPackageRef();
       return basicGetEPackageRef();
+    case Model3Package.META_REF__ECLASS_REF:
+      if (resolve)
+        return getEClassRef();
+      return basicGetEClassRef();
+    case Model3Package.META_REF__EREFERENCE_REF:
+      if (resolve)
+        return getEReferenceRef();
+      return basicGetEReferenceRef();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -133,12 +260,19 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
     case Model3Package.META_REF__EPACKAGE_REF:
       setEPackageRef((EPackage)newValue);
       return;
+    case Model3Package.META_REF__ECLASS_REF:
+      setEClassRef((EClass)newValue);
+      return;
+    case Model3Package.META_REF__EREFERENCE_REF:
+      setEReferenceRef((EReference)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -149,12 +283,19 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
     case Model3Package.META_REF__EPACKAGE_REF:
       setEPackageRef((EPackage)null);
       return;
+    case Model3Package.META_REF__ECLASS_REF:
+      setEClassRef((EClass)null);
+      return;
+    case Model3Package.META_REF__EREFERENCE_REF:
+      setEReferenceRef((EReference)null);
+      return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -164,6 +305,10 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
     {
     case Model3Package.META_REF__EPACKAGE_REF:
       return ePackageRef != null;
+    case Model3Package.META_REF__ECLASS_REF:
+      return eClassRef != null;
+    case Model3Package.META_REF__EREFERENCE_REF:
+      return eReferenceRef != null;
     }
     return super.eIsSet(featureID);
   }

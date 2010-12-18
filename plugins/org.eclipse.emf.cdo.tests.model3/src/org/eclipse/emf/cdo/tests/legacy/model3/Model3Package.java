@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.cdo.tests.legacy.model3.Model3Factory
  * @model kind="package"
  * @generated
@@ -31,8 +32,8 @@ import org.eclipse.emf.ecore.EReference;
 public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Package
 {
   /**
-   * The package name.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNAME = "model3";
@@ -45,15 +46,15 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/legacy/model3/1.0.0";
 
   /**
-   * The package namespace name.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNS_PREFIX = "model3";
 
   /**
-   * The singleton instance of the package.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   Model3Package eINSTANCE = org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl.init();
@@ -61,6 +62,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.Class1Impl <em>Class1</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Class1Impl
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getClass1()
    * @generated
@@ -68,24 +70,25 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   int CLASS1 = 0;
 
   /**
-   * The feature id for the '<em><b>Class2</b></em>' reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Class2</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int CLASS1__CLASS2 = 0;
 
   /**
-   * The number of structural features of the '<em>Class1</em>' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The number of structural features of the '<em>Class1</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int CLASS1_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl <em>Meta Ref</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl <em>Meta Ref</em>}'
+   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getMetaRef()
    * @generated
@@ -93,24 +96,41 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   int META_REF = 1;
 
   /**
-   * The feature id for the '<em><b>EPackage Ref</b></em>' reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>EPackage Ref</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int META_REF__EPACKAGE_REF = 0;
 
   /**
-   * The number of structural features of the '<em>Meta Ref</em>' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>EClass Ref</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
-  int META_REF_FEATURE_COUNT = 1;
+  int META_REF__ECLASS_REF = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonImpl <em>Polygon</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>EReference Ref</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int META_REF__EREFERENCE_REF = 2;
+
+  /**
+   * The number of structural features of the '<em>Meta Ref</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int META_REF_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonImpl <em>Polygon</em>}'
+   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getPolygon()
    * @generated
@@ -118,24 +138,25 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   int POLYGON = 2;
 
   /**
-   * The feature id for the '<em><b>Points</b></em>' attribute list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Points</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int POLYGON__POINTS = 0;
 
   /**
-   * The number of structural features of the '<em>Polygon</em>' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The number of structural features of the '<em>Polygon</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int POLYGON_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonWithDuplicatesImpl <em>Polygon With Duplicates</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonWithDuplicatesImpl
+   * <em>Polygon With Duplicates</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonWithDuplicatesImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getPolygonWithDuplicates()
    * @generated
@@ -143,17 +164,17 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   int POLYGON_WITH_DUPLICATES = 3;
 
   /**
-   * The feature id for the '<em><b>Points</b></em>' attribute list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Points</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int POLYGON_WITH_DUPLICATES__POINTS = 0;
 
   /**
-   * The number of structural features of the '<em>Polygon With Duplicates</em>' class.
-   * <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Polygon With Duplicates</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
@@ -162,6 +183,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl <em>Node A</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getNodeA()
    * @generated
@@ -169,33 +191,33 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   int NODE_A = 4;
 
   /**
-   * The feature id for the '<em><b>Children</b></em>' containment reference list.
-   * <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int NODE_A__CHILDREN = 0;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int NODE_A__NAME = 1;
 
   /**
-   * The feature id for the '<em><b>Other Nodes</b></em>' reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Other Nodes</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int NODE_A__OTHER_NODES = 2;
 
   /**
-   * The number of structural features of the '<em>Node A</em>' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The number of structural features of the '<em>Node A</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
@@ -204,6 +226,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeBImpl <em>Node B</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeBImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getNodeB()
    * @generated
@@ -211,33 +234,33 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   int NODE_B = 5;
 
   /**
-   * The feature id for the '<em><b>Children</b></em>' containment reference list.
-   * <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int NODE_B__CHILDREN = 0;
 
   /**
-   * The feature id for the '<em><b>Parent</b></em>' container reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int NODE_B__PARENT = 1;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int NODE_B__NAME = 2;
 
   /**
-   * The number of structural features of the '<em>Node B</em>' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The number of structural features of the '<em>Node B</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
@@ -246,6 +269,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeCImpl <em>Node C</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeCImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getNodeC()
    * @generated
@@ -253,33 +277,33 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   int NODE_C = 6;
 
   /**
-   * The feature id for the '<em><b>Children</b></em>' containment reference list.
-   * <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int NODE_C__CHILDREN = 0;
 
   /**
-   * The feature id for the '<em><b>Parent</b></em>' container reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int NODE_C__PARENT = 1;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int NODE_C__NAME = 2;
 
   /**
-   * The feature id for the '<em><b>Other Nodes</b></em>' reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Other Nodes</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
@@ -295,8 +319,8 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   int NODE_C__OPPOSITE_NODES = 4;
 
   /**
-   * The number of structural features of the '<em>Node C</em>' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The number of structural features of the '<em>Node C</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
@@ -305,6 +329,7 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl <em>Node D</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getNodeD()
    * @generated
@@ -312,49 +337,49 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   int NODE_D = 7;
 
   /**
-   * The feature id for the '<em><b>Children</b></em>' containment reference list.
-   * <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int NODE_D__CHILDREN = 0;
 
   /**
-   * The feature id for the '<em><b>Parent</b></em>' container reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int NODE_D__PARENT = 1;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int NODE_D__NAME = 2;
 
   /**
-   * The feature id for the '<em><b>Other Nodes</b></em>' reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Other Nodes</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int NODE_D__OTHER_NODES = 3;
 
   /**
-   * The feature id for the '<em><b>Opposite Node</b></em>' reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Opposite Node</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int NODE_D__OPPOSITE_NODE = 4;
 
   /**
-   * The number of structural features of the '<em>Node D</em>' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The number of structural features of the '<em>Node D</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
@@ -362,8 +387,8 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.ImageImpl <em>Image</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.ImageImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getImage()
    * @generated
@@ -371,36 +396,32 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   int IMAGE = 8;
 
   /**
-   * The feature id for the '<em><b>Width</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The feature id for the '<em><b>Width</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int IMAGE__WIDTH = 0;
 
   /**
-   * The feature id for the '<em><b>Height</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The feature id for the '<em><b>Height</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int IMAGE__HEIGHT = 1;
 
   /**
-   * The feature id for the '<em><b>Data</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The feature id for the '<em><b>Data</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int IMAGE__DATA = 2;
 
   /**
-   * The number of structural features of the '<em>Image</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The number of structural features of the '<em>Image</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
@@ -408,8 +429,8 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.FileImpl <em>File</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.FileImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getFile()
    * @generated
@@ -417,35 +438,32 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   int FILE = 9;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int FILE__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Data</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The feature id for the '<em><b>Data</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int FILE__DATA = 1;
 
   /**
-   * The number of structural features of the '<em>File</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The number of structural features of the '<em>File</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int FILE_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '<em>Point</em>' data type.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '<em>Point</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.model3.Point
    * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getPoint()
    * @generated
@@ -463,8 +481,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EClass getClass1();
 
   /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.Class1#getClass2 <em>Class2</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.Class1#getClass2
+   * <em>Class2</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the reference list '<em>Class2</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.Class1#getClass2()
    * @see #getClass1()
@@ -483,14 +502,37 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EClass getMetaRef();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.legacy.model3.MetaRef#getEPackageRef <em>EPackage Ref</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.legacy.model3.MetaRef#getEPackageRef
+   * <em>EPackage Ref</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the reference '<em>EPackage Ref</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.MetaRef#getEPackageRef()
    * @see #getMetaRef()
    * @generated
    */
   EReference getMetaRef_EPackageRef();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.legacy.model3.MetaRef#getEClassRef
+   * <em>EClass Ref</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference '<em>EClass Ref</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.MetaRef#getEClassRef()
+   * @see #getMetaRef()
+   * @generated
+   */
+  EReference getMetaRef_EClassRef();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.legacy.model3.MetaRef#getEReferenceRef
+   * <em>EReference Ref</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference '<em>EReference Ref</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model3.MetaRef#getEReferenceRef()
+   * @see #getMetaRef()
+   * @generated
+   */
+  EReference getMetaRef_EReferenceRef();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.Polygon <em>Polygon</em>}'. <!--
@@ -503,8 +545,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EClass getPolygon();
 
   /**
-   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.legacy.model3.Polygon#getPoints <em>Points</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.legacy.model3.Polygon#getPoints
+   * <em>Points</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the attribute list '<em>Points</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.Polygon#getPoints()
    * @see #getPolygon()
@@ -513,8 +556,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EAttribute getPolygon_Points();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.PolygonWithDuplicates <em>Polygon With Duplicates</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.PolygonWithDuplicates
+   * <em>Polygon With Duplicates</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>Polygon With Duplicates</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.PolygonWithDuplicates
    * @generated
@@ -544,9 +588,10 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EClass getNodeA();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeA#getChildren <em>Children</em>}'.
-   * <!-- begin-user-doc --> <!--
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model3.NodeA#getChildren <em>Children</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @return the meta object for the containment reference list '<em>Children</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeA#getChildren()
    * @see #getNodeA()
@@ -555,8 +600,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EReference getNodeA_Children();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeA#getName <em>Name</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeA#getName
+   * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeA#getName()
    * @see #getNodeA()
@@ -565,8 +611,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EAttribute getNodeA_Name();
 
   /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeA#getOtherNodes <em>Other Nodes</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeA#getOtherNodes
+   * <em>Other Nodes</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the reference list '<em>Other Nodes</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeA#getOtherNodes()
    * @see #getNodeA()
@@ -585,9 +632,10 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EClass getNodeB();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeB#getChildren <em>Children</em>}'.
-   * <!-- begin-user-doc --> <!--
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model3.NodeB#getChildren <em>Children</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @return the meta object for the containment reference list '<em>Children</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeB#getChildren()
    * @see #getNodeB()
@@ -596,9 +644,10 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EReference getNodeB_Children();
 
   /**
-   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeB#getParent <em>Parent</em>}'.
-   * <!-- begin-user-doc --> <!--
+   * Returns the meta object for the container reference '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model3.NodeB#getParent <em>Parent</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @return the meta object for the container reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeB#getParent()
    * @see #getNodeB()
@@ -607,8 +656,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EReference getNodeB_Parent();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeB#getName <em>Name</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeB#getName
+   * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeB#getName()
    * @see #getNodeB()
@@ -627,9 +677,10 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EClass getNodeC();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getChildren <em>Children</em>}'.
-   * <!-- begin-user-doc --> <!--
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getChildren <em>Children</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @return the meta object for the containment reference list '<em>Children</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getChildren()
    * @see #getNodeC()
@@ -638,9 +689,10 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EReference getNodeC_Children();
 
   /**
-   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getParent <em>Parent</em>}'.
-   * <!-- begin-user-doc --> <!--
+   * Returns the meta object for the container reference '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getParent <em>Parent</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @return the meta object for the container reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getParent()
    * @see #getNodeC()
@@ -649,8 +701,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EReference getNodeC_Parent();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getName <em>Name</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getName
+   * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getName()
    * @see #getNodeC()
@@ -659,8 +712,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EAttribute getNodeC_Name();
 
   /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getOtherNodes <em>Other Nodes</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getOtherNodes
+   * <em>Other Nodes</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the reference list '<em>Other Nodes</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getOtherNodes()
    * @see #getNodeC()
@@ -691,9 +745,10 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EClass getNodeD();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getChildren <em>Children</em>}'.
-   * <!-- begin-user-doc --> <!--
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getChildren <em>Children</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @return the meta object for the containment reference list '<em>Children</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getChildren()
    * @see #getNodeD()
@@ -702,9 +757,10 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EReference getNodeD_Children();
 
   /**
-   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getParent <em>Parent</em>}'.
-   * <!-- begin-user-doc --> <!--
+   * Returns the meta object for the container reference '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getParent <em>Parent</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @return the meta object for the container reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getParent()
    * @see #getNodeD()
@@ -713,8 +769,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EReference getNodeD_Parent();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getName <em>Name</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getName
+   * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getName()
    * @see #getNodeD()
@@ -723,8 +780,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EAttribute getNodeD_Name();
 
   /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getOtherNodes <em>Other Nodes</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getOtherNodes
+   * <em>Other Nodes</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the reference list '<em>Other Nodes</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getOtherNodes()
    * @see #getNodeD()
@@ -733,8 +791,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EReference getNodeD_OtherNodes();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getOppositeNode <em>Opposite Node</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getOppositeNode
+   * <em>Opposite Node</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the reference '<em>Opposite Node</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.NodeD#getOppositeNode()
    * @see #getNodeD()
@@ -743,9 +802,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EReference getNodeD_OppositeNode();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.Image <em>Image</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.Image <em>Image</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>Image</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.Image
    * @generated
@@ -753,9 +812,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EClass getImage();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.Image#getWidth <em>Width</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.Image#getWidth
+   * <em>Width</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the attribute '<em>Width</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.Image#getWidth()
    * @see #getImage()
@@ -764,9 +823,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EAttribute getImage_Width();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.Image#getHeight <em>Height</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.Image#getHeight
+   * <em>Height</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the attribute '<em>Height</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.Image#getHeight()
    * @see #getImage()
@@ -775,9 +834,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EAttribute getImage_Height();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.Image#getData <em>Data</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.Image#getData
+   * <em>Data</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the attribute '<em>Data</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.Image#getData()
    * @see #getImage()
@@ -786,9 +845,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EAttribute getImage_Data();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.File <em>File</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.File <em>File</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>File</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.File
    * @generated
@@ -796,9 +855,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EClass getFile();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.File#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.File#getName
+   * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.File#getName()
    * @see #getFile()
@@ -807,9 +866,9 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EAttribute getFile_Name();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.File#getData <em>Data</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.legacy.model3.File#getData
+   * <em>Data</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the attribute '<em>Data</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model3.File#getData()
    * @see #getFile()
@@ -829,8 +888,8 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
   EDataType getPoint();
 
   /**
-   * Returns the factory that creates the instances of the model.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -845,13 +904,15 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
+   * 
    * @generated
    */
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.Class1Impl <em>Class1</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.Class1Impl <em>Class1</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Class1Impl
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getClass1()
      * @generated
@@ -859,16 +920,17 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
     EClass CLASS1 = eINSTANCE.getClass1();
 
     /**
-     * The meta object literal for the '<em><b>Class2</b></em>' reference list feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Class2</b></em>' reference list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EReference CLASS1__CLASS2 = eINSTANCE.getClass1_Class2();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl <em>Meta Ref</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl
+     * <em>Meta Ref</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getMetaRef()
      * @generated
@@ -876,16 +938,33 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
     EClass META_REF = eINSTANCE.getMetaRef();
 
     /**
-     * The meta object literal for the '<em><b>EPackage Ref</b></em>' reference feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>EPackage Ref</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EReference META_REF__EPACKAGE_REF = eINSTANCE.getMetaRef_EPackageRef();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonImpl <em>Polygon</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>EClass Ref</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference META_REF__ECLASS_REF = eINSTANCE.getMetaRef_EClassRef();
+
+    /**
+     * The meta object literal for the '<em><b>EReference Ref</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference META_REF__EREFERENCE_REF = eINSTANCE.getMetaRef_EReferenceRef();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonImpl
+     * <em>Polygon</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getPolygon()
      * @generated
@@ -893,16 +972,17 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
     EClass POLYGON = eINSTANCE.getPolygon();
 
     /**
-     * The meta object literal for the '<em><b>Points</b></em>' attribute list feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Points</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute POLYGON__POINTS = eINSTANCE.getPolygon_Points();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonWithDuplicatesImpl <em>Polygon With Duplicates</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonWithDuplicatesImpl
+     * <em>Polygon With Duplicates</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonWithDuplicatesImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getPolygonWithDuplicates()
      * @generated
@@ -910,16 +990,17 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
     EClass POLYGON_WITH_DUPLICATES = eINSTANCE.getPolygonWithDuplicates();
 
     /**
-     * The meta object literal for the '<em><b>Points</b></em>' attribute list feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Points</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute POLYGON_WITH_DUPLICATES__POINTS = eINSTANCE.getPolygonWithDuplicates_Points();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl <em>Node A</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl <em>Node A</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getNodeA()
      * @generated
@@ -935,24 +1016,25 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
     EReference NODE_A__CHILDREN = eINSTANCE.getNodeA_Children();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute NODE_A__NAME = eINSTANCE.getNodeA_Name();
 
     /**
-     * The meta object literal for the '<em><b>Other Nodes</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Other Nodes</b></em>' reference list feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * 
      * @generated
      */
     EReference NODE_A__OTHER_NODES = eINSTANCE.getNodeA_OtherNodes();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeBImpl <em>Node B</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeBImpl <em>Node B</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeBImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getNodeB()
      * @generated
@@ -968,24 +1050,25 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
     EReference NODE_B__CHILDREN = eINSTANCE.getNodeB_Children();
 
     /**
-     * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
-     * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Parent</b></em>' container reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * 
      * @generated
      */
     EReference NODE_B__PARENT = eINSTANCE.getNodeB_Parent();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute NODE_B__NAME = eINSTANCE.getNodeB_Name();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeCImpl <em>Node C</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeCImpl <em>Node C</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeCImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getNodeC()
      * @generated
@@ -1001,40 +1084,41 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
     EReference NODE_C__CHILDREN = eINSTANCE.getNodeC_Children();
 
     /**
-     * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
-     * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Parent</b></em>' container reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * 
      * @generated
      */
     EReference NODE_C__PARENT = eINSTANCE.getNodeC_Parent();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute NODE_C__NAME = eINSTANCE.getNodeC_Name();
 
     /**
-     * The meta object literal for the '<em><b>Other Nodes</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Other Nodes</b></em>' reference list feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * 
      * @generated
      */
     EReference NODE_C__OTHER_NODES = eINSTANCE.getNodeC_OtherNodes();
 
     /**
-     * The meta object literal for the '<em><b>Opposite Nodes</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Opposite Nodes</b></em>' reference list feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * 
      * @generated
      */
     EReference NODE_C__OPPOSITE_NODES = eINSTANCE.getNodeC_OppositeNodes();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl <em>Node D</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl <em>Node D</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeDImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getNodeD()
      * @generated
@@ -1050,41 +1134,41 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
     EReference NODE_D__CHILDREN = eINSTANCE.getNodeD_Children();
 
     /**
-     * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
-     * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Parent</b></em>' container reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * 
      * @generated
      */
     EReference NODE_D__PARENT = eINSTANCE.getNodeD_Parent();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute NODE_D__NAME = eINSTANCE.getNodeD_Name();
 
     /**
-     * The meta object literal for the '<em><b>Other Nodes</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Other Nodes</b></em>' reference list feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * 
      * @generated
      */
     EReference NODE_D__OTHER_NODES = eINSTANCE.getNodeD_OtherNodes();
 
     /**
-     * The meta object literal for the '<em><b>Opposite Node</b></em>' reference feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Opposite Node</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EReference NODE_D__OPPOSITE_NODE = eINSTANCE.getNodeD_OppositeNode();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.ImageImpl <em>Image</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.ImageImpl <em>Image</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.ImageImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getImage()
      * @generated
@@ -1092,33 +1176,33 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
     EClass IMAGE = eINSTANCE.getImage();
 
     /**
-     * The meta object literal for the '<em><b>Width</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>Width</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute IMAGE__WIDTH = eINSTANCE.getImage_Width();
 
     /**
-     * The meta object literal for the '<em><b>Height</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>Height</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute IMAGE__HEIGHT = eINSTANCE.getImage_Height();
 
     /**
-     * The meta object literal for the '<em><b>Data</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>Data</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute IMAGE__DATA = eINSTANCE.getImage_Data();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.FileImpl <em>File</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.FileImpl <em>File</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.FileImpl
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getFile()
      * @generated
@@ -1126,24 +1210,24 @@ public interface Model3Package extends org.eclipse.emf.cdo.tests.model3.Model3Pa
     EClass FILE = eINSTANCE.getFile();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute FILE__NAME = eINSTANCE.getFile_Name();
 
     /**
-     * The meta object literal for the '<em><b>Data</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>Data</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute FILE__DATA = eINSTANCE.getFile_Data();
 
     /**
-     * The meta object literal for the '<em>Point</em>' data type.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '<em>Point</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.model3.Point
      * @see org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl#getPoint()
      * @generated

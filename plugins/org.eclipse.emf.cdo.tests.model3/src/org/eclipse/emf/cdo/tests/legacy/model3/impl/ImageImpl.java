@@ -20,26 +20,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Image</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Image</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.ImageImpl#getWidth <em>Width</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.ImageImpl#getHeight <em>Height</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.ImageImpl#getData <em>Data</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.ImageImpl#getWidth <em>Width</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.ImageImpl#getHeight <em>Height</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.ImageImpl#getData <em>Data</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ImageImpl extends EObjectImpl implements Image
 {
   /**
-   * The default value of the '{@link #getWidth() <em>Width</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #getWidth() <em>Width</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getWidth()
    * @generated
    * @ordered
@@ -47,9 +45,9 @@ public class ImageImpl extends EObjectImpl implements Image
   protected static final int WIDTH_EDEFAULT = 0;
 
   /**
-   * The cached value of the '{@link #getWidth() <em>Width</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getWidth() <em>Width</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getWidth()
    * @generated
    * @ordered
@@ -57,9 +55,9 @@ public class ImageImpl extends EObjectImpl implements Image
   protected int width = WIDTH_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getHeight() <em>Height</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #getHeight() <em>Height</em>}' attribute. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @see #getHeight()
    * @generated
    * @ordered
@@ -67,9 +65,9 @@ public class ImageImpl extends EObjectImpl implements Image
   protected static final int HEIGHT_EDEFAULT = 0;
 
   /**
-   * The cached value of the '{@link #getHeight() <em>Height</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getHeight() <em>Height</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getHeight()
    * @generated
    * @ordered
@@ -77,9 +75,9 @@ public class ImageImpl extends EObjectImpl implements Image
   protected int height = HEIGHT_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getData() <em>Data</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #getData() <em>Data</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getData()
    * @generated
    * @ordered
@@ -87,9 +85,8 @@ public class ImageImpl extends EObjectImpl implements Image
   protected static final CDOBlob DATA_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getData() <em>Data</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getData() <em>Data</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getData()
    * @generated
    * @ordered
@@ -97,8 +94,8 @@ public class ImageImpl extends EObjectImpl implements Image
   protected CDOBlob data = DATA_EDEFAULT;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ImageImpl()
@@ -107,8 +104,8 @@ public class ImageImpl extends EObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -118,8 +115,8 @@ public class ImageImpl extends EObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getWidth()
@@ -128,8 +125,8 @@ public class ImageImpl extends EObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setWidth(int newWidth)
@@ -141,8 +138,8 @@ public class ImageImpl extends EObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getHeight()
@@ -151,8 +148,8 @@ public class ImageImpl extends EObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setHeight(int newHeight)
@@ -164,8 +161,8 @@ public class ImageImpl extends EObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOBlob getData()
@@ -174,8 +171,8 @@ public class ImageImpl extends EObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setData(CDOBlob newData)
@@ -187,8 +184,8 @@ public class ImageImpl extends EObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -207,8 +204,8 @@ public class ImageImpl extends EObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -230,8 +227,8 @@ public class ImageImpl extends EObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -253,8 +250,8 @@ public class ImageImpl extends EObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -273,8 +270,8 @@ public class ImageImpl extends EObjectImpl implements Image
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -294,4 +291,4 @@ public class ImageImpl extends EObjectImpl implements Image
     return result.toString();
   }
 
-} //ImageImpl
+} // ImageImpl

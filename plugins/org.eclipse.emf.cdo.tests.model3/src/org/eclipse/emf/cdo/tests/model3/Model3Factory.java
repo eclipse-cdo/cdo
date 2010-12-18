@@ -15,103 +15,102 @@ import org.eclipse.emf.ecore.EFactory;
 /**
  * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
  * the model. <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.cdo.tests.model3.Model3Package
  * @generated
  */
 public interface Model3Factory extends EFactory
 {
   /**
-   * The singleton instance of the factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The singleton instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   Model3Factory eINSTANCE = org.eclipse.emf.cdo.tests.model3.impl.Model3FactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Class1</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Class1</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Class1</em>'.
    * @generated
    */
   Class1 createClass1();
 
   /**
-   * Returns a new object of class '<em>Meta Ref</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Meta Ref</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Meta Ref</em>'.
    * @generated
    */
   MetaRef createMetaRef();
 
   /**
-   * Returns a new object of class '<em>Polygon</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Polygon</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Polygon</em>'.
    * @generated
    */
   Polygon createPolygon();
 
   /**
-   * Returns a new object of class '<em>Polygon With Duplicates</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Polygon With Duplicates</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Polygon With Duplicates</em>'.
    * @generated
    */
   PolygonWithDuplicates createPolygonWithDuplicates();
 
   /**
-   * Returns a new object of class '<em>Node A</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Node A</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Node A</em>'.
    * @generated
    */
   NodeA createNodeA();
 
   /**
-   * Returns a new object of class '<em>Node B</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Node B</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Node B</em>'.
    * @generated
    */
   NodeB createNodeB();
 
   /**
-   * Returns a new object of class '<em>Node C</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Node C</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Node C</em>'.
    * @generated
    */
   NodeC createNodeC();
 
   /**
-   * Returns a new object of class '<em>Node D</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Node D</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Node D</em>'.
    * @generated
    */
   NodeD createNodeD();
 
   /**
-   * Returns a new object of class '<em>Image</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Returns a new object of class '<em>Image</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Image</em>'.
    * @generated
    */
   Image createImage();
 
   /**
-   * Returns a new object of class '<em>File</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Returns a new object of class '<em>File</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>File</em>'.
    * @generated
    */
   File createFile();
 
   /**
-   * Returns the package supported by this factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the package supported by this factory.
    * @generated
    */

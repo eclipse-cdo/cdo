@@ -37,74 +37,84 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class Model3PackageImpl extends EPackageImpl implements Model3Package
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass class1EClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass metaRefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass polygonEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass polygonWithDuplicatesEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass nodeAEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass nodeBEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass nodeCEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass nodeDEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass imageEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass fileEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EDataType pointEDataType = null;
@@ -129,17 +139,18 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
-   * <p>This method is used to initialize {@link Model3Package#eINSTANCE} when that field is accessed.
-   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
-   * <!-- begin-user-doc -->
+   * <p>
+   * This method is used to initialize {@link Model3Package#eINSTANCE} when that field is accessed. Clients should not
+   * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -157,7 +168,6 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     isInited = true;
 
     // Initialize simple dependencies
-    EcorePackage.eINSTANCE.eClass();
     EtypesPackage.eINSTANCE.eClass();
 
     // Obtain or create and register interdependencies
@@ -183,6 +193,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getClass1()
@@ -192,6 +203,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getClass1_Class2()
@@ -201,6 +213,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getMetaRef()
@@ -210,6 +223,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getMetaRef_EPackageRef()
@@ -219,6 +233,27 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getMetaRef_EClassRef()
+  {
+    return (EReference)metaRefEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getMetaRef_EReferenceRef()
+  {
+    return (EReference)metaRefEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getPolygon()
@@ -228,6 +263,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getPolygon_Points()
@@ -237,6 +273,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getPolygonWithDuplicates()
@@ -246,6 +283,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getPolygonWithDuplicates_Points()
@@ -255,6 +293,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getNodeA()
@@ -264,6 +303,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getNodeA_Children()
@@ -273,6 +313,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getNodeA_Name()
@@ -282,6 +323,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getNodeA_OtherNodes()
@@ -291,6 +333,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getNodeB()
@@ -300,6 +343,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getNodeB_Children()
@@ -309,6 +353,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getNodeB_Parent()
@@ -318,6 +363,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getNodeB_Name()
@@ -327,6 +373,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getNodeC()
@@ -336,6 +383,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getNodeC_Children()
@@ -345,6 +393,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getNodeC_Parent()
@@ -354,6 +403,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getNodeC_Name()
@@ -363,6 +413,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getNodeC_OtherNodes()
@@ -372,6 +423,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getNodeC_OppositeNodes()
@@ -381,6 +433,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getNodeD()
@@ -390,6 +443,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getNodeD_Children()
@@ -399,6 +453,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getNodeD_Parent()
@@ -408,6 +463,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getNodeD_Name()
@@ -417,6 +473,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getNodeD_OtherNodes()
@@ -426,6 +483,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getNodeD_OppositeNode()
@@ -434,8 +492,8 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getImage()
@@ -444,8 +502,8 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getImage_Width()
@@ -454,8 +512,8 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getImage_Height()
@@ -464,8 +522,8 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getImage_Data()
@@ -474,8 +532,8 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getFile()
@@ -484,8 +542,8 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getFile_Name()
@@ -494,8 +552,8 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getFile_Data()
@@ -505,6 +563,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EDataType getPoint()
@@ -514,6 +573,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Model3Factory getModel3Factory()
@@ -523,14 +583,15 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package.  This method is
-   * guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
+   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void createPackageContents()
@@ -545,6 +606,8 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
     metaRefEClass = createEClass(META_REF);
     createEReference(metaRefEClass, META_REF__EPACKAGE_REF);
+    createEReference(metaRefEClass, META_REF__ECLASS_REF);
+    createEReference(metaRefEClass, META_REF__EREFERENCE_REF);
 
     polygonEClass = createEClass(POLYGON);
     createEAttribute(polygonEClass, POLYGON__POINTS);
@@ -591,14 +654,15 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model.  This
-   * method is guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
+   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void initializePackageContents()
@@ -635,6 +699,12 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
     initEClass(metaRefEClass, MetaRef.class, "MetaRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getMetaRef_EPackageRef(), theEcorePackage.getEPackage(), null, "ePackageRef", null, 0, 1,
+        MetaRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMetaRef_EClassRef(), theEcorePackage.getEClass(), null, "eClassRef", null, 0, 1, MetaRef.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getMetaRef_EReferenceRef(), theEcorePackage.getEReference(), null, "eReferenceRef", null, 0, 1,
         MetaRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

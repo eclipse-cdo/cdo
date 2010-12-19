@@ -384,7 +384,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
   /**
    * @since 4.0
    */
-  public CDOChangeSetData compare(CDOBranchPoint source);
+  public CDOChangeSetData compareRevisions(CDOBranchPoint source);
 
   /**
    * @since 2.0

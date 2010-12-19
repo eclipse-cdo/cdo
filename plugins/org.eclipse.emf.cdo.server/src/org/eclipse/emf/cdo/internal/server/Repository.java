@@ -1090,6 +1090,9 @@ public class Repository extends Container<Object> implements InternalRepository
   public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
       CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor)
   {
+    CDOBranchPoint target = targetInfo.getBranchPoint();
+    CDOBranchPoint source = sourceInfo.getBranchPoint();
+
     monitor.begin(5);
 
     try
@@ -1099,22 +1102,30 @@ public class Repository extends Container<Object> implements InternalRepository
 
       if (targetBaseInfo == null && sourceBaseInfo == null)
       {
-        ids.addAll(accessor.readChangeSet(monitor.fork(),
-            CDOChangeSetSegment.createFrom(targetInfo.getBranchPoint(), sourceInfo.getBranchPoint())));
+        if (CDOBranchUtil.isContainedBy(source, target))
+        {
+          ids.addAll(accessor.readChangeSet(monitor.fork(), CDOChangeSetSegment.createFrom(source, target)));
+        }
+        else if (CDOBranchUtil.isContainedBy(target, source))
+        {
+          ids.addAll(accessor.readChangeSet(monitor.fork(), CDOChangeSetSegment.createFrom(target, source)));
+        }
+        else
+        {
+          CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(target, source);
+          ids.addAll(accessor.readChangeSet(monitor.fork(), CDOChangeSetSegment.createFrom(ancestor, target)));
+          ids.addAll(accessor.readChangeSet(monitor.fork(), CDOChangeSetSegment.createFrom(ancestor, source)));
+        }
       }
       else
       {
-        CDORevisionAvailabilityInfo sourceBaseInfoToUse = sourceBaseInfo;
-        if (sourceBaseInfoToUse == null)
-        {
-          sourceBaseInfoToUse = targetBaseInfo;
-        }
+        CDORevisionAvailabilityInfo sourceBaseInfoToUse = sourceBaseInfo == null ? targetBaseInfo : sourceBaseInfo;
 
         ids.addAll(accessor.readChangeSet(monitor.fork(),
-            CDOChangeSetSegment.createFrom(targetBaseInfo.getBranchPoint(), targetInfo.getBranchPoint())));
+            CDOChangeSetSegment.createFrom(targetBaseInfo.getBranchPoint(), target)));
 
         ids.addAll(accessor.readChangeSet(monitor.fork(),
-            CDOChangeSetSegment.createFrom(sourceBaseInfoToUse.getBranchPoint(), sourceInfo.getBranchPoint())));
+            CDOChangeSetSegment.createFrom(sourceBaseInfoToUse.getBranchPoint(), source)));
       }
 
       loadMergeData(ids, targetInfo, monitor.fork());

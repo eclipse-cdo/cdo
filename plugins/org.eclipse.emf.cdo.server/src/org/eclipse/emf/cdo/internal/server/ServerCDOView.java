@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
@@ -27,6 +28,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -591,6 +593,26 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
+    public CDOTransaction openTransaction(CDOBranchPoint target, ResourceSet resourceSet)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOTransaction openTransaction(CDOBranchPoint target)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOView openView(CDOBranchPoint target, ResourceSet resourceSet)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOView openView(CDOBranchPoint target)
+    {
+      throw new UnsupportedOperationException();
+    }
+
     public CDOTransaction openTransaction()
     {
       throw new UnsupportedOperationException();
@@ -748,6 +770,21 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     public void clearCommittedSinceLastRefresh()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOChangeSetData compareRevisions(CDOBranchPoint source, CDOBranchPoint target)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void cacheRevisions(CDORevisionAvailabilityInfo info)
     {
       throw new UnsupportedOperationException();
     }

@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
@@ -205,4 +206,14 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
    * @since 4.0
    */
   public void setMainBranchLocal(boolean mainBranchLocal);
+
+  /**
+   * @since 4.0
+   */
+  public CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint);
+
+  /**
+   * @since 4.0
+   */
+  public void cacheRevisions(CDORevisionAvailabilityInfo info);
 }

@@ -16,6 +16,8 @@ package org.eclipse.emf.cdo.session;
 import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -114,6 +116,22 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
    * Opens and returns a new {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set}.
    * 
    * @see #openTransaction()
+   * @since 4.0
+   */
+  public CDOTransaction openTransaction(CDOBranchPoint target, ResourceSet resourceSet);
+
+  /**
+   * Opens and returns a new {@link CDOTransaction transaction} on a new EMF {@link ResourceSet resource set}.
+   * 
+   * @see #openTransaction()
+   * @since 4.0
+   */
+  public CDOTransaction openTransaction(CDOBranchPoint target);
+
+  /**
+   * Opens and returns a new {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set}.
+   * 
+   * @see #openTransaction()
    * @since 3.0
    */
   public CDOTransaction openTransaction(CDOBranch branch, ResourceSet resourceSet);
@@ -144,6 +162,22 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
    * @see #openTransaction(ResourceSet)
    */
   public CDOTransaction openTransaction();
+
+  /**
+   * Opens and returns a new {@link CDOView view} on the given EMF {@link ResourceSet resource set}.
+   * 
+   * @see #openView()
+   * @since 4.0
+   */
+  public CDOView openView(CDOBranchPoint target, ResourceSet resourceSet);
+
+  /**
+   * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
+   * 
+   * @see #openView()
+   * @since 4.0
+   */
+  public CDOView openView(CDOBranchPoint target);
 
   /**
    * Opens and returns a new {@link CDOView view} on the given EMF {@link ResourceSet resource set}.
@@ -219,6 +253,11 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
    * @since 3.0
    */
   public long refresh();
+
+  /**
+   * @since 4.0
+   */
+  public CDOChangeSetData compareRevisions(CDOBranchPoint source, CDOBranchPoint target);
 
   /**
    * Returns the {@link Options options} of this session.

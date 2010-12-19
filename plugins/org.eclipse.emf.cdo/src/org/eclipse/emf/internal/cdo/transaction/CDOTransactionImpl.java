@@ -409,16 +409,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(target, source);
 
-      CDORevisionAvailabilityInfo ancestorInfo = createRevisionAvailabilityInfo(ancestor);
-      CDORevisionAvailabilityInfo targetInfo = createRevisionAvailabilityInfo(target);
-      CDORevisionAvailabilityInfo sourceInfo = createRevisionAvailabilityInfo(source);
+      CDORevisionAvailabilityInfo ancestorInfo = session.createRevisionAvailabilityInfo(ancestor);
+      CDORevisionAvailabilityInfo targetInfo = session.createRevisionAvailabilityInfo(target);
+      CDORevisionAvailabilityInfo sourceInfo = session.createRevisionAvailabilityInfo(source);
 
       CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
       Set<CDOID> ids = sessionProtocol.loadMergeData(targetInfo, sourceInfo, ancestorInfo, null);
 
-      cacheRevisions(targetInfo);
-      cacheRevisions(sourceInfo);
-      cacheRevisions(ancestorInfo);
+      session.cacheRevisions(targetInfo);
+      session.cacheRevisions(sourceInfo);
+      session.cacheRevisions(ancestorInfo);
 
       CDOChangeSet targetChanges = createChangeSet(ids, ancestorInfo, targetInfo);
       CDOChangeSet sourceChanges = createChangeSet(ids, ancestorInfo, sourceInfo);

@@ -670,7 +670,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
 
     CDOType type = CDOModelUtil.getType(feature.getEType());
-    object = type.convertToEMF(feature.getEType(), object);
+    object = view.getStore().convertToEMF(instance, revision, feature, index, object);
 
     if (type == CDOType.OBJECT)
     {

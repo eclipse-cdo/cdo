@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.revision;
 import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 
 /**
  * @author Eike Stepper
@@ -25,7 +26,7 @@ public interface CDORevisionData
    * 
    * @since 3.0
    */
-  public static final Nil NIL = new Nil();
+  public static final Object NIL = EStoreEObjectImpl.NIL;
 
   /**
    * @since 2.0
@@ -86,22 +87,4 @@ public interface CDORevisionData
    */
   public int hashCode(EStructuralFeature feature);
 
-  /**
-   * A singleton marker class that is only used in {@link CDORevisionData#NIL} for better recognition while debugging.
-   * 
-   * @author Eike Stepper
-   * @since 3.0
-   */
-  public static final class Nil
-  {
-    private Nil()
-    {
-    }
-
-    @Override
-    public String toString()
-    {
-      return "<NIL>";
-    }
-  }
 }

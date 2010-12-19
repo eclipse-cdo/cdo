@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -47,7 +46,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
-import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.spi.cdo.CDOElementProxy;
@@ -494,11 +492,6 @@ public final class CDOStore implements EStore
    */
   public Object convertToCDO(InternalCDOObject object, EStructuralFeature feature, Object value)
   {
-    if (value == EStoreEObjectImpl.NIL)
-    {
-      return CDORevisionData.NIL;
-    }
-
     if (value != null)
     {
       if (feature instanceof EReference)
@@ -535,11 +528,6 @@ public final class CDOStore implements EStore
   public Object convertToEMF(EObject eObject, InternalCDORevision revision, EStructuralFeature feature, int index,
       Object value)
   {
-    if (value == CDORevisionData.NIL)
-    {
-      return EStoreEObjectImpl.NIL;
-    }
-
     if (value != null)
     {
       if (feature.isMany() && index != EStore.NO_INDEX)

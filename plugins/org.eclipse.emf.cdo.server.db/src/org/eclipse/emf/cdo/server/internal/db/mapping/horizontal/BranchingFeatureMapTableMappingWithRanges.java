@@ -244,9 +244,6 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
     builder.append(","); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
     builder.append(","); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VALUE);
 
     for (int i = 0; i < columnNames.size(); i++)
     {
@@ -257,7 +254,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
     builder.append(CDODBSchema.FEATUREMAP_IDX);
     builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_TAG);
-    builder.append(") VALUES (?, ?, ?, ?, ?, ?, "); //$NON-NLS-1$
+    builder.append(") VALUES (?, ?, ?, ?, "); //$NON-NLS-1$
     for (int i = 0; i < columnNames.size(); i++)
     {
       builder.append("?, "); //$NON-NLS-1$
@@ -1214,7 +1211,6 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
       pstmt.setInt(stmtIndex++, branchId);
       pstmt.setInt(stmtIndex++, version);
       pstmt.setNull(stmtIndex++, DBType.INTEGER.getCode()); // versionRemoved
-      pstmt.setInt(stmtIndex++, index);
 
       for (int i = 0; i < columnNames.size(); i++)
       {

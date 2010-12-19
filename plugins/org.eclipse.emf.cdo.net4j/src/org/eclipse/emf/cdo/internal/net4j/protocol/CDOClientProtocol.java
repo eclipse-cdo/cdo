@@ -353,10 +353,10 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new LoadChangeSetsRequest(this, ranges));
   }
 
-  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo ancestorInfo, CDORevisionAvailabilityInfo targetInfo,
-      CDORevisionAvailabilityInfo sourceInfo)
+  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
+      CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo)
   {
-    return send(new LoadMergeDataRequest(this, ancestorInfo, targetInfo, sourceInfo));
+    return send(new LoadMergeDataRequest(this, targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo));
   }
 
   @Override

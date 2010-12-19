@@ -34,11 +34,15 @@ import java.util.Set;
  */
 public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitoring
 {
-  private CDORevisionAvailabilityInfo ancestorInfo;
+  private int infos;
 
   private CDORevisionAvailabilityInfo targetInfo;
 
   private CDORevisionAvailabilityInfo sourceInfo;
+
+  private CDORevisionAvailabilityInfo targetBaseInfo;
+
+  private CDORevisionAvailabilityInfo sourceBaseInfo;
 
   public LoadMergeDataIndication(CDOServerProtocol protocol)
   {
@@ -48,13 +52,23 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
   @Override
   protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
-    monitor.begin(3);
+    infos = in.readInt();
+    monitor.begin(infos);
 
     try
     {
-      ancestorInfo = readRevisionAvailabilityInfo(in, monitor.fork());
       targetInfo = readRevisionAvailabilityInfo(in, monitor.fork());
       sourceInfo = readRevisionAvailabilityInfo(in, monitor.fork());
+
+      if (infos > 2)
+      {
+        targetBaseInfo = readRevisionAvailabilityInfo(in, monitor.fork());
+      }
+
+      if (infos > 3)
+      {
+        sourceBaseInfo = readRevisionAvailabilityInfo(in, monitor.fork());
+      }
     }
     finally
     {
@@ -91,12 +105,12 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
   @Override
   protected void responding(CDODataOutput out, OMMonitor monitor) throws Exception
   {
-    monitor.begin(5);
+    monitor.begin(2 + infos);
 
     try
     {
       InternalRepository repository = getRepository();
-      Set<CDOID> ids = repository.getMergeData(ancestorInfo, targetInfo, sourceInfo, monitor.fork());
+      Set<CDOID> ids = repository.getMergeData(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo, monitor.fork());
 
       out.writeInt(ids.size());
       for (CDOID id : ids)
@@ -107,9 +121,18 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
       monitor.worked();
 
       Set<CDORevisionKey> writtenRevisions = new HashSet<CDORevisionKey>();
-      writeRevisionAvailabilityInfo(out, ancestorInfo, writtenRevisions, monitor.fork());
       writeRevisionAvailabilityInfo(out, targetInfo, writtenRevisions, monitor.fork());
       writeRevisionAvailabilityInfo(out, sourceInfo, writtenRevisions, monitor.fork());
+
+      if (infos > 2)
+      {
+        writeRevisionAvailabilityInfo(out, targetBaseInfo, writtenRevisions, monitor.fork());
+      }
+
+      if (infos > 3)
+      {
+        writeRevisionAvailabilityInfo(out, sourceBaseInfo, writtenRevisions, monitor.fork());
+      }
     }
     finally
     {

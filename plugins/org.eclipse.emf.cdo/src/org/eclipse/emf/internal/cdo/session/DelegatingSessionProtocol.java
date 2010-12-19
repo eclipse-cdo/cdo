@@ -745,15 +745,15 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo ancestorInfo, CDORevisionAvailabilityInfo targetInfo,
-      CDORevisionAvailabilityInfo sourceInfo)
+  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
+      CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.loadMergeData(ancestorInfo, targetInfo, sourceInfo);
+        return delegate.loadMergeData(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo);
       }
       catch (Exception ex)
       {

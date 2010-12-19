@@ -65,12 +65,8 @@ import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
-import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
-import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver2;
@@ -401,10 +397,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       long now = getLastUpdateTime();
       CDOBranchPoint target = getBranch().getPoint(now);
 
-      CDOBranch sourceBranch = source.getBranch();
       if (source.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
       {
-        source = sourceBranch.getPoint(now);
+        source = source.getBranch().getPoint(now);
       }
 
       if (CDOBranchUtil.isContainedBy(source, target))
@@ -419,11 +414,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDORevisionAvailabilityInfo sourceInfo = createRevisionAvailabilityInfo(source);
 
       CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-      Set<CDOID> ids = sessionProtocol.loadMergeData(ancestorInfo, targetInfo, sourceInfo);
+      Set<CDOID> ids = sessionProtocol.loadMergeData(targetInfo, sourceInfo, ancestorInfo, null);
 
-      cacheRevisions(ancestorInfo);
       cacheRevisions(targetInfo);
       cacheRevisions(sourceInfo);
+      cacheRevisions(ancestorInfo);
 
       CDOChangeSet targetChanges = createChangeSet(ids, ancestorInfo, targetInfo);
       CDOChangeSet sourceChanges = createChangeSet(ids, ancestorInfo, sourceInfo);
@@ -435,64 +430,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       return applyChangeSetData(result, ancestorInfo, targetInfo, source).getElement1();
-    }
-  }
-
-  private CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint)
-  {
-    CDORevisionAvailabilityInfo info = new CDORevisionAvailabilityInfo(branchPoint);
-
-    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
-    InternalCDORevisionCache cache = revisionManager.getCache();
-
-    List<CDORevision> revisions = cache.getRevisions(branchPoint);
-    for (CDORevision revision : revisions)
-    {
-      if (revision instanceof PointerCDORevision)
-      {
-        PointerCDORevision pointer = (PointerCDORevision)revision;
-        CDOBranchVersion target = pointer.getTarget();
-        if (target != null)
-        {
-          revision = cache.getRevisionByVersion(pointer.getID(), target);
-        }
-      }
-      else if (revision instanceof DetachedCDORevision)
-      {
-        revision = null;
-      }
-
-      if (revision != null)
-      {
-        info.addRevision(revision);
-      }
-    }
-
-    return info;
-  }
-
-  private void cacheRevisions(CDORevisionAvailabilityInfo info)
-  {
-    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
-    CDOBranch branch = info.getBranchPoint().getBranch();
-    for (CDORevisionKey key : info.getAvailableRevisions().values())
-    {
-      CDORevision revision = (CDORevision)key;
-      revisionManager.addRevision(revision);
-
-      if (!ObjectUtil.equals(revision.getBranch(), branch))
-      {
-        CDOID id = revision.getID();
-        CDORevision firstRevision = revisionManager.getCache().getRevisionByVersion(id,
-            branch.getVersion(CDOBranchVersion.FIRST_VERSION));
-        if (firstRevision != null)
-        {
-          long revised = firstRevision.getTimeStamp() - 1L;
-          CDOBranchVersion target = CDOBranchUtil.copyBranchVersion(revision);
-          PointerCDORevision pointer = new PointerCDORevision(revision.getEClass(), id, branch, revised, target);
-          revisionManager.addRevision(pointer);
-        }
-      }
     }
   }
 

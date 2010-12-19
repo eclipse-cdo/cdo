@@ -31,31 +31,48 @@ import java.util.Set;
  */
 public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<Set<CDOID>>
 {
-  private CDORevisionAvailabilityInfo ancestorInfo;
-
   private CDORevisionAvailabilityInfo targetInfo;
 
   private CDORevisionAvailabilityInfo sourceInfo;
 
-  public LoadMergeDataRequest(CDOClientProtocol protocol, CDORevisionAvailabilityInfo ancestorInfo,
-      CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo)
+  private CDORevisionAvailabilityInfo targetBaseInfo;
+
+  private CDORevisionAvailabilityInfo sourceBaseInfo;
+
+  private int infos;
+
+  public LoadMergeDataRequest(CDOClientProtocol protocol, CDORevisionAvailabilityInfo targetInfo,
+      CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
+      CDORevisionAvailabilityInfo sourceBaseInfo)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_LOAD_MERGE_DATA);
-    this.ancestorInfo = ancestorInfo;
     this.targetInfo = targetInfo;
     this.sourceInfo = sourceInfo;
+    this.targetBaseInfo = targetBaseInfo;
+    this.sourceBaseInfo = sourceBaseInfo;
+    infos = 2 + (targetBaseInfo != null ? 1 : 0) + (sourceBaseInfo != null ? 1 : 0);
   }
 
   @Override
   protected void requesting(CDODataOutput out, OMMonitor monitor) throws IOException
   {
-    monitor.begin(3);
+    out.writeInt(infos);
+    monitor.begin(infos);
 
     try
     {
-      writeRevisionAvailabilityInfo(out, ancestorInfo, monitor.fork());
       writeRevisionAvailabilityInfo(out, targetInfo, monitor.fork());
       writeRevisionAvailabilityInfo(out, sourceInfo, monitor.fork());
+
+      if (infos > 2)
+      {
+        writeRevisionAvailabilityInfo(out, targetBaseInfo, monitor.fork());
+      }
+
+      if (infos > 3)
+      {
+        writeRevisionAvailabilityInfo(out, sourceBaseInfo, monitor.fork());
+      }
     }
     finally
     {
@@ -92,9 +109,9 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<Set<CDO
   protected Set<CDOID> confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
     Set<CDOID> result = new HashSet<CDOID>();
-    int size = in.readInt();
 
-    monitor.begin(size + 3);
+    int size = in.readInt();
+    monitor.begin(size + infos);
 
     try
     {
@@ -105,9 +122,19 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<Set<CDO
         monitor.worked();
       }
 
-      readRevisionAvailabilityInfo(in, ancestorInfo, result, monitor.fork());
       readRevisionAvailabilityInfo(in, targetInfo, result, monitor.fork());
       readRevisionAvailabilityInfo(in, sourceInfo, result, monitor.fork());
+
+      if (infos > 2)
+      {
+        readRevisionAvailabilityInfo(in, targetBaseInfo, result, monitor.fork());
+      }
+
+      if (infos > 3)
+      {
+        readRevisionAvailabilityInfo(in, sourceBaseInfo, result, monitor.fork());
+      }
+
       return result;
     }
     finally
@@ -134,10 +161,21 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<Set<CDO
         else
         {
           CDORevisionKey key = in.readCDORevisionKey();
-          revision = getRevision(key, ancestorInfo);
+          revision = getRevision(key, targetInfo);
+
+          if (revision == null && sourceInfo != null)
+          {
+            revision = getRevision(key, sourceInfo);
+          }
+
+          if (revision == null && targetBaseInfo != null)
+          {
+            revision = getRevision(key, targetBaseInfo);
+          }
+
           if (revision == null)
           {
-            revision = getRevision(key, targetInfo);
+            throw new IllegalStateException("Missing revision: " + key);
           }
         }
 

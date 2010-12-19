@@ -1087,24 +1087,48 @@ public class Repository extends Container<Object> implements InternalRepository
     return CDORevisionDeltaUtil.createChangeSetData(ids, startPoint, endPoint, revisionManager);
   }
 
-  public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo ancestorInfo, CDORevisionAvailabilityInfo targetInfo,
-      CDORevisionAvailabilityInfo sourceInfo, OMMonitor monitor)
+  public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
+      CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor)
   {
-    CDOBranchPoint ancestor = ancestorInfo.getBranchPoint();
-    CDOBranchPoint target = targetInfo.getBranchPoint();
-    CDOBranchPoint source = sourceInfo.getBranchPoint();
-
     monitor.begin(5);
 
     try
     {
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-      Set<CDOID> ids = accessor.readChangeSet(monitor.fork(), CDOChangeSetSegment.createFrom(ancestor, target));
-      ids.addAll(accessor.readChangeSet(monitor.fork(), CDOChangeSetSegment.createFrom(ancestor, source)));
+      Set<CDOID> ids = new HashSet<CDOID>();
 
-      loadMergeData(ids, ancestorInfo, monitor.fork());
+      if (targetBaseInfo == null && sourceBaseInfo == null)
+      {
+        ids.addAll(accessor.readChangeSet(monitor.fork(),
+            CDOChangeSetSegment.createFrom(targetInfo.getBranchPoint(), sourceInfo.getBranchPoint())));
+      }
+      else
+      {
+        CDORevisionAvailabilityInfo sourceBaseInfoToUse = sourceBaseInfo;
+        if (sourceBaseInfoToUse == null)
+        {
+          sourceBaseInfoToUse = targetBaseInfo;
+        }
+
+        ids.addAll(accessor.readChangeSet(monitor.fork(),
+            CDOChangeSetSegment.createFrom(targetBaseInfo.getBranchPoint(), targetInfo.getBranchPoint())));
+
+        ids.addAll(accessor.readChangeSet(monitor.fork(),
+            CDOChangeSetSegment.createFrom(sourceBaseInfoToUse.getBranchPoint(), sourceInfo.getBranchPoint())));
+      }
+
       loadMergeData(ids, targetInfo, monitor.fork());
       loadMergeData(ids, sourceInfo, monitor.fork());
+
+      if (targetBaseInfo != null)
+      {
+        loadMergeData(ids, targetBaseInfo, monitor.fork());
+      }
+
+      if (sourceBaseInfo != null)
+      {
+        loadMergeData(ids, sourceBaseInfo, monitor.fork());
+      }
 
       return ids;
     }

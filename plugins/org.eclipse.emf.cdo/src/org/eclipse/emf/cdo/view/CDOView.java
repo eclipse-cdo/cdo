@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -379,6 +380,11 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
    * @since 4.0
    */
   public CDOQuery createQuery(String language, String queryString, Object context);
+
+  /**
+   * @since 4.0
+   */
+  public CDOChangeSetData compare(CDOBranchPoint source);
 
   /**
    * @since 2.0

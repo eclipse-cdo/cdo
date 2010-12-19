@@ -587,6 +587,14 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.merge(source, merger);
   }
 
+  /**
+   * @since 4.0
+   */
+  public CDOChangeSetData compare(CDOBranchPoint source)
+  {
+    return delegate.compare(source);
+  }
+
   public CDOSavepoint setSavepoint()
   {
     return delegate.setSavepoint();

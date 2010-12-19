@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
@@ -27,6 +29,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -35,8 +38,13 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -60,6 +68,7 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
 
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
@@ -80,6 +89,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -1374,6 +1384,95 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
         }
 
         revisions.put(id, revision);
+      }
+    }
+  }
+
+  public CDOChangeSetData compare(CDOBranchPoint source)
+  {
+    InternalCDOSession session = getSession();
+    synchronized (session.getInvalidationLock())
+    {
+      long now = getLastUpdateTime();
+      CDOBranchPoint target = this;
+
+      if (target.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
+      {
+        target = target.getBranch().getPoint(now);
+      }
+
+      if (source.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
+      {
+        source = source.getBranch().getPoint(now);
+      }
+
+      CDORevisionAvailabilityInfo targetInfo = createRevisionAvailabilityInfo(target);
+      CDORevisionAvailabilityInfo sourceInfo = createRevisionAvailabilityInfo(source);
+
+      CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+      Set<CDOID> ids = sessionProtocol.loadMergeData(targetInfo, sourceInfo, null, null);
+
+      cacheRevisions(targetInfo);
+      cacheRevisions(sourceInfo);
+
+      return CDORevisionDeltaUtil.createChangeSetData(ids, sourceInfo, targetInfo);
+    }
+  }
+
+  protected CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint)
+  {
+    CDORevisionAvailabilityInfo info = new CDORevisionAvailabilityInfo(branchPoint);
+
+    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
+    InternalCDORevisionCache cache = revisionManager.getCache();
+
+    List<CDORevision> revisions = cache.getRevisions(branchPoint);
+    for (CDORevision revision : revisions)
+    {
+      if (revision instanceof PointerCDORevision)
+      {
+        PointerCDORevision pointer = (PointerCDORevision)revision;
+        CDOBranchVersion target = pointer.getTarget();
+        if (target != null)
+        {
+          revision = cache.getRevisionByVersion(pointer.getID(), target);
+        }
+      }
+      else if (revision instanceof DetachedCDORevision)
+      {
+        revision = null;
+      }
+
+      if (revision != null)
+      {
+        info.addRevision(revision);
+      }
+    }
+
+    return info;
+  }
+
+  protected void cacheRevisions(CDORevisionAvailabilityInfo info)
+  {
+    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
+    CDOBranch branch = info.getBranchPoint().getBranch();
+    for (CDORevisionKey key : info.getAvailableRevisions().values())
+    {
+      CDORevision revision = (CDORevision)key;
+      revisionManager.addRevision(revision);
+
+      if (!ObjectUtil.equals(revision.getBranch(), branch))
+      {
+        CDOID id = revision.getID();
+        CDORevision firstRevision = revisionManager.getCache().getRevisionByVersion(id,
+            branch.getVersion(CDOBranchVersion.FIRST_VERSION));
+        if (firstRevision != null)
+        {
+          long revised = firstRevision.getTimeStamp() - 1L;
+          CDOBranchVersion target = CDOBranchUtil.copyBranchVersion(revision);
+          PointerCDORevision pointer = new PointerCDORevision(revision.getEClass(), id, branch, revised, target);
+          revisionManager.addRevision(pointer);
+        }
       }
     }
   }

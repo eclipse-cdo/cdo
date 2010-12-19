@@ -207,10 +207,10 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public CDOChangeSetData[] loadChangeSets(CDOBranchPointRange... ranges);
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo ancestorInfo, CDORevisionAvailabilityInfo targetInfo,
-      CDORevisionAvailabilityInfo sourceInfo);
+  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
+      CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo);
 
   /**
    * @since 4.0

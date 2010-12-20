@@ -13,7 +13,6 @@
 package org.eclipse.emf.cdo.internal.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
@@ -26,7 +25,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDMeta, CDOIDTemp, CDOIDObject
+public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDTemp, CDOIDObject
 {
   public static final CDOIDNullImpl INSTANCE = new CDOIDNullImpl();
 
@@ -47,11 +46,6 @@ public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDMeta, CDO
   }
 
   public boolean isExternal()
-  {
-    return false;
-  }
-
-  public boolean isMeta()
   {
     return false;
   }

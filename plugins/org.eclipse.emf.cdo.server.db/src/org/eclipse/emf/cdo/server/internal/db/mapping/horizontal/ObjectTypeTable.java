@@ -88,7 +88,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
       }
 
       long classID = resultSet.getLong(1);
-      EClass eClass = (EClass)getMetaDataManager().getMetaInstance(classID);
+      EClass eClass = (EClass)getMetaDataManager().getMetaInstance(accessor, classID);
       return new CDOClassifierRef(eClass);
     }
     catch (SQLException ex)
@@ -109,7 +109,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     {
       stmt = accessor.getStatementCache().getPreparedStatement(sqlInsert, ReuseProbability.MAX);
       stmt.setLong(1, CDOIDUtil.getLong(id));
-      stmt.setLong(2, getMetaDataManager().getMetaID(type));
+      stmt.setLong(2, getMetaDataManager().getMetaID(accessor, type, timeStamp));
       stmt.setLong(3, timeStamp);
       DBUtil.trace(stmt.toString());
       int result = stmt.executeUpdate();

@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
-import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
@@ -28,15 +27,12 @@ import java.sql.Types;
 import java.util.Properties;
 
 /**
- * A user type which can handle both {@link CDOIDMeta} as well as {@link CDOIDExternal}. Both are stored in a single
- * varchar field.
+ * A user type which can handle {@link CDOIDExternal}. It's stored in a single varchar field.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
  */
 public class CDOIDExternalUserType implements UserType, ParameterizedType
 {
-  private static final String META_PREFIX = "MID"; //$NON-NLS-1$
-
   private static final int[] SQL_TYPES = { Types.VARCHAR };
 
   public CDOIDExternalUserType()
@@ -86,11 +82,6 @@ public class CDOIDExternalUserType implements UserType, ParameterizedType
       return null;
     }
 
-    if (data.startsWith(META_PREFIX))
-    {
-      return CDOIDUtil.createMeta(Long.parseLong(data.substring(META_PREFIX.length())));
-    }
-
     return CDOIDUtil.createExternal(data);
   }
 
@@ -112,11 +103,7 @@ public class CDOIDExternalUserType implements UserType, ParameterizedType
       localValue = value;
     }
 
-    if (localValue instanceof CDOIDMeta)
-    {
-      statement.setString(index, META_PREFIX + ((CDOIDMeta)localValue).getLongValue());
-    }
-    else if (localValue instanceof CDOIDExternal)
+    if (localValue instanceof CDOIDExternal)
     {
       statement.setString(index, ((CDOIDExternal)localValue).getURI());
     }

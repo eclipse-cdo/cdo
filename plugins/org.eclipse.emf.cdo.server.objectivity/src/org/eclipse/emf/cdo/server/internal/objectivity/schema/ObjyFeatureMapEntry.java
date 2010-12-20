@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Ibrahim Sallam - code refactoring for CDO 3.0
@@ -14,19 +14,14 @@ package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
 
 import com.objy.as.app.Class_Object;
-import com.objy.as.app.Numeric_Value;
 import com.objy.as.app.Proposed_Class;
 import com.objy.as.app.String_Value;
 import com.objy.as.app.d_Access_Kind;
 import com.objy.as.app.d_Module;
-import com.objy.as.app.ooBaseType;
 import com.objy.db.app.ooId;
 
 public class ObjyFeatureMapEntry
 {
-  // caching some details.
-  protected long metaId;
-
   protected String tagName;
 
   protected ooId object;
@@ -34,8 +29,6 @@ public class ObjyFeatureMapEntry
   protected Class_Object classObject;
 
   public static final String MapEntryClassName = "ObjyFeatureMapEntry";
-
-  public static final String MetaId = "metaId";
 
   public static final String EntryName = "tagName";
 
@@ -49,13 +42,6 @@ public class ObjyFeatureMapEntry
       // Proposed_Class B = new Proposed_Class(MapEntryClassName);
       Proposed_Class B = top_mod.propose_new_class(MapEntryClassName);
       B.add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC, "ooObj");
-
-      B.add_basic_attribute(com.objy.as.app.d_Module.LAST, // Access kind
-          d_Access_Kind.d_PUBLIC, // Access kind
-          ObjyFeatureMapEntry.MetaId, // Attribute name
-          1, // # elements in fixed-size array
-          ooBaseType.ooINT64 // type
-      );
 
       B.add_embedded_class_attribute(com.objy.as.app.d_Module.LAST, // Access kind
           d_Access_Kind.d_PUBLIC, // Access kind
@@ -78,16 +64,13 @@ public class ObjyFeatureMapEntry
    * @param tagName
    * @param oid
    */
-  public ObjyFeatureMapEntry(String tagName, ooId oid, long metaId, ooId near)
+  public ObjyFeatureMapEntry(String tagName, ooId oid, ooId near)
   {
     this.tagName = tagName;
     object = oid;
-    this.metaId = metaId;
 
     classObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(MapEntryClassName).getASClass(), near,
         false);
-    Numeric_Value numericValue = new Numeric_Value(metaId);
-    classObject.nset_numeric(MetaId, numericValue);
     String_Value stringValue = classObject.nget_string(EntryName);
     stringValue.update();
     String newValue = this.tagName;
@@ -104,9 +87,6 @@ public class ObjyFeatureMapEntry
   public ObjyFeatureMapEntry(Class_Object classObject)
   {
     this.classObject = classObject;
-
-    Numeric_Value numericValue = classObject.nget_numeric(MetaId);
-    metaId = numericValue.longValue();
 
     String_Value value = classObject.nget_string(EntryName);
     // for objy10.0 -> this.tagName = (value == null || value.toString() == null || value.toString().isEmpty()) ? null :
@@ -139,15 +119,5 @@ public class ObjyFeatureMapEntry
   public ooId getOid()
   {
     return classObject.objectID();
-  }
-
-  public long getMetaId()
-  {
-    return metaId;
-  }
-
-  public void setMetaId(long metaId)
-  {
-    this.metaId = metaId;
   }
 }

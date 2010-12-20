@@ -18,8 +18,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDMeta;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
@@ -49,7 +47,6 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -66,10 +63,8 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import com.objy.db.app.oo;
@@ -690,28 +685,6 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   private CDOPackageRegistry getPackageRegistry()
   {
     return getStore().getRepository().getPackageRegistry();
-  }
-
-  private InternalCDOPackageRegistry getInternalPackageRegistry()
-  {
-    return (InternalCDOPackageRegistry)getPackageRegistry();
-  }
-
-  // TODO - move the following two calls to perhaps a MetaDataManager (as in cdo.db package).
-  // we shouldn't pollute this class with extra stuff.
-  // The meta info is definitely useful for FeatureMapEntry details.
-  public long getMetaID(EModelElement modelElement)
-  {
-    CDOID cdoid = getInternalPackageRegistry().getMetaInstanceMapper().lookupMetaInstanceID(
-        (InternalEObject)modelElement);
-    return CDOIDUtil.getLong(cdoid);
-  }
-
-  public EModelElement getMetaInstance(long id)
-  {
-    CDOIDMeta cdoid = CDOIDUtil.createMeta(id);
-    InternalEObject metaInstance = getInternalPackageRegistry().getMetaInstanceMapper().lookupMetaInstance(cdoid);
-    return (EModelElement)metaInstance;
   }
 
   /**

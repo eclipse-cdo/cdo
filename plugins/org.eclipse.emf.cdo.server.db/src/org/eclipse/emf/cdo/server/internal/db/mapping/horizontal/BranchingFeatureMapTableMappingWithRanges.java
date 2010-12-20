@@ -446,13 +446,13 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
         }
 
         Long tag = resultSet.getLong(2);
-        Object value = getTypeMapping(tag).readValue(resultSet);
+        Object value = getTypeMapping(accessor, tag).readValue(resultSet);
         if (TRACER.isEnabled())
         {
           TRACER.format("Read value for index {0} from result set: {1}", currentIndex, value); //$NON-NLS-1$
         }
 
-        list.set(currentIndex++, CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(tag), value));
+        list.set(currentIndex++, CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(accessor, tag), value));
         valuesToRead--;
       }
 
@@ -502,9 +502,9 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
     }
   }
 
-  private void addFeature(Long tag)
+  private void addFeature(IDBStoreAccessor accessor, Long tag)
   {
-    EStructuralFeature modelFeature = getFeatureByTag(tag);
+    EStructuralFeature modelFeature = getFeatureByTag(accessor, tag);
 
     ITypeMapping typeMapping = getMappingStrategy().createValueMapping(modelFeature);
     String column = CDODBSchema.FEATUREMAP_VALUE + "_" + typeMapping.getDBType(); //$NON-NLS-1$
@@ -588,12 +588,12 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
 
             // now read value and set to chunk
             Long tag = resultSet.getLong(2);
-            Object value = getTypeMapping(tag).readValue(resultSet);
+            Object value = getTypeMapping(chunkReader.getAccessor(), tag).readValue(resultSet);
             if (TRACER.isEnabled())
             {
               TRACER.format("ChunkReader read value for index {0} from result set: {1}", nextDBIndex, value); //$NON-NLS-1$
             }
-            chunk.add(i, CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(tag), value));
+            chunk.add(i, CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(chunkReader.getAccessor(), tag), value));
 
             // advance DB cursor and read next available index
             if (resultSet.next())
@@ -674,7 +674,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
     if (TRACER.isEnabled())
     {
       TRACER.format("Reading list chunk values done for feature {0}.{1} of {2}", getContainingClass().getName(), //$NON-NLS-1$
-          getTagByFeature(getFeature()), revision);
+          getFeature(), revision);
     }
   }
 
@@ -700,10 +700,11 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
     {
       TRACER
           .format(
-              "Writing value for feature {0}.{1} index {2} of {3} : {4}", getContainingClass().getName(), getTagByFeature(getFeature()), idx, revision, value); //$NON-NLS-1$
+              "Writing value for feature {0}.{1} index {2} of {3} : {4}", getContainingClass().getName(), getFeature(), idx, revision, value); //$NON-NLS-1$
     }
 
-    addEntry(accessor, revision.getID(), revision.getBranch().getID(), revision.getVersion(), idx, value);
+    addEntry(accessor, revision.getID(), revision.getBranch().getID(), revision.getVersion(), idx, value,
+        revision.getTimeStamp());
   }
 
   /**
@@ -713,12 +714,12 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
    *          The feature's MetaID in CDO
    * @return the column name where the values are stored
    */
-  protected String getColumnName(Long tag)
+  protected String getColumnName(IDBStoreAccessor accessor, Long tag)
   {
     String column = tagMap.get(tag);
     if (column == null)
     {
-      addFeature(tag);
+      addFeature(accessor, tag);
       column = tagMap.get(tag);
     }
 
@@ -732,12 +733,12 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
    *          The feature's MetaID in CDO
    * @return the corresponding type mapping
    */
-  protected ITypeMapping getTypeMapping(Long tag)
+  protected ITypeMapping getTypeMapping(IDBStoreAccessor accessor, Long tag)
   {
     ITypeMapping typeMapping = typeMappings.get(tag);
     if (typeMapping == null)
     {
-      addFeature(tag);
+      addFeature(accessor, tag);
       typeMapping = typeMappings.get(tag);
     }
 
@@ -748,9 +749,9 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
    * @param metaID
    * @return the column name where the values are stored
    */
-  private EStructuralFeature getFeatureByTag(Long tag)
+  private EStructuralFeature getFeatureByTag(IDBStoreAccessor accessor, Long tag)
   {
-    return (EStructuralFeature)getMappingStrategy().getStore().getMetaDataManager().getMetaInstance(tag);
+    return (EStructuralFeature)getMappingStrategy().getStore().getMetaDataManager().getMetaInstance(accessor, tag);
   }
 
   /**
@@ -758,9 +759,9 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
    *          The EStructuralFeature
    * @return The feature's MetaID in CDO
    */
-  protected Long getTagByFeature(EStructuralFeature feature)
+  protected Long getTagByFeature(IDBStoreAccessor accessor, EStructuralFeature feature, long created)
   {
-    return getMappingStrategy().getStore().getMetaDataManager().getMetaID(feature);
+    return getMappingStrategy().getStore().getMetaDataManager().getMetaID(accessor, feature, created);
   }
 
   /**
@@ -771,7 +772,8 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
    * @param id
    *          the id of the revision from which to remove all items
    */
-  public void clearList(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, int lastIndex)
+  public void clearList(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion,
+      int lastIndex, long timestamp)
   {
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement pstmtDeleteTemp = null;
@@ -785,7 +787,8 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
         if (getValue(accessor, id, branchId, i, false) == null)
         {
           // if not, add a historic entry for missing ones.
-          addHistoricEntry(accessor, id, branchId, 0, newVersion, i, getValueFromBase(accessor, id, branchId, i));
+          addHistoricEntry(accessor, id, branchId, 0, newVersion, i, getValueFromBase(accessor, id, branchId, i),
+              timestamp);
         }
       }
 
@@ -822,7 +825,8 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
       TRACER.format("objectDetached {1}", revision); //$NON-NLS-1$
     }
 
-    clearList(accessor, id, branchId, revision.getVersion(), FINAL_VERSION, revision.getList(getFeature()).size() - 1);
+    clearList(accessor, id, branchId, revision.getVersion(), FINAL_VERSION, revision.getList(getFeature()).size() - 1,
+        revised);
   }
 
   public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion,
@@ -845,7 +849,8 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
     }
 
     // let the visitor collect the changes
-    ListDeltaVisitor visitor = new ListDeltaVisitor(accessor, originalRevision, branchId, oldVersion, newVersion);
+    ListDeltaVisitor visitor = new ListDeltaVisitor(accessor, originalRevision, branchId, oldVersion, newVersion,
+        created);
 
     if (TRACER.isEnabled())
     {
@@ -887,8 +892,10 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
 
     private int lastIndex;
 
+    private long timestamp;
+
     public ListDeltaVisitor(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int targetBranchID,
-        int oldVersion, int newVersion)
+        int oldVersion, int newVersion, long timestamp)
     {
       this.accessor = accessor;
       this.originalRevision = originalRevision;
@@ -897,6 +904,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
       this.oldVersion = oldVersion;
       this.newVersion = newVersion;
       lastIndex = originalRevision.getList(getFeature()).size() - 1;
+      this.timestamp = timestamp;
     }
 
     public void visit(CDOMoveFeatureDelta delta)
@@ -912,7 +920,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
       Object value = getValue(accessor, id, branchID, fromIdx, true);
 
       // remove the item
-      removeEntry(accessor, id, branchID, oldVersion, newVersion, fromIdx);
+      removeEntry(accessor, id, branchID, oldVersion, newVersion, fromIdx, timestamp);
 
       // adjust indexes and shift either up or down
       if (fromIdx < toIdx)
@@ -925,7 +933,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
       }
 
       // create the item
-      addEntry(accessor, id, branchID, newVersion, toIdx, value);
+      addEntry(accessor, id, branchID, newVersion, toIdx, value, timestamp);
     }
 
     public void visit(CDOAddFeatureDelta delta)
@@ -945,7 +953,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
       }
 
       // create the item
-      addEntry(accessor, id, branchID, newVersion, startIndex, delta.getValue());
+      addEntry(accessor, id, branchID, newVersion, startIndex, delta.getValue(), timestamp);
 
       ++lastIndex;
     }
@@ -961,7 +969,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
       }
 
       // remove the item
-      removeEntry(accessor, id, branchID, oldVersion, newVersion, startIndex);
+      removeEntry(accessor, id, branchID, oldVersion, newVersion, startIndex, timestamp);
 
       // make room for the new item
       moveOneUp(accessor, id, branchID, oldVersion, newVersion, startIndex + 1, endIndex);
@@ -979,10 +987,10 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
       }
 
       // remove the item
-      removeEntry(accessor, id, branchID, oldVersion, newVersion, index);
+      removeEntry(accessor, id, branchID, oldVersion, newVersion, index, timestamp);
 
       // create the item
-      addEntry(accessor, id, branchID, newVersion, index, delta.getValue());
+      addEntry(accessor, id, branchID, newVersion, index, delta.getValue(), timestamp);
     }
 
     public void visit(CDOUnsetFeatureDelta delta)
@@ -997,7 +1005,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
         TRACER.format("Delta Unsetting"); //$NON-NLS-1$
       }
 
-      clearList(accessor, id, branchID, oldVersion, newVersion, lastIndex);
+      clearList(accessor, id, branchID, oldVersion, newVersion, lastIndex, timestamp);
       lastIndex = -1;
     }
 
@@ -1013,7 +1021,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
         TRACER.format("Delta Clearing"); //$NON-NLS-1$
       }
 
-      clearList(accessor, id, branchID, oldVersion, newVersion, lastIndex);
+      clearList(accessor, id, branchID, oldVersion, newVersion, lastIndex, timestamp);
       lastIndex = -1;
     }
 
@@ -1068,7 +1076,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
                 TRACER.format("moveOneUp remove: {0}", index); //$NON-NLS-1$
               }
 
-              removeEntry(accessor, id, branchId, oldVersion, newVersion, index);
+              removeEntry(accessor, id, branchId, oldVersion, newVersion, index, timestamp);
             }
             else
             {
@@ -1077,7 +1085,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
                 TRACER.format("moveOneUp add historic entry at: {0}", index); //$NON-NLS-1$
               }
 
-              addHistoricEntry(accessor, id, branchId, 0, newVersion, index, value);
+              addHistoricEntry(accessor, id, branchId, 0, newVersion, index, value, timestamp);
             }
 
             if (TRACER.isEnabled())
@@ -1085,7 +1093,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
               TRACER.format("moveOneUp add: {0}", index - 1); //$NON-NLS-1$
             }
 
-            addEntry(accessor, id, branchId, newVersion, index - 1, value);
+            addEntry(accessor, id, branchId, newVersion, index - 1, value, timestamp);
             break;
           default:
             if (TRACER.isEnabled())
@@ -1151,7 +1159,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
                 TRACER.format("moveOneDown remove: {0}", index); //$NON-NLS-1$
               }
 
-              removeEntry(accessor, id, branchId, oldVersion, newVersion, index);
+              removeEntry(accessor, id, branchId, oldVersion, newVersion, index, timestamp);
             }
             else
             {
@@ -1160,10 +1168,10 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
                 TRACER.format("moveOneDown add historic entry at: {0}", index); //$NON-NLS-1$
               }
 
-              addHistoricEntry(accessor, id, branchId, 0, newVersion, index, value);
+              addHistoricEntry(accessor, id, branchId, 0, newVersion, index, value, timestamp);
             }
 
-            addEntry(accessor, id, branchId, newVersion, index + 1, value);
+            addEntry(accessor, id, branchId, newVersion, index + 1, value, timestamp);
             break;
           default:
             if (TRACER.isEnabled())
@@ -1186,7 +1194,8 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
     }
   }
 
-  private void addEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int version, int index, Object value)
+  private void addEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int version, int index, Object value,
+      long timestamp)
   {
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement pstmt = null;
@@ -1201,8 +1210,8 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
     {
       FeatureMap.Entry entry = (FeatureMap.Entry)value;
       EStructuralFeature entryFeature = entry.getEStructuralFeature();
-      Long tag = getTagByFeature(entryFeature);
-      String column = getColumnName(tag);
+      Long tag = getTagByFeature(accessor, entryFeature, timestamp);
+      String column = getColumnName(accessor, tag);
 
       pstmt = statementCache.getPreparedStatement(sqlInsert, ReuseProbability.HIGH);
 
@@ -1216,7 +1225,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
       {
         if (columnNames.get(i).equals(column))
         {
-          getTypeMapping(tag).setValue(pstmt, stmtIndex++, entry.getValue());
+          getTypeMapping(accessor, tag).setValue(pstmt, stmtIndex++, entry.getValue());
         }
         else
         {
@@ -1243,7 +1252,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
   }
 
   private void addHistoricEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int versionAdded,
-      int versionRemoved, int index, Object value)
+      int versionRemoved, int index, Object value, long timestamp)
   {
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement pstmt = null;
@@ -1260,8 +1269,8 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
     {
       FeatureMap.Entry entry = (FeatureMap.Entry)value;
       EStructuralFeature entryFeature = entry.getEStructuralFeature();
-      Long tag = getTagByFeature(entryFeature);
-      String column = getColumnName(tag);
+      Long tag = getTagByFeature(accessor, entryFeature, timestamp);
+      String column = getColumnName(accessor, tag);
 
       pstmt = statementCache.getPreparedStatement(sqlInsert, ReuseProbability.HIGH);
 
@@ -1276,7 +1285,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
       {
         if (columnNames.get(i).equals(column))
         {
-          getTypeMapping(tag).setValue(pstmt, stmtIndex++, entry.getValue());
+          getTypeMapping(accessor, tag).setValue(pstmt, stmtIndex++, entry.getValue());
         }
         else
         {
@@ -1302,7 +1311,8 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
     }
   }
 
-  private void removeEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, int index)
+  private void removeEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion,
+      int index, long timestamp)
   {
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement pstmt = null;
@@ -1360,7 +1370,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
           // the entry has not been modified since the branch fork.
           // therefore, we have to copy the base value and mark it as removed
           Object value = getValueFromBase(accessor, id, branchId, index);
-          addHistoricEntry(accessor, id, branchId, 0, newVersion, index, value);
+          addHistoricEntry(accessor, id, branchId, 0, newVersion, index, value, timestamp);
         }
       }
     }
@@ -1409,8 +1419,8 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
       if (resultSet.next())
       {
         Long tag = resultSet.getLong(1);
-        Object value = getTypeMapping(tag).readValue(resultSet);
-        result = CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(tag), value);
+        Object value = getTypeMapping(accessor, tag).readValue(resultSet);
+        result = CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(accessor, tag), value);
       }
       else
       {

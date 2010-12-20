@@ -69,12 +69,6 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
   }
 
   @Override
-  protected void adjustMetaRanges()
-  {
-    // Do nothing
-  }
-
-  @Override
   protected void adjustForCommit()
   {
     // Do nothing

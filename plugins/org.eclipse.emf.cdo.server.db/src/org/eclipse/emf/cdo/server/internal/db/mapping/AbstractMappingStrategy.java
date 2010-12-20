@@ -45,6 +45,8 @@ import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
@@ -316,7 +318,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       prefix += NAME_SEPARATOR;
     }
 
-    return getName(prefix + name, typePrefix + getMetaDataManager().getMetaID(element), getMaxTableNameLength());
+    return getName(prefix + name, typePrefix + getUniqueID(element), getMaxTableNameLength());
   }
 
   public String getTableName(EClass eClass, EStructuralFeature feature)
@@ -337,8 +339,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       prefix += NAME_SEPARATOR;
     }
 
-    return getName(prefix + name, TYPE_PREFIX_FEATURE + getMetaDataManager().getMetaID(feature),
-        getMaxTableNameLength());
+    return getName(prefix + name, TYPE_PREFIX_FEATURE + getUniqueID(feature), getMaxTableNameLength());
   }
 
   public String getFieldName(EStructuralFeature feature)
@@ -346,8 +347,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     String name = DBAnnotation.COLUMN_NAME.getValue(feature);
     if (name == null)
     {
-      name = getName(feature.getName(), TYPE_PREFIX_FEATURE + getMetaDataManager().getMetaID(feature),
-          getMaxFieldNameLength());
+      name = getName(feature.getName(), TYPE_PREFIX_FEATURE + getUniqueID(feature), getMaxFieldNameLength());
     }
 
     return name;
@@ -361,7 +361,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       return CDO_SET_PREFIX + name;
     }
 
-    return getName(CDO_SET_PREFIX + feature.getName(), TYPE_PREFIX_FEATURE + getMetaDataManager().getMetaID(feature),
+    return getName(CDO_SET_PREFIX + feature.getName(), TYPE_PREFIX_FEATURE + getUniqueID(feature),
         getMaxFieldNameLength());
   }
 
@@ -386,6 +386,30 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     }
 
     return name;
+  }
+
+  private long getUniqueID(ENamedElement element)
+  {
+    // TODO: replace with a better logic. For now, we fall back to the
+    // element IDs...
+
+    IDBStoreAccessor accessor = getStore().getWriter(null);
+
+    try
+    {
+      long result = getMetaDataManager().getMetaID(accessor, element, System.currentTimeMillis());
+      accessor.commit(new Monitor());
+      return Math.abs(result);
+    }
+    catch (Throwable t)
+    {
+      accessor.rollback();
+      throw new DBException(t);
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(accessor); // do not let the null-accessor go into the pool!
+    }
   }
 
   // -- factories for mapping of classes, values, lists ------------------

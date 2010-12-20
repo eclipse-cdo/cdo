@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
@@ -24,7 +23,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.emf.ecore.EClass;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -102,11 +100,6 @@ public abstract class DelegatingCommitContext implements IStoreAccessor.CommitCo
   public Map<CDOID, CDOID> getIDMappings()
   {
     return getDelegate().getIDMappings();
-  }
-
-  public List<CDOIDMetaRange> getMetaIDRanges()
-  {
-    return getDelegate().getMetaIDRanges();
   }
 
   public String getRollbackMessage()

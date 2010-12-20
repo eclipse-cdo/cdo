@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.spi.common.model;
 
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -32,8 +31,6 @@ public interface InternalCDOPackageInfo extends CDOPackageInfo, Adapter.Internal
   public void setPackageURI(String packageURI);
 
   public void setParentURI(String parentURI);
-
-  public void setMetaIDRange(CDOIDMetaRange metaIDRange);
 
   /**
    * @since 3.0

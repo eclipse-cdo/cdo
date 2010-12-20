@@ -25,10 +25,6 @@ public class ObjyPackageInfo extends ooObj
 
   protected String unitID;
 
-  protected long metaLB;
-
-  protected long metaUB;
-
   protected ToOneRelationship packageUnit;
 
   private String name;
@@ -103,30 +99,6 @@ public class ObjyPackageInfo extends ooObj
   {
     markModified();
     this.unitID = unitID;
-  }
-
-  public long getMetaLB()
-  {
-    fetch();
-    return metaLB;
-  }
-
-  public void setMetaLB(long metaLB)
-  {
-    markModified();
-    this.metaLB = metaLB;
-  }
-
-  public long getMetaUB()
-  {
-    fetch();
-    return metaUB;
-  }
-
-  public void setMetaUB(long metaUB)
-  {
-    markModified();
-    this.metaUB = metaUB;
   }
 
   public void setPackageName(String name)

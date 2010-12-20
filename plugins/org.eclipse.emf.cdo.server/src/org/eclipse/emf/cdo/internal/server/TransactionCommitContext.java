@@ -18,9 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -67,7 +65,6 @@ import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -93,8 +90,6 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class TransactionCommitContext implements InternalCommitContext
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION, TransactionCommitContext.class);
-
   private static final InternalCDORevision DETACHED = new StubCDORevision(null);
 
   private InternalTransaction transaction;
@@ -128,8 +123,6 @@ public class TransactionCommitContext implements InternalCommitContext
   private Set<Object> lockedObjects = new HashSet<Object>();
 
   private List<CDOID> lockedTargets;
-
-  private List<CDOIDMetaRange> metaIDRanges = new ArrayList<CDOIDMetaRange>();
 
   private ConcurrentMap<CDOID, CDOID> idMappings = new ConcurrentHashMap<CDOID, CDOID>();
 
@@ -274,11 +267,6 @@ public class TransactionCommitContext implements InternalCommitContext
     return cache;
   }
 
-  public List<CDOIDMetaRange> getMetaIDRanges()
-  {
-    return Collections.unmodifiableList(metaIDRanges);
-  }
-
   public Map<CDOID, CDOID> getIDMappings()
   {
     return Collections.unmodifiableMap(idMappings);
@@ -382,10 +370,8 @@ public class TransactionCommitContext implements InternalCommitContext
       monitor.begin(107);
 
       dirtyObjects = new InternalCDORevision[dirtyObjectDeltas.length];
-      adjustMetaRanges();
-      monitor.worked();
-
       lockObjects();
+      monitor.worked();
 
       // Could throw an exception
       long[] times = createTimeStamp(monitor.fork());
@@ -512,12 +498,6 @@ public class TransactionCommitContext implements InternalCommitContext
         packageRegistry = null;
       }
 
-      if (metaIDRanges != null)
-      {
-        metaIDRanges.clear();
-        metaIDRanges = null;
-      }
-
       if (idMappings != null)
       {
         idMappings.clear();
@@ -603,49 +583,6 @@ public class TransactionCommitContext implements InternalCommitContext
     {
       newObject.adjustForCommit(branch, timeStamp);
     }
-  }
-
-  protected void adjustMetaRanges()
-  {
-    for (InternalCDOPackageUnit newPackageUnit : newPackageUnits)
-    {
-      for (InternalCDOPackageInfo packageInfo : newPackageUnit.getPackageInfos())
-      {
-        adjustMetaRange(packageInfo);
-      }
-    }
-  }
-
-  private void adjustMetaRange(InternalCDOPackageInfo packageInfo)
-  {
-    CDOIDMetaRange oldRange = packageInfo.getMetaIDRange();
-    if (!oldRange.isTemporary())
-    {
-      throw new IllegalStateException("!oldRange.isTemporary()"); //$NON-NLS-1$
-    }
-
-    int count = oldRange.size();
-    CDOIDMetaRange newRange = transaction.getRepository().getStore().getNextMetaIDRange(count);
-    packageInfo.setMetaIDRange(newRange);
-    packageRegistry.getMetaInstanceMapper().mapMetaInstances(packageInfo.getEPackage(), newRange);
-
-    for (int i = 0; i < count; i++)
-    {
-      CDOIDTemp oldID = (CDOIDTemp)oldRange.get(i);
-      CDOID newID = newRange.get(i);
-      idMappings.put(oldID, newID);
-    }
-
-    addMetaIDRange(newRange);
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Mapping meta ID range: {0} --> {1}", oldRange, newRange); //$NON-NLS-1$
-    }
-  }
-
-  protected void addMetaIDRange(CDOIDMetaRange range)
-  {
-    metaIDRanges.add(range);
   }
 
   protected void lockObjects() throws InterruptedException
@@ -1053,8 +990,6 @@ public class TransactionCommitContext implements InternalCommitContext
           repositoryPackageRegistry.putPackageUnit(newPackageUnits[i]);
           monitor.worked();
         }
-
-        repositoryPackageRegistry.getMetaInstanceMapper().mapMetaInstances(packageRegistry.getMetaInstanceMapper());
       }
       finally
       {

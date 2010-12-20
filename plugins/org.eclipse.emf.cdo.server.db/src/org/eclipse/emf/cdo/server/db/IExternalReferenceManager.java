@@ -23,6 +23,16 @@ public interface IExternalReferenceManager
   public long mapExternalReference(IDBStoreAccessor accessor, CDOIDExternal id, long commitTime);
 
   public CDOIDExternal unmapExternalReference(IDBStoreAccessor accessor, long mappedId);
+  
+  /**
+   * @since 4.0
+   */
+  public long mapURI(IDBStoreAccessor accessor, String uri, long commitTime);
+  
+  /**
+   * @since 4.0
+   */
+  public String unmapURI(IDBStoreAccessor accessor, long mappedId);
 
   /**
    * @author Eike Stepper

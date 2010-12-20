@@ -159,8 +159,6 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CLASS);
-    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CREATED);
     builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
@@ -195,8 +193,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       }
     }
 
-    builder.append(") VALUES (?, ?, "); //$NON-NLS-1$
-    builder.append("?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
+    builder.append(") VALUES (?, ?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
     for (int i = 0; i < getValueMappings().size(); i++)
     {
       builder.append(", ?"); //$NON-NLS-1$
@@ -266,7 +263,6 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       stmt = statementCache.getPreparedStatement(sqlInsertAttributes, ReuseProbability.HIGH);
       stmt.setLong(col++, CDOIDUtil.getLong(revision.getID()));
       stmt.setInt(col++, revision.getVersion());
-      stmt.setLong(col++, accessor.getStore().getMetaDataManager().getMetaID(revision.getEClass()));
       stmt.setLong(col++, commitTime);
       stmt.setLong(col++, revision.getRevised());
       stmt.setLong(col++,

@@ -80,11 +80,6 @@ public abstract class DelegatingCDOPackageRegistry extends Lifecycle implements 
     return getDelegate().getEPackages();
   }
 
-  public MetaInstanceMapper getMetaInstanceMapper()
-  {
-    return getDelegate().getMetaInstanceMapper();
-  }
-
   public InternalCDOPackageInfo getPackageInfo(EPackage ePackage)
   {
     return getDelegate().getPackageInfo(ePackage);

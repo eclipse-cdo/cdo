@@ -68,18 +68,27 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
 
   public long mapExternalReference(IDBStoreAccessor accessor, CDOIDExternal id, long commitTime)
   {
-    String uri = id.getURI();
+    return mapURI(accessor, id.getURI(), commitTime);
+  }
+
+  public CDOIDExternal unmapExternalReference(IDBStoreAccessor accessor, long mappedId)
+  {
+    return CDOIDUtil.createExternal(unmapURI(accessor, mappedId));
+  }
+
+  public long mapURI(IDBStoreAccessor accessor, String uri, long commitTime)
+  {
     long result = lookupByID(accessor, uri);
     if (result < DBStore.NULL)
     {
       // mapping found
       return result;
     }
-
+  
     return insertNew(accessor, uri, commitTime);
   }
 
-  public CDOIDExternal unmapExternalReference(IDBStoreAccessor accessor, long mappedId)
+  public String unmapURI(IDBStoreAccessor accessor, long mappedId)
   {
     PreparedStatement stmt = null;
     ResultSet rs = null;
@@ -97,7 +106,7 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
       }
 
       String uri = rs.getString(1);
-      return CDOIDUtil.createExternal(uri);
+      return uri;
     }
     catch (SQLException e)
     {

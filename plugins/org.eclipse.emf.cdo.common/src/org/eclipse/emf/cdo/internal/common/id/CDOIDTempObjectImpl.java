@@ -41,11 +41,6 @@ public class CDOIDTempObjectImpl extends AbstractCDOIDInteger implements CDOIDTe
     return false;
   }
 
-  public boolean isMeta()
-  {
-    return false;
-  }
-
   public boolean isNull()
   {
     return false;

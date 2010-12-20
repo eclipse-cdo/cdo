@@ -75,8 +75,6 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
 
   private static final String PROP_LAST_CDOID = "org.eclipse.emf.cdo.server.db.lastCDOID"; //$NON-NLS-1$
 
-  private static final String PROP_LAST_METAID = "org.eclipse.emf.cdo.server.db.lastMetaID"; //$NON-NLS-1$
-
   private static final String PROP_LAST_BRANCHID = "org.eclipse.emf.cdo.server.db.lastBranchID"; //$NON-NLS-1$
 
   private static final String PROP_LAST_LOCAL_BRANCHID = "org.eclipse.emf.cdo.server.db.lastLocalBranchID"; //$NON-NLS-1$
@@ -487,12 +485,6 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
         connection.commit();
       }
 
-      dbSchema = createSchema();
-      metaDataManager = new MetaDataManager(this);
-      LifecycleUtil.activate(metaDataManager);
-
-      LifecycleUtil.activate(mappingStrategy);
-
       createdTables = CDODBSchema.INSTANCE.create(dbAdapter, connection);
       connection.commit();
     }
@@ -500,6 +492,17 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     {
       DBUtil.close(connection);
     }
+
+    dbSchema = createSchema();
+
+    externalReferenceManager = createExternalReferenceManager();
+    externalReferenceManager.setStore(this);
+    LifecycleUtil.activate(externalReferenceManager);
+
+    metaDataManager = new MetaDataManager(this);
+    LifecycleUtil.activate(metaDataManager);
+
+    LifecycleUtil.activate(mappingStrategy);
 
     if (isFirstStart(createdTables))
     {
@@ -509,10 +512,6 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     {
       reStart();
     }
-
-    externalReferenceManager = createExternalReferenceManager();
-    externalReferenceManager.setStore(this);
-    LifecycleUtil.activate(externalReferenceManager);
   }
 
   @Override
@@ -527,7 +526,6 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     map.put(PROP_REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
     map.put(PROP_NEXT_LOCAL_CDOID, Long.toString(getNextLocalObjectID()));
     map.put(PROP_LAST_CDOID, Long.toString(getLastObjectID()));
-    map.put(PROP_LAST_METAID, Long.toString(getLastMetaID()));
     map.put(PROP_LAST_BRANCHID, Integer.toString(getLastBranchID()));
     map.put(PROP_LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
     map.put(PROP_LAST_COMMITTIME, Long.toString(getLastCommitTime()));
@@ -579,7 +577,6 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
       names.clear();
       names.add(PROP_NEXT_LOCAL_CDOID);
       names.add(PROP_LAST_CDOID);
-      names.add(PROP_LAST_METAID);
       names.add(PROP_LAST_BRANCHID);
       names.add(PROP_LAST_LOCAL_BRANCHID);
       names.add(PROP_LAST_COMMITTIME);
@@ -588,7 +585,6 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
 
       setNextLocalObjectID(Long.valueOf(map.get(PROP_NEXT_LOCAL_CDOID)));
       setLastObjectID(Long.valueOf(map.get(PROP_LAST_CDOID)));
-      setLastMetaID(Long.valueOf(map.get(PROP_LAST_METAID)));
       setLastBranchID(Integer.valueOf(map.get(PROP_LAST_BRANCHID)));
       setLastLocalBranchID(Integer.valueOf(map.get(PROP_LAST_LOCAL_BRANCHID)));
       setLastCommitTime(Long.valueOf(map.get(PROP_LAST_COMMITTIME)));
@@ -608,9 +604,6 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
         setNextLocalObjectID(result[0]);
         setLastObjectID(result[1]);
 
-        long lastMetaID = DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGE_INFOS_META_UB);
-        setLastMetaID(lastMetaID);
-
         int branchID = DBUtil.selectMaximumInt(connection, CDODBSchema.BRANCHES_ID);
         setLastBranchID(branchID > 0 ? branchID : 0);
 
@@ -624,7 +617,9 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
             CDOBranch.MAIN_BRANCH_ID + "<=" + CDODBSchema.COMMIT_INFOS_BRANCH);
         setLastNonLocalCommitTime(lastNonLocalCommitTime);
 
-        OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.10"), getLastObjectID(), getLastMetaID())); //$NON-NLS-1$
+        OM.LOG
+            .info(MessageFormat.format(
+                Messages.getString("DBStore.10"), getLastObjectID(), getNextLocalObjectID(), getLastBranchID(), getLastCommitTime(), getLastNonLocalCommitTime())); //$NON-NLS-1$
       }
       catch (SQLException e)
       {

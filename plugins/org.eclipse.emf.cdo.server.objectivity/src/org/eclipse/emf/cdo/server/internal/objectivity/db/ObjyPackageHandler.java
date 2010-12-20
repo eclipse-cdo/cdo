@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
-import org.eclipse.emf.cdo.common.id.CDOIDMeta;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -19,7 +17,6 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyPackageInfo;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyPackageUnit;
-import org.eclipse.emf.cdo.server.internal.objectivity.utils.OBJYCDOIDUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.SmartLock;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -141,12 +138,6 @@ public class ObjyPackageHandler
     ooPackageInfo.setUnitID(packageInfo.getPackageUnit().getID());
     ooPackageInfo.setPackageName(packageInfo.getEPackage().getName());
 
-    CDOIDMetaRange metaIDRange = packageInfo.getMetaIDRange();
-    long metaLB = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getLowerBound()).getLongValue();
-    long metaUB = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getUpperBound()).getLongValue();
-    ooPackageInfo.setMetaLB(metaLB);
-    ooPackageInfo.setMetaUB(metaUB);
-
     return ooPackageInfo;
   }
 
@@ -224,11 +215,6 @@ public class ObjyPackageHandler
     packageInfo.setPackageURI(ooPackageInfo.getPackageURI());
     packageInfo.setParentURI(ooPackageInfo.getParentURI());
     // TODO - do we need this!!!! setUnitID(packageInfo.getPackageUnit().getID());
-    long metaLB = ooPackageInfo.getMetaLB();
-    long metaUB = ooPackageInfo.getMetaUB();
-    CDOIDMetaRange metaIDRange = metaLB == 0 ? null : OBJYCDOIDUtil.createMetaRange(OBJYCDOIDUtil.createMeta(metaLB),
-        (int)(metaUB - metaLB) + 1);
-    packageInfo.setMetaIDRange(metaIDRange);
 
     return packageInfo;
   }

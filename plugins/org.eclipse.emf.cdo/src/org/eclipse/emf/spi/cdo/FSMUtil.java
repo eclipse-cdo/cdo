@@ -13,24 +13,16 @@ package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOLegacyAdapter;
-import org.eclipse.emf.internal.cdo.CDOMetaWrapper;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EGenericType;
-import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
@@ -71,37 +63,11 @@ public final class FSMUtil
     return state == CDOState.NEW;
   }
 
-  public static boolean isMeta(Object object)
-  {
-    if (object instanceof EModelElement || object instanceof EGenericType)
-    {
-      EClass eClass = ((EObject)object).eClass();
-      if (eClass == null)
-      {
-        return false;
-      }
-
-      EPackage ePackage = eClass.getEPackage();
-      if (ePackage == null)
-      {
-        return false;
-      }
-
-      return ePackage.getNsURI() == EcorePackage.eNS_URI;
-    }
-
-    return object instanceof org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
-  }
-
   public static boolean isNative(EObject eObject)
   {
     return eObject instanceof CDOObjectImpl;
   }
 
-  /**
-   * @param view
-   *          Only needed if object is a meta instance.
-   */
   public static InternalCDOObject adapt(Object object, CDOView view)
   {
     if (view.isClosed())
@@ -119,11 +85,6 @@ public final class FSMUtil
       throw new IllegalArgumentException(Messages.getString("FSMUtil.1")); //$NON-NLS-1$
     }
 
-    if (isMeta(object))
-    {
-      return adaptMeta((InternalEObject)object, view);
-    }
-
     if (object instanceof InternalEObject)
     {
       if (!view.isLegacyModeEnabled())
@@ -135,30 +96,6 @@ public final class FSMUtil
     }
 
     return null;
-  }
-
-  public static InternalCDOObject adaptMeta(InternalEObject object, CDOView view)
-  {
-    if (view == null)
-    {
-      throw new IllegalArgumentException(Messages.getString("FSMUtil.2")); //$NON-NLS-1$
-    }
-
-    if (object.eIsProxy())
-    {
-      object = (InternalEObject)EcoreUtil.resolve(object, view.getResourceSet());
-    }
-
-    try
-    {
-      InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)view.getSession().getPackageRegistry();
-      CDOID id = packageRegistry.getMetaInstanceMapper().lookupMetaInstanceID(object);
-      return new CDOMetaWrapper((InternalCDOView)view, object, id);
-    }
-    catch (RuntimeException ex)
-    {
-      return null;
-    }
   }
 
   /*

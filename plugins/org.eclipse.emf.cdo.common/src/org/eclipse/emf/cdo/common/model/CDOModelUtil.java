@@ -425,6 +425,18 @@ public final class CDOModelUtil
   }
 
   /**
+   * @since 3.0
+   */
+  public static EPackage readPackage(ExtendedDataInput in, ResourceSet resourceSet, boolean lookForResource)
+      throws IOException
+  {
+    String uri = in.readString();
+    boolean zipped = in.readBoolean();
+    byte[] bytes = in.readByteArray();
+    return EMFUtil.createEPackage(uri, bytes, zipped, resourceSet, lookForResource);
+  }
+
+  /**
    * @since 2.0
    */
   public static void writePackage(ExtendedDataOutput out, EPackage ePackage, boolean zipped,
@@ -505,17 +517,5 @@ public final class CDOModelUtil
         }
       }
     }
-  }
-
-  /**
-   * @since 3.0
-   */
-  public static EPackage readPackage(ExtendedDataInput in, ResourceSet resourceSet, boolean lookForResource)
-      throws IOException
-  {
-    String uri = in.readString();
-    boolean zipped = in.readBoolean();
-    byte[] bytes = in.readByteArray();
-    return EMFUtil.createEPackage(uri, bytes, zipped, resourceSet, lookForResource);
   }
 }

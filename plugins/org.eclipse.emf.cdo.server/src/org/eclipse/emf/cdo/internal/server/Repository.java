@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
@@ -1299,9 +1298,6 @@ public class Repository extends Container<Object> implements InternalRepository
   {
     EMFUtil.registerPackage(ePackage, packageRegistry);
     InternalCDOPackageInfo packageInfo = packageRegistry.getPackageInfo(ePackage);
-    CDOIDMetaRange metaIDRange = store.getNextMetaIDRange(packageInfo.getMetaIDRange().size());
-    packageInfo.setMetaIDRange(metaIDRange);
-    packageRegistry.getMetaInstanceMapper().mapMetaInstances(ePackage, metaIDRange);
 
     InternalCDOPackageUnit packageUnit = packageInfo.getPackageUnit();
     packageUnit.setTimeStamp(store.getCreationTime());

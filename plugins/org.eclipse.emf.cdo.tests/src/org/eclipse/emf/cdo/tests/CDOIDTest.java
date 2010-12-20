@@ -14,10 +14,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDNullImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -48,21 +46,9 @@ public class CDOIDTest extends AbstractCDOTest
     assertEquals(123L, CDOIDUtil.getLong(id));
   }
 
-  public void testGetLong_MetaId()
-  {
-    CDOIDMetaImpl id = new CDOIDMetaImpl(135L);
-    assertEquals(135, CDOIDUtil.getLong(id));
-  }
-
   public void testGetLong_TempId()
   {
     CDOIDTempObjectImpl id = new CDOIDTempObjectImpl(456);
-    assertIllegalArgument(id);
-  }
-
-  public void testGetLong_TempMetaId()
-  {
-    CDOIDTempMetaImpl id = new CDOIDTempMetaImpl(789);
     assertIllegalArgument(id);
   }
 

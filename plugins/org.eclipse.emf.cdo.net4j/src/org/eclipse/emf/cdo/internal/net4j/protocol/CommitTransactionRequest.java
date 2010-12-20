@@ -19,11 +19,9 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.model.lob.CDOClob;
@@ -35,8 +33,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.MetaInstanceMapper;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -219,7 +215,6 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     }
 
     result = confirmingResult(in);
-    confirmingMappingNewPackages(in, result);
     confirmingMappingNewObjects(in, result);
     return result;
   }
@@ -242,32 +237,6 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     CDOBranchPoint branchPoint = in.readCDOBranchPoint();
     long previousTimeStamp = in.readLong();
     return new CommitTransactionResult(idProvider, branchPoint, previousTimeStamp);
-  }
-
-  protected void confirmingMappingNewPackages(CDODataInput in, CommitTransactionResult result) throws IOException
-  {
-    MetaInstanceMapper metaInstanceMapper = getSession().getPackageRegistry().getMetaInstanceMapper();
-    for (CDOPackageUnit newPackageUnit : commitData.getNewPackageUnits())
-    {
-      for (CDOPackageInfo packageInfo : newPackageUnit.getPackageInfos())
-      {
-        CDOIDMetaRange oldRange = packageInfo.getMetaIDRange();
-        CDOIDMetaRange newRange = in.readCDOIDMetaRange();
-        ((InternalCDOPackageInfo)packageInfo).setMetaIDRange(newRange);
-        for (int i = 0; i < oldRange.size(); i++)
-        {
-          CDOIDTemp oldID = (CDOIDTemp)oldRange.get(i);
-          CDOID newID = newRange.get(i);
-          result.addIDMapping(oldID, newID);
-          remapMetaInstanceID(metaInstanceMapper, oldID, newID);
-        }
-      }
-    }
-  }
-
-  protected void remapMetaInstanceID(MetaInstanceMapper metaInstanceMapper, CDOIDTemp oldID, CDOID newID)
-  {
-    metaInstanceMapper.remapMetaInstanceID(oldID, newID);
   }
 
   protected void confirmingMappingNewObjects(CDODataInput in, CommitTransactionResult result) throws IOException

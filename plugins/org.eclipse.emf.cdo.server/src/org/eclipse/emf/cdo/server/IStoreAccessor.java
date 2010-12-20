@@ -15,8 +15,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.model.lob.CDOClob;
@@ -374,15 +372,9 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public ExtendedDataInputStream getLobs();
 
     /**
-     * Returns an unmodifiable map from all temporary IDs (meta or not) to their persistent counter parts. It is
-     * initially populated with the mappings of all new <b>meta</b> objects.
+     * Returns an unmodifiable map from all temporary IDs to their persistent counter parts.
      */
     public Map<CDOID, CDOID> getIDMappings();
-
-    /**
-     * @since 3.0
-     */
-    public List<CDOIDMetaRange> getMetaIDRanges();
 
     /**
      * @since 3.0
@@ -541,8 +533,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * Stores the given {@link CDOPackageUnit package units} in the backend represented by this
      * {@link IStoreAccessor.Raw raw store accessor} without going through a regular
      * {@link IStoreAccessor #commit(OMMonitor) commit}. A regular commit operation would assign new
-     * {@link CDOPackageInfo#getMetaIDRange() meta IDs} and {@link CDOPackageUnit#getTimeStamp() time stamps}, which is
-     * not desired in the context of a replication operation.
+     * {@link CDOPackageUnit#getTimeStamp() time stamps}, which is not desired in the context of a replication
+     * operation.
      * <p>
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
      * this method are followed by a single final call to the {@link #rawCommit(OMMonitor) rawCommit()} method where the

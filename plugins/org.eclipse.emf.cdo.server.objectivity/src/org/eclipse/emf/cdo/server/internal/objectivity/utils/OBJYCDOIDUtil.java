@@ -13,8 +13,6 @@ package org.eclipse.emf.cdo.server.internal.objectivity.utils;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
-import org.eclipse.emf.cdo.common.id.CDOIDMeta;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyProxy;
@@ -137,19 +135,8 @@ public class OBJYCDOIDUtil
     return getContainerId(longCdoID);
   }
 
-  public static CDOIDMeta createMeta(long value)
-  {
-    return CDOIDUtil.createMeta(value);
-  }
-
-  public static CDOIDMetaRange createMetaRange(CDOID lowerBound, int count)
-  {
-    return CDOIDUtil.createMetaRange(lowerBound, count);
-  }
-
   public static CDOIDExternal createCDIDExternal(ObjyProxy proxyObject)
   {
     return CDOIDUtil.createExternal(proxyObject.getUri());
   }
-
 }

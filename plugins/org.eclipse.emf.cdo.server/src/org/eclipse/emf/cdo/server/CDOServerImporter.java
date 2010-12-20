@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
@@ -123,7 +122,7 @@ public abstract class CDOServerImporter
 
     public InternalCDOPackageUnit handlePackageUnit(String id, Type type, long time, String data);
 
-    public InternalCDOPackageInfo handlePackageInfo(String packageURI, CDOIDMetaRange metaIDRange);
+    public InternalCDOPackageInfo handlePackageInfo(String packageURI);
 
     public InternalCDOPackageRegistry handleModels();
 
@@ -187,11 +186,10 @@ public abstract class CDOServerImporter
       return packageUnit;
     }
 
-    public InternalCDOPackageInfo handlePackageInfo(String packageURI, CDOIDMetaRange metaIDRange)
+    public InternalCDOPackageInfo handlePackageInfo(String packageURI)
     {
       InternalCDOPackageInfo packageInfo = (InternalCDOPackageInfo)CDOModelUtil.createPackageInfo();
       packageInfo.setPackageURI(packageURI);
-      packageInfo.setMetaIDRange(metaIDRange);
       packageInfos.add(packageInfo);
       return packageInfo;
     }
@@ -358,10 +356,7 @@ public abstract class CDOServerImporter
         else if (PACKAGE_INFO.equals(qName))
         {
           String packageURI = attributes.getValue(PACKAGE_INFO_URI);
-          CDOID lowerBound = id(attributes.getValue(PACKAGE_INFO_FIRST));
-          int count = Integer.parseInt(attributes.getValue(PACKAGE_INFO_COUNT));
-          CDOIDMetaRange metaIDRange = CDOIDUtil.createMetaRange(lowerBound, count);
-          handler.handlePackageInfo(packageURI, metaIDRange);
+          handler.handlePackageInfo(packageURI);
         }
         else if (BRANCH.equals(qName))
         {

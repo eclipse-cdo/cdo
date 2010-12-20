@@ -39,17 +39,17 @@ public interface IMetaDataManager
    * @param modelElement
    *          the element
    * @return the corresponding ID
-   * @since 2.0
+   * @since 4.0
    */
-  public long getMetaID(EModelElement modelElement);
+  public long getMetaID(IDBStoreAccessor accessor, EModelElement modelElement, long commitTime);
 
   /**
    * Returns the {@link EModelElement} referred to by the given ID. <code> getMetaInstance(getMetaID(m))</code> yields
    * <code>m</code>
    * 
-   * @since 2.0
+   * @since 4.0
    */
-  public EModelElement getMetaInstance(long id);
+  public EModelElement getMetaInstance(IDBStoreAccessor accessor, long id);
 
   /**
    * Loads a package unit from the database.
@@ -62,6 +62,11 @@ public interface IMetaDataManager
    * @since 2.0
    */
   public EPackage[] loadPackageUnit(Connection connection, InternalCDOPackageUnit packageUnit);
+
+  /**
+   * @since 4.0
+   */
+  public void clearMetaIDMappings();
 
   /**
    * Reads information about package units present in the database.
@@ -98,4 +103,5 @@ public interface IMetaDataManager
    */
   public Collection<InternalCDOPackageUnit> rawImport(Connection connection, CDODataInput in, long fromCommitTime,
       long toCommitTime, OMMonitor monitor) throws IOException;
+
 }

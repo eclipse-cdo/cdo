@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
-import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
@@ -28,7 +27,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 /**
- * Persists a CDOID in the DB. Currently {@link CDOIDMeta} and {@link CDOIDExternal} are supported.
+ * Persists a CDOID in the DB. Currently {@link CDOIDExternal} is supported.
  */
 public class CDOIDUserType implements UserType
 {

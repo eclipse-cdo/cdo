@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
-import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -139,7 +138,7 @@ public class ContainerInfoConverter
     cdoRevision.setContainerID(containerID);
 
     final String containerFeatureStr = containerInfo.substring(index + SEPARATOR.length());
-    if (containerID instanceof CDOIDMeta || containerID instanceof CDOIDExternal)
+    if (containerID instanceof CDOIDExternal)
     {
       cdoRevision.setContainingFeatureID(Integer.parseInt(containerFeatureStr));
       return;

@@ -20,14 +20,11 @@ import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndBranchImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaRangeImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongWithClassifierImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectStringImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectStringWithClassifierImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectUUIDImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
@@ -78,10 +75,6 @@ public final class CDOIDUtil
       throw new IllegalArgumentException(MessageFormat.format(
           Messages.getString("CDOIDUtil.0"), id.getClass().getName())); //$NON-NLS-1$
 
-    case META:
-      return ((CDOIDMeta)id).getLongValue();
-
-    case TEMP_META:
     case TEMP_OBJECT:
       throw new IllegalArgumentException(Messages.getString("CDOIDUtil.1")); //$NON-NLS-1$
 
@@ -106,11 +99,6 @@ public final class CDOIDUtil
     }
 
     return null;
-  }
-
-  public static CDOIDTemp createTempMeta(int value)
-  {
-    return new CDOIDTempMetaImpl(value);
   }
 
   public static CDOIDTemp createTempObject(int value)
@@ -158,16 +146,6 @@ public final class CDOIDUtil
   public static CDOIDExternal createExternal(String uri)
   {
     return new CDOIDExternalImpl(uri);
-  }
-
-  public static CDOIDMeta createMeta(long value)
-  {
-    return new CDOIDMetaImpl(value);
-  }
-
-  public static CDOIDMetaRange createMetaRange(CDOID lowerBound, int count)
-  {
-    return new CDOIDMetaRangeImpl(lowerBound, count);
   }
 
   public static CDOIDAndVersion createIDAndVersion(CDOID id, int version)
@@ -304,12 +282,6 @@ public final class CDOIDUtil
 
     case TEMP_OBJECT:
       return new CDOIDTempObjectImpl(Integer.valueOf(fragment));
-
-    case TEMP_META:
-      return new CDOIDTempMetaImpl(Integer.valueOf(fragment));
-
-    case META:
-      return new CDOIDMetaImpl(Long.valueOf(fragment));
 
     case EXTERNAL_OBJECT:
       return new CDOIDExternalImpl(fragment);

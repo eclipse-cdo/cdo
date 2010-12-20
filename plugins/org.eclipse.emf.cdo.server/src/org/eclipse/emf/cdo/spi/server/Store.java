@@ -15,8 +15,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -86,12 +84,6 @@ public abstract class Store extends Lifecycle implements InternalStore
    */
   @ExcludeFromDump
   private transient int lastLocalBranchID;
-
-  @ExcludeFromDump
-  private transient long lastMetaID;
-
-  @ExcludeFromDump
-  private transient Object lastMetaIDLock = new Object();
 
   @ExcludeFromDump
   private transient long lastCommitTime;
@@ -275,32 +267,6 @@ public abstract class Store extends Lifecycle implements InternalStore
   public int getNextLocalBranchID()
   {
     return --lastLocalBranchID;
-  }
-
-  public long getLastMetaID()
-  {
-    synchronized (lastMetaIDLock)
-    {
-      return lastMetaID;
-    }
-  }
-
-  public void setLastMetaID(long lastMetaID)
-  {
-    synchronized (lastMetaIDLock)
-    {
-      this.lastMetaID = lastMetaID;
-    }
-  }
-
-  public CDOIDMetaRange getNextMetaIDRange(int count)
-  {
-    synchronized (lastMetaIDLock)
-    {
-      CDOID lowerBound = CDOIDUtil.createMeta(lastMetaID + 1);
-      lastMetaID += count;
-      return CDOIDUtil.createMetaRange(lowerBound, count);
-    }
   }
 
   /**

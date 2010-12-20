@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Taal - copied from CDORevisionPropertyHandler and adapted
  *    Eike Stepper - maintenance
@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
-import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
@@ -39,7 +38,7 @@ public class CDOReferenceGetter extends CDOPropertyGetter
     {
       return null;
     }
-    else if (o instanceof CDOIDMeta || o instanceof CDOIDExternal)
+    else if (o instanceof CDOIDExternal)
     {
       return o;
     }

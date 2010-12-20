@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.lob.CDOLob;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
@@ -514,7 +513,6 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       // Prepare data needed for commit result and commit notifications
       long timeStamp = result.getTimeStamp();
       setTimeStamp(timeStamp);
-      addMetaIDRanges(commitData.getNewPackageUnits());
       addIDMappings(result.getIDMappings());
       applyIDMappings(new Monitor());
 
@@ -553,23 +551,6 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     protected void lockObjects() throws InterruptedException
     {
       // Do nothing
-    }
-
-    @Override
-    protected void adjustMetaRanges()
-    {
-      // Do nothing
-    }
-
-    private void addMetaIDRanges(List<CDOPackageUnit> newPackageUnits)
-    {
-      for (CDOPackageUnit newPackageUnit : newPackageUnits)
-      {
-        for (CDOPackageInfo packageInfo : newPackageUnit.getPackageInfos())
-        {
-          addMetaIDRange(packageInfo.getMetaIDRange());
-        }
-      }
     }
 
     private void addIDMappings(Map<CDOID, CDOID> idMappings)

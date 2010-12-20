@@ -47,11 +47,6 @@ public class CDOIDObjectStringImpl extends AbstractCDOIDString implements Intern
     return false;
   }
 
-  public boolean isMeta()
-  {
-    return false;
-  }
-
   public boolean isNull()
   {
     return false;

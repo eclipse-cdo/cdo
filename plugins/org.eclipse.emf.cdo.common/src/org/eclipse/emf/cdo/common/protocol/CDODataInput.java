@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -86,8 +85,6 @@ public interface CDODataInput extends ExtendedDataInput
   public CDOIDAndVersion readCDOIDAndVersion() throws IOException;
 
   public CDOIDAndBranch readCDOIDAndBranch() throws IOException;
-
-  public CDOIDMetaRange readCDOIDMetaRange() throws IOException;
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 

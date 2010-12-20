@@ -47,11 +47,6 @@ public class CDOIDObjectUUIDImpl extends AbstractCDOIDString implements Internal
     return false;
   }
 
-  public boolean isMeta()
-  {
-    return false;
-  }
-
   public boolean isNull()
   {
     return false;

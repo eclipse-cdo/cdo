@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
-import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
@@ -46,7 +45,7 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
     int size = size();
     if (sourceIndex >= size)
     {
-      throw new IndexOutOfBoundsException("sourceIndex=" + sourceIndex + ", size=" + size); //$NON-NLS-1$  //$NON-NLS-2$ 
+      throw new IndexOutOfBoundsException("sourceIndex=" + sourceIndex + ", size=" + size); //$NON-NLS-1$  //$NON-NLS-2$
     }
 
     if (targetIndex >= size)
@@ -117,7 +116,7 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
     {
       return null;
     }
-    else if (o instanceof CDOIDMeta || o instanceof CDOIDExternal)
+    else if (o instanceof CDOIDExternal)
     {
       return o;
     }
@@ -144,7 +143,7 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
 
   protected Object getValue(Object o)
   {
-    if (o instanceof CDOIDMeta || o instanceof CDOIDExternal)
+    if (o instanceof CDOIDExternal)
     {
       return o;
     }

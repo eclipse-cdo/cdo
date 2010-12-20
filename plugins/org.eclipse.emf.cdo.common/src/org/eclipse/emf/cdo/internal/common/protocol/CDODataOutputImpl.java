@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
@@ -251,20 +250,6 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
   {
     writeCDOID(idAndBranch.getID());
     writeCDOBranch(idAndBranch.getBranch());
-  }
-
-  public void writeCDOIDMetaRange(CDOIDMetaRange metaRange) throws IOException
-  {
-    if (metaRange == null)
-    {
-      writeBoolean(false);
-    }
-    else
-    {
-      writeBoolean(true);
-      writeCDOID(metaRange.getLowerBound());
-      writeInt(metaRange.size());
-    }
   }
 
   public void writeCDORevisionKey(CDORevisionKey revisionKey) throws IOException

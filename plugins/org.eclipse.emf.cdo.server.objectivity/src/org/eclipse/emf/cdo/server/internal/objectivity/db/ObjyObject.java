@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.IManyTypeMapper;
@@ -463,11 +462,7 @@ public class ObjyObject
               FeatureMap.Entry entry = (FeatureMap.Entry)value;
               EStructuralFeature entryFeature = entry.getEStructuralFeature();
               Object entryValue = entry.getValue();
-              long metaId = storeAccessor.getMetaID(entryFeature);
 
-              // System.out.println("-->> FeatureMap.Entry (" + i + ") -> feature:" + entryFeature.getName() +
-              // " - value:"
-              // + entryValue + " - MetaID: " + metaId);
               ooId oid = null;
               if (entryValue instanceof CDOIDExternal)
               {
@@ -488,9 +483,10 @@ public class ObjyObject
                   TRACER_DEBUG.trace("OBJY: don't know what kind of entryValue is this!!! - " + entryValue);
                 }
               }
+
               // FeatureMapEntry is a presistent class.
-              ObjyFeatureMapEntry featureMapEntry = new ObjyFeatureMapEntry(entryFeature.getName(), oid, metaId,
-                  objectId);
+              ObjyFeatureMapEntry featureMapEntry = new ObjyFeatureMapEntry(entryFeature.getName(), oid, objectId);
+
               // this.cluster(featureMapEntry);
               values[i] = featureMapEntry;
             }
@@ -674,7 +670,6 @@ public class ObjyObject
               else if (objects[i] instanceof ObjyFeatureMapEntry)
               {
                 ObjyFeatureMapEntry mapEntry = (ObjyFeatureMapEntry)objects[i];
-                long metaId = mapEntry.getMetaId();
                 ooId oid = mapEntry.getObject();
                 CDOID cdoId = null;
                 Class_Object refClassObject = Class_Object.class_object_from_oid(oid);
@@ -688,13 +683,13 @@ public class ObjyObject
                 {
                   cdoId = OBJYCDOIDUtil.getCDOID((ooId)objects[i]);
                 }
-                EStructuralFeature entryFeature = (EStructuralFeature)storeAccessor.getMetaInstance(metaId);
-                FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, cdoId);
-                // for verifications...
-                entryFeature = entry.getEStructuralFeature();
 
-                list.add(entry);
-                refClassObject = null;
+                throw new UnsupportedOperationException("FIXME");
+
+                // FIXME Uncomment the following 3 lines:
+                // FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, cdoId);
+                // list.add(entry);
+                // refClassObject = null;
               }
               else
               {
@@ -786,7 +781,6 @@ public class ObjyObject
           else if (objects[i] instanceof ObjyFeatureMapEntry)
           {
             ObjyFeatureMapEntry mapEntry = (ObjyFeatureMapEntry)objects[i];
-            long metaId = mapEntry.getMetaId();
             ooId oid = mapEntry.getObject();
             CDOID cdoId = null;
             Class_Object refClassObject = Class_Object.class_object_from_oid(oid);
@@ -799,13 +793,12 @@ public class ObjyObject
             {
               cdoId = OBJYCDOIDUtil.getCDOID((ooId)objects[i]);
             }
-            // get the entry feature using the metaId.
-            EStructuralFeature entryFeature = (EStructuralFeature)storeAccessor.getMetaInstance(metaId);
-            FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, cdoId);
-            // for verifications...
-            entryFeature = entry.getEStructuralFeature();
 
-            results.add(entry);
+            throw new UnsupportedOperationException("FIXME");
+
+            // FIXME Uncomment the following 2 lines:
+            // FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, cdoId);
+            // results.add(entry);
           }
         }
       }
@@ -1123,11 +1116,7 @@ public class ObjyObject
           else if (objects[i] instanceof ObjyFeatureMapEntry)
           {
             ObjyFeatureMapEntry mapEntry = (ObjyFeatureMapEntry)objects[i];
-            // long metaId = mapEntry.getMetaId();
-            // String name = mapEntry.getTagName();
             ooId oid = mapEntry.getObject();
-            // System.out.println("-->> FeatureMapEntry (" + i + ") -> feature:" + name + " - value:" + oid
-            // + " - metaId: " + metaId);
             ooObj obj = ooObj.create_ooObj(oid);
             obj.delete();
           }

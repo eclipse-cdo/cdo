@@ -339,7 +339,6 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     packageInfo.setPackageUnit(this);
     packageInfo.setPackageURI(ePackage.getNsURI());
     packageInfo.setParentURI(ePackage.getESuperPackage() == null ? null : ePackage.getESuperPackage().getNsURI());
-    packageInfo.setMetaIDRange(packageRegistry.getMetaInstanceMapper().mapMetaInstances(ePackage));
     EMFUtil.addAdapter(ePackage, packageInfo);
 
     packageRegistry.basicPut(ePackage.getNsURI(), ePackage);

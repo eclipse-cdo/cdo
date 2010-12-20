@@ -14,7 +14,6 @@
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -41,7 +40,6 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -244,7 +242,6 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       if (success)
       {
         respondingResult(out);
-        respondingMappingNewPackages(out);
         respondingMappingNewObjects(out);
       }
     }
@@ -272,28 +269,15 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     out.writeLong(commitContext.getPreviousTimeStamp());
   }
 
-  protected void respondingMappingNewPackages(CDODataOutput out) throws Exception
-  {
-    // Meta ID ranges
-    List<CDOIDMetaRange> metaRanges = commitContext.getMetaIDRanges();
-    for (CDOIDMetaRange metaRange : metaRanges)
-    {
-      out.writeCDOIDMetaRange(metaRange);
-    }
-  }
-
   protected void respondingMappingNewObjects(CDODataOutput out) throws Exception
   {
     Map<CDOID, CDOID> idMappings = commitContext.getIDMappings();
     for (Entry<CDOID, CDOID> entry : idMappings.entrySet())
     {
       CDOID oldID = entry.getKey();
-      if (!oldID.isMeta())
-      {
-        CDOID newID = entry.getValue();
-        out.writeCDOID(oldID);
-        out.writeCDOID(newID);
-      }
+      CDOID newID = entry.getValue();
+      out.writeCDOID(oldID);
+      out.writeCDOID(newID);
     }
 
     out.writeCDOID(CDOID.NULL);

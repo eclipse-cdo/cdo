@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.spi.common.model;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.State;
@@ -19,7 +17,6 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit.State;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import java.util.Set;
 
@@ -29,8 +26,6 @@ import java.util.Set;
  */
 public interface InternalCDOPackageRegistry extends CDOPackageRegistry, ILifecycle
 {
-  public MetaInstanceMapper getMetaInstanceMapper();
-
   public void setReplacingDescriptors(boolean replacingDescriptors);
 
   public PackageProcessor getPackageProcessor();
@@ -104,25 +99,5 @@ public interface InternalCDOPackageRegistry extends CDOPackageRegistry, ILifecyc
   public interface PackageLoader
   {
     public EPackage[] loadPackages(CDOPackageUnit packageUnit);
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public interface MetaInstanceMapper
-  {
-    public Set<Entry<CDOID, InternalEObject>> getEntrySet();
-
-    public InternalEObject lookupMetaInstance(CDOID id);
-
-    public CDOID lookupMetaInstanceID(InternalEObject metaInstance);
-
-    public CDOIDMetaRange mapMetaInstances(EPackage ePackage);
-
-    public void mapMetaInstances(EPackage ePackage, CDOIDMetaRange metaIDRange);
-
-    public void mapMetaInstances(MetaInstanceMapper source);
-
-    public void remapMetaInstanceID(CDOID oldID, CDOID newID);
   }
 }

@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
@@ -133,8 +132,7 @@ public abstract class CDOServerExporter<OUT>
       for (InternalCDOPackageInfo packageInfo : packageUnit.getPackageInfos())
       {
         String packageURI = packageInfo.getPackageURI();
-        CDOIDMetaRange metaIDRange = packageInfo.getMetaIDRange();
-        exportPackageInfo(out, packageURI, metaIDRange);
+        exportPackageInfo(out, packageURI);
       }
 
       endPackageUnit(out);
@@ -146,7 +144,7 @@ public abstract class CDOServerExporter<OUT>
 
   protected abstract void endPackageUnit(OUT out) throws Exception;
 
-  protected abstract void exportPackageInfo(OUT out, String packageURI, CDOIDMetaRange metaIDRange) throws Exception;
+  protected abstract void exportPackageInfo(OUT out, String packageURI) throws Exception;
 
   protected void exportBranches(final OUT out) throws Exception
   {
@@ -286,10 +284,6 @@ public abstract class CDOServerExporter<OUT>
 
     public static final String PACKAGE_INFO_URI = "uri";
 
-    public static final String PACKAGE_INFO_FIRST = "first";
-
-    public static final String PACKAGE_INFO_COUNT = "count";
-
     public static final String INSTANCES = "instances";
 
     public static final String BRANCH = "branch";
@@ -427,12 +421,10 @@ public abstract class CDOServerExporter<OUT>
     }
 
     @Override
-    protected void exportPackageInfo(XMLOutput out, String uri, CDOIDMetaRange metaIDRange) throws Exception
+    protected void exportPackageInfo(XMLOutput out, String uri) throws Exception
     {
       out.element(PACKAGE_INFO);
       out.attribute(PACKAGE_INFO_URI, uri);
-      out.attribute(PACKAGE_INFO_FIRST, str(metaIDRange.getLowerBound()));
-      out.attribute(PACKAGE_INFO_COUNT, metaIDRange.size());
     }
 
     @Override

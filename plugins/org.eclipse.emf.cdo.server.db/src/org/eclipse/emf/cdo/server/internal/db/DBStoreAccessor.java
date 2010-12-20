@@ -705,6 +705,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   @Override
   protected final void rollback(IStoreAccessor.CommitContext commitContext)
   {
+    getStore().getMetaDataManager().clearMetaIDMappings();
+
     if (TRACER.isEnabled())
     {
       TRACER.format("--- DB ROLLBACK ---"); //$NON-NLS-1$

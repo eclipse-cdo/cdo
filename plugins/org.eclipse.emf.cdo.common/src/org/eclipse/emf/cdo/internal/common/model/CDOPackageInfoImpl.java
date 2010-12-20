@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.internal.common.model;
 
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
@@ -40,8 +39,6 @@ public class CDOPackageInfoImpl extends AdapterImpl implements InternalCDOPackag
   private String packageURI;
 
   private String parentURI;
-
-  private CDOIDMetaRange metaIDRange;
 
   public CDOPackageInfoImpl()
   {
@@ -77,16 +74,6 @@ public class CDOPackageInfoImpl extends AdapterImpl implements InternalCDOPackag
     this.parentURI = parentURI;
   }
 
-  public CDOIDMetaRange getMetaIDRange()
-  {
-    return metaIDRange;
-  }
-
-  public void setMetaIDRange(CDOIDMetaRange metaIDRange)
-  {
-    this.metaIDRange = metaIDRange;
-  }
-
   public void write(CDODataOutput out) throws IOException
   {
     if (TRACER.isEnabled())
@@ -96,14 +83,12 @@ public class CDOPackageInfoImpl extends AdapterImpl implements InternalCDOPackag
 
     out.writeCDOPackageURI(packageURI);
     out.writeCDOPackageURI(parentURI);
-    out.writeCDOIDMetaRange(getMetaIDRange());
   }
 
   public void read(CDODataInput in) throws IOException
   {
     packageURI = in.readCDOPackageURI();
     parentURI = in.readCDOPackageURI();
-    metaIDRange = in.readCDOIDMetaRange();
     if (TRACER.isEnabled())
     {
       TRACER.format("Read {0}", this); //$NON-NLS-1$
@@ -165,7 +150,6 @@ public class CDOPackageInfoImpl extends AdapterImpl implements InternalCDOPackag
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOPackageInfo[packageURI={0}, parentURI={1}, metaIDRange={2}]", packageURI, //$NON-NLS-1$
-        parentURI, metaIDRange);
+    return MessageFormat.format("CDOPackageInfo[packageURI={0}, parentURI={1}]", packageURI, parentURI); //$NON-NLS-1$
   }
 }

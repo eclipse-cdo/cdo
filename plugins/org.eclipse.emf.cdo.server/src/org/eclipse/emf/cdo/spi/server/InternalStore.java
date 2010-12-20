@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 
@@ -31,8 +30,6 @@ public interface InternalStore extends IStore, ILifecycle
 
   public void setRevisionParallelism(RevisionParallelism revisionParallelism);
 
-  public CDOIDMetaRange getNextMetaIDRange(int count);
-
   public int getNextBranchID();
 
   public int getNextLocalBranchID();
@@ -44,8 +41,6 @@ public interface InternalStore extends IStore, ILifecycle
   public void setLastCommitTime(long lastCommitTime);
 
   public void setLastNonLocalCommitTime(long lastNonLocalCommitTime);
-
-  public void setLastMetaID(long lastMetaID);
 
   /**
    * @since 4.0

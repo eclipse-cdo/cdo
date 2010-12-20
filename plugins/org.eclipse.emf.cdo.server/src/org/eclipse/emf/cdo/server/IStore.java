@@ -15,8 +15,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
-import org.eclipse.emf.ecore.EModelElement;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -112,13 +110,6 @@ public interface IStore
    * @since 3.0
    */
   public long getLastNonLocalCommitTime();
-
-  /**
-   * Returns the id of the last {@link EModelElement} that has been committed to this store.
-   * 
-   * @since 3.0
-   */
-  public long getLastMetaID();
 
   /**
    * Returns a map filled with the property entries for the requested property <code>names</code> if names is not

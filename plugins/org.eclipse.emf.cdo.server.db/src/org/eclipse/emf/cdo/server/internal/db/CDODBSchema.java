@@ -86,12 +86,6 @@ public class CDODBSchema extends DBSchema
   public static final IDBField PACKAGE_INFOS_UNIT = //
   PACKAGE_INFOS.addField("unit", DBType.VARCHAR, 255); //$NON-NLS-1$
 
-  public static final IDBField PACKAGE_INFOS_META_LB = //
-  PACKAGE_INFOS.addField("meta_lb", DBType.BIGINT); //$NON-NLS-1$
-
-  public static final IDBField PACKAGE_INFOS_META_UB = //
-  PACKAGE_INFOS.addField("meta_ub", DBType.BIGINT); //$NON-NLS-1$
-
   public static final IDBIndex INDEX_PACKAGE_INFOS_PK = //
   PACKAGE_INFOS.addIndex(IDBIndex.Type.PRIMARY_KEY, PACKAGE_INFOS_URI);
 
@@ -209,7 +203,7 @@ public class CDODBSchema extends DBSchema
 
   public static final String SQL_QUERY_LOBS = "SELECT 1 FROM " + CDODBSchema.LOBS + " WHERE " + CDODBSchema.LOBS_ID + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-  public static final String SQL_HANDLE_LOBS = "SELECT " + CDODBSchema.LOBS_ID + ", " + CDODBSchema.LOBS_SIZE + ", " + CDODBSchema.LOBS_BDATA + ", " + CDODBSchema.LOBS_CDATA + " FROM " + CDODBSchema.LOBS; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ 
+  public static final String SQL_HANDLE_LOBS = "SELECT " + CDODBSchema.LOBS_ID + ", " + CDODBSchema.LOBS_SIZE + ", " + CDODBSchema.LOBS_BDATA + ", " + CDODBSchema.LOBS_CDATA + " FROM " + CDODBSchema.LOBS; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
   public static final String SQL_LOAD_LOB = "SELECT " + CDODBSchema.LOBS_SIZE + ", " + CDODBSchema.LOBS_BDATA + ", " + CDODBSchema.LOBS_CDATA + " FROM " + CDODBSchema.LOBS + " WHERE " + CDODBSchema.LOBS_ID + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 

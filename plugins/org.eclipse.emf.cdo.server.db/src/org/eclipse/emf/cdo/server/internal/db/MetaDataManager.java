@@ -13,17 +13,15 @@
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDMeta;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.server.db.IDBStore;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IExternalReferenceManager;
+import org.eclipse.emf.cdo.server.db.IExternalReferenceManager.Internal;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -39,10 +37,12 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -66,22 +66,53 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   private IDBStore store;
 
+  private Map<EModelElement, Long> modelElementToMetaID = new HashMap<EModelElement, Long>();
+
+  private Map<Long, EModelElement> metaIDToModelElement = new HashMap<Long, EModelElement>();
+
   public MetaDataManager(IDBStore store)
   {
     this.store = store;
   }
 
-  public long getMetaID(EModelElement modelElement)
+  public synchronized long getMetaID(IDBStoreAccessor accessor, EModelElement modelElement, long commitTime)
   {
-    CDOID cdoid = getPackageRegistry().getMetaInstanceMapper().lookupMetaInstanceID((InternalEObject)modelElement);
-    return CDOIDUtil.getLong(cdoid);
+    Long metaID = modelElementToMetaID.get(modelElement);
+    if (metaID != null)
+    {
+      return metaID;
+    }
+
+    IExternalReferenceManager.Internal manager = (Internal)getStore().getExternalReferenceManager();
+    String uri = EcoreUtil.getURI(modelElement).toString();
+
+    metaID = manager.mapURI(accessor, uri, commitTime);
+    cacheMetaIDMapping(modelElement, metaID);
+
+    return metaID;
   }
 
-  public EModelElement getMetaInstance(long id)
+  public synchronized EModelElement getMetaInstance(IDBStoreAccessor accessor, long id)
   {
-    CDOIDMeta cdoid = CDOIDUtil.createMeta(id);
-    InternalEObject metaInstance = getPackageRegistry().getMetaInstanceMapper().lookupMetaInstance(cdoid);
-    return (EModelElement)metaInstance;
+    EModelElement modelElement = metaIDToModelElement.get(id);
+    if (modelElement != null)
+    {
+      return modelElement;
+    }
+
+    IExternalReferenceManager.Internal externalManager = (Internal)getStore().getExternalReferenceManager();
+    String uri = externalManager.unmapURI(accessor, id);
+
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.setPackageRegistry(getStore().getRepository().getPackageRegistry());
+
+    return (EModelElement)resourceSet.getEObject(URI.createURI(uri), true);
+  }
+
+  public synchronized void clearMetaIDMappings()
+  {
+    modelElementToMetaID.clear();
+    metaIDToModelElement.clear();
   }
 
   public final EPackage[] loadPackageUnit(Connection connection, InternalCDOPackageUnit packageUnit)
@@ -152,7 +183,14 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   @Override
   protected void doBeforeActivate() throws Exception
   {
-    checkState(store != null, "Store is not set"); //$NON-NLS-1$
+    checkState(store, "Store is not set"); //$NON-NLS-1$
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    clearMetaIDMappings();
+    super.doDeactivate();
   }
 
   protected InternalCDOPackageInfo createPackageInfo()
@@ -179,8 +217,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   private byte[] getEPackageBytes(InternalCDOPackageUnit packageUnit)
   {
     EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
-    CDOPackageRegistry packageRegistry = getStore().getRepository().getPackageRegistry();
-    return EMFUtil.getEPackageBytes(ePackage, ZIP_PACKAGE_BYTES, packageRegistry);
+    return EMFUtil.getEPackageBytes(ePackage, ZIP_PACKAGE_BYTES, getPackageRegistry());
   }
 
   private void fillSystemTables(Connection connection, InternalCDOPackageUnit packageUnit, OMMonitor monitor)
@@ -269,11 +306,8 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     String packageURI = packageInfo.getPackageURI();
     String parentURI = packageInfo.getParentURI();
     String unitID = packageInfo.getPackageUnit().getID();
-    CDOIDMetaRange metaIDRange = packageInfo.getMetaIDRange();
-    long metaLB = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getLowerBound()).getLongValue();
-    long metaUB = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getUpperBound()).getLongValue();
 
-    String sql = "INSERT INTO " + CDODBSchema.PACKAGE_INFOS + " VALUES (?, ?, ?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$
+    String sql = "INSERT INTO " + CDODBSchema.PACKAGE_INFOS + " VALUES (?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$
     DBUtil.trace(sql);
     PreparedStatement pstmt = null;
     Async async = monitor.forkAsync();
@@ -284,8 +318,6 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
       pstmt.setString(1, packageURI);
       pstmt.setString(2, parentURI);
       pstmt.setString(3, unitID);
-      pstmt.setLong(4, metaLB);
-      pstmt.setLong(5, metaUB);
 
       if (pstmt.execute())
       {
@@ -344,15 +376,9 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     {
       public boolean handle(int row, final Object... values)
       {
-        long metaLB = (Long)values[3];
-        long metaUB = (Long)values[4];
-        CDOIDMetaRange metaIDRange = metaLB == 0 ? null : CDOIDUtil.createMetaRange(CDOIDUtil.createMeta(metaLB),
-            (int)(metaUB - metaLB) + 1);
-
         InternalCDOPackageInfo packageInfo = createPackageInfo();
         packageInfo.setPackageURI((String)values[1]);
         packageInfo.setParentURI((String)values[2]);
-        packageInfo.setMetaIDRange(metaIDRange);
 
         String unit = (String)values[0];
         List<InternalCDOPackageInfo> list = packageInfos.get(unit);
@@ -373,7 +399,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     try
     {
       DBUtil.select(connection, infoRowHandler, CDODBSchema.PACKAGE_INFOS_UNIT, CDODBSchema.PACKAGE_INFOS_URI,
-          CDODBSchema.PACKAGE_INFOS_PARENT, CDODBSchema.PACKAGE_INFOS_META_LB, CDODBSchema.PACKAGE_INFOS_META_UB);
+          CDODBSchema.PACKAGE_INFOS_PARENT);
     }
     finally
     {
@@ -392,5 +418,11 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     }
 
     return packageUnits.values();
+  }
+
+  private void cacheMetaIDMapping(EModelElement modelElement, Long metaID)
+  {
+    modelElementToMetaID.put(modelElement, metaID);
+    metaIDToModelElement.put(metaID, modelElement);
   }
 }

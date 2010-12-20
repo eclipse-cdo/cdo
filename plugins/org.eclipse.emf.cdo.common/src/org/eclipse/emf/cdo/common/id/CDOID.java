@@ -31,8 +31,6 @@ public interface CDOID extends Serializable, Comparable<CDOID>
 
   public boolean isObject();
 
-  public boolean isMeta();
-
   public boolean isTemporary();
 
   /**
@@ -72,9 +70,7 @@ public interface CDOID extends Serializable, Comparable<CDOID>
      * @since 2.0
      */
     EXTERNAL_TEMP_OBJECT('e'), //
-    TEMP_OBJECT('t'), //
-    META('M'), //
-    TEMP_META('m');
+    TEMP_OBJECT('t');
 
     private static Enum<?>[] chars;
 

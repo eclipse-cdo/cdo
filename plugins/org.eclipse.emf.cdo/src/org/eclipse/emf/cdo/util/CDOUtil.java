@@ -47,13 +47,10 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EGenericType;
-import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.FSMUtil;
@@ -324,30 +321,6 @@ public final class CDOUtil
     }
 
     return FSMUtil.adaptLegacy((InternalEObject)object);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static CDOObject getCDOObject(EModelElement object, CDOView view)
-  {
-    return FSMUtil.adaptMeta((InternalEObject)object, view);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static CDOObject getCDOObject(EGenericType object, CDOView view)
-  {
-    return FSMUtil.adaptMeta((InternalEObject)object, view);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static CDOObject getCDOObject(EStringToStringMapEntryImpl object, CDOView view)
-  {
-    return FSMUtil.adaptMeta(object, view);
   }
 
   /**

@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.tests.store.logic;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
@@ -239,7 +238,6 @@ public abstract class TestLogic extends AbstractOMTest
       String name = ePackage.getName();
       boolean dynamic = EMFUtil.isDynamicEPackage(ePackage);
       String ecore = null;
-      CDOIDMetaRange idRange = null;
 
       if (parentURI == null)
       {
@@ -247,12 +245,10 @@ public abstract class TestLogic extends AbstractOMTest
         {
           ecore = EMFUtil.ePackageToString(ePackage, EPackage.Registry.INSTANCE);
         }
-
-        idRange = SessionUtil.registerEPackage(ePackage, 1, null, null);
       }
 
       TransactionPackageRegistry packageManager = transactionCommitContext.getPackageRegistry();
-      EPackage newPackage = CDOModelUtil.createPackage(packageManager, uri, name, ecore, dynamic, idRange, parentURI);
+      EPackage newPackage = CDOModelUtil.createPackage(packageManager, uri, name, ecore, dynamic, parentURI);
       ModelUtil.initializeEPackage(ePackage, newPackage);
       packageManager.addPackage(newPackage);
       newPackages.add(newPackage);

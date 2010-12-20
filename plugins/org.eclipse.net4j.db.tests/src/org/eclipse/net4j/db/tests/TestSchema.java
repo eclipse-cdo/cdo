@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -45,9 +45,6 @@ public class TestSchema extends DBSchema
 
   public static final IDBField REPOSITORY_NEXT_CDOID = //
   REPOSITORY.addField("next_cdoid", DBType.BIGINT); //$NON-NLS-1$
-
-  public static final IDBField REPOSITORY_NEXT_METAID = //
-  REPOSITORY.addField("next_metaid", DBType.BIGINT); //$NON-NLS-1$
 
   /**
    * DBTable cdo_packages

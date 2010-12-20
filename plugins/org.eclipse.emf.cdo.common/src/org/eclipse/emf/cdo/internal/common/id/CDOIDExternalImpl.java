@@ -50,11 +50,6 @@ public class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExternal
     return true;
   }
 
-  public boolean isMeta()
-  {
-    return false;
-  }
-
   public boolean isNull()
   {
     return false;

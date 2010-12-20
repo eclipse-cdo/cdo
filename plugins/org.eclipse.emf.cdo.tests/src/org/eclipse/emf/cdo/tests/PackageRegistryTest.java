@@ -464,7 +464,6 @@ public class PackageRegistryTest extends AbstractCDOTest
       packageRegistry.putEPackage(model1Package);
 
       CDOPackageUnit packageUnit = packageRegistry.getPackageUnit(model1Package);
-      assertEquals(false, packageUnit.getTopLevelPackageInfo().getMetaIDRange().isTemporary());
       assertEquals(CDOPackageUnit.State.LOADED, packageUnit.getState());
 
       {
@@ -553,7 +552,6 @@ public class PackageRegistryTest extends AbstractCDOTest
       Model1Package model1Package = getModel1Package();
 
       CDOPackageUnit packageUnit = packageRegistry.getPackageUnit(model1Package);
-      assertEquals(false, packageUnit.getTopLevelPackageInfo().getMetaIDRange().isTemporary());
       assertEquals(CDOPackageUnit.State.LOADED, packageUnit.getState());
 
       {

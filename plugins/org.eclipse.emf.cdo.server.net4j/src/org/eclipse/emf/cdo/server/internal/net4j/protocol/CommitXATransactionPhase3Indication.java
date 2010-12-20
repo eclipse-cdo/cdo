@@ -38,11 +38,6 @@ public class CommitXATransactionPhase3Indication extends CommitTransactionIndica
   {
     commitContext.commit(monitor);
     boolean success = respondingException(out, commitContext.getRollbackMessage());
-    if (success)
-    {
-      respondingMappingNewPackages(out);
-    }
-
     commitContext.postCommit(success);
   }
 

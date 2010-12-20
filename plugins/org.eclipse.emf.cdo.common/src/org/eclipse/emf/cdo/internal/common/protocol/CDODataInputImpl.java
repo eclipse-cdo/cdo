@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
 import org.eclipse.emf.cdo.common.id.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
@@ -49,10 +48,7 @@ import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndBranchImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaRangeImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
@@ -287,12 +283,6 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     case TEMP_OBJECT:
       return new CDOIDTempObjectImpl(readInt());
 
-    case TEMP_META:
-      return new CDOIDTempMetaImpl(readInt());
-
-    case META:
-      return new CDOIDMetaImpl(readLong());
-
     case EXTERNAL_OBJECT:
       return new CDOIDExternalImpl(readString());
 
@@ -350,17 +340,6 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     CDOID id = readCDOID();
     CDOBranch branch = readCDOBranch();
     return new CDOIDAndBranchImpl(id, branch);
-  }
-
-  public CDOIDMetaRange readCDOIDMetaRange() throws IOException
-  {
-    boolean exist = readBoolean();
-    if (exist)
-    {
-      return new CDOIDMetaRangeImpl(readCDOID(), readInt());
-    }
-
-    return null;
   }
 
   public CDORevisionKey readCDORevisionKey() throws IOException

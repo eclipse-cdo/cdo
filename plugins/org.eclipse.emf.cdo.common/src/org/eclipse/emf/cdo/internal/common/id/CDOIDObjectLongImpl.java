@@ -46,11 +46,6 @@ public class CDOIDObjectLongImpl extends AbstractCDOIDLong implements InternalCD
     return false;
   }
 
-  public boolean isMeta()
-  {
-    return false;
-  }
-
   public boolean isNull()
   {
     return false;

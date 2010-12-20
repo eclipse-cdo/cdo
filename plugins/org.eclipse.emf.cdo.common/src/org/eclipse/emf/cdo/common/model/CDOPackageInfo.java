@@ -10,12 +10,9 @@
  */
 package org.eclipse.emf.cdo.common.model;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.State;
 
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EPackage;
 
 /**
@@ -47,12 +44,6 @@ public interface CDOPackageInfo extends Adapter, EPackage.Descriptor, Comparable
    * package info.
    */
   public String getParentURI();
-
-  /**
-   * Returns the consecutive range of {@link CDOID ids} permanently assigned to the {@link EModelElement model elements}
-   * in the package described by this package info.
-   */
-  public CDOIDMetaRange getMetaIDRange();
 
   /**
    * Returns the {@link EPackage package} described by this package info.

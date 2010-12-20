@@ -57,7 +57,7 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
     if (type != null)
     {
       long classID = type;
-      EClass eClass = (EClass)getMetaDataManager().getMetaInstance(classID);
+      EClass eClass = (EClass)getMetaDataManager().getMetaInstance(accessor, classID);
       return new CDOClassifierRef(eClass);
     }
 
@@ -67,7 +67,7 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
   public void putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
   {
     long longId = CDOIDUtil.getLong(id);
-    long classID = getMetaDataManager().getMetaID(type);
+    long classID = getMetaDataManager().getMetaID(accessor, type, timeStamp);
     doPutObjectType(longId, classID);
 
     delegate.putObjectType(accessor, timeStamp, id, type);

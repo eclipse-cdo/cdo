@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
@@ -37,7 +36,6 @@ import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
@@ -53,7 +51,6 @@ import org.eclipse.emf.cdo.view.CDOViewAdaptersNotifiedEvent;
 import org.eclipse.emf.cdo.view.CDOViewEvent;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
-import org.eclipse.emf.internal.cdo.CDOMetaWrapper;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOStore;
 import org.eclipse.emf.internal.cdo.CDOURIHandler;
@@ -691,22 +688,13 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
         InternalCDOObject localLookupObject = objects.get(id);
         if (localLookupObject == null)
         {
-          if (id.isMeta())
+          if (!loadOnDemand)
           {
-            localLookupObject = createMetaObject((CDOIDMeta)id);
+            return null;
           }
-          else
-          {
-            if (loadOnDemand)
-            {
-              excludeTempIDs(id);
-              localLookupObject = createObject(id);
-            }
-            else
-            {
-              return null;
-            }
-          }
+
+          excludeTempIDs(id);
+          localLookupObject = createObject(id);
 
           // CDOResource have a special way to register to the view.
           if (!CDOModelUtil.isResource(localLookupObject.eClass()))
@@ -787,21 +775,6 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
       return objects.remove(id);
     }
-  }
-
-  /**
-   * @return Never <code>null</code>
-   */
-  private InternalCDOObject createMetaObject(CDOIDMeta id)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Creating meta object for " + id); //$NON-NLS-1$
-    }
-
-    InternalCDOPackageRegistry packageRegistry = getSession().getPackageRegistry();
-    InternalEObject metaInstance = packageRegistry.getMetaInstanceMapper().lookupMetaInstance(id);
-    return new CDOMetaWrapper(this, metaInstance, id);
   }
 
   /**

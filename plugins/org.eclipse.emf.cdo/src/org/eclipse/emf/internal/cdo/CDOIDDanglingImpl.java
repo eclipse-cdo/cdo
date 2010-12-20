@@ -90,11 +90,6 @@ public class CDOIDDanglingImpl extends AbstractCDOID implements CDOIDDangling
     return false;
   }
 
-  public boolean isMeta()
-  {
-    return false;
-  }
-
   public boolean isNull()
   {
     return false;

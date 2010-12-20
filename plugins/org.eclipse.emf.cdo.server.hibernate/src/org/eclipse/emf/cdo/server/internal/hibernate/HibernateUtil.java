@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
-import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
@@ -275,7 +274,7 @@ public class HibernateUtil
 
   /**
    * Converts a CDOID to an unique String representations. Null, {@link CDOIDTemp} and null CDOID's are returned as null
-   * value. Supports {@link CDOID}, {@link CDOIDMeta} and {@link CDOIDExternal}.
+   * value. Supports {@link CDOID} and {@link CDOIDExternal}.
    * 
    * @param cdoID
    *          the cdoID to convert

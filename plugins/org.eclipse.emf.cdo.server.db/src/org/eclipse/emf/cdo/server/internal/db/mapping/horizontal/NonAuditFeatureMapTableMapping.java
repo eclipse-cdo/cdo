@@ -247,13 +247,13 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
    * @param value
    *          the value to insert.
    */
-  public void insertListItem(IDBStoreAccessor accessor, CDOID id, int index, Object value)
+  public void insertListItem(IDBStoreAccessor accessor, CDOID id, int index, Object value, long timestamp)
   {
     move1up(accessor, id, index, UNBOUNDED_MOVE);
-    insertValue(accessor, id, index, value);
+    insertValue(accessor, id, index, value, timestamp);
   }
 
-  private void insertValue(IDBStoreAccessor accessor, CDOID id, int index, Object value)
+  private void insertValue(IDBStoreAccessor accessor, CDOID id, int index, Object value, long timestamp)
   {
     PreparedStatement stmt = null;
 
@@ -261,8 +261,8 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     {
       FeatureMap.Entry entry = (FeatureMap.Entry)value;
       EStructuralFeature entryFeature = entry.getEStructuralFeature();
-      Long tag = getTagByFeature(entryFeature);
-      String column = getColumnName(tag);
+      Long tag = getTagByFeature(accessor, entryFeature, timestamp);
+      String column = getColumnName(accessor, tag);
 
       String sql = sqlInsert;
 
@@ -275,7 +275,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
       {
         if (getColumnNames().get(i).equals(column))
         {
-          getTypeMapping(tag).setValue(stmt, stmtIndex++, entry.getValue());
+          getTypeMapping(accessor, tag).setValue(stmt, stmtIndex++, entry.getValue());
         }
         else
         {
@@ -470,15 +470,15 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
    * @param value
    *          the value to be set.
    */
-  public void setListItem(IDBStoreAccessor accessor, CDOID id, int index, Object value)
+  public void setListItem(IDBStoreAccessor accessor, CDOID id, int index, Object value, long timestamp)
   {
     PreparedStatement stmt = null;
 
     FeatureMap.Entry entry = (FeatureMap.Entry)value;
     EStructuralFeature entryFeature = entry.getEStructuralFeature();
-    Long tag = getTagByFeature(entryFeature);
-    String column = getColumnName(tag);
-    ITypeMapping mapping = getTypeMapping(tag);
+    Long tag = getTagByFeature(accessor, entryFeature, timestamp);
+    String column = getColumnName(accessor, tag);
+    ITypeMapping mapping = getTypeMapping(accessor, tag);
 
     try
     {
@@ -515,7 +515,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
   }
 
   public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion,
-      final int newVersion, long created, CDOListFeatureDelta listDelta)
+      final int newVersion, final long created, CDOListFeatureDelta listDelta)
   {
     CDOFeatureDeltaVisitor visitor = new CDOFeatureDeltaVisitor()
     {
@@ -526,7 +526,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
 
       public void visit(CDOAddFeatureDelta delta)
       {
-        insertListItem(accessor, id, delta.getIndex(), delta.getValue());
+        insertListItem(accessor, id, delta.getIndex(), delta.getValue(), created);
       }
 
       public void visit(CDORemoveFeatureDelta delta)
@@ -536,7 +536,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
 
       public void visit(CDOSetFeatureDelta delta)
       {
-        setListItem(accessor, id, delta.getIndex(), delta.getValue());
+        setListItem(accessor, id, delta.getIndex(), delta.getValue(), created);
       }
 
       public void visit(CDOUnsetFeatureDelta delta)

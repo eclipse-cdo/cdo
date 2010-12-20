@@ -424,14 +424,14 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       while ((listChunk == CDORevision.UNCHUNKED || --listChunk >= 0) && resultSet.next())
       {
         Long tag = resultSet.getLong(1);
-        Object value = getTypeMapping(tag).readValue(resultSet);
+        Object value = getTypeMapping(accessor, tag).readValue(resultSet);
 
         if (TRACER.isEnabled())
         {
           TRACER.format("Read value for index {0} from result set: {1}", list.size(), value); //$NON-NLS-1$
         }
 
-        list.set(currentIndex++, CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(tag), value));
+        list.set(currentIndex++, CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(accessor, tag), value));
       }
     }
     catch (SQLException ex)
@@ -451,9 +451,9 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     }
   }
 
-  private void addFeature(Long tag)
+  private void addFeature(IDBStoreAccessor accessor, Long tag)
   {
-    EStructuralFeature modelFeature = getFeatureByTag(tag);
+    EStructuralFeature modelFeature = getFeatureByTag(accessor, tag);
 
     ITypeMapping typeMapping = getMappingStrategy().createValueMapping(modelFeature);
     String column = CDODBSchema.FEATUREMAP_VALUE + "_" + typeMapping.getDBType(); //$NON-NLS-1$
@@ -502,7 +502,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       while (resultSet.next())
       {
         Long tag = resultSet.getLong(1);
-        Object value = getTypeMapping(tag).readValue(resultSet);
+        Object value = getTypeMapping(chunkReader.getAccessor(), tag).readValue(resultSet);
 
         if (chunk == null)
         {
@@ -521,7 +521,8 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
           TRACER.format("Read value for chunk index {0} from result set: {1}", indexInChunk, value); //$NON-NLS-1$
         }
 
-        chunk.add(indexInChunk++, CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(tag), value));
+        chunk.add(indexInChunk++,
+            CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(chunkReader.getAccessor(), tag), value));
         if (indexInChunk == chunkSize)
         {
           if (TRACER.isEnabled())
@@ -536,8 +537,8 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("Reading list chunk values done for feature {0}.{1} of {2}v{3}", getContainingClass().getName(), //$NON-NLS-1$
-            getTagByFeature(getFeature()), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
+        TRACER.format("Reading list chunk values done for feature {0}.{1} of {2}", getContainingClass().getName(), //$NON-NLS-1$
+            getFeature(), chunkReader.getRevision());
       }
     }
     catch (SQLException ex)
@@ -573,10 +574,10 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     {
       TRACER
           .format(
-              "Writing value for feature {0}.{1} index {2} of {3}v{4} : {5}", getContainingClass().getName(), getTagByFeature(getFeature()), idx, revision.getID(), revision.getVersion(), value); //$NON-NLS-1$
+              "Writing value for feature {0}.{1} index {2} of {3} : {4}", getContainingClass().getName(), getFeature(), idx, revision, value); //$NON-NLS-1$
     }
 
-    addEntry(accessor, revision.getID(), revision.getVersion(), idx, value);
+    addEntry(accessor, revision.getID(), revision.getVersion(), idx, value, revision.getTimeStamp());
   }
 
   /**
@@ -586,12 +587,12 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
    *          The feature's MetaID in CDO
    * @return the column name where the values are stored
    */
-  protected String getColumnName(Long tag)
+  protected String getColumnName(IDBStoreAccessor accessor, Long tag)
   {
     String column = tagMap.get(tag);
     if (column == null)
     {
-      addFeature(tag);
+      addFeature(accessor, tag);
       column = tagMap.get(tag);
     }
 
@@ -605,12 +606,12 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
    *          The feature's MetaID in CDO
    * @return the corresponding type mapping
    */
-  protected ITypeMapping getTypeMapping(Long tag)
+  protected ITypeMapping getTypeMapping(IDBStoreAccessor accessor, Long tag)
   {
     ITypeMapping typeMapping = typeMappings.get(tag);
     if (typeMapping == null)
     {
-      addFeature(tag);
+      addFeature(accessor, tag);
       typeMapping = typeMappings.get(tag);
     }
 
@@ -621,9 +622,9 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
    * @param metaID
    * @return the column name where the values are stored
    */
-  private EStructuralFeature getFeatureByTag(Long tag)
+  private EStructuralFeature getFeatureByTag(IDBStoreAccessor accessor, Long tag)
   {
-    return (EStructuralFeature)getMappingStrategy().getStore().getMetaDataManager().getMetaInstance(tag);
+    return (EStructuralFeature)getMappingStrategy().getStore().getMetaDataManager().getMetaInstance(accessor, tag);
   }
 
   /**
@@ -631,9 +632,9 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
    *          The EStructuralFeature
    * @return The feature's MetaID in CDO
    */
-  protected Long getTagByFeature(EStructuralFeature feature)
+  protected Long getTagByFeature(IDBStoreAccessor accessor, EStructuralFeature feature, long timestamp)
   {
-    return getMappingStrategy().getStore().getMetaDataManager().getMetaID(feature);
+    return getMappingStrategy().getStore().getMetaDataManager().getMetaID(accessor, feature, timestamp);
   }
 
   /**
@@ -718,7 +719,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     }
 
     // let the visitor collect the changes
-    ListDeltaVisitor visitor = new ListDeltaVisitor(accessor, originalRevision, oldVersion, newVersion);
+    ListDeltaVisitor visitor = new ListDeltaVisitor(accessor, originalRevision, oldVersion, newVersion, created);
 
     if (TRACER.isEnabled())
     {
@@ -745,8 +746,10 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
 
     private int lastIndex;
 
+    private long timestamp;
+
     public ListDeltaVisitor(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int oldVersion,
-        int newVersion)
+        int newVersion, long timestamp)
     {
       this.accessor = accessor;
       this.originalRevision = originalRevision;
@@ -754,6 +757,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       this.oldVersion = oldVersion;
       this.newVersion = newVersion;
       lastIndex = originalRevision.getList(getFeature()).size() - 1;
+      this.timestamp = timestamp;
     }
 
     public void visit(CDOMoveFeatureDelta delta)
@@ -782,7 +786,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       }
 
       // create the item
-      addEntry(accessor, id, newVersion, toIdx, value);
+      addEntry(accessor, id, newVersion, toIdx, value, timestamp);
     }
 
     public void visit(CDOAddFeatureDelta delta)
@@ -802,7 +806,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       }
 
       // create the item
-      addEntry(accessor, id, newVersion, startIndex, delta.getValue());
+      addEntry(accessor, id, newVersion, startIndex, delta.getValue(), timestamp);
 
       ++lastIndex;
     }
@@ -839,7 +843,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       removeEntry(accessor, id, oldVersion, newVersion, index);
 
       // create the item
-      addEntry(accessor, id, newVersion, index, delta.getValue());
+      addEntry(accessor, id, newVersion, index, delta.getValue(), timestamp);
     }
 
     public void visit(CDOUnsetFeatureDelta delta)
@@ -918,7 +922,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
               TRACER.format("moveOneUp add: {0}", index - 1); //$NON-NLS-1$
             }
 
-            addEntry(accessor, id, newVersion, index - 1, value);
+            addEntry(accessor, id, newVersion, index - 1, value, timestamp);
             break;
 
           case 1:
@@ -987,7 +991,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
               TRACER.format("moveOneDown add: {0}", index + 1); //$NON-NLS-1$
             }
 
-            addEntry(accessor, id, newVersion, index + 1, value);
+            addEntry(accessor, id, newVersion, index + 1, value, timestamp);
             break;
 
           case 1:
@@ -1019,7 +1023,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     }
   }
 
-  private void addEntry(IDBStoreAccessor accessor, CDOID id, int version, int index, Object value)
+  private void addEntry(IDBStoreAccessor accessor, CDOID id, int version, int index, Object value, long timestamp)
   {
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement pstmt = null;
@@ -1034,8 +1038,8 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     {
       FeatureMap.Entry entry = (FeatureMap.Entry)value;
       EStructuralFeature entryFeature = entry.getEStructuralFeature();
-      Long tag = getTagByFeature(entryFeature);
-      String column = getColumnName(tag);
+      Long tag = getTagByFeature(accessor, entryFeature, timestamp);
+      String column = getColumnName(accessor, tag);
 
       pstmt = statementCache.getPreparedStatement(sqlInsert, ReuseProbability.HIGH);
 
@@ -1048,7 +1052,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       {
         if (columnNames.get(i).equals(column))
         {
-          getTypeMapping(tag).setValue(pstmt, stmtIndex++, entry.getValue());
+          getTypeMapping(accessor, tag).setValue(pstmt, stmtIndex++, entry.getValue());
         }
         else
         {
@@ -1172,8 +1176,8 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       }
 
       Long tag = resultSet.getLong(1);
-      Object value = getTypeMapping(tag).readValue(resultSet);
-      result = CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(tag), value);
+      Object value = getTypeMapping(accessor, tag).readValue(resultSet);
+      result = CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(accessor, tag), value);
 
       if (TRACER.isEnabled())
       {
